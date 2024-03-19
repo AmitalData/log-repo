@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CB_RegularityRequiredCertificateUpdateClass
    {  		
-		public const string HashString = "a793f742b08e9db1900159e1f117bc6a";
+		public const string HashString = "6584fa9ce28a6e1ad136061f35d9e6f4";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -126,7 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "סוגי רישיונות/אישורים נדרשים בתחולה של דרישות חוקיות",
 			      				    DefaultText =  "Regularity Required Certificate",
-			      				    Code =  "691a",
+			      				    Code =  "9069",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -153,6 +153,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 						FieldName =  "RegularityInceptionID",
 					  						ObjectTableName =  "Customs.CB_RegularityRequiredCertificate",
 					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "CB_RegularityInception",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,

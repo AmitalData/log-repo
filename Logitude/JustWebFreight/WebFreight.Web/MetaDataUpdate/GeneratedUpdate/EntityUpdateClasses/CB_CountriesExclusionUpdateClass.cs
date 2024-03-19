@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CB_CountriesExclusionUpdateClass
    {  		
-		public const string HashString = "df1224509b8e7393dd67debed2f85e25";
+		public const string HashString = "7690b70083911f6a7b2bf85c3b76ebc2";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -126,7 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "החרגת מדינה בדרישת חוקיות",
 			      				    DefaultText =  "Countries Exclusion",
-			      				    Code =  "e97b",
+			      				    Code =  "daa7",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -153,6 +153,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 						FieldName =  "RegularityRequirementID",
 					  						ObjectTableName =  "Customs.CB_CountriesExclusion",
 					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "CB_RegularityRequirement",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,

@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CB_RuleDetailsHistoryUpdateClass
    {  		
-		public const string HashString = "fc86cb8b43c21b0cb171a6127531a3e9";
+		public const string HashString = "2d47b1531f72847eaaee0eb0b005524a";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -126,7 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  " היסטוריה של כללים",
 			      				    DefaultText =  "Rule Details History",
-			      				    Code =  "874b",
+			      				    Code =  "80bf",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -532,6 +532,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 						FieldName =  "RuleID",
 					  						ObjectTableName =  "Customs.CB_RuleDetailsHistory",
 					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "CB_Rule",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
@@ -784,6 +785,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 						FieldName =  "Parent_RuleDetailsHistoryID",
 					  						ObjectTableName =  "Customs.CB_RuleDetailsHistory",
 					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "CB_RuleDetailsHistory",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,

@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CB_TradeLevyUpdateClass
    {  		
-		public const string HashString = "c93e831164099319979c89ce9c794b9d";
+		public const string HashString = "3cc5dc07254a5c27a7b824fd3663ecd2";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -126,7 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "רשימה של היטלי סחר",
 			      				    DefaultText =  "Trade Levy",
-			      				    Code =  "75e2",
+			      				    Code =  "33d3",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -723,6 +723,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 						FieldName =  "ComputationMethodDataID",
 					  						ObjectTableName =  "Customs.CB_TradeLevy",
 					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "CB_ComputationMethodData",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
