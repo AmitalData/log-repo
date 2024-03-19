@@ -151,7 +151,7 @@ namespace Logitude.Accounting.BL.CoreBL
         public List<JournalLine> GetJournalLineByLedgerTransactionIdList(List<string> transactionIdList, int tenant)
         {
             var a = new JournalLineRepository(_AccountingContext);
-            return a.GetJournalLineByLedgerTransactionIdList(transactionIdList, tenant).ToList();
+            return a.GetJournalLineByLedgerTransactionIdList(transactionIdList, tenant);
         }
         public List<LedgerTransactionPM> GetLedgerTransactionPMsByIdList(List<string> transactionIdList, int tenant)
         {

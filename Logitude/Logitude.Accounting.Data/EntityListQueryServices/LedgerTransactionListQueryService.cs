@@ -121,18 +121,50 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
             if (ledgerTransactionBalanceFilter.GLAccountId == accountingSettingList.VATInputsGLAccountId)
             {
-                IQueryable<LedgerTransactionList> inputs = GetInputTransactions(taxReport, transactionBalanceFilter, accountingSettingList, query).OrderByDescending(d => d.AccountingDate).Skip(ledgerTransactionBalanceFilter.PageStartAtRecordIndex).Take(ledgerTransactionBalanceFilter.PageSize);
-                transactions = inputTransactions = inputs;
+                inputTransactions = GetInputTransactions(taxReport, transactionBalanceFilter, accountingSettingList, query)
+                    .OrderByDescending(d => d.AccountingDate)
+                    .Skip(ledgerTransactionBalanceFilter.PageStartAtRecordIndex)
+                    .Take(ledgerTransactionBalanceFilter.PageSize);
 
-
+                transactions = inputTransactions;
             }
-            if (ledgerTransactionBalanceFilter.GLAccountId == accountingSettingList.VATOutputGLAccountId)
+            else if (ledgerTransactionBalanceFilter.GLAccountId == accountingSettingList.VATOutputGLAccountId)
             {
-                transactions = outputTransactions = GetOutputTransactions(taxReport, accountingSettingList, query);
+                outputTransactions = GetOutputTransactions(taxReport, accountingSettingList, query)
+                    .OrderByDescending(d => d.AccountingDate)
+                    .Skip(ledgerTransactionBalanceFilter.PageStartAtRecordIndex)
+                    .Take(ledgerTransactionBalanceFilter.PageSize);
+                transactions = outputTransactions;
             }
             if (accountingSettingList.VATOutputGLAccountId == accountingSettingList.VATInputsGLAccountId)
             {
-                transactions = inputTransactions.Concat(outputTransactions);
+                // Concatenate transactions if necessary
+                inputTransactions = GetInputTransactions(taxReport, transactionBalanceFilter, accountingSettingList, query)
+                    .OrderByDescending(d => d.AccountingDate)
+                    .Skip(ledgerTransactionBalanceFilter.PageStartAtRecordIndex)
+                    .Take(ledgerTransactionBalanceFilter.PageSize);
+
+                outputTransactions = GetOutputTransactions(taxReport, accountingSettingList, query)
+                    .OrderByDescending(d => d.AccountingDate)
+                    .Skip(ledgerTransactionBalanceFilter.PageStartAtRecordIndex)
+                    .Take(ledgerTransactionBalanceFilter.PageSize);
+
+                if (inputTransactions.Any() && outputTransactions.Any())
+                {
+                    transactions = inputTransactions.Concat(outputTransactions);
+                }
+                else if (outputTransactions.Any())
+                {
+                    transactions = outputTransactions;
+                }
+                else if (inputTransactions.Any())
+                {
+                    transactions = inputTransactions;
+                }
+                else
+                {
+                    transactions = Enumerable.Empty<LedgerTransactionList>().AsQueryable();
+                }
             }
             if (!string.IsNullOrEmpty(ledgerTransactionBalanceFilter.SearchFields))
             {
@@ -178,17 +210,26 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             IQueryable<LedgerTransactionList> transactions = journalsTransactions.OrderByDescending(d => d.AccountingDate).Skip(transactionBalanceFilter.PageStartAtRecordIndex).Take(transactionBalanceFilter.PageSize);
             IQueryable<LedgerTransactionList> creditLines = GetTaxJournalLines(transactions, taxReport.Tenant);
             transactions = ExcludeDuplicatedLinesForTheSameJournal(creditLines, transactions);
-            return transactions.Concat(creditLines);
+            if (creditLines.Any())
+            {
+                transactions = transactions.Concat(creditLines);
+            }
+            else if (!transactions.Any())
+            {
+                transactions = Enumerable.Empty<LedgerTransactionList>().AsQueryable();
+            }
+
+            return transactions;
         }
         private IQueryable<LedgerTransactionList> ExcludeDuplicatedLinesForTheSameJournal(IQueryable<LedgerTransactionList> creditLines, IQueryable<LedgerTransactionList> transactions)
         {
-            List<string> journalids = creditLines.Select(d => d.JournalId).ToList();
-            transactions = transactions.Where(d => !journalids.Contains(d.JournalId));
+            List<string> journalIds = creditLines.Select(d => d.JournalId).ToList();
+            transactions = transactions.Where(d => !journalIds.Contains(d.JournalId));
             return transactions;
         }
         private IQueryable<LedgerTransactionList> GetTaxJournalLines(IQueryable<LedgerTransactionList> transactions, int tenant)
         {
-            IQueryable<JournalLine> journalLines = GetJournalLinesForTransactions(transactions, tenant);
+            List<JournalLine> journalLines = GetJournalLinesForTransactions(transactions, tenant);
             return GetCreditLinesFromSelectedTransactionsGroupedByJournalId(transactions, journalLines);
         }
         public IQueryable<LedgerTransactionList> GetLedgerTransactionsOutputNotIncludedInTaxReports(string accountId, IQueryable<LedgerTransactionList> query)
@@ -207,84 +248,140 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             IQueryable<LedgerTransactionList> outputLines = journalOutputLines.OrderByDescending(d => d.AccountingDate).Skip(transactionBalanceFilter.PageStartAtRecordIndex).Take(transactionBalanceFilter.PageSize);
             IQueryable<LedgerTransactionList> creditLines = GetTaxJournalLines(outputLines, transactionBalanceFilter.Tenant);
             outputLines = ExcludeDuplicatedLinesForTheSameJournal(creditLines, outputLines);
-            return outputLines.Concat(creditLines);
+
+            if (outputLines.Any() && creditLines.Any())
+            {
+                return outputLines.Concat(creditLines);
+            }
+            else if (outputLines.Any())
+            {
+                return outputLines;
+            }
+            else if (creditLines.Any())
+            {
+                return creditLines;
+            }
+            else
+            {
+                return Enumerable.Empty<LedgerTransactionList>().AsQueryable();
+            }
         }
-        private IQueryable<JournalLine> GetJournalLinesForTransactions(IQueryable<LedgerTransactionList> transactions, int tenant)
+        private List<JournalLine> GetJournalLinesForTransactions(IQueryable<LedgerTransactionList> transactions, int tenant)
         {
             List<string> transactionIds = transactions.Select(d => d.Id).ToList();
             JournalLineRepository journalLineRepository = new JournalLineRepository(context);
             return journalLineRepository.GetJournalLineByLedgerTransactionIdList(transactionIds, tenant);
         }
-        private IQueryable<LedgerTransactionList> GetCreditLinesFromSelectedTransactionsGroupedByJournalId(IQueryable<LedgerTransactionList> outputLines, IQueryable<JournalLine> JournalLines)
+        private IQueryable<LedgerTransactionList> GetCreditLinesFromSelectedTransactionsGroupedByJournalId(IQueryable<LedgerTransactionList> outputLines, List<JournalLine> JournalLines)
 
         {
-            return (from ledger in outputLines
-                    join journalLine in JournalLines
-                on new { ledger.JournalId, Line = ledger.JournalLineNumber } equals new { journalLine.JournalId, journalLine.Line }
-                    where journalLine.ActionCode == CreditTypeJournalLine
-                    group ledger by ledger.JournalId into gp
-                    select new LedgerTransactionList()
-                    {
-                        Id = gp.FirstOrDefault().Id,
-                        LocalAmountDebit = gp.FirstOrDefault().LocalAmountDebit,
-                        LocalAmountCredit = gp.Sum(d => d.LocalAmountCredit),
-                        ForeignAmountDebit = gp.Sum(d => d.ForeignAmountDebit),
-                        Tenant = gp.FirstOrDefault().Tenant,
-                        AccountingDate = gp.FirstOrDefault().AccountingDate,
-                        DocumentDate = gp.FirstOrDefault().DocumentDate,
-                        DueDate = gp.FirstOrDefault().DueDate,
-                        Reference1 = gp.FirstOrDefault().Reference1,
-                        Reference2 = gp.FirstOrDefault().Reference2,
-                        Reference3 = gp.FirstOrDefault().Reference3,
-                        AccountId = gp.FirstOrDefault().AccountId,
-                        OppositeAccountId = gp.FirstOrDefault().OppositeAccountId,
-                        JournalId = gp.FirstOrDefault().JournalId,
-                        Notes = gp.FirstOrDefault().Notes,
-                        JournalLineNumber = gp.FirstOrDefault().JournalLineNumber,
-                        SourceNumber = gp.FirstOrDefault().SourceNumber,
-                        SourceTypeCode = gp.FirstOrDefault().SourceTypeCode,
-                        SelectCheckBox = false,
-                        JournalNumber = gp.FirstOrDefault().JournalNumber,
-                        OpenAmount = gp.FirstOrDefault().OpenAmount,
-                        ReconcileMethodCode = gp.FirstOrDefault().ReconcileMethodCode,
-                        OppositeAccountEnglishName = gp.FirstOrDefault().OppositeAccountEnglishName,
-                        OppositeAccountLocalName = gp.FirstOrDefault().OppositeAccountLocalName,
-                        OppositeAccountDisplayNumber = gp.FirstOrDefault().OppositeAccountDisplayNumber,
-                        OriginalAmount = 0,
-                        CalculatedForeignAmount = gp.FirstOrDefault().CalculatedForeignAmount,
-                        CalculatedLocalAmount = gp.FirstOrDefault().CalculatedLocalAmount,
-                        ForeignAmountCredit = gp.Sum(d => d.ForeignAmountCredit),
-                        ForeignAmount = gp.FirstOrDefault().ForeignAmount,
-                        CurrencyId = gp.FirstOrDefault().CurrencyId,
-                        SearchFields = gp.FirstOrDefault().SearchFields,
+            // Fetch outputLines from the database
+            var outputLinesList = outputLines.ToList();
 
-                        ControlAccountId =null,
-                        ExchangeRate = 0,
-                        Source = null,
-                        SourceType = null,
-                        CurrencyCode =null,
-                        CreateDate = DateTime.MinValue,
-                        AmountToReconcile = 0,
-                        Mark = false,
-                        InternalNote = null,
-                        UpdatedByUserName = null,
-                        UpdateDateTime = DateTime.MinValue,
-                        OpenAmountCurrencyId = null,
-                        OpenAmountCurrencyCode = null,
-                        IsReconciled = false,
-                        InReconcileProgress = false,
-                        InProgressExternalReconcile = false,
-                        SourceId = null, 
-                        CurrencySign = null,
-                        OpenAmountCurrencySign = null,
-                        IsExternalReconcile = false,
-                        AccountDisplayNumber = null,
-                        AccountLocalName = null,
-                        JournalCreatedByUser = null,
-                        TaxReportId = "",
-                        TaxReportNumber = "",
-                        SecurityLevelFiltering = 1
-                    }).AsQueryable();
+            // Perform the join in-memory
+            var groupedTransactions =
+                from ledger in outputLinesList
+                join journalLine in JournalLines
+                on new { ledger.JournalId, Line = ledger.JournalLineNumber } equals new { journalLine.JournalId, Line = journalLine.Line }
+                where journalLine.ActionCode == CreditTypeJournalLine
+                group ledger by ledger.JournalId into gp
+                select new
+                {
+                    Id = gp.FirstOrDefault().Id,
+                    LocalAmountDebit = gp.FirstOrDefault().LocalAmountDebit,
+                    LocalAmountCredit = gp.Sum(d => d.LocalAmountCredit),
+                    ForeignAmountDebit = gp.Sum(d => d.ForeignAmountDebit),
+                    Tenant = gp.FirstOrDefault().Tenant,
+                    AccountingDate = gp.FirstOrDefault().AccountingDate,
+                    DocumentDate = gp.FirstOrDefault().DocumentDate,
+                    DueDate = gp.FirstOrDefault().DueDate,
+                    Reference1 = gp.FirstOrDefault().Reference1,
+                    Reference2 = gp.FirstOrDefault().Reference2,
+                    Reference3 = gp.FirstOrDefault().Reference3,
+                    AccountId = gp.FirstOrDefault().AccountId,
+                    OppositeAccountId = gp.FirstOrDefault().OppositeAccountId,
+                    JournalId = gp.FirstOrDefault().JournalId,
+                    Notes = gp.FirstOrDefault().Notes,
+                    JournalLineNumber = gp.FirstOrDefault().JournalLineNumber,
+                    SourceNumber = gp.FirstOrDefault().SourceNumber,
+                    SourceTypeCode = gp.FirstOrDefault().SourceTypeCode,
+                    JournalNumber = gp.FirstOrDefault().JournalNumber,
+                    OpenAmount = gp.FirstOrDefault().OpenAmount,
+                    ReconcileMethodCode = gp.FirstOrDefault().ReconcileMethodCode,
+                    OppositeAccountEnglishName = gp.FirstOrDefault().OppositeAccountEnglishName,
+                    OppositeAccountLocalName = gp.FirstOrDefault().OppositeAccountLocalName,
+                    OppositeAccountDisplayNumber = gp.FirstOrDefault().OppositeAccountDisplayNumber,
+                    CalculatedForeignAmount = gp.FirstOrDefault().CalculatedForeignAmount,
+                    CalculatedLocalAmount = gp.FirstOrDefault().CalculatedLocalAmount,
+                    ForeignAmountCredit = gp.Sum(d => d.ForeignAmountCredit),
+                    ForeignAmount = gp.FirstOrDefault().ForeignAmount,
+                    CurrencyId = gp.FirstOrDefault().CurrencyId,
+                    SearchFields = gp.FirstOrDefault().SearchFields
+                };
+
+            var ledgerTransactionList = groupedTransactions.Select(gp => new LedgerTransactionList
+            {
+                Id = gp.Id,
+                LocalAmountDebit = gp.LocalAmountDebit,
+                LocalAmountCredit = gp.LocalAmountCredit,
+                ForeignAmountDebit = gp.ForeignAmountDebit,
+                Tenant = gp.Tenant,
+                AccountingDate = gp.AccountingDate,
+                DocumentDate = gp.DocumentDate,
+                DueDate = gp.DueDate,
+                Reference1 = gp.Reference1,
+                Reference2 = gp.Reference2,
+                Reference3 = gp.Reference3,
+                AccountId = gp.AccountId,
+                OppositeAccountId = gp.OppositeAccountId,
+                JournalId = gp.JournalId,
+                Notes = gp.Notes,
+                JournalLineNumber = gp.JournalLineNumber,
+                SourceNumber = gp.SourceNumber,
+                SourceTypeCode = gp.SourceTypeCode,
+                SelectCheckBox = false,
+                JournalNumber = gp.JournalNumber,
+                OpenAmount = gp.OpenAmount,
+                ReconcileMethodCode = gp.ReconcileMethodCode,
+                OppositeAccountEnglishName = gp.OppositeAccountEnglishName,
+                OppositeAccountLocalName = gp.OppositeAccountLocalName,
+                OppositeAccountDisplayNumber = gp.OppositeAccountDisplayNumber,
+                OriginalAmount = 0,
+                CalculatedForeignAmount = gp.CalculatedForeignAmount,
+                CalculatedLocalAmount = gp.CalculatedLocalAmount,
+                ForeignAmountCredit = gp.ForeignAmountCredit,
+                ForeignAmount = gp.ForeignAmount,
+                CurrencyId = gp.CurrencyId,
+                SearchFields = gp.SearchFields,
+                ControlAccountId = null,
+                ExchangeRate = 0,
+                Source = null,
+                SourceType = null,
+                CurrencyCode = null,
+                CreateDate = DateTime.MinValue,
+                AmountToReconcile = 0,
+                Mark = false,
+                InternalNote = null,
+                UpdatedByUserName = null,
+                UpdateDateTime = null,
+                OpenAmountCurrencyId = null,
+                OpenAmountCurrencyCode = null,
+                IsReconciled = false,
+                InReconcileProgress = false,
+                InProgressExternalReconcile = false,
+                SourceId = null,
+                CurrencySign = null,
+                OpenAmountCurrencySign = null,
+                IsExternalReconcile = false,
+                AccountDisplayNumber = null,
+                AccountLocalName = null,
+                JournalCreatedByUser = null,
+                TaxReportId = "",
+                TaxReportNumber = "",
+                SecurityLevelFiltering = 1
+            });
+
+            return ledgerTransactionList.AsQueryable();
         }
 
         private IQueryable<LedgerTransactionList> GetInputTransactions(TaxReportList taxReport, LedgerTransactionBalanceFilter transactionBalanceFilter, FullAccountingSettingList accountingSettingList, IQueryable<LedgerTransactionList> query)
@@ -421,10 +518,10 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                            JournalId = a.JournalId,
                                                            Notes = a.Notes,
                                                            JournalLineNumber = a.JournalLineNumber,
-                                                           SourceNumber= a.JournalLine.Journal.AccountingEntityReference,
-                                                           SourceTypeCode= a.JournalLine.Journal.AccountingEntity.Code,
-                                                           SelectCheckBox=false,
-                                                           JournalNumber= a.JournalLine.Journal.JournalNumber,
+                                                           SourceNumber = a.JournalLine.Journal.AccountingEntityReference,
+                                                           SourceTypeCode = a.JournalLine.Journal.AccountingEntity.Code,
+                                                           SelectCheckBox = false,
+                                                           JournalNumber = a.JournalLine.Journal.JournalNumber,
                                                            OpenAmount = a.OpenAmount,
                                                            ReconcileMethodCode = a.Account.ReconcileMethodCode,
                                                            OppositeAccountEnglishName = a.OppositeAccount != null ? a.OppositeAccount.EnglishName : null,
@@ -462,7 +559,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                            AccountLocalName = a.Account != null ? a.Account.LocalName : null,
                                                            JournalCreatedByUser = a.JournalLine.Journal.CreatedByUser.Contact.DontShowLocalLabels ? a.JournalLine.Journal.CreatedByUser.Contact.EnglishName : a.JournalLine.Journal.CreatedByUser.Contact.LocalName,
                                                            TaxReportId = "",
-                                                           TaxReportNumber =  "",
+                                                           TaxReportNumber = "",
                                                            SecurityLevelFiltering = 1
                                                        });
             return query;
