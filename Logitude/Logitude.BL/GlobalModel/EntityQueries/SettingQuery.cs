@@ -75,9 +75,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
             SettingPM entity;
             try
             {
-                var b = (from a in repository.context.Settings
-                         select a
-                          );
+               
                
                     entity = (from a in repository.context.Settings
                               select new SettingPM()

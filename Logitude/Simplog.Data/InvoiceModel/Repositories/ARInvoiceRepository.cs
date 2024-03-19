@@ -161,7 +161,7 @@ namespace Simplog.Data.InvoiceModel.Repositories
 
         public ARInvoice GetSingleInvoice(string id)
         {
-            return (from a in context.ARInvoices.Include("BillTo").Include("BillTo.PartnerType").Include("CreatedByUser.Contact").Include("InvoiceCurrency").Include("Status").Include("ARInvoiceType").Include("IssuedByUser.Contact").Include("PrintByUser.Contact").Include("PaymentTerm").Include("ProfitCurrency").Include("LocalCurrency").Include("TransferStatus").Include("ApprovedByUser.Contact").Include("SalesmanUser.Contact")
+            return (from a in context.ARInvoices.Include("BillTo").Include("BillTo.PartnerType").Include("CreatedByUser.Contact").Include("InvoiceCurrency").Include("Status").Include("ARInvoiceType").Include("IssuedByUser.Contact").Include("PrintByUser.Contact").Include("PaymentTerm").Include("ProfitCurrency").Include("LocalCurrency").Include("TransferStatus").Include("ApprovedByUser.Contact").Include("SalesmanUser.Contact").Include("Confirmation")
                     where a.Id == id
                     select a).FirstOrDefault();
         }
