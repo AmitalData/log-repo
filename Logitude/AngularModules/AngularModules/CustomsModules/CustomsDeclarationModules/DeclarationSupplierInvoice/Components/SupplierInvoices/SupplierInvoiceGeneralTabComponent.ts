@@ -79,6 +79,7 @@ import { ClientIndicationPM } from 'Customs/EntityPMs/ClientIndicationPM';
 import { ClientIndicationListService } from 'Customs/Services/StandardLists/ClientIndicationListService';
 import { ClientItemExtendedPMService } from 'Customs/Services/ExtendedPMs/ClientItemExtendedPMService';
 import { ClientItemPM } from 'Customs/EntityPMs/ClientItemPM';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -4441,9 +4442,9 @@ export class SupplierInvoiceItemLine extends BaseComponent {
         if (!this.entityPM.ClassificationCode) this.entityPM.ClassificationCode = "";
         if (!this.entityPM.ItemDescription) this.entityPM.ItemDescription = "";
 
-        if (AppTool.IsNullOrEmpty(this.ItemCode)) {
-            return;
-        }
+        // if (AppTool.IsNullOrEmpty(this.ItemCode)) {
+        //     return;
+        // }
         //if (this.Parent.Parent.ItemCode_LocalCache != null && this.Parent.Parent.ItemCode_LocalCache.length > 0) {
         //if (GITITEMCacheService.Instance.ItemCode_LocalCache != null && GITITEMCacheService.Instance.ItemCode_LocalCache.length > 0)
         {
@@ -4526,39 +4527,52 @@ export class SupplierInvoiceItemLine extends BaseComponent {
                 }
             }
             else if (FeatureLocator.HasFeaturePermession("Customs.Declaration", "OCR")) {
-                if (AppTool.IsNullOrEmpty(this.entityPM.ClassificationCode) && !AppTool.IsNullOrEmpty(this.Parent.declarationPM.ExporterImporterCode) && !AppTool.IsNullOrEmpty(this.ItemCode)) {
-                    var clientItemExtendedPMService: ClientItemExtendedPMService = new ClientItemExtendedPMService();
-                    clientItemExtendedPMService.GetClientItemPM(this.ItemCode, this.Parent.declarationPM.ExporterImporterCode, SessionLocator.Tenant)
-                        .subscribe((response: ServiceResponse) => {
-                            if (response?.Result) {
-                                var clientItemPM: ClientItemPM = response.Result;
-                                this.entityPM.ClassificationCode = clientItemPM?.ClassificationCode;
-                                if (AppTool.IsNullOrEmpty(this.entityPM.ItemDescription))
-                                    this.entityPM.ItemDescription = clientItemPM?.ItemDescription;
-                                if (AppTool.IsNullOrEmpty(this.entityPM.OriginCountryCode)) {
-                                    this.entityPM.OriginCountryCode = clientItemPM?.OriginCountryCode;
-                                    this.entityPM.OriginCountryName = clientItemPM?.OriginCountryName;
-                                }
-                                if(!AppTool.IsNullOrEmpty(this.entityPM.ClassificationCode))
-                                {
-                                    this.Parent.quantityTypeMessageService.GetQuantityType(this.entityPM.ClassificationCode, this.Parent.declarationPM.Direction === 'E').subscribe((myServiceResponse: ServiceResponse) => {
-                                        if (!myServiceResponse.HasError && myServiceResponse.Result != null) {
-                                            this.entityPM.InvoiceQuantityType = myServiceResponse.Result;
-                                            this.QunatityTypeCode = "(" + myServiceResponse.Result + ")";
-                                           
-                                        }
+                if (AppTool.IsNullOrEmpty(this.entityPM.ClassificationCode) &&
+                    !AppTool.IsNullOrEmpty(this.Parent.declarationPM.ExporterImporterCode) &&
+                    (!AppTool.IsNullOrEmpty(this.ItemCode) || !AppTool.IsNullOrEmpty(this.ItemDescription))) {
                     
-                    
-                    
-                                    });
-                                }
-
-
+                    const clientItemExtendedPMService = new ClientItemExtendedPMService();
+                    let clientItemRequest: Observable<ServiceResponse>;
+            
+                    if (!AppTool.IsNullOrEmpty(this.ItemCode)) {
+                        clientItemRequest = clientItemExtendedPMService.GetClientItemPM(
+                            this.ItemCode,
+                            this.Parent.declarationPM.ExporterImporterCode,
+                            SessionLocator.Tenant
+                        );
+                    } else {
+                        clientItemRequest = clientItemExtendedPMService.GetClientItemDescriptionPM(
+                            this.ItemDescription,
+                            this.Parent.declarationPM.ExporterImporterCode,
+                            SessionLocator.Tenant
+                        );
+                    }
+            
+                    clientItemRequest.subscribe((response: ServiceResponse) => {
+                        if (response?.Result) {
+                            const clientItemPM: ClientItemPM = response.Result;
+                            this.entityPM.ClassificationCode = clientItemPM?.ClassificationCode;
+                            this.entityPM.ItemDescription = this.entityPM.ItemDescription || clientItemPM?.ItemDescription;
+                            this.entityPM.ItemCode = this.entityPM.ItemCode || clientItemPM?.ItemCode;
+                            this.entityPM.OriginCountryCode = this.entityPM.OriginCountryCode || clientItemPM?.OriginCountryCode;
+                            this.entityPM.OriginCountryName = this.entityPM.OriginCountryName || clientItemPM?.OriginCountryName;
+            
+                            if (!AppTool.IsNullOrEmpty(this.entityPM.ClassificationCode)) {
+                                this.Parent.quantityTypeMessageService.GetQuantityType(
+                                    this.entityPM.ClassificationCode,
+                                    this.Parent.declarationPM.Direction === 'E'
+                                ).subscribe((myServiceResponse: ServiceResponse) => {
+                                    if (!myServiceResponse.HasError && myServiceResponse.Result != null) {
+                                        this.entityPM.InvoiceQuantityType = myServiceResponse.Result;
+                                        this.QunatityTypeCode = "(" + myServiceResponse.Result + ")";
+                                    }
+                                });
                             }
-
-                        })
+                        }
+                    });
                 }
             }
+            
 
         }
 
