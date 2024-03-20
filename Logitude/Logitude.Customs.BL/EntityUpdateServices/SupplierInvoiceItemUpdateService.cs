@@ -190,10 +190,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                 string quantityType = customsItemQueryService.GetQuantityTypeByClassificationWithMultiCustomItems(entityPM.ClassificationCode, entityPM.Tenant, true);
                                 if (!string.IsNullOrEmpty(quantityType))
                                 {
-                                    entityPM.StatisticQuantityType = quantityType;
-                                    entityPM.StatisticQuantity = entityPM?.InvoiceQuantity;
-                                    entityPM.ItemAdditionalStatus = true;
-                                    if (string.IsNullOrEmpty(entityPM.InvoiceQuantityType))
+                                    //entityPM.StatisticQuantityType = quantityType;
+                                    //entityPM.StatisticQuantity = entityPM?.InvoiceQuantity;
+                                    //entityPM.ItemAdditionalStatus = true;
+                                    //if (string.IsNullOrEmpty(entityPM.InvoiceQuantityType))
                                         entityPM.InvoiceQuantityType = quantityType;
 
                                 }
