@@ -831,14 +831,13 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 					_MyDeclarationPM.IsDiamondDeclaration = true;
 				}
 
-                if (string.IsNullOrWhiteSpace(_AmitalCustomsFile.AutoSending) || (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.AutoSending) && _AmitalCustomsFile.AutoSending.ToLower() != "true"))
+                if (_AmitalCustomsFile.Direction == "E" && !string.IsNullOrWhiteSpace(_AmitalCustomsFile.AutoSending) && _AmitalCustomsFile.AutoSending.ToLower() == "true")
                 {
-                    _MyDeclarationPM.AutoSending = false;
-
+                    _MyDeclarationPM.AutoSending = true;
                 }
                 else
                 {
-                    _MyDeclarationPM.AutoSending = true;
+                    _MyDeclarationPM.AutoSending = false;
                 }
 
                 //  UpdateTrucker();
@@ -2333,12 +2332,22 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 			myAmitalCustom.AgentId = "550221105";
 
 			myAmitalCustom.CreatedByUserId = "ITZIK";
-			myAmitalCustom.CustomerId = "10010650";
-			myAmitalCustom.TransportModeId = "O";
+            myAmitalCustom.CustomerId = "10010650";
+            myAmitalCustom.TransportModeId = "O";
 			myAmitalCustom.Tenant = "1";
-			myAmitalCustom.ImporterId = "00000000";
+            myAmitalCustom.ImporterId = "00000000";
 
-			amitalObjExample.LogitudeCustomsFile = new LogitudeCustomsFile[] { myAmitalCustom };
+
+            // jeremy - test new declaration in export
+			/*
+            myAmitalCustom.CustomerId = null;
+            myAmitalCustom.Direction = "E";
+            myAmitalCustom.AutoSending = "true";
+            myAmitalCustom.CustomFileNo = "89237489723";
+			myAmitalCustom.Mode = "NEW";
+			*/
+
+            amitalObjExample.LogitudeCustomsFile = new LogitudeCustomsFile[] { myAmitalCustom };
 
 			var xml = XmlGenericUtil<LOGICUSTFILE>.SerializeObject(amitalObjExample);
             xml = @"<?xml version=""1.0""?><LOGICUSTFILE xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"" xmlns=""http://tempuri.org/LOGICUSTFILE"">
