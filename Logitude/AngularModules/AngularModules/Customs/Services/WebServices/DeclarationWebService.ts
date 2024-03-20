@@ -1404,7 +1404,6 @@ export class DeclarationWebService {
         });
     }
     GetNewAmendmentDeclarationWithSend(genericRequestParams: GenericRequestParams) {
-        debugger
         return defer(() => {
 
             var authHeader = new Headers();
