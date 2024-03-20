@@ -141,6 +141,7 @@
     <None Include="DBScripts\CommonModel\202304051240_MarkDuplicatedDocumentsAsDeletedCloudIgnore.Ignoresxml" />
     <None Include="DBScripts\CommonModel\202304051240_MarkDuplicatedDocumentsAsDeletedLogboxIgnore.Ignoresxml" />
     <None Include="DBScripts\CommonModel\202307021535_FillCargoTrackingInvitationFromSharedLogistics.sxml" />
+    <None Include="DBScripts\CommonModel\202403201211_UpdateSendingInterestReportinDefult.sxml" />
     <None Include="DBScripts\CommonModel\202308031135_FillEORInumberCardFromCustomer.sxml" />
     <None Include="DBScripts\CommonModel\FillCodeForCustomerSizes.sxml" />
     <None Include="DBScripts\CommonModel\FillTenantManagmentArchiveShipmentFilters.sxml" />
