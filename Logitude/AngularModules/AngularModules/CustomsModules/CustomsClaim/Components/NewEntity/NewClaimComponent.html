@@ -1,4 +1,4 @@
-﻿<table>
+<table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td colspan="4">
             <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="false"></ValidationSummary>
@@ -51,6 +51,20 @@
                                 <td><div></div></td>
                             </tr>
 
+                            <!-- CustomFileNo -->
+                            <tr class="FormFieldRow" *ngIf="ShowCustomFileNo">
+                                <td style="width: 120px">
+                                    <LogLabel [ObjectFieldName]="'CustomFileNo'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td style="width: 180px">
+                                    <LogTextBox [ObjectFieldName]="'CustomFileNo'" [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext" [AddCommasToNumbers]="false"
+                                                [Text]="CustomFileNo"></LogTextBox>
+                                </td>
+                                <td><div></div></td>
+                            </tr>
+                            
                             <tr><td><div></div></td></tr>
                         </table>
 

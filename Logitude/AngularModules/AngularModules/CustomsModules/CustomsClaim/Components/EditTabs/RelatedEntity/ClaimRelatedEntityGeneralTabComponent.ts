@@ -72,7 +72,7 @@ export class ClaimRelatedEntityGeneralTabComponent extends BaseComponent {
             this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
                 this.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
                     if (this.CurrentEditComponentId == this.CurrentSession.CurrentEditComponent.ComponentId) {
-                        if (tabCode == "CLMG") {
+                        if (tabCode == "CLMG" && !this.CurrentSession.CurrentEditComponent.EntityPM.notSavedEntity) {
                             this.RefreshEntity();
                             this.BuildPaymentAmountList();
                         }

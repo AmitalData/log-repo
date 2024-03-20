@@ -112,7 +112,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ReferantName, 
 	         IsSendClaimsRelatedEntity, 
 	         CustomsBranchName, 
-	         ClaimAmount,
+	         ClaimAmount, 
+	         CustomFileNo,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
