@@ -29,7 +29,7 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
         {
             var gov = mehesTableRow.MyTradeAgreement?? new TradeAgreement();
             return base.IsEqual(mehesTableRow, curDbPM)
-                && gov.CustomsBookTypeID == curDbPM.CustomsBookTypeID;
+                && gov.CustomsBookTypeID == curDbPM.CustomsBookTypeID && gov.CountryGroupID == curDbPM.CountryGroupID;
 
 
         }
@@ -39,6 +39,7 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
             base.SetOtherFields(mehesTableRow, curDbPM);
             var gov = mehesTableRow.MyTradeAgreement ?? new TradeAgreement();
             curDbPM.CustomsBookTypeID = gov.CustomsBookTypeID;
+            curDbPM.CountryGroupID = gov.CountryGroupID;
         }
     }
 }

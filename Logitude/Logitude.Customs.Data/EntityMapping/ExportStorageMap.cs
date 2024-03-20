@@ -76,6 +76,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.IsDangerousGoods).HasColumnName("IsDangerousGoods").HasPrecision(1, 0);
 
             this.Property(t => t.ActionCode).HasColumnName("ActionCode").HasMaxLength(2).IsUnicode(false);
+
+            this.Property(t => t.ContainerTypeWCO).HasColumnName("ContainerTypeWCO").HasMaxLength(10).IsUnicode(false);
         }
     }
 }

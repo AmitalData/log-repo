@@ -158,6 +158,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private int? countryGroupID ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? CountryGroupID  
+	   {
+	    
+	     get
+		{
+		   return countryGroupID;
+		 }
+		 set
+		 {
+		   if(countryGroupID != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CountryGroupID",OldValue=countryGroupID,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   countryGroupID=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

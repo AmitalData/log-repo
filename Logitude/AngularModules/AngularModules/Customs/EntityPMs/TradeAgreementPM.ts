@@ -54,6 +54,11 @@ export class TradeAgreementPM {
     public set CustomsBookTypeID(newValue: number) { if (this.customsBookTypeID != newValue) { this.customsBookTypeID = newValue; this.MarkAsDirty("CustomsBookTypeID"); } }
        
 	 
+    private countryGroupID: number;
+    public get CountryGroupID() { return this.countryGroupID; }
+    public set CountryGroupID(newValue: number) { if (this.countryGroupID != newValue) { this.countryGroupID = newValue; this.MarkAsDirty("CountryGroupID"); } }
+       
+	 
 
     public OldEntityPM: TradeAgreementPM;
 		

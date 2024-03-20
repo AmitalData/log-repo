@@ -124,6 +124,12 @@
     <Compile Include="EntityKeys\CargoSplitRequestStatusKeys.cs" />
     <Compile Include="EntityKeys\CargoStatusKeys.cs" />
     <Compile Include="EntityKeys\CargoTypeKeys.cs" />
+    <Compile Include="EntityKeys\CertificateOfOriginInvoiceKeys.cs" />
+    <Compile Include="EntityKeys\CertificateOfOriginItemKeys.cs" />
+    <Compile Include="EntityKeys\CertificateOfOriginKeys.cs" />
+    <Compile Include="EntityKeys\CertificateOfOriginMandatoryFieldsKeys.cs" />
+    <Compile Include="EntityKeys\CertificateOfOriginStatusCodeEnumKeys.cs" />
+    <Compile Include="EntityKeys\CertificateOfOriginTypeCodeEnumKeys.cs" />
     <Compile Include="EntityKeys\ClaimReasonTypeKeys.cs" />
     <Compile Include="EntityKeys\ClaimsRelatedEntitiesRefundKeys.cs" />
     <Compile Include="EntityKeys\ClaimsRelatedEntitiesSeizureKeys.cs" />
@@ -226,6 +232,7 @@
     <Compile Include="EntityKeys\NDMessageActionCodeKeys.cs" />
     <Compile Include="EntityKeys\OcrDocumentKeys.cs" />
     <Compile Include="EntityKeys\OcrStatusKeys.cs" />
+    <Compile Include="EntityKeys\OriginCriterionKeys.cs" />
     <Compile Include="EntityKeys\PartyRelationshipTypeKeys.cs" />
     <Compile Include="EntityKeys\PendingByKeywordKeys.cs" />
     <Compile Include="EntityKeys\PendingErrorPlaceKeys.cs" />
@@ -240,6 +247,7 @@
     <Compile Include="EntityKeys\ReferenceStatusKeys.cs" />
     <Compile Include="EntityKeys\RefundCustomerActivityTypeKeys.cs" />
     <Compile Include="EntityKeys\ReleaseMessageTypeKeys.cs" />
+    <Compile Include="EntityKeys\RequestReasonCodeEnumKeys.cs" />
     <Compile Include="EntityKeys\RequestToAdvanceAQueueKeys.cs" />
     <Compile Include="EntityKeys\RequestTypeKeys.cs" />
     <Compile Include="EntityKeys\SchedulerParamKeys.cs" />
@@ -294,6 +302,12 @@
     <Compile Include="EntityListQueryServices\CargoSplitRequestStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CargoStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CargoTypeListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\CertificateOfOriginInvoiceListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\CertificateOfOriginItemListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\CertificateOfOriginListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\CertificateOfOriginMandatoryFieldsListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\CertificateOfOriginStatusCodeEnumListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\CertificateOfOriginTypeCodeEnumListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ClaimReasonTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ClaimsRelatedEntitiesRefundListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ClaimsRelatedEntitiesSeizureListQueryService.cs" />
@@ -396,6 +410,12 @@
     <Compile Include="EntityListQueryServices\Generated\CargoSplitRequestStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CargoStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CargoTypeListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\CertificateOfOriginInvoiceListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\CertificateOfOriginItemListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\CertificateOfOriginListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\CertificateOfOriginMandatoryFieldsListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\CertificateOfOriginStatusCodeEnumListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\CertificateOfOriginTypeCodeEnumListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ClaimReasonTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ClaimsRelatedEntitiesRefundListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ClaimsRelatedEntitiesSeizureListQueryService.Generated.cs" />
@@ -497,6 +517,7 @@
     <Compile Include="EntityListQueryServices\Generated\NDMessageActionCodeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\OcrDocumentListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\OcrStatusListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\OriginCriterionListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\PartyRelationshipTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\PendingByKeywordListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\PendingErrorPlaceListQueryService.Generated.cs" />
@@ -511,6 +532,7 @@
     <Compile Include="EntityListQueryServices\Generated\ReferenceStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\RefundCustomerActivityTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ReleaseMessageTypeListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\RequestReasonCodeEnumListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\RequestToAdvanceAQueueListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\RequestTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SchedulerParamListQueryService.Generated.cs" />
@@ -564,6 +586,7 @@
     <Compile Include="EntityListQueryServices\NDMessageActionCodeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\OcrDocumentListQueryService.cs" />
     <Compile Include="EntityListQueryServices\OcrStatusListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\OriginCriterionListQueryService.cs" />
     <Compile Include="EntityListQueryServices\PartyRelationshipTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\PendingByKeywordListQueryService.cs" />
     <Compile Include="EntityListQueryServices\PendingErrorPlaceListQueryService.cs" />
@@ -578,6 +601,7 @@
     <Compile Include="EntityListQueryServices\ReferenceStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\RefundCustomerActivityTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ReleaseMessageTypeListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\RequestReasonCodeEnumListQueryService.cs" />
     <Compile Include="EntityListQueryServices\RequestToAdvanceAQueueListQueryService.cs" />
     <Compile Include="EntityListQueryServices\RequestTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SchedulerParamListQueryService.cs" />
@@ -610,6 +634,12 @@
     <Compile Include="EntityListQueryServices\UIMessageTenantListQueryService.cs" />
     <Compile Include="EntityListQueryServices\UpdateCodeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\VendorCurrencyListQueryService.cs" />
+    <Compile Include="EntityLists\Generated\CertificateOfOriginInvoiceList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\CertificateOfOriginItemList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\CertificateOfOriginList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\CertificateOfOriginMandatoryFieldsList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\CertificateOfOriginStatusCodeEnumList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\CertificateOfOriginTypeCodeEnumList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ClientItemList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ClientIndicationList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ConfirmationNumberTokenLogList.Generated.cs" />
@@ -623,8 +653,10 @@
     <Compile Include="EntityLists\Generated\DefaultValueList.Generated.cs" />
     <Compile Include="EntityLists\Generated\GovernmentProcTypeTenantList.Generated.cs" />
     <Compile Include="EntityLists\Generated\InternationalSiteTenantList.Generated.cs" />
-    <Compile Include="EntityLists\Generated\RequestToAdvanceAQueueList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\OriginCriterionList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\RequestReasonCodeEnumList.Generated.cs" />
     <Compile Include="EntityLists\Generated\SupplierInvioceExportDefaultList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\RequestToAdvanceAQueueList.Generated.cs" />
     <Compile Include="EntityLists\Generated\UIMessageTenantList.Generated.cs" />
     <Compile Include="EntityLists\Generated\OcrDocumentList.Generated.cs" />
     <Compile Include="EntityLists\Generated\OcrStatusList.Generated.cs" />
@@ -805,6 +837,12 @@
     <Compile Include="EntityMapping\CargoSplitRequestStatusMap.cs" />
     <Compile Include="EntityMapping\CargoStatusMap.cs" />
     <Compile Include="EntityMapping\CargoTypeMap.cs" />
+    <Compile Include="EntityMapping\CertificateOfOriginInvoiceMap.cs" />
+    <Compile Include="EntityMapping\CertificateOfOriginItemMap.cs" />
+    <Compile Include="EntityMapping\CertificateOfOriginMandatoryFieldsMap.cs" />
+    <Compile Include="EntityMapping\CertificateOfOriginMap.cs" />
+    <Compile Include="EntityMapping\CertificateOfOriginStatusCodeEnumMap.cs" />
+    <Compile Include="EntityMapping\CertificateOfOriginTypeCodeEnumMap.cs" />
     <Compile Include="EntityMapping\ClaimReasonTypeMap.cs" />
     <Compile Include="EntityMapping\ClaimsRelatedEntitiesRefundMap.cs" />
     <Compile Include="EntityMapping\ClaimsRelatedEntitiesSeizureMap.cs" />
@@ -907,6 +945,7 @@
     <Compile Include="EntityMapping\NDMessageActionCodeMap.cs" />
     <Compile Include="EntityMapping\OcrDocumentMap.cs" />
     <Compile Include="EntityMapping\OcrStatusMap.cs" />
+    <Compile Include="EntityMapping\OriginCriterionMap.cs" />
     <Compile Include="EntityMapping\PartyRelationshipTypeMap.cs" />
     <Compile Include="EntityMapping\PendingByKeywordMap.cs" />
     <Compile Include="EntityMapping\PendingErrorPlaceMap.cs" />
@@ -921,6 +960,7 @@
     <Compile Include="EntityMapping\ReferenceStatusMap.cs" />
     <Compile Include="EntityMapping\RefundCustomerActivityTypeMap.cs" />
     <Compile Include="EntityMapping\ReleaseMessageTypeMap.cs" />
+    <Compile Include="EntityMapping\RequestReasonCodeEnumMap.cs" />
     <Compile Include="EntityMapping\RequestToAdvanceAQueueMap.cs" />
     <Compile Include="EntityMapping\RequestTypeMap.cs" />
     <Compile Include="EntityMapping\SchedulerParamMap.cs" />
@@ -975,6 +1015,12 @@
     <Compile Include="EntityPOCOs\CargoSplitRequestStatus.cs" />
     <Compile Include="EntityPOCOs\CargoStatus.cs" />
     <Compile Include="EntityPOCOs\CargoType.cs" />
+    <Compile Include="EntityPOCOs\CertificateOfOrigin.cs" />
+    <Compile Include="EntityPOCOs\CertificateOfOriginInvoice.cs" />
+    <Compile Include="EntityPOCOs\CertificateOfOriginItem.cs" />
+    <Compile Include="EntityPOCOs\CertificateOfOriginMandatoryFields.cs" />
+    <Compile Include="EntityPOCOs\CertificateOfOriginStatusCodeEnum.cs" />
+    <Compile Include="EntityPOCOs\CertificateOfOriginTypeCodeEnum.cs" />
     <Compile Include="EntityPOCOs\ClaimReasonType.cs" />
     <Compile Include="EntityPOCOs\ClaimsRelatedEntitiesRefund.cs" />
     <Compile Include="EntityPOCOs\ClaimsRelatedEntitiesSeizure.cs" />
@@ -1077,6 +1123,7 @@
     <Compile Include="EntityPOCOs\NDMessageActionCode.cs" />
     <Compile Include="EntityPOCOs\OcrDocument.cs" />
     <Compile Include="EntityPOCOs\OcrStatus.cs" />
+    <Compile Include="EntityPOCOs\OriginCriterion.cs" />
     <Compile Include="EntityPOCOs\PartyRelationshipType.cs" />
     <Compile Include="EntityPOCOs\PendingByKeyword.cs" />
     <Compile Include="EntityPOCOs\PendingErrorPlace.cs" />
@@ -1092,6 +1139,7 @@
     <Compile Include="EntityPOCOs\ReferenceStatus.cs" />
     <Compile Include="EntityPOCOs\RefundCustomerActivityType.cs" />
     <Compile Include="EntityPOCOs\ReleaseMessageType.cs" />
+    <Compile Include="EntityPOCOs\RequestReasonCodeEnum.cs" />
     <Compile Include="EntityPOCOs\RequestToAdvanceAQueue.cs" />
     <Compile Include="EntityPOCOs\RequestType.cs" />
     <Compile Include="EntityPOCOs\SchedulerParam.cs" />
@@ -1146,6 +1194,12 @@
     <Compile Include="Repsitories\CargoSplitRequestStatusRepository.cs" />
     <Compile Include="Repsitories\CargoStatusRepository.cs" />
     <Compile Include="Repsitories\CargoTypeRepository.cs" />
+    <Compile Include="Repsitories\CertificateOfOriginInvoiceRepository.cs" />
+    <Compile Include="Repsitories\CertificateOfOriginItemRepository.cs" />
+    <Compile Include="Repsitories\CertificateOfOriginMandatoryFieldsRepository.cs" />
+    <Compile Include="Repsitories\CertificateOfOriginRepository.cs" />
+    <Compile Include="Repsitories\CertificateOfOriginStatusCodeEnumRepository.cs" />
+    <Compile Include="Repsitories\CertificateOfOriginTypeCodeEnumRepository.cs" />
     <Compile Include="Repsitories\ClaimReasonTypeRepository.cs" />
     <Compile Include="Repsitories\ClaimsRelatedEntitiesRefundRepository.cs" />
     <Compile Include="Repsitories\ClaimsRelatedEntitiesSeizureRepository.cs" />
@@ -1248,6 +1302,12 @@
     <Compile Include="Repsitories\Generated\CargoSplitRequestStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CargoStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CargoTypeRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\CertificateOfOriginInvoiceRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\CertificateOfOriginItemRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\CertificateOfOriginMandatoryFieldsRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\CertificateOfOriginRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\CertificateOfOriginStatusCodeEnumRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\CertificateOfOriginTypeCodeEnumRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ClaimReasonTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ClaimsRelatedEntitiesRefundRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ClaimsRelatedEntitiesSeizureRepository.Generated.cs" />
@@ -1349,6 +1409,7 @@
     <Compile Include="Repsitories\Generated\NDMessageActionCodeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\OcrDocumentRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\OcrStatusRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\OriginCriterionRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\PartyRelationshipTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\PendingByKeywordRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\PendingErrorPlaceRepository.Generated.cs" />
@@ -1363,6 +1424,7 @@
     <Compile Include="Repsitories\Generated\ReferenceStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\RefundCustomerActivityTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ReleaseMessageTypeRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\RequestReasonCodeEnumRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\RequestToAdvanceAQueueRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\RequestTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SchedulerParamRepository.Generated.cs" />
@@ -1416,6 +1478,7 @@
     <Compile Include="Repsitories\NDMessageActionCodeRepository.cs" />
     <Compile Include="Repsitories\OcrDocumentRepository.cs" />
     <Compile Include="Repsitories\OcrStatusRepository.cs" />
+    <Compile Include="Repsitories\OriginCriterionRepository.cs" />
     <Compile Include="Repsitories\PartyRelationshipTypeRepository.cs" />
     <Compile Include="Repsitories\PendingByKeywordRepository.cs" />
     <Compile Include="Repsitories\PendingErrorPlaceRepository.cs" />
@@ -1430,6 +1493,7 @@
     <Compile Include="Repsitories\ReferenceStatusRepository.cs" />
     <Compile Include="Repsitories\RefundCustomerActivityTypeRepository.cs" />
     <Compile Include="Repsitories\ReleaseMessageTypeRepository.cs" />
+    <Compile Include="Repsitories\RequestReasonCodeEnumRepository.cs" />
     <Compile Include="Repsitories\RequestToAdvanceAQueueRepository.cs" />
     <Compile Include="Repsitories\RequestTypeRepository.cs" />
     <Compile Include="Repsitories\SchedulerParamRepository.cs" />

@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class TradeAgreementUpdateClass
    {  		
-		public const string HashString = "bf4e6672914f428876b9727d80b42764";
+		public const string HashString = "4f3ecc3ef0b1981710576532c61ecc36";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -205,6 +205,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -267,6 +268,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -329,6 +331,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -388,6 +391,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -450,6 +454,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -512,6 +517,70 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "CountryGroupID",
+					  						ObjectTableName =  "Customs.TradeAgreement",
+					  						FieldsDataType =  "Integer",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "CountryGroupID",
+					  						ListPropertyPath =  "CountryGroupID",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.TradeAgreement",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "CountryGroupID",
+					  						DefaultText =  "Country Group ID",
+					  						FullLocalDefaultText =  "מזהה קבוצת מדינות",
+					  						ListFieldLable =  "CountryGroupIDListLable",
+					  						ListLableDefaultText =  "Country Group ID",
+					  						ListLocalDefaultText =  "מזהה קבוצת מדינות",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -550,17 +619,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query TradeAgreementQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TradeAgreementTextCode_0.Id, NameTextCodeCode = TradeAgreementTextCode_0.Code, ObjectTableName = "Customs.TradeAgreement", Code = "TradeAgreement",  QueryGroupCode = "TRAG", IndexOrder = 0, Tenant = 0, ObjectTableId = TradeAgreementObjectTable.Id, QuerySection = "Customs.TradeAgreement", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TradeAgreementFeature_0.Id,FeatureUniqeCode= TradeAgreementFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
+			  Query TradeAgreementQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = TradeAgreementTextCode_0.Id, NameTextCodeCode = TradeAgreementTextCode_0.Code, ObjectTableName = "Customs.TradeAgreement", Code = "TradeAgreement",  QueryGroupCode = "TRAG", IndexOrder = 0, Tenant = 0, ObjectTableId = TradeAgreementObjectTable.Id, QuerySection = "Customs.TradeAgreement", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = TradeAgreementFeature_0.Id,FeatureUniqeCode= TradeAgreementFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
 	
 			 QueryColumn TradeAgreementQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TradeAgreementQuery.Id,QueryCode = TradeAgreementQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.TradeAgreement.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn TradeAgreementQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TradeAgreementQuery.Id,QueryCode = TradeAgreementQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.TradeAgreement.CustomsBookTypeID" , ColumnWidth = 150 }, addedQueryColumns);
+			 QueryColumn TradeAgreementQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TradeAgreementQuery.Id,QueryCode = TradeAgreementQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.TradeAgreement.CountryGroupID" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn TradeAgreementQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TradeAgreementQuery.Id,QueryCode = TradeAgreementQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.TradeAgreement.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn TradeAgreementQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TradeAgreementQuery.Id,QueryCode = TradeAgreementQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.TradeAgreement.CustomsBookTypeID" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn TradeAgreementQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TradeAgreementQuery.Id,QueryCode = TradeAgreementQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.TradeAgreement.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn TradeAgreementQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TradeAgreementQuery.Id,QueryCode = TradeAgreementQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.TradeAgreement.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn TradeAgreementQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TradeAgreementQuery.Id,QueryCode = TradeAgreementQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.TradeAgreement.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn TradeAgreementQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TradeAgreementQuery.Id,QueryCode = TradeAgreementQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.TradeAgreement.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+
+			 QueryColumn TradeAgreementQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TradeAgreementQuery.Id,QueryCode = TradeAgreementQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.TradeAgreement.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

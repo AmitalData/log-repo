@@ -31,6 +31,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public bool Inactive { get; set; }
         [Column("CustomsBookTypeID")]
 	    public int? CustomsBookTypeID { get; set; }
+        [Column("CountryGroupID")]
+	    public int? CountryGroupID { get; set; }
     }
 }
 	 

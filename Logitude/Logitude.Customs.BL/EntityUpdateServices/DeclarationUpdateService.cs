@@ -2986,7 +2986,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             OptionalTamaPercentage = item.OptionalTamaPercentage,
                             OriginCountryCode = item.OriginCountryCode,
                             OriginCountryName = item.OriginCountryName,
-                            PreferenceDocumentNumber = item.PreferenceDocumentNumber,
+                            PreferenceDocumentNumber = toDeclaration.Direction == "E" ? "" : item.PreferenceDocumentNumber,
                             SalesTaxExemptionTypeCode = item.SalesTaxExemptionTypeCode,
                             StatisticQuantity = item.StatisticQuantity,
                             StatisticQuantityType = item.StatisticQuantityType,

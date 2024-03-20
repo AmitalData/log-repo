@@ -242,6 +242,30 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             InsertClosedTableRecord(tradeAgreementTable, tradeAgreementObjectTable, customsClosedTables, customsClosedTableRepository);
             addedClosedTables.Add(tradeAgreementTable);
 
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData originCriterionTable = closedSystemTables.Where(d => d.id == "1977").FirstOrDefault();
+            ObjectTable originCriterionObjectTable = objectTableRepository.GetObjectTableByName("Customs.OriginCriterion", 0, false);
+            InsertClosedTableRecord(originCriterionTable, originCriterionObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(originCriterionTable);
+
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData requestReasonCodeEnumTable = closedSystemTables.Where(d => d.id == "1960").FirstOrDefault();
+            ObjectTable requestReasonCodeEnumObjectTable = objectTableRepository.GetObjectTableByName("Customs.RequestReasonCodeEnum", 0, false);
+            InsertClosedTableRecord(requestReasonCodeEnumTable, requestReasonCodeEnumObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(requestReasonCodeEnumTable);
+                                                              
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData certificateOfOriginTypeCodeEnumTable = closedSystemTables.Where(d => d.id == "1958").FirstOrDefault();
+            ObjectTable certificateOfOriginTypeCodeEnumObjectTable = objectTableRepository.GetObjectTableByName("Customs.CertificateOfOriginTypeCodeEnum", 0, false);
+            InsertClosedTableRecord(certificateOfOriginTypeCodeEnumTable, certificateOfOriginTypeCodeEnumObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(certificateOfOriginTypeCodeEnumTable);  
+            
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData certificateOfOriginStatusCodeEnumTable = closedSystemTables.Where(d => d.id == "1957").FirstOrDefault();
+            ObjectTable certificateOfOriginStatusCodeEnumObjectTable = objectTableRepository.GetObjectTableByName("Customs.CertificateOfOriginStatusCodeEnum", 0, false);
+            InsertClosedTableRecord(certificateOfOriginStatusCodeEnumTable, certificateOfOriginStatusCodeEnumObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(certificateOfOriginStatusCodeEnumTable);
+
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData MandatoryFieldsPerCertificateOfOriginTable = closedSystemTables.Where(d => d.id == "239684").FirstOrDefault();
+            ObjectTable MandatoryFieldsPerCertificateOfOriginObjectTable = objectTableRepository.GetObjectTableByName("Customs.CertificateOfOriginMandatoryFields", 0, false);
+            InsertClosedTableRecord(MandatoryFieldsPerCertificateOfOriginTable, MandatoryFieldsPerCertificateOfOriginObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(MandatoryFieldsPerCertificateOfOriginTable);
 
             SYSTBL_NG_9001_MSG_SystemTablesResponseTableData requestToAdvanceAQueueTable = closedSystemTables.Where(d => d.id == "239678").FirstOrDefault();
             ObjectTable requestToAdvanceAQueueTableObjectTable = objectTableRepository.GetObjectTableByName("Customs.RequestToAdvanceAQueue", 0, false);

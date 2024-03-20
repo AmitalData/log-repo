@@ -3998,6 +3998,36 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 		
 			return documentsFiling;
 		}
+		public List<string> GetCOOEDocument(string declarationId, string certificateOfOriginId, int tenant)
+		{
+
+			DocumentTypeRepository documentTypeRep = new DocumentTypeRepository(tenant);
+			DocumentType type = documentTypeRep.GetSingleDocumentTypeByCode("COOE", tenant);
+			ObjectTableRepository objectTableRep = new ObjectTableRepository(tenant);
+			ObjectTable objectTable = objectTableRep.GetObjectTableByName("Customs.Declaration", tenant, true);
+			ObjectTable objectTableCertificate = objectTableRep.GetObjectTableByName("Customs.CertificateOfOrigin", tenant, true);
+
+			if (type != null)
+			{
+				if (type.ObjectTableId == objectTable.Id)
+				{
+					string documentTypeId = type.Id;
+
+                    var DocumentsFilingList = (from a in repository.GetByEntityAndChiled(objectTable.Id, declarationId, objectTableCertificate.Id, certificateOfOriginId, tenant, documentTypeId)
+                                               select a.DocumentId);
+
+					if (!LogitudeSettings.GetLogitudeCustomsSettingsMInject(tenant).IsConnectedToUniFreight)
+					{
+                        
+						return DocumentsFilingList.ToList();
+
+					}
+
+
+				}
+			}
+			return null;
+		}
 	}
 
 

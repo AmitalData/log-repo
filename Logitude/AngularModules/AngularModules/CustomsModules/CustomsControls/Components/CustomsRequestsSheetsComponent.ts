@@ -282,7 +282,7 @@ export class CustomsRequestsSheetsComponent
         //    messageWindow.Width = 400;
         //    messageWindow.Height = 150;
         //    messageWindow.ShowErrorIcon = true;
-        //     messageWindow.Show("אין אפשרות לבטל בקשות בסטטוס ניתוח נכשל/תשובה תקינה , הסר את הסטטוס ונסה שוב");
+        //     messageWindow.Show("םין םפשרות לבטל בקשות בסטטוס ניתוח נכשל/תשובה תקינה , הסר םת הסטטוס ונסה שוב");
         //    return;
         //}
         this.CurrentSession.StartBusyIndicator("");
@@ -325,7 +325,7 @@ export class CustomsRequestsSheetsComponent
         //    messageWindow.Width = 400;
         //    messageWindow.Height = 150;
         //    messageWindow.ShowErrorIcon = true;
-        //    messageWindow.Show("אין אפשרות לנתח מחדש בקשות בסטטוס שליחה נכשלה , הסר את הסטטוס ונסה שוב");
+        //    messageWindow.Show("םין םפשרות לנתח מחדש בקשות בסטטוס שליחה נכשלה , הסר םת הסטטוס ונסה שוב");
         //    return;
         //}
         this.CurrentSession.StartBusyIndicator("");
@@ -411,8 +411,9 @@ export class CustomsRequestsSheetsComponent
             //////never tested !!!!!!!- copy from silverlight
             filters.addAdditionalFilter("Id", this.entityArgs.EntityPM.Id, null, null, "Equals", false, false, false, "string");
         }
-        else if (objectTableName === "Customs.ExportStorage") {
-          
+ 
+       else if (objectTableName === "Customs.ExportStorage" || (objectTableName === "Customs.CertificateOfOrigin" && !AppTool.IsNullOrEmpty(this.entityArgs.EntityPM.Id))) {
+           
             filters.addAdditionalFilter("ObjectTableId2", objectTableId1, null, null, "Equals", false, false, false, "string");
             let EntityId2 = this.entityArgs.EntityPM.Id;
             filters.addAdditionalFilter("EntityId2", EntityId2, null, null, "Equals", false, false, false, "string");
@@ -502,7 +503,7 @@ export class CustomsRequestsSheetsComponent
             FieldName: 'RequestDescription',
             DataTypeCode: 'String',//'Number',
             Display: TextCodeTranslator.Translate("Customs.CustomsRequestsSheet.F.RequestDescription"),
-            Styles: { width: '220px' },
+            Styles: this.entityArgs.IsFromStandAloneScreen?{ width: '135px' }: { width: '220px' },
             IsCustomTemplate: true
             , ServerSideSortable: true,
             SortByName: 'RequestDescription'
@@ -512,7 +513,7 @@ export class CustomsRequestsSheetsComponent
             FieldName: 'CustomFileNo',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.CustomsRequestsSheet.F.CustomFileNo"),
-            Styles: { width: '100px' },
+            Styles: this.entityArgs.IsFromStandAloneScreen?{ width: '85px' }: { width: '100px' }, 
             IsCustomTemplate: true,
 
             ServerSideSortable: true,
@@ -522,7 +523,7 @@ export class CustomsRequestsSheetsComponent
             FieldName: 'RequestStatusName',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.CustomsRequestsSheet.F.RequestStatusName"),
-            Styles: { width: '100px' },
+            Styles: this.entityArgs.IsFromStandAloneScreen?{ width: '80px' }: { width: '100px' }, 
             IsCustomTemplate: true,
             ServerSideSortable: true,
             SortByName: 'RequestStatusName'
@@ -531,7 +532,7 @@ export class CustomsRequestsSheetsComponent
             FieldName: 'RequestCreateDate',
             DataTypeCode: 'Date',
             Display: TextCodeTranslator.Translate("Customs.CustomsRequestsSheet.F.RequestCreateDate"),
-            Styles: { width: '160px' },
+            Styles: this.entityArgs.IsFromStandAloneScreen?{ width: '120px' }: { width: '160px' }, 
             IsCustomTemplate: true,
             HtmlListComponentName: 'CustomsRequestsSheetsListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CustomsRequestsSheetsListTemplate',
@@ -544,7 +545,7 @@ export class CustomsRequestsSheetsComponent
             FieldName: 'RequestOwnerName',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.CustomsRequestsSheet.F.RequestOwnerName"),
-            Styles: { width: '140px' },
+            Styles: this.entityArgs.IsFromStandAloneScreen?{ width: '65px' }: { width: '140px' }, 
             IsCustomTemplate: true,
             ServerSideSortable: true,
             SortByName: 'RequestOwnerName'
@@ -555,13 +556,14 @@ export class CustomsRequestsSheetsComponent
             FieldName: 'IsDCA',
             DataTypeCode: 'boolean',
             Display: TextCodeTranslator.Translate("Customs.CustomsRequestsSheet.F.IsDCA"),
-            Styles: { width: '50px' },
+            Styles: this.entityArgs.IsFromStandAloneScreen?{ width: '38px' }: { width: '50px' }, 
             IsCustomTemplate: true,
             HtmlListComponentName: 'CustomsRequestsSheetsListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CustomsRequestsSheetsListTemplate',
             ServerSideSortable: true,
             SortByName: 'IsDCA'
         });
+        if(!this.entityArgs.IsFromStandAloneScreen){
         this.columns.push({
             FieldName: 'IsRestored',
             DataTypeCode: 'String',
@@ -573,6 +575,7 @@ export class CustomsRequestsSheetsComponent
             ServerSideSortable: true,
             SortByName: 'IsRestored'
         });
+        }
         this.columns.push({
             FieldName: 'CancleRequest',
             DataTypeCode: 'String',
@@ -608,7 +611,7 @@ export class CustomsRequestsSheetsComponent
             FieldName: 'ReAnalyze',
             DataTypeCode: 'String',
             Display: '',//TextCodeTranslator.Translate("CommunicationLogSteps.O.Log"),
-            Styles: { width: '80px' },
+            Styles: this.entityArgs.IsFromStandAloneScreen?{ width: '70px' }: { width: '80px' }, 
             IsCustomTemplate: true,
             HtmlListComponentName: 'CustomsRequestsSheetsListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CustomsRequestsSheetsListTemplate',
@@ -713,7 +716,7 @@ export class CustomsRequestsSheetsComponent
             //////never tested !!!!!!!- copy from silverlight
             filters.addAdditionalFilter("Id", this.entityArgs.EntityPM.Id, null, null, "Equals", false, false, false, "string");
         }
-        else if (objectTableName === "Customs.ExportStorage") {
+        else if (objectTableName === "Customs.ExportStorage" || (objectTableName === "Customs.CertificateOfOrigin" && !AppTool.IsNullOrEmpty(this.entityArgs.EntityPM.Id))) {
             
             filters.addAdditionalFilter("ObjectTableId2", objectTableId1, null, null, "Equals", false, false, false, "string");
             let EntityId2 = this.entityArgs.EntityPM.Id;

@@ -1,0 +1,113 @@
+<style>
+    .FlipImgHoriz {
+        transform: rotate(180deg);
+    }
+
+    .DeleteIconButton {
+        display: none;
+    }
+
+    .TapagNumberListItem:hover:not(:first-child) .DeleteIconButton {
+        display: block !important;
+    }
+</style>
+
+
+<table>
+
+    <tr>
+        <td colspan="4">
+            <div class="FillParent CurvedArea">
+                <table>
+                    <tr>
+                        <td style="width: 100px">
+                            <div class="FillParent AppLeftMenuBackgroundRTL">
+                                <table>
+                                    <tr style="height:5px;">
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="vertical-align: top;">
+                                            <ul>
+                                                <li class="DefaultMenuItem" *ngFor="let item of TabsItemsSource"
+                                                    (click)="SelectedTabCode = item.code"
+                                                    [class.SelectedMenuItem]="item.code === SelectedTabCode"
+                                                    [style.text-align]='right'>
+                                                    <div
+                                                        style="position:absolute; top:0; bottom:0; margin:auto; height: 22px; line-height: 22px; right: 5px; padding-left: 5px;">
+                                                        {{item.textCode | TextCodeTranslationPipe}}</div>
+                                                    <img *ngIf="SelectedTabCode == item.code"
+                                                        class="LeftCenter FlipImgHoriz"
+                                                        src="./Images/SelectedMenuArrow.png"
+                                                        style="margin-right: -1px;" />
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+
+                        <td>
+                            <div class="FillParent">
+                                <div class="ScrollViewer">
+                                    <div class="ScrollContent">
+                                        <div class="FillParent" style="padding:7px;">
+
+                                            <!-- GENERAL -->
+                                            <div class="MediaStretch" [hidden]="SelectedTabCode != 'GENERAL'">
+                                                <div LocationDirective Code="GENERAL"></div>
+                                            </div>
+                                            <!-- MOREDATA -->
+                                            <div class="MediaStretch" [hidden]="SelectedTabCode != 'MOREDATA'">
+                                                <div LocationDirective Code="MOREDATA"></div>
+                                            </div>
+                                            <!-- REQUESTSHEET -->
+                                            <div class="MediaStretch" [hidden]="SelectedTabCode != 'REQUESTSHEET'">
+                                                <div LocationDirective Code="REQUESTSHEET"></div>
+                                            </div>
+                                            <!-- ANSWERTOCERTIFICATE -->
+                                            <div class="MediaStretch"
+                                                [hidden]="SelectedTabCode != 'ANSWERTOCERTIFICATE'">
+                                                <div LocationDirective Code="ANSWERTOCERTIFICATE"></div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+        </td>
+    </tr>
+
+    <tr style="height: 40px;">
+        <td>
+            <div></div>
+        </td>
+        <td style="width: 240px;">
+            <div style="display: flex; align-items: flex-end; justify-content: space-around;">                
+                <div style="width: 57px;vertical-align: bottom;">
+                    <button class="Button"
+                    (click)="CancelButtonClicked()">{{'Customs.General.B.Cancel'  |TextCodeTranslationPipe}}</button>
+                </div>
+                <div style="width: 57px;vertical-align: bottom;">
+                    <button class="RedButton" (click)="SaveAndSendClick()"  [disabled]="IsDisplayOnly">{{'General.B.Save' | TextCodeTranslationPipe}}</button>
+                </div>
+                
+                <div style="width: 110px;vertical-align: bottom;">
+                    <custom-send-options [IsDisabled]="IsDisplayOnly" [AvoidDoubleClick]="true" #MyCustomSendOptionsComponent (SendButtonClicked)="SaveAndSendClick($event)">
+                    </custom-send-options>
+                </div>
+                
+            </div>
+        </td>
+
+    </tr>
+</table>

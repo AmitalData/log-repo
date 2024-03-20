@@ -66,7 +66,17 @@
     <Compile Include="Contracts\SendDeclarationChecksResult.cs" />
     <Compile Include="Contracts\UnifreightGenericService.cs" />
     <Compile Include="EntityPMs\CargoIdentifireTypePM.cs" />
+    <Compile Include="EntityPMs\CertificateOfOriginMandatoryFieldsPM.cs" />
+    <Compile Include="EntityPMs\CertificateOfOriginStatusCodeEnumPM.cs" />
     <Compile Include="EntityPMs\ConfirmationTypePM.cs" />
+    <Compile Include="EntityPMs\Generated\CertificateOfOriginInvoicePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CertificateOfOriginItemPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CertificateOfOriginMandatoryFieldsPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CertificateOfOriginPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CertificateOfOriginStatusCodeEnumPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CertificateOfOriginTypeCodeEnumPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\OriginCriterionPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\RequestReasonCodeEnumPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\RequestToAdvanceAQueuePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ConfirmationNumberTokenLogPM.Generated.cs" />
     <Compile Include="EntityPMs\InternalBorderSiteTypePM.cs" />
@@ -173,6 +183,7 @@
     <Compile Include="EntityPMs\IncotemrsFileValidationPM.cs" />
     <Compile Include="EntityPMs\NDMessageActionCodePM.cs" />
     <Compile Include="EntityPMs\ModificationAndDiscountTypePM.cs" />
+    <Compile Include="EntityPMs\CertificateOfOriginTypeCodeEnumPM.cs" />
     <Compile Include="EntityPMs\PhysicalCheckPMRequest.cs" />
     <Compile Include="EntityPMs\CityPM.cs" />
     <Compile Include="EntityPMs\ClaimsRelatedEntityPM.cs" />
@@ -534,6 +545,7 @@
     <Compile Include="EntityPMs\SupplierInvoicePM.cs" />
     <Compile Include="EntityPMs\TapagConnectionTablePM.cs" />
     <Compile Include="EntityPMs\ItemGovernmentProcedureTypePM.cs" />
+    <Compile Include="EntityPMs\OriginCriterionPM.cs" />
     <Compile Include="EntityPMs\TradeAgreementPM.cs" />
     <Compile Include="EntityPMs\UIMessagePM.cs" />
     <Compile Include="EntityPMs\ValidCustomsItemPM.cs" />

@@ -50,6 +50,12 @@ namespace Logitude.Customs.Data
 		 IDbSet<CargoStatus> CargoStatuses { get; }
 		 IDbSet<CargoType> CargoTypes { get; }
 		 IDbSet<CertificateExemptionType> CertificateExemptionTypes { get; }
+		 IDbSet<CertificateOfOrigin> CertificateOfOrigins { get; }
+		 IDbSet<CertificateOfOriginInvoice> CertificateOfOriginInvoices { get; }
+		 IDbSet<CertificateOfOriginItem> CertificateOfOriginItems { get; }
+		 IDbSet<CertificateOfOriginMandatoryFields> CertificateOfOriginMandatoryFieldss { get; }
+		 IDbSet<CertificateOfOriginStatusCodeEnum> CertificateOfOriginStatusCodeEnums { get; }
+		 IDbSet<CertificateOfOriginTypeCodeEnum> CertificateOfOriginTypeCodeEnums { get; }
 		 IDbSet<CertificatesStatus> CertificatesStatuses { get; }
 		 IDbSet<CheckEntityType> CheckEntityTypes { get; }
 		 IDbSet<CheckEssenceLookup> CheckEssenceLookups { get; }
@@ -290,6 +296,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<OcrDocument> OcrDocuments { get; }
 		 IDbSet<OcrStatus> OcrStatuses { get; }
 		 IDbSet<OrganizationUnitType> OrganizationUnitTypes { get; }
+		 IDbSet<OriginCriterion> OriginCriterions { get; }
 		 IDbSet<PackageMeasureQualifier> PackageMeasureQualifiers { get; }
 		 IDbSet<PackingType> PackingTypes { get; }
 		 IDbSet<ParagraphType> ParagraphTypes { get; }
@@ -337,6 +344,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<RefundCustomerActivityType> RefundCustomerActivityTypes { get; }
 		 IDbSet<RegisteredWarehouseSiteType> RegisteredWarehouseSiteTypes { get; }
 		 IDbSet<ReleaseMessageType> ReleaseMessageTypes { get; }
+		 IDbSet<RequestReasonCodeEnum> RequestReasonCodeEnums { get; }
 		 IDbSet<RequestStatus> RequestStatuses { get; }
 		 IDbSet<RequestToAdvanceAQueue> RequestToAdvanceAQueues { get; }
 		 IDbSet<RequestType> RequestTypes { get; }

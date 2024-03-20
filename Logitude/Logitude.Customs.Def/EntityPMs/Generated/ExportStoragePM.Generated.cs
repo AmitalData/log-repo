@@ -1009,6 +1009,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string containerTypeWCO ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ContainerTypeWCO  
+	   {
+	    
+	     get
+		{
+		   return containerTypeWCO;
+		 }
+		 set
+		 {
+		   if(containerTypeWCO != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContainerTypeWCO",OldValue=containerTypeWCO,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   containerTypeWCO=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

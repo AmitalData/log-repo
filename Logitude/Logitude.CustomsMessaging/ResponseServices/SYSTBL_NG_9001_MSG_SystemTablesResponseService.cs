@@ -1,5 +1,6 @@
 ﻿using Logitude.AmitalMessaging.Utils;
 using Logitude.BL.Helpers;
+using Logitude.Customs.BL.CloseTables;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.Customs.BL.Messaging.Customs;
@@ -12,6 +13,7 @@ using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.Common.ResponseData;
 using Logitude.CustomsMessaging.Helpers;
 using Logitude.CustomsMessaging.Helpers.ClosedTable;
+using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
@@ -601,7 +603,170 @@ ID List :
                                                         int.TryParse(dr["CustomsBookTypeID"]?.ToString(), out int val);
                                                         newExt.MyTradeAgreement.CustomsBookTypeID = val;
                                                     }
+                                                    if (dr["CountryGroupID"].ToString() != null)
+                                                    {
+                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+                                                        int.TryParse(dr["CountryGroupID"]?.ToString(), out int val);
+                                                        newExt.MyTradeAgreement.CountryGroupID = val;
+                                                    }
 
+                                                    extList.Add(newExt);
+                                                });
+                        return extList;
+
+                    }
+                case "1977":
+                case "OriginCriterion":
+                    {
+                        var extList = new List<SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt>();
+                        Logitude.CustomsMessaging.Helpers.ClosedTable.
+                                                    ManipulateCustomResponse.
+                                                DataSetToTableData(customResponse,
+                                                (newResponseTableData, dr) =>
+                                                {
+                                                    var newExt = SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt.CreateNew(newResponseTableData);
+                                                    newExt.MyOriginCriterion = new Helpers.ClosedTable.OriginCriterion();
+
+                                                    if (!writeHighlight)
+                                                    {
+                                                        writeHighlight = true;
+                                                    }
+                                                    if (dr["CertificateOfOriginTypeCodeID"].ToString() != null)
+                                                    {
+                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+                                                        int.TryParse(dr["CertificateOfOriginTypeCodeID"]?.ToString(), out int val);
+                                                        newExt.MyOriginCriterion.CertificateOfOriginTypeCodeID = val;
+                                                    }
+                                                    if (dr["OriginCriterionCode"].ToString() != null)
+                                                    {
+                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+                                                        newExt.MyOriginCriterion.OriginCriterionCode = dr["OriginCriterionCode"]?.ToString();
+                                                    }
+
+                                                    extList.Add(newExt);
+                                                });
+                        return extList;
+
+                    }
+                case "1958":
+                case "CertificateOfOriginTypeCodeEnum":
+                    {
+                        var extList = new List<SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt>();
+                        Logitude.CustomsMessaging.Helpers.ClosedTable.
+                                                    ManipulateCustomResponse.
+                                                DataSetToTableData(customResponse,
+                                                (newResponseTableData, dr) =>
+                                                {
+                                                    var newExt = SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt.CreateNew(newResponseTableData);
+                                                    newExt.MyCertificateOfOriginTypeCodeEnum = new Helpers.ClosedTable.CertificateOfOriginTypeCodeEnum();
+
+                                                    if (!writeHighlight)
+                                                    {
+                                                        writeHighlight = true;
+                                                    }
+                                                    if (dr["IsCustomApprovalRequired"] != DBNull.Value && dr["IsCustomApprovalRequired"] != null)
+                                                    {
+                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+                                                        newExt.MyCertificateOfOriginTypeCodeEnum.IsCustomApprovalRequired = Convert.ToBoolean(dr["IsCustomApprovalRequired"]);
+                                                    }
+
+                                                    if (dr["IsCriterionMandatory"] != DBNull.Value && dr["IsCriterionMandatory"] != null)
+                                                    {
+                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+                                                        newExt.MyCertificateOfOriginTypeCodeEnum.IsCriterionMandatory = Convert.ToBoolean(dr["IsCriterionMandatory"]);
+                                                    }
+
+                                                    extList.Add(newExt);
+                                                });
+                        return extList;
+
+                    }    
+                case "239684":
+                case "CertificateOfOriginMandatoryFields":
+                    {
+                        var extList = new List<SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt>();
+                        Logitude.CustomsMessaging.Helpers.ClosedTable.
+                                                    ManipulateCustomResponse.
+                                                DataSetToTableData(customResponse,
+                                                (newResponseTableData, dr) =>
+                                                {
+                                                    var newExt = SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt.CreateNew(newResponseTableData);
+                                                    newExt.MyCertificateOfOriginMandatoryFields = new Helpers.ClosedTable.CertificateOfOriginMandatoryFields();
+
+                                                    if (!writeHighlight)
+                                                    {
+                                                        writeHighlight = true;
+                                                    }
+                                                    if (dr["CertificateOfOriginTypeCodeID"].ToString() != null)
+                                                    {
+                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+                                                        int d;
+                                                        if (dr["CertificateOfOriginTypeCodeID"] != DBNull.Value && int.TryParse(dr["CertificateOfOriginTypeCodeID"].ToString(), out d))
+                                                        {
+                                                            newExt.MyCertificateOfOriginMandatoryFields.CertificateOfOriginTypeCodeID = d;
+                                                        }
+                                                    } 
+                                                    if (dr["CertificateOfOriginTypeCodeName"].ToString() != null)
+                                                    {
+                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+                                                        newExt.MyCertificateOfOriginMandatoryFields.CertificateOfOriginTypeName = dr["CertificateOfOriginTypeCodeName"]?.ToString();
+                                                    }
+                                                    if (dr["ConstraintTypeEnumID"] != DBNull.Value && dr["ConstraintTypeEnumID"] != null)
+                                                    {
+                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+                                                        string constraintTypeValue = dr["ConstraintTypeEnumID"]?.ToString();
+                                                        if(constraintTypeValue != null) 
+                                                        {
+                                                            newExt.MyCertificateOfOriginMandatoryFields.IsMandatory = constraintTypeValue == "1" ? true : false;
+                                                        }
+                                                    }
+
+
+                                                    //if (dr["Location"].ToString() != null)
+                                                    //{
+                                                    //    LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+                                                    //    newExt.MyCertificateOfOriginMandatoryFields.Location = (int)dr["ID"];
+                                                    //}
+                                                    //if (dr["LastUpdatedDate"].ToString() != null)
+                                                    //{
+                                                    //    LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+                                                    //    newExt.MyCertificateOfOriginMandatoryFields.LastUpdatedDate = (DateTime)dr["LastUpdatedDate"];
+                                                    //}
+
+                                                    extList.Add(newExt);
+                                                });
+                        return extList;
+
+                    } 
+                case "1957":
+                case "CertificateOfOriginStatusCodeEnum":
+                    {
+                        var extList = new List<SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt>();
+                        Logitude.CustomsMessaging.Helpers.ClosedTable.
+                                                    ManipulateCustomResponse.
+                                                DataSetToTableData(customResponse,
+                                                (newResponseTableData, dr) =>
+                                                {
+                                                    var newExt = SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt.CreateNew(newResponseTableData);
+                                                    newExt.MyCertificateOfOriginStatusCodeEnum = new Helpers.ClosedTable.CertificateOfOriginStatusCodeEnum();
+
+                                                    if (!writeHighlight)
+                                                    {
+                                                        writeHighlight = true;
+                                                    }
+                                                    if(dr["RecordEditable"].ToString() != null)
+                                                    {
+                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+
+                                                        // Task #96160 add close custom table 
+                                                        
+                                                        int.TryParse(dr["ID"]?.ToString(), out int statusId);
+
+                                                        if (statusId == 4 || statusId == 5 || statusId == 6 || statusId == 8) 
+                                                            newExt.MyCertificateOfOriginStatusCodeEnum.RecordEditable = true;
+                                                        else
+                                                            newExt.MyCertificateOfOriginStatusCodeEnum.RecordEditable = false;
+                                                    }
                                                     extList.Add(newExt);
                                                 });
                         return extList;

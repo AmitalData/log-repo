@@ -966,6 +966,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     CreatedByPartner = entityPOCO.CreatedByPartner,
                     StorageFreeDays = entityPOCO.StorageFreeDays,
                     BillToId = entityPOCO.BillToId,
+                    Address1 = entityPOCO.Address1,
+                    Address2 = entityPOCO.Address2
                 };
 
                 if (entityPOCO.Customer != null)

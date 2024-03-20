@@ -410,6 +410,82 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
                         );
                     }
                     break;
+                case "1977":
+                case "OriginCriterion":
+                    {
+                        closedTableService = new Update1977OriginCriterionTypeView(customContext, entitySystemTables,
+                          (mycustomContext) =>
+                          {
+                              return new
+                                  OriginCriterionUpdateService(mycustomContext, new Dictionary<string, IContext>(), tenant);
+                          },
+                        (mycustomContext) =>
+                        {
+                            var qs = new OriginCriterionQueryService(mycustomContext);
+                            return qs as ICanGetAllClosedTable<OriginCriterionPM>;
+                        }
+                        , tenant
+                        , false
+                        );
+                    }
+                    break;
+                case "1958":
+                case "CertificateOfOriginTypeCodeEnum":
+                    {
+                        closedTableService = new Update1958CertificateOfOriginTypeCodeEnumTypeView(customContext, entitySystemTables,
+                          (mycustomContext) =>
+                          {
+                              return new
+                                  CertificateOfOriginTypeCodeEnumUpdateService(mycustomContext, new Dictionary<string, IContext>(), tenant);
+                          },
+                        (mycustomContext) =>
+                        {
+                            var qs = new CertificateOfOriginTypeCodeEnumQueryService(mycustomContext);
+                            return qs as ICanGetAllClosedTable<CertificateOfOriginTypeCodeEnumPM>;
+                        }
+                        , tenant
+                        , false
+                        );
+                    }
+                    break;
+                case "1957":
+                case "CertificateOfOriginStatusCodeEnum":
+                    {
+                        closedTableService = new Update1957CertificateOfOriginStatusCodeEnumTypeView(customContext, entitySystemTables,
+                          (mycustomContext) =>
+                          {
+                              return new
+                                  CertificateOfOriginStatusCodeEnumUpdateService(mycustomContext, new Dictionary<string, IContext>(), tenant);
+                          },
+                        (mycustomContext) =>
+                        {
+                            var qs = new CertificateOfOriginStatusCodeEnumQueryService(mycustomContext);
+                            return qs as ICanGetAllClosedTable<CertificateOfOriginStatusCodeEnumPM>;
+                        }
+                        , tenant
+                        , false
+                        );
+                    }
+                    break;
+                case "239684":
+                case "CertificateOfOriginMandatoryFields":
+                    {
+                        closedTableService = new Update2095CertificateOfOriginMandatoryFieldsTypeView(customContext, entitySystemTables,
+                          (mycustomContext) =>
+                          {
+                              return new
+                                  CertificateOfOriginMandatoryFieldsUpdateService(mycustomContext, new Dictionary<string, IContext>(), tenant);
+                          },
+                        (mycustomContext) =>
+                        {
+                            var qs = new CertificateOfOriginMandatoryFieldsQueryService(mycustomContext);
+                            return qs as ICanGetAllClosedTable<CertificateOfOriginMandatoryFieldsPM>;
+                        }
+                        , tenant
+                        , false
+                        );
+                    }
+                    break;
                 case "1422":
                 case "ItemGovernmentProcedureType":
                     {

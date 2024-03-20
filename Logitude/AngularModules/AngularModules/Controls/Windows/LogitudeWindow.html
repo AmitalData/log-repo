@@ -67,6 +67,10 @@
         user-select: none;
     }
 
+    .userSelectEnable{
+        user-select: text;
+    }
+
     .CancelControl {
         height: 20px;
         line-height: 20px;
@@ -119,7 +123,7 @@
                                     <td *ngIf="!IsShowAutomationDelayTitle">
                                         <table>
                                             <tr>
-                                                <td style="width: 1px; font-size: 18px;">
+                                                <td class="userSelectEnable" style="width: 1px; font-size: 18px;">
                                                     {{Title}}
                                                 </td>
 
@@ -133,6 +137,10 @@
 
                                                 <td>
                                                     <div></div>
+                                                </td>
+                                                
+                                                <td *ngIf="SubTitle" [ngClass]="{'userSelectEnable': SubTitle}" style="width: 1px; font-size: 18px;">
+                                                    {{SubTitle}}
                                                 </td>
                                             </tr>
                                         </table>

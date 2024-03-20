@@ -59,6 +59,7 @@ using Logitude.Customs.BL.Helpers;
 using Logitude.Customs.Data.EntityPOCOs;
 using System.Data;
 using Org.BouncyCastle.Bcpg.Sig;
+using Logitude.Customs.Data.EntityMapping;
 
 namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 {
@@ -2542,7 +2543,45 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-    }
+		public HttpResponseMessage PostNewAmendmentDeclarationWithSend(GenericRequestParams requestParams)
+		{
+
+			try
+			{
+				string token = HttpContext.Current.Request.Headers["Token"];
+				AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                PC_NG_2280_MSG01_CertificateOfOriginRequestResponseService _pc_NG_2280_MSG01_CertificateOfOriginRequestResponseService = new PC_NG_2280_MSG01_CertificateOfOriginRequestResponseService();
+				DF_NG_2751_MSG10000_ExportDeclarationRequestService _dF_MSG10000_ExportDeclarationRequestService = new DF_NG_2751_MSG10000_ExportDeclarationRequestService();
+
+				ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
+				CertificateOfOriginQueryService certificateOfOriginQuery = new CertificateOfOriginQueryService(MyContext);
+				CertificateOfOriginPM certificateOfOriginPM = certificateOfOriginQuery.GetSingle(requestParams.LoggingEntityId2, true, false);
+
+
+				var request = _dF_MSG10000_ExportDeclarationRequestService.GetRequest(requestParams);
+				string error = "";
+				DF_NG_2757_MSG10004_ExportAmendmentDeclarationResponseService dF_NG_2757_MSG10004_ExportFixedDeclarationResponseService = new DF_NG_2757_MSG10004_ExportAmendmentDeclarationResponseService();
+
+				DeclarationPM declarationPM = dF_NG_2757_MSG10004_ExportFixedDeclarationResponseService.MapResponseToDeclaration(request.Declaration, requestParams.Tenant, true, requestParams.AppicationId, out error, user: requestParams.LoggingUserId, isCopy: false, from2280:true);
+
+
+				if (declarationPM != null) { 
+                    
+					bool IsUpdated = _pc_NG_2280_MSG01_CertificateOfOriginRequestResponseService.UpdateCooNumberInDeclaration(declarationPM.Id, certificateOfOriginPM);
+
+					INF_MSG_GenericResponseData responseData = _pc_NG_2280_MSG01_CertificateOfOriginRequestResponseService.SendAmendmentDeclaration(declarationPM);
+					
+				   return Request.CreateResponse(HttpStatusCode.OK, declarationPM);
+				}
+
+				return Request.CreateResponse(HttpStatusCode.BadRequest, error);		
+			}
+			catch (Exception ex)
+			{
+				return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+			}
+		}
+	}
 
     internal class CustomsPartnersItemCRList
     {

@@ -29,7 +29,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                        LocalName = a.LocalName,
                                                        SearchFields = a.SearchFields,
                                                        Inactive = a.Inactive,
-                                                        CustomsBookTypeID = a.CustomsBookTypeID
+                                                        CustomsBookTypeID = a.CustomsBookTypeID,
+                                                        CountryGroupID = a.CountryGroupID,
                                                     });
             return query;
 		}

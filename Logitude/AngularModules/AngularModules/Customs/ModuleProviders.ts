@@ -175,6 +175,10 @@ import { TapagListService } from './Services/StandardLists/TapagListService';
 import { TapagTypeListService } from './Services/StandardLists/TapagTypeListService';
 import { TermsOfSaleTypeListService } from './Services/StandardLists/TermsOfSaleTypeListService';
 import { TradeAgreementListService } from './Services/StandardLists/TradeAgreementListService';
+import { RequestReasonCodeEnumListService } from './Services/StandardLists/RequestReasonCodeEnumListService';
+import { OriginCriterionListService } from './Services/StandardLists/OriginCriterionListService';
+import { CertificateOfOriginTypeCodeEnumListService   } from './Services/StandardLists/CertificateOfOriginTypeCodeEnumListService';
+import { CertificateOfOriginStatusCodeEnumListService  } from './Services/StandardLists/CertificateOfOriginStatusCodeEnumListService';
 import { TradeLevyExamptTypeListService } from './Services/StandardLists/TradeLevyExamptTypeListService';
 import { UnloadingSiteTypeListService } from './Services/StandardLists/UnloadingSiteTypeListService';
 import { ValidCustomsItemListService } from './Services/StandardLists/ValidCustomsItemListService';
@@ -261,6 +265,8 @@ import { ServersNameListService } from './Services/StandardLists/ServersNameList
 import { PhysicalCheckCodeListService } from './Services/StandardLists/PhysicalCheckCodeListService';
 import { SchedulerParamListService } from './Services/StandardLists/SchedulerParamListService';
 import { VendorCurrencyListService } from './Services/StandardLists/VendorCurrencyListService';
+import { CertificateOfOriginListService } from './Services/StandardLists/CertificateOfOriginListService';
+import { CertificateOfOriginMandatoryFieldsListService } from './Services/StandardLists/CertificateOfOriginMandatoryFieldsListService';
 
 
 //#endregion
@@ -276,6 +282,7 @@ import { CustomsDocumentsTicketPMService } from './Services/StandardPMs/CustomsD
 import { CustomsExchangeRatePMService } from './Services/StandardPMs/CustomsExchangeRatePMService';
 import { CustomsHouseTypeAdditionalPMService } from './Services/StandardPMs/CustomsHouseTypeAdditionalPMService';
 import { InternalBorderSiteTypePMService } from './Services/StandardPMs/InternalBorderSiteTypePMService';
+import { CertificateOfOriginMandatoryFieldsPMService } from './Services/StandardPMs/CertificateOfOriginMandatoryFieldsPMService';
 import { CustomsHouseTypePMService } from './Services/StandardPMs/CustomsHouseTypePMService';
 import { CustomsItemPMService } from './Services/StandardPMs/CustomsItemPMService';
 import { CustomsPartnersItemPMService } from './Services/StandardPMs/CustomsPartnersItemPMService';
@@ -637,11 +644,17 @@ export class ModuleProviders {
             case "StorageMessageTypeListService": { myResult = new StorageMessageTypeListService(); break; }
             case "SubCountryListService": { myResult = new SubCountryListService(); break; }
             case "SupplierInvoiceListService": { myResult = new SupplierInvoiceListService(); break; }
+            case "CertificateOfOriginListService": { myResult = new CertificateOfOriginListService(); break; }
+            case "CertificateOfOriginMandatoryFieldsListService": { myResult = new CertificateOfOriginMandatoryFieldsListService(); break; }
             case "TapagConnectionTableListService": { myResult = new TapagConnectionTableListService(); break; }
             case "TapagListService": { myResult = new TapagListService(); break; }
             case "TapagTypeListService": { myResult = new TapagTypeListService(); break; }
             case "TermsOfSaleTypeListService": { myResult = new TermsOfSaleTypeListService(); break; }
             case "TradeAgreementListService": { myResult = new TradeAgreementListService(); break; }
+            case "RequestReasonCodeEnumListService": { myResult = new RequestReasonCodeEnumListService(); break; }
+            case "OriginCriterionListService": { myResult = new OriginCriterionListService(); break; }
+            case "CertificateOfOriginTypeCodeEnumListService": { myResult = new CertificateOfOriginTypeCodeEnumListService(); break; }
+            case "CertificateOfOriginStatusCodeEnumListService": { myResult = new CertificateOfOriginStatusCodeEnumListService(); break; }
             case "TradeLevyExamptTypeListService": { myResult = new TradeLevyExamptTypeListService(); break; }
             case "UnloadingSiteTypeListService": { myResult = new UnloadingSiteTypeListService(); break; }
             case "ValidCustomsItemListService": { myResult = new ValidCustomsItemListService(); break; }
@@ -781,6 +794,7 @@ export class ModuleProviders {
             case "CustomsHouseTypeAdditionalPMService": { myResult = new CustomsHouseTypeAdditionalPMService(); break; }
             case "CustomsHouseTypePMService": { myResult = new CustomsHouseTypePMService(); break; }
             case "InternalBorderSiteTypePMService": { myResult = new InternalBorderSiteTypePMService(); break; }
+            case "CertificateOfOriginMandatoryFieldsPMService": { myResult = new CertificateOfOriginMandatoryFieldsPMService(); break; }
             case "CustomsItemPMService": { myResult = new CustomsItemPMService(); break; }
             case "CustomsPartnersItemPMService": { myResult = new CustomsPartnersItemPMService(); break; }
             case "CustomsRequestsSheetPMService": { myResult = new CustomsRequestsSheetPMService(); break; }

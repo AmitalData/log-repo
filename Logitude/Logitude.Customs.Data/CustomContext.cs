@@ -134,6 +134,18 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new CertificateExemptionTypeMap());
 	
+            modelBuilder.Configurations.Add(new CertificateOfOriginMap());
+	
+            modelBuilder.Configurations.Add(new CertificateOfOriginInvoiceMap());
+	
+            modelBuilder.Configurations.Add(new CertificateOfOriginItemMap());
+	
+            modelBuilder.Configurations.Add(new CertificateOfOriginMandatoryFieldsMap());
+	
+            modelBuilder.Configurations.Add(new CertificateOfOriginStatusCodeEnumMap());
+	
+            modelBuilder.Configurations.Add(new CertificateOfOriginTypeCodeEnumMap());
+	
             modelBuilder.Configurations.Add(new CertificatesStatusMap());
 	
             modelBuilder.Configurations.Add(new CheckEntityTypeMap());
@@ -614,6 +626,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new OrganizationUnitTypeMap());
 	
+            modelBuilder.Configurations.Add(new OriginCriterionMap());
+	
             modelBuilder.Configurations.Add(new PackageMeasureQualifierMap());
 	
             modelBuilder.Configurations.Add(new PackingTypeMap());
@@ -707,6 +721,8 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new RegisteredWarehouseSiteTypeMap());
 	
             modelBuilder.Configurations.Add(new ReleaseMessageTypeMap());
+	
+            modelBuilder.Configurations.Add(new RequestReasonCodeEnumMap());
 	
             modelBuilder.Configurations.Add(new RequestStatusMap());
 	
@@ -882,6 +898,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new VendorTypeMap());
 	
+				
+			modelBuilder.Entity<CertificateOfOriginItem>().Property(x => x.Weight).HasPrecision(18, 2);
 				
 			modelBuilder.Entity<ClaimImporterDeclarsPage3B>().Property(x => x.SaleAmountAfter).HasPrecision(16, 2);
 				
@@ -1586,6 +1604,42 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<CertificateExemptionType> CertificateExemptionTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CertificateOfOrigin> CertificateOfOrigins 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CertificateOfOriginInvoice> CertificateOfOriginInvoices 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CertificateOfOriginItem> CertificateOfOriginItems 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CertificateOfOriginMandatoryFields> CertificateOfOriginMandatoryFieldss 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CertificateOfOriginStatusCodeEnum> CertificateOfOriginStatusCodeEnums 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CertificateOfOriginTypeCodeEnum> CertificateOfOriginTypeCodeEnums 
 	 {
 	      get; set;
 	 
@@ -3031,6 +3085,12 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<OriginCriterion> OriginCriterions 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<PackageMeasureQualifier> PackageMeasureQualifiers 
 	 {
 	      get; set;
@@ -3308,6 +3368,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<ReleaseMessageType> ReleaseMessageTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<RequestReasonCodeEnum> RequestReasonCodeEnums 
 	 {
 	      get; set;
 	 

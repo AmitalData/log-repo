@@ -1,0 +1,279 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ServiceModel.DomainServices.Server; 
+using Logitude.Server.Tools; 
+using System.Runtime.Serialization;
+using Simplog.Server.Infrastructure.DataContracts; 
+using Logitude.Customs.Def.Validators;
+  
+namespace Logitude.Customs.Def.EntityPMs
+{
+   [CustomValidation(typeof(CustomsClassLevelValidator), "ValidateClass")]
+   [DataContract]
+   public partial class CertificateOfOriginInvoicePM : EntityPM
+   {
+   	  private string id ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Id  
+	   {
+	    
+	     get
+		{
+		   return id;
+		 }
+		 set
+		 {
+		   if(id != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Id",OldValue=id,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   id=value;
+		   }
+			
+		 }
+	   }
+	  private int tenant ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int Tenant  
+	   {
+	    
+	     get
+		{
+		   return tenant;
+		 }
+		 set
+		 {
+		   if(tenant != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Tenant",OldValue=tenant,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   tenant=value;
+		   }
+			
+		 }
+	   }
+	  private string searchFields ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string SearchFields  
+	   {
+	    
+	     get
+		{
+		   return searchFields;
+		 }
+		 set
+		 {
+		   if(searchFields != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SearchFields",OldValue=searchFields,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   searchFields=value;
+		   }
+			
+		 }
+	   }
+	  private string certificateOfOriginId ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CertificateOfOriginId  
+	   {
+	    
+	     get
+		{
+		   return certificateOfOriginId;
+		 }
+		 set
+		 {
+		   if(certificateOfOriginId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CertificateOfOriginId",OldValue=certificateOfOriginId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   certificateOfOriginId=value;
+		   }
+			
+		 }
+	   }
+	  private int? invoicesIdUry ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? InvoicesIdUry  
+	   {
+	    
+	     get
+		{
+		   return invoicesIdUry;
+		 }
+		 set
+		 {
+		   if(invoicesIdUry != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InvoicesIdUry",OldValue=invoicesIdUry,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   invoicesIdUry=value;
+		   }
+			
+		 }
+	   }
+	  private string invoiceNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string InvoiceNumber  
+	   {
+	    
+	     get
+		{
+		   return invoiceNumber;
+		 }
+		 set
+		 {
+		   if(invoiceNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InvoiceNumber",OldValue=invoiceNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   invoiceNumber=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? invoiceDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? InvoiceDate  
+	   {
+	    
+	     get
+		{
+		   return invoiceDate;
+		 }
+		 set
+		 {
+		   if(invoiceDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InvoiceDate",OldValue=invoiceDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   invoiceDate=value;
+		   }
+			
+		 }
+	   }
+	  private string invoiceSum ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string InvoiceSum  
+	   {
+	    
+	     get
+		{
+		   return invoiceSum;
+		 }
+		 set
+		 {
+		   if(invoiceSum != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InvoiceSum",OldValue=invoiceSum,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   invoiceSum=value;
+		   }
+			
+		 }
+	   }
+	  private string currencyTypeCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CurrencyTypeCode  
+	   {
+	    
+	     get
+		{
+		   return currencyTypeCode;
+		 }
+		 set
+		 {
+		   if(currencyTypeCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CurrencyTypeCode",OldValue=currencyTypeCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   currencyTypeCode=value;
+		   }
+			
+		 }
+	   }
+	  private string descriptionOfInvoice ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DescriptionOfInvoice  
+	   {
+	    
+	     get
+		{
+		   return descriptionOfInvoice;
+		 }
+		 set
+		 {
+		   if(descriptionOfInvoice != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DescriptionOfInvoice",OldValue=descriptionOfInvoice,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   descriptionOfInvoice=value;
+		   }
+			
+		 }
+	   }
+	  private bool isInvoicesForPrint ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsInvoicesForPrint  
+	   {
+	    
+	     get
+		{
+		   return isInvoicesForPrint;
+		 }
+		 set
+		 {
+		   if(isInvoicesForPrint != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsInvoicesForPrint",OldValue=isInvoicesForPrint,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isInvoicesForPrint=value;
+		   }
+			
+		 }
+	   }
+   }
+   
+}
+	 

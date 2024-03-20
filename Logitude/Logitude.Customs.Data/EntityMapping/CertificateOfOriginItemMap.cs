@@ -1,0 +1,69 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using System.Data.Entity.ModelConfiguration;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data;
+ 
+namespace Logitude.Customs.Data.EntityMapping
+{
+ 
+    public class CertificateOfOriginItemMap : EntityTypeConfiguration<CertificateOfOriginItem>
+    {
+	    string dbms;
+        public CertificateOfOriginItemMap()
+        { 
+			  this.ToTable("CertificateOfOriginItems", "Customs");
+		
+		    this.HasKey(t => new { t.Id });
+	 
+            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
+
+            this.Property(t => t.SearchFields).HasColumnName("SearchFields").IsMaxLength().IsUnicode(true);
+
+            this.Property(t => t.CertificateOfOriginId).HasColumnName("CertificateOfOriginId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.ItemSerial).HasColumnName("ItemSerial");
+
+            this.Property(t => t.ItemId).HasColumnName("ItemId").HasMaxLength(6).IsUnicode(true);
+
+            this.Property(t => t.OriginCriterionCode).HasColumnName("OriginCriterionCode").HasMaxLength(2).IsUnicode(false);
+
+            this.Property(t => t.MarksAndNumbers).HasColumnName("MarksAndNumbers").HasMaxLength(35).IsUnicode(true);
+
+            this.Property(t => t.PackageQuantity).HasColumnName("PackageQuantity");
+
+            this.Property(t => t.PackageType).HasColumnName("PackageType").HasMaxLength(4).IsUnicode(false);
+
+            dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms == "oracle")
+            {
+              this.Property(t => t.ItemDescription).HasMaxLength(2000);
+			}
+            else
+            {
+              this.Property(t => t.ItemDescription).HasMaxLength(8000);
+			}
+
+
+            this.Property(t => t.ItemDescription).HasColumnName("ItemDescription").IsUnicode(true);
+
+            this.Property(t => t.Weight).HasColumnName("Weight").HasPrecision(18, 2);
+
+            this.Property(t => t.MeasureType).HasColumnName("MeasureType").HasMaxLength(3).IsUnicode(false);
+
+            this.Property(t => t.InvoiceConnect).HasColumnName("InvoiceConnect").HasMaxLength(35).IsUnicode(true);
+
+            this.Property(t => t.ContainerIsoCode).HasColumnName("ContainerIsoCode").HasMaxLength(12).IsUnicode(true);
+        }
+    }
+}
+	 

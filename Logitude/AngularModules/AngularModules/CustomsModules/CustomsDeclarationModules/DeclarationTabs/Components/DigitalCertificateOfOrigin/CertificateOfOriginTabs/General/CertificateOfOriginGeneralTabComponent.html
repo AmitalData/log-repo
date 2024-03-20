@@ -1,0 +1,644 @@
+<style>
+
+</style>
+<table *ngIf="isReady">
+    <tr style="height: 28px;">
+        <td *ngIf="IsDisplayOnly">
+            <div style="width:90%;text-align:center">
+                <div class="DisbleBox">
+                    {{'Customs.CertificateOfOrigin.O.DisplayOnly'| TextCodeTranslationPipe}}
+                </div>
+            </div>
+        </td>
+        <td *ngIf="entityPM.IsChange && entityPM.COONumber != null || ErrorsList?.length > 0">
+            <div *ngIf="ErrorsList?.length > 0">
+                <ValidationSummary  class="StyleMess" [ItemsSource]="ErrorsList" [SingleLine]="true"></ValidationSummary>
+            </div>
+            <div *ngIf="entityPM.IsChange && entityPM.COONumber != null"  style="width:90%;text-align:center">
+                <div class="DisbleBox">
+                    {{'Customs.CertificateOfOrigin.O.IsChange'| TextCodeTranslationPipe}}
+                </div>
+            </div>
+        </td> 
+    </tr>
+    <tr style="height:300px">
+        <td style="vertical-align:top">
+            <div style="vertical-align:top; margin:5px">
+                <!-- Part 1: -->
+                <table style="width:870px">
+                    <!-- First Row -->
+                    <tr class="FieldRow">
+                        <td style="width:130px;">
+                            <LogLabel [ObjectFieldName]="'CooTypeCode'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:180px">
+                            <LogLov [ObjectFieldName]="'CooTypeCode'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"
+                                [LookUpTableName]="'Customs.CertificateOfOriginTypeCodeEnum'"
+                                [SelectedValue]="CooTypeCode" [HideColumns]="true" [CustomizedWidth]="180"></LogLov>
+                        </td>
+                        <td style="width:130px; padding-right: 10px">
+                            <LogLabel [ObjectFieldName]="'RequestReasonCode'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:180px">
+                            <LogLov [ObjectFieldName]="'RequestReasonCode'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext" [LookUpTableName]="'Customs.RequestReasonCodeEnum'"
+                                [SelectedValue]="RequestReasonCode" [HideColumns]="true" [CustomizedWidth]="180"></LogLov>
+                        </td>
+                        <td style="width: 30px;"></td>
+                        <td style="width:130px">
+                            <LogLabel [ObjectFieldName]="'DateOfDeclaration'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:180px">
+                            <LogDatePicker [ObjectFieldName]="'DateOfDeclaration'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                        </td>
+                    </tr>
+
+                    <!-- Second Row -->
+                    <tr class="FieldRow">
+                        <td style="width:130px;">
+                            <LogLabel [ObjectFieldName]="'ExporterName'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:180px">
+                            <LogTextBox [ObjectFieldName]="'ExporterName'" [DataContext]="DataContext"
+                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                        </td>
+                        <td style="width:130px; padding-right: 10px">
+                            <LogLabel [ObjectFieldName]="'ConsigneeName'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:180px">
+                            <LogTextBox [ObjectFieldName]="'ConsigneeName'" [DataContext]="DataContext"
+                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                        </td>
+                        <td style="width: 30px;"></td>
+                        <td style="width:130px">
+                            <LogLabel [ObjectFieldName]="'OriginCountry'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:180px">
+                            <LogLov [ObjectFieldName]="'OriginCountry'" [ObjectTableName]="ObjectTableName"
+                                [SelectedValue]="OriginCountry" [DataContext]="DataContext"
+                                [LookUpTableName]="'Customs.CustomsCountry'" [HideColumns]="true" [CustomizedWidth]="180"></LogLov>
+                        </td>
+                    </tr>
+
+                    <!-- Third Row A -->
+                    <tr class="FieldRow">
+                        <td style="width:130px;" rowspan="2">
+                            <LogLabel [ObjectFieldName]="'ExporterAddress'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:180px;" rowspan="2" class="AddressBox">
+                            <LogTextBox style="width:240px;max-height: 50px;" [IsMultiline]="true"
+                                [ObjectFieldName]="'ExporterAddress'" [HideColumns]="true"
+                                [ObjectTableName]="ObjectTableName" [InputType]="'nText'" [DataContext]="DataContext" [Direction]="'LTR'">
+                            </LogTextBox>
+                        </td>
+                        <td style="width:130px; padding-right: 10px" rowspan="2">
+                            <LogLabel [ObjectFieldName]="'ConsigneeAddress'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:180px" rowspan="2"  class="AddressBox">
+                            <LogTextBox style="width:240px;" [IsMultiline]="true" [ObjectFieldName]="'ConsigneeAddress'"
+                                [HideColumns]="true" [ObjectTableName]="ObjectTableName" [InputType]="'nText'"
+                                [DataContext]="DataContext" [Direction]="'LTR'"></LogTextBox>
+                        </td>
+                        <td style="width: 30px;"></td>
+                        <td style="width:130px" rowspan="1">
+                            <LogLabel [ObjectFieldName]="'OriginGroupOfCountry'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:180px" rowspan="1">
+                            <LogLov [ObjectFieldName]="'OriginGroupOfCountry'" [ObjectTableName]="ObjectTableName"
+                                [SelectedValue]="OriginGroupOfCountry" [DataContext]="DataContext"
+                                [LookUpTableName]="'Customs.CountryGroup'" [HideColumns]="true" [CustomizedWidth]="180"></LogLov>
+                        </td>
+                    </tr>
+                    <!-- Third Row B -->
+                    <tr class="FieldRow">
+                        <td style="width: 30px;"></td>
+                        <td style="width:130px" rowspan="1">
+                            <LogLabel [ObjectFieldName]="'DestinationCountry'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:180px" rowspan="1">
+                            <LogLov [ObjectFieldName]="'DestinationCountry'" [ObjectTableName]="ObjectTableName"
+                                [SelectedValue]="DestinationCountry" [DataContext]="DataContext"
+                                [LookUpTableName]="'Customs.CustomsCountry'" [HideColumns]="true" [CustomizedWidth]="180"></LogLov>
+                        </td>
+                    </tr>
+
+                    <!-- Fourth Row -->
+                    <tr class="FieldRow">
+                        <td style="width:130px">
+                            <LogLabel [ObjectFieldName]="'ExporterCountry'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:180px">
+                            <LogLov [ObjectFieldName]="'ExporterCountry'" [ObjectTableName]="ObjectTableName"
+                                [SelectedValue]="ExporterCountry" [DataContext]="DataContext"
+                                [LookUpTableName]="'Customs.CustomsCountry'" [HideColumns]="true" [CustomizedWidth]="180"></LogLov>
+                        </td>
+                        <td style="width:130px; padding-right: 10px">
+                            <LogLabel [ObjectFieldName]="'ConsigneeCountry'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:180px">
+                            <LogLov [ObjectFieldName]="'ConsigneeCountry'" [ObjectTableName]="ObjectTableName"
+                                [SelectedValue]="ConsigneeCountry" [DataContext]="DataContext"
+                                [LookUpTableName]="'Customs.CustomsCountry'" [HideColumns]="true" [CustomizedWidth]="180"></LogLov>
+                        </td>
+                        <td style="width: 30px;"></td>
+                        <td style="width:130px">
+                            <LogLabel [ObjectFieldName]="'DestinationGroupOfCountries'"
+                                [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:180px">
+                            <LogLov [ObjectFieldName]="'DestinationGroupOfCountries'"
+                                [ObjectTableName]="ObjectTableName" [SelectedValue]="DestinationGroupOfCountries"
+                                [DataContext]="DataContext" [LookUpTableName]="'Customs.CountryGroup'"
+                                [HideColumns]="true" [CustomizedWidth]="180"></LogLov>
+                        </td>
+                    </tr>
+
+                    <!-- Fifth Row -->
+                    <tr class="FieldRow">
+                        <td style="width:130px">
+                            <LogLabel [ObjectFieldName]="'PlaceOfManufacture'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:180px">
+                            <LogLov [ObjectFieldName]="'PlaceOfManufacture'" [ObjectTableName]="ObjectTableName"
+                                [SelectedValue]="PlaceOfManufacture" [DataContext]="DataContext"
+                                [LookUpTableName]="'Customs.City'" [HideColumns]="true" [CustomizedWidth]="180"></LogLov>
+                        </td>
+                        <td style="width:130px; padding-right: 10px">
+                            <LogLabel [ObjectFieldName]="'ZipCodeOfManufacture'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:180px">
+                            <LogTextBox [ObjectFieldName]="'ZipCodeOfManufacture'" [DataContext]="DataContext"
+                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                        </td>
+                        <td style="width: 30px;"></td>
+                        <td style="width:130px">
+                            <LogLabel [ObjectFieldName]="'TradeAgreementCountry1'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:180px">
+                            <LogLov [ObjectFieldName]="'TradeAgreementCountry1'" [ObjectTableName]="ObjectTableName"
+                                [SelectedValue]="TradeAgreementCountry1" [DataContext]="DataContext"
+                                [LookUpTableName]="'Customs.CustomsCountry'" [HideColumns]="true" [CustomizedWidth]="180"></LogLov>
+                        </td>
+                    </tr>
+
+                    <!-- Sixth Row -->
+                    <tr class="FieldRow">
+                        <td style="width:130px"></td>
+                        <td style="width:180px"></td>
+                        <td></td>
+                        <td></td>
+                        <td style="width: 30px;"></td>
+                        <td style="width:130px">
+                            <LogLabel [ObjectFieldName]="'TradeAgreementCountry2'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:180px">
+                            <LogLov [ObjectFieldName]="'TradeAgreementCountry2'" [ObjectTableName]="ObjectTableName"
+                                [SelectedValue]="TradeAgreementCountry2" [DataContext]="DataContext"
+                                [LookUpTableName]="'Customs.CustomsCountry'" [HideColumns]="true" [CustomizedWidth]="180"></LogLov>
+                        </td>
+                    </tr>
+
+                    <!-- Seventh Row -->
+                    <tr class="FieldRow">
+                        <td class="TabTitleRow" style="width:130px">
+                            <!-- PART 2- headline -->
+                            {{'Customs.Declaration.TH.ExporterInvoices'| TextCodeTranslationPipe}}
+                        </td>
+                        <td style="width:180px"></td>
+                        <td></td>
+                        <!-- PART 2- -->
+                        <td>
+                            <div style="display: flex; width: 146px;">
+                                <LogLabel [ObjectFieldName]="'IsUnitedInvoices'" [ObjectTableName]="ObjectTableName"
+                                    [DataContext]="DataContext"></LogLabel>
+                                <LogCheckBox [ObjectFieldName]="'IsUnitedInvoices'" [Checked]="IsUnitedInvoices"
+                                    [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
+                                    [Value]="IsUnitedInvoices"></LogCheckBox>
+                            </div>
+                        </td>
+                        <td style="width: 30px;"></td>
+                        <td>
+                            <LogLabel [ObjectFieldName]="'TradeAgreementGroupOfCountries'"
+                                [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td>
+                            <LogLov [ObjectFieldName]="'TradeAgreementGroupOfCountries'"
+                                [ObjectTableName]="ObjectTableName" [SelectedValue]="TradeAgreementGroupOfCountries"
+                                [DataContext]="DataContext" [LookUpTableName]="'Customs.CountryGroup'"
+                                [HideColumns]="true" [CustomizedWidth]="180"></LogLov>
+                        </td>
+                    </tr>
+
+                </table>
+
+                <!-- Part 2: -->
+                <table style="width:580px">
+                    <tr class="FieldRow" style="width: 600px ; height : 120px">
+                        <div class="GeneratedGridContainer" style="width: 100% ; height : 100%;">
+                            <logitude-edit-grid style="min-width: 500px;" GridWidth="500px" GridHeight="100%"
+                                [ItemSource]="CertificateOriginInvoiceItems">
+                                <log-column [header]="'Customs.CertificateOfOrigin.O.number' | TextCodeTranslationPipe"
+                                    [binding]="'InvoicesIdUry'" [width]="'35'" [Alignment]="'right'">
+                                    <ng-template let-item>
+                                        <log-cell-template [IgnoreMods]="true" [IsEnabled]="!IsDisplayOnly"
+                                            #logcelltemplate>
+                                            <div style="text-align:right">
+                                                <span>{{item.InvoicesIdUry}}</span>
+                                            </div>
+
+                                        </log-cell-template>
+                                    </ng-template>
+                                </log-column>
+
+                                <log-column
+                                    [header]="'Customs.CertificateOfOrigin.O.InvoiceNumber' | TextCodeTranslationPipe"
+                                    [binding]="'InvoiceNumber'" [width]="'90'" [Alignment]="'right'">
+                                    <ng-template let-item>
+                                        <log-cell-template [IgnoreMods]="true" [IsEnabled]="!IsDisplayOnly"
+                                            #logcelltemplate>
+                                            <div style="text-align:right">
+                                                <span>{{item.InvoiceNumber}}</span>
+                                            </div>
+
+                                        </log-cell-template>
+                                    </ng-template>
+                                </log-column>
+
+                                <log-column
+                                    [header]="'Customs.CertificateOfOrigin.O.InvoiceDate' | TextCodeTranslationPipe"
+                                    [binding]="'InvoiceDate'" [width]="'100'" [Alignment]="'right'">
+                                    <ng-template let-item>
+                                        <log-cell-template [IgnoreMods]="true" [IsEnabled]="!IsDisplayOnly"
+                                            #logcelltemplate>
+                                            <div style="text-align:right">
+                                                <span>{{item.InvoiceDate | DateTimeToDatePipe}}</span>
+                                            </div>
+
+                                        </log-cell-template>
+                                    </ng-template>
+                                </log-column>
+
+                                <log-column
+                                    [header]="'Customs.CertificateOfOrigin.O.InvoiceSum' | TextCodeTranslationPipe"
+                                    [binding]="'InvoiceSum'" [width]="'120'" [Alignment]="'right'">
+                                    <ng-template let-item>
+                                        <log-cell-template [IgnoreMods]="true" [IsEnabled]="!IsDisplayOnly"
+                                            #logcelltemplate>
+                                            <div style="text-align:right">
+                                                <span style="padding-right:5px">{{item.InvoiceSum |
+                                                    NumbersPipe:'n2'}}</span>
+                                                <span style="float: right;">{{item.CurrencyTypeCode}}</span>
+                                            </div>
+
+                                        </log-cell-template>
+                                    </ng-template>
+                                </log-column>
+
+                                <log-column
+                                    [header]="'Customs.CertificateOfOrigin.O.ItemDescription' | TextCodeTranslationPipe"
+                                    [binding]="'DescriptionOfInvoice'" [width]="'175'" [Alignment]="'right'"
+                                    [Editable]="true">
+                                    <ng-template let-item>
+                                        <log-cell-template #logcelltemplate
+                                            (CellClicked)="onCellSelected($event,logcelltemplate,item)"
+                                            [RIndex]="item.InvoicesIdUry" [IsEnabled]="!IsDisplayOnly">
+                                            <!-- <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
+                                                <span>{{item.DescriptionOfInvoice}}</span>
+                                            </div>
+                                            <div *ngIf="logcelltemplate.IsEditMode" style="width: 100%;" class="DescriptionBox"> -->
+                                            <div class="TextTrimming" style="text-align:right" *ngIf="IsDisplayOnly">
+                                                <span>{{item.DescriptionOfInvoice}}</span>
+                                            </div>
+                                            <div style="width: 164.5px;" class="DescriptionBox" *ngIf="!IsDisplayOnly">
+                                                <LogTextBox #DescriptionOfInvoiceTextBox 
+                                                    [ObjectFieldName]="'DescriptionOfInvoice'" [DataContext]="item"
+                                                    [FocusOnMe]="true" [InputType]="'nText'" [IsAccumulative]="true"
+                                                    [Text]="item.DescriptionOfInvoice"
+                                                    [ObjectTableName]="'Customs.CertificateOriginInvoice'"
+                                                    [HideColumns]="true" [IsMultiline]="true" [EnableKeyDown]="true" [Direction]="'LTR'">
+                                                </LogTextBox>
+                                            </div>
+                                        </log-cell-template>
+
+                                    </ng-template>
+                                </log-column>
+
+                                <log-column
+                                    [header]="'Customs.CertificateOfOrigin.O.IsInvoicesForPrint' | TextCodeTranslationPipe"
+                                    [binding]="'IsInvoicesForPrint'" [width]="'40'" [Alignment]="'right'">
+                                    <ng-template let-item>
+                                        <log-cell-template [IgnoreMods]="true" [IsEnabled]="!IsDisplayOnly"
+                                            #logcelltemplate>
+                                            <div style="text-align:right">
+                                                <LogCheckBox [ObjectFieldName]="'IsInvoicesForPrint'"
+                                                    [Checked]="item.IsInvoicesForPrint"
+                                                    [ObjectTableName]="'Customs.CertificateOriginInvoice'"
+                                                    [DataContext]="DataContext" (Changed)="OnChanged($event,item)"
+                                                    [Value]="item.IsInvoicesForPrint"></LogCheckBox>
+                                            </div>
+                                        </log-cell-template>
+                                    </ng-template>
+                                </log-column>
+                            </logitude-edit-grid>
+                        </div>
+                    </tr>
+                </table>
+
+                <!-- Part 3: -->
+                <table style="width:870px">
+                    <tr>
+                        <td class="TabTitleRow">{{'Customs.Declaration.O.ConsignmentPackages' |
+                            TextCodeTranslationPipe}} </td>
+                    </tr>
+                    <tr class="FieldRow" style="height : 120px">
+                        <div class="GeneratedGridContainer" style="height : 100%;">
+                            <logitude-edit-grid GridWidth="100%" GridHeight="100%"
+                                [ItemSource]="CertificateOriginItemItems">
+                                <log-column [header]="'Customs.CertificateOfOrigin.O.number' | TextCodeTranslationPipe"
+                                    [binding]="'ItemSerial'" [width]="'35'" [Alignment]="'right'">
+                                    <ng-template let-item>
+                                        <log-cell-template [IgnoreMods]="true" [IsEnabled]="!IsDisplayOnly"
+                                            #logcelltemplate>
+                                            <div style="text-align:right">
+                                                <span>{{item.ItemSerial}}</span>
+                                            </div>
+
+                                        </log-cell-template>
+                                    </ng-template>
+                                </log-column>
+                                <log-column
+                                    [header]="'Customs.CertificateOfOrigin.O.MarksAndNumbers' | TextCodeTranslationPipe"
+                                    [binding]="'MarksAndNumbers'" [width]="'125'" [Alignment]="'right'"
+                                    [Editable]="true">
+                                    <ng-template let-item>
+                                        <log-cell-template #logcelltemplate
+                                            (CellClicked)="onCellSelected($event,logcelltemplate,item)"
+                                            [RIndex]="item.ItemSerial" [IsEnabled]="!IsDisplayOnly">
+                                            <!-- <div class="TextTrimming" style="text-align:right"
+                                                *ngIf="logcelltemplate.IsDisplayMode">
+                                                <span>{{item.MarksAndNumbers}}</span>
+                                            </div>
+                                            <div *ngIf="logcelltemplate.IsEditMode"> -->
+                                            <div class="TextTrimming" style="text-align:right"
+                                                *ngIf="IsDisplayOnly">
+                                                <span>{{item.MarksAndNumbers}}</span>
+                                            </div>
+                                            <div class="Tbl1Col1 DescriptionBox" *ngIf="!IsDisplayOnly">
+                                                <LogTextBox #MarksAndNumbersTextBox
+                                                    [ObjectFieldName]="'MarksAndNumbers'" [DataContext]="item"
+                                                     [InputType]="'nText'" [IsAccumulative]="true"
+                                                    [Text]="item.MarksAndNumbers"
+                                                    [ObjectTableName]="'Customs.CertificateOfOriginItem'"
+                                                    [HideColumns]="true" [IsMultiline]="true" [EnableKeyDown]="true" [Direction]="'LTR'">
+                                                </LogTextBox>
+                                            </div>
+                                        </log-cell-template>
+                                    </ng-template>
+                                </log-column>
+
+                                <log-column
+                                    [header]="'Customs.CertificateOfOrigin.O.ItemDescription' | TextCodeTranslationPipe"
+                                    [binding]="'ItemDescription'" [width]="'125'" [Alignment]="'right'"
+                                    [Editable]="true">
+                                    <ng-template let-item>
+                                        <log-cell-template #logcelltemplate
+                                            (CellClicked)="onCellSelected($event,logcelltemplate,item)"
+                                            [RIndex]="item.ItemSerial" [IsEnabled]="!IsDisplayOnly">
+                                            <!-- <div class="TextTrimming" style="text-align:right"
+                                                *ngIf="logcelltemplate.IsDisplayMode">
+                                                <span>{{item.ItemDescription}}</span>
+                                            </div>
+                                            <div class="Tbl1Col1 DescriptionBox" *ngIf="logcelltemplate.IsEditMode"> -->
+                                            <div class="TextTrimming" style="text-align:right" *ngIf="IsDisplayOnly">
+                                                <span>{{item.ItemDescription}}</span>
+                                            </div>
+                                            <div class="Tbl1Col1 DescriptionBox" style="width: 125;" *ngIf="!IsDisplayOnly">
+                                                <LogTextBox #ItemDescriptionTextBox
+                                                    [ObjectFieldName]="'ItemDescription'" [DataContext]="item"
+                                                      [InputType]="'nText'" [IsAccumulative]="true"
+                                                    [Text]="item.ItemDescription"
+                                                    [ObjectTableName]="'Customs.CertificateOriginInvoice'"
+                                                    [HideColumns]="true" [IsMultiline]="true" [EnableKeyDown]="true" [Direction]="'LTR'">
+                                                </LogTextBox>
+                                            </div>
+                                        </log-cell-template>
+                                    </ng-template>
+                                </log-column>
+
+                                <log-column
+                                    [header]="'Customs.CertificateOfOrigin.O.PackageQuantity' | TextCodeTranslationPipe"
+                                    [binding]="'PackageQuantity'" [width]="'40'" [Alignment]="'right'"
+                                    [Editable]="true">
+                                    <ng-template let-item>
+                                        <log-cell-template #logcelltemplate
+                                            (CellClicked)="onCellSelected($event,logcelltemplate,item)"
+                                            [RIndex]="item.ItemSerial"  [IsEnabled]="!IsDisplayOnly">
+                                            <div class="TextTrimming" style="text-align:right"
+                                                *ngIf="logcelltemplate.IsDisplayMode">
+                                                <span>{{item.PackageQuantity}}</span>
+                                            </div>
+                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                                <LogTextBox #PackageQuantityTextBox
+                                                    [ObjectFieldName]="'PackageQuantity'" [DataContext]="item"
+                                                    [InputType]="'number'" [IsAccumulative]="true"
+                                                    [Text]="item.PackageQuantity"
+                                                    [ObjectTableName]="'Customs.CertificateOfOriginItem'"
+                                                    [HideColumns]="true">
+                                                </LogTextBox>
+                                            </div>
+                                        </log-cell-template>
+                                    </ng-template>
+                                </log-column>
+
+                                <log-column
+                                    [header]="'Customs.CertificateOfOrigin.O.PackageType' | TextCodeTranslationPipe"
+                                    [binding]="'PackageType'" [width]="'70'" [Alignment]="'right'" [Editable]="true">
+                                    <ng-template let-item>
+                                        <log-cell-template #logcelltemplate
+                                            (CellClicked)="onCellSelected($event,logcelltemplate,item)"
+                                            [RIndex]="item.ItemSerial"  [IsEnabled]="!IsDisplayOnly">
+                                            <div class="TextTrimming" style="text-align:right"
+                                                *ngIf="logcelltemplate.IsDisplayMode">
+                                                <span>{{item.PackingTypeName}}</span>
+                                            </div>
+                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                                <LogLov [ObjectFieldName]="'PackageType'"
+                                                    [ObjectTableName]="'Customs.CertificateOfOriginItem'"
+                                                    [DataContext]="item" [LookUpTableName]="'Customs.PackingType'"
+                                                    [HideColumns]="true"
+                                                    (SelectedItemChanged)="item.SetLocalName($event, 'PackingTypeName',item ,CertificateOriginItemItems)"
+                                                    [CustomizedWidth]="180">
+                                                </LogLov>
+                                            </div>
+                                        </log-cell-template>
+                                    </ng-template>
+                                </log-column>
+
+                                <log-column [header]="'Customs.CertificateOfOrigin.O.Weight' | TextCodeTranslationPipe"
+                                    [binding]="'Weight'" [width]="'80'" [Alignment]="'right'" [Editable]="true">
+                                    <ng-template let-item>
+                                        <log-cell-template #logcelltemplate
+                                            (CellClicked)="onCellSelected($event,logcelltemplate,item)"
+                                            [RIndex]="item.ItemSerial"  [IsEnabled]="!IsDisplayOnly">
+                                            <div class="TextTrimming" style="text-align:right"
+                                                *ngIf="logcelltemplate.IsDisplayMode">
+                                                <span>{{item.Weight}}</span>
+                                            </div>
+                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                                <LogTextBox #WeightTextBox [ObjectFieldName]="'Weight'"
+                                                    [DataContext]="item"   [InputType]="'number'"
+                                                    [IsAccumulative]="true" [Text]="item.Weight"
+                                                    [ObjectTableName]="'Customs.CertificateOfOriginItem'"
+                                                    [HideColumns]="true"></LogTextBox>
+                                            </div>
+                                        </log-cell-template>
+                                    </ng-template>
+                                </log-column>
+
+                                <log-column
+                                    [header]="'Customs.CertificateOfOrigin.O.MeasureType' | TextCodeTranslationPipe"
+                                    [binding]="'MeasureType'" [width]="'80'" [Alignment]="'right'" [Editable]="true">
+                                    <ng-template let-item>
+                                        <log-cell-template #logcelltemplate
+                                            (CellClicked)="onCellSelected($event,logcelltemplate,item)"
+                                            [RIndex]="item.ItemSerial"  [IsEnabled]="!IsDisplayOnly">
+                                            <div class="TextTrimming" style="text-align:right"
+                                                *ngIf="logcelltemplate.IsDisplayMode">
+                                                <span>{{item.MeasureTypeName}}</span>
+                                            </div>
+                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                                <LogLov #MeasureTypeTextBox [ObjectFieldName]="'MeasureType'"
+                                                    [ObjectTableName]="'Customs.CertificateOfOriginItem'" [DataContext]="item"
+                                                    [LookUpTableName]="'Customs.MeasurmentUnit'"
+                                                    (SelectedItemChanged)="item.SetLocalName($event, 'MeasureTypeName',item,CertificateOriginItemItems)"
+                                                   [HideColumns]="true"  
+                                                   [CustomizedWidth]="180">
+                                                </LogLov>
+                                            </div>
+                                        </log-cell-template>
+                                    </ng-template>
+                                </log-column>
+
+                                <log-column
+                                    [header]="'Customs.CertificateOfOrigin.O.ContainerIsoCode' | TextCodeTranslationPipe"
+                                    [binding]="'ContainerIsoCode'" [width]="'80'" [Alignment]="'right'"
+                                    [Editable]="true">
+                                    <ng-template let-item>
+                                        <log-cell-template #logcelltemplate
+                                            (CellClicked)="onCellSelected($event,logcelltemplate,item)"
+                                            [RIndex]="item.ItemSerial"  [IsEnabled]="!IsDisplayOnly">
+                                            <div class="TextTrimming" style="text-align:right"
+                                                *ngIf="logcelltemplate.IsDisplayMode">
+                                                <span>{{item.ContainerIsoCode}}</span>
+                                            </div>
+                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                                <LogTextBox #ContainerIsoCodeTextBox
+                                                    [ObjectFieldName]="'ContainerIsoCode'" [DataContext]="item"
+                                                   [InputType]="'nText'" [IsAccumulative]="true"
+                                                    [Text]="item.ContainerIsoCode"
+                                                    [ObjectTableName]="'Customs.CertificateOfOriginItem'"
+                                                    [HideColumns]="true">
+                                                </LogTextBox>
+                                            </div>
+                                        </log-cell-template>
+                                    </ng-template>
+                                </log-column>
+
+                                <log-column
+                                    [header]="'Customs.CertificateOfOrigin.O.ItemId' | TextCodeTranslationPipe"
+                                    [binding]="'ItemId'" [width]="'80'" [Alignment]="'right'" [Editable]="true">
+                                    <ng-template let-item>
+                                        <log-cell-template #logcelltemplate
+                                            (CellClicked)="onCellSelected($event,logcelltemplate,item)"
+                                            [RIndex]="item.ItemSerial"  [IsEnabled]="!IsDisplayOnly">
+                                            <div class="TextTrimming" style="text-align:right"
+                                                *ngIf="logcelltemplate.IsDisplayMode">
+                                                <span>{{item.ItemId}}</span>
+                                            </div>
+                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                                <LogTextBox #ItemIdTextBox [ObjectFieldName]="'ItemId'"
+                                                    [DataContext]="item"   [InputType]="'nText'"
+                                                    [IsAccumulative]="true" [Text]="item.ItemId"
+                                                    [ObjectTableName]="'Customs.CertificateOfOriginItem'"
+                                                    [HideColumns]="true">
+                                                </LogTextBox>
+                                            </div>
+                                        </log-cell-template>
+                                    </ng-template>
+                                </log-column>
+
+                                <log-column
+                                    [header]="'Customs.CertificateOfOrigin.O.OriginCriterionCode' | TextCodeTranslationPipe"
+                                    [binding]="'OriginCriterionCode'" [width]="'70'" [Alignment]="'right'">
+                                    <ng-template let-item>
+                                        <log-cell-template #logcelltemplate
+                                            (CellClicked)="onCellSelected($event,logcelltemplate,item)"
+                                            [RIndex]="item.ItemSerial"  [IsEnabled]="!IsDisplayOnly">
+                                            <div class="TextTrimming" style="text-align:right"
+                                                *ngIf="logcelltemplate.IsDisplayMode">
+                                                <span>{{item.OriginCriterionCodeName}}</span>
+                                            </div>
+                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                                <LogLov #OriginCriterionCodeTextBox [ObjectFieldName]="'OriginCriterionCode'"
+                                                    [ObjectTableName]="'Customs.CertificateOfOriginItem'" [DataContext]="item"
+                                                    [LookUpTableName]="'Customs.OriginCriterion'"
+                                                    [DisplayMemberPath]="'OriginCriterionCode'"
+                                                    (SelectedItemChanged)="item.SetLocalName($event, 'OriginCriterionCodeName', item ,CertificateOriginItemItems)"
+                                                    [CustomizedWidth]="180" [QueryFilterItems]="CriterionTypesFilterItems"
+                                                    [HideColumns]="true"  >
+                                                </LogLov>
+                                            </div>
+                                        </log-cell-template>
+                                    </ng-template>
+                                </log-column>
+
+
+                                <log-column [width]="'60'" [Editable]="true" [Alignment]="'right'"
+                                    [visibility]="'visibile'"
+                                    [header]="'Customs.CertificateOfOrigin.O.InvoiceConnect' | TextCodeTranslationPipe">
+                                    <ng-template let-item>
+                                        <log-cell-template [IgnoreMods]="true" [IsEnabled]="!IsDisplayOnly"
+                                            #logcelltemplate>
+                                            <div id="connectedInvoices">
+                                                <div>{{item.InvoiceConnect}}</div>
+                                                <div
+                                                    style=" float: right;width: 22px; height:20px; padding-top: 2px; display:block">
+                                                    <IconButton [Name]="'Edit'" [IsSmall]="true"
+                                                        [IsEnabled]="!IsDisplayOnly" (click)="ShowSelectionComponent(currentDeclaration, false, false, item)">
+                                                    </IconButton>
+                                                </div>
+                                            </div>
+                                        </log-cell-template>
+                                    </ng-template>
+                                </log-column>
+                            </logitude-edit-grid>
+                        </div>
+                    </tr>
+
+                </table>
+            </div>
+
+        </td>
+        <td></td>
+    </tr>
+
+    <tr style="height:50%"></tr>
+</table>

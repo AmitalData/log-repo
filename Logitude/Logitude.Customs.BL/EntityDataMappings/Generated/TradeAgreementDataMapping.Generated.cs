@@ -27,7 +27,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         LocalName, 
 	         SearchFields, 
 	         Inactive, 
-	         CustomsBookTypeID,
+	         CustomsBookTypeID, 
+	         CountryGroupID,
 	      }
 
 
@@ -39,7 +40,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         LocalName, 
 	         SearchFields, 
 	         Inactive, 
-	         CustomsBookTypeID,
+	         CustomsBookTypeID, 
+	         CountryGroupID,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -71,6 +73,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsBookTypeID))
             {
 				entityPOCO.CustomsBookTypeID = entityPM.CustomsBookTypeID;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CountryGroupID))
+            {
+				entityPOCO.CountryGroupID = entityPM.CountryGroupID;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -109,6 +116,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.CustomsBookTypeID = entityPOCO.CustomsBookTypeID;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CountryGroupID))
+            {
+					entityPM.CountryGroupID = entityPOCO.CountryGroupID;
+            }
+
 		}
 
 		public void PMToOldPM(TradeAgreementPM entityPM, TradeAgreementPM oldEntityPM)
@@ -138,6 +150,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsBookTypeID))
             {
                 oldEntityPM.CustomsBookTypeID = entityPM.CustomsBookTypeID;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CountryGroupID))
+            {
+                oldEntityPM.CountryGroupID = entityPM.CountryGroupID;
             }
 			
 		}

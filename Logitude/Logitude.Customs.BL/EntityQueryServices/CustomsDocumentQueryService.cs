@@ -316,11 +316,14 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return DocumentDeclarationId;
         }
 
-        private static ResultByDocumentType GetDocumentIdByDocumentTypeNotDeleted(string declarationId, int tenant, DocumentType type, ObjectTable objectTable, DocumentsFilingRepository documentRepository)
+	
+
+		private static ResultByDocumentType GetDocumentIdByDocumentTypeNotDeleted(string declarationId, int tenant, DocumentType type, ObjectTable objectTable, DocumentsFilingRepository documentRepository)
         {
             string DocumentsFilingId;
             string documentTypeId = type.Id;
             var dtoList = documentRepository.GetByEntity(objectTable.Id, declarationId, tenant);
+
             dtoList = dtoList.Where(a => a.DocumentTypeId == documentTypeId).ToList();
             var list = dtoList.Select(r => r.Id).ToList();
             if (!LogitudeSettings.GetLogitudeCustomsSettingsMInject(tenant).IsConnectedToUniFreight)

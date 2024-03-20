@@ -1,0 +1,185 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using System.Data.Entity.ModelConfiguration;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data;
+ 
+namespace Logitude.Customs.Data.EntityMapping
+{
+ 
+    public class CertificateOfOriginMap : EntityTypeConfiguration<CertificateOfOrigin>
+    {
+	    string dbms;
+        public CertificateOfOriginMap()
+        { 
+			  this.ToTable("CertificateOfOrigins", "Customs");
+		
+		    this.HasKey(t => new { t.Id });
+	 
+            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
+
+            this.Property(t => t.SearchFields).HasColumnName("SearchFields").IsMaxLength().IsUnicode(true);
+
+            this.Property(t => t.Counter).HasColumnName("Counter").HasMaxLength(10).IsUnicode(true);
+
+            this.Property(t => t.CooTypeCode).HasColumnName("CooTypeCode").HasMaxLength(2).IsUnicode(false);
+
+            this.Property(t => t.RequestReasonCode).HasColumnName("RequestReasonCode").HasMaxLength(2).IsUnicode(false);
+
+            this.Property(t => t.COONumber).HasColumnName("COONumber").HasMaxLength(35).IsUnicode(true);
+
+            this.Property(t => t.COONumberToCancel).HasColumnName("COONumberToCancel").HasMaxLength(35).IsUnicode(true);
+
+            this.Property(t => t.ReplacementReason).HasColumnName("ReplacementReason").HasMaxLength(128).IsUnicode(true);
+
+            this.Property(t => t.DeclarationId).HasColumnName("DeclarationId").IsRequired().HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.ExporterVat).HasColumnName("ExporterVat").HasMaxLength(9).IsUnicode(true);
+
+            this.Property(t => t.ExporterName).HasColumnName("ExporterName").HasMaxLength(128).IsUnicode(true);
+
+            this.Property(t => t.ExporterAddress).HasColumnName("ExporterAddress").HasMaxLength(256).IsUnicode(true);
+
+            this.Property(t => t.ExporterCountry).HasColumnName("ExporterCountry").HasMaxLength(2).IsUnicode(false);
+
+            this.Property(t => t.TradeAgreementCountry1).HasColumnName("TradeAgreementCountry1").HasMaxLength(2).IsUnicode(false);
+
+            this.Property(t => t.TradeAgreementCountry2).HasColumnName("TradeAgreementCountry2").HasMaxLength(2).IsUnicode(false);
+
+            this.Property(t => t.TradeAgreementGroupOfCountries).HasColumnName("TradeAgreementGroupOfCountries").HasMaxLength(2).IsUnicode(false);
+
+            this.Property(t => t.ConsigneeName).HasColumnName("ConsigneeName").HasMaxLength(128).IsUnicode(true);
+
+            this.Property(t => t.ConsigneeAddress).HasColumnName("ConsigneeAddress").HasMaxLength(256).IsUnicode(true);
+
+            this.Property(t => t.ConsigneeCountry).HasColumnName("ConsigneeCountry").HasMaxLength(2).IsUnicode(false);
+
+            this.Property(t => t.ConsigneeRemarks).HasColumnName("ConsigneeRemarks").HasMaxLength(256).IsUnicode(true);
+
+            this.Property(t => t.IsConsigneeForPrint).HasColumnName("IsConsigneeForPrint");
+
+            this.Property(t => t.OriginCountry).HasColumnName("OriginCountry").HasMaxLength(2).IsUnicode(false);
+
+            this.Property(t => t.OriginGroupOfCountry).HasColumnName("OriginGroupOfCountry").HasMaxLength(2).IsUnicode(false);
+
+            this.Property(t => t.DestinationCountry).HasColumnName("DestinationCountry").HasMaxLength(2).IsUnicode(false);
+
+            this.Property(t => t.DestinationGroupOfCountries).HasColumnName("DestinationGroupOfCountries").HasMaxLength(2).IsUnicode(false);
+
+            this.Property(t => t.Transport).HasColumnName("Transport").HasMaxLength(35).IsUnicode(true);
+
+            this.Property(t => t.PortOfShipment).HasColumnName("PortOfShipment").HasMaxLength(17).IsUnicode(false);
+
+            this.Property(t => t.IsCumulation).HasColumnName("IsCumulation");
+
+            this.Property(t => t.CumulationCountry).HasColumnName("CumulationCountry").HasMaxLength(2).IsUnicode(false);
+
+            this.Property(t => t.CumulationGroupOfCountries).HasColumnName("CumulationGroupOfCountries").HasMaxLength(2).IsUnicode(false);
+
+            this.Property(t => t.PlaceOfManufacture).HasColumnName("PlaceOfManufacture").HasMaxLength(5).IsUnicode(false);
+
+            this.Property(t => t.ZipCodeOfManufacture).HasColumnName("ZipCodeOfManufacture").HasMaxLength(7).IsUnicode(true);
+
+            this.Property(t => t.Observations).HasColumnName("Observations").HasMaxLength(512).IsUnicode(true);
+
+            this.Property(t => t.IsExportDecForPrint).HasColumnName("IsExportDecForPrint");
+
+            this.Property(t => t.IsUnitedInvoices).HasColumnName("IsUnitedInvoices");
+
+            this.Property(t => t.CustomsHouse).HasColumnName("CustomsHouse").HasMaxLength(17).IsUnicode(false);
+
+            this.Property(t => t.IssuingCountry).HasColumnName("IssuingCountry").HasMaxLength(2).IsUnicode(false);
+
+            this.Property(t => t.CityOfDeclaration).HasColumnName("CityOfDeclaration").HasMaxLength(5).IsUnicode(false);
+
+            this.Property(t => t.CountryOfDeclaration).HasColumnName("CountryOfDeclaration").HasMaxLength(2).IsUnicode(false);
+
+            this.Property(t => t.DateOfDeclaration).HasColumnName("DateOfDeclaration");
+
+            this.Property(t => t.IsDeclaredByManufacture).HasColumnName("IsDeclaredByManufacture");
+
+            this.Property(t => t.IsDeclaredByExporter).HasColumnName("IsDeclaredByExporter");
+
+            this.Property(t => t.IsAttachedList).HasColumnName("IsAttachedList");
+
+            this.Property(t => t.InsufficentWorkingInd).HasColumnName("InsufficentWorkingInd");
+
+            this.Property(t => t.InsufficentWorkingText).HasColumnName("InsufficentWorkingText").HasMaxLength(256).IsUnicode(true);
+
+            this.Property(t => t.NonExportDate).HasColumnName("NonExportDate");
+
+            this.Property(t => t.NonExportCountry).HasColumnName("NonExportCountry").HasMaxLength(2).IsUnicode(false);
+
+            this.Property(t => t.NonImportBillOfLadingNum).HasColumnName("NonImportBillOfLadingNum").HasMaxLength(35).IsUnicode(true);
+
+            this.Property(t => t.NonExportPort).HasColumnName("NonExportPort").HasMaxLength(17).IsUnicode(false);
+
+            this.Property(t => t.NonImportDate).HasColumnName("NonImportDate");
+
+            this.Property(t => t.NonExportBillOfLadingNum).HasColumnName("NonExportBillOfLadingNum").HasMaxLength(35).IsUnicode(true);
+
+            this.Property(t => t.NonTransirCountry).HasColumnName("NonTransirCountry").HasMaxLength(2).IsUnicode(false);
+
+            this.Property(t => t.NonPortOfEntrance).HasColumnName("NonPortOfEntrance").HasMaxLength(17).IsUnicode(false);
+
+            this.Property(t => t.NonExpectedExitDate).HasColumnName("NonExpectedExitDate");
+
+            this.Property(t => t.NonExitPort).HasColumnName("NonExitPort").HasMaxLength(17).IsUnicode(false);
+
+            dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms == "oracle")
+            {
+              this.Property(t => t.NonGoodsDescription).HasMaxLength(2000);
+			}
+            else
+            {
+              this.Property(t => t.NonGoodsDescription).HasMaxLength(8000);
+			}
+
+
+            this.Property(t => t.NonGoodsDescription).HasColumnName("NonGoodsDescription").IsUnicode(true);
+
+            this.Property(t => t.NonDeclaringCompany).HasColumnName("NonDeclaringCompany").HasMaxLength(128).IsUnicode(true);
+
+            this.Property(t => t.NonDeclaringPerson).HasColumnName("NonDeclaringPerson").HasMaxLength(128).IsUnicode(true);
+
+            this.Property(t => t.NonDeclaringPosition).HasColumnName("NonDeclaringPosition").HasMaxLength(128).IsUnicode(true);
+
+            this.Property(t => t.NonManifestNum).HasColumnName("NonManifestNum").HasMaxLength(35).IsUnicode(true);
+
+            this.Property(t => t.ErrXml).HasColumnName("ErrXml").IsMaxLength().IsUnicode(true);
+
+            this.Property(t => t.CooStatusCode).HasColumnName("CooStatusCode").HasMaxLength(2).IsUnicode(false);
+
+            this.Property(t => t.FeedbackRemark).HasColumnName("FeedbackRemark").HasMaxLength(512).IsUnicode(true);
+
+            this.Property(t => t.RejectCancelReason).HasColumnName("RejectCancelReason").HasMaxLength(512).IsUnicode(true);
+
+            this.Property(t => t.IssueDateIfReleased).HasColumnName("IssueDateIfReleased");
+
+            this.Property(t => t.QueryUrl).HasColumnName("QueryUrl").HasMaxLength(512).IsUnicode(true);
+
+            this.Property(t => t.CooPdf).HasColumnName("CooPdf").HasMaxLength(125).IsUnicode(true);
+
+            this.Property(t => t.CoodPdf1).HasColumnName("CoodPdf1").HasMaxLength(125).IsUnicode(true);
+
+            this.Property(t => t.OpenByUser).HasColumnName("OpenByUser").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.IsSubmitted).HasColumnName("IsSubmitted");
+
+            this.Property(t => t.UpdateDeclaration).HasColumnName("UpdateDeclaration").HasMaxLength(1).IsUnicode(false);
+
+            this.Property(t => t.IsChange).HasColumnName("IsChange");
+        }
+    }
+}
+	 

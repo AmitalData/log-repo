@@ -14,6 +14,7 @@ export class TradeAgreementList {
 	SearchFields: string;
 	Inactive: boolean;
 	CustomsBookTypeID: number;
+	CountryGroupID: number;
 	
 }
  

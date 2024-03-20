@@ -18,7 +18,7 @@ import {CustomFieldClass} from '../../DataContracts/CustomFieldClass';
         <tr>
             <td style="width: 16px;">
                 <div class="CheckBox">
-                    <input [attr.id]="ControlId" type="checkbox" [disabled]="IsDisabled" [(ngModel)]="BoolValue" (focus)="onFocus()" (blur)="onBlur()" />
+                    <input [attr.id]="ControlId" type="checkbox" [disabled]="IsDisabled" [checked]="BoolValue" [(ngModel)]="BoolValue" (focus)="onFocus()" (blur)="onBlur()" (change)="OnChecked($event)"/>
                     <label [attr.for]="ControlId">{{Text}}</label>
                 </div>
             </td>
@@ -51,6 +51,7 @@ export class LogCheckboxComponent implements OnInit, OnDestroy {
     public uiProperty: UIProperty;
     CopyValueSubs: any;
     private show: boolean;
+    @Output() Changed: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     private isDisabled: boolean;
     @Input()  public get IsDisabled() {
@@ -100,9 +101,9 @@ export class LogCheckboxComponent implements OnInit, OnDestroy {
             }
         }
         if (this.boolValue != newValue) {
-            if (typeof (newValue) == 'boolean') {
+        
                 this.boolValue = newValue;
-                if (typeof (this.boolValue) == 'boolean') {
+              
                     if (dataContextValue != this.boolValue) {
 
                         if (this.ObjectField && this.ObjectField.IsCustom) {
@@ -122,9 +123,9 @@ export class LogCheckboxComponent implements OnInit, OnDestroy {
                         }
                         this.ValueChanged.emit(this.boolValue);
                     }
-                }
+              
             }
-        }
+      
     }
 
     checked: boolean;
@@ -288,5 +289,8 @@ export class LogCheckboxComponent implements OnInit, OnDestroy {
             this.CopyValueSubs = null;
         }
     }
+    OnChecked(event) {
+        this.Changed.emit(event);
+  }
 
 }

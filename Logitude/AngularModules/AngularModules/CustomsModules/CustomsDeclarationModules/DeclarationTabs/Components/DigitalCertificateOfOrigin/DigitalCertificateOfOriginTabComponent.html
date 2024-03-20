@@ -1,0 +1,237 @@
+<style>
+    .subTitle {
+        color: #1b90cb;
+        font-size: 16px;
+    }
+
+    .DisbleBox {
+        display: inline-block;
+        border: 1px solid #ffd800;
+        border-radius: 5px;
+        background: #faf5c0;
+        padding: 2px 10px;
+        margin: 5px;
+        color: gray;
+        font-family: sans-serif;
+    }
+
+    #DigitalCertificateOfOriginHeader {
+        height: 0px !important;
+    }
+
+  
+
+    #buttonNewCertificateOfOrigin{
+        height: 21px;
+        width: 95px !important;
+        height: 21px!important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+</style>
+<table *ngIf="EntityPM != null &&  EntityPM.Direction=='E'">
+   
+    <tr>
+        <td>
+            <div class="TableHolder">
+                <table *ngIf="IsVisible">
+                    <tr style="height:20px">
+
+                        <td class="TabTitleRow" id="DigitalCertificateOfOriginHeader" style="width:150px;">
+                            {{'Customs.Declaration.TH.DigitalCertificateOfOrigin'| TextCodeTranslationPipe}}
+                        </td>
+                        <td style="position: absolute;
+                        padding-right: 30%;">
+                            <div style="width:100%;text-align:center" *ngIf="IsDisplayOnly">
+                                <div class="DisbleBox">
+                                    {{DisplayOnlyMessage}}
+                                    <span style="padding: 0px 16px;">-</span>
+                                    <span class="hyperlink" (click)="RefreshEntity()"
+                                        style="font-size:12px;">רענן</span>
+                                </div>
+                            </div>
+                            <div *ngIf="!IsDisplayOnly" style="width: 100%;text-align:center">
+                                <div *ngIf="ShowStorageStatusMessage || IsDisplayMessage" class="DisbleBox">
+                                    {{DisplayOnlyMessage}}
+                                </div>
+                            </div>
+                            <div *ngIf="EntityPM.IsSubmitDeclaration && (IsUpdateDeclarationA || IsUpdateDeclarationB)" style="width: 100%;text-align:center">
+                                <div class="DisbleBox" *ngIf="IsUpdateDeclarationA">
+                                    <!-- {{MessA}} -->
+                                    {{'Customs.CertificateOfOrigin.O.NumNotUpdate'| TextCodeTranslationPipe}}
+                                    <span style="padding: 0px 16px;">-</span>
+                                    <!-- <span class="hyperlink" (click)="OpenNewAmendmentWithSend()" style="font-size:12px;">{{MessLinkA}}</span> -->
+                                    <span class="hyperlink" (click)="OpenNewAmendmentWithSend()" style="font-size:12px;">{{'Customs.CertificateOfOrigin.O.AutoAmendment'| TextCodeTranslationPipe}}</span>
+                
+                                </div>
+                                <div class="DisbleBox" *ngIf="IsUpdateDeclarationB">
+                                    <!-- {{MessB}} -->
+                                    {{'Customs.CertificateOfOrigin.O.UpdatedItemInvoice'| TextCodeTranslationPipe}}
+                                </div>
+                            </div>
+                           
+                        </td> 
+                     
+                    </tr>
+                    <tr>
+                        <td style="height: 21px;padding: 0px;padding-bottom: 0px;width: 100px;">
+                            <div>
+                                <button [disabled]="!IsAllowChange" class="Button" id="buttonNewCertificateOfOrigin" (click)="AddNewCertificateOfOrigin(isNew)">         
+                                    {{'Customs.Declaration.TH.NewCertificateOfOrigin'| TextCodeTranslationPipe}}           
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="5" style="height: 40%;">
+                            <div class="CellContent" style="bottom: 5px;padding:5px">
+                                <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="ItemsSource"
+                                    (SelectedItemChanged)="OnRowSelected($event)" [SelectedRow]="SelectedRow">
+                                    <log-column
+                                        [header]="'Customs.CertificateOfOrigin.F.ListCounter' | TextCodeTranslationPipe"
+                                        [binding]="'ListCounter'" [width]="'35'" [Alignment]="'right'">
+                                        <ng-template let-item>
+                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                                <div style="text-align:right">
+                                                    <span>{{item.ListCounter}}</span>
+                                                </div>
+
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
+                                    <log-column
+                                        [header]="'Customs.CertificateOfOrigin.O.Counter' | TextCodeTranslationPipe"
+                                        [binding]="'Counter'" [width]="'90'" [Alignment]="'right'">
+                                        <ng-template let-item>
+                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                                <div style="text-align:right">
+                                                    <span>{{item.Counter}}</span>
+                                                </div>
+
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
+                                    <log-column
+                                        [header]="'Customs.CertificateOfOrigin.O.CooTypeCode' | TextCodeTranslationPipe"
+                                        [binding]="'CooTypeCode'" [width]="'140'" [Alignment]="'right'">
+                                        <ng-template let-item>
+                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                                <div style="text-align:right">
+                                                    <span>{{item.CooTypeCodeName}}</span>
+                                                </div>
+
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
+                                    <log-column
+                                        [header]="'Customs.CertificateOfOrigin.O.RequestReasonCode' | TextCodeTranslationPipe"
+                                        [binding]="'RequestReasonCode'" [width]="'140'" [Alignment]="'right'">
+                                        <ng-template let-item>
+                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                                <div style="text-align:right">
+                                                    <span>{{item.RequestReasonCodeName}}</span>
+                                                </div>
+
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
+                                    <log-column
+                                        [header]="'Customs.CertificateOfOrigin.O.OpenByUser' | TextCodeTranslationPipe"
+                                        [binding]="'OpenByUser'" [width]="'100'" [Alignment]="'right'">
+                                        <ng-template let-item>
+                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                                <div style="text-align:right">
+                                                    <span>{{item.OpenByUserName}}</span>
+                                                </div>
+
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
+                                    <log-column
+                                        [header]="'Customs.CertificateOfOrigin.O.CooNumber' | TextCodeTranslationPipe"
+                                        [binding]="'COONumber'" [width]="'135'" [Alignment]="'right'">
+                                        <ng-template let-item>
+                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                                <div style="text-align:right">
+                                                    <span>{{item.COONumber}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
+                                    <log-column
+                                        [header]="'Customs.CertificateOfOrigin.O.CooStatusCode' | TextCodeTranslationPipe"
+                                        [binding]="'CooStatusCode'" [width]="'140'" [Alignment]="'right'">
+                                        <ng-template let-item>
+                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                                <div style="text-align:right">
+                                                    <span>{{item.CooStatusCodeName}}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
+                                    
+                                    <log-column [width]="'35'" [Editable]="true" [Alignment]="'right'"
+                                        [visibility]="'visibile'">
+                                        <ng-template let-item>
+                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                                <span class="CellSeparator" style="float: right;"></span>
+                                                <div
+                                                    style="width: 22px; float: right; height:20px; padding-top: 2px; display:block">
+                                                    <IconButton [Name]="'Edit'" [IsSmall]="true"
+                                                        (click)="EditButtonClicked(item)"></IconButton>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
+
+                                    <log-column [width]="'120'" [Editable]="true" [Alignment]="'right'"
+                                        [visibility]="'visibile'">
+                                        <ng-template let-item>
+                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                                <div style="width: 114px;float: right; height:20px; padding-top: 2px; display:block">
+                                                    <button [disabled]="!IsAllowChange" class="Button"  (click)="SendMsgCooStatusCode(item)" style="height: 21px;width: 120px; display: inline-block;"  style="float:left;">         
+                                                        {{'Customs.CertificateOfOrigin.O.CooStatusCode'| TextCodeTranslationPipe}}           
+                                                    </button>                                                   
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
+                                    
+                                    <log-column [width]="'120'" [Editable]="true" [Alignment]="'right'"
+                                        [visibility]="'visibile'">
+                                        <ng-template let-item>
+                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                                <div style="width: 114px;float: right; height:20px; padding-top: 2px; display:block">
+                                                    <button [disabled]="!IsAllowChange" class="Button"  (click)="CopyOfCertificate(item)" style="height: 21px;width: 120px; display: inline-block;"  style="float:left;">         
+                                                        {{'Customs.CertificateOfOrigin.O.CopyOfCertificate'| TextCodeTranslationPipe}}           
+                                                    </button>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
+                                 
+                                    <log-column [width]="'110'" [Editable]="true" [Alignment]="'right'"
+                                        [visibility]="'visibile'">
+                                        <ng-template let-item>
+                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                                    <div style="width: 22px; float: right; height:20px; padding-top: 2px;display:block">
+                                                        <IconButton [Name]="'Delete'" [IsSmall]="true"
+                                                            (click)="DeleteButtonClicked(item)"
+                                                            [IsEnabled]="!IsDisplayOnly && !item.IsSubmitted"></IconButton>
+                                                    </div>                                                    
+                                                    <div *ngFor="let docCOE of item.CertificateOriginDocuments" style="width: 22px; float: right; height:20px; padding-top: 2px;display:block">
+                                                        <img style="width: 18px; display: flex" class="PDFIcon" (click)="ShowCertificatePDF(docCOE)" src="./Images/SimplogIcons/File-pdf-48.png"/>
+                                                    </div>
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
+                                </logitude-edit-grid>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </td>
+    </tr>
+</table>

@@ -219,7 +219,31 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 				return;
             }
-            setting = CustomsSettingQueryService.GetSettingByTenant(_MyDeclarationPM.Tenant);
+			if ((requestParams.InterfaceTypeCode == "2751" || requestParams.InterfaceTypeCode == "2751T"))
+            {
+				if (customResponse?.Response?.Declaration != null) 
+                {
+
+					PC_NG_2280_MSG01_CertificateOfOriginRequestResponseService _pc_NG_2280_MSG01_CertificateOfOriginRequestResponseService = new PC_NG_2280_MSG01_CertificateOfOriginRequestResponseService();
+
+					CertificateOfOriginUpdateService certificateOfOriginUpdateService = new CertificateOfOriginUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
+					CertificateOfOriginQueryService certificateOfOriginQueryService = new CertificateOfOriginQueryService(_MyDeclarationPM.Tenant);
+					var certificateOfOrigins = certificateOfOriginQueryService.GetCertificateOfOriginsByDeclarationId(_MyDeclarationPM.Id, _MyDeclarationPM.AmendmentOriginalDeclartation, _MyDeclarationPM.Tenant);
+					if (certificateOfOrigins != null && certificateOfOrigins.Count() == 1)
+					{
+						var certificateOfOrigin = certificateOfOriginQueryService.GetSingle(certificateOfOrigins[0].Id, true, false);
+
+						bool IsUpdated = _pc_NG_2280_MSG01_CertificateOfOriginRequestResponseService.UpdateCooNumberInDeclaration(_MyDeclarationPM.Id, certificateOfOrigin, true);
+						if (!IsUpdated)
+						{
+							certificateOfOrigin.UpdateDeclaration = "C";
+							certificateOfOrigin.ChangeSetOp = ChangeSetOperation.Update;
+							certificateOfOriginUpdateService.Update(certificateOfOrigin, true);
+						}
+					}
+				}
+			}
+			setting = CustomsSettingQueryService.GetSettingByTenant(_MyDeclarationPM.Tenant);
             if (this._MyDeclarationPM.PaymentDate.HasValue)
             {
                 if (customResponse.Response != null && customResponse.Response.Status != null && (customResponse.Response.Status[0].NameCode.Value == "13" || customResponse.Response.Status[0].NameCode.Value == "14"))

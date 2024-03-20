@@ -63,8 +63,15 @@ export class DeclarationEditComponentController implements IEditComponentControl
             if (indexOfTab > -1) {
                 allTabs[indexOfTab].TabNameTextCodeCode = "Customs.Declaration.TH.ExporterInvoices";
             }
-
-
+            var indexOfTab = allTabs.findIndex(t => t.Code == "DCOO");
+            if (indexOfTab > -1) {
+                if(currentEntity.DeclarationTypeCode == "2" || currentEntity.DeclarationTypeCode == "3"){
+                    allTabs[indexOfTab].TabNameTextCodeCode = "Customs.Declaration.TH.DigitalCertificateOfOrigin";
+                }
+                else {
+                    allTabs.splice(indexOfTab, 1);
+                }
+            }
         }
         else {
             var indexOfTab = allTabs.findIndex(t => t.Code == "DEIN");
@@ -75,6 +82,11 @@ export class DeclarationEditComponentController implements IEditComponentControl
             if (indexOfTab > -1) {
                 allTabs.splice(indexOfTab, 1);
 
+            }
+            
+            var indexOfTab = allTabs.findIndex(t => t.Code == "DCOO");
+            if (indexOfTab > -1) {
+                allTabs.splice(indexOfTab, 1);
             }
         }
 

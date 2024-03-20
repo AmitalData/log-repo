@@ -5,6 +5,7 @@ using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Data.Entity.Infrastructure;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 
 namespace Simplog.Data.CommonDataModel.Repositories
 {
@@ -175,10 +176,22 @@ namespace Simplog.Data.CommonDataModel.Repositories
                          DocumentId=a.DocumentId
                      });
             var allForEntity = q.ToList();
-            return allForEntity;
+			return allForEntity;
         }
-        
-        public string GetDocumentIdByDocumentType(string documentTypeId, string objectTableId, string entityId, int tenant ,out string DocumentsFilingId)
+		public IQueryable<DocumentsFiling> GetByEntityAndChiled(string objectTableId, string entityId,string objectTableIdChiled, string entityIdChiled, int tenant,string documentTypeId)
+		{
+            (context as System.Data.Entity.Infrastructure.IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
+
+            var q = (from a in context.DocumentsFilings
+                     where
+                     a.Tenant == tenant && a.ObjectTableId == objectTableId && a.EntityId == entityId && a.ChildObjectTableId == objectTableIdChiled && a.ChildEntityId == entityIdChiled && a.DocumentTypeId == documentTypeId
+                     select a);
+					
+			
+			return q;
+		}
+
+		public string GetDocumentIdByDocumentType(string documentTypeId, string objectTableId, string entityId, int tenant ,out string DocumentsFilingId)
         {
             (context as System.Data.Entity.Infrastructure.IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
 

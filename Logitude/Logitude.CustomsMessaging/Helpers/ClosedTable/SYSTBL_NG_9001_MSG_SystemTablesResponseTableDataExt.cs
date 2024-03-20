@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Logitude.Customs.Data.EntityPOCOs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,6 +19,10 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
         public IncotemrsFileValidation MyIncotemrsFileValidation { get; set; }
         public CargoIdentifireType MyCargoIdentifireType { get; set; }
         public TradeAgreement MyTradeAgreement { get; set; }
+        public OriginCriterion MyOriginCriterion { get; set; }
+        public CertificateOfOriginTypeCodeEnum MyCertificateOfOriginTypeCodeEnum { get; set; }
+        public CertificateOfOriginStatusCodeEnum MyCertificateOfOriginStatusCodeEnum { get; set; }
+        public CertificateOfOriginMandatoryFields MyCertificateOfOriginMandatoryFields{ get; set; }
         public ConfirmationType MyConfirmationType { get; set; }
         public ItemGovernmentProcedureType MyItemGovernmentProcedureType { get; set; }
 
@@ -113,8 +118,38 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
     public class TradeAgreement
     {
         public int CustomsBookTypeID { get; set; }
+        public int CountryGroupID { get; set; }
+
+    }
+    public class OriginCriterion
+    {
+        public int CertificateOfOriginTypeCodeID { get; set; }
+        public string OriginCriterionCode { get; set; }
+
     }
 
+    public class CertificateOfOriginTypeCodeEnum
+    {
+        public bool IsCustomApprovalRequired { get; set; }
+        public bool IsCriterionMandatory { get; set; }
+
+    }
+    public class CertificateOfOriginMandatoryFields
+    {
+        public string MappedCertificateFieldsName { get; set; }
+        public string MappedCertificateFields { get; set; }
+        public string CertificateOfOriginTypeName { get; set; }
+        public int CertificateOfOriginTypeCodeID { get; set; }
+        public bool IsMandatory { get; set; }
+        public int Location { get; set; }
+        public DateTime LastUpdatedDate { get; set; }
+
+    }
+
+    public class CertificateOfOriginStatusCodeEnum
+    {
+        public bool RecordEditable { get; set; }
+    }
 
     public class ConfirmationType
     {

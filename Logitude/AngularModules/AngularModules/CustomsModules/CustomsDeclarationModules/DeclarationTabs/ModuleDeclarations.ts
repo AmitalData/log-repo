@@ -33,6 +33,11 @@ import { ExportDeclarationClosureComponent } from './Components/Closure/ExportDe
 import { DeclarationExportStorageComponent } from './Components/ExportStorageList/DeclarationExportStorageComponent';
 import { DeclarationPendingsGeneralComponent } from './Components/Classification/DeclarationPendingsGeneralComponent';
 import { ComprehensiveUpdateConsignment } from './Components/General/ConsigmentTabContent/ComprehensiveUpdateConsignment';
+import { DigitalCertificateOfOriginTabComponent } from './Components/DigitalCertificateOfOrigin/DigitalCertificateOfOriginTabComponent';
+import { CertificateOfOriginComponent } from './Components/DigitalCertificateOfOrigin/CertificateOfOriginTabs/CertificateOfOriginComponent';
+import { CertificateOfOriginGeneralTabComponent } from './Components/DigitalCertificateOfOrigin/CertificateOfOriginTabs/General/CertificateOfOriginGeneralTabComponent';
+import { CertificateOfOriginMoreDetailsTabComponent } from './Components/DigitalCertificateOfOrigin/CertificateOfOriginTabs/MoreData/CertificateOfOriginMoreDetailsTabComponent';
+import { CertificateAnswersComponent } from './Components/DigitalCertificateOfOrigin/CertificateOfOriginTabs/CertificateAnswers/CertificateAnswersComponent';
 
 
 export const Components =
@@ -68,10 +73,15 @@ export const Components =
         DeclarationCargoSealTabComponent,
         ExportDeclarationComponent,
         ExportDeclarationClosureComponent,
-
         DeclarationPendingsGeneralComponent,
         DeclarationExportStorageComponent,
-        ComprehensiveUpdateConsignment
+        ComprehensiveUpdateConsignment,
+        
+        DigitalCertificateOfOriginTabComponent,
+        CertificateOfOriginComponent,
+        CertificateOfOriginGeneralTabComponent,
+        CertificateOfOriginMoreDetailsTabComponent,
+        CertificateAnswersComponent
 
     ];
 
@@ -88,7 +98,6 @@ export class ModuleDeclarations {
             case "CustomsAnswersComponent": { myResult = CustomsAnswersComponent; break; }
             case "DeclarationCorrectionsComponent": { myResult = DeclarationCorrectionsComponent; break; }
             case "CertificateTabComponent": { myResult = CertificateTabComponent; break; }
-            case "CreateEditTicketComponent": { myResult = CreateEditTicketComponent; break; }
             case "NewCertificateGoodsItemsSelectionComponent": { myResult = NewCertificateGoodsItemsSelectionComponent; break; }
 
             case "ConstraintsDetailsComponent": { myResult = ConstraintsDetailsComponent; break; }
@@ -117,6 +126,13 @@ export class ModuleDeclarations {
             case "ExportDeclarationClosureComponent": { myResult = ExportDeclarationClosureComponent; break; }
             case "DeclarationPendingsGeneralComponent": { myResult = DeclarationPendingsGeneralComponent; break; }
             case "ComprehensiveUpdateConsignment": { myResult = ComprehensiveUpdateConsignment; break; }
+            
+            case "DigitalCertificateOfOriginTabComponent": { myResult = DigitalCertificateOfOriginTabComponent; break; }
+            case "CertificateOfOriginComponent": { myResult = CertificateOfOriginComponent; break; }
+            case "CertificateOfOriginGeneralTabComponent": { myResult = CertificateOfOriginGeneralTabComponent; break; }
+            case "CertificateOfOriginMoreDetailsTabComponent": { myResult = CertificateOfOriginMoreDetailsTabComponent; break; }
+            case "CreateEditTicketComponent": { myResult = CreateEditTicketComponent; break; }
+            case "CertificateAnswersComponent": { myResult = CertificateAnswersComponent; break; }
 
         }
 

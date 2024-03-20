@@ -1,0 +1,365 @@
+<style>
+    .FieldRow {
+        height: 22px;
+        line-height: 35px;
+    }
+    .DisbleBox {
+        display: inline-block;
+        border: 1px solid #ffd800;
+        border-radius: 5px;
+        background: #faf5c0; /*fbebbc*/
+        padding: 4px 10px;
+        color: gray;
+        font-family: sans-serif;
+        max-width: 660px;
+        white-space: normal;
+    }
+    tr{
+        height: 5px;
+    }
+</style>
+<table>
+    <tr>
+        <td>
+            <div style="width:90%;text-align:center" *ngIf="IsDisplayOnly">
+                <div class="DisbleBox">
+                    {{'Customs.CertificateOfOrigin.O.DisplayOnly'| TextCodeTranslationPipe}}
+                </div>
+            </div> 
+            <div *ngIf="entityPM.IsChange && entityPM.COONumber != null || ErrorsList?.length > 0">
+                <div *ngIf="ErrorsList?.length > 0">
+                    <ValidationSummary  class="StyleMess" [ItemsSource]="ErrorsList" [SingleLine]="true"></ValidationSummary>
+                </div>
+                <div *ngIf="entityPM.IsChange && entityPM.COONumber != null"  style="width:90%;text-align:center">
+                    <div class="DisbleBox">
+                        {{'Customs.CertificateOfOrigin.O.IsChange'| TextCodeTranslationPipe}}
+                    </div>
+                </div>
+            </div> 
+        </td>
+
+    </tr>
+    <tr style="height:300px;">
+        <td style="vertical-align:top">
+            <div style="vertical-align:top; margin:5px">
+                <table style="width:850px">
+                    <tr class="FieldRow">
+                        <td style="width:130px">
+                            <LogLabel [ObjectFieldName]="'IsCumulation'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:180px">
+                            <LogCheckBox [ObjectFieldName]="'IsCumulation'"
+                                                    [Checked]="IsCumulation" [ObjectTableName]="ObjectTableName"
+                                                    [DataContext]="DataContext"></LogCheckBox>
+                        </td>
+                       
+                        <td style="width:130px">
+                            <LogLabel [ObjectFieldName]="'CumulationCountry'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:180px">
+                            <LogLov [ObjectFieldName]="'CumulationCountry'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext" [LookUpTableName]="'Customs.CustomsCountry'"
+                                [SelectedValue]="CumulationCountry" [HideColumns]="true"></LogLov>
+                        </td>
+                       
+                        <td style="width:130px">
+                            <LogLabel [ObjectFieldName]="'CumulationGroupOfCountries'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:180px">
+                            <LogLov [ObjectFieldName]="'CumulationGroupOfCountries'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext" [LookUpTableName]="'Customs.CountryGroup'"
+                                [SelectedValue]="CumulationGroupOfCountries" [HideColumns]="true"></LogLov>
+                        </td>
+                 
+                    </tr>
+
+                    <tr class="FieldRow">
+                        <td style="width:130px">
+                            <LogLabel [ObjectFieldName]="'CityOfDeclaration'" [ObjectTableName]="ObjectTableName"
+                            [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:180px">
+                            <LogLov [ObjectFieldName]="'CityOfDeclaration'" [ObjectTableName]="ObjectTableName"
+                            [DataContext]="DataContext" [LookUpTableName]="'Customs.City'"
+                            [SelectedValue]="CityOfDeclaration" [HideColumns]="true"></LogLov>
+                        </td>
+                        
+                        <td style="width:130px">
+                            <LogLabel [ObjectFieldName]="'IsDeclaredByExporter'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:180px">
+                            <LogCheckBox [ObjectFieldName]="'IsDeclaredByExporter'"
+                                                    [Checked]="IsDeclaredByExporter" [ObjectTableName]="ObjectTableName"
+                                                    [DataContext]="DataContext"></LogCheckBox>
+                        </td>
+
+                        <td style="width:130px">
+                            <LogLabel [ObjectFieldName]="'IsDeclaredByManufacture'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:180px">
+                            <LogCheckBox [ObjectFieldName]="'IsDeclaredByManufacture'"
+                                                    [Checked]="IsDeclaredByManufacture" [ObjectTableName]="ObjectTableName"
+                                                    [DataContext]="DataContext"></LogCheckBox>
+                        </td>       
+                    </tr>
+
+                    <tr class="FieldRow">
+                        <td style="width:130px">
+                            <LogLabel [ObjectFieldName]="'IsExportDecForPrint'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:180px">
+                            <LogCheckBox [ObjectFieldName]="'IsExportDecForPrint'"
+                                                    [Checked]="IsExportDecForPrint" [ObjectTableName]="ObjectTableName"
+                                                    [DataContext]="DataContext"></LogCheckBox>
+                        </td>
+                        
+                        <td style="width:130px">
+                            <LogLabel [ObjectFieldName]="'InsufficentWorkingInd'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:180px">
+                            <LogCheckBox [ObjectFieldName]="'InsufficentWorkingInd'"
+                                                    [Checked]="InsufficentWorkingInd" [ObjectTableName]="ObjectTableName"
+                                                    [DataContext]="DataContext"></LogCheckBox>
+                        </td>
+
+                        <td style="width:130px">
+                            <LogLabel [ObjectFieldName]="'IsConsigneeForPrint'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:180px">
+                            <LogCheckBox [ObjectFieldName]="'IsConsigneeForPrint'"
+                                                    [Checked]="IsConsigneeForPrint" [ObjectTableName]="ObjectTableName"
+                                                    [DataContext]="DataContext"></LogCheckBox>
+                        </td>       
+                    </tr>
+                 
+                    <tr class="FieldRow">
+                        <td style="width:130px">
+                            <LogLabel [ObjectFieldName]="'IsAttachedList'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:180px">
+                            <LogCheckBox [ObjectFieldName]="'IsAttachedList'"
+                                                    [Checked]="IsAttachedList" [ObjectTableName]="ObjectTableName"
+                                                    [DataContext]="DataContext"></LogCheckBox>
+                        </td>
+                        
+                        <td style="width:130px">
+                            <LogLabel [ObjectFieldName]="'InsufficentWorkingText'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:180px">
+                            <LogTextBox [ObjectFieldName]="'InsufficentWorkingText'" [DataContext]="DataContext"
+                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                        </td>
+
+                        <td style="width:130px">
+                            <LogLabel [ObjectFieldName]="'COONumberToCancel'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:180px">
+                            <LogTextBox [ObjectFieldName]="'COONumberToCancel'" [DataContext]="DataContext"
+                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                        </td>       
+                    </tr>
+                 
+                    <tr class="FieldRow">                        
+                        <td style="width:130px">
+                            <LogLabel [ObjectFieldName]="'Observations'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:180px">
+                            <LogTextBox [ObjectFieldName]="'Observations'" [DataContext]="DataContext"
+                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                        </td>
+
+                        <td style="width:130px">
+                            <LogLabel [ObjectFieldName]="'ConsigneeRemarks'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:180px">
+                            <LogTextBox [ObjectFieldName]="'ConsigneeRemarks'" [DataContext]="DataContext"
+                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                        </td>
+
+                        <td style="width:130px">
+                            <LogLabel [ObjectFieldName]="'ReplacementReason'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:180px">
+                            <LogTextBox [ObjectFieldName]="'ReplacementReason'" [DataContext]="DataContext"
+                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                        </td>       
+                    </tr>
+                </table>
+
+                <table style="width:850px">
+                    <tr class="FieldRow" style="height: 160px;"></tr>
+                </table>
+
+                <table style="width:850px">
+                    <tr class="FieldRow">
+                        <td class="TabTitleRow" style="width:130px">
+                            <!-- PART 2- headline -->
+                            {{'Customs.CertificateOfOrigin.O.TransitCertificate'| TextCodeTranslationPipe}}
+                        </td>
+                    </tr>
+
+                    <tr class="FieldRow">
+                        <td style="width:130px">
+                            <LogLabel [ObjectFieldName]="'NonExportPort'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:180px">
+                            <LogLov [ObjectFieldName]="'NonExportPort'" [ObjectTableName]="ObjectTableName"
+                            [DataContext]="DataContext" [LookUpTableName]="'Customs.InternationalSite'"
+                            [SelectedValue]="NonExportPort" [HideColumns]="true"></LogLov>
+                        </td>
+                       
+                        <td style="width:130px">
+                            <LogLabel [ObjectFieldName]="'NonExportCountry'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:180px">
+                            <LogLov [ObjectFieldName]="'NonExportCountry'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext" [LookUpTableName]="'Customs.CustomsCountry'"
+                                [SelectedValue]="NonExportCountry" [HideColumns]="true"></LogLov>
+                        </td>
+                       
+                        <td style="width:180px">
+                            <LogLabel [ObjectFieldName]="'NonExportDate'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:180px">
+                            <LogDatePicker [ObjectFieldName]="'NonExportDate'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                        </td>
+                    </tr>
+             
+                    <tr class="FieldRow">
+                        <td style="width:130px">
+                            <LogLabel [ObjectFieldName]="'NonPortOfEntrance'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:180px">
+                            <LogLov [ObjectFieldName]="'NonPortOfEntrance'" [ObjectTableName]="ObjectTableName"
+                            [DataContext]="DataContext" [LookUpTableName]="'Customs.InternationalSite'"
+                            [SelectedValue]="NonPortOfEntrance" [HideColumns]="true"></LogLov>
+                        </td>
+                       
+                        <td style="width:130px">
+                            <LogLabel [ObjectFieldName]="'NonImportBillOfLadingNum'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:180px">
+                            <LogTextBox [ObjectFieldName]="'NonImportBillOfLadingNum'" [DataContext]="DataContext"
+                            [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                        </td>
+                       
+                        <td style="width:180px">
+                            <LogLabel [ObjectFieldName]="'NonImportDate'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:180px">
+                            <LogDatePicker [ObjectFieldName]="'NonImportDate'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                        </td>
+                    </tr>
+    
+                    <tr class="FieldRow">
+                        <td style="width:130px">
+                            <LogLabel [ObjectFieldName]="'NonExitPort'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:180px">
+                            <LogLov [ObjectFieldName]="'NonExitPort'" [ObjectTableName]="ObjectTableName"
+                            [DataContext]="DataContext" [LookUpTableName]="'Customs.InternationalSite'"
+                            [SelectedValue]="NonExitPort" [HideColumns]="true"></LogLov>
+                        </td>
+                       
+                        <td style="width:130px">
+                            <LogLabel [ObjectFieldName]="'NonExportBillOfLadingNum'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:180px">
+                            <LogTextBox [ObjectFieldName]="'NonExportBillOfLadingNum'" [DataContext]="DataContext"
+                            [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                        </td>
+                       
+                        <td style="width:180px">
+                            <LogLabel [ObjectFieldName]="'NonExpectedExitDate'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:180px">
+                            <LogDatePicker [ObjectFieldName]="'NonExpectedExitDate'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                        </td>
+                    </tr>
+
+                    <tr class="FieldRow">
+                        <td style="width:130px">
+                            <LogLabel [ObjectFieldName]="'NonDeclaringCompany'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:180px">
+                            <LogTextBox [ObjectFieldName]="'NonDeclaringCompany'" [DataContext]="DataContext"
+                            [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                        </td>
+                       
+                        <td style="width:130px">
+                            <LogLabel [ObjectFieldName]="'NonDeclaringPerson'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:180px">
+                            <LogTextBox [ObjectFieldName]="'NonDeclaringPerson'" [DataContext]="DataContext"
+                            [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                        </td>
+                       
+                        <td style="width:130px">
+                            <LogLabel [ObjectFieldName]="'NonDeclaringPosition'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:180px">
+                            <LogTextBox [ObjectFieldName]="'NonDeclaringPosition'" [DataContext]="DataContext"
+                            [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                        </td>
+                    </tr>
+
+                    <tr class="FieldRow">
+                        <td style="width:130px">
+                            <LogLabel [ObjectFieldName]="'NonGoodsDescription'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:180px">
+                            <LogTextBox [ObjectFieldName]="'NonGoodsDescription'" [DataContext]="DataContext"
+                            [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                        </td>
+                       
+                        <td style="width:130px">
+                            <LogLabel [ObjectFieldName]="'NonManifestNum'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:180px">
+                            <LogTextBox [ObjectFieldName]="'NonManifestNum'" [DataContext]="DataContext"
+                            [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                        </td>
+                       
+                        <td style="width:130px"></td>
+                        <td style="width:180px"></td>
+                    </tr>
+                </table>
+            </div>
+
+        </td>
+        <td></td>
+    </tr>
+
+    <tr style="height:50%"></tr>
+</table>

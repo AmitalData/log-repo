@@ -243,6 +243,12 @@
     <None Include="DBTables\CargoStatus.dxml" />
     <None Include="DBTables\CargoType.dxml" />
     <None Include="DBTables\CertificateExemptionType.dxml" />
+    <None Include="DBTables\CertificateOfOrigin.dxml" />
+    <None Include="DBTables\CertificateOfOriginInvoice.dxml" />
+    <None Include="DBTables\CertificateOfOriginItem.dxml" />
+    <None Include="DBTables\CertificateOfOriginMandatoryFields.dxml" />
+    <None Include="DBTables\CertificateOfOriginStatusCodeEnum.dxml" />
+    <None Include="DBTables\CertificateOfOriginTypeCodeEnum.dxml" />
     <None Include="DBTables\CertificatesStatus.dxml" />
     <None Include="DBTables\CheckEntityType.dxml" />
     <None Include="DBTables\CheckEssenceLookup.dxml" />
@@ -477,6 +483,7 @@
     <None Include="DBTables\OcrDocument.dxml" />
     <None Include="DBTables\OcrStatus.dxml" />
     <None Include="DBTables\OrganizationUnitType.dxml" />
+    <None Include="DBTables\OriginCriterion.dxml" />
     <None Include="DBTables\PackageMeasureQualifier.dxml" />
     <None Include="DBTables\PackingType.dxml" />
     <None Include="DBTables\ParagraphType.dxml" />
@@ -523,6 +530,7 @@
     <None Include="DBTables\RefundCustomerActivityType.dxml" />
     <None Include="DBTables\RegisteredWarehouseSiteType.dxml" />
     <None Include="DBTables\ReleaseMessageType.dxml" />
+    <None Include="DBTables\RequestReasonCodeEnum.dxml" />
     <None Include="DBTables\RequestStatus.dxml" />
     <None Include="DBTables\RequestToAdvanceAQueue.dxml" />
     <None Include="DBTables\RequestType.dxml" />
@@ -606,6 +614,9 @@
     <None Include="DBTables\VendorType.dxml" />
     <None Include="EntityFiles\ConfirmationNumberTokenLog.lxml" />
     <None Include="EntityFiles\AddressCurrency.lxml" />
+    <None Include="EntityFiles\CertificateOfOrigin.lxml" />
+    <None Include="EntityFiles\CertificateOfOriginInvoice.lxml" />
+    <None Include="EntityFiles\CertificateOfOriginItem.lxml" />
     <None Include="EntityFiles\ClientItem.lxml" />
     <None Include="EntityFiles\ClientIndication.lxml" />
     <None Include="EntityFiles\CountryCurrency.lxml" />
@@ -619,6 +630,11 @@
     <None Include="EntityFiles\DeclarationFollowUp.lxml" />
     <None Include="EntityFiles\DefaultType.lxml" />
     <None Include="EntityFiles\DefaultValue.lxml" />
+    <None Include="EntityFiles\CertificateOfOriginTypeCodeEnum.lxml" />
+    <None Include="EntityFiles\CertificateOfOriginStatusCodeEnum.lxml" />
+    <None Include="EntityFiles\CertificateOfOriginMandatoryFields.lxml" />
+    <None Include="EntityFiles\RequestReasonCodeEnum.lxml" />
+    <None Include="EntityFiles\OriginCriterion.lxml" />
     <None Include="EntityFiles\GovernmentProcTypeTenant.lxml" />
     <None Include="EntityFiles\InternationalSiteTenant.lxml" />
     <None Include="EntityFiles\OcrDocument.lxml" />
