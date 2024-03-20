@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CB_RegularityRequirementUpdateClass
    {  		
-		public const string HashString = "58046ca6416431fb464a0314bf573615";
+		public const string HashString = "a031fced6ac6fbd8c6bfb4b473f322ee";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -126,7 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  " רשימה של דרישות חוקיות",
 			      				    DefaultText =  "Regularity Requirement",
-			      				    Code =  "57dd",
+			      				    Code =  "26e9",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -404,6 +404,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 						FieldName =  "CustomsItemID",
 					  						ObjectTableName =  "Customs.CB_RegularityRequirement",
 					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "CB_CustomsItem",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
