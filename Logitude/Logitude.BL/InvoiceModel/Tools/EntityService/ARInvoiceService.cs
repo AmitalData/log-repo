@@ -448,9 +448,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         {
            try {
 
-                   var res = ExportServerService.CreateConfirmationNumber(entityPM.Tenant, "libby@amital.co.il", CreateBodyFromARInvoice());
-
-                    if(res != null && res.StatusCode == System.Net.HttpStatusCode.OK) {
+                  ApiResponse apiResponse = ExportServerService.CreateConfirmationNumber(entityPM.Tenant, "libby@amital.co.il", CreateBodyFromARInvoice());
+                 
+                    if(apiResponse != null && apiResponse.Res?.StatusCode == System.Net.HttpStatusCode.OK) {
                         entityPM.ConfirmationNumberStatus = "2"; 
                         //entityPM.ConfirmationNumber=
                    }
@@ -468,24 +468,33 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private string CreateBodyFromARInvoice()
         {
             FullAccountingSettingRepository fullAccountingSettingRepository = new FullAccountingSettingRepository(entityPM.Tenant);
+            int ConsolidationVAT;
+            int.TryParse(fullAccountingSettingRepository.GetSingleFullAccountingSetting(entityPM.Tenant).ConsolidationVAT, out ConsolidationVAT);
             ConfirmationNumberAPI confirmationNumberAPI = new ConfirmationNumberAPI()
             {
-                InvoiceId = entityPM.InvoiceNumber,
-                InvoiceType = "305",
-                VatNumber=entityPM.VatNumber,
-                UnionVatNumber= fullAccountingSettingRepository.GetSingleFullAccountingSetting(entityPM.Tenant).ConsolidationVAT,
-                CustomerVatNumber=entityPM.VatNumber,
-                CustomerName=entityPM.BillToLocalName,
-                InvoiceDate= (DateTime)entityPM.InvoiceDate,
-                InvoiceIssuanceDate=(DateTime)entityPM.CreateDate,
-                AccountingSoftwareNumber="99999999",
-                ClientSoftwareKey="99999",
-                AmountBeforeDiscount=(decimal)entityPM.TotaVatableAmountForTaxReport,
+                Invoice_ID = entityPM.InvoiceNumber,
+                Invoice_Type = 305,
+                Vat_Number=int.Parse(entityPM.VatNumber),
+                Union_Vat_Number= ConsolidationVAT,
+                Customer_VAT_Number=int.Parse(entityPM.VatNumber),
+                Customer_Name=entityPM.BillToLocalName,
+                Invoice_Date= entityPM.InvoiceDate?.ToString("yyyy-MM-dd"),
+                Invoice_Issuance_Date = entityPM.CreateDate?.ToString("yyyy-MM-dd"),
+                Accounting_Software_Number =99999999,
+                Client_Software_Key="99999",
+                Amount_Before_Discount=(decimal)entityPM.TotaVatableAmountForTaxReport,
                 Discount=0,
-                PaymentAmount= (decimal)entityPM.TotaVatableAmountForTaxReport,
-                VatAmount=entityPM.TotalVAT,
-                PaymentAmountIncludingVat=entityPM.AmountInLocalCurrency,
-
+                Payment_Amount= (decimal)entityPM.TotaVatableAmountForTaxReport,
+                VAT_Amount=entityPM.TotalVAT,
+                Payment_Amount_Including_VAT=(decimal)entityPM.AmountInLocalCurrency,
+                Invoice_Reference_Number= string.Empty,
+                Branch_ID= string.Empty,
+                Arrival_Date= DateTime.Now.ToString("yyyy-MM-dd"),
+                Estimated_Arrival_Time= string.Empty,
+                Invoice_Note= string.Empty,
+                Phone_Of_Driver= "123",
+                Delivery_Address=string.Empty,
+                Items = new List<InvoiceItem>()
             };
             return JsonConvert.SerializeObject(confirmationNumberAPI);
         }
@@ -5076,37 +5085,48 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         public class ConfirmationNumberAPI
         {
-            public string InvoiceId { get; set; }
-            public string InvoiceType { get; set; }
-            public string VatNumber { get; set; }
-            public string UnionVatNumber { get; set; }
-            public string InvoiceReferenceNumber { get; set; }
-            public string CustomerVatNumber { get; set; }
-            public string CustomerName { get; set; }
-            public DateTime InvoiceDate { get; set; }
-            public DateTime InvoiceIssuanceDate { get; set; }
-            public string BranchId { get; set; }
-            public string AccountingSoftwareNumber { get; set; }
-            public string ClientSoftwareKey { get; set; }
-
-            public decimal AmountBeforeDiscount { get; set; }
+            public string Invoice_ID { get; set; }
+            public int Invoice_Type { get; set; }
+            public int Vat_Number { get; set; } // Consider using a nullable long for VAT number
+            public int Union_Vat_Number { get; set; } // Consider using a nullable long for VAT number
+            public string Invoice_Reference_Number { get; set; }
+            public int Customer_VAT_Number { get; set; }
+            public string Customer_Name { get; set; }
+            public string Invoice_Date { get; set; }
+            public string Invoice_Issuance_Date { get; set; }
+            public string Branch_ID { get; set; }
+            public int Accounting_Software_Number { get; set; } // Consider using a nullable long
+            public string Client_Software_Key { get; set; }
+            public decimal Amount_Before_Discount { get; set; }
             public decimal Discount { get; set; }
-            public decimal PaymentAmount { get; set; }
-            public decimal VatAmount { get; set; }
-            public double? PaymentAmountIncludingVat { get; set; }
+            public decimal Payment_Amount { get; set; }
+            public decimal VAT_Amount { get; set; }
+            public decimal? Payment_Amount_Including_VAT { get; set; }
+            public string Invoice_Note { get; set; }
+            public int Action { get; set; }
+            public long Vehicle_License_Number { get; set; } // Consider using a nullable long
+            public string Phone_Of_Driver { get; set; }
+            public string Arrival_Date { get; set; }
+            public string Estimated_Arrival_Time { get; set; }
+            public int Transition_Location { get; set; }
+            public string Delivery_Address { get; set; }
+            public int Additional_Information { get; set; }
+            public List<InvoiceItem> Items { get; set; }
+        }
 
-            public string InvoiceNote { get; set; }
-            public string Action { get; set; }
-            public string VehicleLicenseNumber { get; set; }
-            public string PhoneOfDriver { get; set; }
-            public DateTime ArrivalDate { get; set; }
-
-            // Assuming EstimatedArrivalTime is a TimeSpan
-            public TimeSpan EstimatedArrivalTime { get; set; }
-
-            public string TransitionLocation { get; set; }
-            public string DeliveryAddress { get; set; }
-            public string AdditionalInformation { get; set; }
+        public class InvoiceItem
+        {
+            public int Index { get; set; }
+            public string Catalog_ID { get; set; }
+            public int Category { get; set; }
+            public string Description { get; set; }
+            public string Measure_Unit_Description { get; set; }
+            public decimal Quantity { get; set; }
+            public decimal Price_Per_Unit { get; set; }
+            public decimal Discount { get; set; }
+            public decimal Total_Amount { get; set; }
+            public int VAT_Rate { get; set; }
+            public decimal VAT_Amount { get; set; }
         }
     }
 }

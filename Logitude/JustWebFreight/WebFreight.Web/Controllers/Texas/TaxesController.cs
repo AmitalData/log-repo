@@ -52,7 +52,7 @@ namespace WebFreight.Web.Controllers
             AuthenticationToken authToken = GetTenantFromToken();
             if (authToken == null) return Request.CreateResponse(HttpStatusCode.Unauthorized);
 
-            return ExportServerService.CreateConfirmationNumber(authToken.Tenant, authToken.Email, Convert.ToString(body));
+            return ExportServerService.CreateConfirmationNumber(authToken.Tenant, authToken.Email, Convert.ToString(body)).Res;
         }
 
         private static AuthenticationToken GetTenantFromToken()
