@@ -476,9 +476,10 @@
   </Column>
   <Column
     Name="SendingInterestReport"
-    Type="bit">
+    Type="bit"
+    DefaultValue="0">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Relation
     ForeignKeyColumn="Id"
