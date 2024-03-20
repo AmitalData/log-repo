@@ -25,7 +25,7 @@ namespace Unifreight.BL.EntityDataMappings
             entityPOCO.TRANSPVAL = entityPM.TRANSPVAL;
             entityPOCO.CURRIDN = entityPM.CURRIDN;
             entityPOCO.tenant = entityPM.Tenant;
-            entityPOCO.IS_SYNCH = entityPM.IS_SYNCH;
+            entityPOCO.IS_SYNCHRONIZED = entityPM.IS_SYNCH;
             entityPOCO.LAST_UPDATE_DT = entityPM.LAST_UPDATE_DT;
         }
 
@@ -38,7 +38,7 @@ namespace Unifreight.BL.EntityDataMappings
             entityPM.TRANSPVAL = entityPOCO.TRANSPVAL;
             entityPM.CURRIDN = entityPOCO.CURRIDN;
             entityPM.Tenant = (int)entityPOCO.tenant;
-            entityPM.IS_SYNCH = (bool)entityPOCO.IS_SYNCH;
+            entityPM.IS_SYNCH = (bool)entityPOCO.IS_SYNCHRONIZED;
             entityPM.LAST_UPDATE_DT = entityPOCO.LAST_UPDATE_DT;
 
         }

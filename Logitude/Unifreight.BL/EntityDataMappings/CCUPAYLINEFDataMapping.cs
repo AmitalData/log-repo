@@ -31,7 +31,7 @@ namespace Unifreight.BL.EntityDataMappings
             entityPOCO.TYPE = entityPM.TYPE;
             entityPOCO.VATBANK = entityPM.VATBANK;
             entityPOCO.tenant = entityPM.Tenant;
-            entityPOCO.IS_SYNCH = entityPM.IS_SYNCH;
+            entityPOCO.IS_SYNCHRONIZED = entityPM.IS_SYNCH;
             entityPOCO.LAST_UPDATE_DT = entityPM.LAST_UPDATE_DT;
         }
 
@@ -54,7 +54,7 @@ namespace Unifreight.BL.EntityDataMappings
             entityPM.TYPE = entityPOCO.TYPE;
             entityPM.VATBANK = entityPOCO.VATBANK;
             entityPM.Tenant = (int)entityPOCO.tenant;
-            entityPM.IS_SYNCH = (bool)entityPOCO.IS_SYNCH;
+            entityPM.IS_SYNCH = (bool)entityPOCO.IS_SYNCHRONIZED;
             entityPM.LAST_UPDATE_DT = entityPOCO.LAST_UPDATE_DT;
 
         }

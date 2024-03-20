@@ -28,7 +28,7 @@ namespace Unifreight.BL.EntityDataMappings
             entityPOCO.APPROVELEVEL = entityPM.APPROVELEVEL;
             entityPOCO.MESSAGETXT = entityPM.MESSAGETXT;
             entityPOCO.tenant = entityPM.Tenant;
-            entityPOCO.IS_SYNCH = entityPM.IS_SYNCH;
+            entityPOCO.IS_SYNCHRONIZED = entityPM.IS_SYNCH;
             entityPOCO.LAST_UPDATE_DT = entityPM.LAST_UPDATE_DT;
         }
 
@@ -49,7 +49,7 @@ namespace Unifreight.BL.EntityDataMappings
             entityPM.APPROVELEVEL = entityPOCO.APPROVELEVEL;
             entityPM.MESSAGETXT = entityPOCO.MESSAGETXT;
             entityPM.Tenant = (int)entityPOCO.tenant;
-            entityPM.IS_SYNCH = (bool)entityPOCO.IS_SYNCH;
+            entityPM.IS_SYNCH = (bool)entityPOCO.IS_SYNCHRONIZED;
             entityPM.LAST_UPDATE_DT = entityPOCO.LAST_UPDATE_DT;
 
         }
