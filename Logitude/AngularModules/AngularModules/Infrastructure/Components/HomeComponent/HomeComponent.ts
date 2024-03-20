@@ -57,7 +57,7 @@ export class HomeComponent implements OnDestroy{
 
         this.Tabs = [];
         this.Tabs.push(new SessionTabItem());
-
+        console.log("tab[1].IsSelected: " + this.Tabs[1]?.IsSelected)
         this.InitializeComponent();
 
         if (!this.IsNewSignupTenant) {
@@ -78,6 +78,12 @@ export class HomeComponent implements OnDestroy{
         if (!AppTool.IsNullOrEmpty(ObjectsLocator.GlobalSetting.ReleaseNotesURL) && SessionLocator.ShowUserNewReleaseToolTip && !SessionLocator.PrivateLableSettings) {
             this.ShowNewReleaseToolTip = true;
         }
+
+        console.log("constructor, ShowBackButton: " + this.ShowBackButton)
+        console.log("constructor, _AmitalBrowserInUse: " + this._AmitalBrowserInUse)
+        console.log("constructor, tab.SessionComponent.CurrentEditComponent: " + this.Tabs[1]?.SessionComponent?.CurrentEditComponent)
+        console.log("constructor, tab.IsSelected: " + this.Tabs[1]?.IsSelected)
+
     }
 
     OnSessionMouseUp($event) {
@@ -505,6 +511,7 @@ export class HomeComponent implements OnDestroy{
         if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
             this.AddTab();//this.Tabs.push(new SessionTabItem());
             this._AmitalBrowserInUse = AmitalGatewayUtil.Instance.AmitalBrowserInUse;
+            console.log("func: CheckAmitalBrowserInUse, _AmitalBrowserInUse: " + this._AmitalBrowserInUse)
             let myCA23EditTab: SessionTabItem = this.Tabs[1];
             this.SelectionChanged(myCA23EditTab);
             let timerToken = //setTimeout(() => this.RunComponent(), 1);
@@ -565,6 +572,7 @@ export class HomeComponent implements OnDestroy{
             SessionLocator.ExternalParams["ExportDecId"];
         if (!AppTool.IsNullOrEmpty(exportDecId)) {
             this.ShowBackButton = false;
+            console.log("func: ShowExportDeclaration, ShowBackButton: " + this.ShowBackButton)
             AmitalGatewayUtil.Instance.AmitalBrowserInUse = false;
             console.log("161487-AmitalBrowserInUse = false + UnifreightEntity : BFIFILE"); 
             setTimeout(() => {
@@ -831,6 +839,10 @@ export class HomeComponent implements OnDestroy{
     AddTab() {
         SessionLocator.Index += 1;
         this.Tabs.push(new SessionTabItem());
+        console.log("func: AddTab, ShowBackButton: " + this.ShowBackButton)
+        console.log("func: AddTab, _AmitalBrowserInUse: " + this._AmitalBrowserInUse)
+        console.log("func: AddTab, tab.SessionComponent.CurrentEditComponent: " + this.Tabs[1]?.SessionComponent?.CurrentEditComponent)
+        console.log("func: AddTab, tab.IsSelected: " + this.Tabs[1]?.IsSelected)
         this.SelectionChanged(this.Tabs[this.Tabs.length - 1]);
         this.Retries = 0;
         this.RunComponentTimer();
