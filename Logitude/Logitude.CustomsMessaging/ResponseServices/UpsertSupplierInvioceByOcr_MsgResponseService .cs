@@ -470,6 +470,17 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         else
                             supplierInvoiceItemPM.OriginCountryCode = CustomsCountry.Code;
                     }
+                    if (supplierInvoiceItem.TryGetValue("ITEM_HS_CODE", out string itemCode))
+                    {
+                        supplierInvoiceItemPM.ClassificationCode = itemCode;
+                    }
+                    else if(dic.TryGetValue("HS_CODE", out string classificationCode))
+                    {
+                        supplierInvoiceItemPM.ClassificationCode = classificationCode;
+                    }
+                    {
+
+                    }
                     //if (supplierInvoiceItem.TryGetValue("Item_unit", out string ItemUnit))
                     //{
                     //    MeasurmentUnitQueryService measurmentUnitQueryService = new MeasurmentUnitQueryService(tenant);
@@ -479,7 +490,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     //    else
                     //        supplierInvoiceItemPM.InvoiceQuantityType = MeasurmentUnit.Code;
                     //}
-                    
+
                     if (string.IsNullOrEmpty(supplierInvoiceItemPM.OriginCountryCode) && !string.IsNullOrEmpty(originCountryField))
                     {
                         supplierInvoiceItemPM.OriginCountryCode = originCountryField;
