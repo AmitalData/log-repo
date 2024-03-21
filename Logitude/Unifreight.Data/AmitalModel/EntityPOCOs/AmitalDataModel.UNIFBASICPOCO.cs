@@ -53,25 +53,25 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
 
 
         /// <summary>
-        /// There are no comments for IS_SYNCHRONIZED in the schema.
+        /// There are no comments for IS_SYNCH in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<bool> IS_SYNCHRONIZED
+        public virtual global::System.Nullable<bool> IS_SYNCH
         {
             get
             {
-                return _IS_SYNCHRONIZED;
+                return _IS_SYNCH;
             }
             set
             {
-                if (_IS_SYNCHRONIZED != value)
+                if (_IS_SYNCH != value)
                 {
-                    _IS_SYNCHRONIZED = value;
-                    OnPropertyChanged("IS_SYNCHRONIZED");
+                    _IS_SYNCH = value;
+                    OnPropertyChanged("IS_SYNCH");
                 }
             }
         }
-        private global::System.Nullable<bool> _IS_SYNCHRONIZED;
+        private global::System.Nullable<bool> _IS_SYNCH;
 
 
         /// <summary>

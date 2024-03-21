@@ -46,14 +46,16 @@ namespace Unifreight.BL.EntityUpdateServices
 
         protected override void OnUpdating(YCULTASKPM entityPM)
         {
-            CustomsSettingRepository custSettingsRepo = new CustomsSettingRepository(entityPM.Tenant);
-            bool isConnectedToUnifreight = custSettingsRepo.GetSettingByTenant(entityPM.Tenant).IsConnectedToUniFreight;
-            if (!isConnectedToUnifreight)
-            {
-                entityPM.IS_SYNCHRONIZED = false;
-                entityPM.LAST_UPDATE_DT = DateTime.Now;
+            if (entityPM.Tenant != 0) {
+                CustomsSettingRepository custSettingsRepo = new CustomsSettingRepository(entityPM.Tenant);
+                bool isConnectedToUnifreight = custSettingsRepo.GetSettingByTenant(entityPM.Tenant).IsConnectedToUniFreight;
+                if (!isConnectedToUnifreight)
+                {
+                    entityPM.IS_SYNCH = false;
+                    entityPM.LAST_UPDATE_DT = DateTime.Now;
+                }
             }
-
+          
         }
     }
 }

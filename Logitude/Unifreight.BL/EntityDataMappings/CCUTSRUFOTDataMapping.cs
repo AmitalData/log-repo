@@ -20,7 +20,7 @@ namespace Unifreight.BL.EntityDataMappings
             entityPOCO.QUANTITY = entityPM.QUANTITY;
             entityPOCO.TSRUFANO = entityPM.TSRUFANO;
             entityPOCO.tenant = entityPM.Tenant;
-            entityPOCO.IS_SYNCHRONIZED = entityPM.IS_SYNCHRONIZED;
+            entityPOCO.IS_SYNCH = entityPM.IS_SYNCH;
             entityPOCO.LAST_UPDATE_DT = entityPM.LAST_UPDATE_DT;
         }
 
@@ -32,7 +32,7 @@ namespace Unifreight.BL.EntityDataMappings
             entityPM.QUANTITY = entityPOCO.QUANTITY;
             entityPM.TSRUFANO = entityPOCO.TSRUFANO;
             entityPM.Tenant = entityPOCO.tenant != null ? (int)entityPOCO.tenant : 0;
-            entityPM.IS_SYNCHRONIZED = entityPOCO.IS_SYNCHRONIZED != null ? (bool)entityPOCO.IS_SYNCHRONIZED : false;
+            entityPM.IS_SYNCH = entityPOCO.IS_SYNCH != null ? (bool)entityPOCO.IS_SYNCH : false;
             entityPM.LAST_UPDATE_DT = entityPOCO.LAST_UPDATE_DT != null ? entityPOCO.LAST_UPDATE_DT : DateTime.Now;
 
         }

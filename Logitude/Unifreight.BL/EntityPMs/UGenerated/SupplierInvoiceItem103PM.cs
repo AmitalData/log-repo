@@ -35,7 +35,7 @@ namespace Unifreight.BL.EntityPMs
         public string CURRENCYCODE { get; set; }
         public int Tenant { get; set; }
 
-        public bool IS_SYNCHRONIZED { get; set; }
+        public bool IS_SYNCH { get; set; }
 
         public DateTime? LAST_UPDATE_DT { get; set; }
 
