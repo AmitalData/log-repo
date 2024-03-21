@@ -51,7 +51,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
     {
 	  
        
-        public HttpResponseMessage GetSingle(string id)
+        public HttpResponseMessage GetSingle(string cb_id)
         {
 		  try
             {
@@ -63,7 +63,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
                 CB_LevyConditionQueryService cB_LevyConditionQuery = new CB_LevyConditionQueryService(MyContext);
 				cB_LevyConditionQuery.InitializeSettings();
-                CB_LevyConditionPM cB_LevyConditionPM = cB_LevyConditionQuery.GetSingle(id,true,false);
+                CB_LevyConditionPM cB_LevyConditionPM = cB_LevyConditionQuery.GetSingle(cb_id,true,false);
 
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
             

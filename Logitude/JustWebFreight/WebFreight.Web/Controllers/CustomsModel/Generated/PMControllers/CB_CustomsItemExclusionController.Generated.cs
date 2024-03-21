@@ -51,7 +51,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
     {
 	  
        
-        public HttpResponseMessage GetSingle(string id)
+        public HttpResponseMessage GetSingle(string cb_id)
         {
 		  try
             {
@@ -63,7 +63,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
                 CB_CustomsItemExclusionQueryService cB_CustomsItemExclusionQuery = new CB_CustomsItemExclusionQueryService(MyContext);
 				cB_CustomsItemExclusionQuery.InitializeSettings();
-                CB_CustomsItemExclusionPM cB_CustomsItemExclusionPM = cB_CustomsItemExclusionQuery.GetSingle(id,true,false);
+                CB_CustomsItemExclusionPM cB_CustomsItemExclusionPM = cB_CustomsItemExclusionQuery.GetSingle(cb_id,true,false);
 
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
             

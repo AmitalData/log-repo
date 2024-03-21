@@ -12,16 +12,14 @@ namespace Logitude.Customs.Data.EntityLists
    [DataContract]
    public partial class CB_PropertiesDetailsHistoryList
    {
-   
-       [Key]
-       [DataMember]
-       public string ID  { get; set; }
+          [DataMember]
+       public int ID  { get; set; }
        [DataMember]
        public DateTime CreateDate  { get; set; }
        [DataMember]
        public DateTime? UpdateDate  { get; set; }
        [DataMember]
-       public string CustomsItemID  { get; set; }
+       public int CustomsItemID  { get; set; }
        [DataMember]
        public DateTime? StartDate  { get; set; }
        [DataMember]
@@ -76,6 +74,10 @@ namespace Logitude.Customs.Data.EntityLists
        public bool IsCarDiscount  { get; set; }
        [DataMember]
        public string DiscountRegularityRequirementType  { get; set; }
+
+       [Key]
+       [DataMember]
+       public string CB_ID  { get; set; }
    }
 
 }

@@ -8,7 +8,7 @@
 
 export class CB_ComputationMethodDataList {
    
-	ID: string;
+	ID: number;
 	AlternateDefinedPerUnitMeasure: number;
 	AlternateRate: number;
 	CalculationReference: string;
@@ -24,6 +24,7 @@ export class CB_ComputationMethodDataList {
 	TariffRelatedToQuotaID: string;
 	Notes: string;
 	EnglishNotes: string;
+	CB_ID: string;
 	
 }
  

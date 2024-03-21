@@ -51,7 +51,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
     {
 	  
        
-        public HttpResponseMessage GetSingle(string id)
+        public HttpResponseMessage GetSingle(string cb_id)
         {
 		  try
             {
@@ -61,7 +61,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
                 CB_AdditionRulesDetailsHistoryListQueryService cB_AdditionRulesDetailsHistoryQuery = new CB_AdditionRulesDetailsHistoryListQueryService(MyContext);
-                CB_AdditionRulesDetailsHistoryList cB_AdditionRulesDetailsHistoryList = cB_AdditionRulesDetailsHistoryQuery.GetSingle(id);
+                CB_AdditionRulesDetailsHistoryList cB_AdditionRulesDetailsHistoryList = cB_AdditionRulesDetailsHistoryQuery.GetSingle(cb_id);
  				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 				           
                 return Request.CreateResponse(HttpStatusCode.OK,  cB_AdditionRulesDetailsHistoryList);

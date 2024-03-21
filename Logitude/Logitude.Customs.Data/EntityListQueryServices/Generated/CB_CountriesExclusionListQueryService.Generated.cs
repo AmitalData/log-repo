@@ -103,7 +103,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                             }
                         default:
                             {
-                                query2 = query2.OrderByDescending(d => d.ID);
+                                query2 = query2.OrderByDescending(d => d.CB_ID);
                                 break;
                             }
                     }
@@ -112,7 +112,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             }
 		    else
             {
-                query2 = query2.OrderByDescending(d => d.ID);
+                query2 = query2.OrderByDescending(d => d.CB_ID);
             }
 			if(!queryOperations.GetAll)
 			{
@@ -129,10 +129,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
              return GetList(new QueryOperations() { QueryFilterItems=new List<QueryFilterItem>(),PageIndex = 0,GetAll = true},tenant);
          }
 
-        public CB_CountriesExclusionList GetSingle(string id)
+        public CB_CountriesExclusionList GetSingle(string cb_id)
         {
             IQueryable<CB_CountriesExclusion> CB_CountriesExclusionQuery = (from a in context.CB_CountriesExclusions
-                                                       where a.ID == id
+                                                       where a.CB_ID == cb_id
                                                        select a);
 
              

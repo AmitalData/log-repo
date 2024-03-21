@@ -6,10 +6,8 @@
   Module="Customs">
   <Column
     Name="ID"
-    Type="varchar"
-    Size="15">
+    Type="int">
     <Constraints
-      PrimaryKey="true"
       Nullable="false" />
   </Column>
   <Column
@@ -72,8 +70,7 @@
   </Column>
   <Column
     Name="ComputationMethodDataID"
-    Type="varchar"
-    Size="15">
+    Type="int">
     <Constraints
       Nullable="true" />
   </Column>
@@ -91,6 +88,14 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="CB_ID"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="CustomsBookTypeID"
     ReferencedTable="CustomsBookTypes"
@@ -105,11 +110,6 @@
     ForeignKeyColumn="TradeLevyStatusID"
     ReferencedTable="TradeLevystatuses"
     ReferencedColumn="Code"
-    ReferencedTableSchema="Customs" />
-  <Relation
-    ForeignKeyColumn="ComputationMethodDataID"
-    ReferencedTable="CB_ComputationMethodDatas"
-    ReferencedColumn="ID"
     ReferencedTableSchema="Customs" />
   <Relation
     ForeignKeyColumn="LevyTrustID"

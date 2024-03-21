@@ -51,7 +51,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
     {
 	  
        
-        public HttpResponseMessage GetSingle(string id)
+        public HttpResponseMessage GetSingle(string cb_id)
         {
 		  try
             {
@@ -63,7 +63,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
                 CB_QuotaQueryService cB_QuotaQuery = new CB_QuotaQueryService(MyContext);
 				cB_QuotaQuery.InitializeSettings();
-                CB_QuotaPM cB_QuotaPM = cB_QuotaQuery.GetSingle(id,true,false);
+                CB_QuotaPM cB_QuotaPM = cB_QuotaQuery.GetSingle(cb_id,true,false);
 
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
             

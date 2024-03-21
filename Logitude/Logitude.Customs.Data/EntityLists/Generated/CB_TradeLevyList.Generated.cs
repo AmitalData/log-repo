@@ -12,10 +12,8 @@ namespace Logitude.Customs.Data.EntityLists
    [DataContract]
    public partial class CB_TradeLevyList
    {
-   
-       [Key]
-       [DataMember]
-       public string ID  { get; set; }
+          [DataMember]
+       public int ID  { get; set; }
        [DataMember]
        public DateTime CreateDate  { get; set; }
        [DataMember]
@@ -35,11 +33,15 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string TradeLevyStatusID  { get; set; }
        [DataMember]
-       public string ComputationMethodDataID  { get; set; }
+       public int? ComputationMethodDataID  { get; set; }
        [DataMember]
        public string LevyTrustID  { get; set; }
        [DataMember]
        public string ParagraphTypeID  { get; set; }
+
+       [Key]
+       [DataMember]
+       public string CB_ID  { get; set; }
    }
 
 }

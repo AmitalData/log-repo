@@ -51,7 +51,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
     {
 	  
        
-        public HttpResponseMessage GetSingle(string id)
+        public HttpResponseMessage GetSingle(string cb_id)
         {
 		  try
             {
@@ -63,7 +63,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
                 CB_CustomsItemLinkageQueryService cB_CustomsItemLinkageQuery = new CB_CustomsItemLinkageQueryService(MyContext);
 				cB_CustomsItemLinkageQuery.InitializeSettings();
-                CB_CustomsItemLinkagePM cB_CustomsItemLinkagePM = cB_CustomsItemLinkageQuery.GetSingle(id,true,false);
+                CB_CustomsItemLinkagePM cB_CustomsItemLinkagePM = cB_CustomsItemLinkageQuery.GetSingle(cb_id,true,false);
 
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
             

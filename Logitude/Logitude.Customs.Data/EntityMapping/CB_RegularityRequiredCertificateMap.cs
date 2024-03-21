@@ -31,11 +31,11 @@ namespace Logitude.Customs.Data.EntityMapping
 	}
 
 		
-		    this.HasKey(t => new { t.ID });
+		    this.HasKey(t => new { t.CB_ID });
 	 
-            this.Property(t => t.ID).HasColumnName("ID").IsRequired().HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.ID).HasColumnName("ID");
 
-            this.Property(t => t.RegularityInceptionID).HasColumnName("RegularityInceptionID").HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.RegularityInceptionID).HasColumnName("RegularityInceptionID");
 
             this.Property(t => t.ConfirmationTypeID).HasColumnName("ConfirmationTypeID").HasMaxLength(4).IsUnicode(false);
 
@@ -46,6 +46,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.TrNumber).HasColumnName("TrNumber");
 
             this.Property(t => t.AuthorityID).HasColumnName("AuthorityID").HasMaxLength(3).IsUnicode(false);
+
+            this.Property(t => t.CB_ID).HasColumnName("CB_ID").IsRequired().HasMaxLength(15).IsUnicode(false);
         }
     }
 }

@@ -18,9 +18,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
     {
 	 string dbms;
 
-        [Key]
-        [Column("ID")]
-	    public string ID { get; set; }
+           [Column("ID")]
+	    public int ID { get; set; }
         [Column("AlternateDefinedPerUnitMeasure")]
 	    public decimal? AlternateDefinedPerUnitMeasure { get; set; }
         [Column("AlternateRate")]
@@ -66,6 +65,9 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string Notes { get; set; }
         [Column("EnglishNotes")]
 	    public string EnglishNotes { get; set; }
+     [Key]
+        [Column("CB_ID")]
+	    public string CB_ID { get; set; }
     }
 }
 	 

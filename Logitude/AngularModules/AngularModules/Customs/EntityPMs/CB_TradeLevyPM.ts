@@ -24,9 +24,9 @@ export class CB_TradeLevyPM {
       }
  	 
     
-    private iD: string;
+    private iD: number;
     public get ID() { return this.iD; }
-    public set ID(newValue: string) { if (this.iD != newValue) { this.iD = newValue; this.MarkAsDirty("ID"); } }
+    public set ID(newValue: number) { if (this.iD != newValue) { this.iD = newValue; this.MarkAsDirty("ID"); } }
        
 	 
     private createDate: Date;
@@ -74,9 +74,9 @@ export class CB_TradeLevyPM {
     public set TradeLevyStatusID(newValue: string) { if (this.tradeLevyStatusID != newValue) { this.tradeLevyStatusID = newValue; this.MarkAsDirty("TradeLevyStatusID"); } }
        
 	 
-    private computationMethodDataID: string;
+    private computationMethodDataID: number;
     public get ComputationMethodDataID() { return this.computationMethodDataID; }
-    public set ComputationMethodDataID(newValue: string) { if (this.computationMethodDataID != newValue) { this.computationMethodDataID = newValue; this.MarkAsDirty("ComputationMethodDataID"); } }
+    public set ComputationMethodDataID(newValue: number) { if (this.computationMethodDataID != newValue) { this.computationMethodDataID = newValue; this.MarkAsDirty("ComputationMethodDataID"); } }
        
 	 
     private levyTrustID: string;
@@ -87,6 +87,11 @@ export class CB_TradeLevyPM {
     private paragraphTypeID: string;
     public get ParagraphTypeID() { return this.paragraphTypeID; }
     public set ParagraphTypeID(newValue: string) { if (this.paragraphTypeID != newValue) { this.paragraphTypeID = newValue; this.MarkAsDirty("ParagraphTypeID"); } }
+       
+	 
+    private cB_ID: string;
+    public get CB_ID() { return this.cB_ID; }
+    public set CB_ID(newValue: string) { if (this.cB_ID != newValue) { this.cB_ID = newValue; this.MarkAsDirty("CB_ID"); } }
        
 	 
 

@@ -21,9 +21,9 @@ namespace Logitude.Customs.Data.EntityMapping
         { 
 			  this.ToTable("CB_CustomsItemDetailsHistorys", "Customs");
 		
-		    this.HasKey(t => new { t.ID });
+		    this.HasKey(t => new { t.CB_ID });
 	 
-            this.Property(t => t.ID).HasColumnName("ID").IsRequired().HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.ID).HasColumnName("ID");
 
             this.Property(t => t.CreateDate).HasColumnName("CreateDate");
 
@@ -45,9 +45,11 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.EnglishGoodsDescriptionRTF).HasColumnName("EnglishGoodsDescriptionRTF").IsMaxLength().IsUnicode(false);
 
-            this.Property(t => t.CustomsItemID).HasColumnName("CustomsItemID").HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.CustomsItemID).HasColumnName("CustomsItemID");
 
             this.Property(t => t.ChangeRequestTypePriority).HasColumnName("ChangeRequestTypePriority");
+
+            this.Property(t => t.CB_ID).HasColumnName("CB_ID").IsRequired().HasMaxLength(15).IsUnicode(false);
         }
     }
 }

@@ -27,9 +27,9 @@ export class CB_PropertiesDetailsHistoryPM {
 
 	 
     
-    private iD: string;
+    private iD: number;
     public get ID() { return this.iD; }
-    public set ID(newValue: string) { if (this.iD != newValue) { this.iD = newValue; this.MarkAsDirty("ID"); } }
+    public set ID(newValue: number) { if (this.iD != newValue) { this.iD = newValue; this.MarkAsDirty("ID"); } }
        
 	 
     private createDate: Date;
@@ -42,9 +42,9 @@ export class CB_PropertiesDetailsHistoryPM {
     public set UpdateDate(newValue: Date) { if (this.updateDate != newValue) { this.updateDate = newValue; this.MarkAsDirty("UpdateDate"); } }
        
 	 
-    private customsItemID: string;
+    private customsItemID: number;
     public get CustomsItemID() { return this.customsItemID; }
-    public set CustomsItemID(newValue: string) { if (this.customsItemID != newValue) { this.customsItemID = newValue; this.MarkAsDirty("CustomsItemID"); } }
+    public set CustomsItemID(newValue: number) { if (this.customsItemID != newValue) { this.customsItemID = newValue; this.MarkAsDirty("CustomsItemID"); } }
        
 	 
     private startDate: Date;
@@ -180,6 +180,11 @@ export class CB_PropertiesDetailsHistoryPM {
     private discountRegularityRequirementType: string;
     public get DiscountRegularityRequirementType() { return this.discountRegularityRequirementType; }
     public set DiscountRegularityRequirementType(newValue: string) { if (this.discountRegularityRequirementType != newValue) { this.discountRegularityRequirementType = newValue; this.MarkAsDirty("DiscountRegularityRequirementType"); } }
+       
+	 
+    private cB_ID: string;
+    public get CB_ID() { return this.cB_ID; }
+    public set CB_ID(newValue: string) { if (this.cB_ID != newValue) { this.cB_ID = newValue; this.MarkAsDirty("CB_ID"); } }
        
 	 
 

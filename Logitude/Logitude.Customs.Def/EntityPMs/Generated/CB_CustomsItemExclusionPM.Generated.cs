@@ -18,14 +18,12 @@ namespace Logitude.Customs.Def.EntityPMs
    [DataContract]
    public partial class CB_CustomsItemExclusionPM : EntityPM
    {
-   	  private string iD ;
-	  
-       [Key]
-	  
+   	  private int iD ;
+	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string ID  
+       public int ID  
 	   {
 	    
 	     get
@@ -36,19 +34,19 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(iD != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ID",OldValue=iD,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ID",OldValue=iD,NewValue=value,PropertyType="int"};
 		    NotifyPropertyChanged(values);
 		   iD=value;
 		   }
 			
 		 }
 	   }
-	  private string regularityRequirementID ;
+	  private int regularityRequirementID ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string RegularityRequirementID  
+       public int RegularityRequirementID  
 	   {
 	    
 	     get
@@ -59,19 +57,19 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(regularityRequirementID != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RegularityRequirementID",OldValue=regularityRequirementID,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RegularityRequirementID",OldValue=regularityRequirementID,NewValue=value,PropertyType="int"};
 		    NotifyPropertyChanged(values);
 		   regularityRequirementID=value;
 		   }
 			
 		 }
 	   }
-	  private string customsItemID ;
+	  private int customsItemID ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string CustomsItemID  
+       public int CustomsItemID  
 	   {
 	    
 	     get
@@ -82,9 +80,34 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(customsItemID != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomsItemID",OldValue=customsItemID,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomsItemID",OldValue=customsItemID,NewValue=value,PropertyType="int"};
 		    NotifyPropertyChanged(values);
 		   customsItemID=value;
+		   }
+			
+		 }
+	   }
+	  private string cB_ID ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CB_ID  
+	   {
+	    
+	     get
+		{
+		   return cB_ID;
+		 }
+		 set
+		 {
+		   if(cB_ID != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CB_ID",OldValue=cB_ID,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   cB_ID=value;
 		   }
 			
 		 }

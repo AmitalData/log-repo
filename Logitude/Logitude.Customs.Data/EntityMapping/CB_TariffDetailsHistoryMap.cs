@@ -21,17 +21,17 @@ namespace Logitude.Customs.Data.EntityMapping
         { 
 			  this.ToTable("CB_TariffDetailsHistorys", "Customs");
 		
-		    this.HasKey(t => new { t.ID });
+		    this.HasKey(t => new { t.CB_ID });
 	 
-            this.Property(t => t.ID).HasColumnName("ID").IsRequired().HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.ID).HasColumnName("ID");
 
             this.Property(t => t.CreateDate).HasColumnName("CreateDate");
 
             this.Property(t => t.UpdateDate).HasColumnName("UpdateDate");
 
-            this.Property(t => t.TariffID).HasColumnName("TariffID").HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.TariffID).HasColumnName("TariffID");
 
-            this.Property(t => t.QuotaID).HasColumnName("QuotaID").HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.QuotaID).HasColumnName("QuotaID");
 
             this.Property(t => t.StartDate).HasColumnName("StartDate");
 
@@ -39,11 +39,13 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.EntityStatusID).HasColumnName("EntityStatusID").HasMaxLength(2).IsUnicode(false);
 
-            this.Property(t => t.WithinQuota_ComputMethDataID).HasColumnName("WithinQuota_ComputMethDataID").HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.WithinQuota_ComputMethDataID).HasColumnName("WithinQuota_ComputMethDataID");
 
-            this.Property(t => t.WithoutQuota_ComputMethDataID).HasColumnName("WithoutQuota_ComputMethDataID").HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.WithoutQuota_ComputMethDataID).HasColumnName("WithoutQuota_ComputMethDataID");
 
             this.Property(t => t.ChangeRequestTypePriority).HasColumnName("ChangeRequestTypePriority");
+
+            this.Property(t => t.CB_ID).HasColumnName("CB_ID").IsRequired().HasMaxLength(15).IsUnicode(false);
         }
     }
 }

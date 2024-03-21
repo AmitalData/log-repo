@@ -6,10 +6,8 @@
   Module="Customs">
   <Column
     Name="ID"
-    Type="varchar"
-    Size="15">
+    Type="int">
     <Constraints
-      PrimaryKey="true"
       Nullable="false" />
   </Column>
   <Column
@@ -27,15 +25,13 @@
   </Column>
   <Column
     Name="CustomsItemID"
-    Type="varchar"
-    Size="15">
+    Type="int">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="VendorID"
-    Type="varchar"
-    Size="15">
+    Type="int">
     <Constraints
       Nullable="true" />
   </Column>
@@ -61,10 +57,9 @@
   </Column>
   <Column
     Name="TradeLevyID"
-    Type="varchar"
-    Size="15">
+    Type="int">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="StartDate"
@@ -78,24 +73,17 @@
     <Constraints
       Nullable="true" />
   </Column>
-  <Relation
-    ForeignKeyColumn="CustomsItemID"
-    ReferencedTable="CB_CustomsItems"
-    ReferencedColumn="ID"
-    ReferencedTableSchema="Customs" />
-  <Relation
-    ForeignKeyColumn="VendorID"
-    ReferencedTable="CB_Vendors"
-    ReferencedColumn="ID"
-    ReferencedTableSchema="Customs" />
+  <Column
+    Name="CB_ID"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="CountryGroupID"
     ReferencedTable="CountryGroups"
     ReferencedColumn="Code"
-    ReferencedTableSchema="Customs" />
-  <Relation
-    ForeignKeyColumn="TradeLevyID"
-    ReferencedTable="CB_TradeLevys"
-    ReferencedColumn="ID"
     ReferencedTableSchema="Customs" />
 </Table>

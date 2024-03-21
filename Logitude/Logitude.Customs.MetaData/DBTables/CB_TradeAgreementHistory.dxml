@@ -6,10 +6,8 @@
   Module="Customs">
   <Column
     Name="ID"
-    Type="varchar"
-    Size="15">
+    Type="int">
     <Constraints
-      PrimaryKey="true"
       Nullable="false" />
   </Column>
   <Column
@@ -51,10 +49,9 @@
   </Column>
   <Column
     Name="TradeAgreementID"
-    Type="varchar"
-    Size="15">
+    Type="int">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="ChangeRequestTypePriority"
@@ -62,14 +59,17 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="CB_ID"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="EntityStatusID"
     ReferencedTable="CustomsEntityStatuses"
     ReferencedColumn="Code"
-    ReferencedTableSchema="Customs" />
-  <Relation
-    ForeignKeyColumn="TradeAgreementID"
-    ReferencedTable="CB_TradeAgreements"
-    ReferencedColumn="ID"
     ReferencedTableSchema="Customs" />
 </Table>

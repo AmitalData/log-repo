@@ -28,7 +28,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         IsPersonalImportIncluded, 
 	         RequirementGoodsDescription, 
 	         RegularityRequirementWarnID, 
-	         IsCarnetIncluded,
+	         IsCarnetIncluded, 
+	         CB_ID,
 	      }
 
 
@@ -41,7 +42,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         IsPersonalImportIncluded, 
 	         RequirementGoodsDescription, 
 	         RegularityRequirementWarnID, 
-	         IsCarnetIncluded,
+	         IsCarnetIncluded, 
+	         CB_ID,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -50,6 +52,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	    public void PMToPOCO(CB_RegularityInceptionPM entityPM, CB_RegularityInception entityPOCO)
         {
 			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ID))
+            {
+				entityPOCO.ID = entityPM.ID;
+			}
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RegularityRequirementID))
             {
 				entityPOCO.RegularityRequirementID = entityPM.RegularityRequirementID;
@@ -119,12 +126,22 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.IsCarnetIncluded = entityPOCO.IsCarnetIncluded;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CB_ID))
+            {
+					entityPM.CB_ID = entityPOCO.CB_ID;
+            }
+
 		}
 
 		public void PMToOldPM(CB_RegularityInceptionPM entityPM, CB_RegularityInceptionPM oldEntityPM)
         {
 		     oldEntityPM.ChangedProperties.Clear();
 			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ID))
+            {
+                oldEntityPM.ID = entityPM.ID;
+            }
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RegularityRequirementID))
             {
                 oldEntityPM.RegularityRequirementID = entityPM.RegularityRequirementID;

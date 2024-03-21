@@ -48,9 +48,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
             mapping = new CB_CountriesExclusionDataMapping();
         }
 		 
-		public  CB_CountriesExclusionPM GetSingle(string id,bool getComposition, bool getFromCache)
+		public  CB_CountriesExclusionPM GetSingle(string cb_id,bool getComposition, bool getFromCache)
         {
-             EntityKeys = new CB_CountriesExclusionKeys(){ ID = id };
+             EntityKeys = new CB_CountriesExclusionKeys(){ CB_ID = cb_id };
 
 			 return base.GetSingle(EntityKeys, getComposition, getFromCache);
         }
@@ -58,7 +58,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
        
 	    protected override EntityKeyFields GetKeys(CB_CountriesExclusion entityPOCO)
         {
-            CB_CountriesExclusionKeys entityKeys = new CB_CountriesExclusionKeys() { ID = entityPOCO.ID,  };
+            CB_CountriesExclusionKeys entityKeys = new CB_CountriesExclusionKeys() { CB_ID = entityPOCO.CB_ID,  };
             return entityKeys;
         }
      

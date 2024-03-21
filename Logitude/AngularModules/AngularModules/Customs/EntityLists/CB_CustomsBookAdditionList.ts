@@ -8,13 +8,14 @@
 
 export class CB_CustomsBookAdditionList {
    
-	ID: string;
+	ID: number;
 	CreateDate: Date;
 	UpdateDate: Date;
 	TypeID: string;
 	Title: string;
 	CustomsBookTypeID: string;
 	AdditionCode: number;
+	CB_ID: string;
 	
 }
  

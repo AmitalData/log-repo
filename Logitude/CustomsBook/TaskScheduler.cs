@@ -230,6 +230,15 @@ namespace CustomsBook
                                         bulkCopy.DestinationTableName = sqlTableName;
                                         bulkCopy.BatchSize = 1000; // Set desired segment size
 
+                                        string runningId = "1"; // Initialize the running ID as string
+
+                                        foreach (DataRow accessRow in accessReader)
+                                        {
+                                            accessRow["CB_ID"] = runningId; // Assign the running ID (as string) to the CB_ID field
+                                            runningId = (int.Parse(runningId) + 1).ToString(); // Increment the running ID for the next record
+                                        }
+
+                                        bulkCopy.ColumnMappings.Add("CB_ID", "CB_ID");
 
                                         foreach (DataRow accessColumn in accessSchema.Rows)
                                         {

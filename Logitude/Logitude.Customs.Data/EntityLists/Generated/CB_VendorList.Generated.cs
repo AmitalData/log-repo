@@ -12,10 +12,8 @@ namespace Logitude.Customs.Data.EntityLists
    [DataContract]
    public partial class CB_VendorList
    {
-   
-       [Key]
-       [DataMember]
-       public string ID  { get; set; }
+          [DataMember]
+       public int ID  { get; set; }
        [DataMember]
        public string Title  { get; set; }
        [DataMember]
@@ -24,6 +22,10 @@ namespace Logitude.Customs.Data.EntityLists
        public string EnglishCountryName  { get; set; }
        [DataMember]
        public string VendorSingleStringAddress  { get; set; }
+
+       [Key]
+       [DataMember]
+       public string CB_ID  { get; set; }
    }
 
 }

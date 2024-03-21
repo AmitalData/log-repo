@@ -21,9 +21,9 @@ namespace Logitude.Customs.Data.EntityMapping
         { 
 			  this.ToTable("CB_RegularityRequirements", "Customs");
 		
-		    this.HasKey(t => new { t.ID });
+		    this.HasKey(t => new { t.CB_ID });
 	 
-            this.Property(t => t.ID).HasColumnName("ID").IsRequired().HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.ID).HasColumnName("ID");
 
             this.Property(t => t.CreateDate).HasColumnName("CreateDate");
 
@@ -33,7 +33,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.IsAllCountries).HasColumnName("IsAllCountries");
 
-            this.Property(t => t.CustomsItemID).HasColumnName("CustomsItemID").HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.CustomsItemID).HasColumnName("CustomsItemID");
 
             this.Property(t => t.IsAllCustomsItems).HasColumnName("IsAllCustomsItems");
 
@@ -50,6 +50,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.RegularitySourceCodeID).HasColumnName("RegularitySourceCodeID").HasMaxLength(4).IsUnicode(false);
 
             this.Property(t => t.CustomsBookTypeID).HasColumnName("CustomsBookTypeID").HasMaxLength(4).IsUnicode(false);
+
+            this.Property(t => t.CB_ID).HasColumnName("CB_ID").IsRequired().HasMaxLength(15).IsUnicode(false);
         }
     }
 }

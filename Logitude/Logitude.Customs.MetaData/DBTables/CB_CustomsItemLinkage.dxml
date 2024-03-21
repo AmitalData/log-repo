@@ -6,10 +6,8 @@
   Module="Customs">
   <Column
     Name="ID"
-    Type="varchar"
-    Size="15">
+    Type="int">
     <Constraints
-      PrimaryKey="true"
       Nullable="false" />
   </Column>
   <Column
@@ -22,17 +20,15 @@
   <Column
     Name="CustomsItemDetailsHistoryID"
     OldNames="ChangeDate"
-    Type="varchar"
-    Size="15">
+    Type="int">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="Connect_CustItemDetailsHistID"
-    Type="varchar"
-    Size="15">
+    Type="int">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="CreateDate"
@@ -40,19 +36,17 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="CB_ID"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="ChangeTypeID"
     ReferencedTable="ChangeTypes"
     ReferencedColumn="Code"
-    ReferencedTableSchema="Customs" />
-  <Relation
-    ForeignKeyColumn="CustomsItemDetailsHistoryID"
-    ReferencedTable="CB_CustomsItemDetailsHistorys"
-    ReferencedColumn="ID"
-    ReferencedTableSchema="Customs" />
-  <Relation
-    ForeignKeyColumn="Connect_CustItemDetailsHistID"
-    ReferencedTable="CB_CustomsItemDetailsHistorys"
-    ReferencedColumn="ID"
     ReferencedTableSchema="Customs" />
 </Table>

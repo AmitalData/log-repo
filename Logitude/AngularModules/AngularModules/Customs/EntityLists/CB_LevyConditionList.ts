@@ -8,17 +8,18 @@
 
 export class CB_LevyConditionList {
    
-	ID: string;
+	ID: number;
 	LevyConditionNumber: number;
 	LevyGoodsDescription: string;
-	CustomsItemID: string;
-	VendorID: string;
+	CustomsItemID: number;
+	VendorID: number;
 	CountryGroupID: string;
 	IsCountriesGroup: boolean;
 	CountryID: string;
-	TradeLevyID: string;
+	TradeLevyID: number;
 	StartDate: Date;
 	EndDate: Date;
+	CB_ID: string;
 	
 }
  

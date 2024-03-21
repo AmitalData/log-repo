@@ -21,17 +21,19 @@ namespace Logitude.Customs.Data.EntityMapping
         { 
 			  this.ToTable("CB_LevyExclusions", "Customs");
 		
-		    this.HasKey(t => new { t.ID });
+		    this.HasKey(t => new { t.CB_ID });
 	 
-            this.Property(t => t.ID).HasColumnName("ID").IsRequired().HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.ID).HasColumnName("ID");
 
             this.Property(t => t.LevyExclusionNumber).HasColumnName("LevyExclusionNumber");
 
-            this.Property(t => t.TradeLevyID).HasColumnName("TradeLevyID").HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.TradeLevyID).HasColumnName("TradeLevyID");
 
-            this.Property(t => t.VendorID).HasColumnName("VendorID").HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.VendorID).HasColumnName("VendorID");
 
             this.Property(t => t.CountryGroupID).HasColumnName("CountryGroupID").HasMaxLength(2).IsUnicode(false);
+
+            this.Property(t => t.CB_ID).HasColumnName("CB_ID").IsRequired().HasMaxLength(15).IsUnicode(false);
         }
     }
 }

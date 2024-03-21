@@ -12,10 +12,8 @@ namespace Logitude.Customs.Data.EntityLists
    [DataContract]
    public partial class CB_AdditionRulesDetailsHistoryList
    {
-   
-       [Key]
-       [DataMember]
-       public string ID  { get; set; }
+          [DataMember]
+       public int ID  { get; set; }
        [DataMember]
        public DateTime CreateDate  { get; set; }
        [DataMember]
@@ -37,9 +35,13 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public int ChangeRequestTypePriority  { get; set; }
        [DataMember]
-       public string CustomsBookAdditionID  { get; set; }
+       public int CustomsBookAdditionID  { get; set; }
        [DataMember]
        public string EnglishRulesRTF  { get; set; }
+
+       [Key]
+       [DataMember]
+       public string CB_ID  { get; set; }
    }
 
 }

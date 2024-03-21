@@ -24,9 +24,9 @@ export class CB_VendorPM {
       }
  	 
     
-    private iD: string;
+    private iD: number;
     public get ID() { return this.iD; }
-    public set ID(newValue: string) { if (this.iD != newValue) { this.iD = newValue; this.MarkAsDirty("ID"); } }
+    public set ID(newValue: number) { if (this.iD != newValue) { this.iD = newValue; this.MarkAsDirty("ID"); } }
        
 	 
     private title: string;
@@ -47,6 +47,11 @@ export class CB_VendorPM {
     private vendorSingleStringAddress: string;
     public get VendorSingleStringAddress() { return this.vendorSingleStringAddress; }
     public set VendorSingleStringAddress(newValue: string) { if (this.vendorSingleStringAddress != newValue) { this.vendorSingleStringAddress = newValue; this.MarkAsDirty("VendorSingleStringAddress"); } }
+       
+	 
+    private cB_ID: string;
+    public get CB_ID() { return this.cB_ID; }
+    public set CB_ID(newValue: string) { if (this.cB_ID != newValue) { this.cB_ID = newValue; this.MarkAsDirty("CB_ID"); } }
        
 	 
 

@@ -50,7 +50,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 		
 		protected override EntityKeyFields GetKeys(CB_TradeAgreementHistoryPM entityPM)
         {
-            CB_TradeAgreementHistoryKeys entityKeys = new CB_TradeAgreementHistoryKeys() { ID = entityPM.ID };
+            CB_TradeAgreementHistoryKeys entityKeys = new CB_TradeAgreementHistoryKeys() { CB_ID = entityPM.CB_ID };
             return entityKeys;
         }
 

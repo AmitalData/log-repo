@@ -24,9 +24,9 @@ export class CB_AdditionRulesDetailsHistoryPM {
       }
  	 
     
-    private iD: string;
+    private iD: number;
     public get ID() { return this.iD; }
-    public set ID(newValue: string) { if (this.iD != newValue) { this.iD = newValue; this.MarkAsDirty("ID"); } }
+    public set ID(newValue: number) { if (this.iD != newValue) { this.iD = newValue; this.MarkAsDirty("ID"); } }
        
 	 
     private createDate: Date;
@@ -79,14 +79,19 @@ export class CB_AdditionRulesDetailsHistoryPM {
     public set ChangeRequestTypePriority(newValue: number) { if (this.changeRequestTypePriority != newValue) { this.changeRequestTypePriority = newValue; this.MarkAsDirty("ChangeRequestTypePriority"); } }
        
 	 
-    private customsBookAdditionID: string;
+    private customsBookAdditionID: number;
     public get CustomsBookAdditionID() { return this.customsBookAdditionID; }
-    public set CustomsBookAdditionID(newValue: string) { if (this.customsBookAdditionID != newValue) { this.customsBookAdditionID = newValue; this.MarkAsDirty("CustomsBookAdditionID"); } }
+    public set CustomsBookAdditionID(newValue: number) { if (this.customsBookAdditionID != newValue) { this.customsBookAdditionID = newValue; this.MarkAsDirty("CustomsBookAdditionID"); } }
        
 	 
     private englishRulesRTF: string;
     public get EnglishRulesRTF() { return this.englishRulesRTF; }
     public set EnglishRulesRTF(newValue: string) { if (this.englishRulesRTF != newValue) { this.englishRulesRTF = newValue; this.MarkAsDirty("EnglishRulesRTF"); } }
+       
+	 
+    private cB_ID: string;
+    public get CB_ID() { return this.cB_ID; }
+    public set CB_ID(newValue: string) { if (this.cB_ID != newValue) { this.cB_ID = newValue; this.MarkAsDirty("CB_ID"); } }
        
 	 
 

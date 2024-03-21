@@ -18,14 +18,12 @@ namespace Logitude.Customs.Def.EntityPMs
    [DataContract]
    public partial class CB_CustomsItemLinkagePM : EntityPM
    {
-   	  private string iD ;
-	  
-       [Key]
-	  
+   	  private int iD ;
+	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string ID  
+       public int ID  
 	   {
 	    
 	     get
@@ -36,7 +34,7 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(iD != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ID",OldValue=iD,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ID",OldValue=iD,NewValue=value,PropertyType="int"};
 		    NotifyPropertyChanged(values);
 		   iD=value;
 		   }
@@ -66,12 +64,12 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private string customsItemDetailsHistoryID ;
+	  private int customsItemDetailsHistoryID ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string CustomsItemDetailsHistoryID  
+       public int CustomsItemDetailsHistoryID  
 	   {
 	    
 	     get
@@ -82,19 +80,19 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(customsItemDetailsHistoryID != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomsItemDetailsHistoryID",OldValue=customsItemDetailsHistoryID,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomsItemDetailsHistoryID",OldValue=customsItemDetailsHistoryID,NewValue=value,PropertyType="int"};
 		    NotifyPropertyChanged(values);
 		   customsItemDetailsHistoryID=value;
 		   }
 			
 		 }
 	   }
-	  private string connect_CustItemDetailsHistID ;
+	  private int connect_CustItemDetailsHistID ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string Connect_CustItemDetailsHistID  
+       public int Connect_CustItemDetailsHistID  
 	   {
 	    
 	     get
@@ -105,7 +103,7 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(connect_CustItemDetailsHistID != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Connect_CustItemDetailsHistID",OldValue=connect_CustItemDetailsHistID,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Connect_CustItemDetailsHistID",OldValue=connect_CustItemDetailsHistID,NewValue=value,PropertyType="int"};
 		    NotifyPropertyChanged(values);
 		   connect_CustItemDetailsHistID=value;
 		   }
@@ -131,6 +129,31 @@ namespace Logitude.Customs.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreateDate",OldValue=createDate,NewValue=value,PropertyType="DateTime"};
 		    NotifyPropertyChanged(values);
 		   createDate=value;
+		   }
+			
+		 }
+	   }
+	  private string cB_ID ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CB_ID  
+	   {
+	    
+	     get
+		{
+		   return cB_ID;
+		 }
+		 set
+		 {
+		   if(cB_ID != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CB_ID",OldValue=cB_ID,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   cB_ID=value;
 		   }
 			
 		 }

@@ -51,7 +51,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
     {
 	  
        
-        public HttpResponseMessage GetSingle(string id)
+        public HttpResponseMessage GetSingle(string cb_id)
         {
 		  try
             {
@@ -63,7 +63,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
                 CB_VendorQueryService cB_VendorQuery = new CB_VendorQueryService(MyContext);
 				cB_VendorQuery.InitializeSettings();
-                CB_VendorPM cB_VendorPM = cB_VendorQuery.GetSingle(id,true,false);
+                CB_VendorPM cB_VendorPM = cB_VendorQuery.GetSingle(cb_id,true,false);
 
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
             

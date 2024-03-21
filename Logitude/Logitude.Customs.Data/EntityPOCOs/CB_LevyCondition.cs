@@ -18,23 +18,16 @@ namespace Logitude.Customs.Data.EntityPOCOs
     {
 	 string dbms;
 
-        [Key]
-        [Column("ID")]
-	    public string ID { get; set; }
+           [Column("ID")]
+	    public int ID { get; set; }
         [Column("LevyConditionNumber")]
 	    public int? LevyConditionNumber { get; set; }
         [Column("LevyGoodsDescription")]
 	    public string LevyGoodsDescription { get; set; }
-        [ForeignKey("CustomsItem")]
         [Column("CustomsItemID")]
-	    public string CustomsItemID { get; set; }
-	      
-        public virtual CB_CustomsItem CustomsItem { get; set; }
-        [ForeignKey("Vendor")]
+	    public int CustomsItemID { get; set; }
         [Column("VendorID")]
-	    public string VendorID { get; set; }
-	      
-        public virtual CB_Vendor Vendor { get; set; }
+	    public int? VendorID { get; set; }
         [ForeignKey("CountryGroupCode")]
         [Column("CountryGroupID")]
 	    public string CountryGroupID { get; set; }
@@ -44,15 +37,15 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public bool IsCountriesGroup { get; set; }
         [Column("CountryID")]
 	    public string CountryID { get; set; }
-        [ForeignKey("TradeLevy")]
         [Column("TradeLevyID")]
-	    public string TradeLevyID { get; set; }
-	      
-        public virtual CB_TradeLevy TradeLevy { get; set; }
+	    public int TradeLevyID { get; set; }
         [Column("StartDate")]
 	    public DateTime StartDate { get; set; }
         [Column("EndDate")]
 	    public DateTime? EndDate { get; set; }
+     [Key]
+        [Column("CB_ID")]
+	    public string CB_ID { get; set; }
     }
 }
 	 

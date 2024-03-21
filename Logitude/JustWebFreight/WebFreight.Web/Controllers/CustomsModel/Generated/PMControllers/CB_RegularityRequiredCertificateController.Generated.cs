@@ -51,7 +51,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
     {
 	  
        
-        public HttpResponseMessage GetSingle(string id)
+        public HttpResponseMessage GetSingle(string cb_id)
         {
 		  try
             {
@@ -63,7 +63,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
                 CB_RegularityRequiredCertificateQueryService cB_RegularityRequiredCertificateQuery = new CB_RegularityRequiredCertificateQueryService(MyContext);
 				cB_RegularityRequiredCertificateQuery.InitializeSettings();
-                CB_RegularityRequiredCertificatePM cB_RegularityRequiredCertificatePM = cB_RegularityRequiredCertificateQuery.GetSingle(id,true,false);
+                CB_RegularityRequiredCertificatePM cB_RegularityRequiredCertificatePM = cB_RegularityRequiredCertificateQuery.GetSingle(cb_id,true,false);
 
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
             

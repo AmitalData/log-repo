@@ -8,9 +8,10 @@
 
 export class CB_CustomsItemExclusionList {
    
-	ID: string;
-	RegularityRequirementID: string;
-	CustomsItemID: string;
+	ID: number;
+	RegularityRequirementID: number;
+	CustomsItemID: number;
+	CB_ID: string;
 	
 }
  

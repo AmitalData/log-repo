@@ -12,18 +12,20 @@ namespace Logitude.Customs.Data.EntityLists
    [DataContract]
    public partial class CB_LevyExclusionList
    {
-   
-       [Key]
-       [DataMember]
-       public string ID  { get; set; }
+          [DataMember]
+       public int ID  { get; set; }
        [DataMember]
        public int? LevyExclusionNumber  { get; set; }
        [DataMember]
-       public string TradeLevyID  { get; set; }
+       public int TradeLevyID  { get; set; }
        [DataMember]
-       public string VendorID  { get; set; }
+       public int? VendorID  { get; set; }
        [DataMember]
        public string CountryGroupID  { get; set; }
+
+       [Key]
+       [DataMember]
+       public string CB_ID  { get; set; }
    }
 
 }

@@ -8,13 +8,14 @@
 
 export class CB_RegularityInceptionList {
    
-	ID: string;
-	RegularityRequirementID: string;
+	ID: number;
+	RegularityRequirementID: number;
 	InterConditionsRelationshipID: string;
 	IsPersonalImportIncluded: boolean;
 	RequirementGoodsDescription: string;
 	RegularityRequirementWarnID: string;
 	IsCarnetIncluded: boolean;
+	CB_ID: string;
 	
 }
  

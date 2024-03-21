@@ -12,12 +12,10 @@ namespace Logitude.Customs.Data.EntityLists
    [DataContract]
    public partial class CB_RegularityInceptionList
    {
-   
-       [Key]
+          [DataMember]
+       public int ID  { get; set; }
        [DataMember]
-       public string ID  { get; set; }
-       [DataMember]
-       public string RegularityRequirementID  { get; set; }
+       public int RegularityRequirementID  { get; set; }
        [DataMember]
        public string InterConditionsRelationshipID  { get; set; }
        [DataMember]
@@ -28,6 +26,10 @@ namespace Logitude.Customs.Data.EntityLists
        public string RegularityRequirementWarnID  { get; set; }
        [DataMember]
        public bool IsCarnetIncluded  { get; set; }
+
+       [Key]
+       [DataMember]
+       public string CB_ID  { get; set; }
    }
 
 }

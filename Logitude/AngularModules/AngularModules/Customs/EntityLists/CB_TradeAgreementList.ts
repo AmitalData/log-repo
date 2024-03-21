@@ -8,7 +8,7 @@
 
 export class CB_TradeAgreementList {
    
-	ID: string;
+	ID: number;
 	CreateDate: Date;
 	UpdateDate: Date;
 	Title: string;
@@ -17,6 +17,7 @@ export class CB_TradeAgreementList {
 	CustomsBookTypeID: string;
 	EntityStatusID: string;
 	TradeAgreementAbbreviation: string;
+	CB_ID: string;
 	
 }
  
