@@ -1,4 +1,4 @@
-import { Component, NgModule } from '@angular/core';
+import { Component, NgModuleת } from '@angular/core';
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { TenantPM } from '../../../Common/EntityPMs/TenantPM';
@@ -59,7 +59,7 @@ export class OcrDefaultsSettingsComponent extends BaseComponent {
     private buyerRoleCodeChecked: boolean = true
     private partyRelationshipCodeChecked: boolean = true
     private accountTypeCodeChecked: boolean = true
-    private IsChecked: boolean = true
+    public IsChecked: boolean = true
     FIELD_IS_REQUIERD: string;
     public ProcessTypeCodeFilterItems: ApiQueryFilters;
 
