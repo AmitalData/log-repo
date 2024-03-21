@@ -27800,6 +27800,18 @@
       LocalDefaultText="&quot;נתוני ההצבעה נמחקו בהצלחה&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.GroupingAccountLines&quot;"
+      DefaultText="&quot;Grouping Account Lines&quot;"
+      LocalDefaultText="&quot;קיבוץ שורות חשבון&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.GroupedAccountLinesResult&quot;"
+      DefaultText="&quot;Grouped account lines Result&quot;"
+      LocalDefaultText="&quot;שורות חשבון קובצו לקבוצות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
