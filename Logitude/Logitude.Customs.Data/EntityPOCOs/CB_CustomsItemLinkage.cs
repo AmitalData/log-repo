@@ -18,26 +18,22 @@ namespace Logitude.Customs.Data.EntityPOCOs
     {
 	 string dbms;
 
-        [Key]
-        [Column("ID")]
-	    public string ID { get; set; }
+           [Column("ID")]
+	    public int ID { get; set; }
         [ForeignKey("ChangeTypeCode")]
         [Column("ChangeTypeID")]
 	    public string ChangeTypeID { get; set; }
 	      
         public virtual ChangeType ChangeTypeCode { get; set; }
-        [ForeignKey("CustomsItemDetailsHistory")]
         [Column("CustomsItemDetailsHistoryID")]
-	    public string CustomsItemDetailsHistoryID { get; set; }
-	      
-        public virtual CB_CustomsItemDetailsHistory CustomsItemDetailsHistory { get; set; }
-        [ForeignKey("Connected_CustomsItemDetailsHistory")]
+	    public int CustomsItemDetailsHistoryID { get; set; }
         [Column("Connect_CustItemDetailsHistID")]
-	    public string Connect_CustItemDetailsHistID { get; set; }
-	      
-        public virtual CB_CustomsItemDetailsHistory Connected_CustomsItemDetailsHistory { get; set; }
+	    public int Connect_CustItemDetailsHistID { get; set; }
         [Column("CreateDate")]
 	    public DateTime CreateDate { get; set; }
+     [Key]
+        [Column("CB_ID")]
+	    public string CB_ID { get; set; }
     }
 }
 	 

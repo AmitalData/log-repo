@@ -8,7 +8,7 @@
 
 export class CB_CustomsBookAdditionsDetailsHistoryList {
    
-	ID: string;
+	ID: number;
 	CreateDate: Date;
 	UpdateDate: Date;
 	TypeID: string;
@@ -17,8 +17,9 @@ export class CB_CustomsBookAdditionsDetailsHistoryList {
 	EndDate: Date;
 	EntityStatusID: string;
 	EnglishTitle: string;
-	CustomsBookAdditionID: string;
+	CustomsBookAdditionID: number;
 	ChangeRequestTypePriority: number;
+	CB_ID: string;
 	
 }
  

@@ -24,14 +24,14 @@ export class CB_RegularityRequiredCertificatePM {
       }
  	 
     
-    private iD: string;
+    private iD: number;
     public get ID() { return this.iD; }
-    public set ID(newValue: string) { if (this.iD != newValue) { this.iD = newValue; this.MarkAsDirty("ID"); } }
+    public set ID(newValue: number) { if (this.iD != newValue) { this.iD = newValue; this.MarkAsDirty("ID"); } }
        
 	 
-    private regularityInceptionID: string;
+    private regularityInceptionID: number;
     public get RegularityInceptionID() { return this.regularityInceptionID; }
-    public set RegularityInceptionID(newValue: string) { if (this.regularityInceptionID != newValue) { this.regularityInceptionID = newValue; this.MarkAsDirty("RegularityInceptionID"); } }
+    public set RegularityInceptionID(newValue: number) { if (this.regularityInceptionID != newValue) { this.regularityInceptionID = newValue; this.MarkAsDirty("RegularityInceptionID"); } }
        
 	 
     private confirmationTypeID: string;
@@ -57,6 +57,11 @@ export class CB_RegularityRequiredCertificatePM {
     private authorityID: string;
     public get AuthorityID() { return this.authorityID; }
     public set AuthorityID(newValue: string) { if (this.authorityID != newValue) { this.authorityID = newValue; this.MarkAsDirty("AuthorityID"); } }
+       
+	 
+    private cB_ID: string;
+    public get CB_ID() { return this.cB_ID; }
+    public set CB_ID(newValue: string) { if (this.cB_ID != newValue) { this.cB_ID = newValue; this.MarkAsDirty("CB_ID"); } }
        
 	 
 

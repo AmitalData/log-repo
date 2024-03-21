@@ -18,9 +18,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
     {
 	 string dbms;
 
-        [Key]
-        [Column("ID")]
-	    public string ID { get; set; }
+           [Column("ID")]
+	    public int ID { get; set; }
         [Column("CreateDate")]
 	    public DateTime CreateDate { get; set; }
         [Column("UpdateDate")]
@@ -36,13 +35,13 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string EntityStatusID { get; set; }
 	      
         public virtual CustomsEntityStatus EntityStatusCode { get; set; }
-        [ForeignKey("QuotaDetailsHistory")]
         [Column("QuotaDetailsHistoryID")]
-	    public string QuotaDetailsHistoryID { get; set; }
-	      
-        public virtual CB_QuotaDetailsHistory QuotaDetailsHistory { get; set; }
+	    public int QuotaDetailsHistoryID { get; set; }
         [Column("Step")]
 	    public int Step { get; set; }
+     [Key]
+        [Column("CB_ID")]
+	    public string CB_ID { get; set; }
     }
 }
 	 

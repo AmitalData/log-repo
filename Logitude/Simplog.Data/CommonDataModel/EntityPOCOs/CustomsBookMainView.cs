@@ -10,8 +10,8 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
     public class CustomsBookMainView
     {
         [Key]
-        public string CustomItemId { get; set; }
-        public string Parent_CustomsItemId { get; set; }
+        public int CustomItemId { get; set; }
+        public int Parent_CustomsItemId { get; set; }
         public string CustomsBookTypeID { get; set; }
         public string FullClassification { get; set; }
         public string CustomsItemHierarchicLocationID { get; set; }

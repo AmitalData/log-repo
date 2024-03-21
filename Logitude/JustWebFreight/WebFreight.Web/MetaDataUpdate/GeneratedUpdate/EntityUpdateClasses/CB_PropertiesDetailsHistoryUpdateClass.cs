@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CB_PropertiesDetailsHistoryUpdateClass
    {  		
-		public const string HashString = "5997e4c3ba82557e0a76047ff736ddc1";
+		public const string HashString = "527b64a28b817aee5c3b6eae39b6b7ff";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -104,7 +104,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasFiltersMenu =  false,
 			      				    IsEditable =  false,
 			      				    IsNewWizard =  false,
-			      				    KeyPropertyPath =  "ID",
+			      				    KeyPropertyPath =  "CB_ID",
 			      				    AutoCompleteSearchWindow =  false,
 			      				    IsClosed =  false,
 			      				    CacheOnClient =  false,
@@ -115,7 +115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    IsMain =  true,
 			      				    IsAutoComplete =  false,
 			      				    EnableEditFromLOV =  false,
-			      				    SortingByObjectField =  "ID",
+			      				    SortingByObjectField =  "CB_ID",
 			      				    InActive =  false,
 			      				    IsSaveButtonVisible =  false,
 			      				    IsComposition =  false,
@@ -126,7 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "היסטוריה של מאפיינים של פרט מכס",
 			      				    DefaultText =  "Properties Details History",
-			      				    Code =  "e84e",
+			      				    Code =  "dc19",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -274,8 +274,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "CustomsItemID",
 					  						ObjectTableName =  "Customs.CB_PropertiesDetailsHistory",
-					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "CB_CustomsItem",
+					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,

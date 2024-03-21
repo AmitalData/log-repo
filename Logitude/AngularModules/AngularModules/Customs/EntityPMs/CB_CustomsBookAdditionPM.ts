@@ -24,9 +24,9 @@ export class CB_CustomsBookAdditionPM {
       }
  	 
     
-    private iD: string;
+    private iD: number;
     public get ID() { return this.iD; }
-    public set ID(newValue: string) { if (this.iD != newValue) { this.iD = newValue; this.MarkAsDirty("ID"); } }
+    public set ID(newValue: number) { if (this.iD != newValue) { this.iD = newValue; this.MarkAsDirty("ID"); } }
        
 	 
     private createDate: Date;
@@ -57,6 +57,11 @@ export class CB_CustomsBookAdditionPM {
     private additionCode: number;
     public get AdditionCode() { return this.additionCode; }
     public set AdditionCode(newValue: number) { if (this.additionCode != newValue) { this.additionCode = newValue; this.MarkAsDirty("AdditionCode"); } }
+       
+	 
+    private cB_ID: string;
+    public get CB_ID() { return this.cB_ID; }
+    public set CB_ID(newValue: string) { if (this.cB_ID != newValue) { this.cB_ID = newValue; this.MarkAsDirty("CB_ID"); } }
        
 	 
 

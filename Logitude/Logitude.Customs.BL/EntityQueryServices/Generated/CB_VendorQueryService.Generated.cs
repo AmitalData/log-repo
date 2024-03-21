@@ -48,9 +48,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
             mapping = new CB_VendorDataMapping();
         }
 		 
-		public  CB_VendorPM GetSingle(string id,bool getComposition, bool getFromCache)
+		public  CB_VendorPM GetSingle(string cb_id,bool getComposition, bool getFromCache)
         {
-             EntityKeys = new CB_VendorKeys(){ ID = id };
+             EntityKeys = new CB_VendorKeys(){ CB_ID = cb_id };
 
 			 return base.GetSingle(EntityKeys, getComposition, getFromCache);
         }
@@ -58,7 +58,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
        
 	    protected override EntityKeyFields GetKeys(CB_Vendor entityPOCO)
         {
-            CB_VendorKeys entityKeys = new CB_VendorKeys() { ID = entityPOCO.ID,  };
+            CB_VendorKeys entityKeys = new CB_VendorKeys() { CB_ID = entityPOCO.CB_ID,  };
             return entityKeys;
         }
      

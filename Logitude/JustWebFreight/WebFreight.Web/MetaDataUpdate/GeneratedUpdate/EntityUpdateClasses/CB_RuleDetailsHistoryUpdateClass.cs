@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CB_RuleDetailsHistoryUpdateClass
    {  		
-		public const string HashString = "2d47b1531f72847eaaee0eb0b005524a";
+		public const string HashString = "c2ce8c27593c9e1d101ec27db2a8b859";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -104,7 +104,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasFiltersMenu =  false,
 			      				    IsEditable =  false,
 			      				    IsNewWizard =  false,
-			      				    KeyPropertyPath =  "ID",
+			      				    KeyPropertyPath =  "CB_ID",
 			      				    AutoCompleteSearchWindow =  false,
 			      				    IsClosed =  false,
 			      				    CacheOnClient =  false,
@@ -115,7 +115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    IsMain =  true,
 			      				    IsAutoComplete =  false,
 			      				    EnableEditFromLOV =  false,
-			      				    SortingByObjectField =  "ID",
+			      				    SortingByObjectField =  "CB_ID",
 			      				    InActive =  false,
 			      				    IsSaveButtonVisible =  false,
 			      				    IsComposition =  false,
@@ -126,7 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  " היסטוריה של כללים",
 			      				    DefaultText =  "Rule Details History",
-			      				    Code =  "80bf",
+			      				    Code =  "83ab",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -531,8 +531,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "RuleID",
 					  						ObjectTableName =  "Customs.CB_RuleDetailsHistory",
-					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "CB_Rule",
+					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
@@ -784,8 +783,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "Parent_RuleDetailsHistoryID",
 					  						ObjectTableName =  "Customs.CB_RuleDetailsHistory",
-					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "CB_RuleDetailsHistory",
+					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,

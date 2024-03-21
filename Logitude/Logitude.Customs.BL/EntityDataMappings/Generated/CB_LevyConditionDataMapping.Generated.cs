@@ -32,7 +32,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CountryID, 
 	         TradeLevyID, 
 	         StartDate, 
-	         EndDate,
+	         EndDate, 
+	         CB_ID,
 	      }
 
 
@@ -49,7 +50,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CountryID, 
 	         TradeLevyID, 
 	         StartDate, 
-	         EndDate,
+	         EndDate, 
+	         CB_ID,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -58,6 +60,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	    public void PMToPOCO(CB_LevyConditionPM entityPM, CB_LevyCondition entityPOCO)
         {
 			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ID))
+            {
+				entityPOCO.ID = entityPM.ID;
+			}
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LevyConditionNumber))
             {
 				entityPOCO.LevyConditionNumber = entityPM.LevyConditionNumber;
@@ -167,12 +174,22 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.EndDate = entityPOCO.EndDate;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CB_ID))
+            {
+					entityPM.CB_ID = entityPOCO.CB_ID;
+            }
+
 		}
 
 		public void PMToOldPM(CB_LevyConditionPM entityPM, CB_LevyConditionPM oldEntityPM)
         {
 		     oldEntityPM.ChangedProperties.Clear();
 			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ID))
+            {
+                oldEntityPM.ID = entityPM.ID;
+            }
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LevyConditionNumber))
             {
                 oldEntityPM.LevyConditionNumber = entityPM.LevyConditionNumber;

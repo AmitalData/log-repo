@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CB_CustomsItemUpdateClass
    {  		
-		public const string HashString = "2a97377d78357b02c8570ad240f0d06c";
+		public const string HashString = "aa45057aea04db858dd20889fee22736";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -105,7 +105,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    IsEditable =  false,
 			      				    IsNewWizard =  false,
 			      				    LookUp1 =  "ID",
-			      				    KeyPropertyPath =  "ID",
+			      				    KeyPropertyPath =  "CB_ID",
 			      				    AutoCompleteSearchWindow =  false,
 			      				    IsClosed =  false,
 			      				    CacheOnClient =  false,
@@ -116,7 +116,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    IsMain =  true,
 			      				    IsAutoComplete =  false,
 			      				    EnableEditFromLOV =  false,
-			      				    SortingByObjectField =  "ID",
+			      				    SortingByObjectField =  "CB_ID",
 			      				    InActive =  false,
 			      				    IsSaveButtonVisible =  false,
 			      				    IsComposition =  false,
@@ -127,7 +127,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "פרט מכס",
 			      				    DefaultText =  "CustomsItem",
-			      				    Code =  "c177",
+			      				    Code =  "aa95",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  true,
 			      				    ClientModuleName =  "Customs",
@@ -153,10 +153,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "ID",
 					  						ObjectTableName =  "Customs.CB_CustomsItem",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
 					  						MaxLength =  15,
-					  						IsRequired =  true,
+					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
@@ -337,8 +337,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "Parent_CustomsItemID",
 					  						ObjectTableName =  "Customs.CB_CustomsItem",
-					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "CB_CustomsItem",
+					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,

@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CB_QuotaRenewalUpdateClass
    {  		
-		public const string HashString = "964e9292ebb23c0dd3364551c379fc51";
+		public const string HashString = "7e31d9ca741ea129b2971a94d64eb627";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -104,7 +104,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasFiltersMenu =  false,
 			      				    IsEditable =  false,
 			      				    IsNewWizard =  false,
-			      				    KeyPropertyPath =  "ID",
+			      				    KeyPropertyPath =  "CB_ID",
 			      				    AutoCompleteSearchWindow =  false,
 			      				    IsClosed =  false,
 			      				    CacheOnClient =  false,
@@ -115,7 +115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    IsMain =  true,
 			      				    IsAutoComplete =  false,
 			      				    EnableEditFromLOV =  false,
-			      				    SortingByObjectField =  "ID",
+			      				    SortingByObjectField =  "CB_ID",
 			      				    InActive =  false,
 			      				    IsSaveButtonVisible =  false,
 			      				    IsComposition =  false,
@@ -126,7 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "חידושים של מכסות",
 			      				    DefaultText =  "Quota Renewal",
-			      				    Code =  "7c23",
+			      				    Code =  "de04",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -531,8 +531,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "QuotaDetailsHistoryID",
 					  						ObjectTableName =  "Customs.CB_QuotaRenewal",
-					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "CB_QuotaDetailsHistory",
+					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,

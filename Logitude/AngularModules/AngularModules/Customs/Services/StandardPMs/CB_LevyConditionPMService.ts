@@ -32,12 +32,12 @@ export class CB_LevyConditionPMService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/cb_levyconditions';      
     }
 
-	get(id: string) {       
+	get(cb_id: string) {       
 
 		var callTime = new Date();		
 
 		return defer(() => {
-			return this._http.get(this._apiUrl + '/getsingle?' + 'id=' + id, ServiceHelper.GetHttpFullHeaders())
+			return this._http.get(this._apiUrl + '/getsingle?' + 'cb_id=' + cb_id, ServiceHelper.GetHttpFullHeaders())
 				.pipe(
 					map((response: HttpResponse<any>) => {
 						var pm = response.body;
@@ -51,7 +51,7 @@ export class CB_LevyConditionPMService {
 						serviceResponse.Result = entity;
               
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "CB_LevyCondition", "GetSinglePM", 'id=' + id);
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "CB_LevyCondition", "GetSinglePM", 'cb_id=' + cb_id);
 				 
 						return serviceResponse;
 

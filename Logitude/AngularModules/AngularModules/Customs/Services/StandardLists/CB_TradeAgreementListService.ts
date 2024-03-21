@@ -32,12 +32,12 @@ export class CB_TradeAgreementListService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/cb_tradeagreementviews';  
     }
 
-	getSingle(id: string) {
+	getSingle(cb_id: string) {
 	   
 		var callTime = new Date();
 
 		return defer(() => {
-			return this._http.get(this._apiUrl + '/getsingle/?' + 'id=' + id, ServiceHelper.GetHttpFullHeaders())
+			return this._http.get(this._apiUrl + '/getsingle/?' + 'cb_id=' + cb_id, ServiceHelper.GetHttpFullHeaders())
 				.pipe(			
 					map((response: HttpResponse<any>) => {
 
@@ -52,7 +52,7 @@ export class CB_TradeAgreementListService {
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "CB_TradeAgreement", "GetSingleList", 'id=' + id); 
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "CB_TradeAgreement", "GetSingleList", 'cb_id=' + cb_id); 
 
 						return serviceResponse;
 					}),

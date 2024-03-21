@@ -44,7 +44,7 @@ namespace WebFreight.Web.CustomModel.DomainServices
 		  //service = ContainerAccessor.Container.Resolve(typeof(IDomainServiceUpdateClass<CB_CustomsItemPM>), "CustomDomainServiceUpdateClass", new ParameterOverride("", 1)) as IDomainServiceUpdateClass<CB_CustomsItemPM>;
 		}
        
-        public CB_CustomsItemPM GetSingleCB_CustomsItemPM(string id,int tenant)
+        public CB_CustomsItemPM GetSingleCB_CustomsItemPM(string cb_id,int tenant)
         {
             if (MyContext == null)
             {
@@ -52,13 +52,13 @@ namespace WebFreight.Web.CustomModel.DomainServices
             }
 
             CB_CustomsItemQueryService cB_CustomsItemQuery = new CB_CustomsItemQueryService(MyContext);
-            CB_CustomsItemPM cB_CustomsItemPM = cB_CustomsItemQuery.GetSingle(id,false,false);
+            CB_CustomsItemPM cB_CustomsItemPM = cB_CustomsItemQuery.GetSingle(cb_id,false,false);
             return cB_CustomsItemPM;
            
         }
 
          
-		public CB_CustomsItemList GetSingleCB_CustomsItemList(string id,int tenant)
+		public CB_CustomsItemList GetSingleCB_CustomsItemList(string cb_id,int tenant)
         {
             SecurityUtility.AuthenticationOnTenant(tenant);
 			             SecurityUtility.CheckContactFeature("Customs.CB_CustomsItem", "READ", tenant); if ( MyContext == null)
@@ -68,7 +68,7 @@ namespace WebFreight.Web.CustomModel.DomainServices
 
           
             CB_CustomsItemListQueryService listService = new CB_CustomsItemListQueryService(MyContext);
-            return listService.GetSingle(id);
+            return listService.GetSingle(cb_id);
         }
 
 		public List<CB_CustomsItemList> GetCB_CustomsItemLists(int tenant)

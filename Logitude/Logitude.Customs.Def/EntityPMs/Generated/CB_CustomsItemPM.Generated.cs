@@ -18,14 +18,12 @@ namespace Logitude.Customs.Def.EntityPMs
    [DataContract]
    public partial class CB_CustomsItemPM : EntityPM
    {
-   	  private string iD ;
-	  
-       [Key]
-	  
+   	  private int iD ;
+	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string ID  
+       public int ID  
 	   {
 	    
 	     get
@@ -36,7 +34,7 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(iD != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ID",OldValue=iD,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ID",OldValue=iD,NewValue=value,PropertyType="int"};
 		    NotifyPropertyChanged(values);
 		   iD=value;
 		   }
@@ -112,12 +110,12 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private string parent_CustomsItemID ;
+	  private int? parent_CustomsItemID ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string Parent_CustomsItemID  
+       public int? Parent_CustomsItemID  
 	   {
 	    
 	     get
@@ -128,7 +126,7 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(parent_CustomsItemID != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Parent_CustomsItemID",OldValue=parent_CustomsItemID,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Parent_CustomsItemID",OldValue=parent_CustomsItemID,NewValue=value,PropertyType="int?"};
 		    NotifyPropertyChanged(values);
 		   parent_CustomsItemID=value;
 		   }
@@ -223,6 +221,31 @@ namespace Logitude.Customs.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomsItemHierarchicLocationID",OldValue=customsItemHierarchicLocationID,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   customsItemHierarchicLocationID=value;
+		   }
+			
+		 }
+	   }
+	  private string cB_ID ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CB_ID  
+	   {
+	    
+	     get
+		{
+		   return cB_ID;
+		 }
+		 set
+		 {
+		   if(cB_ID != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CB_ID",OldValue=cB_ID,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   cB_ID=value;
 		   }
 			
 		 }

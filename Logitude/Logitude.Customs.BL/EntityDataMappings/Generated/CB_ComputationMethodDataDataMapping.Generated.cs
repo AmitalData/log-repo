@@ -37,7 +37,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ReductionRate, 
 	         TariffRelatedToQuotaID, 
 	         Notes, 
-	         EnglishNotes,
+	         EnglishNotes, 
+	         CB_ID,
 	      }
 
 
@@ -59,7 +60,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ReductionRate, 
 	         TariffRelatedToQuotaID, 
 	         Notes, 
-	         EnglishNotes,
+	         EnglishNotes, 
+	         CB_ID,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -68,6 +70,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	    public void PMToPOCO(CB_ComputationMethodDataPM entityPM, CB_ComputationMethodData entityPOCO)
         {
 			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ID))
+            {
+				entityPOCO.ID = entityPM.ID;
+			}
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AlternateDefinedPerUnitMeasure))
             {
 				entityPOCO.AlternateDefinedPerUnitMeasure = entityPM.AlternateDefinedPerUnitMeasure;
@@ -227,12 +234,22 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.EnglishNotes = entityPOCO.EnglishNotes;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CB_ID))
+            {
+					entityPM.CB_ID = entityPOCO.CB_ID;
+            }
+
 		}
 
 		public void PMToOldPM(CB_ComputationMethodDataPM entityPM, CB_ComputationMethodDataPM oldEntityPM)
         {
 		     oldEntityPM.ChangedProperties.Clear();
 			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ID))
+            {
+                oldEntityPM.ID = entityPM.ID;
+            }
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AlternateDefinedPerUnitMeasure))
             {
                 oldEntityPM.AlternateDefinedPerUnitMeasure = entityPM.AlternateDefinedPerUnitMeasure;

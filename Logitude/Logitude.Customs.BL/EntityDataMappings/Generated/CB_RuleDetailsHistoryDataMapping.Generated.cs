@@ -36,7 +36,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         Parent_RuleDetailsHistoryID, 
 	         ChangeRequestTypePriority, 
 	         RulesRTF, 
-	         EnglishRulesRTF,
+	         EnglishRulesRTF, 
+	         CB_ID,
 	      }
 
 
@@ -57,7 +58,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         Parent_RuleDetailsHistoryID, 
 	         ChangeRequestTypePriority, 
 	         RulesRTF, 
-	         EnglishRulesRTF,
+	         EnglishRulesRTF, 
+	         CB_ID,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -66,6 +68,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	    public void PMToPOCO(CB_RuleDetailsHistoryPM entityPM, CB_RuleDetailsHistory entityPOCO)
         {
 			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ID))
+            {
+				entityPOCO.ID = entityPM.ID;
+			}
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreateDate))
             {
 				entityPOCO.CreateDate = entityPM.CreateDate;
@@ -215,12 +222,22 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.EnglishRulesRTF = entityPOCO.EnglishRulesRTF;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CB_ID))
+            {
+					entityPM.CB_ID = entityPOCO.CB_ID;
+            }
+
 		}
 
 		public void PMToOldPM(CB_RuleDetailsHistoryPM entityPM, CB_RuleDetailsHistoryPM oldEntityPM)
         {
 		     oldEntityPM.ChangedProperties.Clear();
 			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ID))
+            {
+                oldEntityPM.ID = entityPM.ID;
+            }
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreateDate))
             {
                 oldEntityPM.CreateDate = entityPM.CreateDate;

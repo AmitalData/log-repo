@@ -18,20 +18,19 @@ namespace Logitude.Customs.Data.EntityPOCOs
     {
 	 string dbms;
 
-        [Key]
-        [Column("ID")]
-	    public string ID { get; set; }
+           [Column("ID")]
+	    public int ID { get; set; }
         [Column("CreateDate")]
 	    public DateTime CreateDate { get; set; }
         [Column("UpdateDate")]
 	    public DateTime? UpdateDate { get; set; }
         [Column("Title")]
 	    public string Title { get; set; }
-        [ForeignKey("CustomsItem")]
         [Column("CustomsItemID")]
-	    public string CustomsItemID { get; set; }
-	      
-        public virtual CB_CustomsItem CustomsItem { get; set; }
+	    public int CustomsItemID { get; set; }
+     [Key]
+        [Column("CB_ID")]
+	    public string CB_ID { get; set; }
     }
 }
 	 

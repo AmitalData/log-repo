@@ -12,7 +12,7 @@ namespace Logitude.Customs.Data.EntityKeys
 {
    public partial class CB_ComputationMethodDataKeys : EntityKeyFields
    {
-   	  public string ID  { get; set; }
+   	  public string CB_ID  { get; set; }
 	  
 				 
 	    			   
@@ -20,7 +20,7 @@ namespace Logitude.Customs.Data.EntityKeys
 	 
 	  public override string GetFullKey()
       {
-                 return ID ;
+                 return CB_ID ;
                  
       }
 

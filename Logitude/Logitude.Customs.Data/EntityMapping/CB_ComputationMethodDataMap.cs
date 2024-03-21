@@ -21,9 +21,9 @@ namespace Logitude.Customs.Data.EntityMapping
         { 
 			  this.ToTable("CB_ComputationMethodDatas", "Customs");
 		
-		    this.HasKey(t => new { t.ID });
+		    this.HasKey(t => new { t.CB_ID });
 	 
-            this.Property(t => t.ID).HasColumnName("ID").IsRequired().HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.ID).HasColumnName("ID");
 
             this.Property(t => t.AlternateDefinedPerUnitMeasure).HasColumnName("AlternateDefinedPerUnitMeasure").HasPrecision(10, 2);
 
@@ -54,6 +54,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.Notes).HasColumnName("Notes").HasMaxLength(255).IsUnicode(false);
 
             this.Property(t => t.EnglishNotes).HasColumnName("EnglishNotes").HasMaxLength(255).IsUnicode(false);
+
+            this.Property(t => t.CB_ID).HasColumnName("CB_ID").IsRequired().HasMaxLength(15).IsUnicode(false);
         }
     }
 }

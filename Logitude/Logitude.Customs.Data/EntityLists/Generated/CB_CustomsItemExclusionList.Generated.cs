@@ -12,14 +12,16 @@ namespace Logitude.Customs.Data.EntityLists
    [DataContract]
    public partial class CB_CustomsItemExclusionList
    {
-   
+          [DataMember]
+       public int ID  { get; set; }
+       [DataMember]
+       public int RegularityRequirementID  { get; set; }
+       [DataMember]
+       public int CustomsItemID  { get; set; }
+
        [Key]
        [DataMember]
-       public string ID  { get; set; }
-       [DataMember]
-       public string RegularityRequirementID  { get; set; }
-       [DataMember]
-       public string CustomsItemID  { get; set; }
+       public string CB_ID  { get; set; }
    }
 
 }

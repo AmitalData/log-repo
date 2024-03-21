@@ -12,10 +12,8 @@ namespace Logitude.Customs.Data.EntityLists
    [DataContract]
    public partial class CB_RegularityRequirementList
    {
-   
-       [Key]
-       [DataMember]
-       public string ID  { get; set; }
+          [DataMember]
+       public int ID  { get; set; }
        [DataMember]
        public DateTime CreateDate  { get; set; }
        [DataMember]
@@ -25,7 +23,7 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public bool IsAllCountries  { get; set; }
        [DataMember]
-       public string CustomsItemID  { get; set; }
+       public int? CustomsItemID  { get; set; }
        [DataMember]
        public bool IsAllCustomsItems  { get; set; }
        [DataMember]
@@ -42,6 +40,10 @@ namespace Logitude.Customs.Data.EntityLists
        public string RegularitySourceCodeID  { get; set; }
        [DataMember]
        public string CustomsBookTypeID  { get; set; }
+
+       [Key]
+       [DataMember]
+       public string CB_ID  { get; set; }
    }
 
 }

@@ -12,10 +12,8 @@ namespace Logitude.Customs.Data.EntityLists
    [DataContract]
    public partial class CB_QuotaDetailsHistoryList
    {
-   
-       [Key]
-       [DataMember]
-       public string ID  { get; set; }
+          [DataMember]
+       public int ID  { get; set; }
        [DataMember]
        public DateTime CreateDate  { get; set; }
        [DataMember]
@@ -41,7 +39,7 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public DateTime? RenewalUntilDate  { get; set; }
        [DataMember]
-       public string QuotaID  { get; set; }
+       public int QuotaID  { get; set; }
        [DataMember]
        public int ChangeRequestTypePriority  { get; set; }
        [DataMember]
@@ -50,6 +48,10 @@ namespace Logitude.Customs.Data.EntityLists
        public string PerYearFrequency  { get; set; }
        [DataMember]
        public string CurrencyTypeID  { get; set; }
+
+       [Key]
+       [DataMember]
+       public string CB_ID  { get; set; }
    }
 
 }

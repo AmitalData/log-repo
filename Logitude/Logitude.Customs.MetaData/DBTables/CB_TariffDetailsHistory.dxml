@@ -6,10 +6,8 @@
   Module="Customs">
   <Column
     Name="ID"
-    Type="varchar"
-    Size="15">
+    Type="int">
     <Constraints
-      PrimaryKey="true"
       Nullable="false" />
   </Column>
   <Column
@@ -26,15 +24,13 @@
   </Column>
   <Column
     Name="TariffID"
-    Type="varchar"
-    Size="15">
+    Type="int">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="QuotaID"
-    Type="varchar"
-    Size="15">
+    Type="int">
     <Constraints
       Nullable="true" />
   </Column>
@@ -59,15 +55,13 @@
   </Column>
   <Column
     Name="WithinQuota_ComputMethDataID"
-    Type="varchar"
-    Size="15">
+    Type="int">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="WithoutQuota_ComputMethDataID"
-    Type="varchar"
-    Size="15">
+    Type="int">
     <Constraints
       Nullable="true" />
   </Column>
@@ -77,24 +71,17 @@
     <Constraints
       Nullable="false" />
   </Column>
-  <Relation
-    ForeignKeyColumn="QuotaID"
-    ReferencedTable="CB_Quotas"
-    ReferencedColumn="ID"
-    ReferencedTableSchema="Customs" />
+  <Column
+    Name="CB_ID"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="EntityStatusID"
     ReferencedTable="CustomsEntityStatuses"
     ReferencedColumn="Code"
-    ReferencedTableSchema="Customs" />
-  <Relation
-    ForeignKeyColumn="WithinQuota_ComputMethDataID"
-    ReferencedTable="CB_ComputationMethodDatas"
-    ReferencedColumn="ID"
-    ReferencedTableSchema="Customs" />
-  <Relation
-    ForeignKeyColumn="WithoutQuota_ComputMethDataID"
-    ReferencedTable="CB_ComputationMethodDatas"
-    ReferencedColumn="ID"
     ReferencedTableSchema="Customs" />
 </Table>

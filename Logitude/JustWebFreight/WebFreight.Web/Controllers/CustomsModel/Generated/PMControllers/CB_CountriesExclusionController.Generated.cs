@@ -51,7 +51,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
     {
 	  
        
-        public HttpResponseMessage GetSingle(string id)
+        public HttpResponseMessage GetSingle(string cb_id)
         {
 		  try
             {
@@ -63,7 +63,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
                 CB_CountriesExclusionQueryService cB_CountriesExclusionQuery = new CB_CountriesExclusionQueryService(MyContext);
 				cB_CountriesExclusionQuery.InitializeSettings();
-                CB_CountriesExclusionPM cB_CountriesExclusionPM = cB_CountriesExclusionQuery.GetSingle(id,true,false);
+                CB_CountriesExclusionPM cB_CountriesExclusionPM = cB_CountriesExclusionQuery.GetSingle(cb_id,true,false);
 
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
             

@@ -24,9 +24,9 @@ export class CB_CustomsItemPM {
       }
  	 
     
-    private iD: string;
+    private iD: number;
     public get ID() { return this.iD; }
-    public set ID(newValue: string) { if (this.iD != newValue) { this.iD = newValue; this.MarkAsDirty("ID"); } }
+    public set ID(newValue: number) { if (this.iD != newValue) { this.iD = newValue; this.MarkAsDirty("ID"); } }
        
 	 
     private createDate: Date;
@@ -44,9 +44,9 @@ export class CB_CustomsItemPM {
     public set FullClassification(newValue: string) { if (this.fullClassification != newValue) { this.fullClassification = newValue; this.MarkAsDirty("FullClassification"); } }
        
 	 
-    private parent_CustomsItemID: string;
+    private parent_CustomsItemID: number;
     public get Parent_CustomsItemID() { return this.parent_CustomsItemID; }
-    public set Parent_CustomsItemID(newValue: string) { if (this.parent_CustomsItemID != newValue) { this.parent_CustomsItemID = newValue; this.MarkAsDirty("Parent_CustomsItemID"); } }
+    public set Parent_CustomsItemID(newValue: number) { if (this.parent_CustomsItemID != newValue) { this.parent_CustomsItemID = newValue; this.MarkAsDirty("Parent_CustomsItemID"); } }
        
 	 
     private computedCheckDigit: string;
@@ -67,6 +67,11 @@ export class CB_CustomsItemPM {
     private customsItemHierarchicLocationID: string;
     public get CustomsItemHierarchicLocationID() { return this.customsItemHierarchicLocationID; }
     public set CustomsItemHierarchicLocationID(newValue: string) { if (this.customsItemHierarchicLocationID != newValue) { this.customsItemHierarchicLocationID = newValue; this.MarkAsDirty("CustomsItemHierarchicLocationID"); } }
+       
+	 
+    private cB_ID: string;
+    public get CB_ID() { return this.cB_ID; }
+    public set CB_ID(newValue: string) { if (this.cB_ID != newValue) { this.cB_ID = newValue; this.MarkAsDirty("CB_ID"); } }
        
 	 
 

@@ -18,14 +18,12 @@ namespace Logitude.Customs.Def.EntityPMs
    [DataContract]
    public partial class CB_PropertiesDetailsHistoryPM : EntityPM
    {
-   	  private string iD ;
-	  
-       [Key]
-	  
+   	  private int iD ;
+	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string ID  
+       public int ID  
 	   {
 	    
 	     get
@@ -36,7 +34,7 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(iD != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ID",OldValue=iD,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ID",OldValue=iD,NewValue=value,PropertyType="int"};
 		    NotifyPropertyChanged(values);
 		   iD=value;
 		   }
@@ -89,12 +87,12 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private string customsItemID ;
+	  private int customsItemID ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string CustomsItemID  
+       public int CustomsItemID  
 	   {
 	    
 	     get
@@ -105,7 +103,7 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(customsItemID != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomsItemID",OldValue=customsItemID,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomsItemID",OldValue=customsItemID,NewValue=value,PropertyType="int"};
 		    NotifyPropertyChanged(values);
 		   customsItemID=value;
 		   }
@@ -729,6 +727,31 @@ namespace Logitude.Customs.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DiscountRegularityRequirementType",OldValue=discountRegularityRequirementType,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   discountRegularityRequirementType=value;
+		   }
+			
+		 }
+	   }
+	  private string cB_ID ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CB_ID  
+	   {
+	    
+	     get
+		{
+		   return cB_ID;
+		 }
+		 set
+		 {
+		   if(cB_ID != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CB_ID",OldValue=cB_ID,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   cB_ID=value;
 		   }
 			
 		 }

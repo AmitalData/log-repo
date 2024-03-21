@@ -18,9 +18,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
     {
 	 string dbms;
 
-        [Key]
-        [Column("ID")]
-	    public string ID { get; set; }
+           [Column("ID")]
+	    public int ID { get; set; }
         [Column("Title")]
 	    public string Title { get; set; }
         [Column("State")]
@@ -29,6 +28,9 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string EnglishCountryName { get; set; }
         [Column("VendorSingleStringAddress")]
 	    public string VendorSingleStringAddress { get; set; }
+     [Key]
+        [Column("CB_ID")]
+	    public string CB_ID { get; set; }
     }
 }
 	 
