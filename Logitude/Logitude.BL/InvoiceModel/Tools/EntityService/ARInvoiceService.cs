@@ -52,6 +52,7 @@ using Logitude.BL.AnalyticTableServices;
 using System.Data.Entity.Core;
 using Logitude.BL.Helpers.ExportServer;
 using Newtonsoft.Json;
+using System.Text.Json;
 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
@@ -498,16 +499,13 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 Payment_Amount = (decimal)entityPM.TotaVatableAmountForTaxReport,
                 VAT_Amount = entityPM.TotalVAT,
                 Payment_Amount_Including_VAT = (decimal)entityPM.AmountInLocalCurrency,
-                Invoice_Reference_Number = string.Empty,
-                Branch_ID = string.Empty,
-                Arrival_Date = DateTime.Now.ToString("yyyy-MM-dd"),
-                Estimated_Arrival_Time = string.Empty,
-                Invoice_Note = string.Empty,
-                Phone_Of_Driver = "123",
-                Delivery_Address = string.Empty,
-                Items = new List<InvoiceItem>()
+               
+              
             };
-            return JsonConvert.SerializeObject(confirmationNumberAPI);
+           
+            return JsonConvert.SerializeObject(confirmationNumberAPI,
+           new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore, Formatting = Formatting.Indented });
+            
         }
         private void UpdateInterestReportFields(ARInvoicePM theEntityPM)
         {

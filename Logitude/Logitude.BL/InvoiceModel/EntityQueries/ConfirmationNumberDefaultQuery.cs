@@ -54,6 +54,20 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                      };
             return result;
         }
+        public IQueryable<ConfirmationNumberDefaultList> GetIQueryableEntityListByTenant(int tenant)
+        {
+            IQueryable<ConfirmationNumberDefaultList> result = from entity in repository.context.ConfirmationNumberDefaults
+                                                               where entity.Tenant== tenant
+                                                               select new ConfirmationNumberDefaultList()
+                                                               {
+                                                                   Tenant = entity.Tenant,
+                                                                   Id = entity.Id,
+                                                                   FromDate = entity.FromDate,
+                                                                   AmountForConfirmationNumber = entity.AmountForConfirmationNumber,
+                                                               };
+            return result;
+        }
+
 
     }
 }

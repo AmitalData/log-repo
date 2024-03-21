@@ -19162,7 +19162,7 @@
     IsReadOnly="true"
     IsHeaderScreen="true"
     Code="&quot;ARInvoice.FullAccHeaderScreen&quot;"
-    NumberOfColumns="4"
+    NumberOfColumns="5"
     NumberOfRows="1">
     <ScreenFields>
       <ScreenField
@@ -19184,6 +19184,11 @@
         Column="3"
         Row="0"
         ObjectFieldName="&quot;JournalNumber&quot;"
+        ScreenName="Header Screen" />
+      <ScreenField
+        Column="4"
+        Row="0"
+        ObjectFieldName="&quot;ConfirmationNumber&quot;"
         ScreenName="Header Screen" />
     </ScreenFields>
   </Screen>

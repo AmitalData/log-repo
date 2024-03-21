@@ -1076,6 +1076,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                             tenant.DPArchiveShipmentDepartFilter = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().DPArchiveShipmentDepartFilter;
                             tenant.DPArchiveShipmentArrivalFilter = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().DPArchiveShipmentArrivalFilter;
                             //tenant.StockTypeCode = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().StockTypeCode;
+                            scope.Complete();
                         }
 
                         GetStaticTenantOtherFields(tenant);

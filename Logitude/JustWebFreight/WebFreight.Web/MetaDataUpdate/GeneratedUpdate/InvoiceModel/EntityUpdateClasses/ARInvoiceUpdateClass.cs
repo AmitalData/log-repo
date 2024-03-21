@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class ARInvoiceUpdateClass
    {  		
-		public const string HashString = "fe919c5d8a2a6ad9ae124ffadbb33e25";
+		public const string HashString = "91a5189b40cd5f3301b81bd0954860ec";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -15255,7 +15255,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 		       
 	      
 
-	         Screen ARInvoiceHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ARInvoice.FullAccHeaderScreen", Name = "Header Screen", ObjectTableId = ARInvoiceObjectTable.Id, NumberOfColumns = 4, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen ARInvoiceHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ARInvoice.FullAccHeaderScreen", Name = "Header Screen", ObjectTableId = ARInvoiceObjectTable.Id, NumberOfColumns = 5, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       
              ScreenField ARInvoiceARInvoiceFullAccHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ARInvoiceHeaderScreenScreen0.Id,ScreenCode = ARInvoiceHeaderScreenScreen0.Code, ObjectFieldCode = "ARInvoice.DueDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
@@ -15264,6 +15264,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
              ScreenField ARInvoiceARInvoiceFullAccHeaderScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = ARInvoiceHeaderScreenScreen0.Id,ScreenCode = ARInvoiceHeaderScreenScreen0.Code, ObjectFieldCode = "ARInvoice.StatusName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
              ScreenField ARInvoiceARInvoiceFullAccHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 3, Row = 0, ScreenId = ARInvoiceHeaderScreenScreen0.Id,ScreenCode = ARInvoiceHeaderScreenScreen0.Code, ObjectFieldCode = "ARInvoice.JournalNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ARInvoiceARInvoiceFullAccHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 4, Row = 0, ScreenId = ARInvoiceHeaderScreenScreen0.Id,ScreenCode = ARInvoiceHeaderScreenScreen0.Code, ObjectFieldCode = "ARInvoice.ConfirmationNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          	
 		    ARInvoiceObjectTable.HeaderScreenId = ARInvoiceHeaderScreenScreen0.Id;
 		    ARInvoiceObjectTable.HeaderScreenCode = ARInvoiceHeaderScreenScreen0.Code;
