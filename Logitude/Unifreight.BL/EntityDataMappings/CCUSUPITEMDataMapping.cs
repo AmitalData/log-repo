@@ -65,7 +65,7 @@ namespace Unifreight.BL.EntityDataMappings
             entityPOCO.PURCHCOUNTRYN = entityPM.PURCHCOUNTRYN;
             entityPOCO.STSQNTY = entityPM.STSQNTY;
             entityPOCO.tenant = entityPM.Tenant;
-            entityPOCO.IS_SYNCHRONIZED = entityPM.IS_SYNCH;
+            entityPOCO.IS_SYNCHRONIZED = entityPM.IS_SYNCHRONIZED;
             entityPOCO.LAST_UPDATE_DT = entityPM.LAST_UPDATE_DT;
         }
 
@@ -122,7 +122,7 @@ namespace Unifreight.BL.EntityDataMappings
             entityPM.PURCHCOUNTRYN = entityPOCO.PURCHCOUNTRYN;
             entityPM.STSQNTY = entityPOCO.STSQNTY;
             entityPM.Tenant = (int)entityPOCO.tenant;
-            entityPM.IS_SYNCH = (bool)entityPOCO.IS_SYNCHRONIZED;
+            entityPM.IS_SYNCHRONIZED = (bool)entityPOCO.IS_SYNCHRONIZED;
             entityPM.LAST_UPDATE_DT = entityPOCO.LAST_UPDATE_DT;
 
         }

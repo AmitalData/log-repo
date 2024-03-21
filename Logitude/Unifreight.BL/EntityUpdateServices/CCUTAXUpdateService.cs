@@ -45,7 +45,7 @@ namespace Unifreight.BL.EntityUpdateServices
             bool isConnectedToUnifreight = custSettingsRepo.GetSettingByTenant(entityPM.Tenant).IsConnectedToUniFreight;
             if (!isConnectedToUnifreight)
             {
-                entityPM.IS_SYNCH = false;
+                entityPM.IS_SYNCHRONIZED = false;
                 entityPM.LAST_UPDATE_DT = DateTime.Now;
             }
         }

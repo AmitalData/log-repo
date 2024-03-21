@@ -54,7 +54,7 @@ namespace Unifreight.BL.EntityDataMappings
             entityPOCO.GSTRING3 = entityPM.GSTRING3;
             entityPOCO.QUEUEMANAGEMENT = entityPM.QUEUEMANAGEMENT;
             entityPOCO.tenant = entityPM.Tenant;
-            entityPOCO.IS_SYNCHRONIZED = entityPM.IS_SYNCH;
+            entityPOCO.IS_SYNCHRONIZED = entityPM.IS_SYNCHRONIZED;
             entityPOCO.LAST_UPDATE_DT = entityPM.LAST_UPDATE_DT;
         }
 
@@ -87,7 +87,7 @@ namespace Unifreight.BL.EntityDataMappings
             entityPM.GSTRING3 = entityPOCO.GSTRING3;
             entityPM.QUEUEMANAGEMENT = entityPOCO.QUEUEMANAGEMENT;
             entityPM.Tenant = (int)entityPOCO.tenant;
-            entityPM.IS_SYNCH = (bool)entityPOCO.IS_SYNCHRONIZED;
+            entityPM.IS_SYNCHRONIZED = (bool)entityPOCO.IS_SYNCHRONIZED;
             entityPM.LAST_UPDATE_DT = entityPOCO.LAST_UPDATE_DT;
 
         }

@@ -364,7 +364,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     if (!isConnectedToUniFreight)
                     {
                         myGGGQPM.Tenant = EntityPM.Tenant;
-                        myGGGQPM.IS_SYNCH = false;
+                        myGGGQPM.IS_SYNCHRONIZED = false;
                         myGGGQPM.LAST_UPDATE_DT = DateTime.Now;
                         _AmitalContext = AmitalContext.GetContext(entityPM.Tenant);
                         myGGGQUpdateService = new GGGQUpdateService(_AmitalContext);
