@@ -1378,7 +1378,7 @@
             }
         }
 
-        public string ItemDescription
+        public string ITEMDESCRIPTION
         {
             get
             {

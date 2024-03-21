@@ -2715,9 +2715,9 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                 {
                     SupplierInvoiceItemPM.StatisticQuantityType = TranslateMeasurmentUnit(invoiceItem.StatisticQuantityType);
                 }
-                if (string.IsNullOrWhiteSpace(SupplierInvoiceItemPM.ItemDescription) && !string.IsNullOrWhiteSpace(invoiceItem.ItemDescription))
+                if (string.IsNullOrWhiteSpace(SupplierInvoiceItemPM.ItemDescription) && !string.IsNullOrWhiteSpace(invoiceItem.ITEMDESCRIPTION))
                 {
-                    SupplierInvoiceItemPM.ItemDescription = invoiceItem.ItemDescription;
+                    SupplierInvoiceItemPM.ItemDescription = invoiceItem.ITEMDESCRIPTION.Length > 256 ? invoiceItem.ITEMDESCRIPTION.Substring(0, 256) : invoiceItem.ITEMDESCRIPTION;
                 }
                 SupplierInvoiceItemPMList.Add(SupplierInvoiceItemPM);
             }
