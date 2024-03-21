@@ -1,4 +1,4 @@
-import { Component, NgModuleת } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
 import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { TenantPM } from '../../../Common/EntityPMs/TenantPM';
