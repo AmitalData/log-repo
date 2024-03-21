@@ -306,7 +306,7 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         this.UIProperties.SetEnabled("BranchId", this.ObjectTableName, isEditingEnabled);
         this.UIProperties.SetEnabled("InvoiceCurrencyId", this.ObjectTableName, isEditingEnabled);
         this.UIProperties.SetEnabled("VatNumber", this.ObjectTableName, isEditingEnabled);
-        this.UIProperties.SetEnabled("ConfirmationNumber", this.ObjectTableName, true);
+        this.UIProperties.SetEnabled("ConfirmationNumber", this.ObjectTableName, false);
         this.UIProperties.SetEnabled("ConfirmationNumberStatusName", this.ObjectTableName, false);
 
         this.UIProperties.SetEnabled("InvoiceDate", this.ObjectTableName, this.IsDatesFieldEnabledWhileCrediting || isEditingEnabled);
