@@ -37,9 +37,6 @@ namespace Unifreight.BL.EntityDataMappings
             entityPM.CURRID = entityPOCO.CURRID;
             entityPM.TRANSPVAL = entityPOCO.TRANSPVAL;
             entityPM.CURRIDN = entityPOCO.CURRIDN;
-            //entityPM.Tenant = (int)entityPOCO.tenant;
-            //entityPM.IS_SYNCHRONIZED = (bool)entityPOCO.IS_SYNCHRONIZED;
-            //entityPM.LAST_UPDATE_DT = entityPOCO.LAST_UPDATE_DT;
             entityPM.Tenant = entityPOCO.tenant != null ? (int)entityPOCO.tenant : 0;
             entityPM.IS_SYNCHRONIZED = entityPOCO.IS_SYNCHRONIZED != null ? (bool)entityPOCO.IS_SYNCHRONIZED : false;
             entityPM.LAST_UPDATE_DT = entityPOCO.LAST_UPDATE_DT != null ? entityPOCO.LAST_UPDATE_DT : DateTime.Now;
