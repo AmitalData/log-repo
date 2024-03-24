@@ -27809,7 +27809,13 @@
     <TextCode
       Code="&quot;Customs.Declaration.O.GroupedAccountLinesResult&quot;"
       DefaultText="&quot;Grouped account lines Result&quot;"
-      LocalDefaultText="&quot;שורות חשבון קובצו לקבוצות&quot;"
+      LocalDefaultText="&quot;שורות חשבון שקובצו לקבוצות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.GroupedEmptyLines&quot;"
+      DefaultText="&quot;GroupedEmptyLines&quot;"
+      LocalDefaultText="&quot;ריקים&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
