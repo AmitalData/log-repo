@@ -222,6 +222,24 @@
       TextCodeTypeCode="&quot;MC&quot;"
       IsSpellChecked="false" />
     <TextCode
+      Code="&quot;General.O.Billings.ChargeType&quot;"
+      DefaultText="&quot;Charge Type&quot;"
+      LocalDefaultText="&quot;סעיף חיוב&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.O.Billings.UsedRec&quot;"
+      DefaultText="&quot;used in receivables should be marked as Receivable&quot;"
+      LocalDefaultText="&quot;בהגדרה לא מסומן לשימוש בחשבוניות לקוח&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.O.Billings.UsedPay&quot;"
+      DefaultText="&quot;used in payables should be marked as Payable&quot;"
+      LocalDefaultText="&quot;בהגדרה לא מסומן לשימוש בחשבוניות ספק&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
       Code="&quot;General.MC.Others.Others&quot;"
       DefaultText="&quot;Others&quot;"
       TextCodeTypeCode="&quot;MC&quot;"

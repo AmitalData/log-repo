@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class GeneralUpdateClass
    {  		
-		public const string HashString = "c3321fd2468255cb85cf2ee285720a54";
+		public const string HashString = "c451835ead9652dc296a4ff041321f13";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -823,7 +823,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_GeneralMCBillingsChargesTypes = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Billings.ChargesTypes", DefaultText = "Charges Types",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode GeneralTextCode_GeneralMCOthersOthers = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Others.Others", DefaultText = "Others",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+            TextCode GeneralTextCode_GeneralOBillingsChargeType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.Billings.ChargeType", DefaultText = "Charge Type", LocalDefaultText = "&quot;סעיף חיוב&quot;", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+            TextCode GeneralTextCode_GeneralOBillingsUsedRec = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.Billings.UsedRec", DefaultText = "used in receivables should be marked as Receivable", LocalDefaultText = "&quot;בהגדרה לא מסומן לשימוש בחשבוניות לקוח&quot;", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+            TextCode GeneralTextCode_GeneralOBillingsUsedPay = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.Billings.UsedPay", DefaultText = "used in payables should be marked as Payable", LocalDefaultText = "&quot;בהגדרה לא מסומן לשימוש בחשבוניות ספק&quot;", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+            TextCode GeneralTextCode_GeneralMCOthersOthers = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Others.Others", DefaultText = "Others",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_GeneralMCOthersPorts = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Others.Ports", DefaultText = "Ports",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
