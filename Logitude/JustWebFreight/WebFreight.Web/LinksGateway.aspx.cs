@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -19,6 +20,7 @@ namespace WebFreight.Web
 
             //http://localhost:9996/LinksGateway.aspx?Menu=PREQ&SecurityKey=cfeb18b0f2044ccab43bb1d2cc67048e&Tenant=203
             var Menu = Request.QueryString["Menu"];
+            if (Menu == null) { return; }
             if (Menu == "PREQ" || Menu == "UID")
             {
                 var Tenant = Request.QueryString["Tenant"];
@@ -28,10 +30,36 @@ namespace WebFreight.Web
                 string RedirectUrl = "Angular" + htmlVersion + "/index.html?Menu=" + Menu + "&SecurityKey=" + SecurityKey + "&Tenant=" + Tenant;
                 Response.Redirect("~/" + RedirectUrl);
             }
+            else if(Menu.ToUpper().StartsWith("URL_"))  {
+                var htmlVersion = GetHTMLVersion();
+                Menu = Menu.Substring("URL_".Length)+"&";
+                StringBuilder queryStringBuilder = getQueryStringBuilder("Menu");
+                string RedirectUrl = "Angular" + htmlVersion + "/index.html?Menu="+Menu + queryStringBuilder.ToString();
+                Response.Redirect("~/" + RedirectUrl);
+
+            }
 
      
         }
 
+        private StringBuilder getQueryStringBuilder(string excludeKey)
+        {
+            StringBuilder queryStringBuilder = new StringBuilder();
+            foreach (string key in Request.QueryString.AllKeys)
+            {
+                if (!string.IsNullOrEmpty(key) && key.ToLower()!=excludeKey.ToLower())
+                {
+                    if (queryStringBuilder.Length > 0)
+                    {
+                        queryStringBuilder.Append("&");
+                    }
+                    queryStringBuilder.Append(HttpUtility.UrlEncode(key));
+                    queryStringBuilder.Append("=");
+                    queryStringBuilder.Append(HttpUtility.UrlEncode(Request.QueryString[key]));
+                }
+            }
+            return queryStringBuilder;
+        }
 
         private string GetHTMLVersion()
         {
