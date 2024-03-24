@@ -94,7 +94,7 @@ export class RootComponent implements AfterViewInit {
                 (SessionLocator.ExternalParams.Menu.toLocaleLowerCase() ==
                     'preq' ||
                     SessionLocator.ExternalParams.Menu.toLocaleLowerCase() ==
-                        'uid');
+                    'uid');
             if (url && IsPREQ == false && url.indexOf('localhost') == -1) {
                 window.onbeforeunload = function (e) {
                     var message = '';
@@ -161,8 +161,8 @@ export class RootComponent implements AfterViewInit {
         if (this.isPrivateLable == true) {
             this.LoadPrivateLablePages();
         } else if (
-            SessionLocator?.ExternalParams?.Menu?.startsWith(
-                'SatisfactionSurvey'
+            SessionLocator?.ExternalParams?.Menu?.toUpperCase().startsWith(
+                'SATISFACTIONSURVEY'
             )
         )
             SessionLocator.DynamicLoader.Load(
@@ -475,7 +475,7 @@ export class RootComponent implements AfterViewInit {
 
     SignOutCompleted() {
         var loginService = new LoginService();
-        loginService.GetSignOut().subscribe((res: any) => {});
+        loginService.GetSignOut().subscribe((res: any) => { });
 
         window.sessionStorage.setItem('userdata', 'SignOut');
         SessionLocator.ClearLocalStorage();
