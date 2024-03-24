@@ -447,12 +447,3 @@ public class DocumentData
     public string FileName { get; set; }
 }
 
-public class StatusData
-{
-    public int Tenant { get; set; }
-    public bool IsActive { get; set; }
-    public DateTime LastStatusDate { get; set; }
-    public bool IsLogged { get; set; }
-    public string LoggedByUserEmail { get; set; }
-    public bool IsValidCert { get; set; }
-}
