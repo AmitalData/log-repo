@@ -449,8 +449,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         {
             try
             {
-
-                ApiResponse apiResponse = ExportServerService.CreateConfirmationNumber(entityPM.Tenant, "libby@amital.co.il", CreateBodyFromARInvoice());
+                ContactQuery contactQuery = new ContactQuery(entityPM.Tenant);
+                var loggedUserEmail = contactQuery.GetContactEmailById(entityPM.CreatedByUserId, entityPM.Tenant);
+                ApiResponse apiResponse = ExportServerService.CreateConfirmationNumber(entityPM.Tenant, loggedUserEmail, CreateBodyFromARInvoice());
 
                 if (apiResponse != null && apiResponse.Res?.StatusCode == System.Net.HttpStatusCode.OK)
                 {
@@ -462,6 +463,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     }
                     else
                     {
+                        Logitude.Server.Tools.Utils.Logger.LogDebug("apiResponse.Msg :{0}", apiResponse.Msg);
+
                         entityPM.ConfirmationNumberStatus = "5";
                     }
                     //entityPM.ConfirmationNumber=
@@ -469,11 +472,15 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                 else
                 {
+                    Logitude.Server.Tools.Utils.Logger.LogDebug("apiResponse.Res.StatusCode :{0} {1}", apiResponse?.Res?.StatusCode, apiResponse);
+
                     entityPM.ConfirmationNumberStatus = "5";
                 }
             }
             catch (Exception ex)
             {
+                Logitude.Server.Tools.Utils.Logger.LogDebug(ex, "apiResponse ");
+
                 entityPM.ConfirmationNumberStatus = "5";
             }
         }
