@@ -168,6 +168,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     declarationPM.PrimaryInvoiceCounterKey = declarationOrg.PrimaryInvoiceCounterKey;
                     declarationPM.ExcludeConsignment = declarationOrg.ExcludeConsignment;
                     declarationPM.IsDiamondDeclaration = declarationOrg.IsDiamondDeclaration;
+                    declarationPM.IsSubmitDeclaration = declarationOrg.IsDiamondDeclaration;
                     if (declarationOrg.IsCourierDeclaration)
                     {
                         declarationPM.IsCourierDeclaration = true;
@@ -190,7 +191,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         declarationPM.CasualImporterContact = declarationOrg.CasualImporterContact;
                         declarationPM.PalestinianCode = declarationOrg.PalestinianCode;
                         declarationPM.CourierSuspentionCode = declarationOrg.CourierSuspentionCode;
-                        declarationPM.IsSubmitDeclaration = declarationOrg.IsDiamondDeclaration;
                     }
 
                     if (isFromAmendment)
