@@ -141,7 +141,8 @@ namespace Logitude.Customs.Data.Repsitories
                     allDecSameFile = qAllCustomFileNo.ToList();
                 }
                 var qGetAcceptDeclarationAmendment = (from a in allDecSameFile
-                                                      where ((a.Id == id && a.AmendmentDontDisplayInList == false && a.DeclarationNumber != null) ||
+                                                      where ( (a.Id == id && a.AmendmentDontDisplayInList == false && a.IsAmendment != true) ||
+                                                      (a.Id == id && a.AmendmentDontDisplayInList == false && a.DeclarationNumber != null) ||
                             (a.AmendmentOriginalDeclartation == id && a.DeclarationNumber != null && a.AmendmentDontDisplayInList == false))
                             && a.Tenant == tenant
                                                       select a
