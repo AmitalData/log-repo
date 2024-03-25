@@ -214,6 +214,7 @@ export class GLAccountMenuButtonsHandler {
         var myGLAccountListService: GLAccountListService = new GLAccountListService();
         myGLAccountListService.getSingle(this.EntityPM.Id)
             .subscribe((response: ServiceResponse) => {
+                
                 // var gLAccount: GLAccountList = response.Result as GLAccountList; //
 
                 // if (!gLAccount.BalanceInLocalCurrency || gLAccount.BalanceInLocalCurrency == 0) { // check if the balance is 0 
