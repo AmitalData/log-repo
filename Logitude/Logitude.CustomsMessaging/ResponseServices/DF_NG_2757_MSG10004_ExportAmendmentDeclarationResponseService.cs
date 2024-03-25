@@ -190,6 +190,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         declarationPM.CasualImporterContact = declarationOrg.CasualImporterContact;
                         declarationPM.PalestinianCode = declarationOrg.PalestinianCode;
                         declarationPM.CourierSuspentionCode = declarationOrg.CourierSuspentionCode;
+                        declarationPM.IsSubmitDeclaration = declarationOrg.IsDiamondDeclaration;
                     }
 
                     if (isFromAmendment)
