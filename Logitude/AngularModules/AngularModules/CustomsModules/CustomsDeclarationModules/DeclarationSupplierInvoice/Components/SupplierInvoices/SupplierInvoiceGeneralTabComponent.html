@@ -1044,6 +1044,8 @@
                                 <button id="UpdateClassificationCode" *ngIf="hasOcr && declarationPM.Direction == 'E'"  (click)="UpdateClicked(UpdateOptions.ClassificationCode)" [disabled]="!IsActionButtonsEnabled" style="text-align:right">{{'Customs.Declaration.O.UpdateClassificationCode' |TextCodeTranslationPipe }}</button>
                                 <button id="UpdateProtocolCode" *ngIf="hasOcr && declarationPM.Direction == 'E'"  (click)="UpdateClicked(UpdateOptions.ProtocolCode)" [disabled]="!IsActionButtonsEnabled" style="text-align:right">{{'Customs.Declaration.O.UpdateProtocolCode' |TextCodeTranslationPipe }}</button>
                                 <button id="UpdateTradeAgreement" *ngIf="(hasOcr && declarationPM.Direction == 'E') || declarationPM.Direction == 'I'"  (click)="UpdateClicked(UpdateOptions.TradeAgreement)" [disabled]="!IsActionButtonsEnabled" style="text-align:right">{{'Customs.Declaration.O.UpdateTradeAgreement' |TextCodeTranslationPipe }}</button>
+                                <!-- <button id="GroupingAccountLines" *ngIf="hasOcr && declarationPM.Direction == 'E'"  (click)="UpdateGroupingAccountLines()" [disabled]="!IsActionButtonsEnabled" style="text-align:right">{{'Customs.Declaration.O.GroupingAccountLines' |TextCodeTranslationPipe }}</button> -->
+                                <button id="GroupingAccountLines" *ngIf="hasOcr && declarationPM.Direction == 'E'"  (click)="UpdateGroupingAccountLines()" [disabled]="!IsActionButtonsEnabled" style="text-align:right">קיבוץ שורות חשבון</button>
                             </div>
                         </div>
                     </td>
