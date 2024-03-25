@@ -163,17 +163,24 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                    ChartOfAcountName4 = "",
                    ChartOfAcountName5 = "",
 
-                   ChartOfAcountName1English = "",
-                   ChartOfAcountName2English = "",
-                   ChartOfAcountName3English = "",
-                   ChartOfAcountName4English = "",
-                   ChartOfAcountName5English = "",
 
 
                    ChartOfAccountId = "",
                    GLAccountName = "",
                    GLAccountNumber = "",
                    GLAccountId = g.Key.AccountId,
+
+
+                   ChartOfAcountName1English = "",
+                   ChartOfAcountName2English = "",
+                   ChartOfAcountName3English = "",
+                   ChartOfAcountName4English = "",
+                   ChartOfAcountName5English = "",
+
+                   GLAccountEnglish = "",
+                   ChartOfAccountsTypeEnglish = "",
+                   ChartOfAccountsEnglish = "",
+
                    CurrencyId = "",//g.Key.CurrencyId,
 
                    LocalOpenBalance =
@@ -270,16 +277,19 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                            ChartOfAcountName5 = chartf.Level5Name,
 
 
-                           ChartOfAcountName1English = chartf.Level1English,
-                           ChartOfAcountName2English = chartf.Level2English,
-                           ChartOfAcountName3English = chartf.Level3English,
-                           ChartOfAcountName4English = chartf.Level4English,
-                           ChartOfAcountName5English = chartf.Level5English,
 
                            ChartOfAccountId = chartf.ChartOfAccountId,
                            GLAccountName = chartf.GLAccountName,
                            GLAccountNumber = chartf.GLAccountNumber,
                            GLAccountId = chartf.GLAccountId,
+
+
+
+                           ChartOfAcountName1English = chartf.Level1English,
+                           ChartOfAcountName2English = chartf.Level2English,
+                           ChartOfAcountName3English = chartf.Level3English,
+                           ChartOfAcountName4English = chartf.Level4English,
+                           ChartOfAcountName5English = chartf.Level5English,
 
                            GLAccountEnglish = chartf.GLAccountEnglish,
                            ChartOfAccountsTypeEnglish = chartf.ChartOfAccountsTypeEnglish,
@@ -334,16 +344,17 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                        ChartOfAcountName5 = chartf.Level5Name,
 
 
-                       ChartOfAcountName1English = chartf.Level1English,
-                       ChartOfAcountName2English = chartf.Level2English,
-                       ChartOfAcountName3English = chartf.Level3English,
-                       ChartOfAcountName4English = chartf.Level4English,
-                       ChartOfAcountName5English = chartf.Level5English,
 
                        ChartOfAccountId = chartf.ChartOfAccountId,
                        GLAccountName = chartf.GLAccountName,
                        GLAccountNumber = chartf.GLAccountNumber,
                        GLAccountId = chartf.GLAccountId,
+
+                       ChartOfAcountName1English = chartf.Level1English,
+                       ChartOfAcountName2English = chartf.Level2English,
+                       ChartOfAcountName3English = chartf.Level3English,
+                       ChartOfAcountName4English = chartf.Level4English,
+                       ChartOfAcountName5English = chartf.Level5English,
 
                        GLAccountEnglish = chartf.GLAccountEnglish,
                        ChartOfAccountsTypeEnglish = chartf.ChartOfAccountsTypeEnglish,
@@ -437,16 +448,18 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                      ChartOfAcountName5 = gCOA.Key.ChartOfAcountName5,
 
 
-                     ChartOfAcountName1English = gCOA.Key.ChartOfAcountName1English,
-                     ChartOfAcountName2English = gCOA.Key.ChartOfAcountName2English,
-                     ChartOfAcountName3English = gCOA.Key.ChartOfAcountName3English,
-                     ChartOfAcountName4English = gCOA.Key.ChartOfAcountName4English,
-                     ChartOfAcountName5English = gCOA.Key.ChartOfAcountName5English,
 
                      ChartOfAccountId = gCOA.Key.ChartOfAccountId,
                      GLAccountName = gCOA.Key.GLAccountName,
                      GLAccountNumber = gCOA.Key.GLAccountNumber,
                      GLAccountId = gCOA.Key.GLAccountId,
+
+
+                     ChartOfAcountName1English = gCOA.Key.ChartOfAcountName1English,
+                     ChartOfAcountName2English = gCOA.Key.ChartOfAcountName2English,
+                     ChartOfAcountName3English = gCOA.Key.ChartOfAcountName3English,
+                     ChartOfAcountName4English = gCOA.Key.ChartOfAcountName4English,
+                     ChartOfAcountName5English = gCOA.Key.ChartOfAcountName5English,
 
                      GLAccountEnglish = gCOA.Key.GLAccountEnglish,
                      ChartOfAccountsTypeEnglish = gCOA.Key.ChartOfAccountsTypeEnglish,
@@ -495,16 +508,19 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                                          ChartOfAcountName5 = gCOA.ChartOfAcountName5,
 
 
+
+                                         ChartOfAccountId = gCOA.ChartOfAccountId,
+                                         GLAccountName = gCOA.GLAccountName,
+                                         GLAccountNumber = gCOA.GLAccountNumber,
+                                         GLAccountId = gCOA.GLAccountId,
+
+
                                          ChartOfAcountName1English = gCOA.ChartOfAcountName1English,
                                          ChartOfAcountName2English = gCOA.ChartOfAcountName2English,
                                          ChartOfAcountName3English = gCOA.ChartOfAcountName3English,
                                          ChartOfAcountName4English = gCOA.ChartOfAcountName4English,
                                          ChartOfAcountName5English = gCOA.ChartOfAcountName5English,
 
-                                         ChartOfAccountId = gCOA.ChartOfAccountId,
-                                         GLAccountName = gCOA.GLAccountName,
-                                         GLAccountNumber = gCOA.GLAccountNumber,
-                                         GLAccountId = gCOA.GLAccountId,
                                          GLAccountEnglish = gCOA.GLAccountEnglish,
                                          ChartOfAccountsTypeEnglish = gCOA.ChartOfAccountsTypeEnglish,
                                          ChartOfAccountsEnglish = gCOA.ChartOfAccountsEnglish,
@@ -945,16 +961,18 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                           ChartOfAcountName5 = chartf.Level5Name,
 
 
-                          ChartOfAcountName1English = chartf.Level1English,
-                          ChartOfAcountName2English = chartf.Level2English,
-                          ChartOfAcountName3English = chartf.Level3English,
-                          ChartOfAcountName4English = chartf.Level4English,
-                          ChartOfAcountName5English = chartf.Level5English,
 
                           ChartOfAccountId = chartf.ChartOfAccountId,
                           GLAccountName = chartf.GLAccountName,
                           GLAccountNumber= chartf.GLAccountNumber,
                           GLAccountId = chartf.GLAccountId,
+
+
+                          ChartOfAcountName1English = chartf.Level1English,
+                          ChartOfAcountName2English = chartf.Level2English,
+                          ChartOfAcountName3English = chartf.Level3English,
+                          ChartOfAcountName4English = chartf.Level4English,
+                          ChartOfAcountName5English = chartf.Level5English,
 
                           GLAccountEnglish = chartf.GLAccountEnglish,
                           ChartOfAccountsTypeEnglish = chartf.ChartOfAccountsTypeEnglish,
@@ -1043,16 +1061,18 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                          ChartOfAcountName5 = gCOA.Key.ChartOfAcountName5,
 
 
-                         ChartOfAcountName1English = gCOA.Key.ChartOfAcountName1English,
-                         ChartOfAcountName2English = gCOA.Key.ChartOfAcountName2English,
-                         ChartOfAcountName3English = gCOA.Key.ChartOfAcountName3English,
-                         ChartOfAcountName4English = gCOA.Key.ChartOfAcountName4English,
-                         ChartOfAcountName5English = gCOA.Key.ChartOfAcountName5English,
 
                          ChartOfAccountId = gCOA.Key.ChartOfAccountId, 
                          GLAccountName = gCOA.Key.GLAccountName,
                          GLAccountNumber= gCOA.Key.GLAccountNumber,
                          GLAccountId = gCOA.Key.GLAccountId,
+
+
+                         ChartOfAcountName1English = gCOA.Key.ChartOfAcountName1English,
+                         ChartOfAcountName2English = gCOA.Key.ChartOfAcountName2English,
+                         ChartOfAcountName3English = gCOA.Key.ChartOfAcountName3English,
+                         ChartOfAcountName4English = gCOA.Key.ChartOfAcountName4English,
+                         ChartOfAcountName5English = gCOA.Key.ChartOfAcountName5English,
 
                          GLAccountEnglish = gCOA.Key.GLAccountEnglish,
                          ChartOfAccountsTypeEnglish = gCOA.Key.ChartOfAccountsTypeEnglish,
