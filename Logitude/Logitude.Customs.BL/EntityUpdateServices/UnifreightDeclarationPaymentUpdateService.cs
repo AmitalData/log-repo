@@ -25,6 +25,7 @@ using Unifreight.Data.AmitalModel;
 using Unifreight.Data.AmitalModel.EntityKeys;
 using Unifreight.Data.AmitalModel.EntityPOCOs;
 using Logitude.Customs.Def.Messaging.Customs;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
@@ -193,6 +194,14 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
                 _CCUPAYHAND.ChangeSetOp = ChangeSetOperation.Update;
             }
+            
+            
+            var setting = CustomsSettingQueryService.GetSettingByTenant(_DirtyDeclarationPaymentPM.Tenant);
+            if (!setting.IsConnectedToUniFreight)
+            {
+                _CCUPAYHAND.Tenant =  _DirtyDeclarationPaymentPM.Tenant;
+            }
+
             _CCUPAYHAND.DeclarationId = _DeclarationPM.Id;
 
             //_CCUPAYHAND.PAYTAX = _DirtyDeclarationPaymentPM.;
@@ -343,6 +352,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             curCCUPAYLINEF.BANKBRANCH = decDeclarationPaymentMethods.BranchCode;
             curCCUPAYLINEF.BANKACCOUNT = decDeclarationPaymentMethods.AccountNumber;
             curCCUPAYLINEF.PAYORDNO = _DeclarationPM.PaymentOrderNumber.ToNullableInt("_DeclarationPM.PaymentOrderNumber"); //Yuval Chalup 20.09.2015 TASK-16498      
+
+            var setting = CustomsSettingQueryService.GetSettingByTenant(_DirtyDeclarationPaymentPM.Tenant);
+            if (!setting.IsConnectedToUniFreight)
+            {
+                curCCUPAYLINEF.Tenant = _DirtyDeclarationPaymentPM.Tenant;
+            }
 
             return curCCUPAYLINEF;
         }

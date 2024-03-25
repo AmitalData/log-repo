@@ -16,6 +16,7 @@ using System.Transactions;
 using Simplog.Server.Infrastructure.Helpers;
 using System.Configuration;
 using Simplog.Server.Infrastructure;
+using Logitude.Customs.Data.Repsitories;
 
 namespace Unifreight.BL.EntityUpdateServices
 {
@@ -74,6 +75,20 @@ namespace Unifreight.BL.EntityUpdateServices
                 return true;
             }
             return false;
+        }
+        protected override void OnUpdating(GGGQPM entityPM)
+        {
+            if (entityPM.Tenant != 0)
+            {
+                CustomsSettingRepository custSettingsRepo = new CustomsSettingRepository(entityPM.Tenant);
+                bool isConnectedToUnifreight = custSettingsRepo.GetSettingByTenant(entityPM.Tenant).IsConnectedToUniFreight;
+                if (!isConnectedToUnifreight)
+                {
+                    entityPM.IS_SYNCH = false;
+                    entityPM.LAST_UPDATE_DT = DateTime.Now;
+                }
+            }
+
         }
 
         protected override void UpdateComposition(GGGQPM entityPM)

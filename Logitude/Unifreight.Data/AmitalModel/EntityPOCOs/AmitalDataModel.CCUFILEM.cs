@@ -20,7 +20,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
     /// There are no comments for Unifreight.Data.AmitalModel.CCUFILEM in the schema.
     /// </summary>
     [System.Runtime.Serialization.DataContractAttribute(IsReference = true)]
-    public partial class CCUFILEM : INotifyPropertyChanged
+    public partial class CCUFILEM : UNIFBASICPOCO ,INotifyPropertyChanged
     {
 
         public CCUFILEM()

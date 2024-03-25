@@ -21,7 +21,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
     /// There are no comments for Unifreight.Data.AmitalModel.CCUCRREQ in the schema.
     /// </summary>
     [System.Runtime.Serialization.DataContractAttribute(IsReference=true)]
-    public partial class CCUCRREQ : INotifyPropertyChanged    {
+    public partial class CCUCRREQ : UNIFBASICPOCO, INotifyPropertyChanged    {
 
         public CCUCRREQ()
         {

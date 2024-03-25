@@ -127,7 +127,7 @@ namespace Unifreight.Data.AmitalModel
             modelBuilder.Entity<GGGQ>()
                 .Property(p => p.EXPTASKTIME)
                     .HasColumnName(@"EXP_TASK_TIME")
-                    .HasColumnType("double");
+                    .HasColumnType("int64");
             modelBuilder.Entity<GGGQ>()
                 .Property(p => p.TRY)
                     .HasColumnType("int");
@@ -10901,7 +10901,203 @@ namespace Unifreight.Data.AmitalModel
         {
             DbModelBuilder modelBuilder = new DbModelBuilder(DbModelBuilderVersion.V4_1);
 
+            #region GGGQ
 
+            modelBuilder.Entity<GGGQ>()
+                .HasKey(p => new { p.QUEID })
+                .ToTable("GGGQ", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<GGGQ>()
+                .Property(p => p.QUEID)
+                    .HasColumnName(@"QUE_ID")
+                    .IsRequired()
+                    .HasMaxLength(30)
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GGGQ>()
+                .Property(p => p.CREATEDATE)
+                    .HasColumnName(@"CREATE_DATE")
+                    .HasColumnType("date");
+            modelBuilder.Entity<GGGQ>()
+                .Property(p => p.EXECDATE)
+                    .HasColumnName(@"EXEC_DATE")
+                    .IsRequired()
+                    .HasColumnType("date");
+            modelBuilder.Entity<GGGQ>()
+                .Property(p => p.STARTDATE)
+                    .HasColumnName(@"START_DATE")
+                    .HasColumnType("date");
+            modelBuilder.Entity<GGGQ>()
+                .Property(p => p.ORIGINQUE)
+                    .HasColumnName(@"ORIGIN_QUE")
+                    .HasMaxLength(30)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GGGQ>()
+                .Property(p => p.USERID)
+                    .HasColumnName(@"USER_ID")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar");
+            modelBuilder.Entity<GGGQ>()
+                .Property(p => p.REF)
+                    .HasMaxLength(50)
+                    .HasColumnType("varchar");
+            modelBuilder.Entity<GGGQ>()
+                .Property(p => p.DEPENDENCYREF)
+                    .HasColumnName(@"DEPENDENCY_REF")
+                    .HasMaxLength(50)
+                    .HasColumnType("varchar");
+            modelBuilder.Entity<GGGQ>()
+                .Property(p => p.DONEOPERATION)
+                    .HasColumnName(@"DONE_OPERATION")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GGGQ>()
+                .Property(p => p.STATUS)
+                    .IsRequired()
+                    .HasMaxLength(2)
+                    .HasColumnType("varchar");
+#if reserveword
+            modelBuilder.Entity<GGGQ>()
+                .Property(p => p.DESC)
+                    .HasMaxLength(50)
+                    .HasColumnType("varchar");
+#endif
+            modelBuilder.Entity<GGGQ>()
+                .Property(p => p.EXPTASKTIME)
+                    .HasColumnName(@"EXP_TASK_TIME")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<GGGQ>()
+                .Property(p => p.TRY)
+                    .HasColumnType("int");
+            modelBuilder.Entity<GGGQ>()
+                .Property(p => p.PRIORITY)
+                    .HasColumnType("int");
+            modelBuilder.Entity<GGGQ>()
+                .Property(p => p.ENTNAME)
+                    .HasMaxLength(32)
+                    .HasColumnType("varchar");
+            modelBuilder.Entity<GGGQ>()
+                .Property(p => p.PRIMARYNUM)
+                    .HasColumnName(@"PRIMARY_NUM")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar");
+            modelBuilder.Entity<GGGQ>()
+                .Property(p => p.LOGLEVEL)
+                    .HasColumnName(@"LOG_LEVEL")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GGGQ>()
+                .Property(p => p.SECNUMBER)
+                    .HasColumnName(@"SEC_NUMBER")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar");
+            modelBuilder.Entity<GGGQ>()
+                .Property(p => p.PROCESSID)
+                    .HasColumnName(@"PROCESS_ID")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<GGGQ>()
+                .Property(p => p.FORMID)
+                    .HasColumnName(@"FORM_ID")
+                    .HasMaxLength(50)
+                    .HasColumnType("varchar");
+            modelBuilder.Entity<GGGQ>()
+                .Property(p => p.COMPUTERID)
+                    .HasColumnName(@"COMPUTER_ID")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar");
+            modelBuilder.Entity<GGGQ>()
+                .Property(p => p.GSTRING1)
+                    .HasMaxLength(255)
+                    .HasColumnType("varchar");
+            modelBuilder.Entity<GGGQ>()
+                .Property(p => p.GSTRING2)
+                    .HasMaxLength(255)
+                    .HasColumnType("varchar");
+            modelBuilder.Entity<GGGQ>()
+                .Property(p => p.GSTRING3)
+                    .HasMaxLength(255)
+                    .HasColumnType("varchar");
+            modelBuilder.Entity<GGGQ>()
+                .Property(p => p.GSTRING4)
+                    .HasMaxLength(255)
+                    .HasColumnType("varchar");
+            modelBuilder.Entity<GGGQ>()
+                .Property(p => p.QUEUEMANAGEMENT)
+                    .HasColumnName(@"QUEUE_MANAGEMENT")
+                    .HasColumnType("bit");
+            modelBuilder.Entity<GGGQ>()
+                .Property(p => p.OTHERASNFILE)
+                    .HasColumnName(@"OTHER_ASN_FILE")
+                    .HasColumnType("bit");
+            modelBuilder.Entity<GGGQ>()
+                .Property(p => p.STOPPEDBYSM)
+                    .HasColumnName(@"STOPPED_BY_SM")
+                    .HasColumnType("bit");
+            modelBuilder.Entity<GGGQ>()
+                .Property(p => p.GSTRING5)
+                    .HasMaxLength(255)
+                    .HasColumnType("varchar");
+            modelBuilder.Entity<GGGQ>()
+                .Property(p => p.DEBUG)
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GGGQ>()
+                .Property(p => p.WEAKREF)
+                    .HasColumnName(@"WEAK_REF")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GGGQ>()
+                .Property(p => p.HUGERECORD)
+                    .HasColumnName(@"HUGE_RECORD")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GGGQ>()
+                .Property(p => p.POSTFAILED)
+                    .HasColumnName(@"POST_FAILED")
+                    .HasMaxLength(16)
+                    .HasColumnType("varchar");
+            modelBuilder.Entity<GGGQ>()
+                .Property(p => p.GSTRING6)
+                    .HasMaxLength(255)
+                    .HasColumnType("varchar");
+            modelBuilder.Entity<GGGQ>()
+                .Property(p => p.POSTSUCCESS)
+                    .HasColumnName(@"POST_SUCCESS")
+                    .HasMaxLength(16)
+                    .HasColumnType("varchar");
+            modelBuilder.Entity<GGGQ>()
+                .Property(p => p.FAILED)
+                    .HasColumnType("int");
+
+            #endregion
+
+
+            #region GGGQC
+
+            modelBuilder.Entity<GGGQC>()
+                .HasKey(p => new { p.QUEID, p.FIELDID })
+                .ToTable("GGGQC", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<GGGQC>()
+                .Property(p => p.QUEID)
+                    .HasColumnName(@"QUE_ID")
+                    .IsRequired()
+                    .HasMaxLength(30)
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GGGQC>()
+                .Property(p => p.FIELDID)
+                    .HasColumnName(@"FIELD_ID")
+                    .IsRequired()
+                    .HasMaxLength(30)
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("varchar");
+            modelBuilder.Entity<GGGQC>()
+                .Property(p => p.FIELDVAL)
+                    .HasColumnName(@"FIELD_VAL")
+                    .HasColumnType("varchar(max)");
+
+            #endregion
 
             #region CCUMSHGR
 

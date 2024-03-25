@@ -21,14 +21,14 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
     /// There are no comments for Unifreight.Data.AmitalModel.CCUPAYLINEF in the schema.
     /// </summary>
     [System.Runtime.Serialization.DataContractAttribute(IsReference=true)]
-    public partial class CCUPAYLINEF : INotifyPropertyChanged    {
+    public partial class CCUPAYLINEF : UNIFBASICPOCO, INotifyPropertyChanged    {
 
         public CCUPAYLINEF()
         {
         }
 
         #region Properties
-    
+
         /// <summary>
         /// There are no comments for FILENO in the schema.
         /// </summary>
