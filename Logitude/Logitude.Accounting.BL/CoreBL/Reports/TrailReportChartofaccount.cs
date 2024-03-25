@@ -120,7 +120,7 @@ Init_LocalAmountsOfAccountTransStart_JoinAccountsWhereIscontrolAccount_GroupByCO
                                   on chartf.GLAccountId equals data.GLAccountId
                                   into groupJoin
                                   from groupJoinData in groupJoin.DefaultIfEmpty()
-                                  select new TrailReportM()
+                                  select new TrailReportM2()
                                   {
                                       ChartOfAcountType = chartf.ChartOfAccountTypeCode,
                                       ChartOfAcount1 = chartf.Level1Id,
@@ -244,6 +244,7 @@ Init_LocalAmountsOfAccountTransStart_JoinAccountsWhereIscontrolAccount_GroupByCO
 
 
                                  GLAccountName = "",//gCOA.Key.GLAccountName,
+                                 GLAccountEnglish = "",
 
                      GLAccountId = "",//gCOA.Key.GLAccountId,
 
@@ -307,6 +308,7 @@ Init_LocalAmountsOfAccountTransStart_JoinAccountsWhereIscontrolAccount_GroupByCO
 
 
                                  GLAccountName = "",
+                                 GLAccountEnglish = "",
 
                                  GLAccountId = g.Key.COAType,
                                  CurrencyId = "",//g.Key.CurrencyId,

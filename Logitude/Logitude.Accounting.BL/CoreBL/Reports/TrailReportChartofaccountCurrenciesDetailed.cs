@@ -223,6 +223,11 @@ qTransStart_JoinAccountsWhereIscontrolAccount_GroupByCOATypeId);
                  trailReportRow.ChartOfAcountName3,
                  trailReportRow.ChartOfAcountName4,
                  trailReportRow.ChartOfAcountName5,
+                 trailReportRow.ChartOfAcountName1English,
+                 trailReportRow.ChartOfAcountName2English,
+                 trailReportRow.ChartOfAcountName3English,
+                 trailReportRow.ChartOfAcountName4English,
+                 trailReportRow.ChartOfAcountName5English,
                  trailReportRow.ChartOfAcountCode1,
                  trailReportRow.ChartOfAcountCode2,
                  trailReportRow.ChartOfAcountCode3,
@@ -251,6 +256,11 @@ qTransStart_JoinAccountsWhereIscontrolAccount_GroupByCOATypeId);
                     ChartOfAcountName3 = gCOA.Key.ChartOfAcountName3,
                     ChartOfAcountName4 = gCOA.Key.ChartOfAcountName4,
                     ChartOfAcountName5 = gCOA.Key.ChartOfAcountName5,
+                    ChartOfAcountName1English = gCOA.Key.ChartOfAcountName1English,
+                    ChartOfAcountName2English = gCOA.Key.ChartOfAcountName2English,
+                    ChartOfAcountName3English = gCOA.Key.ChartOfAcountName3English,
+                    ChartOfAcountName4English = gCOA.Key.ChartOfAcountName4English,
+                    ChartOfAcountName5English = gCOA.Key.ChartOfAcountName5English,
                     ChartOfAcountCode1 = gCOA.Key.ChartOfAcountCode1,
                     ChartOfAcountCode2 = gCOA.Key.ChartOfAcountCode2,
                     ChartOfAcountCode3 = gCOA.Key.ChartOfAcountCode3,
@@ -260,6 +270,7 @@ qTransStart_JoinAccountsWhereIscontrolAccount_GroupByCOATypeId);
                     ChartOfAccountId = gCOA.Key.ChartOfAccountId,
 
                     GLAccountName = "",//gCOA.Key.GLAccountName,
+                    GLAccountEnglish = "",
 
                     GLAccountId = "",//gCOA.Key.GLAccountId,
 
@@ -303,6 +314,13 @@ qTransStart_JoinAccountsWhereIscontrolAccount_GroupByCOATypeId);
                     ChartOfAcountName3 = chartf.Level3Name,
                     ChartOfAcountName4 = chartf.Level4Name,
                     ChartOfAcountName5 = chartf.Level5Name,
+
+                    ChartOfAcountName1English = chartf.Level1English,
+                    ChartOfAcountName2English = chartf.Level2English,
+                    ChartOfAcountName3English = chartf.Level3English,
+                    ChartOfAcountName4English = chartf.Level4English,
+                    ChartOfAcountName5English = chartf.Level5English,
+
                     ChartOfAcountCode1 = chartf.Level1Code,
                     ChartOfAcountCode2 = chartf.Level2Code,
                     ChartOfAcountCode3 = chartf.Level3Code,
@@ -353,6 +371,9 @@ qTransStart_JoinAccountsWhereIscontrolAccount_GroupByCOATypeId);
                              {
 
                                  ChartOfAcountType = "",
+                                 ChartOfAccountsTypeEnglish = "",
+                                 ChartOfAccountsEnglish = "",
+
                                  ChartOfAcount1 = "",
                                  ChartOfAcount2 = "",
                                  ChartOfAcount3 = "",
@@ -363,6 +384,13 @@ qTransStart_JoinAccountsWhereIscontrolAccount_GroupByCOATypeId);
                                  ChartOfAcountName3 = "",
                                  ChartOfAcountName4 = "",
                                  ChartOfAcountName5 = "",
+
+                                 ChartOfAcountName1English = "",
+                                 ChartOfAcountName2English = "",
+                                 ChartOfAcountName3English = "",
+                                 ChartOfAcountName4English = "",
+                                 ChartOfAcountName5English = "",
+
                                  ChartOfAcountCode1 = "",
                                  ChartOfAcountCode2 = "",
                                  ChartOfAcountCode3 = "",
@@ -375,7 +403,7 @@ qTransStart_JoinAccountsWhereIscontrolAccount_GroupByCOATypeId);
 
                                  ChartOfAccountId = "",
                                  GLAccountName = "",
-
+                                 GLAccountEnglish = "",
                                  GLAccountId = g.Key.COAType,
                                  CurrencyId = g.Key.CurrencyId,
 
