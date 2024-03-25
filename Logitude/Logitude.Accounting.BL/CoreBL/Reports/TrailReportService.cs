@@ -990,11 +990,106 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 sb.Append("ACC:" + this.GLAccountName + "," + this.GLAccountId);
             }
 
-            
-            sb.Append("Cur:" + this.CurrencyId);
-            
 
-            
+            sb.Append("Cur:" + this.CurrencyId);
+
+
+
+
+            sb.Append("Local:");
+            sb.Append("OB:").Append(this.LocalOpenBalance.GetValueOrDefault().ToString());
+
+            sb.Append("D:").Append(this.LocalDebit.GetValueOrDefault().ToString());
+            sb.Append("C:").Append(this.LocalCredit.GetValueOrDefault().ToString());
+
+            sb.Append("CB:").Append(this.LocalCloseBalance.GetValueOrDefault().ToString());
+
+
+
+            sb.Append("Foreign:");
+            sb.Append("OB:").Append(this.ForeignOpenBalance.GetValueOrDefault().ToString());
+
+            sb.Append("D:").Append(this.ForeignDebit.GetValueOrDefault().ToString());
+            sb.Append("C:").Append(this.ForeignCredit.GetValueOrDefault().ToString());
+
+            sb.Append("CB:").Append(this.ForeignCloseBalance.GetValueOrDefault().ToString());
+
+
+            return sb.ToString();
+        }
+    }
+    public class TrailReportM2
+    {
+
+        public string ChartOfAccountTypeName { get; set; }
+        public string ChartOfAcountType { get; set; }
+        public int? ChartOfAcountTypeOrder { get; set; }
+        public string ChartOfAcount1 { get; set; }
+        public string ChartOfAcount2 { get; set; }
+        public string ChartOfAcount3 { get; set; }
+        public string ChartOfAcount4 { get; set; }
+        public string ChartOfAcount5 { get; set; }
+        public string ChartOfAcountName1 { get; set; }
+        public string ChartOfAcountName2 { get; set; }
+        public string ChartOfAcountName3 { get; set; }
+        public string ChartOfAcountName4 { get; set; }
+        public string ChartOfAcountName5 { get; set; }
+        public string ChartOfAcountName1English { get; set; }
+        public string ChartOfAcountName2English { get; set; }
+        public string ChartOfAcountName3English { get; set; }
+        public string ChartOfAcountName4English { get; set; }
+        public string ChartOfAcountName5English { get; set; }
+        public string ChartOfAcountCode1 { get; set; }
+        public string ChartOfAcountCode2 { get; set; }
+        public string ChartOfAcountCode3 { get; set; }
+        public string ChartOfAcountCode4 { get; set; }
+        public string ChartOfAcountCode5 { get; set; }
+        public string ChartOfAccountsTypeEnglish { get; set; }
+        public string ChartOfAccountsEnglish { get; set; }
+
+        public string GLAccountName { get; set; }
+        public string GLAccountEnglish { get; set; }
+        public string GLAccountNumber { get; set; }
+
+        public string GLAccountId { get; set; }
+        public string CurrencyId { get; set; }
+        public string ChartOfAccountId { get; set; }
+
+        public decimal? LocalOpenBalance { get; set; }
+        public decimal? LocalDebit { get; set; }
+        public decimal? LocalCredit { get; set; }
+        public decimal? LocalCloseBalance { get; set; }
+
+
+
+        public decimal? ForeignOpenBalance { get; set; }
+
+        public decimal? ForeignDebit { get; set; }
+
+        public decimal? ForeignCredit { get; set; }
+
+        public decimal? ForeignCloseBalance { get; set; }
+
+
+        public override string ToString()
+        {
+            var sb = new StringBuilder();
+            sb.Append("COAT:" + this.ChartOfAcountType);
+            sb.Append("COA:" + this.ChartOfAcount1 +
+        this.ChartOfAcount2 +
+        this.ChartOfAcount3 +
+        this.ChartOfAcount4 +
+        this.ChartOfAcount5);
+            if (!String.IsNullOrWhiteSpace(this.GLAccountName + this.GLAccountId))
+            {
+                sb.Append("ACC:" + this.GLAccountName + "," + this.GLAccountId);
+            }
+
+
+            sb.Append("Cur:" + this.CurrencyId);
+
+
+
 
             sb.Append("Local:");
             sb.Append("OB:").Append(this.LocalOpenBalance.GetValueOrDefault().ToString());
