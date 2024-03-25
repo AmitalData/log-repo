@@ -3708,7 +3708,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
         }
 
 
-        if (this.entityPM.SupplierInvioceItemCertificats?.length == 0) {
+        if (this.entityPM.SupplierInvioceItemCertificats.length == 0) {
             this.WarningVisiblity = false;
             this.OkVisiblity = false;
             this.IsBlueBorderVisibile = false;
