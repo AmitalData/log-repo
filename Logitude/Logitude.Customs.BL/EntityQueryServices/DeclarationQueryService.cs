@@ -2043,6 +2043,51 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return ticketValidStatus;
         }
 
+        public bool CheckDiamondsDeclarationReadyForSending(DeclarationPM declarationPM)
+        {
+            bool declarationReadyForSending;
+
+            // get all documents CONNECTED to the declaration
+            CustomsDocumentsTicketQueryService myCustomsDocumentsTicketQueryService = new CustomsDocumentsTicketQueryService(declarationPM.Tenant);
+            List<CustomsDocumentsTicketPM> customsDocumentsTicketPMList = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(declarationPM.Id, "", "", "", declarationPM.Tenant, "Declaration").ToList();
+            var DocumentsFilingIdList = new List<string>();
+            foreach (var customsDocumentsTicketPM in customsDocumentsTicketPMList)
+            {
+                if (!string.IsNullOrWhiteSpace(customsDocumentsTicketPM.DocumentsFilingId))
+                {
+                    DocumentsFilingIdList.Add(customsDocumentsTicketPM.DocumentsFilingId);
+                }
+            }
+
+            // if the declaration has no connected document, it can not been sent to the mehes
+            if (DocumentsFilingIdList.Count() == 0)
+            {
+                declarationReadyForSending = false;
+            }
+            else
+            {
+                // get all declaration Customs Document
+                var myCustomsDocumentQueryService = new CustomsDocumentQueryService(declarationPM.Tenant);
+                var customsDocumentPMList = myCustomsDocumentQueryService.GetCustomsDocumentList(DocumentsFilingIdList, declarationPM.Tenant);
+
+                // determine how many supplier invoices documents had been successfully sent to the mekhes
+                int sentSupplierInvoices = customsDocumentPMList.Where(document => document.DocumentTypeCode == "380" && document.DocumentStatusCode == "1").Count();
+
+                // get all supplier invoices count of the declaration
+                SupplierInvoiceListQueryService supplierInvoiceQuery = new SupplierInvoiceListQueryService(context);
+                QueryOperations queryOperations = new QueryOperations();
+                queryOperations.SetFilter("DeclarationId", declarationPM.Id, false, "Equals", null, false, false, "string");
+                int declarationSupplierInvoiceCount = supplierInvoiceQuery.GetListCount(queryOperations, declarationPM.Tenant);
+
+                // the declaration may be sent if documents about all its supplier invoices have been sent to the mehes and received simuhin
+                declarationReadyForSending = sentSupplierInvoices >= declarationSupplierInvoiceCount;
+
+                /* if need to check for every invoice, the relation between document and invoice is
+                 * (invoice.SequenceNumeric == customsDocumentsTicketPM.ConnectedInvoicesSequences) */
+            }
+
+            return declarationReadyForSending;
+        }
 
         public bool IsDocumentMissing(DeclarationPM myDeclarationPM)
         {
