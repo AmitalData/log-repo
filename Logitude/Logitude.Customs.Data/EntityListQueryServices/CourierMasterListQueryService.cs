@@ -319,7 +319,16 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                      into DeclarationCourierStatusesJoin
  from myDeclarationCourierStatuses in DeclarationCourierStatusesJoin
  where ids.Contains(p.CourierMasterId)
- select new { p.CourierMasterId, myDeclarations, myDeclarationCourierStatuses });//.ToList();
+ select new 
+ {
+     p.CourierMasterId,
+     myDeclarations.CourierCustomStatusCode,
+     myDeclarationCourierStatuses.IsClosedForFollowUp,
+     myDeclarationCourierStatuses.CourierDeclarationStatusCode,
+     myDeclarationCourierStatuses.CourierPendingReasonList,
+     myDeclarationCourierStatuses.DocumentStatusCode,
+     myDeclarationCourierStatuses.IsCourierMissingClassification
+ });
 
             var qJoinList = qJoin.ToList();
 
@@ -330,26 +339,26 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                   select new MyJoin
                   {
                       CourierMasterId = g.Key,
-                      IsClosedForFollowUp0 = g.Count(r => r.myDeclarationCourierStatuses.IsClosedForFollowUp == false),
+                      IsClosedForFollowUp0 = g.Count(r => r.IsClosedForFollowUp == false),
                       P900 = g.Count(
-                          r => r.myDeclarationCourierStatuses.CourierPendingReasonList != null && r.myDeclarationCourierStatuses.CourierPendingReasonList.Contains("900")),
-                      IsCourierMissingClassification = g.Count(r => r.myDeclarationCourierStatuses.IsCourierMissingClassification == true),
+                          r => r.CourierPendingReasonList != null && r.CourierPendingReasonList.Contains("900")),
+                      IsCourierMissingClassification = g.Count(r => r.IsCourierMissingClassification == true),
                       IsMissingImporterId = g.Count(
-                          r => (r.myDeclarationCourierStatuses.CourierPendingReasonList != null && r.myDeclarationCourierStatuses.CourierPendingReasonList.Contains("902"))
-                          && r.myDeclarationCourierStatuses.IsClosedForFollowUp == false),
-                      IsPendingCustoms = g.Count(r => r.myDeclarations.CourierCustomStatusCode == "2" && r.myDeclarationCourierStatuses.IsClosedForFollowUp == false),
-                      IsSuspendedDeclarations = g.Count(r => r.myDeclarationCourierStatuses.IsClosedForFollowUp == false && r.myDeclarations.CourierCustomStatusCode == "2"),
+                          r => (r.CourierPendingReasonList != null && r.CourierPendingReasonList.Contains("902"))
+                          && r.IsClosedForFollowUp == false),
+                      IsPendingCustoms = g.Count(r => r.CourierCustomStatusCode == "2" && r.IsClosedForFollowUp == false),
+                      IsSuspendedDeclarations = g.Count(r => r.IsClosedForFollowUp == false && r.CourierCustomStatusCode == "2"),
 
-                      HawbQuantityNoDocuments = g.Count(s => s.myDeclarationCourierStatuses.IsClosedForFollowUp == false && s.myDeclarationCourierStatuses.DocumentStatusCode == "M"
-                      || s.myDeclarationCourierStatuses.IsClosedForFollowUp == false && s.myDeclarationCourierStatuses.DocumentStatusCode == "X"),
+                      HawbQuantityNoDocuments = g.Count(s => s.IsClosedForFollowUp == false && s.DocumentStatusCode == "M"
+                      || s.IsClosedForFollowUp == false && s.DocumentStatusCode == "X"),
 
-                      NoDocumentsStatusR = g.Count(s => s.myDeclarationCourierStatuses.IsClosedForFollowUp == false && s.myDeclarationCourierStatuses.CourierDeclarationStatusCode == "R"),
-                      NoDocumentsStatusI = g.Count(s => s.myDeclarationCourierStatuses.IsClosedForFollowUp == false && s.myDeclarationCourierStatuses.CourierDeclarationStatusCode == "I"),
-                      NoDocumentsStatusV = g.Count(s => s.myDeclarationCourierStatuses.IsClosedForFollowUp == false && s.myDeclarationCourierStatuses.CourierDeclarationStatusCode == "V"),
+                      NoDocumentsStatusR = g.Count(s => s.IsClosedForFollowUp == false && s.CourierDeclarationStatusCode == "R"),
+                      NoDocumentsStatusI = g.Count(s => s.IsClosedForFollowUp == false && s.CourierDeclarationStatusCode == "I"),
+                      NoDocumentsStatusV = g.Count(s => s.IsClosedForFollowUp == false && s.CourierDeclarationStatusCode == "V"),
 
-                      //NoDocumentsStatus = g.All(s => s.myDeclarationCourierStatuses.IsClosedForFollowUp == false && s.myDeclarationCourierStatuses.CourierDeclarationStatusCode == "R") ? -2 :
-                      //                    g.Any(s => s.myDeclarationCourierStatuses.IsClosedForFollowUp == false && s.myDeclarationCourierStatuses.CourierDeclarationStatusCode == "I") ? -3 :
-                      //                    g.All(s => s.myDeclarationCourierStatuses.IsClosedForFollowUp == false && s.myDeclarationCourierStatuses.CourierDeclarationStatusCode == "V") ? -4 : 0,
+                      //NoDocumentsStatus = g.All(s => s.IsClosedForFollowUp == false && s.CourierDeclarationStatusCode == "R") ? -2 :
+                      //                    g.Any(s => s.IsClosedForFollowUp == false && s.CourierDeclarationStatusCode == "I") ? -3 :
+                      //                    g.All(s => s.IsClosedForFollowUp == false && s.CourierDeclarationStatusCode == "V") ? -4 : 0,
 
                   }
                   ).ToList();
