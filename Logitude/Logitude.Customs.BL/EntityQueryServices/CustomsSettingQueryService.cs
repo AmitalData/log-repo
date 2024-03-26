@@ -166,7 +166,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             var setting = this.GetSettingByTenantN(tenant);
 
             var signQueueHSMService = new SignQueueHSMService();
-            bool hasValidHsm = signQueueHSMService.GetHSMAllCertificates(tenant, false).Any(i => i.IsOk == true);
+            bool hasValidHsm = (bool)(signQueueHSMService.GetHSMAllCertificates(tenant, false)?.Any(i => i.IsOk == true));
 
             bool fromEnvSetting =
                 !string.IsNullOrEmpty(environmentSettingPM.HSMActiveCertUrl) &&
