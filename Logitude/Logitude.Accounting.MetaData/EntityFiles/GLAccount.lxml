@@ -18786,7 +18786,7 @@
     <TextCode
       Code="&quot;GLAccount.O.BalanceInHebrew&quot;"
       DefaultText="&quot;Balance&quot;"
-      LocalDefaultText="&quot;יתרה לפי יתרה לגביה בשח&quot;"
+      LocalDefaultText="&quot;יתרה לפי&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
@@ -18823,12 +18823,6 @@
       Code="&quot;GLAccount.O.ClosingBalanceAccordingToTheBalanceInDue&quot;"
       DefaultText="&quot;Closing balance according to the balance In Due&quot;"
       LocalDefaultText="&quot;יתרת סגירה לפי יתרה לגביה&quot;"
-      TextCodeTypeCode="&quot;O&quot;"
-      IsSpellChecked="false" />
-    <TextCode
-      Code="&quot;GLAccount.O.Display&quot;"
-      DefaultText="&quot;Display&quot;"
-      LocalDefaultText="&quot;להציג&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
