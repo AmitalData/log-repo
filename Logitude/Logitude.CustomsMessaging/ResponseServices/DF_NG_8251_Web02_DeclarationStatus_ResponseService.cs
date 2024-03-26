@@ -430,6 +430,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                     }
                                     if (declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode == "1")
                                     {
+                                        string originalStatus = declarationPM.DeclarationStatusTypeCode;
                                         declarationPM.DeclarationStatusTypeCode = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode;
                                         var myEventContextTagModel = new EventContextTagModel()
                                         {
@@ -441,6 +442,33 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                         UpdateDeclaration(declarationUpdateService, declarationPM);
                                         //if (isAutoPayment)
                                         //    SendPayment(declarationPM, dbContext, requestParams);
+
+                                        if (declarationPM.Direction == "E" && originalStatus != declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationStatusCode)
+                                        {
+                                            // pass cancel status to unifreight
+                                            var amitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
+                                            {
+                                                Tenant = declarationPM.Tenant,
+                                                objectTableName = "Customs.Declaration",
+                                                EventCode = "CAN",
+                                                notes = "הערות המכס לביטול: " + declarationPM.CustomCancelRequestRemarks,
+                                                CommunicationLoggingEntityReference = declarationPM.DeclarationNumber,
+                                                EntityId = declarationPM.Id,
+                                                UserId = requestParams.LoggingUserId,
+                                                CommunicationSubject = "FU Status CAN from logitude ",
+                                                MyFUStatus = new AmitalEventTracerModel.FUStatus()
+                                                {
+                                                    entname = "BFIFILE",
+                                                    primary_number = declarationPM.CustomFileNo,
+                                                    status = "new",
+                                                    xml_status = "new",
+                                                    status_id = "CAN",
+                                                    status_DateTime = DateTime.Now,
+                                                    comments = ""
+                                                }
+                                            };
+                                            AmitalEventTracer.CreateTraceEvent(amitalEventTracerModel);
+                                        }
                                     }
                                     else if ((declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationVersion == declarationPM.VersionId && declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.ReleaseDateTime.HasValue))
                                     {
