@@ -290,6 +290,33 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     {
                         SendDeclarationPrint(requestParams);
                     }
+
+                    // if the declaration has been canceled, pass the status to unifreight
+                    if (customResponse?.Response?.Status[0]?.NameCode?.Value == "1" && _MyDeclarationPM?.DeclarationStatusTypeCode != "1")
+                    {
+                        var amitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
+                        {
+                            Tenant = _MyDeclarationPM.Tenant,
+                            objectTableName = "Customs.Declaration",
+                            EventCode = "CAN",
+                            notes = "הערות המכס לביטול: " + _MyDeclarationPM.CustomCancelRequestRemarks,
+                            CommunicationLoggingEntityReference = _MyDeclarationPM.DeclarationNumber,
+                            EntityId = _MyDeclarationPM.Id,
+                            UserId = requestParams.LoggingUserId,
+                            CommunicationSubject = "FU Status CAN from logitude ",
+                            MyFUStatus = new AmitalEventTracerModel.FUStatus()
+                            {
+                                entname = "BFIFILE",
+                                primary_number = _MyDeclarationPM.CustomFileNo,
+                                status = "new",
+                                xml_status = "new",
+                                status_id = "CAN",
+                                status_DateTime = DateTime.Now,
+                                comments = ""
+                            }
+                        };
+                        AmitalEventTracer.CreateTraceEvent(amitalEventTracerModel);
+                    }
                 }
             }
 
