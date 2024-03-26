@@ -300,11 +300,6 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                                                  row.ChartOfAcount3,
                                                  row.ChartOfAcount4,
                                                  row.ChartOfAcount5,
-                                                 row.ChartOfAcountName1,
-                                                 row.ChartOfAcountName2,
-                                                 row.ChartOfAcountName3,
-                                                 row.ChartOfAcountName4,
-                                                 row.ChartOfAcountName5,
 
 
                                                  row.ChartOfAcountCode1,
@@ -312,6 +307,14 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                                                  row.ChartOfAcountCode3,
                                                  row.ChartOfAcountCode4,
                                                  row.ChartOfAcountCode5,
+
+                                                 row.ChartOfAcountName1,
+                                                 row.ChartOfAcountName2,
+                                                 row.ChartOfAcountName3,
+                                                 row.ChartOfAcountName4,
+                                                 row.ChartOfAcountName5,
+
+
 
 
 
@@ -337,6 +340,13 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                                                      ChartOfAcount4 = groupTrailOnlyCOAType.Key.ChartOfAcount4,
                                                      ChartOfAcount5 = groupTrailOnlyCOAType.Key.ChartOfAcount5,
 
+
+                                                     ChartOfAcountCode1 = groupTrailOnlyCOAType.Key.ChartOfAcountCode1,
+                                                     ChartOfAcountCode2 = groupTrailOnlyCOAType.Key.ChartOfAcountCode2,
+                                                     ChartOfAcountCode3 = groupTrailOnlyCOAType.Key.ChartOfAcountCode3,
+                                                     ChartOfAcountCode4 = groupTrailOnlyCOAType.Key.ChartOfAcountCode4,
+                                                     ChartOfAcountCode5 = groupTrailOnlyCOAType.Key.ChartOfAcountCode5,
+
                                                      ChartOfAcountName1 = groupTrailOnlyCOAType.Key.ChartOfAcountName1,
                                                      ChartOfAcountName2 = groupTrailOnlyCOAType.Key.ChartOfAcountName2,
                                                      ChartOfAcountName3 = groupTrailOnlyCOAType.Key.ChartOfAcountName3,
@@ -344,11 +354,6 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                                                      ChartOfAcountName5 = groupTrailOnlyCOAType.Key.ChartOfAcountName5,
 
 
-                                                     ChartOfAcountCode1 = groupTrailOnlyCOAType.Key.ChartOfAcountCode1,
-                                                     ChartOfAcountCode2 = groupTrailOnlyCOAType.Key.ChartOfAcountCode2,
-                                                     ChartOfAcountCode3 = groupTrailOnlyCOAType.Key.ChartOfAcountCode3,
-                                                     ChartOfAcountCode4 = groupTrailOnlyCOAType.Key.ChartOfAcountCode4,
-                                                     ChartOfAcountCode5 = groupTrailOnlyCOAType.Key.ChartOfAcountCode5,
 
                                                      ChartOfAccountId = "",
                                                      GLAccountName = "",//= groupTrailOnlyCOAType.Key.GLAccountName,
@@ -405,17 +410,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                          row.ChartOfAcount3,
                          row.ChartOfAcount4,
                          row.ChartOfAcount5,
-                         row.ChartOfAcountName1,
-                         row.ChartOfAcountName2,
-                         row.ChartOfAcountName3,
-                         row.ChartOfAcountName4,
-                         row.ChartOfAcountName5,
 
-                         row.ChartOfAcountName1English,
-                         row.ChartOfAcountName2English,
-                         row.ChartOfAcountName3English,
-                         row.ChartOfAcountName4English,
-                         row.ChartOfAcountName5English,
 
                          row.ChartOfAcountCode1,
                          row.ChartOfAcountCode2,
@@ -423,10 +418,26 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                          row.ChartOfAcountCode4,
                          row.ChartOfAcountCode5,
 
+                         row.ChartOfAcountName1,
+                         row.ChartOfAcountName2,
+                         row.ChartOfAcountName3,
+                         row.ChartOfAcountName4,
+                         row.ChartOfAcountName5,
+
+
+
+
                          row.ChartOfAccountId,
                          row.GLAccountName,
                          row.GLAccountNumber,
                          row.GLAccountId,
+
+
+                         row.ChartOfAcountName1English,
+                         row.ChartOfAcountName2English,
+                         row.ChartOfAcountName3English,
+                         row.ChartOfAcountName4English,
+                         row.ChartOfAcountName5English,
 
                          row.GLAccountEnglish,
                          row.ChartOfAccountsTypeEnglish,
