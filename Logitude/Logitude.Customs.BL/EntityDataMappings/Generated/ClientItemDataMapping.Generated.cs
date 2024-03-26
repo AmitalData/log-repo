@@ -29,7 +29,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ItemCode, 
 	         OriginCountryCode, 
 	         ClientCode, 
-	         Id,
+	         Id, 
+	         ItemKey,
 	      }
 
 
@@ -44,7 +45,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         OriginCountryCode, 
 	         OriginCountryName, 
 	         ClientCode, 
-	         Id,
+	         Id, 
+	         ItemKey,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -76,6 +78,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OriginCountryCode))
             {
 				entityPOCO.OriginCountryCode = entityPM.OriginCountryCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ItemKey))
+            {
+				entityPOCO.ItemKey = entityPM.ItemKey;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -124,6 +131,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.Id = entityPOCO.Id;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ItemKey))
+            {
+					entityPM.ItemKey = entityPOCO.ItemKey;
+            }
+
 		}
 
 		public void PMToOldPM(ClientItemPM entityPM, ClientItemPM oldEntityPM)
@@ -155,6 +167,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.OriginCountryCode = entityPM.OriginCountryCode;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ItemKey))
+            {
+                oldEntityPM.ItemKey = entityPM.ItemKey;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(ClientItemPM entityPM)
@@ -171,6 +188,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.ItemDescription)) //T4 find type == nText 
             {
                 entityPM.ItemDescription = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ItemDescription));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.ItemKey)) //T4 find type == nText 
+            {
+                entityPM.ItemKey = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ItemKey));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}
