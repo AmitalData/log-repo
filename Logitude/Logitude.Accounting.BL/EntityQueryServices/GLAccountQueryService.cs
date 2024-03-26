@@ -830,6 +830,16 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                                 select a.Id).ToList();
            
         }
+        public List<string> GetChildrenByCurrencyGLAccountIds(string accountId, int tenant)
+        {
+            IQueryable<GLAccount> glaccounts = repository.GetAll(tenant);
+            return (from a in glaccounts
+                    join
+                   c in context.GLAccountCurrencies on a.Id equals c.GLAccountId
+                    where c.MainGLAccountId == accountId && a.Tenant == tenant 
+                    select a.Id).ToList();
+
+        }
 
         public IQueryable<GLAccountPM> GetChildrenGLAccounts(string accountId, int tenant)
         {
@@ -1371,9 +1381,14 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             if (!String.IsNullOrEmpty(args.CardId) && !String.IsNullOrEmpty(args.AccountId) && args.Tenant > 0)
             { 
                 int res = Update_ConnectCardToGLAccount(args.CardId, args.Tenant, args.AccountId, displayNumber); 
+                
             }
-
-
+            if (IsFullAccountingActivated(args.Tenant))
+            {
+                IAccountingContext context = MainContext as AccountingContext;
+                GLAccountUpdateService gLAccountUpdateService = new GLAccountUpdateService(context, new Dictionary<string, IContext>(), args.Tenant);
+                gLAccountUpdateService.UpdateGLAccountWithAdditionalData(args.AccountId, args.Tenant);
+            }
             //ICommonDataContext context = CommonDataContext.GetContext(args.Tenant);
             //CardRepository cardRepository = new CardRepository(context);
             //Card card = null;

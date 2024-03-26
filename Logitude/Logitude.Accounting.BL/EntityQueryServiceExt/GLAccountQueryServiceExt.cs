@@ -112,5 +112,11 @@ namespace Logitude.Accounting.BL.EntityQueryServiceExt
             EntityQueryServices.GLAccountQueryService query = new EntityQueryServices.GLAccountQueryService(tenant);
             return query.CheckInactiveGLAccounts(glaccountIds, tenant);
         }
+
+        public List<string> GetChildrenByCurrencyGLAccountIds (string accountId, int tenant)
+        {
+            EntityQueryServices.GLAccountQueryService query = new EntityQueryServices.GLAccountQueryService(tenant);
+            return query.GetChildrenByCurrencyGLAccountIds(accountId, tenant);
+        }
     }
 }
