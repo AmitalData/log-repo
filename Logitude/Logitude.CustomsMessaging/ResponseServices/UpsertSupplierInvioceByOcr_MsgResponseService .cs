@@ -478,9 +478,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     {
                         supplierInvoiceItemPM.ClassificationCode = classificationCode;
                     }
-                    {
-
-                    }
                     //if (supplierInvoiceItem.TryGetValue("Item_unit", out string ItemUnit))
                     //{
                     //    MeasurmentUnitQueryService measurmentUnitQueryService = new MeasurmentUnitQueryService(tenant);
