@@ -306,6 +306,13 @@ Init_LocalAmountsOfAccountTransStart_JoinAccountsWhereIscontrolAccount_GroupByCO
                                  ChartOfAcount4 = "",
                                  ChartOfAcount5 = "",
 
+
+                                 ChartOfAcountCode1 = "",
+                                 ChartOfAcountCode2 = "",
+                                 ChartOfAcountCode3 = "",
+                                 ChartOfAcountCode4 = "",
+                                 ChartOfAcountCode5 = "",
+
                                  ChartOfAcountName1 = "",
                                  ChartOfAcountName2 = "",
                                  ChartOfAcountName3 = "",
@@ -313,11 +320,6 @@ Init_LocalAmountsOfAccountTransStart_JoinAccountsWhereIscontrolAccount_GroupByCO
                                  ChartOfAcountName5 = "",
 
 
-                                 ChartOfAcountCode1 = "",
-                                 ChartOfAcountCode2 = "",
-                                 ChartOfAcountCode3 = "",
-                                 ChartOfAcountCode4 = "",
-                                 ChartOfAcountCode5 = "",
 
                                  ChartOfAccountId = "",
                                  GLAccountName = "",
