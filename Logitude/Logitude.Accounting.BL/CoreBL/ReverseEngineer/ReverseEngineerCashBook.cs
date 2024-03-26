@@ -44,21 +44,21 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
 
 
 
-                var qAccountingCurrencyId = (from c in myCashBookRepository.GetAll(_Tenant).Where( r=>r.CurrencyId == accountingCurrencyId )
-                         join a in myGLAccountMoreDataRepository.GetAll(_Tenant)
-                         on c.AccountId equals a.AccountId
-                         where a.BalanceInLocalCurrency!= c.TotalAmount 
+                //var qAccountingCurrencyId = (from c in myCashBookRepository.GetAll(_Tenant).Where( r=>r.CurrencyId == accountingCurrencyId )
+                //         join a in myGLAccountMoreDataRepository.GetAll(_Tenant)
+                //         on c.AccountId equals a.AccountId
+                //         where a.BalanceInLocalCurrency!= c.TotalAmount 
 
                     
 
-                         select new GLAccountBalanceDTO
-                         {
-                             AccountId = c.AccountId,
-                             BalanceInLocalCurrency = c.TotalAmount ?? 0 - a.BalanceInLocalCurrency,
-                             CHANGE_TYPE = c.LocalName + "  היתרה בקופה שונה מהיתרה בכרטיס הנחש"
+                //         select new GLAccountBalanceDTO
+                //         {
+                //             AccountId = c.AccountId,
+                //             BalanceInLocalCurrency = c.TotalAmount ?? 0 - a.BalanceInLocalCurrency,
+                //             CHANGE_TYPE = c.LocalName + "  היתרה בקופה שונה מהיתרה בכרטיס הנחש"
 
-                         }
-                         );
+                //         }
+                //         );
 
                 var qForeignCurrencyId = (from c in myCashBookRepository.GetAll(_Tenant).Where(r => r.CurrencyId != accountingCurrencyId)
                                              join a in myGLAccountMoreDataRepository.GetAll(_Tenant)
@@ -77,13 +77,7 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
                          );
 
 
-
-
-
-
-
-
-                var l = qAccountingCurrencyId.Take(30).Union(qForeignCurrencyId.Take(30)).ToList();
+                var l = qForeignCurrencyId.Take(30).ToList();
                 CompareReport = new CompareReportM()
                 {
                     CompareReportName = "ReverseEngineerCashBook",
