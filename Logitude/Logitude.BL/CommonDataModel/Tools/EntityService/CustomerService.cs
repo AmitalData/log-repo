@@ -1240,8 +1240,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     {
                         entity.ContactForAccounting = false;
                         repository.Update(entity);
-
-
+                        this.UpdateGLAccount();
                     }
                 }
                 if(item.ContactForAccounting != true && item.Id == entityPM.ContactForAccounting)
@@ -1252,12 +1251,34 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     {
                         entity.ContactForAccounting = true;
                         repository.Update(entity);
-
+                        this.UpdateGLAccount();
                     }
                 }
             }
             repository.SubmitChanges();
 
+        }
+        private void UpdateGLAccount()
+        {
+            var glaccount = GetGLaccount(entityPM.Card.GLAccountId);
+            if (glaccount != null)
+            {
+                glaccount.ContactId = contactRepository.GetContactForAccountingByGLAccountIdExcludeOneCard(glaccount.Id);
+                this.SaveGLAccountChanges(glaccount);
+
+                //  var contacts = contactRepository.GetContactForAccountingByGLAccountId(glaccount.Id).FirstOrDefault();
+            }
+        }
+        private GLAccountPM GetGLaccount(string accountId)
+        {
+            IGLAccountQueryServiceExt gLAccountQueryServiceExt = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
+            return gLAccountQueryServiceExt.GetSingleGLAccountWithComposition(accountId, tenant);
+        }
+        private void SaveGLAccountChanges(GLAccountPM accountPM)
+        {
+            IGLAccountUpdateServiceExt glaccountUpdate = ContainerAccessor.Container.Resolve(typeof(IGLAccountUpdateServiceExt), "GLAccountUpdateServiceExt", new ParameterOverride("", 1)) as IGLAccountUpdateServiceExt;
+            accountPM.ChangeSetOp = ChangeSetOperation.Update;
+            glaccountUpdate.Update(accountPM);
         }
         private void CreateCustomerProduct(CustomerProductPM itemPM)
         {

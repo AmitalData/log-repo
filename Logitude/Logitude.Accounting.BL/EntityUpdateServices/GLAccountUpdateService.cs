@@ -2600,6 +2600,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             }, false);
         }
+
         public class CsvModel
         {
             public int Tenant { get; set; }
@@ -2727,9 +2728,40 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 throw new Exception("File is empty");
             }
         }
+
+
+
+        public void UpdateGLAccountWithAdditionalData(string glaccountId, int tenant, string excludeId = null)
+        {
+            GLAccountQueryService gLAccountQuery = new GLAccountQueryService(tenant);
+            var glaccount = gLAccountQuery.GetSingle(glaccountId, true, false);
+            if (glaccount != null)
+            {
+                ContactRepository contactRep = new ContactRepository(tenant);
+                CustomerRepository customerRepository = new CustomerRepository(tenant);
+                glaccount.ContactId = contactRep.GetContactForAccountingByGLAccountIdExcludeOneCard(glaccount.Id, excludeId);
+                glaccount.SalesmanUserId = customerRepository.GetSalesManByGLAccountId(glaccount.Id, tenant, excludeId);
+                glaccount.CollectorId = customerRepository.GetCollectorByGLAccount(glaccount.Id, tenant, excludeId);
+                glaccount.ChangeSetOp = ChangeSetOperation.Update;
+                Update(glaccount, true);
+                var listOfChildren = gLAccountQuery.GetChildrenByCurrencyGLAccountIds(glaccount.Id, tenant);
+                foreach (var child in listOfChildren)
+                {
+                    if (!string.IsNullOrEmpty(child))
+                    {
+                        var item = gLAccountQuery.GetSingle(child, false, false);
+                        if (item != null)
+                        {
+                            item.ContactId = glaccount.ContactId;
+                            item.SalesmanUserId = glaccount.SalesmanUserId;
+                            item.CollectorId = glaccount.CollectorId;
+                            Update(item, true);
+                        }
+                    }
+                }
+            }
+        }
     }
-
-
     public class GLAccountUpdateServiceBalancePriv : GLAccountUpdateService
     {
         private decimal? _deltaBalanceInLocalCurrency;
@@ -2782,3 +2814,4 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
     }
 }
+
