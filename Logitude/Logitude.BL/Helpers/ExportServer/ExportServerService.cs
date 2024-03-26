@@ -62,7 +62,10 @@ namespace Logitude.BL.Helpers.ExportServer
             string exportToken = ExportServerLogin.GetToken(tenant, email);
 
             if (exportToken == null)
-                exportToken = ExportServerLogin.GetToken(tenant, "ConfirmationNumber@amital.co.il");
+            {
+                int? exportTenant = tenantManagementQuery.GetSinglePM(tenant).ExportTenant;
+                exportToken = ExportServerLogin.GetToken(tenant, $"system@tenant{exportTenant}.com");
+            }
 
             return exportToken;
 
