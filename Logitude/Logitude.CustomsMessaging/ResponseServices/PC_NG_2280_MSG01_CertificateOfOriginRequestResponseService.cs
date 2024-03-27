@@ -183,7 +183,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 this.MyResponseData.ApplicationID = requestParams.CertificateOfOriginId;
                 this.MyResponseData.Succeeded = true;
-				this.MyResponseData.UserMessage = "Can not find documentType";
+				this.MyResponseData.UserMessage = "Can not find COOE documentType";
                 return;
             }
             var documentsFilingPMList = documentsFilingQuery.GetDocumentsFilingPMsByEntityIdAndObjectTable(declarationPM.Id, certificateOfOriginPM.Id, objectTableId, "I", requestParams.Tenant);
