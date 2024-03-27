@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class ConfirmationNumberDefaultUpdateClass
    {  		
-		public const string HashString = "86f6ab2c7a7f766e7f0333569bb42302";
+		public const string HashString = "7dcde7160dc2bbaf224c673ce6c71c55";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -96,7 +96,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			      				    IsNew =  true,
 			      				    DBTableName =  "ConfirmationNumberDefaults",
 			      				    ObjectTableSingular =  "ConfirmationNumberDefault",
-			      				    ObjectTablePlural =  "ConfirmationNumberDefaults",
+			      				    ObjectTablePlural =  "Confirmation Number Defaults",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    AvailableInCustomization =  true,
@@ -447,10 +447,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AmountForConfirmationNumber",
 					  						DefaultText =  "Amount For Confirmation Number",
-					  						FullLocalDefaultText =  "סכום מינימום להקצאה ",
+					  						FullLocalDefaultText =  "סכום מע\"מ מינימלי",
 					  						ListFieldLable =  "AmountForConfirmationNumberListLable",
 					  						ListLableDefaultText =  "Amount For Confirmation Number",
-					  						ListLocalDefaultText =  "סכום מינימום להקצאה ",
+					  						ListLocalDefaultText =  "סכום מע\"מ מינימלי ",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,

@@ -466,6 +466,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         Logitude.Server.Tools.Utils.Logger.LogDebug("apiResponse.Msg :{0}", apiResponse.Msg);
 
                         entityPM.ConfirmationNumberStatus = "5";
+                        this.CreateEvent("CNF", entityPM, apiResponse?.Msg);
+                       
                     }
                     //entityPM.ConfirmationNumber=
                 }
@@ -475,6 +477,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     Logitude.Server.Tools.Utils.Logger.LogDebug("apiResponse.Res.StatusCode :{0} {1}", apiResponse?.Res?.StatusCode, apiResponse);
 
                     entityPM.ConfirmationNumberStatus = "5";
+                    this.CreateEvent("CNF", entityPM, apiResponse?.Msg);
+                
                 }
             }
             catch (Exception ex)
@@ -482,6 +486,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 Logitude.Server.Tools.Utils.Logger.LogDebug(ex, "apiResponse ");
 
                 entityPM.ConfirmationNumberStatus = "5";
+                this.CreateEvent("CNF", entityPM, ex.Message);
+               
             }
         }
         private string CreateBodyFromARInvoice()
@@ -5097,7 +5103,19 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             aRInvoice.SATTransferStatusCode = sATTransferedStatusCode;
             arInvoiceRepository.Update(aRInvoice);
         }
-
+        private void CreateEvent(string eventCode, ARInvoicePM arinvocie, string Notes = null)
+        {
+            ContactPM loggedContact = LoggedContactResolver.GetLoggedContact(arinvocie.Tenant);
+            EventTracer.CreateTraceEvent(new EventTracerArgs()
+            {
+                EntityId = arinvocie.Id,
+                Tenant = arinvocie.Tenant,
+                UserId = loggedContact.Id,
+                ObjectTableName = "ARInvoice",
+                EventTypeCode = eventCode,
+                Notes = Notes,
+            });
+        }
 
         public class ConfirmationNumberAPI
         {
