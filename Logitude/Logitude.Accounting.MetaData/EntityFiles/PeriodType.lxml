@@ -43,7 +43,7 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;סוג תקופה חשבונאית&quot;"
   DefaultText="&quot;Period Type&quot;"
-  Code="&quot;9270&quot;"
+  Code="&quot;7bb7&quot;"
   Name="&quot;PeriodType Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;EnglishName&quot;"
@@ -489,20 +489,20 @@
   <Records>
     <Record
       Code="&quot;1&quot;"
-      LocalName="&quot;תקופה חשבונאית&quot;"
-      SearchFields="&quot;1,Accounting,חשבונאות&quot;"
+      LocalName="&quot;חודש חשבונאי&quot;"
+      SearchFields="&quot;1,Accounting,חודש חשבונאי&quot;"
       Inactive="false"
       EnglishName="&quot;Accounting&quot;" />
     <Record
       Code="&quot;3&quot;"
       EnglishName="&quot;Interest Invoice&quot;"
-      LocalName="&quot;חשבונית ריבית&quot;"
-      SearchFields="&quot;3,Interest Invoice,חשבונית ריבית&quot;"
+      LocalName="&quot;חשבוניות ריבית ללקוח&quot;"
+      SearchFields="&quot;3,Interest Invoice,חשבוניות ריבית ללקוח&quot;"
       Inactive="false" />
     <Record
       Code="&quot;2&quot;"
-      LocalName="&quot;חשבונית כללית&quot;"
-      SearchFields="&quot;2,Invoice,חשבונית כללית&quot;"
+      LocalName="&quot;חשבוניות לקוח&quot;"
+      SearchFields="&quot;2,Invoice,חשבוניות לקוח&quot;"
       Inactive="false"
       EnglishName="&quot;Invoice&quot;" />
   </Records>
