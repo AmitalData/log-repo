@@ -179,7 +179,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
 			//Check if file already exists
 			var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
 			var documentType = documentTypeQuery.GetSinglePMByCodeAndTenant("COOE", requestParams.Tenant);
-			var documentsFilingPMList = documentsFilingQuery.GetDocumentsFilingPMsByEntityIdAndObjectTable(declarationPM.Id, certificateOfOriginPM.Id, objectTableId, "I", requestParams.Tenant);
+            if (documentType == null)
+            {
+                this.MyResponseData.ApplicationID = requestParams.CertificateOfOriginId;
+                this.MyResponseData.Succeeded = true;
+				this.MyResponseData.UserMessage = "Can not find documentType";
+                return;
+            }
+            var documentsFilingPMList = documentsFilingQuery.GetDocumentsFilingPMsByEntityIdAndObjectTable(declarationPM.Id, certificateOfOriginPM.Id, objectTableId, "I", requestParams.Tenant);
 			foreach (var documentItem in documentsFilingPMList)
 			{
 				if (documentItem.DocumentTypeId == documentType?.Id)
