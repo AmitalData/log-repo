@@ -6160,6 +6160,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string diamondsDeclarationFilter ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DiamondsDeclarationFilter  
+	   {
+	    
+	     get
+		{
+		   return diamondsDeclarationFilter;
+		 }
+		 set
+		 {
+		   if(diamondsDeclarationFilter != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DiamondsDeclarationFilter",OldValue=diamondsDeclarationFilter,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   diamondsDeclarationFilter=value;
+		   }
+			
+		 }
+	   }
    }
    
 }
