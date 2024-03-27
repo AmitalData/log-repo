@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class PeriodTypeUpdateClass
    {  		
-		public const string HashString = "e4aa24458d6fed4d7028723edf333b0d";
+		public const string HashString = "e2f890ef55887470d16471eaa615c843";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -132,7 +132,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "סוג תקופה חשבונאית",
 			      				    DefaultText =  "Period Type",
-			      				    Code =  "9270",
+			      				    Code =  "7bb7",
 			      				    Name =  "PeriodType Query Group",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "EnglishName",
