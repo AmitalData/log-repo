@@ -230,6 +230,7 @@
     <Compile Include="EntityKeys\DefaultValueKeys.cs" />
     <Compile Include="EntityKeys\DeficitDecisionKeys.cs" />
     <Compile Include="EntityKeys\DeliveryTypeKeys.cs" />
+    <Compile Include="EntityKeys\DiscountTypeRegulationKeys.cs" />
     <Compile Include="EntityKeys\DocumentRejectTypeKeys.cs" />
     <Compile Include="EntityKeys\DocumentTypeCustomsDataKeys.cs" />
     <Compile Include="EntityKeys\EntryExitTypeKeys.cs" />
@@ -455,6 +456,7 @@
     <Compile Include="EntityListQueryServices\DefaultValueListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DeficitDecisionListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DeliveryTypeListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\DiscountTypeRegulationListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DocumentRejectTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DocumentTypeCustomsDataListQueryService.cs" />
     <Compile Include="EntityListQueryServices\EntryExitTypeListQueryService.cs" />
@@ -598,6 +600,7 @@
     <Compile Include="EntityListQueryServices\Generated\DefaultValueListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DeficitDecisionListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DeliveryTypeListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\DiscountTypeRegulationListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DocumentRejectTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DocumentTypeCustomsDataListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\EntryExitTypeListQueryService.Generated.cs" />
@@ -826,6 +829,7 @@
     <Compile Include="EntityLists\Generated\DeclarationCounterList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DefaultTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DefaultValueList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\DiscountTypeRegulationList.Generated.cs" />
     <Compile Include="EntityLists\Generated\EntryExitTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\GovernmentProcTypeTenantList.Generated.cs" />
     <Compile Include="EntityLists\Generated\InceptionCodeList.Generated.cs" />
@@ -1131,6 +1135,7 @@
     <Compile Include="EntityMapping\DefaultValueMap.cs" />
     <Compile Include="EntityMapping\DeficitDecisionMap.cs" />
     <Compile Include="EntityMapping\DeliveryTypeMap.cs" />
+    <Compile Include="EntityMapping\DiscountTypeRegulationMap.cs" />
     <Compile Include="EntityMapping\DocumentRejectTypeMap.cs" />
     <Compile Include="EntityMapping\DocumentTypeCustomsDataMap.cs" />
     <Compile Include="EntityMapping\EntryExitTypeMap.cs" />
@@ -1356,6 +1361,7 @@
     <Compile Include="EntityPOCOs\DefaultValue.cs" />
     <Compile Include="EntityPOCOs\DeficitDecision.cs" />
     <Compile Include="EntityPOCOs\DeliveryType.cs" />
+    <Compile Include="EntityPOCOs\DiscountTypeRegulation.cs" />
     <Compile Include="EntityPOCOs\DocumentRejectType.cs" />
     <Compile Include="EntityPOCOs\DocumentTypeCustomsData.cs" />
     <Compile Include="EntityPOCOs\EntryExitType.cs" />
@@ -1582,6 +1588,7 @@
     <Compile Include="Repsitories\DefaultValueRepository.cs" />
     <Compile Include="Repsitories\DeficitDecisionRepository.cs" />
     <Compile Include="Repsitories\DeliveryTypeRepository.cs" />
+    <Compile Include="Repsitories\DiscountTypeRegulationRepository.cs" />
     <Compile Include="Repsitories\DocumentRejectTypeRepository.cs" />
     <Compile Include="Repsitories\DocumentTypeCustomsDataRepository.cs" />
     <Compile Include="Repsitories\EntryExitTypeRepository.cs" />
@@ -1725,6 +1732,7 @@
     <Compile Include="Repsitories\Generated\DefaultValueRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DeficitDecisionRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DeliveryTypeRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\DiscountTypeRegulationRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DocumentRejectTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DocumentTypeCustomsDataRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\EntryExitTypeRepository.Generated.cs" />

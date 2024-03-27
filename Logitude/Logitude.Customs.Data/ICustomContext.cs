@@ -260,6 +260,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<DepositCustomerActivity> DepositCustomerActivities { get; }
 		 IDbSet<DepositEssenceType> DepositEssenceTypes { get; }
 		 IDbSet<DepositFileType> DepositFileTypes { get; }
+		 IDbSet<DiscountTypeRegulation> DiscountTypeRegulations { get; }
 		 IDbSet<DocumentRejectType> DocumentRejectTypes { get; }
 		 IDbSet<DocumentTypeCustomsData> DocumentTypeCustomsData { get; }
 		 IDbSet<EntitlementType> EntitlementTypes { get; }

@@ -554,6 +554,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new DepositFileTypeMap());
 	
+            modelBuilder.Configurations.Add(new DiscountTypeRegulationMap());
+	
             modelBuilder.Configurations.Add(new DocumentRejectTypeMap());
 	
             modelBuilder.Configurations.Add(new DocumentTypeCustomsDataMap());
@@ -2972,6 +2974,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<DepositFileType> DepositFileTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<DiscountTypeRegulation> DiscountTypeRegulations 
 	 {
 	      get; set;
 	 
