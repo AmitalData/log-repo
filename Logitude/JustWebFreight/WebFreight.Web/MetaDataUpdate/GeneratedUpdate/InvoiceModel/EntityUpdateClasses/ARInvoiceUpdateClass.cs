@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class ARInvoiceUpdateClass
    {  		
-		public const string HashString = "91a5189b40cd5f3301b81bd0954860ec";
+		public const string HashString = "8056fd796e1ed69ca774ff3b34156663";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -15868,6 +15868,24 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
                 Code =  "HSMS",
                 EnglishName =  "The invoice signature HSM Succeeded",
                 LocalName =  "The invoice signature HSM Succeeded",
+                IsManualEntry =  true,
+                ShortView =  true,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = ARInvoiceObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "CNF",
+                EnglishName =  "Confirmation number failed",
+                LocalName =  "כשלון בקבלת הקצאה",
                 IsManualEntry =  true,
                 ShortView =  true,
                 IsAgentView =  false,

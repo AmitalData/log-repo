@@ -19794,6 +19794,19 @@
       AllowedInAutomation="false"
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
+    <EventType
+      Code="&quot;CNF&quot;"
+      ObjectTableName="&quot;ARInvoice&quot;"
+      EnglishName="&quot;Confirmation number failed&quot;"
+      LocalName="&quot;כשלון בקבלת הקצאה&quot;"
+      IsManualEntry="true"
+      ShortView="true"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
   <Records />
   <MenuButtons

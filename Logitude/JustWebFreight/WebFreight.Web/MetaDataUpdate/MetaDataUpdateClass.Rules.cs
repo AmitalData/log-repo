@@ -542,6 +542,31 @@ namespace WebFreight.Web.MetaDataUpdate
             //ObjectTableRuleRepository.Add(PackageTypeDuplicationRule);
             #endregion
 
+            #region ConfirmationNumberDefaults
+            ObjectTable ConfirmationNumberDefaultsTable = ObjectContext.ObjectTables.Where(f => f.Name == "ConfirmationNumberDefaults" && f.Tenant == 0).FirstOrDefault();
+            ObjectField ConfirmationNumberDefaultsCode = ObjectContext.ObjectFields.Where(d => d.FieldName == "FromDate" && d.ObjectTableId == ConfirmationNumberDefaultsTable.Id).FirstOrDefault();
+
+            ObjectTableRule ConfirmationNumberDefaultsDuplicationRule = AddObjectTableRules.AddObjectTableRule(new ObjectTableRuleDetails()
+            {
+                RuleCode = "CNDR",
+                Name = "FromDate Duplication",
+                ObjectTableId = PackageTypeTable.Id,
+                Tenant = 0,
+                RuleTypeCode = "DUPL",
+                //TriggerFieldId = packageTypeCode.Id,
+                SystemLevel = true,
+                OutputMessage = "This  date  already exists",
+                ActiveForNew = true,
+                ActiveForUpdate = false,
+                TriggerTypeCode = "ALLW",
+                RuleNotificationTypeCode = "ERR",
+            }, ObjectTableRuleRepository, TenantObjectTableRule);
+
+            ObjectTableRuleField ConfirmationNumberDefaultField = AddObjectTableRules.AddObjectTableRuleField(new ObjectTableRuleFieldDetails() { ObjectFieldId = ConfirmationNumberDefaultsCode.Id, ObjectFieldCode = ConfirmationNumberDefaultsCode.FieldCode, ObjectTableRuleId = ConfirmationNumberDefaultsDuplicationRule.Id, SystemLevel = true, Tenant = 0 }, ObjectTableRuleFieldRepository, TenantObjectTableRuleFields);
+            //ObjectTableRuleFieldRepository.Add(packageTypeCodeField);
+            //ObjectTableRuleRepository.Add(PackageTypeDuplicationRule);
+            #endregion
+
             #region VesselRules
             ObjectTable VesselTable = ObjectContext.ObjectTables.Where(f => f.Name == "Vessel" && f.Tenant == 0).FirstOrDefault();
             ObjectField vesselCode = ObjectContext.ObjectFields.Where(d => d.FieldName == "Code" && d.ObjectTableId == VesselTable.Id).FirstOrDefault();
