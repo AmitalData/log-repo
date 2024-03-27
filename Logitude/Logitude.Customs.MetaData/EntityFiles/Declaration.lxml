@@ -21740,7 +21740,7 @@
     ObjectFieldNotRequired="false"
     SystemMaxLength="200"
     DisplayInList="false"
-    IsCustomFilter="false"
+    IsCustomFilter="true"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
