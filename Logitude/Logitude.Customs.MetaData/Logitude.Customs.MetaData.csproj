@@ -399,6 +399,7 @@
     <None Include="DBTables\CustomsItem.dxml" />
     <None Include="DBTables\CustomsItemCategory.dxml" />
     <None Include="DBTables\CustomsItemDetailsHistory.dxml" />
+    <None Include="DBTables\CustomsItemGroup.dxml" />
     <None Include="DBTables\CustomsItemHierarchicLocation.dxml" />
     <None Include="DBTables\CustomsPartnerFtp.dxml" />
     <None Include="DBTables\CustomsPartnersItem.dxml" />
@@ -452,6 +453,7 @@
     <None Include="DBTables\DepositCustomerActivity.dxml" />
     <None Include="DBTables\DepositEssenceType.dxml" />
     <None Include="DBTables\DepositFileType.dxml" />
+    <None Include="DBTables\DiscountTypeRegulation.dxml" />
     <None Include="DBTables\DocumentRejectType.dxml" />
     <None Include="DBTables\DocumentTypeCustomsData.dxml" />
     <None Include="DBTables\EntitlementType.dxml" />
@@ -671,6 +673,8 @@
     <None Include="EntityFiles\CB_RegularityRequiredCertificate.lxml" />
     <None Include="EntityFiles\CB_TradeLevy.lxml" />
     <None Include="EntityFiles\CB_Vendor.lxml" />
+    <None Include="EntityFiles\DiscountTypeRegulation.lxml" />
+    <None Include="EntityFiles\CustomsItemGroup.lxml" />
     <None Include="EntityFiles\RegularityRequirementWarning.lxml" />
     <None Include="EntityFiles\CB_ComputationMethodData.lxml" />
     <None Include="EntityFiles\CB_CountriesExclusion.lxml" />

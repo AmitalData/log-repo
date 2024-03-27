@@ -205,6 +205,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<CustomsItem> CustomsItems { get; }
 		 IDbSet<CustomsItemCategory> CustomsItemCategories { get; }
 		 IDbSet<CustomsItemDetailsHistory> CustomsItemDetailsHistorys { get; }
+		 IDbSet<CustomsItemGroup> CustomsItemGroups { get; }
 		 IDbSet<CustomsItemHierarchicLocation> CustomsItemHierarchicLocations { get; }
 		 IDbSet<CustomsPartnerFtp> CustomsPartnerFtps { get; }
 		 IDbSet<CustomsPartnersItem> CustomsPartnersItems { get; }
@@ -260,6 +261,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<DepositCustomerActivity> DepositCustomerActivities { get; }
 		 IDbSet<DepositEssenceType> DepositEssenceTypes { get; }
 		 IDbSet<DepositFileType> DepositFileTypes { get; }
+		 IDbSet<DiscountTypeRegulation> DiscountTypeRegulations { get; }
 		 IDbSet<DocumentRejectType> DocumentRejectTypes { get; }
 		 IDbSet<DocumentTypeCustomsData> DocumentTypeCustomsData { get; }
 		 IDbSet<EntitlementType> EntitlementTypes { get; }
