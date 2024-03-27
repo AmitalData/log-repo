@@ -24,19 +24,10 @@ namespace Logitude.Accounting.BL
             all.Add(new PeriodTypeDetails()
             {    
                 Code = "1", 
-                LocalName = "חשבונאות", 
+                LocalName = "תקופה חשבונאית", 
                 SearchFields = "1,Accounting,חשבונאות", 
                 Inactive = false, 
                 EnglishName = "Accounting", 
-			});
-			 
-            all.Add(new PeriodTypeDetails()
-            {    
-                Code = "2", 
-                LocalName = "חשבונית", 
-                SearchFields = "2,Invoice,חשבונית", 
-                Inactive = false, 
-                EnglishName = "Invoice", 
 			});
 			 
             all.Add(new PeriodTypeDetails()
@@ -46,6 +37,15 @@ namespace Logitude.Accounting.BL
                 LocalName = "חשבונית ריבית", 
                 SearchFields = "3,Interest Invoice,חשבונית ריבית", 
                 Inactive = false, 
+			});
+			 
+            all.Add(new PeriodTypeDetails()
+            {    
+                Code = "2", 
+                LocalName = "חשבונית כללית", 
+                SearchFields = "2,Invoice,חשבונית כללית", 
+                Inactive = false, 
+                EnglishName = "Invoice", 
 			});
 			
             return all;
