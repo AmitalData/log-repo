@@ -92,12 +92,18 @@ namespace Logitude.Customs.Data.EntityPOCOs
         public virtual CarWeight CarWeightCode { get; set; }
         [Column("VatDiscountRate")]
 	    public decimal VatDiscountRate { get; set; }
+        [ForeignKey("CustomsItemGroup")]
      
 	    public string Discount_CustomsItemGroupTypeID { get; set; }
+	      
+        public virtual CustomsItemGroup CustomsItemGroup { get; set; }
         [Column("IsCarDiscount")]
 	    public bool IsCarDiscount { get; set; }
+        [ForeignKey("DiscountTypeRegulation")]
      
 	    public string DiscountRegularityRequirementType { get; set; }
+	      
+        public virtual DiscountTypeRegulation DiscountTypeRegulation { get; set; }
      [Key]
         [Column("CB_ID")]
 	    public string CB_ID { get; set; }

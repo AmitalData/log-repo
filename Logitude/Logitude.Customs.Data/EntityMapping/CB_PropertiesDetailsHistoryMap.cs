@@ -82,11 +82,11 @@ namespace Logitude.Customs.Data.EntityMapping
             dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
             {
-              this.Property(t => t.Discount_CustomsItemGroupTypeID).HasColumnName("Discount_CustomsItemGroupTypeI").HasMaxLength(2).IsUnicode(false);
+              this.Property(t => t.Discount_CustomsItemGroupTypeID).HasColumnName("Discount_CustomsItemGroupTypeI").HasMaxLength(4).IsUnicode(false);
 			}
 			else
 			{
-              this.Property(t => t.Discount_CustomsItemGroupTypeID).HasColumnName("Discount_CustomsItemGroupTypeID").HasMaxLength(2).IsUnicode(false);
+              this.Property(t => t.Discount_CustomsItemGroupTypeID).HasColumnName("Discount_CustomsItemGroupTypeID").HasMaxLength(4).IsUnicode(false);
 			}
 
 
@@ -95,11 +95,11 @@ namespace Logitude.Customs.Data.EntityMapping
             dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
             {
-              this.Property(t => t.DiscountRegularityRequirementType).HasColumnName("DiscountRegularityRequirementT").HasMaxLength(2).IsUnicode(false);
+              this.Property(t => t.DiscountRegularityRequirementType).HasColumnName("DiscountRegularityRequirementT").HasMaxLength(4).IsUnicode(false);
 			}
 			else
 			{
-              this.Property(t => t.DiscountRegularityRequirementType).HasColumnName("DiscountRegularityRequirementType").HasMaxLength(2).IsUnicode(false);
+              this.Property(t => t.DiscountRegularityRequirementType).HasColumnName("DiscountRegularityRequirementType").HasMaxLength(4).IsUnicode(false);
 			}
 
 
