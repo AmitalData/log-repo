@@ -109,7 +109,7 @@ namespace AmitalCustomsWindowsService
 
 
             }
-            else
+            else if(string.IsNullOrEmpty(ConfigurationManager.AppSettings["WServiceName"]) || ConfigurationManager.AppSettings["WServiceName"] == "production")
             {
                 Logger.LogMe("Runtime", false);
                 ServicesToRun = new ServiceBase[] { GetMyService() /*new MyWinService()*/ };
