@@ -184,7 +184,7 @@
   <Column
     Name="Discount_CustomsItemGroupTypeID"
     Type="varchar"
-    Size="2">
+    Size="4">
     <Constraints
       Nullable="true" />
   </Column>
@@ -197,7 +197,7 @@
   <Column
     Name="DiscountRegularityRequirementType"
     Type="varchar"
-    Size="2">
+    Size="4">
     <Constraints
       Nullable="true" />
   </Column>
@@ -237,6 +237,16 @@
   <Relation
     ForeignKeyColumn="CarWeightID"
     ReferencedTable="CarWeights"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="Discount_CustomsItemGroupTypeID"
+    ReferencedTable="CustomsItemGroups"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="DiscountRegularityRequirementType"
+    ReferencedTable="DiscountTypeRegulations"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
 </Table>
