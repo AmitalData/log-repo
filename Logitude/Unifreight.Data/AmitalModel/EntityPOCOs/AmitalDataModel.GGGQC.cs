@@ -18,7 +18,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
 {
 
     [System.Runtime.Serialization.DataContractAttribute(IsReference = true)]
-    public partial class GGGQC : INotifyPropertyChanged
+    public partial class GGGQC : UNIFBASICPOCO, INotifyPropertyChanged
     {
 
         public GGGQC()
