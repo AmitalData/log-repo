@@ -396,6 +396,7 @@
     <None Include="DBTables\CustomsItem.dxml" />
     <None Include="DBTables\CustomsItemCategory.dxml" />
     <None Include="DBTables\CustomsItemDetailsHistory.dxml" />
+    <None Include="DBTables\CustomsItemGroup.dxml" />
     <None Include="DBTables\CustomsItemHierarchicLocation.dxml" />
     <None Include="DBTables\CustomsPartnerFtp.dxml" />
     <None Include="DBTables\CustomsPartnersItem.dxml" />
@@ -668,6 +669,7 @@
     <None Include="EntityFiles\CB_RegularityRequiredCertificate.lxml" />
     <None Include="EntityFiles\CB_TradeLevy.lxml" />
     <None Include="EntityFiles\CB_Vendor.lxml" />
+    <None Include="EntityFiles\CustomsItemGroup.lxml" />
     <None Include="EntityFiles\RegularityRequirementWarning.lxml" />
     <None Include="EntityFiles\CB_ComputationMethodData.lxml" />
     <None Include="EntityFiles\CB_CountriesExclusion.lxml" />

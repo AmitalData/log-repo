@@ -484,6 +484,7 @@ import { ChangeTypeListService } from './Services/StandardLists/ChangeTypeListSe
 import { RegularitySourceListService } from './Services/StandardLists/RegularitySourceListService';
 import { InterConditionsRelationshipListService } from './Services/StandardLists/InterConditionsRelationshipListService';
 import { EntryExitTypeListService } from './Services/StandardLists/EntryExitTypeListService';
+import { CustomsItemGroupListService } from './Services/StandardLists/CustomsItemGroupListService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -747,6 +748,7 @@ export class ModuleProviders {
             case "LogisticActionResponseReqSListService": { myResult = new LogisticActionResponseReqSListService(); break; }
             case "CustomsDocumentUploadListService": { myResult = new CustomsDocumentUploadListService(); break; }
             case "ExportLogisticPermitActionListService": { myResult = new ExportLogisticPermitActionListService(); break; }
+            case "CustomsItemGroupListService": { myResult = new CustomsItemGroupListService(); break; }
             case "CustomsItemCategoryListService": { myResult = new CustomsItemCategoryListService(); break; }
             case "CustomsItemHierarchicLocationListService": { myResult = new CustomsItemHierarchicLocationListService(); break; }
             case "CustomsEntityStatusListService": { myResult = new CustomsEntityStatusListService(); break; }

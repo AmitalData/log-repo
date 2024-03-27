@@ -204,6 +204,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<CustomsItem> CustomsItems { get; }
 		 IDbSet<CustomsItemCategory> CustomsItemCategories { get; }
 		 IDbSet<CustomsItemDetailsHistory> CustomsItemDetailsHistorys { get; }
+		 IDbSet<CustomsItemGroup> CustomsItemGroups { get; }
 		 IDbSet<CustomsItemHierarchicLocation> CustomsItemHierarchicLocations { get; }
 		 IDbSet<CustomsPartnerFtp> CustomsPartnerFtps { get; }
 		 IDbSet<CustomsPartnersItem> CustomsPartnersItems { get; }

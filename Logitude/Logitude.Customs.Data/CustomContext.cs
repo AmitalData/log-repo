@@ -442,6 +442,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new CustomsItemDetailsHistoryMap());
 	
+            modelBuilder.Configurations.Add(new CustomsItemGroupMap());
+	
             modelBuilder.Configurations.Add(new CustomsItemHierarchicLocationMap());
 	
             modelBuilder.Configurations.Add(new CustomsPartnerFtpMap());
@@ -2634,6 +2636,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<CustomsItemDetailsHistory> CustomsItemDetailsHistorys 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CustomsItemGroup> CustomsItemGroups 
 	 {
 	      get; set;
 	 
