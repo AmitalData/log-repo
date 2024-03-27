@@ -244,6 +244,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
 				}
 			}
 			setting = CustomsSettingQueryService.GetSettingByTenant(_MyDeclarationPM.Tenant);
+
+            var lastStatus =_MyDeclarationPM.DeclarationStatusTypeCode;
+
             if (this._MyDeclarationPM.PaymentDate.HasValue)
             {
                 if (customResponse.Response != null && customResponse.Response.Status != null && (customResponse.Response.Status[0].NameCode.Value == "13" || customResponse.Response.Status[0].NameCode.Value == "14"))
@@ -1140,14 +1143,72 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 myDeclarationUpdateService.SendDelayedDeclarationStatusRequest(_MyDeclarationPM);
             }
-            
-            if (isSendVPE)
+          
+                if (isSendVPE)
             {
                 string xml_status = "new";
                 RaiseStatus(_MyDeclarationPM, "", "VPE", xml_status);
             }
+            if (_MyDeclarationPM.Direction == "E" && _MyDeclarationPM.AutoSending && _MyDeclarationPM.IsDiamondDeclaration && customResponse?.Response?.Status[0]?.NameCode?.Value == "13" && lastStatus != "13")
+            {
+                CustomsRequestsSheetQueryService customsRequestsSheetQuery = new CustomsRequestsSheetQueryService(context);
+                List<CustomsRequestsSheetPM> requestSheets = customsRequestsSheetQuery.GetRequestByInterfaceTypeCode(_MyDeclarationPM.Tenant, "2755E",
+                   requestParams.LoggingObjectTableId, requestParams.LoggingEntityId,
+                    _MyDeclarationPM.CustomFileNo);
+
+                if (requestSheets == null || requestSheets.Count()==0) {
+                    CreateDeclartionPayment(requestParams);
+                    Send2755(requestParams);
+                }
+           
+            }
         }
 
+        private void CreateDeclartionPayment(GenericRequestParams requestParams)
+        {
+            DeclarationPaymentQueryService declarationPaymentQueryService = new DeclarationPaymentQueryService(requestParams.Tenant);
+
+
+            if (declarationPaymentQueryService.GetSingle(_MyDeclarationPM.Id, true, false) == null)
+            {
+                DeclarationPaymentPM declarationPaymentPM = new DeclarationPaymentPM()
+                {
+                    DeclarationId = _MyDeclarationPM.Id,
+                    CreatedByUserId = _MyDeclarationPM.CreatedByUserId,
+                    PaymentDate = DateTime.Now,
+                    SignatoryIdentification = requestParams.SignByPersonalId,
+                    Tenant = requestParams.Tenant,
+                    ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
+                };
+                var context = CustomContext.GetContext(requestParams.Tenant);
+                DeclarationPaymentUpdateService declarationPaymentUpdateService = new DeclarationPaymentUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
+                declarationPaymentUpdateService.Update(declarationPaymentPM, true);
+
+            }
+
+
+        }
+        private void Send2755(GenericRequestParams requestParams)
+        {
+            GenericRequestParams submitRequestParams = new GenericRequestParams();
+            submitRequestParams.AppicationId = requestParams.AppicationId;
+            submitRequestParams.InterfaceTypeCode = "2755E";
+        
+            submitRequestParams.Tenant = requestParams.Tenant;
+            submitRequestParams.RequestVIA = SendRequestVIA.WebServiceBatch;
+            submitRequestParams.LoggingUserId = requestParams.LoggingUserId;
+            submitRequestParams.ForcePersonalSign =true;
+           
+            submitRequestParams.LoggingEntityId = requestParams.LoggingEntityId;
+            submitRequestParams.LoggingEntityId2 = requestParams.LoggingEntityId2;
+            submitRequestParams.LoggingObjectTableId = requestParams.LoggingObjectTableId;
+            submitRequestParams.LoggingObjectTableId2 = requestParams.LoggingObjectTableId2;
+
+            var messagingService = new
+                DF_NG_2755_MSG12001_SubmitExportDeclarationMessagingService();
+            INF_MSG_GenericResponseData submitResponseData = messagingService.Send(submitRequestParams);
+            
+        }
         private void UpdateDepositionStatusCode()
         {
             if (_MyDeclarationError != null && _MyDeclarationError.Entitites != null && _MyDeclarationError.Entitites.Count > 0)

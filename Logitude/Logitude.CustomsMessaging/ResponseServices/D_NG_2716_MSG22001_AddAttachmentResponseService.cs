@@ -28,6 +28,7 @@ using Logitude.Customs.BL.BL;
 using Logitude.Customs.Def.EntityQueryServicesExt;
 using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
+using Simplog.Data.CommonDataModel.Repositories;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -143,6 +144,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 return;
             }
 
+            var declarationQueryService = new Logitude.Customs.BL.EntityQueryServices.DeclarationQueryService(requestParams.Tenant);
+            var declarationPM = declarationQueryService.GetSingle(requestParams.DeclaretionId, false, false);
+
             LogMessagingUtil.Instance.AppendLine("Analyze Customs Document response" + requestParams.DocumentsFilingId);
             _MyCustomsDocumentPM.ChangeSetOp = ChangeSetOperation.Update;
             //NO ApplicationID - ERROR
@@ -191,8 +195,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     if (requestParams.IsFromAutoClosing)
                     {
 						
-						var declarationQueryService = new Logitude.Customs.BL.EntityQueryServices.DeclarationQueryService(requestParams.Tenant);
-						var declarationPM = declarationQueryService.GetSingle(requestParams.DeclaretionId, false, false);
                         if (declarationPM?.TransportModeId == "O") {
 
                            var declarations = declarationQueryService.GetDeclarationsByExportFile(declarationPM.Tenant, declarationPM.ExportFile);
@@ -271,17 +273,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     {
                         if (_MyCustomsDocumentPM.DocumentStatusCode == "1")
                         {
-                            DeclarationQueryService declarationQueryService = new DeclarationQueryService(context);
                             DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
+
                             var requestedCustomsDocId = myCustomsDocumentsTicketQueryService.CheckRequestedCustomsDocIdsByEntityIdAndChilds(requestParams.DeclaretionId, requestParams.Tenant, "", customsDocumentsTicket.RequestedCustomsDocId);
 
-                            var declaration = declarationQueryService.GetSingle(requestParams.DeclaretionId, false,false);
-                            if (requestedCustomsDocId != declaration.RequestedCustomsDocId)
-                                declaration.ChangeSetOp = ChangeSetOperation.Update;
+                            if (requestedCustomsDocId != declarationPM.RequestedCustomsDocId)
+                                declarationPM.ChangeSetOp = ChangeSetOperation.Update;
 
-                            declarationUpdateService.Update(declaration, true);
+                            declarationUpdateService.Update(declarationPM, true);
                         }
-
 
                         customsDocumentsTicket.VerificationStatusTypeCode = "8";
                         customsDocumentsTicket.ChangeSetOp = ChangeSetOperation.Update;
@@ -295,7 +295,24 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
             }
 
-          
+            // for the Diamonds declaration in export, send it automatically to the mehes
+            if (declarationPM.IsDiamondDeclaration && declarationPM.Direction == "E" && declarationPM.AutoSending)
+            {
+                try
+                {
+                    LogMessagingUtil.Instance.AppendLine("Check to send diamonds declaration to mehes");
+                    SendAutomaticReadyDeclaration(declarationPM);
+                }
+                catch (System.Exception e)
+                {
+                    LogMessagingUtil.Instance.AppendLine("Failed to send automatic diamonds declarations: " + e.ToString());
+                }
+            }
+            else
+            {
+                LogMessagingUtil.Instance.AppendLine("No check for diamonds process");
+            }
+
             UpdateDeclarationCourierStatus(context, _MyCustomsDocumentPM, requestParams.DeclaretionId);
             this.MyResponseData.ApplicationID = _MyCustomsDocumentPM.CustomsDocId;
             this.MyResponseData.DocumentNumber = _MyCustomsDocumentPM.ExternalAttachmentId;
@@ -366,13 +383,51 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         //throw;
                     }
                 }
-
-
-
             }
         }
 
-        
+        private void SendAutomaticReadyDeclaration(DeclarationPM declaration)
+        {
+            // determine if the export diamonds feature is enabled to allow autosending
+            ICommonDataContext myContextCommon = CommonDataContext.GetContext(declaration.Tenant);
+            FeatureRepository myFeatureRepository = new FeatureRepository(myContextCommon);
+            FeatureQuery featureQuery = new FeatureQuery(myFeatureRepository);
+            var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(declaration.Tenant), declaration.Tenant);
+            var featureExportDiamonds = features.Features.FirstOrDefault(x => x.Code == "ExportDiamonds");
+
+            if (featureExportDiamonds != null)
+            {
+                // check the declaration is ready to be sent the mehes. if then send it
+                var declarationQueryService = new DeclarationQueryService(declaration.Tenant);
+                bool declarationReadyForSending = declarationQueryService.CheckDiamondsDeclarationReadyForSending(declaration);
+
+                if (declarationReadyForSending)
+                {
+                    GenericRequestParams requestParamsData = new GenericRequestParams()
+                    {
+                        AppicationId = declaration.Id,
+                        Tenant = declaration.Tenant,
+                        RequestVIA = SendRequestVIA.Default,
+                        ForcePersonalSign = false,
+                        LoggingEnabled = true,
+                        LoggingEntityId = declaration.Id,
+                        LoggingEntityReference = declaration.DeclarationNumber,
+                        LoggingUserId = declaration.CreatedByUserId,
+                        RequestName = "Declaration Request",
+                        ResponseName = "Declaration Response",
+                        ForceCompanySign = true,
+                        LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration")
+                    };
+
+                    LogMessagingUtil.Instance.AppendLine("Send declaration to mehes");
+                    INF_MSG_GenericResponseData responseData;
+                    var messagingService = new DF_NG_2751_MSG10000_ExportDeclarationMessagingService();
+                    responseData = messagingService.Send(requestParamsData);
+                }
+            }
+        }
+
+
         private void EnshureIsPartOfDeclaration(ICustomContext context, string declaretionId)
         {
             if (String.IsNullOrWhiteSpace(declaretionId)) return;
