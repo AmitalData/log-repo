@@ -366,6 +366,16 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         myGGGQPM.Tenant = EntityPM.Tenant;
                         myGGGQPM.IS_SYNCH = false;
                         myGGGQPM.LAST_UPDATE_DT = DateTime.Now;
+                        if (myGGGQPM.GGGQCPMs.Count > 0)
+                        {
+                            foreach (var GGGQC_Item in myGGGQPM.GGGQCPMs)
+                            {
+                                GGGQC_Item.Tenant = EntityPM.Tenant;
+                                GGGQC_Item.IS_SYNCH = false;
+                                GGGQC_Item.LAST_UPDATE_DT = DateTime.Now;
+                            }
+                        }
+
                         _AmitalContext = AmitalContext.GetContext(entityPM.Tenant);
                         myGGGQUpdateService = new GGGQUpdateService(_AmitalContext);
                     }
