@@ -1785,11 +1785,17 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
             case 'DutyRegimeProtocolCode': {
                 item.DutyRegimeProtocolCode = args.FinalValue.Code;
                 item.DutyRegimeProtocolLocalName = args.FinalValue.LocalName;
+                if (this.Parent.declarationPM.Direction == "E") {
+                    this.DutyRegimeProtocolCode = item.DutyRegimeProtocolCode;
+                }
                 break;
             }
             case 'TradeAgreementCode': {
                 item.TradeAgreementCode = args.FinalValue.Code;
                 item.TradeAgreementName = args.FinalValue.LocalName;
+                if (this.Parent.declarationPM.Direction == "E") {
+                    this.PreferenceDocumentTypeCode = item.TradeAgreementCode;
+                }
                 break;
             }
         }
