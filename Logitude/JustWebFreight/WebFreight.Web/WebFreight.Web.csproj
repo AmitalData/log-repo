@@ -1470,6 +1470,10 @@
     <Compile Include="Controllers\Test\TestController.cs" />
     <Compile Include="Controllers\WebDomainControllers\PotentialAddressController.cs" />
     <Compile Include="Controllers\WebDomainControllers\QuoteOPDomainController.cs" />
+    <Compile Include="Controllers\WebServices\AmitalAPIControllerBase.cs" />
+    <Compile Include="Controllers\WebServices\AmitalAPISchemaController.cs" />
+    <Compile Include="Controllers\WebServices\AmitalAPIClientController.cs" />
+    <Compile Include="Controllers\WebServices\AmitalAPIClientapiController.cs" />
     <Compile Include="Controllers\WebServices\Services\AllocateInvoiceService.cs" />
     <Compile Include="Controllers\WebServices\Services\ShaamService.cs" />
     <Compile Include="Controllers\WebServices\ShaamWebServiceController.cs" />
@@ -3044,6 +3048,15 @@
       <DependentUpon>HealthProb.aspx</DependentUpon>
     </Compile>
     <Compile Include="Helpers\AdvancedDateResolver.cs" />
+    <Compile Include="Helpers\AmitalAPI\AmitalApiClientapiApi.cs" />
+    <Compile Include="Helpers\AmitalAPI\AmitalApiClientApi.cs" />
+    <Compile Include="Helpers\AmitalAPI\AmitalApiCRUDApiBase.cs" />
+    <Compile Include="Helpers\AmitalAPI\AmitalAPIHelper.cs" />
+    <Compile Include="Helpers\AmitalAPI\AmitalApiSchemaApi.cs" />
+    <Compile Include="Helpers\AmitalAPI\Structs\AmitalApiClient.cs" />
+    <Compile Include="Helpers\AmitalAPI\Structs\AmitalApiClientapi.cs" />
+    <Compile Include="Helpers\AmitalAPI\Structs\AmitalApiSchema.cs" />
+    <Compile Include="Helpers\AmitalAPI\Structs\AmitalApiSettings.cs" />
     <Compile Include="Helpers\ContainerStatusesHelper.cs" />
     <Compile Include="Helpers\DocumentFile.cs" />
     <Compile Include="Helpers\DocumentDownloadTokenService.cs" />
@@ -3085,6 +3098,7 @@
     <Compile Include="Helpers\AutomationDocumentHelper.cs" />
     <Compile Include="Helpers\BaseDataProviderService.cs" />
     <Compile Include="Helpers\DocumentTypeTemplateDefultAttachmentService.cs" />
+    <Compile Include="Helpers\HeaderHelper.cs" />
     <Compile Include="Helpers\PrivateLabelsBrandingDataService.cs" />
     <Compile Include="Helpers\QuotesRequestService.cs" />
     <Compile Include="Helpers\QuoteOPTemplateReportHelper.cs" />

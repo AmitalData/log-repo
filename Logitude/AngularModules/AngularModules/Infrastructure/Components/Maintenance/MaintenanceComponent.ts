@@ -1,5 +1,5 @@
 declare var window: any;
-import { Component } from '@angular/core';
+import { Component, isDevMode } from '@angular/core';
 import { TextCodeTranslator } from '../../Utilities/TextCodeTranslator';
 import { SessionLocator } from '../../Utilities/SessionLocator';
 import { FeatureLocator } from '../../Utilities/FeatureLocator';
@@ -71,6 +71,9 @@ export class MaintenanceComponent {
         
         if (FeatureLocator.HasFeaturePermession("General", this.invoiceConfirmationNumber))
             this.PagesMenu.push(new Menu("SHA", TextCodeTranslator.Translate("General.MC.ShaamTokenManagement")));
+        
+        if (isDevMode() || FeatureLocator.HasFeaturePermession("CustomsGeneral", 'AmitalAPI'))
+            this.PagesMenu.push(new Menu('AAP', TextCodeTranslator.Translate("Customs.General.F.AmitalAPI") || 'Amital API'));
 
         if (FeatureLocator.HasFeaturePermession("General", "TICKET")) {
             this.PagesMenu.push(new Menu("TKT", "Tickets"));
@@ -163,6 +166,7 @@ export class MaintenanceComponent {
         this.BuildOtherMenus();
         this.BuildTransmissionsMenus();
         this.BuildShaamTokenManagementMenu();
+        this.BuildAmitalAPISettingsMenu();
         this.PageChanged(this.PagesMenu[0]);
     }
     private BuildSystemSettings() {
@@ -805,6 +809,28 @@ export class MaintenanceComponent {
 
     }
 
+    private BuildAmitalAPISettingsMenu() {
+        if (!isDevMode() && !FeatureLocator.HasFeaturePermession("CustomsGeneral", 'AmitalAPI')) return;
+
+        if(isDevMode() || SessionLocator.Tenant === 0) {
+            var item = new MenusTablePM();
+            item.CategoryTypeCode = 'AAP';
+            item.Icon = "Settings"
+            item.Code = "AMITAL_API_SETTINGS";
+            item.ObjectTableName = TextCodeTranslator.Translate("Customs.MC.General.AmitalAPISettings") || 'Amital API Settings',
+            this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+            
+            if(!isDevMode()) return;
+        }
+        
+        var item = new MenusTablePM();
+        item.CategoryTypeCode = 'AAP';
+        item.Icon = "Settings"
+        item.Code = "API_SETTINGS";
+        item.ObjectTableName = TextCodeTranslator.Translate("Customs.MC.General.APISettings") || 'API Settings',
+        this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+    }
+
     // Commands
     public PageChanged(item: Menu) {
         this.SelectedMenu = item;
@@ -830,6 +856,27 @@ export class MaintenanceComponent {
 
         if (item) {
             switch (item.Code) {
+                
+                case "AMITAL_API_SETTINGS": {
+                        const logWindow = new LogitudeWindow();
+                        logWindow.Width = window.outerWidth;
+                        logWindow.Height = window.outerHeight;
+                        logWindow.Title = TextCodeTranslator.Translate("Customs.MC.General.AmitalAPISettings") || 'Amital API Settings';
+                        logWindow.IsShowCloseButton = true;
+                        logWindow.Show('./Common/Components/Maintenance/AmitalAPI/AmitalAPISettingsComponent');
+                    break;
+                }
+
+                case "API_SETTINGS": {
+                        const logWindow = new LogitudeWindow();
+                        logWindow.Width = window.outerWidth;
+                        logWindow.Height = window.outerHeight;
+                        logWindow.Title = TextCodeTranslator.Translate("Customs.MC.General.APISettings") || 'API Settings';
+                        logWindow.IsShowCloseButton = true;
+                        logWindow.Show('./Common/Components/Maintenance/AmitalAPI/APISettingsComponent');
+                    break;
+                }
+
                 case "CSSS": {
                     const logWindow = new LogitudeWindow();
                     logWindow.Title = TextCodeTranslator.Translate('General.MC.TokenManagement');

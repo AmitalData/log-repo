@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class GeneralUpdateClass
    {  		
-		public const string HashString = "dd7d00303e0c37f8d88b4918fbe2ea1e";
+		public const string HashString = "c1a8ebb3f93df0ec259eaf0f44801f88";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -124,7 +124,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "General",
-			      				    Code =  "280b",
+			      				    Code =  "f1d1",
 			      				    Name =  "General",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Generals",
@@ -2452,6 +2452,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
  		   TextCode GeneralTextCode_GeneralMCTokenManagement = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.TokenManagement", DefaultText = "Token Management",LocalDefaultText = @"", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_GeneralMCLogs = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.Logs", DefaultText = "Logs",LocalDefaultText = @"", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_GeneralOUpdateFailed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.UpdateFailed", DefaultText = "Update failed",LocalDefaultText = @"עידכון נכשל", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_GeneralOAddFailed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.AddFailed", DefaultText = "Add Failed",LocalDefaultText = @"הוספה נכשלה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GeneralTextCode_GeneralOClientAPIAlreadyExists = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.ClientAPIAlreadyExists", DefaultText = "Client API already exists",LocalDefaultText = @"Client API כבר קיים", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

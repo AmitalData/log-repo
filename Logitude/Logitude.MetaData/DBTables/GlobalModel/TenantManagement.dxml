@@ -956,6 +956,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="AmitalApiToken"
+    Type="varchar"
+    Size="200">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="Id"
     ReferencedTable="GlobalTenants"
