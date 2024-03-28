@@ -50,6 +50,7 @@ using Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Logitude.CRM.Data.EntityPOCOs;
+using Logitude.Server.Tools.Utils;
 
 namespace Logitude.Accounting.BL.CoreBL
 {
@@ -1598,6 +1599,7 @@ namespace Logitude.Accounting.BL.CoreBL
         public class JournalApproveWorker
         {
             private static DateTime _NextDueDoneAt = DateTime.MinValue;
+            private static Dictionary<int, DateTime> _NextDueDoneDict = new Dictionary<int, DateTime>();
             private static DateTime _freeTenantsDateTime = DateTime.Now;
             static JournalApproveWorker()
             {
@@ -1740,6 +1742,33 @@ namespace Logitude.Accounting.BL.CoreBL
                     if (response == null || (response != null && response.MessageId == null))
                     {
                         break;
+                    }
+
+                    if (selectedQueue == JournalApproveService.K_AccountingJournalApproveMutliThreadingWR 
+                        && response != null && response.Tenant != 0)
+                    {
+                        try
+                        {
+                            Logger.LogTrace(String.Format("JournalApproveService, Point 1, tenant {0}", response.Tenant));
+                            if (_NextDueDoneDict == null) _NextDueDoneDict = new Dictionary<int, DateTime>();
+                            if (!_NextDueDoneDict.ContainsKey(response.Tenant))
+                                _NextDueDoneDict.Add(response.Tenant, DateTime.MinValue);
+
+                            if (DateTime.UtcNow.Date > _NextDueDoneDict[response.Tenant].Date)  
+                            {
+                                Logger.LogTrace(String.Format("JournalApproveService, Point 2, tenant {0}, date {1} ", response.Tenant, _NextDueDoneDict[response.Tenant].Date));
+
+                                _NextDueDoneDict[response.Tenant] = DateTime.UtcNow.Date;
+                                var myDueLocalBalanceService = new DueLocalBalanceService();
+                                myDueLocalBalanceService.RunOneTenantFast(response.Tenant);
+                                Logger.LogTrace(String.Format("JournalApproveService, Point 3, tenant {0}", response.Tenant));
+                            }
+                        }
+                        catch (Exception)
+                        {
+                            SetTenantIdle(response.Tenant);
+                            throw;
+                        }
                     }
 
 

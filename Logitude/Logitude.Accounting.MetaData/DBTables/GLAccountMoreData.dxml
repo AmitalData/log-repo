@@ -77,4 +77,6 @@
     ReferencedTable="GLAccounts"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
+  <Index
+  Columns="NextDueDate" />
 </Table>
