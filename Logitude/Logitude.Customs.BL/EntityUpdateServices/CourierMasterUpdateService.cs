@@ -507,7 +507,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
                 using (SqlConnection cn = new SqlConnection(strConnString))
                 {
-                    string cmd = "Update DECLARATIONS set " +
+                    string cmd = "Update Customs.DECLARATIONS set " +
                         "ISCLOSE= 0  , ISCANCELLED =0 ";
                     cmd = cmd + " where ID IN " + "(" + declarations + ")";
 
@@ -574,7 +574,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
                 using (SqlConnection cn = new SqlConnection(strConnString))
                 {
-                    string cmd = "Update DECLARATIONS set " +
+                    string cmd = "Update Customs.DECLARATIONS set " +
                         "ISCLOSE= 1  , ISCANCELLED =1 ";
                     cmd = cmd + " where ID IN " + "(" + declarations + ")";
 
