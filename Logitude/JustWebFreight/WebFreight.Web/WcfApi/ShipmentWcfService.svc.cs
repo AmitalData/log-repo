@@ -45,6 +45,8 @@ using System.Data.Entity.Infrastructure;
 using System.Data.SqlClient;
 using System.ComponentModel;
 using WebFreight.Web.Helpers.APIHelpers;
+using Logitude.SystemLogs;
+using NPOI.SS.Formula.Functions;
 
 namespace WebFreight.Web.WcfApi
 {
@@ -490,9 +492,11 @@ namespace WebFreight.Web.WcfApi
                         }
                         else
                         {
-                            response.HasError = true;
-                            response.ErrorMessage = "QuoteNumber field doesn't exist in the database,Upsert this entity before using it.";
-                            return response;
+                            ExceptionHandler.HandleException(new Exception("QuoteNumber field doesn't exist in the database"), DateTime.Now, entityPM.Tenant, 
+                                null, null, "QuoteNumber field doesn't exist in the database,Upsert this entity before using it.",  null);
+                            //response.HasError = true;
+                            //response.ErrorMessage = "QuoteNumber field doesn't exist in the database,Upsert this entity before using it.";
+                            //return response;
                         }
                     }
 
