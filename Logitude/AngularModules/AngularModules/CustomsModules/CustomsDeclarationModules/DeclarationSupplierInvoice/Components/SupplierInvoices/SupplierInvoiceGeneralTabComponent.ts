@@ -3872,9 +3872,6 @@ export class SupplierInvoiceItemLine extends BaseComponent {
     public get TradeAgreementCode() { return this.entityPM.TradeAgreementCode; }
     public set TradeAgreementCode(newValue: string) {
         this.entityPM.TradeAgreementCode = newValue;
-        if (this.Parent.declarationPM.Direction == "E") {
-            this.Parent.PreferenceDocumentTypeCode = newValue;
-        }
         this.CheckTariff();
     }
 
@@ -3884,9 +3881,6 @@ export class SupplierInvoiceItemLine extends BaseComponent {
     public get DutyRegimeProtocolCode() { return this.entityPM.DutyRegimeProtocolCode; }
     public set DutyRegimeProtocolCode(newValue: string) {
         this.entityPM.DutyRegimeProtocolCode = newValue;
-        if (this.Parent.declarationPM.Direction == "E") {
-            this.Parent.DutyRegimeProtocolCode = newValue;
-        }
         this.tradeAgreementProtocolListService.getSingle(newValue).subscribe((res) =>
             this.DutyRegimeProtocolLocalName = res?.Result?.LocalName);
     }
