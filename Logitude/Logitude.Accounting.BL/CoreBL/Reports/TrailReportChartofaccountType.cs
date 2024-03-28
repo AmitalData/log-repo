@@ -99,6 +99,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                      ChartOfAcount5 = "",
 
                      GLAccountName = "",
+                     GLAccountEnglish = "",
 
                      GLAccountId = "",
                      CurrencyId = "",// g.Key.CurrencyId,
