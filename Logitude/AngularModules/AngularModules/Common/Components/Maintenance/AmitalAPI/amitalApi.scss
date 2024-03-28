@@ -1,7 +1,3 @@
-.margin-vertical {
-    margin: 15px 0;
-}
-
 :host ::ng-deep .user-select .TextTrimming {
     user-select: text !important;
 }
@@ -16,4 +12,8 @@
     display: inline-block;
     width: 50px;
     margin: 0 5px;
+}
+
+.margin-vertical {
+    margin: 15px 0;
 }

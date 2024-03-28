@@ -1,5 +1,5 @@
 declare var window: any;
-import { Component, isDevMode } from '@angular/core';
+import { Component } from '@angular/core';
 import { TextCodeTranslator } from '../../Utilities/TextCodeTranslator';
 import { SessionLocator } from '../../Utilities/SessionLocator';
 import { FeatureLocator } from '../../Utilities/FeatureLocator';
@@ -72,8 +72,8 @@ export class MaintenanceComponent {
         if (FeatureLocator.HasFeaturePermession("General", this.invoiceConfirmationNumber))
             this.PagesMenu.push(new Menu("SHA", TextCodeTranslator.Translate("General.MC.ShaamTokenManagement")));
         
-        if (isDevMode() || FeatureLocator.HasFeaturePermession("CustomsGeneral", 'AmitalAPI'))
-            this.PagesMenu.push(new Menu('AAP', TextCodeTranslator.Translate("Customs.General.F.AmitalAPI") || 'Amital API'));
+        if (FeatureLocator.HasFeaturePermession("CustomsGeneral", 'AmitalAPI'))
+            this.PagesMenu.push(new Menu('AAP', TextCodeTranslator.Translate("CustomsGeneral.Features.AmitalAPI")));
 
         if (FeatureLocator.HasFeaturePermession("General", "TICKET")) {
             this.PagesMenu.push(new Menu("TKT", "Tickets"));
@@ -810,9 +810,9 @@ export class MaintenanceComponent {
     }
 
     private BuildAmitalAPISettingsMenu() {
-        if (!isDevMode() && !FeatureLocator.HasFeaturePermession("CustomsGeneral", 'AmitalAPI')) return;
+        if (!FeatureLocator.HasFeaturePermession("CustomsGeneral", 'AmitalAPI')) return;
 
-        if(isDevMode() || SessionLocator.Tenant === 0) {
+        if(SessionLocator.Tenant === 0) {
             var item = new MenusTablePM();
             item.CategoryTypeCode = 'AAP';
             item.Icon = "Settings"
@@ -820,7 +820,7 @@ export class MaintenanceComponent {
             item.ObjectTableName = TextCodeTranslator.Translate("Customs.MC.General.AmitalAPISettings"),
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
             
-            if(!isDevMode()) return;
+            return;
         }
         
         var item = new MenusTablePM();
