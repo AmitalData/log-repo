@@ -1,0 +1,26 @@
+.client-data-field {
+    display: flex; 
+    flex-wrap: wrap; 
+    justify-content: space-evenly;
+    justify-content: flex-end;
+
+}
+
+.client-data-field div {
+    flex: 0 0 240px; 
+    height: 40px; 
+    line-height: 2;
+    direction: ltr;
+}
+
+.client-data-field div > * {
+    display: inline-block;
+}
+
+.client-data-field div LogLabel {
+    width:90px;
+}
+
+.client-data-field div LogTextBox {
+    width:300px
+}

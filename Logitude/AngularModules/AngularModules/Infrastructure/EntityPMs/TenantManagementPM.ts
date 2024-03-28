@@ -915,6 +915,11 @@ export class TenantManagementPM {
     public set IsHybrid(newValue: boolean) { if (this.isHybrid != newValue) { this.isHybrid = newValue; this.MarkAsDirty("IsHybrid"); } }
        
 	 
+    private amitalApiAddress: string;
+    public get AmitalApiAddress() { return this.amitalApiAddress; }
+    public set AmitalApiAddress(newValue: string) { if (this.amitalApiAddress != newValue) { this.amitalApiAddress = newValue; this.MarkAsDirty("AmitalApiAddress"); } }
+       
+	 
 
     public OldEntityPM: TenantManagementPM;
 		

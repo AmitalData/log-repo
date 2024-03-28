@@ -112,6 +112,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                           AmitalTaxesUrl = a.AmitalTaxesUrl,
                           PrivateKey = a.PrivateKey,
                           TaxesRediractUrl = a.TaxesRediractUrl,
+                          AmitalApiAddress = a.AmitalApiAddress,
+                          AmitalApiXFunctionsKey = a.AmitalApiXFunctionsKey,
                       }).FirstOrDefault();
 
             return entity;

@@ -93,7 +93,7 @@ namespace WebFreight.Web.Controllers.WebServices
             object responseData = null;
             try
             {
-                int? tenant = GetTenantFromToken();
+                int? tenant = HeaderHelper.GetTenantFromToken();
                 if (tenant == null && authorize)
                     return Request.CreateResponse(HttpStatusCode.Unauthorized);
 
@@ -112,20 +112,6 @@ namespace WebFreight.Web.Controllers.WebServices
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-        }
-
-        private int? GetTenantFromToken()
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                return authToken.Tenant;
-            }
-            catch (Exception)
-            {
-                return null;
             }
         }
 
