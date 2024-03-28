@@ -30,7 +30,7 @@ import { AmitalAPIAddClientWindowComponent } from "./AmitalAPIAddClientWindowCom
                     <ng-template let-item>
                         <log-cell-template [IgnoreMods]="true" #logcelltemplate>
                             <div *ngIf="logcelltemplate.IsDisplayMode" class="TextTrimming" style="text-align:center">
-                                <button class="Button RedButton" (click)="openRemovePopup(item.Id, false)">{{'General.B.Remove' | TextCodeTranslationPipe}}</button>
+                                <button class="Button RedButton" (click)="openRemovePopup(item.Id)">{{'General.B.Remove' | TextCodeTranslationPipe}}</button>
                                 <button class="Button RedButton" (click)="openEditClientPopup(item)">{{'General.B.Edit' | TextCodeTranslationPipe}}</button>
                             </div>
                         </log-cell-template>
@@ -38,7 +38,7 @@ import { AmitalAPIAddClientWindowComponent } from "./AmitalAPIAddClientWindowCom
                 </log-column>
             </logitude-edit-grid>
         </div>
-        <app-AmitalAPI-Schema-Table></app-AmitalAPI-Schema-Table>
+        <app-amitalapi-schema-table></app-amitalapi-schema-table>
     `,
     styleUrls: ['./amitalApi.scss'],
     styles: [``],

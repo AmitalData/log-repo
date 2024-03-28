@@ -74,6 +74,6 @@ namespace WebFreight.Web.Controllers.WebServices
             return Request.CreateResponse(HttpStatusCode.OK, res);
         }
 
-        protected string GetAmitalApiToken(int tenant) => tenantManagementQuery.GetSinglePM(tenant).AmitalApiToken;        
+        protected string GetAmitalApiToken(int tenant) => tenantManagementQuery.GetSinglePM(tenant).AmitalApiToken;
     }
 }

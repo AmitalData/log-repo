@@ -5,14 +5,13 @@ using System.Net;
 using System.Text;
 using System;
 using Logitude.BL.GlobalModel.EntityQueries;
-using Logitude.Customs.Data.EntityPOCOs;
 
 namespace WebFreight.Web.Helpers.AmitalAPI
 {
     internal static class AmitalAPIHelper
     {
-        static readonly string baseUrl = "";// new SettingQuery().GetSinglePMFromCahche().AmitalApiAddress;
-        static readonly string xFunctionsKey = "";//new SettingQuery().GetSinglePMFromCahche().AmitalApiXFunctionsKey;
+        static readonly string baseUrl = new SettingQuery().GetSinglePMFromCahche().AmitalApiAddress;
+        static readonly string xFunctionsKey = new SettingQuery().GetSinglePMFromCahche().AmitalApiXFunctionsKey;
 
         public static HttpClienResponse SendRequest(string token, string url, HttpMethod httpMethod, object body = null, string user = "")
         {
@@ -57,18 +56,7 @@ namespace WebFreight.Web.Helpers.AmitalAPI
             client.Dispose();
 
             return new HttpClienResponse { Content = content, Res = res };
-        }
-
-        private static void AddHeadersUser(HttpClient httpClient, string user)
-        {
-            httpClient.DefaultRequestHeaders.Add("user_id", user);
-            //var user = HeaderHelper.GetUserFromToken();
-            //if (user != null)
-            //{
-            //    client.DefaultRequestHeaders.Add("user", user.Id.ToString());
-            //    client.DefaultRequestHeaders.Add("tenant", user.TenantId.ToString());
-            //}
-        }   
+        }  
     }
 
     public class HttpClienResponse

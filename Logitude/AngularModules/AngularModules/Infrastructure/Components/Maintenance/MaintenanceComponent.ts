@@ -817,7 +817,7 @@ export class MaintenanceComponent {
             item.CategoryTypeCode = 'AAP';
             item.Icon = "Settings"
             item.Code = "AMITAL_API_SETTINGS";
-            item.ObjectTableName = TextCodeTranslator.Translate("Customs.MC.General.AmitalAPISettings") || 'Amital API Settings',
+            item.ObjectTableName = TextCodeTranslator.Translate("Customs.MC.General.AmitalAPISettings"),
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
             
             if(!isDevMode()) return;
@@ -827,7 +827,7 @@ export class MaintenanceComponent {
         item.CategoryTypeCode = 'AAP';
         item.Icon = "Settings"
         item.Code = "API_SETTINGS";
-        item.ObjectTableName = TextCodeTranslator.Translate("Customs.MC.General.APISettings") || 'API Settings',
+        item.ObjectTableName = TextCodeTranslator.Translate("Customs.MC.General.APISettings"),
         this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
     }
 
@@ -861,7 +861,7 @@ export class MaintenanceComponent {
                         const logWindow = new LogitudeWindow();
                         logWindow.Width = window.outerWidth;
                         logWindow.Height = window.outerHeight;
-                        logWindow.Title = TextCodeTranslator.Translate("Customs.MC.General.AmitalAPISettings") || 'Amital API Settings';
+                        logWindow.Title = TextCodeTranslator.Translate("Customs.MC.General.AmitalAPISettings");
                         logWindow.IsShowCloseButton = true;
                         logWindow.Show('./Common/Components/Maintenance/AmitalAPI/AmitalAPISettingsComponent');
                     break;
@@ -871,7 +871,7 @@ export class MaintenanceComponent {
                         const logWindow = new LogitudeWindow();
                         logWindow.Width = window.outerWidth;
                         logWindow.Height = window.outerHeight;
-                        logWindow.Title = TextCodeTranslator.Translate("Customs.MC.General.APISettings") || 'API Settings';
+                        logWindow.Title = TextCodeTranslator.Translate("Customs.MC.General.APISettings");
                         logWindow.IsShowCloseButton = true;
                         logWindow.Show('./Common/Components/Maintenance/AmitalAPI/APISettingsComponent');
                     break;

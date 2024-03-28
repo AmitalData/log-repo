@@ -8,7 +8,7 @@ import { ObservableCollection } from "Infrastructure/Utilities/ObservableCollect
 import { AmitalAPIAddSchemaWindowComponent } from "./AmitalAPIAddSchemaWindowComponent";
 
 @Component({
-    selector: 'app-AmitalAPI-Schema-Table',
+    selector: 'app-amitalapi-schema-table',
     template: `
         <h2 class='subTitle'>Schemas</h2>
 
@@ -29,7 +29,7 @@ import { AmitalAPIAddSchemaWindowComponent } from "./AmitalAPIAddSchemaWindowCom
                     <ng-template let-item>
                         <log-cell-template [IgnoreMods]="true" #logcelltemplate>
                             <div *ngIf="logcelltemplate.IsDisplayMode" class="TextTrimming" style="text-align:center">
-                                <button class="Button RedButton" (click)="openRemovePopup(item.Id, false)">{{'General.B.Remove' | TextCodeTranslationPipe}}</button>
+                                <button class="Button RedButton" (click)="openRemovePopup(item.Id)">{{'General.B.Remove' | TextCodeTranslationPipe}}</button>
                                 <button class="Button RedButton" (click)="openEditPopup(item)">{{'General.B.Edit' | TextCodeTranslationPipe}}</button>
                             </div>
                         </log-cell-template>
