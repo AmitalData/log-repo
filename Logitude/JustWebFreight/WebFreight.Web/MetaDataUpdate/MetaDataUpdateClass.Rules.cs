@@ -543,7 +543,7 @@ namespace WebFreight.Web.MetaDataUpdate
             #endregion
 
             #region ConfirmationNumberDefaults
-            ObjectTable ConfirmationNumberDefaultsTable = ObjectContext.ObjectTables.Where(f => f.Name == "ConfirmationNumberDefaults" && f.Tenant == 0).FirstOrDefault();
+            ObjectTable ConfirmationNumberDefaultsTable = ObjectContext.ObjectTables.Where(f => f.Name == "ConfirmationNumberDefault" && f.Tenant == 0).FirstOrDefault();
             ObjectField ConfirmationNumberDefaultsCode = ObjectContext.ObjectFields.Where(d => d.FieldName == "FromDate" && d.ObjectTableId == ConfirmationNumberDefaultsTable.Id).FirstOrDefault();
 
             ObjectTableRule ConfirmationNumberDefaultsDuplicationRule = AddObjectTableRules.AddObjectTableRule(new ObjectTableRuleDetails()
