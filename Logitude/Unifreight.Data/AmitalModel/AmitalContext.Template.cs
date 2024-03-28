@@ -10891,6 +10891,57 @@ namespace Unifreight.Data.AmitalModel
 
             #endregion
 
+            #region GAQTEAM
+
+            modelBuilder.Entity<GAQTEAM>()
+                .HasKey(p => p.TEAMID)
+                .ToTable("GAQTEAM", "V5111");
+            // Properties:
+            modelBuilder.Entity<GAQTEAM>()
+                .Property(p => p.TEAMID)
+                    .HasColumnName(@"TEAM_ID")
+                    .IsRequired()
+                    .HasMaxLength(9)
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GAQTEAM>()
+                .Property(p => p.NAMEHEB)
+                    .HasColumnName(@"NAME_HEB")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GAQTEAM>()
+                .Property(p => p.NAMEENG)
+                    .HasColumnName(@"NAME_ENG")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GAQTEAM>()
+                .Property(p => p.ROLEID)
+                    .HasColumnName(@"ROLE_ID")
+                    .HasMaxLength(9)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GAQTEAM>()
+                .Property(p => p.TEAMLEADER)
+                    .HasColumnName(@"TEAM_LEADER")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GAQTEAM>()
+                .Property(p => p.ENTNAME)
+                    .HasMaxLength(32)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<GAQTEAM>()
+                .Property(p => p.BLOCKRECORD)
+                    .HasColumnName(@"BLOCK_RECORD")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<GAQTEAM>()
+                .Property(p => p.SEARCHENG)
+                    .HasColumnName(@"SEARCH_ENG")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar2");
+
+            #endregion
+
+
             #region Disabled conventions
 
 
@@ -13133,6 +13184,8 @@ namespace Unifreight.Data.AmitalModel
         public virtual DbSet<MFIFILEM> MFIFILEMs { get; set; }
         public virtual DbSet<EFIMMN> EFIMMNs { get; set; }
         public virtual DbSet<LFIFILEM> LFIFILEMs { get; set; }
+        public virtual DbSet<GAQTEAM> GAQTEAMs { get; set; }
+       
 
     }
 }
