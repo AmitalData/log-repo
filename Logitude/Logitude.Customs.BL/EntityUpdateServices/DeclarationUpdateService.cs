@@ -1044,6 +1044,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
                 return;// not courier !!
             }
+            LogMessagingUtil.Instance.AppendLine("UpdateDeclarationPending903InvalidPhoneNumber() 903");
+
             updateDeclarationPending903InvalidPhoneNumberService.Calc(myDeclarationCourierStatusPM);
             if (myDeclarationCourierStatusPM != null && myDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.Update)
             {

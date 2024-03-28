@@ -150,6 +150,7 @@ namespace Logitude.Customs.BL.BL
                     CalcDeclarationPendings906(myDeclarationCourierStatusPM);
                 CalcDeclarationPendings908(myDeclarationCourierStatusPM);
 
+               LogMessagingUtil.Instance.AppendLine("CalcAll()->903");
 
                 var updateDeclarationPending903InvalidPhoneNumberService = new UpdateDeclarationPending903InvalidPhoneNumberService(declarationPM);
                 LogMessagingUtil.Instance.AppendLine("CalcAll->calc903");
@@ -731,7 +732,9 @@ namespace Logitude.Customs.BL.BL
         }
         public void Calc(DeclarationCourierStatusPM myDeclarationCourierStatusPM)
         {
-            LogMessagingUtil.Instance.AppendLine("Calc903!!!!()");
+
+            LogMessagingUtil.Instance.AppendLine("Calc() 903");
+
             if (declarationPM == null || myDeclarationCourierStatusPM == null) return;
             string courierReasonCode = "903";
             if (myDeclarationCourierStatusPM == null)
@@ -753,16 +756,21 @@ namespace Logitude.Customs.BL.BL
             {
                 valid = true;
             }
+            LogMessagingUtil.Instance.AppendLine("valid 903:" + valid);
 
             if (valid)
             {
                 if (declarationPending903PM != null && declarationPending903PM.Status == "A")
                 {
+                    LogMessagingUtil.Instance.AppendLine("declarationPending903PM.Status == a 903");
+
                     //UPDATE to solve
                     declarationPending903PM.Status = "S";
                     declarationPending903PM.ChangeSetOp = ChangeSetOperation.Update;
                     if (myDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.None)
                     {
+                        LogMessagingUtil.Instance.AppendLine("myDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update 903");
+
                         myDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
                     }
 
@@ -773,11 +781,14 @@ namespace Logitude.Customs.BL.BL
             {
                 CourierPendingReasonRepository courierPendingReasonRepositoryRepository = new CourierPendingReasonRepository(declarationPM.Tenant);
                 Boolean isActive = courierPendingReasonRepositoryRepository.IsActive(courierReasonCode, myDeclarationCourierStatusPM.Tenant);
+                LogMessagingUtil.Instance.AppendLine("isActive 903"+ isActive);
+
                 if (isActive)
                 {
                     if (declarationPending903PM == null)
-                {
-               
+                { 
+                LogMessagingUtil.Instance.AppendLine("declarationPending903PM == null)");
+
                         declarationPending903PM = new DeclarationPendingPM()
                         {
                             ChangeSetOp = ChangeSetOperation.Insert,
@@ -799,10 +810,14 @@ namespace Logitude.Customs.BL.BL
 
                  
                 else
-                {
-                    if (declarationPending903PM.Status == "S")
                     {
-                        declarationPending903PM.Status = "A";
+                        LogMessagingUtil.Instance.AppendLine("isActive! 903");
+
+                        if (declarationPending903PM.Status == "S")
+                    {
+                            LogMessagingUtil.Instance.AppendLine("declarationPending903PM.Status == s");
+
+                            declarationPending903PM.Status = "A";
                         declarationPending903PM.ChangeSetOp = ChangeSetOperation.Update;
                         if (myDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.None)
                         {
