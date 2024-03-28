@@ -117,7 +117,7 @@ export class AmitalAPIAddApiWindowComponent {
         if (!updateRow) return;
 
         if(!isUpdate && clientapis.some(clientapi => clientapi.SchemaId +';'+ clientapi.PartnerName === updateRow.SchemaId +';'+ updateRow.PartnerName)) {
-            new MessageWindow().Show(TextCodeTranslator.Translate('General.O.ClientAPIAlreadyExists') || 'Client API already exists');
+            new MessageWindow().Show(TextCodeTranslator.Translate('General.O.ClientAPIAlreadyExists'));
             return;
         }
 
@@ -160,7 +160,7 @@ export class AmitalAPIAddApiWindowComponent {
         SessionLocator.SelectedSession.StopBusyIndicator();
         
         if(!res) 
-            new MessageWindow().Show(isUpdate ? TextCodeTranslator.Translate('General.O.UpdateFailed') || 'Update failed!' : TextCodeTranslator.Translate('General.O.AddFailed') || 'Add failed!')
+            new MessageWindow().Show(isUpdate ? TextCodeTranslator.Translate('General.O.UpdateFailed') : TextCodeTranslator.Translate('General.O.AddFailed'))
         
         return res;
     }
