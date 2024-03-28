@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 
 
-		public const string HashString = "f5c7fb71d65630a59539c4ed49844d97";
+		public const string HashString = "823dcdc1307a260cdbac5446ea9a58f6";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -18652,7 +18652,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query DiamondsDeclarationsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationTextCode_20.Id, NameTextCodeCode = DeclarationTextCode_20.Code, ObjectTableName = "Customs.Declaration", Code = "DiamondsDeclarations",  QueryGroupCode = "DECL", IndexOrder = 20, Tenant = 0, ObjectTableId = DeclarationObjectTable.Id, QuerySection = "Customs.Declaration", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DeclarationFeature_20.Id,FeatureUniqeCode= DeclarationFeature_20.FeatureUniqeCode, DefaultSortName = "TaxationDateTime", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+			  Query DiamondsDeclarationsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationTextCode_20.Id, NameTextCodeCode = DeclarationTextCode_20.Code, ObjectTableName = "Customs.Declaration", Code = "DiamondsDeclarations",  QueryGroupCode = "DECL", IndexOrder = 20, Tenant = 0, ObjectTableId = DeclarationObjectTable.Id, QuerySection = "Customs.ExportDeclaration", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DeclarationFeature_20.Id,FeatureUniqeCode= DeclarationFeature_20.FeatureUniqeCode, DefaultSortName = "TaxationDateTime", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
 			 QueryColumn DiamondsDeclarationsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DiamondsDeclarationsQuery.Id,QueryCode = DiamondsDeclarationsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.Declaration.CreateDateForExport" , ColumnWidth = 100 }, addedQueryColumns);
 
@@ -22078,7 +22078,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode DeclarationTextCode_CustomsDeclarationOPaidDeclarations = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.PaidDeclarations", DefaultText = "Paid Declarations",LocalDefaultText = @"הצהרות שהוגשו", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOReleasedDeclaration = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ReleasedDeclaration", DefaultText = "Released Declaration",LocalDefaultText = @"הצהרות שהותרו", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOReleasedDeclarations = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ReleasedDeclarations", DefaultText = "Released Declarations",LocalDefaultText = @"הצהרות שהותרו", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

@@ -23594,7 +23594,7 @@
     QueryGroupCode="&quot;DECL&quot;"
     IndexOrder="20"
     ObjectTableName="&quot;Customs.Declaration&quot;"
-    QuerySection="&quot;Customs.Declaration&quot;"
+    QuerySection="&quot;Customs.ExportDeclaration&quot;"
     SystemLevel="true"
     IsAddNewEntity="true"
     IsPackagable="true"
@@ -28151,8 +28151,8 @@
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;Customs.Declaration.O.ReleasedDeclaration&quot;"
-      DefaultText="&quot;Released Declaration&quot;"
+      Code="&quot;Customs.Declaration.O.ReleasedDeclarations&quot;"
+      DefaultText="&quot;Released Declarations&quot;"
       LocalDefaultText="&quot;הצהרות שהותרו&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
