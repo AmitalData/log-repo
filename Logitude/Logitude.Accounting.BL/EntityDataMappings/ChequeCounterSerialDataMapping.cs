@@ -6,9 +6,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
-using Logitude.Server.Tools; 
+using Logitude.Server.Tools;
 using Logitude.Accounting.Data.EntityPOCOs;
-using Logitude.Accounting.Def.EntityPMs; 
+using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Accounting.Data;
 
 namespace Logitude.Accounting.BL.EntityDataMappings
@@ -18,13 +18,14 @@ namespace Logitude.Accounting.BL.EntityDataMappings
     {
         public void CustomPMToPOCO(ChequeCounterSerialPM entityPM, ChequeCounterSerial entityPOCO)
         {
-            AddPOCOPropertyName(POCOPropertyNames.BankAccountId);
-            AddPOCOPropertyName(POCOPropertyNames.ChequeCounterEnd);
-            AddPOCOPropertyName(POCOPropertyNames.ChequeCounterBegin);
-            AddPOCOPropertyName(POCOPropertyNames.Tenant);
-            AddPOCOPropertyName(POCOPropertyNames.SeriesId);
             if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
             {
+                AddPOCOPropertyName(POCOPropertyNames.BankAccountId);
+                AddPOCOPropertyName(POCOPropertyNames.ChequeCounterEnd);
+                AddPOCOPropertyName(POCOPropertyNames.ChequeCounterBegin);
+                AddPOCOPropertyName(POCOPropertyNames.Tenant);
+                AddPOCOPropertyName(POCOPropertyNames.SeriesId);
+
                 entityPOCO.BankAccountId = entityPM.BankAccountId;
                 entityPOCO.ChequeCounterEnd = entityPM.ChequeCounterEnd;
                 entityPOCO.ChequeCounterBegin = entityPM.ChequeCounterBegin;
@@ -41,4 +42,3 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 
     }
 }
-   
