@@ -1676,12 +1676,12 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-	  private decimal? securityLevelFiltering ;
+	  private decimal securityLevelFiltering ;
 	  	  
        
 	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
 	   [DataMember]
-       public decimal? SecurityLevelFiltering  
+       public decimal SecurityLevelFiltering  
 	   {
 	    
 	     get
@@ -1692,7 +1692,7 @@ namespace Logitude.Accounting.Def.EntityPMs
 		 {
 		   if(securityLevelFiltering != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SecurityLevelFiltering",OldValue=securityLevelFiltering,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SecurityLevelFiltering",OldValue=securityLevelFiltering,NewValue=value,PropertyType="decimal"};
 		    NotifyPropertyChanged(values);
 		   securityLevelFiltering=value;
 		   }
