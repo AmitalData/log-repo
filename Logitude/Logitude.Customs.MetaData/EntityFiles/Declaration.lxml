@@ -23590,7 +23590,7 @@
   <Query
     Code="&quot;DiamondsDeclarations&quot;"
     TextCode="&quot;Diamonds Declarations&quot;"
-    LocalTextCode="&quot;הצהרת יהלומים&quot;"
+    LocalTextCode="&quot;הצהרות יהלומים&quot;"
     QueryGroupCode="&quot;DECL&quot;"
     IndexOrder="20"
     ObjectTableName="&quot;Customs.Declaration&quot;"

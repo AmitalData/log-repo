@@ -1,13 +1,22 @@
+<style>
+    td {
+        float: left; margin-right: 20px; vertical-align:middle;
+    }
+    td:last-child {
+        margin-right: 0px;
+    }
+</style>
+
 <table>
     <tr>
-        <td></td>
-        <td *ngIf="isExport" style="width: 140px;">
+        <td *ngIf="isExport">
             <button class="Button" style="width: 126px;" (click)="openFiltersWindow()">
                 {{titleExportFilterMenu}}
                 <img *ngIf="exportFilterData?.filterActive" width="20" height="20" style="vertical-align: middle;" src="./Images/Icons/MiniGreenTick.png" />
             </button>
         </td>
-        <td style="width:117px; vertical-align:middle;">
+
+        <td>
             <ul class="FiltersMenu">
                 <li (click)="itemClicked('All')" (mouseover)="itemMouseOver('All')"
                     [class.SelectedFilter]="SelectedValue === 'All'">
@@ -28,6 +37,17 @@
                     <img [id]="TransportFilter_I" class="CenterCenter" src="./Images/TransportModes/I_g.png"
                         style="top: 1px;" />
                 </li>
+            </ul>
+        </td>
+
+        <td>
+            <ul class="FiltersMenu">
+                <ng-container *ngIf="isExport && currentQuery == diamondsDeclarationsQuery">
+                    <li *ngFor="let menu of diamondsMenus" (click)="ShowDiamondsDeclarationByMenu(menu)"
+                        [class.SelectedFilter]="selectedDiamondsMenu === menu" class="SeparatedMenu">
+                        {{ diamondsMenuTranslates[menu] || menu }}<span *ngIf="diamondsMenusCount[menu] >= 0"> ({{diamondsMenusCount[menu]}})</span>
+                    </li>
+                </ng-container>
             </ul>
         </td>
     </tr>
