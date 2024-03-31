@@ -1676,6 +1676,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private decimal? securityLevelFiltering ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? SecurityLevelFiltering  
+	   {
+	    
+	     get
+		{
+		   return securityLevelFiltering;
+		 }
+		 set
+		 {
+		   if(securityLevelFiltering != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SecurityLevelFiltering",OldValue=securityLevelFiltering,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   securityLevelFiltering=value;
+		   }
+			
+		 }
+	   }
 	  private string taxReportId ;
 	  	  
        
