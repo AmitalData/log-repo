@@ -39,6 +39,11 @@ namespace Logitude.Customs.Data.CustomFilters
                     queryableData = queryableData.Where(d => (d.PaymentDate != null) && (d.HatraDate == null));
                 }
 
+                if (item.FieldName == "DiamondsDeclarationFilter")
+                {
+                    queryableData = AddDiamondsDeclarationFilter(queryableData, (string)item.FieldValue);
+                }
+
                 if (item.FieldName == "CourierPendingReasonList")
                 {
                     queryableData = queryableData.Join(context.DeclarationCourierStatuses, x => x.Id, x => x.DeclarationId, (dec, sta) => new { dec = dec, sta = sta })
@@ -47,6 +52,34 @@ namespace Logitude.Customs.Data.CustomFilters
                 }
             }
 
+            return queryableData;
+        }
+
+        public IQueryable<Declaration> AddDiamondsDeclarationFilter(IQueryable<Declaration> queryableData, string menuFilter)
+        {
+            string correctDraftStatus = "13";
+            List<string> releasedStatuses = new List<string> { "44", "43", "8", "7" };
+
+            switch (menuFilter)
+            {
+                case "DeclarationsWithDeficiencies":
+                    queryableData = queryableData.Where(d => d.DeclarationNumber == null);
+                    break;
+                case "IncorrectDeclarations":
+                    queryableData = queryableData.Where(d => d.DeclarationStatusTypeCode != correctDraftStatus && !releasedStatuses.Contains(d.DeclarationStatusTypeCode) && d.IsSubmitDeclaration == false);
+                    break;
+                case "CorrectDraft":
+                    queryableData = queryableData.Where(d => d.DeclarationStatusTypeCode == correctDraftStatus);
+                    break;
+                case "PaidDeclarations":
+                    queryableData = queryableData.Where(d => d.IsSubmitDeclaration == true && !releasedStatuses.Contains(d.DeclarationStatusTypeCode));
+                    break;
+                case "ReleasedDeclarations":
+                    queryableData = queryableData.Where(d => releasedStatuses.Contains(d.DeclarationStatusTypeCode));
+                    break;
+                default:
+                    return null;
+            }
             return queryableData;
         }
 

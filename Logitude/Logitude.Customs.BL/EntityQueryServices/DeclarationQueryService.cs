@@ -39,6 +39,7 @@ using Simplog.Server.Infrastructure.DataContracts;
 using Logitude.CustomsMessaging.Common.ResponseData;
 using Logitude.BL.Security;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.Customs.Data.CustomFilters;
 //using Logitude.Server.Tools.Helpers;
 
 namespace Logitude.Customs.BL.EntityQueryServices
@@ -2094,6 +2095,36 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return declarationReadyForSending;
         }
 
+        public DiamondsDeclarationSummary GetDiamondsDeclarationsCounts(int tenant, List<string> requestedCounts)
+        {
+            var mycontext = CustomContext.GetContext(tenant);
+            IQueryable<Declaration> declaration =
+                 from dc in mycontext.Declarations
+                 where dc.Tenant == tenant && dc.Direction == "E" && dc.IsCancelled == false &&
+                     dc.AmendmentDontDisplayInList == false && dc.IsDiamondDeclaration == true
+                 select dc;
+
+            DeclarationCustomFilters declarationCustomFilters = new DeclarationCustomFilters();
+            DiamondsDeclarationSummary diamondsDeclarationSummary = new DiamondsDeclarationSummary()
+            {
+                Counts = new Dictionary<string, int>()
+            };
+
+            int total = 0;
+            foreach (var requestedCount in requestedCounts) {
+                var query = declarationCustomFilters.AddDiamondsDeclarationFilter(declaration, requestedCount);
+                if (query != null)
+                {
+                    int count = query.Count();
+                    diamondsDeclarationSummary.Counts[requestedCount] = count;
+                    total += count;
+                }
+            }
+
+            diamondsDeclarationSummary.TotalCount = total;
+            return diamondsDeclarationSummary;
+        }
+
         public bool IsDocumentMissing(DeclarationPM myDeclarationPM)
         {
             var customContext = CustomContext.GetContext(myDeclarationPM.Tenant);
@@ -2501,4 +2532,10 @@ namespace Logitude.Customs.BL.EntityQueryServices
 			return declarationPMs;
 		}
 	}
+
+    public class DiamondsDeclarationSummary
+    {
+        public Dictionary<string, int> Counts { get; set; }
+        public int TotalCount { get; set; }
+    }
 }

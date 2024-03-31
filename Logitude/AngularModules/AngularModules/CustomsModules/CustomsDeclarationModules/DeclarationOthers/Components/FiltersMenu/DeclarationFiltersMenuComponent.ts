@@ -5,6 +5,8 @@ import { ApiQueryFilters } from "Infrastructure/DataContracts/ApiQueryFilters";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 import { TextCodeTranslator } from "Infrastructure/Utilities/TextCodeTranslator";
 import { filter } from "rxjs/operators";
+import { DeclarationExtendedListService } from '../../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
+import { ServiceResponse } from "Infrastructure/DataContracts/ServiceResponse";
 
 @Component({
     selector: 'DeclarationFiltersMenuComponent',
@@ -23,6 +25,16 @@ export class DeclarationFiltersMenuComponent
     isExport: boolean = false;
     titleExportFilterMenu: string = TextCodeTranslator.Translate("Customs.Declaration.O.exportFilterMenu");
     exportFilterData: any;
+    private _DeclarationExtendedListService: DeclarationExtendedListService = new DeclarationExtendedListService();
+    currentQuery: string;
+
+    // diamonds vars
+    diamondsMenusCount = {};
+    diamondsMenuTranslates = [];
+    @Output() CustomGetTotalCount = new EventEmitter();
+    diamondsDeclarationsQuery = "Customs.Declaration.DiamondsDeclarations";
+    private selectedDiamondsMenu: string = "DeclarationsWithDeficiencies"; // the default diamonds filter
+    private diamondsMenus = ["ReleasedDeclarations", "PaidDeclarations", "CorrectDraft", "IncorrectDeclarations", "DeclarationsWithDeficiencies"]; // list of diamonds filters
 
     constructor() {
         super();
@@ -33,6 +45,35 @@ export class DeclarationFiltersMenuComponent
 
     ngOnInit() {        
         this.initIsExport();
+
+        // prepare diamonds menus translates
+        this.diamondsMenus.forEach(menu => this.diamondsMenuTranslates[menu] = TextCodeTranslator.Translate("Customs.Declaration.O." + menu));
+
+        // on query/menu changed or refresh clicked
+        this.CurrentSession.CurrentListComponent.onQueryChangeEvent.subscribe(data => {
+
+            if (data.QueryCode == this.diamondsDeclarationsQuery) {
+                // if the query has been changed and it is now diamonds menu, get the diamonds declarations according to the selected menu filter
+                if (data.QueryCode != this.currentQuery) {
+                    setTimeout(() => this.ShowDiamondsDeclarationByMenu(), 200);                    
+                }
+
+                this._DeclarationExtendedListService.GetDiamondsDeclarationsCounts(this.diamondsMenus)
+                    .subscribe((myResponse: ServiceResponse) => {
+                        if (myResponse != null) {
+                            if (!myResponse.HasError) {
+                                this.diamondsMenusCount = myResponse?.Result?.Counts;
+                                this.CustomGetTotalCount.emit(myResponse?.Result?.TotalCount);
+                            }
+                        }
+                    });
+            }
+            else {
+                this.CustomGetTotalCount.emit(null);
+            }
+
+            this.currentQuery = data.QueryCode;
+        });
     }
 
     private initIsExport() {
@@ -108,6 +149,38 @@ export class DeclarationFiltersMenuComponent
         this.ApplyTransportSelectedStyle();
     }
 
+    ShowDiamondsDeclarationByMenu(menu?: string) {
+        if (menu) {
+            this.SelectedDiamondsMenu = menu;
+        }
+
+        // add the selected menu to the filter
+        if (this.apiQueryFilters.AdditionalFilters.length > 0) {
+            this.apiQueryFilters.AdditionalFilters = this.apiQueryFilters.AdditionalFilters.filter(a => a.FieldName != "DiamondsDeclarationFilter");
+        }
+        this.apiQueryFilters.addAdditionalFilter("DiamondsDeclarationFilter", this.SelectedDiamondsMenu, null, null, "Equals", true, false, true, "string", false);
+
+        // specify this filter is only for the current diamonds menu and not for others queries
+        var index = this.apiQueryFilters.AdditionalFilters.findIndex(d=> d.FieldName == "DiamondsDeclarationFilter");
+        if (index > -1) {
+            this.apiQueryFilters.AdditionalFilters[index]["SpecificMenuFilter"] = true;
+        }
+
+        this.SelectedValueChanged.emit({ Filters: this.apiQueryFilters, RemoveFilter: false });
+    }
+
+    // RemoveDiamondsDeclarationFilter() {
+    //     setTimeout(() => {
+    //         // set to ignore the diamonds filter
+    //         var item = this.apiQueryFilters.AdditionalFilters.filter(d=> d.FieldName == "DiamondsDeclarationFilter")[0];
+    //         if (item) {
+    //             var index = this.apiQueryFilters.AdditionalFilters.indexOf(item);
+    //             this.apiQueryFilters.AdditionalFilters[index].IgnoreFilter = true;
+    //         }
+    //         this.SelectedValueChanged.emit({ Filters: this.apiQueryFilters, RemoveFilter: false });
+    //     }, 200);
+    // }
+
     ApplyTransportSelectedStyle() {
         var itemValue = this.SelectedValue;
         var img_A = document.getElementById(this.TransportFilter_A);
@@ -144,6 +217,14 @@ export class DeclarationFiltersMenuComponent
             this.selectedValue = value;
         }
     }
+
+    public get SelectedDiamondsMenu() { return this.selectedDiamondsMenu; }
+    public set SelectedDiamondsMenu(value: string) {
+        if (this.selectedDiamondsMenu != value) {
+            this.selectedDiamondsMenu = value;
+        }
+    }
+
 
     openFiltersWindow() {
         const logitudeWindow = new LogitudeWindow();
