@@ -1,5 +1,6 @@
 ﻿using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.Tools.DataMapping;
+using Logitude.BL.InvoiceModel.Tools.Validating;
 using Logitude.Server.Tools.Counters;
 using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
@@ -42,6 +43,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             //this.entityPM.Id = IdCounter.GetNumber("SATInterfaceSetting", tenant).ToString();
             this.Poco = new ConfirmationNumberDefault();
             this.entityPM.Tenant = tenant;
+            ConfirmationNumberDefaultValidator.Validate(theEntityPm, objectContext);
             this.entityPM.Id = IdCounter.GetNumber("ConfirmationNumberDefault", tenant).ToString();
             ConfirmationNumberDefaultMapping.MapEntity(entityPM, Poco, isNewEntity);
             entityRepository.Add(Poco);
@@ -54,6 +56,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.isNewEntity = false;
             this.entityPM = theEntityPm;
             this.Poco = entityRepository.GetSingleConfirmationNumberDefault(entityPM.Id,entityPM.Tenant);
+            ConfirmationNumberDefaultValidator.Validate(theEntityPm, objectContext);
             ConfirmationNumberDefaultMapping.MapEntity(entityPM, Poco, isNewEntity);
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();

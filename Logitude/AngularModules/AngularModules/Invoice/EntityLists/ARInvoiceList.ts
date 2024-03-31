@@ -169,5 +169,5 @@ export class ARInvoiceList {
 		ConfirmationNumber: string;
 		ConfirmationNumberStatus: string;
 		ConfirmationNumberStatusName: string;
-	
+	    APIResponseToConfirmation:string
 }
