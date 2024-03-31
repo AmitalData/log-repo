@@ -94,7 +94,7 @@ export class AmitalAPISchemaTable {
 
     initTable(schemasData: AmitalApiSchema[]) {
         schemasData.forEach(schema => {
-            schema['tenants'] = schema.Tenants.join(', ')
+            schema['tenants'] = schema.Tenants?.join(', ')
             schema.UpdateDate = new Date(schema.UpdateDate).toLocaleString() as any;
             schema.CreateDate = new Date(schema.CreateDate).toLocaleString() as any;
         });
