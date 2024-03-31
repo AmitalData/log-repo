@@ -134,7 +134,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         UpdateDateTime, 
 	         UpdatedByUserName, 
 	         InternalNote, 
-	         SecurityLevelFiltering, 
 	         TaxReportId, 
 	         TaxReportNumber, 
 	         AmountInNIS,

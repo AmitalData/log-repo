@@ -407,7 +407,8 @@ namespace WebFreight.Web.AccountingModel.DomainServices
                                                             OppositeAccountEnglishName = a.OppositeAccount != null ? a.OppositeAccount.EnglishName : null,
                                                             OppositeAccountLocalName = a.OppositeAccount != null ? a.OppositeAccount.LocalName : null,
                                                             OppositeAccountDisplayNumber = a.OppositeAccount != null ? a.OppositeAccount.DisplayNumber : null,
-                                                        };
+															SecurityLevelFiltering = 1,
+														};
 
             query2 = filter.GetFilteredQuery<LedgerTransactionList>(listQueryOperation, query2);
 

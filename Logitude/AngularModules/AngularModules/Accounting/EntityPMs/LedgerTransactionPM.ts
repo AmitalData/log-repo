@@ -384,11 +384,6 @@ export class LedgerTransactionPM {
     public set InternalNote(newValue: string) { if (this.internalNote != newValue) { this.internalNote = newValue; this.MarkAsDirty("InternalNote"); } }
        
 	 
-    private securityLevelFiltering: number;
-    public get SecurityLevelFiltering() { return this.securityLevelFiltering; }
-    public set SecurityLevelFiltering(newValue: number) { if (this.securityLevelFiltering != newValue) { this.securityLevelFiltering = newValue; this.MarkAsDirty("SecurityLevelFiltering"); } }
-       
-	 
     private taxReportId: string;
     public get TaxReportId() { return this.taxReportId; }
     public set TaxReportId(newValue: string) { if (this.taxReportId != newValue) { this.taxReportId = newValue; this.MarkAsDirty("TaxReportId"); } }
