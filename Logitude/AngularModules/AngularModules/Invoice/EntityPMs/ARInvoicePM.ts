@@ -1207,7 +1207,10 @@ export class ARInvoicePM {
     public get ConfirmationNumberStatusName() { return this.confirmationNumberStatusName; }
     public set ConfirmationNumberStatusName(newValue: string) { if (this.confirmationNumberStatusName != newValue) { this.confirmationNumberStatusName = newValue; this.MarkAsDirty("ConfirmationNumberStatusName"); } }
        
-	 
+	  private aPIResponseToConfirmation: string;
+    public get APIResponseToConfirmation() { return this.aPIResponseToConfirmation; }
+    public set APIResponseToConfirmation(newValue: string) { if (this.aPIResponseToConfirmation != newValue) { this.aPIResponseToConfirmation = newValue; this.MarkAsDirty("APIResponseToConfirmation"); } }
+       
 
     public OldEntityPM: ARInvoicePM;
 		

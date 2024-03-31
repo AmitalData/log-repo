@@ -317,6 +317,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             SetSatStatus();
             SetConfirmationNumberStatus();
+
             EntityAutomationService entityAutomationService = new EntityAutomationService(new EntityAutomationArgs() { Poco = invoice, EntityPM = entityPM, OldEntityPM = new ARInvoicePM(), AutomationType = "OnCreate", ObjectTableName = "ARInvoice", Tenant = entityPM.Tenant, EntityId = entityPM.Id, EntityReference = entityPM.InvoiceNumber });
 
             if (!entityPM.IsConsolidationInvoice)
@@ -466,6 +467,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         Logitude.Server.Tools.Utils.Logger.LogDebug("apiResponse.Msg :{0}", apiResponse.Msg);
 
                         entityPM.ConfirmationNumberStatus = "5";
+                        entityPM.APIResponseToConfirmation = apiResponse.Msg?.Substring(0, 1000);
+
                         this.CreateEvent("CNF", entityPM, apiResponse?.Msg);
                        
                     }
@@ -477,6 +480,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     Logitude.Server.Tools.Utils.Logger.LogDebug("apiResponse.Res.StatusCode :{0} {1}", apiResponse?.Res?.StatusCode, apiResponse);
 
                     entityPM.ConfirmationNumberStatus = "5";
+                    entityPM.APIResponseToConfirmation = apiResponse.Msg ?.Substring(0, 1000);
                     this.CreateEvent("CNF", entityPM, apiResponse?.Msg);
                 
                 }
@@ -486,7 +490,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 Logitude.Server.Tools.Utils.Logger.LogDebug(ex, "apiResponse ");
 
                 entityPM.ConfirmationNumberStatus = "5";
-                this.CreateEvent("CNF", entityPM, ex.Message);
+                entityPM.APIResponseToConfirmation = ex.Message?.Substring(0,1000);
+               this.CreateEvent("CNF", entityPM, ex.Message);
                
             }
         }

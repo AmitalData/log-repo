@@ -31,6 +31,7 @@ import { CloneDeep } from 'Infrastructure/Helpers/LodashClone';
 import { WorkFlowVersionPMService } from 'Workflow/Services/StandardPMs/WorkFlowVersionPMService';
 //import { CloneEntityPM } from 'Infrastructure/Helpers/SafeCloneDeep';
 import { GlobalDomainService } from '../../../Common/Services/GlobalDomainService';
+import { MessageWindow } from 'Controls/Windows/MessageWindow';
 
 
 const InterestTransactionTabCode = 'GLIT';
@@ -1536,7 +1537,7 @@ export class EditComponent implements OnDestroy {
                     res.subscribe((myResponse: ServiceResponse) => {
 
                         this.StopBusyIndicator();
-
+                       
                         if (myResponse.HasError) {
                             this.OnSavingFailed();
                             this.ValidationErrorsList = myResponse.ErrorsArray;
@@ -1544,6 +1545,12 @@ export class EditComponent implements OnDestroy {
                         }
 
                         else {
+                            if(this.ObjectTableName == "ARInvoice" && myResponse.Result?.ConfirmationNumberStatus==5){
+                                const messageWindow = new MessageWindow();
+                                messageWindow.Title=myResponse.Result?.ConfirmationNumberStatusName;
+                                messageWindow.Show(myResponse.Result?.APIResponseToConfirmation);
+                            } 
+                            
                             this.EntityPM = myResponse.Result;
                             this.EntityId = this.EntityPM.Id;
                             this.entityArgs.EntityPM = this.EntityPM;

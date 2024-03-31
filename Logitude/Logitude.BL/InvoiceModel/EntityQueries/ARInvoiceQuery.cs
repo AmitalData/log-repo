@@ -2146,7 +2146,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     IsSigned=entityPOCO.IsSigned,
                     ConfirmationNumber=entityPOCO.ConfirmationNumber,
                     ConfirmationNumberStatusName = entityPOCO.Confirmation != null ? entityPOCO.Confirmation.LocalName : null,
-
+                 
                 };
 
                 entityPM.ConcurrencyGUID = entityPOCO.ConcurrencyGUID;
