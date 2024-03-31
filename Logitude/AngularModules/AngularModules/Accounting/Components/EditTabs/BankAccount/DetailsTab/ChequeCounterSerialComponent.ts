@@ -36,6 +36,7 @@ export class ChequeCounterSerialComponent extends BaseComponent implements OnIni
     chequeCounter: number;
     currentSerial: ChequeCounterSerialPM;
     myService: BankAccountPMService;
+    oldChequeCounterSerialList: number[] = [];
     constructor(public entityArgs: EntityArgs) {
         super();
         this.SeriesIdHeader = TextCodeTranslator.Translate("ChequeCounterSerial.CH.SeriesIdListLable");
@@ -111,8 +112,10 @@ export class ChequeCounterSerialComponent extends BaseComponent implements OnIni
         this.ChequeCounterSerials.Clear();
         var list = [];
         this.EntityPM.ChequeCounterSerials.forEach(item => {
+            item.CloneMe();
             list.push(new ChequeCounterSerialItem(item, this));
         });
+        this.oldChequeCounterSerialList = this.EntityPM.ChequeCounterSerials.map(e => e.SeriesId);
         this.ChequeCounterSerials.InsertCollection(list);
         if (!AppTool.IsNullOrEmpty(this.SeriesId)) {
             this.currentSerial = this.ChequeCounterSerials.Collection.find(c => c.SeriesId == this.SeriesId);
@@ -132,6 +135,10 @@ export class ChequeCounterSerialComponent extends BaseComponent implements OnIni
 
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
+        this.EntityPM.ChequeCounterSerials.forEach(c => {
+            c.RejectChanges();
+        });
+        this.EntityPM.ChequeCounterSerials = this.EntityPM.ChequeCounterSerials.filter(x => this.oldChequeCounterSerialList.includes(x.SeriesId));
     }
 
     OnRowEnded($event) {
