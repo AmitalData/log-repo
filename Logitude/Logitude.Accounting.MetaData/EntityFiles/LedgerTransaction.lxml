@@ -5725,7 +5725,7 @@
     ListFieldLable="&quot;SecurityLevelFilteringListLable&quot;"
     ListLableDefaultText="&quot;Security Level Filtering&quot;"
     ListLocalDefaultText="&quot;סינון ברמת אבטחה&quot;"
-    IsNullable="false"
+    IsNullable="true"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
