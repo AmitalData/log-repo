@@ -20,6 +20,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         protected override void OnCreating(ClientItemPM entityPM, EntityPM entityParentPM)
         {
             entityPM.Id = IdCounter.GetNumber("Customs.ClientItem", entityPM.Tenant);
+            entityPM.ItemKey = entityPM.ItemCode + "_" + entityPM.ItemDescription;
 
         }
 

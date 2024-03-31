@@ -29,16 +29,19 @@
             <table>
                 <tr>
                     <td style="width:100px">
-                        <LogLabel [ObjectFieldName]="UpdateField"
-                            [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        <LogLabel [ObjectFieldName]="UpdateField" [ObjectTableName]="ObjectTableName"
+                            [DataContext]="DataContext"></LogLabel>
                     </td>
                     <td style="width:160px">
-                        <LogTextBoxV2 #ClassificationTextBox [ObjectFieldName]="UpdateField"
+                        <!-- <LogTextBoxV2 #ClassificationTextBox [ObjectFieldName]="UpdateField"
                             (LostFocus)="validateClassificationNumber(ClassificationTextBox)"
                             (KeyUp)="classificationKeyUp($event,ClassificationTextBox)" [DataContext]="DataContext"
                             [FocusOnMe]="true" [InputType]="'integertext'"
                             [ObjectTableName]="ObjectTableName" [HideColumns]="true" [DebounceTime]="1">
-                        </LogTextBoxV2>
+                        </LogTextBoxV2> -->
+                        <LogLov [ObjectFieldName]="UpdateField" [ObjectTableName]="ObjectTableName"
+                            [DataContext]="DataContext" [LookUpTableName]="'Customs.ClientItem'" [HideColumns]="true">
+                        </LogLov>
                     </td>
                     <td>
                         <div></div>
@@ -53,13 +56,12 @@
             <table>
                 <tr>
                     <td style="width:100px">
-                        <LogLabel [ObjectFieldName]="UpdateField"
-                            [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        <LogLabel [ObjectFieldName]="UpdateField" [ObjectTableName]="ObjectTableName"
+                            [DataContext]="DataContext"></LogLabel>
                     </td>
                     <td style="width:160px">
-                        <LogLov tabindex="1" [ObjectFieldName]="UpdateField"
-                            [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
-                            [LookUpTableName]="LookUpTableName" [HideColumns]="true"
+                        <LogLov tabindex="1" [ObjectFieldName]="UpdateField" [ObjectTableName]="ObjectTableName"
+                            [DataContext]="DataContext" [LookUpTableName]="LookUpTableName" [HideColumns]="true"
                             (SelectedItemChanged)="FinalValue = $event">
                         </LogLov>
                     </td>
@@ -237,7 +239,8 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' |TextCodeTranslationPipe}}</button>
+                        <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel'
+                            |TextCodeTranslationPipe}}</button>
                     </td>
 
                     <td style="width: 5px;">

@@ -473,11 +473,18 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     }
                     if (supplierInvoiceItem.TryGetValue("ITEM_HS_CODE", out string itemCode))
                     {
-                        supplierInvoiceItemPM.ClassificationCode = itemCode;
+                        if (itemCode.Length > 11)
+                            supplierInvoiceItemPM.ClassificationCode = itemCode.Substring(0, 11);
+                        else
+                            supplierInvoiceItemPM.ClassificationCode = itemCode;
+
                     }
                     else if(dic.TryGetValue("HS_CODE", out string classificationCode))
                     {
-                        supplierInvoiceItemPM.ClassificationCode = classificationCode;
+                        if (classificationCode.Length > 11)
+                            supplierInvoiceItemPM.ClassificationCode = classificationCode.Substring(0, 11);
+                        else
+                            supplierInvoiceItemPM.ClassificationCode = classificationCode;
                     }
                     //if (supplierInvoiceItem.TryGetValue("Item_unit", out string ItemUnit))
                     //{

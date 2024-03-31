@@ -600,17 +600,21 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             ClientItemQueryService clientItemQueryService = new ClientItemQueryService(entityPM.Tenant);
             ClientItemUpdateService clientItemUpdateServicev = new ClientItemUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
 
-            if (entityPM != null )
+            if (entityPM != null)
             {
-               
-                    if (entityPM.ChangeSetOp != ChangeSetOperation.None && !string.IsNullOrEmpty(entityPM.ItemCode))
+                if (!string.IsNullOrEmpty(entityPM.ItemCode) || !string.IsNullOrEmpty(entityPM.ItemDescription))
+                {
+                    string ItemKey = entityPM.ItemCode + "_" + entityPM.ItemDescription;
+
+                    if (entityPM.ChangeSetOp != ChangeSetOperation.None && !string.IsNullOrEmpty(ItemKey))
                     {
-                        ClientItemPM clientItem = clientItemQueryService.GetSingleWithTenant(entityPM.ItemCode, exporterCode, entityPM.Tenant);
+                        ClientItemPM clientItem = clientItemQueryService.GetSingleWithTenant(ItemKey, exporterCode, entityPM.Tenant);
                         if (clientItem == null)
                         {
                             clientItem = new ClientItemPM()
                             {
                                 ItemCode = entityPM.ItemCode,
+                                ItemKey = ItemKey,
                                 Tenant = entityPM.Tenant,
                                 ItemDescription = entityPM.ItemDescription,
                                 ClassificationCode = entityPM.ClassificationCode,
@@ -630,8 +634,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         }
 
                         clientItemUpdateServicev.Update(clientItem, true);
-                   
 
+
+                    }
                 }
             }
         }
