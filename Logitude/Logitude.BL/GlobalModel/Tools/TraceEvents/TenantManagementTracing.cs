@@ -338,10 +338,6 @@ namespace Logitude.BL.GlobalModel.Tools.TraceEvents
                     }
 
 
-                    foreach (var lic in entityPM.TenantManagementLicenses)
-                    {
-                        //if (poco.TenantM) ;
-                    }
 
                     if (entityPM.NumberOfUsers != poco.NumberOfUsers || entityPM.TotalNumberOfUsers != poco.TotalNumberOfUsers || entityPM.FreeUsers != poco.FreeUsers)
                     {
