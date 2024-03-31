@@ -550,14 +550,14 @@ namespace WebFreight.Web.MetaDataUpdate
             {
                 RuleCode = "CNDR",
                 Name = "FromDate Duplication",
-                ObjectTableId = PackageTypeTable.Id,
+                ObjectTableId = ConfirmationNumberDefaultsTable.Id,
                 Tenant = 0,
                 RuleTypeCode = "DUPL",
                 //TriggerFieldId = packageTypeCode.Id,
                 SystemLevel = true,
                 OutputMessage = "This  date  already exists",
                 ActiveForNew = true,
-                ActiveForUpdate = false,
+                ActiveForUpdate = true,
                 TriggerTypeCode = "ALLW",
                 RuleNotificationTypeCode = "ERR",
             }, ObjectTableRuleRepository, TenantObjectTableRule);
