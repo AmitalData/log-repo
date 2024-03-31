@@ -161,7 +161,7 @@ namespace Logitude.Accounting.Data.EntityLists
        [DataMember]
        public string InternalNote  { get; set; }
        [DataMember]
-       public decimal? SecurityLevelFiltering  { get; set; }
+       public int SecurityLevelFiltering  { get; set; }
        [DataMember]
        public string TaxReportId  { get; set; }
        [DataMember]
