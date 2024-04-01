@@ -94,7 +94,10 @@ export class SendContainerization implements OnDestroy {
     }
     reloadEvent: any;
     ButtonText: string;
+
     OnCustomSendOptionsButtonClick(event: CustomSendOptionsArgs) {
+        
+
         this.SendContainerizationService._TestCase = null;
         if (event.TestCase) {
 
@@ -198,6 +201,8 @@ export class SendContainerizationService implements OnDestroy {
 
 
     OnCustomSendOptionsButtonClick(event) {
+
+        debugger
         this.EntityPM.OperationMode="2";
         this.EntityPM.IsChange = false;
         this.CurrentSession.StartBusyIndicator("");
@@ -213,6 +218,7 @@ export class SendContainerizationService implements OnDestroy {
             params.LoggingUserId = SessionLocator.LoggedUserId;
             params.RequestName = "המכלה";
             params.ResponseName = "המכלה תשובה"
+            params.TestCase=this._TestCase
             CustomMessageProgressComponent
                 .ShowProgressBar(this.CurrentSession,params.PBId,
                     "שליחת המכלה", false)

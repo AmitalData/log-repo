@@ -274,7 +274,7 @@ MainInterfaceCode ="5002"
 
                          new SincroTestCaseDetail()
                 {
-                    Code = "2450",
+                    Code = "2450UpdateContainerWithError",
                     Name = "עדכון מכולה עם שגיאה",
                     Entity="Containerization",
                      Param1= @"{}",
@@ -283,7 +283,7 @@ MainInterfaceCode ="5002"
 
                          new SincroTestCaseDetail()
                 {
-                    Code = "2450",
+                    Code = "2450UpdateContainer",
                     Name = "עדכון מכולה",
                     Entity="Containerization",
                      Param1= @"{}",
@@ -292,7 +292,7 @@ MainInterfaceCode ="5002"
 
                          new SincroTestCaseDetail()
                 {
-                    Code = "2450",
+                    Code = "2450CancelContainerization",
                     Name = "ביטול המכלה",
                     Entity="Containerization",
                      Param1= @"{}",

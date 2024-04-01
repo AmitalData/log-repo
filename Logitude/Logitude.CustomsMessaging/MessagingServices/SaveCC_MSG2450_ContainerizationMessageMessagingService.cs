@@ -64,37 +64,45 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 switch (requestParams.TestCase.Code)
                 {
                     case "2450NotFound":
-                        var Fake2754ValidMsg = new Fake_2450_Containerization_RequestMessagingService(requestParams);
-                        _ResponseHeader = Fake2754ValidMsg.CallWS(requestParams, out response);
-                        break;
-                    case "2754Constraint":
-                    /*    var Fake2754WithConstraintMsg = new Fake_2754_MSG10004_ImportDeclarationResponseWithConstraint(requestParams);
-                        _ResponseHeader = Fake2754WithConstraintMsg.CallWS(requestParams, out response);*/
+                        var Fake2450NotFoundMsg = new Fake_2450_NotFound(requestParams);
+                        _ResponseHeader = Fake2450NotFoundMsg.CallWS(requestParams, out response);
                         break;
 
-                        /* case "2754Payment":
-                             var Fake2754SumbitPayment = new Fake_2754_MSG10004_SumbitPayment(requestParams);
-                             _ResponseHeader = Fake2754SumbitPayment.CallWS(out response, requestParams);
-                             break;*/
+                    case "2450Found":
+                        var Fake2450FoundMsg = new Fake_2450_Found(requestParams);
+                        _ResponseHeader = Fake2450FoundMsg.CallWS(requestParams, out response);
+                        break;
 
-                        //case "2754Payment":
-                        //    var Fake2754SumbitPayment = new Fake_2754_MSG10004_SumbitPayment(requestParams);
-                        //    _ResponseHeader = Fake2754SumbitPayment.CallWS(out response);
+                    case "2450UpdateContainerWithError":
+                        var Fake2450UpdateContainerWithErrorMsg = new Fake_2450_UpdateContainerWithError(requestParams);
+                        _ResponseHeader = Fake2450UpdateContainerWithErrorMsg.CallWS(requestParams, out response);
+                        break;
+
+                    case "2450UpdateContainer":
+                        var Fake2450UpdateContainerMsg = new Fake_2450_UpdateContainer(requestParams);
+                        _ResponseHeader = Fake2450UpdateContainerMsg.CallWS(requestParams, out response);
+                        break;
+
+                    case "2450CancelContainerization":
+                        var Fake2450CancelContainerizationMsg = new Fake_2450_CancelContainerization(requestParams);
+                        _ResponseHeader = Fake2450CancelContainerizationMsg.CallWS(requestParams, out response);
+                        break;
 
                 }
                 exceptionMessage = null;
-                return response;
             }
-
-            using (var uifreightSdkGateway = new UnifreightSdkGateway(base.CustomsSetting.IIGServiceAddress))
+            else
             {
-                _ResponseHeader = uifreightSdkGateway.GetChannel<IContainerizationMessageOperation>()
-                    .ContainerizationMessage(
-                    this.RequestsSheetExternalId,
-                    base.CustomsSetting.CustomsAgentId,
-                    customRequest,
-                    ref this._IIGGatewayMoreParams,
-                    out response);
+                using (var uifreightSdkGateway = new UnifreightSdkGateway(base.CustomsSetting.IIGServiceAddress))
+                {
+                    _ResponseHeader = uifreightSdkGateway.GetChannel<IContainerizationMessageOperation>()
+                        .ContainerizationMessage(
+                        this.RequestsSheetExternalId,
+                        base.CustomsSetting.CustomsAgentId,
+                        customRequest,
+                        ref this._IIGGatewayMoreParams,
+                        out response);
+                }
             }
             
             if (response.ResponseContentHeader.Exception != null && response.ResponseContentHeader.Exception.Any(x => x.ExceptionLevel == 3))
