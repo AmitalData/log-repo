@@ -136,6 +136,7 @@ export class ClaimGeneralTabComponent extends BaseComponent {
         this.EntityPM.CustomerName = declaration.CustomerName;
         this.EntityPM.ClientId = declaration.ImporterId;
         this.EntityPM.ReferantId = declaration.ReferentUserId;
+        this.EntityPM.CustomsBranchCode = declaration.DeclarationOfficeCode;
 
         // set Claims Related Entity and Entities Amount
         let claimsRelatedEntityPM = new ClaimsRelatedEntityPM(this.EntityPM);
