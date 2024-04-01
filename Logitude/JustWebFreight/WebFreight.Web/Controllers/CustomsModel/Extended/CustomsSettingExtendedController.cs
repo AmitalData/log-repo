@@ -230,7 +230,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
 
 
-        public HttpResponseMessage GetSincroOption(String SincroScreen, int tenant)
+        public HttpResponseMessage GetSincroOption(String SincroScreen, int tenant,string objectTable)
         {
             if (ModelState.IsValid)
             {
@@ -297,7 +297,18 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                                         .ToList();
                                 }
                                 break;
-                       
+
+                            case "SincroSendContainerization":
+                                {
+                                    mySincroTestCaseDetailList
+                                        =
+                                        queryService.GetAllSincroTestCaseDetails()
+                                        .Where(r => r.Entity == "Containerization")
+                                        .Where(r => !r.IsDCA == true)
+                                        .ToList();
+                                }
+                                break;
+
                             default:
                                 throw new Exception($"SincroScreen is not valid (SincroScreen)");
                                 break;

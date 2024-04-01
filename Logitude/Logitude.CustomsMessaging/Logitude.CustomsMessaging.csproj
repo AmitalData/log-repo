@@ -185,7 +185,6 @@
       <HintPath>..\packages\UnifreightIIG.3.1803.69\lib\Net40\UnifreightIIG.Common.dll</HintPath>
     </Reference>
     <Reference Include="UnifreightIIG.DCA, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-
       <HintPath>..\packages\UnifreightIIG.3.1803.69\lib\Net40\UnifreightIIG.DCA.dll</HintPath>
     </Reference>
     <Reference Include="WindowsAzureEventSource, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -214,9 +213,14 @@
     <Compile Include="Dca\Restore9100\SendNG_9100_MSG_OutgoingMessageRequestService.cs" />
     <Compile Include="Dca\WaitingTester.cs" />
     <Compile Include="FakeMessagingServices\Courier\Fake_1770_MN_MSG1_MANIFESTResponse.cs" />
+    <Compile Include="FakeMessagingServices\Fake_2450_CancelContainerization.cs" />
+    <Compile Include="FakeMessagingServices\Fake_2450_UpdateContainer.cs" />
+    <Compile Include="FakeMessagingServices\Fake_2450_UpdateContainerWithError.cs" />
+    <Compile Include="FakeMessagingServices\Fake_2450_Found.cs" />
     <Compile Include="FakeMessagingServices\DCASincroService.cs" />
     <Compile Include="FakeMessagingServices\Fake_2754_MSG10004_ImportDeclarationResponse.cs" />
     <Compile Include="FakeMessagingServices\Fake_2754_MSG10004_ImportDeclarationResponseWithConstraint.cs" />
+    <Compile Include="FakeMessagingServices\Fake_2450_NotFound.cs" />
     <Compile Include="FakeMessagingServices\Fake_DF_NG_2892_MSG14000_ImportDeclarationResponseService.cs" />
     <Compile Include="FakeMessagingServices\Fake_2754_MSG10004_SumbitPayment.cs" />
     <Compile Include="FakeMessagingServices\Fake_5117_MSG14003_AmendmentReplyMsg.cs" />

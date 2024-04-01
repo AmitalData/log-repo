@@ -45,10 +45,12 @@ export class SendDeclarationTastCaseComponent extends BaseComponent{
         //CurrentSession.StartBusyIndicator("");
     }
     SetWindowArgs(windowArgs) {
-
+        debugger;
         var myCustomsSettingExtendedListService = new CustomsSettingExtendedListService();
-        
-        myCustomsSettingExtendedListService.GetSincroOption(SessionLocator.Tenant, windowArgs.SincroScreen)
+        if(windowArgs.ObjectTableName != null){
+            this.ObjectTableName=windowArgs.ObjectTableName ;
+        }
+        myCustomsSettingExtendedListService.GetSincroOption(SessionLocator.Tenant, windowArgs.SincroScreen,this.ObjectTableName)
             .subscribe(response => {
                 //this.CurrentSession.StopBusyIndicator();
                 if (!response.HasError && response.Result != null ) {
