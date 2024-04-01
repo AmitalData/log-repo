@@ -15874,8 +15874,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   Feature CustomerFeature_10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Customer.Feature.InactiveCustomers", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customer.Features.InactiveCustomers", NameTextCodeDefaultText = "Inactive Customers", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,CustomerObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode CustomerTextCode_10 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.Q.CargoTrackingCustomers", DefaultText = @"Cargo Tracking Customers",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
-			   Feature CustomerFeature_10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Customer.Q.CargoTrackingCustomers", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomerFeatures.CargoTrackingCustomers", NameTextCodeDefaultText = "Cargo Tracking Customers", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,CustomerObjectTable, addedFeatures, addedTextCodes);
+			   TextCode CustomerTextCode_11 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customer.Q.CargoTrackingCustomers", DefaultText = @"Cargo Tracking Customers",LocalDefaultText = null, ObjectTableId = CustomerObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature CustomerFeature_11 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Customer.Q.CargoTrackingCustomers", ObjectTableId = CustomerObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomerFeatures.CargoTrackingCustomers", NameTextCodeDefaultText = "Cargo Tracking Customers", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,CustomerObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();
 	        //FeaturesRepository.SubmitChanges();    
@@ -16492,7 +16492,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
                 ManualActivatedFollowUp =  false,
                 IsFollowUp =  false,
                 ObjectTableId = CustomerObjectTable.Id,
-                EntityStatusId = AllEntityStatuses.Where(d => d.Tenant == 0 && d.Code == "CSCR").FirstOrDefault().Id,
+            //    EntityStatusId = AllEntityStatuses.Where(d => d.Tenant == 0 && d.Code == "CSCR").FirstOrDefault().Id,
 				 
             }, EventTypeRepository, tenantEventTypes);
 
@@ -16626,7 +16626,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
                 ManualActivatedFollowUp =  false,
                 IsFollowUp =  false,
                 ObjectTableId = CustomerObjectTable.Id,
-                EntityStatusId = AllEntityStatuses.Where(d => d.Tenant == 0 && d.Code == "CSCR").FirstOrDefault().Id,
+         //       EntityStatusId = AllEntityStatuses.Where(d => d.Tenant == 0 && d.Code == "CSCR").FirstOrDefault().Id,
 				 
             }, EventTypeRepository, tenantEventTypes);
 

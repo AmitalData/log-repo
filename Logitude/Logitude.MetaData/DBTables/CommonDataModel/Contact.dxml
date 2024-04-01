@@ -246,11 +246,11 @@
     ReferencedTable="ContactDoneMethods"
     ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
-  <Relation
+  <!--<Relation
     ForeignKeyColumn="DigitalPortalLanguage"
     ReferencedTable="DigitalPortalLanguages"
     ReferencedColumn="Code"
-    ReferencedTableSchema="dbo" />
+    ReferencedTableSchema="dbo" />-->
   <Index
     Columns="Tenant,Email" />
   <Index

@@ -27,7 +27,7 @@ import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCod
 import { AgingReportParameters } from '../../../DataContracts/AgingReportParameters';
 import { PeriodM } from '../../../DataContracts/PeriodM';
 import { GLAccountList } from '../../../EntityLists/GLAccountList';
-import { GLAccountFollowUpDataPM } from '../../../EntityPMs/GLaccountFollowUpDataPM';
+import { GLAccountFollowUpDataPM } from '../../../EntityPMs/GLAccountFollowUpDataPM';
 import { GLaccountFollowUpDataExtendedPMService } from 'Accounting/Services/ExtendedPMs/GLaccountFollowUpDataExtendedPMService';
 import { GLAccountCardsDataPMService } from '../../../Services/StandardPMs/GLAccountCardsDataPMService';
 import { GLAccountExtendedPMService } from '../../../Services/ExtendedPMs/GLAccountExtendedPMService';

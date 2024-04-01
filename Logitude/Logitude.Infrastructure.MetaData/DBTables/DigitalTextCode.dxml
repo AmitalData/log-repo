@@ -3,7 +3,7 @@
   Name="DigitalTextCodes"
   Schema="dbo"
   DBType="Main"
-  Module="TextCodes">
+  Module="Common">
   <Column
     Name="Id"
     Type="varchar"

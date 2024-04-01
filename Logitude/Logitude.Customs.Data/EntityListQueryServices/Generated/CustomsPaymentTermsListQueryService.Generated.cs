@@ -27,6 +27,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
         public List<CustomsPaymentTermList> GetList(QueryOperations queryOperations, int tenant)
         {
+            return GetList(queryOperations, tenant, new TreeFilterQueryArgs());
+        }
+        public List<CustomsPaymentTermList> GetList(QueryOperations queryOperations, int tenant, TreeFilterQueryArgs treeFilterQueryArgs)
+        {
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
 
@@ -141,8 +145,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             return CustomsPaymentTermList;
            
         }
-
         public int GetListCount(QueryOperations queryOperations)
+        {
+            return GetListCount(queryOperations,  new TreeFilterQueryArgs());
+
+
+        }
+
+        public int GetListCount(QueryOperations queryOperations,  TreeFilterQueryArgs treeFilterQueryArgs)
         {
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();

@@ -192,7 +192,7 @@ export class LoginComponent implements OnInit {
         this.ContinueClicked()
     }
  
-    }
+     
 
 
     IsShowLoginForm: boolean = false;
@@ -216,7 +216,7 @@ export class LoginComponent implements OnInit {
                 this.IsShowLoginForm = true;
             }
 
-        }
+         
         this.authHeader = new Headers();
         this.authHeader.append('Content-Type', 'application/json');
         this.authHeader.append('Accept', 'application/json');

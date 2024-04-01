@@ -83,10 +83,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="DBScripts\2023AddQuoteDigitalScreens.sxml" />
-    <None Include="DBScripts\2023AddQuoteDigitalTextCodes.sxml" />
-    <None Include="DBScripts\2023AddQuoteDigitalFieldSecurities.sxml" />
-    <None Include="DBScripts\202301051306_FillParentObjectTbaleIdInDigitalPortalScreen.sxml" />
     <None Include="DBScripts\202301290901_FillContainersSettings.sxml" />
     <None Include="DBScripts\202008161345_RemoveCHWFeatureToggle.sxml" />
     <None Include="DBScripts\202006092059_SetPermissionToAllBIFolders.sxml" />
@@ -104,10 +100,7 @@
     <None Include="DBScripts\20220619_DeletePLETogglesCodes.sxml" />
     <None Include="DBScripts\20220208_DeleteBCFTogglesCodes.sxml" />
     <None Include="DBScripts\20230222300_DeleteAevCauBcfToggles.sxml" />
-    <None Include="DBScripts\3_PredefinedPortalScreen.sxml" />
-    <None Include="DBScripts\4_DigitalPreDefinedComponents.sxml" />
     <None Include="DBScripts\1_DigitalProfile.sxml" />
-    <None Include="DBScripts\2_DigitalTextCodes.sxml" />
     <None Include="DBTables\BatchTaskExecution.dxml" />
     <None Include="DBTables\BatchTaskExecutionStatus.dxml" />
     <None Include="DBTables\BIFoldersPermission.dxml" />

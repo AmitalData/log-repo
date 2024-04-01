@@ -1,4 +1,4 @@
-﻿ <Script DBType="Main" Pre="true" Module="Accounting" >
+﻿ <Script DBType="Main"   Module="Accounting" >
   <Sql Version="2">
     <![CDATA[
         update glaccountmoredatas set balanceinlocalcurrency = 0 where balanceinlocalcurrency is null

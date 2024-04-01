@@ -145,7 +145,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
             }, 3000);
         }
         }
-    }
+    
 
     findParentWithNonZeroScrollTop(element) {
         while (element) {
@@ -1837,9 +1837,9 @@ export class EditComponent implements OnDestroy, AfterViewInit {
 
                             }
                         }
- ====
+ 
                             this.ClonedEntityPM = CloneDeep(this.EntityPM);
-                        }
+                        });
  
                     }, error => {
                         this.OnSavingFailed();
@@ -1849,7 +1849,8 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                         this.ValidationErrorsList = myErrors;
                         this.FireSaveCompleted(false);
                     });
-                });
+                
+            
             }
         }
 
@@ -2015,6 +2016,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                                 if (this.ObjectTableName == "Shipment") {
                                     this.CurrentSession.FireEvent("FollowupsChanged")
                                 }
+                         
 
                             });
                         }
@@ -2022,6 +2024,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                 });
             }
         }
+    
     }
 
     private UpdateComponentMembers() {

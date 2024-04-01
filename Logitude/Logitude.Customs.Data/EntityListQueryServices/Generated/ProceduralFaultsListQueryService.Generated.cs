@@ -27,6 +27,11 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
         public List<ProceduralFaultList> GetList(QueryOperations queryOperations, int tenant)
         {
+            return GetList(queryOperations, tenant, new TreeFilterQueryArgs());
+        }
+
+        public List<ProceduralFaultList> GetList(QueryOperations queryOperations, int tenant ,  TreeFilterQueryArgs treeFilterQueryArgs)
+        {
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
 
@@ -144,6 +149,12 @@ namespace Logitude.Customs.Data.EntityListQueryServices
         }
 
         public int GetListCount(QueryOperations queryOperations, int tenant)
+        {
+            return GetListCount(queryOperations, tenant, new TreeFilterQueryArgs());
+               
+
+        }
+        public int GetListCount(QueryOperations queryOperations, int tenant, TreeFilterQueryArgs treeFilterQueryArgs)
         {
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();

@@ -1,8 +1,0 @@
-﻿<Script DBType="Main" Pre="true" Module="Infrastructure">
-	<Sql Version="1">
-		<![CDATA[
-    ALTER TABLE ScreenSections
-ADD Id varchar(15);
-    ]]>
-	</Sql>
-</Script>

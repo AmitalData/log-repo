@@ -1221,7 +1221,7 @@ namespace Logitude.DBMigrations.Models
         {
             string partition = "";
             bool isZeroDownTimeArgumentProvided = ToolArguments.IsArgumentProvided(Arguments.ZERODOWNTIME);
-            string indexOnlineOption = isZeroDownTimeArgumentProvided ? (ToolConfigurations.AOTCreateIndexWithOnline ? " WITH (ONLINE = ON)" : null) : null;
+            string indexOnlineOption = null;// isZeroDownTimeArgumentProvided ? (ToolConfigurations.AOTCreateIndexWithOnline ? " WITH (ONLINE = ON)" : null) : null;
 
             string indexColumns = !index.Columns.Contains(",") ? "[" + index.Columns + "]" : string.Join(",", index.Columns.Split(',').Select(c => "[" + c + "]").ToArray());
             string includeColumns = String.IsNullOrEmpty(index.Include) ? null : (!index.Include.Contains(",") ? "[" + index.Include + "]" : string.Join(",", index.Include.Split(',').Select(c => "[" + c + "]").ToArray()));

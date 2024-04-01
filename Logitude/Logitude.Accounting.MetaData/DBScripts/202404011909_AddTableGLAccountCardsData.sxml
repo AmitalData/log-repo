@@ -1,0 +1,49 @@
+﻿<Script DBType="Main" Module="Accounting" Pre="true">
+
+  <Sql Version="1">
+    <![CDATA[
+    
+  CREATE TABLE [dbo].[GLAccountCardsDatas](
+	[Id] [varchar](15) NOT NULL,
+	[Tenant] [int] NOT NULL,
+	[SalesmanUserId] [varchar](15) NULL,
+	[CreditLimit] [float] NULL,
+	[PaymentTermId] [varchar](15) NULL,
+	[CollectorUserId] [varchar](15) NULL,
+	[Phone] [varchar](40) NULL,
+	[VatNumber] [varchar](20) NULL,
+	[TotalOpenShipments] [decimal](18, 2) NULL,
+	[InsuredcreditLimit] [float] NULL,
+ CONSTRAINT [PK_GLAccountCardsDatas] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+ 
+
+ALTER TABLE [dbo].[GLAccountCardsDatas]  WITH CHECK ADD  CONSTRAINT [FK_GLAccountCardsDatas_PaymentTerms_PaymentTermId] FOREIGN KEY([PaymentTermId])
+REFERENCES [dbo].[PaymentTerms] ([Id])
+ 
+
+ALTER TABLE [dbo].[GLAccountCardsDatas] CHECK CONSTRAINT [FK_GLAccountCardsDatas_PaymentTerms_PaymentTermId]
+ 
+
+ALTER TABLE [dbo].[GLAccountCardsDatas]  WITH CHECK ADD  CONSTRAINT [FK_GLAccountCardsDatas_Users_CollectorUserId] FOREIGN KEY([CollectorUserId])
+REFERENCES [dbo].[Users] ([Id])
+ 
+
+ALTER TABLE [dbo].[GLAccountCardsDatas] CHECK CONSTRAINT [FK_GLAccountCardsDatas_Users_CollectorUserId]
+ 
+
+ALTER TABLE [dbo].[GLAccountCardsDatas]  WITH CHECK ADD  CONSTRAINT [FK_GLAccountCardsDatas_Users_SalesmanUserId] FOREIGN KEY([SalesmanUserId])
+REFERENCES [dbo].[Users] ([Id])
+ 
+
+ALTER TABLE [dbo].[GLAccountCardsDatas] CHECK CONSTRAINT [FK_GLAccountCardsDatas_Users_SalesmanUserId]
+ 
+
+
+
+    ]]>
+  </Sql>
+</Script>

@@ -3,7 +3,7 @@
   Name="DigitalProfiles"
   Schema="dbo"
   DBType="Main"
-  Module="DigitalProfile">
+  Module="Common">
   <Column
     Name="Id"
     Type="varchar"

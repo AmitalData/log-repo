@@ -30,7 +30,7 @@ import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { BookingWizardPackageItem } from 'Booking/Components/BookingWizard/Packages/PackagesTabComponent';
 import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
-import { Data } from '@microsoft/applicationinsights-common';
+// import { Data } from '@microsoft/applicationinsights-common';
 import { CopyFromTenant0ExtendedListService } from 'Accounting/Services/ExtendedLists/CopyFromTenant0ExtendedListService';
 import { CopyFromTenant0PM } from 'Accounting/EntityPMs/CopyFromTenant0PM';
 import { List } from 'cypress/types/lodash';
@@ -52,7 +52,7 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
     //public myForm: ControlGroup;
     public ObjectTableName: string = "FullAccountingSetting";
     public TenantPM: TenantPM;
-    public EntityPM: FullAccountingSettingPM;
+    //public EntityPM: FullAccountingSettingPM;
     public listCopyFromTenant0: CopyFromTenant0PM[];
     public CopyFromTenant0PM: CopyFromTenant0PM[];
     public isRTL: boolean = false;
@@ -72,8 +72,7 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
 
     constructor(public serviceArgs: ServiceArgs, private _entityResourceService: EntityResourceService, private cd: ChangeDetectorRef) {
         super();
-        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
-
+        this.isRTL = ObjectsLocator.GlobalSetting ? (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl") : false;
         this.CurrentSession.StartBusyIndicatorLoading();
 
         this._entityResourceService.getEntityResourceByTableName("GLAccount").subscribe((responseGLAccount: any) => {
@@ -1036,7 +1035,7 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
 
 
     public ShowLocals: boolean = !SessionLocator.LoggedUserPM.DontShowLocal;
-    isRTL = ObjectsLocator.GlobalSetting ? (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl") : false;
+     //public isRTL = ObjectsLocator.GlobalSetting ? (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl") : false;
 
 
     public get NumberOfPeriods(): number {

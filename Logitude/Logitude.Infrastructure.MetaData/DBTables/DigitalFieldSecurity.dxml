@@ -3,7 +3,7 @@
   Name="DigitalFieldSecurities"
   Schema="dbo"
   DBType="Main"
-  Module="DigitalFieldSecurity">
+  Module="Common">
   <Column
     Name="Id"
     Type="varchar"

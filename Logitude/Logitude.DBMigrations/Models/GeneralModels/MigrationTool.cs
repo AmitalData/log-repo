@@ -289,6 +289,7 @@ namespace Logitude.DBMigrations.Models
 
             foreach (var dxmlTable in dxmlTables)
             {
+          //      if (!(dxmlTable.DXMLFileName.Contains("DigitalFieldSecuri"))) continue;
                 Console.WriteLine("Generating Script For " + dxmlTable.DXMLFileName + " ...");
 
                 if (IsDXMLFileForHistoryTable(dxmlTable.DXMLFileName))

@@ -38,6 +38,7 @@
     <Constraints
       Nullable="true" />
   </Column>
+  
   <Column
     Name="IsARInvoiceTransferEnabled"
     Type="bit">

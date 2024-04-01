@@ -117,8 +117,6 @@
             this.UpdateINFlble = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-             this.buttonQuoteOPMZIP = new System.Windows.Forms.Button();
-            this.UpdateQuoteOPM = new System.Windows.Forms.Button();
              this.updateDashboardLabel = new System.Windows.Forms.Label();
             this.updateDashboardButton = new System.Windows.Forms.Button();
             this.updateWorkflowLabel = new System.Windows.Forms.Label();
@@ -2333,13 +2331,13 @@
             // 
             // uploadPackagesTypes
             // 
-            this.uploadPackagesTypes.Location = new System.Drawing.Point(271, 550);
-            this.uploadPackagesTypes.Name = "uploadPackagesTypes";
-            this.uploadPackagesTypes.Size = new System.Drawing.Size(184, 23);
-            this.uploadPackagesTypes.TabIndex = 102;
-            this.uploadPackagesTypes.Text = "Upload packages types";
-            this.uploadPackagesTypes.UseVisualStyleBackColor = true;
-            this.uploadPackagesTypes.Click += new System.EventHandler(this.uploadPackagesTypes_Click);
+            //this.uploadPackagesTypes.Location = new System.Drawing.Point(271, 550);
+            //this.uploadPackagesTypes.Name = "uploadPackagesTypes";
+            //this.uploadPackagesTypes.Size = new System.Drawing.Size(184, 23);
+            //this.uploadPackagesTypes.TabIndex = 102;
+            //this.uploadPackagesTypes.Text = "Upload packages types";
+            //this.uploadPackagesTypes.UseVisualStyleBackColor = true;
+            //this.uploadPackagesTypes.Click += new System.EventHandler(this.uploadPackagesTypes_Click);
             // 
 
             // updateBluesnapTransactionsLabel
@@ -4143,7 +4141,7 @@
         private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.ToolStripMenuItem tESTToolStripMenuItem;
         private System.Windows.Forms.Button MapUnifreightTables;
-        private System.Windows.Forms.Button button53;
+      //  private System.Windows.Forms.Button button53;
         private System.Windows.Forms.Button UpdateTable1344;
         private System.Windows.Forms.Label uploadPackagesLabel;
         private System.Windows.Forms.Label updateBluesnapTransactionsLabel;

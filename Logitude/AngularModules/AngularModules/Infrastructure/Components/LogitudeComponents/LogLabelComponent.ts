@@ -24,7 +24,7 @@ import { EntityResourceService } from '../../Services/EntityResourceService';
         "IsSmallLabel",
         "Replace",
             "ReplaceWith",
-         "LayoutDirection"
+         "LayoutDirection",
          "ShowTitle",
         "Title",
      ],

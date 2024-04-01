@@ -60,7 +60,7 @@ export class MainMenuComponent {
     }
 
     private GetMainMenuItemsFromWindow() {
-
+debugger;
         var myResult: MainMenuItem[] = [];
 
         window.MenusTables.filter(f => f.MenuTypeCode.toUpperCase() == "MAIN").forEach((item) => {
@@ -350,7 +350,7 @@ export class MainMenuComponent {
 
                         break;
                     }
-                    case "General.MH.Dashboard": {
+                  
                      case "General.MH.ClassicDashboard": {
                          ServiceLocator.SendTotangoUserActivity("Dashboard", "Main View");
                         myComponentPath = "./Dashboard/Components/Workspace/DashboardComponent";

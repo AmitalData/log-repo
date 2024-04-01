@@ -3,7 +3,7 @@
   Name="DigitalPortalScreens"
   Schema="dbo"
   DBType="Main"
-  Module="DigitalPortalScreen">
+  Module="Common">
   <Column
     Name="Id"
     Type="varchar"

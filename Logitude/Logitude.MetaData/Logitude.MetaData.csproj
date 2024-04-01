@@ -170,7 +170,6 @@
     <None Include="DBScripts\GlobalModel\AddOpportunityStageChangingBatchService.sxml" />
     <None Include="DBScripts\InfrastructureModel\202209260235_UpdateEntityStatusDelivery.sxml" />
     <None Include="DBScripts\InfrastructureModel\202303081102_UpdateAvailableInDocumentTypesForCustomObjects.sxml" />
-    <None Include="DBScripts\InfrastructureModel\AddIdFieldToScreenSectionTable.sxml" />
     <None Include="DBScripts\InfrastructureModel\UpdateScreenSectionTable.sxml" />
     <None Include="DBScripts\InvoiceModel\202201160900_UpdateAutomaticLastUpdateDateOnARInvoiceTransferStatus.sxml" />
     <None Include="DBScripts\InvoiceModel\202209061205_FillPaidStatusOfARInvoices.sxml" />
@@ -343,7 +342,6 @@
     <None Include="DBOthers\CommonDataModel\Triggers\TriggerOnCreate_AutomaticLastUpdateDateVatTypes.dxml" />
     <None Include="DBOthers\CommonDataModel\Triggers\TriggerOnCreate_AutomaticLastUpdateCustomerTeams.dxml" />
     <None Include="DBOthers\CommonDataModel\Triggers\Trigger_AutomaticLastUpdateDateVatTypes.dxml" />
-    <None Include="DBOthers\ShipmentsModel\Triggers\TriggerOnCreate_AutomaticLastUpdateDateContainers.dxml" />
     <None Include="DBOthers\CommonDataModel\Triggers\Trigger_AutomaticLastUpdateDateCustomerTeams.dxml" />
     <None Include="DBOthers\ShipmentsModel\Triggers\TriggerOnCreate_AutomaticLastUpdateDatePayableProratedAmounts.dxml" />
     <None Include="DBOthers\ShipmentsModel\Triggers\TriggerOnCreate_AutomaticLastUpdateDateShipmentSubTypes.dxml" />
@@ -357,7 +355,6 @@
     <None Include="DBScripts\CommonModel\202111011306_PODDocumentWR.sxml" />
     <None Include="DBScripts\CommonModel\202111101034_UpdateUsersSecurityLevelWithNullValues.sxml" />
     <None Include="DBScripts\CommonModel\202109021051_AddDefaultValueForSecurityLevel.sxml" />
-    <None Include="DBScripts\CommonModel\202109021049_UpdateUsersSecurityLevel.sxml" />
     <None Include="DBScripts\CommonModel\202112191200_UpdateReportExcelAllowed.sxml" />
     <None Include="DBScripts\CommonModel\202201261145_FillPostalCodesTable.sxml" />
     <None Include="DBScripts\CommonModel\202201101050_AddHRAdminRole.sxml" />
