@@ -8,6 +8,7 @@ import {SupplierInvoicePM} from '../../../../../Customs/EntityPMs/SupplierInvoic
 
 import {TextCodeTranslator} from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
+import { FeatureLocator } from 'Infrastructure/Utilities/FeatureLocator';
 
 
 @Component({
@@ -23,6 +24,8 @@ export class UpdateProcessCodeComponent extends BaseComponent {
     IsDisplayOnly: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     public ProcessTypeCodeFilterItems: ApiQueryFilters;
+    public hasOcr: boolean;
+    
 
     constructor() {
         super();
@@ -34,6 +37,8 @@ export class UpdateProcessCodeComponent extends BaseComponent {
         if (this.CurrentSession.CurrentEditComponent.EntityPM.Direction == "E") {
             this.ProcessTypeCodeFilterItems.addAdditionalFilter("LeadDocumentTypeID", this.CurrentSession.CurrentEditComponent.EntityPM.DeclarationTypeCode, null, null, "Equals", false, false, false, "string",false,true);
         }
+        this.hasOcr = FeatureLocator.HasFeaturePermession("Customs.Declaration", "OCR");
+
     }
 
     SetWindowArgs(args: any) {
