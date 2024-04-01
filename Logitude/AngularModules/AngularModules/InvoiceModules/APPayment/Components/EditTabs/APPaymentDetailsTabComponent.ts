@@ -110,7 +110,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {
             this.IsEditExchangeRateVisible = true;
         }
-
+      
         this.LocalCurrencyCode = SessionLocator.LocalCurrencyCode;
     }
     InitLOVFilters() {
@@ -876,7 +876,10 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                 if (this.EntityPM.VendorId != value || (this.IsFullAccounting && this.EntityPM.ReconcileInternalTrans && this.ReconcileInternalTrans.length > 0)) {
                     this.EntityPM.VendorId = value;
                     this.UIProperties.SetEnabled("PaymentCurrencyId", this.ObjectTableName, true);
-                    this.PaymentCurrencyId = SessionLocator.TenantPM.CurrencyId;
+                    if(this.EntityPM.IsFromReconcilePage && !AppTool.IsNullOrEmpty(this.PaymentCurrencyId))
+                       this.PaymentCurrencyId = this.PaymentCurrencyId;
+                    else
+                       this.PaymentCurrencyId = SessionLocator.TenantPM.CurrencyId;
                     if (AppTool.IsNullOrEmpty(this.EntityPM.VendorId)) {
                         this.UIProperties.SetEnabled("VendorAddressId", this.ObjectTableName, false);
                     }
@@ -1017,7 +1020,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                     this.ValidateW();
 
                     if (!gla.IsMultiCurrency) {
-                      
+                        
                         this.FilterInvoiceByAPPayment=true;
                         this.PaymentCurrencyId = gla.CurrencyId;
                     }
@@ -1220,7 +1223,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
 
         return this.EntityPM.PaymentCurrencyId;
     }
-    set PaymentCurrencyId(value: string) {
+    set PaymentCurrencyId(value: string) {        
         this.setPaymentCurrencyId(value)
     }
 
@@ -1234,7 +1237,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     async setPaymentCurrencyId(value: string) {
         if (!this.EntityPM.IsCreatedFromInvoiceSide) {
             if (this.EntityPM != null) {
-                if (this.EntityPM.PaymentCurrencyId != value) {
+                if (this.EntityPM.PaymentCurrencyId != value || this.EntityPM.IsFromReconcilePage) {
                     this.EntityPM.PaymentCurrencyId = value;                    
                     this.PaymentCurrencyExchangeRate = await this.GetCurrencyRate(value);                    
                     this.ExchangeRateDate = this.GetCurrencyRateDate(value);
@@ -1250,6 +1253,9 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                                 var list: CurrencyList = myResponse.Result;
                                 if (list) {
                                     this.PaymentCurrencyCode = list.Code;
+                                    if(this.EntityPM.IsFromReconcilePage && this.EntityPM.IsMultiCurrency && this.PaymentCurrencyCode != "NIS") {
+                                        this.UIProperties.SetEnabled("PaymentCurrencyId", this.ObjectTableName, false);  
+                                    }
                                 }
                             }
                         });
