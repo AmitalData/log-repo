@@ -91,10 +91,11 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
 
             CheckBankAndGLAccountsCurrency(bankAccountPM, useLocal);
-            CheckChequeCounterSerials(bankAccountPM.ChequeCounterSerials);
+            CheckChequeCounterSerials(bankAccountPM, useLocal);
         }
-        public virtual void CheckChequeCounterSerials(List<ChequeCounterSerialPM> chequeCounterSerials)
+        public virtual void CheckChequeCounterSerials(BankAccountPM bankAccountPM, bool useLocal)
         {
+            var chequeCounterSerials = bankAccountPM.ChequeCounterSerials;
             var hasChange = chequeCounterSerials.FirstOrDefault(c => c.ChangeSetOp != ChangeSetOperation.None);
             if (hasChange == null)
             {
@@ -120,6 +121,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             {
                 isValid = ValidateSerialsOverlap(chequeCounterSerials);
             }
+            if (isValid)
+            {
+                isValid = ValidateSerialsHaveAlreadyCheques(bankAccountPM, useLocal);
+            }
             if (!isValid)
             {
                 throw new ApplicationException("Invalid chequeCounterSerials");
@@ -141,7 +146,34 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
             return true;
         }
+        private bool ValidateSerialsHaveAlreadyCheques(BankAccountPM bankAccountPM, bool useLocal)
+        {
+            StringBuilder sb = new StringBuilder();
+            var futureSerials = bankAccountPM.ChequeCounterSerials.Where(x => x.SeriesId > bankAccountPM.ChequeCounterSeriesID).ToList();
+            var currentSerial = bankAccountPM.ChequeCounterSerials.FirstOrDefault(x => x.SeriesId == bankAccountPM.ChequeCounterSeriesID);
+            if (bankAccountPM.ChequeCounter == currentSerial.ChequeCounterBegin)
+            {
+                //if current serial has not started yet add it to check if its good. 
+                futureSerials.Add(currentSerial);
+            }
+            foreach (var item in futureSerials)
+            {
+                PaymentChequeQueryService service = new PaymentChequeQueryService(_MainContext);
+                var exists = service.GetPaymentChequesInRange(bankAccountPM.Id, item.ChequeCounterBegin, item.ChequeCounterEnd, item.Tenant);
+                if (exists.Count > 0)
+                {
+                    string msg = TextCodesTranslator.TranslateText("ChequeCounterSerial.O.ChequeSerialAlreadyUsed", bankAccountPM.Tenant, useLocal);
+                    sb.AppendFormat(msg, item.SeriesId);
 
+                }
+            }
+            if (sb.Length > 0)
+            {
+                throw new ApplicationException(sb.ToString());
+            }
+
+            return true;
+        }
         public virtual void CheckBankAndGLAccountsCurrency(BankAccountPM bankAccountPM, bool useLocal)
         {
             //get glaccounts
