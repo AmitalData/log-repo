@@ -18,7 +18,7 @@ export class CB_CustomsItemList {
 	CustomsItemCategoryID: string;
 	CustomsItemHierarchicLocationID: string;
 	GoodsDescription: string;
-	Rules: string;
+	Rules: number;
 	Remarks: string;
 	Agreements: string;
 	CustomsRate: string;
@@ -27,6 +27,7 @@ export class CB_CustomsItemList {
 	MeasurementUnit: string;
 	SearchFields: string;
 	CB_ID: string;
+	SearchByTextResult: string;
 	
 }
  
