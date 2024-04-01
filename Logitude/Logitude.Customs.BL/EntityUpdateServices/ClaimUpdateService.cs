@@ -155,6 +155,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 tapagPM.CustomerId = entityPM.CustomerId;
                 tapagPM.ReferantId = entityPM.ReferantId;
                 tapagPM.IsClosed = entityPM.IsClosed;
+                tapagPM.CustomsBranchCode = entityPM.CustomsBranchCode;
                 tapagUpdateService.Update(tapagPM, false);
             }
         }
