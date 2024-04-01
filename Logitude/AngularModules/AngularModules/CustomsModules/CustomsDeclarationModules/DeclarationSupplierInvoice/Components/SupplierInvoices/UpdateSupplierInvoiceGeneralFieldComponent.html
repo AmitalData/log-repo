@@ -33,15 +33,21 @@
                             [DataContext]="DataContext"></LogLabel>
                     </td>
                     <td style="width:160px">
-                        <!-- <LogTextBoxV2 #ClassificationTextBox [ObjectFieldName]="UpdateField"
+                        <LogTextBoxV2 *ngIf="!hasOcr" #ClassificationTextBox [ObjectFieldName]="UpdateField"
                             (LostFocus)="validateClassificationNumber(ClassificationTextBox)"
                             (KeyUp)="classificationKeyUp($event,ClassificationTextBox)" [DataContext]="DataContext"
-                            [FocusOnMe]="true" [InputType]="'integertext'"
-                            [ObjectTableName]="ObjectTableName" [HideColumns]="true" [DebounceTime]="1">
-                        </LogTextBoxV2> -->
-                        <LogLov [ObjectFieldName]="UpdateField" [ObjectTableName]="ObjectTableName"
-                            [DataContext]="DataContext" [LookUpTableName]="'Customs.ClientItem'" [HideColumns]="true">
+                            [FocusOnMe]="true" [InputType]="'integertext'" [ObjectTableName]="ObjectTableName"
+                            [HideColumns]="true" [DebounceTime]="1">
+                        </LogTextBoxV2>
+                        <LogLov *ngIf="hasOcr" #ClassificationTextBox
+                            (LostFocus)="validateClassificationNumber(ClassificationTextBox)"
+                            (KeyUp)="classificationKeyUp($event,ClassificationTextBox)"
+                            (SelectedItemChanged)="FinalValue = $event" [DataContext]="DataContext"
+                            [ObjectFieldName]="UpdateField" [ObjectTableName]="ObjectTableName"
+                            [LookUpTableName]="'Customs.ClientItem'" [HideColumns]="true"
+                            [SelectedValuePath]="'ClassificationCode'">
                         </LogLov>
+
                     </td>
                     <td>
                         <div></div>
