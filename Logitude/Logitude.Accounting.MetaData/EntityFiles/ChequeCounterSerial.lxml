@@ -42,7 +42,7 @@
   ParentTableName="BankAccount"
   LocalDefaultText="&quot;סדרת שיקים&quot;"
   DefaultText="&quot;Cheque Series&quot;"
-  Code="&quot;10e7&quot;"
+  Code="&quot;9ec2&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Accounting&quot;"
@@ -600,6 +600,12 @@
       Code="&quot;ChequeCounterSerial.O.ChequeCounterEndSmaller&quot;"
       DefaultText="&quot;The cheque counter end field must be bigger than the cheque counter begin field&quot;"
       LocalDefaultText="&quot;שדה סיום מונה המחאות חייב להיות גדול מהשדה תחילת מונה המחאות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ChequeCounterSerial.O.ChequeSerialAlreadyUsed&quot;"
+      DefaultText="&quot;Series Id {0} contains cheques numbers that have already been generated in the past.&quot;"
+      LocalDefaultText="&quot;סדרה מספר {0} מכילה מספרי שיקים שכבר נוצרו בעבר. &quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

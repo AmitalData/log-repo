@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ChequeCounterSerialUpdateClass
    {  		
-		public const string HashString = "8ff1a6369e0978223890791422e73bc3";
+		public const string HashString = "b81ce5e2b1e4b1e86f42ac0011c19eeb";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -130,7 +130,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "סדרת שיקים",
 			      				    DefaultText =  "Cheque Series",
-			      				    Code =  "10e7",
+			      				    Code =  "9ec2",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",
@@ -631,6 +631,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode ChequeCounterSerialTextCode_ChequeCounterSerialONoSeriesDefined = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChequeCounterSerial.O.NoSeriesDefined", DefaultText = "The cheque series are not defined in the system, it is mandatory to define some series for the bank entity before issuing a new cheque",LocalDefaultText = @"לא מוגדרות סדרות המחאות במערכת , חובה להגדיר ביישות הבנק סדרה כלשהי לפני הפקת המחאה חדשה", ObjectTableId = ChequeCounterSerialObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ChequeCounterSerialTextCode_ChequeCounterSerialOChequeCounterEndSmaller = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChequeCounterSerial.O.ChequeCounterEndSmaller", DefaultText = "The cheque counter end field must be bigger than the cheque counter begin field",LocalDefaultText = @"שדה סיום מונה המחאות חייב להיות גדול מהשדה תחילת מונה המחאות", ObjectTableId = ChequeCounterSerialObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ChequeCounterSerialTextCode_ChequeCounterSerialOChequeSerialAlreadyUsed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChequeCounterSerial.O.ChequeSerialAlreadyUsed", DefaultText = "Series Id {0} contains cheques numbers that have already been generated in the past.",LocalDefaultText = @"סדרה מספר {0} מכילה מספרי שיקים שכבר נוצרו בעבר. ", ObjectTableId = ChequeCounterSerialObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
