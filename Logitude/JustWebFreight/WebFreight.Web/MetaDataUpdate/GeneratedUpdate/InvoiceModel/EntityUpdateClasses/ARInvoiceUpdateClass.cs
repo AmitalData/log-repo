@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class ARInvoiceUpdateClass
    {  		
-		public const string HashString = "70543c4bb2841d94e47a7c5a9eb0586d";
+		public const string HashString = "571caa6308b5929354593b2f06525110";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -14695,6 +14695,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "APIResponseToConfirmation",
 					  						ListPropertyPath =  "APIResponseToConfirmation",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -16616,6 +16617,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
  		   TextCode ARInvoiceTextCode_ARInvoiceOreportsToVAT = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.O.reportsToVAT", DefaultText = "Lines to report",LocalDefaultText = @"שורות לדיווח", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ARInvoiceTextCode_ARInvoiceONotreportsToVAT = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.O.NotreportsToVAT", DefaultText = "Lines not to report",LocalDefaultText = @"שורות לא לדיווח", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARInvoiceTextCode_ARInvoiceOConfirmationNumberFailed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.O.ConfirmationNumberFailed", DefaultText = "Confirmation number failed",LocalDefaultText = @"כשלון בקבלת הקצאה", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

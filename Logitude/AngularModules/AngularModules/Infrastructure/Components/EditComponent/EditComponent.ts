@@ -1545,9 +1545,10 @@ export class EditComponent implements OnDestroy {
                         }
 
                         else {
+                            
                             if(this.ObjectTableName == "ARInvoice" && myResponse.Result?.ConfirmationNumberStatus==5){
                                 const messageWindow = new MessageWindow();
-                                messageWindow.Title=myResponse.Result?.ConfirmationNumberStatusName;
+                                messageWindow.Title=TextCodeTranslator.Translate("ARInvoice.O.ConfirmationNumberFailed");
                                 messageWindow.Show(myResponse.Result?.APIResponseToConfirmation);
                             } 
                             

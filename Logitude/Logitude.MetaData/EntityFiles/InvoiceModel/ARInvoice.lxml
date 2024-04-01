@@ -17793,6 +17793,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;APIResponseToConfirmation&quot;"
     ListPropertyPath="&quot;APIResponseToConfirmation&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -21453,6 +21454,12 @@
       Code="&quot;ARInvoice.O.NotreportsToVAT&quot;"
       DefaultText="&quot;Lines not to report&quot;"
       LocalDefaultText="&quot;שורות לא לדיווח&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.O.ConfirmationNumberFailed&quot;"
+      DefaultText="&quot;Confirmation number failed&quot;"
+      LocalDefaultText="&quot;כשלון בקבלת הקצאה&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

@@ -467,7 +467,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         Logitude.Server.Tools.Utils.Logger.LogDebug("apiResponse.Msg :{0}", apiResponse.Msg);
 
                         entityPM.ConfirmationNumberStatus = "5";
-                        entityPM.APIResponseToConfirmation = apiResponse.Msg?.Substring(0, 1000);
+                        entityPM.APIResponseToConfirmation = apiResponse.Msg?.Length > 500 ? apiResponse.Msg?.Substring(0, 500): apiResponse.Msg;
 
                         this.CreateEvent("CNF", entityPM, apiResponse?.Msg);
                        
@@ -480,7 +480,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     Logitude.Server.Tools.Utils.Logger.LogDebug("apiResponse.Res.StatusCode :{0} {1}", apiResponse?.Res?.StatusCode, apiResponse);
 
                     entityPM.ConfirmationNumberStatus = "5";
-                    entityPM.APIResponseToConfirmation = apiResponse.Msg ?.Substring(0, 1000);
+                    entityPM.APIResponseToConfirmation = apiResponse.Msg?.Length > 500 ? apiResponse.Msg?.Substring(0, 500) : apiResponse.Msg;
                     this.CreateEvent("CNF", entityPM, apiResponse?.Msg);
                 
                 }
@@ -490,7 +490,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 Logitude.Server.Tools.Utils.Logger.LogDebug(ex, "apiResponse ");
 
                 entityPM.ConfirmationNumberStatus = "5";
-                entityPM.APIResponseToConfirmation = ex.Message?.Substring(0,1000);
+                entityPM.APIResponseToConfirmation = ex.Message.Length > 500 ? ex.Message.Substring(0, 500) : ex.Message;
                this.CreateEvent("CNF", entityPM, ex.Message);
                
             }
