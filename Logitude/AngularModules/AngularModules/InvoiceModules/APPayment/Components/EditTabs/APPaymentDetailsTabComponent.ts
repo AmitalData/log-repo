@@ -924,7 +924,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
             this.vendorGLAccount = null;
             this.deductionFileNumber = null;
             this.VendorAddressId = null;
-            this.PaymentCurrencyId = SessionLocator.TenantPM.CurrencyId;
+            this.PaymentCurrencyId =  this.EntityPM.IsFromReconcilePage && !AppTool.IsNullOrEmpty(this.PaymentCurrencyId)?this.PaymentCurrencyId:SessionLocator.TenantPM.CurrencyId;
             this.VendorAddressId = null;
             this.EntityPM.VendorBankAddress = null;
             this.EntityPM.VendorIBANNumber = null;
