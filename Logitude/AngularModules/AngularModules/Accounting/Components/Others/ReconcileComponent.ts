@@ -2117,6 +2117,9 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
         newApPaymentPM.ValueDate = DateTool.GetCurrentDateAsUtc();
         newApPaymentPM.RegisterDate = DateTool.GetCurrentDateAsUtc();
         newApPaymentPM.DontDisplayAPInvoices=true;
+        newApPaymentPM.PaymentCurrencyId = this.CurrencyId;
+        newApPaymentPM.IsFromReconcilePage = true;
+        newApPaymentPM.IsMultiCurrency = this.GLAccountPM.IsMultiCurrency;
         if (!SessionLocator.LoggedUserPM.IsCustomerCare) {
             newApPaymentPM.BranchId = SessionLocator.LoggedUserPM.BranchId;
         }

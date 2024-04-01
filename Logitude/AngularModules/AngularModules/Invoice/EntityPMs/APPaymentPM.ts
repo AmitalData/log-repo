@@ -568,6 +568,16 @@ export class APPaymentPM {
     public get DontDisplayAPInvoices() { return this.dontDisplayAPInvoices; }
     public set DontDisplayAPInvoices(newValue: boolean) { if (this.dontDisplayAPInvoices != newValue) { this.dontDisplayAPInvoices = newValue; this.MarkAsDirty("dontDisplayAPInvoices"); } }
 
+    	 
+    private isFromReconcilePage: boolean;
+    public get IsFromReconcilePage() { return this.isFromReconcilePage; }
+    public set IsFromReconcilePage(newValue: boolean) { if (this.isFromReconcilePage != newValue) { this.isFromReconcilePage = newValue; this.MarkAsDirty("IsFromReconcilePage"); } }
+       
+	 	 
+    private isMultiCurrency: boolean;
+    public get IsMultiCurrency() { return this.isMultiCurrency; }
+    public set IsMultiCurrency(newValue: boolean) { if (this.isMultiCurrency != newValue) { this.isMultiCurrency = newValue; this.MarkAsDirty("IsMultiCurrency"); } }
+       
     public OldEntityPM: APPaymentPM;
 		
     public IsDirty: boolean;
