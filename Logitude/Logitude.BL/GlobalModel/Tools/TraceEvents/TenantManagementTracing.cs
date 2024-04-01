@@ -25,6 +25,27 @@ namespace Logitude.BL.GlobalModel.Tools.TraceEvents
     {
         public static void Trace(TenantManagementPM entityPM, TenantManagement poco, bool isNewEntity)
         {
+            List<TenantManagementLicense> licenses = null;
+            if (entityPM != null && entityPM.TenantManagementLicenses != null && entityPM.TenantManagementLicenses.Count > 0)
+            {
+                List<TenantManagementLicensePM> additionalPackagesChanged = entityPM.TenantManagementLicenses.Where(a => a.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Update).ToList();
+                if (additionalPackagesChanged.Count > 0)
+                {
+
+
+                    IGlobalContext MyGlContext = GlobalContext.GetContext(0);
+                    TenantManagementLicenseRepository tenantManagementLicenseRepository = new TenantManagementLicenseRepository(MyGlContext);
+                    var tenantManagementLicenseQuery = tenantManagementLicenseRepository.GetTenantManagementLicenses(entityPM.Id);
+                    if (tenantManagementLicenseQuery != null)
+                    {
+
+                        licenses = tenantManagementLicenseQuery.ToList();
+                    }
+
+                }
+            }
+
+
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
                 Contact loggedContact = null;
@@ -271,7 +292,7 @@ namespace Logitude.BL.GlobalModel.Tools.TraceEvents
                         }
                         if (entityPM.TenantManagementLicenses != null)
                         {
-                            note = note + BuildTenantManagementLicensesNotes(entityPM);
+                            note = note + BuildTenantManagementLicensesNotes(entityPM, licenses);
                         }
                         if (!string.IsNullOrEmpty(note))
                         {
@@ -346,7 +367,7 @@ namespace Logitude.BL.GlobalModel.Tools.TraceEvents
                         {
                             int oldNum = poco.NumberOfUsers.HasValue ? poco.NumberOfUsers.Value : 0;
                             int newNum = entityPM.NumberOfUsers.HasValue ? entityPM.NumberOfUsers.Value : 0;
-                            usersNotes = usersNotes + "Package {entityPM.PackageCode} - Number of users changed from {oldNum} to {newNum}";
+                            usersNotes = usersNotes + "Package " + entityPM.PackageCode + " - Number of users changed from " + oldNum + " to " + newNum;
                         }
 
                         if (entityPM.FreeUsers != poco.FreeUsers)
@@ -442,7 +463,7 @@ namespace Logitude.BL.GlobalModel.Tools.TraceEvents
             return notesTemp;
         }
 
-        private static string BuildTenantManagementLicensesNotes(TenantManagementPM entityPM)
+        private static string BuildTenantManagementLicensesNotes(TenantManagementPM entityPM, List<TenantManagementLicense> licenses)
         {
             var notesTemp = "";
             var additionalPackagesAdded = entityPM.TenantManagementLicenses.Where(a => a.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert).ToList();
@@ -461,24 +482,23 @@ namespace Logitude.BL.GlobalModel.Tools.TraceEvents
             }
             if (additionalPackagesChanged != null && additionalPackagesChanged.Count() > 0)
             {
-                TenantManagementLicenseQuery tenantManagementLicenseQuery = new TenantManagementLicenseQuery(entityPM.Id);
-                List<TenantManagementLicensePM> licenses = tenantManagementLicenseQuery.GetTenantManagementLicensePMs(entityPM.Id).ToList();
                 if (licenses != null && licenses.Count > 0)
                 {
                     foreach (var licensePM in additionalPackagesChanged)
                     {
-                        TenantManagementLicensePM oldPM = licenses.Where(lic => lic.PackageCode == licensePM.PackageCode).FirstOrDefault();
-                        if (oldPM != null) 
-                        { 
-                            if (licensePM.NumberOfUsers != oldPM.NumberOfUsers)
+                        TenantManagementLicense old = licenses.Where(lic => lic.PackageCode == licensePM.PackageCode).FirstOrDefault();
+                        if (old != null)
+                        {
+                            if (licensePM.NumberOfUsers != old.NumberOfUsers)
                             {
-                                int oldNum = oldPM.NumberOfUsers.HasValue ? oldPM.NumberOfUsers.Value : 0;
+                                int oldNum = old.NumberOfUsers.HasValue ? old.NumberOfUsers.Value : 0;
                                 int newNum = licensePM.NumberOfUsers.HasValue ? licensePM.NumberOfUsers.Value : 0;
-                                notesTemp = notesTemp + "Additional Package {licensePM.PackageCode} - Number of users changed from {oldNum} to {newNum}";
+                                notesTemp = notesTemp + "Additional Package " + licensePM.PackageCode + ":  Number of users changed from " + oldNum + " to " +newNum;
                             }
                         }
                     }
                 }
+               
             }
 
             if (!string.IsNullOrEmpty(notesTemp))
