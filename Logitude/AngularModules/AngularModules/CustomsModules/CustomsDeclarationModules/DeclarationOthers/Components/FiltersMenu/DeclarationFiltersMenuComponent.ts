@@ -33,8 +33,8 @@ export class DeclarationFiltersMenuComponent
     diamondsMenuTranslates = [];
     @Output() CustomGetTotalCount = new EventEmitter();
     diamondsDeclarationsQuery = "Customs.Declaration.DiamondsDeclarations";
-    private selectedDiamondsMenu: string = "DeclarationsWithDeficiencies"; // the default diamonds filter
-    private diamondsMenus = ["ReleasedDeclarations", "PaidDeclarations", "CorrectDraft", "IncorrectDeclarations", "DeclarationsWithDeficiencies"]; // list of diamonds filters
+    selectedDiamondsMenu: string = "DeclarationsWithDeficiencies"; // the default diamonds filter
+    diamondsMenus = ["ReleasedDeclarations", "PaidDeclarations", "CorrectDraft", "IncorrectDeclarations", "DeclarationsWithDeficiencies"]; // list of diamonds filters
 
     constructor() {
         super();
