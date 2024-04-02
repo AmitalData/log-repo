@@ -322,20 +322,35 @@ namespace Logitude.Customs.BL.EntityQueryServices
             var tPendingCount = Task.Run(() =>
             {
                 stopwatch = Stopwatch.StartNew();
-                var query = GetIQueryableDeclarationCourierStatusCountDTO(tenant, integratorId).Where(x => x.CourierPendingReasonList != null);
-                var response = (from a in query
-                                group a by 1 into g
-                                select new
-                                {
-                                    PendingCount = g.Count(x => !string.IsNullOrEmpty(x.CourierPendingReasonList)),
-                                    PendingPaymentCount = g.Count(x => x.CourierPendingReasonList.Contains("900")),
-                                    WithoutIdCount = g.Count(x => x.CourierPendingReasonList.Contains("902"))
-                                }).Single();
+                var query = (from a in GetIQueryableDeclarationCourierStatusCountDTO(tenant, integratorId)
+                              group a by a.CourierPendingReasonList into g
+                              select new
+                              {
+                                  Value = g.Key,
+                                  Count = g.Count(),
+                              });
+                var response = query.ToList();
                 my.TookPendingCount = stopwatch.ElapsedMilliseconds;
+                int total = 0;
 
-                my.PendingCount = response.PendingCount;
-                my.WithoutIdCount = response.WithoutIdCount;
-                my.PendingPaymentCount = response.PendingPaymentCount;
+                foreach (var result in response)
+                {
+                    total += result.Count;
+
+                    if (!string.IsNullOrEmpty(result.Value))
+                    {
+                        my.PendingCount += result.Count;
+                        if (result.Value.Contains("900"))
+                        {
+                            my.PendingPaymentCount += result.Count;
+                        }
+                        if (result.Value.Contains("902"))
+                        {
+                            my.WithoutIdCount += result.Count;
+                        }
+                    }
+                }
+                my.OpenCourierMasterCount = total;
             });
             listOfTast.Add(tPendingCount);
 
@@ -350,27 +365,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
             var tPendingCustomsCount = Task.Run(() =>
             {
                 stopwatch = Stopwatch.StartNew();
-                var query = GetIQueryableDeclarationCourierStatusCountDTO(tenant, integratorId);
-                var queryWithGroup = (from a in query
-                              group a by a.DeclarationCourierCustomStatusCode into g
-                              select new
-                              {
-                                  DeclarationCourierCustomStatusCode = g.Key,
-                                  Count = g.Count(),
-                              });
-                var response = queryWithGroup.ToList();
+                my.PendingCustomsCount = GetIQueryableDeclarationCourierStatusCountDTO(tenant, integratorId).Where(x => x.DeclarationCourierCustomStatusCode == "2").Count();
                 my.TookPendingCustomsCount = stopwatch.ElapsedMilliseconds;
-
-                var total = 0;
-                foreach(var result in response)
-                {
-                    if (result.DeclarationCourierCustomStatusCode == "2")
-                    {
-                        my.PendingCustomsCount = result.Count;
-                    }
-                    total += result.Count;
-                }
-                my.OpenCourierMasterCount = total;
             });
             listOfTast.Add(tPendingCustomsCount);
 
