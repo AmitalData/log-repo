@@ -27,5 +27,17 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
            response = fakeRespond; 
             return _ResponseHeader;
         }
+
+        public void AddResponseHeader()
+        {
+
+            _ResponseHeader.CorrelationId = Guid.NewGuid().ToString();
+            _ResponseHeader.ExternalId = Guid.NewGuid().ToString();
+            _ResponseHeader.Status = "Success";
+            _ResponseHeader.ErrorDescription = "";
+            _ResponseHeader.ErrorCode = "None";
+
+
+        }
     }
 }
