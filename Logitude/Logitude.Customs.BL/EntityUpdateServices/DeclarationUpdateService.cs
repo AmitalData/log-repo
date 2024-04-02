@@ -2091,7 +2091,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                         if (!setting.IsConnectedToUniFreight)
                         {
-                            myCCUFILEM.tenant = EntityPM.Tenant;
+                            myCCUFILEM.TENANT = EntityPM.Tenant;
                         }
                     }
                 }

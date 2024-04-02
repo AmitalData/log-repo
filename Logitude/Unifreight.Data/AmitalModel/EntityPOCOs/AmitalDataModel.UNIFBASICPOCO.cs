@@ -34,7 +34,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
         /// There are no comments for tenant in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<int> tenant
+        public virtual global::System.Nullable<int> TENANT
         {
             get
             {
@@ -45,7 +45,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 if (_tenant != value)
                 {
                     _tenant = value;
-                    OnPropertyChanged("tenant");
+                    OnPropertyChanged("TENANT");
                 }
             }
         }
