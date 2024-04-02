@@ -32,6 +32,7 @@ using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.CommonDataModel;
 using System.IO;
 using System.Xml.Serialization;
+using Logitude.BL.CommonDataModel.EntityQueries;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -474,8 +475,21 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         {
                             RaiseEvent(this._MyDeclarationPM, user?.Id, status_id: "WAT", versionId: customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value, status_DateTime: _DateTime);
                         }
-                  
 
+                        if (this._MyDeclarationPM.IsDiamondDeclaration && this._MyDeclarationPM.AutoSending)
+                        {
+                            // determine if the export diamonds feature is enabled to allow autosending
+                            ICommonDataContext myContextCommon = CommonDataContext.GetContext(this._MyDeclarationPM.Tenant);
+                            FeatureRepository myFeatureRepository = new FeatureRepository(myContextCommon);
+                            FeatureQuery featureQuery = new FeatureQuery(myFeatureRepository);
+                            var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(this._MyDeclarationPM.Tenant), this._MyDeclarationPM.Tenant);
+                            var featureExportDiamonds = features.Features.FirstOrDefault(x => x.Code == "ExportDiamonds");
+
+                            if (featureExportDiamonds != null)
+                            {
+                                RaiseEvent(this._MyDeclarationPM, user?.Id, status_id: "SOY", versionId: customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value, status_DateTime: _DateTime);
+                            }
+                        }
                     }
                 }
             }

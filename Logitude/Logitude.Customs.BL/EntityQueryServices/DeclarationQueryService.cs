@@ -2517,9 +2517,21 @@ namespace Logitude.Customs.BL.EntityQueryServices
 		{
 			return this.repository.GetSignedByUserIdByCustomFileNo(tenant, customFileNo);
 		}
-		public List<DeclarationPM> GetDeclarationsByExportFile(int tenant, string exportFile)
+        public DeclarationPM GetDeclarationByExportFile(int tenant, string customFileNo)
+        {
+            Declaration declaration =this.repository.GetDeclarationsByExportFile(tenant, customFileNo);
+            DeclarationDataMapping mappings = new DeclarationDataMapping();
+            DeclarationPM declarationPM = new DeclarationPM();
+            if (declaration != null)
+            {
+                mappings.CustomPOCOToPM(declarationPM, declaration);
+                mappings.POCOToPM(declarationPM, declaration);
+            }
+            return declarationPM;
+        }
+        public List<DeclarationPM> GetDeclarationsByExportFile(int tenant, string exportFile)
 		{
-			List<Declaration> declarations = repository.GetDeclarationsByExportFile(tenant, exportFile);
+			List<Declaration> declarations = repository.GetDeclarationsByExportFileNotClose(tenant, exportFile);
 			DeclarationDataMapping mappings = new DeclarationDataMapping();
 			List<DeclarationPM> declarationPMs = new List<DeclarationPM>();
 			foreach (Declaration declaration in declarations)

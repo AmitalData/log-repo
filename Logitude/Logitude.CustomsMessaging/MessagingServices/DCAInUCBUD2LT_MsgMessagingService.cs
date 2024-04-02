@@ -560,13 +560,15 @@ namespace Logitude.CustomsMessaging.MessagingServices
             LogitudeSettings.HandleLogMe("arrived Function " + _DocumentsFilingPM?.DocumentTypeId + logData, false, "CreateUD2LTService", stopLogAt);
          
 
-            bool IsSendByDocType = false;
+            bool AutoSending = false;
             string CustomsDocumentUpload = "";
             try
             {
                 DocumentTypeQueryService documentTypeQueryService = new DocumentTypeQueryService(_DocumentsFilingPM.Tenant);
                 DocumentTypePM documentTypePM = documentTypeQueryService.GetDocumentTypeCodeById(_DocumentsFilingPM.DocumentTypeId, _DocumentsFilingPM.Tenant);
 
+                var declarationQueryService = new Logitude.Customs.BL.EntityQueryServices.DeclarationQueryService(_DocumentsFilingPM.Tenant);
+                DeclarationPM declartionPM = declarationQueryService.GetDeclarationByExportFile(_DocumentsFilingPM.Tenant, _DocumentsFilingPM.ExternalEntityReference);
                 if (documentTypePM != null && !String.IsNullOrWhiteSpace(documentTypePM.Code))
                 {
                     LogitudeSettings.HandleLogMe("documentTypePM != null " + documentTypePM?.Code + logData, false, "CreateUD2LTService", stopLogAt);
@@ -585,14 +587,20 @@ namespace Logitude.CustomsMessaging.MessagingServices
                             LogitudeSettings.HandleLogMe("customDocumentTypePM != null " + customDocumentTypePM?.CustomsDocumentUpload + logData, false, "CreateUD2LTService", stopLogAt);
                             CustomsDocumentUpload = customDocumentTypePM.CustomsDocumentUpload;
 
-                            if (customDocumentTypePM.CustomsDocumentUpload == "C")
+                            if (customDocumentTypePM.CustomsDocumentUpload == "C" )
                             {
                                 LogitudeSettings.HandleLogMe("customDocumentTypePM.CustomsDocumentUpload == C" + logData, false, "CreateUD2LTService", stopLogAt);
-                                IsSendByDocType = true;
+                                AutoSending = true;
 
                             }
                         }
                     }
+                }
+
+                if (declartionPM != null)
+                {
+                    if (declartionPM.Direction == "E" && declartionPM.IsDiamondDeclaration && declartionPM.AutoSending)
+                        AutoSending = true;
                 }
             }
             catch (Exception ee)
@@ -605,8 +613,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 logData += $"CheckIsSendByDocType:CustomsDocumentUpload:{CustomsDocumentUpload}";
             }
 
-            LogitudeSettings.HandleLogMe("IsSendByDocType"+ IsSendByDocType + logData, false, "CreateUD2LTService", stopLogAt);
-            return IsSendByDocType;
+            LogitudeSettings.HandleLogMe("AutoSending" + AutoSending + logData, false, "CreateUD2LTService", stopLogAt);
+            return AutoSending;
 
         }
 
