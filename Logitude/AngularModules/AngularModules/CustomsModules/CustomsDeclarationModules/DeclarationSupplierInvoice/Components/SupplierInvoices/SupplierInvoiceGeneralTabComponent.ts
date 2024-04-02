@@ -4644,37 +4644,56 @@ export class SupplierInvoiceItemLine extends BaseComponent {
     }
     ClassificationCodeDblClick(logCellTemplate: LogCellTemplateComponent, ClassificationTextBox) {
 
-        if (this.Parent.declarationPM.Direction != "E" || !AmitalGatewayUtil.Instance.AmitalBrowserInUse || this.Parent.declarationPM.IsConnectedToUnifreight) return;
+        // if (this.Parent.declarationPM.Direction != "E" || !AmitalGatewayUtil.Instance.AmitalBrowserInUse || this.Parent.declarationPM.IsConnectedToUnifreight) return;
 
-        if (!this.Parent.IsReadOnly) {
-            console.log("[Double Click] ", this.entityPM);
+        if (this.Parent.declarationPM.Direction != "E" || this.Parent.declarationPM.IsConnectedToUnifreight) return;
 
-            if (this.Parent.IsDisplayOnly)
-                return;
-
-            //close the cell before showing window; to avoid [true] to [false] problem
-            logCellTemplate.IsDisplayMode = true;
-            logCellTemplate.IsEditMode = false;
-
+        if (this.Parent.declarationPM.Direction == "E" && this.Parent.hasOcr && SessionLocator.FeatureToggles.find(t => t.ToggleCode === "TCR")) { // && hasToggleFeature  (simon frida)
             var logWindow = new LogitudeWindow();
             logWindow.Width = 850;
             logWindow.Height = 650;
             logWindow.Title = TextCodeTranslator.Translate("Customs.CustomsPartnersItem.Q.ItemQuery");
             logWindow.ShowCloseButton = true;
             logWindow.WindowArgs = {
-
-                searchText: this.ClassificationCode,
-                customFileNo: this.Parent.declarationPM.CustomFileNo,
-                declarationId: this.Parent.declarationPM.Id,
-
+                isFromSupplierInvoice: true,
+                ClientCode: this.Parent.declarationPM?.ExporterImporterCode,
             };
             logWindow.WindowClosed.subscribe(($event: any) => {
-
-                this.PartnerItemsDescreptionSelectionCompleted(this.entityPM, $event, logCellTemplate, ClassificationTextBox);
-
+                this.PartnerItemsSelectionCompleted(this.entityPM, $event);
             });
+            logWindow.Show('./CustomsModules/CustomsClient/Components/EditTabs/Items/ClientItemsTabComponent');
+        } else if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
 
-            logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/PartnersItemsDescreptionSelectionComponent');
+            if (!this.Parent.IsReadOnly) {
+                console.log("[Double Click] ", this.entityPM);
+
+                if (this.Parent.IsDisplayOnly)
+                    return;
+
+                //close the cell before showing window; to avoid [true] to [false] problem
+                logCellTemplate.IsDisplayMode = true;
+                logCellTemplate.IsEditMode = false;
+
+                var logWindow = new LogitudeWindow();
+                logWindow.Width = 850;
+                logWindow.Height = 650;
+                logWindow.Title = TextCodeTranslator.Translate("Customs.CustomsPartnersItem.Q.ItemQuery");
+                logWindow.ShowCloseButton = true;
+                logWindow.WindowArgs = {
+
+                    searchText: this.ClassificationCode,
+                    customFileNo: this.Parent.declarationPM.CustomFileNo,
+                    declarationId: this.Parent.declarationPM.Id,
+
+                };
+                logWindow.WindowClosed.subscribe(($event: any) => {
+
+                    this.PartnerItemsDescreptionSelectionCompleted(this.entityPM, $event, logCellTemplate, ClassificationTextBox);
+
+                });
+
+                logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/PartnersItemsDescreptionSelectionComponent');
+            }
         }
     }
     PartnerItemsDescreptionSelectionCompleted(item, partnersItem, logcelltemplate, ClassificationTextBox) {

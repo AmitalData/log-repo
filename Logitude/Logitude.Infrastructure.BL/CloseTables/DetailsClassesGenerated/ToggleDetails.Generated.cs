@@ -269,8 +269,6 @@ namespace Logitude.Infrastructure.BL
                 Description = "Ocean Insights Containers", 
 			});
 			 
-          
-
             all.Add(new ToggleDetails()
             {    
                 Name = "Reports in Shared Logistics", 
@@ -287,7 +285,6 @@ namespace Logitude.Infrastructure.BL
                 Description = "Collaboration Tool", 
 			});
 			 
-			 
             all.Add(new ToggleDetails()
             {    
                 Code = "SDE", 
@@ -302,6 +299,14 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "LCP,Lock Counter Procedure", 
                 Description = "Lock Counter Procedure", 
                 Code = "LCP", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "TCR", 
+                Name = "Toggle OCR", 
+                SearchFields = "TOCR", 
+                Description = "Toggle for OCR", 
 			});
 			
             return all;
