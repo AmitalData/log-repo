@@ -168,7 +168,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     declarationPM.PrimaryInvoiceCounterKey = declarationOrg.PrimaryInvoiceCounterKey;
                     declarationPM.ExcludeConsignment = declarationOrg.ExcludeConsignment;
                     declarationPM.IsDiamondDeclaration = declarationOrg.IsDiamondDeclaration;
-                    declarationPM.IsSubmitDeclaration = declarationOrg.IsSubmitDeclaration;
+                  //  declarationPM.IsSubmitDeclaration = declarationOrg.IsSubmitDeclaration;
                     if (declarationOrg.IsCourierDeclaration)
                     {
                         declarationPM.IsCourierDeclaration = true;
