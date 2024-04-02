@@ -77,7 +77,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         {
 
             CustomsSettingQueryService settingsQuery = new CustomsSettingQueryService(entityPM.Tenant);
-             if (!CustomsSettingQueryService.GetSettingByTenant(entityPM.Tenant).IsConnectedToUniFreight)
+            if (!CustomsSettingQueryService.GetSettingByTenant(entityPM.Tenant).IsConnectedToUniFreight)
             {
                 if (entityPM.IsDiamondDeclaration || entityPM.IsCourierDeclaration)
                 {
@@ -212,7 +212,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
 
 
-            entityPM.CreatedByUserId =contact.Id;
+            entityPM.CreatedByUserId = contact.Id;
             if ((!entityPM.IsConnectedToUnifreight && entityPM.Direction != "E" && entityPM.IsAmendment != true) ||
                 (entityPM.Direction == "E" && entityPM.IsAmendment != true && string.IsNullOrEmpty(entityPM.ReferentUserId)))
 
@@ -224,10 +224,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 if (entityPM.Direction == "E") { entityPM.DeclarationTypeCode = "2"; } else { entityPM.DeclarationTypeCode = "1"; }
 
             }
-                
-           
-          
-             
+
+
+
+
             OnCreatingExportDeclaration(entityPM);
 
         }
@@ -272,9 +272,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         if (!allAgentRoleCodes.Contains(declarationPM.AgentRoleCode))
                         {
                             throw new Exception("תפקיד סוכן - ערכים שגויים  ");
-                        }                                         
+                        }
                     }
-                    
+
 
                     break;
 
@@ -330,6 +330,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             if (!string.IsNullOrWhiteSpace(UntilDateyyyyMMdd))
             {
                 stopLogAt = DateTime.ParseExact(UntilDateyyyyMMdd, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None);
+
                 LogitudeSettings.HandleLogMe(msg + " DeclarationUpdateService.OnUpdating = declarationPM.Id: " + declarationPM.Id + ", PaymentOrderPM.PaymentNumber: " + declarationPM.PaymentOrderNumber + declarationPM.PaymentStatusCode + ", courierPaymentStatusCode: " + declarationPM.CourierPaymentStatusCode, false, "CreateUD2LTService", stopLogAt);
             }
         }
@@ -435,11 +436,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             entityPM.ShortProcedure = governmentProcedureType.ShortProcedure;
                         }
                     }
-                  
 
-                    foreach(var con in entityPM.Consignments)
+
+                    foreach (var con in entityPM.Consignments)
                     {
-                        if(con.ConsignmentType == "E")
+                        if (con.ConsignmentType == "E")
                         {
                             entityPM.ShipCode = con.ShipCode;
                             break;
@@ -448,7 +449,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
                 LogPayment("2", entityPM);
 
-                    ConsignmentPM consignment = (from a in entityPM.Consignments select a).FirstOrDefault();
+                ConsignmentPM consignment = (from a in entityPM.Consignments select a).FirstOrDefault();
                 if (consignment != null) //itzik - due below crash 
                 {
                     entityPM.ExportLoadingPortCode = consignment.ExportLoadingPortCode;
@@ -654,9 +655,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     if (canResetDeclaration)
                     {
                         var listCRS = crsQS.GetCustomsRequestsSheetByCustomFileNumber(entityPM.CustomFileNo, entityPM.Tenant);
-                        var CRS2755 = listCRS.Where(r => r.InterfaceTypeCode == interfaceTypeCode);// - מסר הגשה
+                        var CRS2755 = listCRS.Where(r => r.InterfaceTypeCode == interfaceTypeCode).ToList();// - מסר הגשה
 
-                        if (CRS2755 != null)
+                        if (CRS2755.Count > 0)
                         {
                             if (entityPM.Direction == "E")
                             {
@@ -672,14 +673,14 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                     }
                                 }
                             }
-                          
+
                         }
                     }
                     else
                     {
                         throw new Exception(TranslateTextsClass.Translate("Customs.Declaration.O.CantResetDeclarationNumberPaymentDate", entityPM.Tenant, true));
                     }
-               
+
 
                     ContactRepository contactRep = new ContactRepository(entityPM.Tenant);
 
@@ -1055,7 +1056,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         }
 
         private void UpdateReferantData(DeclarationPM entityPM)
-        {if (entityPM.Direction == "E") return;
+        {
+            if (entityPM.Direction == "E") return;
             DateTime stopLogAt = new DateTime(2021, 06, 01);
             string logData = "";
             var loggedUser = AuthenticationUtil.ResolveUserIdentityName(entityPM.Tenant);
@@ -1312,10 +1314,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 if (autonomyType != null)
                 {
                     entityPM.AutonomyRegionTypeName = autonomyType.LocalName;
-                } 
-                
+                }
+
             }
-            
+
             LogMessagingUtil.Instance.AppendLine("declarationAfterUpdating step4");
 
             if (entityPM.ImporterEntitlementTypeCode != null)
@@ -1402,9 +1404,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     entityPM.FacilityTypeName = null;
                 }
             }
- 
+
             if (entityPM.ImporterId != null)
-             {
+            {
                 ClientQueryService clientQueryService = new ClientQueryService(entityPM.Tenant);
                 ClientPM client = clientQueryService.GetSingle(entityPM.ImporterId, false, true);
                 if (client != null)
@@ -1472,7 +1474,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 bool dirty = false;
 
                 if (entityPM.Direction != "E")
-                 {
+                {
                     int index = 0;
                     foreach (Consignment item in consignments)
 
@@ -1528,11 +1530,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             itemPM.SequenceNumeric = item.SequenceNumeric;
 
                         }
-                       
+
 
                     }
                 }
-                 
+
                 if (dirty)
                 {
                     consignmentRepository.SubmitChanges();
@@ -1597,7 +1599,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         declarationCourierStatusUpdateService.ImporterCode = ImporterCode;
                     }
 
-                    DeclarationCourierStatusPM newDeclarationCourierStatusPM = declarationCourierStatusUpdateService.CalculateDeclarationCourierStatus(entityPM); 
+                    DeclarationCourierStatusPM newDeclarationCourierStatusPM = declarationCourierStatusUpdateService.CalculateDeclarationCourierStatus(entityPM);
                     if (IsFromU2L)
                     {
                         declarationCourierStatusUpdateService.TruckerId = TruckerId;
@@ -3051,618 +3053,618 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                         };
 
-                        
 
-                            item.SupplierInvoiceItemProcesTypes = supplierInvoiceItemProcesTypesQueryService.GetMulti(new SupplierInvoiceItemKeys() { DeclarationId = fromDeclarationId, CounterKey = invoiceItem.CounterKey, LineNumber = invoiceItem.LineNumber }, true, true);
 
-                            foreach (SupplierInvoiceItemProcesTypePM ItemProcesTypes in item.SupplierInvoiceItemProcesTypes)
+                        item.SupplierInvoiceItemProcesTypes = supplierInvoiceItemProcesTypesQueryService.GetMulti(new SupplierInvoiceItemKeys() { DeclarationId = fromDeclarationId, CounterKey = invoiceItem.CounterKey, LineNumber = invoiceItem.LineNumber }, true, true);
+
+                        foreach (SupplierInvoiceItemProcesTypePM ItemProcesTypes in item.SupplierInvoiceItemProcesTypes)
+                        {
+                            SupplierInvoiceItemProcesTypePM ItemProcesTypePM = new SupplierInvoiceItemProcesTypePM()
                             {
-                                SupplierInvoiceItemProcesTypePM ItemProcesTypePM = new SupplierInvoiceItemProcesTypePM()
-                                {
-                                    DeclarationId = toDeclaration.Id,
-                                    InvoiceCounterKey = ItemProcesTypes.InvoiceCounterKey,
-                                    InvoiceItemLineNumber = ItemProcesTypes.InvoiceItemLineNumber,
-                                    LineNumber = ItemProcesTypes.LineNumber,
-                                    Tenant = toDeclaration.Tenant,
-                                    ProcessTypeCode = ItemProcesTypes.ProcessTypeCode,
-                                    ProcessTypeName = ItemProcesTypes.ProcessTypeName,
-                                    ChangeSetOp = ChangeSetOperation.Insert,
+                                DeclarationId = toDeclaration.Id,
+                                InvoiceCounterKey = ItemProcesTypes.InvoiceCounterKey,
+                                InvoiceItemLineNumber = ItemProcesTypes.InvoiceItemLineNumber,
+                                LineNumber = ItemProcesTypes.LineNumber,
+                                Tenant = toDeclaration.Tenant,
+                                ProcessTypeCode = ItemProcesTypes.ProcessTypeCode,
+                                ProcessTypeName = ItemProcesTypes.ProcessTypeName,
+                                ChangeSetOp = ChangeSetOperation.Insert,
 
-                                };
-                                invoiceItem.SupplierInvoiceItemProcesTypes.Add(ItemProcesTypePM);
-                            }
-                            //SupplierInvoiceItemsMods
-                            item.SupplierInvoiceItemsMods = supplierInvoiceItemsModsQueryService.GetMulti(new SupplierInvoiceItemKeys() { DeclarationId = fromDeclarationId, CounterKey = invoiceItem.CounterKey, LineNumber = invoiceItem.LineNumber }, true, true);
+                            };
+                            invoiceItem.SupplierInvoiceItemProcesTypes.Add(ItemProcesTypePM);
+                        }
+                        //SupplierInvoiceItemsMods
+                        item.SupplierInvoiceItemsMods = supplierInvoiceItemsModsQueryService.GetMulti(new SupplierInvoiceItemKeys() { DeclarationId = fromDeclarationId, CounterKey = invoiceItem.CounterKey, LineNumber = invoiceItem.LineNumber }, true, true);
 
-                            foreach (SupplierInvoiceItemsModPM ItemsMods in item.SupplierInvoiceItemsMods)
+                        foreach (SupplierInvoiceItemsModPM ItemsMods in item.SupplierInvoiceItemsMods)
+                        {
+                            SupplierInvoiceItemsModPM ItemsModsPM = new SupplierInvoiceItemsModPM()
                             {
-                                SupplierInvoiceItemsModPM ItemsModsPM = new SupplierInvoiceItemsModPM()
-                                {
-                                    DeclarationId = toDeclaration.Id,
-                                    InvoiceCounterKey = ItemsMods.InvoiceCounterKey,
-                                    TypeCode = ItemsMods.TypeCode,
-                                    LineNumber = ItemsMods.LineNumber,
-                                    Tenant = toDeclaration.Tenant,
-                                    CurrencyTypeCode = ItemsMods.CurrencyTypeCode,
-                                    Amount = ItemsMods.Amount,
-                                    TypeName = ItemsMods.TypeName,
-                                    CurrencyTypeName = ItemsMods.CurrencyTypeName,
-                                    ModificationCounterKey = ItemsMods.ModificationCounterKey,
-                                    ChangeSetOp = ChangeSetOperation.Insert,
+                                DeclarationId = toDeclaration.Id,
+                                InvoiceCounterKey = ItemsMods.InvoiceCounterKey,
+                                TypeCode = ItemsMods.TypeCode,
+                                LineNumber = ItemsMods.LineNumber,
+                                Tenant = toDeclaration.Tenant,
+                                CurrencyTypeCode = ItemsMods.CurrencyTypeCode,
+                                Amount = ItemsMods.Amount,
+                                TypeName = ItemsMods.TypeName,
+                                CurrencyTypeName = ItemsMods.CurrencyTypeName,
+                                ModificationCounterKey = ItemsMods.ModificationCounterKey,
+                                ChangeSetOp = ChangeSetOperation.Insert,
 
-                                };
-                                invoiceItem.SupplierInvoiceItemsMods.Add(ItemsModsPM);
-                            }
-                            //SupplierInvoiceItemsMods
-                            item.SupplierInvoiceItemsMods = supplierInvoiceItemsModsQueryService.GetMulti(new SupplierInvoiceItemKeys() { DeclarationId = fromDeclarationId, CounterKey = invoiceItem.CounterKey, LineNumber = invoiceItem.LineNumber }, true, true);
+                            };
+                            invoiceItem.SupplierInvoiceItemsMods.Add(ItemsModsPM);
+                        }
+                        //SupplierInvoiceItemsMods
+                        item.SupplierInvoiceItemsMods = supplierInvoiceItemsModsQueryService.GetMulti(new SupplierInvoiceItemKeys() { DeclarationId = fromDeclarationId, CounterKey = invoiceItem.CounterKey, LineNumber = invoiceItem.LineNumber }, true, true);
 
-                            foreach (SupplierInvoiceItemsModPM ItemsMods in item.SupplierInvoiceItemsMods)
+                        foreach (SupplierInvoiceItemsModPM ItemsMods in item.SupplierInvoiceItemsMods)
+                        {
+                            SupplierInvoiceItemsModPM ItemsModsPM = new SupplierInvoiceItemsModPM()
                             {
-                                SupplierInvoiceItemsModPM ItemsModsPM = new SupplierInvoiceItemsModPM()
-                                {
-                                    DeclarationId = toDeclaration.Id,
-                                    InvoiceCounterKey = ItemsMods.InvoiceCounterKey,
-                                    TypeCode = ItemsMods.TypeCode,
-                                    LineNumber = ItemsMods.LineNumber,
-                                    Tenant = toDeclaration.Tenant,
-                                    CurrencyTypeCode = ItemsMods.CurrencyTypeCode,
-                                    Amount = ItemsMods.Amount,
-                                    TypeName = ItemsMods.TypeName,
-                                    CurrencyTypeName = ItemsMods.CurrencyTypeName,
-                                    ModificationCounterKey = ItemsMods.ModificationCounterKey,
-                                    ChangeSetOp = ChangeSetOperation.Insert,
+                                DeclarationId = toDeclaration.Id,
+                                InvoiceCounterKey = ItemsMods.InvoiceCounterKey,
+                                TypeCode = ItemsMods.TypeCode,
+                                LineNumber = ItemsMods.LineNumber,
+                                Tenant = toDeclaration.Tenant,
+                                CurrencyTypeCode = ItemsMods.CurrencyTypeCode,
+                                Amount = ItemsMods.Amount,
+                                TypeName = ItemsMods.TypeName,
+                                CurrencyTypeName = ItemsMods.CurrencyTypeName,
+                                ModificationCounterKey = ItemsMods.ModificationCounterKey,
+                                ChangeSetOp = ChangeSetOperation.Insert,
 
-                                };
-                                invoiceItem.SupplierInvoiceItemsMods.Add(ItemsModsPM);
-                            }
-
-                            try
-                            {
-                                item.SupplierInvoiceItemsPrices = supplierInvoiceItemsPricesQueryService.GetMulti(new SupplierInvoiceItemKeys() { DeclarationId = fromDeclarationId, CounterKey = invoiceItem.CounterKey, LineNumber = invoiceItem.LineNumber }, true, true);
-                            }
-                            catch (Exception ex)
-                            {
-                                Exception message = ex;
-
-                            }
-                            //SupplierInvoiceItemsPrices
-
-                            foreach (SupplierInvoiceItemsPricePM ItemsPrices in item.SupplierInvoiceItemsPrices)
-                            {
-                                SupplierInvoiceItemsPricePM ItemsPricesPM = new SupplierInvoiceItemsPricePM()
-                                {
-                                    DeclarationId = toDeclaration.Id,
-                                    InvoiceCounterKey = ItemsPrices.InvoiceCounterKey,
-                                    InvoiceItemLineNumber = ItemsPrices.InvoiceItemLineNumber,
-                                    LineNumber = ItemsPrices.LineNumber,
-                                    Tenant = toDeclaration.Tenant,
-                                    AdditionalPriceTypeCode = ItemsPrices.AdditionalPriceTypeCode,
-                                    AdditionalPriceTypeName = ItemsPrices.AdditionalPriceTypeName,
-                                    AdditionalPrice = ItemsPrices.AdditionalPrice,
-                                    ChangeSetOp = ChangeSetOperation.Insert,
-
-                                };
-                                invoiceItem.SupplierInvoiceItemsPrices.Add(ItemsPricesPM);
-                            }
-
-                            //SuppInvoiceItemsAbachStatements
-                            item.SuppInvoiceItemsAbachStatements = suppInvoiceItemsAbachStatementQueryService.GetMulti(new SupplierInvoiceItemKeys() { DeclarationId = fromDeclarationId, CounterKey = invoiceItem.CounterKey, LineNumber = invoiceItem.LineNumber }, true, true);
-
-                            foreach (SuppInvoiceItemsAbachStatementPM ItemsAbachStatements in item.SuppInvoiceItemsAbachStatements)
-                            {
-                                SuppInvoiceItemsAbachStatementPM ItemsAbachStatementsPM = new SuppInvoiceItemsAbachStatementPM()
-                                {
-                                    DeclarationId = toDeclaration.Id,
-                                    InvoiceCounterKey = ItemsAbachStatements.InvoiceCounterKey,
-                                    InvoiceItemLineNumber = ItemsAbachStatements.InvoiceItemLineNumber,
-                                    SequenceNumeric = ItemsAbachStatements.SequenceNumeric,
-                                    Tenant = toDeclaration.Tenant,
-                                    StatementTypeCode = ItemsAbachStatements.StatementTypeCode,
-                                    IsStatementInd = ItemsAbachStatements.IsStatementInd,
-                                    StatementTypeName = ItemsAbachStatements.StatementTypeName,
-                                    ChangeSetOp = ChangeSetOperation.Insert,
-
-                                };
-                                invoiceItem.SuppInvoiceItemsAbachStatements.Add(ItemsAbachStatementsPM);
-                            }
-
-                            //SupplierInvoiceItemLevies
-                            item.SupplierInvoiceItemLevies = supplierInvoiceItemsLevyQueryService.GetMulti(new SupplierInvoiceItemKeys() { DeclarationId = fromDeclarationId, CounterKey = invoiceItem.CounterKey, LineNumber = invoiceItem.LineNumber }, true, true);
-
-                            foreach (SupplierInvoiceItemsLevyPM ItemLevy in item.SupplierInvoiceItemLevies)
-                            {
-                                SupplierInvoiceItemsLevyPM ItemLevyPM = new SupplierInvoiceItemsLevyPM()
-                                {
-                                    DeclarationId = toDeclaration.Id,
-                                    InvoiceCounterKey = ItemLevy.InvoiceCounterKey,
-                                    InvoiceItemLineNumber = ItemLevy.InvoiceItemLineNumber,
-                                    LineNumber = ItemLevy.LineNumber,
-                                    Tenant = toDeclaration.Tenant,
-                                    TradeLevyExamptCode = ItemLevy.TradeLevyExamptCode,
-                                    TradeLevyNumber = ItemLevy.TradeLevyNumber,
-                                    TradeLevyExamptName = ItemLevy.TradeLevyExamptName,
-                                    ChangeSetOp = ChangeSetOperation.Insert,
-
-                                };
-                                invoiceItem.SupplierInvoiceItemLevies.Add(ItemLevyPM);
-                            }
-                            //SupplierInvoiceItemsConDeclars
-
-                            item.SupplierInvoiceItemsConDeclars = supplierInvoiceItemsConDeclarQueryService.GetMulti(new SupplierInvoiceItemKeys() { DeclarationId = fromDeclarationId, CounterKey = invoiceItem.CounterKey, LineNumber = invoiceItem.LineNumber }, true, true);
-
-                            foreach (SupplierInvoiceItemsConDeclarPM ItemsConDeclar in item.SupplierInvoiceItemsConDeclars)
-                            {
-                                SupplierInvoiceItemsConDeclarPM ItemsConDeclarPM = new SupplierInvoiceItemsConDeclarPM()
-                                {
-                                    DeclarationId = toDeclaration.Id,
-                                    InvoiceCounterKey = ItemsConDeclar.InvoiceCounterKey,
-                                    InvoiceItemLineNumber = ItemsConDeclar.InvoiceItemLineNumber,
-                                    LineNumber = ItemsConDeclar.LineNumber,
-                                    Tenant = toDeclaration.Tenant,
-                                    DeclarationNumber = ItemsConDeclar.DeclarationNumber,
-                                    ItemSequence = ItemsConDeclar.ItemSequence,
-                                    DeclarationTypeCode = ItemsConDeclar.DeclarationTypeCode,
-                                    InvoiceNumber = ItemsConDeclar.InvoiceNumber,
-                                    Quantity = ItemsConDeclar.Quantity,
-                                    DeclarationTypeName = ItemsConDeclar.DeclarationTypeName,
-                                    QuantityTypeCode = ItemsConDeclar.QuantityTypeCode,
-                                    QuantityTypeName = ItemsConDeclar.QuantityTypeName,
-                                    ChangeSetOp = ChangeSetOperation.Insert,
-
-                                };
-                                invoiceItem.SupplierInvoiceItemsConDeclars.Add(ItemsConDeclarPM);
-                            }
-                            //SupplierInvoiceItemsDescripts
-
-                            item.SupplierInvoiceItemsDescripts = supplierInvoiceItemsDescriptQueryService.GetMulti(new SupplierInvoiceItemKeys() { DeclarationId = fromDeclarationId, CounterKey = invoiceItem.CounterKey, LineNumber = invoiceItem.LineNumber }, true, true);
-
-                            foreach (SupplierInvoiceItemsDescriptPM ItemsDescript in item.SupplierInvoiceItemsDescripts)
-                            {
-                                SupplierInvoiceItemsDescriptPM ItemsDescriptPM = new SupplierInvoiceItemsDescriptPM()
-                                {
-                                    DeclarationId = toDeclaration.Id,
-                                    InvoiceCounterKey = ItemsDescript.InvoiceCounterKey,
-                                    InvoiceItemLineNumber = ItemsDescript.InvoiceItemLineNumber,
-                                    LineNumber = ItemsDescript.LineNumber,
-                                    Tenant = toDeclaration.Tenant,
-                                    TypeCode = ItemsDescript.TypeCode,
-                                    Description = ItemsDescript.Description,
-                                    TypeName = ItemsDescript.TypeName,
-                                    ChangeSetOp = ChangeSetOperation.Insert,
-
-                                };
-                                invoiceItem.SupplierInvoiceItemsDescripts.Add(ItemsDescriptPM);
-                            }
-                            //SupplierInvoiceItemsProdIdents
-                            item.SupplierInvoiceItemsProdIdents = supplierInvoiceItemsProdIdentQueryService.GetMulti(new SupplierInvoiceItemKeys() { DeclarationId = fromDeclarationId, CounterKey = invoiceItem.CounterKey, LineNumber = invoiceItem.LineNumber }, true, true);
-
-                            foreach (SupplierInvoiceItemsProdIdentPM ItemsProdIdent in item.SupplierInvoiceItemsProdIdents)
-                            {
-                                SupplierInvoiceItemsProdIdentPM ItemsProdIdentPM = new SupplierInvoiceItemsProdIdentPM()
-                                {
-                                    DeclarationId = toDeclaration.Id,
-                                    InvoiceCounterKey = ItemsProdIdent.InvoiceCounterKey,
-                                    InvoiceItemLineNumber = ItemsProdIdent.InvoiceItemLineNumber,
-                                    LineNumber = ItemsProdIdent.LineNumber,
-                                    Tenant = toDeclaration.Tenant,
-                                    TypeCode = ItemsProdIdent.TypeCode,
-                                    Identification = ItemsProdIdent.Identification,
-                                    TypeName = ItemsProdIdent.TypeName,
-                                    ChangeSetOp = ChangeSetOperation.Insert,
-
-                                };
-                                invoiceItem.SupplierInvoiceItemsProdIdents.Add(ItemsProdIdentPM);
-                            }
-                            //SupplierInvoiceItemsSerialNums
-                            item.SupplierInvoiceItemsSerialNums = supplierInvoiceItemsSerialNumQueryService.GetMulti(new SupplierInvoiceItemKeys() { DeclarationId = fromDeclarationId, CounterKey = invoiceItem.CounterKey, LineNumber = invoiceItem.LineNumber }, true, true);
-
-                            foreach (SupplierInvoiceItemsSerialNumPM ItemsSerialNum in item.SupplierInvoiceItemsSerialNums)
-                            {
-                                SupplierInvoiceItemsSerialNumPM ItemsSerialNumPM = new SupplierInvoiceItemsSerialNumPM()
-                                {
-                                    DeclarationId = toDeclaration.Id,
-                                    InvoiceCounterKey = ItemsSerialNum.InvoiceCounterKey,
-                                    InvoiceItemLineNumber = ItemsSerialNum.InvoiceItemLineNumber,
-                                    LineNumber = ItemsSerialNum.LineNumber,
-                                    Tenant = toDeclaration.Tenant,
-                                    TypeCode = ItemsSerialNum.TypeCode,
-                                    SerialNumber = ItemsSerialNum.SerialNumber,
-                                    TypeName = ItemsSerialNum.TypeName,
-                                    ChangeSetOp = ChangeSetOperation.Insert,
-
-                                };
-                                invoiceItem.SupplierInvoiceItemsSerialNums.Add(ItemsSerialNumPM);
-                            }
-
-                            //
-
-
-                            //item.SupplierInvioceItemCertificats = supplierInvioceItemCertificatQueryService.GetMulti(new SupplierInvoiceItemKeys() { DeclarationId = fromDeclarationId, CounterKey = invoicePM.InvoiceCounterKey, LineNumber = item.LineNumber }, true, true); 
-
-                            //foreach (SupplierInvioceItemCertificatPM certificate in item.SupplierInvioceItemCertificats)
-                            //{
-                            //    SupplierInvioceItemCertificatPM certificatePM = new SupplierInvioceItemCertificatPM()
-                            //    {
-                            //        DeclarationId = toDeclaration.Id,
-                            //        InvoiceCounterKey = certificate.InvoiceCounterKey,
-                            //        LineNumber = certificate.LineNumber,
-                            //        Tenant = certificate.Tenant,
-                            //        ItemCertificateCounterKey = certificate.ItemCertificateCounterKey,
-                            //        CertificateNumber = certificate.CertificateNumber,
-                            //        AttachmentTypeCode = certificate.AttachmentTypeCode,
-                            //        AttachmentTypeName = certificate.AttachmentTypeName,
-                            //        CustomsAttachmentID = certificate.CustomsAttachmentID,
-                            //        CertificateExemptionTypeCode = certificate.CertificateExemptionTypeCode,
-                            //        CertificateExemptionTypeName = certificate.CertificateExemptionTypeName,
-                            //        ReqConfirmationTypeCode = certificate.ReqConfirmationTypeCode,
-                            //        ReqConfirmationTypeName = certificate.ReqConfirmationTypeName,
-                            //        ResConfirmationTypeCode = certificate.ResConfirmationTypeCode,
-                            //        ResConfirmationTypeName = certificate.ResConfirmationTypeName,
-                            //        ChangeSetOp = ChangeSetOperation.Insert,
-
-
-                            //    };
-
-                            //    invoiceItem.SupplierInvioceItemCertificats.Add(certificatePM);
-                            //}
-
-
-                            //foreach (SupplierInvoiceItemsConDeclarPM connectedDeclaration in item.SupplierInvoiceItemsConDeclars)
-                            //{
-                            //    SupplierInvoiceItemsConDeclarPM connectedDeclarationPM = new SupplierInvoiceItemsConDeclarPM()
-                            //    {
-                            //        DeclarationId = toDeclaration.Id,
-                            //        DeclarationNumber = toDeclaration.DeclarationNumber,
-                            //        DeclarationTypeCode = connectedDeclaration.DeclarationTypeCode,
-                            //        DeclarationTypeName = connectedDeclaration.DeclarationTypeName,
-                            //        InvoiceNumber = connectedDeclaration.InvoiceNumber,
-                            //        Quantity = connectedDeclaration.Quantity,
-                            //        Tenant = toDeclaration.Tenant,
-                            //        InvoiceCounterKey = connectedDeclaration.InvoiceCounterKey,
-                            //        InvoiceItemLineNumber = connectedDeclaration.InvoiceItemLineNumber,
-                            //        ItemSequence = connectedDeclaration.ItemSequence,
-                            //        LineNumber = connectedDeclaration.LineNumber
-                            //    };
-
-                            //    invoiceItem.SupplierInvoiceItemsConDeclars.Add(connectedDeclarationPM);
-
-                            //}
-
-                            //foreach (SupplierInvoiceItemsDescriptPM desc in item.SupplierInvoiceItemsDescripts)
-                            //{
-                            //    SupplierInvoiceItemsDescriptPM descreption = new SupplierInvoiceItemsDescriptPM()
-                            //        {
-                            //            DeclarationId = toDeclaration.Id,
-                            //            TypeCode = desc.TypeCode,
-                            //            TypeName = desc.TypeName,
-                            //            Description = desc.Description,
-                            //            InvoiceCounterKey = desc.InvoiceCounterKey,
-                            //            InvoiceItemLineNumber = desc.InvoiceItemLineNumber,
-                            //            LineNumber = desc.LineNumber,
-                            //            Tenant = desc.Tenant
-                            //        };
-
-                            //    invoiceItem.SupplierInvoiceItemsDescripts.Add(descreption);
-                            //}
-
-                            //foreach (SupplierInvoiceItemsLevyPM levy in item.SupplierInvoiceItemLevies)
-                            //{
-                            //    SupplierInvoiceItemsLevyPM levyPM = new SupplierInvoiceItemsLevyPM()
-                            //    {
-                            //        DeclarationId = toDeclaration.Id,
-                            //        Tenant = toDeclaration.Tenant,
-                            //        TradeLevyExamptCode = levy.TradeLevyExamptCode,
-                            //        TradeLevyExamptName = levy.TradeLevyExamptName,
-                            //        TradeLevyNumber = levy.TradeLevyNumber,
-                            //        InvoiceCounterKey = levy.InvoiceCounterKey,
-                            //        InvoiceItemLineNumber = levy.InvoiceItemLineNumber,
-                            //        LineNumber = levy.LineNumber
-
-                            //    };
-
-                            //    invoiceItem.SupplierInvoiceItemLevies.Add(levyPM);
-                            //}
-
-                            //foreach (SupplierInvoiceItemsModPM mod in item.SupplierInvoiceItemsMods)
-                            //{
-                            //    SupplierInvoiceItemsModPM modPM = new SupplierInvoiceItemsModPM()
-                            //    {
-                            //        DeclarationId = toDeclaration.Id,
-                            //        Tenant = toDeclaration.Tenant,
-                            //        Amount = mod.Amount,
-                            //        CurrencyTypeCode = mod.CurrencyTypeCode,
-                            //        CurrencyTypeName = mod.CurrencyTypeName,
-                            //        TypeCode = mod.TypeCode,
-                            //        TypeName = mod.TypeName,
-                            //        InvoiceCounterKey = mod.InvoiceCounterKey,
-                            //        LineNumber = mod.LineNumber,
-                            //        ModificationCounterKey = mod.ModificationCounterKey
-
-
-
-                            //    };
-
-                            //    invoiceItem.SupplierInvoiceItemsMods.Add(modPM);
-                            //}
-
-                            //foreach (SupplierInvoiceItemsProdIdentPM productIdent in item.SupplierInvoiceItemsProdIdents)
-                            //{
-                            //    SupplierInvoiceItemsProdIdentPM productIdentPM = new SupplierInvoiceItemsProdIdentPM()
-                            //    {
-                            //        DeclarationId = toDeclaration.Id,
-                            //        Tenant = toDeclaration.Tenant,
-                            //        Identification = productIdent.Identification,
-                            //        TypeCode = productIdent.TypeCode,
-                            //        TypeName = productIdent.TypeName,
-                            //        InvoiceCounterKey = productIdent.InvoiceCounterKey,
-                            //        LineNumber = productIdent.LineNumber,
-                            //        InvoiceItemLineNumber = productIdent.InvoiceItemLineNumber
-
-                            //    };
-
-                            //    invoiceItem.SupplierInvoiceItemsProdIdents.Add(productIdentPM);
-                            //}
-
-                            //foreach (SupplierInvoiceItemsSerialNumPM serialNum in item.SupplierInvoiceItemsSerialNums)
-                            //{
-                            //    SupplierInvoiceItemsSerialNumPM serialNumPM = new SupplierInvoiceItemsSerialNumPM()
-                            //    {
-                            //        DeclarationId = toDeclaration.Id,
-                            //        Tenant = toDeclaration.Tenant,
-                            //        SerialNumber = serialNum.SerialNumber,
-
-                            //        TypeCode = serialNum.TypeCode,
-                            //        TypeName = serialNum.TypeName,
-                            //        InvoiceCounterKey = serialNum.InvoiceCounterKey,
-                            //        LineNumber = serialNum.LineNumber,
-                            //        InvoiceItemLineNumber = serialNum.InvoiceItemLineNumber
-
-                            //    };
-
-                            //    invoiceItem.SupplierInvoiceItemsSerialNums.Add(serialNumPM);
-                            //}
-
-                            //foreach (SupplierInvoiceItemVehiclePM vehicle in item.SupplierInvoiceItemVehicles)
-                            //{
-                            //    SupplierInvoiceItemVehiclePM vehiclePM = new SupplierInvoiceItemVehiclePM()
-                            //    {
-                            //        DeclarationId = toDeclaration.Id,
-                            //        Tenant = toDeclaration.Tenant,
-                            //        RichbitFileNumber = vehicle.RichbitFileNumber,
-                            //        RichbitFileStatus = vehicle.RichbitFileStatus,
-                            //        VehicleChassisNumber = vehicle.VehicleChassisNumber,
-                            //        VehicleTypeCode = vehicle.VehicleTypeCode,
-                            //        VehicleId = vehicle.VehicleId,
-                            //        InvoiceCounterKey = vehicle.InvoiceCounterKey,
-                            //        LineNumber = vehicle.LineNumber,
-                            //        InvoiceItemLineNumber = vehicle.InvoiceItemLineNumber,
-
-                            //        SequenceNumeric = vehicle.SequenceNumeric,
-                            //    };
-
-                            //    invoiceItem.SupplierInvoiceItemVehicles.Add(vehiclePM);
-                            //}
-
-
-                            invoicePM.SupplierInvoiceItems.Add(invoiceItem);
-
+                            };
+                            invoiceItem.SupplierInvoiceItemsMods.Add(ItemsModsPM);
                         }
 
+                        try
+                        {
+                            item.SupplierInvoiceItemsPrices = supplierInvoiceItemsPricesQueryService.GetMulti(new SupplierInvoiceItemKeys() { DeclarationId = fromDeclarationId, CounterKey = invoiceItem.CounterKey, LineNumber = invoiceItem.LineNumber }, true, true);
+                        }
+                        catch (Exception ex)
+                        {
+                            Exception message = ex;
 
-                        GetSupplierInvoiceModifications(toDeclarationId, fromDeclarationId, tenant, fromDeclaration.Direction, invoice, invoicePM);
+                        }
+                        //SupplierInvoiceItemsPrices
 
-                        SupplierInvoiceUpdateService invoiceUpdateService = new SupplierInvoiceUpdateService(context, new Dictionary<string, IContext>(), tenant);
-                        invoiceUpdateService.Update(invoicePM, true);
-                        //     CustomsStoredProcedures.CopySupplierInvoiceItems(fromDeclarationId, toDeclarationId,invoicePM.InvoiceCounterKey,  tenant);
+                        foreach (SupplierInvoiceItemsPricePM ItemsPrices in item.SupplierInvoiceItemsPrices)
+                        {
+                            SupplierInvoiceItemsPricePM ItemsPricesPM = new SupplierInvoiceItemsPricePM()
+                            {
+                                DeclarationId = toDeclaration.Id,
+                                InvoiceCounterKey = ItemsPrices.InvoiceCounterKey,
+                                InvoiceItemLineNumber = ItemsPrices.InvoiceItemLineNumber,
+                                LineNumber = ItemsPrices.LineNumber,
+                                Tenant = toDeclaration.Tenant,
+                                AdditionalPriceTypeCode = ItemsPrices.AdditionalPriceTypeCode,
+                                AdditionalPriceTypeName = ItemsPrices.AdditionalPriceTypeName,
+                                AdditionalPrice = ItemsPrices.AdditionalPrice,
+                                ChangeSetOp = ChangeSetOperation.Insert,
+
+                            };
+                            invoiceItem.SupplierInvoiceItemsPrices.Add(ItemsPricesPM);
+                        }
+
+                        //SuppInvoiceItemsAbachStatements
+                        item.SuppInvoiceItemsAbachStatements = suppInvoiceItemsAbachStatementQueryService.GetMulti(new SupplierInvoiceItemKeys() { DeclarationId = fromDeclarationId, CounterKey = invoiceItem.CounterKey, LineNumber = invoiceItem.LineNumber }, true, true);
+
+                        foreach (SuppInvoiceItemsAbachStatementPM ItemsAbachStatements in item.SuppInvoiceItemsAbachStatements)
+                        {
+                            SuppInvoiceItemsAbachStatementPM ItemsAbachStatementsPM = new SuppInvoiceItemsAbachStatementPM()
+                            {
+                                DeclarationId = toDeclaration.Id,
+                                InvoiceCounterKey = ItemsAbachStatements.InvoiceCounterKey,
+                                InvoiceItemLineNumber = ItemsAbachStatements.InvoiceItemLineNumber,
+                                SequenceNumeric = ItemsAbachStatements.SequenceNumeric,
+                                Tenant = toDeclaration.Tenant,
+                                StatementTypeCode = ItemsAbachStatements.StatementTypeCode,
+                                IsStatementInd = ItemsAbachStatements.IsStatementInd,
+                                StatementTypeName = ItemsAbachStatements.StatementTypeName,
+                                ChangeSetOp = ChangeSetOperation.Insert,
+
+                            };
+                            invoiceItem.SuppInvoiceItemsAbachStatements.Add(ItemsAbachStatementsPM);
+                        }
+
+                        //SupplierInvoiceItemLevies
+                        item.SupplierInvoiceItemLevies = supplierInvoiceItemsLevyQueryService.GetMulti(new SupplierInvoiceItemKeys() { DeclarationId = fromDeclarationId, CounterKey = invoiceItem.CounterKey, LineNumber = invoiceItem.LineNumber }, true, true);
+
+                        foreach (SupplierInvoiceItemsLevyPM ItemLevy in item.SupplierInvoiceItemLevies)
+                        {
+                            SupplierInvoiceItemsLevyPM ItemLevyPM = new SupplierInvoiceItemsLevyPM()
+                            {
+                                DeclarationId = toDeclaration.Id,
+                                InvoiceCounterKey = ItemLevy.InvoiceCounterKey,
+                                InvoiceItemLineNumber = ItemLevy.InvoiceItemLineNumber,
+                                LineNumber = ItemLevy.LineNumber,
+                                Tenant = toDeclaration.Tenant,
+                                TradeLevyExamptCode = ItemLevy.TradeLevyExamptCode,
+                                TradeLevyNumber = ItemLevy.TradeLevyNumber,
+                                TradeLevyExamptName = ItemLevy.TradeLevyExamptName,
+                                ChangeSetOp = ChangeSetOperation.Insert,
+
+                            };
+                            invoiceItem.SupplierInvoiceItemLevies.Add(ItemLevyPM);
+                        }
+                        //SupplierInvoiceItemsConDeclars
+
+                        item.SupplierInvoiceItemsConDeclars = supplierInvoiceItemsConDeclarQueryService.GetMulti(new SupplierInvoiceItemKeys() { DeclarationId = fromDeclarationId, CounterKey = invoiceItem.CounterKey, LineNumber = invoiceItem.LineNumber }, true, true);
+
+                        foreach (SupplierInvoiceItemsConDeclarPM ItemsConDeclar in item.SupplierInvoiceItemsConDeclars)
+                        {
+                            SupplierInvoiceItemsConDeclarPM ItemsConDeclarPM = new SupplierInvoiceItemsConDeclarPM()
+                            {
+                                DeclarationId = toDeclaration.Id,
+                                InvoiceCounterKey = ItemsConDeclar.InvoiceCounterKey,
+                                InvoiceItemLineNumber = ItemsConDeclar.InvoiceItemLineNumber,
+                                LineNumber = ItemsConDeclar.LineNumber,
+                                Tenant = toDeclaration.Tenant,
+                                DeclarationNumber = ItemsConDeclar.DeclarationNumber,
+                                ItemSequence = ItemsConDeclar.ItemSequence,
+                                DeclarationTypeCode = ItemsConDeclar.DeclarationTypeCode,
+                                InvoiceNumber = ItemsConDeclar.InvoiceNumber,
+                                Quantity = ItemsConDeclar.Quantity,
+                                DeclarationTypeName = ItemsConDeclar.DeclarationTypeName,
+                                QuantityTypeCode = ItemsConDeclar.QuantityTypeCode,
+                                QuantityTypeName = ItemsConDeclar.QuantityTypeName,
+                                ChangeSetOp = ChangeSetOperation.Insert,
+
+                            };
+                            invoiceItem.SupplierInvoiceItemsConDeclars.Add(ItemsConDeclarPM);
+                        }
+                        //SupplierInvoiceItemsDescripts
+
+                        item.SupplierInvoiceItemsDescripts = supplierInvoiceItemsDescriptQueryService.GetMulti(new SupplierInvoiceItemKeys() { DeclarationId = fromDeclarationId, CounterKey = invoiceItem.CounterKey, LineNumber = invoiceItem.LineNumber }, true, true);
+
+                        foreach (SupplierInvoiceItemsDescriptPM ItemsDescript in item.SupplierInvoiceItemsDescripts)
+                        {
+                            SupplierInvoiceItemsDescriptPM ItemsDescriptPM = new SupplierInvoiceItemsDescriptPM()
+                            {
+                                DeclarationId = toDeclaration.Id,
+                                InvoiceCounterKey = ItemsDescript.InvoiceCounterKey,
+                                InvoiceItemLineNumber = ItemsDescript.InvoiceItemLineNumber,
+                                LineNumber = ItemsDescript.LineNumber,
+                                Tenant = toDeclaration.Tenant,
+                                TypeCode = ItemsDescript.TypeCode,
+                                Description = ItemsDescript.Description,
+                                TypeName = ItemsDescript.TypeName,
+                                ChangeSetOp = ChangeSetOperation.Insert,
+
+                            };
+                            invoiceItem.SupplierInvoiceItemsDescripts.Add(ItemsDescriptPM);
+                        }
+                        //SupplierInvoiceItemsProdIdents
+                        item.SupplierInvoiceItemsProdIdents = supplierInvoiceItemsProdIdentQueryService.GetMulti(new SupplierInvoiceItemKeys() { DeclarationId = fromDeclarationId, CounterKey = invoiceItem.CounterKey, LineNumber = invoiceItem.LineNumber }, true, true);
+
+                        foreach (SupplierInvoiceItemsProdIdentPM ItemsProdIdent in item.SupplierInvoiceItemsProdIdents)
+                        {
+                            SupplierInvoiceItemsProdIdentPM ItemsProdIdentPM = new SupplierInvoiceItemsProdIdentPM()
+                            {
+                                DeclarationId = toDeclaration.Id,
+                                InvoiceCounterKey = ItemsProdIdent.InvoiceCounterKey,
+                                InvoiceItemLineNumber = ItemsProdIdent.InvoiceItemLineNumber,
+                                LineNumber = ItemsProdIdent.LineNumber,
+                                Tenant = toDeclaration.Tenant,
+                                TypeCode = ItemsProdIdent.TypeCode,
+                                Identification = ItemsProdIdent.Identification,
+                                TypeName = ItemsProdIdent.TypeName,
+                                ChangeSetOp = ChangeSetOperation.Insert,
+
+                            };
+                            invoiceItem.SupplierInvoiceItemsProdIdents.Add(ItemsProdIdentPM);
+                        }
+                        //SupplierInvoiceItemsSerialNums
+                        item.SupplierInvoiceItemsSerialNums = supplierInvoiceItemsSerialNumQueryService.GetMulti(new SupplierInvoiceItemKeys() { DeclarationId = fromDeclarationId, CounterKey = invoiceItem.CounterKey, LineNumber = invoiceItem.LineNumber }, true, true);
+
+                        foreach (SupplierInvoiceItemsSerialNumPM ItemsSerialNum in item.SupplierInvoiceItemsSerialNums)
+                        {
+                            SupplierInvoiceItemsSerialNumPM ItemsSerialNumPM = new SupplierInvoiceItemsSerialNumPM()
+                            {
+                                DeclarationId = toDeclaration.Id,
+                                InvoiceCounterKey = ItemsSerialNum.InvoiceCounterKey,
+                                InvoiceItemLineNumber = ItemsSerialNum.InvoiceItemLineNumber,
+                                LineNumber = ItemsSerialNum.LineNumber,
+                                Tenant = toDeclaration.Tenant,
+                                TypeCode = ItemsSerialNum.TypeCode,
+                                SerialNumber = ItemsSerialNum.SerialNumber,
+                                TypeName = ItemsSerialNum.TypeName,
+                                ChangeSetOp = ChangeSetOperation.Insert,
+
+                            };
+                            invoiceItem.SupplierInvoiceItemsSerialNums.Add(ItemsSerialNumPM);
+                        }
+
+                        //
+
+
+                        //item.SupplierInvioceItemCertificats = supplierInvioceItemCertificatQueryService.GetMulti(new SupplierInvoiceItemKeys() { DeclarationId = fromDeclarationId, CounterKey = invoicePM.InvoiceCounterKey, LineNumber = item.LineNumber }, true, true); 
+
+                        //foreach (SupplierInvioceItemCertificatPM certificate in item.SupplierInvioceItemCertificats)
+                        //{
+                        //    SupplierInvioceItemCertificatPM certificatePM = new SupplierInvioceItemCertificatPM()
+                        //    {
+                        //        DeclarationId = toDeclaration.Id,
+                        //        InvoiceCounterKey = certificate.InvoiceCounterKey,
+                        //        LineNumber = certificate.LineNumber,
+                        //        Tenant = certificate.Tenant,
+                        //        ItemCertificateCounterKey = certificate.ItemCertificateCounterKey,
+                        //        CertificateNumber = certificate.CertificateNumber,
+                        //        AttachmentTypeCode = certificate.AttachmentTypeCode,
+                        //        AttachmentTypeName = certificate.AttachmentTypeName,
+                        //        CustomsAttachmentID = certificate.CustomsAttachmentID,
+                        //        CertificateExemptionTypeCode = certificate.CertificateExemptionTypeCode,
+                        //        CertificateExemptionTypeName = certificate.CertificateExemptionTypeName,
+                        //        ReqConfirmationTypeCode = certificate.ReqConfirmationTypeCode,
+                        //        ReqConfirmationTypeName = certificate.ReqConfirmationTypeName,
+                        //        ResConfirmationTypeCode = certificate.ResConfirmationTypeCode,
+                        //        ResConfirmationTypeName = certificate.ResConfirmationTypeName,
+                        //        ChangeSetOp = ChangeSetOperation.Insert,
+
+
+                        //    };
+
+                        //    invoiceItem.SupplierInvioceItemCertificats.Add(certificatePM);
+                        //}
+
+
+                        //foreach (SupplierInvoiceItemsConDeclarPM connectedDeclaration in item.SupplierInvoiceItemsConDeclars)
+                        //{
+                        //    SupplierInvoiceItemsConDeclarPM connectedDeclarationPM = new SupplierInvoiceItemsConDeclarPM()
+                        //    {
+                        //        DeclarationId = toDeclaration.Id,
+                        //        DeclarationNumber = toDeclaration.DeclarationNumber,
+                        //        DeclarationTypeCode = connectedDeclaration.DeclarationTypeCode,
+                        //        DeclarationTypeName = connectedDeclaration.DeclarationTypeName,
+                        //        InvoiceNumber = connectedDeclaration.InvoiceNumber,
+                        //        Quantity = connectedDeclaration.Quantity,
+                        //        Tenant = toDeclaration.Tenant,
+                        //        InvoiceCounterKey = connectedDeclaration.InvoiceCounterKey,
+                        //        InvoiceItemLineNumber = connectedDeclaration.InvoiceItemLineNumber,
+                        //        ItemSequence = connectedDeclaration.ItemSequence,
+                        //        LineNumber = connectedDeclaration.LineNumber
+                        //    };
+
+                        //    invoiceItem.SupplierInvoiceItemsConDeclars.Add(connectedDeclarationPM);
+
+                        //}
+
+                        //foreach (SupplierInvoiceItemsDescriptPM desc in item.SupplierInvoiceItemsDescripts)
+                        //{
+                        //    SupplierInvoiceItemsDescriptPM descreption = new SupplierInvoiceItemsDescriptPM()
+                        //        {
+                        //            DeclarationId = toDeclaration.Id,
+                        //            TypeCode = desc.TypeCode,
+                        //            TypeName = desc.TypeName,
+                        //            Description = desc.Description,
+                        //            InvoiceCounterKey = desc.InvoiceCounterKey,
+                        //            InvoiceItemLineNumber = desc.InvoiceItemLineNumber,
+                        //            LineNumber = desc.LineNumber,
+                        //            Tenant = desc.Tenant
+                        //        };
+
+                        //    invoiceItem.SupplierInvoiceItemsDescripts.Add(descreption);
+                        //}
+
+                        //foreach (SupplierInvoiceItemsLevyPM levy in item.SupplierInvoiceItemLevies)
+                        //{
+                        //    SupplierInvoiceItemsLevyPM levyPM = new SupplierInvoiceItemsLevyPM()
+                        //    {
+                        //        DeclarationId = toDeclaration.Id,
+                        //        Tenant = toDeclaration.Tenant,
+                        //        TradeLevyExamptCode = levy.TradeLevyExamptCode,
+                        //        TradeLevyExamptName = levy.TradeLevyExamptName,
+                        //        TradeLevyNumber = levy.TradeLevyNumber,
+                        //        InvoiceCounterKey = levy.InvoiceCounterKey,
+                        //        InvoiceItemLineNumber = levy.InvoiceItemLineNumber,
+                        //        LineNumber = levy.LineNumber
+
+                        //    };
+
+                        //    invoiceItem.SupplierInvoiceItemLevies.Add(levyPM);
+                        //}
+
+                        //foreach (SupplierInvoiceItemsModPM mod in item.SupplierInvoiceItemsMods)
+                        //{
+                        //    SupplierInvoiceItemsModPM modPM = new SupplierInvoiceItemsModPM()
+                        //    {
+                        //        DeclarationId = toDeclaration.Id,
+                        //        Tenant = toDeclaration.Tenant,
+                        //        Amount = mod.Amount,
+                        //        CurrencyTypeCode = mod.CurrencyTypeCode,
+                        //        CurrencyTypeName = mod.CurrencyTypeName,
+                        //        TypeCode = mod.TypeCode,
+                        //        TypeName = mod.TypeName,
+                        //        InvoiceCounterKey = mod.InvoiceCounterKey,
+                        //        LineNumber = mod.LineNumber,
+                        //        ModificationCounterKey = mod.ModificationCounterKey
+
+
+
+                        //    };
+
+                        //    invoiceItem.SupplierInvoiceItemsMods.Add(modPM);
+                        //}
+
+                        //foreach (SupplierInvoiceItemsProdIdentPM productIdent in item.SupplierInvoiceItemsProdIdents)
+                        //{
+                        //    SupplierInvoiceItemsProdIdentPM productIdentPM = new SupplierInvoiceItemsProdIdentPM()
+                        //    {
+                        //        DeclarationId = toDeclaration.Id,
+                        //        Tenant = toDeclaration.Tenant,
+                        //        Identification = productIdent.Identification,
+                        //        TypeCode = productIdent.TypeCode,
+                        //        TypeName = productIdent.TypeName,
+                        //        InvoiceCounterKey = productIdent.InvoiceCounterKey,
+                        //        LineNumber = productIdent.LineNumber,
+                        //        InvoiceItemLineNumber = productIdent.InvoiceItemLineNumber
+
+                        //    };
+
+                        //    invoiceItem.SupplierInvoiceItemsProdIdents.Add(productIdentPM);
+                        //}
+
+                        //foreach (SupplierInvoiceItemsSerialNumPM serialNum in item.SupplierInvoiceItemsSerialNums)
+                        //{
+                        //    SupplierInvoiceItemsSerialNumPM serialNumPM = new SupplierInvoiceItemsSerialNumPM()
+                        //    {
+                        //        DeclarationId = toDeclaration.Id,
+                        //        Tenant = toDeclaration.Tenant,
+                        //        SerialNumber = serialNum.SerialNumber,
+
+                        //        TypeCode = serialNum.TypeCode,
+                        //        TypeName = serialNum.TypeName,
+                        //        InvoiceCounterKey = serialNum.InvoiceCounterKey,
+                        //        LineNumber = serialNum.LineNumber,
+                        //        InvoiceItemLineNumber = serialNum.InvoiceItemLineNumber
+
+                        //    };
+
+                        //    invoiceItem.SupplierInvoiceItemsSerialNums.Add(serialNumPM);
+                        //}
+
+                        //foreach (SupplierInvoiceItemVehiclePM vehicle in item.SupplierInvoiceItemVehicles)
+                        //{
+                        //    SupplierInvoiceItemVehiclePM vehiclePM = new SupplierInvoiceItemVehiclePM()
+                        //    {
+                        //        DeclarationId = toDeclaration.Id,
+                        //        Tenant = toDeclaration.Tenant,
+                        //        RichbitFileNumber = vehicle.RichbitFileNumber,
+                        //        RichbitFileStatus = vehicle.RichbitFileStatus,
+                        //        VehicleChassisNumber = vehicle.VehicleChassisNumber,
+                        //        VehicleTypeCode = vehicle.VehicleTypeCode,
+                        //        VehicleId = vehicle.VehicleId,
+                        //        InvoiceCounterKey = vehicle.InvoiceCounterKey,
+                        //        LineNumber = vehicle.LineNumber,
+                        //        InvoiceItemLineNumber = vehicle.InvoiceItemLineNumber,
+
+                        //        SequenceNumeric = vehicle.SequenceNumeric,
+                        //    };
+
+                        //    invoiceItem.SupplierInvoiceItemVehicles.Add(vehiclePM);
+                        //}
+
+
+                        invoicePM.SupplierInvoiceItems.Add(invoiceItem);
+
                     }
 
-                    //CustomsStoredProcedures.CopySupplierInvoiceItems(fromDeclarationId, toDeclarationId, tenant);
-                    //CustomsStoredProcedures.CopySupplierInvoiceItemsCer(fromDeclarationId, toDeclarationId, tenant);
 
-                    //toDeclaration.SupplierInvoices.Add(invoicePM);
+                    GetSupplierInvoiceModifications(toDeclarationId, fromDeclarationId, tenant, fromDeclaration.Direction, invoice, invoicePM);
 
-                    scope.Complete();
-
+                    SupplierInvoiceUpdateService invoiceUpdateService = new SupplierInvoiceUpdateService(context, new Dictionary<string, IContext>(), tenant);
+                    invoiceUpdateService.Update(invoicePM, true);
+                    //     CustomsStoredProcedures.CopySupplierInvoiceItems(fromDeclarationId, toDeclarationId,invoicePM.InvoiceCounterKey,  tenant);
                 }
 
-                //SaveCurrentEntityChangesEvent saveEntityChanges = currentAssemlyLocator.CurrentEditControlViewModel.eventAggregator.GetEvent<SaveCurrentEntityChangesEvent>();
-                //saveEntityChanges.Publish(new SaveCurrentEntityChangesEventArgs());
+                //CustomsStoredProcedures.CopySupplierInvoiceItems(fromDeclarationId, toDeclarationId, tenant);
+                //CustomsStoredProcedures.CopySupplierInvoiceItemsCer(fromDeclarationId, toDeclarationId, tenant);
 
-                //RefreshScreenAfterReloadWithNewContextEvent RefreshScreenAfterReloadWithNewContext = currentAssemlyLocator.CurrentEditControlViewModel.eventAggregator.GetEvent<RefreshScreenAfterReloadWithNewContextEvent>();
-                //RefreshScreenAfterReloadWithNewContext.Publish(new RefreshScreenAfterReloadWithNewContextEventArgs() { ObjectTableName = "Customs.Declaration", CurrentEntity = entityPM, Context = declarationViewModel.context });
+                //toDeclaration.SupplierInvoices.Add(invoicePM);
 
-                // declarationViewModel.context.SubmitChanges();
-
-                //declarationSelectionWindow.Close();
-                //declarationSelectionWindow = null;
-
-
-                return true;
+                scope.Complete();
 
             }
 
-            private void GetSupplierInvoiceModifications(string toDeclarationId, string fromDeclarationId, int tenant, string declarationDirection, SupplierInvoicePM supplierInvoicePMOrg, SupplierInvoicePM supplierInvoicePMNew)
+            //SaveCurrentEntityChangesEvent saveEntityChanges = currentAssemlyLocator.CurrentEditControlViewModel.eventAggregator.GetEvent<SaveCurrentEntityChangesEvent>();
+            //saveEntityChanges.Publish(new SaveCurrentEntityChangesEventArgs());
+
+            //RefreshScreenAfterReloadWithNewContextEvent RefreshScreenAfterReloadWithNewContext = currentAssemlyLocator.CurrentEditControlViewModel.eventAggregator.GetEvent<RefreshScreenAfterReloadWithNewContextEvent>();
+            //RefreshScreenAfterReloadWithNewContext.Publish(new RefreshScreenAfterReloadWithNewContextEventArgs() { ObjectTableName = "Customs.Declaration", CurrentEntity = entityPM, Context = declarationViewModel.context });
+
+            // declarationViewModel.context.SubmitChanges();
+
+            //declarationSelectionWindow.Close();
+            //declarationSelectionWindow = null;
+
+
+            return true;
+
+        }
+
+        private void GetSupplierInvoiceModifications(string toDeclarationId, string fromDeclarationId, int tenant, string declarationDirection, SupplierInvoicePM supplierInvoicePMOrg, SupplierInvoicePM supplierInvoicePMNew)
+        {
+            if (declarationDirection != "E") return;
+
+            supplierInvoicePMOrg.SupplierInvoiceModifications = new SupplierInvoiceModificationQueryService(tenant).GetMulti(new SupplierInvoiceKeys() { DeclarationId = fromDeclarationId, InvoiceCounterKey = supplierInvoicePMNew.InvoiceCounterKey }, true, true);
+
+            List<SupplierInvoiceModificationPM> supplierInvoiceItemPMs = new List<SupplierInvoiceModificationPM>();
+            var sims = supplierInvoicePMOrg.SupplierInvoiceModifications;
+            sims.ForEach(sim =>
             {
-                if (declarationDirection != "E") return;
-
-                supplierInvoicePMOrg.SupplierInvoiceModifications = new SupplierInvoiceModificationQueryService(tenant).GetMulti(new SupplierInvoiceKeys() { DeclarationId = fromDeclarationId, InvoiceCounterKey = supplierInvoicePMNew.InvoiceCounterKey }, true, true);
-
-                List<SupplierInvoiceModificationPM> supplierInvoiceItemPMs = new List<SupplierInvoiceModificationPM>();
-                var sims = supplierInvoicePMOrg.SupplierInvoiceModifications;
-                sims.ForEach(sim =>
+                supplierInvoiceItemPMs.Add(new SupplierInvoiceModificationPM
                 {
-                    supplierInvoiceItemPMs.Add(new SupplierInvoiceModificationPM
-                    {
-                        ChangeSetOp = ChangeSetOperation.Insert,
-                        DeclarationId = toDeclarationId,
-                        InvoiceCounterKey = sim.InvoiceCounterKey,
-                        ModificationCounterKey = sim.ModificationCounterKey,
-                        TypeCode = sim.TypeCode,
-                        Tenant = sim.Tenant,
-                        CurrencyTypeCode = sim.CurrencyTypeCode,
-                        Amount = sim.Amount,
-                        TypeDesc = sim.TypeDesc
-                    });
+                    ChangeSetOp = ChangeSetOperation.Insert,
+                    DeclarationId = toDeclarationId,
+                    InvoiceCounterKey = sim.InvoiceCounterKey,
+                    ModificationCounterKey = sim.ModificationCounterKey,
+                    TypeCode = sim.TypeCode,
+                    Tenant = sim.Tenant,
+                    CurrencyTypeCode = sim.CurrencyTypeCode,
+                    Amount = sim.Amount,
+                    TypeDesc = sim.TypeDesc
                 });
+            });
 
-                supplierInvoicePMNew.SupplierInvoiceModifications = supplierInvoiceItemPMs;
-            }
+            supplierInvoicePMNew.SupplierInvoiceModifications = supplierInvoiceItemPMs;
+        }
 
 
-            public SendDeclarationChecksResult DoSendDeclarationChekcs(string declarationId, int tenant)
+        public SendDeclarationChecksResult DoSendDeclarationChekcs(string declarationId, int tenant)
+        {
+            //-----------------------Defenitions-------------------------------//
+            ICustomContext myContext = CustomContext.GetContext(tenant);
+            DeclarationQueryService declarationQueryService = new EntityQueryServices.DeclarationQueryService(myContext);
+            ClientQueryService clientQueryService = new ClientQueryService(myContext);
+            CustomsExchangeRateQueryService exchangeRateQueryService = new CustomsExchangeRateQueryService(myContext);
+
+            //--------------------Getting single declaration---------------------------------------//
+            declarationQueryService.LoadSupplierInvoicesWithItems = false;
+            DeclarationPM declaration = declarationQueryService.GetSingle(declarationId, true, false);
+
+            //-----------------Clients Check----------------//
+            if (!string.IsNullOrEmpty(declaration.ImporterCode))
             {
-                //-----------------------Defenitions-------------------------------//
-                ICustomContext myContext = CustomContext.GetContext(tenant);
-                DeclarationQueryService declarationQueryService = new EntityQueryServices.DeclarationQueryService(myContext);
-                ClientQueryService clientQueryService = new ClientQueryService(myContext);
-                CustomsExchangeRateQueryService exchangeRateQueryService = new CustomsExchangeRateQueryService(myContext);
-
-                //--------------------Getting single declaration---------------------------------------//
-                declarationQueryService.LoadSupplierInvoicesWithItems = false;
-                DeclarationPM declaration = declarationQueryService.GetSingle(declarationId, true, false);
-
-                //-----------------Clients Check----------------//
-                if (!string.IsNullOrEmpty(declaration.ImporterCode))
+                ClientPM client = clientQueryService.GetClientByCode(declaration.ImporterCode, tenant);
+                if (client != null)
                 {
-                    ClientPM client = clientQueryService.GetClientByCode(declaration.ImporterCode, tenant);
-                    if (client != null)
-                    {
-                        declaration.ImporterId = client.Id;
-                    }
-                    //else //this check doesn't happen in silverlight...
-                    //{
-                    //    SendDeclarationChecksResult result = new Contracts.SendDeclarationChecksResult();
-                    //    result.HasError = true;
-                    //    result.ErrorMessages = new List<string>();
-                    //    result.ErrorMessages.Add("יש לשלוף יבואן מהמכס לפני שליחה");
-                    //    result.ErrorsType = "Customs.General.O.PreSendValidations";
-                    //    return result;
-                    //}
+                    declaration.ImporterId = client.Id;
                 }
-                //--------------------------------------------------------//
+                //else //this check doesn't happen in silverlight...
+                //{
+                //    SendDeclarationChecksResult result = new Contracts.SendDeclarationChecksResult();
+                //    result.HasError = true;
+                //    result.ErrorMessages = new List<string>();
+                //    result.ErrorMessages.Add("יש לשלוף יבואן מהמכס לפני שליחה");
+                //    result.ErrorsType = "Customs.General.O.PreSendValidations";
+                //    return result;
+                //}
+            }
+            //--------------------------------------------------------//
 
-                //----------------------exchange rates checks-----------------------//
-                if (declaration.SupplierInvoices != null)
+            //----------------------exchange rates checks-----------------------//
+            if (declaration.SupplierInvoices != null)
+            {
+                if (declaration.SupplierInvoices.Count > 0)
                 {
-                    if (declaration.SupplierInvoices.Count > 0)
+                    List<string> codesList = new List<string>();
+                    //Get all Currency types
+                    foreach (var supplierInvoice in declaration.SupplierInvoices)
                     {
-                        List<string> codesList = new List<string>();
-                        //Get all Currency types
-                        foreach (var supplierInvoice in declaration.SupplierInvoices)
+                        if (!string.IsNullOrWhiteSpace(supplierInvoice.InvoiceCurrencyTypeCode))
                         {
-                            if (!string.IsNullOrWhiteSpace(supplierInvoice.InvoiceCurrencyTypeCode))
+                            codesList.Add(supplierInvoice.InvoiceCurrencyTypeCode);
+                        }
+                        foreach (var supplierInvoiceFreightAmounts in supplierInvoice.SupplierInvoiceFreightAmounts)
+                        {
+                            if (!string.IsNullOrWhiteSpace(supplierInvoiceFreightAmounts.CurrencyTypeCode))
                             {
-                                codesList.Add(supplierInvoice.InvoiceCurrencyTypeCode);
+                                codesList.Add(supplierInvoiceFreightAmounts.CurrencyTypeCode);
                             }
-                            foreach (var supplierInvoiceFreightAmounts in supplierInvoice.SupplierInvoiceFreightAmounts)
+                        }
+                    }
+
+                    codesList = codesList.Distinct<string>().ToList();
+                    string codes = string.Join(",", codesList.ToArray());
+                    List<CustomsExchangeRatePM> myCustomsExchangeRatePMList = exchangeRateQueryService.GetExchangeRateByCurrencyAndDate(codes, declaration.TaxationDateTime, tenant);
+                    foreach (var supplierInvoice in declaration.SupplierInvoices.Where(rec => !string.IsNullOrWhiteSpace(rec.InvoiceCurrencyTypeCode)))
+                    {
+                        Decimal? invoiceExchangeRate = 1;
+                        Decimal? amountExchangeRate = 1;
+                        Decimal? totalFreightInInvoiceCurrency = 0;
+                        Decimal? totalFreightInNIS = 0;
+                        //Get the Exchange Rate for the Invoice Currency type
+                        CustomsExchangeRatePM rate = myCustomsExchangeRatePMList.FirstOrDefault(obj => obj.CurrencyTypeCode == supplierInvoice.InvoiceCurrencyTypeCode);
+                        if (rate != null)
+                        {
+                            if (!string.IsNullOrWhiteSpace(rate.ExchangeRate.ToString()))
                             {
-                                if (!string.IsNullOrWhiteSpace(supplierInvoiceFreightAmounts.CurrencyTypeCode))
-                                {
-                                    codesList.Add(supplierInvoiceFreightAmounts.CurrencyTypeCode);
-                                }
+                                invoiceExchangeRate = rate.ExchangeRate;
                             }
                         }
 
-                        codesList = codesList.Distinct<string>().ToList();
-                        string codes = string.Join(",", codesList.ToArray());
-                        List<CustomsExchangeRatePM> myCustomsExchangeRatePMList = exchangeRateQueryService.GetExchangeRateByCurrencyAndDate(codes, declaration.TaxationDateTime, tenant);
-                        foreach (var supplierInvoice in declaration.SupplierInvoices.Where(rec => !string.IsNullOrWhiteSpace(rec.InvoiceCurrencyTypeCode)))
+                        //Go over all Freight Amounts for the Invoice
+                        foreach (var supplierInvoiceFreightAmounts in supplierInvoice.SupplierInvoiceFreightAmounts)
                         {
-                            Decimal? invoiceExchangeRate = 1;
-                            Decimal? amountExchangeRate = 1;
-                            Decimal? totalFreightInInvoiceCurrency = 0;
-                            Decimal? totalFreightInNIS = 0;
-                            //Get the Exchange Rate for the Invoice Currency type
-                            CustomsExchangeRatePM rate = myCustomsExchangeRatePMList.FirstOrDefault(obj => obj.CurrencyTypeCode == supplierInvoice.InvoiceCurrencyTypeCode);
+                            //Get the Exchange Rate for the Freight Amount Currency type
+                            rate = myCustomsExchangeRatePMList.FirstOrDefault(obj => obj.CurrencyTypeCode == supplierInvoiceFreightAmounts.CurrencyTypeCode);
                             if (rate != null)
                             {
                                 if (!string.IsNullOrWhiteSpace(rate.ExchangeRate.ToString()))
                                 {
-                                    invoiceExchangeRate = rate.ExchangeRate;
+                                    amountExchangeRate = rate.ExchangeRate;
                                 }
                             }
-
-                            //Go over all Freight Amounts for the Invoice
-                            foreach (var supplierInvoiceFreightAmounts in supplierInvoice.SupplierInvoiceFreightAmounts)
-                            {
-                                //Get the Exchange Rate for the Freight Amount Currency type
-                                rate = myCustomsExchangeRatePMList.FirstOrDefault(obj => obj.CurrencyTypeCode == supplierInvoiceFreightAmounts.CurrencyTypeCode);
-                                if (rate != null)
-                                {
-                                    if (!string.IsNullOrWhiteSpace(rate.ExchangeRate.ToString()))
-                                    {
-                                        amountExchangeRate = rate.ExchangeRate;
-                                    }
-                                }
-                                //SUM
-                                totalFreightInInvoiceCurrency = totalFreightInInvoiceCurrency + ((supplierInvoiceFreightAmounts.Amount * amountExchangeRate) / invoiceExchangeRate);
-                                //SUM in ILS
-                                totalFreightInNIS = totalFreightInNIS + (supplierInvoiceFreightAmounts.Amount * amountExchangeRate);
-                            }
-                            //supplierInvoice.TotalFreightInInvoiceCurrency = LogitudeUtilities.Round(totalFreightInInvoiceCurrency, 2);
+                            //SUM
+                            totalFreightInInvoiceCurrency = totalFreightInInvoiceCurrency + ((supplierInvoiceFreightAmounts.Amount * amountExchangeRate) / invoiceExchangeRate);
                             //SUM in ILS
-                            supplierInvoice.TotalFreightInNIS = this.Round(totalFreightInNIS, 2);
+                            totalFreightInNIS = totalFreightInNIS + (supplierInvoiceFreightAmounts.Amount * amountExchangeRate);
                         }
+                        //supplierInvoice.TotalFreightInInvoiceCurrency = LogitudeUtilities.Round(totalFreightInInvoiceCurrency, 2);
+                        //SUM in ILS
+                        supplierInvoice.TotalFreightInNIS = this.Round(totalFreightInNIS, 2);
                     }
                 }
-                //---------------save updated data for declaration and invoices--------------//
-                this.Update(declaration, true);
+            }
+            //---------------save updated data for declaration and invoices--------------//
+            this.Update(declaration, true);
 
 
-                var res = new Def.Contracts.SendDeclarationChecksResult() { HasError = false };
+            var res = new Def.Contracts.SendDeclarationChecksResult() { HasError = false };
 
-                if (declaration.Direction != "E")
+            if (declaration.Direction != "E")
+            {
+                var siWithInsurance = declaration.SupplierInvoices.Where(r => r.InsuranceAmount.HasValue).ToList();
+                if (siWithInsurance.Count > 1)
                 {
-                    var siWithInsurance = declaration.SupplierInvoices.Where(r => r.InsuranceAmount.HasValue).ToList();
-                    if (siWithInsurance.Count > 1)
+
+                    var siWithValues = siWithInsurance.Where(r => r.InsuranceAmount > 0).ToList();
+                    if (siWithValues.Count > 1)
                     {
 
-                        var siWithValues = siWithInsurance.Where(r => r.InsuranceAmount > 0).ToList();
-                        if (siWithValues.Count > 1)
-                        {
-
-                            res.HasError = true;
-                            res.ErrorMessages = new List<string>() { "קיים יותר מחשבון ספק אחד עם ערך בשדה ביטוח " };
-
-                        }
-
-
+                        res.HasError = true;
+                        res.ErrorMessages = new List<string>() { "קיים יותר מחשבון ספק אחד עם ערך בשדה ביטוח " };
 
                     }
 
+
+
                 }
 
-
-                return res;//new Contracts.SendDeclarationChecksResult() { HasError = false };
             }
 
-            public decimal? Round(object value, int digits)
+
+            return res;//new Contracts.SendDeclarationChecksResult() { HasError = false };
+        }
+
+        public decimal? Round(object value, int digits)
+        {
+            double? myValue = null;
+            if (value != null)
             {
-                double? myValue = null;
-                if (value != null)
-                {
-                    myValue = Convert.ToDouble(value);
-                }
-
-                double? myResult = myValue;
-
-                if (myValue != null && digits >= 1 && digits <= 15)
-                {
-                    string mySTR = String.Format("{0:N" + digits + "}", myValue);
-
-                    myResult = Convert.ToDouble(mySTR);
-                }
-
-                if (myResult == null)
-                {
-                    return null;
-                }
-
-                else
-                {
-                    return (decimal)myResult;
-                }
+                myValue = Convert.ToDouble(value);
             }
+
+            double? myResult = myValue;
+
+            if (myValue != null && digits >= 1 && digits <= 15)
+            {
+                string mySTR = String.Format("{0:N" + digits + "}", myValue);
+
+                myResult = Convert.ToDouble(mySTR);
+            }
+
+            if (myResult == null)
+            {
+                return null;
+            }
+
+            else
+            {
+                return (decimal)myResult;
+            }
+        }
 
 
 
@@ -3895,11 +3897,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                 DeclarationQueryService query = new DeclarationQueryService(customContext);
                 var errors12195 = query.GetDeclarationErrors(myDeclarationPM.Id, tenant, null).Where(x => x.ErrorType == "12195").ToList();
-                foreach(var error in errors12195)
+                foreach (var error in errors12195)
                 {
-                    var line = error.Line-1;
-                    var ParentLine = error.ParentLine-1;
-                    if (line >= 0 && ParentLine >=0 && myDeclarationPM.SupplierInvoices.Count > ParentLine)
+                    var line = error.Line - 1;
+                    var ParentLine = error.ParentLine - 1;
+                    if (line >= 0 && ParentLine >= 0 && myDeclarationPM.SupplierInvoices.Count > ParentLine)
                     {
                         if (myDeclarationPM.SupplierInvoices[ParentLine.Value].SupplierInvoiceItems.Count >= line)
                         {
@@ -3911,7 +3913,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         }
                     }
                 }
-              
+
                 if (myDeclarationPM.ChangeSetOp == ChangeSetOperation.Update)
                 {
                     DeclarationUpdateService service = new DeclarationUpdateService(customContext, new Dictionary<string, IContext>(), myDeclarationPM.Tenant);
