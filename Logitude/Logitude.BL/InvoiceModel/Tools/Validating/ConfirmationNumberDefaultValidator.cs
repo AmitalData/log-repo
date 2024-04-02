@@ -43,7 +43,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
     {
         public static void Validate(ConfirmationNumberDefaultPM entityPM, IInvoiceContext myContext)
         {
-           var value = myContext.ConfirmationNumberDefaults .FirstOrDefault(a => DbFunctions.TruncateTime(a.FromDate)== DbFunctions.TruncateTime(entityPM.FromDate));
+           var value = myContext.ConfirmationNumberDefaults .FirstOrDefault(a => DbFunctions.TruncateTime(a.FromDate)== DbFunctions.TruncateTime(entityPM.FromDate) && a.Tenant==entityPM.Tenant);
            
             if (value!=null)
             {
