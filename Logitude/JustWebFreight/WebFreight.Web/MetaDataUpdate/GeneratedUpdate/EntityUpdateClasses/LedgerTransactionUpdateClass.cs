@@ -85,8 +85,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class LedgerTransactionUpdateClass
    {  		
-		public const string HashString = "c5cadb232b0acd9591b243cde1547ff3";
-	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
+ 
+		public const string HashString = "ff0171faa94ed261900c51749fb1991a";
+ 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
@@ -455,10 +456,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreateDate",
 					  						DefaultText =  "Create Date",
-					  						FullLocalDefaultText =  "תאריך יצירה",
+					  						FullLocalDefaultText =  "תםריך יצירה",
 					  						ListFieldLable =  "CreateDateListLable",
 					  						ListLableDefaultText =  "Create Date",
-					  						ListLocalDefaultText =  "תאריך יצירה",
+					  						ListLocalDefaultText =  "תםריך יצירה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -656,10 +657,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AccountingDate",
 					  						DefaultText =  "Accounting Date",
-					  						FullLocalDefaultText =  "תאריך חשבונאי",
+					  						FullLocalDefaultText =  "תםריך חשבונםי",
 					  						ListFieldLable =  "AccountingDateListLable",
 					  						ListLableDefaultText =  "Accounting Date",
-					  						ListLocalDefaultText =  "תאריך חשבונאי",
+					  						ListLocalDefaultText =  "תםריך חשבונםי",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -721,10 +722,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DocumentDate",
 					  						DefaultText =  "Document Date",
-					  						FullLocalDefaultText =  "תאריך אסמכתא",
+					  						FullLocalDefaultText =  "תםריך םסמכתם",
 					  						ListFieldLable =  "DocumentDateListLable",
 					  						ListLableDefaultText =  "Document Date",
-					  						ListLocalDefaultText =  "תאריך אסמכתא",
+					  						ListLocalDefaultText =  "תםריך םסמכתם",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -786,10 +787,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DueDate",
 					  						DefaultText =  "Due Date",
-					  						FullLocalDefaultText =  "תאריך פרעון",
+					  						FullLocalDefaultText =  "תםריך פרעון",
 					  						ListFieldLable =  "DueDateListLable",
 					  						ListLableDefaultText =  "Due Date",
-					  						ListLocalDefaultText =  "תאריך פרעון",
+					  						ListLocalDefaultText =  "תםריך פרעון",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1254,10 +1255,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Reference1",
 					  						DefaultText =  "Reference1",
-					  						FullLocalDefaultText =  "אסמכתא 1",
+					  						FullLocalDefaultText =  "םסמכתם 1",
 					  						ListFieldLable =  "Reference1ListLable",
 					  						ListLableDefaultText =  "Reference1",
-					  						ListLocalDefaultText =  "אסמכתא 1",
+					  						ListLocalDefaultText =  "םסמכתם 1",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1319,10 +1320,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Reference2",
 					  						DefaultText =  "Reference2",
-					  						FullLocalDefaultText =  "אסמכתא 2",
+					  						FullLocalDefaultText =  "םסמכתם 2",
 					  						ListFieldLable =  "Reference2ListLable",
 					  						ListLableDefaultText =  "Reference2",
-					  						ListLocalDefaultText =  "אסמכתא 2",
+					  						ListLocalDefaultText =  "םסמכתם 2",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1384,10 +1385,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Reference3",
 					  						DefaultText =  "Reference3",
-					  						FullLocalDefaultText =  "אסמכתא 3",
+					  						FullLocalDefaultText =  "םסמכתם 3",
 					  						ListFieldLable =  "Reference3ListLable",
 					  						ListLableDefaultText =  "Reference3",
-					  						ListLocalDefaultText =  "אסמכתא 3",
+					  						ListLocalDefaultText =  "םסמכתם 3",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1583,10 +1584,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SearchFields",
 					  						DefaultText =  "Journal No. / Reference",
-					  						FullLocalDefaultText =  "מס פקודת יומן/ אסמכתא",
+					  						FullLocalDefaultText =  "מס פקודת יומן/ םסמכתם",
 					  						ListFieldLable =  "SearchFieldsListLable",
 					  						ListLableDefaultText =  "Journal No. / Reference",
-					  						ListLocalDefaultText =  "מס פקודת יומן/ אסמכתא",
+					  						ListLocalDefaultText =  "מס פקודת יומן/ םסמכתם",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2177,10 +2178,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AmountToReconcile",
 					  						DefaultText =  "Amount to Reconcile",
-					  						FullLocalDefaultText =  "סכום להתאמה",
+					  						FullLocalDefaultText =  "סכום להתםמה",
 					  						ListFieldLable =  "AmountToReconcileListLable",
 					  						ListLableDefaultText =  "Amount to Reconcile",
-					  						ListLocalDefaultText =  "סכום להתאמה",
+					  						ListLocalDefaultText =  "סכום להתםמה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2372,10 +2373,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsReconciled",
 					  						DefaultText =  "Is Reconciled",
-					  						FullLocalDefaultText =  "בוצעה התאמה",
+					  						FullLocalDefaultText =  "בוצעה התםמה",
 					  						ListFieldLable =  "IsReconciledListLable",
 					  						ListLableDefaultText =  "Is Reconciled",
-					  						ListLocalDefaultText =  "בוצעה התאמה",
+					  						ListLocalDefaultText =  "בוצעה התםמה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2878,10 +2879,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsExternalReconcile",
 					  						DefaultText =  "Is External Reconcile",
-					  						FullLocalDefaultText =  "מותאם חיצונית",
+					  						FullLocalDefaultText =  "מותםם חיצונית",
 					  						ListFieldLable =  "IsExternalReconcileListLable",
 					  						ListLableDefaultText =  "Is External Reconcile",
-					  						ListLocalDefaultText =  "מותאם חיצונית",
+					  						ListLocalDefaultText =  "מותםם חיצונית",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2942,10 +2943,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "InReconcileProgress",
 					  						DefaultText =  "In Reconcile Progress",
-					  						FullLocalDefaultText =  "התאמה בתהליך",
+					  						FullLocalDefaultText =  "התםמה בתהליך",
 					  						ListFieldLable =  "InReconcileProgressListLable",
 					  						ListLableDefaultText =  "In Reconcile Progress",
-					  						ListLocalDefaultText =  "התאמה בתהליך",
+					  						ListLocalDefaultText =  "התםמה בתהליך",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -3073,10 +3074,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ReconcileRemarks",
 					  						DefaultText =  "Reconcile Remarks",
-					  						FullLocalDefaultText =  "הערות להאתמה",
+					  						FullLocalDefaultText =  "הערות להםתמה",
 					  						ListFieldLable =  "ReconcileRemarksListLable",
 					  						ListLableDefaultText =  "Reconcile Remarks",
-					  						ListLocalDefaultText =  "הערות להאתמה",
+					  						ListLocalDefaultText =  "הערות להםתמה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -3511,10 +3512,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PaymentReconciledAmount",
 					  						DefaultText =  "16",
-					  						FullLocalDefaultText =  "סכום תואם תשלום",
+					  						FullLocalDefaultText =  "סכום תוםם תשלום",
 					  						ListFieldLable =  "PaymentReconciledAmountListLable",
 					  						ListLableDefaultText =  "Payment Reconciled Amount",
-					  						ListLocalDefaultText =  "סכום תואם תשלום",
+					  						ListLocalDefaultText =  "סכום תוםם תשלום",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -3575,10 +3576,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "InProgressExternalReconcile",
 					  						DefaultText =  "In External Reconcile Progress",
-					  						FullLocalDefaultText =  "התאמה חצונית בתהליך",
+					  						FullLocalDefaultText =  "התםמה חצונית בתהליך",
 					  						ListFieldLable =  "InProgressExternalReconcileListLable",
 					  						ListLableDefaultText =  "In External Reconcile Progress",
-					  						ListLocalDefaultText =  "התאמה חצונית בתהליך",
+					  						ListLocalDefaultText =  "התםמה חצונית בתהליך",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -3826,10 +3827,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsForeignAmountCreditPos",
 					  						DefaultText =  "IsForeignAmountCreditPos",
-					  						FullLocalDefaultText =  "אשראי בסכום זר חיובי",
+					  						FullLocalDefaultText =  "םשרםי בסכום זר חיובי",
 					  						ListFieldLable =  "IsForeignAmountCreditPosListLable",
 					  						ListLableDefaultText =  "IsForeignAmountCreditPos",
-					  						ListLocalDefaultText =  "אשראי בסכום זר חיובי",
+					  						ListLocalDefaultText =  "םשרםי בסכום זר חיובי",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -3952,10 +3953,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsLocalAmountCreditPos",
 					  						DefaultText =  "IsLocalAmountCreditPos",
-					  						FullLocalDefaultText =  "אשראי סכום מקומי חיובי",
+					  						FullLocalDefaultText =  "םשרםי סכום מקומי חיובי",
 					  						ListFieldLable =  "IsLocalAmountCreditPosListLable",
 					  						ListLableDefaultText =  "IsLocalAmountCreditPos",
-					  						ListLocalDefaultText =  "אשראי סכום מקומי חיובי",
+					  						ListLocalDefaultText =  "םשרםי סכום מקומי חיובי",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -4141,10 +4142,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IconCode",
 					  						DefaultText =  "IconCode",
-					  						FullLocalDefaultText =  "קוד אייקון",
+					  						FullLocalDefaultText =  "קוד םייקון",
 					  						ListFieldLable =  "IconCodeListLable",
 					  						ListLableDefaultText =  "IconCode",
-					  						ListLocalDefaultText =  "קוד אייקון",
+					  						ListLocalDefaultText =  "קוד םייקון",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -4204,10 +4205,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ForeignAmountCreditWithSign",
 					  						DefaultText =  "ForeignAmountCreditWithSign",
-					  						FullLocalDefaultText =  "אשראי בסכום זר",
+					  						FullLocalDefaultText =  "םשרםי בסכום זר",
 					  						ListFieldLable =  "ForeignAmountCreditWithSignListLable",
 					  						ListLableDefaultText =  "ForeignAmountCreditWithSign",
-					  						ListLocalDefaultText =  "אשראי בסכום זר",
+					  						ListLocalDefaultText =  "םשרםי בסכום זר",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -4529,10 +4530,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PaymentValueDate",
 					  						DefaultText =  "PaymentValueDate",
-					  						FullLocalDefaultText =  "תאריך ערך תשלום",
+					  						FullLocalDefaultText =  "תםריך ערך תשלום",
 					  						ListFieldLable =  "PaymentValueDateListLable",
 					  						ListLableDefaultText =  "PaymentValueDate",
-					  						ListLocalDefaultText =  "תאריך ערך תשלום",
+					  						ListLocalDefaultText =  "תםריך ערך תשלום",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -4625,11 +4626,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  200,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
 					  						MultiLine =  false,
@@ -4645,6 +4646,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "LedgerTransaction",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -4979,10 +4981,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SecurityLevelFiltering",
 					  						DefaultText =  "Security Level Filtering",
-					  						FullLocalDefaultText =  "סינון ברמת אבטחה",
+					  						FullLocalDefaultText =  "סינון ברמת םבטחה",
 					  						ListFieldLable =  "SecurityLevelFilteringListLable",
 					  						ListLableDefaultText =  "Security Level Filtering",
-					  						ListLocalDefaultText =  "סינון ברמת אבטחה",
+					  						ListLocalDefaultText =  "סינון ברמת םבטחה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -5231,75 +5233,77 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 			 QueryColumn LedgerTransactionsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "LedgerTransaction.CreateDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn LedgerTransactionsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "LedgerTransaction.AccountDisplayNumber" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LedgerTransactionsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "LedgerTransaction.JournalCreatedByUser" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn LedgerTransactionsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "LedgerTransaction.AccountingDate" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LedgerTransactionsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "LedgerTransaction.AccountDisplayNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn LedgerTransactionsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "LedgerTransaction.DocumentDate" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LedgerTransactionsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "LedgerTransaction.AccountingDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn LedgerTransactionsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "LedgerTransaction.DueDate" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LedgerTransactionsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "LedgerTransaction.DocumentDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn LedgerTransactionsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "LedgerTransaction.LocalAmountDebit" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LedgerTransactionsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "LedgerTransaction.DueDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn LedgerTransactionsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "LedgerTransaction.LocalAmountCredit" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LedgerTransactionsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "LedgerTransaction.LocalAmountDebit" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn LedgerTransactionsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "LedgerTransaction.ForeignAmountDebit" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LedgerTransactionsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "LedgerTransaction.LocalAmountCredit" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn LedgerTransactionsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "LedgerTransaction.ForeignAmountCredit" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LedgerTransactionsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "LedgerTransaction.ForeignAmountDebit" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn LedgerTransactionsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "LedgerTransaction.ExchangeRate" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LedgerTransactionsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "LedgerTransaction.ForeignAmountCredit" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn LedgerTransactionsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "LedgerTransaction.Reference1" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LedgerTransactionsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "LedgerTransaction.ExchangeRate" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn LedgerTransactionsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "LedgerTransaction.Reference2" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LedgerTransactionsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "LedgerTransaction.Reference1" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn LedgerTransactionsQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "LedgerTransaction.Reference3" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LedgerTransactionsQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "LedgerTransaction.Reference2" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn LedgerTransactionsQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 13, ObjectFieldCode = "LedgerTransaction.OpenAmount" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LedgerTransactionsQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 13, ObjectFieldCode = "LedgerTransaction.Reference3" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn LedgerTransactionsQueryColumn_14 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 14, ObjectFieldCode = "LedgerTransaction.JournalNumber" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LedgerTransactionsQueryColumn_14 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 14, ObjectFieldCode = "LedgerTransaction.OpenAmount" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn LedgerTransactionsQueryColumn_15 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 15, ObjectFieldCode = "LedgerTransaction.CurrencyCode" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LedgerTransactionsQueryColumn_15 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 15, ObjectFieldCode = "LedgerTransaction.JournalNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn LedgerTransactionsQueryColumn_16 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 16, ObjectFieldCode = "LedgerTransaction.Source" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LedgerTransactionsQueryColumn_16 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 16, ObjectFieldCode = "LedgerTransaction.CurrencyCode" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn LedgerTransactionsQueryColumn_17 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 17, ObjectFieldCode = "LedgerTransaction.SourceType" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LedgerTransactionsQueryColumn_17 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 17, ObjectFieldCode = "LedgerTransaction.Source" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn LedgerTransactionsQueryColumn_18 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 18, ObjectFieldCode = "LedgerTransaction.Notes" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LedgerTransactionsQueryColumn_18 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 18, ObjectFieldCode = "LedgerTransaction.SourceType" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn LedgerTransactionsQueryColumn_19 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 19, ObjectFieldCode = "LedgerTransaction.AmountToReconcile" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LedgerTransactionsQueryColumn_19 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 19, ObjectFieldCode = "LedgerTransaction.Notes" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn LedgerTransactionsQueryColumn_20 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 20, ObjectFieldCode = "LedgerTransaction.Mark" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LedgerTransactionsQueryColumn_20 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 20, ObjectFieldCode = "LedgerTransaction.AmountToReconcile" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn LedgerTransactionsQueryColumn_21 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 21, ObjectFieldCode = "LedgerTransaction.OpenAmountCurrencyCode" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LedgerTransactionsQueryColumn_21 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 21, ObjectFieldCode = "LedgerTransaction.Mark" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn LedgerTransactionsQueryColumn_22 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 22, ObjectFieldCode = "LedgerTransaction.IsReconciled" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LedgerTransactionsQueryColumn_22 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 22, ObjectFieldCode = "LedgerTransaction.OpenAmountCurrencyCode" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn LedgerTransactionsQueryColumn_23 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 23, ObjectFieldCode = "LedgerTransaction.SourceNumber" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LedgerTransactionsQueryColumn_23 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 23, ObjectFieldCode = "LedgerTransaction.IsReconciled" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn LedgerTransactionsQueryColumn_24 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 24, ObjectFieldCode = "LedgerTransaction.CurrencySign" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LedgerTransactionsQueryColumn_24 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 24, ObjectFieldCode = "LedgerTransaction.SourceNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn LedgerTransactionsQueryColumn_25 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 25, ObjectFieldCode = "LedgerTransaction.OpenAmountCurrencySign" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LedgerTransactionsQueryColumn_25 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 25, ObjectFieldCode = "LedgerTransaction.CurrencySign" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn LedgerTransactionsQueryColumn_26 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 26, ObjectFieldCode = "LedgerTransaction.IsExternalReconcile" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LedgerTransactionsQueryColumn_26 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 26, ObjectFieldCode = "LedgerTransaction.OpenAmountCurrencySign" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn LedgerTransactionsQueryColumn_27 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 27, ObjectFieldCode = "LedgerTransaction.InReconcileProgress" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LedgerTransactionsQueryColumn_27 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 27, ObjectFieldCode = "LedgerTransaction.IsExternalReconcile" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn LedgerTransactionsQueryColumn_28 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 28, ObjectFieldCode = "LedgerTransaction.ForeignAmount" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LedgerTransactionsQueryColumn_28 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 28, ObjectFieldCode = "LedgerTransaction.InReconcileProgress" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn LedgerTransactionsQueryColumn_29 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 29, ObjectFieldCode = "LedgerTransaction.ReconcileRemarks" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LedgerTransactionsQueryColumn_29 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 29, ObjectFieldCode = "LedgerTransaction.ForeignAmount" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn LedgerTransactionsQueryColumn_30 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 30, ObjectFieldCode = "LedgerTransaction.OppositeAccountEnglishName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LedgerTransactionsQueryColumn_30 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 30, ObjectFieldCode = "LedgerTransaction.ReconcileRemarks" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn LedgerTransactionsQueryColumn_31 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 31, ObjectFieldCode = "LedgerTransaction.OppositeAccountLocalName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LedgerTransactionsQueryColumn_31 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 31, ObjectFieldCode = "LedgerTransaction.OppositeAccountEnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn LedgerTransactionsQueryColumn_32 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 32, ObjectFieldCode = "LedgerTransaction.OppositeAccountDisplayNumber" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LedgerTransactionsQueryColumn_32 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 32, ObjectFieldCode = "LedgerTransaction.OppositeAccountLocalName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn LedgerTransactionsQueryColumn_33 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 33, ObjectFieldCode = "LedgerTransaction.InProgressExternalReconcile" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LedgerTransactionsQueryColumn_33 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 33, ObjectFieldCode = "LedgerTransaction.OppositeAccountDisplayNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn LedgerTransactionsQueryColumn_34 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 34, ObjectFieldCode = "LedgerTransaction.CalculatedLocalAmount" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LedgerTransactionsQueryColumn_34 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 34, ObjectFieldCode = "LedgerTransaction.InProgressExternalReconcile" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn LedgerTransactionsQueryColumn_35 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 35, ObjectFieldCode = "LedgerTransaction.CalculatedForeignAmount" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn LedgerTransactionsQueryColumn_35 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 35, ObjectFieldCode = "LedgerTransaction.CalculatedLocalAmount" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn LedgerTransactionsQueryColumn_36 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, IndexOrder = 36, ObjectFieldCode = "LedgerTransaction.CalculatedForeignAmount" , ColumnWidth = 100 }, addedQueryColumns);
 
              AdvancedQueryFilter LedgerTransactionsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "LedgerTransaction.AccountingDate", PredefinedValue = "",PredefinedValue2 = null, CustomPredefined = true, QueryId = LedgerTransactionsQuery.Id,QueryCode = LedgerTransactionsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
@@ -5416,9 +5420,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode LedgerTransactionTextCode_LedgerTransactionOAgingMonthNotSet = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.AgingMonthNotSet", DefaultText = "Number of aging months is not set in Full Accounting Settings",LocalDefaultText = @"יש להגדיר מספר חודשי גיול בהגדרות מערכת", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode LedgerTransactionTextCode_LedgerTransactionOREFFrom = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.REFFrom", DefaultText = "From Ref. Date",LocalDefaultText = @"מתאריך אסמכתא", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode LedgerTransactionTextCode_LedgerTransactionOREFFrom = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.REFFrom", DefaultText = "From Ref. Date",LocalDefaultText = @"מתםריך םסמכתם", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode LedgerTransactionTextCode_LedgerTransactionOREFTo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.REFTo", DefaultText = "To Ref. date",LocalDefaultText = @"עד תאריך אסמכתא", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode LedgerTransactionTextCode_LedgerTransactionOREFTo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.REFTo", DefaultText = "To Ref. date",LocalDefaultText = @"עד תםריך םסמכתם", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode LedgerTransactionTextCode_LedgerTransactionOBank = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.Bank", DefaultText = "Bank",LocalDefaultText = @"בנק", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
@@ -5432,9 +5436,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode LedgerTransactionTextCode_LedgerTransactionOGlaccountOnly = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.GlaccountOnly", DefaultText = "Glaccount",LocalDefaultText = @"כרטיס עוש", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode LedgerTransactionTextCode_LedgerTransactionOReconciliationNo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.ReconciliationNo", DefaultText = "Reconciliation Number",LocalDefaultText = @"מספר התאמה", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode LedgerTransactionTextCode_LedgerTransactionOReconciliationNo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.ReconciliationNo", DefaultText = "Reconciliation Number",LocalDefaultText = @"מספר התםמה", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode LedgerTransactionTextCode_LedgerTransactionOReferenceDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.ReferenceDate", DefaultText = "Reference Date",LocalDefaultText = @"תאריך אסמכתא", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode LedgerTransactionTextCode_LedgerTransactionOReferenceDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.ReferenceDate", DefaultText = "Reference Date",LocalDefaultText = @"תםריך םסמכתם", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode LedgerTransactionTextCode_LedgerTransactionOAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.Amount", DefaultText = "Amount",LocalDefaultText = @"סכום", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
@@ -5446,7 +5450,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode LedgerTransactionTextCode_GLAccount_LedgerTransaction = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount_LedgerTransaction", DefaultText = "Ledger Transaction",LocalDefaultText = @"Ledger Transaction", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode LedgerTransactionTextCode_LedgerTransactionOOneYearValidation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.OneYearValidation", DefaultText = "Can not be filtered for more than 365 days",LocalDefaultText = @"לא ניתן לבצע חיתוך של יותר מ 365 ימים", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode LedgerTransactionTextCode_LedgerTransactionOOneYearValidation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.OneYearValidation", DefaultText = "Can not be filtered for more than 365 days",LocalDefaultText = @"לם ניתן לבצע חיתוך של יותר מ 365 ימים", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode LedgerTransactionTextCode_LedgerTransactionOLocalAmount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.LocalAmount", DefaultText = "Local Amount",LocalDefaultText = "סכום בש''ח", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
@@ -5456,7 +5460,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode LedgerTransactionTextCode_LedgerTransactionOOnly = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.Only", DefaultText = "Only",LocalDefaultText = @"רק", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode LedgerTransactionTextCode_LedgerTransactionOWithOut = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.WithOut", DefaultText = "WithOut",LocalDefaultText = @"ללא", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode LedgerTransactionTextCode_LedgerTransactionOWithOut = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.WithOut", DefaultText = "WithOut",LocalDefaultText = @"ללם", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode LedgerTransactionTextCode_LedgerTransactionOVatRreporting = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "LedgerTransaction.O.VatRreporting", DefaultText = "VAT Reporting",LocalDefaultText = "דווח המע''מ", ObjectTableId = LedgerTransactionObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
