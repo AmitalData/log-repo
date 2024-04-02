@@ -1149,6 +1149,8 @@
 
         private string statisticQuantityTypeField;
 
+        private string itemDescription;
+
         private CERTIFICATES[] cERTIFICATESField;
 
         private POINTERS[] pOINTERSField;
@@ -1373,6 +1375,18 @@
             set
             {
                 this.statisticQuantityTypeField = value;
+            }
+        }
+
+        public string ITEMDESCRIPTION
+        {
+            get
+            {
+                return this.itemDescription;
+            }
+            set
+            {
+                this.itemDescription = value;
             }
         }
 

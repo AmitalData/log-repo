@@ -2715,6 +2715,10 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                 {
                     SupplierInvoiceItemPM.StatisticQuantityType = TranslateMeasurmentUnit(invoiceItem.StatisticQuantityType);
                 }
+                if (!string.IsNullOrWhiteSpace(invoiceItem.ITEMDESCRIPTION))
+                {
+                    SupplierInvoiceItemPM.ItemDescription = invoiceItem.ITEMDESCRIPTION.Length > 256 ? invoiceItem.ITEMDESCRIPTION.Substring(0, 256) : invoiceItem.ITEMDESCRIPTION;
+                }
                 SupplierInvoiceItemPMList.Add(SupplierInvoiceItemPM);
             }
 
