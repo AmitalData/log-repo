@@ -73,6 +73,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     _JournalExtendedPMService: JournalExtendedPMService = new JournalExtendedPMService();
     public FilterInvoiceByAPPayment:boolean= false
     public GLAccountsFilterItems: ApiQueryFilters;
+    isLoad:boolean = false;
 
     constructor(private entityArgs: EntityArgs, private _entityResourceService: EntityResourceService, private cd: ChangeDetectorRef) {
         super();
@@ -111,7 +112,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
             this.IsEditExchangeRateVisible = true;
         }
       
-        this.LocalCurrencyCode = SessionLocator.LocalCurrencyCode;
+        this.LocalCurrencyCode = SessionLocator.LocalCurrencyCode;       
     }
     InitLOVFilters() {
         this.GLAccountsFilterItems = new ApiQueryFilters();
@@ -1252,10 +1253,11 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                             if (!myResponse.HasError) {
                                 var list: CurrencyList = myResponse.Result;
                                 if (list) {
-                                    this.PaymentCurrencyCode = list.Code;
-                                    if(this.EntityPM.IsFromReconcilePage && this.EntityPM.IsMultiCurrency && this.PaymentCurrencyCode != "NIS") {
+                                    this.PaymentCurrencyCode = list.Code;                                  
+                                    if(!this.isLoad && this.EntityPM.IsFromReconcilePage && this.EntityPM.IsMultiCurrency && this.PaymentCurrencyCode != "NIS") {
                                         this.UIProperties.SetEnabled("PaymentCurrencyId", this.ObjectTableName, false);  
                                     }
+                                    this.isLoad = true;
                                 }
                             }
                         });
@@ -1273,7 +1275,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
             }
         }
         this.filterBankAccountsUsingPaymentCurrencyId();
-    }
+    } 
     filterBankAccountsUsingPaymentCurrencyId(){
         if (this.IsFullAccounting == true && this.PaymentMethodCode == "BT" && this.EntityPM.PaymentCurrencyId) {
             this.BankAccountsFilterItems = new ApiQueryFilters();
