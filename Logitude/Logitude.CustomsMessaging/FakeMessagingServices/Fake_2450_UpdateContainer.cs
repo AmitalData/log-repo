@@ -27,8 +27,20 @@ namespace Logitude.CustomsMessaging.FakeMessagingServices
             fakeRespond.ResponseContentHeader.Exception[0] = new Exception();
             fakeRespond.ResponseContentHeader.Exception[0].ExceptionLevel = 3;
             fakeRespond.ResponseContentHeader.Exception[0].ExeptionType = 656;
+            fakeRespond.ResponseContentHeader.Exception[0].ExeptionDescription = "UpdateSuccess";
             response = fakeRespond; 
             return _ResponseHeader;
+        }
+
+        public void AddResponseHeader()
+        {
+
+            _ResponseHeader.CorrelationId = Guid.NewGuid().ToString();
+            _ResponseHeader.ExternalId = Guid.NewGuid().ToString();
+            _ResponseHeader.Status = "Success";
+            _ResponseHeader.ErrorDescription = "";
+            _ResponseHeader.ErrorCode = "None";
+
         }
     }
 }
