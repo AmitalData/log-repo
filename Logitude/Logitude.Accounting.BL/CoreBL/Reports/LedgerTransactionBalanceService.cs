@@ -241,9 +241,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             {
                 rec.CalculatedForeignAmount = rec.ForeignAmountCredit != 0 ? rec.ForeignAmountCredit * -1 : rec.ForeignAmountDebit;
 
-                rec.ForeignAmountCreditWithSign = rec.CalculatedForeignAmount + " " + rec.CurrencySign;
                 ledgerTransactionHelper.MapAmountWithNegativeValue(rec);
-                rec.ForeignAmountCreditWithSign = rec.CalculatedForeignAmount + " " + rec.CurrencySign;
             }
         }
 
