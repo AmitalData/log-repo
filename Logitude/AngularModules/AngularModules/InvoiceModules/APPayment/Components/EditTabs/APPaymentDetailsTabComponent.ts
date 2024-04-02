@@ -70,6 +70,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     VendorLovSizeForFullAccounting:number;
     _JournalExtendedPMService: JournalExtendedPMService = new JournalExtendedPMService();
     public FilterInvoiceByAPPayment:boolean= false
+    isLoad:boolean = false;
     constructor(private entityArgs: EntityArgs, private _entityResourceService: EntityResourceService, private cd: ChangeDetectorRef) {
         super();
 
@@ -106,7 +107,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
             this.IsEditExchangeRateVisible = true;
         }
       
-        this.LocalCurrencyCode = SessionLocator.LocalCurrencyCode;
+        this.LocalCurrencyCode = SessionLocator.LocalCurrencyCode;       
     }
 
     private InitializeBillToLov() {
@@ -1204,10 +1205,11 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                             if (!myResponse.HasError) {
                                 var list: CurrencyList = myResponse.Result;
                                 if (list) {
-                                    this.PaymentCurrencyCode = list.Code;
-                                    if(this.EntityPM.IsFromReconcilePage && this.EntityPM.IsMultiCurrency && this.PaymentCurrencyCode != "NIS") {
+                                    this.PaymentCurrencyCode = list.Code;                                  
+                                    if(!this.isLoad && this.EntityPM.IsFromReconcilePage && this.EntityPM.IsMultiCurrency && this.PaymentCurrencyCode != "NIS") {
                                         this.UIProperties.SetEnabled("PaymentCurrencyId", this.ObjectTableName, false);  
                                     }
+                                    this.isLoad = true;
                                 }
                             }
                         });
@@ -1225,7 +1227,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
             }
         }
         this.filterBankAccountsUsingPaymentCurrencyId();
-    }
+    } 
     filterBankAccountsUsingPaymentCurrencyId(){
         if (this.IsFullAccounting == true && this.PaymentMethodCode == "BT" && this.EntityPM.PaymentCurrencyId) {
             this.BankAccountsFilterItems = new ApiQueryFilters();
