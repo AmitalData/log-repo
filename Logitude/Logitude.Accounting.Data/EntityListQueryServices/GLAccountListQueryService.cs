@@ -234,8 +234,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                    PaymentTerm = CardsDatas != null ? CardsDatas.PaymentTerm.LocalName == null ? CardsDatas.PaymentTerm.EnglishName : CardsDatas.PaymentTerm.LocalName : null,
                                                    TotalOpenShipments = CardsDatas != null ? CardsDatas.TotalOpenShipments : null,
                                                    Phone = CardsDatas != null ? CardsDatas.Phone : null,
-                                                   Salesman = CardsDatas != null ? CardsDatas.SalesmanUser.Contact.LocalName == null ? CardsDatas.SalesmanUser.Contact.EnglishName : CardsDatas.SalesmanUser.Contact.LocalName : null,
-                                                   Collector = CardsDatas != null ? CardsDatas.CollectorUser.Contact.LocalName == null ? CardsDatas.CollectorUser.Contact.EnglishName : CardsDatas.CollectorUser.Contact.LocalName : null,
+                                                   Salesman = a.SalesmanUserId != null ? (a.SalesmanUser.Contact != null ? (a.SalesmanUser.Contact.LocalName == null ? a.SalesmanUser.Contact.EnglishName : a.SalesmanUser.Contact.LocalName) : null) : null,
+                                                   Collector = a.CollectorId != null ? (a.CollectorUser.Contact != null ? (a.CollectorUser.Contact.LocalName == null ? a.CollectorUser.Contact.EnglishName : a.CollectorUser.Contact.LocalName) : null) : null,
                                                    CardCollectorId = CardsDatas != null ? CardsDatas.CollectorUser.Id : null,
 
                                                    // GLAccount Follow Up Datas
@@ -334,7 +334,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
                                                    InsuredCreditPercentage = (CardsDatas.CreditLimit == null || CardsDatas.CreditLimit == 0) ? 0 :
                                                    ( (CardsDatas.InsuredcreditLimit ?? 0) / CardsDatas.CreditLimit * 100 ),
-
+                                                   ContactId = a.ContactId,
+                                                   ContactName = a.Contact != null ? a.Contact.LocalName : null,
 
 
                                                }); ;
@@ -656,6 +657,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                            Obligo = glaccount.Obligo,
                            CreditUsed = glaccount.CreditUsed,
                            InsuredCreditPercentage = glaccount.InsuredCreditPercentage,
+                           ContactId = glaccount.ContactId,
+                           ContactName = glaccount.ContactName,
                        };
 
 
