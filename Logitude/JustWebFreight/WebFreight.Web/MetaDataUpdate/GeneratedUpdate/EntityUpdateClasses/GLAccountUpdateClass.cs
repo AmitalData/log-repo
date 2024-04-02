@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GLAccountUpdateClass
    {  		
-		public const string HashString = "6f8c365e35ccd2eb5ca8c09b0d0650e1";
+		public const string HashString = "3228bd78f98396abdfee5e43bfd2f3cc";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -11900,6 +11900,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ContactId",
 					  						DefaultText =  "Contact Id",
+					  						FullLocalDefaultText =  "איש קשר",
 					  						ListFieldLable =  "ContactIdListLable",
 					  						ListLableDefaultText =  "ContactId",
 					  						ListLocalDefaultText =  "איש קשר",
@@ -11934,13 +11935,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  1000,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
+					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -11965,6 +11967,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ContactName",
 					  						DefaultText =  "ContactName",
+					  						FullLocalDefaultText =  "איש קשר",
 					  						ListFieldLable =  "ContactNameListLable",
 					  						ListLableDefaultText =  "ContactName",
 					  						ListLocalDefaultText =  "איש קשר",
