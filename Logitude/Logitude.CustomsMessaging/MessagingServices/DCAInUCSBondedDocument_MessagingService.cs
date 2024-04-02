@@ -1,4 +1,5 @@
 ﻿
+using DocumentFormat.OpenXml.Office2010.Excel;
 using Logitude.AmitalMessaging.Utils;
 using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityPMs;
@@ -6,6 +7,7 @@ using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.Customs.BL.Messaging.Customs;
 using Logitude.Customs.Data;
+using Logitude.Customs.Data.EntityMapping;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.Customs.Def.EntityQueryServicesExt;
@@ -97,7 +99,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
 
 
-        public  string CreateCRS(
+        public string CreateCRS(
             int tenant,
             string LoggingUserId,
             DocumentsFilingPM documentsFilingPM,
@@ -136,25 +138,25 @@ namespace Logitude.CustomsMessaging.MessagingServices
                    objectTableDocumentsFilingId, documentsFilingPM.Id, null, true);
 
             }
-            if (RequestInProgressList != null && RequestInProgressList.Count > 0 )
+            if (RequestInProgressList != null && RequestInProgressList.Count > 0)
             {
                 LogitudeSettings.HandleLogMe("cresteCRS - קיים מסר זהה בתהליך", false, "sendOcrDocument", stopLogAt);
 
                 LogMessagingUtil.Instance.AppendLine("קיים מסר זהה בתהליך");
                 ///throw new System.Exception("Requestsheet  with Interface Type  = UCBUCBNDCD  already in progress  !!!");
-                         RequestInProgressListOut = string.Join(",", RequestInProgressList.Select(request => request.Id.ToString())); ;
+                RequestInProgressListOut = string.Join(",", RequestInProgressList.Select(request => request.Id.ToString())); ;
 
                 return "קיים מסר זהה בתהליך";
 
             }
-            
 
 
-            
-             var RequestInProgressList2715 = customsRequestsSheetQS
-                   .GetRequestInProgress(tenant, "2715",
-                   null, null,
-                   objectTableDocumentsFilingId, documentsFilingPM.Id, null, true);
+
+
+            var RequestInProgressList2715 = customsRequestsSheetQS
+                  .GetRequestInProgress(tenant, "2715",
+                  null, null,
+                  objectTableDocumentsFilingId, documentsFilingPM.Id, null, true);
             if (RequestInProgressList2715 != null && RequestInProgressList2715.Count > 0)
             {
                 LogitudeSettings.HandleLogMe("cresteCRS -2715 קיים מסר זהה בתהליך", false, "sendOcrDocument", stopLogAt);
@@ -171,7 +173,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             CustomsDocumentQueryService customsDocumentQueryService = new CustomsDocumentQueryService(documentsFilingPM.Tenant);
             var customDoc = customsDocumentQueryService.GetSingle(documentsFilingPM.Id, false, false);
 
-            if(customDoc != null && !string.IsNullOrEmpty( customDoc.CustomsDocId))
+            if (customDoc != null && !string.IsNullOrEmpty(customDoc.CustomsDocId))
             {
                 LogitudeSettings.HandleLogMe("cresteCRS - קיים סימוכין מכס", false, "sendOcrDocument", stopLogAt);
 
@@ -188,21 +190,21 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
             var myDCAInUCSBondedWithResponseContentHeader = new DCAInUCSBondedWithResponseContentHeader()
             {
-                DeclarationId = documentsFilingPM.IsNotCustomsDocId ? documentsFilingPM.DeclarationId: documentsFilingPM.EntityId,
+                DeclarationId = documentsFilingPM.IsNotCustomsDocId ? documentsFilingPM.DeclarationId : documentsFilingPM.EntityId,
                 DocumentsFilingId = documentsFilingPM.Id,
                 CustomsDoucumentTypeCode = CustomsDoucumentTypeCode,
-                LoggingUserId = documentsFilingPM.IsNotCustomsDocId ? documentsFilingPM.LoggedUserId: LoggingUserId,
-                
+                LoggingUserId = documentsFilingPM.IsNotCustomsDocId ? documentsFilingPM.LoggedUserId : LoggingUserId,
+
                 DocumentTypeCode = documentsFilingPM.DocumentTypeCode,
-                 LoggingEntityReference = documentsFilingPM.Code,
+                LoggingEntityReference = documentsFilingPM.Code,
                 tenant = tenant,
                 MyMoreParams = "",
                 ResponseContentHeader = new DefaultResponseContentHeader()
                 {
                     TransmitionDateTime = transmitionDateTime
                 },
-				IsSendFromAutoClosing = documentsFilingPM.IsNotCustomsDocId,
-			};
+                IsSendFromAutoClosing = documentsFilingPM.IsNotCustomsDocId,
+            };
 
 
 
@@ -303,12 +305,12 @@ namespace Logitude.CustomsMessaging.MessagingServices
         public string DocumentsFilingId { get; set; }
         public string DOCUMENTTYPEID { get; set; }
         public string DocumentTypeCode { get; set; }
-        public string LoggingEntityReference { get;  set; }
-		public bool IsSendFromAutoClosing { get; set; }
+        public string LoggingEntityReference { get; set; }
+        public bool IsSendFromAutoClosing { get; set; }
 
-		//public string DocumentTypeId { get; set; }
+        //public string DocumentTypeId { get; set; }
 
-		public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
     }
 
 
@@ -344,7 +346,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 {
                     return;
                 }
- 
+
                 var DocumentsMetaDataTypeRepo = new DocumentsMetaDataTypeRepository(_DocumentsFilingPM.Tenant);
                 var ENDOC = DocumentsMetaDataTypeRepo.GetSingleDocumentsMetaDataTypeByCode("ENDOC", _DocumentsFilingPM.Tenant);
                 var myDocumentsFilingMetaDataValueReferenceAsDocType = "";
@@ -374,9 +376,9 @@ namespace Logitude.CustomsMessaging.MessagingServices
                         return;
                     }
                 }
-                if(!String.IsNullOrWhiteSpace(logData))
+                if (!String.IsNullOrWhiteSpace(logData))
                 {
-                    LogitudeSettings.HandleLogMe(logData , false, "after checks", stopLogAt);
+                    LogitudeSettings.HandleLogMe(logData, false, "after checks", stopLogAt);
                 }
                 CustomsDocumentPM customsDocumentPM;
                 if (!IscustomsDocumentSent(stopLogAt, out customsDocumentPM))
@@ -400,9 +402,9 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 else
                 {
                     LogitudeSettings.HandleLogMe("!interactive before cresteCRS", false, "sendOcrDocument", stopLogAt);
-					LogitudeSettings.HandleLogMe("_DocumentsFilingPM.IsNotCustomsDocId" + _DocumentsFilingPM.IsNotCustomsDocId, false, "sendClosing", stopLogAt);
+                    LogitudeSettings.HandleLogMe("_DocumentsFilingPM.IsNotCustomsDocId" + _DocumentsFilingPM.IsNotCustomsDocId, false, "sendClosing", stopLogAt);
 
-					string key = ProcessLockTableUtil.Instance.GetKey4UCBUD2LT(_DocumentsFilingPM.Id, _DocumentsFilingPM.Tenant);
+                    string key = ProcessLockTableUtil.Instance.GetKey4UCBUD2LT(_DocumentsFilingPM.Id, _DocumentsFilingPM.Tenant);
                     using (var disposableToken =
                         ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(_DocumentsFilingPM.Tenant, true, key,
                         "UCBNDCD.CRS", true)
@@ -411,14 +413,14 @@ namespace Logitude.CustomsMessaging.MessagingServices
                         var myDCAInUCBUD2LT_MsgMessagingService = new DCAInUCSBondedDocument_MessagingService();
                         string RequestInProgressList;
                         string crs = myDCAInUCBUD2LT_MsgMessagingService.CreateCRS(
-                            _DocumentsFilingPM.Tenant, 
+                            _DocumentsFilingPM.Tenant,
                             loggingUserId,
                             _DocumentsFilingPM,
-                            myDocumentsFilingMetaDataValueReferenceAsDocType, out  RequestInProgressList);
+                            myDocumentsFilingMetaDataValueReferenceAsDocType, out RequestInProgressList);
                         logData = LogMessagingUtil.Instance.ToString();
                         LogitudeSettings.HandleLogMe("after cresteCRS", false, "sendOcrDocument", stopLogAt);
 
-                        LogitudeSettings.HandleLogMe(crs + " " + logData + _DocumentsFilingPM.Code, false, "CreateUCBNDCDService.OK" , stopLogAt);
+                        LogitudeSettings.HandleLogMe(crs + " " + logData + _DocumentsFilingPM.Code, false, "CreateUCBNDCDService.OK", stopLogAt);
 
                     }
                 }
@@ -427,7 +429,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             catch (Exception E)
             {
                 logData = LogMessagingUtil.Instance.ToString();
-                LogitudeSettings.HandleLogMe(E.ToString() + logData + _DocumentsFilingPM.Code, true, "SendBondedCustomDocument" , stopLogAt);
+                LogitudeSettings.HandleLogMe(E.ToString() + logData + _DocumentsFilingPM.Code, true, "SendBondedCustomDocument", stopLogAt);
                 LogitudeSettings.HandleLogMe(E.ToString() + logData + _DocumentsFilingPM.Code, true, "sendOcrDocumentError", stopLogAt);
                 throw;
             }
@@ -454,16 +456,18 @@ namespace Logitude.CustomsMessaging.MessagingServices
             LogitudeSettings.HandleLogMe("CheckIsSendByDocTypeBonded  ", false, "SendBondedCustomDocument", stopLogAt);
 
 
-            bool IsSendByDocType = false;
+            bool AutoSending = false;
             string CustomsDocumentUpload = "";
             try
             {
                 DocumentTypeQueryService documentTypeQueryService = new DocumentTypeQueryService(_DocumentsFilingPM.Tenant);
                 DocumentTypePM documentTypePM = documentTypeQueryService.GetDocumentTypeCodeById(_DocumentsFilingPM.DocumentTypeId, _DocumentsFilingPM.Tenant);
 
+                var declarationQueryService = new Logitude.Customs.BL.EntityQueryServices.DeclarationQueryService(_DocumentsFilingPM.Tenant);
+                DeclarationPM declartionPM = declarationQueryService.GetDeclarationByExportFile(_DocumentsFilingPM.Tenant, _DocumentsFilingPM.ExternalEntityReference);
                 if (documentTypePM != null && !String.IsNullOrWhiteSpace(documentTypePM.Code))
                 {
-                    LogitudeSettings.HandleLogMe("  if (documentTypePM != null && !String.IsNullOrWhiteSpace(documentTypePM.Code))"+ documentTypePM?.Code, false, "SendBondedCustomDocument", stopLogAt);
+                    LogitudeSettings.HandleLogMe("  if (documentTypePM != null && !String.IsNullOrWhiteSpace(documentTypePM.Code))" + documentTypePM?.Code, false, "SendBondedCustomDocument", stopLogAt);
                     DocumentTypeCustomsDataQueryService documentTypeCustomsDataQueryService = new DocumentTypeCustomsDataQueryService(_DocumentsFilingPM.Tenant);
                     DocumentTypeCustomsDataPM documentTypeCustomsDataPM = documentTypeCustomsDataQueryService.GetSingle(documentTypePM.Code, false, true);
 
@@ -489,12 +493,23 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
                                 LogitudeSettings.HandleLogMe("   if (customDocumentTypePM.CustomsDocumentUpload == U || customDocumentTypePM.CustomsDocumentUpload == C)  " + customDocumentTypePM?.CustomsDocumentUpload, false, "SendBondedCustomDocument", stopLogAt);
 
-                                IsSendByDocType = true;
+                                AutoSending = true;
 
                             }
                         }
                     }
                 }
+                if (declartionPM != null)
+                {
+                    if (declartionPM.Direction == "E" && declartionPM.IsDiamondDeclaration && declartionPM.AutoSending)
+                    {
+                        LogitudeSettings.HandleLogMe("  declartionPM.Direction == E && declartionPM.IsDiamondDeclaration && declartionPM.AutoSending  " + declartionPM?.Id, false, "SendBondedCustomDocument", stopLogAt);
+                        AutoSending = true;
+
+                    }
+                   
+                }
+
             }
             catch (Exception ee)
             {
@@ -504,14 +519,14 @@ namespace Logitude.CustomsMessaging.MessagingServices
             {
                 logData += $"CheckIsSendByDocType:CustomsDocumentUpload:{CustomsDocumentUpload}";
             }
-            return IsSendByDocType;
+            return AutoSending;
         }
 
-        private bool HaveTransDocumentTypeCode(string myDocumentsFilingMetaDataValueReferenceAsDocType ,DateTime stopLogAt)
+        private bool HaveTransDocumentTypeCode(string myDocumentsFilingMetaDataValueReferenceAsDocType, DateTime stopLogAt)
         {
 
-                var myCustomDocumentTypeQueryService = new CustomDocumentTypeQueryService(_DocumentsFilingPM.Tenant);
-                var myCustomDocumentTypePM = myCustomDocumentTypeQueryService.GetSingleCustomDocumentTypeWithTenant(myDocumentsFilingMetaDataValueReferenceAsDocType, _DocumentsFilingPM.Tenant);
+            var myCustomDocumentTypeQueryService = new CustomDocumentTypeQueryService(_DocumentsFilingPM.Tenant);
+            var myCustomDocumentTypePM = myCustomDocumentTypeQueryService.GetSingleCustomDocumentTypeWithTenant(myDocumentsFilingMetaDataValueReferenceAsDocType, _DocumentsFilingPM.Tenant);
             if (myCustomDocumentTypePM == null)
             {
                 LogitudeSettings.HandleLogMe("myDocumentsFilingMetaDataValueReferenceAsDocType " + myDocumentsFilingMetaDataValueReferenceAsDocType + " but not found" + _DocumentsFilingPM.Code, false, "SendBondedCustomDocument", stopLogAt);
@@ -521,10 +536,10 @@ namespace Logitude.CustomsMessaging.MessagingServices
             }
             else
             {
-                
+
                 return true;
             }
-            
+
             //var myDocumentTypeCustomsDataQueryService = new DocumentTypeCustomsDataQueryService(_DocumentsFilingPM.Tenant);
             //CustomsDoucumentTypeCode = myDocumentTypeCustomsDataQueryService.GetSingle(this._DocumentsFilingPM.DocumentTypeCode, true, true);
             //if (CustomsDoucumentTypeCode == null || String.IsNullOrWhiteSpace(CustomsDoucumentTypeCode.CustomsDoucumentTypeCode))
@@ -546,7 +561,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             {
                 if (!String.IsNullOrWhiteSpace(customsDocumentPM.CustomsDocId))
                 {
-                    LogitudeSettings.HandleLogMe("IscustomsDocumentSent(): myCustomsDocument already send !!"+_DocumentsFilingPM.Code, false, "SendBondedCustomDocument", stopLogAt);
+                    LogitudeSettings.HandleLogMe("IscustomsDocumentSent(): myCustomsDocument already send !!" + _DocumentsFilingPM.Code, false, "SendBondedCustomDocument", stopLogAt);
                     Debug.WriteLine("myCustomsDocument already send !!");
                     return false;
                 }
@@ -568,7 +583,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 Debug.WriteLine("_DocumentsFilingPM == null");
                 return false;
             }
-            
+
             //if (!_DocumentsFilingPM.DocumentsFilingMetaDataValues.Any(r => r.DocumentsMetaDataTypeCode == "ENDOC"))
             //{
 
@@ -590,13 +605,13 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
     class Send2715Bonded
     {
-        public  void Send(
+        public void Send(
             int Tenant,
             string DocumentsFilingPMId,
            CustomsDocumentPM customsDocumentPM,
 
            string CustomsDoucumentTypeCode,
-           bool IsSendFromAutoClosing = false,string LogingUserId = "")
+           bool IsSendFromAutoClosing = false, string LogingUserId = "")
         {
             if (customsDocumentPM == null)
             {
@@ -618,7 +633,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             var myDocumentTypeCustomsDatatQueryService = new DocumentTypeCustomsDataQueryService(dbContext);
             var DocumentTypeCustomsDatat = myDocumentTypeCustomsDatatQueryService.GetSingle(CustomsDoucumentTypeCode, true, false);
             customsDocumentPM.DocumentTypeCode = DocumentTypeCustomsDatat?.CustomsDoucumentTypeCode;//_DocumentsFilingPM.DocumentTypeCode;
-                                                                          //myCustomsDocumentPM.CurrentCustomsDocumentsTicketId = customsDocumentsTicketPM.Id;
+                                                                                                    //myCustomsDocumentPM.CurrentCustomsDocumentsTicketId = customsDocumentsTicketPM.Id;
             customsDocumentPM.Tenant = Tenant;
 
 
@@ -628,10 +643,10 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 {
                     var context1 = CustomContext.GetContext(Tenant);//context each CRS TRANS
                     var myCustomsDocumentUpdateService = new CustomsDocumentUpdateService(context1, new Dictionary<string, IContext>(), customsDocumentPM.Tenant);
-					myCustomsDocumentUpdateService.LoginUserId = LogingUserId;
-					myCustomsDocumentUpdateService.IsSendFromAutoClosing = IsSendFromAutoClosing;
+                    myCustomsDocumentUpdateService.LoginUserId = LogingUserId;
+                    myCustomsDocumentUpdateService.IsSendFromAutoClosing = IsSendFromAutoClosing;
 
-					customsDocumentPM.IsSendToQueue = false;
+                    customsDocumentPM.IsSendToQueue = false;
                     myCustomsDocumentUpdateService.AddPerfectCustomsDocumentMetaDataValues(customsDocumentPM);
                     myCustomsDocumentUpdateService.Update(customsDocumentPM, true);
 
@@ -641,7 +656,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                         r.ChangeSetOp = ChangeSetOperation.None;
                     });
                     customsDocumentPM.IsSendToQueue = true;
-					myCustomsDocumentUpdateService.IgnoreSendFailure = true;
+                    myCustomsDocumentUpdateService.IgnoreSendFailure = true;
                     myCustomsDocumentUpdateService.Update(customsDocumentPM, true);
                     LogMessagingUtil.Instance.AppendLine($" CreateSheetSBQMessage({DocumentsFilingPMId})");
 
