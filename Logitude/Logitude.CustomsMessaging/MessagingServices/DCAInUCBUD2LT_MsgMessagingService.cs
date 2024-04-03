@@ -442,7 +442,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 }
                 else
                 {
-                    if (declarationPM.IsDiamondDeclaration)
+                    if (declarationPM.IsDiamondDeclaration && declarationPM.Direction!="E")
                     {
                         //CGG_DEC_DOC_CLT
                         var amitalContext = AmitalContext.GetContext(tenant);
