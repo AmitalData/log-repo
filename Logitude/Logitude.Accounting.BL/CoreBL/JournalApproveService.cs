@@ -1747,19 +1747,19 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         try
                         {
-                            Logger.LogTrace(String.Format("JournalApproveService, Point 1, tenant {0}", response.Tenant));
+                            Logger.LogDebug(String.Format("JournalApproveService, Point 1, tenant {0}", response.Tenant));
                             if (_NextDueDoneDict == null) _NextDueDoneDict = new Dictionary<int, DateTime>();
                             if (!_NextDueDoneDict.ContainsKey(response.Tenant))
                                 _NextDueDoneDict.Add(response.Tenant, DateTime.MinValue);
 
                             if (DateTime.UtcNow.Date > _NextDueDoneDict[response.Tenant].Date)  
                             {
-                                Logger.LogTrace(String.Format("JournalApproveService, Point 2, tenant {0}, date {1} ", response.Tenant, _NextDueDoneDict[response.Tenant].Date));
+                                Logger.LogDebug(String.Format("JournalApproveService, Point 2, tenant {0}, date {1} ", response.Tenant, _NextDueDoneDict[response.Tenant].Date));
 
                                 _NextDueDoneDict[response.Tenant] = DateTime.UtcNow.Date;
                                 var myDueLocalBalanceService = new DueLocalBalanceService();
                                 myDueLocalBalanceService.RunOneTenantFast(response.Tenant);
-                                Logger.LogTrace(String.Format("JournalApproveService, Point 3, tenant {0}", response.Tenant));
+                                Logger.LogDebug(String.Format("JournalApproveService, Point 3, tenant {0}", response.Tenant));
                             }
                         }
                         catch (Exception)
@@ -1775,7 +1775,9 @@ namespace Logitude.Accounting.BL.CoreBL
                         string communicationLogId = response.MessageValues["communicationLogId"].ToString();
                         int tenant = 0;
                         int.TryParse(response.MessageValues["tenant"].ToString(), out tenant);
+                        Logger.LogDebug(String.Format("JournalApproveService, Point 4, tenant {0}", response.Tenant));
                         UpdateGLAccountAgingData(communicationLogId, queueservice, tenant);
+                        Logger.LogDebug(String.Format("JournalApproveService, Point 5, tenant {0}", response.Tenant));
                         SetTenantIdle(response.Tenant);
                     }
                     else

@@ -46,6 +46,11 @@ namespace Logitude.Accounting.BL.CoreBL.Reports.Aging
             RebuildAging4AccountTypeCode(tenant, "Vendor3", null);
         }
 
+        public void ReBuildByType(int tenant, string type)
+        {
+            RebuildAging4AccountTypeCode(tenant, type, null);
+        }
+
         public List<GLAccountAgingDataPM> RebuildAging4AccountTypeCode(int tenant, string aging4AccountTypeCode, string MyGLAccId)
         {
             var agingReportRebulidService = new AgingReportRebulidService(new AgingReportRebulidParam()
