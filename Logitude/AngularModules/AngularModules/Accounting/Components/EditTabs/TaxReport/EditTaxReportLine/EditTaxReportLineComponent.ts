@@ -63,7 +63,7 @@ export class EditTaxReportLineComponent extends BaseComponent {
             this.SetUpdatedByMessage();
             
             this.SetUIProperties();
-            this.SetEnabledForConfirmationNumber();
+           
         }
     }
 
@@ -195,15 +195,9 @@ export class EditTaxReportLineComponent extends BaseComponent {
 
 
         }
-
+        this.UIProperties.SetEnabled("ConfirmationNumber", this.ObjectTableName, true);
     }
-    SetEnabledForConfirmationNumber () {
-
-        if (!AppTool.IsNullOrEmpty(this.ConfirmationNumber) ) {
-            this.UIProperties.SetEnabled("ConfirmationNumber", this.ObjectTableName, false);
-          
-        } else this.UIProperties.SetEnabled("ConfirmationNumber", this.ObjectTableName, true);
-    }
+   
     SetEnabledForReferenceField() {
 
         if (!AppTool.IsNullOrEmpty(this.PreviousReference) || this.PreviousReference != " ") {
