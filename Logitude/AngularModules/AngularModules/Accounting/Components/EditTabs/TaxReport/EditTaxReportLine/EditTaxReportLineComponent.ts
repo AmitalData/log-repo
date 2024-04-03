@@ -48,7 +48,7 @@ export class EditTaxReportLineComponent extends BaseComponent {
     }
 
     SetWindowArgs(args) {
-        if (args != null) {
+                if (args != null) {
             this.TaxReportPM = args.TaxReportPM;
             this.TaxReportLinePM = args.TaxReportLinePM;
 
@@ -61,7 +61,9 @@ export class EditTaxReportLineComponent extends BaseComponent {
             this.OldReferenceDate = this.ReferenceDate;
             this.TypeFilterItems.addAdditionalFilter("Code", "I,S", null, null, "InListExact", false, false, false, "string", false, true);
             this.SetUpdatedByMessage();
+            
             this.SetUIProperties();
+            this.SetEnabledForConfirmationNumber();
         }
     }
 
@@ -195,6 +197,13 @@ export class EditTaxReportLineComponent extends BaseComponent {
         }
 
     }
+    SetEnabledForConfirmationNumber () {
+
+        if (!AppTool.IsNullOrEmpty(this.ConfirmationNumber) ) {
+            this.UIProperties.SetEnabled("ConfirmationNumber", this.ObjectTableName, false);
+          
+        } else this.UIProperties.SetEnabled("ConfirmationNumber", this.ObjectTableName, true);
+    }
     SetEnabledForReferenceField() {
 
         if (!AppTool.IsNullOrEmpty(this.PreviousReference) || this.PreviousReference != " ") {
@@ -212,17 +221,24 @@ export class EditTaxReportLineComponent extends BaseComponent {
 
         if (!this.TaxReportLinePM.IsDirty)
             return this.CurrentSession.CloseCurrentWindowEmit("ok");
-
+        var fieldName: string
+        this.ValidationErrorsList = [];
+        if(this.ConfirmationNumber?.length <9 && this.ConfirmationNumber?.length>0)
+        {
+            var fieldError: string = TextCodeTranslator.Translate("TaxReportLine.O.ConfirmationMinNineDigits");
+            this.ValidationErrorsList.push(fieldError);
+        }
         if (!this.TaxReportLinePM.TransmitStatusCode) {
             var fieldName: string = TextCodeTranslator.Translate('TaxReportLine.F.TransmitStatusCode');
             var translatedRequiredError: string = TextCodeTranslator.Translate("General.M.FieldIsRequired");
             var fieldError: string = translatedRequiredError.replace("%FieldName", fieldName);
 
-            this.ValidationErrorsList = [];
+            
             this.ValidationErrorsList.push(fieldError);
-            return;
+            
         }
-
+        if(this.ValidationErrorsList?.length>0)
+        return;
         // update line
         this.TaxReportLinePM.IsManuallyChanged = true;
 
