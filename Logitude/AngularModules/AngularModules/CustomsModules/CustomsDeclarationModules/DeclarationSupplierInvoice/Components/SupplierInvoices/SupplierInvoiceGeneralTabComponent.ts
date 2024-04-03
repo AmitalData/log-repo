@@ -4650,11 +4650,9 @@ export class SupplierInvoiceItemLine extends BaseComponent {
     }
     ClassificationCodeDblClick(logCellTemplate: LogCellTemplateComponent, ClassificationTextBox) {
 
-        // if (this.Parent.declarationPM.Direction != "E" || !AmitalGatewayUtil.Instance.AmitalBrowserInUse || this.Parent.declarationPM.IsConnectedToUnifreight) return;
-
         if (this.Parent.declarationPM.Direction != "E" || this.Parent.declarationPM.IsConnectedToUnifreight) return;
 
-        if (this.Parent.declarationPM.Direction == "E" && this.Parent.hasOcr && SessionLocator.FeatureToggles.find(t => t.ToggleCode === "TCR")) { // && hasToggleFeature  (simon frida)
+        if (this.Parent.hasOcr && SessionLocator.FeatureToggles.find(t => t.ToggleCode === "TCR")) {
             var logWindow = new LogitudeWindow();
             logWindow.Width = 850;
             logWindow.Height = 650;
