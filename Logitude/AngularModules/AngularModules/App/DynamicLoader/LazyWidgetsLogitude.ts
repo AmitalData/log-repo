@@ -34,18 +34,18 @@ export const LazyWidgets: { path: string, loadChildren: () => Promise<NgModuleFa
   { loadChildren: () => import('../../CommonModules/CommonPartners/ModuleCommonPartners').then(m => m.ModuleCommonPartners), path: 'CommonPartners' },
 
   // Shipment Modules
-  { loadChildren: () => import('../../Shipment/Module_SHIP').then(m => m.Shipment_Module), path: 'Shipment' },
-  { loadChildren: () => import('../../ShipmentModules/ShipmentAWB/ModuleShipmentAWB').then(m => m.ModuleShipmentAWB), path: 'ShipmentAWB' },
-  { loadChildren: () => import('../../ShipmentModules/ShipmentINTTRA/ModuleShipmentINTTRA').then(m => m.ModuleShipmentINTTRA), path: 'ShipmentINTTRA' },
-  { loadChildren: () => import('../../ShipmentModules/ShipmentOthers/ModuleShipmentOthers').then(m => m.ModuleShipmentOthers), path: 'ShipmentOthers' },
-  { loadChildren: () => import('../../ShipmentModules/ShipmentStock/ModuleShipmentStock').then(m => m.ModuleShipmentStock), path: 'ShipmentStock' },
-  { loadChildren: () => import('../../ShipmentModules/ShipmentTabs/ModuleShipmentTabs').then(m => m.ModuleShipmentTabs), path: 'ShipmentTabs' },
-  { loadChildren: () => import('../../ShipmentModules/ShipmentPackages/ModuleShipmentPackages').then(m => m.ModuleShipmentPackages), path: 'ShipmentPackages' },
-  { loadChildren: () => import('../../ShipmentModules/ShipmentRouting/ModuleShipmentRouting').then(m => m.ModuleShipmentRouting), path: 'ShipmentRouting' },
-  { loadChildren: () => import('../../ShipmentModules/ShipmentLogBox/ModuleShipmentLogBox').then(m => m.ModuleShipmentLogBox), path: 'ShipmentLogBox' },
-  { loadChildren: () => import('../../ShipmentModules/ShipmentSharedManifest/ModuleShipmentSharedManifest').then(m => m.ModuleShipmentSharedManifest), path: 'ShipmentSharedManifest' },
-  { loadChildren: () => import('../../ShipmentModules/ShipmentAMANAC/ModuleShipmentAMANAC').then(m => m.ModuleShipmentAMANAC), path: 'ShipmentAMANAC' },
-  { loadChildren: () => import('../../ShipmentModules/ShipmentContainers/ModuleShipmentContainers').then(m => m.ModuleShipmentContainers), path: 'ShipmentContainers' },
+  // { loadChildren: () => import('../../Shipment/Module_SHIP').then(m => m.Shipment_Module), path: 'Shipment' },
+  // { loadChildren: () => import('../../ShipmentModules/ShipmentAWB/ModuleShipmentAWB').then(m => m.ModuleShipmentAWB), path: 'ShipmentAWB' },
+  // { loadChildren: () => import('../../ShipmentModules/ShipmentINTTRA/ModuleShipmentINTTRA').then(m => m.ModuleShipmentINTTRA), path: 'ShipmentINTTRA' },
+  // { loadChildren: () => import('../../ShipmentModules/ShipmentOthers/ModuleShipmentOthers').then(m => m.ModuleShipmentOthers), path: 'ShipmentOthers' },
+  // { loadChildren: () => import('../../ShipmentModules/ShipmentStock/ModuleShipmentStock').then(m => m.ModuleShipmentStock), path: 'ShipmentStock' },
+  // { loadChildren: () => import('../../ShipmentModules/ShipmentTabs/ModuleShipmentTabs').then(m => m.ModuleShipmentTabs), path: 'ShipmentTabs' },
+  // { loadChildren: () => import('../../ShipmentModules/ShipmentPackages/ModuleShipmentPackages').then(m => m.ModuleShipmentPackages), path: 'ShipmentPackages' },
+  // { loadChildren: () => import('../../ShipmentModules/ShipmentRouting/ModuleShipmentRouting').then(m => m.ModuleShipmentRouting), path: 'ShipmentRouting' },
+  // { loadChildren: () => import('../../ShipmentModules/ShipmentLogBox/ModuleShipmentLogBox').then(m => m.ModuleShipmentLogBox), path: 'ShipmentLogBox' },
+  // { loadChildren: () => import('../../ShipmentModules/ShipmentSharedManifest/ModuleShipmentSharedManifest').then(m => m.ModuleShipmentSharedManifest), path: 'ShipmentSharedManifest' },
+  // { loadChildren: () => import('../../ShipmentModules/ShipmentAMANAC/ModuleShipmentAMANAC').then(m => m.ModuleShipmentAMANAC), path: 'ShipmentAMANAC' },
+  // { loadChildren: () => import('../../ShipmentModules/ShipmentContainers/ModuleShipmentContainers').then(m => m.ModuleShipmentContainers), path: 'ShipmentContainers' },
 
     
   // Invoice Modules
@@ -89,14 +89,62 @@ export const LazyWidgets: { path: string, loadChildren: () => Promise<NgModuleFa
   { loadChildren: () => import('../../TasksApp/ModuleTasksApp').then(m => m.ModuleTasksApp), path: 'TasksApp' },
 
   //shipment order
-  { loadChildren: () => import('../../ShipmentOrder/Module_SHIPOR').then(m => m.ShipmentOrderModule), path: 'ShipmentOrder' },
+  // { loadChildren: () => import('../../ShipmentOrder/Module_SHIPOR').then(m => m.ShipmentOrderModule), path: 'ShipmentOrder' },
 
-  { loadChildren: () => import('../../Workflow/ModuleWorkflow').then(m => m.ModuleWorkflow), path: 'Workflow' },
+  // { loadChildren: () => import('../../Workflow/ModuleWorkflow').then(m => m.ModuleWorkflow), path: 'Workflow' },
+  // { loadChildren: () => import('../../InfrastructureModules/InfrastructureAutomation/ModuleInfrastructureAutomation').then(m => m.ModuleInfrastructureAutomation), path: 'InfrastructureAutomation' },
+  //  { loadChildren: () => import('../../InfrastructureModules/InfrastructureBatchService/ModuleInfrastructureBatchService').then(m => m.ModuleInfrastructureBatchService), path: 'InfrastructureBatchService' },
+  //  { loadChildren: () => import('../../InfrastructureModules/InfrastructureCommunications/ModuleInfrastructureCommunications').then(m => m.ModuleInfrastructureCommunications), path: 'InfrastructureCommunications' },
+  //  { loadChildren: () => import('../../InfrastructureModules/InfrastructureCustomization/ModuleInfrastructureCustomization').then(m => m.ModuleInfrastructureCustomization), path: 'InfrastructureCustomization' },
+  //  { loadChildren: () => import('../../InfrastructureModules/InfrastructureDocuments/ModuleInfrastructureDocuments').then(m => m.ModuleInfrastructureDocuments), path: 'InfrastructureDocuments' },
+  //  { loadChildren: () => import('../../InfrastructureModules/InfrastructureGettingStarted/ModuleInfrastructureGettingStarted').then(m => m.ModuleInfrastructureGettingStarted), path: 'InfrastructureGettingStarted' },
+  //  { loadChildren: () => import('../../InfrastructureModules/InfrastructureHybrid/ModuleInfrastructureHybrid').then(m => m.ModuleInfrastructureHybrid), path: 'InfrastructureHybrid' },
+  //  { loadChildren: () => import('../../InfrastructureModules/InfrastructureOthers/ModuleInfrastructureOthers').then(m => m.ModuleInfrastructureOthers), path: 'InfrastructureOthers' },
+  //  { loadChildren: () => import('../../InfrastructureModules/InfrastructureStimulsoft/ModuleInfrastructureStimulsoft').then(m => m.ModuleInfrastructureStimulsoft), path: 'InfrastructureStimulsoft' },
+  //  { loadChildren: () => import('../../InfrastructureModules/InfrastructureTenantManagement/ModuleInfrastructureTenantManagement').then(m => m.ModuleInfrastructureTenantManagement), path: 'InfrastructureTenantManagement' },
+  //  { loadChildren: () => import('../../InfrastructureModules/InfrastructureUser/ModuleInfrastructureUser').then(m => m.ModuleInfrastructureUser), path: 'InfrastructureUser' },
+  //  { loadChildren: () => import('../../InfrastructureModules/InfrastructureComputingPartner/ModuleInfrastructureComputingPartner').then(m => m.ModuleInfrastructureComputingPartner), path: 'InfrastructureComputingPartner' },
+  //  { loadChildren: () => import('../../InfrastructureModules/InfrastructureBusinessProcess/ModuleInfrastructureBusinessProcess').then(m => m.ModuleInfrastructureBusinessProcess), path: 'InfrastructureBusinessProcess' },
+  //  { loadChildren: () => import('../../InfrastructureModules/InfrastructureBIReport/ModuleInfrastructureBIReport').then(m => m.ModuleInfrastructureBIReport), path: 'InfrastructureBIReport' },
+  //  { loadChildren: () => import('../../InfrastructureModules/InfrastructureHelpResource/ModuleInfrastructureHelpResource').then(m => m.ModuleInfrastructureHelpResource), path: 'InfrastructureHelpResource' },
+ 
 
+  // Customs Modules
+  { loadChildren: () => import('../../Customs/Module_CUST').then(m => m.CustomsModule), path: 'Customs' },
+  { loadChildren: () => import('../../CustomsModules/CustomsClaim/ModuleCustomsClaim').then(m => m.ModuleCustomsClaim), path: 'CustomsClaim' },
+  { loadChildren: () => import('../../CustomsModules/CustomsControls/ModuleCustomsControls').then(m => m.ModuleCustomsControls), path: 'CustomsControls' },
+  { loadChildren: () => import('../../CustomsModules/CustomsClient/ModuleCustomsClient').then(m => m.ModuleCustomsClient), path: 'CustomsClient' },
+  { loadChildren: () => import('../../CustomsModules/CustomsDeclarationModules/DeclarationTabs/ModuleDeclarationTabs').then(m => m.ModuleDeclarationTabs), path: 'DeclarationTabs' },
+  { loadChildren: () => import('../../CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/ModuleDeclarationSupplierInvoice').then(m => m.ModuleDeclarationSupplierInvoice), path: 'DeclarationSupplierInvoice' },
+  { loadChildren: () => import('../../CustomsModules/CustomsDeclarationModules/DeclarationOthers/ModuleDeclarationOthers').then(m => m.ModuleDeclarationOthers), path: 'DeclarationOthers' },
+  { loadChildren: () => import('../../CustomsModules/CustomsCourier/ModuleCustomsCourier').then(m => m.ModuleCustomsCourier), path: 'CustomsCourier' },
+  { loadChildren: () => import('../../CustomsModules/CustomsDeclarationCargoSplit/ModuleCustomsDeclarationCargoSplit').then(m => m.ModuleCustomsDeclarationCargoSplit), path: 'CustomsDeclarationCargoSplit' },
+  { loadChildren: () => import('../../CustomsModules/CustomsLogisticActionRequest/ModuleCustomsLogisticActionRequest').then(m => m.ModuleCustomsLogisticActionRequest), path: 'CustomsLogisticActionRequest' },
+  { loadChildren: () => import('../../CustomsModules/CustomsMaintenance/ModuleCustomsMaintenance').then(m => m.ModuleCustomsMaintenance), path: 'CustomsMaintenance' },
+  { loadChildren: () => import('../../CustomsModules/CustomsReferant/ModuleCustomsReferant').then(m => m.ModuleCustomsReferant), path: 'CustomsReferant' },
+  { loadChildren: () => import('../../CustomsModules/CustomsCollateral/ModuleCustomsCollateral').then(m => m.ModuleCustomsCollateral), path: 'CustomsCollateral' },
+  { loadChildren: () => import('../../CustomsModules/CustomsPhysicalCheck/ModulePhysicalCheck').then(m => m.ModulePhysicalCheck), path: 'PhysicalCheck' },
+    { loadChildren: () => import('../../CustomsModules/CustomsPhysicalCheck/ModulePhysicalCheck').then(m => m.ModulePhysicalCheck), path: 'CustomsPhysicalCheck' },
+    { loadChildren: () => import('../../CustomsModules/CustomsProceduralFault/ModuleProceduralFault').then(m => m.ModuleProceduralFault), path: 'CustomsProceduralFault' },
+  { loadChildren: () => import('../../CustomsModules/CustomsVehicle/ModuleCustomsVehicle').then(m => m.ModuleCustomsVehicle), path: 'CustomsVehicle' },
+  { loadChildren: () => import('../../CustomsModules/CustomsPaymentOrder/ModuleCustomsPaymentOrder').then(m => m.ModuleCustomsPaymentOrder), path: 'CustomsPaymentOrder' },
+  { loadChildren: () => import('../../CustomsModules/CustomsListTemplates/ModuleCustomsListTemplates').then(m => m.ModuleCustomsListTemplates), path: 'CustomsListTemplates' },
+  { loadChildren: () => import('../../CustomsModules/CustomsDocuments/ModuleCustomsDocuments').then(m => m.ModuleCustomsDocuments), path: 'CustomsDocuments' },
+  { loadChildren: () => import('../../CustomsModules/CustomsRequests/ModuleCustomsRequests').then(m => m.ModuleCustomsRequests), path: 'CustomsRequests' },
+  { loadChildren: () => import('../../CustomsModules/CustomsGeneralRequests/ModuleCustomsGeneralRequests').then(m => m.ModuleCustomsGeneralRequests), path: 'CustomsGeneralRequests' },
+  { loadChildren: () => import('../../CustomsModules/CustomsVendor/ModuleCustomsVendor').then(m => m.ModuleCustomsVendor), path: 'CustomsVendor' },
+    { loadChildren: () => import('../../CustomsModules/InvoiceQueue/ModuleInvoiceQueue').then(m => m.ModuleInvoiceQueue), path: 'InvoiceQueue' },
+    { loadChildren: () => import('../../CustomsModules/CustomsExportStorage/export-storage.module').then(m => m.ExportStorageModule), path: 'CustomsExportStorage' },
+    
+    { loadChildren: () => import('../../CustomsModules/CustomsContainerization/ModuleCustomsContainerization').then(m => m.ModuleCustomsContainerization), path: 'CustomsContainerization' },
+    { loadChildren: () => import('../../CustomsModules/CustomsReport/ModuleCustomsReports').then(m => m.ModuleCustomsReports), path: 'CustomsReport' },
+    { loadChildren: () => import('../../CustomsModules/CustomsCountry/ModuleCustomsCountry').then(m => m.ModuleCustomsCountry), path: 'CustomsCountry' },
+  
+   
 ];
 
 export function LazyArrayToObjects() {
-  const result = {};
+    const result = {};
 
   for (const w of LazyWidgets) {
     result[w.path] = w.loadChildren;

@@ -1,5 +1,7 @@
 declare var window: any;
 declare var System: any;
+declare var require: any
+
 import {TextCodeTranslator} from '../Utilities/TextCodeTranslator';
 import {AppTool} from '../Tools';
 import {RulesValidator} from './RulesValidator';

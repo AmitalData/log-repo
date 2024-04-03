@@ -21,6 +21,7 @@ import {ServiceLocator} from '../../../../../Infrastructure/Locators/ServiceLoca
 import { Console } from 'console';
 import { CommonDomainService } from '../../../../../Common/Services/CommonDomainService';
 import { DownloadManager } from '../../../../../Infrastructure/Utilities/DownloadManager';
+declare var require: any
 
 @Component({
     

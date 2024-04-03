@@ -8,6 +8,9 @@ import { ChildDirective } from './Directives/ChildDirective';
 
 import { AppComponent } from './AppComponent';
 import { LazyArrayToObjects } from './DynamicLoader/LazyWidgetsLogitude';
+// import { AppComponent } from './AppComponent_Cust';
+
+// import { LazyArrayToObjects } from './DynamicLoader/LazyWidgetsCustoms';
 
  
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 

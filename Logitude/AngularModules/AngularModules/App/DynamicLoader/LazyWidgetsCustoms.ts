@@ -63,18 +63,11 @@ export const LazyWidgets: { path: string, loadChildren: () => Promise<NgModuleFa
     { loadChildren: () => import('../../CustomsModules/CustomsReport/ModuleCustomsReports').then(m => m.ModuleCustomsReports), path: 'CustomsReport' },
     { loadChildren: () => import('../../CustomsModules/CustomsCountry/ModuleCustomsCountry').then(m => m.ModuleCustomsCountry), path: 'CustomsCountry' },
   
-    // QuoteOPM Modules
-    { loadChildren: () => import('../../QuoteOPM/Module_QUPM').then(m => m.QuoteModule), path: 'QuoteOPM' },
-    { loadChildren: () => import('../../QuoteOPModules/QuoteCharges/ModuleQuoteCharges').then(m => m.ModuleQuoteCharges), path: 'QuoteCharges' },
-    { loadChildren: () => import('../../QuoteOPModules/QuoteOthers/ModuleQuoteOthers').then(m => m.ModuleQuoteOthers), path: 'QuoteOthers' },
-    { loadChildren: () => import('../../QuoteOPModules/QuoteTabs/ModuleQuoteTabs').then(m => m.ModuleQuoteTabs), path: 'QuoteTabs' },
-    { loadChildren: () => import('../../QuoteOPModules/QuoteTemplates/ModuleQuoteTemplates').then(m => m.ModuleQuoteOPTemplates), path: 'QuoteTemplates' },
-
+   
 ];
 
 export function LazyArrayToObjects() {
   const result = {};
-
   for (const w of LazyWidgets) {
     result[w.path] = w.loadChildren;
   }

@@ -1,5 +1,6 @@
 import { compare, Operation } from 'fast-json-patch';
 import { CloneDeep } from './LodashClone';
+declare var require: any
 
 export class JsonPatchBuilder {
     private LeftObject: any;
