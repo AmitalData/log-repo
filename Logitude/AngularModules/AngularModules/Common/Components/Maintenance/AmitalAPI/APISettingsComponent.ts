@@ -13,43 +13,77 @@ import { FieldData, MoreParam } from "./amitalApiTypes";
 @Component({
     selector: 'appAPISettings',
     template: `    
-    <div class='client-data-field margin-vertical' *ngIf='headerDataFieldReady' >
-        <div *ngFor='let field of fields'>
-            <LogLabel [DataContext]="DataContext" [Text]="field.label" [LayoutDirection]="'ltr'"></LogLabel>
-            <LogTextBox [DataContext]="DataContext" [ObjectFieldName]='field.name' [dir]="'ltr'"></LogTextBox>
+    <div class='form-data-field' *ngIf='headerDataFieldReady' >
+        <div *ngFor='let field of fields' class='form-data-field-field'>
+            <LogLabel class='HeaderScreenLable' [DataContext]="DataContext" [Text]="field.label" [LayoutDirection]="'ltr'"></LogLabel>
+            <span class='HeaderScreenValue' [dir]="'ltr'">{{DataContext[field.name]}}</span>
         </div>
     </div>      
-    
-    <h2 class='subTitle'>API</h2>
+    <div class='body-wrapper'>
+        <h2 class='subTitle margin-vertical'>API</h2>
 
-    <button class="Button RedButton margin-vertical" (click)="openAddPopup()">{{'General.B.Add' | TextCodeTranslationPipe}}</button>
+        <button class="Button RedButton margin-vertical" (click)="openAddPopup()">{{'General.B.Add' | TextCodeTranslationPipe}}</button>
 
-    <div class='user-select' style='height: 600px; width: 100%; position: relative;' *ngIf='clientapiTableReady'>
-        <logitude-edit-grid GridHeight="100%" GridWidth="100%" [ItemSource]="clientapiDataSource">
-            <log-column [header]="col.label" [width]="'140'" [Alignment]="'center'" [binding]="col.name" *ngFor='let col of clientapiColumns'>
-                <ng-template let-item>
-                    <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                        <div *ngIf="logcelltemplate.IsDisplayMode" class="TextTrimming" style="text-align:center">
-                            {{item[col.name]}}
-                        </div>
-                    </log-cell-template>
-                </ng-template>
-            </log-column>
-            <log-column [header]="''" [width]="'140'" [Alignment]="'center'">
-                <ng-template let-item>
-                    <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                        <div *ngIf="logcelltemplate.IsDisplayMode" class="TextTrimming" style="text-align:center">
-                            <button class="Button RedButton" (click)="openRemovePopup(item.Id)">{{'General.B.Remove' | TextCodeTranslationPipe}}</button>
-                            <button class="Button RedButton" (click)="openEditPopup(item)">{{'General.B.Edit' | TextCodeTranslationPipe}}</button>
-                        </div>
-                    </log-cell-template>
-                </ng-template>
-            </log-column>
-        </logitude-edit-grid>
+        <div class='user-select' style='height: 600px; width: 100%; position: relative;' *ngIf='clientapiTableReady'>
+            <logitude-edit-grid GridHeight="100%" GridWidth="100%" [ItemSource]="clientapiDataSource">
+                <log-column [header]="col.label" [width]="'140'" [Alignment]="'center'" [binding]="col.name" *ngFor='let col of clientapiColumns'>
+                    <ng-template let-item>
+                        <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                            <div *ngIf="logcelltemplate.IsDisplayMode" class="TextTrimming" style="text-align:center">
+                                {{item[col.name]}}
+                            </div>
+                        </log-cell-template>
+                    </ng-template>
+                </log-column>
+                <log-column [header]="''" [width]="'140'" [Alignment]="'center'">
+                    <ng-template let-item>
+                        <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                            <div *ngIf="logcelltemplate.IsDisplayMode" class="TextTrimming" style="text-align:center">
+                                <button class="Button RedButton" (click)="openRemovePopup(item.Id)">{{'General.B.Remove' | TextCodeTranslationPipe}}</button>
+                                <button class="Button RedButton" (click)="openEditPopup(item)">{{'General.B.Edit' | TextCodeTranslationPipe}}</button>
+                            </div>
+                        </log-cell-template>
+                    </ng-template>
+                </log-column>
+            </logitude-edit-grid>
+        </div>
     </div>
     `,
     styleUrls: ['./fields.scss', './amitalApi.scss'],
-    styles: [``],
+    styles: [`
+        .body-wrapper {
+            -webkit-border-radius: 8px;
+            border: 1px solid #c8c8c8;
+            padding: 0 15px;
+        }
+
+        :host .form-data-field {
+            margin-bottom: 0px;
+            padding-top: 5px;
+            padding-left: 10px;
+            padding-right: 10px;
+            padding-bottom: 10px;
+            background: #F7F7F7;
+            border: 1px solid #DADADA;
+            border-bottom-width: 0px;
+            border-radius: 8px 8px 0px 0px;
+            -moz-border-radius: 8px 8px 0px 0px;
+            -webkit-border-radius: 8px 8px 0px 0px;    
+        }
+
+        :host .form-data-field div {
+            flex: 0 0 390px; 
+            display: flex;
+            overflow: hidden;
+        }
+
+        .form-data-field div span {
+            width:300px;
+            align-self: center;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+    `],
 })
 export class APISettingsComponent extends BaseComponent {
     DataContext: APISettingsComponent | any = this;
@@ -84,7 +118,7 @@ export class APISettingsComponent extends BaseComponent {
         { name: 'ApiType', label: 'Api Type', width: '100' },
         { name: 'Address', label: 'Address', width: '100' },
         { name: 'PartnerName', label: 'Partner', width: '100' },
-        { name: 'PartnerToken', label: 'Toekn', width: '100' },
+        { name: 'PartnerToken', label: 'Token', width: '100' },
     ].concat(this.moreParamsList.map(param => ({ name: param.name, label: param.label, width: '100' })));
 
     async ngOnInit() {

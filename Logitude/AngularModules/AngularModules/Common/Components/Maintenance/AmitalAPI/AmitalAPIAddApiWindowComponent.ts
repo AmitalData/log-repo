@@ -6,12 +6,13 @@ import { AmitalApiSchema } from "Common/Services/AmitalAPISchemaWebService";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 import { MessageWindow } from "Controls/Windows/MessageWindow";
 import { TextCodeTranslator } from "Infrastructure/Utilities/TextCodeTranslator";
-import { MoreParam, FieldData } from "./amitalApiTypes";
+import { MoreParam } from "./amitalApiTypes";
+import { TextBoxField } from "./components/LogTexBoxFormComponent";
 
 @Component({
-    template: `
-        <div class='client-data-field margin-vertical' *ngIf='fieldsReady'>
-            <div class='field'>
+    template: `        
+        <log-text-box-form *ngIf='fieldsReady' class='form-data-field' [DataContext]='data' [fields]='fields' [dir]="'ltr'">
+            <div class='form-data-field-field'>
                 <LogLabel [DataContext]="data" [Text]="'Schema'" [LayoutDirection]="'ltr'"></LogLabel>
                 <span>
                     <select #selectedData (change)='onSchemaSelect(selectedData.value)' [value]='SchemaSelected' >
@@ -19,41 +20,24 @@ import { MoreParam, FieldData } from "./amitalApiTypes";
                     </select>
                 </span>
             </div>
-            <div *ngFor='let field of fields'>
-                <LogLabel [DataContext]="data" [Text]="field.label" [LayoutDirection]="'ltr'"></LogLabel>
-                <LogTextBox [DataContext]="data" [ObjectFieldName]='field.name' [dir]="'ltr'"></LogTextBox>
-            </div>
-        </div>    
-        <div class='button-wrapper'>
-            <button class="Button" (click)="close(null)">{{'General.B.Close' | TextCodeTranslationPipe}}</button>
-            <button class="Button RedButton" (click)="close(data)">{{'General.B.Save' | TextCodeTranslationPipe}}</button>
-        </div>
-    `,
+        </log-text-box-form>
+        <log-close-save-buttons (close)='close($event)'></log-close-save-buttons>        
+    `,    
     styleUrls: ['./fields.scss'],
     styles: [`      
-        .field {
+        .form-data-field-field {
             margin: 0;
             line-height: unset !important;
         }
 
-        .field span {
+        .form-data-field-field span {
             width: 300px;
         }
 
-        .field span select {
+        .form-data-field-field span select {
             width: 262px;
             height: 22px;
             box-shadow : inset 0 0 3px #AAAAAA;
-        }
-
-        .button-wrapper {
-            direction: ltr;
-        }
-
-        .Button {
-            display: inline-block;
-            width: 50px;
-            margin: 0 5px;
         }
     `],
 })
@@ -64,11 +48,11 @@ export class AmitalAPIAddApiWindowComponent {
     SchemaSelected: string = '';
     data: AmitalApiClientapi & any = { UIProperties: new UIProperties() };
     moreParamsList: MoreParam[] = [];
-    fields: FieldData[] = []
-    basicFields: FieldData[] = [
+    fields: TextBoxField[] = []
+    basicFields: TextBoxField[] = [
         { name: 'PartnerName', label: 'Partner' },
-        { name: 'PartnerToken', label: 'Toekn' },
-        { name: 'Active', label: 'Active' },
+        { name: 'PartnerToken', label: 'Token' },
+        { name: 'Active', label: 'Active', type: 'boolean' },
     ];
 
     constructor(private readonly cdr: ChangeDetectorRef) { }
@@ -86,10 +70,9 @@ export class AmitalAPIAddApiWindowComponent {
         this.fieldsReady = true;
     }
 
-    close(data: any) {
-        console.log(data);
+    close(save: boolean) {
         delete this.data.UIProperties;
-        this.logWindow.Close(data);
+        this.logWindow.Close(save ? this.data : null);
     }
 
     onSchemaSelect(schemaId: string) {
@@ -116,7 +99,7 @@ export class AmitalAPIAddApiWindowComponent {
         let updateRow: AmitalApiClientapi = await AmitalAPIAddApiWindowComponent.openWindow(row, schemas, moreParams);
         if (!updateRow) return;
 
-        if(!isUpdate && clientapis.some(clientapi => clientapi.SchemaId +';'+ clientapi.PartnerName === updateRow.SchemaId +';'+ updateRow.PartnerName)) {
+        if (!isUpdate && clientapis.some(clientapi => clientapi.SchemaId + ';' + clientapi.PartnerName === updateRow.SchemaId + ';' + updateRow.PartnerName)) {
             new MessageWindow().Show(TextCodeTranslator.Translate('General.O.ClientAPIAlreadyExists'));
             return;
         }
@@ -130,7 +113,7 @@ export class AmitalAPIAddApiWindowComponent {
     private static openWindow(row: AmitalApiClientapi, schemas: AmitalApiSchema[], moreParams: MoreParam[]): Promise<AmitalApiClientapi> {
         const logWindow = new LogitudeWindow();
         logWindow.Width = 850;
-        logWindow.Height = 300;
+        logWindow.Height = 340;
         logWindow.Title = "Client API";
         logWindow.WindowArgs = { row, logWindow, schemas: schemas, moreParams };
         logWindow.Show('./Common/Components/Maintenance/AmitalAPI//AmitalAPIAddApiWindowComponent');
@@ -158,10 +141,13 @@ export class AmitalAPIAddApiWindowComponent {
             res = await (isUpdate ? new AmitalAPIClientapiWebService().update(updateRow) : new AmitalAPIClientapiWebService().add(updateRow));
         } catch (error) { }
         SessionLocator.SelectedSession.StopBusyIndicator();
-        
-        if(!res) 
-            new MessageWindow().Show(isUpdate ? TextCodeTranslator.Translate('General.O.UpdateFailed') : TextCodeTranslator.Translate('General.O.AddFailed'))
-        
+
+        if (!res) {            
+            const win = new MessageWindow();
+            win.ShowErrorIcon = true;
+            win.Show(isUpdate ? TextCodeTranslator.Translate('General.O.UpdateFailed') : TextCodeTranslator.Translate('General.O.AddFailed'))
+        }
+
         return res;
     }
 }

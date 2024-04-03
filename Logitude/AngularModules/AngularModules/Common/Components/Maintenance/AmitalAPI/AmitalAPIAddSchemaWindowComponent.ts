@@ -2,38 +2,19 @@ import { Component } from "@angular/core";
 import { LogitudeWindow } from "Controls/Windows/LogitudeWindow";
 import { UIProperties } from "Infrastructure/Components/LogitudeComponents/UIProperties";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
-import { FieldData } from "./amitalApiTypes";
 import { AmitalAPISchemaWebService, AmitalApiSchema } from "Common/Services/AmitalAPISchemaWebService";
 import { MessageWindow } from "Controls/Windows/MessageWindow";
 import { TextCodeTranslator } from "Infrastructure/Utilities/TextCodeTranslator";
+import { TextBoxField } from "./components/LogTexBoxFormComponent";
 
 @Component({
     template: `
-        <div class='client-data-field margin-vertical' *ngIf='fieldsReady'>
-            <div *ngFor='let field of fields'>
-                <LogLabel [DataContext]="data" [Text]="field.label" [LayoutDirection]="'ltr'"></LogLabel>
-                <LogTextBox [DataContext]="data" [ObjectFieldName]='field.name' [dir]="'ltr'"></LogTextBox>
-            </div>
-        </div>    
-        <div class='button-wrapper'>
-            <button class="Button" (click)="close(null)">{{'General.B.Close' | TextCodeTranslationPipe}}</button>
-            <button class="Button RedButton" (click)="close(data)">{{'General.B.Save' | TextCodeTranslationPipe}}</button>
-        </div>
+        <log-text-box-form *ngIf='fieldsReady' [DataContext]='data' [fields]='fields' [dir]="'ltr'"></log-text-box-form>       
+        <log-close-save-buttons (close)='close($event)'></log-close-save-buttons>        
     `,
-    styleUrls: ['./fields.scss'],
     styles: [`      
-        .client-data-field div LogLabel {
+        .form-data-field div LogLabel {
             width: 170px !important;
-        }
-
-        .button-wrapper {
-            direction: ltr;
-        }
-
-        .Button {
-            display: inline-block;
-            width: 50px;
-            margin: 0 5px;
         }
     `],
 })
@@ -41,7 +22,7 @@ export class AmitalAPIAddSchemaWindowComponent {
     fieldsReady: boolean = false;
     logWindow: LogitudeWindow;
     data: AmitalApiSchema & any = { UIProperties: new UIProperties() };
-    fields: FieldData[] = [
+    fields: TextBoxField[] = [
         { name: 'Name', label: 'Name' },
         { name: 'SchemaJson', label: 'Schema Json' },
         { name: 'Active', label: 'Active' },
@@ -51,7 +32,7 @@ export class AmitalAPIAddSchemaWindowComponent {
         { name: 'tenants', label: 'Tenants' },
     ];
 
-    fieldsForCreate: FieldData[] = [
+    fieldsForCreate: TextBoxField[] = [
         { name: 'Ref1', label: 'Ref1' },
         { name: 'Ref2', label: 'Ref2' },
         { name: 'Ref3', label: 'Ref3' },
@@ -69,16 +50,16 @@ export class AmitalAPIAddSchemaWindowComponent {
         this.fieldsReady = true;
     }
 
-    close(data: any) {
+    close(save: boolean) {
         delete this.data.UIProperties;
-        this.logWindow.Close(data);
+        this.logWindow.Close(save ? this.data : null);
     }
 
     static async openEditPopup(row: AmitalApiSchema, isUpdate: boolean): Promise<AmitalApiSchema | boolean> {
         let updateRow: AmitalApiSchema = await AmitalAPIAddSchemaWindowComponent.openWindow(row);
         if (!updateRow) return;
 
-        updateRow.Tenants = updateRow['tenants'].split(',').map(t => t.trim());
+        updateRow.Tenants = updateRow['tenants']?.split(',').map(t => t.trim());
         let res: AmitalApiSchema | boolean = await AmitalAPIAddSchemaWindowComponent.sendToServer(isUpdate, updateRow);
 
         return res;
@@ -105,8 +86,11 @@ export class AmitalAPIAddSchemaWindowComponent {
         } catch (error) { }
         SessionLocator.SelectedSession.StopBusyIndicator();
 
-        if (!res)
-            new MessageWindow().Show(isUpdate ? TextCodeTranslator.Translate('General.O.UpdateFailed') || 'Update failed!' : TextCodeTranslator.Translate('General.O.AddFailed') || 'Add failed!');
+        if (!res) {
+            const win = new MessageWindow();
+            win.ShowErrorIcon = true;
+            win.Show(isUpdate ? TextCodeTranslator.Translate('General.O.UpdateFailed') : TextCodeTranslator.Translate('General.O.AddFailed'));
+        }
 
         return res;
     }

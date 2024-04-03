@@ -52,13 +52,14 @@ export class AmitalAPISettingsComponent {
     clientTableReady: boolean = false;
 
     clientColumns: (FieldData & { width: string })[] = [
+        { name: 'Name', label: 'Name', width: '100' },
         { name: 'AzureClientId', label: 'Client Id', width: '241' },
-        { name: 'AzureApiRegisterName', label: 'Client Name', width: '224' },
+        { name: 'AzureApiRegisterName', label: 'Register Name', width: '224' },
         { name: 'SecretValue', label: 'Client Secret', width: '99' },
         { name: 'SecretExpired', label: 'Secret Expired', width: '250' },
         { name: 'AzureManagedApplObjId', label: 'Caller Objectid', width: '253' },
-        { name: 'baseAddress', label: 'Base Addres', width: '298' },
-        { name: 'authAddress', label: 'Auth Address', width: '265' },
+        { name: 'baseAddress', label: 'Base Addres', width: '220' },
+        { name: 'authAddress', label: 'Auth Address', width: '220' },
         { name: 'Tenant', label: 'Tenant', width: '66' },
     ];
 
