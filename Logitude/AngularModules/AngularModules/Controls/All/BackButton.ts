@@ -9,7 +9,7 @@ import { AppTool } from '../../Infrastructure/Tools';
 
     template:
     `
-    <div id="{{ 'EditBackbutton' | IdGeneratorPipe}}" class="BackBottun" (mouseover)="IsHover = true" (mouseleave)="IsHover = false"
+    <div id="{{ 'EditBackbutton' | IdGeneratorAsyncPipe | async}}" class="BackBottun" (mouseover)="IsHover = true" (mouseleave)="IsHover = false"
         [ngStyle]="LayoutDirection == 'rtl' ? {'padding-right': '10px'} : {'padding-left': '10px'}">
         <div class="BackBottonBody" [ngStyle]="LayoutDirection == 'rtl' ? {'border-right': 'none'} : {'border-left': 'none'}">{{Text}}</div>
 

@@ -73,7 +73,7 @@
     <tr>
         <td>
             <div class="MediaFill" style="overflow-x: hidden;">
-                <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="DataContext.TotalVATsList" [Disabled]="!IsEditingVATEnabled">
+                <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="DataContext.TotalVATsList" [Disabled]="!IsEditingVATEnabled" [UseVirtuallization]="DataContext.IsUsingVirtuallization">
 
                     <!-- VAT Type -->
                     <log-column [header]="'VAT Type'" [width]="'200'" [Alignment]="'left'">

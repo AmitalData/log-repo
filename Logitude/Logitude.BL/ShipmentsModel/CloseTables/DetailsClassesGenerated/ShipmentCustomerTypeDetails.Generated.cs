@@ -148,6 +148,14 @@ namespace Logitude.BL.ShipmentsModel
                 Name = "Shipper Not Exporter", 
                 ShowInLOV = true, 
 			});
+			 
+            all.Add(new ShipmentCustomerTypeDetails()
+            {    
+                Code = "TRK", 
+                Name = "Trucker", 
+                SearchFields = "TRK,Trucker", 
+                ShowInLOV = true, 
+			});
 			
             return all;
        }

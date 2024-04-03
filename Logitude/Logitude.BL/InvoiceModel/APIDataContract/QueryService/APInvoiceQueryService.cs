@@ -107,8 +107,15 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
             this.aPInvoicePM = RestClientAPIAPInvoice!=null? RestClientAPIAPInvoice: APInvoiceDataMappingAndValidatin(myEntity, tenant, computingPartnerName);
             aPInvoicePM.Tenant = tenant;
             aPInvoicePM.StatusCode = "AD";
-            aPInvoicePM.CreatedByUserId = myUser.Id;
-            aPInvoicePM.UpdatedByUserId = myUser.Id;
+            if (string.IsNullOrWhiteSpace(RestClientAPIAPInvoice.CreatedByUserId)) {
+                aPInvoicePM.CreatedByUserId = myUser.Id;
+            }
+
+            if (string.IsNullOrWhiteSpace(RestClientAPIAPInvoice.UpdatedByUserId))
+            {
+                aPInvoicePM.UpdatedByUserId = myUser.Id;
+            }
+
             aPInvoicePM.CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
             aPInvoicePM.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
 
@@ -169,6 +176,70 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 
             transferstatusCodes.Add(new TransferStatusCodeItem("BLTO", billToAccountingCard));
         }
+
+        public APInvoice SetAPInvoiceSystemUser(APInvoice entity)
+        {
+            String systemUserId = "";
+            UserPM myCreatedByUserPM = null;
+            Logitude.BL.CommonDataModel.APIDataContract.ApiV1.User systemUser = null;
+            if (entity.CreatedByUser != null)
+            {
+                UserQuery query = new UserQuery(entity.Tenant);
+                myCreatedByUserPM = query.UserCustomDataMappingAndValidatin(entity.CreatedByUser, entity.Tenant);
+            }
+
+
+
+            if (entity.CreatedByUser == null || myCreatedByUserPM == null)
+            {
+                systemUserId = AuthenticationUtil.ResolveSystemUserId(entity.Tenant);
+                if (!String.IsNullOrEmpty(systemUserId))
+                {
+                    entity.CreatedByUser = null;
+
+                    UserQueryService userQueryService = new UserQueryService(entity.Tenant);
+                    systemUser = userQueryService.GetUserById(systemUserId, entity.Tenant);
+                    if (systemUser != null)
+                    {
+                        entity.CreatedByUser = new CommonDataModel.APIDataContract.ApiV1.User();
+                        entity.CreatedByUser.Id = systemUser.Id;
+                        entity.CreatedByUser.EnglishName = systemUser.EnglishName;
+                        entity.CreatedByUser.ExternalCode = systemUser.ExternalCode;
+                        entity.CreatedByUser.LocalName = systemUser.LocalName;
+
+                    }
+                }
+            }
+
+
+            UserPM myIssuedByUserPM = null;
+            if (entity.UpdatedByUser != null)
+            {
+                UserQuery query = new UserQuery(entity.Tenant);
+                myIssuedByUserPM = query.UserCustomDataMappingAndValidatin(entity.UpdatedByUser, entity.Tenant);
+            }
+
+
+
+            if (entity.UpdatedByUser == null || myIssuedByUserPM == null)
+            {
+                entity.UpdatedByUser = null;
+                if (systemUser != null)
+                {
+                    entity.UpdatedByUser = new CommonDataModel.APIDataContract.ApiV1.User();
+                    entity.UpdatedByUser.Id = systemUser.Id;
+                    entity.UpdatedByUser.EnglishName = systemUser.EnglishName;
+                    entity.UpdatedByUser.ExternalCode = systemUser.ExternalCode;
+                    entity.UpdatedByUser.LocalName = systemUser.LocalName;
+
+                }
+            }
+
+
+
+            return entity;
+        }
+
         private void InitAndValidateGeneralData(AccountingSetting accountingSetting)
         {
             if (string.IsNullOrEmpty(this.aPInvoicePM.InvoiceNumber))
@@ -323,7 +394,12 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 
                 else
                 {
-                    throw new ApplicationException("No Shipment Found");
+                    TenantQuery tenantQuery = new TenantQuery(tenant);
+                    TenantPM tPM = tenantQuery.GetSinglePM(tenant);
+                    if (!(tPM != null && tPM.AccountingActivated)) 
+                    {
+                        throw new ApplicationException("No Shipment Found");
+                    }
                 }
             }
         }
@@ -438,7 +514,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 
                         if (!string.IsNullOrEmpty(chargesType.ContainerMeasurementId))
                         {
-                            Simplog.Data.CommonDataModel.EntityPOCOs.Measurement measurement = measurementRepository.GetSingleMeasurement(chargesType.ContainerMeasurementId, tenant);
+                            Simplog.Data.CommonDataModel.EntityPOCOs.Measurement measurement = measurementRepository.GetSingleMeasurement(chargesType.ContainerMeasurementId, this.tenant);
                             if (measurement != null)
                             {
                                 if (measurement.Code == "BCNT")
@@ -460,15 +536,15 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 
                                     if (!string.IsNullOrEmpty(line.ContainerTypeId) && line.Quantity != null && line.Quantity != 0)
                                     {
-                                        Simplog.Data.CommonDataModel.EntityPOCOs.PackageType packageType = packageTypeRepository.GetSinglePackageType(line.ContainerTypeId, tenant);
-                                        if(packageType != null)
+                                        Simplog.Data.CommonDataModel.EntityPOCOs.PackageType packageType = packageTypeRepository.GetSinglePackageType(line.ContainerTypeId, this.tenant);
+                                        if (packageType != null)
                                         {
-                                            if(!packageType.IsContainer)
+                                            if (!packageType.IsContainer)
                                             {
                                                 throw new ApplicationException(chargesType.Code + " Line Container Type should be is Container");
                                             }
 
-                                            if(!packageType.IsOcean)
+                                            if (!packageType.IsOcean)
                                             {
                                                 throw new ApplicationException(chargesType.Code + " Line Container Type should be Ocean");
                                             }
@@ -496,8 +572,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                             chargeDebitAccount = chargesType.PayableDebitAccount;
                         }
 
-                        line.Description = chargesType.EnglishName;
-                        line.LocalDescription = chargesType.LocalName;
+                        SetLineDescription(line, chargesType);
 
                         if (!aPInvoicePM.TotalVATOnly)
                         {
@@ -508,7 +583,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 
                             if (!string.IsNullOrEmpty(line.VatTypeId))
                             {
-                                Simplog.Data.CommonDataModel.EntityPOCOs.VatType vatType = VatTypeRepository.GetSingleVatType(line.VatTypeId, tenant, true);
+                                Simplog.Data.CommonDataModel.EntityPOCOs.VatType vatType = VatTypeRepository.GetSingleVatType(line.VatTypeId, this.tenant, true);
                                 if (vatType != null)
                                 {
                                     line.VatTypeName = vatType.EnglishName;
@@ -518,7 +593,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                                     {
                                         if (!vatType.IsMultiPercentage)
                                         {
-                                            VatTypePercentage vatTypePercentage = vatTypePercentageRepository.GetVatTypePercentageByDate(vatType.Id, tenant, this.aPInvoicePM.InvoiceDate);
+                                            VatTypePercentage vatTypePercentage = vatTypePercentageRepository.GetVatTypePercentageByDate(vatType.Id, this.tenant, this.aPInvoicePM.InvoiceDate);
                                             if (vatTypePercentage != null)
                                             {
                                                 line.VatPercentage = vatTypePercentage.Percentage;
@@ -554,7 +629,32 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                 line.EntityId = this.aPInvoicePM.MainEntityId;
             }
         }
-        
+
+        private void SetLineDescription(APInvoiceLinePM line, Simplog.Data.CommonDataModel.EntityPOCOs.ChargesType chargesType)
+        {
+            Tenant tenant = GetTenant();
+            if (tenant.AccountingActivated)
+            {
+                line.LocalDescription = line.LocalDescription ?? line.Description ?? chargesType.LocalName ?? chargesType.EnglishName;
+
+                if (string.IsNullOrWhiteSpace(line.Description))
+                    line.Description = chargesType.EnglishName;
+
+            }
+            else
+            {
+                line.Description = chargesType.EnglishName;
+                line.LocalDescription = chargesType.LocalName;
+            }
+        }
+
+        private Tenant GetTenant()
+        {
+            TenantRepository tenantRepository = new TenantRepository(tenant);
+            Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
+            return tenantPOCO;
+        }
+
         private void FillVATTransferExternalCodes(string accountingSysytemCode, string payableVATCard)
         {
             var myGroup = (from a in this.aPInvoicePM.InvoiceLines
@@ -830,6 +930,63 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
             }
         }
 
+        public APInvoiceLite GetAPInvoiceLiteByInvoiceNumberAndExternalId(string number, string externalId, int tenant)
+        {
+            try
+            {
+
+
+                string aPInvoiceId = query.GetSingleIdByNumberAndExternalId(number, externalId, tenant);
+
+
+                return new APInvoiceLite() { Id = aPInvoiceId };
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+
+        public APInvoiceLite GetAPInvoiceLiteByInvoiceNumber(string number, int tenant)
+        {
+            try
+            {
+
+
+                string aPInvoiceId = query.GetSingleIdByNumber(number, tenant);
+
+
+                return new APInvoiceLite() { Id = aPInvoiceId };
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+
+        public APInvoiceLite GetAPInvoiceLiteByExternalId(string externalId, int tenant)
+        {
+            try
+            {
+
+
+                string aPInvoiceId = query.GetSingleIdByExternalId(externalId, tenant);
+
+
+                return new APInvoiceLite() { Id = aPInvoiceId };
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+
         public APInvoice GetAPInvoiceByInternalNumber(string number, int tenant)
         {
             try
@@ -869,7 +1026,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
 
         public void APInvoiceCustomDataMapping(APInvoice apinvoice, int tenant)
         {
-        
+            
             apinvoice.Tenant = tenant;
             apinvoice.InvoiceExpectedAmount = Math.Round((double)apinvoice.AmountInInvoiceCurrency, 2);
             apinvoice.AmountInInvoiceCurrency= Math.Round((double)apinvoice.AmountInInvoiceCurrency, 2);
@@ -907,10 +1064,43 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
             }
        
         }
-
-        public void PaymentTermMapAndValidate(APInvoice apinvoice, APInvoicePM apinvoicePM, int tenant)
+        public bool IsFullAccountingActivated(int tenant)
         {
-            if (apinvoice.PaymentTerm == null && apinvoice.DueDate != null)
+            TenantRepository tenantRepository = new TenantRepository(tenant);
+            bool isFullAccountingActivated = tenantRepository.GetTenantAccountingActivated(tenant);
+            return isFullAccountingActivated;
+        }
+        public void PaymentTermMapAndValidate(APInvoice apinvoice, APInvoicePM apinvoicePM, int tenant, string glAccountPaymentTermId)
+        {
+            
+            
+
+            bool FullAccountingTenant = IsFullAccountingActivated(tenant);
+            if (glAccountPaymentTermId != null && FullAccountingTenant)
+            {
+                var paymentTermRepository = new PaymentTermRepository(tenant);
+                var myPaymentTerm = paymentTermRepository.GetSinglePaymentTerm(glAccountPaymentTermId, tenant);
+
+                int daysDifference = myPaymentTerm.Days;
+                DateTime? InvoiceDate = apinvoice.InvoiceDate;
+                var dueDate = InvoiceDate.Value.AddDays(daysDifference);
+                DateTime dueDateFormated = new DateTime(dueDate.Year, dueDate.Month, dueDate.Day , 0, 0, 0);
+
+                apinvoicePM.DueDate = dueDateFormated;
+                if (apinvoice.PaymentTerm == null) {
+                    PaymentTerm paymentTermAPI = null;
+                        paymentTermAPI = new PaymentTerm()
+                        {
+                            Days = myPaymentTerm.Days,
+                            EnglishName = myPaymentTerm.EnglishName,
+                            Id = myPaymentTerm.Id,
+                            LocalName = myPaymentTerm.LocalName,
+                            ExternalId = myPaymentTerm.ExternalId,
+                        };
+                    apinvoice.PaymentTerm = paymentTermAPI;
+                }
+            }
+            else if (glAccountPaymentTermId == null && apinvoice.PaymentTerm == null && apinvoice.DueDate != null)
             {
                 double daysDifference = GetDaysDiffernceForDate(apinvoice.DueDate, tenant);
                 var paymentTerm = GetPaymentTermByDaysDifference(tenant, daysDifference);
@@ -919,22 +1109,36 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                 else
                     apinvoice.PaymentTerm = paymentTerm;
             }
-            else if (apinvoice.PaymentTerm != null && apinvoice.DueDate != null)
-            {
-                double daysDifference = GetDaysDiffernceForDate(apinvoice.DueDate, tenant);
-                if (apinvoice.PaymentTerm.Days != daysDifference)
-                {
-                    apinvoice.PaymentTerm = GetManuallySetPaymentTerm(tenant);
-                }
-            }
-            else if (apinvoice.PaymentTerm != null && apinvoice.DueDate == null)
+            else if (FullAccountingTenant && apinvoice.PaymentTerm != null)
             {
                 int daysDifference = apinvoice.PaymentTerm.Days;
-                DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant);
-                DateTime dueDate = new DateTime(todayDate.Year, todayDate.Month, todayDate.Day + daysDifference, 0, 0, 0);
+                DateTime? InvoiceDate = apinvoice.InvoiceDate;
+                var dueDate = InvoiceDate.Value.AddDays(daysDifference);
+                DateTime dueDateFormated = new DateTime(dueDate.Year, dueDate.Month, dueDate.Day , 0, 0, 0);
 
-                apinvoicePM.DueDate = dueDate;
+                apinvoicePM.DueDate = dueDateFormated;
             }
+            else if (!FullAccountingTenant)
+            {
+                 if (apinvoice.PaymentTerm != null && apinvoice.DueDate != null)
+                {
+                    double daysDifference = GetDaysDiffernceForDate(apinvoice.DueDate, tenant);
+                    if (apinvoice.PaymentTerm.Days != daysDifference)
+                    {
+                        apinvoice.PaymentTerm = GetManuallySetPaymentTerm(tenant);
+                    }
+                }
+                else if (apinvoice.PaymentTerm != null && apinvoice.DueDate == null)
+                {
+                    int daysDifference = apinvoice.PaymentTerm.Days;
+                    DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+
+                    var dueDate = todayDate.AddDays(daysDifference);
+                    DateTime dueDateFormated = new DateTime(dueDate.Year, dueDate.Month, dueDate.Day, 0, 0, 0);
+
+                    apinvoicePM.DueDate = dueDateFormated;
+                }
+            }          
             else
             {
                 throw new ApplicationException("Neither Due Date nor Payment Term is provided!");
@@ -943,7 +1147,6 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
             if (apinvoicePM.PaymentTermId == null)
                 apinvoicePM.PaymentTermId = apinvoice.PaymentTerm?.Id;
         }
-
         private static PaymentTerm GetManuallySetPaymentTerm(int tenant)
         {
             PaymentTermQuery paymentTermQuery = new PaymentTermQuery(tenant);

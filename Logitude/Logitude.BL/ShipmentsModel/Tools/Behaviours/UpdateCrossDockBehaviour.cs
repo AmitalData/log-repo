@@ -6,6 +6,7 @@ using Logitude.BL.Security;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.Tools.Behaviours;
 using Logitude.BL.ShipmentsModel.Tools.TraceEvents;
+using Logitude.Infrastructure.Data.Models.AuditLog;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Logitude.WarehouseLib.Data;
@@ -55,7 +56,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
             storageCalculater = new StorageCalculater(this.shipmentPM);
         }
 
-        public void Handle()
+        public void Handle(List<FieldChange> fieldChanges = null)
         {
             UpdateShipmentWarehouseLegData();
             UpdateWarehouseLegDates();
@@ -291,7 +292,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviour
                 }
             }
             shipmentPM.WarehouseReleasesIds = null;
-        }        
+        }
     }
 
     public class StorageCalculater

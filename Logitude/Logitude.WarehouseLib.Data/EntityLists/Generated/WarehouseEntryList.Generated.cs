@@ -6,11 +6,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace Logitude.WarehouseLib.Data.EntityLists
 {
    [DataContract]
-   public partial class WarehouseEntryList
+   public partial class WarehouseEntryList : CustomFieldList
    {
    
        [Key]
@@ -152,6 +153,8 @@ namespace Logitude.WarehouseLib.Data.EntityLists
        public double? Ratio  { get; set; }
        [DataMember]
        public string MasterShipmentNumber  { get; set; }
+       [DataMember]
+       public string ConnectedToReferenceNumber  { get; set; }
    }
 
 }

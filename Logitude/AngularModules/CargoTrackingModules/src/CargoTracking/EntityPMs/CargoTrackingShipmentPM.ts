@@ -15,11 +15,11 @@ import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/Propert
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
 export class CargoTrackingShipmentPM {
-
+      
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-          this.UIProperties = new UIProperties(this); 
+                    this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -472,6 +472,271 @@ export class CargoTrackingShipmentPM {
     private currentMilestoneExceptions: string;
     public get CurrentMilestoneExceptions() { return this.currentMilestoneExceptions; }
     public set CurrentMilestoneExceptions(newValue: string) { if (this.currentMilestoneExceptions != newValue) { this.currentMilestoneExceptions = newValue; this.MarkAsDirty("CurrentMilestoneExceptions"); } }
+       
+	 
+    private forwardingShipmentLevelCode: string;
+    public get ForwardingShipmentLevelCode() { return this.forwardingShipmentLevelCode; }
+    public set ForwardingShipmentLevelCode(newValue: string) { if (this.forwardingShipmentLevelCode != newValue) { this.forwardingShipmentLevelCode = newValue; this.MarkAsDirty("ForwardingShipmentLevelCode"); } }
+       
+	 
+    private goodsClassificationDate: Date;
+    public get GoodsClassificationDate() { return this.goodsClassificationDate; }
+    public set GoodsClassificationDate(newValue: Date) { if (this.goodsClassificationDate != newValue) { this.goodsClassificationDate = newValue; this.MarkAsDirty("GoodsClassificationDate"); } }
+       
+	 
+    private goodsClassificationEstDate: Date;
+    public get GoodsClassificationEstDate() { return this.goodsClassificationEstDate; }
+    public set GoodsClassificationEstDate(newValue: Date) { if (this.goodsClassificationEstDate != newValue) { this.goodsClassificationEstDate = newValue; this.MarkAsDirty("GoodsClassificationEstDate"); } }
+       
+	 
+    private goodsClassificationNotes: string;
+    public get GoodsClassificationNotes() { return this.goodsClassificationNotes; }
+    public set GoodsClassificationNotes(newValue: string) { if (this.goodsClassificationNotes != newValue) { this.goodsClassificationNotes = newValue; this.MarkAsDirty("GoodsClassificationNotes"); } }
+       
+	 
+    private documentInspectionDate: Date;
+    public get DocumentInspectionDate() { return this.documentInspectionDate; }
+    public set DocumentInspectionDate(newValue: Date) { if (this.documentInspectionDate != newValue) { this.documentInspectionDate = newValue; this.MarkAsDirty("DocumentInspectionDate"); } }
+       
+	 
+    private documentInspectionEstDate: Date;
+    public get DocumentInspectionEstDate() { return this.documentInspectionEstDate; }
+    public set DocumentInspectionEstDate(newValue: Date) { if (this.documentInspectionEstDate != newValue) { this.documentInspectionEstDate = newValue; this.MarkAsDirty("DocumentInspectionEstDate"); } }
+       
+	 
+    private documentInspectionNotes: string;
+    public get DocumentInspectionNotes() { return this.documentInspectionNotes; }
+    public set DocumentInspectionNotes(newValue: string) { if (this.documentInspectionNotes != newValue) { this.documentInspectionNotes = newValue; this.MarkAsDirty("DocumentInspectionNotes"); } }
+       
+	 
+    private documentInspectionDone: boolean;
+    public get DocumentInspectionDone() { return this.documentInspectionDone; }
+    public set DocumentInspectionDone(newValue: boolean) { if (this.documentInspectionDone != newValue) { this.documentInspectionDone = newValue; this.MarkAsDirty("DocumentInspectionDone"); } }
+       
+	 
+    private goodsClassificationDone: boolean;
+    public get GoodsClassificationDone() { return this.goodsClassificationDone; }
+    public set GoodsClassificationDone(newValue: boolean) { if (this.goodsClassificationDone != newValue) { this.goodsClassificationDone = newValue; this.MarkAsDirty("GoodsClassificationDone"); } }
+       
+	 
+    private gatepassArrivedDate: Date;
+    public get GatepassArrivedDate() { return this.gatepassArrivedDate; }
+    public set GatepassArrivedDate(newValue: Date) { if (this.gatepassArrivedDate != newValue) { this.gatepassArrivedDate = newValue; this.MarkAsDirty("GatepassArrivedDate"); } }
+       
+	 
+    private gatepassArrivedEstDate: Date;
+    public get GatepassArrivedEstDate() { return this.gatepassArrivedEstDate; }
+    public set GatepassArrivedEstDate(newValue: Date) { if (this.gatepassArrivedEstDate != newValue) { this.gatepassArrivedEstDate = newValue; this.MarkAsDirty("GatepassArrivedEstDate"); } }
+       
+	 
+    private gatepassArrivedNotes: string;
+    public get GatepassArrivedNotes() { return this.gatepassArrivedNotes; }
+    public set GatepassArrivedNotes(newValue: string) { if (this.gatepassArrivedNotes != newValue) { this.gatepassArrivedNotes = newValue; this.MarkAsDirty("GatepassArrivedNotes"); } }
+       
+	 
+    private gatepassArrivedDone: boolean;
+    public get GatepassArrivedDone() { return this.gatepassArrivedDone; }
+    public set GatepassArrivedDone(newValue: boolean) { if (this.gatepassArrivedDone != newValue) { this.gatepassArrivedDone = newValue; this.MarkAsDirty("GatepassArrivedDone"); } }
+       
+	 
+    private importManifest: string;
+    public get ImportManifest() { return this.importManifest; }
+    public set ImportManifest(newValue: string) { if (this.importManifest != newValue) { this.importManifest = newValue; this.MarkAsDirty("ImportManifest"); } }
+       
+	 
+    private createdDone: boolean;
+    public get CreatedDone() { return this.createdDone; }
+    public set CreatedDone(newValue: boolean) { if (this.createdDone != newValue) { this.createdDone = newValue; this.MarkAsDirty("CreatedDone"); } }
+       
+	 
+    private prevForwardingShipmentId: string;
+    public get PrevForwardingShipmentId() { return this.prevForwardingShipmentId; }
+    public set PrevForwardingShipmentId(newValue: string) { if (this.prevForwardingShipmentId != newValue) { this.prevForwardingShipmentId = newValue; this.MarkAsDirty("PrevForwardingShipmentId"); } }
+       
+	 
+    private bookingDone: boolean;
+    public get BookingDone() { return this.bookingDone; }
+    public set BookingDone(newValue: boolean) { if (this.bookingDone != newValue) { this.bookingDone = newValue; this.MarkAsDirty("BookingDone"); } }
+       
+	 
+    private bookingDate: Date;
+    public get BookingDate() { return this.bookingDate; }
+    public set BookingDate(newValue: Date) { if (this.bookingDate != newValue) { this.bookingDate = newValue; this.MarkAsDirty("BookingDate"); } }
+       
+	 
+    private bookingEstimationDate: Date;
+    public get BookingEstimationDate() { return this.bookingEstimationDate; }
+    public set BookingEstimationDate(newValue: Date) { if (this.bookingEstimationDate != newValue) { this.bookingEstimationDate = newValue; this.MarkAsDirty("BookingEstimationDate"); } }
+       
+	 
+    private bookingNotes: string;
+    public get BookingNotes() { return this.bookingNotes; }
+    public set BookingNotes(newValue: string) { if (this.bookingNotes != newValue) { this.bookingNotes = newValue; this.MarkAsDirty("BookingNotes"); } }
+       
+	 
+    private bookingExceptionReason: string;
+    public get BookingExceptionReason() { return this.bookingExceptionReason; }
+    public set BookingExceptionReason(newValue: string) { if (this.bookingExceptionReason != newValue) { this.bookingExceptionReason = newValue; this.MarkAsDirty("BookingExceptionReason"); } }
+       
+	 
+    private paymentRequiredDone: boolean;
+    public get PaymentRequiredDone() { return this.paymentRequiredDone; }
+    public set PaymentRequiredDone(newValue: boolean) { if (this.paymentRequiredDone != newValue) { this.paymentRequiredDone = newValue; this.MarkAsDirty("PaymentRequiredDone"); } }
+       
+	 
+    private paymentRequiredEstimationDate: Date;
+    public get PaymentRequiredEstimationDate() { return this.paymentRequiredEstimationDate; }
+    public set PaymentRequiredEstimationDate(newValue: Date) { if (this.paymentRequiredEstimationDate != newValue) { this.paymentRequiredEstimationDate = newValue; this.MarkAsDirty("PaymentRequiredEstimationDate"); } }
+       
+	 
+    private paymentRequiredDate: Date;
+    public get PaymentRequiredDate() { return this.paymentRequiredDate; }
+    public set PaymentRequiredDate(newValue: Date) { if (this.paymentRequiredDate != newValue) { this.paymentRequiredDate = newValue; this.MarkAsDirty("PaymentRequiredDate"); } }
+       
+	 
+    private paymentRequiredNotes: string;
+    public get PaymentRequiredNotes() { return this.paymentRequiredNotes; }
+    public set PaymentRequiredNotes(newValue: string) { if (this.paymentRequiredNotes != newValue) { this.paymentRequiredNotes = newValue; this.MarkAsDirty("PaymentRequiredNotes"); } }
+       
+	 
+    private paymentReceivedDone: boolean;
+    public get PaymentReceivedDone() { return this.paymentReceivedDone; }
+    public set PaymentReceivedDone(newValue: boolean) { if (this.paymentReceivedDone != newValue) { this.paymentReceivedDone = newValue; this.MarkAsDirty("PaymentReceivedDone"); } }
+       
+	 
+    private paymentReceivedEstomationDate: Date;
+    public get PaymentReceivedEstomationDate() { return this.paymentReceivedEstomationDate; }
+    public set PaymentReceivedEstomationDate(newValue: Date) { if (this.paymentReceivedEstomationDate != newValue) { this.paymentReceivedEstomationDate = newValue; this.MarkAsDirty("PaymentReceivedEstomationDate"); } }
+       
+	 
+    private paymentReceivedDate: Date;
+    public get PaymentReceivedDate() { return this.paymentReceivedDate; }
+    public set PaymentReceivedDate(newValue: Date) { if (this.paymentReceivedDate != newValue) { this.paymentReceivedDate = newValue; this.MarkAsDirty("PaymentReceivedDate"); } }
+       
+	 
+    private paymentReceivedNotes: string;
+    public get PaymentReceivedNotes() { return this.paymentReceivedNotes; }
+    public set PaymentReceivedNotes(newValue: string) { if (this.paymentReceivedNotes != newValue) { this.paymentReceivedNotes = newValue; this.MarkAsDirty("PaymentReceivedNotes"); } }
+       
+	 
+    private poNumber: string;
+    public get PoNumber() { return this.poNumber; }
+    public set PoNumber(newValue: string) { if (this.poNumber != newValue) { this.poNumber = newValue; this.MarkAsDirty("PoNumber"); } }
+       
+	 
+    private descriptionOfGoods: string;
+    public get DescriptionOfGoods() { return this.descriptionOfGoods; }
+    public set DescriptionOfGoods(newValue: string) { if (this.descriptionOfGoods != newValue) { this.descriptionOfGoods = newValue; this.MarkAsDirty("DescriptionOfGoods"); } }
+       
+	 
+    private supplyDateTime: Date;
+    public get SupplyDateTime() { return this.supplyDateTime; }
+    public set SupplyDateTime(newValue: Date) { if (this.supplyDateTime != newValue) { this.supplyDateTime = newValue; this.MarkAsDirty("SupplyDateTime"); } }
+       
+	 
+    private activatedForDeclarationApprove: boolean;
+    public get ActivatedForDeclarationApprove() { return this.activatedForDeclarationApprove; }
+    public set ActivatedForDeclarationApprove(newValue: boolean) { if (this.activatedForDeclarationApprove != newValue) { this.activatedForDeclarationApprove = newValue; this.MarkAsDirty("ActivatedForDeclarationApprove"); } }
+       
+	 
+    private isImporterApprovalRequried: boolean;
+    public get IsImporterApprovalRequried() { return this.isImporterApprovalRequried; }
+    public set IsImporterApprovalRequried(newValue: boolean) { if (this.isImporterApprovalRequried != newValue) { this.isImporterApprovalRequried = newValue; this.MarkAsDirty("IsImporterApprovalRequried"); } }
+       
+	 
+    private tenantDeclarationMessage: string;
+    public get TenantDeclarationMessage() { return this.tenantDeclarationMessage; }
+    public set TenantDeclarationMessage(newValue: string) { if (this.tenantDeclarationMessage != newValue) { this.tenantDeclarationMessage = newValue; this.MarkAsDirty("TenantDeclarationMessage"); } }
+       
+	 
+    private isOperationalClosed: boolean;
+    public get IsOperationalClosed() { return this.isOperationalClosed; }
+    public set IsOperationalClosed(newValue: boolean) { if (this.isOperationalClosed != newValue) { this.isOperationalClosed = newValue; this.MarkAsDirty("IsOperationalClosed"); } }
+       
+	 
+    private approvedDate: Date;
+    public get ApprovedDate() { return this.approvedDate; }
+    public set ApprovedDate(newValue: Date) { if (this.approvedDate != newValue) { this.approvedDate = newValue; this.MarkAsDirty("ApprovedDate"); } }
+       
+	 
+    private denyDate: Date;
+    public get DenyDate() { return this.denyDate; }
+    public set DenyDate(newValue: Date) { if (this.denyDate != newValue) { this.denyDate = newValue; this.MarkAsDirty("DenyDate"); } }
+       
+	 
+    private denyReason: string;
+    public get DenyReason() { return this.denyReason; }
+    public set DenyReason(newValue: string) { if (this.denyReason != newValue) { this.denyReason = newValue; this.MarkAsDirty("DenyReason"); } }
+       
+	 
+    private connectedShipmentsNumbers: string;
+    public get ConnectedShipmentsNumbers() { return this.connectedShipmentsNumbers; }
+    public set ConnectedShipmentsNumbers(newValue: string) { if (this.connectedShipmentsNumbers != newValue) { this.connectedShipmentsNumbers = newValue; this.MarkAsDirty("ConnectedShipmentsNumbers"); } }
+       
+	 
+    private invoicedDate: Date;
+    public get InvoicedDate() { return this.invoicedDate; }
+    public set InvoicedDate(newValue: Date) { if (this.invoicedDate != newValue) { this.invoicedDate = newValue; this.MarkAsDirty("InvoicedDate"); } }
+       
+	 
+    private invoicedDone: boolean;
+    public get InvoicedDone() { return this.invoicedDone; }
+    public set InvoicedDone(newValue: boolean) { if (this.invoicedDone != newValue) { this.invoicedDone = newValue; this.MarkAsDirty("InvoicedDone"); } }
+       
+	 
+    private invoicedNotes: string;
+    public get InvoicedNotes() { return this.invoicedNotes; }
+    public set InvoicedNotes(newValue: string) { if (this.invoicedNotes != newValue) { this.invoicedNotes = newValue; this.MarkAsDirty("InvoicedNotes"); } }
+       
+	 
+    private invoicedExceptionReason: string;
+    public get InvoicedExceptionReason() { return this.invoicedExceptionReason; }
+    public set InvoicedExceptionReason(newValue: string) { if (this.invoicedExceptionReason != newValue) { this.invoicedExceptionReason = newValue; this.MarkAsDirty("InvoicedExceptionReason"); } }
+       
+	 
+    private approvedByUserName: string;
+    public get ApprovedByUserName() { return this.approvedByUserName; }
+    public set ApprovedByUserName(newValue: string) { if (this.approvedByUserName != newValue) { this.approvedByUserName = newValue; this.MarkAsDirty("ApprovedByUserName"); } }
+       
+	 
+    private sHOHouse: string;
+    public get SHOHouse() { return this.sHOHouse; }
+    public set SHOHouse(newValue: string) { if (this.sHOHouse != newValue) { this.sHOHouse = newValue; this.MarkAsDirty("SHOHouse"); } }
+       
+	 
+    private chargeableWeightInKG: number;
+    public get ChargeableWeightInKG() { return this.chargeableWeightInKG; }
+    public set ChargeableWeightInKG(newValue: number) { if (this.chargeableWeightInKG != newValue) { this.chargeableWeightInKG = newValue; this.MarkAsDirty("ChargeableWeightInKG"); } }
+       
+	 
+    private chargeableWeight: number;
+    public get ChargeableWeight() { return this.chargeableWeight; }
+    public set ChargeableWeight(newValue: number) { if (this.chargeableWeight != newValue) { this.chargeableWeight = newValue; this.MarkAsDirty("ChargeableWeight"); } }
+       
+	 
+    private chargeableWeightUnitCode: string;
+    public get ChargeableWeightUnitCode() { return this.chargeableWeightUnitCode; }
+    public set ChargeableWeightUnitCode(newValue: string) { if (this.chargeableWeightUnitCode != newValue) { this.chargeableWeightUnitCode = newValue; this.MarkAsDirty("ChargeableWeightUnitCode"); } }
+       
+	 
+    private incotermName: string;
+    public get IncotermName() { return this.incotermName; }
+    public set IncotermName(newValue: string) { if (this.incotermName != newValue) { this.incotermName = newValue; this.MarkAsDirty("IncotermName"); } }
+       
+	 
+    private showMoneyOrder: boolean;
+    public get ShowMoneyOrder() { return this.showMoneyOrder; }
+    public set ShowMoneyOrder(newValue: boolean) { if (this.showMoneyOrder != newValue) { this.showMoneyOrder = newValue; this.MarkAsDirty("ShowMoneyOrder"); } }
+       
+	 
+    private cargoTrackingPrivateShowEvents: boolean;
+    public get CargoTrackingPrivateShowEvents() { return this.cargoTrackingPrivateShowEvents; }
+    public set CargoTrackingPrivateShowEvents(newValue: boolean) { if (this.cargoTrackingPrivateShowEvents != newValue) { this.cargoTrackingPrivateShowEvents = newValue; this.MarkAsDirty("CargoTrackingPrivateShowEvents"); } }
+       
+	 
+    private cargoTrackingPublicShowEvents: boolean;
+    public get CargoTrackingPublicShowEvents() { return this.cargoTrackingPublicShowEvents; }
+    public set CargoTrackingPublicShowEvents(newValue: boolean) { if (this.cargoTrackingPublicShowEvents != newValue) { this.cargoTrackingPublicShowEvents = newValue; this.MarkAsDirty("CargoTrackingPublicShowEvents"); } }
        
 	 
 

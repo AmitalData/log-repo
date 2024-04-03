@@ -65,6 +65,7 @@ namespace Logitude.XSD
         public ShipmentMasterData MasterData { get; set; }
         public CCSResult Result { get; set; }
         public string AWBMessagesCCSTypeCode { get; set; }
+        public bool isMultiHS { get; set; }
         #endregion
 
         #region Private Members
@@ -79,7 +80,7 @@ namespace Logitude.XSD
         private CommunicationLogRepository communicationLogRepository;
         #endregion
 
-        public CCSHelper(string myShipmentId, int myTenant, string myRecipient, bool isCargonautSending, bool isDEXXSending)
+        public CCSHelper(string myShipmentId, int myTenant, string myRecipient, bool isCargonautSending, bool isDEXXSending, bool isMultiHS = false)
         {
             this.Tenant = myTenant;
             this.ShipmentId = myShipmentId;
@@ -89,6 +90,7 @@ namespace Logitude.XSD
             this.IsValid = true;
             this.TodayDate = TenantServerConfigration.GetCurrentDateTime(myTenant).Date;
             this.TodayDateTime = TenantServerConfigration.GetCurrentDateTime(myTenant);
+            this.isMultiHS = isMultiHS;
 
             this.Result = new CCSResult()
             {
@@ -326,7 +328,7 @@ namespace Logitude.XSD
                             {
                                 Sender = this.TTY,
                                 Recipient = this.Recipient,
-                                Item = dataBuilder.GetChampFHL5(),
+                                Item = dataBuilder.GetChampFHL5(isMultiHS),
                             };
 
                             this.SendXMLFile(envelop, "champmessageoutqueue");
@@ -394,7 +396,7 @@ namespace Logitude.XSD
                         #region FWB
                         FWBDataContext dataContext = new FWBDataContext(this.Shipment, this.MasterData, this.AWBMessagesCCSTypeCode);
                         FWBDataBuilder dataBuilder = new FWBDataBuilder(dataContext);
-                        var champ17Item = dataBuilder.GetChampFWB17();
+                        var champ17Item = dataBuilder.GetChampFWB17(this.isMultiHS);
                         this.ValidateFNAStringLength(dataContext);
 
                         if (this.IsValid)

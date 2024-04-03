@@ -28,6 +28,8 @@ export class ARInvoiceValidator {
 
         Validator.TryValidateObject(this.EntityPM, "ARInvoice", this.Errors);
 
+        this.ValidateSATStatus();
+        
         if (this.EntityPM.IsInvoiceNumberManuallySet && AppTool.IsNullOrEmpty(this.EntityPM.InvoiceNumber)) {
             this.Errors.push(TextCodeTranslator.Translate("ARInvoice.M.YouShouldSetInvoiceNumber"));
         }
@@ -39,11 +41,14 @@ export class ARInvoiceValidator {
         if (this.EntityPM.IsInvoiceNumberFromStock && AppTool.IsNullOrEmpty(this.EntityPM.InvoiceNumber) && this.EntityPM.IsAutoCredit) {
             this.Errors.push(TextCodeTranslator.Translate("ARInvoice.M.YouShouldSetInvoiceNumber"));
         }
-
-        if (DateTool.GetDateParts(this.EntityPM.InvoiceDate).DateTicks > DateTool.GetCurrentDateAsUtcForAccountingValidation().valueOf()) {
+        var date1 = new Date(this.EntityPM.InvoiceDate.toString());
+        var date2 = new Date();
+        date2.setHours(23);
+        date2.setMinutes(59);
+        
+        if (date1.valueOf() > date2.valueOf()) {
             this.Errors.push(TextCodeTranslator.Translate("ARInvoice.M.CantIssueInvoiceWithFutureDate"));
         }
-
         if (SessionLocator.AccountingSettingPM.IsVatNumberMandatoryInAR) {
             if (AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || this.EntityPM.StatusCode == "DR") {
                 if (AppTool.IsNullOrEmpty(this.EntityPM.VatNumber)) {
@@ -68,7 +73,7 @@ export class ARInvoiceValidator {
             this.ValidateNormalInvoice()
         }        
 
-        if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33") {
+        if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF40") {
             if (AppTool.IsNullOrEmpty(this.EntityPM.SATPaymentMethodCode)) {
                 this.Errors.push("Forma Pago Field is Required");
           }
@@ -84,6 +89,15 @@ export class ARInvoiceValidator {
 
         return this.Errors;
     }
+    private ValidateSATStatus() {
+        if (!SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "INU")[0]) return;
+
+        let sATTransferingStatusCode = "TG";
+        if (this.EntityPM.SATTransferStatusCode == sATTransferingStatusCode && !this.EntityPM.ResendToSAT) {
+            this.Errors.push("You are not allowed to update the invoice while its status is Transferring to SAT");
+        }
+    }
+
     private ValidateNormalInvoice() {
         if (this.EntityPM.InvoiceLines.length == 0) {
             this.Errors.push(TextCodeTranslator.Translate("ARInvoice.M.YouShouldHaveOneLineAtLeast"));
@@ -227,7 +241,7 @@ export class ARInvoiceValidator {
             }
         }
 
-        else if (this.EntityPM.ConstituentInvoices.length == 0) {
+        else if (this.EntityPM.StatusCode != 'VD' && this.EntityPM.ConstituentInvoices.length == 0) {
             this.Errors.push(TextCodeTranslator.Translate("ARInvoice.M.YouShouldHaveOneLineAtLeast"));
         }
 

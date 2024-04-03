@@ -1,18 +1,18 @@
-﻿using Logitude.Test.Base.Models.Api;
-using Logitude.Test.Base.Models.Infrastructure;
-using Logitude.Test.Base.Models.Shared;
-using Logitude.Test.Base.Models.UserTenantPreparation;
-using Logitude.Test.Base.Models.LocationsPreparation;
-using Logitude.Test.Base.Models.PartnersPreparation;
-using Logitude.Test.Base.Services;
+﻿using Logitude.Base.Models.Api;
+using Logitude.Base.Models.Infrastructure;
+using Logitude.Base.Models.Shared;
+using Logitude.Base.Models.UserTenant;
+using Logitude.Base.Models.Locations;
+using Logitude.Base.Models.Partners;
+using Logitude.Base.Services;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using TechTalk.SpecFlow;
-using Logitude.Test.Base.Models.BillingsPreparation;
+using Logitude.Base.Models.Billings;
 
-namespace Logitude.Test.Base.Hooks
+namespace Logitude.Base.Hooks
 {
     [Binding]
     public class BeforeTestRun
@@ -28,7 +28,7 @@ namespace Logitude.Test.Base.Hooks
             SetupBillingPreparationVariables();
         }
 
-        public static void PrepareTheData(string email, string password,string url)
+        public static void PrepareTheData(string email, string password, string url)
         {
             SetupBaseSettingsForForm(email, password, url);
             SetupDefaultUserAuthentication();
@@ -41,12 +41,51 @@ namespace Logitude.Test.Base.Hooks
         private static void SetupBaseSettings()
         {
             Configurations configurations = GetConfigurations();
-            if(configurations != null)
+            if (configurations != null)
             {
                 Settings.ServerUrl = configurations.ServerSettings.Url;
                 Settings.DefaultUserCredentials = GetUserCredentialsFromConfigurations(configurations, true);
                 Settings.OtherUserCredentials = GetUserCredentialsFromConfigurations(configurations, false);
+                Settings.UserEmptyTenantCredentials = GetUserEmptyTenantCredentialsFromConfigurations(configurations);
             }
+            Settings.ServerUrl = Environment.GetEnvironmentVariable("URL") ?? Settings.ServerUrl;
+            Settings.DefaultUserCredentials = GetDefaultUserCredentialsFromEnvironmentVariable() ?? Settings.DefaultUserCredentials;
+            Settings.OtherUserCredentials = GetOtherUserCredentialsFromEnvironmentVariable() ?? Settings.OtherUserCredentials;
+
+        }
+
+        private static Credentials GetOtherUserCredentialsFromEnvironmentVariable()
+        {
+            var email = Environment.GetEnvironmentVariable("OtherUserEmail");
+            var password = Environment.GetEnvironmentVariable("OtherUserPassword");
+            if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
+            {
+                return null;
+            }
+            Credentials userCredentials = new Credentials
+            {
+                Email = email,
+                Password = password
+            };
+
+            return userCredentials;
+        }
+
+        private static Credentials GetDefaultUserCredentialsFromEnvironmentVariable()
+        {
+            var email = Environment.GetEnvironmentVariable("DefaultUserEmail");
+            var password = Environment.GetEnvironmentVariable("DefaultUserPassword");
+            if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password))
+            {
+                return null;
+            }
+            Credentials userCredentials = new Credentials
+            {
+                Email = email,
+                Password = password
+            };
+
+            return userCredentials;
         }
 
         private static void SetupBaseSettingsForForm(string email, string password, string url)
@@ -64,6 +103,7 @@ namespace Logitude.Test.Base.Hooks
         {
             SetupDefaultUserAuthentication();
             SetupOtherUserAuthentication();
+            SetupUserEmptyTenantAuthentication();
         }
 
         private static void SetupDefaultUserTenant()
@@ -88,6 +128,8 @@ namespace Logitude.Test.Base.Hooks
             BillingVariables BillingsVariables = DataPreparation.GetBillingVariables();
             BillingDataMap(BillingsVariables);
         }
+
+    
 
         private static Configurations GetConfigurations()
         {
@@ -115,6 +157,17 @@ namespace Logitude.Test.Base.Hooks
 
             return userCredentials;
         }
+        private static Credentials GetUserEmptyTenantCredentialsFromConfigurations(Configurations configurations)
+        {
+            ConfigurationsUser userConfiguration = configurations?.Users.Where(u => u.DefaultSpecified).FirstOrDefault();
+            Credentials userCredentials = new Credentials
+            {
+                Email = userConfiguration?.Email,
+                Password = userConfiguration?.Password
+            };
+
+            return userCredentials;
+        }
 
         private static void SetupDefaultUserAuthentication()
         {
@@ -122,7 +175,7 @@ namespace Logitude.Test.Base.Hooks
             UserTenant.Token = userLogin?.Token;
             UserTenant.Tenant = userLogin == null ? 0 : userLogin.Tenant;
             UserTenant.UserId = userLogin?.UserId;
-            UserTenant.UserName = userLogin?.UserName;
+            UserTenant.DocumentDownloadToken = userLogin?.DocumentDownloadToken;
         }
 
         private static void SetupOtherUserAuthentication()
@@ -132,6 +185,14 @@ namespace Logitude.Test.Base.Hooks
             UserOtherTenant.Tenant = userLogin == null ? 0 : userLogin.Tenant;
             UserOtherTenant.UserId = userLogin?.UserId;
             UserOtherTenant.UserName = userLogin?.UserName;
+        }
+        private static void SetupUserEmptyTenantAuthentication()
+        {
+            UserLogin userLogin = GetUserLogin(Settings.UserEmptyTenantCredentials);
+            UserEmptyTenant.Token = userLogin?.Token;
+            UserEmptyTenant.Tenant = userLogin == null ? 0 : userLogin.Tenant;
+            UserEmptyTenant.UserId = userLogin?.UserId;
+            UserEmptyTenant.UserName = userLogin?.UserName;
         }
 
         private static UserLogin GetUserLogin(Credentials userCredentials)
@@ -162,7 +223,7 @@ namespace Logitude.Test.Base.Hooks
                 .Filter1Name("SearchFields")
                 .Filter1Operator("Contains")
                 .Filter1Value(Settings.DefaultUserCredentials.Email)
-                .Build(); 
+                .Build();
 
             ApiResponse<IEnumerable<User>> usersResponse = APICaller.CallGetByFilters<IEnumerable<User>>(Urls.UserViewsGetByFilters, UserTenant.Token, apiQueryFilters);
 
@@ -214,17 +275,22 @@ namespace Logitude.Test.Base.Hooks
             PartnersData.ShippingLineMAEUId = partnersVariables.ShippingLineMAEUId;
             PartnersData.ShippingLineYMLUId = partnersVariables.ShippingLineYMLUId;
             PartnersData.WarehouseId = partnersVariables.WarehouseId;
+            PartnersData.CustomerContactId = partnersVariables.CustomerContactId;
         }
 
         private static void BillingDataMap(BillingVariables billingVariables)
         {
             BillingData.CurrencyEURId = billingVariables.CurrencyEURId;
+            BillingData.CurrencyNISId = billingVariables.CurrencyNISId;
             BillingData.MeasurementGRWTId = billingVariables.MeasurementGRWTId;
             BillingData.ChargeTypeAFTId = billingVariables.ChargeTypeAFTId;
-            BillingData.IncotermLDEId = billingVariables.IncotermLDEId;
+            BillingData.ChargeTypeOFTId = billingVariables.ChargeTypeOFTId;
+            //BillingData.IncotermLDEId = billingVariables.IncotermLDEId;
             BillingData.VATTypeZeroId = billingVariables.VATTypeZeroId;
             BillingData.PaymentTermCashId = billingVariables.PaymentTermCashId;
-            BillingData.CreditCardTSId = billingVariables.CreditCardTSId;
+           // BillingData.CreditCardTSId = billingVariables.CreditCardTSId;
         }
+
+
     }
 }

@@ -175,5 +175,20 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 		public string DeclarationId { get; set; }
 		public string LoggedUserId { get; set; }
 
-	}
+        public bool? IsTransferdToQBO { get; set; }
+        public bool IsAgentSharedInHouse { get; set; }
+        public bool IsAgentSharedInDirect { get; set; }
+        public bool IsAgentSharedInMaster { get; set; }
+
+        public bool FromCTool { get; set; }
+        public string ReceivedByByContactId { get; set; }
+        public bool IsCustomerUploadPermission { get; set; }
+        public bool IsApprovalRequired { get; set; }
+        public bool IsFromDigital { get; set; }
+        public string ReceivedByPartner { get; set; }
+        public string InvoiceBillTo { get; set; }
+        public string BillToId { get; set; }
+
+
+    }
 }

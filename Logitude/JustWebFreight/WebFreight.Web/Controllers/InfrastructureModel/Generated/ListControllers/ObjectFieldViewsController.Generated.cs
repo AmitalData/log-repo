@@ -51,7 +51,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
     {
 
 
-        public HttpResponseMessage GetSingle(string id)
+        public HttpResponseMessage GetSingle(string id, bool includeMetaDataFields = false)
         {
             try
             {
@@ -63,7 +63,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
                 IWebFreightContext MyContext = WebFreightContext.GetContext(authToken.Tenant);
                 ObjectFieldRepository objectFieldRepository = new ObjectFieldRepository(MyContext);
                 ObjectFieldList entityList = null;
-                ObjectField entityPoco = objectFieldRepository.GetSingleObjectFieldById(id, authToken.Tenant);
+                ObjectField entityPoco = objectFieldRepository.GetSingleObjectFieldById(id, authToken.Tenant, includeMetaDataFields);
 
                 if (entityPoco != null)
                 {
@@ -213,7 +213,8 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 
                 IWebFreightContext MyContext = WebFreightContext.GetContext(tenant);
                 ObjectFieldRepository objectFieldRepository = new ObjectFieldRepository(MyContext);
-                IQueryable<ObjectField> entityPocos = objectFieldRepository.GetObjectFieldsFromTenanZeroAndMyTenant(tenant);
+                var IncludeMetaDataFields = queryOperations.QueryFilterItems.Where(a => a.FieldName == "IncludeMetaDataFields").FirstOrDefault() != null;
+                IQueryable<ObjectField> entityPocos = objectFieldRepository.GetObjectFieldsFromTenanZeroAndMyTenant(tenant, IncludeMetaDataFields);
 
                 ObjectFieldQuery objectFieldQuery = new ObjectFieldQuery(objectFieldRepository);
 

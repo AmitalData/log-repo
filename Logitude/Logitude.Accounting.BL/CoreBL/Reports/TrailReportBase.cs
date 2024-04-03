@@ -70,9 +70,6 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             _FromBeginOfMonth = new DateTime(_TrailReportParam.FromDate.Year, _TrailReportParam.FromDate.Month, 1);
 
             _ToBeginOfMonth = new DateTime(_TrailReportParam.ToDate.Year, _TrailReportParam.ToDate.Month, 1);
-            using (var transactionScope = TransactionFactory.GetNewTransaction(TimeSpan.FromMinutes(__TimeOutInMinutes)) //snapshot isolation performance
-                )
-            {
 
 
 
@@ -124,7 +121,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
                 DbLog = "";// _DbLogger.ToString();
                 return myOutputReport;
-            }
+        
         }
         private void CreateQBaseAllCardsAndDetialsAccTypeBy5LevelHierarchy()
         {
@@ -662,18 +659,18 @@ trailReportParam.ChartOfAccountsTypeCodeList.Count > 0
                 case ReportLevel.ChartofaccountType:
                     if (trailReportParam.ChartOfAccountsIdList.Count > 0)
                     {
-                        throw new Exception("in  ChartofaccountType level - ChartOfAccountsIdList  is not  allowed !!!");
+                       // throw new Exception("in  ChartofaccountType level - ChartOfAccountsIdList  is not  allowed !!!");
                     }
                     if (trailReportParam.ChartOfAccountsTypeCodeList.Count > 0)
                     {
-                        throw new Exception("in  ChartofaccountType level - ChartOfAccountsTypeCodeList  is not  allowed !!!");
+                        // throw new Exception("in  ChartofaccountType level - ChartOfAccountsTypeCodeList  is not  allowed !!!");
                     }
 
                     break;
                 case ReportLevel.Chartofaccount:
                     if (trailReportParam.ChartOfAccountsIdList.Count > 0)
                     {
-                        throw new Exception("in  ChartofaccountType level - ChartOfAccountsIdList  is not  allowed !!!");
+                        ///throw new Exception("in  ChartofaccountType level - ChartOfAccountsIdList  is not  allowed !!!");
                     }
 
                     break;

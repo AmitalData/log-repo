@@ -31,20 +31,20 @@
             <!-- Filters -->
             <tr style="height:1px;" [attr.Id]="FiltersAreaId">
                 <td style="width:100%;max-width: 500px;">
-                    <div [ngStyle]="{'height':FilterConrolHeight>185 && IsSchedulerReport ? '185px' : FilterConrolHeight}" style="overflow-x:auto;overflow-y:auto">
+                    <div  style="overflow-x:auto;overflow-y:auto" [ngStyle]="{'height':FilterConrolHeight>185 && IsSchedulerReport ? '185px' : FilterConrolHeight}">
                         <div #FiltersLocation class="LocationDirective"></div>
                     </div>
                 </td>
             </tr>
-            
+
             <tr style="height: 5px;">
                 <td></td>
             </tr>
 
             <tr>
                 <td>
-                    <div id="{{'RunReportSucceededDiv ' | IdGeneratorPipe}}" *ngIf="IsRunReportSucceeded" style="width:0px;height:0px;"></div>
-                    <div id="{{'RunReportFailedDiv ' | IdGeneratorPipe}}" *ngIf="IsRunReportFailed" style="width:0px;height:0px;"></div>
+                    <div id="{{'RunReportSucceededDiv ' | IdGeneratorAsyncPipe | async}}" *ngIf="IsRunReportSucceeded" style="width:0px;height:0px;"></div>
+                    <div id="{{'RunReportFailedDiv ' | IdGeneratorAsyncPipe | async}}" *ngIf="IsRunReportFailed" style="width:0px;height:0px;"></div>
 
                     <div class="MediaFill" *ngIf="IsResourcesReady">
                         <StimulsoftViewer style="text-align:center;" [StimulsoftArgData]="StimulsoftArg"></StimulsoftViewer>

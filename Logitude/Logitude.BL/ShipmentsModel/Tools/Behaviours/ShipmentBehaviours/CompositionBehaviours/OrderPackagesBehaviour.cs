@@ -118,6 +118,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours.Composi
             itemPoco.GrossWeight = itemPM.GrossWeight;
             itemPoco.Width = itemPM.Width;
             itemPoco.VolumetricWeight = itemPM.VolumetricWeight;
+            itemPoco.ContainerNumber = itemPM.ContainerNumber;
         }
     }
 }

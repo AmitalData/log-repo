@@ -1,5 +1,7 @@
 import { GLAccountsPageComponent } from './Components/Workspaces/GLAccounts/GLAccountsPageComponent';
 import { AccountingNoteComponent } from './Components/Others/AccountingNoteComponent';
+import { InterestTransactionNotesComponent } from './Components/Others/InterestTransactionNotesComponent';
+import { LedgerTransactionInternalNotesComponent } from './Components/Others/LedgerTransactionInternalNotesComponent';
 import { IntegrityCheckTabComponent } from './Components/EditTabs/AccountingIntegrityCheck/IntegrityCheckTabComponent';
 import {AccountingWorkspaceComponent} from './Components/Workspaces/AccountingWorkspaceComponent';
 import {MainPageComponent} from './Components/Workspaces/Main/MainPageComponent';
@@ -35,6 +37,7 @@ import {NewConnectedGLAccountComponent} from './Components/EditTabs/GLAccount/Ne
 import {NewPaymentChequeComponent} from './Components/NewEntity/NewPaymentChequeComponent';
 import {NewTaxWithholdingAssessingOfficeComponent} from './Components/Maintenance/NewTaxWithholdingAssessingOfficeComponent';
 import { FullAccountingSettingsComponent } from './Components/Maintenance/FullAccountingSettingsComponent';
+import { ChartOfAccountsTypesOrderComponent } from './Components/Maintenance/ChartOfAccountsTypesOrderComponent';
 import { FullAccountingAddControlComponent } from './Components/Maintenance/FullAccountingAddControlComponent';
 
 import {AccountingPeriodsComponent} from './Components/Maintenance/AccountingPeriodsComponent';
@@ -48,6 +51,7 @@ import { LoadRecoExPageComponent } from './Components/NewEntity/LoadRecoExPageCo
 import { Generate1000Component } from './Components/Maintenance/Generate1000Component';
 import { Receiving1000Component } from './Components/Maintenance/Receiving1000Component';
 import { AccountingFunctionalTestComponent } from './Components/Maintenance/AccountingFunctionalTestComponent';
+import { UploadExpensesComponent } from './Components/Maintenance/UploadExpensesComponent';
 import { ManageExternalReconciliationTabComponent } from './Components/Others/ReconcileExternalPage/ManageExternalReconciliationTabComponent';
 import { ExternalPagesTabComponent } from './Components/Others/ReconcileExternalPage/ExternalPagesTabComponent';
 
@@ -128,6 +132,7 @@ import { InterestReportGeneralTabComponent } from './Components/EditTabs/Interes
 import { InterestReportLineByDateDetailsComponent } from './Components/EditTabs/InterestReport/GeneralTab/InterestReportLineByDateDetails/InterestReportLineByDateDetailsComponent';
 import { InterestReportLinesByDateListTemplate } from './Components/ListTemplates/InterestReportLinesByDateListTemplate';
 import { InterestReportShortTitleComponent } from './Components/ShortTiTles/InterestReportShortTitleComponent';
+import { CashBookShortTitleComponent } from './Components/ShortTitles/CashbookShortTitleComponent';
 import { UserDefinedReportShortTitleComponent } from './Components/ShortTiTles/UserDefinedReportShortTitleComponent';
 import { ConnectWithGLAccountComponent } from './Components/EditTabs/GLAccount/ConnectWithGLAccountComponent';
 import { InterestReportEditOpenBalanceComponent } from './Components/EditTabs/InterestReport/GeneralTab/InterestReportEditOpenBalance/InterestReportEditOpenBalanceComponent';
@@ -146,8 +151,14 @@ import { UpdateJournalLineComponent } from './Components/EditTabs/Journal/Update
 import { JournalCSVLoadComponent } from './Components/NewEntity/JournalCSVLoadComponent';
 
 import { GlAccountListTemplate } from './Components/ListTemplates/GlAccountListTemplate';
+import { GlAccountInterestTransactionsNotesTemplate } from './Components/ListTemplates/GlAccountInterestTransactionsNotesTemplate';
+import { GlAccountLedgerTransactionsInternalNotesTemplate } from './Components/ListTemplates/GlAccountLedgerTransactionsInternalNotesTemplate';
 import { CopyInvoiceComponent } from './Components/Others/CopyInvoiceComponent';
-
+import { TaxReportUploadLinesComponent } from './Components/Others/TaxReportUploadLinesComponent';
+import { CashbookTotalAdjustWindow } from './Components/EditTabs/CashBook/CashbookTotalAdjustWindow';
+import { JournalShortTitleComponent } from './Components/ShortTitles/JournalShortTitleComponent';
+import { GLAccountInterestTransactionsComponent } from './Components/EditTabs/GLAccount/GLAccountInterestTransactionsComponent';
+import { GlAccountInterestTransactionsListTemplate } from './Components/ListTemplates/GlAccountInterestTransactionsListTemplate';
 
 //import { CashBookGeneralTabComponent } from './Components/EditTabs/CashBook/CashBookGeneralTabComponent';
 
@@ -185,7 +196,7 @@ export const Components =
         LoadRecoExPageComponent,
         NewUserDefinedReportComponent,
         JournalCSVLoadComponent,
-        
+        TaxReportUploadLinesComponent,
 
         //Maintenance
         NewCategory1Component,
@@ -194,6 +205,7 @@ export const Components =
         NewCategory4Component,
         NewCategory5Component,
         FullAccountingSettingsComponent,
+        ChartOfAccountsTypesOrderComponent,
         FullAccountingAddControlComponent,
         AccountingPeriodsComponent,
         EditAccountingPeriodComponent,
@@ -205,12 +217,13 @@ export const Components =
         Generate1000Component,
         Receiving1000Component,
         AccountingFunctionalTestComponent,
-
+        UploadExpensesComponent,
         //Edit Tabs
         GLAccountGeneralTabComponent,
         //CashBookGeneralTabComponent,
         GLAccountOverviewComponent,
         GLAccountTransactionsTabComponent,
+        GLAccountInterestTransactionsComponent,
         ManageReconciliationsTabComponent,
         JournalDetailsTabComponent,
         JournalDebugTabComponent,
@@ -242,7 +255,10 @@ export const Components =
         GLAccountChequeListComponent,
         //Templates
         GlAccountLedgerTransactionsListTemplate,
+        GlAccountInterestTransactionsListTemplate,
         GlAccountListTemplate,
+        GlAccountInterestTransactionsNotesTemplate,
+        GlAccountLedgerTransactionsInternalNotesTemplate,
         ReconcileExternalPageListTemplate,
         ReconcileExternalPageLineListTemplate,
         FieldTemplateComponent,
@@ -261,6 +277,7 @@ export const Components =
         OutOfDepositMessage,
         Aging4CustomerChartWindowComponent,
         PaymentChequeShortTitleComponent,
+        JournalShortTitleComponent,
         ReconciliationShortTitleComponent,
         ExternalReconciliationShortTitleComponent,
         TaxReportShortTitleComponent,
@@ -279,6 +296,8 @@ export const Components =
         NewTaxDeductionReportComponent,
         IntegrityCheckTabComponent,
         AccountingNoteComponent,
+        InterestTransactionNotesComponent,
+        LedgerTransactionInternalNotesComponent,
         NewIntegrityCheckComponent,
         AddEditInterestBasesPeriodComponent,
         InterestBasesTypeShortTitleComponent,
@@ -289,6 +308,7 @@ export const Components =
         InterestReportLineByDateDetailsComponent,
         InterestReportLinesByDateListTemplate,
         InterestReportShortTitleComponent,
+        CashBookShortTitleComponent,
         InterestReportEditOpenBalanceComponent,
         CargoTrackingBuildShipmentComponent,
         CargoTrackingIncrementalStatistics,
@@ -307,7 +327,8 @@ export const Components =
         BtatchPrintWarningComponent,
         BtatchPrintConfirmComponent,
         InvoiceDateForBatchInvoicesComponent,
-        UserDefinedReportShortTitleComponent
+        UserDefinedReportShortTitleComponent,
+        CashbookTotalAdjustWindow,
 
 
     ];
@@ -320,6 +341,7 @@ export class ModuleDeclarations {
         switch (name) {
 
             //Workspaces
+            case "CashbookTotalAdjustWindow": { myResult = CashbookTotalAdjustWindow; break; }
             case "AccountingWorkspaceComponent": { myResult = AccountingWorkspaceComponent; break; }
             case "MainPageComponent": { myResult = MainPageComponent; break; }
             case "GLAccountsPageComponent": { myResult = GLAccountsPageComponent; break; }
@@ -359,6 +381,7 @@ export class ModuleDeclarations {
             case "NewCategory4Component": { myResult = NewCategory4Component; break; }
             case "NewCategory5Component": { myResult = NewCategory5Component; break; }
             case "FullAccountingSettingsComponent": { myResult = FullAccountingSettingsComponent; break; }
+            case "ChartOfAccountsTypesOrderComponent": { myResult = ChartOfAccountsTypesOrderComponent; break; }
             case "FullAccountingAddControlComponent": { myResult = FullAccountingAddControlComponent; break; }
             case "YearTransferComponent": { myResult = YearTransferComponent; break; }
             case "AccountingPeriodsComponent": { myResult = AccountingPeriodsComponent; break; }
@@ -370,12 +393,14 @@ export class ModuleDeclarations {
             case "Generate1000Component": { myResult = Generate1000Component; break; }
             case "Receiving1000Component": { myResult = Receiving1000Component; break; }
             case "AccountingFunctionalTestComponent": { myResult = AccountingFunctionalTestComponent; break; }
+            case "UploadExpensesComponent": { myResult = UploadExpensesComponent; break; }
 
             //Edit Tabs
             case "GLAccountGeneralTabComponent": { myResult = GLAccountGeneralTabComponent; break; }
             //case "CashBookGeneralTabComponent": { myResult = CashBookGeneralTabComponent; break; }
             case "GLAccountOverviewComponent": { myResult = GLAccountOverviewComponent; break; }
             case "GLAccountTransactionsTabComponent": { myResult = GLAccountTransactionsTabComponent; break; }
+            case "GLAccountInterestTransactionsComponent": { myResult = GLAccountInterestTransactionsComponent; break; }
             case "GLAccountChequeListComponent": { myResult = GLAccountChequeListComponent; break; }
             case "ManageReconciliationsTabComponent": { myResult = ManageReconciliationsTabComponent; break; }
             case "JournalDetailsTabComponent": { myResult = JournalDetailsTabComponent; break; }
@@ -407,7 +432,10 @@ export class ModuleDeclarations {
 
              //Templates
             case "GlAccountLedgerTransactionsListTemplate": { myResult = GlAccountLedgerTransactionsListTemplate; break; }
+            case "GlAccountInterestTransactionsListTemplate": { myResult = GlAccountInterestTransactionsListTemplate; break; }
             case "GlAccountListTemplate": { myResult = GlAccountListTemplate; break; }
+            case "GlAccountInterestTransactionsNotesTemplate": { myResult = GlAccountInterestTransactionsNotesTemplate; break; }
+            case "GlAccountLedgerTransactionsInternalNotesTemplate": { myResult = GlAccountLedgerTransactionsInternalNotesTemplate; break; }
             case "ReconcileExternalPageListTemplate": { myResult = ReconcileExternalPageListTemplate; break; }
             case "ReconcileExternalPageLineListTemplate": { myResult = ReconcileExternalPageLineListTemplate; break; }
             case "FieldTemplateComponent": { myResult = FieldTemplateComponent; break; }
@@ -435,6 +463,7 @@ export class ModuleDeclarations {
             case "OutOfDepositMessage": { myResult = OutOfDepositMessage; break; }
             case "Aging4CustomerChartWindowComponent": { myResult = Aging4CustomerChartWindowComponent; break; }
             case "PaymentChequeShortTitleComponent": { myResult = PaymentChequeShortTitleComponent; break; }
+            case "JournalShortTitleComponent": { myResult = JournalShortTitleComponent; break; }
             case "GLAccountShortTitleComponent": { myResult = GLAccountShortTitleComponent; break; }
             case "BankAccountShortTitleComponent": { myResult = BankAccountShortTitleComponent; break; }
             case "BankDepositShortTitleComponent": { myResult = BankDepositShortTitleComponent; break; }
@@ -456,18 +485,21 @@ export class ModuleDeclarations {
             case "AccountingFlatFileDownloadComponent": { myResult = AccountingFlatFileDownloadComponent; break; }
             case "IntegrityCheckTabComponent": { myResult = IntegrityCheckTabComponent; break; }
             case "AccountingNoteComponent": { myResult = AccountingNoteComponent; break; }
+            case "InterestTransactionNotesComponent": { myResult = InterestTransactionNotesComponent; break; }
+            case "LedgerTransactionInternalNotesComponent": { myResult = LedgerTransactionInternalNotesComponent; break; }
             case "NewIntegrityCheckComponent": { myResult = NewIntegrityCheckComponent; break; }
             case "AddEditInterestBasesPeriodComponent": { myResult = AddEditInterestBasesPeriodComponent; break; }
             case "InterestBasesTypeShortTitleComponent": { myResult = InterestBasesTypeShortTitleComponent; break; }
             case "ExtReconcileAdjustBankFeeComponent": { myResult = ExtReconcileAdjustBankFeeComponent; break; }
             case "ManageExternalReconciliationTabComponent": { myResult = ManageExternalReconciliationTabComponent; break;}
-            case "InterestReportShortTitleComponent": { myResult = InterestReportShortTitleComponent; break;}
+            case "InterestReportShortTitleComponent": { myResult = InterestReportShortTitleComponent; break; }
+            case "CashBookShortTitleComponent": { myResult = CashBookShortTitleComponent; break; }
             case "BatchInvoicesComponent" :{myResult =BatchInvoicesComponent; break;}
             case "BatchPrintComponent" :{myResult =BatchPrintComponent; break;}
             case "InvoiceDateForBatchInvoicesComponent" :{myResult =InvoiceDateForBatchInvoicesComponent; break;}
             case "BtatchPrintWarningComponent": { myResult = BtatchPrintWarningComponent; break; }
             case "InterestInvoiceAutoCreditComponent": { myResult = InterestInvoiceAutoCreditComponent; break; }
-
+            case "TaxReportUploadLinesComponent": { myResult = TaxReportUploadLinesComponent; break;}
 
         }
 

@@ -1,0 +1,65 @@
+﻿<Script DBType="Global" Module="Global">
+  <Sql Version="1">
+    <![CDATA[
+     
+if((select count(*) from [dbo].[BatchServicesDefinitions] where [Code] = 'Workflow_StarWorkflowInstanceRetryWorker') = 0)
+begin
+
+INSERT INTO [dbo].[BatchServicesDefinitions]
+           ([Code]
+           ,[ClassName]
+           ,[Parameter1]
+           ,[Parameter2]
+           ,[QueueDefinitionCode])
+     VALUES
+           ('Workflow_StarWorkflowInstanceRetryWorker'
+           ,'Workflow_StarWorkflowInstanceRetryWorker'
+           ,NULL
+           ,NULL
+           ,'WorkFlowInstanceRetry')
+
+end;
+else
+begin
+
+update [dbo].[BatchServicesDefinitions] set
+            [Code] = 'Workflow_StarWorkflowInstanceRetryWorker'
+           ,[ClassName] = 'Workflow_StarWorkflowInstanceRetryWorker'
+           ,[Parameter1] = NULL
+           ,[Parameter2] = NULL
+           ,[QueueDefinitionCode] = 'WorkFlowInstanceRetry'
+where [Code] = 'Workflow_StarWorkflowInstanceRetryWorker';
+
+end;
+
+
+---------------------------------------------------------------------------------------------------------------
+
+if((select count(*) from [dbo].[BatchServicesDefinitionMods] where [Code] = 'Workflow_StarWorkflowInstanceRetryWorker') = 0)
+begin
+
+INSERT INTO [dbo].[BatchServicesDefinitionMods]
+           ([Code]
+           ,[InActive]
+           ,[NumberOfThreads])
+     VALUES
+           ('Workflow_StarWorkflowInstanceRetryWorker'
+           ,0
+           ,1)
+
+end;
+else
+begin
+
+update [dbo].[BatchServicesDefinitionMods] set 
+			[Code] = 'Workflow_StarWorkflowInstanceRetryWorker'
+			,[InActive] = 0
+			,[NumberOfThreads] = 1
+where [Code] = 'Workflow_StarWorkflowInstanceRetryWorker';
+
+end;
+
+
+    ]]>
+  </Sql>
+</Script>

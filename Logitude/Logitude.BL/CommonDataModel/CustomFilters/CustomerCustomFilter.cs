@@ -160,7 +160,6 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
                                         date2 = todayDate.AddDays(0);
                                         break;
                                     }
-
                                 case "PO_YS":
                                 case "CS_YS":
                                     {
@@ -168,7 +167,6 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
                                         date2 = todayDate.AddDays(-1);
                                         break;
                                     }
-
                                 case "PO_LW":
                                 case "CS_LW":
                                     {
@@ -237,17 +235,16 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
 
         public IQueryable<CustomersDataView> GetFreelancerCustomers(IQueryable<CustomersDataView> queryableData, int tenant)
         {
-            FreelancerCustomersUtil frlUtil = new FreelancerCustomersUtil(tenant);
+            var frlUtil = new FreelancerCustomersUtil(tenant);
 
             List<string> customersIds = frlUtil.GetConnectedCustomersIds(tenant);
+            
             if (customersIds.Count > 0)
             {
                 queryableData = queryableData.Where(d => customersIds.Contains(d.Id));
             }
             
             return queryableData;
-
-
         }
     }
 }

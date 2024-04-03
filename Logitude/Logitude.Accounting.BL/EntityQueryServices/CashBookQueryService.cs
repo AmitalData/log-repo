@@ -48,6 +48,13 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
             return EntityPM;
         }
+
+        public bool CheckIfCashbookLineCreatedForPaymentCheque(string cashBookId, string paymentChequeId, int tenant)
+        {
+            CashBookRepository cashBookRepo = new CashBookRepository(tenant);
+          return cashBookRepo.CheckIfCashbookLinereateForPaymentCheque(cashBookId, paymentChequeId, tenant);
+
+        }
         public CashBookPM GetByPaymentAndCurrencyAndBranch(string currency, string paymentMethod,string branch, int tenant)
         {
             CashBookRepository cashBookQuery = new CashBookRepository(tenant);
@@ -102,6 +109,19 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         public CashBookPM GetLightCashbook(string id, int tenant)
         {
             CashBook cashBook = repository.GetSingle(id, tenant);
+            CashBookPM entityPM = new CashBookPM();
+
+            if (cashBook != null)
+            {
+                mapping.POCOToPM(entityPM, cashBook);
+            }
+
+            return entityPM;
+        }
+
+        public CashBookPM GetCashbookByAccountId(string accountId, int tenant)
+        {
+            CashBook cashBook = repository.GetCashbookByAccountId(accountId, tenant);
             CashBookPM entityPM = new CashBookPM();
 
             if (cashBook != null)

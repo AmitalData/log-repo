@@ -27,7 +27,6 @@ namespace Logitude.BL.GlobalModel.Tools.Validating
                 throw new ApplicationException("Main Package field is required");
             }
 
-            ValidateCCSParameter(entityPM, entityRepository);
             ValidateNumberOfUsers(entityPM);
             ValidateConnectedAirline(entityPM, entityRepository);
             ValidateSupportEmail(entityPM, entityRepository);
@@ -74,29 +73,7 @@ namespace Logitude.BL.GlobalModel.Tools.Validating
                 throw new ApplicationException(msg);
             }
         }
-        private static void ValidateCCSParameter(TenantManagementPM entityPM, TenantManagementRepository entityRepository)
-        {
-            if (!string.IsNullOrEmpty(entityPM.TTY) || !string.IsNullOrEmpty(entityPM.PIMA))
-            {
-                IQueryable<TenantManagement> iQueryable = entityRepository.GetAllTenants();
-
-                if (!string.IsNullOrEmpty(entityPM.TTY))
-                {
-                    if (iQueryable.Where(d => d.TTY == entityPM.TTY && d.Id != entityPM.Id).Any())
-                    {
-                        throw new ApplicationException("the TTY field is alredy used by another tenant");
-                    }
-                }
-
-                if (!string.IsNullOrEmpty(entityPM.PIMA))
-                {
-                    if (iQueryable.Where(d => d.PIMA == entityPM.PIMA && d.Id != entityPM.Id).Any())
-                    {
-                        throw new ApplicationException("the PIMA field is alredy used by another tenant");
-                    }
-                }
-            }
-        }
+      
         private static void ValidateNumberOfUsers(TenantManagementPM entityPM)
         {
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -222,6 +199,7 @@ namespace Logitude.BL.GlobalModel.Tools.Validating
                     }
                 }
             }
-        }        
+        }
+
     }
 }

@@ -56,6 +56,8 @@ namespace CommunicationWorkerRole
         public string LoggedContactId { get; set; }
         public string UserName { get; set; }
         public string StageName { get; set; }
+        public string EmailFooterMessage { get; set; }
+
         public string contactEmail = "";
         public string GuidId = "";
         public string EntityId = "";
@@ -93,6 +95,7 @@ namespace CommunicationWorkerRole
                                 ObjectTableId = response.MessageValues["ObjectTableId"].ToString();
                                 LoggedContactId = response.MessageValues["CurrentLoggedUserId"].ToString();
                                 UserName = this.GetUserName(LoggedContactId, tenant);
+                                this.SetEmailFooterMessage();
                                 this.CreateCommunicationLog(lineId, tenant, ticketNumber, contactId, ownerId);
                                 queueservice.Complete();
                                 LogDoneItemInMemory();
@@ -343,6 +346,16 @@ namespace CommunicationWorkerRole
 
             return myResult;
         }
+        private void SetEmailFooterMessage()
+        {
+            var logitudeFooterMessage = "This email is a service from Logitude!";
+            var cloudFooterMessage = "This email is a service from Unifreight Cloud Generation!";
+            
+            if (LogitudeSettings.DeploymentStage == "Simplog")
+                this.EmailFooterMessage = logitudeFooterMessage;
+            else
+                this.EmailFooterMessage = cloudFooterMessage;
+        }
 
         Ticket Ticket;
         private string GetTicketStageName(string Id, string objectTableId, int tenant)
@@ -399,7 +412,11 @@ namespace CommunicationWorkerRole
                 if (isInternal)
                 {
                     string replayTo = newInboundEmailLine.Recepient;
-                    replayToList = replayTo.Split('@')[0] + "-in" + "@" + replayTo.Split('@')[1];
+                    if (!replayTo.Split('@')[0].Contains("+"))
+                    {
+                        replayTo = newInboundEmailLine.Recepient.Split('@')[0] + "+" + GuidId + "@" + newInboundEmailLine.Recepient.Split('@')[1];
+                    }
+                    replayToList = replayTo.Split('@')[0] +  "-in" + "@" + replayTo.Split('@')[1];
                 }
 
                 else
@@ -414,6 +431,10 @@ namespace CommunicationWorkerRole
                 if (isInternal)
                 {
                     string replayTo = newInboundEmailLine.Sender;
+                    if (!replayTo.Split('@')[0].Contains("+"))
+                    {
+                        replayTo = newInboundEmailLine.Sender.Split('@')[0] + "+" + GuidId + "@" + newInboundEmailLine.Sender.Split('@')[1];
+                    }
                     replayToList = replayTo.Split('@')[0] + "-in" + "@" + replayTo.Split('@')[1];
                 }
 
@@ -483,14 +504,6 @@ namespace CommunicationWorkerRole
 
             try
             {
-                //IQueueService queueservice = QueueServiceManager.GetQueueService("emailqueue", Tenant);
-                //Dictionary<string, string> message = new Dictionary<string, string>() 
-                //    {
-                //        { "CommunicationLogId", myCommunicationLogId}, 
-                //        { "Tenant", Tenant.ToString() }, 
-                //    };
-
-                //queueservice.Send(message);
 
                 DbQueueService queueservice = new DbQueueService("EmailQueue", Tenant);
                 queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", myCommunicationLogId }, { "Tenant", Tenant.ToString() } }, Tenant);
@@ -568,7 +581,6 @@ namespace CommunicationWorkerRole
 
                 else
                 {
-                    //replayToList = newInboundEmailLine.Sender;
                     replayToList = replayTo.Split('@')[0] + "-ex" + "@" + replayTo.Split('@')[1];
                 }
             }
@@ -1112,7 +1124,7 @@ namespace CommunicationWorkerRole
             }
 
             myResult += @"<div style='text-align:center;width:100%!important;height:50px;background:#008dbc;border:1px solid #DADADA;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;font-family:Lucida Sans Unicode;font-size:17px;'>"
-                   + @"<p style='text-align:center;font-family:Lucida Sans Unicode;color:#FFFFFF;font-size:17px;'>This email is a service from Unifreight Cloud Generation!</p>"
+                   + @"<p style='text-align:center;font-family:Lucida Sans Unicode;color:#FFFFFF;font-size:17px;'>"+ this.EmailFooterMessage+"</p>"
                    + @"</div>";
 
             string lowerPart =
@@ -1262,7 +1274,7 @@ namespace CommunicationWorkerRole
             }
 
             myResult += @"<div style='text-align:center;min-height:50px;background:#008dbc;border:1px solid #DADADA;border-radius:8px;-moz-border-radius:8px;-webkit-border-radius:8px;font-family:Lucida Sans Unicode;font-size:17px;'>"
-                   + @"<p style='width:100%!important;text-align:center;font-family:Lucida Sans Unicode;color:#FFFFFF;font-size:17px;'>This email is service  from Unifreight!</p>"
+                   + @"<p style='width:100%!important;text-align:center;font-family:Lucida Sans Unicode;color:#FFFFFF;font-size:17px;'>"+ this.EmailFooterMessage + "</p>"
                    + @"</div>";
 
             string lowerPart =

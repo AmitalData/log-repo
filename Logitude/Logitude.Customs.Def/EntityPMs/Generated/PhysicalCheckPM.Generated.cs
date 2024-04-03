@@ -1170,7 +1170,7 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private string requestToAdvanceAQueue ;
+ 	  private string requestToAdvanceAQueue ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
@@ -1240,6 +1240,6 @@ namespace Logitude.Customs.Def.EntityPMs
 		 }
 	   }
    }
-   
+    
 }
 	 

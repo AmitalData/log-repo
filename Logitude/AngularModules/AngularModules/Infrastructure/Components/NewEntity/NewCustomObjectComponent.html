@@ -1,0 +1,67 @@
+<style type="text/css">
+</style>
+<table>
+    <tr style="height:1px;" *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <ScrollViewer>
+                <div style="height:15px"></div>
+                <div style="height:96%; padding-left:10px">
+                    <table>
+                        <tr>
+                            <td>
+                                <div class="MediaFill">
+                                    <div class="LocationDirective" #GeneratedArea></div>
+                                </div>
+                            </td>
+                        </tr>
+                        
+                    </table>
+                </div>
+             </ScrollViewer>
+        </td>
+    </tr>
+    <tr>
+        <td style="height: 5px">
+            <div></div>
+        </td>
+    </tr>
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+                    <!-- Close -->
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+                    <!-- Save -->
+                    <td style="width: 57px;">
+                        <button id="{{ 'SaveBtn' | IdGeneratorAsyncPipe | async}}" *ngIf="!EntityPM.IsDirty" class="Button" (click)="OkButtonClicked()">
+                            <img class="LeftCenter" style="margin-left: 2px;" src="./Images/Buttons/Save.png" />
+                            <span style="line-height: 19px; margin-left: 17px;">Save</span>
+                        </button>
+                        <button id="{{ 'SaveBtn' | IdGeneratorAsyncPipe | async}}" *ngIf="EntityPM.IsDirty" class="EntityChangesButton" (click)="OkButtonClicked()">
+                            <img class="LeftCenter" style="margin-left: 2px;" src="./Images/Buttons/Save.Red.png" />
+                            <span style="line-height: 19px; margin-left: 17px;">Save</span>
+                        </button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

@@ -51,6 +51,8 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string ReceivableAccountId { get; set; }
         public string ReceivableCreditAccount { get; set; }
         public string ReceivableCreditGLAccountId { get; set; }
+        public string RecCreditGLAcountLocalName { get; set; }
+        public string PayDebitGLAcountLocalName { get; set; }
         public string SATExternalId { get; set; }
 
         [ForeignKey("DueTypeCode")]
@@ -60,6 +62,11 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         [ForeignKey("ChargesGroupId")]
         public virtual ChargesGroup ChargesGroup { get; set; }
         public string ChargesGroupId { get; set; }
+
+        [ForeignKey("QuoteChargesGroupId")]
+        public virtual QuoteChargesGroup QuoteChargesGroup { get; set; }
+        public string QuoteChargesGroupId { get; set; }
+        public string QuoteChargesGroupCode{ get; set; }
 
         [ForeignKey("IATACodeId")]
         public virtual IATACode IATACode { get; set; }

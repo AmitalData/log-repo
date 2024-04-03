@@ -12,6 +12,7 @@ import {TenantLoginPolicyList} from '../../../../Common/EntityLists/TenantLoginP
 import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 import {UserExtendedListService} from '../../../../Common/Services/ExtendedLists/UserExtendedListService';
 import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
+import { FullAccountingSettingListService } from 'Accounting/Services/StandardLists/FullAccountingSettingListService';
 
 @Component({
     
@@ -27,9 +28,11 @@ export class UserGeneralTabComponent extends BaseComponent implements OnDestroy 
     private CurrentSession = SessionLocator.SelectedSession;
     public SignatureImageId: string;
     public EntityId: string; 
+    private fullAccountingSettingListService: FullAccountingSettingListService;
 
     constructor(public entityArgs: EntityArgs, public TenantLoginPolicyListService: TenantLoginPolicyListService) {
         super();
+        this.fullAccountingSettingListService = new FullAccountingSettingListService();
         this.EntityPM = entityArgs.EntityPM;
         this.EntityId = this.EntityPM.Id;
         this.BuildTechnologyList();
@@ -41,6 +44,7 @@ export class UserGeneralTabComponent extends BaseComponent implements OnDestroy 
         this.SetSelectedDirection();
 
         this.InitializeImageIds();
+        this.getAccountingSettingSecurityLevelField();
        // this.SelectedDirection = this.EntityPM.LayoutDirection == 'ltr' ? this.LayoutDirections[0] : this.LayoutDirections[1];
     }
 
@@ -169,6 +173,21 @@ export class UserGeneralTabComponent extends BaseComponent implements OnDestroy 
         });
     }
 
+    getAccountingSettingSecurityLevelField() {
+        this.fullAccountingSettingListService.getSingle(SessionLocator.Tenant.toString()).subscribe((response: any) => {
+            this.CurrentSession.StopBusyIndicator();         
+            if (response != null) {
+                var response = response.Result;
+                if (response.IsSecurityLevelActivated) {
+                        this.IsSecurityLevelVisibile = true;
+                    }
+                    else {
+                        this.IsSecurityLevelVisibile= false;
+                    }
+                }
+        });
+    }
+
     public IsEditingEnabled: boolean = false;
     public IsPersonalIdVisible: boolean = false;
     public IsExpirationDateVisible: boolean = false;
@@ -178,6 +197,7 @@ export class UserGeneralTabComponent extends BaseComponent implements OnDestroy 
     public IsAdditionalPackagesOnlyVisible: boolean = false;
     public IsLayoutDirectionVisibile: boolean = false;
     public IsDontShowLocalLabelsVisibile: boolean = false;
+    public IsSecurityLevelVisibile: boolean = false;
 
     SetUIProperties() {
         if (FeatureLocator.HasFeaturePermession("User", "PERSONALID")) {
@@ -410,6 +430,13 @@ export class UserGeneralTabComponent extends BaseComponent implements OnDestroy 
     public set AdditionalPackagesOnly(value: boolean) {
         if (this.EntityPM.AdditionalPackagesOnly != value) {
             this.EntityPM.AdditionalPackagesOnly = value;
+        }
+    }
+
+    public get SecurityLevel() { return this.EntityPM.SecurityLevel; }
+    public set SecurityLevel(value: number) {
+        if (this.EntityPM.SecurityLevel != value) {
+            this.EntityPM.SecurityLevel = value;
         }
     }
 }

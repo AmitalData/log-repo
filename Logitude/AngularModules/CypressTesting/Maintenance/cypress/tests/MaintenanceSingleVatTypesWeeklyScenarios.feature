@@ -1,11 +1,11 @@
-@dev @weekly
+@stable @weekly @release
 Feature: Single Vat Type Create, Search and Edit from Maintenance
     The user creates a single vat type, searches for and edits it from the Maintenance Module.
 
     Scenario: Add Single Vat Type Code with lenght more than 5
         Given the user logged in and open "VatTypes" in maintenance menu
         When add "123456" as single vat type code
-        Then a validation message with "Code Field must be less than 5" error should appear
+        Then a validation message with "Code Field length must be less than 5" error should appear
 
     Scenario: Create new single vat type
         Given a single vat type with the following details

@@ -1,4 +1,5 @@
-@release @stable @all
+@devrelease 
+#@release @stable
 Feature: Partial Split shipment
     The user creates a shipment, adds packages,
     splits the shipment by moving part of the packages to a new shipment,

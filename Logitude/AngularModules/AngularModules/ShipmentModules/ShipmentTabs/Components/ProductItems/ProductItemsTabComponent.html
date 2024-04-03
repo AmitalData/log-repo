@@ -18,7 +18,7 @@
         <tr>
             <td>
                 <div class="MediaFill" style="overflow-x: hidden;">
-                    <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="ProductItems" [Disabled]="!IsEditingEnabled" (RowEnded)="OnRowEnded($event)">
+                    <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="ProductItems" [Disabled]="!IsEditingEnabled" (RowEnded)="OnRowEnded($event)" [UseVirtuallization]="IsUsingVirtuallization">
 
                         <log-column [header]="'Product Item'" [width]="'150'" [Alignment]="'left'">
                             <ng-template let-item>
@@ -37,7 +37,8 @@
                                                 [SelectedValue]="item.ProductItemId"
                                                 [DependencyFilter1Value]="CustomerId"
                                                 [DisplayMemberPath]="'Name'"
-                                                [FocusOnMe]="true">
+                                                [FocusOnMe]="true"
+                                                [QueryFilterItems]="ProductItemQueryFilters">
                                         </LogLov>
                                     </div>
                                 </log-cell-template>
@@ -96,6 +97,42 @@
                             <ng-template let-item>
                                 <log-cell-template #logcelltemplate>
                                     <span>{{item.HTSCode}}</span>
+                                </log-cell-template>
+                            </ng-template>
+                        </log-column>
+
+                        <log-column [header]="'VAT %'" [width]="'120'" [Alignment]="'left'">
+                            <ng-template let-item>
+                                <log-cell-template #logcelltemplate>
+                                    <span>{{item.VATPercentage}}</span>
+                                </log-cell-template>
+                            </ng-template>
+                        </log-column>
+
+                        <log-column [header]="'Duties %'" [width]="'120'" [Alignment]="'left'">
+                            <ng-template let-item>
+                                <log-cell-template #logcelltemplate>
+                                    <span>{{item.DutiesPercentage}}</span>
+                                </log-cell-template>
+                            </ng-template>
+                        </log-column>
+
+                        <log-column [header]="'Other Duties'" [width]="'120'" [Alignment]="'left'">
+                            <ng-template let-item>
+                                <log-cell-template #logcelltemplate>
+                                    <span>{{item.OtherDuties}}</span>
+                                </log-cell-template>
+                            </ng-template>
+                        </log-column>
+
+                        <log-column [header]="'Remarks'" [width]="'100'" [Alignment]="'left'">
+                            <ng-template let-item>
+                                <log-cell-template #logcelltemplate [IsEnabled]="false" [CellColor]="item.CellColor">
+                                    <div style="height: 100%; width: 100%; left:5px; float:left;">
+                                        <img class="LeftCenter" *ngIf="!item.Remarks" src="./Images/Notes_notexists.png" style="display: block; float: left; left: 5px;" />
+                                        <!--<img class="CenterCenter" *ngIf="item.Remarks" src="./Images/Notes_exists.png" style="display: block;" [title]="item.Remarks" />-->
+                                        <HelperNotes style="display: block; float: left;"  *ngIf="item.Remarks" [Title]="'Remarks'" [IsEnabled]="false" [Text]="item.Remarks"></HelperNotes>
+                                    </div>
                                 </log-cell-template>
                             </ng-template>
                         </log-column>

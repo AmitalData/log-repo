@@ -1,36 +1,54 @@
-﻿using Logitude.CargoTracking.Data;
+﻿using Logitude.CargoTracking.BL.EntityQueryServices;
+using Logitude.CargoTracking.Data;
 using Logitude.CargoTracking.Data.EntityListQueryServices;
 using Logitude.CargoTracking.Data.EntityLists;
 using Logitude.CargoTracking.Def.DataContracts;
 using System.Collections.Generic;
 using System.Linq;
+using Logitude.CargoTracking.Data.Model;
 
 namespace Logitude.CargoTracking.BL.CoreBL
 {
     public class CargoTrackingUsersShipmentService
     {
-        public CargoTrackingShipmentsResponse GetUserShipmentsResponse(int pageIndex, int pageSize, CargoTrackingShipmentFilters shipmentFilters)
+        public CargoTrackingShipmentsResponse GetUserShipmentsResponse(CargoTrackingShipmentSearchInput shipmentSearchInput)
         {
-            CargoTrackingShipmentSearchListQueryService shipmentSearchQuery = GetCargoTrackingShipmentSearchQuery(shipmentFilters);
-
-            CargoTrackingShipmentsResponse response = new CargoTrackingShipmentsResponse
+            return new CargoTrackingShipmentsResponse
             {
-                Shipments = shipmentSearchQuery.GetShipmentsByFilters(pageIndex, pageSize, shipmentFilters).ToList(),
-                ShipmentsCount = GetAllShipmentsCount(pageIndex, shipmentFilters)
+                Shipments = GetUserShipments(shipmentSearchInput),
+                ShipmentsCount = GetAllShipmentsCountForFirstPageOnly(shipmentSearchInput)
             };
-
-            return response;
         }
-        public CargoTrackingShipmentsCounter GetUserShipmentsCounter(CargoTrackingShipmentFilters shipmentFilters)
+
+        public List<Customer> GetShipmentsCustomers(int tenant)
+        {
+            CargoTrackingShipmentSearchInput shipmentSearchInput = new CargoTrackingShipmentSearchInput() { Tenant = tenant };
+            CargoTrackingShipmentSearchListQueryService shipmentSearchQuery = GetCargoTrackingShipmentSearchQuery(shipmentSearchInput);
+            return shipmentSearchQuery.GetShipmentsCustomers(tenant);
+        }
+
+        public List<CargoTrackingShipmentList> GetUserShipments(CargoTrackingShipmentSearchInput shipmentSearchInput)
+        {
+            CargoTrackingShipmentSearchListQueryService shipmentSearchQuery = GetCargoTrackingShipmentSearchQuery(shipmentSearchInput);
+            var shipments = shipmentSearchQuery.GetFilteredShipments(shipmentSearchInput);
+            CargoTrackingShipmentQueryService cargoTrackingShipmentQueryService = new CargoTrackingShipmentQueryService(shipmentSearchInput.Tenant);
+            cargoTrackingShipmentQueryService.SetFutureMilstone(shipments);
+            return shipments;
+        }
+        public int GetAllShipmentsCountForFirstPageOnly(CargoTrackingShipmentSearchInput shipmentSearchInput)
+        {
+            var isNotFirstPage = shipmentSearchInput.PageIndex != 0;
+            if (isNotFirstPage)
+                return 0;
+
+            CargoTrackingShipmentSearchListQueryService shipmentSearchQuery = GetCargoTrackingShipmentSearchQuery(shipmentSearchInput);
+            return shipmentSearchQuery.GetShipmentsCount(shipmentSearchInput);
+        }
+        public CargoTrackingShipmentsCounter GetUserShipmentsCounter(CargoTrackingShipmentSearchInput shipmentSearchInput)
         {
 
-            shipmentFilters.TransportModeCodes = "";
-            shipmentFilters.DirectionCodes = "";
-            //var customers = shipmentFilters.CustomersIdsString;
-            //shipmentFilters.CustomersIdsString = "";
-
-            CargoTrackingShipmentSearchListQueryService shipmentSearchQuery = GetCargoTrackingShipmentSearchQuery(shipmentFilters);
-            IQueryable<CargoTrackingShipmentList> shipmentsIQuerable = shipmentSearchQuery.GetShipmentsByFilters(shipmentFilters);
+            CargoTrackingShipmentSearchListQueryService shipmentSearchQuery = GetCargoTrackingShipmentSearchQuery(shipmentSearchInput);
+            IQueryable<CargoTrackingShipmentList> shipmentsIQuerable = shipmentSearchQuery.GetShipmentsByFilters(shipmentSearchInput);
 
             CargoTrackingShipmentsCounter counter = new CargoTrackingShipmentsCounter();
             counter.Air = shipmentsIQuerable.Count(d => d.TransportModeId == "A");
@@ -38,22 +56,20 @@ namespace Logitude.CargoTracking.BL.CoreBL
             counter.Sea = shipmentsIQuerable.Count(d => d.TransportModeId == "O");
             counter.Import = shipmentsIQuerable.Count(d => d.DirectionId == "I" || d.DirectionId == "C");
             counter.Export = shipmentsIQuerable.Count(d => d.DirectionId == "E");
+            counter.Drop = shipmentsIQuerable.Count(d => d.DirectionId == "R");
+            counter.Domestic = shipmentsIQuerable.Count(d => d.DirectionId == "D");
+            counter.HasException = shipmentsIQuerable.Count(d => d.CurrentMilestoneExceptions != null);
+            counter.OrdersOnly = shipmentsIQuerable.Count(d => d.EntityType == "O");
+            counter.EstimatedArrivalOnly = shipmentsIQuerable.Count(d => d.ArrivalEstimationDate != null && d.ArrivalDate == null);
+            counter.OperationalOpenedOnly = shipmentsIQuerable.Count(d => d.IsOperationalClosed == false);
+
 
             return counter;
         }
-        private int GetAllShipmentsCount(int pageIndex, CargoTrackingShipmentFilters shipmentFilters)
-        {
-            CargoTrackingShipmentSearchListQueryService shipmentSearchQuery = GetCargoTrackingShipmentSearchQuery(shipmentFilters);
-            var count = 0;
-            if (pageIndex == 0)
-                count = shipmentSearchQuery.GetShipmentsCount(shipmentFilters);
 
-            return count;
-        }
-
-        private CargoTrackingShipmentSearchListQueryService GetCargoTrackingShipmentSearchQuery(CargoTrackingShipmentFilters shipmentFilters)
+        private CargoTrackingShipmentSearchListQueryService GetCargoTrackingShipmentSearchQuery(CargoTrackingShipmentSearchInput shipmentSearchInput)
         {
-            ICargoTrackingContext MyContext = CargoTrackingContext.GetContext(shipmentFilters.Tenant);
+            ICargoTrackingContext MyContext = CargoTrackingContext.GetContext(shipmentSearchInput.Tenant);
             CargoTrackingShipmentSearchListQueryService cargoTrackingShipmentSearchQuery = new CargoTrackingShipmentSearchListQueryService(MyContext);
             return cargoTrackingShipmentSearchQuery;
         }
@@ -62,6 +78,7 @@ namespace Logitude.CargoTracking.BL.CoreBL
     {
         public List<CargoTrackingShipmentList> Shipments { get; set; }
         public int ShipmentsCount { get; set; }
+        public List<Customer> Customers { get; set; }
     }
     public class CargoTrackingShipmentsCounter
     {
@@ -70,5 +87,12 @@ namespace Logitude.CargoTracking.BL.CoreBL
         public int Air { get; set; }
         public int Land { get; set; }
         public int Sea { get; set; }
+        public int Drop { get; set; }
+        public int Domestic { get; set; }
+        public int HasException { get; set; }
+        public int OrdersOnly { get; set; }
+        public int EstimatedArrivalOnly { get; set; }
+        public int OperationalOpenedOnly { get; set; }
+
     }
 }

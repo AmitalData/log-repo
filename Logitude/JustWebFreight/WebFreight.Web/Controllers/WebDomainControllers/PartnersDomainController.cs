@@ -16,6 +16,8 @@ using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -311,7 +313,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 CardQuery cardQuery = new CardQuery(authToken.Tenant);
                 CardList myResult = cardQuery.GetCarrierCopyToCurrentTenant(entityId, authToken.Tenant, null, null, false, null);
 
@@ -331,7 +333,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 string loggedUserEmail = authToken.Email;
                 int tenant = authToken.Tenant;
-
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 PartnersDomainService partnersDomain = new PartnersDomainService();
                 bool myResult = partnersDomain.IsCustomerConnectedToEntities(entityId, tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
@@ -350,6 +352,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 string loggedUserEmail = authToken.Email;
                 int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 PartnersDomainService partnersDomain = new PartnersDomainService();
 
                 bool myResult = false;
@@ -425,6 +428,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
 
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("Airline", "READ", authToken.Tenant);
 
                 AirlineQuery entityQuery = new AirlineQuery(authToken.Tenant);
@@ -444,7 +448,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("Airline", "READ", authToken.Tenant);
 
@@ -466,6 +470,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
 
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("ShippingLine", "READ", authToken.Tenant);
 
@@ -488,6 +493,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
 
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("Trucker", "READ", authToken.Tenant);
 
                 TruckerQuery entityQuery = new TruckerQuery(tenant);
@@ -509,6 +515,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
 
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("Warehouse", "READ", authToken.Tenant);
 
                 WarehouseQuery entityQuery = new WarehouseQuery(tenant);
@@ -644,7 +651,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 string loggedUserEmail = authToken.Email;
                 int tenant = authToken.Tenant;
-
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 AddressRepository addressRepository = new AddressRepository(tenant);
                 TenantRepository tenantRepository = new TenantRepository(tenant);
                 Tenant myTenant = tenantRepository.GetSingleTenant(tenant);
@@ -969,6 +976,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                             {
                                 if (args.Contact != null)
                                 {
+                                    HandleInactiveContact(args);
                                     if (args.Contact.Id == null)
                                     {
                                         this.CreateContact(args);
@@ -1012,6 +1020,22 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
+        private void HandleInactiveContact(PartnerServicePM args)
+        {
+            if (args.InactiveContactId != null)
+            {
+                ContactPM tempContactPM = args.Contact;
+                ContactQuery contactQuery = new ContactQuery(args.Tenant);
+                ContactPM contactPM = contactQuery.GetSingleContactPM(args.InactiveContactId);
+                args.Contact = contactPM;
+                args.Contact.InActive = false;
+                ICommonDataContext objectContext = CommonDataContext.GetContext(args.Tenant);
+                this.UpdatePartnerContact(args, objectContext);
+                args.Contact = tempContactPM;
+                args.Contact.InActive = !args.IsReactivatingContact;
+            }
+        }
+
         public HttpResponseMessage GetRecentCustomers(string ownerId, string businessUnitId)
         {
             try
@@ -1046,7 +1070,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 CustomerBusinessUnitFilter myFilter = new CustomerBusinessUnitFilter(tenant);
                 myResult = myFilter.RunFilter(myResult);
 
-                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
                 customFieldResolver.SetCustomFieldsValues("Customer", tenant, myResult.Cast<object>().ToList());
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
@@ -1130,7 +1154,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
-
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 DateTime? date = DateHelper.GetDate(startDate);
 
                 ownerId = this.FixFilter(ownerId);
@@ -1155,7 +1179,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                
+
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("Airline", "READ", tenant);
 
@@ -1201,7 +1226,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
-
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 PartnersDomainService service = new PartnersDomainService();
                 service.AllowAirline(isAllowed, code, tenant, myTenantId);                
 
@@ -1254,7 +1279,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
-
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 PartnersDomainService service = new PartnersDomainService();
                 service.RegistrationRequested(isRequested, tenantAirlineId, zeroAirlineId, tenant, tenantManagmentId, AWBMessagesCCSTypeCode);
 
@@ -1274,7 +1299,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
-
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 PartnersDomainService service = new PartnersDomainService();
                 service.RegisteringAirline(isRegistered, tenantAirlineId, zeroAirlineId, tenant, tenantManagmentId, AWBMessagesCCSTypeCode, loggedContactName);
 
@@ -1294,7 +1319,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
-
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 PartnersDomainService service = new PartnersDomainService();
                 service.SetIsDirect(isDirect, tenantAirlineId, zeroAirlineId, tenant, tenantManagmentId, AWBMessagesCCSTypeCode);
 
@@ -1314,7 +1339,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
-
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 declineNotes = this.FixFilter(declineNotes);
 
                 PartnersDomainService service = new PartnersDomainService();
@@ -2106,7 +2131,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
-
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 string SearchText = filters.Filter10Value;
 
                 PartnersDomainService domainService = new PartnersDomainService();
@@ -2125,6 +2150,11 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             try
             {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
                 ICommonDataContext MyContext = CommonDataContext.GetContext(tenant);
                 AirlineRepository airlineRepository = new AirlineRepository(MyContext);
                 AirlineQuery airlineQuery = new AirlineQuery(airlineRepository);
@@ -2144,6 +2174,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             try
             {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("Airline", "READ", tenant);
 
@@ -2460,6 +2493,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 string loggedUserEmail = authToken.Email;
                 int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 PartnersDomainService partnersDomain = new PartnersDomainService();
 
                 bool myResult = false;
@@ -2674,6 +2708,69 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetAllCarrierServiceLinesByCarrierId(string carrierId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                string loggedUserEmail = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                CarrierServiceLineQuery carrierServiceLineQuery = new CarrierServiceLineQuery(tenant);
+                List<CarrierServiceLinePM> serviceLinePMs = carrierServiceLineQuery.GetCarrierServiceLinePMsByCardId(carrierId, tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, serviceLinePMs);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetRemoveServiceLineFromCarrier(string serviceLineId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                string loggedUserEmail = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
+                CarrierServiceLineRepository serviceLineRepository = new CarrierServiceLineRepository(commonDataContext);
+                CarrierServiceLine serviceLine = serviceLineRepository.GetSingleCarrierServiceLine(serviceLineId, tenant);
+
+                if (serviceLine != null)
+                {
+                    this.ValidateConnectedShipmentsToServiceLine(serviceLine);
+                    serviceLineRepository.Remove(serviceLine);
+                    commonDataContext.SaveChanges();
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, "ok");
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        private void ValidateConnectedShipmentsToServiceLine(CarrierServiceLine serviceLine)
+        {
+            ShipmentRepository shipmentRepository = new ShipmentRepository(serviceLine.Tenant);
+            IQueryable<ShipmentMasterData> shipments = shipmentRepository.GetMasterByServiceLineId(serviceLine.Id, serviceLine.Tenant);
+
+            if(shipments.Count() > 0)
+            {
+                throw new ApplicationException("Can't delete Service lines which are connected to shipments");
             }
         }
     }

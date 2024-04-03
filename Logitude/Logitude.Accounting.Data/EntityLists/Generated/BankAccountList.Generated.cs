@@ -88,6 +88,10 @@ namespace Logitude.Accounting.Data.EntityLists
        public string PrintingBranchNumber  { get; set; }
        [DataMember]
        public string PrintingAccountNumber  { get; set; }
+       [DataMember]
+       public string TotalOpenExternalTransactions  { get; set; }
+       [DataMember]
+       public string TotalOpenPagesLines  { get; set; }
    }
 
 }

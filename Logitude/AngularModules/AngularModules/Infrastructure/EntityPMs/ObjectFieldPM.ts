@@ -8,13 +8,13 @@
 //------------------------------------------------------------------------------
 
 
-import {ObjectFieldValidationPM} from './ObjectFieldValidationPM';
-import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
-import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
-import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
-import {Output, EventEmitter}  from '@angular/core';
-import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
-import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
+import { ObjectFieldValidationPM } from './ObjectFieldValidationPM';
+import { UIProperties, UIProperty } from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
+import { ServiceHelper } from '../../Infrastructure/Utilities/ServiceHelper';
+import { ServiceLocator } from '../../Infrastructure/Locators/ServiceLocator';
+import { Output, EventEmitter } from '@angular/core';
+import { PropertyChangedArgs } from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
+import { CustomFieldClass } from '../../Infrastructure/DataContracts/CustomFieldClass';
 
 
 export class ObjectFieldPM {
@@ -22,7 +22,7 @@ export class ObjectFieldPM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-          this.UIProperties = new UIProperties(this); 
+		            this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -55,6 +55,11 @@ export class ObjectFieldPM {
     private dataTypeCode: string;
     public get DataTypeCode() { return this.dataTypeCode; }
     public set DataTypeCode(newValue: string) { if (this.dataTypeCode != newValue) { this.dataTypeCode = newValue; this.MarkAsDirty("DataTypeCode"); } }
+       
+	 
+    private dataTypeName: string;
+    public get DataTypeName() { return this.dataTypeName; }
+    public set DataTypeName(newValue: string) { if (this.dataTypeName != newValue) { this.dataTypeName = newValue; this.MarkAsDirty("DataTypeName"); } }
        
 	 
     private maxLength: number;
@@ -494,14 +499,14 @@ export class ObjectFieldPM {
 	 
      
 	private objectFieldValidations: ObjectFieldValidationPM[];
-    get  ObjectFieldValidations() {
+    get ObjectFieldValidations() {
         if (this.objectFieldValidations == null) {
             this.objectFieldValidations = [];
         }
 
         return this.objectFieldValidations;
     }
-    set  ObjectFieldValidations(newValue: ObjectFieldValidationPM[]) {
+    set ObjectFieldValidations(newValue: ObjectFieldValidationPM[]) {
         if (this.objectFieldValidations != newValue) {
             this.objectFieldValidations = newValue;
         }
@@ -513,7 +518,7 @@ export class ObjectFieldPM {
 
                 item.EntityParentPM = this;
 
-                this. ObjectFieldValidations.push(item);
+                this.ObjectFieldValidations.push(item);
                 this.MarkAsDirty();
             }
         }
@@ -522,7 +527,7 @@ export class ObjectFieldPM {
         if (item != null) {
             var index = this.ObjectFieldValidations.indexOf(item);
             if (index > -1) {
-                this. ObjectFieldValidations.splice(index, 1);
+                this.ObjectFieldValidations.splice(index, 1);
                 this.MarkAsDirty();
             }
         }
@@ -613,22 +618,80 @@ export class ObjectFieldPM {
     public set AdditionalQuerySections(newValue: string) { if (this.additionalQuerySections != newValue) { this.additionalQuerySections = newValue; this.MarkAsDirty("AdditionalQuerySections"); } }
        
 	 
+    private leftKey: string;
+    public get LeftKey() { return this.leftKey; }
+    public set LeftKey(newValue: string) { if (this.leftKey != newValue) { this.leftKey = newValue; this.MarkAsDirty("LeftKey"); } }
+       
+	 
+    private rightKey: string;
+    public get RightKey() { return this.rightKey; }
+    public set RightKey(newValue: string) { if (this.rightKey != newValue) { this.rightKey = newValue; this.MarkAsDirty("RightKey"); } }
+       
+	 
+    private isForeignKey: boolean;
+    public get IsForeignKey() { return this.isForeignKey; }
+    public set IsForeignKey(newValue: boolean) { if (this.isForeignKey != newValue) { this.isForeignKey = newValue; this.MarkAsDirty("IsForeignKey"); } }
+       
+	 
+    private foreignEntity: string;
+    public get ForeignEntity() { return this.foreignEntity; }
+    public set ForeignEntity(newValue: string) { if (this.foreignEntity != newValue) { this.foreignEntity = newValue; this.MarkAsDirty("ForeignEntity"); } }
+       
+	 
+    private navigationPropertyName: string;
+    public get NavigationPropertyName() { return this.navigationPropertyName; }
+    public set NavigationPropertyName(newValue: string) { if (this.navigationPropertyName != newValue) { this.navigationPropertyName = newValue; this.MarkAsDirty("NavigationPropertyName"); } }
+       
+	 
+    private defaultAdditionalFilters: string;
+    public get DefaultAdditionalFilters() { return this.defaultAdditionalFilters; }
+    public set DefaultAdditionalFilters(newValue: string) { if (this.defaultAdditionalFilters != newValue) { this.defaultAdditionalFilters = newValue; this.MarkAsDirty("DefaultAdditionalFilters"); } }
+       
+	 
+    private defaultAdditionalTreeFilters: string;
+    public get DefaultAdditionalTreeFilters() { return this.defaultAdditionalTreeFilters; }
+    public set DefaultAdditionalTreeFilters(newValue: string) { if (this.defaultAdditionalTreeFilters != newValue) { this.defaultAdditionalTreeFilters = newValue; this.MarkAsDirty("DefaultAdditionalTreeFilters"); } }
+       
+	 
+    private forMetaDataOnly: boolean;
+    public get ForMetaDataOnly() { return this.forMetaDataOnly; }
+    public set ForMetaDataOnly(newValue: boolean) { if (this.forMetaDataOnly != newValue) { this.forMetaDataOnly = newValue; this.MarkAsDirty("ForMetaDataOnly"); } }
+       
+	 
+    private isListFilter: boolean;
+    public get IsListFilter() { return this.isListFilter; }
+    public set IsListFilter(newValue: boolean) { if (this.isListFilter != newValue) { this.isListFilter = newValue; this.MarkAsDirty("IsListFilter"); } }
+       
+    private indexOrder: number;
+    public get IndexOrder() { return this.indexOrder; }
+    public set IndexOrder(newValue: number) { if (this.indexOrder != newValue) { this.indexOrder = newValue; this.MarkAsDirty("IndexOrder"); } }
+
+	 
+    private relatedEntities: string;
+    public get RelatedEntities() { return this.relatedEntities; }
+    public set RelatedEntities(newValue: string) { if (this.relatedEntities != newValue) { this.relatedEntities = newValue; this.MarkAsDirty("RelatedEntities"); } }
+       
+	 
+    private isRelatedEntity: boolean;
+    public get IsRelatedEntity() { return this.isRelatedEntity; }
+    public set IsRelatedEntity(newValue: boolean) { if (this.isRelatedEntity != newValue) { this.isRelatedEntity = newValue; this.MarkAsDirty("IsRelatedEntity"); } }
+       
+	 
 
     public OldEntityPM: ObjectFieldPM;
 		
     public IsDirty: boolean;
     public DisableMarkAsDirty: boolean = false;
-    MarkAsDirty(propertyName:string = null) {
-       if(!this.DisableMarkAsDirty)
-       {
-        this.IsDirty = true;
-		  	
-        if (propertyName != null) {
-            this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
-            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "ObjectField");
-           
+    MarkAsDirty(propertyName: string = null) {
+        if (!this.DisableMarkAsDirty) {
+            this.IsDirty = true;
+
+            if (propertyName != null) {
+                this.PropertyChanged.emit(new PropertyChangedArgs(propertyName, this));
+                ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "ObjectField");
+
+            }
         }
-	 }
     }
     private MyClone: ObjectFieldPM;
 
@@ -640,4 +703,4 @@ export class ObjectFieldPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

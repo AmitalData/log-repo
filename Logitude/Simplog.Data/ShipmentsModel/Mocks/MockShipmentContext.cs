@@ -10,6 +10,7 @@ using Simplog.Data.CommonDataModel.Mocks;
 using System.Data.Entity;
 using Simplog.Server.Infrastructure.Helpers;
 using System.Data.Common;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
 
 namespace Simplog.Data.ShipmentsModel.Mocks
 {
@@ -638,6 +639,16 @@ namespace Simplog.Data.ShipmentsModel.Mocks
         {
             get { throw new NotImplementedException(); }
         }
+
+        public IDbSet<ShipmentDigitalField> ShipmentDigitalFields
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public IDbSet<ContainersExternalData> ContainersExternalDatas
+        {
+            get { throw new NotImplementedException(); }
+        }
         public IDbSet<OceanInsightsRequest> OceanInsightsRequests
         {
             get { throw new NotImplementedException(); }
@@ -646,7 +657,10 @@ namespace Simplog.Data.ShipmentsModel.Mocks
         {
             get { throw new NotImplementedException(); }
         }
-
+        public IDbSet<LogitudeOceanInsightsResponse> LogitudeOceanInsightsResponses
+        {
+            get { throw new NotImplementedException(); }
+        }
 
         public IDbSet<OceanInsightsRequestsCount> OceanInsightsRequestsCounts
         {
@@ -735,6 +749,13 @@ namespace Simplog.Data.ShipmentsModel.Mocks
         {
             throw new NotImplementedException();
         }
+
+        public IQueryable<DigitalShipmentsDataView> DigitalShipmentSearch(string SearchFields)
+        {
+            throw new NotImplementedException();
+        }
+
+
         public IDbSet<ShipmentCustomsTransmission> ShipmentCustomsTransmissions
         {
             get
@@ -917,7 +938,34 @@ namespace Simplog.Data.ShipmentsModel.Mocks
         public IDbSet<Container> Containers { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public IDbSet<ContainerStatus> ContainerStatuses { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public IDbSet<ContainerStatusSource> ContainerStatusSources { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public IDbSet<ShipmentUnassignedField> ShipmentUnassignedFields { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
+        public IDbSet<ARInvoice> ARInvoicesForReports { get; }
 
-    }
+        public IDbSet<PayableProratedAmount> PayableProratedAmounts => throw new NotImplementedException();
+
+        public IDbSet<ContainerTrackingProvider> ContainerTrackingProviders => throw new NotImplementedException();
+
+        public IDbSet<ContainerTrackingResponse> ContainerTrackingResponses => throw new NotImplementedException();
+
+        public IDbSet<ContainerTrackingRequest> ContainerTrackingRequests => throw new NotImplementedException();
+
+        public IDbSet<ShipmentDocsField> ShipmentDocsFields => throw new NotImplementedException();
+
+        public IDbSet<ShipmentAnalytic> ShipmentAnalytics { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+        public IDbSet<ShipmentDataView> ShipmentDigitalDataViews => throw new NotImplementedException();
+
+        public IDbSet<DigitalShipmentsDataView> DigitalShipmentsDataViews => throw new NotImplementedException();
+
+        IDbSet<DigitalShipmentsDataView> IShipmentsContext.ShipmentDigitalDataViews => throw new NotImplementedException();
+
+        public IDbSet<ContainerDiscrepancy> ContainerDiscrepancies { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public IDbSet<ContainerAnalytic> ContainerAnalytics { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+		public IDbSet<OceanInsightsStatusLog> OceanInsightsStatusLogs { get =>  throw new NotImplementedException(); set => throw new NotImplementedException();}
+		
+			
+			
+		
+	}
 }

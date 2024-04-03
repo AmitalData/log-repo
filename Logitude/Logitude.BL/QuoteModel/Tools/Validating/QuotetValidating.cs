@@ -389,16 +389,15 @@ namespace Logitude.BL.QuoteModel.Tools.Validating
 
                 if (isInlandDomestic)
                 {
-                    List<DomesticCountry> iDomesticCountries = new List<DomesticCountry>();
-                    AddDomesticAddress(iDomesticCountries, entityPM.FromPartnerAddressId, entityPM.Tenant);
-                    AddDomesticAddress(iDomesticCountries, entityPM.ToPartnerAddressId, entityPM.Tenant);
+                    List<DomesticCountry> iDomesticCountries = GetInlandDomesticCountries(entityPM);
 
                     if (iDomesticCountries.GroupBy(g => g.CountryId).Count() > 1)
                     {
                         bool isAllPortsEC = iDomesticCountries.Where(d => d.CountryIsEC == false).Any() ? false : true;
                         bool isAllPortsNA = iDomesticCountries.Where(d => d.CountryIsNorthAmerica == false).Any() ? false : true;
+                        bool isAllPortChina = iDomesticCountries.Where(d => d.CountryIsGreaterChinese == false).Any() ? false : true;
 
-                        if (!isAllPortsEC && !isAllPortsNA)
+                        if (!isAllPortsEC && !isAllPortsNA && !isAllPortChina)
                         {
                             throw new ApplicationException("Both Addresses must be in the same country since the direction is Domestic");
                         }
@@ -414,11 +413,107 @@ namespace Logitude.BL.QuoteModel.Tools.Validating
                     {
                         bool isAllPortsEC = iDomesticCountries.Where(d => d.CountryIsEC == false).Any() ? false : true;
                         bool isAllPortsNA = iDomesticCountries.Where(d => d.CountryIsNorthAmerica == false).Any() ? false : true;
+                        bool isAllPortChina = iDomesticCountries.Where(d => d.CountryIsGreaterChinese == false).Any() ? false : true;
 
-                        if (!isAllPortsEC && !isAllPortsNA)
+                        if (!isAllPortsEC && !isAllPortsNA & !isAllPortChina)
                         {
                             throw new ApplicationException("All Ports must be in the same country since the direction is Domestic");
                         }
+                    }
+                }
+            }
+        }
+        private static List<DomesticCountry> GetInlandDomesticCountries(QuotePM entityPM)
+        {
+            List<DomesticCountry> domesticCountries = new List<DomesticCountry>();
+
+            switch (entityPM.InlandDomesticFromTypeCode)
+            {
+                case "PART":
+                    {
+                        AddDomesticAddress(domesticCountries, entityPM.FromPartnerAddressId, entityPM.Tenant);
+                        break;
+                    }
+
+                case "PORT":
+                    {
+                        AddDomesticPort(domesticCountries, entityPM.FromPortId, entityPM.Tenant);
+                        break;
+                    }
+
+                case "CASL":
+                    {
+                        AddDomesticCountry(domesticCountries, entityPM.InlandDomesticFromCountryId, entityPM.Tenant);
+                        break;
+                    }
+            }
+
+            switch (entityPM.InlandDomesticToTypeCode)
+            {
+                case "PART":
+                    {
+                        AddDomesticAddress(domesticCountries, entityPM.ToPartnerAddressId, entityPM.Tenant);
+                        break;
+                    }
+
+                case "PORT":
+                    {
+                        AddDomesticPort(domesticCountries, entityPM.ToPortId, entityPM.Tenant);
+                        break;
+                    }
+
+                case "CASL":
+                    {
+                        AddDomesticCountry(domesticCountries, entityPM.InlandDomesticToCountryId, entityPM.Tenant);
+                        break;
+                    }
+            }
+
+            return domesticCountries;
+        }
+        private static void AddDomesticAddress(List<DomesticCountry> iDomesticCountries, string iAddressId, int iTenant)
+        {
+            if (!string.IsNullOrEmpty(iAddressId))
+            {
+                if (!iDomesticCountries.Where(d => d.Id == iAddressId).Any())
+                {
+                    AddressRepository addressRepository = new AddressRepository(iTenant);
+                    Address iAddress = addressRepository.GetSingleAddress(iAddressId, iTenant);
+
+                    if (iAddress != null)
+                    {
+                        iDomesticCountries.Add(new DomesticCountry()
+                        {
+                            Id = iAddress.Id + "A",
+                            CountryId = iAddress.CountryId,
+                            CountryIsEC = iAddress.Country.EC,
+                            CountryIsNorthAmerica = iAddress.Country.IsNorthAmerica,
+                            CountryIsGreaterChinese = iAddress.Country.IsGreaterChina,
+
+                        });
+                    }
+                }
+            }
+        }
+        private static void AddDomesticCountry(List<DomesticCountry> iDomesticCountries, string iCountryId, int iTenant)
+        {
+            if (!string.IsNullOrEmpty(iCountryId))
+            {
+                if (!iDomesticCountries.Where(d => d.Id == iCountryId).Any())
+                {
+                    CountryRepository countryRepository = new CountryRepository(iTenant);
+                    Country iCountry = countryRepository.GetSingleCountry(iCountryId, iTenant);
+
+                    if (iCountry != null)
+                    {
+                        iDomesticCountries.Add(new DomesticCountry()
+                        {
+                            Id = iCountry.Id + "C",
+                            CountryId = iCountry.Id,
+                            CountryIsEC = iCountry.EC,
+                            CountryIsNorthAmerica = iCountry.IsNorthAmerica,
+                            CountryIsGreaterChinese = iCountry.IsGreaterChina,
+                        });
                     }
                 }
             }
@@ -435,32 +530,11 @@ namespace Logitude.BL.QuoteModel.Tools.Validating
                     {
                         iDomesticCountries.Add(new DomesticCountry()
                         {
-                            Id = iPort.Id,
+                            Id = iPort.Id + "P",
                             CountryId = iPort.CountryId,
                             CountryIsEC = iPort.CountryEC,
                             CountryIsNorthAmerica = iPort.CountryIsNorthAmerica,
-                        });
-                    }
-                }
-            }
-        }
-        private static void AddDomesticAddress(List<DomesticCountry> iDomesticCountries, string iAddressId, int iTenant)
-        {
-            if (!string.IsNullOrEmpty(iAddressId))
-            {
-                if (!iDomesticCountries.Where(d => d.Id == iAddressId).Any())
-                {
-                    AddressRepository addressRepository = new AddressRepository(iTenant);
-                    Address iAddress = addressRepository.GetSingleAddress(iAddressId, iTenant);
-
-                    if (iAddress != null)
-                    {
-                        iDomesticCountries.Add(new DomesticCountry()
-                        {
-                            Id = iAddress.Id,
-                            CountryId = iAddress.CountryId,
-                            CountryIsEC = iAddress.Country.EC,
-                            CountryIsNorthAmerica = iAddress.Country.IsNorthAmerica,
+                            CountryIsGreaterChinese = iPort.CountryIsGreaterChinese,
                         });
                     }
                 }
@@ -543,14 +617,6 @@ namespace Logitude.BL.QuoteModel.Tools.Validating
             {
                 foreach (QuoteChargePM item in lines)
                 {
-                    if (item.CostCurrencyId == item.SaleCurrencyId)
-                    {
-                        if (item.CostExchangeRate != item.SaleExchangeRate)
-                        {
-                            throw new ApplicationException("Charges of same cost and sale currency should have same exchange rate");
-                        }
-                    }
-
                     if (item.IsAllIN)
                     {
                         if (freightCharge != null)
@@ -564,10 +630,7 @@ namespace Logitude.BL.QuoteModel.Tools.Validating
 
                     if (entityPM.IsSaleCurrencySameAsCost)
                     {
-                        if (item.CostCurrencyId != item.SaleCurrencyId)
-                        {
-                            throw new ApplicationException("All charges sale currency must be same as cost currency");
-                        }
+                        
                     }
 
                     else if (entityPM.IsMultiCurrency)
@@ -597,9 +660,12 @@ namespace Logitude.BL.QuoteModel.Tools.Validating
 
                     if (subType != null)
                     {
-                        if (entityPM.ShipmentTypeId.ToLower() != subType.ShipmentTypeCode.ToLower())
+                        if (!string.IsNullOrEmpty(subType.ShipmentTypeCode))
                         {
-                            throw new ApplicationException("Sub Type is not allowed with this shipment type");
+                            if (entityPM.ShipmentTypeId.ToLower() != subType.ShipmentTypeCode.ToLower())
+                            {
+                                throw new ApplicationException("Sub Type is not allowed with this shipment type");
+                            }
                         }
                     }
                 }
@@ -657,5 +723,7 @@ namespace Logitude.BL.QuoteModel.Tools.Validating
         public string CountryId { get; set; }
         public bool CountryIsEC { get; set; }
         public bool CountryIsNorthAmerica { get; set; }
+        public bool CountryIsGreaterChinese { get; set; }
+
     }
 }

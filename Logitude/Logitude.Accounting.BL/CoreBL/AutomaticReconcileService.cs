@@ -123,7 +123,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                     string msg = TranslateTextsClass.Translate("Accounting.General.O.NoAutoRecoMethodDefined4GLAccount", 0, useLocal);
 
-                    throw new Exception(msg);
+                    throw new ApplicationException(msg);
                     //No GlAccount AutomaticReconcile and no Screen AutomaticReconcile defintion // WI26460
                     
                 }
@@ -153,24 +153,24 @@ namespace Logitude.Accounting.BL.CoreBL
 
             });
 
-            var takeFirst50000 = true;
-            if (takeFirst50000)
+            var takeFirst250000 = true;
+            if (takeFirst250000)
             {
                 qNotReconciledGroupByHaveValuesMapDTO = qNotReconciledGroupByHaveValuesMapDTO
                     .OrderBy(rec => rec.AccountingDate)
-                    .Take(50000);
+                    .Take(250000);
             }
             //expresion tree
             var fieldList = fields.ToArray();
             var lambada = GroupByExpression<LedgerTransactionDto>(fieldList);
             var qNotReconciledGroupByHaveValuesMapDTOHavingZeroSum = qNotReconciledGroupByHaveValuesMapDTO.GroupBy(lambada.Compile()).Where(g => g.Sum(r => r.OpenAmount) == 0);
-            var only100Match = true;
-            if (only100Match)// 100 Match with most rows 
+            var only10000Match = true;
+            if (only10000Match)// 10000 Match with most rows 
             {
                 qNotReconciledGroupByHaveValuesMapDTOHavingZeroSum =
                     qNotReconciledGroupByHaveValuesMapDTOHavingZeroSum
                     .OrderByDescending(g => g.Count())
-                    .Take(100); ;
+                    .Take(10000); ;
             }
 
             var resGroupBy = qNotReconciledGroupByHaveValuesMapDTOHavingZeroSum.ToList();

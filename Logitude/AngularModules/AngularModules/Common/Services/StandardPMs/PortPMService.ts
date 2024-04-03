@@ -21,6 +21,7 @@ import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLo
 
 import {PortPM} from '../../EntityPMs/PortPM';
 
+import {PortPMInitService} from '../../EntityPMInitServices/PortPMInitService';
 import {PortValidator} from '../../Validators/PortValidator';
 
 @Injectable()
@@ -46,6 +47,8 @@ export class PortPMService {
 						var entity: PortPM;
 						if (pm) {
 							entity = this.MapJsonToEntityPM(pm);
+                      PortPMInitService.InitValues(entity, false);
+                      PortPMInitService.ApplyUIPoperties(entity, false);
 						}
 
 						var serviceResponse: ServiceResponse = new ServiceResponse();
@@ -235,6 +238,10 @@ export class PortPMService {
 		    var entityPM: PortPM;
 			entityPM = new PortPM();
 			entityPM.Tenant = InfraSettings.TenantPM.Id;
+
+			PortPMInitService.InitValues(entityPM, true);
+			PortPMInitService.ApplyUIPoperties(entityPM, true);
+
 			return entityPM;
     }
 		 

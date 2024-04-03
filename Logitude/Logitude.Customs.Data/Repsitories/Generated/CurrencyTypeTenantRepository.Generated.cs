@@ -49,7 +49,7 @@ namespace Logitude.Customs.Data.Repsitories
                     where a.Id == keys.Id
                     select a).FirstOrDefault();
         }
-		         
+		 		                 
         partial void onAdd();//Partial Methods Definition in Generated
         public void Add(CurrencyTypeTenant entity)
         {

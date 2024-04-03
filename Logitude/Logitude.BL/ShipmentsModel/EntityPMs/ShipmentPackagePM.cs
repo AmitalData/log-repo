@@ -6,13 +6,15 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using System;
 using Logitude.BL.Validators;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Logitude.Server.Tools;
+using Logitude.BL.InfrastructureModel.EntityPMs;
 
 namespace Logitude.BL.ShipmentsModel.EntityPMs
 {
 
     [CustomValidation(typeof(Validators.ClassLevelValidator), "ValidateClass")]
     [CustomValidation(typeof(ShipmentPackageValidator), "IsShipmentPackageValid")]
-    public class ShipmentPackagePM
+    public class ShipmentPackagePM: ChildEntitiesCustomFieldPM
     {
         [Key]
         public string Id { get; set; }
@@ -330,11 +332,15 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string LastStatusCode { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
 
         public string ContainerStatusSourceCode { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string LastStatusName { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string ContainerStatusName { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public DateTime? LastStatusDate { get; set; }
@@ -424,5 +430,14 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string ContainerEntityId { get; set; }
         public bool IsCreatedFromPickupDelivery{ get; set; }
         public bool IsPackageCheckedInLeg { get; set; }
+        public string ChangeSet { get; set; }
+
+        public double? VolumeInCBM { get; set; }
+        public double? GrossWeightInKG { get; set; }
+        public double? GrossWeightInLB { get; set; }
+        public double? VolumeInCBF { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public DateTime? ContainerStrippedDate { get; set; }
     }
 }

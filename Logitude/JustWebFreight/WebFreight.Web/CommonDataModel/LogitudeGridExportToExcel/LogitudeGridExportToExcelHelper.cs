@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Script.Serialization;
 using WebFreight.Web.Helpers;
 
@@ -33,7 +34,7 @@ namespace Logitude.BL.CommonDataModel.LogitudeGridExportToExcel
             {
                 FileName = logitudeGridExportToExcelArguments.ObjectTableName + DateTime.Now.ToShortDateString(),
                 FolderName = "others",
-                Extension = "xls",//fileparams[1],
+                Extension = logitudeGridExportToExcelArguments.IsXslxFormat ? "xlsx" : "xls",//fileparams[1],
                 Tenant = logitudeGridExportToExcelArguments.Tenant,
                 FileSize = ExcelDataByte.Length,
 
@@ -84,6 +85,7 @@ namespace Logitude.BL.CommonDataModel.LogitudeGridExportToExcel
                 QueryColumns =
                 logitudeGridExportToExcelArguments.QueryColumns,
                 QueryPM = queryPM,
+                IsXslxFormat = logitudeGridExportToExcelArguments.IsXslxFormat,
             };
             var data = new ExportToExcelHelper().ExportQueryToExcel(exportToExcelArgs);
 
@@ -93,6 +95,9 @@ namespace Logitude.BL.CommonDataModel.LogitudeGridExportToExcel
 
         private void SetFiltersForQueryOperations(QueryOperations queryOperations, LogitudeGridExportToExcelArguments logitudeGridExportToExcelArguments)
         {
+        
+
+
             List<ObjectField> ObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName(queryOperations.ObjectTableName, logitudeGridExportToExcelArguments.Tenant);
             foreach (QueryFilterItem filter in logitudeGridExportToExcelArguments.AdditionalFilters)
             {
@@ -100,9 +105,11 @@ namespace Logitude.BL.CommonDataModel.LogitudeGridExportToExcel
                 if (field != null)
                 {
                     string valuestring1 = filter.FieldValue != null ? filter.FieldValue.ToString() : null;
+                    valuestring1 = HttpUtility.UrlDecode(valuestring1);
                     object value1 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
 
                     string valuestring2 = filter.FieldValue2 != null ? filter.FieldValue2.ToString() : null;
+                    valuestring2 = HttpUtility.UrlDecode(valuestring2);
                     object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
                     queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode);
                 }

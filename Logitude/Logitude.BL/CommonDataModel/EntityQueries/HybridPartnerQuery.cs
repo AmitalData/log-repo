@@ -45,8 +45,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                        IsMislakaActivated = a.IsMislakaActivated,
                                                        IsExternalPartner = a.IsExternalPartner,
                                                        ReceiveAllStatuses = a.ReceiveAllStatuses,
-                                                       AllowSendingDocsToAgent = a.AllowSendingDocsToAgent
-
+                                                       AllowSendingDocsToAgent = a.AllowSendingDocsToAgent,
+                                                       InActive = a.InActive
 
                                                    };
 
@@ -71,7 +71,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                           IsMislakaActivated = a.IsMislakaActivated,
                                           IsExternalPartner = a.IsExternalPartner,
                                           ReceiveAllStatuses = a.ReceiveAllStatuses,
-                                          AllowSendingDocsToAgent = a.AllowSendingDocsToAgent
+                                          AllowSendingDocsToAgent = a.AllowSendingDocsToAgent,
+                                          InActive = a.InActive
 
                                       }).FirstOrDefault();
 
@@ -97,8 +98,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                  IsMislakaActivated = a.IsMislakaActivated,
                                                  IsExternalPartner = a.IsExternalPartner,
                                                  ReceiveAllStatuses = a.ReceiveAllStatuses,
-                                                 AllowSendingDocsToAgent = a.AllowSendingDocsToAgent
-
+                                                 AllowSendingDocsToAgent = a.AllowSendingDocsToAgent,
+                                                 InActive = a.InActive
                                              }).FirstOrDefault();
 
 
@@ -136,8 +137,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                             IsMislakaActivated = a.IsMislakaActivated,
                                                             IsExternalPartner = a.IsExternalPartner,
                                                             ReceiveAllStatuses = a.ReceiveAllStatuses,
-                                                            AllowSendingDocsToAgent = a.AllowSendingDocsToAgent
-
+                                                            AllowSendingDocsToAgent = a.AllowSendingDocsToAgent,
+                                                            InActive = a.InActive
                                                         };
 
 
@@ -172,8 +173,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                           IsMislakaActivated = a.IsMislakaActivated,
                                           IsExternalPartner = a.IsExternalPartner,
                                           ReceiveAllStatuses = a.ReceiveAllStatuses,
-                                          AllowSendingDocsToAgent = a.AllowSendingDocsToAgent
-
+                                          AllowSendingDocsToAgent = a.AllowSendingDocsToAgent,
+                                          InActive = a.InActive
                                       }).FirstOrDefault();
 
 
@@ -204,7 +205,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                     IsMislakaActivated = b.IsMislakaActivated,
                                     IsExternalPartner = b.IsExternalPartner,
                                     ReceiveAllStatuses = b.ReceiveAllStatuses,
-                                    AllowSendingDocsToAgent = b.AllowSendingDocsToAgent
+                                    AllowSendingDocsToAgent = b.AllowSendingDocsToAgent,
+                                    InActive = b.InActive
                                 }).OrderByDescending(a => a.StatusName).ToList();
              
             return requestsList;
@@ -233,7 +235,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   IsMislakaActivated = a.IsMislakaActivated,
                                   IsExternalPartner = a.IsExternalPartner,
                                   ReceiveAllStatuses = a.ReceiveAllStatuses,
-                                  AllowSendingDocsToAgent = a.AllowSendingDocsToAgent
+                                  AllowSendingDocsToAgent = a.AllowSendingDocsToAgent,
+                                  InActive = a.InActive
                               }).OrderByDescending(a => a.StatusName).ToList();
 
 
@@ -258,6 +261,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               LocalName = b.LocalName,
                               LogoId = b.LogoId,
                               Name = b.Name,
+                              InActive = b.InActive
                           }).ToList();
             }
 
@@ -281,6 +285,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               LocalName = b.LocalName,
                               LogoId = b.LogoId,
                               Name = b.Name,
+                              InActive = b.InActive
                           }).ToList();
 
             }
@@ -299,6 +304,19 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
 
         }
+
+        public List<string> GetPartnersForRequest(int PartnerTenant, List<string> Ids)
+        {
+            List<string> partners = (from a in repository.context.HybridPartners
+                                  where a.PartnerTenant == PartnerTenant && Ids.Contains(a.Id)
+                                        select a.Id).ToList();
+             
+            return partners;
+
+
+        }
+
+       
 
 
 

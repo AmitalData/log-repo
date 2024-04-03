@@ -1,29 +1,75 @@
-import {Component,ViewChild, ElementRef, AfterViewInit, HostListener, Input, EventEmitter} from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import {
+    Component,
+    ViewChild,
+    ElementRef,
+    AfterViewInit,
+    HostListener,
+    Input,
+    EventEmitter,
+    OnInit,
+    Inject
+} from '@angular/core';
+import { Router, ActivatedRoute, Data } from '@angular/router';
+
 import { FormBuilder } from '@angular/forms';
 import { CargoTrackingSearchService } from 'src/CargoTracking/Services/Others/CargoTrackingSearchService';
 import { CargoTrackingShipmentList } from 'src/CargoTracking/EntityLists/CargoTrackingShipmentList';
 import { CargoTrackingBrandingData } from 'src/CargoTracking/DataContracts/CargoTrackingBrandingData';
-import { CargoTrackingShipmentWithMilestones, Milestone } from 'src/CargoTracking/Components/PublicSite/PublicShipmentDetailsComponent/PublicShipmentDetailsComponent';
+import {
+    CargoTrackingShipmentWithMilestones,
+    Milestone
+} from 'src/CargoTracking/Components/PublicSite/PublicShipmentDetailsComponent/PublicShipmentDetailsComponent';
 import { CargoTrackingPortService } from '../../../../Services/Others/CargoTrackingPortService';
 import { CargoTrackingShipmentService } from '../../../../Services/Others/CargoTrackingShipmentService';
 import { CargoTrackingShipmentCustomsData } from "../../../../DataContracts/CargoTrackingShipmentCustomsData";
 import { DocumentDownloadService } from '../../../../Services/Others/DocumentDownloadService';
 import { MessageWindowComponent } from '../../../../../Infrastructure/Components/MessageWindow/MessageWindowComponent';
+import { CargoTrackingShipmentOrderService } from '../../../../Services/Others/CargoTrackingShipmentOrderService';
 import { MatDialog } from '@angular/material/dialog';
 import { DatePipe } from '@angular/common';
+import {
+    CargoTrackingShipmentExtendedService
+} from 'src/CargoTracking/Services/Others/CargoTrackingShipmentExtendedService';
+import { CargoTrackingShipmentMappedPM } from 'src/CargoTracking/DataContracts/CargoTrackingShipmentMappedPM';
+import {
+    CargoTrackingBrandingDataExtendedService
+} from 'src/CargoTracking/Services/Others/CargoTrackingBrandingDataExtendedService';
+import { ServiceHelper } from 'src/CargoTracking/Utilities/ServiceHelper';
+import { ServiceResponse } from 'src/CargoTracking/DataContracts/ServiceResponse';
+import { DeclarationApprovalArgs } from 'src/CargoTracking/DataContracts/DeclarationApprovalArgs';
+import { RootContext } from 'src/CargoTracking/Utilities/RootContext';
+import { MilestoneCodes } from 'src/CargoTracking/Constants/MilestoneCodes';
+
+const mobileScreenMaxWidth = 470;
+
+const approvalResponseMessage = 'הצהרה זו אושרה ע"י';
+const declineResponseMessage = 'הצהרה זו נדחתה';
+
+const orderShipmentTypeCode = 'O';
+const declineText = 'דחיה';
+const declineMessageText = 'אנא רשם/י סיבת הדחיה ואת שמך';
+const confirmText = 'אישור';
+const approvedByLabelText = 'שם המאשר/ת';
+const cancelText = 'ביטול';
 
 @Component({
     selector: 'ShipmentDetailsComponent',
     templateUrl: './ShipmentDetailsComponent.html',
-    styleUrls: ['./ShipmentDetailsComponent.css']
+    styleUrls: ['./ShipmentDetailsComponent.css',
+        '../../UserDashboardComponent.css']
 })
-export class ShipmentDetailsComponent implements AfterViewInit
-{
+export class ShipmentDetailsComponent implements OnInit, AfterViewInit {
 
     @ViewChild('SliderWrapper') SliderWrapperElement: ElementRef;
+    @ViewChild('slider') SliderElement: ElementRef;
+    @ViewChild('RoutingSliderWrapper') RoutingSliderWrapperElement: ElementRef;
+
 
     @Input() DetailsSectionToggleEvent: EventEmitter<any> = new EventEmitter();
+
+    cargoTrackingShipmentPM: CargoTrackingShipmentMappedPM = new CargoTrackingShipmentMappedPM();
+
+
 
     public isLoading: boolean = true;
     showMoreReferences: boolean = false;
@@ -34,417 +80,800 @@ export class ShipmentDetailsComponent implements AfterViewInit
     public fromPortCode: string;
     ShipmentReferences: string[] = [];
     SearchText: string = "";
-    CustomsBrokerReference: string;
     ShipmentPM: any;
-    ShipmentPackages: any[];
-    DocumentsFilings: any[];
-    PartnerCards: PartnerCard[] = [];
+    ShipmentOrder: any;
     HasReferences: boolean = false;
     HasContainersDetails: boolean = false;
     InlandTransportMode = 'I';
+    WarehouseTransportMode = 'W'
     OceanTransportMode = 'O';
     AirTransportMode = 'A';
     ContainersNumbers: string[] = [];
     ShowDetailsSection: boolean = false;
-
-
-    ShipmentCustomsData: CargoTrackingShipmentCustomsData = null;
-    get tenant()
-    {
-        return CargoTrackingBrandingData.Tenant;
+    TitleOfCustomsOrForwarder: string = "";
+    TitleOfCustomsOrForwarder_MB: string = "";
+    ValueOfCustomsOrForwarder: string = "";
+    CustomsEntityType: string = "C";
+    ForwardingEntityType: string = "F";
+    OrderEntityType: string = "O";
+    RoutingPagersWidth: number = 100;
+    RoutingMobilePagersWidth: number = 60;
+    MaxWidthForMobileScreenForRouting: number = 470;
+    RoutingMobileMarginLeft: number = 55;
+    showMoreEvents: boolean  = false;
+    NoTaxDetails: boolean = false;
+    public OverviewPanelTitle: string;
+    public TypeTitle: string;
+    isSharedLink: boolean = false;
+    isDeclarationLink: boolean = false;
+    hasApprovalDeclineResponse: boolean = false;
+    noShipmentFound: boolean = false;
+    approvalMessage: string;
+    PartnersPanel: string = "PartnersPanel";
+    EventsPanel: string = "EventsPanel";
+    MaxHeightForPartnersPanel: number = 600;
+    MaxNumberOfCarachterForMobile: number = 15;
+    MobileReferencesViewCount = 1;
+    WebReferencesViewCount = 3;
+    PartnerCardTypesOfShipmentTransportMode = {
+        'A': "AIRLINES",
+        'I': "TRUCKER",
+        'O': "SHIPPING LINES"
+    };
+    EntityType_Customs = "C";
+    _tenant;
+    focusOnPanel;
+    baseURL;
+    isBrandingDataLoaded;
+    IFrameURI: string = "";
+    IsPDF: boolean = false;
+    get tenant() {
+        return this._tenant || CargoTrackingBrandingData.Tenant;
     }
+
+    get DeclarationApprovalEnabled() {
+        const isCustomShipment = this.cargoTrackingShipmentPM.EntityType == this.EntityType_Customs;
+        const haveResponse = this.cargoTrackingShipmentPM.ApprovedDate || this.cargoTrackingShipmentPM.DenyReason;
+        const responseRequired = this.cargoTrackingShipmentPM.IsImporterApprovalRequried;
+        return isCustomShipment
+            && this.cargoTrackingShipmentPM.ActivatedForDeclarationApprove
+            && (responseRequired || haveResponse);
+    }
+    get ShowDocumentMNO() {
+        return this.cargoTrackingShipmentPM.ShowMoneyOrder;
+    }
+    get ShowShipmentAsDeclaration() {
+        return this.isDeclarationLink && this.DeclarationApprovalEnabled;
+    }
+
+    get ShowNoShipmentFoundMessage() {
+        const noDeclarationShipmentFound = this.isDeclarationLink && this.DeclarationApprovalEnabled && this.noShipmentFound;
+        const noNormalShipmentFound = !this.isDeclarationLink && this.noShipmentFound;
+        return noDeclarationShipmentFound || noNormalShipmentFound;
+    }
+
+    get ShowNotSupportedDeclarationMessage() {
+        return this.isDeclarationLink && !this.DeclarationApprovalEnabled;
+    }
+
+    get IsOrderShipment() {
+        return this.cargoTrackingShipmentPM.EntityType == orderShipmentTypeCode;
+    }
+    get ShowEventPanel() {
+        return this.cargoTrackingShipmentPM.CargoTrackingPrivateShowEvents;
+    }
+
     constructor(private router: Router,
         private route: ActivatedRoute,
-        private searchService: CargoTrackingSearchService,
-        private cargoTrackingPortService: CargoTrackingPortService,
         private cargoTrackingShipmentService: CargoTrackingShipmentService,
+        private cargoTrackingShipmentExtendedService: CargoTrackingShipmentExtendedService,
+        private brandingService: CargoTrackingBrandingDataExtendedService,
         private documentDownloadService: DocumentDownloadService,
         public dialog: MatDialog,
-        private datePipe: DatePipe)
-    {
+        private datePipe: DatePipe,
+        @Inject('BASE_URL') baseUrl: string) {
+        this.baseURL = baseUrl;
 
         this.GetIdFromURI();
 
     }
-    ngAfterViewInit(): void
-    {
-        this.LoadShipment();
-        this.CreatePartnerCardsFromShipmentPM();
 
-    }
-    @HostListener('window:resize', ['$event'])
-    onResize()
-    {
-        //event.target.innerWidth;
-        this.InitSlider();
+    ngOnInit(): void {
     }
 
-    onMousewheel(event: WheelEvent)
-    {
-        event.preventDefault();
-        if (event.deltaY > 0) {
-            this.MoveSlider('left');
+    ngAfterViewInit(): void {
+        this.LoadCargoShipmentPM();
+    }
+
+
+    checkDescriptionShipping(description: string): string {
+        let mainCarniageLes = "MainCarniageLes";
+        return description.includes(mainCarniageLes.toLocaleLowerCase()) ? " " : description;
+    }
+
+    splitAddressAndPhone(addressString: string) {
+        const parts = addressString.split('Phone: ');
+
+        if (parts.length === 1) {
+            return { address: parts[0], phone: '' }; // If "Phone: " was not found in the string, assume the whole string as the address.
         }
-        if (event.deltaY < 0) {
-            this.MoveSlider('right');
-        }
-    }
-
-    logPan(i)
-    {
-        console.log(i);
-
-    }
-    InitSlider()
-    {
-
-        var PAGERS_WIDTH = 200; // 100 * 2 pager
-        var screenwidth = window.innerWidth;
-
-        var sliderWrapperWidth = this.SliderWrapperElement.nativeElement.offsetWidth;
-
-        if (screenwidth > 470)
-            var count = Math.floor((sliderWrapperWidth - PAGERS_WIDTH) / this.sliderCardWidth);
-
-
-        this.sliderVisibleCardsCount = count;
-
-        this.sliderVisibleCardsWidth = count * this.sliderCardWidth;
-        this.sliderMarginCardCount = 0;
-        this.sliderMarginLeft = screenwidth < 470 ? (this.sliderCardWidth + 55) * -1 : 0; // mobile: add
-
-    }
-
-    LoadShipment()
-    {
-        //this.isLoading = true;
-        this.searchService.getShipment(this.SecurityKey, this.tenant).subscribe((result: any) =>
-        {
-            this.isLoading = false;
-            console.log("[getShipment]", result);
-            this.ShipmentWithMilestones = result;
-            if (this.ShipmentWithMilestones) {
-                this.Shipment = result;
-                this.ShipmentReferences = result.ShipmentList.CustomerReference ? result.ShipmentList.CustomerReference.split(',') : null;
-                this.HasReferences = this.SetHasReferences(); 
-               
-                this.SetRoutingVariables();
-                this.GetShipmentPM();
-                this.GetShipmentCustomsData();
-                this.GetShipmentPackages();
-                this.GetDocumentsFilingsConnectedToShipment();
-                this.SetContainersNumbers(result);
-
-            }
-
-            setTimeout(() =>
-            {
-                this.InitSlider();
-                this.BuildSliderCards();
-
-            }, 200);
-        });
-    }
-
-
-    SetHasReferences() {
-        return this.ShipmentReferences == null ? false : true;
-    }
-    SetHasContainersDetails() {
-        return this.ShipmentPackages.length==0  ? false : true;
-    }
-    SetRoutingVariables()
-    {
-        this.SetFromPortCode(this.Shipment.ShipmentList.FromPortId);
-        this.SetToPortCode(this.Shipment.ShipmentList.ToPortId);
-    }
-
-    private SetFromPortCode(id: string)
-    {
-        this.cargoTrackingPortService.get(id).subscribe((result: any) =>
-        {
-            this.fromPortCode = result.Code;
-        })
-    }
-
-    private SetToPortCode(id: string)
-    {
-        this.cargoTrackingPortService.get(id).subscribe((result: any) =>
-        {
-            this.toPortCode = result.Code;
-        })
-    }
-
-
-    GetShipmentPM()
-    {
-        this.cargoTrackingShipmentService.get(this.Shipment.ShipmentList.EntityId).subscribe((result: any) =>
-        {
-            if (result) {
-                this.ShipmentPM = result;
-                console.log("ShipmentPM", this.ShipmentPM);
-
-                this.GetPartnersAddresses();
-                this.FillCustomsBrokerReferenceFromShipmentPM();
-                this.InitRoutes();
-            }
-        });
-    }
-
-    GetShipmentPackages() {
-        this.cargoTrackingShipmentService.GetShipmentPackages(this.Shipment.ShipmentList.EntityId).subscribe((result: any) => {
-            if (result) {
-                this.ShipmentPackages = result;
-                this.HasContainersDetails = this.SetHasContainersDetails();
-                console.log("GetShipmentPackages", this.ShipmentPackages);
-            }
-        });
-    }
-
-    GetDocumentsFilingsConnectedToShipment() {
-        this.cargoTrackingShipmentService.GetDocumentsFilingsConnectedToShipment(this.Shipment.ShipmentList.EntityId).subscribe((result: any) => {
-            if (result) {
-                this.DocumentsFilings = result.map(d => (
-                    {
-                        ShowDetailsMenu: false,
-                        ...d }
-                    ));;
-                console.log("DocumentsFilings", this.DocumentsFilings);
-                this.isLoading = false;
-
-            }
-        });
-    }
-
-    private SetContainersNumbers(result: any) {
-        this.ContainersNumbers = result.ShipmentList.ContainersNumbers ? result.ShipmentList.ContainersNumbers.split(',') : null;
-    }
-
-    PartnersAddresses: any[] = [];
-    GetPartnersAddresses(){
-        var partnersIds = this.GetShipmentPMPartnersIds();
-        this.cargoTrackingShipmentService.GetPartnersAddresses(partnersIds).subscribe((result: any) =>
-        {
-            if (result) {
-                this.PartnersAddresses = result;
-
-                this.CreatePartnerCardsFromShipmentPM();
-            }
-        });
-    }
-    private GetShipmentPMPartnersIds()
-    {
-        var partnersIds =  [
-            this.ShipmentPM.ShipperId,
-            this.ShipmentPM.ConsigneeId,
-            this.ShipmentPM.FreightForwarderId,
-            this.ShipmentPM.CustomerId,
-            this.ShipmentPM.AgentId,
-            this.ShipmentPM.IssuingCarrierAgentId,
-            this.ShipmentPM.CustomAgentExportId,
-            this.ShipmentPM.CustomAgentImportId,
-            this.ShipmentPM.Notify1Id,
-            this.ShipmentPM.Notify2Id,
-            this.ShipmentPM.ShipperNotExporterId,
-            this.ShipmentPM.ConsigneeNotImporterId,
-            this.ShipmentPM.CustomClearancePointId,
-            this.ShipmentPM.ColoaderId,
-            this.ShipmentPM.FreelancerId,
-            this.ShipmentPM.ConsolidatorId,
-            this.ShipmentPM.ReleasingAgentId,
-        ];
-
-        return partnersIds.filter(p=>p);
-    }
-
-    loadingCustomsData: boolean = false;
-    NoTaxDetails: boolean = false;
-    GetShipmentCustomsData() {
-        this.loadingCustomsData = true;
-        this.cargoTrackingShipmentService.GetShipmentCustomsData(this.Shipment.ShipmentList.EntityId).subscribe((result: any) => {
-            if (result) {
-                this.ShipmentCustomsData = result;
-                this.loadingCustomsData = false;
-                this.NoTaxDetails = this.ShipmentCustomsData.TaxDetails.length == 0 ? true : false;
-            }
-        }, () => {
-            this.loadingCustomsData = false;
-
-        });
-        this.loadingCustomsData = false;
-
-    }
-
-    private FillCustomsBrokerReferenceFromShipmentPM()
-    {
-        this.CustomsBrokerReference = this.ShipmentPM.CustomFileNumber;
-    }
-
-    CreatePartnerCardsFromShipmentPM()
-    {
-        if (this.ShipmentPM) {
-
-            if (this.ShipmentPM.ShipperId)
-                this.PartnerCards.push(this.CreateShipperPartnerCard());
-
-            if (this.ShipmentPM.ConsigneeId)
-                this.PartnerCards.push(this.CreateConsigneePartnerCard());
-
-            if (this.ShipmentPM.FreightForwarderId)
-                this.PartnerCards.push(this.CreateFreightForwarderPartnerCard());
-
-            // if (this.ShipmentPM.CustomerId)
-            //     this.PartnerCards.push(this.CreateCustomerPartnerCard());
-
-            if (this.ShipmentPM.AgentId)
-                this.PartnerCards.push(this.CreateAgentPartnerCard());
-
-            if (this.ShipmentPM.IssuingCarrierAgentId)
-                this.PartnerCards.push(this.CreateIssuingCarrierAgentPartnerCard());
-
-            if (this.ShipmentPM.CustomAgentExportId)
-                this.PartnerCards.push(this.CreateCustomAgentExportPartnerCard());
-
-            if (this.ShipmentPM.CustomAgentImportId)
-                this.PartnerCards.push(this.CreateCustomAgentImportPartnerCard());
-
-            if (this.ShipmentPM.Notify1Id)
-                this.PartnerCards.push(this.CreateNotify1PartnerCard());
-
-            if (this.ShipmentPM.Notify2Id)
-                this.PartnerCards.push(this.CreateNotify2PartnerCard());
-
-            if (this.ShipmentPM.ShipperNotExporterId)
-                this.PartnerCards.push(this.CreateShipperNotExporterPartnerCard());
-
-            if (this.ShipmentPM.ConsigneeNotImporterId)
-                this.PartnerCards.push(this.CreateConsigneeNotImporterPartnerCard());
-
-            if (this.ShipmentPM.CustomClearancePointId)
-                this.PartnerCards.push(this.CreateCustomClearancePointPartnerCard());
-
-            if (this.ShipmentPM.ColoaderId)
-                this.PartnerCards.push(this.CreateColoaderPartnerCard());
-
-            if (this.ShipmentPM.FreelancerId)
-                this.PartnerCards.push(this.CreateFreelancerPartnerCard());
-
-            if (this.ShipmentPM.ConsolidatorId)
-                this.PartnerCards.push(this.CreateConsolidatorPartnerCard());
-
-            if (this.ShipmentPM.ReleasingAgentId)
-                this.PartnerCards.push(this.CreateReleasingAgentPartnerCard());
+        else {
+            return { address: parts[0], phone: parts[1] };
         }
     }
-    private GetIdFromURI()
-    {
+
+    IsExport:boolean = false;
+    CheckIsExport() {
+        this.IsExport =  this.cargoTrackingShipmentPM.DirectionId === ShipmentDirections.Export;
+    }
+
+    private GetIdFromURI() {
 
         let _id = this.route.snapshot.paramMap.get('SecurityKey');
         this.SecurityKey = _id;
-        return _id;
+
+        this.route.queryParams.subscribe(params => {
+            this.SecurityKey = params['SecurityKey'] || this.SecurityKey;
+            this._tenant = params['Tenant'];
+            this.focusOnPanel = params['Panel'];
+        });
+
+        const data: Data = this.route.snapshot.data;
+        this.isSharedLink = data?.isSharedLink;
+        this.isDeclarationLink = data?.isDeclaration;
+        if (this.isSharedLink) {
+            this.GetBrandingData();
+        }
+    }
+
+
+    LoadCargoShipmentPM() {
+        if (this.isSharedLink) {
+            this.GetMainShipmentByShipmentSecurityKey();
+        } else {
+            this.GetShipmentBySecurityKey();
+        }
+
+    }
+
+    private GetShipmentBySecurityKey() {
+        this.cargoTrackingShipmentExtendedService.GetCargoShipmentPMBySecurityKey(this.SecurityKey, this.tenant)
+            .subscribe((result: any) => {
+                this.isLoading = false;
+
+                console.log("GetCargoShipmentPMBySecurityKey", this.ShipmentPM);
+                if (result) {
+                    this.InitializeComponent(result);
+                } else {
+                    this.noShipmentFound = true;
+                }
+            }, (error) => {
+                this.noShipmentFound = true;
+                this.isLoading = false;
+
+            });
+    }
+
+    private GetMainShipmentByShipmentSecurityKey() {
+        this.cargoTrackingShipmentExtendedService.GetMainCargoShipmentPMBySecurityKey(this.SecurityKey, this.tenant)
+            .subscribe((result: any) => {
+                this.isLoading = false;
+
+                console.log("GetMainCargoShipmentPMBySecurityKey", this.ShipmentPM);
+                if (result) {
+                    this.InitializeComponent(result);
+                } else {
+                    this.noShipmentFound = true;
+                }
+            }, (error) => {
+                this.noShipmentFound = true;
+                this.isLoading = false;
+
+            });
+    }
+
+    private InitializeComponent(result: any) {
+        this.cargoTrackingShipmentPM = result;
+        this.CheckIsExport();
+
+        this.BuildShipmentReferences();
+
+        this.SetCustomsOrForwarderFields();
+        this.SetOverviewPanelTitle();
+        this.SetTypeTitle();
+
+        this.SetContainersNumbers(result);
+        this.SetHasContainersDetails();
+
+        this.NoTaxDetails = this.cargoTrackingShipmentPM?.CustomsData?.TaxDetails?.length == 0 ? true : false;
+
+
+        setTimeout(() => {
+            this.InitSlider();
+            this.InitRoutingSlider();
+            this.BuildSliderCards();
+
+            if (this.isSharedLink && this.focusOnPanel)
+                this.ScrollToPanel(this.focusOnPanel);
+
+        }, 200);
+
+
+        this.SetDeclarationMessage();
+        this.SetDocumentPDF();
+    }
+
+
+    private SetDocumentPDF() {
+
+        var DocumentToShow = this.cargoTrackingShipmentPM.DocumentsFilings.filter(x => x.DocumentTypeCode == "MNO");
+        this.cargoTrackingShipmentPM.DocumentsFilings = this.cargoTrackingShipmentPM.DocumentsFilings.sort((a, b) => {
+            if (a.CreateDate < b.CreateDate) {
+                return 1;
+            }
+            if (a.CreateDate > b.CreateDate) {
+                return -1;
+            }
+            return 0;
+        });
+
+
+
+        if (DocumentToShow == null || DocumentToShow.length == 0) {
+            this.IsPDF = false;
+        }
+        else {
+
+            if (DocumentToShow.length > 1) DocumentToShow = DocumentToShow.sort((a, b) => <any>new Date(b.CreateDate) - <any>new Date(a.CreateDate));
+
+            this.cargoTrackingShipmentExtendedService.GetFilingAttachPdfReport(DocumentToShow[0].DocumentId, this.tenant).subscribe((response: ServiceResponse) => {
+                if (response) {
+                    this.IsPDF = true
+
+                    var buffer = this.base64ToBufferConvertor(response.toString());
+                    var blob = new Blob([buffer], { type: 'application/pdf' });
+                    var objectURL = URL.createObjectURL(blob);
+                    this.IFrameURI = objectURL;
+                }
+            });
+
+        }
+
+
+
+
+
+    }
+    public base64ToBufferConvertor(str: string) {
+        str = window.atob(str); // creates a ASCII string
+        var buffer = new ArrayBuffer(str.length),
+            view = new Uint8Array(buffer);
+        for (var i = 0; i < str.length; i++) {
+            view[i] = str.charCodeAt(i);
+        }
+
+        return buffer;
+
+    }
+    private BuildShipmentReferences() {
+        this.ShipmentReferences = this.cargoTrackingShipmentPM.CustomerReference ?
+            this.cargoTrackingShipmentPM.CustomerReference.split(',').filter(d => d) : [];
+
+        this.ShipmentReferences = this.ShipmentReferences.map((el) => {
+            return el.trim();
+        });
+
+        if (this.cargoTrackingShipmentPM.EntityType === 'O') {
+            this.AddShipmentReferencesForOrderShipment();
+        }
+        this.ShipmentReferences = this.ShipmentReferences.filter((el, i, a) => i === a.indexOf(el));
+    }
+
+    private AddShipmentReferencesForOrderShipment() {
+        if (this.cargoTrackingShipmentPM.ShipmentOrderPONumber != null)
+            this.ShipmentReferences.push(this.cargoTrackingShipmentPM.ShipmentOrderPONumber);
+        if (this.cargoTrackingShipmentPM.SHOBookingConfirmationNumber != null)
+            this.ShipmentReferences.push(this.cargoTrackingShipmentPM.SHOBookingConfirmationNumber);
+    }
+
+    OpenReferencesMessageWindow(references: any[], isMobile: boolean, event) {
+        if (!references)
+            return;
+
+        references = references.filter(d => d).map(x => x.trim());
+        this.dialog.open(MessageWindowComponent, {
+            data: {
+                title: 'References',
+                description: isMobile ? references.slice(1, references.length + 1).join("\n") : references.slice(3, references.length + 1).join("\n"),
+            },
+
+            position: {
+                top: event.clientY + 'px',
+                left: event.clientX + 'px',
+            },
+
+        });
+    }
+
+    private SetDeclarationMessage() {
+        if (this.isSharedLink && this.isDeclarationLink) {
+            const isCustomShipment = this.cargoTrackingShipmentPM.EntityType == this.EntityType_Customs;
+            this.hasApprovalDeclineResponse = isCustomShipment && this.cargoTrackingShipmentPM.ActivatedForDeclarationApprove && !this.cargoTrackingShipmentPM.IsImporterApprovalRequried;
+
+            if (this.hasApprovalDeclineResponse) {
+                if (this.cargoTrackingShipmentPM.ApprovedDate)
+                    this.SetApprovedDeclarationMessage();
+                else
+                    this.SetDeniedDeclarationMessage();
+
+            } else {
+                this.approvalMessage = this.cargoTrackingShipmentPM.TenantDeclarationMessage;
+            }
+
+        }
+    }
+
+    private SetDeniedDeclarationMessage() {
+        const denyDate = this.datePipe.transform(this.cargoTrackingShipmentPM.DenyDate, 'dd/MM/yyyy, HH:mm');
+        this.approvalMessage = declineResponseMessage + ' "' + this.cargoTrackingShipmentPM.DenyReason + '"' + ' תאריך ' + denyDate;
+    }
+
+    private SetApprovedDeclarationMessage() {
+        const approvedDate = this.datePipe.transform(this.cargoTrackingShipmentPM.ApprovedDate, 'dd/MM/yyyy, HH:mm');
+        this.approvalMessage = approvalResponseMessage + ' ' + this.cargoTrackingShipmentPM.ApprovedByUserName + ' בתאריך ' + approvedDate;
+    }
+
+    private GetBrandingData() {
+        this.brandingService
+            .GetUserDashboardBrandingData(ServiceHelper.GetcargoTrackingDataRequest(this.baseURL))
+            .subscribe((response: ServiceResponse) => {
+                if (response.Result) {
+                    if (response?.Result?.ForceHttps)
+                        this.RedirectAppToHttps();
+
+                    ServiceHelper.SetCargoTrackingDate(response.Result, this.baseURL);
+
+                    this.isBrandingDataLoaded = true;
+                }
+            });
+    }
+
+    RedirectAppToHttps() {
+        const isLocally = window.location.origin.indexOf('localhost') > -1;
+
+        if (!isLocally && location.protocol === 'http:') {
+            window.location.href = location.href.replace('http', 'https');
+        }
+    }
+
+    private SetContainersNumbers(result: any) {
+        this.ContainersNumbers = [];
+        this.ContainersNumbers = result.ContainersNumbers ? result.ContainersNumbers.split(',') : null;
+    }
+
+    get CompanyLogo() {
+        return CargoTrackingBrandingData.ComapnylogoURL;
+    }
+
+    get BrowserIcon() {
+        return CargoTrackingBrandingData.BrowserIconURL;
+    }
+
+    get BackGroundImg() {
+        return CargoTrackingBrandingData.BackgroundURL;
+    }
+
+    get ShipmentHeaderImage() {
+        return CargoTrackingBrandingData.ShipmentHeaderURL;
+    }
+
+    public get InvertedLogoURL() {
+        return CargoTrackingBrandingData.InvertedLogoURL;
+    }
+
+
+    private SetOverviewPanelTitle() {
+        if (this.cargoTrackingShipmentPM.EntityType == this.OrderEntityType) {
+            this.OverviewPanelTitle = "SHO Overview";
+
+        } else {
+            this.OverviewPanelTitle = "Overview";
+        }
+    }
+
+    @HostListener('window:resize', ['$event'])
+    onResize() {
+        //event.target.innerWidth;
+        this.InitSlider();
+        this.InitRoutingSlider();
+
+    }
+
+    onMousewheelOnMilestonesSlider(event: WheelEvent) {
+        let scrollEnds = false;
+        if (event.deltaY > 0) {
+            scrollEnds = this.MoveSlider('left');
+        }
+        if (event.deltaY < 0) {
+            scrollEnds = this.MoveSlider('right');
+        }
+
+        if (!scrollEnds)
+            event.preventDefault();
+
+    }
+
+    onMousewheelOnRoutingSlider(event: WheelEvent) {
+        let scrollEnds = false;
+        if (event.deltaY > 0) {
+            scrollEnds = this.MoveRoutingSlider('left');
+        }
+        if (event.deltaY < 0) {
+            scrollEnds = this.MoveRoutingSlider('right');
+        }
+
+        if (!scrollEnds)
+            event.preventDefault();
+    }
+
+    logPan(i) {
+        console.log(i);
+
+    }
+
+    InitSlider() {
+        if (!this.SliderWrapperElement)
+            return;
+
+        this.SetSliderVisibleCardsWrapperWidth();
+
+        this.sliderMarginCardCount = 0;
+        this.sliderMarginLeft = 0;
+    }
+
+    private SetSliderVisibleCardsWrapperWidth() {
+        const webPagersWidth = 200;
+        const mobilePagersWidth = 60;
+
+        const sliderWrapperWidth = this.SliderWrapperElement.nativeElement.offsetWidth;
+
+        const extraOffset = 20;
+        if (this.IsMobileView)
+            var mobileCount = Math.floor((sliderWrapperWidth - mobilePagersWidth) / this.sliderMobileCardWidth);
+
+        else
+            var webCount = Math.floor((sliderWrapperWidth - webPagersWidth) / this.sliderCardWidth);
+
+        this.sliderVisibleCardsCount = mobileCount || webCount;
+
+        if (this.IsMobileView) {
+            const extraOffset = 10;
+            this.sliderVisibleCardsWidth = this.sliderMobileCardWidth * this.sliderVisibleCardsCount + extraOffset;
+        } else {
+            this.sliderVisibleCardsWidth = this.sliderVisibleCardsCount * this.sliderCardWidth;
+        }
+    }
+
+    InitRoutingSlider() {
+        var screenwidth = window.innerWidth;
+        var sliderWrapperWidth = this.RoutingSliderWrapperElement.nativeElement.offsetWidth;
+        var count = this.CalculateRoutingSliderVisibleCardsWidth(screenwidth, sliderWrapperWidth);
+
+        //this.routingSliderVisibleCardsWidth = this.routingSliderVisibleCardsCount * this.routingSliderCardWidth;
+        this.routingSliderMarginCardCount = 0;
+        this.routingSliderMarginLeft = 0;
+
+    }
+
+    private CalculateRoutingSliderVisibleCardsWidth(screenwidth: number, sliderWrapperWidth: any) {
+        if (screenwidth > this.MaxWidthForMobileScreenForRouting) {
+            this.CalculateVisibleSliderCardsCountForWeb(sliderWrapperWidth);
+        }
+
+        if (screenwidth <= this.MaxWidthForMobileScreenForRouting) {
+            this.CalculateVisibleSliderCardsCountForMobile(sliderWrapperWidth);
+        }
+    }
+
+    private CalculateVisibleSliderCardsCountForWeb(sliderWrapperWidth: any) {
+        this.routingSliderVisibleCardsCount = (sliderWrapperWidth - this.RoutingPagersWidth) / this.routingSliderCardWidth;
+        this.routingSliderVisibleCardsWidth = this.routingSliderVisibleCardsCount * this.routingSliderCardWidth;
+
+    }
+
+    private CalculateVisibleSliderCardsCountForMobile(sliderWrapperWidth: number) {
+        this.routingSliderCardWidth = 300;
+        this.RoutingMobilePagersWidth = sliderWrapperWidth - this.routingSliderCardWidth;
+        this.routingSliderVisibleCardsWidth = 300;
+        this.routingSliderVisibleCardsCount = (sliderWrapperWidth - this.RoutingMobilePagersWidth) / this.routingSliderCardWidth;
+    }
+
+
+    SetTitleForSupplierOrClient(shipment: any) {
+        let title;
+
+        switch (shipment.DirectionId) {
+            case ShipmentDirections.Import: {
+                title = 'SHIPPER';
+                break;
+            }
+            case ShipmentDirections.Export: {
+                title = 'CLIENT';
+                break;
+            }
+            case ShipmentDirections.Drop: {
+                if (shipment.ShipmentNumber.startsWith('EF') || shipment.ShipmentNumber.startsWith('MF')) {
+                    title = 'CLIENT';
+                } else {
+                    title = 'SHIPPER';
+                }
+                break;
+            }
+        }
+
+        if (shipment.EntityType === this.EntityType_Customs) {
+            title = 'SHIPPER';
+        }
+
+        return title;
+    }
+
+    SetSupplierOrClientValueByDirection(shipment) {
+        let name;
+
+        switch (shipment.DirectionId) {
+            case ShipmentDirections.Import: {
+                name = shipment.ShipperName;
+                break;
+            }
+            case ShipmentDirections.Export: {
+                name = shipment.ConsigneeName;
+                break;
+            }
+            case ShipmentDirections.Drop: {
+                if (shipment.ShipmentNumber.startsWith('EF') || shipment.ShipmentNumber.startsWith('MF')) {
+                    name = shipment.ConsigneeName;
+                } else {
+                    name = shipment.ShipperName;
+                }
+                break;
+            }
+        }
+        if (shipment.EntityType === this.EntityType_Customs) {
+            name = shipment.ShipperName;
+        }
+        return name;
+    }
+
+    SetTypeTitle() {
+
+        if (this.cargoTrackingShipmentPM.EntityType == 'O') {
+            this.TypeTitle = "SHIPMENT TYPE";
+        }
+        else
+            this.TypeTitle = "PACKAGE TYPE";
+    }
+
+    SetHasContainersDetails() {
+        return this.cargoTrackingShipmentPM.Packages.length == 0 ? false : true;
+    }
+
+
+    SetCustomsOrForwarderFields() {
+        this.SetTitleOfCustomsOrForwarder();
+        this.SetValueOfCustomsOrForwarder();
+    }
+
+    SetTitleOfCustomsOrForwarder() {
+        if (this.cargoTrackingShipmentPM.EntityType == this.CustomsEntityType) {
+            this.TitleOfCustomsOrForwarder = "Customs Broker References";
+            this.TitleOfCustomsOrForwarder_MB = "Customs Broker Ref.";
+        }
+        if (this.cargoTrackingShipmentPM.EntityType == this.ForwardingEntityType) {
+            this.TitleOfCustomsOrForwarder = "Forwarder Reference";
+            this.TitleOfCustomsOrForwarder_MB = "Forwarder Ref.";
+        }
+        if (this.cargoTrackingShipmentPM.EntityType == this.OrderEntityType) {
+            this.TitleOfCustomsOrForwarder = "SHO References";
+            this.TitleOfCustomsOrForwarder_MB = "SHO References";
+        }
+    }
+
+    SetValueOfCustomsOrForwarder() {
+        this.ValueOfCustomsOrForwarder = this.cargoTrackingShipmentPM.ShipmentNumber;
+        if (!this.cargoTrackingShipmentPM.ConnectedShipmentsNumbers) {
+            return;
+        }
+        this.ValueOfCustomsOrForwarder = this.cargoTrackingShipmentPM.ShipmentNumber + "\n" + this.cargoTrackingShipmentPM.ConnectedShipmentsNumbers;
+
     }
 
     //#region Slider
     SliderCards: MilestoneCard[] = [];
     sliderMarginLeft: number = 0;
     sliderMarginCardCount: number = 0;
-    sliderCardWidth: number = 200;
+    sliderCardWidth: number = 164;
+    sliderMobileCardWidth: number = 133;
     sliderVisibleCardsCount: number = 5;
     sliderVisibleCardsWidth: number = 0;
     NoMilstonesFound: boolean = false;
-    BuildSliderCards()
-    {
-        // this.Shipment.Milestones.forEach((milstone:Milestone) => {
-        //     var newCard = new MilestoneCard();
-        //     newCard.Code = milstone.Code;
-        //     newCard.Date = milstone.EstimationDate || milstone.Date;
-        //     newCard.Title = milstone.Name;
-        //     newCard.Description = milstone.Notes;
-        //     newCard.IsDimmed = milstone.IsEstimation;
-        //     newCard.IsActive = milstone.Code == this.Shipment.ShipmentList.CurrentMilestoneCode;
-        //     this.SliderCards.push(newCard);
-        // });
-       
-      
-        this.SliderCards = this.Shipment.Milestones
-            .filter(milstone =>
-            {
+
+    BuildSliderCards() {
+        let currentDate = new Date();
+        if (!this.cargoTrackingShipmentPM.Milestones)
+            return;
+        this.SliderCards = this.cargoTrackingShipmentPM.Milestones
+            .filter(milstone => {
                 var date = milstone.EstimationDate || milstone.Date;
-                if (date)
+                if (date && !milstone.InActive)
                     return true;
                 return false;
             })
-            .sort((a, b) =>
-            {
-                if (a.Id > b.Id) return 1;
-                if (a.Id < b.Id) return -1;
+            .sort((a, b) => {
+                if (a.Weight > b.Weight) return 1;
+                if (a.Weight < b.Weight) return -1;
                 return 0;
             })
-            .map((milstone: Milestone) =>
-            {
+            .map((milstone: Milestone) => {
                 var newCard = new MilestoneCard();
-                newCard.Date = milstone.Done ? milstone.Date : (milstone.EstimationDate || milstone.Date);
-                newCard.Code = 'No. ' + milstone.Id;
+                var CurrentMilestoneExceptions = this.cargoTrackingShipmentPM.CurrentMilestoneExceptions;
+                newCard.Date = milstone.Done ? (milstone.Date || milstone.EstimationDate) : (milstone.EstimationDate || milstone.Date);
+                newCard.ExpectedDate = milstone.Date ? null : milstone.EstimationDate;
+                newCard.Code = 'No. ' + milstone.Code;
                 newCard.Title = milstone.Name;
-                newCard.Description = milstone.Notes;
-                newCard.IsDimmed = milstone.IsEstimation && !milstone.Done;
-                newCard.IsActive = milstone.Id + '' == this.Shipment.ShipmentList.CurrentMilestoneCode;
-                newCard.HasWarning = milstone.IsCurrent && this.Shipment.ShipmentList.CurrentMilestoneExceptions != null;
-                newCard.WarningMessage = this.Shipment.ShipmentList.CurrentMilestoneExceptions?.split("\n")[1];
-                newCard.WarningDate = this.datePipe.transform(this.Shipment.ShipmentList.CurrentMilestoneExceptions?.split("")[0], 'dd/MM/yyyy, HH:mm');
+
+                let cardDateTime = new Date(newCard.Date ? newCard.Date : newCard.ExpectedDate);
+                var cardDate = new Date(cardDateTime.getFullYear(), cardDateTime.getMonth(), cardDateTime.getDate());
+
+                newCard.IsDimmed = (milstone.IsEstimation && !milstone.Done) || cardDate.getTime() > currentDate.getTime();
+                newCard.IsActive = milstone.Code + '' == this.cargoTrackingShipmentPM.CurrentMilestoneCode;
+                newCard.HasWarning = milstone.IsCurrent && CurrentMilestoneExceptions != null;
+                newCard.WarningMessage = newCard.HasWarning ? CurrentMilestoneExceptions.substring(CurrentMilestoneExceptions.indexOf(',') + 1,) : null;
+                newCard.WarningDate = newCard.HasWarning ? this.datePipe.transform(CurrentMilestoneExceptions?.split(',')[0], 'dd/MM/yyyy, HH:mm') : null;
                 return newCard;
             });
         this.SetNoMilstonesFound();
-        // .sort((a, b) => {
-        //     if (a.Date > b.Date) return 1;
-        //     if (a.Date < b.Date) return -1;
-        //      return 0;
-        //     });
+
+        this.ScrollIntoLastSliderCard();
+
+
     }
+
+    ScrollIntoLastSliderCard() {
+        const hiddenCardsCount = this.SliderCards.length - this.sliderVisibleCardsCount;
+        const width = this.IsMobileView ? this.sliderMobileCardWidth : this.sliderCardWidth;
+
+        if (hiddenCardsCount > 0) {
+            this.sliderMarginLeft = hiddenCardsCount * width * -1;
+            this.sliderMarginCardCount = hiddenCardsCount;
+        }
+    }
+
     SetNoMilstonesFound() {
         if (this.SliderCards.length == 0) this.NoMilstonesFound = true;
     }
-    MoveSlider(dir)
-    {
+
+    MoveSlider(dir) {
 
         if (dir == 'right' && this.sliderMarginLeft == 0)
-            return;
+            return true;
 
         if (dir == 'left' && ((this.sliderMarginCardCount + this.sliderVisibleCardsCount) >= this.SliderCards.length) || (this.sliderVisibleCardsCount >= this.SliderCards.length))
-            return;
+            return true;
 
-        var margin = this.sliderMarginLeft;
+        let margin = this.sliderMarginLeft;
+        const cardWidth = this.IsMobileView ? this.sliderMobileCardWidth : this.sliderCardWidth
 
         // inc\dec
         if (dir == 'left') {
-            margin -= this.sliderCardWidth;
+            margin -= cardWidth;
             this.sliderMarginCardCount++;
-        }
-        else {
-            margin += this.sliderCardWidth;
+        } else {
+            margin += cardWidth;
             this.sliderMarginCardCount--;
         }
 
         // limit boundary
         if (margin > 0)
             this.sliderMarginLeft = 0;
-        else if (margin < this.sliderVisibleCardsWidth * -1)
-            this.sliderMarginLeft = this.sliderVisibleCardsWidth;
         else
             this.sliderMarginLeft = margin;
 
-        var screenwidth = window.innerWidth;
-        if (screenwidth < 470)
-            this.sliderMarginLeft - 55;
+        console.log("sliderMarginCardCount:sliderMarginLeft === ", this.sliderMarginCardCount, '\t', this.sliderMarginLeft);
 
 
     }
+
+
+    get IsMobileView() {
+        const isPortrait = window.innerHeight > window.innerWidth;
+        return (window.innerWidth <= mobileScreenMaxWidth && isPortrait)
+            || (window.innerHeight <= mobileScreenMaxWidth && !isPortrait);
+    }
+
+    get IsNotMobileView() {
+        return !this.IsMobileView
+    }
+
     //#endregion
 
-    GetModeIcon()
-    {
+    //#region Routing Slider
+    routingSliderMarginLeft: number = 0;
+    routingSliderMarginCardCount: number = 0;
+    routingSliderCardWidth: number = 200;
+    routingSliderMobileCardWidth: number = 180;
+    routingSliderVisibleCardsCount: number = 1;
+    routingSliderVisibleCardsWidth: number = 0;
+
+
+    MoveRoutingSlider(direction) {
+
+        if (direction == 'right' && this.routingSliderMarginLeft == 0)
+            return true;
+
+        if (direction == 'left' && ((this.routingSliderMarginCardCount + this.routingSliderVisibleCardsCount) >= this.cargoTrackingShipmentPM.RoutingSteps.length) || (this.routingSliderVisibleCardsCount >= this.cargoTrackingShipmentPM.RoutingSteps.length))
+            return true;
+
+        var margin = this.SetRoutingSliderMarginBasedOnDirection(direction);
+
+        this.SetRoutingSliderMarginLeft(margin);
+
+        var screenwidth = window.innerWidth;
+        if (screenwidth < this.MaxWidthForMobileScreenForRouting)
+            this.routingSliderMarginLeft - this.RoutingMobileMarginLeft;
+
+
+    }
+
+    private SetRoutingSliderMarginLeft(margin: number) {
+        if (margin > 0)
+            this.routingSliderMarginLeft = 0;
+
+        else
+            this.routingSliderMarginLeft = margin;
+    }
+
+    private SetRoutingSliderMarginBasedOnDirection(direction: any) {
+        var margin = this.routingSliderMarginLeft;
+
+        if (direction == 'left') {
+            margin -= this.routingSliderCardWidth;
+            this.routingSliderMarginCardCount++;
+        } else {
+            margin += this.routingSliderCardWidth;
+            this.routingSliderMarginCardCount--;
+        }
+        return margin;
+    }
+
+    //#endregion
+
+    GetSlice(text: string, numberOfCharacter) {
+        var result = text
+        if (text?.length > numberOfCharacter && !this.IsMobileView) {
+            if (!this.ContainsHebrew(text))
+                result = text.slice(0, numberOfCharacter) + "..."
+            else
+                result = "..." + text.slice(0, numberOfCharacter)
+
+        }
+        if (text?.length > this.MaxNumberOfCarachterForMobile && this.IsMobileView) {
+            if (!this.ContainsHebrew(text))
+                result = text.slice(0, this.MaxNumberOfCarachterForMobile) + "..."
+            else
+                result = "..." + text.slice(0, this.MaxNumberOfCarachterForMobile)
+        }
+        return result;
+
+    }
+
+    ContainsHebrew(str: string) {
+        return (/[\u0590-\u05FF]/).test(str)
+    }
+
+    GetModeIcon() {
         var iconPath = "";
-        switch (this.Shipment.ShipmentList.TransportModeId) {
+        switch (this.cargoTrackingShipmentPM.TransportModeId) {
             case 'A':
                 iconPath = "./assets/images/misc/plane.svg";
                 break;
@@ -464,439 +893,34 @@ export class ShipmentDetailsComponent implements AfterViewInit
     }
 
     selectedNavButton: string = "Overview";
-    PanelsNavigatorClicked(panelName: string)
-    {
+
+    PanelsNavigatorClicked(panelName: string) {
         this.ScrollToPanel(panelName);
     }
 
-    private ScrollToPanel(panelName: string)
-    {
+    private ScrollToPanel(panelName: string) {
         this.selectedNavButton = panelName;
         var panelElement = document.getElementById(panelName) as HTMLElement;
-        if (panelElement)
+        if (panelElement) {
             panelElement.scrollIntoView();
+            if ((panelName == this.PartnersPanel && panelElement.clientHeight > this.MaxHeightForPartnersPanel && !this.ShowEventPanel) || (panelName != this.EventsPanel && this.ShowEventPanel) || (panelName != this.PartnersPanel && !this.ShowEventPanel))
+                document.getElementsByTagName('html')[0].scrollTop -= 113;
+
+        }
+
+
     }
 
-    BackLinkClicked()
-    {
+    BackLinkClicked() {
         this.router.navigate(['cargo-tracking', 'shipments']);
     }
 
-
-    ShipmentRouteSteps: RoutingStep[] = [];
-    private CreateReleasingAgentPartnerCard()
-    {
-        let releasingAgent = new PartnerCard();
-        releasingAgent.Type = "Releasing Agent";
-        releasingAgent.Name = this.ShipmentPM.ReleasingAgentName;
-        releasingAgent.Address = this.GetPartnerAddress(this.ShipmentPM.ReleasingAgentId);
-        releasingAgent.PhoneNumber = this.GetPartnerPhoneNumberFromAddress(this.ShipmentPM.ReleasingAgentId);
-        releasingAgent.FaxNumber = this.GetPartnerFaxNumberFromAddress(this.ShipmentPM.ReleasingAgentId);
-
-        return releasingAgent;
+    DownloadAllClick(securityKey: string) {
+        this.documentDownloadService.ExternalDownloadAllDocuments(securityKey, this.cargoTrackingShipmentPM.ForwardingShipmentHeaderId, this.tenant);
     }
 
-    private CreateConsolidatorPartnerCard()
-    {
-        let consolidator = new PartnerCard();
-        consolidator.Type = "Consolidator";
-        consolidator.Name = this.ShipmentPM.ConsolidatorName;
-        consolidator.Address = this.GetPartnerAddress(this.ShipmentPM.ConsolidatorId);
-        consolidator.PhoneNumber = this.GetPartnerPhoneNumberFromAddress(this.ShipmentPM.ConsolidatorId);
-        consolidator.FaxNumber = this.GetPartnerFaxNumberFromAddress(this.ShipmentPM.ConsolidatorId);
-
-        return consolidator;
-    }
-
-    private CreateFreelancerPartnerCard()
-    {
-        let freelancer = new PartnerCard();
-        freelancer.Type = "Freelancer";
-        freelancer.Name = this.ShipmentPM.FreelancerName;
-        freelancer.Address = this.GetPartnerAddress(this.ShipmentPM.FreelancerId);
-        freelancer.PhoneNumber = this.GetPartnerPhoneNumberFromAddress(this.ShipmentPM.FreelancerId);
-        freelancer.FaxNumber = this.GetPartnerFaxNumberFromAddress(this.ShipmentPM.FreelancerId);
-        return freelancer;
-    }
-
-    private CreateColoaderPartnerCard()
-    {
-        let coloader = new PartnerCard();
-        coloader.Type = "Coloader";
-        coloader.Name = this.ShipmentPM.ColoaderName;
-        coloader.Address = this.GetPartnerAddress(this.ShipmentPM.ColoaderId);
-        coloader.PhoneNumber = this.GetPartnerPhoneNumberFromAddress(this.ShipmentPM.ColoaderId);
-        coloader.FaxNumber = this.GetPartnerFaxNumberFromAddress(this.ShipmentPM.ColoaderId);
-        return coloader;
-    }
-
-    private CreateCustomClearancePointPartnerCard()
-    {
-        let customClearancePoint = new PartnerCard();
-        customClearancePoint.Type = "Custom Clearance Point";
-        customClearancePoint.Name = this.ShipmentPM.CustomClearancePointName;
-        customClearancePoint.Address = this.GetPartnerAddress(this.ShipmentPM.CustomClearancePointId);
-        customClearancePoint.PhoneNumber = this.GetPartnerPhoneNumberFromAddress(this.ShipmentPM.CustomClearancePointId);
-        customClearancePoint.FaxNumber = this.GetPartnerFaxNumberFromAddress(this.ShipmentPM.CustomClearancePointId);
-        return customClearancePoint;
-    }
-
-    private CreateConsigneeNotImporterPartnerCard()
-    {
-        let consigneeNotImporter = new PartnerCard();
-        consigneeNotImporter.Type = "Consignee Not Importer";
-        consigneeNotImporter.Name = this.ShipmentPM.ConsigneeNotImporterName;
-        consigneeNotImporter.Address = this.GetPartnerAddress(this.ShipmentPM.ConsigneeNotImporterId);
-        consigneeNotImporter.PhoneNumber = this.GetPartnerPhoneNumberFromAddress(this.ShipmentPM.ConsigneeNotImporterId);
-        consigneeNotImporter.FaxNumber = this.GetPartnerFaxNumberFromAddress(this.ShipmentPM.ConsigneeNotImporterId);
-        return consigneeNotImporter;
-    }
-
-    private CreateShipperNotExporterPartnerCard()
-    {
-        let shipperNotExporter = new PartnerCard();
-        shipperNotExporter.Type = "Shipper Not Exporter";
-        shipperNotExporter.Name = this.ShipmentPM.ShipperNotExporterName;
-        shipperNotExporter.Address = this.GetPartnerAddress(this.ShipmentPM.ShipperNotExporterId);
-        shipperNotExporter.PhoneNumber = this.GetPartnerPhoneNumberFromAddress(this.ShipmentPM.ShipperNotExporterId);
-        shipperNotExporter.FaxNumber = this.GetPartnerFaxNumberFromAddress(this.ShipmentPM.ShipperNotExporterId);
-        return shipperNotExporter;
-    }
-
-    private CreateNotify2PartnerCard()
-    {
-        let notify2 = new PartnerCard();
-        notify2.Type = "Notify 2";
-        notify2.Name = this.ShipmentPM.Notify2Name;
-        notify2.Address = this.GetPartnerAddress(this.ShipmentPM.Notify2Id);
-        notify2.PhoneNumber = this.GetPartnerPhoneNumberFromAddress(this.ShipmentPM.Notify2Id);
-        notify2.FaxNumber = this.GetPartnerFaxNumberFromAddress(this.ShipmentPM.Notify2Id);
-        return notify2;
-    }
-
-    private CreateNotify1PartnerCard()
-    {
-        let notify1 = new PartnerCard();
-        notify1.Type = "Notify 1";
-        notify1.Name = this.ShipmentPM.Notify1Name;
-        notify1.Address = this.GetPartnerAddress(this.ShipmentPM.Notify1Id);
-        notify1.PhoneNumber = this.GetPartnerPhoneNumberFromAddress(this.ShipmentPM.Notify1Id);
-        notify1.FaxNumber = this.GetPartnerFaxNumberFromAddress(this.ShipmentPM.Notify1Id);
-        return notify1;
-    }
-
-    private CreateCustomAgentImportPartnerCard()
-    {
-        let customAgentImport = new PartnerCard();
-        customAgentImport.Type = "Custom Agent Import";
-        customAgentImport.Name = this.ShipmentPM.CustomAgentImportName;
-        customAgentImport.Address = this.GetPartnerAddress(this.ShipmentPM.CustomAgentImportId);
-        customAgentImport.PhoneNumber = this.GetPartnerPhoneNumberFromAddress(this.ShipmentPM.CustomAgentImportId);
-        customAgentImport.FaxNumber = this.GetPartnerFaxNumberFromAddress(this.ShipmentPM.CustomAgentImportId);
-        return customAgentImport;
-    }
-
-    private CreateCustomAgentExportPartnerCard()
-    {
-        let customAgentExport = new PartnerCard();
-        customAgentExport.Type = "Custom Agent Export";
-        customAgentExport.Name = this.ShipmentPM.CustomAgentExportName;
-        customAgentExport.Address = this.GetPartnerAddress(this.ShipmentPM.CustomAgentExportId);
-        customAgentExport.PhoneNumber = this.GetPartnerPhoneNumberFromAddress(this.ShipmentPM.CustomAgentExportId);
-        customAgentExport.FaxNumber = this.GetPartnerFaxNumberFromAddress(this.ShipmentPM.CustomAgentExportId);
-        return customAgentExport;
-    }
-
-    private CreateIssuingCarrierAgentPartnerCard()
-    {
-        let issuingCarrierAgent = new PartnerCard();
-        issuingCarrierAgent.Type = "Issuing Carrier's Agent";
-        issuingCarrierAgent.Name = this.ShipmentPM.IssuingCarrierAgentName;
-        issuingCarrierAgent.Address = this.GetPartnerAddress(this.ShipmentPM.IssuingCarrierAgentId);
-        issuingCarrierAgent.PhoneNumber = this.GetPartnerPhoneNumberFromAddress(this.ShipmentPM.IssuingCarrierAgentId);
-        issuingCarrierAgent.FaxNumber = this.GetPartnerFaxNumberFromAddress(this.ShipmentPM.IssuingCarrierAgentId);
-        return issuingCarrierAgent;
-    }
-
-    private CreateAgentPartnerCard()
-    {
-        let agent = new PartnerCard();
-        agent.Type = "Agent";
-        agent.Name = this.ShipmentPM.AgentName;
-        agent.Address = this.GetPartnerAddress(this.ShipmentPM.AgentId);
-        agent.PhoneNumber = this.GetPartnerPhoneNumberFromAddress(this.ShipmentPM.AgentId);
-        agent.FaxNumber = this.GetPartnerFaxNumberFromAddress(this.ShipmentPM.AgentId);
-        return agent;
-    }
-
-    private CreateCustomerPartnerCard()
-    {
-        let customer = new PartnerCard();
-        customer.Type = "Customer";
-        customer.Name = this.ShipmentPM.CustomerName;
-        customer.Address = this.GetPartnerAddress(this.ShipmentPM.CustomerId);
-        customer.PhoneNumber = this.GetPartnerPhoneNumberFromAddress(this.ShipmentPM.CustomerId);
-        customer.FaxNumber = this.GetPartnerFaxNumberFromAddress(this.ShipmentPM.CustomerId);
-        return customer;
-    }
-
-
-    private CreateFreightForwarderPartnerCard()
-    {
-        let freightForwarder = new PartnerCard();
-        freightForwarder.Type = "Freight Forwarder";
-        freightForwarder.Name = this.ShipmentPM.FreightForwarderName;
-        freightForwarder.Address = this.GetPartnerAddress(this.ShipmentPM.FreightForwarderId);
-        freightForwarder.PhoneNumber = this.GetPartnerPhoneNumberFromAddress(this.ShipmentPM.FreightForwarderId);
-        freightForwarder.FaxNumber = this.GetPartnerFaxNumberFromAddress(this.ShipmentPM.FreightForwarderId);
-        return freightForwarder;
-    }
-
-    private CreateConsigneePartnerCard()
-    {
-        var consignee = new PartnerCard();
-        consignee.Type = "consignee";
-        consignee.Name = this.ShipmentPM.ConsigneeName;
-        consignee.Address = this.GetPartnerAddress(this.ShipmentPM.ConsigneeId);
-        consignee.PhoneNumber = this.GetPartnerPhoneNumberFromAddress(this.ShipmentPM.ConsigneeId);
-        consignee.FaxNumber = this.GetPartnerFaxNumberFromAddress(this.ShipmentPM.ConsigneeId);
-        return consignee;
-    }
-
-    private CreateShipperPartnerCard()
-    {
-        var shipper = new PartnerCard();
-        shipper.Type = "shipper";
-        shipper.Name = this.ShipmentPM.ShipperName;
-        shipper.Address = this.GetPartnerAddress(this.ShipmentPM.ShipperId);
-        shipper.PhoneNumber = this.GetPartnerPhoneNumberFromAddress(this.ShipmentPM.ShipperId);
-        shipper.FaxNumber = this.GetPartnerFaxNumberFromAddress(this.ShipmentPM.ConsigneeId);
-        return shipper;
-    }
-
-
-    private GetPartnerPhoneNumberFromAddress(cardId: any)
-    {
-        var address = this.PartnersAddresses.find(a => a.CardId == cardId);
-        if (address)
-            var phoneNumber = address.PhoneNumber;
-        return phoneNumber;
-    }
-    private GetPartnerFaxNumberFromAddress(cardId: any)
-    {
-        var address = this.PartnersAddresses.find(a => a.CardId == cardId);
-        if (address)
-            var faxNumber = address.FaxNumber;
-        return faxNumber;
-    }
-    private GetPartnerAddress(cardId: any)
-    {
-        var address = this.PartnersAddresses.find(a => a.CardId == cardId);
-        if (address) {
-            var addressLines = [
-                address.Address1,
-                address.Address2,
-                address.ZipCode,
-                address.City + ',' + address.CountryName
-            ];
-            return addressLines.filter(a=>a).join('<br>');
-        }
-        return null;
-    }
-
-    InitRoutes()
-    {
-        this.CreatePickupsRoutesFromShipmentPM();
-        this.CreateWarehouseLegRoutesFromShipmentPMIfExist();
-        this.CreateMainCarriageLegsRoutesFromShipmentPM();
-        this.CreateShipmentDeliveriesRoutesFromShipmentPM();
-    }
-
-    private CreatePickupsRoutesFromShipmentPM() {
-        for (let i = 0; i < this.ShipmentPM.ShipmentPickUps.length; i++) {
-            this.AddShipmentRouteStep(this.CreateSinglePickupsRoute(i));
-        }
-    }
-
-    private CreateWarehouseLegRoutesFromShipmentPMIfExist() {
-        if (this.ShipmentPM.WarehouseLegTerminalName != null) {
-            this.AddShipmentRouteStep(this.CreateSingleWarehouseLegRoute());
-        }
-    }
-
-    private CreateMainCarriageLegsRoutesFromShipmentPM() {
-        for (let i = 0; i < this.ShipmentPM.MainCarriageLegs.length; i++)
-            this.AddShipmentRouteStep(this.CreateSingleMainCarriageLegsRoute(i));
-    }
-
-    private CreateShipmentDeliveriesRoutesFromShipmentPM() {
-        for (let i = 0; i < this.ShipmentPM.ShipmentDeliveries.length; i++) {
-            this.AddShipmentRouteStep(this.CreateSingleShipmentDeliveriesRoute(i));
-        }
-    }
-
-    private CreateSinglePickupsRoute(i: number) {
-        var step = new RoutingStep();
-        step.TransportModeCode = this.InlandTransportMode;
-        step.Description = this.ShipmentPM.ShipmentPickUps[i].CarrierName != null ? "Via " + this.ShipmentPM.ShipmentPickUps[i].CarrierName : null;
-
-        this.SetFromAndToLabelsForShipmentRoutes(this.ShipmentPM.ShipmentPickUps[i], step);
-        step.Directions = this.BuildRouteDirections(this.ShipmentPM.ShipmentPickUps[i]);
-        return step;
-    }
-
-    private CreateSingleWarehouseLegRoute() {
-        var step = new RoutingStep();
-        step.TransportModeCode = this.InlandTransportMode;
-        step.Description = this.ShipmentPM.WarehouseLegRemarks == null ? "WarehouseLeg" : this.ShipmentPM.WarehouseLegRemarks;
-        step.FromPortLabel = this.ShipmentPM.WarehouseLegTerminalName;
-
-        this.SetWarehouseLegDirections(step);
-        return step;
-    }
-
-    private CreateSingleMainCarriageLegsRoute(i: number) {
-        var step = new RoutingStep();
-        step.TransportModeCode = this.ShipmentPM.TransportModeId;
-        step.Description = this.ShipmentPM.MainCarriageCarrierName != null ? "Via " + this.ShipmentPM.MainCarriageCarrierName : null;
-        step.FromPortLabel = this.ShipmentPM.MainCarriageFromPortCode;
-        step.ToPortLabel = this.ShipmentPM.MainCarriageToPortCode;
-
-        step.Directions = this.BuildRouteDirections(this.ShipmentPM.MainCarriageLegs[i]);
-        return step;
-    }
-
-    private CreateSingleShipmentDeliveriesRoute(i: number) {
-        var step = new RoutingStep();
-        step.TransportModeCode = this.InlandTransportMode;
-        step.Description = this.ShipmentPM.ShipmentDeliveries[i].CarrierName != null ? "Via " + this.ShipmentPM.ShipmentDeliveries[i].CarrierName : null;
-
-        this.SetFromAndToLabelsForShipmentRoutes(this.ShipmentPM.ShipmentDeliveries[i], step);
-        step.Directions = this.BuildRouteDirections(this.ShipmentPM.ShipmentDeliveries[i]);
-        return step;
-    }
-
-    private SetFromAndToLabelsForShipmentRoutes(shipmentRoute: any, step: RoutingStep) {
-        step.FromPortLabel = this.GetFromPortLabel(shipmentRoute);
-        step.ToolTipFromPortLabel = this.GetToolTipFromPortLabel(shipmentRoute);
-
-        step.ToPortLabel = this.GetToPortLabel(shipmentRoute);
-        step.ToolTipToPortLabel = this.GetToolTipToPortLabel(shipmentRoute);
-    }
-
-    private GetFromPortLabel(shipmentRoute: any) {
-        if (shipmentRoute.PickUpDeliveryFromTypeCode == "PORT") {
-            return shipmentRoute.FromPortCode;
-        }
-
-        else if (shipmentRoute.PickUpDeliveryFromTypeCode == "PART") {
-            return shipmentRoute.FromLocation.toString().split(" ")[0];
-        }
-
-        else {
-           return shipmentRoute.FromAddressCountryCode;
-        }
-    }
-
-    private GetToolTipFromPortLabel(shipmentRoute: any) {
-
-        if (shipmentRoute.PickUpDeliveryFromTypeCode == "PART") {
-            return "Partner: \n" + shipmentRoute.FromLocation.toString().split("\r")[0];
-        }
-
-        else if (shipmentRoute.PickUpDeliveryFromTypeCode == "CASL") {
-            return "Address: \n" + (shipmentRoute.FromAddressCity_Dummy != null ? shipmentRoute.FromAddressCity_Dummy + ',' :"")  + shipmentRoute.FromAddressCountryName;
-        }
-    }
-
-    private GetToPortLabel(shipmentRoute: any) {
-
-        if (shipmentRoute.PickUpDeliveryToTypeCode == "PORT") {
-           return shipmentRoute.ToPortCode;
-        }
-
-        else if (shipmentRoute.PickUpDeliveryToTypeCode == "PART") {
-            return shipmentRoute.ToLocation.toString().split(" ")[0];
-        }
-
-        else {
-            return shipmentRoute.ToAddressCountryCode;
-        }
-    }
-
-    private GetToolTipToPortLabel(shipmentRoute: any) {
-        if (shipmentRoute.PickUpDeliveryToTypeCode == "PART") {
-            return "Partner: \n" + shipmentRoute.ToLocation.toString().split("\r")[0];
-        }
-
-        else if (shipmentRoute.PickUpDeliveryToTypeCode == "CASL") {
-            return "Address: \n" + (shipmentRoute.ToAddressCity_Dummy != null ? shipmentRoute.ToAddressCity_Dummy + ',' : "" ) + shipmentRoute.ToAddressCountryName;
-        }
-    }
-
-    BuildRouteDirections(shipmentRoute) {
-        var directions = [];
-
-        var direction = this.BuildExportRouteDirection(shipmentRoute.ETD, "ETD");
-        if (direction)
-            directions.push(direction);
-
-        var direction = this.BuildImportRouteDirection(shipmentRoute.ETA, "ETA");
-        if (direction)
-            directions.push(direction);
-
-        var direction = this.BuildExportRouteDirection(shipmentRoute.ATD, "ATD");
-        if (direction)
-            directions.push(direction);
-
-        var direction = this.BuildImportRouteDirection(shipmentRoute.ATA, "ATA");
-        if (direction)
-            directions.push(direction);
-
-        return directions;
-    }
-
-    private SetWarehouseLegDirections(step: RoutingStep) {
-        if (this.ShipmentPM.WarehouseLegExpectedEntryDate != null) {
-            step.Directions.push(this.BuildExportRouteDirection(this.ShipmentPM.WarehouseLegExpectedEntryDate,"ETD"));
-        }
-
-        if (this.ShipmentPM.WarehouseLegExpectedReleaseDate != null) {
-            step.Directions.push(this.BuildImportRouteDirection(this.ShipmentPM.WarehouseLegExpectedReleaseDate,"ETA"));
-        }
-
-        if (this.ShipmentPM.WarehouseLegActualEntryDate != null) {
-            step.Directions.push(this.BuildExportRouteDirection(this.ShipmentPM.WarehouseLegActualEntryDate, "ATD"));
-        }
-
-        if (this.ShipmentPM.WarehouseLegActualReleaseDate != null) {
-            step.Directions.push(this.BuildImportRouteDirection(this.ShipmentPM.WarehouseLegActualReleaseDate, "ATA"));
-        }
-    }
-  
-    BuildExportRouteDirection(fieldValue, fieldName: string) {
-        if (fieldValue != null) {
-            return new RouteDirection(fieldValue, fieldName, "out");
-        }
-    }
-
-    BuildImportRouteDirection(fieldValue, fieldName: string) {
-        if (fieldValue != null) {
-            return new RouteDirection(fieldValue, fieldName, "in");
-        }
-    }
-
-    private AddShipmentRouteStep(step: RoutingStep) {
-        this.ShipmentRouteSteps.push(step);
-    }
-
-    DownloadDocument(document: string) {
-        if(document)
-            this.documentDownloadService.DownloadPage(document);
-    }
-
-    DownloadAllClick(entityId: string) {
-        this.documentDownloadService.DownloadAllPages(entityId);
+    DownloadDocument(item) {
+        this.documentDownloadService.ExternalDownloadPage(item.SecurityId, this.tenant, this.cargoTrackingShipmentPM.ShipmentNumber + '_' + item.DocumentTypeName);
     }
 
     ShowMoreLinkClicked() {
@@ -907,19 +931,315 @@ export class ShipmentDetailsComponent implements AfterViewInit
     OpenMessageWindow(messageDescription, messageDate) {
         this.dialog.open(MessageWindowComponent, {
             data: {
-                title: 'Alert',
+                title: 'Exception',
                 date: messageDate,
                 description: messageDescription,
             }
         });
-    } 
+    }
+
+    OpenReferencesWindow(references) {
+        references = references.map(x => x.trim()).filter(d => d);
+        this.dialog.open(MessageWindowComponent, {
+            data: {
+                title: 'References',
+                description: references.join("\n"),
+            }
+        });
+    }
+
+    ShowMoreWindow(text) {
+        console.log(text)
+        this.dialog.open(MessageWindowComponent, {
+            data: {
+                title: '',
+                description: text,
+            }
+        });
+    }
+
+    ChangeShowDetailsSectionValue(newValue) {
+        this.ShowDetailsSection = newValue;
+    }
+
+    ApproveDeclaration() {
+        const confirmMessage = this.ShowDeclarationApproveConfirmMessage();
+        confirmMessage.afterClosed().subscribe(windowArgs => {
+            const button = windowArgs?.button;
+            if (button == 'ok') {
+                this.SendDeclarationApproveRequest(windowArgs.textValue);
+            }
+        });
+    }
+
+    private SendDeclarationApproveRequest(approvedBy: string) {
+        RootContext.StartBusyIndicatorLoading();
+
+        const args = this.BuildDeclarationApprovalArguments(approvedBy);
+        this.cargoTrackingShipmentExtendedService.PostDeclarationApprovalResponse(args)
+            .subscribe(
+                res => {
+                    this.ShowDeclarationApprovedMessage();
+                    this.GetMainShipmentByShipmentSecurityKey();
+                    RootContext.StopBusyIndicator();
+                },
+                err => {
+                    this.ShowFailureMessage(err);
+                    RootContext.StopBusyIndicator();
+                }
+            );
+    }
+
+    DenyDeclaration() {
+
+        const denyConfirmMessage = this.ShowDeclarationDeclineConfirmMessage();
+        denyConfirmMessage.afterClosed().subscribe(windowArgs => {
+            const button = windowArgs?.button;
+            if (button == 'ok') {
+                this.SendDeclarationDeclineRequest(windowArgs.textValue);
+            }
+        });
+    }
+
+    private ShowDeclarationDeclineConfirmMessage() {
+        return this.dialog.open(MessageWindowComponent, {
+            data: {
+                title: declineText,
+                description: declineMessageText,
+                showOkButton: true,
+                okButtonText: confirmText,
+                showCancelButton: true,
+                cancelButtonText: cancelText,
+                showMultilineTextBox: true,
+                inputRequired: true
+            }
+        });
+    }
+
+    private ShowDeclarationApproveConfirmMessage() {
+        return this.dialog.open(MessageWindowComponent, {
+            data: {
+                title: confirmText,
+                description: approvedByLabelText,
+                showOkButton: true,
+                okButtonText: confirmText,
+                showCancelButton: true,
+                cancelButtonText: cancelText,
+                showTextBox: true,
+                inputRequired: true
+
+            }
+        });
+    }
+
+    private SendDeclarationDeclineRequest(denyMessage: string) {
+        RootContext.StartBusyIndicatorLoading();
+
+        const args = this.BuildDeclarationDeclineArguments(denyMessage);
+        this.cargoTrackingShipmentExtendedService.PostDeclarationApprovalResponse(args)
+            .subscribe(arg => {
+                RootContext.StopBusyIndicator();
+
+                this.dialog.open(MessageWindowComponent, {
+                    data: {
+                        description: 'Declaration Declined',
+                        showOkButton: true
+                    }
+                });
+                this.GetMainShipmentByShipmentSecurityKey();
+
+            }, (error) => {
+                RootContext.StopBusyIndicator();
+                this.ShowFailureMessage(error);
+            });
+    }
+
+    private BuildDeclarationDeclineArguments(denyMessage: string) {
+        let args = new DeclarationApprovalArgs();
+        args.Tenant = Number(this.tenant);
+        args.Denied = true;
+        args.ShipmentSecurityKey = this.SecurityKey;
+        args.DenyReason = denyMessage;
+        return args;
+    }
+
+    private BuildDeclarationApprovalArguments(approvedBy: string) {
+        let args = new DeclarationApprovalArgs();
+        args.Tenant = Number(this.tenant);
+        args.Approved = true;
+        args.ApprovedBy = approvedBy;
+        args.ShipmentSecurityKey = this.SecurityKey;
+        return args;
+    }
+
+    private ShowDeclarationApprovedMessage() {
+        return this.dialog.open(MessageWindowComponent, {
+            data: {
+                description: 'Approved Successfully',
+                showOkButton: true
+            }
+        });
+    }
+
+    private ShowFailureMessage(error: any) {
+        this.dialog.open(MessageWindowComponent, {
+            data: {
+                title: 'Failed',
+                description: error || 'Something went bad'
+            }
+        });
+    }
+
+    masterLabel = 'Master';
+    houseLabel = 'House';
+
+    SetMasterOrHouseLabel() {
+        if (this.cargoTrackingShipmentPM.EntityType == ShipmentEntityTypes.Customs && this.cargoTrackingShipmentPM.ForwardingShipmentHeaderId && this.cargoTrackingShipmentPM.ForwardingShipmentLevelCode == ShipmentLevelCodes.House && this.cargoTrackingShipmentPM.ForwardingHouse) {
+            return this.houseLabel;
+        } else if (this.cargoTrackingShipmentPM.EntityType == ShipmentEntityTypes.Customs && this.cargoTrackingShipmentPM.ForwardingShipmentHeaderId && this.cargoTrackingShipmentPM.ForwardingShipmentLevelCode == ShipmentLevelCodes.Direct && this.cargoTrackingShipmentPM.ForwardingMaster) {
+            return this.masterLabel;
+        } else if (this.cargoTrackingShipmentPM.EntityType == ShipmentEntityTypes.Forwarding && this.cargoTrackingShipmentPM.ShipmentLevelCode == ShipmentLevelCodes.House && this.cargoTrackingShipmentPM.House) {
+            return this.houseLabel;
+        } else if (this.cargoTrackingShipmentPM.EntityType == ShipmentEntityTypes.Forwarding && this.cargoTrackingShipmentPM.ShipmentLevelCode == ShipmentLevelCodes.Direct && this.cargoTrackingShipmentPM.Master) {
+            return this.masterLabel;
+        } else if (this.cargoTrackingShipmentPM.House) {
+            return this.houseLabel;
+        } else if (this.cargoTrackingShipmentPM.Master) {
+            return this.masterLabel;
+        }
+        return null;
+
+    }
+
+    SetMasterOrHouseValue() {
+        if (this.cargoTrackingShipmentPM.EntityType == ShipmentEntityTypes.Customs && this.cargoTrackingShipmentPM.ForwardingShipmentHeaderId && this.cargoTrackingShipmentPM.ForwardingShipmentLevelCode == ShipmentLevelCodes.House && this.cargoTrackingShipmentPM.ForwardingHouse) {
+            return this.cargoTrackingShipmentPM.ForwardingHouse;
+        } else if (this.cargoTrackingShipmentPM.EntityType == ShipmentEntityTypes.Customs && this.cargoTrackingShipmentPM.ForwardingShipmentHeaderId && this.cargoTrackingShipmentPM.ForwardingShipmentLevelCode == ShipmentLevelCodes.Direct && this.cargoTrackingShipmentPM.ForwardingMaster) {
+            return this.cargoTrackingShipmentPM.ForwardingMaster;
+        } else if (this.cargoTrackingShipmentPM.EntityType == ShipmentEntityTypes.Forwarding && this.cargoTrackingShipmentPM.ShipmentLevelCode == ShipmentLevelCodes.House && this.cargoTrackingShipmentPM.House) {
+            return this.cargoTrackingShipmentPM.House;
+        } else if (this.cargoTrackingShipmentPM.EntityType == ShipmentEntityTypes.Forwarding && this.cargoTrackingShipmentPM.ShipmentLevelCode == ShipmentLevelCodes.Direct && this.cargoTrackingShipmentPM.Master) {
+            return this.cargoTrackingShipmentPM.Master;
+        } else if (this.cargoTrackingShipmentPM.House) {
+            return this.cargoTrackingShipmentPM.House;
+        } else if (this.cargoTrackingShipmentPM.Master) {
+            return this.cargoTrackingShipmentPM.Master;
+        }
+
+        return null;
+
+    }
+
+    checkPartnerTypePermissionSharedAccess(partnerTypeName): boolean {
+        if (this.cargoTrackingShipmentPM.SharedLogisticsSetting) {
+            switch (partnerTypeName) {
+                case PartnerTypeNames.COLLECTOR:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsCollectorShared;
+                case PartnerTypeNames.SALESMAN:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsSalesmanShared;
+                case PartnerTypeNames.ACCOUNTMANAGER:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsAccountManagerShared;
+                case PartnerTypeNames.ReleasingAgent:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsReleasingAgentShared;
+                case PartnerTypeNames.Customer:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsCustomerShared;
+                case PartnerTypeNames.IssuingCarrierAgent:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsIssuingCarrierAgentShared;
+                case PartnerTypeNames.Consolidator:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsConsolidatorShared;
+                case PartnerTypeNames.CustomClearancePoint:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsCustomClearancePoinShared;
+                case PartnerTypeNames.CustomAgentImport:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsCustomsAgentImportShared;
+                case PartnerTypeNames.CustomAgentExport:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsCustomsAgentExportShared;
+                case PartnerTypeNames.Coloader:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsColoaderShared;
+                case PartnerTypeNames.FreightForwarder:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsFreightForwarderShared;
+                case PartnerTypeNames.Notify1:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsNotify1Shared;
+                case PartnerTypeNames.Notify2:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsNotify2Shared;
+                case PartnerTypeNames.ConsigneeNotImporter:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsConsigneeNotImporterShared;
+                case PartnerTypeNames.ShipperNotExporter:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsShipperNotExporterShared;
+                case PartnerTypeNames.Agent:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsAgentShared;
+                case PartnerTypeNames.consignee:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsConsigneeShared;
+                case PartnerTypeNames.shipper:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsShipperShared;
+                case PartnerTypeNames.Carrier:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsMainCarrierShared;
+                case PartnerTypeNames.Trucker:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsPickDelivCarriesShared;
+                default:
+                    return false
+            }
+        }
+        return true;
+    }
+
+    checkPartnerTypePermissionContactAccess(partnerTypeName): boolean {
+        if (this.cargoTrackingShipmentPM.SharedLogisticsSetting) {
+            switch (partnerTypeName) {
+                case PartnerTypeNames.COLLECTOR:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsCollectorShowContactTS;
+                case PartnerTypeNames.SALESMAN:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsSalesmanShowContactTS;
+                case PartnerTypeNames.ACCOUNTMANAGER:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsAccountManagerShowContactTS;
+                case PartnerTypeNames.ReleasingAgent:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsReleasingAgentShowContactTS;
+                case PartnerTypeNames.Customer:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsCustomerShowContactTS;
+                case PartnerTypeNames.IssuingCarrierAgent:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsIssuingCarAgentShowContactTS;
+                case PartnerTypeNames.Consolidator:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsConsolidatorShowContactTS;
+                case PartnerTypeNames.CustomClearancePoint:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsCustomCleaPointShowContactTS;
+                case PartnerTypeNames.CustomAgentImport:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsCustomAgentImShowContactTS;
+                case PartnerTypeNames.CustomAgentExport:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsCustomAgentExShowContactTS;
+                case PartnerTypeNames.Coloader:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsColoaderShowContactTS;
+                case PartnerTypeNames.FreightForwarder:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsFreightForwardShowContactTS;
+                case PartnerTypeNames.Notify1:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsNotify1ShowContactTS;
+                case PartnerTypeNames.Notify2:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsNotify2ShowContactTS;
+                case PartnerTypeNames.ConsigneeNotImporter:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsConsigneeNotImShowContactTS;
+                case PartnerTypeNames.ShipperNotExporter:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsShipperNotExShowContactTS;
+                case PartnerTypeNames.Agent:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsAgentShowContactTS;
+                case PartnerTypeNames.consignee:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsConsigneeShowContactTS;
+                case PartnerTypeNames.shipper:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsShipperShowContactTS;
+                case PartnerTypeNames.Carrier:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsMainCarShowContactTS;
+                case PartnerTypeNames.Trucker:
+                    return this.cargoTrackingShipmentPM.SharedLogisticsSetting.IsPickDelivCarShowContactTS;
+                default:
+                    return true
+            }
+        }
+        return true;
+    }
 }
 
 
-export class MilestoneCard
-{
+export class MilestoneCard {
     Code: string;
     Date: Date;
+    ExpectedDate: Date;
     Title: string;
     Description: string;
     IsActive: boolean;
@@ -929,39 +1249,44 @@ export class MilestoneCard
     WarningDate: string;
 }
 
-export class RoutingStep
-{
-    IsActive: boolean;
-    FromPortLabel;
-    ToPortLabel;
-    ToolTipFromPortLabel;
-    ToolTipToPortLabel;
-    Description: string;
-    TransportModeCode;
-    Directions: RouteDirection[] = [];
-}
-export class RouteDirection
-{
-    constructor(date: Date, label: string, direction: 'in' | 'out')
-    {
-        this.Date = date;
-        this.Label = label;
-        this.Direction = direction;
-    }
-    Date: Date;
-    Label: string;
-    Direction: 'in' | 'out' = 'in';
+export enum ShipmentDirections {
+    Import = "I",
+    Export = "E",
+    Drop = "R"
 }
 
-export class PartnerCard
-{
-    constructor()
-    {
-    }
-    Name: string;
-    Type: string;
-    Address: string;
-    PhoneNumber: string;
-    FaxNumber: string;
-    ShowDetails: boolean = false;
+export enum PartnerTypeNames {
+    COLLECTOR = 'COLLECTOR',
+    SALESMAN = 'SALESMAN',
+    ACCOUNTMANAGER = 'ACCOUNT MANAGER',
+    ReleasingAgent = 'Releasing Agent',
+    Customer = 'Customer',
+    IssuingCarrierAgent = "Issuing Carrier's Agent",
+    Consolidator = 'Consolidator',
+    CustomClearancePoint = 'Custom Clearance Point',
+    CustomAgentImport = 'Custom Agent Import',
+    CustomAgentExport = 'Custom Agent Export',
+    Coloader = 'Coloader',
+    FreightForwarder = 'Freight Forwarder',
+    Notify1 = 'Notify 1',
+    Notify2 = 'Notify 2',
+    ConsigneeNotImporter = 'Consignee Not Importer',
+    ShipperNotExporter = 'Shipper Not Exporter',
+    Agent = 'Agent',
+    consignee = 'consignee',
+    shipper = 'shipper',
+    Carrier = 'Carrier',
+    Trucker = 'Trucker'
+}
+
+export enum ShipmentEntityTypes {
+    Order = 'O',
+    Customs = 'C',
+    Forwarding = 'F'
+}
+
+export enum ShipmentLevelCodes {
+    House = 'H',
+    Direct = 'D',
+    Customs = 'A'
 }

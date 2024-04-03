@@ -21,6 +21,9 @@ using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.WarehouseLib.BL.Service;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Logitude.BL.Helpers;
 
 namespace Logitude.WarehouseLib.BL.EntityDataMappings
 {
@@ -41,10 +44,18 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
                 entityPOCO.Id = entityPM.Id;
                 entityPOCO.Tenant = entityPM.Tenant;
             }
-        
+
             BuildSearchFields(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
         }
 
+
+        private string GetPrimaryContactId(string cardId, int tenant)
+        {
+            CardQuery cardQuery = new CardQuery(tenant);
+            CardPM cardPM = cardQuery.GetSinglePM(cardId, tenant);
+            if (cardPM == null) return null;
+            return cardPM.PrimaryContactId;
+        }
 
         public void CustomPOCOToPM(WarehouseEntryPM entityPM, WarehouseEntry entityPOCO)
         {
@@ -58,7 +69,10 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
             CardPM cardPM = cardQuery.GetSinglePM(entityPM.CustomerId, entityPM.Tenant);
             if (cardPM != null) entityPM.CustomerName = cardPM.EnglishName;
 
-        
+            entityPM.ShipperPrimaryContactId = GetPrimaryContactId(entityPM.ShipperId, entityPM.Tenant);
+            entityPM.CustomerPrimaryContactId = GetPrimaryContactId(entityPM.CustomerId, entityPM.Tenant);
+            entityPM.ConsigneePrimaryContactId = GetPrimaryContactId(entityPM.ConsigneeId, entityPM.Tenant);
+
             WarehouseQuery warehouseQuery = new WarehouseQuery(entityPM.Tenant);
             WarehousePM warehousePM = warehouseQuery.GetSinglePM(entityPM.WarehouseId, entityPM.Tenant);
             if (warehousePM != null) entityPM.WarehouseName = warehousePM.EnglishName;
@@ -154,14 +168,27 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
                     MethodHelper.AddToSearchFields(ref mySearchFields, myCard.EnglishName);
                 }
             }
-
+            mySearchFields = AddCustomFieldsToSearchFields(entityPM, mySearchFields);
             entityPM.SearchFields = mySearchFields;
         }
 
+        private string AddCustomFieldsToSearchFields(WarehouseEntryPM entityPM, string mySearchFields)
+        {
+            #region Custom Fields
+            List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("WarehouseEntry", entityPM.Tenant).Where(o => o.DataTypeCode != "Decimal").ToList();
 
-
-
-
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(entityPM.Tenant);
+            foreach (ObjectField field in customFields)
+            {
+                object value = customFieldResolver.GetFieldValue(entityPM, field, entityPM.Tenant);
+                if (value != null)
+                {
+                    MethodHelper.AddToSearchFields(ref mySearchFields, value.ToString());
+                }
+            }
+            #endregion
+            return mySearchFields;
+        }
     }
 }
    

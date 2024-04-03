@@ -62,14 +62,69 @@ namespace WebFreight.Web
                 #endregion
 
                 AuthenticationTokenRepository authenticationTokenRepository = new AuthenticationTokenRepository(0);
-                AuthenticationToken Primaryauthentication = new AuthenticationToken() { APICredentialID = apiCredintialsId, CreateDate = DateTime.Now, Email = "system@tenant" + data.Tenant + ".com", Password = PrimaryhashedKey, Token = data.Token, Tenant = data.Tenant, APIToken = true };
+                DateTime? authenticationTokenExpirationDate = null;
+                bool haveAPICredintialValidKeyTokenFeature = FeatureToggleHelper.HasFeatureToggle("AVT", data.Tenant);
+                if (data.TokenExpirationTime != null && haveAPICredintialValidKeyTokenFeature) authenticationTokenExpirationDate = DateTime.Now.AddHours((double)data.TokenExpirationTime);
+                AuthenticationToken Primaryauthentication = new AuthenticationToken() { APICredentialID = apiCredintialsId, CreateDate = DateTime.Now, Email = "system@tenant" + data.Tenant + ".com", Password = PrimaryhashedKey, Token = data.Token, Tenant = data.Tenant, APIToken = true, ExpirationDate = authenticationTokenExpirationDate };
                 //AuthenticationToken Secondaryauthentication = new AuthenticationToken() { CreateDate = DateTime.Now, Email = "system@tenant" + data.Tenant + ".com", Password = SecondaryhashedKey, Token = Secondarytoken, Tenant = data.Tenant, APIToken = true };
                 authenticationTokenRepository.Add(Primaryauthentication);
                 //authenticationTokenRepository.Add(Secondaryauthentication);
                 authenticationTokenRepository.SubmitChanges();
+                if (Key.WithDocumentDownloadToken)
+                {
+                    data.DocumentDownloadToken = GetDocumentDownloadTokenReal(null, Primaryauthentication.Token);
+                }
                 //data.Token = token;
             }
             return data;
+        }
+
+        private static string GetDocumentDownloadTokenReal(string documentToken, string headerToken)
+        {
+            string result = "";
+
+
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(/*token*/headerToken);
+
+            if (authToken != null)
+            {
+                AuthenticationTokenRepository authenticationTokenRepository = new AuthenticationTokenRepository(authToken.Tenant);
+
+                if (!string.IsNullOrEmpty(documentToken))
+                {
+                    AuthenticationToken documentAuthenticationToken = AuthenticationTokenRepository.GetSingleTokenFromCache(documentToken);
+                    if (documentAuthenticationToken != null)
+                    {
+                        DateTime nowDate = DateTime.Now;
+                        DateTime endDate = (DateTime)documentAuthenticationToken.ExpirationDate;
+                        if (endDate.AddMinutes(-5) > nowDate)
+                        {
+                            result = documentAuthenticationToken.Token;
+                        }
+                    }
+                }
+
+                if (string.IsNullOrEmpty(result))
+                {
+                    AuthenticationToken authenticationDocument = new AuthenticationToken()
+                    {
+                        CreateDate = DateTime.Now,
+                        ExpirationDate = DateTime.Now.AddMinutes(15),
+                        Email = authToken.Email,
+                        Password = authToken.Password,
+                        Token = AuthenticationUtil.GenerateToken(),
+                        Tenant = authToken.Tenant
+                        ,
+                        ClientType = "DocumentDownload"
+                    };
+
+                    authenticationTokenRepository.Add(authenticationDocument);
+                    authenticationTokenRepository.SubmitChanges();
+                    result = authenticationDocument.Token;
+                }
+            }
+
+            return result;
         }
 
 

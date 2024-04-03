@@ -15,17 +15,19 @@ let shipmentNumber: string;
 let EventType: string;
 let EventNote: string;
 //#endregion
+
 //#region Create Direct Shipment
 Given("the user logged in and navigates to shipments workspace", () => {
     cy.Login()
     ShipmentActions.NavigatesToShipmentsWorkspace()
 });
-Given("a direct shipment with the following details",
-    (dataTable) => {
-        shipmentDetails = Assists.CreateInstance<ShipmentDetails>(dataTable, true);
-        ShipmentActions.OpenNewShipmentWizard(shipmentDetails.ShipmentLevel);
-        ShipmentActions.FillShipmentWizardsFields(shipmentDetails);
-    });
+
+Given("a direct shipment with the following details", (dataTable) => {
+    shipmentDetails = Assists.CreateInstance<ShipmentDetails>(dataTable, true);
+    ShipmentActions.OpenNewShipmentWizard(shipmentDetails.ShipmentLevel);
+    ShipmentActions.FillShipmentWizardsFields(shipmentDetails);
+});
+
 When("create shipment", () => {
     ShipmentActions.CreateShipment(shipmentDetails.ShipmentLevel);
 });
@@ -36,33 +38,38 @@ Then("the direct should create successfully", () => {
     });
 });
 //#endregion
+
 //#region Add exception
-Given("the initial has exception status is {string}",
-    (hasException) => {
-        ShipmentActions.OpenShipment(shipmentNumber);
-        ShipmentActions.CheckHasException(hasException)
-    });
-Given("exception event with the following details",
-    (dataTable) => {
-        eventDetails = Assists.CreateInstance<EventDetails>(dataTable, true);
-        EventType = eventDetails.EventType
-        EventNote = eventDetails.EventNotes
-        ShipmentActions.FillEventDetails(eventDetails)
-    });
+Given("the initial has exception status is {string}", (hasException) => {
+    ShipmentActions.OpenShipment(shipmentNumber);
+    ShipmentActions.CheckHasException(hasException)
+});
+
+Given("exception event with the following details", (dataTable) => {
+    eventDetails = Assists.CreateInstance<EventDetails>(dataTable, true);
+    EventType = eventDetails.EventType
+    EventNote = eventDetails.EventNotes
+    ShipmentActions.FillEventDetails(eventDetails)
+});
+
 When("add exception", () => {
     ShipmentActions.AddEvent()
 });
+
 Then("the exception should add successfully", () => {
     ShipmentActions.AssertAddEvent()
 });
+
 Then("the exception should appear in events tab", () => {
     ShipmentActions.AssertEventAppearInEventTab(EventType)
 });
+
 Then("has exception should change to yes", () => {
     ShipmentActions.RefreshEventTab()
     ShipmentActions.CheckHasException(BaseSelectors.ContainYes)
 });
 //#endregion
+
 //#region resolve the exception
 When("resolve the exception due to {string}", (ExceptionResolvedNote) => {
     EventNote = ExceptionResolvedNote

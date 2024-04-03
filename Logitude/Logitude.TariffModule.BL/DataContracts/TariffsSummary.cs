@@ -17,5 +17,10 @@ namespace Logitude.TariffModule.BL.DataContracts
         public int OceanLCLFreightCount { get; set; }
         public int OceanFCLFreightCount { get; set; }
         public int OceanFCLSurchargesCount { get; set; }
+        public int ImportCustomsChargesCount { get; set; }
+        public int ExportCustomsChargesCount { get; set; }
+        public int InlandFTLTariffsCount { get; set; }
+        public int ImportSaleCount { get; set; }
+        public int ExportSaleCount { get; set; }
     }
 }

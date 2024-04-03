@@ -56,6 +56,7 @@ namespace WebFreight.Web.WcfApi
                     AgentService service = new AgentService(commoncontext, entityPM.Tenant);
                     CurrencyRepository currencyRepository = new CurrencyRepository(commoncontext);
                     VatTypeRepository vatTypeRepository = new VatTypeRepository(commoncontext);
+
                     if (entityPM.InvoiceCurrencyId != null)
                     {
                         Currency currency = currencyRepository.GetSingleCurrencyByCode(entityPM.InvoiceCurrencyId, entityPM.Tenant);
@@ -86,6 +87,15 @@ namespace WebFreight.Web.WcfApi
                         }
                     }
 
+                    string paymentTermCode = entityPM.PaymentTermId;
+                    entityPM.PaymentTermId = GetPaymentTermId(entityPM, commoncontext);
+                    if (!string.IsNullOrEmpty(paymentTermCode) && string.IsNullOrEmpty(entityPM.PaymentTermId))
+                    {
+                        response.HasError = true;
+                        response.ErrorMessage = "PaymentTermId field doesn't exist in the database,Upsert this entity before using it.";
+                        return response;
+                    }
+                    
                     if (entityPM.PrimaryContactId != null)
                     {
                         ContactRepository contactRepository = new ContactRepository(commoncontext);
@@ -152,6 +162,15 @@ namespace WebFreight.Web.WcfApi
                 }
                 return response;
             }
+        }
+
+        private string GetPaymentTermId(AgentPM entityPM, ICommonDataContext commoncontext)
+        {
+            if (string.IsNullOrEmpty(entityPM.PaymentTermId)) return null;
+            PaymentTermRepository paymentTermRepository = new PaymentTermRepository(commoncontext);
+            PaymentTerm paymentTerm = paymentTermRepository.GetSinglePaymentTermByCode(entityPM.PaymentTermId, entityPM.Tenant);
+            if (paymentTerm == null) return null;
+            return paymentTerm.Id;
         }
 
         public AgentPM GetAgentPM(string code, int tenant, ref Response response)

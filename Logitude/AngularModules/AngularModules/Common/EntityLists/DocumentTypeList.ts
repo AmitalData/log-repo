@@ -33,6 +33,7 @@ export class DocumentTypeList {
 		IsHouse: boolean;
 		CustomControl: string;
 		IsCustomerView: boolean;
+		IsCustomerUploadPermission: boolean;
 		IsAgentView: boolean;
 		IsReadOnly: boolean;
 		LimitedPrintCopyId: string;

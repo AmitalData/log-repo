@@ -10,6 +10,8 @@ using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.QuoteModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
@@ -76,11 +78,13 @@ using Simplog.Data.QuoteModel;
 					{
 						temp = query.GetSinglePM(item.Id, Tenant);
 					} 
-										   
-					if(temp == null)
+					
+					
+			  	   if(temp == null)
 					{   
 					    throw new ApplicationException("QuotePriceSteps with Id " + item.Id + " doesn't exist");
 					} 
+				 
 					
 					if(string.IsNullOrEmpty(temp.Id))
 					{
@@ -99,33 +103,33 @@ using Simplog.Data.QuoteModel;
 						
 					}
                     
-					if(!IsUpdate)// && item.PriceBreakStep != null)
-					{							//throw new ApplicationException("PriceBreakStep Can't be update"); 
-							temp.Step = item.PriceBreakStep;
+					if(!IsUpdate)
+					{							
+						temp.Step = item.PriceBreakStep;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && item.CostUnitPrice != null)
-					{							//throw new ApplicationException("CostUnitPrice Can't be update"); 
-							temp.CostUnitPrice = item.CostUnitPrice;
+					if(!IsUpdate)
+					{							
+						temp.CostUnitPrice = item.CostUnitPrice;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && item.SaleUnitPrice != null)
-					{							//throw new ApplicationException("SaleUnitPrice Can't be update"); 
-							temp.SaleUnitPrice = item.SaleUnitPrice;
+					if(!IsUpdate)
+					{							
+						temp.SaleUnitPrice = item.SaleUnitPrice;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(item.MeasurementUnit))
-					{							//throw new ApplicationException("MeasurementUnit Can't be update"); 
-							temp.MeasurementUnit = item.MeasurementUnit;
+					if(!IsUpdate)
+					{							
+						temp.MeasurementUnit = item.MeasurementUnit;
 
 										}  
 
@@ -141,6 +145,8 @@ using Simplog.Data.QuoteModel;
                 throw ex;
             } 
         }
-		 
+
+
+						   
    }
 }

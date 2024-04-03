@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Logitude.DBMigrations.Models
+﻿namespace Logitude.DBMigrations.Models
 {
     public static class Arguments
     {
@@ -24,6 +18,8 @@ namespace Logitude.DBMigrations.Models
         public const string SCRIPTS = "-scripts";
         public const string EXCLUDEINDEX = "-excludeindex";
         public const string INCLUDECONSTRAINTDROP = "-includeconstraintdrop";
+
+        public const string INCLUDEINDEXDROP = "-includeindexdrop";
 
     }
 }

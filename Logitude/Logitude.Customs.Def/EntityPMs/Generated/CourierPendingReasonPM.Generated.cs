@@ -342,7 +342,7 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private string overseasSuspendedCode ;
+ 	  private string overseasSuspendedCode ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
@@ -366,6 +366,6 @@ namespace Logitude.Customs.Def.EntityPMs
 		 }
 	   }
    }
-   
+    
 }
 	 

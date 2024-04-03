@@ -37,7 +37,8 @@ namespace WebFreight.Web.Helpers
                     dateValue = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
                     break;
                 case "BLM":
-                    dateValue = new DateTime(DateTime.Today.Year, DateTime.Today.Month - 1, 1);
+                    var temp = DateTime.Today.AddMonths(-1);
+                    dateValue = new DateTime(temp.Year, temp.Month, 1);
                     break;
                 case "BTQ":
                     dateValue = new DateTime(DateTime.Now.Year, (quarterNumber - 1) * 3 + 1, 1);

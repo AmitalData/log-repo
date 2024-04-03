@@ -1,6 +1,7 @@
 ﻿using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.Tools.Initializers;
 using Logitude.Server.Tools.Helpers;
+using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Interfaces;
@@ -61,6 +62,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
             else if (initializer.EntityPM.ShipmentDirectionConverted && initializer.EntityPM.ShipmentConvertedNewNumber)
             {
+                this.entityPM.OldShipmentNumber = initializer.EntityPM.ShipmentNumber;
                 isTakenCounter = true;
 
                 EventTracer.CreateTraceEvent(new EventTracerArgs()
@@ -77,12 +79,16 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
             if (isTakenCounter)
             {
-                Dictionary<string, string> counterAdditionalParameters = new Dictionary<string, string>() { { "[B]", "" } };
-                if (!string.IsNullOrEmpty(initializer.EntityPM.BranchId))
+                string branchId =!string.IsNullOrEmpty(initializer.EntityPM.BranchId) ? initializer.EntityPM.BranchId : GetCreatedByUserBranchId(initializer.EntityPM.CreatedByUserId , initializer.EntityPM.Tenant);
+                Dictionary<string, string> counterAdditionalParameters = new Dictionary<string, string>() { { "[B]", "" },{ "[BranchName]",""} };
+                if (!string.IsNullOrEmpty(branchId))
                 {
                     BranchRepository branchRepository = new BranchRepository(initializer.CommonContext);
-                    Branch myBranch = branchRepository.GetSingleBranch(initializer.EntityPM.BranchId, initializer.EntityPM.Tenant);
-
+                    Branch myBranch = branchRepository.GetSingleBranch(branchId, initializer.EntityPM.Tenant);
+                    if(myBranch != null)
+                    {
+                        counterAdditionalParameters["[BranchName]"] = myBranch.EnglishName;
+                    }
                     if (myBranch != null && !string.IsNullOrEmpty(myBranch.CounterCode))
                     {
                         counterAdditionalParameters["[B]"] = myBranch.CounterCode;
@@ -106,8 +112,43 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                         initializer.EntityPM.ShipmentNumber = TableCounter.GetNumber(initializer.Tenant, "SHIP", initializer.EntityPM.DirectionId, initializer.EntityPM.TransportModeId, counterAdditionalParameters);
                     }
                 }
+
+                if(initializer.EntityPM.ShipmentLevelCode != "H")
+                {
+                    initializer.EntityPM.MasterShipmentNumber = initializer.EntityPM.ShipmentNumber;
+                }
+            }
+
+            if (IsUpdatingHousesConnectedMasters())
+            {
+                
             }
         }
 
+        private string GetCreatedByUserBranchId(string createdByUserId , int tenant)
+        {
+            if(string.IsNullOrEmpty(createdByUserId)) return null;
+            var commonContext = CommonDataContext.GetContext(tenant);
+            User user = (from d in commonContext.Users where d.Id == entityPM.CreatedByUserId && d.Tenant == tenant select d).FirstOrDefault();
+            if (user == null) return null;
+            return user.BranchId;
+        }
+
+        private bool IsUpdatingHousesConnectedMasters()
+        {
+            if(!initializer.EntityPM.ShipmentDirectionConverted)            
+                return false;            
+
+            else if(!initializer.EntityPM.ShipmentConvertedNewNumber)            
+                return false;
+
+            else if (initializer.EntityPM.ShipmentLevelCode != "C")
+                return false;
+
+            else if (initializer.EntityPM.ShipmentConsoleShipments.Count == 0)
+                return false;
+
+            return true;
+        }
     }
 }

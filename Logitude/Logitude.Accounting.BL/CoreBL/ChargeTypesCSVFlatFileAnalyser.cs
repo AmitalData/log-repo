@@ -79,6 +79,13 @@ namespace Logitude.Accounting.BL.CoreBL
                     string text_44;
                     string text_2;
                     DateTime @now = TenantServerConfigration.GetCurrentDateTime(tenant);
+
+                    string measurementCode = "FIXD";
+                    MeasurementQuery measurementQuery = new MeasurementQuery(tenant);
+                    MeasurementPM measurementPM = measurementQuery.GetSinglePMByCode(measurementCode, tenant);
+                    string measurementId = "";
+                    if (measurementPM != null) measurementId = measurementPM.Id;
+
                     string chargesGroupCode = "NONE";
                     ChargesGroupQuery chargesGroupQuery = new ChargesGroupQuery(tenant);
                     ChargesGroupPM chargesGroupPM = chargesGroupQuery.GetSingleChargesGroupPMByCode(chargesGroupCode, tenant);
@@ -86,6 +93,10 @@ namespace Logitude.Accounting.BL.CoreBL
                     if (chargesGroupPM != null) chargesGroupId = chargesGroupPM.Id;
 
                     var usrid = AuthenticationUtil.ResolveUserId(tenant);
+
+                    TenantQuery tenantQuery = new TenantQuery(tenant);
+                    TenantPM tPM = tenantQuery.GetSinglePM(tenant);
+                    string accountingCurrencyId = tPM.CurrencyId;
 
                     foreach (ChargeTypeSrcLineDTO ct1stLineDTO in _ChargeTypeSrcLinesDTO)
                     {
@@ -177,39 +188,40 @@ namespace Logitude.Accounting.BL.CoreBL
                                 IsInland = true,
                                 IsAutoDisplayInShipment = false,
                                 IsAutoDisplayInConsolidation = false,
-                                Description = "",
+                                Description = null, 
                                 AWBPrintDescription = true,
-                                DueTypeCode = "",
+                                DueTypeCode = "NO",
+
                                 IsAutoDisplayInQuote = false,
-                                MeasurementId = "???",
-                                ContainerMeasurementCode = "",
+                                MeasurementId = measurementId,
+                                ContainerMeasurementCode = null, 
 
 
-                                ContainerMeasurementId = "",
+                                ContainerMeasurementId = null, 
                                 ViewOrder = 100,
-                                ReceivableAccountId = "",
-                                PayableAccountId = "",
+                                ReceivableAccountId = null, 
+                                PayableAccountId = null, 
                                 AccountingVATSplit = false,
                                 ReceivableCreditAccount = recInternal,
                                 PayableDebitAccount = payInternal,
-                                ReceivablesChargesTypeExternalCode = "",
-                                IATACodeId = "",
+                                ReceivablesChargesTypeExternalCode = null, 
+                                IATACodeId = null, 
                                 PayableDebitGLAcountId = payId,
                                 ReceivableCreditGLAccountId = recId,
                                 ChargesGroupId = chargesGroupId,
-                                PayablesChargesTypeExternalCode = "",
+                                PayablesChargesTypeExternalCode = null, 
                                 IsExpense = false,
 
                                 IsBackToBack = false,
                                 IsAutoDisplayInCustoms = false,
                                 IsCustoms = false,
-                                SATExternalId = "",
+                                SATExternalId = null, 
                                 IsImport = false,
                                 IsDomestic = false,
                                 IsExport = false,
                                 IsDrop = false,
-                                ReceivablesDefaultCurrencyId = "",
-                                PayablesDefaultCurrencyId = "",
+                                ReceivablesDefaultCurrencyId = accountingCurrencyId,
+                                PayablesDefaultCurrencyId = accountingCurrencyId,
                                 ApplyRegionalTax = false,
                                 HasPickup = false,
                                 HasDelivery = false,

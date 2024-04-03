@@ -24,5 +24,6 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string ShipmentTypeName { get; set; }
         public string CreatedByUserName { get; set; }
         public string UpdatedByUserName { get; set; }
+        public bool IsManuallyAdded { get; set; }
     }
 }

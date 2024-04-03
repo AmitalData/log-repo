@@ -362,7 +362,7 @@ class FollowupClass {
         this.Done = entityPM.Done;
         this.Date = entityPM.Date;
         this.Name = entityPM.EventTypeFollowUpName;
-        this.Notes = entityPM.Note;
+        this.Notes = entityPM.Notes;
 
         if (this.Date) {
             if (DateTool.GetDateParts(this.Date).DateTicks < DateTool.GetCurrentDateAsUtc().valueOf()) {

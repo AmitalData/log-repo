@@ -48,7 +48,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public Address GetSingleAddressByCardIdAndTypeId(string cardId,string addressTypeId, int tenant)
         {
-            return (from record in context.Addresses.Include("Country").Include("State") where record.AddressTypeId == addressTypeId && record.CardId == cardId && record.Tenant == tenant select record).FirstOrDefault();
+            return (from record in context.Addresses.Include("Country").Include("State") where record.AddressTypeId == addressTypeId && record.CardId == cardId && record.Tenant == tenant && !record.InActive select record).FirstOrDefault();
         }
 
         public Address GetByCardIdAndTypeId(string cardId, string addressTypeId, int tenant)

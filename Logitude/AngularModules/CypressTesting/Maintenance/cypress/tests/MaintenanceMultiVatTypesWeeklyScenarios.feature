@@ -1,4 +1,4 @@
-@dev @weekly
+@release @stable @weekly
 Feature: Multi Vat Type Create, Search and Edit from Maintenance
     The user creates a multi vat type, searches for and edits it from the Maintenance Module.
 
@@ -11,7 +11,7 @@ Feature: Multi Vat Type Create, Search and Edit from Maintenance
     Scenario: Add Multi Vat Type Code with lenght more than 5
         Given the user open "VatTypes" in maintenance menu
         When add "123456" as multi vat type code
-        Then a validation message with "Code Field must be less than 5" error should appear
+        Then a validation message with "Code Field length must be less than 5" error should appear
 
     Scenario: Create new multi vat type
         And a multi vat type with the following details
@@ -45,6 +45,7 @@ Feature: Multi Vat Type Create, Search and Edit from Maintenance
         And the following event should appear in events tab
             | Event            | Notes                |
             | Vat Type Updated | Vat Type Inactivated |
+        And this message "This is Multi-percentages VAT" should appear in percentage tab
 
     Scenario: Save and close the multi vat type
         When save and close multi vat type

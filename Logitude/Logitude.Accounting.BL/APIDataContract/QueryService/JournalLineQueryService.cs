@@ -166,6 +166,7 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
                     //temp.IsCreditAccountMulti = item.IsCreditAccountMulti;
                     //temp.IsDebitAccountMulti = item.IsDebitAccountMulti;
                     temp.ExternalReconcileNumber = item.ExternalReconcileNumber;
+                    temp.ConfirmationNumber = item.ConfirmationNumber; 
 
                     JournalActionTypeQueryService journalActionTypeService = new JournalActionTypeQueryService(Tenant);
                     temp.ActionCode = item.ActionCode;
@@ -189,13 +190,19 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
             {
 
                 var MyList = new List<JournalLine>();
+                JournalPM journalPM = null;
+
+                JournalQueryService journalQueryService = new JournalQueryService(Tenant);
+
+                if (lines != null && lines.Any())
+                    journalPM = journalQueryService.GetJournalPMById(lines[0].JournalId, Tenant);
+
                 foreach (var item in lines)
                 {
 
                     var temp = new JournalLine();
 
-                    JournalQueryService journalQueryService = new JournalQueryService(Tenant);
-                    JournalPM journalPM = journalQueryService.GetJournalPMById(item.JournalId, Tenant);
+                    //JournalPM journalPM = journalQueryService.GetJournalPMById(item.JournalId, Tenant);
                     if (journalPM != null)
                         temp.JournalNumber = journalPM.JournalNumber;
                     temp.Line = item.Line;
@@ -257,6 +264,7 @@ namespace Logitude.Accounting.BL.APIDataContract.ApiV1
                     //temp.IsDebitAccountMulti = item.IsDebitAccountMulti;
                     temp.ExternalReconcileNumber = item.ExternalReconcileNumber;
                     temp.ActionCode = item.ActionCode;
+                    temp.ConfirmationNumber = item.ConfirmationNumber;
                     MyList.Add(temp);
                 }
 

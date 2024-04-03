@@ -27,31 +27,25 @@ namespace WebFreight.Web.Helpers.BIReport
             this.bIReportXMLData = bIReportXMLData;
             this.bIReportdataTable = bIReportdataTable;
             this.tenant = tenant;
-            this.bIReportHtmlRenderingService = new BIReportHtmlRenderingService(this.bIReportdataTable);
+            this.bIReportHtmlRenderingService = new BIReportHtmlRenderingService(this.bIReportdataTable, bIReportXMLData, tenant);
         }
 
         public byte[] Run()
         {
-            byte[] pdfData = null;
-
-            if (bIReportdataTable != null)
+            if (bIReportdataTable == null) return null;
+            if (!CheckIfAllowExportBIReportToPdfFormat())
             {
-                if (CheckIfAllowExportBIReportToPdfFormat())
-                {
-                    pdfData = GetEvoPdfData();
-                }
-                else
-                {
-                    throw new Exception("The report size is too big to be downloaded in PDF. " +
-                        "The number of report columns and rows shouldn't exceed 15 and 40000, respectively. " +
-                        "Please use download to Excel option.");
-                }
+                throw new Exception("The report size is too big to be downloaded in PDF. " +
+                       "The number of report columns and rows shouldn't exceed 15 and 40000, respectively. " +
+                       "Please use download to Excel option.");
             }
-            return pdfData;
+
+            return GetEvoPdfData();
+
         }
 
         private byte[] GetEvoPdfData()
-        {
+        {           
             InitializePdfConverter();
             SetEvoPdfHeader();
             SetEvoPdfFooter();

@@ -1,0 +1,62 @@
+<div class="TabHolder" [style.opacity]="IsDisabledEntity ? '0.5':'1'" [style.pointer-events]="IsDisabledEntity ? 'none':'auto'">
+    <table>
+        <tr style="height: 1px;">
+            <td>
+                <table>
+                    <tr class="TabTitleRow">
+                        <td colspan="2">{{'DeploymentPackage.TH.General' | TextCodeTranslationPipe}}</td>
+                    </tr>
+
+                    <tr>
+                        <td style="width: 360px">
+                            <table>
+                                <!-- Code -->
+                                <tr class="FormFieldRow">
+                                    <td style="width: 100px;">
+                                        <LogLabel [ObjectFieldName]="'Code'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <LogTextBox [ObjectFieldName]="'Code'" [Text]="Code" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                    </td>
+                                </tr>
+
+                                <!-- Name -->
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'Name'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <LogTextBox [ObjectFieldName]="'Name'" [Text]="Name" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                    </td>
+                                </tr>
+
+                                <!-- Description -->
+                                <tr class="FormFieldRow" style="height: 100px;">
+                                    <td style="vertical-align:top;">
+                                        <div style="padding-top: 8px">
+                                            <LogLabel [ObjectFieldName]="'Description'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                        </div>
+                                    </td>
+
+                                    <td style="padding-top: 6px">
+                                        <LogTextBox [ObjectFieldName]="'Description'" [Text]="Description" [IsMultiline]="true" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td></td>
+                                </tr>
+                            </table>
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</div>

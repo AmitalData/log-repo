@@ -90,6 +90,15 @@ namespace Simplog.Data.ShipmentsModel.Repositories
             }
         }
 
+        public LogitudeOceanInsightsRequest GetSingleLogitudeOceanInsightsRequestByOBLNumberAndScac(string oblNumber, string carrier_scac,string shipmentId)
+        {
+            return (from a in Context.LogitudeOceanInsightsRequests where a.BLNumber == oblNumber && a.SCACCode == carrier_scac && a.ShipmentId == shipmentId  select a).FirstOrDefault();
+        }
+
+        public LogitudeOceanInsightsRequest GetSingleLogitudeOceanInsightsRequestByContainerAndScac(string container_number, string carrier_scac, string shipmentId)
+        {
+            return (from a in Context.LogitudeOceanInsightsRequests where a.ContainerNumber == container_number && a.SCACCode == carrier_scac && a.ShipmentId == shipmentId select a).FirstOrDefault();
+        }
         public void SubmitChanges()
         {
             Context.SaveChanges();

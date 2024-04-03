@@ -39,7 +39,7 @@
             box-shadow: 0px 0px 5px 1px rgba(0,148,118,1);
         }
 </style>
-<table>
+<table style="height: 210px;">
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
         <td colspan="3">
             <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
@@ -53,10 +53,9 @@
 
     <tr>
         <td>
-
             <table>
                 <tr>
-                    <td style="width:450px">
+                    <td style="width:450px" *ngIf="isReady">
                         <table>
 
                             <tr>
@@ -120,7 +119,26 @@
                                                     </li>
                                                 </ul>
                                             </td>
-                                            <td></td>
+                                            <td>
+                                                <div style="padding: 0 10px;display: flex;" *ngIf="FilterSelectedValue === 'GLAccount'">
+
+                                                    <div style="padding: 4px 15px;">{{'GLAccount.F.ChartOfAccountsTypeCode' | TextCodeTranslationPipe}}</div>
+                                                    <div style="width: 150px;" *ngIf="chartOfAccountsTypes.length > 0">
+                                                        <ComboBoxWithInCheckBox [AutoHeight]="true" [MinHeight]="150" [ItemsSource]="chartOfAccountsTypes" [IsDisabled]="isChartOfAccountsTypesDisabled"
+                                                            [SelectedItem]="ChartOfAccountsTypeComboboxValue" (EditedItemSource)="OnChartOfAccountsTypeItemClicked($event)"
+                                                            [SelectionType]="showLocal?'קבוצה':'Product'"
+                                                            (SelectedItemChanged)="ChartOfAccountsTypeComboboxValue = $event" [Binding]="'LocalName'" [AlternativeBinding]="'EnglishName'"></ComboBoxWithInCheckBox>
+                                                    </div>
+                                                    <div style="width: 50px;"></div>
+                                                    <div style="padding: 4px 15px;">{{'GLAccount.F.ChartOfAccountsId' | TextCodeTranslationPipe}}</div>
+                                                    <div style="width: 150px;" *ngIf="chartOfAccounts.length > 0" >
+                                                        <ComboBoxWithInCheckBox [AutoHeight]="true" [MinHeight]="150" [ItemsSource]="chartOfAccounts" [IsDisabled]="isChartOfAccountsDisabled" (SetStyle)="handleSetStyle($event)"
+                                                            [SelectedItem]="ChartOfAccountsComboBoxValue" (EditedItemSource)="OnChartOfAccountsItemClicked($event)"
+                                                            [SelectionType]="showLocal?'קבוצה':'Product'"
+                                                            (SelectedItemChanged)="ChartOfAccountsComboBoxValue = $event" [Binding]="'LocalName'" [AlternativeBinding]="'EnglishName'"></ComboBoxWithInCheckBox>
+                                                    </div>
+                                                </div>
+                                            </td>
                                         </tr>
 
                                     </table>
@@ -141,7 +159,8 @@
                                                           [DataContext]="DataContext"></LogLabel>
                                             </td>
                                             <td style="width:120px">
-                                                <ComboBox [ItemsSource]="CategoriesList" (SelectedItemChanged)="SelectedItemChanged($event)" [IsDisabled]="IsCategoryDisabled"></ComboBox>
+                                                <ComboBox [ItemsSource]="CategoriesList" [SelectedItem]="SelectedCategory"
+                                                (SelectedItemChanged)="SelectedItemChanged($event)" [IsDisabled]="IsCategoryDisabled"></ComboBox>
                                             </td>
                                             <td style="width:10px"></td>
                                             <td style="padding-left: 5px;width:120px">
@@ -241,7 +260,7 @@
                                                 <CheckBox [IsChecked]="DetailedForCustomers" (Checked)="DetailedForCustomers = $event" [IsEnabled]="IsDetailedCheckBoxEnabled"></CheckBox>
                                             </td>
                                             <td style="width:60px">{{'Accounting.O.Customers' | TextCodeTranslationPipe}}</td>
-                                           
+
                                             <td style="width:20px">
                                                 <CheckBox [IsChecked]="DetailedForVendors" (Checked)="DetailedForVendors = $event" [IsEnabled]="IsDetailedCheckBoxEnabled"></CheckBox>
                                             </td>
@@ -271,7 +290,7 @@
                                                 <CheckBox [IsChecked]="CurrencyFilter" (Checked)="CurrencyFilter = $event" [IsEnabled]="IsEditable">></CheckBox>
 
                                             </td>
-                                          
+
                                             <td style="width:100px">{{'Accounting.O.CurrencyDetailed' |TextCodeTranslationPipe }}</td>
 
 
@@ -297,7 +316,7 @@
                     </td>
 
                     <td style="width:20px"></td>
-                   
+
 
                 </tr>
 

@@ -87,13 +87,12 @@
                                 </td>
 
                                 <td>
-
                                     <!-- [DependencyFilter1Value]="CarrierDependencyProperty1" -->
                                     <LogLov [ObjectFieldName]="'PreCarriageCarrierId'"
                                             [SelectedValue]="PreCarriageCarrierId"
                                             [ObjectTableName]="ObjectTableName"
                                             [DataContext]="DataContext"
-                                            [LookUpTableName]="'Carrier'">
+                                            [LookUpTableName]="'Carrier'" [ShowInActive]="'true'" [ShowInActivePopUpWindow]="'true'">
                                     </LogLov>
                                 </td>
                             </tr>
@@ -109,18 +108,34 @@
                                 </td>
                             </tr>
 
-                            <!-- PreCarriageVesselId -->
-                            <tr class="FormFieldRow">
+                            <!-- PreCarriageVesselName -->
+                            <tr class="FormFieldRow" *ngIf="PreCarriageTransportModeId == 'O'">
                                 <td>
-                                    <LogLabel [ObjectFieldName]="'PreCarriageVesselId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.O.Routings.Vessel'"></LogLabel>
+                                    <LogLabel [ObjectFieldName]="'PreCarriageVesselName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.O.Routings.Vessel'"></LogLabel>
                                 </td>
 
-                                <td>
+                                <td *ngIf="IsVesselFreeTextVisible">
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <LogTextBox [HideLastColumn]="true" [ObjectFieldName]="'PreCarriageVesselName'" [Text]="PreCarriageVesselName" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                            </td>
+                                            <td style="width: 20px; left:-15px;">
+                                                <span *ngIf="IsChooseVesselVisible" class="hyperlink" [class.HyperlinkDisabled]="!IsEditingEnabled" (click)="ChooseVesselClicked('P')">
+                                                    <img style="vertical-align: middle; width: 14px; height: 14px; cursor: pointer;" src="./Images/LOVSearch.png" />
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+
+                                <td *ngIf="!IsVesselFreeTextVisible">
                                     <LogLov [ObjectFieldName]="'PreCarriageVesselId'"
                                             [SelectedValue]="PreCarriageVesselId"
                                             [ObjectTableName]="ObjectTableName"
                                             [DataContext]="DataContext"
-                                            [LookUpTableName]="'Vessel'">
+                                            [LookUpTableName]="'Vessel'"
+                                            (SelectedItemChanged)="PreCarriageVessel = $event">
                                     </LogLov>
                                 </td>
                             </tr>
@@ -334,7 +349,7 @@
                                             [SelectedValue]="PreForwardingCarrierId"
                                             [ObjectTableName]="ObjectTableName"
                                             [DataContext]="DataContext"
-                                            [LookUpTableName]="'Carrier'">
+                                            [LookUpTableName]="'Carrier'" [ShowInActive]="'true'" [ShowInActivePopUpWindow]="'true'">
                                     </LogLov>
                                 </td>
                             </tr>
@@ -350,18 +365,34 @@
                                 </td>
                             </tr>
 
-                            <!-- PreForwardingVesselId -->
-                            <tr class="FormFieldRow">
+                            <!-- PreForwardingVesselName -->
+                            <tr class="FormFieldRow" *ngIf="PreForwardingTransportModeId == 'O'">
                                 <td>
-                                    <LogLabel [ObjectFieldName]="'PreForwardingVesselId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.O.Routings.Vessel'"></LogLabel>
+                                    <LogLabel [ObjectFieldName]="'PreForwardingVesselName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.O.Routings.Vessel'"></LogLabel>
                                 </td>
 
-                                <td>
+                                <td *ngIf="IsVesselFreeTextVisible">
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <LogTextBox [HideLastColumn]="true" [ObjectFieldName]="'PreForwardingVesselName'" [Text]="PreForwardingVesselName" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                            </td>
+                                            <td style=" width: 20px; left:-15px;">
+                                                <span *ngIf="IsChooseVesselVisible" class="hyperlink" [class.HyperlinkDisabled]="!IsEditingEnabled" (click)="ChooseVesselClicked('F')">
+                                                    <img style="vertical-align: middle; width: 14px; height: 14px; cursor: pointer;" src="./Images/LOVSearch.png" />
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+
+                                <td *ngIf="!IsVesselFreeTextVisible">
                                     <LogLov [ObjectFieldName]="'PreForwardingVesselId'"
                                             [SelectedValue]="PreForwardingVesselId"
                                             [ObjectTableName]="ObjectTableName"
                                             [DataContext]="DataContext"
-                                            [LookUpTableName]="'Vessel'">
+                                            [LookUpTableName]="'Vessel'"
+                                            (SelectedItemChanged)="PreForwardingVessel = $event">
                                     </LogLov>
                                 </td>
                             </tr>
@@ -514,7 +545,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="Button" id="{{ 'PreCarriageCancelBtn' | IdGeneratorPipe}}" (click)="CancelButtonClicked()">Cancel</button>
+                        <button class="Button" id="{{ 'PreCarriageCancelBtn' | IdGeneratorAsyncPipe | async}}" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -522,7 +553,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="RedButton" (click)="OkButtonClicked()" [disabled]="!IsOkButtonEnabled" id="{{ 'PreCarriageOKBtn' | IdGeneratorPipe}}">Ok</button>
+                        <button class="RedButton" (click)="OkButtonClicked()" [disabled]="!IsOkButtonEnabled" id="{{ 'PreCarriageOKBtn' | IdGeneratorAsyncPipe | async}}">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
                     </td>
                 </tr>
             </table>

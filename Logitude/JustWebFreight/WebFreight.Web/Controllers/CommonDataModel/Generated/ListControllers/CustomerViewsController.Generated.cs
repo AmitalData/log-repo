@@ -29,6 +29,7 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.CustomFilters;
 using Logitude.BL.CommonDataModel.BusinessUnitFilters;
 using Logitude.BL.Helpers;
+using Logitude.Server.Tools.TreeFilterQuery;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 {
@@ -78,7 +79,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 IQueryable<CustomerList> entityLists = customerQuery.GetIQueryableEntityList(entityPocos);
 
                 List<CustomerList> listResult = entityLists.ToList();
-                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
                 customFieldResolver.SetCustomFieldsValues("Customer", authToken.Tenant, listResult.Cast<object>().ToList());
 
                 return Request.CreateResponse(HttpStatusCode.OK, listResult);
@@ -187,44 +188,38 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                 ICommonDataContext MyContext = CommonDataContext.GetContext(tenant);
                 CustomerRepository customerRepository = new CustomerRepository(MyContext);
-                
+                IQueryable<CustomersDataView> entityPocos = customerRepository.GetCustomersDataViews(tenant);
+
                 CustomerQuery customerQuery = new CustomerQuery(customerRepository);
+
                 QueryOperations nonListQueryOperation = new QueryOperations();
                 nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
                 QueryOperations listQueryOperation = new QueryOperations();
                 listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
-                int skippedEntities = queryOperations.PageIndex;
-                IQueryable<CustomerList> entityLists;
 
-                FeatureQuery featureQuery = new FeatureQuery();
-                string loggedUserId = null;
-                ContactQuery contactQuery = new ContactQuery(tenant);
-                var contact = contactQuery.GetContactByEmailOnly(authToken.Email, tenant);
-                if (contact != null)
+                CustomerCustomFilter customfilters = new CustomerCustomFilter(tenant);
+                entityPocos = customfilters.GetFilteredQuery(queryOperations, entityPocos);
+
+                CustomerBusinessUnitFilter myFilter = new CustomerBusinessUnitFilter(tenant);
+                entityPocos = myFilter.RunFilter(entityPocos);
+
+
+                TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
                 {
-                    loggedUserId = contact.Id;
-                }
-                var features = featureQuery.GetAllowedFeaturesForLoggedUser(loggedUserId, tenant);
-                var feature = features.Features.FirstOrDefault(x => x.Code == "CUSTOMERSVIEW");
-                if (feature != null)
-                {
-                    var entityPocos = customerRepository.GetCustomers(tenant);
-                    CustomerBusinessUnitFilter myFilter = new CustomerBusinessUnitFilter(tenant);
-                    entityPocos = myFilter.RunFilter(entityPocos);
-                    entityPocos = genericFilter.GetFilteredQuery<Customer>(nonListQueryOperation, entityPocos);
-                    entityLists = customerQuery.GetIQueryableEntityList(entityPocos);
-                }
-                else
-                {
-                    IQueryable<CustomersDataView> entityPocos = customerRepository.GetCustomersDataViews(tenant);
-                    CustomerCustomFilter customfilters = new CustomerCustomFilter(tenant);
-                    entityPocos = customfilters.GetFilteredQuery(queryOperations, entityPocos);
-                    CustomerBusinessUnitFilter myFilter = new CustomerBusinessUnitFilter(tenant);
-                    entityPocos = myFilter.RunFilter(entityPocos);
-                    entityPocos = genericFilter.GetFilteredQuery<CustomersDataView>(nonListQueryOperation, entityPocos);
-                    entityLists = customerQuery.GetIQueryableEntityList(entityPocos);
-                }
+                    AdditionalTreeFilter = filters.TreeFilters,
+                    ObjectTableName = "Customer",
+                    ParentEntityId = filters.ParentEntityId,
+                    ParentObjectTableName = filters.ParentObjectTableName,
+                    Tenant = tenant,
+                    ParentEntity = filters.ParentEntity
+                };
+
+
+                entityPocos = genericFilter.GetFilteredQuery<CustomersDataView>(nonListQueryOperation, entityPocos);
+                int skippedEntities = queryOperations.PageIndex;
+                IQueryable<CustomerList> entityLists = customerQuery.GetIQueryableEntityList(entityPocos);
                 entityLists = genericFilter.GetFilteredQuery<CustomerList>(listQueryOperation, entityLists);
+                entityLists = new TreeFilterQueryService().Apply<CustomerList>(entityLists, treeFilterQueryArgs);
 
                 if (!string.IsNullOrEmpty(searchvalue))
                 {
@@ -233,7 +228,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 }
 
 
-              else  if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
+                else if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
                 {
                     PropertyInfo propInfo = typeof(CustomerList).GetProperty(queryOperations.SortByColumnName);
 
@@ -295,10 +290,6 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                             }
                         }
                     }
-                    else
-                    {
-                        entityLists = entityLists.OrderByDescending(d => d.Code);
-                    }
                 }
                 else
                 {
@@ -324,8 +315,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                 }
 
-                List< CustomerList > listResult = entityLists.ToList();
-                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                List<CustomerList> listResult = entityLists.ToList();
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
                 customFieldResolver.SetCustomFieldsValues("Customer", authToken.Tenant, listResult.Cast<object>().ToList());
 
                 response.Result = listResult;

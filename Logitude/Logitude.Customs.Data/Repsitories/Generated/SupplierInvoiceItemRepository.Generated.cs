@@ -49,7 +49,7 @@ namespace Logitude.Customs.Data.Repsitories
                     where a.DeclarationId == keys.DeclarationId && a.CounterKey == keys.CounterKey && a.LineNumber == keys.LineNumber
                     select a).FirstOrDefault();
         }
-		         
+		 		                 
         partial void onAdd();//Partial Methods Definition in Generated
         public void Add(SupplierInvoiceItem entity)
         {

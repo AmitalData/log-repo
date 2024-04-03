@@ -32,11 +32,13 @@ namespace Simplog.Server.Infrastructure.Azure
                     }
                     else
                     {
+
                         string dProtocol = @"http://";
-                        if (LogitudeSettings.IsCostomsDeploy)
+                        if (LogitudeSettings.IsCostomsDeploy || LogitudeSettings.StorageAccountName.Equals("amitalexporttest", StringComparison.OrdinalIgnoreCase))
                         {
                             dProtocol = @"httpS://";
                         }
+
 
 
                         storageaccount = new CloudStorageAccount(new StorageCredentials(LogitudeSettings.StorageAccountName, LogitudeSettings.StorageAccountKey),
@@ -285,7 +287,7 @@ namespace Simplog.Server.Infrastructure.Azure
 
              
             CloudBlobContainer blobContainer = BlobClient.GetContainerReference(containername);
-            //if (!LogitudeSettings.IsCostomsDeploy)
+
             {
                 blobContainer.CreateIfNotExists();
             }
@@ -386,7 +388,12 @@ namespace Simplog.Server.Infrastructure.Azure
                         //blobName = blobname;
                         break;
                     }
-
+                case "multiprint":
+                    {
+                        blobName = "multiprint/" + blobname;
+                        //blobName = blobname;
+                        break;
+                    }
                 case "termsOfUse":
                     {
                         blobName = "termsOfUse/" + blobname; 

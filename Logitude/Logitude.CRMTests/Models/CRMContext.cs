@@ -11,5 +11,6 @@ namespace Logitude.CRMTests.Models
         public ActivityPM ActiviyTask { get; set; }
         public ActivityPM ActiviyAppointment { get; set; }
         public ActivityPM ActiviyPhoneCall { get; set; }
+        public OpportunityPM Opportunity { get; set; }
     }
 }

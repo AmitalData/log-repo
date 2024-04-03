@@ -135,7 +135,30 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 			
 		 }
 	   }
-   }
+	  private int? weight ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? Weight  
+	   {
+	    
+	     get
+		{
+		   return weight;
+		 }
+		 set
+		 {
+		   if(weight != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Weight",OldValue=weight,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   weight=value;
+		   }
+			
+		 }
+	   }
+	    }
    
 }
 	 

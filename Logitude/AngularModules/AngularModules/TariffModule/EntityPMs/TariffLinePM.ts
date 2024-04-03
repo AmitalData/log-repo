@@ -21,9 +21,9 @@ export class TariffLinePM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	        constructor(_entityParentPM: any) {
-          this.EntityParentPM = _entityParentPM;
-          this.UIProperties = new UIProperties(this); 
-          this.IsDirty = false;
+	                  this.EntityParentPM = _entityParentPM;
+                this.UIProperties = new UIProperties(this);
+                this.IsDirty = false;
       }
 
 	 
@@ -590,6 +590,51 @@ export class TariffLinePM {
     private viaPortHasWrongTransMode: boolean;
     public get ViaPortHasWrongTransMode() { return this.viaPortHasWrongTransMode; }
     public set ViaPortHasWrongTransMode(newValue: boolean) { if (this.viaPortHasWrongTransMode != newValue) { this.viaPortHasWrongTransMode = newValue; this.MarkAsDirty("ViaPortHasWrongTransMode"); } }
+       
+	 
+    private fromCountryId: string;
+    public get FromCountryId() { return this.fromCountryId; }
+    public set FromCountryId(newValue: string) { if (this.fromCountryId != newValue) { this.fromCountryId = newValue; this.MarkAsDirty("FromCountryId"); } }
+       
+	 
+    private toCountryId: string;
+    public get ToCountryId() { return this.toCountryId; }
+    public set ToCountryId(newValue: string) { if (this.toCountryId != newValue) { this.toCountryId = newValue; this.MarkAsDirty("ToCountryId"); } }
+       
+	 
+    private fromCountryCode: string;
+    public get FromCountryCode() { return this.fromCountryCode; }
+    public set FromCountryCode(newValue: string) { if (this.fromCountryCode != newValue) { this.fromCountryCode = newValue; this.MarkAsDirty("FromCountryCode"); } }
+       
+	 
+    private toCountryCode: string;
+    public get ToCountryCode() { return this.toCountryCode; }
+    public set ToCountryCode(newValue: string) { if (this.toCountryCode != newValue) { this.toCountryCode = newValue; this.MarkAsDirty("ToCountryCode"); } }
+       
+	 
+    private fromCountryName: string;
+    public get FromCountryName() { return this.fromCountryName; }
+    public set FromCountryName(newValue: string) { if (this.fromCountryName != newValue) { this.fromCountryName = newValue; this.MarkAsDirty("FromCountryName"); } }
+       
+	 
+    private toCountryName: string;
+    public get ToCountryName() { return this.toCountryName; }
+    public set ToCountryName(newValue: string) { if (this.toCountryName != newValue) { this.toCountryName = newValue; this.MarkAsDirty("ToCountryName"); } }
+       
+	 
+    private isFromAllOtherCountries: boolean;
+    public get IsFromAllOtherCountries() { return this.isFromAllOtherCountries; }
+    public set IsFromAllOtherCountries(newValue: boolean) { if (this.isFromAllOtherCountries != newValue) { this.isFromAllOtherCountries = newValue; this.MarkAsDirty("IsFromAllOtherCountries"); } }
+       
+	 
+    private isToAllOtherCountries: boolean;
+    public get IsToAllOtherCountries() { return this.isToAllOtherCountries; }
+    public set IsToAllOtherCountries(newValue: boolean) { if (this.isToAllOtherCountries != newValue) { this.isToAllOtherCountries = newValue; this.MarkAsDirty("IsToAllOtherCountries"); } }
+       
+	 
+    private unitOfMeasurementCode: string;
+    public get UnitOfMeasurementCode() { return this.unitOfMeasurementCode; }
+    public set UnitOfMeasurementCode(newValue: string) { if (this.unitOfMeasurementCode != newValue) { this.unitOfMeasurementCode = newValue; this.MarkAsDirty("UnitOfMeasurementCode"); } }
        
 	 
 

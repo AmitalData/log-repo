@@ -7,6 +7,7 @@ import { PaymentTermsSelectors } from "../../selectors/PaymentTermsSelectors";
 import { PaymentTermDetails } from "cypress/models/PaymentTermDetails";
 import * as BaseActions from "../../../../Base/cypress/actions/Actions";
 import { EventTypeDetails } from "../../../../Base/cypress/models/EventTypeDetails";
+import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors";
 
 //#region Add payment term code with lenght more than 2
 Given("the user logged in and open {string} in maintenance menu", (maintenanceItemName) => {
@@ -32,11 +33,13 @@ When("add another payment term code: {string}", (paymentTermCode) => {
 
 Then("this validation message error {string} should appear", (validationMessage) => {
     GeneralActions.ValidateSingleErrorMessage(validationMessage)
+    cy.Click(BaseSelectors.Button, BaseSelectors.ContainsCancel);
 });
 //#endregion
 
 //#region Create new payment term
 Given("a payment term with the following details", (dataTable) => {
+    cy.wait(1000)
     let paymentTermDetails = Assists.CreateInstance<PaymentTermDetails>(dataTable, true);
     PaymentTermActions.FillPaymentTermDetails(paymentTermDetails, 4);
 });

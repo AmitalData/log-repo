@@ -63,7 +63,8 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 	         LastRunDate, 
 	         LastRunByUserName, 
 	         FactTableName, 
-	         LastRunId,
+	         LastRunId, 
+	         AvailableForScheduling,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

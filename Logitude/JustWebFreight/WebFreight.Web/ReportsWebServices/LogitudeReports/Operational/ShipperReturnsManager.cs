@@ -1,5 +1,7 @@
 ﻿using Logitude.BL.Helpers;
 using Logitude.BL.ShipmentsModel.EntityLists;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
@@ -12,6 +14,7 @@ using System.Linq;
 using System.Web;
 using System.Xml.Serialization;
 using WebFreight.Web.DataProviders;
+using WebFreight.Web.Services;
 
 namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
 {
@@ -33,7 +36,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
         public ShipperReturnsManager(byte[] xmlFilters, int tenant)
         {
             this.tenant = tenant;
-            customFieldResolver = new CustomFieldResolver();
+            customFieldResolver = new CustomFieldResolver(tenant);
             shipmentsContext = ShipmentsContext.GetContext(tenant);
             shipmentRepository = new ShipmentRepository(tenant);
             MemoryStream memoryStream = new MemoryStream(xmlFilters);
@@ -107,14 +110,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
         public byte[] GetData()
         {
             this.LoadDataProvider();
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(ShipperReturnsDataProvider));
-            MemoryStream memoryStream = new MemoryStream();
-            xmlSerializer.Serialize(memoryStream, iDataProvider);
-            memoryStream.Seek(0, SeekOrigin.Begin);
-            StreamReader streamReader = new StreamReader(memoryStream);
-            string content = streamReader.ReadToEnd();
-            byte[] bytearray = memoryStream.ToArray();
-            return bytearray;
+            return new ReportMemoryStreamService().Convert(iDataProvider, typeof(ShipperReturnsDataProvider), tenant);
         }
 
         private void LoadDataProvider()
@@ -133,9 +129,23 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
             iDataProvider.FromDate = this.fromDate;
             iDataProvider.ToDate = this.toDate;
             iDataProvider.ShipperId = this.shipperId;
+            this.SetShipperName();
             iDataProvider.MainCarriageFinalDestinationPortId = this.mainCarriageFromPortId;
             iDataProvider.MainCarriageFromPortId = this.mainCarriageFromPortId;
             iDataProvider.Subshipper = this.subshipper;
+        }
+
+        private void SetShipperName()
+        {
+            if (string.IsNullOrEmpty(this.shipperId))
+            {
+                return;
+            }
+            Card iCard = CardRepository.GetSingleCard(this.shipperId, tenant, false);
+            if (iCard != null)
+            {
+                iDataProvider.ShipperName = iCard.EnglishName;
+            }
         }
 
         private void BuildSourceData()

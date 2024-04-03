@@ -1,5 +1,9 @@
 
-
+<style>
+    .TabTitle > div{
+        font-size: 18px !important;
+    }
+</style>
 <!-- Alert -->
 <!--<div class="alert-animation Alert">
     <!--<div class="alert-close" (click)="CloseAlert()">×</div>-->
@@ -20,15 +24,36 @@
     <span *ngIf="!recoCallback.isSplitted">{{'Accounting.General.O.Reconciliation' | TextCodeTranslationPipe}} <a *ngIf="RecoPM" href="#" (click)="OpenReco()"> {{RecoPM.Number }}</a> {{'Accounting.General.O.wascreatedsuccessfully' | TextCodeTranslationPipe}}.</span>
     <span *ngIf="recoCallback.isSplitted">{{recoCallback.splittedRecoCount}} {{'Accounting.O.MultiRecoCreated' | TextCodeTranslationPipe}}.</span>
 
-
 </div>
+
+<div *ngIf="showInternalReconcileAPPaymentAlert" class="alert-animation SaveAlert"
+     [style.text-align]="isRTL ? 'right' : 'left'"
+     style="min-width: 720px;background: #c0e8c2;border: 1px solid #54a758;color: #6a7769;">
+    <div class="alert-close" (click)="CloseGetInternalReconcileAPPaymentAlert()" [style.right]="isRTL ? 'initial' : '5px'"
+     [style.left]="isRTL ? '5px' : 'initial'"
+     style="color: #439c47;text-decoration: underline;">{{'Accounting.General.B.Close' | TextCodeTranslationPipe}}</div>
+
+    <span>{{GetInternalReconcileAPPaymentAlertMessage()}}</span>
+</div>
+
 <table>
-    <tr style="height:10px"></tr>
+    <tr style="height:10px"></tr>   
     <tr><td style="width :10px"></td>
-        <td class="TabTitle">{{'Accounting.General.O.Reconcile' |TextCodeTranslationPipe}}</td>
+        <td class="TabTitle">
+            <div float-start>{{openTransactionLabel}}</div>
+            <div style="padding: 0 3px;" float-start> - </div>
+            <div float-start>{{displayNumber}}</div>
+            <div style="padding: 0 3px;" float-start> - </div>
+            <div float-start>{{accountName}}</div>
+            <div style="padding: 0 3px;" float-start *ngIf="paymentTermName"> - </div>
+            <div float-start *ngIf="paymentTermName">{{paymentTermName}}</div>
+            <div style="padding: 0 3px;width :50px"float-start></div>
+            <div *ngIf="isFullAccounting" style="padding: 0 80%;font-size: 15px;display: flex;position: absolute;"float-start>{{NumberOfselectedlines}}/{{NumberOfFilteredlines}}</div>
+        </td>
         <td>
             <div style="width: 150px" [style.float]="isRTL ? 'left' : 'right'">
-                <button class="Button" (click)="AutomaticReconcileButton()">{{'Accounting.General.O.AutomaticReconcile' | TextCodeTranslationPipe}}</button>
+                <button class="Button" [disabled]="IsMultiWithReconcileMethodCodeEqualOne && CurrencyId == null"
+                (click)="AutomaticReconcileButton()">{{'Accounting.General.O.AutomaticReconcile' | TextCodeTranslationPipe}}</button>
             </div>
         </td>
 
@@ -58,7 +83,7 @@
     </tr>
 
     <!-- Filter Fields -->
-    
+
     <tr style="height: 30px;">
         <td style="" colspan="6">
 
@@ -66,15 +91,15 @@
                 <ul class="horizontal-list fixed">
 
                     <li style="width: 80px; padding: 0 35px;"><CheckBox title="Select All" style="position: absolute; top: 12px;" [IsChecked]="isAllSelected"
-                        (Checked)="isAllSelected = $event"></CheckBox></li>
+                        [IsEnabled]="IsCheckBoxEnabled" (Checked)="isAllSelected = $event"></CheckBox></li>
 
                     <li style="width: 70px;"><LogLabel [ObjectFieldName]="'CurrencyId'" [ObjectTableName]="ObjectTableName"
                         [DataContext]="DataContext"></LogLabel></li>
 
                     <li style="width: 150px; " [style.padding-right]="isRTL ? 'initial' : '10px'"
                     [style.padding-left]="isRTL ? '10px' : 'initial'"><LogLov [ObjectFieldName]="'CurrencyId'" [ObjectTableName]="ObjectTableName"
-                        [DataContext]="DataContext" [LookUpTableName]="'Currency'" [SelectedValue]="CurrencyId"
-                        [HideColumns]="true">
+                        [DataContext]="DataContext" [LookUpTableName]="'Currency'" [SelectedValue]="CurrencyId" 
+                        [HideColumns]="true" [QueryFilterItems]="CurrencyFilters">
                     </LogLov></li>
 
                     <li class="seperator" ></li>
@@ -83,9 +108,9 @@
                         <img [attr.src]="areFiltersSelected ? './Images/FilterGrayTransUsed.png' : './Images/FilterGrayTrans.png'">
                         <img [class.FlipImgVert]="showMoreFilters" src="./Images/FiltersOpen.png" style="margin-top: 2px;margin-left: 4px;">
                     </div></li>
-
+                                     
                     <li float-end>
-                        
+
                         <div style="width: 250px; padding: 3px 4px;"  float-end>
                             <SearchTextBox [ObjectTableName]="ObjectTableName"
                                 (SearchTextChangeEvent)="TextChanged($event)"></SearchTextBox>
@@ -97,6 +122,34 @@
                         <div [style.float]="isRTL ? 'left' : 'right'"  style="padding: 3px 4px;">
                             <IconButton [style.float]="isRTL ? 'right' : 'left'" [Name]="'excel'"  (click)="ExportToExcelClick()"></IconButton>
                         </div>
+                        <div [style.float]="isRTL ? 'left' : 'right'" style="padding: 3px 4px">
+                            <div
+                              *ngIf="GLAccountPM && GLAccountPM.AccountTypeCode == '3'"
+                              [style.float]="isRTL ? 'right' : 'left'"
+                              style="margin: 3px 10px 0; height: 24px; display: flex"
+                            >
+                              <button
+                                class="Button"
+                                [disabled]="!EnableCreateAPPaymentButton"
+                                (click)="CreatePaymentButtonClicked()"
+                                style="width: fit-content"
+                              >
+                              {{'APPAyment.O.NewAPPaymentTitle' | TextCodeTranslationPipe}}
+                              </button>
+
+                              <div style="width: 10px"></div>
+
+                              <LogToolTip
+                                float-start
+                                [direction]="isRTL?'bottomright':'bottomleft'"
+                                [name]="'tooltip-reco'"
+                              >
+                                <div style="width: 300px; white-space: pre-line">
+                                  {{'APPayment.M.NewAPPaymentInfo' | TextCodeTranslationPipe}}
+                                </div>
+                              </LogToolTip>
+                            </div>
+                          </div>
                     </li>
                 </ul>
             </div>
@@ -106,7 +159,7 @@
 
                     <!-- Date -->
                     <li float-start style="padding-left: 20px;padding-top: 5px;">{{'Accounting.General.O.Date' | TextCodeTranslationPipe}}:</li>
-                    
+
                     <li float-start style="padding: 0 5px;padding-top: 4px;width: 150px;">
                         <ComboBox [ItemsSource]="DateTypes" [Binding]="'LocalName'" [SelectedItem]="SelectedDateType"
                         (SelectedItemChanged)="SelectedDateType = $event"></ComboBox>
@@ -177,12 +230,12 @@
             </div>
 
             <!-- <table> -->
-                
-             
-    
+
+
+
                 <!-- <tr class="FormFieldRow"> -->
-    
-    
+
+
                     <!-- OpenAmount -->
                     <!-- <td style="width: 120px; " [style.padding-right]="isRTL ? 'initial' : '10px'" [style.padding-left]="isRTL ? '10px' : 'initial'">
                                 <LogLabel [ObjectFieldName]="'OpenAmount'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
@@ -193,21 +246,21 @@
                             <td style="width: 80px;">
                                 <LogTextBox [InputType]="'sigdouble'" [NoObjectField]="true" [ObjectFieldName]="'OpenAmount'" [HideColumns]="true"
                                             (ValueChanged)="OpenAmountTextChanged($event)" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-        
+
                             </td> -->
-    
+
                     <!-- <td style="width :20px"></td> -->
-    
-    
-    
+
+
+
                     <!-- <td>
                         <div></div>
                     </td> -->
-    
-    
+
+
                 <!-- </tr> -->
-    
-                
+
+
                 <!-- <tr>
                     <td>
                         <div></div>
@@ -242,7 +295,8 @@
                                [CheckBoxFilterChanged]="CheckBoxFilterChanged"
                                (SortInvoked)="OnSortInvoked($event)"
                                (DataLoaded)="onDataLoaded()"
-                               [ChangeCheckBoxesState]="ChangeCheckBoxesState">
+                               [ChangeCheckBoxesState]="ChangeCheckBoxesState"
+                               (rowSelectedEvent)="onRowSelected($event)">
                 </logitude-grid>
             </div>
         </td>
@@ -271,7 +325,7 @@
                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'20'">
                         <ng-template let-item>
                             <log-cell-template [IgnoreMods]="true" title="{{GetIndicatorText(item)}}">
-                                <div class="circleDraw" [class.orangeCircle]="(item.LocalAmountDebit >0 && item.OpenAmount != item.OriginalAmount) || (item.LocalAmountCredit>0 && item.OpenAmount != -1*item.OriginalAmount)"></div>
+                                <div class="circleDraw" [class.orangeCircle]="(item.LocalAmountDebit != 0 && item.OpenAmount != item.OriginalAmount) || (item.LocalAmountCredit != 0 && item.OpenAmount != -1*item.OriginalAmount)"></div>
                             </log-cell-template>
                         </ng-template>
                     </log-column>
@@ -352,9 +406,11 @@
                                     <span>{{item.AmountToReconcile | NumbersPipe:'N2'}}</span>
                                 </div>
                                 <div *ngIf="logcelltemplate.IsEditMode">
-                                    <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'AmountToReconcile'" [AlignTextToRight]="true"
+                                    <LogTextBox #AmountToReconcileTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'AmountToReconcile'" [AlignTextToRight]="true"
                                                 [InputType]="'sigdouble'" [DigitsAfterPoint]="2" [DataContext]="item"
-                                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"
+                                                (dblclick)="item.AutomaticallyFillAmountToReconciledblclick(logcelltemplate,AmountToReconcileTextBox)">
+                                            </LogTextBox>
                                 </div>
                             </log-cell-template>
                         </ng-template>
@@ -415,6 +471,36 @@
                         </ng-template>
                     </log-column>
 
+                     <!-- InternalNote -->
+                      <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'80'" [header]="'Internal Notes'">
+                        <ng-template let-item>
+                        <log-cell-template   #logcelltemplate>
+                            <table>
+                                <tr>
+                                    <td style="width:5px;">
+                                        <div></div>
+                                    </td>
+                                    <td style="width:16px;">
+                                        <img *ngIf="!item.InternalNote" style="vertical-align: middle; display: block;" src="./Images/Notes_notexists.png" />
+                                        <img *ngIf="item.InternalNote" style="vertical-align: middle; display: block;" src="./Images/Notes_exists.png" />
+                                    </td>
+                                    <td style="width:5px;">
+                                        <div></div>
+                                    </td>
+
+                                    <td style="width:20px;height:20px;padding-left:1px;">
+                                        <IconButton [Name]="'Edit'" [IsSmall]="true"  [Left]="3" (click)="OpenLedgerTransactionInternalNote(item.LedgerTransactionPM);$event.stopPropagation()"></IconButton>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+                               </tr>
+                            </table>
+                        </log-cell-template>
+                        </ng-template>
+                    </log-column>
+
                     <!--  -->
                     <log-column [header]="''" [width]="'90'" [binding]="'button'">
                         <ng-template let-item>
@@ -444,16 +530,16 @@
                     </div>
 
                     <div class="footer-cell" [class.border-left]="isRTL" float-start style="text-align: right;">
-                        <div style="font-size: 15px;color:#740218;">{{TotalCredit | NumbersPipe:'N2'}}</div>
+                        <div style="font-size: 15px;color:#740218;" class="notranslate">{{TotalCredit | NumbersPipe:'N2'}}</div>
                         <div style="font-size: 13px; color: #6f6f6f;">{{'Accounting.General.O.Credit' | TextCodeTranslationPipe}} </div>
                     </div>
                     <div class="footer-cell" [class.border-left]="!isRTL" float-start text-start style="padding-left: 20px;">
-                        <div style="font-size: 15px;  color:#0a7d4c;">{{TotalDebit | NumbersPipe:'N2'}}</div>
+                        <div style="font-size: 15px;  color:#0a7d4c;" class="notranslate">{{TotalDebit | NumbersPipe:'N2'}}</div>
                         <div style="font-size: 13px; color: #6f6f6f;">{{'Accounting.General.O.Debit' | TextCodeTranslationPipe}} </div>
                     </div>
 
                     <div class="footer-cell " float-start style="padding-left: 30px;">
-                        <div style="font-size: 15px; color:#0f9776;" [class.red]="TotalsDeference!=0">{{TotalsDeference | NumbersPipe:'N2'}}</div>
+                        <div style="font-size: 15px; color:#0f9776;" [class.red]="TotalCredit>TotalDebit" class="notranslate">{{TotalsDeference | NumbersPipe:'N2'}}</div>
                         <div style="font-size: 13px; color: #6f6f6f;">{{'Accounting.General.O.Difference' | TextCodeTranslationPipe}} </div>
                     </div>
                 </div>

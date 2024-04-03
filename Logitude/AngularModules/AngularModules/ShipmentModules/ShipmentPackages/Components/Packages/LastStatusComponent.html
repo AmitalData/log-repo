@@ -9,7 +9,8 @@
     <tr>
         <td>
             <div class="MediaFill">
-                <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="ItemsSource">
+                <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="ItemsSource"
+                                    [UseVirtuallization]="IsUsingVirtuallization">
 
                     <!-- Status -->
                     <log-column [width]="'250'" [header]="'Status'">
@@ -88,7 +89,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="Button" (click)="CloseClicked()">Close</button>
+                        <button class="Button" (click)="CloseClicked()">{{'General.B.Close' | TextCodeTranslationPipe}}</button>
                     </td>
                 </tr>
             </table>

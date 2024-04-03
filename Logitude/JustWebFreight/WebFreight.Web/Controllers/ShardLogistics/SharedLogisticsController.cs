@@ -33,18 +33,20 @@ namespace WebFreight.Web.Controllers.ShardLogistics
 {
     public class SharedLogisticsController : ApiController
     {
-        public HttpResponseMessage GetSharedLogisticsStatistics(int tenant)
+        public HttpResponseMessage GetSharedLogisticsStatistics(int tenant, string invitationStatusType)
         {
 
             try
             {
                 Authentication();
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 SharedLogisticsStatusStatistics dataClass = new SharedLogisticsStatusStatistics() { Id = "0001" };
 
                 CardQuery cardQuery = new CardQuery(tenant);
-                IQueryable<CardList> cards = cardQuery.GetCustomerCardPMsByTenant(tenant);
+                IQueryable<CardList> cards = cardQuery.GetCardPMsByTenant(tenant);
                 IQueryable<CardList> agents = null;
+                IQueryable<CardList> ctoolPartners = null;
 
                 CustomerRepository CustomerRepository = new CustomerRepository(tenant);
                 IQueryable<CustomersDataView> customers = CustomerRepository.GetCustomersDataViews(tenant);
@@ -53,25 +55,31 @@ namespace WebFreight.Web.Controllers.ShardLogistics
                 {
                     customers = customers.Where(d => d.CustomerStatusCode == "ACT" && d.IsCustomer && !d.InActive);
 
-                    dataClass.InvitedCustomersCount = customers.Where(d => d.SharedLogisticsInvitationStatusCode == 2).Count();
-                    dataClass.NotInvitedCustomersCount = customers.Where(d => d.SharedLogisticsInvitationStatusCode == 1).Count();
-                    dataClass.ActivatedCustomersCount = customers.Where(d => d.SharedLogisticsInvitationStatusCode == 3 && !d.IsActiveForMobile).Count();
-                    dataClass.ActivatedCustomersForMobileCount = customers.Where(d => d.SharedLogisticsInvitationStatusCode == 3 && d.IsActiveForMobile).Count();
+                    dataClass.InvitedCustomersCount = customers.Where(d => (invitationStatusType == "CargoTracking" ? d.CargoTrackingInvitationStatusCode == 2 : d.SharedLogisticsInvitationStatusCode == 2)).Count();
+                    dataClass.NotInvitedCustomersCount = customers.Where(d => (invitationStatusType == "CargoTracking" ? d.CargoTrackingInvitationStatusCode == 1 : d.SharedLogisticsInvitationStatusCode == 1)).Count();
+                    dataClass.ActivatedCustomersCount = customers.Where(d => (invitationStatusType == "CargoTracking" ? d.CargoTrackingInvitationStatusCode == 3 : d.SharedLogisticsInvitationStatusCode == 3) && !d.IsActiveForMobile).Count();
+                    dataClass.ActivatedCustomersForMobileCount = customers.Where(d => (invitationStatusType == "CargoTracking" ? d.CargoTrackingInvitationStatusCode == 3 : d.SharedLogisticsInvitationStatusCode == 3) && d.IsActiveForMobile).Count();
                 }
 
                 if (cards != null)
                 {
-                    cards = cards.Where(d => d.PartnerTypeId != "PO");
-
                     agents = cards.Where(d => d.PartnerTypeId == "AG" && !d.InActive);
+                    ctoolPartners = cards.Where(d => d.PartnerTypeId != "CS" && !d.InActive);
                 }
+
 
                 if (agents != null && agents.Count() > 0)
                 {
-                    dataClass.InvitedAgentsCount = agents.Where(d => d.SharedLogisticsInvitationStatusCode == 2).Count();
-                    dataClass.NotInvitedAgentsCount = agents.Where(d => d.SharedLogisticsInvitationStatusCode == 1).Count();
-                    dataClass.ActivatedAgentsCount = agents.Where(d => d.SharedLogisticsInvitationStatusCode == 3).Count();
+                    dataClass.InvitedAgentsCount = agents.Where(d => (invitationStatusType == "CargoTracking" ? d.CargoTrackingInvitationStatusCode == 2 : d.SharedLogisticsInvitationStatusCode == 2)).Count();
+                    dataClass.NotInvitedAgentsCount = agents.Where(d => (invitationStatusType == "CargoTracking" ? d.CargoTrackingInvitationStatusCode == 1 : d.SharedLogisticsInvitationStatusCode == 1)).Count();
+                    dataClass.ActivatedAgentsCount = agents.Where(d => (invitationStatusType == "CargoTracking" ? d.CargoTrackingInvitationStatusCode == 3 : d.SharedLogisticsInvitationStatusCode == 3)).Count();
                 }
+
+                if (ctoolPartners != null && ctoolPartners.Count() > 0)
+                {
+                    SetCtoolpartnersStatistics(dataClass, ctoolPartners);
+                }
+
                 return Request.CreateResponse(HttpStatusCode.OK, dataClass);
             }
 
@@ -81,16 +89,28 @@ namespace WebFreight.Web.Controllers.ShardLogistics
             }
         }
 
+        private void SetCtoolpartnersStatistics(SharedLogisticsStatusStatistics sharedLogisticsStatusStatistics, IQueryable<CardList> ctoolPartners)
+        {
+
+            sharedLogisticsStatusStatistics.InvitedCToolPartnersCount = ctoolPartners.Where(d => d.SharedLogisticsInvitationStatusCode == 2).Count();
+            sharedLogisticsStatusStatistics.NotInvitedCToolPartnersCount = ctoolPartners.Where(d => d.SharedLogisticsInvitationStatusCode == 1).Count();
+            sharedLogisticsStatusStatistics.ActivatedCToolPartnersCount = ctoolPartners.Where(d => d.SharedLogisticsInvitationStatusCode == 3).Count();
+
+        }
+
         public HttpResponseMessage GetSharedLogisticsSummaryData(int tenant)
         {
             try
             {
                 Authentication();
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 ContactActivityLogRepository contactLogRep = new ContactActivityLogRepository();
                 SharedLogisticsSummary result = new SharedLogisticsSummary();
                 result.Id = 1;
-                IQueryable<ContactActivityLog>allSharedLogisticsList = contactLogRep.GetSharedLogisticsContactLogs(tenant).Where( d=>d.PartnerTypeId == "CS" || d.PartnerTypeId == "AG");
+                IQueryable<ContactActivityLog>allSharedLogisticsList = contactLogRep.GetSharedLogisticsContactLogs(tenant)
+                                                                                    .Where( d=> (d.PartnerTypeId == "CS" || d.PartnerTypeId == "AG")
+                                                                                              && !d.Module.StartsWith("Digital Portal"));
 
                 if (allSharedLogisticsList.Count() > 0)
                 {
@@ -102,13 +122,41 @@ namespace WebFreight.Web.Controllers.ShardLogistics
                     DateTime yesterdayDate = todayDate.AddDays(-1).AddHours(23).AddMinutes(59).AddSeconds(59);
                     DateTime lastMonthDate = todayDate.AddDays(-30);
 
+                    result.TodayCustomersCount = allSharedLogisticsList.Where(d => d.PartnerTypeId == "CS"
+                                                                                && d.LogDateTime >= todayDate1
+                                                                                && d.LogDateTime <= todayDate2)
+                                                                       .GroupBy(d => d.CardId)
+                                                                       .Count();
 
-                    result.TodayCustomersCount = allSharedLogisticsList.Where(d => d.PartnerTypeId == "CS" && d.LogDateTime >= todayDate1 && d.LogDateTime <= todayDate2).GroupBy(d => d.CardId).Count();  //TodayCustomersList.GroupBy(d => d.CardId).Count();
-                    result.LastWeekCustomersCount = allSharedLogisticsList.Where(d => d.PartnerTypeId == "CS" && d.LogDateTime >= lastWeekDate && d.LogDateTime <= yesterdayDate).GroupBy(d => d.CardId).Count();//LastWeekCustomersList.GroupBy(d => d.CardId).Count();
-                    result.LastMonthCustomersCount = allSharedLogisticsList.Where(d => d.PartnerTypeId == "CS" && d.LogDateTime >= lastMonthDate && d.LogDateTime <= yesterdayDate).GroupBy(d => d.CardId).Count();  //LastMonthCustomersList.GroupBy(d => d.CardId).Count();
-                    result.TodayAgentsCount = allSharedLogisticsList.Where(d => d.PartnerTypeId == "AG" && d.LogDateTime >= todayDate1 && d.LogDateTime <= todayDate2).GroupBy(d => d.CardId).Count(); //TodayAgentsList.GroupBy(d => d.CardId).Count();
-                    result.LastWeekAgentsCount = allSharedLogisticsList.Where(d => d.PartnerTypeId == "AG" && d.LogDateTime >= lastWeekDate && d.LogDateTime <= yesterdayDate).GroupBy(d => d.CardId).Count();//LastWeekAgentsList.GroupBy(d => d.CardId).Count();
-                    result.LastMonthAgentsCount = allSharedLogisticsList.Where(d => d.PartnerTypeId == "AG" && d.LogDateTime >= lastMonthDate && d.LogDateTime <= yesterdayDate).GroupBy(d => d.CardId).Count(); //LastMonthAgentsList.GroupBy(d => d.CardId).Count();
+                    result.LastWeekCustomersCount = allSharedLogisticsList.Where(d => d.PartnerTypeId == "CS"
+                                                                                   && d.LogDateTime >= lastWeekDate
+                                                                                   && d.LogDateTime <= yesterdayDate)
+                                                                          .GroupBy(d => d.CardId)
+                                                                          .Count();
+
+                    result.LastMonthCustomersCount = allSharedLogisticsList.Where(d => d.PartnerTypeId == "CS"
+                                                                                    && d.LogDateTime >= lastMonthDate
+                                                                                    && d.LogDateTime <= yesterdayDate)
+                                                                           .GroupBy(d => d.CardId)
+                                                                           .Count();
+
+                    result.TodayAgentsCount = allSharedLogisticsList.Where(d => d.PartnerTypeId == "AG"
+                                                                             && d.LogDateTime >= todayDate1
+                                                                             && d.LogDateTime <= todayDate2)
+                                                                    .GroupBy(d => d.CardId)
+                                                                    .Count();
+
+                    result.LastWeekAgentsCount = allSharedLogisticsList.Where(d => d.PartnerTypeId == "AG"
+                                                                                && d.LogDateTime >= lastWeekDate
+                                                                                && d.LogDateTime <= yesterdayDate)
+                                                                       .GroupBy(d => d.CardId)
+                                                                       .Count();
+
+                    result.LastMonthAgentsCount = allSharedLogisticsList.Where(d => d.PartnerTypeId == "AG"
+                                                                                 && d.LogDateTime >= lastMonthDate
+                                                                                 && d.LogDateTime <= yesterdayDate)
+                                                                        .GroupBy(d => d.CardId)
+                                                                        .Count();
                 }
 
    
@@ -131,6 +179,7 @@ namespace WebFreight.Web.Controllers.ShardLogistics
             try
             {
                 Authentication();
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 List<LastLoginPartners> result = new List<LastLoginPartners>();
 
@@ -219,6 +268,8 @@ namespace WebFreight.Web.Controllers.ShardLogistics
             try
             {
                 Authentication();
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
                 CardRepository cardRepository = new CardRepository(tenant);
                 ContactRepository contactRepository = new ContactRepository(tenant);
 
@@ -252,7 +303,13 @@ namespace WebFreight.Web.Controllers.ShardLogistics
                 }
 
 
-                List<ContactActivityLog> filterdList = contactLogRep.GetContactActivityLogs(tenant).Where(d => d.IsSharedLogisticsContact && d.PartnerTypeId == partnerTypeId && d.LogDateTime >= date1 && d.LogDateTime <= date2).ToList();
+                List<ContactActivityLog> filterdList = contactLogRep.GetContactActivityLogs(tenant)
+                                                                    .Where(d => d.IsSharedLogisticsContact 
+                                                                             && d.PartnerTypeId == partnerTypeId 
+                                                                             && d.LogDateTime >= date1 
+                                                                             && d.LogDateTime <= date2
+                                                                             && !d.Module.StartsWith("Digital Portal"))
+                                                                    .ToList();
 
 
 
@@ -362,6 +419,7 @@ namespace WebFreight.Web.Controllers.ShardLogistics
             try
             {
                 Authentication();
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 List<CardLogActivityDetails> list = new List<CardLogActivityDetails>();
                 DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
@@ -392,7 +450,13 @@ namespace WebFreight.Web.Controllers.ShardLogistics
                         }
                 }
 
-                List<ContactActivityLog> filterdList = contactLogRep.GetContactActivityLogs(tenant).Where(d => d.IsSharedLogisticsContact && d.PartnerTypeId == partnerTypeId && d.LogDateTime >= date1 && d.LogDateTime <= date2).ToList();
+                List<ContactActivityLog> filterdList = contactLogRep.GetContactActivityLogs(tenant)
+                                                                    .Where(d => d.IsSharedLogisticsContact 
+                                                                             && d.PartnerTypeId == partnerTypeId 
+                                                                             && d.LogDateTime >= date1
+                                                                             && !d.Module.StartsWith("Digital Portal")
+                                                                             && d.LogDateTime <= date2)
+                                                                    .ToList();
 
                 int j = 0;
                 list = (from r in filterdList
@@ -422,6 +486,7 @@ namespace WebFreight.Web.Controllers.ShardLogistics
             try
             {
                 Authentication();
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 CustomerTenantAccessRequestStatusCount dataClass = new CustomerTenantAccessRequestStatusCount() { Id = "0001" };
 
@@ -456,6 +521,8 @@ namespace WebFreight.Web.Controllers.ShardLogistics
             try
             {
                 Authentication();
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
                 var customerTenantAccessQuery = new CustomerTenantAccessQuery(tenant);
                 List<CustomerTenantAccessList> list = customerTenantAccessQuery.GetLastCustomerRequests(tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, list);
@@ -485,6 +552,7 @@ namespace WebFreight.Web.Controllers.ShardLogistics
                 string loggedUserEmail = authToken.Email;
 
                 SecurityUtility.AuthenticationOnTenant(tenant);
+
                 //SecurityUtility.CheckSharedContactAuthentication(tenant, filters.PartnerId);
 
                 partnerId = this.FixFilter(partnerId);
@@ -798,6 +866,36 @@ namespace WebFreight.Web.Controllers.ShardLogistics
                              Field38 = f.Field38,
                              Field39 = f.Field39,
                              Field40 = f.Field40,
+                             Field41 = f.Field41,
+                             Field42 = f.Field42,
+                             Field43 = f.Field43,
+                             Field44 = f.Field44,
+                             Field45 = f.Field45,
+                             Field46 = f.Field46,
+                             Field47 = f.Field47,
+                             Field48 = f.Field48,
+                             Field49 = f.Field49,
+                             Field50 = f.Field50,
+                             Field51 = f.Field51,
+                             Field52 = f.Field52,
+                             Field53 = f.Field53,
+                             Field54 = f.Field54,
+                             Field55 = f.Field55,
+                             Field56 = f.Field56,
+                             Field57 = f.Field57,
+                             Field58 = f.Field58,
+                             Field59 = f.Field59,
+                             Field60 = f.Field60,
+                             Field61 = f.Field61,
+                             Field62 = f.Field62,
+                             Field63 = f.Field63,
+                             Field64 = f.Field64,
+                             Field65 = f.Field65,
+                             Field66 = f.Field66,
+                             Field67 = f.Field67,
+                             Field68 = f.Field68,
+                             Field69 = f.Field69,
+                             Field70 = f.Field70,
                              CustomsDeclarationNumber = f.CustomsDeclarationNumber,
                              Field10 = f.Field10,
                              ChargeableWeightInKG = f.ChargeableWeightInKG,
@@ -859,6 +957,8 @@ namespace WebFreight.Web.Controllers.ShardLogistics
                              FinalArrivalDate = f.FinalArrivalDate,
                              Shipper = f.ShipperName,
                              Consignee = f.ConsigneeName,
+                             ShipperCountryCode = f.ShipperCountryCode,
+                             ConsigneeCountryCode = f.ConsigneeCountryCode,
                              ShipperReference1 = f.ShipperReference1,
                              ShipperReference2 = f.ShipperReference2,
                              ConsigneeReference1 = f.ConsigneeReference1,

@@ -41,7 +41,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private GLAccountPM GetGLaccount(string accountId)
         {
             IGLAccountQueryServiceExt gLAccountQueryServiceExt = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
-            return gLAccountQueryServiceExt.GetSingleGLAccountPM(accountId, tenant);
+            return gLAccountQueryServiceExt.GetSingleGLAccountWithComposition(accountId, tenant);
         }
        
     
@@ -88,9 +88,12 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
         private double? SetCreditLimit()
         {
-            var cardWithCreditLimit = connectedCards.Where(d => d.CreditLimitAmount != null).Sum(d => d.CreditLimitAmount);
-            if (cardWithCreditLimit == null) return null;
-            else return cardWithCreditLimit;
+            var customerWithCreditLimit = connectedCards.Where(d => d.CreditLimitAmount != null).Sum(d => d.CreditLimitAmount);
+            var accountingPartnerWithCreditLimit = connectedCards.Where(d => d.AccountingPartnerCreditLimit != null).Sum(d => d.AccountingPartnerCreditLimit);
+            customerWithCreditLimit = customerWithCreditLimit == null ? 0 : customerWithCreditLimit;
+            accountingPartnerWithCreditLimit = accountingPartnerWithCreditLimit == null ? 0 : accountingPartnerWithCreditLimit;
+            return customerWithCreditLimit + accountingPartnerWithCreditLimit;
+         
         }
         private string SetCollectorId()
         {
@@ -127,6 +130,12 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             CustomerQuery customerQuery = new CustomerQuery(tenant);
             List<string> cardIds = connectedCards.Select(d => d.Id).ToList();
             return customerQuery.GetCustomersByCardsIds(cardIds, tenant);
+        }
+        private List<AccountingPartnerPM> GetAccountingPartnerCards()
+        {
+            AccountingPartnerQuery accountingPartnerQuery = new AccountingPartnerQuery(tenant);
+            List<string> accountingPartnerIds = connectedCards.Where(d=>d.PartnerTypeId=="AC").Select(d => d.Id).ToList();
+            return accountingPartnerQuery.GetAccountingPartnersByIds(accountingPartnerIds, tenant);
         }
         //private double? GetCustomerCreditLimitAmount()
         //{
@@ -192,9 +201,21 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         }
         private double? GetInsuredCreditLimit()
         {
+            double? customersInsuredCreditLimit = GetInsuredCreditLimitByCustomer()== null? 0: GetInsuredCreditLimitByCustomer();
+            double? accountingPartnerInsuredCreditLimit = GetInsuredCreditLimitByAccountingPArtner()== null? 0 : GetInsuredCreditLimitByAccountingPArtner();
+            return customersInsuredCreditLimit + accountingPartnerInsuredCreditLimit;
+        }
+        private double? GetInsuredCreditLimitByCustomer()
+        {
             List<CustomerPM> customerPMs = GetCardsCustomers();
-            return customerPMs.Where(d => d.InsuredcreditLimit !=null).Sum(d=> d.InsuredcreditLimit);
-           
+            return customerPMs.Where(d => d.InsuredcreditLimit != null).Sum(d => d.InsuredcreditLimit);
+
+        }
+        private double? GetInsuredCreditLimitByAccountingPArtner()
+        {
+            List<AccountingPartnerPM> accountingPartners = GetAccountingPartnerCards();
+            return accountingPartners.Where(d => d.InsuredCreditlimit != null).Sum(d => d.InsuredCreditlimit);
+
         }
         private decimal? GetTotalOpenFilesAmount()
         {

@@ -27,11 +27,12 @@ namespace WarehouseDataService.Helper
                 try
                 {
                     countStart = commandRowCount.ExecuteScalar().ToString();
-
+                    sourceConnection.Close();
 
                 }
                 catch (Exception ex)
                 {
+                    sourceConnection.Close();
 
                     // MessageBox.Show(ex.Message);
                 }

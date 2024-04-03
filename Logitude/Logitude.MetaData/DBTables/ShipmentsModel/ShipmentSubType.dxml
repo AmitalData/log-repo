@@ -78,6 +78,20 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="IsManuallyAdded"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="AutomaticLastUpdateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Index
+    Columns="AutomaticLastUpdateDate" />
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"

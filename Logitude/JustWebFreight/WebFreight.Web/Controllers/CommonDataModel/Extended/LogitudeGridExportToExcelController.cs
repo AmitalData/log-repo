@@ -40,6 +40,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnEntityTenant("LogitudeGridExportToExcel", Arguments.Tenant, authToken.Tenant);
                 LogitudeGridExportToExcelHelper logitudeGridExportToExcelHelper = new LogitudeGridExportToExcelHelper();
                 string FileName = logitudeGridExportToExcelHelper.ExportDataToExcel(Arguments);
                 return Request.CreateResponse(HttpStatusCode.OK, FileName);

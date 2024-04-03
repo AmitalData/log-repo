@@ -1,0 +1,14 @@
+<View DBType="Main" Name="DBA_View_ReportsExecutionLogs_ToBeDeleted" Schema="dbo" Module="Common">
+  <SqlScript>
+    <![CDATA[
+    create VIEW [dbo].[DBA_View_ReportsExecutionLogs_ToBeDeleted] AS
+
+	SELECT TOP 1000 *
+    FROM [dbo].[ReportExecutionLogs]
+    where CreateDate < DATEADD(Month, -6, GETDATE())
+    ORDER BY CreateDate;
+    ]]>
+  </SqlScript>
+  <OracleScript>
+  </OracleScript>
+</View>

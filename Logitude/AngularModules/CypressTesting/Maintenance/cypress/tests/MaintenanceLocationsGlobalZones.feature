@@ -1,4 +1,4 @@
-@release @stable @all
+@release @stable
 Feature: Create Global Zone, Inactivate and activate it from Maintenance
     The user creates a Global Zone, Inactivates it,
     selects it to edit and activates it from the Maintenance module.
@@ -6,7 +6,7 @@ Feature: Create Global Zone, Inactivate and activate it from Maintenance
     Scenario: Add GlobalZoneCode with lenght more than 8
         Given the user logged in and navigate to "Global Zones" in maintenance menu
         When add "123456789" as Global Zone code
-        Then a validation message with "Code Field must be less than 8" error should appear
+        Then a validation message with "Code Field length must be less than 8" error should appear
 
     Scenario: Add global zone
         Given a global zone with the following details

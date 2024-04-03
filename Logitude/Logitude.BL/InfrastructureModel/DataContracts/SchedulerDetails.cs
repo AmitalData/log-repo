@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace Logitude.BL.InfrastructureModel.DataContracts
 {
@@ -59,11 +60,23 @@ namespace Logitude.BL.InfrastructureModel.DataContracts
         [DataMember]
         public string ReportTemplateId { get; set; }
         [DataMember]
+        public string BIReportEntityId { get; set; }
+        [DataMember]
+        public string DWQueryId { get; set; }
+        [DataMember]
+        public string ReportTemplateType { get; set; }
+        [DataMember]
         public ReportSchedulerRecepients Recepients { get; set; }
         [DataMember]
         public List<QueryFilterItem> ReportFilterItems { get; set; }
         [DataMember]
         public string MainCustomerFieldName { get; set; }
+        [DataMember]
+        public DWObjectFieldsDetails DWQueryFilterData { get; set; }
+        [DataMember]
+        public string DocumentTypeTemplateId { get; set; }
+        [DataMember]
+        public string MessageTemplateId { get; set; }
     }
 
     [DataContract(Namespace = "")]

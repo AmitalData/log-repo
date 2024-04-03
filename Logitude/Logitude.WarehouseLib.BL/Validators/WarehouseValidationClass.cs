@@ -6,6 +6,7 @@ using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
+using Simplog.Data.Helpers;
 
 namespace Logitude.WarehouseLib.BL.Validators
 {
@@ -94,15 +95,9 @@ namespace Logitude.WarehouseLib.BL.Validators
                     }
 
                     string valueString = value != null ? value.ToString() : "";
-                    if (!string.IsNullOrEmpty(valueString))
+                    if (FieldValueValidator.IsNotValidMinMaxValue(field, valueString))
                     {
-                        if (!field.IsMaxLength)
-                        {
-                            if (valueString.Length > field.MaxLength || valueString.Length < field.MinLength)
-                            {
-                                valid = false;
-                            }
-                        }
+                        valid = false;
                     }
                 }
 
@@ -193,16 +188,9 @@ namespace Logitude.WarehouseLib.BL.Validators
                 }
 
                 string valueString = value != null ? value.ToString() : "";
-                if (!string.IsNullOrEmpty(valueString))
+                if (FieldValueValidator.IsNotValidMinMaxValue(field, valueString))
                 {
-                    if (!field.IsMaxLength)
-                    {
-                        if (valueString.Length > field.MaxLength || valueString.Length < field.MinLength)
-                        {
-                            error = WarehouseTranslateTextsClass.GetTranslation("General.M.MinMax", field.FullNameTextCode.Code, field.MinLength.ToString(), field.MaxLength.ToString(), field.Tenant);
-
-                        }
-                    }
+                    error = WarehouseTranslateTextsClass.GetTranslation("General.M.MinMax", field.FullNameTextCode.Code, field.MinLength.ToString(), field.MaxLength.ToString(), field.Tenant);
                 }
             }
 

@@ -61,7 +61,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.IsEnabledForCustomers)
                 .IsRequired();
 
-
+            this.Property(t => t.IsSystem)
+                .IsRequired();
 
             this.Property(t => t.InternalRemarks)
                .HasMaxLength(500)
@@ -100,6 +101,13 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.AttachedExternalDocumentsIds) 
                .HasMaxLength(300)
                .IsUnicode(false);
+
+            this.Property(t => t.EntityId)
+                .HasMaxLength(15)
+                .IsUnicode(false);
+            this.Property(t => t.ObjectTableId)
+                .HasMaxLength(15)
+                .IsUnicode(false);
 
 
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
@@ -191,7 +199,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.AutomationId).HasColumnName("AutomationId");
 
             this.Property(t => t.AttachedExternalDocumentsIds).HasColumnName("AttachedExternalDocumentsIds");
-
+            this.Property(t => t.IsSystem).HasColumnName("IsSystem");
 
 
             if (dbms == "oracle")
@@ -206,7 +214,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
                 
 
             }
-
+            this.Property(t => t.EntityId).HasColumnName("EntityId");
+            this.Property(t => t.ObjectTableId).HasColumnName("ObjectTableId");
 
             // Relationships
             this.HasRequired(t => t.DocumentType)

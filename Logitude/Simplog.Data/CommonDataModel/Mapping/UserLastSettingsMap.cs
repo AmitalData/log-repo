@@ -23,7 +23,6 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.FilterName).HasColumnName("FilterName").IsRequired().HasMaxLength(50).IsUnicode(false);
 
             this.Property(t => t.FilterValue).HasColumnName("FilterValue").HasMaxLength(50).IsUnicode(false);
-
         }
     }
 }

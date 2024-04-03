@@ -21,14 +21,15 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
         {
             ShipmentInventoryDataProvider dataprovider = LoadShipmentInventoryDataProvider(entityId, tenant);
             XmlSerializer serializer = new XmlSerializer(typeof(ShipmentInventoryDataProvider));
-            MemoryStream memstream = new MemoryStream();
-            serializer.Serialize(memstream, dataprovider);
-            memstream.Seek(0, SeekOrigin.Begin);
-            var reader = new StreamReader(memstream);
-            string content = reader.ReadToEnd();
-            byte[] bytearray = memstream.ToArray();
-            return bytearray;
-
+            using (MemoryStream memstream = new MemoryStream())
+            {
+                serializer.Serialize(memstream, dataprovider);
+                memstream.Seek(0, SeekOrigin.Begin);
+                var reader = new StreamReader(memstream);
+                string content = reader.ReadToEnd();
+                byte[] bytearray = memstream.ToArray();
+                return bytearray;
+            }
         }
 
         private ShipmentInventoryDataProvider LoadShipmentInventoryDataProvider(string entityId, int tenant)

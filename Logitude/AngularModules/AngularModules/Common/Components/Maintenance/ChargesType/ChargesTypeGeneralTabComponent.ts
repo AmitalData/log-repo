@@ -31,7 +31,8 @@ export class ChargesTypeGeneralTabComponent extends BaseComponent implements OnI
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = this.entityArgs.EntityPM;
-        if (SessionLocator.SATInterfaceSettings && SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33") {
+
+        if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF40") {
             this.DisplaySATSettings = true;
         }
         if (SessionLocator.AccountingSettingPM.AllowRegionalTaxManagement) {
@@ -58,7 +59,7 @@ export class ChargesTypeGeneralTabComponent extends BaseComponent implements OnI
 
     private BuildQueryFilters() {
         this.MeasurementsQueryFilters = new ApiQueryFilters();
-        this.MeasurementsQueryFilters.addAdditionalFilter("Code", "STFE", null, null, "NotContains", false, false, false, "string", false, true, true);
+        this.MeasurementsQueryFilters.addAdditionalFilter("Code", "STFE", null, null, "Exclude", false, false, false, "string", false, true, true);
     }
 
     public CustomsFieldsIsVisible: boolean = false;

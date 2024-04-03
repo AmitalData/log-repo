@@ -20,8 +20,8 @@ namespace WebFreight.Web.AccountingModel.DomainServices
         public List<LedgerTransactionList> GetGLAccountLedgerTransactionFilters(byte[] xmlFilters, int tenant)
         {
             SecurityUtility.AuthenticationOnTenant(tenant);
-            if (ledgerTransactionBalanceService==null)
-            {
+            //if (ledgerTransactionBalanceService==null)
+            //{
                 var accountingContext = AccountingContext.GetContext(tenant);
                 QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);
                 LedgerTransactionBalanceFilterCreateLTBFilter ledgerTransactionBalanceFilterCreateLTBFilter = new LedgerTransactionBalanceFilterCreateLTBFilter();
@@ -29,7 +29,7 @@ namespace WebFreight.Web.AccountingModel.DomainServices
                 ledgerTransactionBalanceService = new LedgerTransactionBalanceService(accountingContext, LTBFilter);
                 ledgerTransactionBalanceService.Run(true);
                 
-            }
+            //}
            
             return ledgerTransactionBalanceService.Response.MyLedgerTransactionList;
 

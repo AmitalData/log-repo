@@ -500,6 +500,15 @@ namespace WebFreight.Web.MetaDataUpdate
                     Prefix = "CC",
                 };
 
+                CounterDefinition myCounterDefinition_10 = new CounterDefinition()
+                {
+                    Id = IdCounter.GetNumber("CounterDefinition", 0).ToString(),
+                    CounterId = myCounter.Id,
+                    Tenant = 0,
+                    StartNumber = 1000,
+                    Parameter1 = "COD",
+                    Prefix = "COD",
+                };
 
                 CounterRepository.Add(myCounter);
                 CounterDefinitionRepository.Add(myCounterDefinition_01);
@@ -509,6 +518,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 CounterDefinitionRepository.Add(myCounterDefinition_05);
                 CounterDefinitionRepository.Add(myCounterDefinition_06);
                 CounterDefinitionRepository.Add(myCounterDefinition_07);
+                CounterDefinitionRepository.Add(myCounterDefinition_10);
 
 
                 if ( LogitudeSettings.DeploymentStage == "amitalstorage" )

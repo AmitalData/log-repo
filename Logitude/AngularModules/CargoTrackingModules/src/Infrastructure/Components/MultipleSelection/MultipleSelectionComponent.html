@@ -1,0 +1,23 @@
+<mat-form-field *ngIf="!UseFixedTitle" appearance="fill" floatLabel="never" >
+    <mat-label>{{Title}}</mat-label>
+    <mat-select #select multiple disableOptionCentering  panelClass="myPanelClass">
+        <mat-option class="{{selection.Name}}" matInput *ngFor="let selection of MultipleSelectionList" [value]="selection" (click)="SelectFilter(selection)">{{selection.Name}} <span *ngIf="selection.Count != null">({{selection.Count}})</span></mat-option>
+    </mat-select>
+</mat-form-field>
+
+<mat-form-field class="fixed-title-form" *ngIf="UseFixedTitle" appearance="fill" floatLabel="never" >
+    <div class="flex">
+        <mat-select placeholder="{{Title}}"  #select multiple disableOptionCentering panelClass="myPanelClass">
+            <mat-select-trigger class="mat-select-trigger">{{Title}}</mat-select-trigger>
+            <mat-option class="{{selection.Name}}" matInput *ngFor="let selection of MultipleSelectionList" [value]="selection" (click)="SelectFilter(selection)">
+                {{selection.Name}}
+                <span *ngIf="selection.Count">({{selection.Count}})</span>
+            </mat-option>
+        </mat-select>
+
+        <i *ngIf="!ShowSortIcon " class="la la-angle-down"></i>
+        <i *ngIf="ShowSortIcon && !IsSortDescending" class="la la-sort-amount-down-alt sort"></i>
+        <i *ngIf="ShowSortIcon && IsSortDescending" class="la la-sort-amount-up-alt sort"></i>
+        <!-- <img class="sort-img" *ngIf="ShowSortIcon" src="./assets/images/icons/sort.svg" [class.FlipImgVert]="!IsSortDescending" alt=" " /> -->
+    </div>
+</mat-form-field>

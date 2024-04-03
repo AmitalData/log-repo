@@ -69,6 +69,9 @@ export class HybridPartnerTabComponent extends BaseComponent {
     public get AllowSendingDocsToAgent() { return this.myentityPM.AllowSendingDocsToAgent }
     public set AllowSendingDocsToAgent(newValue: boolean) { this.myentityPM.AllowSendingDocsToAgent = newValue; }
 
+    public get InActive() { return this.myentityPM.InActive }
+    public set InActive(newValue: boolean) { this.myentityPM.InActive = newValue; }
+
     onIsMislakaActivated(event) {
         this.IsMislakaActivated = event;
     }
@@ -83,6 +86,10 @@ export class HybridPartnerTabComponent extends BaseComponent {
 
     onAllowSendingDocsToAgent(event) {
         this.AllowSendingDocsToAgent = event;
+    }
+
+    OnInActiveChange(event) {
+        this.InActive = event;
     }
 
     OpenUpLoadLogo() {

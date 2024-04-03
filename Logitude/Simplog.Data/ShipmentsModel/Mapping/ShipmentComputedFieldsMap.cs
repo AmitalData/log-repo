@@ -55,12 +55,12 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.OnHandDate).IsOptional();
             this.Property(t => t.PODDate).IsOptional();
 
-
-
-
-
-
-
+            this.Property(t => t.AccountingClosedByUserId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.MainCarriageETA).IsOptional();
+            this.Property(t => t.MainCarriageETD).IsOptional();
+            this.Property(t => t.MainCarriageATA).IsOptional();
+            this.Property(t => t.MainCarriageATD).IsOptional();
+            this.Property(t => t.PackagesQuantityAndType).HasMaxLength(2000).IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("ShipmentComputedFields");
@@ -96,7 +96,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.ExpectedArrivalNoticeSent).HasColumnName("ExpectedArrivalNoticeSent");
             this.Property(t => t.ArrivalNoticeSent).HasColumnName("ArrivalNoticeSent");
             this.Property(t => t.T1Received).HasColumnName("T1Received");
-
+            this.Property(t => t.IsDocumentsNeedApprove).HasColumnName("IsDocumentsNeedApprove");
 
 
 
@@ -137,6 +137,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.PickupFrom).HasColumnName("PickupFrom");
             this.Property(t => t.PickupTo).HasColumnName("PickupTo");
             this.Property(t => t.OperationallyClosedByUserName).HasColumnName("OperationallyClosedByUserName");
+            this.Property(t => t.AccountingClosedByUserId).HasColumnName("AccountingClosedByUserId");
 
             this.Property(t => t.DeliveryDate).HasColumnName("DeliveryDate");
             this.Property(t => t.OnHandDate).HasColumnName("OnHandDate");
@@ -148,7 +149,13 @@ namespace Simplog.Data.ShipmentsModel.Mapping
 
             this.HasOptional(t => t.DeliveryTrucker).WithMany().HasForeignKey(d => d.DeliveryTruckerId);
             this.HasOptional(t => t.PickupTrucker).WithMany().HasForeignKey(d => d.PickupTruckerId);
+            this.HasOptional(t => t.AccountingClosedByUserUser).WithMany().HasForeignKey(d => d.AccountingClosedByUserId);
 
+            this.Property(t => t.MainCarriageETA).HasColumnName("MainCarriageETA");
+            this.Property(t => t.MainCarriageETD).HasColumnName("MainCarriageETD");
+            this.Property(t => t.MainCarriageATA).HasColumnName("MainCarriageATA");
+            this.Property(t => t.MainCarriageATD).HasColumnName("MainCarriageATD");
+            this.Property(t => t.PackagesQuantityAndType).HasColumnName("PackagesQuantityAndType");
 
         }
     }

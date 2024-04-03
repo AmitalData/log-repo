@@ -49,7 +49,7 @@ namespace Logitude.Customs.Data.Repsitories
                     where a.DeclarationID == keys.DeclarationID && a.CourierPendingReasonCode == keys.CourierPendingReasonCode
                     select a).FirstOrDefault();
         }
-		         
+		 		                 
         partial void onAdd();//Partial Methods Definition in Generated
         public void Add(DeclarationPending entity)
         {

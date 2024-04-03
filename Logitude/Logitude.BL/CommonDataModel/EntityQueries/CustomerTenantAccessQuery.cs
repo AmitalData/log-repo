@@ -63,11 +63,44 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                               IsPrivateLabelCustomer = a.IsPrivateLabelCustomer,
                                                               CustomCompanyName = a.IsPrivateLabelCustomer == true ? a.CompanyName + " (Private Label Customer)" : a.CompanyName,
                                                               StockTypeCode = a.StockTypeCode,
-
                                                           };
 
+            List<CustomerTenantAccessList> customerTenantAccesses = GetConnectedCustomerTenantAccessCardsDetails(entity);
+            return customerTenantAccesses.AsQueryable();
+        }
 
-            return entity;
+        private static List<CustomerTenantAccessList> GetConnectedCustomerTenantAccessCardsDetails(IQueryable<CustomerTenantAccessList> entity)
+        {
+            List<CustomerTenantAccessList> customerTenantAccesses = entity.ToList();
+
+            if(customerTenantAccesses == null || customerTenantAccesses.Count() == 0) return customerTenantAccesses;
+
+            int tenant = customerTenantAccesses[0].Tenant;
+            CustomerTenantAccessCardRepository customerTenantAccessCardRepository = new CustomerTenantAccessCardRepository(tenant);
+            List<CustomerTenantAccessCard> customerTenantAccessCards = customerTenantAccessCardRepository.GetAllCustomerTenantAccessCardByTenant(tenant).ToList();
+            customerTenantAccesses.ForEach(customerTenantAccess =>
+            {
+                MapConnectedCustomersCardsDetails(customerTenantAccess, customerTenantAccessCards);
+            });
+
+            return customerTenantAccesses;
+        }
+
+        private static void MapConnectedCustomersCardsDetails(CustomerTenantAccessList CustomerTenantAccess, List<CustomerTenantAccessCard> customerTenantAccessCards)
+        {
+            List<CustomerTenantAccessCard> selectedCustomerTenantAccessCards = customerTenantAccessCards.Where(customerTenantAccessCard => customerTenantAccessCard.CustomerTenantAccessId == CustomerTenantAccess.Id).ToList();
+            CustomerTenantAccess.IsCustom = selectedCustomerTenantAccessCards.Any(customerTenantAccessCard => customerTenantAccessCard.IsCustomsActivated);
+            CustomerTenantAccess.IsExport = selectedCustomerTenantAccessCards.Any(customerTenantAccessCard => customerTenantAccessCard.IsExportActivated);
+            selectedCustomerTenantAccessCards.ForEach(customerTenantAccessCard =>
+            {
+                if(!string.IsNullOrEmpty(customerTenantAccessCard?.Customer?.Card?.Code))
+                    CustomerTenantAccess.CustomersCodes += customerTenantAccessCard?.Customer?.Card?.Code + ", ";
+            });
+
+            if (!string.IsNullOrEmpty(CustomerTenantAccess.CustomersCodes) && CustomerTenantAccess.CustomersCodes.Length > 2)
+            {
+                CustomerTenantAccess.CustomersCodes = CustomerTenantAccess.CustomersCodes.Substring(0, CustomerTenantAccess.CustomersCodes.Length - 2);
+            }
         }
 
         public CustomerTenantAccessPM GetSinglePM(string id, int tenant)
@@ -195,7 +228,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                             select new CustomerTenantAccessInfo()
                                             {
                                                 HasAccess = true,
-                                                CustomerTenant = a.CustomerTenant
+                                                CustomerTenant = a.CustomerTenant,
+                                                IsCustomsActivated =  customerTenantAccessCardPM.IsCustomsActivated,
+                                                IsExportActivated = customerTenantAccessCardPM.IsExportActivated 
 
                                             }).FirstOrDefault();
             }

@@ -66,8 +66,8 @@
             <div style="height:100%">
 
                 <div style="height:5px;"></div>
-                <div id="{{'BuildDocumentSucceededDiv ' | IdGeneratorPipe}}" *ngIf="IsDocumentBuildSucceeded" style="width:0px;height:0px;"></div>
-                <div id="{{'BuildDocumentFailedDiv ' | IdGeneratorPipe}}" *ngIf="IsDocumentBuildFailed" style="width:0px;height:0px;"></div>
+                <div id="{{'BuildDocumentSucceededDiv ' | IdGeneratorAsyncPipe | async}}" *ngIf="IsDocumentBuildSucceeded" style="width:0px;height:0px;"></div>
+                <div id="{{'BuildDocumentFailedDiv ' | IdGeneratorAsyncPipe | async}}" *ngIf="IsDocumentBuildFailed" style="width:0px;height:0px;"></div>
 
                 <div *ngIf="LastBuildDateVisible" style="height:30px;border-radius:5px;width:100%;background-color:#FFF9A8;border:2px solid #FFDEA1">
                     <table>
@@ -99,8 +99,8 @@
                         <tr>
                             <td style="width:15px"><div></div></td>
                             <td style="width:70px">Template</td>
-                            <td style="width:150px"><ComboBox style="width:150px;height:22px;display:inline" (SelectedItemChanged)="alertselected($event)" [ItemsSource]="DocumentTypeTemplateLists" [SelectedItem]="CurrentDocumentTypeTemplateList" [Binding]="'Description'"></ComboBox></td>
-                            <td style="width:100px"><a class="Link" [class.HyperlinkDisabled]="isAWBWizard || !IsEnableManageDocument" style="margin-left:10px;font-size:13px;" (click)="showDialog('ManageTemplate')">Manage Template</a></td>
+                            <td style="width:150px"><ComboBox [IsDisabled]="IsTemplateDisabled" style="width:150px;height:22px;display:inline" (SelectedItemChanged)="alertselected($event)" [ItemsSource]="DocumentTypeTemplateLists" [SelectedItem]="CurrentDocumentTypeTemplateList" [Binding]="'Description'"></ComboBox></td>
+                            <td style="width:100px"><a class="Link" [class.HyperlinkDisabled]="(isAWBWizard && IsAWBPackage)|| !IsEnableManageDocument" style="margin-left:10px;font-size:13px;" (click)="showDialog('ManageTemplate')">Manage Template</a></td>
                             <td style="width:100px"><a class="Link" [class.HyperlinkDisabled]="!IsEnableEditDocument" style="margin-left:10px;font-size:13px;" (click)="showDialog('EditDocument')">Edit Document</a></td>
                             <td><div></div></td>
                         </tr>
@@ -164,7 +164,7 @@
 
                                             <td style="width:60px;max-width:60px;margin-left:3px;margin-right:3px; min-width:60px;border-bottom:1px solid #E4E3E1;">
 
-                                                <button [disabled]="!item.IsPrintButtonEnabled" *ngIf="item.IsButtonsStackPanelVisible" id="Printbutton" class="Button" style="margin-top:1px;height:25px;width:55px" (click)="PrintMethod(item)">
+                                                <button [disabled]="!item.IsPrintButtonEnabled || (item.IsOriginal && Signed)" *ngIf="item.IsButtonsStackPanelVisible" id="Printbutton" class="Button" style="margin-top:1px;height:25px;width:55px" (click)="PrintMethod(item)">
                                                     <table>
                                                         <tr>
                                                             <td><img style="width:17px;height:17px;margin-bottom:1px;margin-left:-2px" src="./Images/SimplogIcons/File-pdf-48.png" /></td>
@@ -180,7 +180,7 @@
 
                                             <td style="margin-left:3px;margin-right:3px; min-width:60px;width:60px;max-width:60px;border-bottom:1px solid #E4E3E1;">
 
-                                                <button [disabled]="!item.IsPrintButtonEnabled || (DisableSendOriginalCopy && item.IsOriginal)" *ngIf="item.IsButtonsStackPanelVisible" class="Button" style="margin-top:1px;height:25px;width:55px" (click)="showSendControlDialog(item)">
+                                                <button [disabled]="!item.IsPrintButtonEnabled || (DisableSendOriginalCopy && item.IsOriginal)||(item.IsOriginal && Signed)" *ngIf="item.IsButtonsStackPanelVisible" class="Button" style="margin-top:1px;height:25px;width:55px" (click)="showSendControlDialog(item)">
                                                     <table>
                                                         <tr>
                                                            
@@ -320,7 +320,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button id="{{'closeButtonId' | IdGeneratorPipe}}" class="Button" (click)="CloseButtonClicked()">Close</button>
+                        <button id="{{'closeButtonId' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="CloseButtonClicked()">Close</button>
                     </td>
                 </tr>
             </table>

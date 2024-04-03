@@ -107,6 +107,20 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ChildEntityId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ChildObjectTableId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="ObjectTableId"
     ReferencedTable="ObjectTables"
@@ -122,8 +136,15 @@
     ReferencedTable="Users"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ChildObjectTableId"
+    ReferencedTable="ObjectTables"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
   <Index
     Columns="Tenant,EntityId" />
   <Index
     Columns="ObjectTableId,Tenant,EntityId" />
+  <Index
+    Columns="ObjectTableId,Tenant,EntityId,ChildObjectTableId,ChildEntityId" />
 </Table>

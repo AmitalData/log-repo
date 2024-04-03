@@ -62,7 +62,7 @@ foreach (string file in Directory.EnumerateFiles(sourceFilePath, "*.lxml"))
 }
 
 #>
- 
+     IDbSet<OpportunityAnalytic> OpportunityAnalytics { get; }
          void SetAsModified(object entity);
          void DetectChanges();
          int SaveChanges();
@@ -220,6 +220,16 @@ namespace <#= contextnamespacestring #>
             <#= contextname #> context = new <#= contextname #>(connection);
             return context;
         }
+        public static ICRMContext GetSecContext(int tenant)
+		{
+			GlobalDB currentDb;
+			currentDb = GlobalDbHelper.GetGlobalDB(tenant);
+			string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
+			DbConnection connection = DatabaseInitializer.GetConnection(dbSeconderyConnectionInfo, null, null);
+			CRMContext context = new CRMContext(connection);
+			return context;
+		}
+
         public override LogitudeDBSchema LogitudeDBSchema
         {
             get { return Simplog.Server.Infrastructure.LogitudeDBSchema.LOGITUDE_MAIN; }
@@ -546,7 +556,10 @@ foreach (string file in Directory.EnumerateFiles(sourceFilePath, "*.lxml"))
        // }
 
 #>
-  
+ public IDbSet<OpportunityAnalytic> OpportunityAnalytics
+	 {
+	      get; set;	 
+	 }
  }
 
 

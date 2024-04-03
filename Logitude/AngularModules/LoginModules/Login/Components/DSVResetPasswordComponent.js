@@ -13,7 +13,7 @@ export var DSVResetPasswordComponent = (function (_super) {
     function DSVResetPasswordComponent(ss) {
         _super.call(this, ss);
         this.ss = ss;
-        this.MainColor = null;
+        this.SecondaryColor = null;
         this.BackgroundImage = "";
         this.ForgetPasswordImage = "";
         this.MainLogo = "";
@@ -27,6 +27,7 @@ export var DSVResetPasswordComponent = (function (_super) {
         this.BackgroundImage = BrandingDataService.GetImage("BackgroundImage");
         this.MainLogo = BrandingDataService.GetImage("MainLogo");
         this.ForgetPasswordImage = BrandingDataService.GetImage("ForgetPasswordImage");
+        this.SecondaryColor = BrandingDataService.GetColor("SecondaryColor");
     };
     DSVResetPasswordComponent.decorators = [
         { type: Component, args: [{

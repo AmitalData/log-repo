@@ -1,0 +1,193 @@
+<table *ngIf="IsVisible">
+
+    <tr *ngIf="IsValidationWarningsVisible == true" style="height:30px;">
+        <td style="width:700px;">
+            <table style="height:30px;">
+                <tr>
+                    <td>
+                        <div [title]="ValidationWarningsMessage" style="padding: 1px; white-space: pre-wrap; white-space: -moz-pre-wrap; white-space: -pre-wrap; white-space: -o-pre-wrap; word-wrap: break-word; width: 700px; text-align: left; background-color: #FFF9BA; border: 1px solid #FEAC10; border-radius: 3px; -webkit-border-radius: 3px; ">
+                            <span style="padding: 1px; white-space: pre-wrap; white-space: -moz-pre-wrap; white-space: -pre-wrap; white-space: -o-pre-wrap; word-wrap: break-word; vertical-align: middle; width: 700px;"> {{ValidationWarningsMessage}} </span> 
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+        <td> <div></div></td>
+    </tr>
+
+    <tr style="height: 10px;">
+        <td>
+            <div> </div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table>
+                <tr *ngIf="IsChargifyAccount==true && IsINTTRAPackage==true" class="FormFieldRow">
+                    <td style="float:left;">
+                        <table>
+                            <tr>
+                                <td>
+                                    <RadioButton [Name]="'AWBStock'" [IsChecked]="IsAWBStockChecked" (Checked)="SetAWBStock(true)" [Text]="'e-AWB Stock'"></RadioButton>
+                                </td>
+
+                                <td style="width:3px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="width:25px;float:left">
+                                    <div style="width:17px; height:17px; float:left;">
+                                        <HelpIcon [Header]="'e-AWB Stock'" [Text]="'Your e-AWB subscription requires the purchase of an AWB package. AWB packages are shared across all your users and are valid for 12 months (after which unused AWBs credits will expire). Please consider choosing the best value package for your expected annual volumes of MAWBs and HAWBs. Additional packages can be purchased at any time.'"></HelpIcon>
+                                    </div>
+                                </td>
+
+                                <td style="width:5px;">
+                                    <div></div>
+                                </td>
+
+                                <td>
+                                    <RadioButton [Name]="'AWBStock'" [IsChecked]="!IsAWBStockChecked" (Checked)="SetAWBStock(false)" [Text]="'INTTRA Stock'"></RadioButton>
+                                </td>
+                                <td style="width:3px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="width:25px;float:left">
+                                    <div style="width:17px; height:17px; float:left;">
+                                        <HelpIcon [Header]="'INTTRA Stock'" [Text]="'INTTRA Messaging stocks are shared across all your users and are valid for 12 months (after which unused INTTRA Message stock credits will expire). Please consider choosing the best value package for your expected annual volumes of INTTRA Messages. Additional packages can be purchased at any time.'"></HelpIcon>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+
+                </tr>
+
+                <tr class="FormFieldRow" *ngIf="(IsChargifyAccount==true && IsINTTRAPackage==true && IsAWBStockChecked) || ((IsChargifyAccount!=true || IsINTTRAPackage!=true) && IsChargifyAccount==true)">
+                    <td>
+                        <table>
+                            <tr class="FormFieldRow">
+                                <td style="width:20px;">
+                                    <LogCheckBox [ObjectFieldName]="'Is100AWBSPackage'" [Checked]="Is100AWBSPackage" [NoObjectField]="true" [HideColumns]="true" [DataContext]="DataContext"></LogCheckBox>
+                                </td>
+
+                                <td>
+                                    <LogLabel [NoObjectField]="true" [DataContext]="DataContext" [Text]="AWBSPackage100Label"></LogLabel>
+                                </td>
+                            </tr>
+
+                            <tr class="FormFieldRow">
+                                <td style="width:20px;">
+                                    <LogCheckBox [ObjectFieldName]="'Is200AWBSPackage'" [Checked]="Is200AWBSPackage" [NoObjectField]="true" [HideColumns]="true" [DataContext]="DataContext"></LogCheckBox>
+                                </td>
+
+                                <td>
+                                    <LogLabel [NoObjectField]="true" [DataContext]="DataContext" [Text]="AWBSPackage200Label"></LogLabel>
+                                </td>
+                            </tr>
+
+                            <tr class="FormFieldRow">
+                                <td style="width:20px;">
+                                    <LogCheckBox [ObjectFieldName]="'Is500AWBSPackage'" [Checked]="Is500AWBSPackage" [NoObjectField]="true" [HideColumns]="true" [DataContext]="DataContext"></LogCheckBox>
+                                </td>
+
+                                <td>
+                                    <LogLabel [NoObjectField]="true" [DataContext]="DataContext" [Text]="AWBSPackage500Label"></LogLabel>
+                                </td>
+                            </tr>
+
+                            <tr class="FormFieldRow">
+                                <td style="width:20px;">
+                                    <LogCheckBox [ObjectFieldName]="'Is1000AWBSPackage'" [Checked]="Is1000AWBSPackage" [NoObjectField]="true" [HideColumns]="true" [DataContext]="DataContext"></LogCheckBox>
+                                </td>
+
+                                <td>
+                                    <LogLabel [NoObjectField]="true" [DataContext]="DataContext" [Text]="AWBSPackage1000Label"></LogLabel>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr class="FormFieldRow" *ngIf="(IsChargifyAccount==true && IsINTTRAPackage==true && !IsAWBStockChecked) || ((IsChargifyAccount!=true || IsINTTRAPackage!=true) && IsINTTRAPackage==true)">
+                    <td>
+                        <table>
+                            <tr class="FormFieldRow">
+                                <td style="width:20px;">
+                                    <LogCheckBox [ObjectFieldName]="'Is100INTTRAPackage'" [Checked]="Is100INTTRAPackage" [NoObjectField]="true" [HideColumns]="true" [DataContext]="DataContext"></LogCheckBox>
+                                </td>
+
+                                <td>
+                                    <LogLabel [NoObjectField]="true" [DataContext]="DataContext" [Text]="INTTRAPackage100Label"></LogLabel>
+                                </td>
+                            </tr>
+
+                            <tr class="FormFieldRow">
+                                <td style="width:20px;">
+                                    <LogCheckBox [ObjectFieldName]="'Is200INTTRAPackage'" [Checked]="Is200INTTRAPackage" [NoObjectField]="true" [HideColumns]="true" [DataContext]="DataContext"></LogCheckBox>
+                                </td>
+
+                                <td>
+                                    <LogLabel [NoObjectField]="true" [DataContext]="DataContext" [Text]="INTTRAPackage200Label"></LogLabel>
+                                </td>
+                            </tr>
+
+                            <tr class="FormFieldRow">
+                                <td style="width:20px;">
+                                    <LogCheckBox [ObjectFieldName]="'Is500INTTRAPackage'" [Checked]="Is500INTTRAPackage" [NoObjectField]="true" [HideColumns]="true" [DataContext]="DataContext"></LogCheckBox>
+                                </td>
+
+                                <td>
+                                    <LogLabel [NoObjectField]="true" [DataContext]="DataContext" [Text]="INTTRAPackage500Label"></LogLabel>
+                                </td>
+                            </tr>
+
+                            <tr class="FormFieldRow">
+                                <td style="width:20px;">
+                                    <LogCheckBox [ObjectFieldName]="'Is1000INTTRAPackage'" [Checked]="Is1000INTTRAPackage" [NoObjectField]="true" [HideColumns]="true" [DataContext]="DataContext"></LogCheckBox>
+                                </td>
+
+                                <td>
+                                    <LogLabel [NoObjectField]="true" [DataContext]="DataContext" [Text]="INTTRAPackage1000Label"></LogLabel>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <div> </div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button id="{{'CloseBtn' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="CloseButtonClicked()">Close</button>
+                    </td>
+                    <td style="width: 10px;">
+                        <div></div>
+                    </td>
+                    <td style="width: 57px;">
+                        <button id="{{'SendBtn' | IdGeneratorAsyncPipe | async}}" class="RedButton" (click)="SendButtonClicked()" [disabled]="!IsValidationWarningsVisible">Confirm</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>

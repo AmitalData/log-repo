@@ -3,436 +3,86 @@
         transform: rotate(225deg) !important;
     }
 </style>
-<div *ngIf="isLoading"> <br>  Loading...</div>
 
-<div *ngIf="!isLoading" class="shipment-details-container">
-    <div style="padding: 16px 76px 0px 90px;background: RGB(242,244,247);">
-        <a style="color: var(--MainColor);" href="javascript:;" (click)="BackLinkClicked()">Back to shipments</a>
+<!-- Loading div -->
+<div *ngIf="isLoading"> <br> Loading...</div>
+
+<div *ngIf="!isLoading">
+
+    <!-- No Supported For Declaration -->
+    <div class="no-result-div" *ngIf="ShowNotSupportedDeclarationMessage">
+        <img src="./assets/images/misc/No results@1x.png" alt=" " />
+        <div class="title" style="color: rgb(224, 36, 83);">Declaration approval is not supported yet</div>
     </div>
 
-    <!-- Shipment Header -->
-    <div style="order: 0;" *ngIf="Shipment" class="shipment-header hide-mobile">
-
-        <!-- icon -->
-        <div class="column mode-icon" style="width: 8%;">
-            <div class="circle-image">
-                <div [ngSwitch]="Shipment.ShipmentList.TransportModeId"
-                     style="display: inline-block;    position: relative;     top: 30px">
-                    <svg *ngSwitchCase="'O'" width="47px" height="20px" viewBox="0 0 47 20" version="1.1"
-                         xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                        <title>0FD17A4A-5C03-438A-96BD-5AE25DEE0482</title>
-                        <g id="Desktop-DSV" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                            <g id="Search-Results" transform="translate(-370.000000, -405.000000)" fill="#002664">
-                                <g id="Group-14-Copy" transform="translate(308.000000, 328.000000)">
-                                    <g id="Type/boat" transform="translate(45.000000, 46.000000)">
-                                        <g id="Group">
-                                            <path fill="var(--MainColor)"
-                                                  d="M64.0004222,40.059772 L55.4342944,51 L20.0331393,51 L17.0004222,40.059772 L64.0004222,40.059772 Z M30.3716056,37.1653425 L30.3716056,39.1572031 L20.6380712,39.1572031 L20.6380712,37.1653425 L30.3716056,37.1653425 Z M57.1715124,35.1574036 L57.1715124,39.1411248 L51.6342935,39.1411248 L51.6342935,35.1574036 L57.1715124,35.1574036 Z M51.0698938,35.1574036 L51.0698938,39.1411248 L45.532675,39.1411248 L45.532675,35.1574036 L51.0698938,35.1574036 Z M41.4126297,36.4234621 L41.4126297,39.0792762 L31.6790953,39.0792762 L31.6790953,36.4234621 L41.4126297,36.4234621 Z M25.1815979,34.4120812 L25.1815979,36.7067047 L20.8232989,36.7067047 L20.8232989,34.4120812 L25.1815979,34.4120812 Z M30.1863779,34.4120812 L30.1863779,36.7067047 L25.8280789,36.7067047 L25.8280789,34.4120812 L30.1863779,34.4120812 Z M54.0862725,31 L54.0862725,34.6441488 L48.5490537,34.6441488 L48.5490537,31 L54.0862725,31 Z"
-                                                  id="ship"></path>
-                                        </g>
-                                    </g>
-                                </g>
-                            </g>
-                        </g>
-                    </svg>
-
-                    <svg *ngSwitchCase="'A'" width="36px" height="32px" viewBox="0 0 36 32" version="1.1"
-                         xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                        <title>0115CEBC-E18D-4587-8E9E-7A1A01FA23E5</title>
-                        <g id="Desktop-DSV" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                            <g id="Search-Results" transform="translate(-375.000000, -804.000000)" fill="#002664">
-                                <g id="Group-14-Copy-2" transform="translate(308.000000, 732.000000)">
-                                    <g id="Type/boat" transform="translate(45.000000, 46.000000)">
-                                        <g id="Group">
-                                            <path fill="var(--MainColor)"
-                                                  d="M28.2010781,26 L44.9721135,32.4312677 C46.8367468,31.1081412 48.7257202,29.7863693 50.5260794,28.5557714 C51.8003996,27.6847188 57.0176923,27.3267788 57.7639616,28.3543079 L57.7639616,28.3543079 L57.8454343,28.4667753 C58.5922106,29.4947934 56.4585397,34.1000925 55.1737396,34.9563124 C53.4750773,36.0893977 51.6720921,37.2654064 49.8681811,38.4256513 L50.4013143,55.8435582 L47.2072029,58 L45.7311918,55.9677976 L46.4843162,55.4596112 L41.7760232,43.5398952 C37.7106852,46.0706551 34.750133,47.8626901 34.750133,47.8626901 L34.750133,47.8626901 L33.3792963,52.8533126 L29.7502134,55.3041258 L28.875312,48.0677395 L28.7522579,47.8982233 L22,44.6307983 L25.629421,42.179985 L30.9638518,42.6479476 C30.9638518,42.6479476 33.557413,40.7024661 37.2302404,38.0156431 L27.2355389,29.6802767 L26.4826023,30.1888253 L25.0069668,28.1571663 L28.2010781,26 Z"
-                                                  id="plane"></path>
-                                        </g>
-                                    </g>
-                                </g>
-                            </g>
-                        </g>
-                    </svg>
-
-
-                    <svg *ngSwitchCase="'I'" width="39px" height="24px" viewBox="0 0 39 24" version="1.1"
-                         xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                        <title>1AA85C09-5F26-422B-B8DF-3A21F62D731B</title>
-                        <g id="Desktop-DSV" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                            <g id="Search-Results" transform="translate(-375.000000, -1009.000000)" fill="#002664">
-                                <g id="Group-14-Copy-3" transform="translate(308.000000, 934.000000)">
-                                    <g id="Type/car" transform="translate(45.000000, 46.000000)">
-                                        <g id="Group-3">
-                                            <path fill="var(--MainColor)"
-                                                  d="M29.6731686,46.9283885 C31.3325599,46.9283885 32.677691,48.2875099 32.677691,49.9642285 C32.677691,51.6408786 31.3325599,53 29.6731686,53 C28.0137095,53 26.6685784,51.6408786 26.6685784,49.9642285 C26.6685784,48.2875099 28.0137095,46.9283885 29.6731686,46.9283885 Z M52.7712947,46.9283885 C54.4306859,46.9283885 55.775885,48.2875099 55.775885,49.9642285 C55.775885,51.6408786 54.4306859,53 52.7712947,53 C51.1118356,53 49.7667045,51.6408786 49.7667045,49.9642285 C49.7667045,48.2875099 51.1118356,46.9283885 52.7712947,46.9283885 Z M59.5103151,29.000045 C60.3331132,28.9936856 61,29.6623235 61,30.4935267 L61,30.4935267 L61,48.094433 C61,48.9256362 60.3362073,49.664958 59.5173334,49.7455545 L59.5173334,49.7455545 L56.7117602,50.0216564 C56.7120621,50.0025176 56.7125149,49.9833788 56.7125149,49.96424 C56.7125149,47.7649559 54.9479854,45.9819979 52.7712645,45.9819979 C50.5946191,45.9819979 48.8300897,47.7649559 48.8300897,49.96424 C48.8300897,50.093179 48.8364287,50.2208219 48.8482013,50.3467109 L48.8482013,50.3467109 L33.596213,50.3467109 C33.608061,50.2208219 33.6144001,50.093179 33.6144001,49.96424 C33.6144001,47.7649559 31.8498707,45.9819979 29.6731498,45.9819979 C27.4965043,45.9819979 25.7319749,47.7649559 25.7319749,49.96424 C25.7319749,50.0006876 25.7325031,50.0371352 25.7334842,50.0734302 L25.7334842,50.0734302 L23.395494,49.6050254 C22.5884681,49.443375 21.9644456,48.639088 22.0015746,47.8087235 L22.001651,47.7970977 C22.0037397,47.5436283 22.0604663,43.2216537 23.5033339,42.3380778 C24.3290751,41.8324629 25.2657503,41.5066458 25.9354293,41.3168591 C26.3464133,41.2004251 26.7834328,40.7948503 26.9041773,40.3811168 L26.9041773,40.3811168 L28.6373886,34.4390163 C28.9325334,33.4271763 29.5955715,32.453919 30.5043245,31.6986609 C31.4130775,30.9434028 32.486194,30.4737017 33.5258793,30.3764064 L33.5258793,30.3764064 L35.9259775,30.1515447 C36.1341862,29.5682307 36.6859884,29.1476347 37.3324996,29.1426022 L37.3324996,29.1426022 Z M35.4019465,31.7518073 L33.6669994,31.9144489 C32.140563,32.057418 30.5370764,33.3899662 30.1036038,34.8758536 L30.1036038,34.8758536 L28.4251048,40.6306075 C28.3768824,40.7960704 28.4752137,40.9146394 28.6448597,40.8954243 L28.6448597,40.8954243 L34.2584964,40.2599553 C34.4990043,40.232734 34.7174763,40.013896 34.7465304,39.7711154 L34.7465304,39.7711154 L35.672565,32.0330942 C35.6931671,31.8618363 35.5718943,31.7359472 35.4019465,31.7518073 L35.4019465,31.7518073 Z"
-                                                  id="Truck"
-                                                  transform="translate(41.500000, 41.000000) scale(-1, 1) translate(-41.500000, -41.000000) ">
-                                            </path>
-                                        </g>
-                                    </g>
-                                </g>
-                            </g>
-                        </g>
-                    </svg>
-                </div>
-
-                <svg [class.FlipImgDiagonal]="Shipment.ShipmentList.DirectionId=='E'" width="14" height="14"
-                     version="1.1" viewBox="0 0 512.17 512.17" xml:space="preserve" xmlns="http://www.w3.org/2000/svg"
-                     class="direction-icon">
-                <g xmlns="http://www.w3.org/2000/svg">
-                <path class=""
-                      d="m479.05 283.92c-1.664-3.989-5.547-6.592-9.856-6.592h-116.88v-266.67c0-5.888-4.779-10.667-10.667-10.667h-170.67c-5.888 0-10.667 4.779-10.667 10.667v266.67h-117.33c-4.309 0-8.192 2.603-9.856 6.571-1.643 3.989-0.747 8.576 2.304 11.627l212.8 213.5c2.005 2.005 4.715 3.136 7.552 3.136s5.547-1.131 7.552-3.115l213.42-213.5c3.051-3.052 3.968-7.638 2.304-11.628z"
-                      fill="var(--MainColor)" data-original="#000000" />
-
-
-
-
-
-
-
-                    </g>
-                </svg>
-
-            </div>
-        </div>
-
-        <!-- References -->
-        <div>
-            <div class="title">Customer Ref.  &nbsp;&nbsp;&nbsp;<a *ngIf="HasReferences" (click)="showMoreReferences=!showMoreReferences" style="cursor: pointer;text-decoration: underline;">{{showMoreReferences?'Show Less':'See all'}}</a>  </div>
-            <ul *ngIf="showMoreReferences">
-                <li *ngFor="let ref of ShipmentReferences, let i = index">{{ref}}</li>
-            </ul>
-            <ul *ngIf="!showMoreReferences">
-                <li *ngFor="let ref of ShipmentReferences?.slice(0,2), let i = index">{{ref}}</li>
-            </ul>
-        </div>
-
-        <div>
-            <div class="title">Customs Broker Ref.</div>
-            <ul>
-                <li>{{CustomsBrokerReference}}</li>
-            </ul>
-        </div>
-
-        <div>
-            <div class="title">Routing</div>
-            <ul>
-                <li>{{fromPortCode}} to {{toPortCode}}</li>
-            </ul>
-        </div>
-
+    <!-- No Shipments found -->
+    <div class="no-result-div" *ngIf="ShowNoShipmentFoundMessage">
+        <img src="./assets/images/misc/No results@1x.png" alt=" " />
+        <div class="title">No Shipment Found</div>
+        <p *ngIf="isSharedLink">
+            No shipment found for this link, please make sure the link is valid
+        </p>
     </div>
 
-    <!-- Milestones -->
-    <div class="shipment-header" style="vertical-align:middle;text-align:center">
-        <span *ngIf="NoMilstonesFound" class="title" >No Milestones created for this Shipment</span>
-    </div>
+    <div *ngIf="!ShowNotSupportedDeclarationMessage && !ShowNoShipmentFoundMessage">
 
-    <div *ngIf="!NoMilstonesFound" style="order: 2;" #SliderWrapper class="slider-wrapper" (wheel)="onMousewheel($event)" (pan)="logPan($event)">
 
-        <div *ngIf="!NoMilstonesFound" class="pager hide-mobile" [class.dim]="sliderMarginLeft==0" (click)="MoveSlider('right')">
-            <img class="FlipImgHoriz" src="./assets/images/icons/right-arrow@2x.png" alt="" />
-        </div>
-
-        <div *ngIf="!NoMilstonesFound" class="slider" [style.width.px]="sliderVisibleCardsWidth">
-            <div class="cards" [style.margin-left.px]="sliderMarginLeft">
-
-                <div class="card empty mobile-only">
+        <!-- Application Header - Shared Link -->
+        <div class="web-header-wrapper" *ngIf="isSharedLink" style="position: initial;">
+            <div class="web-header hide-mobile">
+                <div class="logo-wrapper">
+                    <div class="logo">
+                        <img *ngIf="CompanyLogo" style="border:0;outline:none" [attr.src]="CompanyLogo" />
+                    </div>
+                </div>
+                <div style="width:auto;">
 
                 </div>
-                <div class="card"
-                     *ngFor="let card of SliderCards"
-                     [class.active]="card.IsActive"
-                     [class.dim]="card.IsDimmed">
-                    <div class="date">{{card.Date | date: 'dd'}} <span>{{card.Date | date: 'MMM'}}</span></div>
-                    <div class="title">{{card.Title}}</div>
-                    <div class="desc hide-mobile " [attr.title]="card.Description"
-                         style="overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">{{card.Description}}</div>
-                    <div (click)="OpenMessageWindow(card.WarningMessage,card.WarningDate)" [attr.title]="card.WarningDate +'\n'+ card.WarningMessage" *ngIf="card.HasWarning" class="warning-icon mobile-only">!</div>
+
+                <div class="nav">
                 </div>
 
             </div>
         </div>
 
-        <div *ngIf="!NoMilstonesFound" class="pager hide-mobile" (click)="MoveSlider('left')"
-             [class.dim]="((sliderMarginCardCount+sliderVisibleCardsCount)>=SliderCards.length) || (sliderVisibleCardsCount >= SliderCards.length)">
-            <img src="./assets/images/icons/right-arrow@2x.png" alt="" />
-        </div>
-
-    </div>
-
-    <div style="order: 1;" class="PanelsNavigator">
-        <div class="panels-wrapper">
-            <button [class.active]="selectedNavButton=='Overview'" (click)="PanelsNavigatorClicked('Overview')">Overview</button>
-            <button [class.active]="selectedNavButton=='Cargo'" (click)="PanelsNavigatorClicked('Cargo')">Cargo Info</button>
-            <button [class.active]="selectedNavButton=='CustomsDataPanel'" (click)="PanelsNavigatorClicked('CustomsDataPanel')">Customs Data</button>
-            <button [class.active]="selectedNavButton=='Routing'" (click)="PanelsNavigatorClicked('Routing')">Routing</button>
-            <button [class.active]="selectedNavButton=='Documents'" (click)="PanelsNavigatorClicked('Documents')">Documents</button>
-            <button [class.active]="selectedNavButton=='Partners'" (click)="PanelsNavigatorClicked('Partners')">Partners</button>
-        </div>
-    </div>
-
-
-    <panel style="order: 3;" [Title]="'Order Overview'" [ShowGrayPanelOnMobile]="true" [Name]="'Overview'">
-
-        <div body>
-            <div class="data-cards" *ngIf="Shipment&& Shipment.ShipmentList">
-                <div>
-                    <div class="title">Incoterms</div>
-                    <div class="description">{{ShipmentPM?.IncotermName}}</div>
-                </div>
-
-                <!-- ETD/ATD -->
-                <div>
-                    <div class="title">
-                        <span *ngIf="Shipment.ShipmentList.DepartureDate">atd</span>
-                        <span *ngIf="Shipment.ShipmentList.DepartureEstimationDate && !Shipment.ShipmentList.DepartureDate">etd</span>
-                        <span *ngIf="!Shipment.ShipmentList.DepartureEstimationDate && !Shipment.ShipmentList.DepartureDate">etd</span>
-                    </div>
-                    <div class="description">
-                        <span *ngIf="Shipment.ShipmentList.DepartureDate">{{Shipment.ShipmentList.DepartureDate | date:'dd/MM/yyyy'}}</span>
-                        <span *ngIf="Shipment.ShipmentList.DepartureEstimationDate && !Shipment.ShipmentList.DepartureDate">
-                            {{Shipment.ShipmentList.DepartureEstimationDate | date:'dd/MM/yyyy'}}
-                            <span style="color: rgb(59, 59, 59); font-size: 12px;">(Expected)</span>
-                        </span>
-                    </div>
-                </div>
-
-                <!-- ETA/ATA -->
-                <div>
-                    <div class="title">
-                        <span *ngIf="Shipment.ShipmentList.ArrivalDate">ata</span>
-                        <span *ngIf="Shipment.ShipmentList.ArrivalEstimationDate && !Shipment.ShipmentList.ArrivalDate">eta</span>
-                        <span *ngIf="!Shipment.ShipmentList.ArrivalEstimationDate && !Shipment.ShipmentList.ArrivalDate">eta</span>
-                    </div>
-                    <div class="description">
-                        <span *ngIf="Shipment.ShipmentList.ArrivalDate">{{Shipment.ShipmentList.ArrivalDate | date:'dd/MM/yyyy'}}</span>
-                        <span *ngIf="Shipment.ShipmentList.ArrivalEstimationDate && !Shipment.ShipmentList.ArrivalDate">
-                            {{Shipment.ShipmentList.ArrivalEstimationDate | date:'dd/MM/yyyy'}}
-                            <span style="color: rgb(59, 59, 59); font-size: 12px;">(Expected)</span>
-                        </span>
-                    </div>
-                </div>
-
-
-                <div>
-                    <div class="title">customer</div>
-                    <div class="description">{{Shipment.ShipmentList.CustomerEnglishName}}</div>
-                </div>
-                <div>
-                    <div class="title">shipper</div>
-                    <div class="description">{{Shipment.ShipmentList.ShipperName}}</div>
-                </div>
-                <div>
-                    <div class="title">quantity</div>
-                    <div class="description">{{ShipmentPM?.NumberOfPackages || 0}} units</div>
-                </div>
-                <div>
-                    <div class="title">weight</div>
-                    <div class="description">{{Shipment.ShipmentList.GrossWeight || 0 }} {{Shipment.ShipmentList.GrossWeightUnitCode||''}}</div>
-                </div>
-                <div>
-                    <div class="title">total value nis</div>
-                    <div class="description"></div>
-                </div>
-                <div>
-                    <div class="title">total taxes</div>
-                    <div class="description">{{ShipmentPM?.TotalTax}}</div>
-                </div>
-                <div>
-                    <div class="title">declaration status</div>
-                    <div class="description"></div>
-                </div>
-
+        <!-- Mobile Header -->
+        <div *ngIf="isBrandingDataLoaded" class="sidebar mobile-only">
+            <div class="logo">
+                <img class="mobile-only" [src]="CompanyLogo" alt="" />
             </div>
         </div>
 
-    </panel>
 
+        <!-- Shipment Details -->
+        <div class="shipment-details-container" [class.auto-overflow]="isSharedLink"
+            [class.special-padding]="isSharedLink">
 
-    <panel style="order: 4;" [Title]="'Cargo Info'" [Name]="'Cargo'" [HaveDetailsSection]="true"
-           [ShowWhitePanelOnMobile]="true" [DetailsTitle]="'Container List'" [DetailsSectionToggleEvent]="DetailsSectionToggleEvent">
-
-        <div body>
-            <div class="data-cards" *ngIf="Shipment&& Shipment.ShipmentList">
-                <div>
-                    <div class="title">Pack Type</div>
-                    <div class="description">
-                        <div *ngFor="let package of ShipmentPackages?.slice(0,2), let i = index">
-                            {{package.PackageTypeName}}
-                            <a *ngIf="ShipmentPackages.length > 2 && i == 1" (click)="ShowMoreLinkClicked()"
-                               style="cursor: pointer; font-size: 11px;color:var(--MainColor)"> {{ShowDetailsSection?'Show less':'Show more'}}</a>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <div class="title">fcl / lcl</div>
-                    <div class="description">{{ShipmentPM?.ShipmentTypeName}}</div>
-                </div>
-                <div>
-                    <div class="title">quantity</div>
-                    <div class="description">{{ShipmentPM?.NumberOfPackages || 0}} unit</div>
-                </div>
-                <div>
-                    <div class="title">weight</div>
-                    <div class="description">{{Shipment.ShipmentList.GrossWeight }} {{Shipment.ShipmentList.GrossWeightUnitCode||''}}</div>
-                </div>
-                <div>
-                    <div class="title">volume</div>
-                    <div class="description">{{Shipment.ShipmentList.Volume }}</div>
-                </div>
-                <div>
-                    <div class="title">storage site</div>
-                    <div class="description">
-                        {{ShipmentPM?.WarehouseLegEnglishName}}
-                    </div>
-                </div>
-                <div>
-                    <div class="title">containers</div>
-                    <div class="description">
-                        <div *ngFor="let container of ContainersNumbers?.slice(0,2), let i = index">
-                            {{container}}
-                            <a *ngIf="ContainersNumbers?.length > 2 && i == 1" (click)="ShowMoreLinkClicked()"
-                               style="cursor: pointer; font-size: 11px;color:var(--MainColor)"> {{ShowDetailsSection?'Show less':'Show more'}} </a>
-                        </div>
-                    </div>
-                </div>
-
+            <!-- Back Link -->
+            <div class="back-to-shipments" *ngIf="!isSharedLink"
+                style="padding: 16px 76px 0px 90px;background: RGB(242,244,247);">
+                <a style="color: var(--MainColor);" href="javascript:;" (click)="BackLinkClicked()">Back to
+                    shipments</a>
             </div>
-        </div>
 
-        <div details>
-            <br>
-            <div *ngIf="!HasContainersDetails">No Containers Details for this Shipment</div>
-            <div *ngIf="Shipment && Shipment.ShipmentList && HasContainersDetails">
+            <!-- Shipment Header -->
+            <div style="order: 0;" class="shipment-header hide-mobile">
 
-                <table *ngIf="Shipment.ShipmentList.TransportModeId != 'A' ">
-                    <tr>
-                        <th style="width: 300px;">Number</th>
-                        <th style="width: 400px;">Type</th>
-                        <th style="width: 200px;">Seal #</th>
-                    </tr>
-
-                    <tr *ngFor="let package of ShipmentPackages">
-                        <td style="width: 300px;">{{package.ContainerNumber}}</td>
-                        <td style="width: 400px;">{{package.PackageTypeName}}</td>
-                        <td style="width: 200px;">{{package.ShipperSeal == null ? package.CarrierSeal : package.ShipperSeal }}</td>
-                    </tr>
-                </table>
-
-                <table *ngIf="Shipment.ShipmentList.TransportModeId == 'A' ">
-                    <tr>
-                        <th style="width: 400px;">Package Type</th>
-                        <th style="width: 250px;">Quantity</th>
-                        <th style="width: 250px;">Weight</th>
-                        <th style="width: 250px;">Volume</th>
-                        <th style="width: 200px;">Storage Site</th>
-                    </tr>
-
-                    <tr *ngFor="let package of ShipmentPackages">
-                        <td style="width: 400px;">{{package.PackageTypeName}}</td>
-                        <td style="width: 250px;">{{package.Quantity}}</td>
-                        <td style="width: 250px;">{{package.Weight}}</td>
-                        <td style="width: 250px;">{{package.Volume}}</td>
-                        <td style="width: 200px;">{{ShipmentPM?.WarehouseLegEnglishName}}</td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-
-    </panel>
-
-    <panel style="order: 5;" [Title]="'Customs Data'"
-           [Name]="'CustomsDataPanel'"
-           [HaveDetailsSection]="true"
-           [ShowWhitePanelOnMobile]="true"
-           [DetailsTitle]="'Tax Details'">
-
-        <div body>
-            <div *ngIf="loadingCustomsData">Loading customs data ...</div>
-            <div *ngIf="!loadingCustomsData && !ShipmentCustomsData">Customs data is not available yet</div>
-            <div *ngIf="!loadingCustomsData && ShipmentCustomsData" class="data-cards">
-                <div>
-                    <div class="title">Declaration #</div>
-                    <div class="description">{{ShipmentCustomsData.DeclarationNumber}}</div>
-                </div>
-                <div>
-                    <div class="title">Declaration Status</div>
-                    <div class="description">{{ShipmentCustomsData.DeclarationStatus}}</div>
-                </div>
-                <div>
-                    <div class="title">Import VAT</div>
-                    <div class="description">{{ShipmentCustomsData.ImporterVatAmount | number}}</div>
-                </div>
-                <div>
-                    <div class="title">total value nis</div>
-                    <div class="description">{{ShipmentCustomsData.TotalValueInNIS||0 | number}} ₪</div>
-                </div>
-                <div>
-                    <div class="title">total value {{ShipmentCustomsData.CurrencyCode }}</div>
-                    <div class="description">{{ShipmentCustomsData.TotalValueInForeignCurrency||0 | number}} {{ShipmentCustomsData.CurrencySign }}</div>
-                </div>
-                <div>
-                    <div class="title">consignment #</div>
-                    <div class="description">-</div>
-                </div>
-                <div>
-                    <div class="title">goods description</div>
-                    <div class="description">{{ShipmentCustomsData.GoodsDescription }}</div>
-                </div>
-                <div>
-                    <div class="title">total taxes</div>
-                    <div class="description">{{ShipmentCustomsData.TotalTax||0 | number}}</div>
-                </div>
-
-
-            </div>
-        </div>
-
-        <div details>
-            <br>
-            <div *ngIf="NoTaxDetails"> No Tax Details for this Shipment </div>
-            <div *ngIf="!loadingCustomsData && !ShipmentCustomsData && !NoTaxDetails">Customs data is not available yet</div>
-
-            <table class="row-hover" *ngIf="!loadingCustomsData && ShipmentCustomsData && !NoTaxDetails">
-                <tr class="header">
-                    <th style="width: 400px;">type</th>
-                    <th style="width: 200px;">calculation base</th>
-                    <th style="width: 150px;text-align: right;">tax amount</th>
-                    <!-- <th style="width: 200px;">pay amount</th>
-                    <th style="width: 200px;">rejected amount</th> -->
-                </tr>
-                <tr *ngFor="let detail of ShipmentCustomsData.TaxDetails">
-                    <td>{{detail.TaxTypeName}}</td>
-                    <td>{{detail.TaxBasis}}</td>
-                    <td style="text-align: right;">{{detail.TaxAmount | number}}</td>
-                </tr>
-
-            </table>
-
-        </div>
-
-    </panel>
-
-    <panel style="order: 6;" [Title]="'Routing'" [Name]="'RoutingPanel'">
-
-        <div body>
-            <div *ngIf="ShipmentRouteSteps?.length == 0">No Routing defined for this shipment </div>
-            <div *ngIf="ShipmentRouteSteps?.length > 0" class="routing-timeline">
-                <div class="routing-step" [class.active]="step.IsActive" *ngFor="let step of ShipmentRouteSteps">
-                    <div class="routing-banner">
-                        <div [ngSwitch]="step.TransportModeCode">
+                <!-- icon -->
+                <div class="column mode-icon" style="width: 8%;">
+                    <div class="circle-image">
+                        <div [ngSwitch]="cargoTrackingShipmentPM.TransportModeId"
+                            style="display: inline-block;    position: relative;     top: 30px">
                             <svg *ngSwitchCase="'O'" width="47px" height="20px" viewBox="0 0 47 20" version="1.1"
-                                 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                                <title>0FD17A4A-5C03-438A-96BD-5AE25DEE0482</title>
+                                xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                                 <g id="Desktop-DSV" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                    <g id="Search-Results" transform="translate(-370.000000, -405.000000)" fill="#002664">
+                                    <g id="Search-Results" transform="translate(-370.000000, -405.000000)"
+                                        fill="#002664">
                                         <g id="Group-14-Copy" transform="translate(308.000000, 328.000000)">
                                             <g id="Type/boat" transform="translate(45.000000, 46.000000)">
                                                 <g id="Group">
-                                                    <path fill="var(--MainColor)"
-                                                          d="M64.0004222,40.059772 L55.4342944,51 L20.0331393,51 L17.0004222,40.059772 L64.0004222,40.059772 Z M30.3716056,37.1653425 L30.3716056,39.1572031 L20.6380712,39.1572031 L20.6380712,37.1653425 L30.3716056,37.1653425 Z M57.1715124,35.1574036 L57.1715124,39.1411248 L51.6342935,39.1411248 L51.6342935,35.1574036 L57.1715124,35.1574036 Z M51.0698938,35.1574036 L51.0698938,39.1411248 L45.532675,39.1411248 L45.532675,35.1574036 L51.0698938,35.1574036 Z M41.4126297,36.4234621 L41.4126297,39.0792762 L31.6790953,39.0792762 L31.6790953,36.4234621 L41.4126297,36.4234621 Z M25.1815979,34.4120812 L25.1815979,36.7067047 L20.8232989,36.7067047 L20.8232989,34.4120812 L25.1815979,34.4120812 Z M30.1863779,34.4120812 L30.1863779,36.7067047 L25.8280789,36.7067047 L25.8280789,34.4120812 L30.1863779,34.4120812 Z M54.0862725,31 L54.0862725,34.6441488 L48.5490537,34.6441488 L48.5490537,31 L54.0862725,31 Z"
-                                                          id="ship"></path>
+                                                    <path fill="var(--secondaryColor)"
+                                                        d="M64.0004222,40.059772 L55.4342944,51 L20.0331393,51 L17.0004222,40.059772 L64.0004222,40.059772 Z M30.3716056,37.1653425 L30.3716056,39.1572031 L20.6380712,39.1572031 L20.6380712,37.1653425 L30.3716056,37.1653425 Z M57.1715124,35.1574036 L57.1715124,39.1411248 L51.6342935,39.1411248 L51.6342935,35.1574036 L57.1715124,35.1574036 Z M51.0698938,35.1574036 L51.0698938,39.1411248 L45.532675,39.1411248 L45.532675,35.1574036 L51.0698938,35.1574036 Z M41.4126297,36.4234621 L41.4126297,39.0792762 L31.6790953,39.0792762 L31.6790953,36.4234621 L41.4126297,36.4234621 Z M25.1815979,34.4120812 L25.1815979,36.7067047 L20.8232989,36.7067047 L20.8232989,34.4120812 L25.1815979,34.4120812 Z M30.1863779,34.4120812 L30.1863779,36.7067047 L25.8280789,36.7067047 L25.8280789,34.4120812 L30.1863779,34.4120812 Z M54.0862725,31 L54.0862725,34.6441488 L48.5490537,34.6441488 L48.5490537,31 L54.0862725,31 Z"
+                                                        id="ship"></path>
                                                 </g>
                                             </g>
                                         </g>
@@ -441,16 +91,16 @@
                             </svg>
 
                             <svg *ngSwitchCase="'A'" width="36px" height="32px" viewBox="0 0 36 32" version="1.1"
-                                 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                                <title>0115CEBC-E18D-4587-8E9E-7A1A01FA23E5</title>
+                                xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                                 <g id="Desktop-DSV" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                    <g id="Search-Results" transform="translate(-375.000000, -804.000000)" fill="#002664">
+                                    <g id="Search-Results" transform="translate(-375.000000, -804.000000)"
+                                        fill="#002664">
                                         <g id="Group-14-Copy-2" transform="translate(308.000000, 732.000000)">
                                             <g id="Type/boat" transform="translate(45.000000, 46.000000)">
                                                 <g id="Group">
-                                                    <path fill="var(--MainColor)"
-                                                          d="M28.2010781,26 L44.9721135,32.4312677 C46.8367468,31.1081412 48.7257202,29.7863693 50.5260794,28.5557714 C51.8003996,27.6847188 57.0176923,27.3267788 57.7639616,28.3543079 L57.7639616,28.3543079 L57.8454343,28.4667753 C58.5922106,29.4947934 56.4585397,34.1000925 55.1737396,34.9563124 C53.4750773,36.0893977 51.6720921,37.2654064 49.8681811,38.4256513 L50.4013143,55.8435582 L47.2072029,58 L45.7311918,55.9677976 L46.4843162,55.4596112 L41.7760232,43.5398952 C37.7106852,46.0706551 34.750133,47.8626901 34.750133,47.8626901 L34.750133,47.8626901 L33.3792963,52.8533126 L29.7502134,55.3041258 L28.875312,48.0677395 L28.7522579,47.8982233 L22,44.6307983 L25.629421,42.179985 L30.9638518,42.6479476 C30.9638518,42.6479476 33.557413,40.7024661 37.2302404,38.0156431 L27.2355389,29.6802767 L26.4826023,30.1888253 L25.0069668,28.1571663 L28.2010781,26 Z"
-                                                          id="plane"></path>
+                                                    <path fill="var(--secondaryColor)"
+                                                        d="M28.2010781,26 L44.9721135,32.4312677 C46.8367468,31.1081412 48.7257202,29.7863693 50.5260794,28.5557714 C51.8003996,27.6847188 57.0176923,27.3267788 57.7639616,28.3543079 L57.7639616,28.3543079 L57.8454343,28.4667753 C58.5922106,29.4947934 56.4585397,34.1000925 55.1737396,34.9563124 C53.4750773,36.0893977 51.6720921,37.2654064 49.8681811,38.4256513 L50.4013143,55.8435582 L47.2072029,58 L45.7311918,55.9677976 L46.4843162,55.4596112 L41.7760232,43.5398952 C37.7106852,46.0706551 34.750133,47.8626901 34.750133,47.8626901 L34.750133,47.8626901 L33.3792963,52.8533126 L29.7502134,55.3041258 L28.875312,48.0677395 L28.7522579,47.8982233 L22,44.6307983 L25.629421,42.179985 L30.9638518,42.6479476 C30.9638518,42.6479476 33.557413,40.7024661 37.2302404,38.0156431 L27.2355389,29.6802767 L26.4826023,30.1888253 L25.0069668,28.1571663 L28.2010781,26 Z"
+                                                        id="plane"></path>
                                                 </g>
                                             </g>
                                         </g>
@@ -460,17 +110,17 @@
 
 
                             <svg *ngSwitchCase="'I'" width="39px" height="24px" viewBox="0 0 39 24" version="1.1"
-                                 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                                <title>1AA85C09-5F26-422B-B8DF-3A21F62D731B</title>
+                                xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                                 <g id="Desktop-DSV" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                    <g id="Search-Results" transform="translate(-375.000000, -1009.000000)" fill="#002664">
+                                    <g id="Search-Results" transform="translate(-375.000000, -1009.000000)"
+                                        fill="#002664">
                                         <g id="Group-14-Copy-3" transform="translate(308.000000, 934.000000)">
                                             <g id="Type/car" transform="translate(45.000000, 46.000000)">
                                                 <g id="Group-3">
-                                                    <path fill="var(--MainColor)"
-                                                          d="M29.6731686,46.9283885 C31.3325599,46.9283885 32.677691,48.2875099 32.677691,49.9642285 C32.677691,51.6408786 31.3325599,53 29.6731686,53 C28.0137095,53 26.6685784,51.6408786 26.6685784,49.9642285 C26.6685784,48.2875099 28.0137095,46.9283885 29.6731686,46.9283885 Z M52.7712947,46.9283885 C54.4306859,46.9283885 55.775885,48.2875099 55.775885,49.9642285 C55.775885,51.6408786 54.4306859,53 52.7712947,53 C51.1118356,53 49.7667045,51.6408786 49.7667045,49.9642285 C49.7667045,48.2875099 51.1118356,46.9283885 52.7712947,46.9283885 Z M59.5103151,29.000045 C60.3331132,28.9936856 61,29.6623235 61,30.4935267 L61,30.4935267 L61,48.094433 C61,48.9256362 60.3362073,49.664958 59.5173334,49.7455545 L59.5173334,49.7455545 L56.7117602,50.0216564 C56.7120621,50.0025176 56.7125149,49.9833788 56.7125149,49.96424 C56.7125149,47.7649559 54.9479854,45.9819979 52.7712645,45.9819979 C50.5946191,45.9819979 48.8300897,47.7649559 48.8300897,49.96424 C48.8300897,50.093179 48.8364287,50.2208219 48.8482013,50.3467109 L48.8482013,50.3467109 L33.596213,50.3467109 C33.608061,50.2208219 33.6144001,50.093179 33.6144001,49.96424 C33.6144001,47.7649559 31.8498707,45.9819979 29.6731498,45.9819979 C27.4965043,45.9819979 25.7319749,47.7649559 25.7319749,49.96424 C25.7319749,50.0006876 25.7325031,50.0371352 25.7334842,50.0734302 L25.7334842,50.0734302 L23.395494,49.6050254 C22.5884681,49.443375 21.9644456,48.639088 22.0015746,47.8087235 L22.001651,47.7970977 C22.0037397,47.5436283 22.0604663,43.2216537 23.5033339,42.3380778 C24.3290751,41.8324629 25.2657503,41.5066458 25.9354293,41.3168591 C26.3464133,41.2004251 26.7834328,40.7948503 26.9041773,40.3811168 L26.9041773,40.3811168 L28.6373886,34.4390163 C28.9325334,33.4271763 29.5955715,32.453919 30.5043245,31.6986609 C31.4130775,30.9434028 32.486194,30.4737017 33.5258793,30.3764064 L33.5258793,30.3764064 L35.9259775,30.1515447 C36.1341862,29.5682307 36.6859884,29.1476347 37.3324996,29.1426022 L37.3324996,29.1426022 Z M35.4019465,31.7518073 L33.6669994,31.9144489 C32.140563,32.057418 30.5370764,33.3899662 30.1036038,34.8758536 L30.1036038,34.8758536 L28.4251048,40.6306075 C28.3768824,40.7960704 28.4752137,40.9146394 28.6448597,40.8954243 L28.6448597,40.8954243 L34.2584964,40.2599553 C34.4990043,40.232734 34.7174763,40.013896 34.7465304,39.7711154 L34.7465304,39.7711154 L35.672565,32.0330942 C35.6931671,31.8618363 35.5718943,31.7359472 35.4019465,31.7518073 L35.4019465,31.7518073 Z"
-                                                          id="Truck"
-                                                          transform="translate(41.500000, 41.000000) scale(-1, 1) translate(-41.500000, -41.000000) ">
+                                                    <path fill="var(--secondaryColor)"
+                                                        d="M29.6731686,46.9283885 C31.3325599,46.9283885 32.677691,48.2875099 32.677691,49.9642285 C32.677691,51.6408786 31.3325599,53 29.6731686,53 C28.0137095,53 26.6685784,51.6408786 26.6685784,49.9642285 C26.6685784,48.2875099 28.0137095,46.9283885 29.6731686,46.9283885 Z M52.7712947,46.9283885 C54.4306859,46.9283885 55.775885,48.2875099 55.775885,49.9642285 C55.775885,51.6408786 54.4306859,53 52.7712947,53 C51.1118356,53 49.7667045,51.6408786 49.7667045,49.9642285 C49.7667045,48.2875099 51.1118356,46.9283885 52.7712947,46.9283885 Z M59.5103151,29.000045 C60.3331132,28.9936856 61,29.6623235 61,30.4935267 L61,30.4935267 L61,48.094433 C61,48.9256362 60.3362073,49.664958 59.5173334,49.7455545 L59.5173334,49.7455545 L56.7117602,50.0216564 C56.7120621,50.0025176 56.7125149,49.9833788 56.7125149,49.96424 C56.7125149,47.7649559 54.9479854,45.9819979 52.7712645,45.9819979 C50.5946191,45.9819979 48.8300897,47.7649559 48.8300897,49.96424 C48.8300897,50.093179 48.8364287,50.2208219 48.8482013,50.3467109 L48.8482013,50.3467109 L33.596213,50.3467109 C33.608061,50.2208219 33.6144001,50.093179 33.6144001,49.96424 C33.6144001,47.7649559 31.8498707,45.9819979 29.6731498,45.9819979 C27.4965043,45.9819979 25.7319749,47.7649559 25.7319749,49.96424 C25.7319749,50.0006876 25.7325031,50.0371352 25.7334842,50.0734302 L25.7334842,50.0734302 L23.395494,49.6050254 C22.5884681,49.443375 21.9644456,48.639088 22.0015746,47.8087235 L22.001651,47.7970977 C22.0037397,47.5436283 22.0604663,43.2216537 23.5033339,42.3380778 C24.3290751,41.8324629 25.2657503,41.5066458 25.9354293,41.3168591 C26.3464133,41.2004251 26.7834328,40.7948503 26.9041773,40.3811168 L26.9041773,40.3811168 L28.6373886,34.4390163 C28.9325334,33.4271763 29.5955715,32.453919 30.5043245,31.6986609 C31.4130775,30.9434028 32.486194,30.4737017 33.5258793,30.3764064 L33.5258793,30.3764064 L35.9259775,30.1515447 C36.1341862,29.5682307 36.6859884,29.1476347 37.3324996,29.1426022 L37.3324996,29.1426022 Z M35.4019465,31.7518073 L33.6669994,31.9144489 C32.140563,32.057418 30.5370764,33.3899662 30.1036038,34.8758536 L30.1036038,34.8758536 L28.4251048,40.6306075 C28.3768824,40.7960704 28.4752137,40.9146394 28.6448597,40.8954243 L28.6448597,40.8954243 L34.2584964,40.2599553 C34.4990043,40.232734 34.7174763,40.013896 34.7465304,39.7711154 L34.7465304,39.7711154 L35.672565,32.0330942 C35.6931671,31.8618363 35.5718943,31.7359472 35.4019465,31.7518073 L35.4019465,31.7518073 Z"
+                                                        id="Truck"
+                                                        transform="translate(41.500000, 41.000000) scale(-1, 1) translate(-41.500000, -41.000000) ">
                                                     </path>
                                                 </g>
                                             </g>
@@ -479,193 +129,1240 @@
                                 </g>
                             </svg>
                         </div>
-                    </div>
-                    <div class="routing-card">
-                        <div class="route-card-body">
-                            <div *ngIf="step.FromPortLabel != null || step.ToPortLabel != null" class="route-label">
-                                <div class="mobile-font-18"  [attr.title]="step.ToolTipFromPortLabel"> {{step.FromPortLabel}} </div>
-                                <div *ngIf="step.ToPortLabel != null" [attr.title]="step.ToolTipToPortLabel">> {{step.ToPortLabel}} </div>
-                            </div>
-                            <div class="route-description TextTrimming">{{step.Description}}</div>
-                            <div *ngFor="let direction of step.Directions" class="route-direction">
 
-                                <svg style="transform: rotate(45deg);"
-                                     [class.FlipImgDiagonal]="direction.Direction == 'in'" width="14" height="14"
-                                     version="1.1" viewBox="0 0 512.17 512.17" xml:space="preserve"
-                                     xmlns="http://www.w3.org/2000/svg" class="direction-icon">
-                                <g xmlns="http://www.w3.org/2000/svg">
+                        <svg *ngIf="cargoTrackingShipmentPM.DirectionId !='R'"
+                            [class.FlipImgDiagonal]="cargoTrackingShipmentPM.DirectionId=='E'" width="14" height="14"
+                            version="1.1" viewBox="0 0 512.17 512.17" xml:space="preserve"
+                            xmlns="http://www.w3.org/2000/svg" class="direction-icon">
+                            <g xmlns="http://www.w3.org/2000/svg">
                                 <path class=""
-                                      d="m479.05 283.92c-1.664-3.989-5.547-6.592-9.856-6.592h-116.88v-266.67c0-5.888-4.779-10.667-10.667-10.667h-170.67c-5.888 0-10.667 4.779-10.667 10.667v266.67h-117.33c-4.309 0-8.192 2.603-9.856 6.571-1.643 3.989-0.747 8.576 2.304 11.627l212.8 213.5c2.005 2.005 4.715 3.136 7.552 3.136s5.547-1.131 7.552-3.115l213.42-213.5c3.051-3.052 3.968-7.638 2.304-11.628z"
-                                      fill="var(--MainColor)" data-original="#000000" />
+                                    d="m479.05 283.92c-1.664-3.989-5.547-6.592-9.856-6.592h-116.88v-266.67c0-5.888-4.779-10.667-10.667-10.667h-170.67c-5.888 0-10.667 4.779-10.667 10.667v266.67h-117.33c-4.309 0-8.192 2.603-9.856 6.571-1.643 3.989-0.747 8.576 2.304 11.627l212.8 213.5c2.005 2.005 4.715 3.136 7.552 3.136s5.547-1.131 7.552-3.115l213.42-213.5c3.051-3.052 3.968-7.638 2.304-11.628z"
+                                    fill="var(--secondaryColor)" data-original="#000000" />
 
 
 
-                                    </g>
-                                </svg>
-                                {{direction.Label}} {{direction.Date | date:'dd/MM/yyyy'}}
-                            </div>
-                        </div>
+                            </g>
+                        </svg>
+                        <svg class="circulararrow" *ngIf="cargoTrackingShipmentPM.DirectionId =='R'" width="16"
+                            height="16" viewBox="0 0 512.000000 512.000000" preserveAspectRatio="xMidYMid meet">
+
+                            <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" fill="#000000"
+                                stroke="none">
+                                <path fill="var(--secondaryColor)" data-original="#000000"
+                                    d="M4074 4690 c-276 -276 -267 -270 -365 -204 -366 247 -717 368 -1139 394 -957 56 -1846 -527 -2176 -1428 -92 -252 -128 -461 -128 -752 -1 -285 18 -401 111 -705 83 -270 206 -493 401 -725 297 -355 736 -619 1195 -720 624 -138 1280 9 1802 403 130 98 320 296 439 456 117 158 124 180 79 223 -16 15 -176 135 -357 267 -360 264 -367 268 -418 214 -14 -16 -57 -71 -97 -124 -179 -243 -409 -398 -694 -471 -109 -27 -139 -31 -277 -31 -172 -2 -260 13 -410 65 -171 60 -278 129 -417 270 -262 266 -376 532 -376 878 0 334 118 617 353 850 165 164 343 264 570 320 125 31 347 38 477 15 149 -27 346 -97 395 -142 42 -38 29 -56 -212 -298 -231 -232 -248 -255 -202 -269 18 -5 139 -22 607 -86 165 -22 345 -47 400 -55 55 -8 235 -33 400 -55 165 -22 362 -50 438 -60 144 -21 170 -18 181 18 3 10 -8 108 -24 217 -17 110 -42 272 -55 360 -125 819 -216 1398 -220 1406 -4 5 -14 9 -23 9 -9 0 -125 -108 -258 -240z" />
+                            </g>
+                        </svg>
+
+                        <span *ngIf="cargoTrackingShipmentPM.EntityType==='O'" class="order-icon">SHO</span>
+
+
                     </div>
                 </div>
-            </div>
-        </div>
 
-    </panel>
+                <!-- References -->
+                <div>
+                    <div class="title">
+                        Customer Ref.
+                    </div>
+                    <ul>
+                        <li *ngIf="ShipmentOrder?.PONumber != null">
+                            <custom-label>{{ShipmentOrder?.PONumber}} </custom-label>
+                        </li>
+                    </ul>
 
+                    <ul>
+                        <li *ngFor="let ref of ShipmentReferences?.slice(0,WebReferencesViewCount), let i = index">
+                            <custom-label>{{ref}}</custom-label>
+                        </li>
+                        <li>
+                            <span class="hide-mobile clickable"
+                                (click)="OpenReferencesMessageWindow(ShipmentReferences, false,$event); $event.stopPropagation()"
+                                *ngIf="ShipmentReferences?.length > WebReferencesViewCount"
+                                >
+                                <img src="./assets/images/icons/info.png" alt=" "
+                                    style="margin-right: 6px; margin-top: 6px" />
+                                <u [attr.title]="ShipmentReferences">+ {{ShipmentReferences?.length - WebReferencesViewCount}} More</u>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
 
-    <panel style="order: 5;" [Title]="'Documents'"
-           [Name]="'DocumentsPanel'"
-           [ShowWhitePanelOnMobile]="false">
+                <div>
+                    <div class="title">{{TitleOfCustomsOrForwarder}}</div>
+                    <ul>
+                        <li style="white-space: pre-wrap;">{{ValueOfCustomsOrForwarder}}</li>
+                    </ul>
+                </div>
 
-        <div body>
-            <div *ngIf="DocumentsFilings?.length == 0 ">No Documents defined for this shipment</div>
-            <a *ngIf="DocumentsFilings?.length > 0 " href="javascript:;" style="color: var(--MainColor)" (click)="DownloadAllClick(Shipment.ShipmentList.EntityId)">Download all</a>
-            <div *ngIf="DocumentsFilings?.length > 0 " class="hide-mobile hide-tablet" style="min-width: 720px;width: calc(100% - 100px);">
-
-                <table class="row-hover" style="width: 100%;">
-                    <tr class="header">
-                        <th style="width: 450px;">type</th>
-                        <th style="width: 450px;">create date</th>
-                        <th style="width: 450px;">customs ref</th>
-                        <th style="width: 50px;" class="hide-mobile"></th>
-                        <th style="width: 50px;" class="hide-mobile"></th>
-                    </tr>
-                    <tr *ngFor="let item of DocumentsFilings">
-                        <td style="width: 450px;">
-                            <img width="16" src="./assets/images/icons/info.png" style="top: 2px; position: relative;padding-right: 7px;" alt="">
-                            {{item.DocumentTypeName}}
-                        </td>
-                        <td style="width: 450px;">{{item.CreateDate | date:'d-MMM-yyyy, H:mm'}}</td>
-                        <td style="width: 450px;">{{item.CustomReference}}</td>
-                        <td style="width: 50px;">
-                            <svg [attr.fill]="item.IsDigitallySigned?'var(--secondaryColor)':'#cecece'" id="Capa_1" enable-background="new 0 0 512 512" height="16" viewBox="0 0 512 512" width="16" xmlns="http://www.w3.org/2000/svg"><path d="m337.903 358.822 23.413-37.992 42.252-14.41 4.681-44.377 31.789-31.295-15.114-42.006 15.114-42.007-31.788-31.295-4.681-44.376-42.252-14.41-23.413-37.993-44.285 5.347-37.619-24.008-37.619 24.01-44.284-5.347-23.413 37.992-42.252 14.41-4.681 44.376-31.789 31.295 15.114 42.007-15.114 42.007 31.788 31.294 4.681 44.377 42.252 14.41 23.413 37.992 44.285-5.346 37.619 24.009 37.619-24.009zm-211.332-170.079c0-71.367 58.062-129.429 129.429-129.429s129.429 58.062 129.429 129.429-58.062 129.429-129.429 129.429-129.429-58.062-129.429-129.429z" /><path d="m256 89.333c-54.815 0-99.41 44.595-99.41 99.41s44.595 99.41 99.41 99.41 99.41-44.595 99.41-99.41-44.595-99.41-99.41-99.41z" /><path d="m211.299 384.568-52.68 6.36-27.833-45.167-9.462-3.226-40.813 127.566 73.475-4.041 57.485 45.94 33.828-105.732z" /><path d="m381.214 345.762-27.834 45.166-52.679-6.36-34 21.7 33.828 105.732 57.485-45.94 73.475 4.041-40.813-127.566z" /></svg>
-                        </td>
-                        <th style="width: 50px;" class="hide-mobile" *ngIf="item.DocumentId">
-                            <a (click)="DownloadDocument(item.DocumentId)" href="javascript:;"  >
-                                <svg style="width: 16px height: 16px;" width="20px" height="19px" viewBox="0 0 20 19" version="1.1" xmlns="http://www.w3.org/2000/svg"
-                                    xmlns:xlink="http://www.w3.org/1999/xlink">
-                                    <title>25C2FAA1-F999-4511-9F5C-294D4EDB7E44</title>
-                                    <g id="Desktop" stroke="none" stroke-width="1" style="fill: var(--secondaryColor);" fill-rule="evenodd">
-                                        <g id="Shipment-page-2" transform="translate(-1296.000000, -2470.000000)" fill="#000000" fill-rule="nonzero">
-                                            <g id="Group-9" transform="translate(291.000000, 884.000000)">
-                                                <g id="Group-8" transform="translate(0.000000, 1428.000000)">
-                                                    <g id="download-icon" transform="translate(1005.000000, 157.000000)">
-                                                        <path style="fill: var(--secondaryColor);"
-                                                            d="M18.325,17.4125005 C18.7668278,17.4125005 19.125,17.7706727 19.125,18.2125005 C19.125,18.6203416 18.8198119,18.9569021 18.4253503,19.0062674 L18.325,19.0125005 L1.675,19.0125005 C1.2331722,19.0125005 0.875,18.6543283 0.875,18.2125005 C0.875,17.8046595 1.18018815,17.468099 1.5746497,17.4187337 L1.675,17.4125005 L18.325,17.4125005 Z M10.2041841,0.987500515 C10.6120246,0.986846005 10.9490753,1.29149277 10.9990745,1.68587446 L11.005469,1.78621461 L11.024,13.1324995 L14.1593146,9.99681511 C14.471734,9.68439568 14.978266,9.68439568 15.2906854,9.99681511 C15.5747031,10.2808328 15.6005229,10.725274 15.3681448,11.0384596 L15.2906854,11.128186 L10.7906854,15.628186 C10.6770784,15.741793 10.5378035,15.8140884 10.3915284,15.8450722 L10.2808011,15.8605641 L10.2808011,15.8605641 L10.1691989,15.8605641 C9.98343814,15.8476542 9.80132341,15.7701948 9.65931458,15.628186 L5.15931458,11.128186 C4.84689514,10.8157665 4.84689514,10.3092345 5.15931458,9.99681511 C5.44333224,9.71279745 5.8877735,9.68697766 6.2009591,9.91935575 L6.29068542,9.99681511 L9.424,13.1304995 L9.40546998,1.78878646 C9.40476084,1.34695923 9.76235685,0.988211767 10.2041841,0.987500515 Z"
-                                                            id="Download"></path>
-                                                    </g>
-                                                </g>
-                                            </g>
-                                        </g>
-                                    </g>
-                                </svg>
-                            </a>
-                        </th>
-                    </tr>
-
-                </table>
+                <div>
+                    <div class="title">Routing</div>
+                    <ul>
+                        <li>
+                            {{cargoTrackingShipmentPM.RouteFromPortName}} to {{cargoTrackingShipmentPM.RouteToPortName}}
+                        </li>
+                    </ul>
+                </div>
 
             </div>
-            <div class="hide-mobile hide-tablet" style="clear: both;"></div>
 
-            <div class="mobile-only tablet-only">
-                <div class="card document-mobile-card" *ngFor="let item of DocumentsFilings">
-                    <div class="details-section">
-                        <div class="row" style="margin-bottom: 5px;">
-                            <div class="col-50 card-title">type</div>
-                            <div class="col-40 card-title">customs ref</div>
-                            <div class="col-10 text-end" (click)="item.ShowDetailsMenu=!item.ShowDetailsMenu">
-                                <a href="javascript:;" style="padding: 10px 3px 0px 13px;"><img src="./assets/images/icons/more.png" alt=""></a>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-50">
-                                {{item.DocumentTypeName}}
-                                <br>
-                                <span style="color: gray;font-size: 13px;">{{item.CreateDate | date:'d-MMM-yyyy, H:mm'}}</span>
+            <!-- [ Declaration Approval ] -->
 
-                            </div>
-                            <div class="col-50">{{item.CustomReference}}</div>
-                        </div>
-                    </div>
-
-                    <div *ngIf="0" class="notes-section">
-                        hellow tester
-                    </div>
-
-                    <details-menu
-                                    [Show]="item.ShowDetailsMenu"
-                                    [Toggle]="'ShowDetailsMenu'"
-                                    [DataContext]="item"
-                                    [MenuTitle]="item.DocumentTypeName"
-                                    [Buttons]="[{Code: 'download', Name:'Download'}]"
-                                    (ButtonClicked)="DownloadDocument(item.DocumentId)"></details-menu>
+        <div  style="display:flex;align-items: center;justify-content: center; margin-top: 30px;flex-wrap: wrap;">
+       
+        <panel *ngIf="ShowShipmentAsDeclaration&&ShowDocumentMNO" [Width]="'100%'" [ShowWhitePanelOnMobile]="true" class="panel1" >
+            <div body class="declaration-approval" style="min-height: 110px">
+            <div  class="declaration-approval-document" >
+                <div *ngIf="IsPDF" style="height:100%;">
+                    <iframe id="pdfQuoteViewerFrame" name="pdfQuoteViewerFrame" [src]="IFrameURI | SafePipe"  width="470px" height="500px" >Loading...</iframe>
+                </div>
+                <div *ngIf="!IsPDF" style="display: flex;justify-content: center;">
+                    <table>
+                        <tr style="height:1px;"> 
+                            <td>
+                                המסמך "הזמנת כסף" לא קיים במשלוח זה
+                            </td>
+                        </tr>
+                      
+                    </table>
                 </div>
             </div>
-        </div>
+           </div>
+        </panel>
+        <panel *ngIf="ShowShipmentAsDeclaration" [Width]="ShowDocumentMNO?'100%':null"  [ShowWhitePanelOnMobile]="true" [ngClass]="ShowDocumentMNO ? 'panel2' : 'panel3'"  >
 
-    </panel>
+            <div body class="declaration-approval">
+           
 
-    <panel style="order: 7;"
-           [Title]="'Partners'"
-           [Name]="'PartnersPanel'"
-           TransparentBackground="true">
+                <div class="declaration-approval-message">{{ approvalMessage }}</div>
+             
+                <div class="declaration-approval-toolbar" *ngIf="!hasApprovalDeclineResponse">
+           
+                             
+                      <button class="declaration-approval-toolbar-button__red animate"
+                          (click)="DenyDeclaration()">דחיה</button>
+                      <button class="declaration-approval-toolbar-button__green animate"
+                        (click)="ApproveDeclaration()">אישור</button>
+                    </div>
+                </div>
 
-        <div body>
+           
 
-            <div class="partners-cards-wrapper">
-                <div class="card partner-card" *ngFor="let partnerCard of PartnerCards">
-                    <div class="header">
-                        <div class="partners-buttons hide-mobile">
-                            <div class="circle-icon">
-                                <a [href]="'tel:'+partnerCard.PhoneNumber">
-                                    <img src="./assets/images/icons/call-white.svg" alt="">
-                                </a>
+        </panel>  
+    </div>
+            <!-- Milestones Slider -->
+            <div *ngIf="!ShowShipmentAsDeclaration" style="order: 2;" #SliderWrapper class="slider-wrapper"
+                [ngClass]="NoMilstonesFound ? 'slider-wrapper no-milestones': 'slider-wrapper'"
+                (wheel)="onMousewheelOnMilestonesSlider($event)" (pan)="logPan($event)">
+
+                <!-- Milestones -->
+                <div *ngIf="NoMilstonesFound" class="shipment-header" style="vertical-align:middle;text-align:center">
+                    <span class="no-data-available" *ngIf="NoMilstonesFound" class="title">No Milestones created for
+                        this Shipment</span>
+                </div>
+
+                <div *ngIf="!NoMilstonesFound" class="pager left-arrow"
+                    [class.dim]="sliderMarginLeft==0 || sliderMarginCardCount==0" (click)="MoveSlider('right')">
+                    <img class="FlipImgHoriz" src="./assets/images/icons/right-arrow@2x.png" alt="" />
+                </div>
+
+                <div *ngIf="!NoMilstonesFound" class="slider" #slider [style.width.px]="sliderVisibleCardsWidth">
+                    <div class="cards" [style.margin-left.px]="sliderMarginLeft">
+
+                        <div class="card" *ngFor="let card of SliderCards" [class.active]="card.IsActive"
+                            [class.dim]="card.IsDimmed">
+
+                            <app-tooltip *ngIf="card.HasWarning" [ShowHeader]="true" [Title]="'Exception'"
+                                style=" position: absolute; top: -12px; right: -12px;">
+                                <div tooltip-trigger>
+                                    <div class="warning-icon"> ! </div>
+                                </div>
+                                <div tooltip-body>
+                                    <div style="text-align: right;">
+
+                                        {{card.WarningDate}}
+                                        <br>
+                                        {{card.WarningMessage}}
+                                    </div>
+                                </div>
+                            </app-tooltip>
+
+
+
+
+                            <div class="date-wrapper">
+                                <span class="date" style="margin-top:9px"> {{card.Date || card.ExpectedDate | date:
+                                    'dd'}}</span>
+                                <span style="width:10px"> </span>
+                                <span class="date" style="display:inline-flex;flex-direction:column-reverse">
+                                    <span class="date-span">{{card.Date || card.ExpectedDate | date: 'MMM'}}</span>
+                                    <span class="date-span">{{card.Date || card.ExpectedDate | date: 'HH:mm' |
+                                        dateTimeFormat}}</span>
+                                </span>
                             </div>
-                            <div class="circle-icon">
-                                <a [href]="'sms:'+partnerCard.PhoneNumber">
-                                    <img src="./assets/images/icons/chat-white.svg" alt="">
-                                </a>
+
+                            <div class="title">
+                                <span>
+                                    <span> {{card.Title}}</span>
+                                    <span style="width:3px"></span>
+                                    <span *ngIf="card.IsDimmed || card.ExpectedDate" style="font-size: 12px;">
+                                        (Expected)</span>
+                                </span>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+
+                <div *ngIf="!NoMilstonesFound" class="pager right-arrow" (click)="MoveSlider('left')"
+                    [class.dim]="((sliderMarginCardCount+sliderVisibleCardsCount)>=SliderCards.length) || (sliderVisibleCardsCount >= SliderCards.length)">
+                    <img src="./assets/images/icons/right-arrow@2x.png" alt="" />
+                </div>
+
+            </div>
+
+            <!-- **** PANELS **** -->
+
+            <!-- Panels Navigator -->
+            <div style="order: 1;" class="PanelsNavigator">
+                <div class="panels-wrapper">
+
+                    <!-- Overview -->
+                    <button *ngIf="!ShowShipmentAsDeclaration" [class.active]="selectedNavButton=='Overview'"
+                        (click)="PanelsNavigatorClicked('Overview')">
+                        <span class="hide-mobile">{{OverviewPanelTitle }}</span>
+                        <span class="mobile-only">Overview</span>
+                    </button>
+
+                    <!-- Cargo -->
+                    <button *ngIf="!ShowShipmentAsDeclaration" [class.active]="selectedNavButton=='Cargo'"
+                        (click)="PanelsNavigatorClicked('Cargo')">
+                        Cargo
+                    </button>
+
+                    <!-- CustomsDataPanel -->
+                    <button *ngIf="!IsOrderShipment && !IsExport" [class.active]="selectedNavButton=='CustomsDataPanel'"
+                        (click)="PanelsNavigatorClicked('CustomsDataPanel')">
+                        Customs
+                    </button>
+
+                    <!-- RoutingPanel -->
+                    <button *ngIf="!ShowShipmentAsDeclaration" [class.active]="selectedNavButton=='RoutingPanel'"
+                        (click)="PanelsNavigatorClicked('RoutingPanel')">
+                        Routing
+                    </button>
+
+                    <!-- DocumentsPanel -->
+                    <button [class.active]="selectedNavButton=='DocumentsPanel'"
+                        (click)="PanelsNavigatorClicked('DocumentsPanel')">
+                        Documents
+                    </button>
+
+                    <button *ngIf="cargoTrackingShipmentPM.EntityType != 'O' && !ShowShipmentAsDeclaration"
+                        [class.active]="selectedNavButton=='ConnectedOrdersPanel'"
+                        (click)="PanelsNavigatorClicked('ConnectedOrdersPanel')">
+                        Connected SHO's
+                    </button>
+
+                    <!-- PartnersPanel -->
+                    <button *ngIf="!ShowShipmentAsDeclaration" [class.active]="selectedNavButton=='PartnersPanel'"
+                        (click)="PanelsNavigatorClicked('PartnersPanel')">
+                        Partners
+                    </button>
+                     <!-- EventsPanel -->
+                     <button *ngIf="!ShowShipmentAsDeclaration&&ShowEventPanel" [class.active]="selectedNavButton=='EventsPanel'"
+                     (click)="PanelsNavigatorClicked('EventsPanel')">
+                     Events
+                 </button>
+                </div>
+            </div>
+
+            <!-- Overview -->
+            <panel *ngIf="!ShowShipmentAsDeclaration" style="order: 3;margin-top: 10px" [Title]="OverviewPanelTitle"
+                [ShowWhitePanelOnMobile]="true" [Name]="'Overview'">
+
+                <div body>
+                    <div class="data-cards" *ngIf="cargoTrackingShipmentPM" id="overview-data-cards">
+                        <div *ngIf="cargoTrackingShipmentPM.EntityType == 'O'">
+                            <div class="title">po number</div>
+                            <div class="description">{{cargoTrackingShipmentPM.ShipmentOrderPONumber}}</div>
+                        </div>
+                        <div *ngIf="SetMasterOrHouseLabel() != null">
+                            <div class="title">{{SetMasterOrHouseLabel()}}</div>
+                            <div class="description">{{SetMasterOrHouseValue()}}</div>
+                        </div>
+                        <div>
+                            <div class="title">Incoterms</div>
+                            <div class="description TextTrimming">
+                                <custom-label>{{cargoTrackingShipmentPM.IncotermName}}</custom-label>
+                                <!-- <span *ngIf="cargoTrackingShipmentPM && cargoTrackingShipmentPM.IncotermName">
+                                    {{cargoTrackingShipmentPM.IncotermName}}
+                                    <a *ngIf="cargoTrackingShipmentPM.IncotermName.length > 18"
+                                        (click)="ShowMoreWindow(cargoTrackingShipmentPM.IncotermName)"
+                                        style="cursor: pointer;text-decoration: underline;font-size: 11px;">Show
+                                        more</a>
+                                </span> -->
+                            </div>
+                        </div>
+
+                        <div class="mobile-only">
+                            <div class="title">Customer Ref.</div>
+                            <div class="description">
+                                <div *ngFor="let item of ShipmentReferences, let i = index">
+                                    <custom-label *ngIf="i == 0">{{item}} </custom-label>
+                                </div>
+                                <!-- <custom-label
+                                    *ngIf="cargoTrackingShipmentPM.EntityType == 'O' && cargoTrackingShipmentPM.PoNumber">
+                                    {{cargoTrackingShipmentPM.PoNumber}}
+                                </custom-label> -->
+                                <span class="clickable"
+                                (click)="OpenReferencesMessageWindow(ShipmentReferences, true,$event); $event.stopPropagation()"
+                                *ngIf="ShipmentReferences?.length > MobileReferencesViewCount"
+                                >
+                                <img src="./assets/images/icons/info.png" alt=" "
+                                    style="margin-right: 6px; margin-top: 6px" />
+                                <u >+ {{ShipmentReferences?.length - MobileReferencesViewCount}} More</u>
+                            </span>
+                            </div>
+                        </div>
+
+                        <div class="mobile-only">
+                            <div class="title">{{TitleOfCustomsOrForwarder_MB}}</div>
+                            <div class="description">
+                                <custom-label>{{ValueOfCustomsOrForwarder}}</custom-label>
+                            </div>
+                        </div>
+
+                        <!-- ETD/ATD -->
+                        <!-- ETD/ATD -->
+                        <div>
+                            <div class="title">
+                                <span *ngIf="cargoTrackingShipmentPM.DepartureDate">atd</span>
+                                <span
+                                    *ngIf="cargoTrackingShipmentPM.DepartureEstimationDate && !cargoTrackingShipmentPM.DepartureDate">etd</span>
+                                <span
+                                    *ngIf="!cargoTrackingShipmentPM.DepartureEstimationDate && !cargoTrackingShipmentPM.DepartureDate">etd</span>
+                            </div>
+                            <div class="description">
+                                <span *ngIf="cargoTrackingShipmentPM.DepartureDate">
+                                    {{
+                                    cargoTrackingShipmentPM.DepartureDate |
+                                    date:'dd/MM/yyyy'
+                                    }}
+                                </span>
+                                <span
+                                    *ngIf="cargoTrackingShipmentPM.DepartureEstimationDate && !cargoTrackingShipmentPM.DepartureDate">
+                                    {{cargoTrackingShipmentPM.DepartureEstimationDate | date:'dd/MM/yyyy'}}
+                                    <span style="color: rgb(59, 59, 59); font-size: 12px;">(Expected)</span>
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- ETA/ATA -->
+                        <div>
+                            <div class="title">
+                                <span *ngIf="cargoTrackingShipmentPM.ArrivalDate">ata</span>
+                                <span
+                                    *ngIf="cargoTrackingShipmentPM.ArrivalEstimationDate && !cargoTrackingShipmentPM.ArrivalDate">eta</span>
+                                <span
+                                    *ngIf="!cargoTrackingShipmentPM.ArrivalEstimationDate && !cargoTrackingShipmentPM.ArrivalDate">eta</span>
+                            </div>
+                            <div class="description">
+                                <span *ngIf="cargoTrackingShipmentPM.ArrivalDate">
+                                    {{
+                                    cargoTrackingShipmentPM.ArrivalDate |
+                                    date:'dd/MM/yyyy'
+                                    }}
+                                </span>
+                                <span
+                                    *ngIf="cargoTrackingShipmentPM.ArrivalEstimationDate && !cargoTrackingShipmentPM.ArrivalDate">
+                                    {{cargoTrackingShipmentPM.ArrivalEstimationDate | date:'dd/MM/yyyy'}}
+                                    <span style="color: rgb(59, 59, 59); font-size: 12px;">(Expected)</span>
+                                </span>
+                            </div>
+                        </div>
+
+
+
+
+                        <div>
+                            <div class="title">{{SetTitleForSupplierOrClient(cargoTrackingShipmentPM)}}</div>
+                            <div class="description">
+                                <custom-label [width]="139">
+                                    {{SetSupplierOrClientValueByDirection(cargoTrackingShipmentPM)}}</custom-label>
+                            </div>
+                        </div>
+                        <!-- <div>
+            <div class="title">shipper</div>
+            <div class="description">{{cargoTrackingShipmentPM.ShipperName}}</div>
+        </div> -->
+                        <!--<div>
+            <div class="title">Incoterms</div>
+            <div class="description">{{ShipmentPM?.IncotermName}}</div>
+        </div>-->
+                        <div
+                            *ngIf="(!IsOrderShipment && cargoTrackingShipmentPM.PackagesQuantity) || (cargoTrackingShipmentPM.EntityType == 'O' && cargoTrackingShipmentPM.ShipmentOrderQuantity)">
+                            <div class="title">quantity</div>
+                            <div *ngIf="!IsOrderShipment" class="description">{{
+                                cargoTrackingShipmentPM.PackagesQuantity}} Units</div>
+                            <div *ngIf="cargoTrackingShipmentPM.EntityType == 'O'" class="description">{{
+                                cargoTrackingShipmentPM.ShipmentOrderQuantity}} Units</div>
+
+                        </div>
+                        <div>
+                            <div class="title">weight</div>
+                            <div class="description">
+
+                                {{cargoTrackingShipmentPM.GrossWeight || 0 }}
+                                {{cargoTrackingShipmentPM.GrossWeightUnitCode||''}}
+                                <span *ngIf="!cargoTrackingShipmentPM.GrossWeightUnitCode"> KG</span>
+                            </div>
+                        </div>
+                        <div *ngIf="!IsOrderShipment && !IsExport">
+                            <div class="title">total value nis</div>
+                            <div class="description" *ngIf="this.cargoTrackingShipmentPM.CustomsData">
+                                {{this.cargoTrackingShipmentPM?.CustomsData.TotalValueInNIS||0 | number}} ₪</div>
+                        </div>
+                        <div *ngIf="!IsOrderShipment && !IsExport">
+                            <div class="title">total taxes nis</div>
+                            <div class="description" *ngIf="this.cargoTrackingShipmentPM.CustomsData">
+                                {{cargoTrackingShipmentPM?.CustomsData.TotalTax||0 | number}} ₪</div>
+                        </div>
+                        <div *ngIf="!IsOrderShipment && !IsExport">
+                            <div class="title">declaration status</div>
+                            <div class="description" *ngIf="cargoTrackingShipmentPM.CustomsData?.DeclarationStatus">
+                                <span>
+                                    {{cargoTrackingShipmentPM.CustomsData?.DeclarationStatus}}
+                                </span>
+                            </div>
+                        </div>
+                        <div *ngIf="cargoTrackingShipmentPM.EntityType == 'O'">
+                            <div class="title">Supply Date Time</div>
+                            <div class="description">
+                                <span *ngIf="cargoTrackingShipmentPM.SupplyDateTime">
+                                    {{cargoTrackingShipmentPM.SupplyDateTime |date:'dd/MM/yyyy'}}
+                                </span>
+                            </div>
+                        </div>
+                        <div *ngIf=" cargoTrackingShipmentPM.EntityType == 'O'">
+                            <div class="title">PO Date</div>
+                            <div class="description">
+                                {{cargoTrackingShipmentPM?.SHOPODate |date:'dd/MM/yyyy'}}
+                            </div>
+                        </div>
+                        <div *ngIf=" cargoTrackingShipmentPM.EntityType == 'O'">
+                            <div class="title booking-title">Booking Confirmation #</div>
+                            <div class="description">
+                                {{cargoTrackingShipmentPM?.SHOBookingConfirmationNumber}}
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </panel>
+
+            <!-- Cargo -->
+            <panel *ngIf="!ShowShipmentAsDeclaration" style="order: 4;" [Title]="'Cargo Information'" [Name]="'Cargo'"
+                [HaveDetailsSection]=" !IsOrderShipment" [ShowWhitePanelOnMobile]="true"
+                [DetailsTitle]="cargoTrackingShipmentPM.TransportModeId != 'A' ? 'Container List' : 'Packages List'"
+                [InputDetailsSectionToggleEvent]="DetailsSectionToggleEvent"
+                (OutputDetailsSectionToggleEvent)="ChangeShowDetailsSectionValue($event)">
+
+                <div body>
+
+                    <div class="data-cards" *ngIf="cargoTrackingShipmentPM">
+                        <div *ngIf="!IsOrderShipment" class="hide-mobile" style="width:170px">
+
+                            <div class="title" >PACKAGE TYPE</div>
+                            <div *ngIf="!IsOrderShipment" style="width:170px">
+                                <div *ngFor="let package of cargoTrackingShipmentPM.Packages.slice(0,2), let i = index"
+                                    style="display:flex;flex-direction:row">
+                                    <div class="description TextTrimming"> {{package.PackageTypeName}}</div>
+
+                                    <i class="las" style="color: var(--MainColor);margin-top:5px; margin-left: 5px;"
+                                        [class.la-chevron-circle-up]="ShowDetailsSection"
+                                        [class.la-chevron-circle-down]="!ShowDetailsSection"
+                                        *ngIf="cargoTrackingShipmentPM.Packages.length > 1 && i == 1"
+                                        (click)="ShowMoreLinkClicked()"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf=" !IsOrderShipment">
+                            <div class="title" *ngIf="cargoTrackingShipmentPM.TransportModeId != 'A'">fcl / lcl</div>
+                            <div class="title" *ngIf="cargoTrackingShipmentPM.TransportModeId == 'A'">Shipment Type
+                            </div>
+                            <div class="description">{{cargoTrackingShipmentPM?.ShipmentTypeName}}</div>
+                        </div>
+                        <div
+                            *ngIf="cargoTrackingShipmentPM.PackagesQuantity || cargoTrackingShipmentPM.ShipmentOrderQuantity">
+                            <div class="title">quantity</div>
+                            <div *ngIf="!IsOrderShipment" class="description">
+                                {{cargoTrackingShipmentPM?.PackagesQuantity}} Units</div>
+                            <div *ngIf="cargoTrackingShipmentPM.EntityType == 'O'" class="description">{{
+                                cargoTrackingShipmentPM.ShipmentOrderQuantity}} Units</div>
+                        </div>
+                        <div>
+                            <div class="title">weight</div>
+                            <div class="description">
+                                {{cargoTrackingShipmentPM.GrossWeight || 0}}
+                                {{cargoTrackingShipmentPM.GrossWeightUnitCode||''}}
+                                <span *ngIf="!cargoTrackingShipmentPM.GrossWeightUnitCode"> KG</span>
                             </div>
                         </div>
                         <div>
-                            <div class="partner-type-label">{{partnerCard.Type}}</div>
-                            <div class="partner-name">{{partnerCard.Name}}</div>
+                            <div class="title">volume</div>
+                            <div style="display:inline" class="description">{{cargoTrackingShipmentPM.Volume || 0 }}
+                            </div><span style="display:inline"> CBM</span>
                         </div>
-                        <div class="mobile-only" (click)="partnerCard.ShowDetails = !partnerCard.ShowDetails" style="padding: 10px;">
-                            <img width="16" src="./assets/images/icons/arrow-down.png" alt="">
+                        <div *ngIf="!IsOrderShipment && cargoTrackingShipmentPM.WarehouseLegName">
+                            <div class="title">storage site</div>
+                            <div class="description TextTrimming">
+                                {{cargoTrackingShipmentPM?.WarehouseLegName}}
+                                <a *ngIf="cargoTrackingShipmentPM && cargoTrackingShipmentPM.WarehouseLegName && cargoTrackingShipmentPM.WarehouseLegName.length > 18"
+                                    (click)="ShowMoreWindow(cargoTrackingShipmentPM.WarehouseLegName)"
+                                    style="cursor: pointer;text-decoration: underline;font-size: 11px;">Show more</a>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="title">Chargeable Weight</div>
+                            <div style="display:inline" class="description">{{cargoTrackingShipmentPM.ChargeableWeightInKG || 0 }}
+                            </div><span style="display:inline"> KG</span>
+                        </div>
+                        <div class="hide-mobile"
+                            *ngIf="cargoTrackingShipmentPM.TransportModeId != 'A' && !IsOrderShipment">
+                            <div class="title">containers</div>
+                            <div class="description">
+                                <div *ngFor="let container of ContainersNumbers?.slice(0,2), let i = index">
+                                    {{container}}
+                                    <i class="las la-chevron-circle-up" style="color: var(--MainColor)"
+                                        *ngIf="ContainersNumbers.length > 2 && i == 1 && ShowDetailsSection"
+                                        (click)="ShowMoreLinkClicked()"></i>
+
+                                    <i class="las la-chevron-circle-down" style="color: var(--MainColor)"
+                                        *ngIf="ContainersNumbers.length > 2 && i == 1 && !ShowDetailsSection"
+                                        (click)="ShowMoreLinkClicked()"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div *ngIf="cargoTrackingShipmentPM?.ImportManifest && !IsOrderShipment && cargoTrackingShipmentPM.DirectionId != 'E'">
+                            <div class="title">Import Manifest</div>
+                            <div class="description">
+                                {{cargoTrackingShipmentPM?.ImportManifest}}
+                            </div>
+                        </div>
+                        <div id="description-of-goods" *ngIf=" cargoTrackingShipmentPM.EntityType == 'O'">
+                            <div class="title">Description Of Goods </div>
+                            <div class="description">
+                               <custom-label [width]="165">{{cargoTrackingShipmentPM?.DescriptionOfGoods}}</custom-label> 
+                            </div>
+                        </div>
+                        <div *ngIf=" cargoTrackingShipmentPM.EntityType == 'O'">
+                            <div class="title">Carrier </div>
+                            <div class="description">
+                                {{cargoTrackingShipmentPM?.SHOCarrierName}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div details>
+                    <br>
+                    <div
+                        *ngIf="cargoTrackingShipmentPM.Packages?.length==0 && cargoTrackingShipmentPM.TransportModeId != 'A'">
+                        No Containers Details for this Shipment</div>
+                    <div
+                        *ngIf="cargoTrackingShipmentPM.Packages?.length==0 && cargoTrackingShipmentPM.TransportModeId == 'A'">
+                        No Packages Details for this Shipment</div>
+
+                    <div *ngIf="cargoTrackingShipmentPM && cargoTrackingShipmentPM.Packages?.length>0">
+
+                        <table *ngIf="cargoTrackingShipmentPM.TransportModeId != 'A' ">
+                            <tr>
+                                <th style="width: 300px;">Number</th>
+                                <th style="width: 400px;">Type</th>
+                                <th style="width: 200px;">Seal #</th>
+                            </tr>
+
+                            <tr *ngFor="let package of cargoTrackingShipmentPM.Packages">
+                                <td style="width: 300px;">{{package.ContainerNumber}}</td>
+                                <td style="width: 400px;">{{package.PackageTypeName}}</td>
+                                <td style="width: 200px;">
+                                    {{
+                                    package.ShipperSeal == null ? package.CarrierSeal :
+                                    package.ShipperSeal
+                                    }}
+                                </td>
+                            </tr>
+                        </table>
+
+                        <table class="package-list-table" *ngIf="cargoTrackingShipmentPM.TransportModeId == 'A' ">
+                            <tr>
+                                <th style="width: 400px;">Type</th>
+                                <th style="width: 200px;">Quantity</th>
+                                <th *ngIf="cargoTrackingShipmentPM.DirectionId !='E'" style="width: 200px;">Weight</th>
+                                <th style="width: 200px;">Volume</th>
+                                <th style="width: 250px;"><span class="hide-mobile">DIMENSIONS (L-W-H) (CM)</span> <span
+                                        class="mobile-only">L-W-H (CM)</span></th>
+                            </tr>
+
+                            <tr *ngFor="let package of cargoTrackingShipmentPM.Packages">
+                                <td style="width: 400px;">{{package.PackageTypeName}}</td>
+                                <td style="width: 200px;">{{package.Quantity}}</td>
+                                <td *ngIf="cargoTrackingShipmentPM.DirectionId != 'E'" style="width: 200px;">{{package.Weight}}</td>
+                                <td style="width: 200px;">{{package.Volume}}</td>
+                                <td style="width: 250px;" *ngIf="package.Height != null">{{package.Length}} -
+                                    {{package.Width}} - {{package.Height}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+            </panel>
+
+            <!-- Customs Data -->
+            <panel *ngIf="!IsOrderShipment && !IsExport" style="order: 5;" [Title]="'Customs Data'" [Name]="'CustomsDataPanel'"
+                [HaveDetailsSection]="true" [AlwaysExpanded]="true" [ShowWhitePanelOnMobile]="true"
+                [DetailsTitle]="'Tax Details'">
+
+                <div body>
+                    <div class="no-data-available" *ngIf="!this.cargoTrackingShipmentPM.CustomsData">Customs data is not
+                        available yet</div>
+                    <div *ngIf="this.cargoTrackingShipmentPM.CustomsData" class="data-cards">
+                        <div>
+                            <div class="title">Declaration #</div>
+                            <div class="description">{{this.cargoTrackingShipmentPM.CustomsData.DeclarationNumber}}
+                            </div>
+                        </div>
+                        <div>
+                            <div class="title">Declaration Status</div>
+                            
+                                <!-- <a *ngIf="this.cargoTrackingShipmentPM.CustomsData.DeclarationStatus && this.cargoTrackingShipmentPM.CustomsData.DeclarationStatus.length > 18"
+                                    (click)="ShowMoreWindow(this.cargoTrackingShipmentPM.CustomsData.DeclarationStatus)"
+                                    style="cursor: pointer;text-decoration: underline;font-size: 11px;">Show more</a> -->
+                                    <custom-label *ngIf="this.cargoTrackingShipmentPM.CustomsData?.DeclarationStatus">{{this.cargoTrackingShipmentPM.CustomsData?.DeclarationStatus}}</custom-label>
+
+                        </div>
+                        <div>
+                            <div class="title">IMPORTER VAT</div>
+                            <div class="description">{{this.cargoTrackingShipmentPM.CustomsData.ImporterId}}</div>
+                        </div>
+                        <div>
+                            <div class="title">Cargo Identifier 1</div>
+                            <div class="description TextTrimming">
+                                {{this.cargoTrackingShipmentPM.CustomsData.CargoIdentifier1 }}
+                                <a *ngIf="this.cargoTrackingShipmentPM.CustomsData.CargoIdentifier1 && this.cargoTrackingShipmentPM.CustomsData.CargoIdentifier1.length > 18"
+                                    (click)="ShowMoreWindow(this.cargoTrackingShipmentPM.CustomsData.CargoIdentifier1)"
+                                    style="cursor: pointer;text-decoration: underline;font-size: 11px;">Show more</a>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="title">Cargo Identifier 2</div>
+                            <div class="description TextTrimming">{{cargoTrackingShipmentPM.CustomsData.CargoIdentifier2
+                                }}
+                                <a *ngIf="this.cargoTrackingShipmentPM.CustomsData.CargoIdentifier2 && this.cargoTrackingShipmentPM.CustomsData.CargoIdentifier2.length > 18"
+                                    (click)="ShowMoreWindow(this.cargoTrackingShipmentPM.CustomsData.CargoIdentifier2)"
+                                    style="cursor: pointer;text-decoration: underline;font-size: 11px;">Show more</a>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="title">Cargo Identifier 3</div>
+                            <div class="description TextTrimming">
+                                {{this.cargoTrackingShipmentPM.CustomsData.CargoIdentifier3 }}
+                                <a *ngIf="this.cargoTrackingShipmentPM.CustomsData.CargoIdentifier3 && this.cargoTrackingShipmentPM.CustomsData.CargoIdentifier3.length > 18"
+                                    (click)="ShowMoreWindow(this.cargoTrackingShipmentPM.CustomsData.CargoIdentifier3)"
+                                    style="cursor: pointer;text-decoration: underline;font-size: 11px;">Show more</a>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="title">goods description</div>
+                            
+                                <!-- <a *ngIf="this.cargoTrackingShipmentPM.CustomsData.GoodsDescription && this.cargoTrackingShipmentPM.CustomsData.GoodsDescription.length > 18"
+                                    (click)="ShowMoreWindow(this.cargoTrackingShipmentPM.CustomsData.GoodsDescription)"
+                                    style="cursor: pointer;text-decoration: underline;font-size: 11px;">Show more</a> -->
+                          
+                            <custom-label >{{this.cargoTrackingShipmentPM.CustomsData?.GoodsDescription}}</custom-label>
+
+                        </div>
+                        <div>
+                            <div class="title">total taxes nis</div>
+                            <div class="description">
+                                {{cargoTrackingShipmentPM?.CustomsData.TotalTax||0 | number}} ₪
+                            </div>
+                        </div>
+                        <div>
+                            <div class="title">total value nis</div>
+                            <div class="description">{{this.cargoTrackingShipmentPM.CustomsData.TotalValueInNIS||0 |
+                                number}} ₪</div>
+                        </div>
+                        <div>
+                            <div class="title">total value {{this.cargoTrackingShipmentPM.CustomsData.CurrencyCode }}
+                            </div>
+                            <div class="description">
+                                {{this.cargoTrackingShipmentPM.CustomsData.TotalValueInForeignCurrency||0 | number}}
+                                {{this.cargoTrackingShipmentPM.CustomsData.CurrencySign }}</div>
+                        </div>
+                        <div *ngIf="this.cargoTrackingShipmentPM.CustomerEnglishName">
+                            <div class="title">Customer name</div>
+                            <div class="description">
+                                <custom-label >{{this.cargoTrackingShipmentPM.CustomerEnglishName}}</custom-label>
+
+                            </div>
+                        </div>
+                        <div *ngIf="this.cargoTrackingShipmentPM.CustomsData?.SupplierName">
+                            <div class="title">Supplier Name</div>
+                            <div class="description">
+                                <custom-label >{{this.cargoTrackingShipmentPM.CustomsData?.SupplierName}}</custom-label>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+
+                <div details>
+                    <br>
+                    <div *ngIf="NoTaxDetails"> No Tax Details for this Shipment </div>
+                    <div *ngIf="!this.cargoTrackingShipmentPM.CustomsData && !NoTaxDetails">
+                        Customs data is not available yet
+                    </div>
+
+                    <table class="row-hover" *ngIf="this.cargoTrackingShipmentPM.CustomsData && !NoTaxDetails">
+                        <tr class="header">
+                            <th style="width: 400px;">type</th>
+                            <th style="width: 200px;"><span class="hide-mobile">calculation base</span><span
+                                    class="mobile-only">base</span></th>
+
+                            <th style="width: 150px;text-align: right;"><span class="hide-mobile">tax amount (NIS)</span><span
+                                    class="mobile-only">amount</span></th>
+                            <!-- <th style="width: 200px;">pay amount</th>
+                        <th style="width: 200px;">rejected amount</th> -->
+                        </tr>
+                        <tr *ngFor="let detail of this.cargoTrackingShipmentPM.CustomsData.TaxDetails">
+                            <td>{{detail.TaxTypeName}}</td>
+                            <td>{{detail.TaxBasis| number}}</td>
+                            <td style="text-align: right;">{{detail.TaxAmount | number}}</td>
+                        </tr>
+
+                    </table>
+
+                </div>
+
+            </panel>
+
+            <!-- Routing -->
+            <panel *ngIf="!ShowShipmentAsDeclaration" style="order: 7;" [Title]="'Routing'" [Name]="'RoutingPanel'"
+                [ShowWhitePanelOnMobile]="cargoTrackingShipmentPM.RoutingSteps?.length === 0">
+
+                <div body>
+                    <div class="slider-wrapper" id="RoutingSliderWrapper" #RoutingSliderWrapper
+                        style="background:rgba(59, 59, 59, 0.00);padding-bottom:10px"
+                        (wheel)="onMousewheelOnRoutingSlider($event)" (pan)="logPan($event)">
+                        <div class="no-data-available" *ngIf="cargoTrackingShipmentPM.RoutingSteps?.length == 0">No
+                            Routing defined for this shipment </div>
+
+                        <div *ngIf="cargoTrackingShipmentPM.RoutingSteps?.length > 0" class="pager left-arrow"
+                            [class.dim]="routingSliderMarginLeft==0 || routingSliderMarginCardCount==0"
+                            (click)="MoveRoutingSlider('right')">
+                            <img class="FlipImgHoriz" src="./assets/images/icons/right-arrow@2x.png" alt="" />
+                        </div>
+                        <div *ngIf="!NoMilstonesFound" class="slider" style="width: 100%;">
+                            <div class="cards" [style.margin-left.px]="routingSliderMarginLeft" style="height:212px">
+                                <div *ngIf="cargoTrackingShipmentPM.RoutingSteps?.length > 0" class="routing-timeline">
+                                    <div class="routing-step" [class.active]="step.IsActive"
+                                        *ngFor="let step of cargoTrackingShipmentPM.RoutingSteps">
+                                        <div class="routing-banner">
+                                            <div [ngSwitch]="step.TransportModeCode">
+                                                <svg *ngSwitchCase="'O'" width="47px" height="20px" viewBox="0 0 47 20"
+                                                    version="1.1" xmlns="http://www.w3.org/2000/svg"
+                                                    xmlns:xlink="http://www.w3.org/1999/xlink">
+                                                    <g id="Desktop-DSV" stroke="none" stroke-width="1" fill="none"
+                                                        fill-rule="evenodd">
+                                                        <g id="Search-Results"
+                                                            transform="translate(-370.000000, -405.000000)"
+                                                            fill="#002664">
+                                                            <g id="Group-14-Copy"
+                                                                transform="translate(308.000000, 328.000000)">
+                                                                <g id="Type/boat"
+                                                                    transform="translate(45.000000, 46.000000)">
+                                                                    <g id="Group">
+                                                                        <path fill="var(--secondaryColor)"
+                                                                            d="M64.0004222,40.059772 L55.4342944,51 L20.0331393,51 L17.0004222,40.059772 L64.0004222,40.059772 Z M30.3716056,37.1653425 L30.3716056,39.1572031 L20.6380712,39.1572031 L20.6380712,37.1653425 L30.3716056,37.1653425 Z M57.1715124,35.1574036 L57.1715124,39.1411248 L51.6342935,39.1411248 L51.6342935,35.1574036 L57.1715124,35.1574036 Z M51.0698938,35.1574036 L51.0698938,39.1411248 L45.532675,39.1411248 L45.532675,35.1574036 L51.0698938,35.1574036 Z M41.4126297,36.4234621 L41.4126297,39.0792762 L31.6790953,39.0792762 L31.6790953,36.4234621 L41.4126297,36.4234621 Z M25.1815979,34.4120812 L25.1815979,36.7067047 L20.8232989,36.7067047 L20.8232989,34.4120812 L25.1815979,34.4120812 Z M30.1863779,34.4120812 L30.1863779,36.7067047 L25.8280789,36.7067047 L25.8280789,34.4120812 L30.1863779,34.4120812 Z M54.0862725,31 L54.0862725,34.6441488 L48.5490537,34.6441488 L48.5490537,31 L54.0862725,31 Z"
+                                                                            id="ship"></path>
+                                                                    </g>
+                                                                </g>
+                                                            </g>
+                                                        </g>
+                                                    </g>
+                                                </svg>
+
+                                                <svg *ngSwitchCase="'A'" width="36px" height="32px" viewBox="0 0 36 32"
+                                                    version="1.1" xmlns="http://www.w3.org/2000/svg"
+                                                    xmlns:xlink="http://www.w3.org/1999/xlink">
+                                                    <g id="Desktop-DSV" stroke="none" stroke-width="1" fill="none"
+                                                        fill-rule="evenodd">
+                                                        <g id="Search-Results"
+                                                            transform="translate(-375.000000, -804.000000)"
+                                                            fill="#002664">
+                                                            <g id="Group-14-Copy-2"
+                                                                transform="translate(308.000000, 732.000000)">
+                                                                <g id="Type/boat"
+                                                                    transform="translate(45.000000, 46.000000)">
+                                                                    <g id="Group">
+                                                                        <path fill="var(--secondaryColor)"
+                                                                            d="M28.2010781,26 L44.9721135,32.4312677 C46.8367468,31.1081412 48.7257202,29.7863693 50.5260794,28.5557714 C51.8003996,27.6847188 57.0176923,27.3267788 57.7639616,28.3543079 L57.7639616,28.3543079 L57.8454343,28.4667753 C58.5922106,29.4947934 56.4585397,34.1000925 55.1737396,34.9563124 C53.4750773,36.0893977 51.6720921,37.2654064 49.8681811,38.4256513 L50.4013143,55.8435582 L47.2072029,58 L45.7311918,55.9677976 L46.4843162,55.4596112 L41.7760232,43.5398952 C37.7106852,46.0706551 34.750133,47.8626901 34.750133,47.8626901 L34.750133,47.8626901 L33.3792963,52.8533126 L29.7502134,55.3041258 L28.875312,48.0677395 L28.7522579,47.8982233 L22,44.6307983 L25.629421,42.179985 L30.9638518,42.6479476 C30.9638518,42.6479476 33.557413,40.7024661 37.2302404,38.0156431 L27.2355389,29.6802767 L26.4826023,30.1888253 L25.0069668,28.1571663 L28.2010781,26 Z"
+                                                                            id="plane"></path>
+                                                                    </g>
+                                                                </g>
+                                                            </g>
+                                                        </g>
+                                                    </g>
+                                                </svg>
+
+                                                <svg *ngSwitchCase="'I'" width="39px" height="24px" viewBox="0 0 39 24"
+                                                    version="1.1" xmlns="http://www.w3.org/2000/svg"
+                                                    xmlns:xlink="http://www.w3.org/1999/xlink">
+                                                    <g id="Desktop-DSV" stroke="none" stroke-width="1" fill="none"
+                                                        fill-rule="evenodd">
+                                                        <g id="Search-Results"
+                                                            transform="translate(-375.000000, -1009.000000)"
+                                                            fill="#002664">
+                                                            <g id="Group-14-Copy-3"
+                                                                transform="translate(308.000000, 934.000000)">
+                                                                <g id="Type/car"
+                                                                    transform="translate(45.000000, 46.000000)">
+                                                                    <g id="Group-3">
+                                                                        <path fill="var(--secondaryColor)"
+                                                                            d="M29.6731686,46.9283885 C31.3325599,46.9283885 32.677691,48.2875099 32.677691,49.9642285 C32.677691,51.6408786 31.3325599,53 29.6731686,53 C28.0137095,53 26.6685784,51.6408786 26.6685784,49.9642285 C26.6685784,48.2875099 28.0137095,46.9283885 29.6731686,46.9283885 Z M52.7712947,46.9283885 C54.4306859,46.9283885 55.775885,48.2875099 55.775885,49.9642285 C55.775885,51.6408786 54.4306859,53 52.7712947,53 C51.1118356,53 49.7667045,51.6408786 49.7667045,49.9642285 C49.7667045,48.2875099 51.1118356,46.9283885 52.7712947,46.9283885 Z M59.5103151,29.000045 C60.3331132,28.9936856 61,29.6623235 61,30.4935267 L61,30.4935267 L61,48.094433 C61,48.9256362 60.3362073,49.664958 59.5173334,49.7455545 L59.5173334,49.7455545 L56.7117602,50.0216564 C56.7120621,50.0025176 56.7125149,49.9833788 56.7125149,49.96424 C56.7125149,47.7649559 54.9479854,45.9819979 52.7712645,45.9819979 C50.5946191,45.9819979 48.8300897,47.7649559 48.8300897,49.96424 C48.8300897,50.093179 48.8364287,50.2208219 48.8482013,50.3467109 L48.8482013,50.3467109 L33.596213,50.3467109 C33.608061,50.2208219 33.6144001,50.093179 33.6144001,49.96424 C33.6144001,47.7649559 31.8498707,45.9819979 29.6731498,45.9819979 C27.4965043,45.9819979 25.7319749,47.7649559 25.7319749,49.96424 C25.7319749,50.0006876 25.7325031,50.0371352 25.7334842,50.0734302 L25.7334842,50.0734302 L23.395494,49.6050254 C22.5884681,49.443375 21.9644456,48.639088 22.0015746,47.8087235 L22.001651,47.7970977 C22.0037397,47.5436283 22.0604663,43.2216537 23.5033339,42.3380778 C24.3290751,41.8324629 25.2657503,41.5066458 25.9354293,41.3168591 C26.3464133,41.2004251 26.7834328,40.7948503 26.9041773,40.3811168 L26.9041773,40.3811168 L28.6373886,34.4390163 C28.9325334,33.4271763 29.5955715,32.453919 30.5043245,31.6986609 C31.4130775,30.9434028 32.486194,30.4737017 33.5258793,30.3764064 L33.5258793,30.3764064 L35.9259775,30.1515447 C36.1341862,29.5682307 36.6859884,29.1476347 37.3324996,29.1426022 L37.3324996,29.1426022 Z M35.4019465,31.7518073 L33.6669994,31.9144489 C32.140563,32.057418 30.5370764,33.3899662 30.1036038,34.8758536 L30.1036038,34.8758536 L28.4251048,40.6306075 C28.3768824,40.7960704 28.4752137,40.9146394 28.6448597,40.8954243 L28.6448597,40.8954243 L34.2584964,40.2599553 C34.4990043,40.232734 34.7174763,40.013896 34.7465304,39.7711154 L34.7465304,39.7711154 L35.672565,32.0330942 C35.6931671,31.8618363 35.5718943,31.7359472 35.4019465,31.7518073 L35.4019465,31.7518073 Z"
+                                                                            id="Truck"
+                                                                            transform="translate(41.500000, 41.000000) scale(-1, 1) translate(-41.500000, -41.000000) ">
+                                                                        </path>
+                                                                    </g>
+                                                                </g>
+                                                            </g>
+                                                        </g>
+                                                    </g>
+                                                </svg>
+
+                                                <svg *ngSwitchCase="'W'" width="39px" height="24px" version="1.1"
+                                                    id="Capa_1" xmlns="http://www.w3.org/2000/svg"
+                                                    xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                                    viewBox="0 0 297 297" style="enable-background:new 0 0 297 297;"
+                                                    xml:space="preserve">
+                                                    <g>
+                                                        <path fill="var(--secondaryColor)" d="M291.219,78.753L153.176,9.732c-2.943-1.473-6.409-1.473-9.353,0L5.781,78.753C2.238,80.525,0,84.145,0,88.107v189.808
+                                        c0,5.775,4.682,10.458,10.458,10.458h34.511c5.775,0,10.458-4.682,10.458-10.458V115.82h186.148v162.095
+                                        c0,5.775,4.682,10.458,10.458,10.458h34.511c5.775,0,10.458-4.682,10.458-10.458V88.107C297,84.145,294.762,80.525,291.219,78.753z
+                                        M276.085,267.457h-13.595V105.362c0-5.775-4.682-10.458-10.458-10.458H44.968c-5.775,0-10.458,4.682-10.458,10.458v162.095H20.915
+                                        V94.57L148.5,30.778L276.085,94.57V267.457z" />
+
+                                                        <path fill="var(--secondaryColor)" d="M217.521,132.552H148.5c-4.043,0-7.32,3.277-7.32,7.32v61.701H79.479c-4.043,0-7.32,3.277-7.32,7.32v69.021
+                                        c0,4.043,3.277,7.32,7.32,7.32h138.042c4.043,0,7.32-3.277,7.32-7.32V139.873C224.842,135.829,221.564,132.552,217.521,132.552z
+                                        M155.82,226.568l16.837,16.837l-16.837,16.837V226.568z M141.18,260.241l-16.837-16.837l16.837-16.837V260.241z M166.174,216.214
+                                        h33.673l-16.837,16.837L166.174,216.214z M166.174,201.573l16.837-16.837l16.837,16.837H166.174z M210.201,191.22l-16.836-16.837
+                                        l16.836-16.837V191.22z M183.011,164.03l-16.837-16.837h33.673L183.011,164.03z M172.657,174.383L155.82,191.22v-33.673
+                                        L172.657,174.383z M113.989,233.051l-16.837-16.837h33.673L113.989,233.051z M103.636,243.404l-16.837,16.837v-33.673
+                                        L103.636,243.404z M113.989,253.758l16.837,16.837H97.153L113.989,253.758z M183.01,253.758l16.837,16.837h-33.673L183.01,253.758z
+                                        M193.364,243.404l16.837-16.837v33.673L193.364,243.404z" />
+
+                                                    </g>
+                                                </svg>
+
+                                            </div>
+                                        </div>
+                                        <div class="routing-card">
+                                            <div class="route-card-body">
+                                                <div *ngIf="(step.FromPortLabel != null || step.ToPortLabel != null) && step.Type == null"
+                                                    class="route-label">
+                                                    <div class="mobile-font-12">
+                                                        <span
+                                                            [attr.title]="step.ToolTipFromPortLabel != null ? step.ToolTipFromPortLabel : step.FromPortLabel?.length > 5 ? step.FromPortLabel : ''">
+                                                            {{ step.ToPortLabel != null ? GetSlice(step.FromPortLabel,5)
+                                                            : GetSlice(step.FromPortLabel,14)}}
+                                                        </span>
+                                                    </div>
+                                                    <div class="mobile-font-12" *ngIf="step.ToPortLabel != null">
+                                                        &nbsp;>
+                                                        <span
+                                                            [attr.title]="step.ToolTipToPortLabel != null ? step.ToolTipToPortLabel : step.ToPortLabel?.length > 5 ? step.ToPortLabel : ''"> {{GetSlice(step.ToPortLabel,5)}}</span>
+                                                    </div>
+                                                </div>
+                                                <div *ngIf="step.Type != null"
+                                                  class="route-label">
+                                                    <div class="mobile-font-12">
+                                                        <span
+                                                            [attr.title]="step.Type">
+                                                            {{ step.Type }}
+                                                           
+                                                        </span>
+                                                    </div>
+                                                   
+                                                </div>
+                                                <div class="route-description TextTrimming" [title]="step.Description">
+                                                    {{checkDescriptionShipping(step.Description)}}
+                                                </div>
+                                                <div class="routes">
+                                                    <div *ngFor="let direction of step.Directions"
+                                                        class="route-direction">
+
+                                                        <svg style="transform: rotate(45deg);"
+                                                            [class.FlipImgDiagonal]="direction.Direction == 'in'"
+                                                            width="14" height="14" version="1.1"
+                                                            viewBox="0 0 512.17 512.17" xml:space="preserve"
+                                                            xmlns="http://www.w3.org/2000/svg" class="direction-icon">
+                                                           
+                                                        </svg>
+                                                        {{direction.Label}} {{direction.Date | date:'dd/MM/yyyy'}}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div *ngIf="cargoTrackingShipmentPM.RoutingSteps?.length > 0" class="pager right-arrow"
+                            (click)="MoveRoutingSlider('left')"
+                            [class.dim]="((routingSliderMarginCardCount+routingSliderVisibleCardsCount)>=cargoTrackingShipmentPM.RoutingSteps.length) || (routingSliderVisibleCardsCount >= cargoTrackingShipmentPM.RoutingSteps.length)">
+                            <img src="./assets/images/icons/right-arrow@2x.png" alt="" />
                         </div>
 
                     </div>
-                    <div class="body bordered" [class.show]="partnerCard.ShowDetails">
-                        <div class="partner-address" [innerHTML]="partnerCard.Address||'No address'">
-                            <!-- {{partnerCard.Address}} -->
-                        </div>
-                        pa
-                        <div class="partner-mobile">{{partnerCard.PhoneNumber}}</div>
-                        <!-- <div class="partner-mobile">{{partnerCard.FaxNumber}}</div> -->
-                        <div class="partners-footer-buttons mobile-only">
-                            <div class="circle-icon-x2">
-                                <a [href]="'tel:'+partnerCard.PhoneNumber">
-                                    <img src="./assets/images/icons/call-white.svg" alt="">
-                                </a>
+                </div>
+
+            </panel>
+
+            <!-- Documents -->
+            <panel style="order: 5;" [Title]="'Documents'" [Name]="'DocumentsPanel'"
+                [ShowWhitePanelOnMobile]="cargoTrackingShipmentPM.DocumentsFilings?.length === 0">
+
+                <div body>
+                    <div class="no-data-available"
+                        *ngIf="cargoTrackingShipmentPM.DocumentsFilings && cargoTrackingShipmentPM.DocumentsFilings.length == 0 "
+                        style="margin-top:10px">No Documents defined for this shipment</div>
+                    <span *ngIf="cargoTrackingShipmentPM.DocumentsFilings?.length > 0 "
+                        style="color: var(--MainColor); cursor: pointer;"
+                        (click)="DownloadAllClick(cargoTrackingShipmentPM.SecurityKey)">Download all</span>
+                    <div *ngIf="cargoTrackingShipmentPM.DocumentsFilings?.length > 0 " class="hide-mobile hide-tablet"
+                        style="min-width: 720px;width: calc(100% - 100px);">
+
+                        <table class="row-hover" style="width: 100%;">
+                            <tr class="header">
+                                <th style="width: 450px;">type</th>
+                                <th style="width: 450px;">file description</th>
+                                <th style="width: 450px;">create date</th>
+                                <th style="width: 450px;">customs ref</th>
+                                <th style="width: 50px;" class="hide-mobile"></th>
+                                <th style="width: 50px;" class="hide-mobile"></th>
+                            </tr>
+                            <tr *ngFor="let item of cargoTrackingShipmentPM.DocumentsFilings">
+                              
+                                <td style="width: 450px;">
+                                    <span [ngSwitch]="item.FileExtension.toLowerCase()">
+                                        <img class="file-extension" *ngSwitchCase="'pdf'" src="./assets/images/FileIcons/File-pdf-48.png" />
+                                        <img class="file-extension" *ngSwitchCase="'txt'" src="./assets/images/FileIcons/txt_48.png" />
+                                        <img class="file-extension" *ngSwitchCase="'xls'" src="./assets/images/FileIcons/Microsoft-Office-Excel-48.png" />
+                                        <img class="file-extension" *ngSwitchCase="'xlsx'" src="./assets/images/FileIcons/Microsoft-Office-Excel-48.png" />
+                                        <img class="file-extension" *ngSwitchCase="'doc'" src="./assets/images/FileIcons/Microsoft-Office-Word-48.png" />
+                                        <img class="file-extension" *ngSwitchCase="'docx'" src="./assets/images/FileIcons/Microsoft-Office-Word-48.png" />
+                                        <img class="file-extension" *ngSwitchCase="'ppt'" src="./assets/images/FileIcons/Microsoft-Office-PowerPoint-48.png" />
+                                        <img class="file-extension" *ngSwitchCase="'pptx'" src="./assets/images/FileIcons/Microsoft-Office-PowerPoint-48.png" />
+                                        <img class="file-extension" *ngSwitchCase="'zip'" src="./assets/images/FileIcons/Zip-icon.png" />
+                                        <img class="file-extension" *ngSwitchCase="'rar'" src="./assets/images/FileIcons/Zip-icon.png" />
+                                        <img class="file-extension" *ngSwitchCase="'xml'" src="./assets/images/FileIcons/Document-xml-48.png" />
+                                        <img class="file-extension" *ngSwitchDefault src="./assets/images/FileIcons/attachment-icon.png" />
+                                    </span>
+                                    <!-- <img width="16" src="./assets/images/FileIcons/info.png"
+                                        style="top: 2px; position: relative;padding-right: 7px;" alt=""> -->
+                                    <custom-label [width]="300">{{item.DocumentTypeName}}</custom-label>
+                                </td>
+                                <td style="width: 450px;"><custom-label [width]="300">
+                                   {{item.Descreption}}</custom-label>
+                                 </td>
+                                <td style="width: 450px;">{{item.CreateDate | date:'d-MMM-yyyy, H:mm'}}</td>
+                                <td style="width: 450px;">{{item.CustomReference}}</td>
+                                <td style="width: 50px;">
+                                    <svg [attr.fill]="item.IsDigitallySigned?'#c13b3b':'#cecece'" id="Capa_1"
+                                        enable-background="new 0 0 512 512" height="16" viewBox="0 0 512 512" width="16"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="m337.903 358.822 23.413-37.992 42.252-14.41 4.681-44.377 31.789-31.295-15.114-42.006 15.114-42.007-31.788-31.295-4.681-44.376-42.252-14.41-23.413-37.993-44.285 5.347-37.619-24.008-37.619 24.01-44.284-5.347-23.413 37.992-42.252 14.41-4.681 44.376-31.789 31.295 15.114 42.007-15.114 42.007 31.788 31.294 4.681 44.377 42.252 14.41 23.413 37.992 44.285-5.346 37.619 24.009 37.619-24.009zm-211.332-170.079c0-71.367 58.062-129.429 129.429-129.429s129.429 58.062 129.429 129.429-58.062 129.429-129.429 129.429-129.429-58.062-129.429-129.429z" />
+                                        <path
+                                            d="m256 89.333c-54.815 0-99.41 44.595-99.41 99.41s44.595 99.41 99.41 99.41 99.41-44.595 99.41-99.41-44.595-99.41-99.41-99.41z" />
+                                        <path
+                                            d="m211.299 384.568-52.68 6.36-27.833-45.167-9.462-3.226-40.813 127.566 73.475-4.041 57.485 45.94 33.828-105.732z" />
+                                        <path
+                                            d="m381.214 345.762-27.834 45.166-52.679-6.36-34 21.7 33.828 105.732 57.485-45.94 73.475 4.041-40.813-127.566z" />
+                                    </svg>
+                                </td>
+                                <th style="width: 50px;" class="hide-mobile" *ngIf="item.DocumentId">
+                                    <span style="cursor: pointer;" (click)="DownloadDocument(item)">
+                                        <svg style="width: 16px; height: 16px;" width="20px" height="19px"
+                                            viewBox="0 0 20 19" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                                            xmlns:xlink="http://www.w3.org/1999/xlink">
+                                            <g id="Desktop" stroke="none" stroke-width="1"
+                                                style="fill: var(--secondaryColor);" fill-rule="evenodd">
+                                                <g id="Shipment-page-2"
+                                                    transform="translate(-1296.000000, -2470.000000)" fill="#000000"
+                                                    fill-rule="nonzero">
+                                                    <g id="Group-9" transform="translate(291.000000, 884.000000)">
+                                                        <g id="Group-8" transform="translate(0.000000, 1428.000000)">
+                                                            <g id="download-icon"
+                                                                transform="translate(1005.000000, 157.000000)">
+                                                                <path style="fill: var(--secondaryColor);"
+                                                                    d="M18.325,17.4125005 C18.7668278,17.4125005 19.125,17.7706727 19.125,18.2125005 C19.125,18.6203416 18.8198119,18.9569021 18.4253503,19.0062674 L18.325,19.0125005 L1.675,19.0125005 C1.2331722,19.0125005 0.875,18.6543283 0.875,18.2125005 C0.875,17.8046595 1.18018815,17.468099 1.5746497,17.4187337 L1.675,17.4125005 L18.325,17.4125005 Z M10.2041841,0.987500515 C10.6120246,0.986846005 10.9490753,1.29149277 10.9990745,1.68587446 L11.005469,1.78621461 L11.024,13.1324995 L14.1593146,9.99681511 C14.471734,9.68439568 14.978266,9.68439568 15.2906854,9.99681511 C15.5747031,10.2808328 15.6005229,10.725274 15.3681448,11.0384596 L15.2906854,11.128186 L10.7906854,15.628186 C10.6770784,15.741793 10.5378035,15.8140884 10.3915284,15.8450722 L10.2808011,15.8605641 L10.2808011,15.8605641 L10.1691989,15.8605641 C9.98343814,15.8476542 9.80132341,15.7701948 9.65931458,15.628186 L5.15931458,11.128186 C4.84689514,10.8157665 4.84689514,10.3092345 5.15931458,9.99681511 C5.44333224,9.71279745 5.8877735,9.68697766 6.2009591,9.91935575 L6.29068542,9.99681511 L9.424,13.1304995 L9.40546998,1.78878646 C9.40476084,1.34695923 9.76235685,0.988211767 10.2041841,0.987500515 Z"
+                                                                    id="Download"></path>
+                                                            </g>
+                                                        </g>
+                                                    </g>
+                                                </g>
+                                            </g>
+                                        </svg>
+                                    </span>
+                                </th>
+                            </tr>
+
+                        </table>
+
+                    </div>
+                    <div class="hide-mobile hide-tablet" style="clear: both;"></div>
+
+                    <div class="mobile-only tablet-only">
+                        <div class="card document-mobile-card"
+                            *ngFor="let item of cargoTrackingShipmentPM.DocumentsFilings">
+                            <div class="details-section">
+                                <div class="row" style="margin-bottom: 5px;">
+                                    <div class="col-50 card-title">type</div>
+                                    <div class="col-35 card-title">customs ref</div>
+                                    <div class="col-15 text-end" (click)="item.ShowDetailsMenu=!item.ShowDetailsMenu">
+
+
+                                        <svg [attr.fill]="item.IsDigitallySigned?'#c13b3b':'#cecece'" id="Capa_1"
+                                            enable-background="new 0 0 512 512" height="16" viewBox="0 0 512 512"
+                                            width="16" xmlns="http://www.w3.org/2000/svg">
+                                            <path
+                                                d="m337.903 358.822 23.413-37.992 42.252-14.41 4.681-44.377 31.789-31.295-15.114-42.006 15.114-42.007-31.788-31.295-4.681-44.376-42.252-14.41-23.413-37.993-44.285 5.347-37.619-24.008-37.619 24.01-44.284-5.347-23.413 37.992-42.252 14.41-4.681 44.376-31.789 31.295 15.114 42.007-15.114 42.007 31.788 31.294 4.681 44.377 42.252 14.41 23.413 37.992 44.285-5.346 37.619 24.009 37.619-24.009zm-211.332-170.079c0-71.367 58.062-129.429 129.429-129.429s129.429 58.062 129.429 129.429-58.062 129.429-129.429 129.429-129.429-58.062-129.429-129.429z" />
+                                            <path
+                                                d="m256 89.333c-54.815 0-99.41 44.595-99.41 99.41s44.595 99.41 99.41 99.41 99.41-44.595 99.41-99.41-44.595-99.41-99.41-99.41z" />
+                                            <path
+                                                d="m211.299 384.568-52.68 6.36-27.833-45.167-9.462-3.226-40.813 127.566 73.475-4.041 57.485 45.94 33.828-105.732z" />
+                                            <path
+                                                d="m381.214 345.762-27.834 45.166-52.679-6.36-34 21.7 33.828 105.732 57.485-45.94 73.475 4.041-40.813-127.566z" />
+                                        </svg>
+                                        <a href="javascript:;" style="padding: 10px 3px 0px 5px;">
+                                            <img src="./assets/images/icons/more.png" alt="">
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-50">
+                                        <custom-label>{{item.DocumentTypeName}}</custom-label>
+                                        <br>
+                                        <span style="color: gray;font-size: 13px;">
+                                            <custom-label [width]="140">"{{item.Descreption}}"</custom-label>
+                                        </span>
+                                        <br>
+                                        <span style="color: gray;font-size: 13px;">
+                                            {{ item.CreateDate | date:'d-MMM-yyyy, H:mm' }}
+                                        </span>
+
+                                    </div>
+                                    <div class="col-50">{{item.CustomReference}}</div>
+                                </div>
                             </div>
-                            <div class="circle-icon-x2">
-                                <a [href]="'sms:'+partnerCard.PhoneNumber">
-                                    <img src="./assets/images/icons/chat-white.svg" alt="">
-                                </a>
+
+                            <div *ngIf="0" class="notes-section">
+                                hellow tester
                             </div>
+
+                            <details-menu [Show]="item.ShowDetailsMenu" [Toggle]="'ShowDetailsMenu'"
+                                [DataContext]="item" [MenuTitle]="item.DocumentTypeName"
+                                [Buttons]="[{Code: 'download', Name:'Download'}]"
+                                (ButtonClicked)="DownloadDocument(item)"></details-menu>
                         </div>
                     </div>
-                    <div></div>
+                </div>
+
+            </panel>
+
+
+
+
+            <panel *ngIf="!ShowShipmentAsDeclaration && !IsOrderShipment" [Title]="'SHO List'"
+                style="order: 6;" [Name]="'ConnectedOrdersPanel'" [ShowWhitePanelOnMobile]="true">
+
+                <div body style="padding: 0px 8px 13px 0px;">
+                    <div class="no-data-available"
+                        *ngIf="!cargoTrackingShipmentPM.ConnectedOrders || cargoTrackingShipmentPM.ConnectedOrders.length == 0 "
+                        style="margin-top:10px">The Shipment is not connected to any Order</div>
+
+                    <div *ngIf="cargoTrackingShipmentPM.ConnectedOrders?.length > 0 ">
+
+                        <table class="row-hover connected-orders-table">
+                            <tr class="header">
+                                <th>SHO Number</th>
+                                <th>PO Number</th>
+                                <th>Supply Date</th>
+                                <th>PO Date</th>
+                                <th>Pickup Date</th>
+                                <th>Booking Confirmation #</th>
+                                <th>Supplier</th>
+                            </tr>
+                            <tr *ngFor="let item of cargoTrackingShipmentPM.ConnectedOrders">
+                                <td>{{item.OrderNumber}}</td>
+                                <td>{{item.PONumber}}</td>
+                                <td>{{item.SupplyDateTime | date:'dd/MM/yyyy'}}</td>
+                                <td>{{item.PODate | date:'dd/MM/yyyy'}}</td>
+                                <td>{{item.PickupActualDateTime | date:'dd/MM/yyyy'}}</td>
+                                <td>{{item.BookingConfirmationNumber}}</td>
+                                <td>{{item.SupplierName}}</td>
+                            </tr>
+
+                        </table>
+
+
+                    </div>
+                </div>
+
+            </panel>
+
+            <!-- Partners -->
+            <panel *ngIf="!ShowShipmentAsDeclaration" style="order: 7;" [Title]="'Partners'" [Name]="'PartnersPanel'"
+                TransparentBackground="true"
+                [ShowWhitePanelOnMobile]="cargoTrackingShipmentPM.PartnerCards?.length === 0">
+
+                <div body>
+                    <div class="no-data-available" *ngIf="cargoTrackingShipmentPM.PartnerCards?.length == 0 "
+                        style="margin-top:10px">No Partners defined for this shipment</div>
+                    <div class="partners-cards-wrapper">
+                        <ng-container *ngFor="let partnerCard of cargoTrackingShipmentPM.PartnerCards">
+                            <div [class.hidden]="partnerCard.Name == null" class="card partner-card"
+                                 *ngIf="checkPartnerTypePermissionSharedAccess(partnerCard.Type)">
+                                <div class="header">
+                                    <div class="partners-buttons hide-mobile" *ngIf="partnerCard.PhoneNumber && checkPartnerTypePermissionContactAccess(partnerCard.Type)">
+                                        <div class="circle-icon">
+                                            <a [href]="'tel:'+partnerCard.PhoneNumber">
+                                                <img src="./assets/images/icons/call-white.svg" alt="">
+                                            </a>
+                                        </div>
+                                        <div class="circle-icon">
+                                            <a [href]="'sms:'+partnerCard.PhoneNumber">
+                                                <img src="./assets/images/icons/chat-white.svg" alt="">
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="partner-type-label">{{partnerCard.Type}}</div>
+                                        <div class="partner-name">
+                                            <custom-label [width]="195">{{partnerCard.Name}}</custom-label>
+                                        </div>
+                                    </div>
+                                    <div class="mobile-only" (click)="partnerCard.ShowDetails = !partnerCard.ShowDetails"
+                                        style="padding: 10px;">
+                                        <img width="16" src="./assets/images/icons/arrow-down.png" alt="">
+                                    </div>
+
+                                </div>
+                                <div class="body bordered" [class.show]="partnerCard.ShowDetails">
+                                    <div class="partner-address" [innerHTML]="splitAddressAndPhone(partnerCard.Address).address||'No address'">
+                                        <!-- {{partnerCard.Address}} -->
+                                    </div>
+                                    <div class="partner-address" style="display: flex;">
+                                        <label class="partner-address" > Phone:&nbsp;  </label>
+                                        <custom-label [width]="139"  class="partner-address">
+                                           {{splitAddressAndPhone(partnerCard.Address).phone ||'No address'}}</custom-label> 
+                                    </div>
+    
+
+                                    <!-- <div class="partner-mobile">Phone: {{partnerCard.PhoneNumber}}</div> -->
+                                    <!-- <div class="partner-mobile">{{partnerCard.FaxNumber}}</div> -->
+                                    <!-- <div class="partners-footer-buttons mobile-only">
+
+                                    <div class="circle-icon-x2">
+
+
+                                        <a [href]="'tel:'+partnerCard.PhoneNumber">
+                                            <img src="./assets/images/icons/call-white.svg" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="circle-icon-x2">
+                                        <a [href]="'sms:'+partnerCard.PhoneNumber">
+                                            <img src="./assets/images/icons/chat-white.svg" alt="">
+                                        </a>
+                                    </div>
+                                </div> -->
+                                </div>
+                                <div></div>
+                            </div>
+                        </ng-container>
+                    </div>
+
+                </div>
+
+            </panel>
+             <!-- Events -->
+             <panel *ngIf="!ShowShipmentAsDeclaration&&ShowEventPanel" style="order: 8;" [Title]="'Events'" [Name]="'EventsPanel'"           
+             [ShowWhitePanelOnMobile]="cargoTrackingShipmentPM.Events?.length === 0">
+            
+             <div body>
+                 <div class="no-data-available" *ngIf="cargoTrackingShipmentPM.Events?.length == 0" style="margin-top:10px">
+                    No Events defined for this shipment
+                 </div>
+                 <div *ngIf="cargoTrackingShipmentPM.Events?.length > 0 " class="hide-mobile hide-tablet" style="min-width: 720px;width: calc(100% - 10px);">
+                    <table class="row-hover" style="width: 100%;">
+                        <tr *ngFor="let item of cargoTrackingShipmentPM.Events| StopLoopPipe: showMoreEvents:3">
+                            <td style="width: 30px;"><img src="./assets/images/icons/tick.png" alt=""></td>
+                            <td style="width: 300px;">{{item.LocalName}} <span *ngIf="item.EntityType"> ({{item.EntityType}})</span></td>
+                            <td style="width: 300px;">{{item.EventDatetime | date: 'dd/MM/yyyy, HH:mm' | dateTimeFormat}}</td>                               
+                            <td class="hide-mobile" style="width: calc(100% - 450px);" *ngIf="item.IsChoose && item.PartnerTypeId=='CS'"> 
+                                <custom-label [width]="1100">{{item.Notes}}</custom-label>
+                            </td>
+                           
+                        </tr>
+                    </table>
+                </div>
+                <div class="hide-mobile hide-tablet" style="clear: both;"></div>
+                <div class="mobile-only tablet-only card document-mobile-card"
+                    *ngFor="let item of cargoTrackingShipmentPM.Events| StopLoopPipe: showMoreEvents:3">
+                    <div class="details-section">
+                       
+                        <div class="row">
+                            <div class="col-50">
+                                <img src="./assets/images/icons/tick.png" alt="">
+                               
+                                <span>
+                                    {{item.LocalName}} <span *ngIf="item.EntityType"> ({{item.EntityType}})</span>
+                                </span>
+                                <br>
+                            
+                            </div>
+                            <div class="col-50">
+                                <span>
+                                    {{ item.EventDatetime | date: 'dd/MM/yyyy, HH:mm' | dateTimeFormat}}
+                                </span>
+                                <br>
+                                <custom-label [width]="100">{{item.Notes}}</custom-label>
+                                </div>
+                        </div>
+                    </div>
+ 
+                </div>
+                <div *ngIf="cargoTrackingShipmentPM.Events?.length > 3">
+                    <button class="buttonShowMore"
+                            (click)="showMoreEvents=!showMoreEvents">
+                        {{showMoreEvents?'Show Less':'Show More'}}
+                    </button>
                 </div>
             </div>
+            </panel>
+            <br>
 
         </div>
 
-    </panel>
 
+    </div>
 
 </div>
-<br>
-<br>

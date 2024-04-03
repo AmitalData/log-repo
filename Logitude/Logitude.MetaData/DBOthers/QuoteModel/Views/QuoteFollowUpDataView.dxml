@@ -11,7 +11,7 @@ SELECT        dbo.Quotes.Id, dbo.Quotes.Tenant, dbo.Quotes.QuoteNumber, dbo.Quot
                          dbo.Quotes.VolumeUnitCode, dbo.Quotes.ShipmentTypeId, dbo.Quotes.ShipperId, dbo.Quotes.ConsigneeId, 
 						 dbo.Quotes.BusinessUnitId, dbo.Quotes.QuoteClosingReasonCode, dbo.Quotes.ValueOfGoods,
                          dbo.Quotes.ShipperContactId, dbo.Quotes.ConsigneeContactId, dbo.Quotes.FromPortId, dbo.Quotes.ToPortId, dbo.Quotes.ProductCode,
-                         dbo.Quotes.IncotermId, dbo.Quotes.SalesmanUserId, dbo.Quotes.CreatedByUserId, dbo.Quotes.DirectionId, dbo.Quotes.TransportModeId, dbo.Quotes.IsDangerous, 
+                         dbo.Quotes.IncotermId, dbo.Quotes.SalesmanUserId, dbo.Quotes.CreatedByUserId, dbo.Quotes.UpdatedByUserId, dbo.Quotes.DirectionId, dbo.Quotes.TransportModeId, dbo.Quotes.IsDangerous, 
                          dbo.Quotes.ExpirationDays, dbo.Quotes.ExpirationDate, dbo.Quotes.VolumetricWeight, dbo.Quotes.StageId, dbo.Quotes.StageDueDate, dbo.Quotes.BranchId, dbo.Quotes.DepartmentId, 
                          dbo.Quotes.PackageType1Id, dbo.Quotes.PackageType2Id, dbo.Quotes.PackageType3Id, dbo.Quotes.PackageType4Id, dbo.Quotes.PackageType5Id, 
                          dbo.Quotes.PackageType1Quantity, dbo.Quotes.PackageType3Quantity, dbo.Quotes.PackageType2Quantity, dbo.Quotes.PackageType4Quantity, 
@@ -30,7 +30,7 @@ SELECT        dbo.Quotes.Id, dbo.Quotes.Tenant, dbo.Quotes.QuoteNumber, dbo.Quot
                          dbo.FollowUps.OwnerUserId AS FollowUpOwnerUserId, ShipperCards.EnglishName AS Shipper, ConsigneeCards.EnglishName AS Consignee, 
                          FollowUpTypes.FollowUpEnglishName AS FollowUpType, FromPorts.Code AS FromPortCode, FromPorts.EnglishName AS FromPortName, 
                          FromPortCountries.EnglishName AS FromPortCountry, ToPorts.Code AS ToPortCode, ToPorts.EnglishName AS ToPortName, 
-                         ToPortCountries.EnglishName AS ToPortCountry, dbo.Stages.Name AS StageName, CreateByContacts.EnglishName AS CreatedByUser, 
+                         ToPortCountries.EnglishName AS ToPortCountry, dbo.Stages.Name AS StageName, CreateByContacts.EnglishName AS CreatedByUser, UpdateByContacts.EnglishName AS UpdatedByUser, 
                          OwnerContacts.EnglishName AS FollowUpOwner, dbo.QuoteTypes.Name AS QuoteTypeName, FollowUpTypes.Id AS FollowUpTypeId, 
                          OwnerContacts.Id AS FollowUpOwnerId, MainCarriageCarriers.EnglishName AS MainCarriageCarrierName, dbo.ShipmentTypes.Name AS ShipmentTypeName,
 						 dbo.BusinessUnits.Name AS BusinessUnitName, dbo.QuoteClosingReasons.Name AS QuoteClosingReasonName,
@@ -49,6 +49,8 @@ FROM            dbo.Quotes INNER JOIN
                          dbo.Users AS CreateByUsers ON dbo.Quotes.CreatedByUserId = CreateByUsers.Id LEFT OUTER JOIN
                          dbo.Users AS OwnerUsers ON dbo.FollowUps.OwnerUserId = OwnerUsers.Id LEFT OUTER JOIN
                          dbo.Contacts AS CreateByContacts ON CreateByUsers.Id = CreateByContacts.Id LEFT OUTER JOIN
+						 dbo.Users AS UpdateByUsers ON dbo.Quotes.UpdatedByUserId = UpdateByUsers.Id LEFT OUTER JOIN
+                         dbo.Contacts AS UpdateByContacts ON UpdateByUsers.Id = UpdateByContacts.Id LEFT OUTER JOIN
                          dbo.Contacts AS OwnerContacts ON OwnerUsers.Id = OwnerContacts.Id LEFT OUTER JOIN
                          dbo.QuoteTypes ON dbo.Quotes.QuoteTypeCode = dbo.QuoteTypes.Code LEFT OUTER JOIN						
                          dbo.Cards AS MainCarriageCarriers ON dbo.Quotes.MainCarriageCarrierId = MainCarriageCarriers.Id LEFT OUTER JOIN

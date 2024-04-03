@@ -1,0 +1,7 @@
+﻿<Script DBType="Main" Module="Shipment" >
+  <Sql Version="2">
+    <![CDATA[
+      update ShipmentSubTypes set IsManuallyAdded = 1 where Code not in ('Air','FCL','LCL','FTL','LTL','MyGI','MyGo')
+    ]]>
+  </Sql>
+</Script>

@@ -69,7 +69,13 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public DateTime? ArrivalNoticeSent { get; set; }
         public DateTime? T1Received { get; set; }
 
+        public string AccountingClosedByUserId { get; set; }
 
-
+        public DateTime? MainCarriageETA { get; set; }
+        public DateTime? MainCarriageETD { get; set; }
+        public DateTime? MainCarriageATA { get; set; }
+        public DateTime? MainCarriageATD { get; set; }
+        public string PackagesQuantityAndType { get; set; }
+        public bool IsDocumentsNeedApprove { get; set; }
     }
 }

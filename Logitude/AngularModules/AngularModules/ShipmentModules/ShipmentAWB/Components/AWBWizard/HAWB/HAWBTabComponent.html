@@ -20,7 +20,7 @@
                                         </td>
 
                                         <td style="width: 70px;">
-                                            <button id="{{'NewHouseBtn' | IdGeneratorPipe}}" class="Button" (click)="NewShipment()">New house</button>
+                                            <button id="{{'NewHouseBtn' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="NewShipment()">New house</button>
                                         </td>
                                     </tr>
                                 </table>

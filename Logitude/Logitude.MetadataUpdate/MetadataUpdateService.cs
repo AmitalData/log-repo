@@ -2,6 +2,7 @@
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.TreeFilterQuery;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Server.Infrastructure;
@@ -81,7 +82,7 @@ namespace Logitude.MetadataUpdate
             }
 
             Logitude.Server.Tools.ContainerAccessor.InitContainer();
-            InjectionUtil.Init(null, null, null, () => (new ByteCompressorUtil()) as IByteCompressorUtil, null, null,null);
+            InjectionUtil.Init(null, null, null, () => (new ByteCompressorUtil()) as IByteCompressorUtil, null, null,null, null, () => (new TreeFilterQueryService()) as ITreeFilterQueryService);
             InfraRegistrationHelper.Register();
             CacheManager.CacheWrapper = new CacheWrapper(WorkerEntryPoint.Cache);
         }

@@ -87,7 +87,7 @@
   <Column
     Name="ErrorMessage"
     Type="nvarchar"
-    Size="4000">
+    Size="-1">
     <Constraints
       Nullable="true" />
   </Column>

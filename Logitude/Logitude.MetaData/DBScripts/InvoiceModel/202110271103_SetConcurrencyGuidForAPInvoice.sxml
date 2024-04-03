@@ -1,0 +1,12 @@
+﻿<Script DBType="Main" Module="Invoice" AOT="true" TargetTableName="APInvoices">
+  <Sql Version="1">
+    <![CDATA[
+    
+    update APInvoices set ConcurrencyGUID = NEWID() where ConcurrencyGUID is null and $LastCounterWhere$    
+			
+
+    ]]>
+  </Sql>
+</Script>
+
+

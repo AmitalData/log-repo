@@ -10,6 +10,8 @@ using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.QuoteModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
@@ -36,21 +38,21 @@ using Simplog.Data.ShipmentsModel;
         }
 
 		
-		public ShipmentType GetShipmentTypeById(string Id,int Tenant,string ComputingPartnerName = "")
+		public ShipmentType GetShipmentTypeById(string Id,int Tenant,  string ComputingPartnerName = "")
         { 
 		    try
             {
-
+				 
 				
-				var temp = query.GetSinglePM(Id,Tenant);				
+				var temp = query.GetSinglePM(Id, Tenant);				
 				 if (temp == null)
                     throw new ApplicationException("ShipmentType with Id " + Id + " doesn't exist");
 
 				return ShipmentTypeDataMapping(temp,Tenant,ComputingPartnerName);
 			}
+
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }
@@ -81,11 +83,13 @@ using Simplog.Data.ShipmentsModel;
 					{
 						temp = query.GetSinglePM(MyEntity.Code);
 					} 
-										   
-					if(temp == null)
+					
+					
+			  	   if(temp == null)
 					{   
 					    throw new ApplicationException("ShipmentType with Code " + MyEntity.Code + " doesn't exist");
 					} 
+				 
 					
 					if(string.IsNullOrEmpty(temp.Id))
 					{
@@ -104,9 +108,9 @@ using Simplog.Data.ShipmentsModel;
 						
 					}
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Name))
-					{							//throw new ApplicationException("Name Can't be update"); 
-							temp.Name = MyEntity.Name;
+					if(!IsUpdate)
+					{							
+						temp.Name = MyEntity.Name;
 
 										}  
 
@@ -119,6 +123,8 @@ using Simplog.Data.ShipmentsModel;
                 throw ex;
             } 
         }
-		 
+
+
+						   
    }
 }

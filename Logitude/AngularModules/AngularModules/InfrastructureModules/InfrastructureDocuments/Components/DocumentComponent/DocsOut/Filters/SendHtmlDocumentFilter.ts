@@ -1,4 +1,4 @@
-﻿export class SendHtmlDocumentFilter {
+export class SendHtmlDocumentFilter {
     InternalDocumentId: string;
     ExternalDocumentId: string;
     Tenant: Number;
@@ -14,6 +14,7 @@
     HtmlPlainString: string;
     ExportQuotationsToIntegratedSystem: boolean;
     DocumentTypeCode: string;
+    DocumentTypeId: string;
     EntityId: string;
     CustomerId: string;
     EventTypeCode: string;
@@ -21,6 +22,8 @@
     ReplyTo: string;
     From: string;
     ObjectTableName: string;
+    ChildObjectTableId: string;
+    ChildEntityId: string;
     constructor() {
 
     }

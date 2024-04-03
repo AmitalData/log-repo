@@ -49,7 +49,7 @@ namespace Logitude.Customs.Data.Repsitories
                     where a.DeclarationCargoSplitId == keys.DeclarationCargoSplitId && a.DecCargoSplitConsLineNo == keys.DecCargoSplitConsLineNo && a.DecCargoSplitConsItemLine == keys.DecCargoSplitConsItemLine && a.PackageLine == keys.PackageLine
                     select a).FirstOrDefault();
         }
-		         
+		 		                 
         partial void onAdd();//Partial Methods Definition in Generated
         public void Add(DecCargoSplitConsPackDet entity)
         {

@@ -55,7 +55,16 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                              ForgetPasswordImageId = a.ForgetPasswordImageId,
                                              SecondaryColor = a.SecondaryColor,
                                              HasLogboxAccess = a.HasLogboxAccess,
-                                         }).FirstOrDefault();
+                                             MainTabHighlightColor = a.MainTabHighlightColor,
+                                             DocumentTypeHighlightColor = a.DocumentTypeHighlightColor,
+                                             IsCustomsActivated = a.IsCustomsActivated,
+                                             IsExportActivated = a.IsExportActivated,
+                                             QueryFiltersHighlightColor = a.QueryFiltersHighlightColor,
+                                             CreateShipmentsWithoutDocs = a.CreateShipmentsWithoutDocs,
+                                             CreateOShipmentsWithoutDocs = a.CreateOShipmentsWithoutDocs,
+                                             FilingInboxDomain = a.FilingInboxDomain,
+                                             DistributorCode = a.DistributorCode
+                                             }).FirstOrDefault();
 
             return entity;
         }
@@ -94,7 +103,15 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                          ForgetPasswordImageId = a.ForgetPasswordImageId,
                                                          SecondaryColor = a.SecondaryColor,
                                                          HasLogboxAccess = a.HasLogboxAccess,
-
+                                                         MainTabHighlightColor = a.MainTabHighlightColor,
+                                                         DocumentTypeHighlightColor = a.DocumentTypeHighlightColor,
+                                                         IsCustomsActivated = a.IsCustomsActivated,
+                                                         IsExportActivated = a.IsExportActivated,
+                                                         QueryFiltersHighlightColor = a.QueryFiltersHighlightColor,
+                                                         CreateShipmentsWithoutDocs = a.CreateShipmentsWithoutDocs,
+                                                         CreateOShipmentsWithoutDocs = a.CreateOShipmentsWithoutDocs,
+                                                         FilingInboxDomain = a.FilingInboxDomain,
+                                                         DistributorCode = a.DistributorCode
                                                      }).FirstOrDefault();
 
             return entity;
@@ -125,6 +142,15 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                            ForgetPasswordImageId = a.ForgetPasswordImageId,
                                                            SecondaryColor = a.SecondaryColor,
                                                            HasLogboxAccess = a.HasLogboxAccess,
+                                                           MainTabHighlightColor = a.MainTabHighlightColor,
+                                                           DocumentTypeHighlightColor = a.DocumentTypeHighlightColor,
+                                                           IsCustomsActivated = a.IsCustomsActivated,
+                                                           IsExportActivated = a.IsExportActivated,
+                                                           QueryFiltersHighlightColor = a.QueryFiltersHighlightColor,
+                                                           CreateShipmentsWithoutDocs = a.CreateShipmentsWithoutDocs,
+                                                           CreateOShipmentsWithoutDocs = a.CreateOShipmentsWithoutDocs,
+                                                           FilingInboxDomain = a.FilingInboxDomain,
+                                                           DistributorCode = a.DistributorCode
                                                        }).FirstOrDefault();
 
             return entity;
@@ -155,6 +181,52 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         ForgetPasswordImageId = a.ForgetPasswordImageId,
                         SecondaryColor = a.SecondaryColor,
                         HasLogboxAccess = a.HasLogboxAccess,
+                        MainTabHighlightColor = a.MainTabHighlightColor,
+                        DocumentTypeHighlightColor = a.DocumentTypeHighlightColor,
+                        IsCustomsActivated = a.IsCustomsActivated,
+                        IsExportActivated = a.IsExportActivated,
+                        QueryFiltersHighlightColor = a.QueryFiltersHighlightColor,
+                        CreateShipmentsWithoutDocs = a.CreateShipmentsWithoutDocs,
+                        CreateOShipmentsWithoutDocs = a.CreateOShipmentsWithoutDocs,
+                        FilingInboxDomain = a.FilingInboxDomain,
+                        DistributorCode = a.DistributorCode
+                    });
+        }
+
+        public IQueryable<TenantManagmentPrivateLabelsPM> GetByHybridPartnerId(string hybridPartnerId)
+        {
+            return (from a in repository.context.TenantManagmentPrivateLabels
+                    where a.HybridPartnerId == hybridPartnerId
+                    select new TenantManagmentPrivateLabelsPM()
+                    {
+                        Id = a.Id,
+                        PrivateLabelName = a.PrivateLabelName,
+                        PrivateLabelShortName = a.PrivateLabelShortName,
+                        PrivateLabelUrl = a.PrivateLabelUrl,
+                        PrivateLabelDomain = a.PrivateLabelDomain,
+                        ReceiveAllStatuses = a.ReceiveAllStatuses,
+                        MainLogo = a.MainLogo,
+                        InActive = a.InActive,
+                        HybridPartnerId = a.HybridPartnerId,
+                        ContactUsEmail = a.ContactUsEmail,
+                        SearchFields = a.SearchFields,
+                        SmallLogo = a.SmallLogo,
+                        BackgroundImageId = a.BackgroundImageId,
+                        LoginImageId = a.LoginImageId,
+                        MainColor = a.MainColor,
+                        LoginProgressImageId = a.LoginProgressImageId,
+                        ForgetPasswordImageId = a.ForgetPasswordImageId,
+                        SecondaryColor = a.SecondaryColor,
+                        HasLogboxAccess = a.HasLogboxAccess,
+                        MainTabHighlightColor = a.MainTabHighlightColor,
+                        DocumentTypeHighlightColor = a.DocumentTypeHighlightColor,
+                        IsCustomsActivated = a.IsCustomsActivated,
+                        IsExportActivated = a.IsExportActivated,
+                        QueryFiltersHighlightColor = a.QueryFiltersHighlightColor,
+                        CreateShipmentsWithoutDocs = a.CreateShipmentsWithoutDocs,
+                        CreateOShipmentsWithoutDocs = a.CreateOShipmentsWithoutDocs,
+                        FilingInboxDomain = a.FilingInboxDomain,
+                        DistributorCode = a.DistributorCode
                     });
         }
 
@@ -182,6 +254,15 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         ForgetPasswordImageId = a.ForgetPasswordImageId,
                         SecondaryColor = a.SecondaryColor,
                         HasLogboxAccess = a.HasLogboxAccess,
+                        MainTabHighlightColor = a.MainTabHighlightColor,
+                        DocumentTypeHighlightColor = a.DocumentTypeHighlightColor,
+                        IsCustomsActivated = a.IsCustomsActivated,
+                        IsExportActivated = a.IsExportActivated,
+                        QueryFiltersHighlightColor = a.QueryFiltersHighlightColor,
+                        CreateShipmentsWithoutDocs = a.CreateShipmentsWithoutDocs,
+                        CreateOShipmentsWithoutDocs = a.CreateOShipmentsWithoutDocs,
+                        FilingInboxDomain = a.FilingInboxDomain,
+                        DistributorCode = a.DistributorCode
                     });
         }
 
@@ -209,6 +290,15 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                        ForgetPasswordImageId = a.ForgetPasswordImageId,
                        SecondaryColor = a.SecondaryColor,
                        HasLogboxAccess = a.HasLogboxAccess,
+                       MainTabHighlightColor = a.MainTabHighlightColor,
+                       DocumentTypeHighlightColor = a.DocumentTypeHighlightColor,
+                       IsCustomsActivated = a.IsCustomsActivated,
+                       IsExportActivated = a.IsExportActivated,
+                       QueryFiltersHighlightColor = a.QueryFiltersHighlightColor,
+                       CreateShipmentsWithoutDocs = a.CreateShipmentsWithoutDocs,
+                       CreateOShipmentsWithoutDocs = a.CreateOShipmentsWithoutDocs,
+                       FilingInboxDomain = a.FilingInboxDomain,
+                       DistributorCode = a.DistributorCode
                    };
 
         }

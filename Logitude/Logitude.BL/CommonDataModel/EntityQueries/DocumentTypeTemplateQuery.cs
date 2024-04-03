@@ -44,7 +44,68 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         public List<DocumentTypeTemplatePM> GetDocumentTypeTemplatesByDocumentTypeId(string documentTypeId, int tenant)
         {
             List<DocumentTypeTemplatePM> documentTypeTemplates = (from a in repository.context.DocumentTypeTemplates.Include("LastUpdatedByUser.Contact").Include("DocumentType")
-                                                                        where a.DocumentTypeId == documentTypeId && a.Tenant == tenant && string.IsNullOrEmpty(a.AutomationId)
+                                                                        where a.DocumentTypeId == documentTypeId && a.Tenant == tenant && (string.IsNullOrEmpty(a.AutomationId) && string.IsNullOrEmpty(a.EntityId))
+                                                                  select new DocumentTypeTemplatePM()
+                                                                        {
+                                                                            Description = a.Description,
+                                                                            DocumentTypeId = a.DocumentTypeId,
+                                                                            Id = a.Id,
+                                                                            LastUpdateDate = a.LastUpdateDate,
+                                                                            LastUpdatedByUserId = a.LastUpdatedByUserId,
+                                                                            TemplateBody = a.TemplateBody,
+                                                                            TemplateType = a.TemplateType,
+                                                                            TemplateBodyHtml = a.TemplateBodyHtml,
+                                                                            Tenant = a.Tenant,
+                                                                            LastUpdateByUserName = a.LastUpdatedByUser.Contact.EnglishName,
+                                                                            IsDefault = a.DocumentType != null ? a.DocumentType.DocumentTypeDefaultReportTemplateId == a.Id || a.DocumentType.DocumentTypeDefaultHTMLTemplateId == a.Id ? true : false : false,
+                                                                            InActive = a.InActive,
+                                                                            EditorTool = a.EditorTool,
+                                                                            HorizontalShift = a.HorizontalShift,
+                                                                            VerticalShift = a.VerticalShift,
+                                                                            Subject = a.Subject,
+                                                                            TemplateBodyjson = a.TemplateBodyjson,
+
+                                                                            IsCopiedAtSignup = a.IsCopiedAtSignup,
+                                                                            IsEnabledForCustomers = a.IsEnabledForCustomers,
+                                                                            CountryCode = a.CountryCode,
+
+                                                                            InternalRemarks = a.InternalRemarks,
+                                                                            Language = a.Language,
+                                                                            OriginalTemplateId = a.OriginalTemplateId,
+                                                                            OriginalTemplateName = a.OriginalTemplate.Description,
+                                                                            From = a.From,
+                                                                            ReplyTo = a.ReplyTo,
+                                                                            TemplateFooterHtml =a.TemplateFooterHtml,
+                                                                            TemplateHeaderHtml = a.TemplateHeaderHtml,
+                                                                            TemplateFooterHeight = a.TemplateFooterHeight,
+                                                                            TemplateHeaderHeight = a.TemplateHeaderHeight,
+                                                                            TemplateTechnologyCode = a.TemplateTechnologyCode,
+                                                                            CC = a.CC,
+                                                                            BCC = a.BCC,
+                                                                            DefultAttachmentsXML = a.DefultAttachmentsXML,
+                                                                            To = a.To,
+                                                                            AutomationId = a.AutomationId,
+                                                                            AttachedExternalDocumentsIds = a.AttachedExternalDocumentsIds,
+                                                                            IsSystem = a.IsSystem,
+                                                                            EntityId = a.EntityId,
+                                                                            ObjectTableId = a.ObjectTableId
+                                                                        }).ToList();
+
+
+            foreach (DocumentTypeTemplatePM item in documentTypeTemplates.Where(d=>d.TemplateType == "M").ToList())
+            {
+                item.DocumentDefultAttachments = BuildDefultAttachments(item.DefultAttachmentsXML);
+            }
+
+
+            return documentTypeTemplates;
+        }     
+
+        public List<DocumentTypeTemplatePM> GetDocumentTypeTemplatesForDocumentTypeCode(string documentTypeCode, string templateType, int tenant)
+        {
+            List<DocumentTypeTemplatePM> documentTypeTemplates = (from a in repository.context.DocumentTypeTemplates.Include("LastUpdatedByUser.Contact").Include("DocumentType")
+                                                                        where a.DocumentType.Code == documentTypeCode && a.TemplateType == "M" && a.Tenant == tenant && (string.IsNullOrEmpty(a.AutomationId) && string.IsNullOrEmpty(a.EntityId)) && !a.InActive
+                                                                        orderby a.Id != a.DocumentType.DocumentTypeDefaultHTMLTemplateId, a.Description
                                                                         select new DocumentTypeTemplatePM()
                                                                         {
                                                                             Description = a.Description,
@@ -86,6 +147,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                             To = a.To,
                                                                             AutomationId = a.AutomationId,
                                                                             AttachedExternalDocumentsIds = a.AttachedExternalDocumentsIds,
+                                                                            IsSystem = a.IsSystem,
+                                                                            EntityId = a.EntityId,
+                                                                            ObjectTableId = a.ObjectTableId
                                                                         }).ToList();
 
 
@@ -101,7 +165,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         public List<DocumentTypeTemplateList> GetDocumentTypeTemplateListsByDocumentTypeId(string documentTypeId, int tenant)
         {
             List<DocumentTypeTemplateList> documentTypeTemplates = (from a in repository.context.DocumentTypeTemplates.Include("LastUpdatedByUser.Contact").Include("DocumentType")
-                                                                    where a.DocumentTypeId == documentTypeId && a.Tenant == tenant && string.IsNullOrEmpty(a.AutomationId)
+                                                                    where a.DocumentTypeId == documentTypeId && a.Tenant == tenant && (string.IsNullOrEmpty(a.AutomationId) && string.IsNullOrEmpty(a.EntityId))
                                                                     select new DocumentTypeTemplateList()
                                                                     {
                                                                         Description = a.Description,
@@ -137,6 +201,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                         To = a.To,
                                                                         AutomationId = a.AutomationId,
                                                                         AttachedExternalDocumentsIds = a.AttachedExternalDocumentsIds,
+                                                                        IsSystem = a.IsSystem,
+                                                                        EntityId = a.EntityId,
+                                                                        ObjectTableId = a.ObjectTableId
                                                                     }).ToList();
 
 
@@ -163,7 +230,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                               InternalRemarks = entity.InternalRemarks,
                                                               Language = entity.Language,
                                                               OriginalTemplateId = entity.OriginalTemplateId,
-                                                              OriginalTemplateName = entity.OriginalTemplate.Description,
+                                                              OriginalTemplateName = entity.OriginalTemplate != null ? entity.OriginalTemplate.Description : null,
                                                               TemplateFooterHeight = entity.TemplateFooterHeight,
                                                               TemplateHeaderHeight = entity.TemplateHeaderHeight,
                                                               TemplateTechnologyCode = entity.TemplateTechnologyCode,
@@ -172,6 +239,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                               To = entity.To,
                                                               AutomationId = entity.AutomationId,
                                                               AttachedExternalDocumentsIds = entity.AttachedExternalDocumentsIds,
+                                                              IsSystem = entity.IsSystem,
+                                                              EntityId = entity.EntityId,
+                                                              ObjectTableId =entity.ObjectTableId
                                                           };
             return result;
         }
@@ -179,7 +249,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         public IQueryable<DocumentTypeTemplatePM> GetDocumentTypeTemplatePMsByTenant(int tenant)
         {
             return from a in repository.context.DocumentTypeTemplates.Include("LastUpdatedByUser.Contact").Include("DocumentType")
-                   where a.Tenant == tenant && string.IsNullOrEmpty(a.AutomationId)
+                   where a.Tenant == tenant && (string.IsNullOrEmpty(a.AutomationId) && string.IsNullOrEmpty(a.EntityId))
                    select new DocumentTypeTemplatePM()
                    {
                        Description = a.Description,
@@ -220,6 +290,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                        DefultAttachmentsXML = a.DefultAttachmentsXML,
                        AutomationId = a.AutomationId, 
                        AttachedExternalDocumentsIds = a.AttachedExternalDocumentsIds,
+                       IsSystem = a.IsSystem,
+                       EntityId = a.EntityId,
+                       ObjectTableId = a.ObjectTableId
                    };
         }
 
@@ -265,6 +338,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         To = a.To,
                         AutomationId = a.AutomationId, 
                         AttachedExternalDocumentsIds = a.AttachedExternalDocumentsIds,
+                        IsSystem = a.IsSystem,
+                        EntityId = a.EntityId,
+                        ObjectTableId =a.ObjectTableId
 
                     }).FirstOrDefault();
 
@@ -279,7 +355,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
 
 
-        public List<DocumentTypeTemplatePM> GetDocumentTypeTemplatesByDocumentTypeIdForAutomation(string documentTypeId,string editorToolCode, int tenant)
+        public List<DocumentTypeTemplatePM> GetDocumentTypeTemplatesByDocumentTypeIdAndEditorToolCode(string documentTypeId,string editorToolCode, int tenant)
         {
 
 
@@ -304,7 +380,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                       HorizontalShift = a.HorizontalShift,
                                                                       VerticalShift = a.VerticalShift,
                                                                       Subject = a.Subject,
-                                                                      ObjectTableId = a.DocumentType.ObjectTableId,
+                                                                      ObjectTableId = string.IsNullOrEmpty(a.ObjectTableId) ? a.DocumentType.ObjectTableId : a.ObjectTableId,
                                                                       IsCopiedAtSignup = a.IsCopiedAtSignup,
                                                                       IsEnabledForCustomers = a.IsEnabledForCustomers,
                                                                       CountryCode = a.CountryCode,
@@ -326,6 +402,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                       To = a.To,
                                                                       AutomationId = a.AutomationId, 
                                                                       AttachedExternalDocumentsIds = a.AttachedExternalDocumentsIds,
+                                                                      IsSystem = a.IsSystem,
+                                                                      EntityId = a.EntityId,
                                                                   }).ToList();
 
             foreach (DocumentTypeTemplatePM item in documentTypeTemplates.Where(d => d.TemplateType == "M").ToList())
@@ -338,8 +416,85 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         }
 
-    
 
+        public List<DocumentTypeTemplateList> getDocumentTypeTemplatesByDocumentTypeCode(string documentTypeCode, int tenant)
+        {
+            DocumentTypeQuery documentTypeQuery = new DocumentTypeQuery(tenant);
+            DocumentTypePM documentTypePM  = documentTypeQuery.GetSinglePMByCode(documentTypeCode, tenant);
+            if (documentTypePM == null) return null;
+            List<DocumentTypeTemplateList> documentTypeTemplates = (from a in repository.context.DocumentTypeTemplates
+                                                                  where a.DocumentTypeId == documentTypePM.Id && a.Tenant == tenant && a.InActive == false && a.TemplateType =="P"
+                                                                  select new DocumentTypeTemplateList()
+                                                                  {
+                                                                      Description = a.Description,
+                                                                      Id = a.Id,
+                                                                  }).ToList();
+
+            DocumentTypeTemplateList defultDocumentTypeTemplate = documentTypeTemplates.Where(d => d.Id == documentTypePM.DocumentTypeDefaultReportTemplateId).FirstOrDefault();
+            if (defultDocumentTypeTemplate != null)
+            {
+                defultDocumentTypeTemplate.IsDefault = true;
+            }
+ 
+            return documentTypeTemplates;
+
+        }
+
+
+
+        public DocumentTypeTemplatePM GetById(string id , int tenant)
+        {
+            return  (from a in repository.context.DocumentTypeTemplates.Include("LastUpdatedByUser.Contact").Include("DocumentType")
+                                          where a.Id == id && a.Tenant == tenant
+                     select new DocumentTypeTemplatePM()
+                                          {
+                                              Description = a.Description,
+                                              DocumentTypeId = a.DocumentTypeId,
+                                              Id = a.Id,
+                                              LastUpdateDate = a.LastUpdateDate,
+                                              LastUpdatedByUserId = a.LastUpdatedByUserId,
+                                              IsDefault = a.DocumentType != null ? a.DocumentType.DocumentTypeDefaultReportTemplateId == a.Id || a.DocumentType.DocumentTypeDefaultHTMLTemplateId == a.Id ? true : false : false,
+                                              TemplateBody = a.TemplateBody,
+                                              TemplateBodyHtml = a.TemplateBodyHtml,
+                                              TemplateType = a.TemplateType,
+                                              Tenant = a.Tenant,
+                                              LastUpdateByUserName = a.LastUpdatedByUser.Contact.EnglishName,
+                                              InActive = a.InActive,
+                                              EditorTool = a.EditorTool,
+                                              HorizontalShift = a.HorizontalShift,
+                                              VerticalShift = a.VerticalShift,
+                                              Subject = a.Subject,
+                                              IsCopiedAtSignup = a.IsCopiedAtSignup,
+                                              IsEnabledForCustomers = a.IsEnabledForCustomers,
+                                              CountryCode = a.CountryCode,
+                                              TemplateBodyjson = a.TemplateBodyjson,
+                                              InternalRemarks = a.InternalRemarks,
+                                              Language = a.Language,
+                                              OriginalTemplateId = a.OriginalTemplateId,
+                                              OriginalTemplateName = a.OriginalTemplate.Description,
+                                              From = a.From,
+                                              ReplyTo = a.ReplyTo,
+                                              ObjectTableId = a.DocumentType != null ? a.DocumentType.ObjectTableId : "",
+                                              TemplateFooterHtml = a.TemplateFooterHtml,
+                                              TemplateHeaderHtml = a.TemplateHeaderHtml,
+                                              TemplateFooterHeight = a.TemplateFooterHeight,
+                                              TemplateHeaderHeight = a.TemplateHeaderHeight,
+                                              TemplateTechnologyCode = a.TemplateTechnologyCode,
+                                              CC = a.CC,
+                                              BCC = a.BCC,
+                                              DefultAttachmentsXML = a.DefultAttachmentsXML,
+                                              To = a.To,
+                                              AutomationId = a.AutomationId,
+                                              AttachedExternalDocumentsIds = a.AttachedExternalDocumentsIds,
+                                              IsSystem = a.IsSystem,
+                                              EntityId = a.EntityId,
+                                              DocumentTypeCode = a.DocumentType != null ? a.DocumentType.Code : "",
+                                              DocumentTypeName = a.DocumentType != null ? a.DocumentType.Name : "",
+
+
+
+                     }).FirstOrDefault();
+        }
 
 
         public DocumentTypeTemplatePM GetSinglePM(string id,int tenant)
@@ -395,6 +550,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         To = a.To,
                         AutomationId = a.AutomationId, 
                         AttachedExternalDocumentsIds = a.AttachedExternalDocumentsIds,
+                        IsSystem = a.IsSystem,
+                        EntityId = a.EntityId,
+                        DocumentTypeCode = a.DocumentType.Code,
 
                     }).FirstOrDefault();
 
@@ -504,7 +662,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 foreach (DocumentTypeList item in DocumentTypeListsFromTenat0)
                 {
                     documentTypeTemplateForDocumentType = (from a in repository.context.DocumentTypeTemplates.Include("LastUpdatedByUser.Contact").Include("DocumentType")
-                                                           where   !a.InActive && a.DocumentTypeId == item.Id && string.IsNullOrEmpty(a.AutomationId)
+                                                           where   !a.InActive && a.DocumentTypeId == item.Id && (string.IsNullOrEmpty(a.AutomationId) && string.IsNullOrEmpty(a.EntityId))
                                                            select new DocumentTypeTemplateList()
                                                            {
                                                                Description = a.Description,
@@ -541,6 +699,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                To = a.To,
                                                                AutomationId = a.AutomationId, 
                                                                AttachedExternalDocumentsIds = a.AttachedExternalDocumentsIds,
+                                                               IsSystem = a.IsSystem,
+                                                               EntityId = a.EntityId,
                                                            });
 
                     if (withFilter)
@@ -592,7 +752,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             {
 
                 IQueryable<DocumentTypeTemplateList> documentTypeTemplateLists = (from a in repository.context.DocumentTypeTemplates.Include("DocumentType").Include("LastUpdatedByUser.Contact")
-                                                                                  where a.Tenant == tenant && !a.InActive && (a.DocumentType.Code == documentTypePM.Code) && string.IsNullOrEmpty(a.AutomationId)
+                                                                                  where a.Tenant == tenant && !a.InActive && (a.DocumentType.Code == documentTypePM.Code) && (string.IsNullOrEmpty(a.AutomationId) && string.IsNullOrEmpty(a.EntityId))
                                                                                   select new DocumentTypeTemplateList()
                                                                                   {
                                                                                       Description = a.Description,
@@ -627,6 +787,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                                       To = a.To,
                                                                                       AutomationId = a.AutomationId, 
                                                                                       AttachedExternalDocumentsIds = a.AttachedExternalDocumentsIds,
+                                                                                      IsSystem = a.IsSystem,
+                                                                                      EntityId = a.EntityId,
+                                                                                      ObjectTableId = a.ObjectTableId
                                                                                   });
                 if (withFilter)
                 {
@@ -894,13 +1057,13 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         public List<DocumentTypeTemplatePM> GetDocumentTypeTemplatesByDocumentTypeIds(List<string> documentTypeIds, int tenant)
         {
             List<DocumentTypeTemplatePM> documentTypeTemplates = (from a in repository.context.DocumentTypeTemplates
-                                                                  where documentTypeIds.Contains(a.DocumentTypeId) && a.Tenant == tenant && string.IsNullOrEmpty(a.AutomationId)
+                                                                  where documentTypeIds.Contains(a.DocumentTypeId) && a.Tenant == tenant && (string.IsNullOrEmpty(a.AutomationId) && string.IsNullOrEmpty(a.EntityId))
                                                                   select new DocumentTypeTemplatePM()
                                                                   {
                                                                       Description = a.Description,
                                                                       DocumentTypeId = a.DocumentTypeId,
                                                                       Id = a.Id,
-                                                                     OriginalTemplateId = a.OriginalTemplateId
+                                                                      OriginalTemplateId = a.OriginalTemplateId
                                                                   }).ToList();
             return documentTypeTemplates;
 

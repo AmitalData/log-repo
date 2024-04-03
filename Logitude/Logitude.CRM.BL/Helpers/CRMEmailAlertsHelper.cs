@@ -143,7 +143,7 @@ namespace Logitude.CRM.BL.Helpers
 
                                 if (isNew || alertCode == "GNOP")
                                 {
-                                    emailAlertManager.TableRows.Add("Created By", createdByContact.EnglishName);
+                                    emailAlertManager.TableRows.Add("Created By", createdByContact?.EnglishName);
                                 }
 
                                 break;
@@ -203,7 +203,7 @@ namespace Logitude.CRM.BL.Helpers
                         case "GANP":
                             {
                                 subject = (isNew ? "New " : "") + activityType.Name + (customer != null ? " for " + customer.Card.EnglishName : "");
-                                emailAlertManager.HtmlTemplate.Append((isNew ? "New " : "") + activityType.Name + " was opened by " + createdByContact.EnglishName + " and assigned to " + ownerContact.EnglishName + " with the following details:");
+                                emailAlertManager.HtmlTemplate.Append((isNew ? "New " : "") + activityType.Name + " was opened by " + createdByContact?.EnglishName + " and assigned to " + ownerContact.EnglishName + " with the following details:");
                                 emailAlertManager.HtmlTemplate.Append("<br /><br />");
 
                                 emailAlertManager.TableRows.Add("Subject", activityPM.Subject);

@@ -1,15 +1,15 @@
-@dev @weekly
+@release @stable @weekly
 Feature: Branch Create, Search and Edit from Maintenance
     The user creates a Branch, searches for and edits it from the Maintenance Module.
 
     Scenario: Add Branch Code with lenght more than 10
         Given the user logged in and open "Branches" in maintenance menu
         When add "12345678901" as branch code
-        Then a validation message with "Code Field must be less than 10" error should appear
+        Then a validation message with "Code Field length must be less than 10" error should appear
 
     Scenario: Add Branch Counter Code with lenght more than 5
         When add "123456" as branch counter code
-        Then a validation message with "Code Field must be less than 5" error should appear
+        Then a validation message with "Code Field length must be less than 5" error should appear
 
     Scenario: Create new Branch
         And a branch with the following details

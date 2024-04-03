@@ -20,6 +20,11 @@ using Simplog.Data.CommonDataModel.Repositories;
 using WebFreight.Web.Security;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using WebFreight.Web.Helpers.APIHelpers;
+using Simplog.Data.CommonDataModel;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.ShipmentsModel.EntityQueries;
+using Logitude.BL.ShipmentsModel.EntityPMs;
 
 namespace WebFreight.Web.App_Code
 {
@@ -61,18 +66,19 @@ namespace WebFreight.Web.App_Code
 
         }
 
-        public HttpResponseMessage GetDownloadFile(string filename, string documentExtension, string fileLocation, string type, int tenant)
+        public HttpResponseMessage GetDownloadFile(string filename, string documentExtension, string fileLocation, string type, int tenant,int tokenTenant)
         {
             string result = "";
 
-            try
+			try
             {
                 string token = System.Web.HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tokenTenant);
 
-           
-                if (tenant != authToken.Tenant)
+
+                if (tokenTenant != authToken.Tenant)
                 {
                     throw new Exception("Sorry you’re not authenticated");
                 }
@@ -89,9 +95,6 @@ namespace WebFreight.Web.App_Code
                     }
                 }
 
-
-
-          
                 Uploader uploaderService = new Uploader();
                 byte[] filedata = uploaderService.DownloadFile(filename, documentExtension, fileLocation, tenant);
 
@@ -103,7 +106,7 @@ namespace WebFreight.Web.App_Code
                     }
                     else result = UTF8Encoding.UTF8.GetString(filedata, 0, filedata.Length);
                 }
-        
+
                 return Request.CreateResponse(HttpStatusCode.OK, result);
 
             }
@@ -115,26 +118,16 @@ namespace WebFreight.Web.App_Code
 
         }
 
-       
-
-        
-
         [ActionName("PostUploadFile")]
         public HttpResponseMessage PostUploadFile(ImageParameter filter)
         {
-
             try
             {
-                 
                 string token = System.Web.HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-             
+                SecurityUtility.AuthenticationOnEntityTenant("ImageParameter", filter.TokenTenant, authToken.Tenant);
 
-                if (filter.Tenant != authToken.Tenant)
-                {
-                    throw new Exception("Sorry you’re not authenticated to upload file");
-                }
                 ImageLibraryControllerHelper imageLibraryControllerHelper = new ImageLibraryControllerHelper();
                 if (filter.UploadMode == "AttachmentUploader" || filter.UploadMode == "Chunk")
                 {
@@ -146,14 +139,11 @@ namespace WebFreight.Web.App_Code
                     string result = imageLibraryControllerHelper.UploadImage(filter);
                     return Request.CreateResponse(HttpStatusCode.OK, result);
                 }
-
-                
             }
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
-
         }
 
         [ActionName("PostImageAfterResize")]
@@ -162,14 +152,15 @@ namespace WebFreight.Web.App_Code
             string token = System.Web.HttpContext.Current.Request.Headers["Token"];
             AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
             SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+            SecurityUtility.AuthenticationOnEntityTenant("ImageParameter", ImageParameter.Tenant, authToken.Tenant);
+
             ImageLibraryControllerHelper imageLibraryControllerHelper = new ImageLibraryControllerHelper();
             ImageParameter.FileData = Convert.FromBase64String(ImageParameter.Base64String);
             ImageParameter.Base64String = "";
-            ImageParameter.FileData = imageLibraryControllerHelper.ResizeImage(ImageParameter.FileData, ImageParameter.Width, ImageParameter.Height, ImageParameter.Extension);
+            if (!ImageParameter.KeepOriginalSize) ImageParameter.FileData = imageLibraryControllerHelper.ResizeImage(ImageParameter.FileData, ImageParameter.Width, ImageParameter.Height, ImageParameter.Extension);
             ImageParameter.Base64String = Convert.ToBase64String(ImageParameter.FileData);
             return Request.CreateResponse(HttpStatusCode.OK, ImageParameter);
         }
-
 
         [ActionName("PostUploadPdfFile")]
         public HttpResponseMessage PostUploadPdfFile(ImageParameter filter)
@@ -179,6 +170,8 @@ namespace WebFreight.Web.App_Code
                 string token = System.Web.HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnEntityTenant("ImageParameter", filter.Tenant, authToken.Tenant);
+
                 ImageLibraryControllerHelper imageLibraryControllerHelper = new ImageLibraryControllerHelper();
 
                 if (filter.Tenant != authToken.Tenant)
@@ -301,19 +294,26 @@ namespace WebFreight.Web.App_Code
 
         public HttpResponseMessage GetCancelUpload(string documentId, int tenant)
         {
-            string token = System.Web.HttpContext.Current.Request.Headers["Token"];
-            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+            try
+            {
+                string token = System.Web.HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
-            Uploader uploaderService = new Uploader();
-            uploaderService.CancelUpload(documentId, "", tenant);
+                Uploader uploaderService = new Uploader();
+                uploaderService.CancelUpload(documentId, "", tenant);
 
-            return Request.CreateResponse(HttpStatusCode.OK, "");
+                return Request.CreateResponse(HttpStatusCode.OK, "");
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, "");
+
+            }
+
 
         }
-
-
-       
 
         public HttpResponseMessage GetRemoveFile(string documentId, int tenant)
         {
@@ -322,7 +322,8 @@ namespace WebFreight.Web.App_Code
                 string token = System.Web.HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                if (tenant  != authToken.Tenant)
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                if (tenant != authToken.Tenant)
                 {
                     throw new Exception("Sorry you’re not authenticated to remove file");
                 }
@@ -339,18 +340,69 @@ namespace WebFreight.Web.App_Code
 
         }
 
-
         public HttpResponseMessage GetImageUrl(string name)
         {
-           
+
             return Request.CreateResponse(HttpStatusCode.OK, "https://www.froala.com/assets/editor/media_files/photo9.jpg");
 
         }
-        
+
+        [ActionName("PostUploadFileFromCTool")]
+        public HttpResponseMessage PostUploadFileFromCTool(ImageParameter filter)
+        {
+
+            try
+            {
+
+                string token = System.Web.HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnEntityTenant("ImageParameter", filter.Tenant, authToken.Tenant);
+
+                ShipmentQuery shipmentQuery = new ShipmentQuery(authToken.Tenant);
+                DocumentsFilingPM entityPM = new DocumentsFilingPM();
+                string entityId = shipmentQuery.GetEntitiyIdByShipmentNumber(filter.ShipmentNumber, authToken.Tenant);
+                string shipmentObjectTableId = ObjectTableRepository.GetObjectTableByName("Shipment");
 
 
+                if (filter.SentSize == 0)
+                {
+                   
+                    entityPM.DocumentTypeId = filter.DocumentTypeId;
+                    entityPM.EntityId = entityId;
+                    entityPM.Tenant = authToken.Tenant;
+                    entityPM.ObjectTableId = shipmentObjectTableId;
+                    entityPM.DirectionCode = "I";
+                    ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Tenant);
+                    DocumentsFilingService service = new DocumentsFilingService(MyContext, entityPM.Tenant);
+                    service.Create(entityPM);
+                }
+                else
+                {
+                    DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(authToken.Tenant);
+                    entityPM = documentsFilingQuery.GetDocumentsFilingPMByEntityIdAndObjectTableIdAndDocumentTypeId(entityId, shipmentObjectTableId,filter.DocumentTypeId,authToken.Tenant);
+                }
+                filter.EntityId = entityPM.Id;
+                ImageLibraryControllerHelper imageLibraryControllerHelper = new ImageLibraryControllerHelper();
+                if (filter.UploadMode == "AttachmentUploader" || filter.UploadMode == "Chunk")
+                {
+                    ImageParameter _filter = imageLibraryControllerHelper.UploadAttachementOrChunk(filter);
+                    return Request.CreateResponse(HttpStatusCode.OK, _filter);
+                }
+                else
+                {
+                    string result = imageLibraryControllerHelper.UploadImage(filter);
+                    return Request.CreateResponse(HttpStatusCode.OK, result);
+                }
 
 
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
 
         //[ActionName("PostUploadPdfFile")]
         //public HttpResponseMessage PostUploadImage(ImageParameter filter)
@@ -359,7 +411,6 @@ namespace WebFreight.Web.App_Code
         //    var temp = uploaderService.UploadImage(filter.FileName, filter.buffer, filter.FileSize, filter.SentSize, filter.BlockIdsList.ToArray(),filter.BufferNumber,filter.Tenant, "jpg", null, null, filter.EntityId);
 
         //}
-
 
     }
 

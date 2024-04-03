@@ -8,6 +8,10 @@ import {AddEditLicenceComponent} from './Components/TenantManagement/AddEditLice
 import {AddEditPrivateLabelsComponent} from './Components/TenantManagement/AddEditPrivateLabelsComponent';
 import {PrivateLabelLoadComponent} from './Components/TenantManagement/PrivateLabelLoadComponent';
 import { CargoTrackingBrandingComponent } from './Components/TenantManagement/CargoTrackingBrandingComponent'; 
+import { CargoLoginPolicyComponent } from './Components/TenantManagement/CargoLoginPolicy/CargoLoginPolicy.component';
+import { SubDomainGenerateComponent } from './Components/TenantManagement/SubDomainGenerateComponent';
+import { AddEditTTYComponent } from './Components/TenantManagement/AddEditTTYComponent';
+import { ECommerceBrandingTabComponent } from './Components/TenantManagement/ECommerceBrandingTabComponent'; 
 
 export const Components =
     [
@@ -20,7 +24,12 @@ export const Components =
         AddEditLicenceComponent,
         AddEditPrivateLabelsComponent,
         PrivateLabelLoadComponent,
-        CargoTrackingBrandingComponent, 
+        CargoTrackingBrandingComponent,
+        CargoLoginPolicyComponent,
+        SubDomainGenerateComponent,
+        AddEditTTYComponent,
+        ECommerceBrandingTabComponent
+ 
     ];
 
 export class ModuleDeclarations {
@@ -38,7 +47,11 @@ export class ModuleDeclarations {
             case "AddEditLicenceComponent": { myResult = AddEditLicenceComponent; break; }
             case "AddEditPrivateLabelsComponent": { myResult = AddEditPrivateLabelsComponent; break; }
             case "PrivateLabelLoadComponent": { myResult = PrivateLabelLoadComponent; break; }
-            case "CargoTrackingBrandingComponent": { myResult = CargoTrackingBrandingComponent; break; } 
+            case "CargoTrackingBrandingComponent": { myResult = CargoTrackingBrandingComponent; break; }
+            case "CargoLoginPolicyComponent": { myResult = CargoLoginPolicyComponent; break; }
+            case "SubDomainGenerateComponent": { myResult = SubDomainGenerateComponent; break; }
+            case "AddEditTTYComponent": { myResult = AddEditTTYComponent; break; }
+            case "ECommerceBrandingTabComponent": { myResult = ECommerceBrandingTabComponent; break; }
 
         }
 

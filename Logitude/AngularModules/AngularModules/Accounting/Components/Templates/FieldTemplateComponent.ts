@@ -7,6 +7,8 @@ import { ARPaymentExtendedListService } from '../../../Invoice/Services/Extended
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
+import { GLAccountSecurityLevelService } from 'Accounting/Utilities/GLAccountSecurityLevelService';
+import { GLAccountExtendedListService } from 'Accounting/Services/ExtendedLists/GLAccountExtendedListService';
 
 @Component({
 
@@ -14,6 +16,7 @@ import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTr
 })
 
 export class FieldTemplateComponent {
+    _GLAccountExtendedListService: GLAccountExtendedListService = new GLAccountExtendedListService();
     public Entity: any = null;
     public FieldName: string = null;
     public FieldValue: any = null;
@@ -49,6 +52,17 @@ export class FieldTemplateComponent {
 
         if (this.Entity != null && this.FieldName != null) {
             this.FieldValue = this.Entity[this.FieldName];
+        }
+        
+        if (this.FieldName == "SplitCurrencyAccount") {
+            this.Entity.GLAccountCurrencies.forEach(glaAcc => {
+                this._GLAccountExtendedListService.GetAccountOpenTransactionsCount(glaAcc.gLAccountId).subscribe((myResult: any) => {
+                    var result: ServiceResponse = myResult;
+                    if (!result.HasError) {
+                        glaAcc.GLAccountOpenTransactionsCount = result.Result;
+                    }
+                });
+            })
         }
         if (this.ObjectTableName == "Revaluation" && this.FieldName == "Status") {
             if (this.FieldValue == "Done") { this.fontColor = "green"; }
@@ -233,16 +247,28 @@ export class FieldTemplateComponent {
     }
 
     OpenGLAccount(id) {
+
         if (!AppTool.IsNullOrEmpty(id)) {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
-                .then(cmpRef => {
-                    cmpRef.instance.ComponentRef = cmpRef;
-                    cmpRef.instance.Run({ EntityId: id, ObjectTableName: 'GLAccount' });
-                    cmpRef.instance.BackCompleted.subscribe(bk => {
-                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-                    });
-                });
-        }
+            GLAccountSecurityLevelService.CheckLevel(id).then(hasAccess =>
+            {
+                if (hasAccess) {
+                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+                        .then(cmpRef =>
+                        {
+                            cmpRef.instance.ComponentRef = cmpRef;
+                            cmpRef.instance.Run({ EntityId: id, ObjectTableName: 'GLAccount' });
+                            cmpRef.instance.BackCompleted.subscribe(bk =>
+                            {
+                                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                            });
+                        });
+                } else {
+                    GLAccountSecurityLevelService.ShowSecurityBockingMessage();
+                }
+            });
+    }
+
+
     }
 
     OpenBankAccount(id) {

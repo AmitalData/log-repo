@@ -1,7 +1,7 @@
-﻿using Logitude.Test.Base.Models.BillingsPreparation;
-using Logitude.Test.Base.Models.LocationsPreparation;
-using Logitude.Test.Base.Models.PartnersPreparation;
-using Logitude.Test.Base.Models.UserTenantPreparation;
+﻿using Logitude.Base.Models.Billings;
+using Logitude.Base.Models.Locations;
+using Logitude.Base.Models.Partners;
+using Logitude.Base.Models.UserTenant;
 using System;
 using System.Collections.Generic;
 

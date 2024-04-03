@@ -404,6 +404,28 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="InterestOpenBalance"
+    Type="decimal"
+    Precision="18"
+    Scale="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DateFormat"
+    Type="nvarchar"
+    Size="50">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PaymentTerms"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="AccountTypeCode"
     ReferencedTable="GLAccountTypes"
@@ -502,6 +524,11 @@
   <Relation
     ForeignKeyColumn="CardsDataId"
     ReferencedTable="GLAccountCardsDatas"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="PaymentTerms"
+    ReferencedTable="PaymentTerms"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Index

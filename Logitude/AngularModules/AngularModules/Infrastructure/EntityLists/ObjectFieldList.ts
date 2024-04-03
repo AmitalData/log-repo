@@ -82,5 +82,15 @@ export class ObjectFieldList {
 		ShortNameTextCodeCode: string;
 		HelpTextCodeCode: string;
 		AdditionalQuerySections: string;
+		LeftKey: string;
+		RightKey: string;
+		IsForeignKey: boolean;
+		ForeignEntity: string;
+		NavigationPropertyName: string;
+		ForMetaDataOnly: boolean;
+		IsListFilter: boolean;
+		NumberOfDigits: number;
+		DigitsAfterPoint: number;
+		CustomPickListCode: string;
 	
-}
+}

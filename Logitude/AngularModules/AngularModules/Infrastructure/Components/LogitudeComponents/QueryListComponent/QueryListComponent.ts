@@ -239,6 +239,8 @@ export class QueryListComponent implements OnInit, AfterViewInit {
                             if (value1 == '#today') value1 = new Date(TodayDate.getFullYear(), TodayDate.getMonth(), TodayDate.getDate(), 0, 0, 0);
                             if (value2 == '#today') value2 = new Date(TodayDate.getFullYear(), TodayDate.getMonth(), TodayDate.getDate(), 23, 59, 59);
 
+                            var TommorowDate = DateTool.AddDays((new Date()), 1);
+                            TommorowDate.setUTCHours(0, 0, 0, 0);
                             var YesterdayDate = DateTool.AddDays((new Date()), -1);
                             var LastSevenDaysDate = DateTool.AddDays((new Date()), -7)
                             var LastThirtyDaysDate = DateTool.AddDays((new Date()), -30);
@@ -277,6 +279,14 @@ export class QueryListComponent implements OnInit, AfterViewInit {
                                 value1 = LastYearFromDate;
                                 value2 = LastYearToDate;
                                 filterOperator = "Between";
+                            }
+                            else if (value1 == "Less than Today") {
+                                value1 = TodayDate;
+                                filterOperator ="LessThan";
+                            }
+                            else if (value2 == "Less than or equal Today") {
+                                value1 = TommorowDate;
+                                filterOperator ="LessThan";
                             }
                         }
                        
@@ -324,11 +334,12 @@ export class QueryListComponent implements OnInit, AfterViewInit {
         this.ignoreMouseDown = false;
 
         var windowArgs: any = {};
-        windowArgs.queryCode = this.SelectedItem.UniqueCode;
-        windowArgs.queryId = this.SelectedItem.Id;
+        windowArgs.queryCode = this.SelectedItem?.UniqueCode;
+        windowArgs.queryId = this.SelectedItem?.Id;
         windowArgs.currentObjectTable = this.ObjectTableName;
         windowArgs.IsNew = true;
         windowArgs.pubSubAdvanceQueryFiltersService = this.pubSubAdvanceQueryFiltersService;
+        windowArgs.CreateWithoutOriginalQuery = this.ItemsSource.length + this.UserItemSource.length == 0;
 
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Width = 960;
@@ -337,8 +348,12 @@ export class QueryListComponent implements OnInit, AfterViewInit {
         logitudeWindow.WindowArgs = windowArgs;
         logitudeWindow.Show('./Infrastructure/Components/NewViewComponent/NewViewComponent');
         logitudeWindow.WindowClosed.subscribe(($event: any) => {
-            var ObjectTable = window.ObjectTables.filter(x => x.Name === this.ObjectTableName)[0];
-            if ($event != this.SelectedItem.UniqueCode) {
+
+            let ObjectTable = window.ObjectTables.filter(x => x.Name === this.ObjectTableName)[0];
+            let newSelectedQuery = window.Queries.filter(a => a.ObjectTableId === ObjectTable.Id)[0];
+            if (!$event) $event = this.SelectedItem ? this.SelectedItem.UniqueCode : newSelectedQuery?.UniqueCode;
+
+            if ($event != this.SelectedItem?.UniqueCode) { 
                 CachedDataManager.RefreshTenantTextCodes().subscribe((response:any) => {
                     var Query = window.Queries.filter(a => a.ObjectTableId === ObjectTable.Id && a.UniqueCode == $event)[0];
                     this.UserItemSource.push(Query);
@@ -390,6 +405,7 @@ export class QueryListComponent implements OnInit, AfterViewInit {
                         window.Queries = window.Queries.filter(a => a.UniqueCode != query.UniqueCode);
                         var ObjectTable = window.ObjectTables.filter(x => x.Name === this.ObjectTableName)[0];
                         var Query = window.Queries.filter(a => a.ObjectTableId === ObjectTable.Id && a.IndexOrder == 0)[0];
+                        if (!Query) Query = window.Queries.filter(a => a.ObjectTableId === ObjectTable.Id)[0];
                         this.UserItemSource = this.UserItemSource.filter(a => a.UniqueCode != query.UniqueCode);
                         this.ComputeListHeight(this.ItemsSource.length + this.UserItemSource.length);
                         this.FillUserItemSource_Share();
@@ -492,7 +508,11 @@ export class QueryListComponent implements OnInit, AfterViewInit {
             logitudeWindow.WindowArgs = windowArgs;
             logitudeWindow.Show('./Infrastructure/Components/NewViewComponent/NewViewComponent');
             logitudeWindow.WindowClosed.subscribe(($event: any) => {
-                var ObjectTable = window.ObjectTables.filter(x => x.Name === this.ObjectTableName)[0];
+
+                let ObjectTable = window.ObjectTables.filter(x => x.Name === this.ObjectTableName)[0];
+                let newSelectedQuery = window.Queries.filter(a => a.ObjectTableId === ObjectTable.Id)[0];
+                if (!$event) $event = this.SelectedItem ? this.SelectedItem.UniqueCode : newSelectedQuery?.UniqueCode;
+
                 var Query = window.Queries.filter(a => a.ObjectTableId === ObjectTable.Id && a.UniqueCode == $event)[0];
 
                 if (!Query) {

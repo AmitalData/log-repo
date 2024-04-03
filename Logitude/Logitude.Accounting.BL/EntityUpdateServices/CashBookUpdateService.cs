@@ -61,8 +61,11 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Update)
             {
-                
 
+                if (entityPM.IsTotalUpdatedByCC)
+                {
+                    CreateTotalUpdatedEvent(entityPM, entityPOCO, contact);
+                }
                 if (entityPM.EnglishName != entityPOCO.EnglishName && (!String.IsNullOrEmpty(entityPM.EnglishName) || !String.IsNullOrEmpty(entityPOCO.EnglishName)))
                 {
                     string resolveLoggingUserId = AuthenticationUtil.ResolveUserIdentityName(entityPM.Tenant);
@@ -126,5 +129,21 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         }
 
+        private void CreateTotalUpdatedEvent(CashBookPM entityPM, CashBook entityPOCO, ContactPM contact)
+        {
+            string notes = TranslateTextsClass.Translate("Accounting.General.O.OldValue", 0) + entityPOCO.TotalAmount
+                        + TranslateTextsClass.Translate("Accounting.General.O.NewValue", 0) + entityPM.TotalAmount;
+
+            EventTracer.CreateTraceEvent(new EventTracerArgs()
+            {
+                EntityId = entityPM.Id,
+                Tenant = entityPM.Tenant,
+                UserId = contact.Id,
+                ObjectTableName = "CashBook",
+                IsAddedManually = false,
+                EventTypeCode = "CCBU",
+                Notes = notes,
+            });
+        }
     }
 }

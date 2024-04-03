@@ -16,6 +16,7 @@ export class BankCodeList {
 	Id: string;
 	Inactive: boolean;
 	LogoId: string;
+	DateFormat: string;
 	
 }
  

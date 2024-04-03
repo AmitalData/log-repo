@@ -56,7 +56,7 @@
           background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
           opacity: 1;
         }
-    
+
 </style>
 <table *ngIf='IsScreenLoaded'>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
@@ -90,7 +90,7 @@
                                    [DisplayMemberPath]="'LocalName'"
                                    [QueryFilterItems]="UserDefinedReportFilterItems"
                                    [LookUpTableName]="'UserDefinedReport'">
-                           </LogLov>    
+                           </LogLov>
                           </td>
                         <td style="width:20px;"></td>
                         <td></td>
@@ -166,7 +166,15 @@
                     <td style="width:20px;">
                           <CheckBox   [IsChecked]="IncludeAnOpeningBalance"  (Checked)="IncludeAnOpeningBalance = $event"></CheckBox>
                     </td>
-                    <td></td>
+                    <td [style.width]="'152px'"  ></td>
+                    <td [style.width]="'270px'"  >
+                        <LogLabel [NoObjectField]="true" [Text] ="'UserDefinedReport.O.ZeroCloseBalanceLabel' | TextCodeTranslationPipe"
+                        [DataContext]="DataContext"></LogLabel>
+                 </td>
+                  <td style="width:20px;">
+                        <CheckBox   [IsChecked]="ExcludeZeroCloseBalance"  (Checked)="ExcludeZeroCloseBalance = $event"></CheckBox>
+                  </td>
+                <td></td>
                   </tr>
                 </table>
               </td>
@@ -201,7 +209,7 @@
             </tr>
             <tr style="height:10px"></tr>
           </table>
-            
+
         </td>
     </tr>
 </table>

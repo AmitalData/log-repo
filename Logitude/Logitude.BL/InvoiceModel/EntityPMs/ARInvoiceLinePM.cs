@@ -59,6 +59,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public double? ProfitCurrencyAmount { get; set; }
         public string InvoiceLocalCurrencyCode { get; set; }
         public string InvoiceCurrencyCode { get; set; }
+        public string InvoiceCurrencyId { get; set; }
         public ChangeSetOperation ChangeSetOp { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
@@ -90,6 +91,15 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
 
         public bool IsRegionalTax { get; set; }
         public double? InvoiceCurrencyExchangeRate { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string ReportedinTaxReport { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string GLAccountLocalName { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string GLAccountDisplayNumber { get; set; }
+
+
 
     }
 }

@@ -120,14 +120,14 @@ namespace Logitude.UnitTest.Accounting.UniTests.ExternalReconcile
 
             if (allreconcileExternalPageLineListinDebit)
             {
-                Assert.AreEqual(1, theCreatedJournal.JournalLines.Count(r => r.ActionTypeCodeEnum == MyJournalActionTypeEnum.Debit));
-                Assert.AreEqual(2, theCreatedJournal.JournalLines.Count(r => r.ActionTypeCodeEnum == MyJournalActionTypeEnum.Credit));
+                Assert.AreEqual(1, theCreatedJournal.JournalLines.Count(r => r.ActionTypeCodeEnum == JournalActionTypeEnum.Debit));
+                Assert.AreEqual(2, theCreatedJournal.JournalLines.Count(r => r.ActionTypeCodeEnum == JournalActionTypeEnum.Credit));
 
 
                 Assert.AreEqual(_BankAccountId, theCreatedJournal.JournalLines[0].CreditAccountId);
                 Assert.AreEqual(_BankAccountId, theCreatedJournal.JournalLines[1].CreditAccountId);
-                Assert.AreEqual(MyJournalActionTypeEnum.Credit, theCreatedJournal.JournalLines[0].ActionTypeCodeEnum);
-                Assert.AreEqual(MyJournalActionTypeEnum.Credit, theCreatedJournal.JournalLines[1].ActionTypeCodeEnum);
+                Assert.AreEqual(JournalActionTypeEnum.Credit, theCreatedJournal.JournalLines[0].ActionTypeCodeEnum);
+                Assert.AreEqual(JournalActionTypeEnum.Credit, theCreatedJournal.JournalLines[1].ActionTypeCodeEnum);
 
                 Assert.AreEqual(_AdjustGLAccountId, theCreatedJournal.JournalLines[0].DebitAccountId);
                 Assert.AreEqual(_AdjustGLAccountId, theCreatedJournal.JournalLines[1].DebitAccountId);
@@ -140,7 +140,7 @@ namespace Logitude.UnitTest.Accounting.UniTests.ExternalReconcile
                 Assert.AreEqual(reconcileExternalPageLineLists[1].DebitAmount * (decimal)lastRate.Rate, theCreatedJournal.JournalLines[1].LocalAmount);
 
 
-                Assert.AreEqual(theCreatedJournal.JournalLines[2].ActionTypeCodeEnum, MyJournalActionTypeEnum.Debit);
+                Assert.AreEqual(theCreatedJournal.JournalLines[2].ActionTypeCodeEnum, JournalActionTypeEnum.Debit);
                 Assert.AreEqual(
                     (
                     (reconcileExternalPageLineLists[0].DebitAmount + reconcileExternalPageLineLists[1].DebitAmount)
@@ -152,13 +152,13 @@ namespace Logitude.UnitTest.Accounting.UniTests.ExternalReconcile
             }
             else
             {
-                Assert.AreEqual(1, theCreatedJournal.JournalLines.Count(r => r.ActionTypeCodeEnum == MyJournalActionTypeEnum.Credit));
-                Assert.AreEqual(2, theCreatedJournal.JournalLines.Count(r => r.ActionTypeCodeEnum == MyJournalActionTypeEnum.Debit));
+                Assert.AreEqual(1, theCreatedJournal.JournalLines.Count(r => r.ActionTypeCodeEnum == JournalActionTypeEnum.Credit));
+                Assert.AreEqual(2, theCreatedJournal.JournalLines.Count(r => r.ActionTypeCodeEnum == JournalActionTypeEnum.Debit));
 
                 Assert.AreEqual(_BankAccountId, theCreatedJournal.JournalLines[0].DebitAccountId);
                 Assert.AreEqual(_BankAccountId, theCreatedJournal.JournalLines[1].DebitAccountId);
-                Assert.AreEqual(MyJournalActionTypeEnum.Debit, theCreatedJournal.JournalLines[0].ActionTypeCodeEnum);
-                Assert.AreEqual(MyJournalActionTypeEnum.Debit, theCreatedJournal.JournalLines[1].ActionTypeCodeEnum);
+                Assert.AreEqual(JournalActionTypeEnum.Debit, theCreatedJournal.JournalLines[0].ActionTypeCodeEnum);
+                Assert.AreEqual(JournalActionTypeEnum.Debit, theCreatedJournal.JournalLines[1].ActionTypeCodeEnum);
 
                 Assert.AreEqual(_AdjustGLAccountId, theCreatedJournal.JournalLines[0].CreditAccountId);
                 Assert.AreEqual(_AdjustGLAccountId, theCreatedJournal.JournalLines[1].CreditAccountId);
@@ -170,7 +170,7 @@ namespace Logitude.UnitTest.Accounting.UniTests.ExternalReconcile
                 Assert.AreEqual(reconcileExternalPageLineLists[0].CreditAmount * (decimal)lastRate.Rate, theCreatedJournal.JournalLines[0].LocalAmount);
                 Assert.AreEqual(reconcileExternalPageLineLists[1].CreditAmount * (decimal)lastRate.Rate, theCreatedJournal.JournalLines[1].LocalAmount);
 
-                Assert.AreEqual(theCreatedJournal.JournalLines[2].ActionTypeCodeEnum, MyJournalActionTypeEnum.Credit);
+                Assert.AreEqual(theCreatedJournal.JournalLines[2].ActionTypeCodeEnum, JournalActionTypeEnum.Credit);
                 Assert.AreEqual(
                     (
                     (reconcileExternalPageLineLists[0].CreditAmount + reconcileExternalPageLineLists[1].CreditAmount)

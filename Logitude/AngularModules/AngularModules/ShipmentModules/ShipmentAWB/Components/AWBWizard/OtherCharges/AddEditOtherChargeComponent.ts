@@ -41,7 +41,7 @@ export class AddEditOtherChargeComponent extends BaseComponent implements AfterV
 
     private BuildQueryFilters() {
         this.MeasurementsQueryFilters = new ApiQueryFilters();
-        this.MeasurementsQueryFilters.addAdditionalFilter("Code", "STFE", null, null, "NotContains", false, false, false, "string", false, true, true);
+        this.MeasurementsQueryFilters.addAdditionalFilter("Code", "STFE", null, null, "Exclude", false, false, false, "string", false, true, true);
     }
 
     ngAfterViewInit() {

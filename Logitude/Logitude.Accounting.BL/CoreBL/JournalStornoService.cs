@@ -12,6 +12,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.CompilerServices;
 using Logitude.Accounting.Def.EntityUpdateServicesExt;
+using Logitude.Accounting.BL.CoreBL.ExternalReconcile.CancelDeposit;
+using Logitude.Accounting.Data.Enums;
 
 [assembly: InternalsVisibleTo("Your.Test.Assembly.Name")]
 
@@ -24,19 +26,20 @@ namespace Logitude.Accounting.BL.CoreBL
         private StornoOverrideM _StornoOverrideM;
         private IJournalUpdateService _journalUpdateService;
         private IJournalStornoPrepareJReconcileService _JournalStornoPrepareJReconcileService;
+        private IJournalStornoPrepareExternalReconcileService _JournalStornoPrepareExternalReconcileService;
 
         public void Init(
             JournalPM journalPM, StornoOverrideM stornoOverrideM, 
             IJournalUpdateService journalUpdateService,
-            IJournalStornoPrepareJReconcileService journalStornoPrepareJReconcileService
-            )
+            IJournalStornoPrepareJReconcileService journalStornoPrepareJReconcileService,
+            IJournalStornoPrepareExternalReconcileService journalStornoPrepareExternalReconcileService)
         {
             // TODO: Complete member initialization
             this._JournalPM = journalPM;
             _StornoOverrideM = stornoOverrideM;
             _journalUpdateService = journalUpdateService;
             _JournalStornoPrepareJReconcileService = journalStornoPrepareJReconcileService;
-
+            _JournalStornoPrepareExternalReconcileService = journalStornoPrepareExternalReconcileService;
 
         }
 
@@ -71,7 +74,7 @@ namespace Logitude.Accounting.BL.CoreBL
         private void ThrowCloseMonth(int tenant)
         {
             var closeMonth = TextCodesTranslatorTranslateText(JournalValidator.M_ClosedMonth, tenant);
-            throw new Exception(closeMonth);//”Accounting period closed
+            throw new ApplicationException(closeMonth);//”Accounting period closed
         }
         public virtual string TextCodesTranslatorTranslateText(string textCodeCode, int tenant)
         {
@@ -87,16 +90,21 @@ namespace Logitude.Accounting.BL.CoreBL
         {
             if (_StornoOverrideM == null)
             {
-                throw new Exception("stornoOverrideM is must (good2 remember values in properties r not Must )");
+                throw new ApplicationException("stornoOverrideM is must (good2 remember values in properties r not Must )");
             }
 
             ThrowIfStornoNotAllowed();
             Storno = CreateStorno(_StornoOverrideM);
             
-            if (_JournalStornoPrepareJReconcileService.CreateJournalReconcileFromStorno(Storno))
+            if (_JournalStornoPrepareJReconcileService.CreateJournalReconcileFromStorno(Storno, _StornoOverrideM))
             {
                 Storno.JournalReconciles.AddRange(_JournalStornoPrepareJReconcileService.JournalReconciles2Insert);
             }
+            if (_JournalStornoPrepareExternalReconcileService.CreateJournalExternalReconcileFromStorno(Storno))
+            {
+                Storno.JournalExternalReconciles.Add(_JournalStornoPrepareExternalReconcileService.JournalExternalReconcilePM);
+            }
+
 
             _journalUpdateService.Update(Storno, true);
             return Storno;
@@ -107,7 +115,7 @@ namespace Logitude.Accounting.BL.CoreBL
         {
             if (stornoOverrideM==null)
             {
-                throw new Exception("stornoOverrideM is must (good2 remember values in properties r not Must )");
+                throw new ApplicationException("stornoOverrideM is must (good2 remember values in properties r not Must )");
             }
             JournalPM Storno = new JournalPM();
 
@@ -119,18 +127,18 @@ namespace Logitude.Accounting.BL.CoreBL
             }
 
             Storno.AccountingEntityCode = _JournalPM.AccountingEntityCode;
-            if (!String.IsNullOrWhiteSpace(stornoOverrideM.AccountingEntityCode))
+            if (!String.IsNullOrWhiteSpace(stornoOverrideM.AccountingEntityCode) && Storno.AccountingEntityCode != AccountingEntityValues.Revaluation)
             {
                 Storno.AccountingEntityCode = stornoOverrideM.AccountingEntityCode;
             }
             Storno.AccountingEntityId = _JournalPM.AccountingEntityId;
-            if (!String.IsNullOrWhiteSpace(stornoOverrideM.AccountingEntityId))
+            if (!String.IsNullOrWhiteSpace(stornoOverrideM.AccountingEntityId) && Storno.AccountingEntityCode != AccountingEntityValues.Revaluation)
             {
                 Storno.AccountingEntityId = stornoOverrideM.AccountingEntityId;
             }
 
             Storno.AccountingEntityReference = _JournalPM.AccountingEntityReference;
-            if (!String.IsNullOrWhiteSpace(stornoOverrideM.AccountingEntityReference))
+            if (!String.IsNullOrWhiteSpace(stornoOverrideM.AccountingEntityReference) && Storno.AccountingEntityCode != AccountingEntityValues.Revaluation)
             {
                 Storno.AccountingEntityReference = stornoOverrideM.AccountingEntityReference;
             }
@@ -163,10 +171,20 @@ namespace Logitude.Accounting.BL.CoreBL
                 Storno.ExternalNo = _JournalPM.ExternalNo;
             }
 
-            foreach (JournalLinePM item in _JournalPM.JournalLines)
+            var journalLines = _JournalPM.JournalLines;
+
+            if (stornoOverrideM.ChequeNumbersToExcludeFromStorno != null && stornoOverrideM.ChequeNumbersToExcludeFromStorno.Count > 0)
+            {
+                RemoveChequesJournalLinesByNumber(stornoOverrideM.ChequeNumbersToExcludeFromStorno, journalLines);
+                ResequenceLinesNumbers(journalLines);
+            }
+
+
+
+            foreach (JournalLinePM item in journalLines)
             {
                 JournalLinePM newStornoJournalLine = new JournalLinePM();
-                newStornoJournalLine.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
+                newStornoJournalLine.ChangeSetOp = ChangeSetOperation.Insert;
                 newStornoJournalLine.AccountingDate = item.AccountingDate;
                 if (stornoOverrideM.AccountingDate.HasValue)
                 {
@@ -218,6 +236,22 @@ namespace Logitude.Accounting.BL.CoreBL
             return Storno;
         }
 
+        private void RemoveChequesJournalLinesByNumber(List<string> chequeNumbersToExcludeFromStorno, List<JournalLinePM> journalLines)
+        {
+            journalLines.RemoveAll(line =>
+            {
+                return chequeNumbersToExcludeFromStorno.Contains(line.Reference2);
+            });
+        }
+
+        private void ResequenceLinesNumbers(List<JournalLinePM> journalLines)
+        {
+            var lineNumber = 1;
+            foreach (var line in journalLines)
+            {
+                line.Line = lineNumber++;
+            }
+        }
 
         public JournalPM Storno { get; set; }
     }

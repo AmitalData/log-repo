@@ -17,13 +17,15 @@ import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
 import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
+import { ObjectCustomFieldPM } from '../../Infrastructure/EntityPMs/ObjectCustomFieldPM';
 
 
-export class CardPM {
+export class CardPM extends ObjectCustomFieldPM {
 
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
+		  super("Card");
           this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
@@ -169,6 +171,11 @@ export class CardPM {
     public set AccountManagerUserId(newValue: string) { if (this.accountManagerUserId != newValue) { this.accountManagerUserId = newValue; this.MarkAsDirty("AccountManagerUserId"); } }
        
 	 
+    private teamId: string;
+    public get TeamId() { return this.teamId; }
+    public set TeamId(newValue: string) { if (this.teamId != newValue) { this.teamId = newValue; this.MarkAsDirty("TeamId"); } }
+       
+	 
     private salesmanBusinessUnitId: string;
     public get SalesmanBusinessUnitId() { return this.salesmanBusinessUnitId; }
     public set SalesmanBusinessUnitId(newValue: string) { if (this.salesmanBusinessUnitId != newValue) { this.salesmanBusinessUnitId = newValue; this.MarkAsDirty("SalesmanBusinessUnitId"); } }
@@ -187,6 +194,11 @@ export class CardPM {
     private billingAddressId: string;
     public get BillingAddressId() { return this.billingAddressId; }
     public set BillingAddressId(newValue: string) { if (this.billingAddressId != newValue) { this.billingAddressId = newValue; this.MarkAsDirty("BillingAddressId"); } }
+       
+	 
+    private pickupDeliveryAddressId: string;
+    public get PickupDeliveryAddressId() { return this.pickupDeliveryAddressId; }
+    public set PickupDeliveryAddressId(newValue: string) { if (this.pickupDeliveryAddressId != newValue) { this.pickupDeliveryAddressId = newValue; this.MarkAsDirty("PickupDeliveryAddressId"); } }
        
 	 
     private website: string;
@@ -267,6 +279,26 @@ export class CardPM {
     private industryId: string;
     public get IndustryId() { return this.industryId; }
     public set IndustryId(newValue: string) { if (this.industryId != newValue) { this.industryId = newValue; this.MarkAsDirty("IndustryId"); } }
+       
+	 
+    private leadDescription: string;
+    public get LeadDescription() { return this.leadDescription; }
+    public set LeadDescription(newValue: string) { if (this.leadDescription != newValue) { this.leadDescription = newValue; this.MarkAsDirty("LeadDescription"); } }
+       
+	 
+    private startWorkingDate: Date;
+    public get StartWorkingDate() { return this.startWorkingDate; }
+    public set StartWorkingDate(newValue: Date) { if (this.startWorkingDate != newValue) { this.startWorkingDate = newValue; this.MarkAsDirty("StartWorkingDate"); } }
+       
+	 
+    private leadSourceId: string;
+    public get LeadSourceId() { return this.leadSourceId; }
+    public set LeadSourceId(newValue: string) { if (this.leadSourceId != newValue) { this.leadSourceId = newValue; this.MarkAsDirty("LeadSourceId"); } }
+       
+	 
+    private customerSizeId: string;
+    public get CustomerSizeId() { return this.customerSizeId; }
+    public set CustomerSizeId(newValue: string) { if (this.customerSizeId != newValue) { this.customerSizeId = newValue; this.MarkAsDirty("CustomerSizeId"); } }
        
 	 
     private customAgent: any;
@@ -364,6 +396,11 @@ export class CardPM {
     public set InvitationDate(newValue: Date) { if (this.invitationDate != newValue) { this.invitationDate = newValue; this.MarkAsDirty("InvitationDate"); } }
        
 	 
+    private cargoTrackingInvitationDate: Date;
+    public get CargoTrackingInvitationDate() { return this.cargoTrackingInvitationDate; }
+    public set CargoTrackingInvitationDate(newValue: Date) { if (this.cargoTrackingInvitationDate != newValue) { this.cargoTrackingInvitationDate = newValue; this.MarkAsDirty("CargoTrackingInvitationDate"); } }
+       
+	 
     private sharedLogisticsInvitationStatusCode: number;
     public get SharedLogisticsInvitationStatusCode() { return this.sharedLogisticsInvitationStatusCode; }
     public set SharedLogisticsInvitationStatusCode(newValue: number) { if (this.sharedLogisticsInvitationStatusCode != newValue) { this.sharedLogisticsInvitationStatusCode = newValue; this.MarkAsDirty("SharedLogisticsInvitationStatusCode"); } }
@@ -372,6 +409,16 @@ export class CardPM {
     private sharedLogisticsInvitationStatusName: string;
     public get SharedLogisticsInvitationStatusName() { return this.sharedLogisticsInvitationStatusName; }
     public set SharedLogisticsInvitationStatusName(newValue: string) { if (this.sharedLogisticsInvitationStatusName != newValue) { this.sharedLogisticsInvitationStatusName = newValue; this.MarkAsDirty("SharedLogisticsInvitationStatusName"); } }
+       
+	 
+    private cargoTrackingInvitationStatusCode: number;
+    public get CargoTrackingInvitationStatusCode() { return this.cargoTrackingInvitationStatusCode; }
+    public set CargoTrackingInvitationStatusCode(newValue: number) { if (this.cargoTrackingInvitationStatusCode != newValue) { this.cargoTrackingInvitationStatusCode = newValue; this.MarkAsDirty("CargoTrackingInvitationStatusCode"); } }
+       
+	 
+    private cargoTrackingInvitationStatusName: string;
+    public get CargoTrackingInvitationStatusName() { return this.cargoTrackingInvitationStatusName; }
+    public set CargoTrackingInvitationStatusName(newValue: string) { if (this.cargoTrackingInvitationStatusName != newValue) { this.cargoTrackingInvitationStatusName = newValue; this.MarkAsDirty("CargoTrackingInvitationStatusName"); } }
        
 	 
     private lastLoginDate: Date;
@@ -439,6 +486,11 @@ export class CardPM {
     public set UsoCFDICode(newValue: string) { if (this.usoCFDICode != newValue) { this.usoCFDICode = newValue; this.MarkAsDirty("UsoCFDICode"); } }
        
 	 
+    private regimenFiscalCode: string;
+    public get RegimenFiscalCode() { return this.regimenFiscalCode; }
+    public set RegimenFiscalCode(newValue: string) { if (this.regimenFiscalCode != newValue) { this.regimenFiscalCode = newValue; this.MarkAsDirty("RegimenFiscalCode"); } }
+       
+	 
     private isInternationalPartner: boolean;
     public get IsInternationalPartner() { return this.isInternationalPartner; }
     public set IsInternationalPartner(newValue: boolean) { if (this.isInternationalPartner != newValue) { this.isInternationalPartner = newValue; this.MarkAsDirty("IsInternationalPartner"); } }
@@ -502,6 +554,56 @@ export class CardPM {
     private iCAO: string;
     public get ICAO() { return this.iCAO; }
     public set ICAO(newValue: string) { if (this.iCAO != newValue) { this.iCAO = newValue; this.MarkAsDirty("ICAO"); } }
+       
+	 
+    private allowUnassignedEntry: boolean;
+    public get AllowUnassignedEntry() { return this.allowUnassignedEntry; }
+    public set AllowUnassignedEntry(newValue: boolean) { if (this.allowUnassignedEntry != newValue) { this.allowUnassignedEntry = newValue; this.MarkAsDirty("AllowUnassignedEntry"); } }
+       
+	 
+    private sATCustomerName: string;
+    public get SATCustomerName() { return this.sATCustomerName; }
+    public set SATCustomerName(newValue: string) { if (this.sATCustomerName != newValue) { this.sATCustomerName = newValue; this.MarkAsDirty("SATCustomerName"); } }
+       
+	 
+    private importLocalCustomerGroupId: string;
+    public get ImportLocalCustomerGroupId() { return this.importLocalCustomerGroupId; }
+    public set ImportLocalCustomerGroupId(newValue: string) { if (this.importLocalCustomerGroupId != newValue) { this.importLocalCustomerGroupId = newValue; this.MarkAsDirty("ImportLocalCustomerGroupId"); } }
+       
+	 
+    private exportLocalCustomerGroupId: string;
+    public get ExportLocalCustomerGroupId() { return this.exportLocalCustomerGroupId; }
+    public set ExportLocalCustomerGroupId(newValue: string) { if (this.exportLocalCustomerGroupId != newValue) { this.exportLocalCustomerGroupId = newValue; this.MarkAsDirty("ExportLocalCustomerGroupId"); } }
+       
+	 
+    private isPotential: boolean;
+    public get IsPotential() { return this.isPotential; }
+    public set IsPotential(newValue: boolean) { if (this.isPotential != newValue) { this.isPotential = newValue; this.MarkAsDirty("IsPotential"); } }
+       
+	 
+    private eORInumber: string;
+    public get EORInumber() { return this.eORInumber; }
+    public set EORInumber(newValue: string) { if (this.eORInumber != newValue) { this.eORInumber = newValue; this.MarkAsDirty("EORInumber"); } }
+       
+	 
+    private singleInvoiceTemplateId: string;
+    public get SingleInvoiceTemplateId() { return this.singleInvoiceTemplateId; }
+    public set SingleInvoiceTemplateId(newValue: string) { if (this.singleInvoiceTemplateId != newValue) { this.singleInvoiceTemplateId = newValue; this.MarkAsDirty("SingleInvoiceTemplateId"); } }
+       
+	 
+    private customsInvoiceTemplateId: string;
+    public get CustomsInvoiceTemplateId() { return this.customsInvoiceTemplateId; }
+    public set CustomsInvoiceTemplateId(newValue: string) { if (this.customsInvoiceTemplateId != newValue) { this.customsInvoiceTemplateId = newValue; this.MarkAsDirty("CustomsInvoiceTemplateId"); } }
+       
+	 
+    private consolidationInvoiceTemplateId: string;
+    public get ConsolidationInvoiceTemplateId() { return this.consolidationInvoiceTemplateId; }
+    public set ConsolidationInvoiceTemplateId(newValue: string) { if (this.consolidationInvoiceTemplateId != newValue) { this.consolidationInvoiceTemplateId = newValue; this.MarkAsDirty("ConsolidationInvoiceTemplateId"); } }
+       
+	 
+    private manifestInvoiceTemplateId: string;
+    public get ManifestInvoiceTemplateId() { return this.manifestInvoiceTemplateId; }
+    public set ManifestInvoiceTemplateId(newValue: string) { if (this.manifestInvoiceTemplateId != newValue) { this.manifestInvoiceTemplateId = newValue; this.MarkAsDirty("ManifestInvoiceTemplateId"); } }
        
 	 
 

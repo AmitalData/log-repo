@@ -13,6 +13,7 @@ import {EventTypeArgs} from '../../Infrastructure/DataContracts/EventTypeArgs';
 import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceResponse';
 import {WarehouseReleasePMExtendedService} from '../../Warehouse/Services/ExtendedPMs/WarehouseReleasePMExtendedService';
 import {MessageWindow} from '../../Controls/Windows/MessageWindow';
+import { LogitudeWindow } from '../../Controls/Windows/LogitudeWindow';
 @Component({
     
     selector: 'ChoosePackagesFromWarehousePackageReleasesComponent',
@@ -41,10 +42,11 @@ export class ChoosePackagesFromWarehousePackageReleasesComponent extends BaseCom
     VolumetricWeightLabel: string;
     IsContainerShipment: boolean = false;
     IsShowMessageNoResult: boolean = false;
+    ShowNewWarehouseReleaseButton: boolean = false;
 
     constructor() {
         super();
-        this.UIProperties.SetEnabled("CustomerId", this.ObjectTableName, false);
+        this.UIProperties.SetEnabled("CustomerId", this.ObjectTableName, true);
         this.warehouseReleasePMExtendedService = new WarehouseReleasePMExtendedService();
     }
 
@@ -65,7 +67,7 @@ export class ChoosePackagesFromWarehousePackageReleasesComponent extends BaseCom
     Initialize(args) {
         this.ViewModelTrigger = args.ViewModelTrigger;
         this.Shipment = this.ViewModelTrigger ? this.ViewModelTrigger.EntityPM : null;
-
+        this.ShowNewWarehouseReleaseButton = args.ShowNewWarehouseReleaseButton;
         this.IsContainerShipment = args.IsContainer;
 
         if (this.Shipment) {
@@ -172,10 +174,24 @@ export class ChoosePackagesFromWarehousePackageReleasesComponent extends BaseCom
         } else this.IsLoadPage = true;
     }
 
-
-
-
-
+    NewWarehouseReleaseButtonClicked() {
+        if (!this.ShowNewWarehouseReleaseButton) return;
+        var windowArgs: any = {};
+        windowArgs.ShipmentPM = this.Shipment;
+        windowArgs.ConnectedTo = "Shipment";
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 1030;
+        logWindow.Height = 620;
+        logWindow.Title = "New Cross Dock Release";
+        logWindow.WindowArgs = windowArgs;
+        var widnowPath: string = "./Warehouse/Components/NewWarehouseReleaseComponent";
+        logWindow.Show(widnowPath);
+        logWindow.WindowClosed.subscribe(($event: any) => {
+            if ($event == "Refresh") {
+                this.LoadWarehouseReleasePackages();
+            }
+        });
+    }
 
     SaveButtonClicked() {
 

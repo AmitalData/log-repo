@@ -79,6 +79,28 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
                                                      Id = a.Id,
                                                      EntryNumber = a.EntryNumber,
                                                      CreateDate = a.CreateDate,
+                                                     ConnectedToReferenceNumber = a.ConnectedToReferenceNumber,
+                                                 }).ToList();
+            return myResult;
+        }
+
+        public List<WarehouseEntryList> GetActiveWarehouseEntryListsByWarehouseId(string warehouseId, int tenant)
+        {
+
+            List<WarehouseEntryList> myResult = (from a in context.WarehouseEntries
+                                                 where a.WarehouseId == warehouseId && a.Tenant == tenant && a.StatusCode != "CAEA"
+                                                 select new WarehouseEntryList()
+                                                 {
+                                                     Id = a.Id,
+                                                     EntryNumber = a.EntryNumber,
+                                                     CreateDate = a.CreateDate,
+                                                     DirectionId = a.DirectionId,
+                                                     TransportModeId = a.TransportModeId,
+                                                     ShipmentId = a.ShipmentId,
+                                                     StatusCode = a.StatusCode,
+                                                     ConnectedToShipment = a.ConnectedToShipment,
+                                                     CustomerId = a.CustomerId,
+                                                     ConnectedToReferenceNumber = a.ConnectedToReferenceNumber,
                                                  }).ToList();
             return myResult;
         }

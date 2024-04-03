@@ -1,5 +1,6 @@
 ﻿using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.BL.QuoteModel.Tools.Initializers;
+using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
@@ -41,23 +42,24 @@ namespace Logitude.BL.QuoteModel.Tools.Behaviours
             MapEstimatedPayablesInSalesCurrencyField();
             MapEstimatedReceivablesInLocalCurrencyField();
             MapEstimatedReceivablesInSalesCurrencyField();
+            MapMarkupAmountField();
         }
 
         private void MapConnectedToShipmentField()
         {
-             quoteComputedField.ConnectedToShipment = (from shipment in initializer.ShipmentContext.Shipments where shipment.QuoteId == quoteEntityPM.Id && shipment.Tenant == quoteEntityPM.Tenant select shipment).Any();
+            quoteComputedField.ConnectedToShipment = (from shipment in initializer.ShipmentContext.Shipments where shipment.QuoteId == quoteEntityPM.Id && shipment.Tenant == quoteEntityPM.Tenant select shipment).Any();
         }
 
         private void MapConnectedToTicketField()
         {
-             quoteComputedField.ConnectedToTicket = (from tickect in initializer.CRMcontext.Tickets where tickect.QuoteId == quoteEntityPM.Id && tickect.Tenant == quoteEntityPM.Tenant select tickect).Any();
+            quoteComputedField.ConnectedToTicket = (from tickect in initializer.CRMcontext.Tickets where tickect.QuoteId == quoteEntityPM.Id && tickect.Tenant == quoteEntityPM.Tenant select tickect).Any();
         }
 
         private void MapFromLocationField()
         {
             if (IsInlandDomestic())
-            {        
-                   quoteComputedField.FromLocation = GetLocationAddress(quoteEntityPM.FromPartnerAddressId);                    
+            {
+                quoteComputedField.FromLocation = GetLocationAddress(quoteEntityPM.FromPartnerAddressId);
             }
         }
 
@@ -65,7 +67,7 @@ namespace Logitude.BL.QuoteModel.Tools.Behaviours
         {
             if (IsInlandDomestic())
             {
-                  quoteComputedField.ToLocation = GetLocationAddress(quoteEntityPM.ToPartnerAddressId); 
+                quoteComputedField.ToLocation = GetLocationAddress(quoteEntityPM.ToPartnerAddressId);
             }
         }
 
@@ -82,7 +84,7 @@ namespace Logitude.BL.QuoteModel.Tools.Behaviours
                     {
                         locationAddress = string.IsNullOrEmpty(locationAddress) ? address.Country.Code : locationAddress + " " + address.Country.Code;
                     }
-                  return locationAddress;
+                    return locationAddress;
                 }
             }
             return "";
@@ -128,7 +130,7 @@ namespace Logitude.BL.QuoteModel.Tools.Behaviours
 
         private bool IsInlandDomestic()
         {
-                return (quoteEntityPM.DirectionId == "D" && quoteEntityPM.TransportModeId == "I");
+            return (quoteEntityPM.DirectionId == "D" && quoteEntityPM.TransportModeId == "I");
         }
 
         private string CalculatePickupAndDeliveryToByAddressId(string id)
@@ -146,7 +148,7 @@ namespace Logitude.BL.QuoteModel.Tools.Behaviours
                 {
                     location = (string.IsNullOrEmpty(location)) ? address.ZipCode : location + " - " + address.ZipCode;
                 }
-               return location;
+                return location;
             }
             return "";
         }
@@ -154,46 +156,46 @@ namespace Logitude.BL.QuoteModel.Tools.Behaviours
         private string CalculatePickupFromUsingFromAddressCountryAndCity()
         {
 
-            string location = (!string.IsNullOrEmpty(quoteEntityPM.FromAddressCity))? quoteEntityPM.FromAddressCity:"";
+            string location = (!string.IsNullOrEmpty(quoteEntityPM.FromAddressCity)) ? quoteEntityPM.FromAddressCity : "";
 
             if (!string.IsNullOrEmpty(quoteEntityPM.FromAddressCountryId))
             {
                 Country country = initializer.CountryRepository.GetSingleCountry(quoteEntityPM.FromAddressCountryId, initializer.Tenant);
                 if (country != null)
                 {
-                     location = (string.IsNullOrEmpty(location))? country.Code : location + " " + country.Code;
+                    location = (string.IsNullOrEmpty(location)) ? country.Code : location + " " + country.Code;
                 }
             }
             if (!string.IsNullOrEmpty(quoteEntityPM.FromAddressZipCode))
             {
-                    location = (string.IsNullOrEmpty(location))? quoteEntityPM.FromAddressZipCode: location +" - "+ quoteEntityPM.FromAddressZipCode;
+                location = (string.IsNullOrEmpty(location)) ? quoteEntityPM.FromAddressZipCode : location + " - " + quoteEntityPM.FromAddressZipCode;
             }
             return location;
         }
 
         private string CalculateDeliveryToUsingToAddressCountryAndCity()
         {
-            string location = (!string.IsNullOrEmpty(quoteEntityPM.ToAddressCity)) ? quoteEntityPM.ToAddressCity: "";
+            string location = (!string.IsNullOrEmpty(quoteEntityPM.ToAddressCity)) ? quoteEntityPM.ToAddressCity : "";
 
             if (!string.IsNullOrEmpty(quoteEntityPM.ToAddressCountryId))
             {
                 Country country = initializer.CountryRepository.GetSingleCountry(quoteEntityPM.ToAddressCountryId, initializer.Tenant);
                 if (country != null)
                 {
-                     location = (string.IsNullOrEmpty(location))? country.Code : location + " " + country.Code; ;
+                    location = (string.IsNullOrEmpty(location)) ? country.Code : location + " " + country.Code; ;
                 }
             }
             if (!string.IsNullOrEmpty(quoteEntityPM.ToAddressZipCode))
             {
-                    location = (string.IsNullOrEmpty(location))?quoteEntityPM.ToAddressZipCode : location += " - " + quoteEntityPM.ToAddressZipCode;
+                location = (string.IsNullOrEmpty(location)) ? quoteEntityPM.ToAddressZipCode : location += " - " + quoteEntityPM.ToAddressZipCode;
             }
             return location;
         }
 
         private void FilterDeletedQuoteCharges()
         {
-            this.quoteCharges =  new List<QuoteChargePM>();
-            this.quoteCharges = quoteEntityPM.QuoteCharges.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
+            quoteCharges = new List<QuoteChargePM>();
+            quoteCharges = quoteEntityPM.QuoteCharges.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
         }
 
         private void MapEstimatedPayablesInLocalCurrencyField()
@@ -225,8 +227,23 @@ namespace Logitude.BL.QuoteModel.Tools.Behaviours
             if (quoteEntityPM.QuoteCharges != null)
             {
                 quoteComputedField.EstimatedReceivablesInSales = quoteCharges.Where(d => d.IsAllIN == false).Sum(d => d.SaleAmountInSaleCurrency);
-            } 
+            }
         }
 
+        private void MapMarkupAmountField()
+        {
+            double? summaryCostAmount = 0;
+            double? summarySaleAmount = 0;
+
+            if (quoteEntityPM != null)
+            {
+                var myCostAmountLocal = MethodHelper.Round(quoteEntityPM.QuoteCharges.Sum(a => a.CostTotalAmountLocal), 2);
+                var mySaleAmountLocal = MethodHelper.Round(quoteEntityPM.QuoteCharges.Where(f => f.IsAllIN == false).Sum(a => a.SaleTotalAmountLocal), 2);
+                summaryCostAmount = MethodHelper.Round(myCostAmountLocal, 2);
+                summarySaleAmount = MethodHelper.Round(mySaleAmountLocal, 2);
+
+                quoteComputedField.MarkupPercentage = summaryCostAmount == 0 ? summaryCostAmount : MethodHelper.Round((summarySaleAmount - summaryCostAmount) * 100 / summaryCostAmount, 2);
+            }
+        }
     }
 }

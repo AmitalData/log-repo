@@ -35,13 +35,6 @@ namespace Logitude.CRM.Data.Repsitories
                     select a).FirstOrDefault();
         }
 
-        public TicketSeverity GetSingleByName(string name, int tenant)
-        {
-            return (from a in context.TicketSeverities
-                    where a.Name == name && a.Tenant == tenant
-                    select a).FirstOrDefault();
-        }
-
         public IQueryable<TicketSeverity> GetAll(int tenant)
         {
             return from a in context.TicketSeverities  
@@ -56,7 +49,7 @@ namespace Logitude.CRM.Data.Repsitories
                     where a.Id == keys.Id
                     select a).FirstOrDefault();
         }
-		         
+		 		                 
         partial void onAdd();//Partial Methods Definition in Generated
         public void Add(TicketSeverity entity)
         {

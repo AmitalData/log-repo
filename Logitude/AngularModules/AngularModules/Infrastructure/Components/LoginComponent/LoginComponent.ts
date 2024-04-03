@@ -43,8 +43,11 @@ import { ObjectsUpdater } from '../../Locators/ObjectsUpdater';
 //import { DWObjectFieldExtendedPMService } from '../../../../Infrastructure/Services/ExtendedPMs/DWObjectFieldExtendedPMService';
 import { UserExtendedPMService } from '../../../Common/Services/ExtendedPMs/UserExtendedPMService';
 import { GeneralDomainService } from '../../../Infrastructure/Services/GeneralDomainService';
-import { TenantList } from 'Common/EntityLists/TenantList';
-
+ import { TenantList } from 'Common/EntityLists/TenantList';
+ 
+import { AuthenticateService, LogitudeTokensService, AuthorizedUser } from "collaboration-tool-core";
+import { SessionInfo as CToolSessionInfo } from "collaboration-tool-core";
+ 
 @Component({
 
     templateUrl: './LoginComponent.html',
@@ -168,9 +171,9 @@ export class LoginComponent implements OnInit {
             });
         } else {
             this.StartLoginProcess();
-        }
+        }     
         
-        // if (isDevMode())
+         // if (isDevMode())
         //     this.developerLogin();         
 
 
@@ -188,6 +191,8 @@ export class LoginComponent implements OnInit {
 
         this.ContinueClicked()
     }
+ 
+     
 
 
     IsShowLoginForm: boolean = false;
@@ -195,21 +200,23 @@ export class LoginComponent implements OnInit {
     StartLoginProcess() {
 
         var url = window.location.href;
-        if (url.indexOf('AmitalSSOAngular') == -1) {
-
+ 
             if (url.indexOf('AmitalSSOAngular') < 1 && url.indexOf('localhost') > -1 && !AppTool.IsNullOrEmpty(url.split('?')[1])) {
-                this.isLocalPrivateLable = true;
+             if (url.indexOf('?Menu') == -1) {
+                 this.isLocalPrivateLable = true;
                 let isDSV = url.indexOf('?D') > -1;
                 window.sessionStorage.setItem('userdata', url.split(isDSV ? '?D' : '?P')[1]);
                 SessionLocator.IsExternalParams = false;
             }
-            if (url && url.indexOf('localhost') > -1 && !this.isLocalPrivateLable) {
-                this.Email = "angular@fnarsoft.com";
+ 
+        }
+        if (url && url.indexOf('localhost') > -1 && !this.isLocalPrivateLable) {
+                 this.Email = "angular@fnarsoft.com";
                 this.Password = "1";
                 this.IsShowLoginForm = true;
             }
 
-        }
+         
         this.authHeader = new Headers();
         this.authHeader.append('Content-Type', 'application/json');
         this.authHeader.append('Accept', 'application/json');
@@ -315,6 +322,8 @@ export class LoginComponent implements OnInit {
 
                 this.loginService.GetLoggedUser().subscribe((myResult: any) => {
 
+                    SessionLocator.UseMemoryCachedData =myResult.DisableCachedData;
+
                     var iGlobalDomainService = new GlobalDomainService();
 
                     iGlobalDomainService.GetTenantManagementJS(SessionInfo.LoggedUserId).subscribe((myResponse: ServiceResponse) => {
@@ -333,8 +342,52 @@ export class LoginComponent implements OnInit {
                     });
                 });
             }
+
+            this.SetCToolAuthorizedUser(userData);
         }
         window.sessionStorage.setItem("userdata", "");
+    }
+
+    SetCToolAuthorizedUser(userData: any) {
+        this.myInfrastructureDomainService.GetFeatureToggles().subscribe((featureTogglesResponse: ServiceResponse) => {
+            if (!featureTogglesResponse.HasError) {
+                var userTenant = Number(userData.CurrentTenant + "");
+                var ctoolFeatureToggle = featureTogglesResponse.Result
+                    .filter((f: any) => (f.TenantNumber == userTenant || (userTenant >= f.FromTenantNumber && userTenant <= f.ToTenantNumber)) && f.ToggleCode === "CTL")[0];
+                if (ctoolFeatureToggle) {
+                    const authenticateService = new AuthenticateService();
+                    if (authenticateService) {
+                        var logitudeAuthenticate = "logitudeAuthenticate";
+                        if (authenticateService.hasOwnProperty(logitudeAuthenticate)) {
+                            authenticateService[logitudeAuthenticate]({ Tenant: userTenant, Token: userData.Token }).then((data: any) => {
+                                if (data !== null && data.User !== null && data.Token !== null) {
+                                    AuthorizedUser.setAuthorizedUser(data);
+                                    CToolSessionInfo.IsUserAuthorized = true;
+                                    CToolSessionInfo.AuthorizedUserToken = data.Token;
+                                    CToolSessionInfo.IsLogitudeAuthentication = true;
+                                    this.SetCToolLogitudeTokens();
+                                }
+                            });
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    SetCToolLogitudeTokens() {
+        const logitudeTokensService = new LogitudeTokensService();
+        if (logitudeTokensService) {
+            var getTokens = "getTokens";
+            if (logitudeTokensService.hasOwnProperty(getTokens)) {
+                logitudeTokensService[getTokens]().then((logitudeTokens: any) => {
+                    if (logitudeTokens) {
+                        let logitudeTokensJson = JSON.stringify(logitudeTokens);
+                        CToolSessionInfo.LogitudeTokensJson = logitudeTokensJson;
+                    }
+                });
+            }
+        }
     }
 
     FillProtractorEmails() {
@@ -817,26 +870,6 @@ export class LoginComponent implements OnInit {
                     this.loginService.GetTenantTextCode().subscribe((myResult: any) => {
                         if (myResult) {
                             window.TextCodes = window.TextCodes.concat(myResult);
-
-                            let additionalTextCodes = [
-                                {
-                                    Code: "General.MH.TasksApp",
-                                    DefaultText: "Tasks App",
-                                    DefaultTextPlural: null,
-                                    InActive: false,
-                                    IsSpellChecked: false,
-                                    LocalDefaultText: null,
-                                    ObjectTableId: "1-1",
-                                    ObjectTableName: "General",
-                                    SpellCheckDate: null,
-                                    SpellCheckedByUserId: null,
-                                    SpellCheckedByUserName: null,
-                                    Tenant: 0,
-                                    TextCodeTypeCode: "MH"
-                                }
-                            ];
-
-                            window.TextCodes = window.TextCodes.concat(additionalTextCodes);
                             this.IncreaseProgressBar();
                             //25
                         }
@@ -961,6 +994,8 @@ export class LoginComponent implements OnInit {
     private GetFeatureToggles() {
         this.myInfrastructureDomainService.GetFeatureToggles().subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
+                SessionLocator.TenantZeroFeatureToggles = myResponse.Result.filter(d => d.TenantNumber == 0);
+
                 var tenant = InfraSettings.TenantPM.Id;
                 SessionLocator.FeatureToggles = myResponse.Result.filter(d => d.TenantNumber == tenant ||
                     (tenant >= d.FromTenantNumber && tenant <= d.ToTenantNumber));

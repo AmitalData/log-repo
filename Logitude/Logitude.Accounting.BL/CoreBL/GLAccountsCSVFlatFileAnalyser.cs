@@ -8,9 +8,13 @@ using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 
 namespace Logitude.Accounting.BL.CoreBL
@@ -27,7 +31,9 @@ namespace Logitude.Accounting.BL.CoreBL
         private string _resolveLoggingUserId;
         private Contact _contact;
         private const bool useLocal = true;
-
+        private string _startingInternal = "";
+        private string _endingInternal = "";
+        private Hashtable _controlAccounts;
 
         public void Analyse(int? ptenant, string FileContent)
         {
@@ -44,7 +50,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
                 if (!ptenant.HasValue)
                 {
-                    throw new Exception("unable to find tenantFromPage4Tester ");
+                    throw new ApplicationException("unable to find tenantFromPage4Tester ");
                 }
                 int tenant = ptenant.Value;
 
@@ -53,25 +59,26 @@ namespace Logitude.Accounting.BL.CoreBL
                 _contact = _contactRep.GetSingleContactByEmail(_resolveLoggingUserId, tenant);
                 accountingContext = AccountingContext.GetContext(tenant);
                 _FullAccountingSettingPM = GetFullAccountingSettings(accountingContext, tenant);
-                ValidateFlatFile();
-
-                IAccountingContext MyContext = AccountingContext.GetContext(tenant);
-
-                using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(55)))
+                ValidateFlatFile(tenant);
+                if (this.MyCSVFlatFileLoadResult.ErrorRowList.Count == 0)
                 {
+
+                    IAccountingContext MyContext = AccountingContext.GetContext(tenant);
+
                     int count = 0;
-                    bool global_errors = false;
+                //    bool global_errors = false;
                     string text;
                     string text_44;
                     string text_2;
                     List<GLAccountPM> newOrUpdLines = new List<GLAccountPM>();
+                    _controlAccounts = new Hashtable();
                     foreach (GLAccountSrcLineDTO accLineDTO in _GLAccountSrcLinesDTO)
                     {
                         count++;
                         bool errors = false;
                         GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(MyContext);
                         GLAccountUpdateService gLAccountUpdateService = new GLAccountUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
-
+                        GLAccountPM cleanGLAccountPM = null;
                         GLAccountPM gLAccountPM = gLAccountQueryService.GetByInternalNumber(accLineDTO.InternalNumber, tenant);
                         if (gLAccountPM == null)
                         {
@@ -97,11 +104,12 @@ namespace Logitude.Accounting.BL.CoreBL
                         }
                         else
                         {
+                            cleanGLAccountPM = DeepCopy(gLAccountPM);
                             gLAccountPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
                         }
                         gLAccountPM.DisplayNumber = accLineDTO.DisplayNumber;
                         gLAccountPM.ExternalDisplayNumber = accLineDTO.DisplayNumber;
-                        if (gLAccountPM.IsMultiCurrency.HasValue)
+                        if (gLAccountPM.IsMultiCurrency.HasValue && gLAccountPM.IsMultiCurrency.Value != accLineDTO.IsMulti)
                         {
                             gLAccountPM.OldIsMultiCurrency = gLAccountPM.IsMultiCurrency.Value;
                         }
@@ -122,20 +130,32 @@ namespace Logitude.Accounting.BL.CoreBL
                         if (chart == null)
                         {
                             text = TranslateTextsClassTranslate("GLAccountsCSV.O.AccountLineNo", 0, useLocal);
+                            if (String.IsNullOrEmpty(text)) text = "Account Line #";
+
                             text_44 = TranslateTextsClassTranslate("GLAccountsCSV.O.NotFound", 0, useLocal);
+                            if (String.IsNullOrEmpty(text_44)) text_44 = "not found";
+
                             text_2 = TranslateTextsClassTranslate("GLAccountsCSV.O.ChartCode", 0, useLocal);
+                            if (String.IsNullOrEmpty(text_2)) text_2 = "Chart of Accounts Code";
+
                             this.AddErrorRow($"{text}{count} ({accLineDTO.InternalNumber}) {text_2} {text_44} ");
                             gLAccountPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.None;
                             errors = true;
                         }
                         else
                         {
-                            string chartType = chart.TypeCode; 
+                            string chartType = chart.TypeCode;
                             if (accLineDTO.ChartType != chartType)
                             {
                                 text = TranslateTextsClassTranslate("GLAccountsCSV.O.AccountLineNo", 0, useLocal);
+                                if (String.IsNullOrEmpty(text)) text = "Account Line #";
+
                                 text_44 = TranslateTextsClassTranslate("GLAccountsCSV.O.WrongM", 0, useLocal);
+                                if (String.IsNullOrEmpty(text_44)) text_44 = "wrong";
+
                                 text_2 = TranslateTextsClassTranslate("GLAccountsCSV.O.ChartType", 0, useLocal);
+                                if (String.IsNullOrEmpty(text_2)) text_2 = "Chart of Accounts Type";
+
                                 this.AddErrorRow($"{text}{count} ({accLineDTO.InternalNumber}) {text_2} {text_44} ");
                                 gLAccountPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.None;
                                 errors = true;
@@ -155,7 +175,36 @@ namespace Logitude.Accounting.BL.CoreBL
                                         break;
 
                                     case "6":
+                                        GLAccountPM controlPM;
                                         gLAccountPM.AccountTypeCode = "4";
+                                        if (_controlAccounts.ContainsKey(chart.Id))
+                                        {
+                                            controlPM = (GLAccountPM)_controlAccounts[chart.Id];
+                                        }
+                                        else
+                                        {
+                                            controlPM = gLAccountQueryService.GetControlGLAccountByChart(chart.Id, tenant);
+                                            _controlAccounts.Add(chart.Id, controlPM);
+                                        }
+                                        if (controlPM == null || String.IsNullOrEmpty(controlPM.Id))
+                                        {
+                                            text = TranslateTextsClassTranslate("GLAccountsCSV.O.AccountLineNo", 0, useLocal);
+                                            if (String.IsNullOrEmpty(text)) text = "Account Line #";
+
+                                            text_44 = TranslateTextsClassTranslate("GLAccountsCSV.O.NotFound", 0, useLocal);
+                                            if (String.IsNullOrEmpty(text_44)) text_44 = "not found";
+
+                                            text_2 = TranslateTextsClassTranslate("GLAccountsCSV.O.ControlAccount", 0, useLocal);
+                                            if (String.IsNullOrEmpty(text_2)) text_2 = "Control Account";
+
+                                            this.AddErrorRow($"{text}{count} ({accLineDTO.InternalNumber}) {text_2} {text_44} ");
+                                            gLAccountPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.None;
+                                            errors = true;
+                                        }
+                                        else
+                                        {
+                                            gLAccountPM.ControlAccountId = controlPM.Id;
+                                        }
                                         break;
 
                                     default:
@@ -193,80 +242,140 @@ namespace Logitude.Accounting.BL.CoreBL
 
                         }
 
-                        //    var taxReportLine = new GLAccountSrcLinePM()
-                        //    {
-                        //        ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
-                        //        Tenant = tenant,
-                        //        GLAccountSrcId = taxReportId,
-                        //        Line = nextLine,
-                        //        IsExternalLine = true,
-                        //        LineTypeCode = accLineDTO.LineTypeCode,
-                        //        Reference = accLineDTO.Reference,
-                        //        ReferenceDate = accLineDTO.ReferenceDate,
-                        //        VatNumber = accLineDTO.VatNumber,
-                        //        VatableInvoiceAmount = accLineDTO.VatableInvoiceAmount,
-                        //        VatAmount = accLineDTO.VatAmount,
-                        //        TotalInvoiceAmount = accLineDTO.VatableInvoiceAmount + accLineDTO.VatAmount,
-                        //        OutputOrInput = accLineDTO.OutputOrInput,
-                        //        ReferecneGroup = accLineDTO.ReferenceGroup,
-                        //        UpdatedByUserId = _contact.Id,
-                        //        //JournalId = "1-1027720",
-                        //        TransmitStatusCode = "1",
-                        //        IsEquipment = false,
-                        //        LastUpdateDateTime = DateTime.Now,
-                        //        GLAccountSrcDate = MyGLAccountSrcPM.GLAccountSrcMonth,
-                        //    };
 
-                        if (!errors)
+                        if (!errors && (gLAccountPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert
+                            || (gLAccountPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Update && IsRealUpdate(gLAccountPM, cleanGLAccountPM))))
                         {
                             newOrUpdLines.Add(gLAccountPM);
                         }
-                        else
-                        {
-                            global_errors = true;
-                        }
+                    //    else
+                    //    {
+                   //         global_errors = true;
+                    //    }
                     }
 
                     if (newOrUpdLines.Count == 0)
                     {
                         text_44 = TranslateTextsClassTranslate("GLAccountsCSV.O.NoLinesProcessed", 0, useLocal);
-                        throw new Exception($"{text_44}");
+                        if (String.IsNullOrEmpty(text_44)) text = "No Lines Processed";
+                        throw new ApplicationException($"{text_44}");
                     }
-
-                    GLAccountUpdateService updateService = new GLAccountUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
-                    //updateService.UpdateMulti(newOrUpdLines, null, null, true);
-                    newOrUpdLines.ForEach(accPM =>
+                    
+                    List<List<GLAccountPM>> chunks = newOrUpdLines.ChunkBy(50);
+                    chunks.ForEach(list =>
+                    {
+                        _startingInternal = "";
+                        _endingInternal = "";
+                        if (list.Count > 0)
                         {
-                            updateService.Update(accPM, true);
-                        });
+                            GLAccountPM startingPM = list.ElementAt(0);
+                            if (startingPM != null) _startingInternal = startingPM.InternalNumber;
 
-                    scope.Complete();
+                            GLAccountPM endingPM = list.ElementAt(list.Count - 1);
+                            if (endingPM != null) _endingInternal = endingPM.InternalNumber;
+                        }
+                        using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(55)))
+                        {
+
+                            GLAccountUpdateService updateService = new GLAccountUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
+                            list.ForEach(accPM =>
+                                {
+
+                                    updateService.Update(accPM, true);
+
+                                });
+                            scope.Complete();
+                        }
+                        _startingInternal = "";
+                        _endingInternal = "";
+
+                    });
 
                     if (MyCSVFlatFileLoadResult.ErrorRowList.Count > 0)
                     {
                         string text_1 = MyCSVFlatFileLoadResult.ErrorRowList.FirstOrDefault();
-                        throw new Exception($"{text_1}");
+                        throw new ApplicationException($"{text_1}");
                     }
-                    //    if (MyFlatFileLoadResult.ExceptionVendorList.Count > 0)
-                    //    {
-                    //        string text = MyFlatFileLoadResult.ExceptionVendorList.FirstOrDefault();
-                    //        throw new Exception($"{text}");
-                    //    }
-
 
 
                 }
+                else
+                {
+                    JournalPM journal = new JournalPM();
+                    String errorLines = "";
+                    MyCSVFlatFileLoadResult.ErrorRowList.ForEach(item => errorLines += item.ToString() + "\n");
+                    throw new ApplicationException($"{errorLines}");
 
+                }
             }
             catch (Exception e)
             {
-                string text = TranslateTextsClassTranslate("GLAccountsCSV.O.FailedWhilePerforming", 0, useLocal);
-
-                throw new Exception($"{text} ", e);
+                string text;
+                if (!String.IsNullOrEmpty(_startingInternal))
+                {
+                    text = $"chunk from { _startingInternal} to {_endingInternal }";
+                    throw new ApplicationException($"{text} ", e.InnerException);
+                }
+                else
+                    throw;
             }
 
+        }
 
+        private bool IsRealUpdate(GLAccountPM gLAccountPM, GLAccountPM cleanGLAccountPM)
+        {
+            bool rv;
+            rv = gLAccountPM.InternalNumber != cleanGLAccountPM.InternalNumber
+               | gLAccountPM.DisplayNumber != cleanGLAccountPM.DisplayNumber
+               | gLAccountPM.ExternalDisplayNumber != cleanGLAccountPM.ExternalDisplayNumber
+               | gLAccountPM.IsMultiCurrency != cleanGLAccountPM.IsMultiCurrency
 
+               | gLAccountPM.CurrencyCode != cleanGLAccountPM.CurrencyCode
+               | gLAccountPM.CurrencyId != cleanGLAccountPM.CurrencyId
+               | gLAccountPM.ChartOfAccountsId != cleanGLAccountPM.ChartOfAccountsId
+               | gLAccountPM.ChartOfAccountsTypeCode != cleanGLAccountPM.ChartOfAccountsTypeCode
+
+               | gLAccountPM.AccountTypeCode != cleanGLAccountPM.AccountTypeCode
+               | gLAccountPM.RevenueExpenseType != cleanGLAccountPM.RevenueExpenseType
+               | gLAccountPM.EnglishName != cleanGLAccountPM.EnglishName
+               | gLAccountPM.LocalName != cleanGLAccountPM.LocalName
+
+               | gLAccountPM.IsVATExempt != cleanGLAccountPM.IsVATExempt
+               | gLAccountPM.ReconcileMethodCode != cleanGLAccountPM.ReconcileMethodCode;
+            return rv;
+        }
+
+        public GLAccountPM DeepCopy(GLAccountPM other)
+        {
+            //using (MemoryStream ms = new MemoryStream())
+            //{
+            //    BinaryFormatter formatter = new BinaryFormatter();
+            //    formatter.Context = new StreamingContext(StreamingContextStates.Clone);
+            //    formatter.Serialize(ms, other);
+            //    ms.Position = 0;
+            //    return (GLAccountPM)formatter.Deserialize(ms);
+            //}
+            GLAccountPM gLAccCopy = new GLAccountPM();
+
+            gLAccCopy.InternalNumber = other.InternalNumber;
+            gLAccCopy.DisplayNumber = other.DisplayNumber;
+            gLAccCopy.ExternalDisplayNumber = other.ExternalDisplayNumber;
+            gLAccCopy.IsMultiCurrency = other.IsMultiCurrency;
+
+            gLAccCopy.CurrencyCode = other.CurrencyCode;
+            gLAccCopy.CurrencyId = other.CurrencyId;
+            gLAccCopy.ChartOfAccountsId = other.ChartOfAccountsId;
+            gLAccCopy.ChartOfAccountsTypeCode = other.ChartOfAccountsTypeCode;
+
+            gLAccCopy.AccountTypeCode = other.AccountTypeCode;
+            gLAccCopy.RevenueExpenseType = other.RevenueExpenseType;
+            gLAccCopy.EnglishName = other.EnglishName;
+            gLAccCopy.LocalName = other.LocalName;
+
+            gLAccCopy.IsVATExempt = other.IsVATExempt;
+            gLAccCopy.ReconcileMethodCode = other.ReconcileMethodCode;
+
+            return (gLAccCopy);
         }
 
         static string ConvertFromDosHebrewToWinHebrew(string FileContent862)
@@ -339,7 +448,7 @@ namespace Logitude.Accounting.BL.CoreBL
                                 string text_3 = TranslateTextsClassTranslate("GLAccountsCSV.O.AccountLine", 0, useLocal);
                                 string text_44 = TranslateTextsClassTranslate("GLAccountsCSV.O.AppearsBefore", 0, useLocal);
                                 string text_2 = TranslateTextsClassTranslate("GLAccountsCSV.O.HeaderType", 0, useLocal);
-                                throw new Exception($"{text_3} {rowtype} {text_44} {text_2} {Opening_LineDTO.RowType} ");
+                                throw new ApplicationException($"{text_3} {rowtype} {text_44} {text_2} {Opening_LineDTO.RowType} ");
                             }
                             GLAccountSrcLineDTO taxLine = GLAccountSrcLineDTO.Create(rawLine);
                             GLAccountSrcLines.Add(taxLine);
@@ -348,7 +457,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         else
                         {
                             string text = TranslateTextsClassTranslate("GLAccountsCSV.O.NotValidRowType", 0, useLocal);
-                            throw new Exception($"{text}  {rawLine}");
+                            throw new ApplicationException($"{text}  {rawLine}");
                         }
                         break;
                 }
@@ -389,19 +498,19 @@ namespace Logitude.Accounting.BL.CoreBL
             var myFullAccountingSettingPM = myFullAccountingSettingQueryService.GetSingleFullAccountingSetting(tenant);
             if (myFullAccountingSettingPM == null)
             {
-                throw new Exception("No FullAccountingSettingPM  for tenant ");
+                throw new ApplicationException("No FullAccountingSettingPM  for tenant ");
             }
             //if (string.IsNullOrWhiteSpace(myFullAccountingSettingPM.DeductionFileNumber))
             //{
             //    text = TranslateTextsClassTranslate("GLAccountsCSV.O.DeductionFileNumber", 0, useLocal);
             //    // Deduction File Number is undefined.
-            //    throw new Exception(text);
+            //    throw new ApplicationException(text);
             //}
             return myFullAccountingSettingPM;
         }
 
 
-        private void ValidateFlatFile()
+        private void ValidateFlatFile(int tenant)
         {
             string text;
             string text_2;
@@ -410,13 +519,13 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 text = TranslateTextsClassTranslate("GLAccountsCSV.O.HeaderLine", 0, useLocal);
                 text_2 = TranslateTextsClassTranslate("GLAccountsCSV.O.NotEncountered", 0, useLocal);
-                throw new Exception($"{text} {Opening_LineDTO.RowType} {text_2}  ");
+                throw new ApplicationException($"{text} {Opening_LineDTO.RowType} {text_2}  ");
             }
             //if (Closing_Line == null)
             //{
             //    text = TranslateTextsClassTranslate("GLAccountsCSV.O.StartingRowType", 0, useLocal);
             //    text_2 = TranslateTextsClassTranslate("GLAccountsCSV.O.NotEncountered", 0, useLocal);
-            //    throw new Exception($"{text} {Closing_LineDTO.RowType} {text_2}  ");
+            //    throw new ApplicationException($"{text} {Closing_LineDTO.RowType} {text_2}  ");
             //}
 
             //if (Closing_Line.DeductionFileNum != Opening_Line.DeductionFileNum)
@@ -424,7 +533,7 @@ namespace Logitude.Accounting.BL.CoreBL
             //    text = TranslateTextsClassTranslate("GLAccountsCSV.O.StartingRowDeductionFile", 0, useLocal);
             //    text_44 = TranslateTextsClassTranslate("GLAccountsCSV.O.DiffersFrom", 0, useLocal);
             //    text_2 = TranslateTextsClassTranslate("GLAccountsCSV.O.FinishingRowDeductionFile", 0, useLocal);
-            //    throw new Exception($"{text} {Closing_Line.DeductionFileNum} {text_44}{text_2} {Opening_Line.DeductionFileNum} ");
+            //    throw new ApplicationException($"{text} {Closing_Line.DeductionFileNum} {text_44}{text_2} {Opening_Line.DeductionFileNum} ");
             //}
             //string myDeduc = _FullAccountingSettingPM.DeductionFileNumber.Replace(" ", "").PadLeft(9, '0').Substring(0, 9);
             //if (Closing_Line.DeductionFileNum != myDeduc)
@@ -432,13 +541,13 @@ namespace Logitude.Accounting.BL.CoreBL
             //    text = TranslateTextsClassTranslate("GLAccountsCSV.O.StartingRowDeductionFile", 0, useLocal);
             //    text_44 = TranslateTextsClassTranslate("GLAccountsCSV.O.DiffersFrom", 0, useLocal);
             //    text_2 = TranslateTextsClassTranslate("GLAccountsCSV.O.OurDeductionFile", 0, useLocal);
-            //    throw new Exception($"{text} {Closing_Line.DeductionFileNum} {text_44}{text_2} {myDeduc} ");
+            //    throw new ApplicationException($"{text} {Closing_Line.DeductionFileNum} {text_44}{text_2} {myDeduc} ");
             //}
 
             //if (Opening_Line.TotalInvalidRecords + Opening_Line.TotalValidRecords != Opening_Line.TotalVendorNumber)
             //{
             //    text = TranslateTextsClassTranslate("GLAccountsCSV.O.FinishingRowTotals", 0, useLocal);
-            //    throw new Exception($"{text} {Opening_Line.TotalInvalidRecords} + {Opening_Line.TotalValidRecords} != {Opening_Line.TotalVendorNumber} ");
+            //    throw new ApplicationException($"{text} {Opening_Line.TotalInvalidRecords} + {Opening_Line.TotalValidRecords} != {Opening_Line.TotalVendorNumber} ");
             //}
 
             //if (Opening_Line.TotalValidRecords != _VendorLinesDTO.Count)
@@ -446,7 +555,7 @@ namespace Logitude.Accounting.BL.CoreBL
             //    text = TranslateTextsClassTranslate("GLAccountsCSV.O.FinishingRowTotalVendors", 0, useLocal);
             //    text_44 = TranslateTextsClassTranslate("GLAccountsCSV.O.DiffersFrom", 0, useLocal);
             //    text_2 = TranslateTextsClassTranslate("GLAccountsCSV.O.CountVendorRows", 0, useLocal);
-            //    throw new Exception($"{text} {Opening_Line.TotalValidRecords} {text_44}{text_2} {_VendorLinesDTO.Count}");
+            //    throw new ApplicationException($"{text} {Opening_Line.TotalValidRecords} {text_44}{text_2} {_VendorLinesDTO.Count}");
             //}
 
 
@@ -456,56 +565,116 @@ namespace Logitude.Accounting.BL.CoreBL
                 if (String.IsNullOrEmpty(accLine.InternalNumber))
                 {
                     text = TranslateTextsClassTranslate("GLAccountsCSV.O.AccountLineNo", 0, useLocal);
+                    if (String.IsNullOrEmpty(text)) text = "Account Line #";
+
                     text_44 = TranslateTextsClassTranslate("GLAccountsCSV.O.IsMissing", 0, useLocal);
+                    if (String.IsNullOrEmpty(text_44)) text_44 = "is missing";
+                    
                     text_2 = TranslateTextsClassTranslate("GLAccountsCSV.O.InternalNumber", 0, useLocal);
+                    if (String.IsNullOrEmpty(text_2)) text_2 = "Internal Number";
+                    
                     this.AddErrorRow($"{text}{count} {text_2} {text_44}");
                 }
+
+
                 if (String.IsNullOrEmpty(accLine.DisplayNumber))
                 {
                     text = TranslateTextsClassTranslate("GLAccountsCSV.O.AccountLineNo", 0, useLocal);
+                    if (String.IsNullOrEmpty(text)) text = "Account Line #";
+
                     text_44 = TranslateTextsClassTranslate("GLAccountsCSV.O.IsMissing", 0, useLocal);
+                    if (String.IsNullOrEmpty(text_44)) text_44 = "is missing";
+
                     text_2 = TranslateTextsClassTranslate("GLAccountsCSV.O.DisplayNumber", 0, useLocal);
+                    if (String.IsNullOrEmpty(text_2)) text_2 = "Display Number";
+
                     this.AddErrorRow($"{text}{count} {text_2} {text_44}");
                 }
+
+
                 if (String.IsNullOrWhiteSpace(accLine.LocalName) && String.IsNullOrWhiteSpace(accLine.EnglishName))
                 {
                     text = TranslateTextsClassTranslate("GLAccountsCSV.O.AccountLineNo", 0, useLocal);
+                    if (String.IsNullOrEmpty(text)) text = "Account Line #";
+
                     text_44 = TranslateTextsClassTranslate("GLAccountsCSV.O.IsMissing", 0, useLocal);
+                    if (String.IsNullOrEmpty(text_44)) text_44 = "is missing";
+
                     text_2 = TranslateTextsClassTranslate("GLAccountsCSV.O.LocalName", 0, useLocal);
+                    if (String.IsNullOrEmpty(text_2)) text_2 = "Local Name";
+
                     this.AddErrorRow($"{text}{count} ({accLine.InternalNumber}) {text_2} {text_44}");
                 }
+
+
                 if (String.IsNullOrEmpty(accLine.ChartCode))
                 {
                     text = TranslateTextsClassTranslate("GLAccountsCSV.O.AccountLineNo", 0, useLocal);
+                    if (String.IsNullOrEmpty(text)) text = "Account Line #";
+
                     text_44 = TranslateTextsClassTranslate("GLAccountsCSV.O.IsMissing", 0, useLocal);
+                    if (String.IsNullOrEmpty(text_44)) text_44 = "is missing";
+
                     text_2 = TranslateTextsClassTranslate("GLAccountsCSV.O.ChartCode", 0, useLocal);
+                    if (String.IsNullOrEmpty(text_2)) text_2 = "Chart of Accounts Code";
+
                     this.AddErrorRow($"{text}{count} ({accLine.InternalNumber}) {text_2} {text_44} ");
                 }
+
+
                 if (!accLine.IsMulti && String.IsNullOrEmpty(accLine.CurrencyCode))
                 {
                     text = TranslateTextsClassTranslate("GLAccountsCSV.O.AccountLineNo", 0, useLocal);
+                    if (String.IsNullOrEmpty(text)) text = "Account Line #";
+
                     text_44 = TranslateTextsClassTranslate("GLAccountsCSV.O.IsMissing", 0, useLocal);
+                    if (String.IsNullOrEmpty(text_44)) text_44 = "is missing";
+
                     text_2 = TranslateTextsClassTranslate("GLAccountsCSV.O.CurrencyCode", 0, useLocal);
+                    if (String.IsNullOrEmpty(text_2)) text_2 = "Currency Code";
+
                     this.AddErrorRow($"{text}{count} ({accLine.InternalNumber}) {text_2} {text_44} ");
                 }
+
+
                 if (!accLine.IsMulti && accLine.CurrencyCode == "##")
                 {
                     text = TranslateTextsClassTranslate("GLAccountsCSV.O.AccountLineNo", 0, useLocal);
+                    if (String.IsNullOrEmpty(text)) text = "Account Line #";
+
                     text_44 = TranslateTextsClassTranslate("GLAccountsCSV.O.IsMissing", 0, useLocal);
+                    if (String.IsNullOrEmpty(text_44)) text_44 = "is missing";
+
                     text_2 = TranslateTextsClassTranslate("GLAccountsCSV.O.CurrencyCode", 0, useLocal);
+                    if (String.IsNullOrEmpty(text_2)) text_2 = "Currency Code";
+
                     this.AddErrorRow($"{text}{count} ({accLine.InternalNumber}) {text_2} {text_44} ");
                 }
+
+
                 if (accLine.IsMulti && !String.IsNullOrEmpty(accLine.CurrencyCode) && accLine.CurrencyCode != "##")
                 {
                     text = TranslateTextsClassTranslate("GLAccountsCSV.O.AccountLineNo", 0, useLocal);
+                    if (String.IsNullOrEmpty(text)) text = "Account Line #";
+
                     text_44 = TranslateTextsClassTranslate("GLAccountsCSV.O.AccountIsaMulti", 0, useLocal);
+                    if (String.IsNullOrEmpty(text_44)) text_44 = "The account is defined as multi currency account";
+
                     this.AddErrorRow($"{text}{count} ({accLine.InternalNumber}) {text_44} ");
                 }
+
+
                 if (accLine.RecoMethod == "1" && (accLine.IsMulti || accLine.CurrencyCode == "NIS"))
                 {
                     text = TranslateTextsClassTranslate("GLAccountsCSV.O.AccountLineNo", 0, useLocal);
+                    if (String.IsNullOrEmpty(text)) text = "Account Line #";
+
                     text_44 = TranslateTextsClassTranslate("GLAccountsCSV.O.Wrong", 0, useLocal);
+                    if (String.IsNullOrEmpty(text_44)) text_44 = "wrong";
+
                     text_2 = TranslateTextsClassTranslate("GLAccountsCSV.O.ReconciliationMethod", 0, useLocal);
+                    if (String.IsNullOrEmpty(text_2)) text_2 = "Reconciliation Method";
+
                     this.AddErrorRow($"{text}{count} ({accLine.InternalNumber}) {text_2} {text_44} ");
                 }
 
@@ -546,7 +715,7 @@ namespace Logitude.Accounting.BL.CoreBL
             if (!rawLine.StartsWith(RowType))
             {
                 string text = TranslateTextsClassTranslate("GLAccountsCSV.O.DoesntStartWithHeaderLine", 0, useLocal);
-                throw new Exception($"{text} {RowType} ");
+                throw new ApplicationException($"{text} {RowType} ");
             }
 
             var rec = new Opening_LineDTO();
@@ -579,7 +748,7 @@ namespace Logitude.Accounting.BL.CoreBL
             if (!rawLine.StartsWith(RowType))
             {
                 string text = TranslateTextsClassTranslate("GLAccountsCSV.O.DoesntStartWithRowType", 0, useLocal);
-                throw new Exception($"{text} {RowType} ");
+                throw new ApplicationException($"{text} {RowType} ");
             }
 
             var rec = new Closing_LineDTO();
@@ -654,7 +823,7 @@ namespace Logitude.Accounting.BL.CoreBL
             if (!startsWithRowTypeOk || actualRowType == "")
             {
                 string text = TranslateTextsClassTranslate("GLAccountsCSV.O.DoesntStartWithCoAType", 0, useLocal);
-                throw new Exception($"{text} {RowType.ToString()} ");
+                throw new ApplicationException($"{text} {RowType.ToString()} ");
             }
 
             var rec = new GLAccountSrcLineDTO();
@@ -738,7 +907,6 @@ namespace Logitude.Accounting.BL.CoreBL
 
             return rec;
         }
-
 
     }
 

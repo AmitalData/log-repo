@@ -26,12 +26,14 @@ import { DownloadManager } from '../../../Infrastructure/Utilities/DownloadManag
 import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
 import { ServiceLocator } from '../../../Infrastructure/Locators/ServiceLocator';
 import { DocumentsFilingExtendedPMService } from '../../../Common/Services/ExtendedPMs/DocumentsFilingExtendedPMService';
+import { AddEditLogboxShipmentService } from '../../../ShipmentModules/ShipmentLogBox/Services/AddEditLogboxShipmentService';
+import { CustomerTenantAccessRequestExtendedPMService } from '../../../Common/Services/ExtendedPMs/CustomerTenantAccessRequestExtendedPMService';
 
 
 declare var window, SetHtmlToFrame: any;
 
 @Component({
-    
+
     templateUrl: './FilingInboxWorkspaceComponent.html',
 })
 
@@ -66,6 +68,9 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
     public IsDSVConnectEnable: boolean = false;
     public IsHebrewSettings = false;
     public _documentsFilingExtendedPMService: DocumentsFilingExtendedPMService;
+    public IsClear = false;
+    public IsFromCompleteFiling = false;
+
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
@@ -157,7 +162,7 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
             this.IsLogBox = true;
         }
 
-        if (SessionLocator.PrivateLableSettings) {
+        if (SessionLocator.PrivateLableSettings && SessionLocator.PrivateLableSettings.PrivateLabelShortName.toLocaleLowerCase() == "dsv") {
             this.IsDSVConnectVisible = true;
         }
         else {
@@ -287,11 +292,25 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
             if (myResult != null && !myResult.HasError) {
                 var domain = ObjectsLocator.GlobalSetting.DocumentFilingEmailDomain;
                 if (SessionLocator.PrivateLableSettings) {
-                    domain = "inbox.dsv.co.il";
+                    domain = this.GetPrivateLableSettingsDomain(SessionLocator.PrivateLableSettings);
                 }
+
                 this.SettingsDomain = myResult.Result != null ? myResult.Result.DocumentFilingInbox + "@" + domain : "";
             }
         });
+    }
+
+    GetPrivateLableSettingsDomain(privateLableSetting: any) {
+        var isDSVTenant = SessionLocator.PrivateLableSettings?.PrivateLabelDomain.toLowerCase().indexOf("dsv") > -1;
+        if (isDSVTenant) {
+            return "inbox.dsv.co.il";
+        }
+
+        if (!AppTool.IsNullOrEmpty(privateLableSetting?.FilingInboxDomain)) {
+            return privateLableSetting.FilingInboxDomain;
+        }
+
+        return privateLableSetting?.PrivateLabelDomain;
     }
 
     //Fill DocumentTypeList 
@@ -317,7 +336,7 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
                     }
                 }
                 else {
-                
+
                     tempName = (tempList[0].substring(0, 1) + tempList[1].substring(0, 1) + tempList[2].substring(0, 1));
                     if (tempName != null) {
                         tempName = tempName.toUpperCase();
@@ -351,7 +370,7 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
         this.CurrentSession.StartBusyIndicatorLoading();
         this.myCommonDomainService.GetFilingInboxes(this.filters, this.myUserId, this.IsShowDeletedEnabled).subscribe((response: ServiceResponse) => {
             if (!response.HasError) {
-               
+
                 var result: FilingInboxPM[] = response.Result;
 
                 if (result != null && !AppTool.IsNullOrEmpty(this.searchFields)) {
@@ -598,6 +617,7 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
 
     }
     FirstPageWork() {
+        this.IsClear = true;
         this.ClearConnectToFilter();
         this.PageIndex = 1;
         this.QueryPageIndex = 0;
@@ -645,6 +665,7 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
         }
     }
     PreviosButtonWork() {
+        this.IsClear= true;
         this.ClearConnectToFilter();
         this.PageIndex = this.PageIndex - 1;
         this.QueryPageIndex = this.QueryPageIndex - 50;
@@ -692,6 +713,7 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
         }
     }
     NextPageWork() {
+        this.IsClear = true;
         this.ClearConnectToFilter();
         this.PageIndex = this.PageIndex + 1;
         this.QueryPageIndex = this.QueryPageIndex + 50;
@@ -739,6 +761,7 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
         }
     }
     LastPageWork() {
+        this.IsClear = true;
         this.ClearConnectToFilter();
         this.PageIndex = this.TotalPagesCount;
         this.QueryPageIndex = (this.TotalPagesCount - 1) * this.pageSize;
@@ -804,6 +827,7 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
     get SelectedConnectToFilter() { return this.mySelectedConnectToFilter; }
     set SelectedConnectToFilter(value: string) {
         if (this.mySelectedConnectToFilter != value) {
+            this.IsClear = true;
             this.ClearConnectToFilter();
             this.mySelectedConnectToFilter = value;
             this.GetConnectToFilterLabel();
@@ -889,7 +913,8 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
                 this.Customer = entity.ShipperName;
             }
 
-            if (AppTool.IsNullOrEmpty(entity.ForwarderShipmentNumber) && !AppTool.IsNullOrEmpty(entity.StatusName) && entity.StatusName.toLocaleLowerCase() != "in progress") {
+            var isDSVTenant = SessionLocator.PrivateLableSettings?.PrivateLabelDomain.toLowerCase().indexOf("dsv") > -1;
+            if (AppTool.IsNullOrEmpty(entity.ForwarderShipmentNumber) && isDSVTenant) {
                 this.IsDSVConnectEnable = true;
             }
             else {
@@ -1021,10 +1046,13 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
 
     ClearConnectToFilter() {
         this.QuickSearchItems = [];
-        this.EntityNumber = null
-        this.Route = null;
-        this.Customer = null;
-        this.EntityId = null;
+        if (this.IsClear) {
+            this.EntityNumber = null;
+            this.EntityId = null;
+            this.Route = null;
+            this.Customer = null;
+        }
+
         this.IsDSVConnectEnable = false;
         if (this.SelectedFilingInbox != null) {
             this.SelectedFilingInbox.FilingInboxAttachments.forEach(item => {
@@ -1116,6 +1144,7 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
         if (this.selectedFilingInbox != value) {
 
             var hasChanges = false;
+            this.IsClear = !this.IsFromCompleteFiling;
             if (this.selectedFilingInbox != null) {
                 this.selectedFilingInbox.FilingInboxAttachments.forEach(item => {
                     if (!AppTool.IsNullOrEmpty(item.DocumentTypeId)) {
@@ -1157,6 +1186,7 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
     SetSelectedFilingInbox(value: FilingInboxData) {
         this.ClearConnectToFilter();
         this.selectedFilingInbox = value;
+        this.IsFromCompleteFiling = false;
         this.EmailBody = value != null ? value.FilingInboxPM.EmailBody : "";
         this.FilingInboxAttachments = value != null ? value.FilingInboxAttachments : [];
         this.isMailBody = false;
@@ -1220,6 +1250,7 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
         this.IsVisible = false;
         this.LoadAllData();
     }
+
     FileButtonClicked() {
         if (this.SelectedFilingInbox != null) {
             this.CurrentSession.StartBusyIndicator("Filing ...");
@@ -1416,6 +1447,8 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
         summary.FilingId = this.SelectedFilingInbox.FilingInboxPM.Id;
         this.myCommonDomainService.PutFilingInboxLogs(summary).subscribe((response: ServiceResponse) => {
             if (!response.HasError) {
+                this.IsClear = false;
+                this.IsFromCompleteFiling = !summary.IsDeleted;
                 this.ClearConnectToFilter();
                 this.IsVisible = false;
                 this.LoadAllData();
@@ -1453,7 +1486,7 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
                             windowArgs.SourceEntity = myResult.Result;//this.rowData;
                             windowArgs.HasSharedDocs = hasSharedDocs;
                             newWindow.WindowArgs = windowArgs;
-                          newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/ForwarderShipmentsComponent');
+                            newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/ForwarderShipmentsComponent');
                         });
                     }
                 }
@@ -1469,18 +1502,15 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
     private entityResourceService: EntityResourceService;
     NewShipmentClicked() {
         this.entityResourceService.getEntityResourceByTableName("Shipment", 0).subscribe((response:any) => {
-            var newWindow = new LogitudeWindow();
+            let newWindow = new LogitudeWindow();
             newWindow.Width = 600;
             newWindow.Height = 350;
             newWindow.Title = "Create New Shipment";
             var windowArgs: any = {};
             windowArgs.IsNew = true;
             newWindow.WindowArgs = windowArgs;
-            if (SessionLocator.PrivateLableSettings) {
-              newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/AddEditPrivateLabelShipmentComponent');
-            }
-            else if (ObjectsLocator.GlobalSetting.DeploymentStage == "logboxwe1" || ObjectsLocator.GlobalSetting.DeploymentStage == "Test2") {
-              newWindow.Show('./ShipmentModules/ShipmentLogBox/Components/Logbox/AddEditImporterShipmentComponent');
+            if (SessionLocator.PrivateLableSettings || ObjectsLocator.GlobalSetting.DeploymentStage == "logboxwe1" || ObjectsLocator.GlobalSetting.DeploymentStage == "Test2") {
+                this.OpenNewLogboxShipment();
             }
             else {
 
@@ -1490,29 +1520,56 @@ export class FilingInboxWorkspaceComponent extends BaseComponent implements OnIn
                 newWindow.Width = 960;
                 newWindow.Height = 570;
                 newWindow.Show('./Shipment/Components/NewShipment/NewShipmentComponent');
+                this.HandleNewShipmentWindowClosed(newWindow);
             }
+        });
+    }
 
-            newWindow.ComponentLoaded.subscribe(s => {
-                newWindow.WindowClosed.subscribe(d => {
-                    var shipment = s.EntityPM;
-                    if (shipment != null) {
-                        this.EntityId = shipment.Id;
-                        if ((ObjectsLocator.GlobalSetting.DeploymentStage == "logboxwe1" || ObjectsLocator.GlobalSetting.DeploymentStage == "Test2") || SessionLocator.PrivateLableSettings) {
-                            this.EntityNumber = AppTool.IsNullOrEmpty(shipment.ForwarderShipmentNumber) ? shipment.CustomerReference1 : shipment.ForwarderShipmentNumber;
-                            if (AppTool.IsNullOrEmpty(shipment.ForwarderShipmentNumber) && !AppTool.IsNullOrEmpty(shipment.StatusName) && shipment.StatusName.toLocaleLowerCase() != "in progress") {
-                                this.IsDSVConnectEnable = true;
-                            }
-                            else {
-                                this.IsDSVConnectEnable = false;
-                            }
+    private HandleNewShipmentWindowClosed(newWindow: LogitudeWindow) {
+        newWindow.ComponentLoaded.subscribe(s => {
+            newWindow.WindowClosed.subscribe(d => {
+                var shipment = s.EntityPM;
+                if (shipment != null) {
+                    this.EntityId = shipment.Id;
+                    if ((ObjectsLocator.GlobalSetting.DeploymentStage == "logboxwe1" || ObjectsLocator.GlobalSetting.DeploymentStage == "Test2") || SessionLocator.PrivateLableSettings) {
+                        this.EntityNumber = AppTool.IsNullOrEmpty(shipment.ForwarderShipmentNumber) ? shipment.CustomerReference1 : shipment.ForwarderShipmentNumber;
+                        if (AppTool.IsNullOrEmpty(shipment.ForwarderShipmentNumber) && !AppTool.IsNullOrEmpty(shipment.StatusName) && shipment.StatusName.toLocaleLowerCase() != "in progress") {
+                            this.IsDSVConnectEnable = true;
                         }
                         else {
-                            this.EntityNumber = shipment.ShipmentNumber;
+                            this.IsDSVConnectEnable = false;
                         }
                     }
-                });
+                    else {
+                        this.EntityNumber = shipment.ShipmentNumber;
+                    }
+                }
             });
         });
+    }
+
+    private OpenNewLogboxShipment() {
+        if (!SessionLocator.PrivateLableSettings) {
+            this.ShowNewLogboxShipment(null);
+            return;
+        }
+
+        this.CurrentSession.StartBusyIndicatorLoading();
+        let customerTenantAccessRequestExtendedPMService: CustomerTenantAccessRequestExtendedPMService = new CustomerTenantAccessRequestExtendedPMService();
+        customerTenantAccessRequestExtendedPMService.getByForwarderId(SessionLocator.Tenant, SessionLocator.PrivateLableSettings.HybridPartnerId).subscribe((serviceResponse: any) => {
+            this.CurrentSession.StopBusyIndicator();
+            if (!serviceResponse.HasError) {
+                this.ShowNewLogboxShipment(serviceResponse.Result);
+            }
+        });
+    }
+
+    private ShowNewLogboxShipment(customerTenantAccessRequestPartner) {
+        let addEditLogboxShipmentService: AddEditLogboxShipmentService = new AddEditLogboxShipmentService(customerTenantAccessRequestPartner);
+        let newWindowArgs: any = [];
+        newWindowArgs.HideDocumentSection = true;
+        let newWindow: LogitudeWindow = addEditLogboxShipmentService.GetNewShipmentWindow(newWindowArgs);
+        this.HandleNewShipmentWindowClosed(newWindow);
     }
 
     IsStopPreviewHtml: boolean = false;

@@ -112,10 +112,15 @@ export class DeliveryPackagesTabComponent {
             this.IsEditingEnabled = ShipmentTool.IsEditingEnabled(this.ShipmentPM);
         }
 
+        if (this.IsShipmentStatuesDelivered()) {
+            this.IsEditingEnabled = false;
+        }
+
         this.IsAddContainerVisible = false;
         if (this.IsFCLEntity) {
-            var featureToggle: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "OIC")[0];
-            if (featureToggle) {
+            //var featureToggle: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "OIC")[0];
+            //if (featureToggle) {
+            if (FeatureLocator.HasFeaturePermession("Container", "ContainersActivated")) {
                 this.IsAddContainerVisible = true;
                 this.IsEditingEnabled = false;
             }
@@ -133,6 +138,21 @@ export class DeliveryPackagesTabComponent {
                 this.IsEditingEnabled = false;
             }
         }
+    }
+
+    private IsShipmentStatuesDelivered() {
+        var deliverdStausName = "Delivered";
+        var IsDeliveryOptionsEnabled = SessionLocator.TenantPM != null ? SessionLocator.TenantPM.EnableDeliveryOptions : false;
+
+        if (!IsDeliveryOptionsEnabled) {
+            return false;
+        }
+
+        if (this.ShipmentPM.StatusName == (deliverdStausName)) {
+            return true;
+        }
+
+        return false;
     }
 
     public SelectedItem: DeliveryPackageItem = null;
@@ -218,12 +238,22 @@ export class DeliveryPackagesTabComponent {
             confirmWindow.WindowClosed.subscribe((event: any) => {
                 if (confirmWindow.Yes) {
                     this.EntityPM.RemovePackage(itemComponent.EntityPM);
+                    //this.RemoveConnectedShipmentPackage(itemComponent.EntityPM);
                     this.BuildItemsSource();
                     this.SetUIProperties();
                 }
             });
         }
     }
+
+    //RemoveConnectedShipmentPackage(pickUpDeliveryPackagePM: ShipmentPickUpDeliveryPackagePM) {
+    //     var shipmentPackage = this.ShipmentPM?.ShipmentPackages?.find(p =>
+    //         (p.ContainerNumber == pickUpDeliveryPackagePM.ContainerNumber) && !AppTool.IsNullOrEmpty(pickUpDeliveryPackagePM.ContainerNumber)
+    //         && AppTool.IsNullOrEmpty(pickUpDeliveryPackagePM.ContainerEntityId))
+    //     if (shipmentPackage != null) {
+    //        this.ShipmentPM.RemovePackage(shipmentPackage);
+    //     }
+    //} 
 
     CopyFromReleasesPackages() {
         var windowArgs: any = {};
@@ -307,10 +337,10 @@ export class DeliveryPackagesTabComponent {
         var entityArgs: EntityArgs = new EntityArgs();
         entityArgs.EntityPM = this.ShipmentPM;
         entityArgs.ObjectTableName = "Shipment";
-        entityArgs.IsFromStandAloneScreen  = true;
+        //entityArgs.IsFromStandAloneScreen  = true;
         var packagesTabComponent: PackagesTabComponent = new PackagesTabComponent(entityArgs, new EntityResourceService());
         packagesTabComponent.ngOnInit();
-        packagesTabComponent.IsEditingEnabled = AppTool.IsNullOrEmpty(this.EntityPM.StandaloneShipmentId) ? true : false;
+        packagesTabComponent.IsEditingEnabled = AppTool.IsNullOrEmpty(this.EntityPM.StandaloneShipmentId) ? this.IsEditingEnabled : false;
         var itemComponent = new ShipmentPackageItem(shipmentPackage, packagesTabComponent, false);
         logWindow.Width = 940;
         logWindow.Height = 610;

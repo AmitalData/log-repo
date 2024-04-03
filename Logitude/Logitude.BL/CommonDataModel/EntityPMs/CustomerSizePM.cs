@@ -28,6 +28,10 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [DataMember]
         public bool InActive { get; set; }
 
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        [DataMember]
+        public string Code { get; set; }
+
         [DataMember]
         public string SearchFields { get; set; }  
     }

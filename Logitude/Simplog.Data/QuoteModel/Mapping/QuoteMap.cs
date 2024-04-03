@@ -19,8 +19,11 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.ShipperReference2).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.ConsigneeReference1).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.ConsigneeReference2).HasMaxLength(50).IsUnicode(false);
+            this.Property(t => t.NotifyReference1).HasMaxLength(50).IsUnicode(false);
+            this.Property(t => t.NotifyReference2).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.LastVersionNumber).IsRequired();
             this.Property(t => t.Notes).HasMaxLength(500).IsUnicode(true);
+            this.Property(t => t.QuoteClosingReasonNotes).HasMaxLength(500).IsUnicode(true);
             this.Property(t => t.DescriptionOfGoods).HasMaxLength(512).IsUnicode(true);
          
             //#if ORACLE_DB
@@ -92,11 +95,11 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.ToPartnerAddressId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.FromAddressId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.FromAddressCountryId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.FromAddressCity).HasMaxLength(25).IsUnicode(true);
+            this.Property(t => t.FromAddressCity).HasMaxLength(40).IsUnicode(true);
             this.Property(t => t.FromAddressZipCode).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ToAddressId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ToAddressCountryId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.ToAddressCity).HasMaxLength(25).IsUnicode(true);
+            this.Property(t => t.ToAddressCity).HasMaxLength(40).IsUnicode(true);
             this.Property(t => t.ToAddressZipCode).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.QuoteClosingReasonCode).HasMaxLength(2).IsUnicode(false);
             this.Property(t => t.QuoteClosingReasonId).HasMaxLength(15).IsUnicode(false);
@@ -106,6 +109,7 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(d => d.BusinessUnitId).HasMaxLength(50).IsUnicode(false);
             this.Property(t => t.Subject).HasMaxLength(200).IsUnicode(true);
             this.Property(d => d.StageId).IsRequired().HasMaxLength(15).IsUnicode(false);
+            this.Property(d => d.ValidByTypeCode).HasMaxLength(3).IsUnicode(false);
             this.Property(d => d.RatingCode).IsRequired().HasMaxLength(1).IsUnicode(false);
             this.Property(d => d.LastActivityTypeCode).HasMaxLength(2).IsUnicode(false);
             this.Property(d => d.NextActivityTypeCode).HasMaxLength(2).IsUnicode(false);
@@ -142,6 +146,15 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.ProfitCurrencyId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ShipmentSubTypeId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.RegionalTaxId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.SpecialServicesTypeId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.ConsigneeNotImporterId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.ConsigneeNotImporterAddressId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.ConsigneeNotImporterContactId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.ConsigneeNotImporterReference).HasMaxLength(50).IsUnicode(false);
+            this.Property(t => t.ShipperNotExporterId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.ShipperNotExporterContactId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.ShipperNotExporterAddressId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.ShipperNotExporterReference).HasMaxLength(50).IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("Quotes");
@@ -331,6 +344,26 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.RegionalTaxId).HasColumnName("RegionalTaxId");
             this.Property(t => t.RegionalTaxPercentage).HasColumnName("RegionalTaxPercentage");
             this.Property(t => t.DescriptionRightToLeft).HasColumnName("DescriptionRightToLeft");
+            this.Property(t => t.NotifyReference1).HasColumnName("NotifyReference1");
+            this.Property(t => t.NotifyReference2).HasColumnName("NotifyReference2");
+            this.Property(t => t.PackagesQuantity).HasColumnName("PackagesQuantity");
+            this.Property(t => t.SpecialServicesTypeId).HasColumnName("SpecialServicesTypeId");
+            this.Property(t => t.ValidByTypeCode).HasColumnName("ValidByTypeCode");            
+            this.Property(t => t.SpecialServicesTypeId).HasColumnName("SpecialServicesTypeId");
+            this.Property(t => t.IncludeInsurance).HasColumnName("IncludeInsurance");
+            this.Property(t => t.IsStackable).HasColumnName("IsStackable");
+            this.Property(t => t.IncludeImportDutyCharges).HasColumnName("IncludeImportDutyCharges");
+            this.Property(t => t.InsuranceValue).HasColumnName("InsuranceValue");
+            this.Property(t => t.ConnectedToOpportunity).HasColumnName("ConnectedToOpportunity");
+            this.Property(t => t.ConsigneeNotImporterId).HasColumnName("ConsigneeNotImporterId");
+            this.Property(t => t.ConsigneeNotImporterAddressId).HasColumnName("ConsigneeNotImporterAddressId");
+            this.Property(t => t.ConsigneeNotImporterContactId).HasColumnName("ConsigneeNotImporterContactId");
+            this.Property(t => t.ConsigneeNotImporterReference).HasColumnName("ConsigneeNotImporterReference");
+            this.Property(t => t.ShipperNotExporterAddressId).HasColumnName("ShipperNotExporterAddressId");
+            this.Property(t => t.ShipperNotExporterContactId).HasColumnName("ShipperNotExporterContactId");
+            this.Property(t => t.ShipperNotExporterReference).HasColumnName("ShipperNotExporterReference");
+            this.Property(t => t.QuoteClosingReasonNotes).HasColumnName("QuoteClosingReasonNotes");
+
 
             // Relationships
             this.HasOptional(t => t.FromPartnerAddress).WithMany().HasForeignKey(d => d.FromPartnerAddressId);
@@ -388,7 +421,14 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.HasOptional(t => t.ProfitCurrency).WithMany().HasForeignKey(d => d.ProfitCurrencyId);
             this.HasOptional(t => t.ShipmentSubType).WithMany().HasForeignKey(d => d.ShipmentSubTypeId);
             this.HasOptional(t => t.RegionalTax).WithMany().HasForeignKey(d => d.RegionalTaxId);
-
+            this.HasOptional(d => d.SpecialServicesType).WithMany().HasForeignKey(d => d.SpecialServicesTypeId);
+            this.HasOptional(t => t.ValidByType).WithMany().HasForeignKey(d => d.ValidByTypeCode);
+            this.HasOptional(t => t.ConsigneeNotImporterAddress).WithMany().HasForeignKey(d => d.ConsigneeNotImporterAddressId);
+            this.HasOptional(t => t.ConsigneeNotImporterCard).WithMany().HasForeignKey(d => d.ConsigneeNotImporterId);
+            this.HasOptional(t => t.ConsigneeNotImporterContact).WithMany().HasForeignKey(d => d.ConsigneeNotImporterContactId);
+            this.HasOptional(t => t.ShipperNotExporterAddress).WithMany().HasForeignKey(d => d.ShipperNotExporterAddressId);
+            this.HasOptional(t => t.ShipperNotExporterCard).WithMany().HasForeignKey(d => d.ShipperNotExporterId);
+            this.HasOptional(t => t.ShipperNotExporterContact).WithMany().HasForeignKey(d => d.ShipperNotExporterContactId);
         }
     }
 }

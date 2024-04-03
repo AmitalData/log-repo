@@ -34,6 +34,10 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPOCO.Subject = entityPM.Subject;
             entityPOCO.ReplyTo = entityPM.ReplyTo;
             entityPOCO.From = entityPM.From;
+
+            entityPOCO.ObjectTableId = entityPM.ObjectTableId;
+            entityPOCO.EntityId = entityPM.EntityId;
+
             //  entityPOCO.CurrentVersion = entityPM.CurrentVersion;
 
         }

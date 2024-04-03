@@ -26,6 +26,16 @@ namespace Logitude.BL.GlobalModel.EntityLists
         public string ForgetPasswordImageId { get; set; }
         public string SecondaryColor { get; set; }
         public bool HasLogboxAccess { get; set; }
+        public string MainTabHighlightColor { get; set; }
+        public string DocumentTypeHighlightColor { get; set; }
+
+        public bool IsCustomsActivated { get; set; }
+        public bool IsExportActivated { get; set; }
+        public string QueryFiltersHighlightColor { get; set; }
+        public bool CreateShipmentsWithoutDocs { get; set; }
+        public bool CreateOShipmentsWithoutDocs { get; set; }
+        public string FilingInboxDomain { get; set; }
+        public string DistributorCode { get; set; }
 
     }
 }

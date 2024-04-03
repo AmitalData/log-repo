@@ -63,7 +63,29 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                        Amount = a.Amount,
                        LineNumber = a.LineNumber,
                        ChargeableDays = a.ChargeableDays,
-                   }).ToList();
+                   }).OrderBy(a => a.Id).ToList();
+
+            return storagePricings;
+        }
+        public IQueryable<ShipmentStoragePricingPM> GetShipmentStoragePricingsIQueryable(int tenant)
+        {
+            IQueryable<ShipmentStoragePricingPM> storagePricings
+                = (from a in repository.context.ShipmentStoragePricings
+                   where a.Tenant == tenant
+                   select new ShipmentStoragePricingPM()
+                   {
+                       Id = a.Id,
+                       Tenant = a.Tenant,
+                       ShipmentId = a.ShipmentId,
+                       WarehouseId = a.WarehouseId,
+                       StepFrom = a.StepFrom,
+                       StepTo = a.StepTo,
+                       Days = a.Days,
+                       SalePrice = a.SalePrice,
+                       Amount = a.Amount,
+                       LineNumber = a.LineNumber,
+                       ChargeableDays = a.ChargeableDays,
+                   });
 
             return storagePricings;
         }

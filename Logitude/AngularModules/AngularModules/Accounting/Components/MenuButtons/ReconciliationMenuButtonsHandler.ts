@@ -14,6 +14,7 @@ import {Validator} from '../../../Infrastructure/Validators/Validator';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {ConfirmWindow} from '../../../Controls/Windows/ConfirmWindow';
+import { JournalExtendedListService } from 'Accounting/Services/ExtendedLists/JournalExtendedListService';
 
 
 export class ReconciliationMenuButtonsHandler {
@@ -22,11 +23,25 @@ export class ReconciliationMenuButtonsHandler {
     public TenantPM: TenantPM;
     public ObjectTableName: string = "Reconciliation"
     private CurrentSession = SessionLocator.SelectedSession;
-
+    journalExtendedListService: JournalExtendedListService = new JournalExtendedListService();
+    private reconciliationJournals:[];
     public SetEntityPM(entityArgs: EntityArgs) {
         this.TenantPM = SessionLocator.TenantPM;
         this.entityArgs = entityArgs;
         this.EntityPM = entityArgs.EntityPM;
+        this.GetReconciliationJournal();
+    }
+
+    private GetReconciliationJournal() {
+
+        this.journalExtendedListService.GetJournalsByAccountingEntityId(this.EntityPM.Id,"10").subscribe((myResponse: ServiceResponse) => {
+            if (myResponse) {
+                if (myResponse.Result) {
+                    this.reconciliationJournals = myResponse.Result;
+                }
+            }
+
+        });
     }
 
     public CheckButtonState(menuButtons: MenuButtonPM[]) {
@@ -77,6 +92,9 @@ export class ReconciliationMenuButtonsHandler {
                         {
                             this.EntityPM.IsCancelled = true;
                             this.entityArgs.EditComponent.SaveChanges();
+                            if(this.reconciliationJournals && this.reconciliationJournals.length > 0) {
+                                this.showReconcCancelWarningWindows();
+                            }
                         }
                     });
 
@@ -84,9 +102,6 @@ export class ReconciliationMenuButtonsHandler {
                 }
 
         }  
-
-
-        
     }
 
     private StartBusyIndicator(message: string) {
@@ -96,4 +111,9 @@ export class ReconciliationMenuButtonsHandler {
     private StopBusyIndicator() {
         this.CurrentSession.StopBusyIndicator();
     }
+    private showReconcCancelWarningWindows() {
+        var window = new MessageWindow();
+        window.Show(TextCodeTranslator.Translate("Accounting.General.O.ReconcCancelWarning"));
+    }
+    
 }

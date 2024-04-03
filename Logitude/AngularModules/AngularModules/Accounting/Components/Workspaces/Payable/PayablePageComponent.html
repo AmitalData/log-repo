@@ -32,7 +32,7 @@
 
                     <td style="width: 390px;">
                         <!-- ObjectTableName = CardGLAccount to filter items by accountTypeCode in CommonDomainController.cs -->
-                        <SearchBox [Watermark]="'Accounting.General.O.AccountNoName' | TextCodeTranslationPipe" [DropDownWidth]="390" [ObjectTableName]="'VendorGLAccount'" [IsQuickSearch]="true" (ItemClicked)="EditGLAccount($event)"></SearchBox>
+                        <SearchBox [Watermark]="'Accounting.General.O.AccountNoName' | TextCodeTranslationPipe" [DropDownWidth]="430" [ObjectTableName]="'VendorGLAccount'" [IsQuickSearch]="true" (ItemClicked)="EditGLAccount($event)"></SearchBox>
                     </td>
 
                     <td>
@@ -82,16 +82,6 @@
                                                         <tr>
                                                             <td>
                                                                 <table>
-                                                                    <!--<tr>
-                                                                        <td style="width:190px;">
-                                                                            <p class="QueryLink" *ngIf="collectorsGLAVisibility" (click)="ViewVendorQuery('MyVendorsAsCollectors')"> My Vendors (As Collector) ({{glAccountSummary.CollectorsCount}})</p>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td style="width:190px;">
-                                                                            <p class="QueryLink" *ngIf="debetorsGLAVisibility" (click)="ViewVendorQuery('DebetorsVendors')"> Debtors Vendors ({{glAccountSummary.DebitorsCount}})</p>
-                                                                        </td>
-                                                                    </tr>-->
                                                                     <tr>
                                                                         <td style="width:190px;">
                                                                             <p class="QueryLink" *ngIf="activeVendorsGLAVisibility" (click)="ViewVendorQuery('ActiveVendorsGLAccounts')"> {{'GLAccounts.Q.ActiveVendors' | TextCodeTranslationPipe}} </p>
@@ -126,7 +116,7 @@
                                             <div class="QueriesSection">
                                                 <div>{{'Accounting.General.O.APInvoices' | TextCodeTranslationPipe}}</div>
                                                 <div [style.right]="isRTL ? 'initial' : '2px'" [style.left]="isRTL ? '2px' : 'initial'" style="height:22px; width: 45px; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; position: absolute; top:2px;">
-                                                    <button id="{{'NewAPInvoice' | IdGeneratorPipe}}" class="Button" (click)="NewGeneralAPInvoice()">{{'Accounting.General.O.New' | TextCodeTranslationPipe}}</button>
+                                                    <button id="{{'NewAPInvoice' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="NewGeneralAPInvoice()">{{'Accounting.General.O.New' | TextCodeTranslationPipe}}</button>
                                                 </div>
                                                 <!--<div>
                                                     <p class="QueryLink" (click)="ViewInvoiceQuery('APInvoice:Draft General APInvoices')">{{'APInvoice.Q.DraftGeneralInvoices' | TextCodeTranslationPipe}}</p>
@@ -146,18 +136,18 @@
                                             <div class="QueriesSection" style="color: #58B8FF;">
                                                 <div>{{'Accounting.General.O.APPayments' | TextCodeTranslationPipe}}</div>
                                                 <div [style.right]="isRTL ? 'initial' : '2px'" [style.left]="isRTL ? '2px' : 'initial'" style="height:22px; width: 45px; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; position: absolute; top:2px;">
-                                                    <button id="{{'NewAPPayment' | IdGeneratorPipe}}" class="Button" (click)="NewAPPaymentMethod()">{{'Accounting.General.O.New' | TextCodeTranslationPipe}}</button>
+                                                    <button id="{{'NewAPPayment' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="NewAPPaymentMethod()">{{'Accounting.General.O.New' | TextCodeTranslationPipe}}</button>
                                                 </div>
                                                 <div>
                                                     <table>
                                                         <tr>
                                                             <td>
                                                                 <table>
-                                                                    <!--<tr>
+                                                                    <tr *ngIf="APPaymentsDraftPermission">
                                                                         <td style="width:190px;">
                                                                             <p class="QueryLink" (click)="ViewInvoiceQuery('APPayment:Draft Payments')"> {{'APPayment.Q.DraftAPPayments' | TextCodeTranslationPipe}}  ({{APPaymentsDraftsCount}})</p>
                                                                         </td>
-                                                                    </tr>-->
+                                                                    </tr>
                                                                     <tr>
                                                                         <td style="width:190px;">
                                                                             <p class="QueryLink" (click)="ViewInvoiceQuery('APPayment:Open Payments')"> {{'APPayment.Q.OpenAPPayments' | TextCodeTranslationPipe}}  </p>

@@ -60,6 +60,16 @@ export class CounterDefinitionPM {
     public get Suffix() { return this.suffix; }
     public set Suffix(newValue: string) { if (this.suffix != newValue) { this.suffix = newValue; this.MarkAsDirty("Suffix"); } }
 
+    private inActive: boolean;
+    public get InActive() { return this.inActive; }
+    public set InActive(newValue: boolean) { if (this.inActive != newValue) { this.inActive = newValue; this.MarkAsDirty("InActive"); } }
+    private usePerBranch: boolean;
+    public get UsePerBranch() { return this.usePerBranch; }
+    public set UsePerBranch(newValue: boolean) { if (this.usePerBranch != newValue) { this.usePerBranch = newValue; this.MarkAsDirty("UsePerBranch"); } }
+
+    private isCustomized: boolean;
+    public get IsCustomized() { return this.isCustomized; }
+    public set IsCustomized(newValue: boolean) { if (this.isCustomized != newValue) { this.isCustomized = newValue; this.MarkAsDirty("IsCustomized"); } }
 
     public OldEntityPM: CounterDefinitionPM;
 

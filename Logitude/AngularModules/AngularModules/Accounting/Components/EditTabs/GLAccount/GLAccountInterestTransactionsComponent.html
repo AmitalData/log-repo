@@ -1,0 +1,109 @@
+<!-- Header -->
+<table style="height: 130px;">
+
+    <!-- Filters -->
+    <tr class="FormFieldRow">
+        <td>
+            <table style="table-layout: fixed;">
+                <tr>
+                    <td style="width:10px"></td>
+                    <td style="width: 100px;" text-start>
+                        {{'Accounting.General.O.FilterBy' | TextCodeTranslationPipe}}
+                    </td>
+
+                    <td style="width: 250px;">
+                        <ul class="FiltersMenu" [class.aboodRTLFilterMenu]="isRTL" float-start>
+                            <li float-start id="filter_Interest" (click)="FilterItemClicked('filter_Interest')" style="height: 22px;" [class.SelectedFilter]="dateFilterSelectedValue === 'filter_Interest'">
+                                {{'GLAccount.O.Filter.Interest' | TextCodeTranslationPipe}}
+                            </li>
+                            <li float-start id="filter_Accounting" (click)="FilterItemClicked('filter_Accounting')" style="height: 22px;" [class.SelectedFilter]="dateFilterSelectedValue === 'filter_Accounting'">
+                                {{'GLAccount.O.Filter.Accounting' | TextCodeTranslationPipe}}
+                            </li>
+                            <li float-start id="filter_Create" (click)="FilterItemClicked('filter_Create')" style="height: 22px;" [class.SelectedFilter]="dateFilterSelectedValue === 'filter_Create'">
+                                {{'GLAccount.O.Filter.Create' | TextCodeTranslationPipe}}
+                            </li>
+                        </ul>
+                    </td>
+
+                    <td style="width:15px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 90px;">
+                        <LogDatePicker [ObjectFieldName]="'FromDate'" [ObjectTableName]="ObjectTableName" [NoObjectField]="true" [ForceSubscribe]="true" [DataContext]="DataContext" [HideColumns]="true" [SelectedDateValue]="FromDate">
+                        </LogDatePicker>
+                    </td>
+
+                    <td style="width:15px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 30px;" text-start>
+                        {{ 'Accounting.General.O.To' | TextCodeTranslationPipe }}
+                    </td>
+
+                    <td style="width: 90px;">
+                        <LogDatePicker [ObjectFieldName]="'ToDate'" [ObjectTableName]="ObjectTableName" [NoObjectField]="true" [ForceSubscribe]="true" [DataContext]="DataContext" [HideColumns]="true" [SelectedDateValue]="ToDate">
+                        </LogDatePicker>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td></td>
+                    <td text-start>
+                        {{'GLAccount.O.InterestReport' | TextCodeTranslationPipe}}
+                    </td>
+
+                    <td>
+                        <div style="width: 110px; display: inline-block;" float-start>
+                            <ComboBox [ItemsSource]="InterestReports" [Binding]="'ReportNumber'" [SelectedItem]="SelectedInterestReport" (SelectedItemChanged)="SelectedInterestReport = $event"></ComboBox>
+                        </div>
+                        <div style="display: inline-block; padding: 0 10px;" *ngIf="SelectedInterestReport" float-start>
+                            <IconButton [Name]="'delete'" (click)="SelectedInterestReport = null"></IconButton>
+                        </div>
+                    </td>
+
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <!-- Toolbar -->
+    <tr class="FormFieldRow">
+        <td colspan="5">
+            <div float-end style="width: 220px;padding: 0 5px;">
+                <SearchTextBox [ObjectTableName]="'LedgerTransaction'" [PlaceHolder]="'Journal No. / Ref./ Amount'" (SearchTextChangeEvent)="TextChanged($event)"></SearchTextBox>
+            </div>
+            <div float-end>
+                <IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"></IconButton>
+            </div>
+            <div float-end>
+                <IconButton style="margin: 0 5px;" [style.float]="isRTL ? 'right' : 'left'" [Name]="'excel'" [Left]="isRTL ? 3:-3" (click)="ExportToExcelClick()"></IconButton>
+            </div>
+
+        </td>
+    </tr>
+</table>
+
+
+
+<!-- Grid -->
+<div class="flex-container">
+
+    <div style="flex-grow: 1000;">
+        <div class="GeneratedGridContainer">
+            <logitude-grid-v2 GridWidth="100%" GridHeight="100%" [ObjectTable]="ObjectTableName" [dataSource]="DataSource" [MenuHeaderchangeevent]="MenuHeaderchangeEvent" [columns]="columns" [autoLoad]="true" [QueryChangeEvent]="QueryChangeEvent" (DataLoaded)="OnDataLoaded($event)"
+                [IsCustomTemplate]="true">
+            </logitude-grid-v2>
+
+        </div>
+    </div>
+
+</div>

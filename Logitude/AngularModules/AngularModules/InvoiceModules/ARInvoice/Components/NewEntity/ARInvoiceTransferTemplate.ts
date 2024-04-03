@@ -38,6 +38,7 @@ export class ARInvoiceTransferTemplate extends BaseComponent {
     }
     public InitTemplate(entity: ARInvoicePM) {
         this.EntityPM = entity;
+        this.IsAutoUpdatingFields = true;
         this.BuildList();
     }
     public SetWindowArgs(args: any) {
@@ -304,7 +305,7 @@ export class ARInvoiceTransferLineArgs extends BaseComponent {
                     this.EditingFieldName = "DebitAccount";
                     this.DescriptionTitle = "Bill To";
                     this.DescriptionValue = this.invoicePM.BillToName;
-                    this.DescriptionHelp = "Please enter debit account";
+                    this.DescriptionHelp = "Please enter credit account";
                     break;
                 }
 
@@ -474,7 +475,7 @@ export class ARInvoiceTransferLineArgs extends BaseComponent {
         });
     }
     private GetCardDataBySplit() {
-        this.invoiceDomainService.GetCardCurrenciesAccountingByCurrencyAndId(this.invoicePM.BillToId, this.invoicePM.InvoiceCurrencyId, true).subscribe((response: ServiceResponse) => {
+        this.invoiceDomainService.GetCardCurrenciesAccountingByCurrencyAndId(this.invoicePM.BillToId, this.invoicePM.InvoiceCurrencyId, false).subscribe((response: ServiceResponse) => {
             if (!response.HasError) {
                 this.EditingFieldValue = response.Result;
             }

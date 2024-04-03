@@ -12,12 +12,19 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
 {
   public  class AutomationSLAResultService : GeneralAutomationResultService, IAutomationResultService
     {
+        public string ResultCode { get { return "SETSLA"; } }
+
+        public List<AutomationQueueArgs> AutomationQueues { get; set; }
+
+        public bool DependencyOnLastEntityUpdate { get { return false; } }
 
         AutomationResultArgs automationResultArgs { get; set; }
         public void Run(AutomationResultArgs automationResultArgs)
         {
             this.automationResultArgs = automationResultArgs;
-            List<Automation> setSLAAutomationsList = automationResultArgs.AutomationLists.Where(d => d.ResultCode == "SETSLA").ToList();
+            AutomationQueues = new List<AutomationQueueArgs>();
+
+            List<Automation> setSLAAutomationsList = automationResultArgs.AutomationLists.Where(d => d.ResultCode == ResultCode).ToList();
             if (setSLAAutomationsList.Count > 0)
             {
 

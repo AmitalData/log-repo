@@ -8,7 +8,7 @@
                         <td>{{'CarrierArea.O.Areas' | TextCodeTranslationPipe}}</td>
 
                         <td style="width: 1px;">
-                            <button id="{{'addArea' | IdGeneratorPipe}}" class="Button" (click)="AddCarrierAreaClicked()">{{'CarrierArea.B.NewArea' | TextCodeTranslationPipe}}</button>
+                            <button id="{{'addArea' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="AddCarrierAreaClicked()">{{'CarrierArea.B.NewArea' | TextCodeTranslationPipe}}</button>
                         </td>
                     </tr>
                 </table>

@@ -34,6 +34,13 @@ export function AssertElementNotExist(selector: string) {
     cy.get(selector).should("not.exist");
 }
 
+export function AssertElementNotVisible(selector: string) {
+    cy.get(selector).should("not.be.visible");
+}
+
+export function AssertElementVisible(selector: string) {
+    cy.get(selector).should("be.visible");
+}
 //be.disable | not.be.disable
 export function AssertElementDisabled(selector: string, condition: string) {
     cy.get(selector).should(condition);

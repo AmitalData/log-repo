@@ -238,14 +238,14 @@ namespace CommunicationWorkerRole
 
                                                     };
                                                     datainByte = storageservice.Read(fileInfo);
-                                                   
+
                                                 }
-                                                ObjectTableRepository repo = new ObjectTableRepository(tenant);
-                                                var Otable = repo.GetSingleObjectTable(DocumentFilingPM.ObjectTableId,tenant,true);
+                                                bool isShipmentOrder = ImporterShipment.IsShipmentOrder;
+                                                ObjectTable entityObjectTable = GetEntityObjectTable(DocumentFilingPM, tenant, isShipmentOrder);
                                                 var tableName = "";
-                                                if(Otable != null)
+                                                if (entityObjectTable != null)
                                                 {
-                                                    tableName = Otable.Name;
+                                                    tableName = entityObjectTable.Name;
                                                 }
                                                 if (IsNew)
                                                 {
@@ -256,7 +256,7 @@ namespace CommunicationWorkerRole
                                                         ForwarderDocumentId = DocumentFilingPM.ForwarderDocumentId,
                                                         EntityId = ImporterShipment.ForwarderShipmentNumber,
                                                         DontAddToQueue = true,
-                                                        DocumentTypeCode = DocumentFilingPM.DocumentTypeCode,
+                                                        DocumentTypeCode = GetDocumentTypeCode(isShipmentOrder, DocumentFilingPM.DocumentTypeCode),
                                                         DirectionCode = DocumentFilingPM.DirectionCode,
                                                         CreatedByUserId = User.Id,
                                                         UpdatedByUserId = User.Id,
@@ -265,7 +265,7 @@ namespace CommunicationWorkerRole
                                                         DocumentsFilingMetaDataValues = new List<DocumentsFilingMetaDataValuePM>(),
                                                         HasFile = DocumentFilingPM.HasFile,
                                                         //DocumentId = DocumentFilingPM.DocumentId,
-                                                        ObjectTableId = DocumentFilingPM.ObjectTableId,
+                                                        ObjectTableId = isShipmentOrder && entityObjectTable != null ? entityObjectTable.Id : DocumentFilingPM.ObjectTableId,
                                                         ObjectTableName = tableName,
                                                         ChildEntityId = DocumentFilingPM.ChildEntityId,
                                                         ChildEntityReference = DocumentFilingPM.ChildEntityReference,
@@ -432,7 +432,7 @@ namespace CommunicationWorkerRole
                                                         ForwarderDocumentId = DocumentFilingPM.ForwarderDocumentId,
                                                         EntityId = ImporterShipment.ForwarderShipmentNumber,
                                                         DontAddToQueue = true,
-                                                        DocumentTypeCode = DocumentFilingPM.DocumentTypeCode,
+                                                        DocumentTypeCode = GetDocumentTypeCode(isShipmentOrder, DocumentFilingPM.DocumentTypeCode),
                                                         DirectionCode = DocumentFilingPM.DirectionCode,
                                                         CreatedByUserId = User.Id,
                                                         UpdatedByUserId = User.Id,
@@ -441,7 +441,7 @@ namespace CommunicationWorkerRole
                                                         DocumentsFilingMetaDataValues = new List<DocumentsFilingMetaDataValuePM>(),
                                                         HasFile = DocumentFilingPM.HasFile,
                                                         //DocumentId = DocumentFilingPM.DocumentId,
-                                                        ObjectTableId = DocumentFilingPM.ObjectTableId,
+                                                        ObjectTableId = isShipmentOrder && entityObjectTable != null ? entityObjectTable.Id : DocumentFilingPM.ObjectTableId,
                                                         ObjectTableName = tableName,
                                                         ChildEntityId = DocumentFilingPM.ChildEntityId,
                                                         ChildEntityReference = DocumentFilingPM.ChildEntityReference,
@@ -557,7 +557,7 @@ namespace CommunicationWorkerRole
                                                     {
                                                         apiLogsService = new APILogsService(webFreightContext, tenant);
                                                         LogPM.QueueMessage = DictionaryJsonConverter.FromDictionaryToJson((Dictionary<string,string>)response.MessageValues);
-                                                        LogPM.QueueType = "SharedDocument"; 
+                                                        LogPM.QueueType = "SharedDocument";
                                                         apiLogsService.Create(LogPM);
                                                     }
                                                     var msg = "Start Sending Document Updates To Forwarder " + DateTime.Now;
@@ -688,6 +688,25 @@ namespace CommunicationWorkerRole
                     Thread.Sleep(60000);
                 }
             }
+        }
+
+        private string GetDocumentTypeCode(bool isShipmentOrder, string documentTypeCode)
+        {
+            const string shipmentOrderCodePrefix = "SO";
+            return isShipmentOrder && !documentTypeCode.StartsWith(shipmentOrderCodePrefix) ? shipmentOrderCodePrefix + documentTypeCode : documentTypeCode;
+        }
+
+        private ObjectTable GetEntityObjectTable(DocumentsFilingPM DocumentFilingPM, int tenant, bool isShipmentOrder)
+        {
+            ObjectTableRepository objectTableRepository = new ObjectTableRepository(tenant);
+            const string shipmentOrderTableName = "ShipmentOrder";
+            if (isShipmentOrder)
+            {
+                return objectTableRepository.GetObjectTableByName(shipmentOrderTableName, tenant, true);
+            }
+            return objectTableRepository.GetSingleObjectTable(DocumentFilingPM.ObjectTableId, tenant, true);
+
+
         }
 
         private void ConnectClient()

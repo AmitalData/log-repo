@@ -1,0 +1,93 @@
+
+
+
+<style>
+    .SimpleGridViewRow:hover {
+        color: black;
+        cursor: pointer;
+        border: 1px solid #85CBED;
+        background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(221, 232, 245, 1) 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
+        background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(221, 232, 245, 1) ));
+        background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
+        -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFFFFF', endColorstr='#DDE8F5' ,GradientType=0)";
+        background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
+    }
+
+    .Selected {
+        background: -moz-linear-gradient(50% 119.23% 90deg,rgba(133, 203, 237, 1) 0%,rgba(232, 247, 255, 1) 100%);
+        background: -webkit-linear-gradient(90deg, rgba(133, 203, 237, 1) 0%, rgba(232, 247, 255, 1) 100%);
+        background: linear-gradient(0deg, rgba(133, 203, 237, 1) 0%, rgba(232, 247, 255, 1) 100%);
+    }
+
+        .Selected:hover {
+            background: -moz-linear-gradient(50% 119.23% 90deg,rgba(133, 203, 237, 1) 0%,rgba(232, 247, 255, 1) 100%);
+            background: -webkit-linear-gradient(90deg, rgba(133, 203, 237, 1) 0%, rgba(232, 247, 255, 1) 100%);
+            background: linear-gradient(0deg, rgba(133, 203, 237, 1) 0%, rgba(232, 247, 255, 1) 100%);
+        }
+
+    .ObjectField {
+        height: 60px;
+        width: 100%;
+        background-color: gainsboro;
+        margin-bottom: 3px;
+    }
+
+        .ObjectField:hover {
+            height: 60px;
+            width: 100%;
+            background-color: gray;
+            margin-bottom: 3px;
+        }
+
+    .MyObjectField {
+        height: 60px;
+        min-width:178px;
+        width: 97%;
+        background-color: gainsboro;
+        margin: 3px;
+    }
+
+        .MyObjectField:hover {
+            height: 60px;
+            width: 97%;
+            background-color: gray;
+            margin: 3px;
+        }
+</style>
+<table style="border:solid 1px silver">
+    <tr>
+        <td attr.data-cy="{{'Column_' +column}}" style="width:216px;border-right:dashed 1px silver;vertical-align: top;" *ngFor="let item of ScreenLayoutComponent.ScreenRows; let column = index">
+            <div (drop)="ScreenLayoutComponent.onMyDrop($event,item,column)" dropzone="true" (dragover)="ScreenLayoutComponent.onMyDragEnter($event)" style="position:absolute;top:0;bottom:0;left:0;right:0;overflow:auto;">
+                <div name="listItem" class="MyObjectField PreventSelect" *ngFor="let item1 of item.ObjectFieldPMs; let row = index" draggable="true" (dragstart)="ScreenLayoutComponent.OnScreenFieldDragStart($event,item1)" [attr.row]="row" [attr.column]="column">
+                    <table attr.data-cy="{{item1.FullNameTextCodeDefaultText}}">
+                        <tr>
+                            <td>
+                                <table>
+                                    <tr style="height:1px;">
+                                        <td class="GridViewCell TextTrimming" style="width: 178px; min-width: 178px; max-width: 178px; font-size:11px">
+                                            {{item1 != null ? item1.FullNameTextCodeDefaultText : ''}}
+                                        </td>
+                                    </tr>
+                                    <tr style="height:1px;">
+                                        <td class="GridViewCell TextTrimming" style="width: 178px; min-width: 178px; max-width: 178px; font-size: 11px ">
+                                            ({{item1 != null ? item1.PMPropertyPath : ''}})
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td style="width:30px;height:60px;">
+                                <img class="DeleteButton RightCenter" style="right: 4px;cursor: pointer;" src="Images/RedX.png" (click)="ScreenLayoutComponent.OnDeleteField(item1)" />
+                            </td>
+                        </tr>
+                        </table>
+                </div>
+            </div>
+        </td>
+        <td></td>
+    </tr>
+</table>

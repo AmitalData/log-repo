@@ -1,0 +1,13 @@
+﻿<Script DBType="Main" Module="Tariff" AOT="true" TargetTableName="TariffLines">
+  <Sql Version="1">
+    <![CDATA[
+    
+update TariffLines Set UnitOfMeasurementCode = 'KG' where TariffId in (select id from Tariffs  where TypeCode in ('AFC','OLC')) and $LastCounterWhere$
+
+    ]]>
+  </Sql>
+</Script>
+
+
+
+

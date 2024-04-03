@@ -167,5 +167,14 @@ namespace Logitude.Infrastructure.BL.ExtendedServices
             LogMessagingUtil.Instance.AppendLine("CreateQBatchTaskExecution:taskExe.Id:" + taskExe.Id);
             return taskExe.Id;
         }
+
+        public T GetArgs<T>()
+        {
+            string xmlParameters = BatchTaskExecution.PrametersXml;
+            System.IO.StringReader stringReader = new System.IO.StringReader(xmlParameters);
+            XmlSerializer serializer = new XmlSerializer(typeof(T));
+            T args = (T)serializer.Deserialize(stringReader);
+            return args;
+        }
     }
 }

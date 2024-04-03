@@ -159,7 +159,7 @@ namespace Logitude.TariffModule.BL.Helpers
                 //containerType4Id = shipment.PackageTypeId4;
                 //containerType5Id = shipment.PackageTypeId5;
 
-                if (tariffType == "OFC")
+                if (tariffType == "OFC" || tariffType == "IFT")
                 {
                     this.SetContainersInitialValues(shipment);
                 }
@@ -261,7 +261,7 @@ namespace Logitude.TariffModule.BL.Helpers
 
             IQueryable<TariffLine> iQueryable = this.tariffRepository.GetAllTariffLines(tenant);
 
-            if (tariffType == "OFC")
+            if (tariffType == "OFC" || tariffType == "IFT")
             {
                 myResult = this.GetTariffSearchSummary_FCL(iQueryable);
             }
@@ -279,7 +279,7 @@ namespace Logitude.TariffModule.BL.Helpers
             IQueryable<TariffLine> iQueryable = this.tariffRepository.GetAllTariffLinesByTariffId(freightTariffId, tenant);
             int count = iQueryable.Count();
 
-            if (tariffType == "OFC")
+            if (tariffType == "OFC" || tariffType == "IFT")
             {
                 myResult = this.GetTariffSearchSummary_FCL(iQueryable);
             }
@@ -293,11 +293,16 @@ namespace Logitude.TariffModule.BL.Helpers
         
         private List<TariffSearchSummary> GetTariffSearchSummary(IQueryable<TariffLine> iQueryable)
         {
-            List<TariffSearchSummary> tariffSearchSummaries = new List<TariffSearchSummary>();            
-            iQueryable = iQueryable.Where(p => p.OriginPortId == fromPort && p.DestinationPortId == toPort 
+            List<TariffSearchSummary> tariffSearchSummaries = new List<TariffSearchSummary>();
+            iQueryable = iQueryable.Where(p => p.OriginPortId == fromPort && p.DestinationPortId == toPort
                                         && System.Data.Entity.DbFunctions.TruncateTime(p.StartDate) <= System.Data.Entity.DbFunctions.TruncateTime(betweenDate)
-                                        && (p.ExpirationDate != null ? (System.Data.Entity.DbFunctions.TruncateTime(p.ExpirationDate) >= System.Data.Entity.DbFunctions.TruncateTime(betweenDate)) : true) 
-                                        && (viaPort != null ? p.ViaPortId == viaPort : true));            
+                                        && (p.ExpirationDate != null ? (System.Data.Entity.DbFunctions.TruncateTime(p.ExpirationDate) >= System.Data.Entity.DbFunctions.TruncateTime(betweenDate)) : true));
+
+            if (!string.IsNullOrEmpty(viaPort))
+            {
+                iQueryable = iQueryable.Where(p => p.ViaPortId != null ? p.ViaPortId == viaPort : true);
+            }
+
             List<string> tariffids = iQueryable.Select(p => p.TariffId).Distinct().ToList();
             TariffSettingRepository tariffSettingRepository = new TariffSettingRepository(tenant);
             List<TariffSetting> setting = tariffSettingRepository.GetAll(tenant).ToList();
@@ -344,235 +349,23 @@ namespace Logitude.TariffModule.BL.Helpers
                 }
             }
 
-            List<Tariff> TariffListTemp = this.tariffRepository.GetAllTariff(tariffids.ToArray(), tenant).Where(p => !p.InActive && p.TypeCode == tariffType).ToList();
+            List<Tariff> costTariffs = this.tariffRepository.GetAllTariff(tariffids.ToArray(), tenant).Where(p => !p.InActive && p.TypeCode == tariffType).ToList();
 
-            if (TariffListTemp.Count > 0)
+            if (costTariffs.Count > 0)
             {
                 if (string.IsNullOrEmpty(currencyId))
                 {
-                    currencyId = TariffListTemp.FirstOrDefault().CurrencyId;
+                    currencyId = costTariffs.FirstOrDefault().CurrencyId;
                 }
             }
 
             if (!string.IsNullOrEmpty(product) && tariffType == "AFC")
             {
-                TariffListTemp = TariffListTemp.Where(p => p.TariffProductId == product).ToList();
+                costTariffs = costTariffs.Where(p => p.TariffProductId == product).ToList();
             }
 
-            if (TariffListTemp != null && TariffListTemp.Count > 0)
-            {
-                TariffListTemp.ForEach(itemStep =>
-                {
-                    int initialPropIndex = -1;
+            items = GetTariffResults(iQueryable, propIndex, costTariffs);
 
-                    if (!string.IsNullOrEmpty(itemStep.PriceSteps))
-                    {
-                        List<string> initialSteps = itemStep.PriceSteps.Split(',').ToList();
-                        int index = 0;
-                        initialSteps.ForEach(item =>
-                        {
-                            if (float.Parse(item) > weight)
-                            {
-                                initialPropIndex = index;
-                                return;
-                            }
-
-                            else if (float.Parse(item) == weight)
-                            {
-                                initialPropIndex = ++index;
-                                return;
-                            }
-
-                            else
-                            {
-                                index++;
-                            }
-                        });
-
-                        if (initialPropIndex == -1)
-                        {
-                            initialPropIndex = initialSteps.Count;
-                        }
-                    }
-                    else
-                    {
-                        initialPropIndex = propIndex;
-                    }
-
-                    if (initialPropIndex == 0)
-                    {
-                        items = items.Concat((from item in iQueryable
-                                              where item.TariffId == itemStep.Id
-                                              group iQueryable by new
-                                              {
-                                                  item.TariffId,
-                                                  item.MinPrice,
-                                                  item.Version,
-                                              } into g  
-                                              select new TariffResult()
-                                              {
-                                                  Price = g.Min(p => g.Key.MinPrice),
-                                                  tariffid = g.Key.TariffId,
-                                                  TariffVersion = g.Key.Version,
-                                                  PriceIndex = 0,
-
-                                              })).ToList();
-                    }
-
-                    else  if (initialPropIndex == 1)
-                    {
-                        items = items.Concat((from item in iQueryable
-                                              where item.TariffId == itemStep.Id
-                                              group iQueryable by new
-                                              {
-                                                  item.TariffId,
-                                                  item.Step1Price,
-                                                  item.Version,
-                                              } into g
-                                              select new TariffResult()
-                                              {
-                                                  Price = g.Min(p => g.Key.Step1Price),
-                                                  tariffid = g.Key.TariffId,
-                                                  TariffVersion = g.Key.Version,
-                                                  PriceIndex = 1,
-                                              })).ToList();
-                    }
-
-                    else if (initialPropIndex == 2)
-                    {
-                        items = items.Concat((from item in iQueryable
-                                              where item.TariffId == itemStep.Id
-                                              group iQueryable by new
-                                              {
-                                                  item.TariffId,
-                                                  item.Step2Price,
-                                                  item.Version,
-                                              } into g
-                                              select new TariffResult()
-                                              {
-                                                  Price = g.Min(p => g.Key.Step2Price),
-                                                  tariffid = g.Key.TariffId,
-                                                  TariffVersion = g.Key.Version,
-                                                  PriceIndex = 2,
-                                              })).ToList();
-                    }
-
-                    else if (initialPropIndex == 3)
-                    {
-                        items = items.Concat((from item in iQueryable
-                                              where item.TariffId == itemStep.Id
-                                              group iQueryable by new
-                                              {
-                                                  item.TariffId,
-                                                  item.Step3Price,
-                                                  item.Version,
-                                              } into g
-                                              select new TariffResult()
-                                              {
-                                                  Price = g.Min(p => g.Key.Step3Price),
-                                                  tariffid = g.Key.TariffId,
-                                                  TariffVersion = g.Key.Version,
-                                                  PriceIndex = 3,
-                                              })).ToList();
-                    }
-
-                    else if (initialPropIndex == 4)
-                    {
-                        items = items.Concat((from item in iQueryable
-                                              where item.TariffId == itemStep.Id
-                                              group iQueryable by new
-                                              {
-                                                  item.TariffId,
-                                                  item.Step4Price,
-                                                  item.Version,
-                                              } into g
-                                              select new TariffResult()
-                                              {
-                                                  Price = g.Min(p => g.Key.Step4Price),
-                                                  tariffid = g.Key.TariffId,
-                                                  TariffVersion = g.Key.Version,
-                                                  PriceIndex = 4,
-                                              })).ToList();
-                    }
-
-                    else if (initialPropIndex == 5)
-                    {
-                        items = items.Concat((from item in iQueryable
-                                              where item.TariffId == itemStep.Id
-                                              group iQueryable by new
-                                              {
-                                                  item.TariffId,
-                                                  item.Step5Price,
-                                                  item.Version,
-                                              } into g
-                                              select new TariffResult()
-                                              {
-                                                  Price = g.Min(p => g.Key.Step5Price),
-                                                  tariffid = g.Key.TariffId,
-                                                  TariffVersion = g.Key.Version,
-                                                  PriceIndex = 5,
-                                              })).ToList();
-                    }
-
-                    else if (initialPropIndex == 6)
-                    {
-                        items = items.Concat((from item in iQueryable
-                                              where item.TariffId == itemStep.Id
-                                              group iQueryable by new
-                                              {
-                                                  item.TariffId,
-                                                  item.Step6Price,
-                                                  item.Version,
-                                              } into g
-                                              select new TariffResult()
-                                              {
-                                                  Price = g.Min(p => g.Key.Step6Price),
-                                                  tariffid = g.Key.TariffId,
-                                                  TariffVersion = g.Key.Version,
-                                                  PriceIndex = 6,
-                                              })).ToList();
-                    }
-
-                    else if (initialPropIndex == 7)
-                    {
-                        items = items.Concat((from item in iQueryable
-                                              where item.TariffId == itemStep.Id
-                                              group iQueryable by new
-                                              {
-                                                  item.TariffId,
-                                                  item.Step7Price,
-                                                  item.Version,
-                                              } into g
-                                              select new TariffResult()
-                                              {
-                                                  Price = g.Min(p => g.Key.Step7Price),
-                                                  tariffid = g.Key.TariffId,
-                                                  TariffVersion = g.Key.Version,
-                                                  PriceIndex = 7,
-                                              })).ToList();
-                    }
-
-                    else if (initialPropIndex == 8)
-                    {
-                        items = items.Concat((from item in iQueryable
-                                              where item.TariffId == itemStep.Id
-                                              group iQueryable by new
-                                              {
-                                                  item.TariffId,
-                                                  item.Step8Price,
-                                                  item.Version,
-                                              } into g
-                                              select new TariffResult()
-                                              {
-                                                  Price = g.Min(p => g.Key.Step8Price),
-                                                  tariffid = g.Key.TariffId,
-                                                  TariffVersion = g.Key.Version,
-                                                  PriceIndex = 8,
-                                              })).ToList();
-                    }
-                });
-            }
-            
             List<Tariff> TariffList = this.tariffRepository.GetAllTariff(items.Select(p => p.tariffid).ToArray(), tenant).Where(p => !p.InActive && p.TypeCode == tariffType).ToList();
             if (!string.IsNullOrEmpty(product) && tariffType == "AFC")
             {
@@ -622,7 +415,13 @@ namespace Logitude.TariffModule.BL.Helpers
             foreach (KeyValuePair<string, List<TariffLine>> entry in SurchargeTariffLines)
             {
                 List<TariffLine> filteredLines = new List<TariffLine>();
-                filteredLines = entry.Value.ToList().Where(p => p.OriginPortId == fromPort && p.DestinationPortId == toPort && (viaPort != null ? p.ViaPortId == viaPort : true)).ToList();
+                filteredLines = entry.Value.ToList().Where(p => p.OriginPortId == fromPort && p.DestinationPortId == toPort).ToList();
+
+                if (!string.IsNullOrEmpty(viaPort))
+                {
+                    filteredLines = filteredLines.Where(p => p.ViaPortId != null ? p.ViaPortId == viaPort : true).ToList();
+                }
+
                 if (filteredLines.Count() == 0)
                 {
                     filteredLines = entry.Value.ToList().Where(p => p.OriginPortId == fromPort && p.IsToAllOtherPorts == true).ToList();
@@ -929,12 +728,271 @@ namespace Logitude.TariffModule.BL.Helpers
             return tariffSearchSummaries;
         }
 
+        private List<TariffResult> GetTariffResults(IQueryable<TariffLine> iQueryable, int propIndex, List<Tariff> tariffs)
+        {
+            if (tariffs == null || tariffs.Count == 0) return new List<TariffResult>();
+
+            var items = new List<TariffResult>();
+            tariffs.ForEach(itemStep =>
+            {
+                int index = GetPirceStepIndex(propIndex, itemStep);
+                items.AddRange(BuildTarrifResult(iQueryable, itemStep, index));
+            });
+
+            return items;
+        }
+
+        private List<TariffResult> BuildTarrifResult(IQueryable<TariffLine> iQueryable, Tariff itemStep, int index)
+        {
+            var items = new List<TariffResult>();
+            switch (index)
+            {
+                case 0:
+                    {
+                        items.AddRange((from item in iQueryable
+                                        where item.TariffId == itemStep.Id
+                                        group iQueryable by new
+                                        {
+                                            item.TariffId,
+                                            item.MinPrice,
+                                            item.Version,
+                                            item.UnitOfMeasurementCode
+                                        } into g
+                                        select new TariffResult()
+                                        {
+                                            Price = g.Min(p => g.Key.MinPrice),
+                                            tariffid = g.Key.TariffId,
+                                            TariffVersion = g.Key.Version,
+                                            PriceIndex = 0,
+                                            UnitOfMeasurement = g.Key.UnitOfMeasurementCode,
+                                        }).ToList());
+                        break;
+                    }
+
+                case 1:
+                    {
+                        items.AddRange((from item in iQueryable
+                                        where item.TariffId == itemStep.Id
+                                        group iQueryable by new
+                                        {
+                                            item.TariffId,
+                                            item.Step1Price,
+                                            item.Version,
+                                            item.UnitOfMeasurementCode
+                                        } into g
+                                        select new TariffResult()
+                                        {
+                                            Price = g.Min(p => g.Key.Step1Price),
+                                            tariffid = g.Key.TariffId,
+                                            TariffVersion = g.Key.Version,
+                                            PriceIndex = 1,
+                                            UnitOfMeasurement = g.Key.UnitOfMeasurementCode,
+                                        }).ToList());
+                        break;
+                    }
+
+                case 2:
+                    {
+                        items.AddRange((from item in iQueryable
+                                        where item.TariffId == itemStep.Id
+                                        group iQueryable by new
+                                        {
+                                            item.TariffId,
+                                            item.Step2Price,
+                                            item.Version,
+                                            item.UnitOfMeasurementCode
+                                        } into g
+                                        select new TariffResult()
+                                        {
+                                            Price = g.Min(p => g.Key.Step2Price),
+                                            tariffid = g.Key.TariffId,
+                                            TariffVersion = g.Key.Version,
+                                            PriceIndex = 2,
+                                            UnitOfMeasurement = g.Key.UnitOfMeasurementCode,
+                                        }).ToList());
+                        break;
+                    }
+
+                case 3:
+                    {
+                        items.AddRange((from item in iQueryable
+                                        where item.TariffId == itemStep.Id
+                                        group iQueryable by new
+                                        {
+                                            item.TariffId,
+                                            item.Step3Price,
+                                            item.Version,
+                                            item.UnitOfMeasurementCode
+                                        } into g
+                                        select new TariffResult()
+                                        {
+                                            Price = g.Min(p => g.Key.Step3Price),
+                                            tariffid = g.Key.TariffId,
+                                            TariffVersion = g.Key.Version,
+                                            PriceIndex = 3,
+                                            UnitOfMeasurement = g.Key.UnitOfMeasurementCode,
+                                        }).ToList());
+                        break;
+                    }
+
+                case 4:
+                    {
+                        items.AddRange((from item in iQueryable
+                                        where item.TariffId == itemStep.Id
+                                        group iQueryable by new
+                                        {
+                                            item.TariffId,
+                                            item.Step4Price,
+                                            item.Version,
+                                            item.UnitOfMeasurementCode
+                                        } into g
+                                        select new TariffResult()
+                                        {
+                                            Price = g.Min(p => g.Key.Step4Price),
+                                            tariffid = g.Key.TariffId,
+                                            TariffVersion = g.Key.Version,
+                                            PriceIndex = 4,
+                                            UnitOfMeasurement = g.Key.UnitOfMeasurementCode,
+                                        }).ToList());
+                        break;
+                    }
+
+                case 5:
+                    {
+                        items.AddRange((from item in iQueryable
+                                        where item.TariffId == itemStep.Id
+                                        group iQueryable by new
+                                        {
+                                            item.TariffId,
+                                            item.Step5Price,
+                                            item.Version,
+                                            item.UnitOfMeasurementCode
+                                        } into g
+                                        select new TariffResult()
+                                        {
+                                            Price = g.Min(p => g.Key.Step5Price),
+                                            tariffid = g.Key.TariffId,
+                                            TariffVersion = g.Key.Version,
+                                            PriceIndex = 5,
+                                            UnitOfMeasurement = g.Key.UnitOfMeasurementCode,
+                                        }).ToList());
+                        break;
+                    }
+
+                case 6:
+                    {
+                        items.AddRange((from item in iQueryable
+                                        where item.TariffId == itemStep.Id
+                                        group iQueryable by new
+                                        {
+                                            item.TariffId,
+                                            item.Step6Price,
+                                            item.Version,
+                                            item.UnitOfMeasurementCode
+                                        } into g
+                                        select new TariffResult()
+                                        {
+                                            Price = g.Min(p => g.Key.Step6Price),
+                                            tariffid = g.Key.TariffId,
+                                            TariffVersion = g.Key.Version,
+                                            PriceIndex = 6,
+                                            UnitOfMeasurement = g.Key.UnitOfMeasurementCode,
+                                        }).ToList());
+                        break;
+                    }
+
+                case 7:
+                    {
+                        items.AddRange((from item in iQueryable
+                                        where item.TariffId == itemStep.Id
+                                        group iQueryable by new
+                                        {
+                                            item.TariffId,
+                                            item.Step7Price,
+                                            item.Version,
+                                            item.UnitOfMeasurementCode
+                                        } into g
+                                        select new TariffResult()
+                                        {
+                                            Price = g.Min(p => g.Key.Step7Price),
+                                            tariffid = g.Key.TariffId,
+                                            TariffVersion = g.Key.Version,
+                                            PriceIndex = 7,
+                                            UnitOfMeasurement = g.Key.UnitOfMeasurementCode,
+                                        }).ToList());
+                        break;
+                    }
+
+                case 8:
+                    {
+                        items.AddRange((from item in iQueryable
+                                        where item.TariffId == itemStep.Id
+                                        group iQueryable by new
+                                        {
+                                            item.TariffId,
+                                            item.Step8Price,
+                                            item.Version,
+                                            item.UnitOfMeasurementCode
+                                        } into g
+                                        select new TariffResult()
+                                        {
+                                            Price = g.Min(p => g.Key.Step8Price),
+                                            tariffid = g.Key.TariffId,
+                                            TariffVersion = g.Key.Version,
+                                            PriceIndex = 8,
+                                            UnitOfMeasurement = g.Key.UnitOfMeasurementCode,
+                                        }).ToList());
+                        break;
+                    }
+            }
+
+            if (items.Any() && items[0].Price == null && index > 0) return BuildTarrifResult(iQueryable, itemStep, index - 1);
+            return items;
+        }
+
+        private int GetPirceStepIndex(int propIndex, Tariff itemStep)
+        {
+            if (string.IsNullOrEmpty(itemStep.PriceSteps)) return propIndex;
+
+            int initialPropIndex = -1;
+            var convertedWeightByUOM = CalculateWeightByUnitOfMeasurementCode(itemStep.UnitOfMeasurementCode);
+
+            List<string> initialSteps = itemStep.PriceSteps.Split(',').ToList();
+            int index = 0;
+            initialSteps.ForEach(item =>
+            {
+                if (float.Parse(item) > convertedWeightByUOM)
+                {
+                    initialPropIndex = index;
+                    return;
+                }
+
+                else if (float.Parse(item) == convertedWeightByUOM)
+                {
+                    initialPropIndex = ++index;
+                    return;
+                }
+
+                else
+                {
+                    index++;
+                }
+            });
+
+            if (initialPropIndex == -1)
+            {
+                initialPropIndex = initialSteps.Count;
+            }
+
+            return initialPropIndex;
+        }
+
         private void CalculateTariffActualPrice(TariffResult tariff, decimal? minprice)
         {
             decimal? actualPrice = 0;
             if (tariff.PriceIndex != 0)
             {
-                actualPrice = tariff.Price * (decimal)weight;
+                actualPrice = tariff.Price * (decimal)CalculateWeightByUnitOfMeasurementCode(tariff.UnitOfMeasurement);
             }
             tariffsSummary.ActualPrice = actualPrice;
         }
@@ -943,7 +1001,7 @@ namespace Logitude.TariffModule.BL.Helpers
         {
             if (tariff.PriceIndex != 0)
             {
-                tariff.Price = tariff.Price * (decimal)weight;
+                tariff.Price = tariff.Price * (decimal) CalculateWeightByUnitOfMeasurementCode(tariff.UnitOfMeasurement);
                 if (tariff.Price < minprice)
                 {
                     tariff.Price = minprice;
@@ -1012,24 +1070,14 @@ namespace Logitude.TariffModule.BL.Helpers
                     tariffsSummary.SellerName = tarrifSellerName;
                     tariffsSummary.EffictiveDate = trariff.ExpirationDate;
 
-                    if (trariff.StartDate != null)
+                    if (tariffType != "IFT")
                     {
-                        tariffsSummary.ValidityDate = String.Format("{0:dd/MM/yyyy}", trariff.StartDate.Value);
+                        tariffsSummary.ValidityDate = this.SetValidityDate(trariff);
+                        tariffsSummary.Remarks = trariff.Notes;
+                        tariffsSummary.UpdateDate = trariff.UpdateDate;
+                        tariffsSummary.LastUsedDate = trariff.LastUsedDate;
                     }
 
-                    if (trariff.ExpirationDate != null)
-                    {
-                        if (string.IsNullOrEmpty(tariffsSummary.ValidityDate))
-                        {
-                            tariffsSummary.ValidityDate = String.Format("{0:dd/MM/yyyy}", trariff.ExpirationDate.Value);
-                        }
-
-                        else
-                        {
-                            tariffsSummary.ValidityDate = tariffsSummary.ValidityDate + " - " + String.Format("{0:dd/MM/yyyy}", trariff.ExpirationDate.Value);
-                        }
-                    }
-                    tariffsSummary.Remarks = trariff.Notes;
                     if (CurrentSurcharge != null)
                     {
                         if (!string.IsNullOrEmpty(tariffsSummary.Remarks) && !string.IsNullOrEmpty(CurrentSurcharge.Notes))
@@ -1098,6 +1146,27 @@ namespace Logitude.TariffModule.BL.Helpers
                                                    .Select(group => new { Item = group.OrderBy(o => o.decimalprice).ToList() }).SelectMany(list => list.Item)
                                                    .ToList();                                                            
             return tariffSearchSummaries;
+        }
+
+        private string SetValidityDate(Tariff trariff)
+        {
+            var validityDate = "";
+            if (trariff.StartDate != null)
+            {
+                validityDate = String.Format("{0:dd/MM/yyyy}", trariff.StartDate.Value);
+            }
+            if (trariff.ExpirationDate != null)
+            {
+                if (string.IsNullOrEmpty(tariffsSummary.ValidityDate))
+                {
+                    validityDate = String.Format("{0:dd/MM/yyyy}", trariff.ExpirationDate.Value);
+                }
+                else
+                {
+                    validityDate = tariffsSummary.ValidityDate + " - " + String.Format("{0:dd/MM/yyyy}", trariff.ExpirationDate.Value);
+                }
+            }
+            return validityDate;
         }
 
         private void Initialization(TariffSearchArgs args, IQueryable<TariffLine> iQueryable)
@@ -1234,7 +1303,13 @@ namespace Logitude.TariffModule.BL.Helpers
 
                         tariffsSummary.AllInSurcharges = surchargesList.Where(a => a.IsAllIn).ToList();
                         tariffsSummary.SurchargesWithoutAllIn = surchargesList.Where(a => !a.IsAllIn).ToList();
-                        tariffsSummary.SurchargesPrice = tariffsSummary.SurchargesWithoutAllIn.Sum(s => s.Price).ToString();      
+                        tariffsSummary.SurchargesPrice = tariffsSummary.SurchargesWithoutAllIn.Sum(s => s.Price).ToString();
+                        if (tariffType == "IFT")
+                        {
+                            tariffsSummary.ValidityDate = this.SetValidityDate(CurrentSurcharge);
+                            tariffsSummary.UpdateDate = CurrentSurcharge.UpdateDate;
+                            tariffsSummary.LastUsedDate = CurrentSurcharge.LastUsedDate;
+                        }
                     }
                 }
             }
@@ -1730,6 +1805,39 @@ namespace Logitude.TariffModule.BL.Helpers
                }
             }
         }
+
+        private double? CalculateWeightByUnitOfMeasurementCode(string tariffUnitOfMeasurementCode)
+        {
+            if (string.IsNullOrEmpty(tariffUnitOfMeasurementCode))
+                return this.weight;
+
+            if (string.IsNullOrEmpty(this.weightCode))
+                return this.weight;
+
+            if(tariffUnitOfMeasurementCode == this.weightCode)
+                return this.weight;
+
+            double ratio = GetWeightRtioByUnitOfMeasurementsCodes(this.weightCode, tariffUnitOfMeasurementCode);
+
+            return this.weight * ratio;
+        }
+        private double GetWeightRtioByUnitOfMeasurementsCodes(string shipmentUnitCode, string tariffUnitOfMeasurementCode)
+        {
+            if (shipmentUnitCode.ToUpper() == "KG" && tariffUnitOfMeasurementCode.ToUpper() == "LB")
+                  return WeightUnitsConverter.KilogramsToPounds;
+            if (shipmentUnitCode.ToUpper() == "KG" && tariffUnitOfMeasurementCode.ToUpper() == "MT")
+                return WeightUnitsConverter.KilogramsToMetricTon;
+            if (shipmentUnitCode.ToUpper() == "LB" && tariffUnitOfMeasurementCode.ToUpper() == "MT")
+                return WeightUnitsConverter.PoundsToMetricTons;
+            if (shipmentUnitCode.ToUpper() == "LB" && tariffUnitOfMeasurementCode.ToUpper() == "KG")
+                return WeightUnitsConverter.PoundsToKilograms;
+            if (shipmentUnitCode.ToUpper() == "MT" && tariffUnitOfMeasurementCode.ToUpper() == "KG")
+                return WeightUnitsConverter.MetricTonToKilograms;
+            if (shipmentUnitCode.ToUpper() == "MT" && tariffUnitOfMeasurementCode.ToUpper() == "LB")
+                return WeightUnitsConverter.MetricTonsToPounds;
+
+            return 1.0;
+        }
     }
 
     public class TariffResult
@@ -1739,6 +1847,7 @@ namespace Logitude.TariffModule.BL.Helpers
         public int TariffVersion { get; set; }
         public decimal? Price { get; set; }
         public int PriceIndex { get; set; }
+        public string UnitOfMeasurement { get; set; }
     }
 
     public class ByPckageType
@@ -1754,5 +1863,14 @@ namespace Logitude.TariffModule.BL.Helpers
         public Tariff Tariff { get; set; }
         public int ContainerNumber { get; set; }
         public string NoteMissingContainers { get; set; }
+    }
+    public struct WeightUnitsConverter 
+    {
+        public const double MetricTonToKilograms = 1000.0;
+        public const double PoundsToKilograms = 0.453592;
+        public const double KilogramsToMetricTon = 0.001;
+        public const double KilogramsToPounds = 2.20462;
+        public const double MetricTonsToPounds = 2204.62;
+        public const double PoundsToMetricTons = 0.000453592;
     }
 }

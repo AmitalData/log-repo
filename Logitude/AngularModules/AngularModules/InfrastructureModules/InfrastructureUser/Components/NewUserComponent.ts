@@ -396,9 +396,18 @@ export class NewUserComponent extends BaseComponent implements OnInit {
                     case "CUCA":
                         {
                             if (SessionInfo.LoggedUserTenant == 0) {
-
                                 this.ObsList.push(new UserRolesItemClass(item, this.NewUserPM, this));
+                            }
 
+                            break;
+                        }
+
+                    case "HRAD":
+                        {
+                            if (SessionInfo.LoggedUserTenant == 0 || SessionInfo.LoggedUserTenant == 1489 || FeatureLocator.IsPackage_DVMT()) {
+                                if (SessionLocator.LoggedUserPM.IsCustomerCare) {
+                                    this.ObsList.push(new UserRolesItemClass(item, this.NewUserPM, this));
+                                }
                             }
 
                             break;
@@ -408,13 +417,11 @@ export class NewUserComponent extends BaseComponent implements OnInit {
                         {
                             if (item.IsCustomRole) {
                                 if (item.Tenant == SessionInfo.LoggedUserTenant) {
-
                                     this.ObsList.push(new UserRolesItemClass(item, this.NewUserPM, this));
                                 }
                             }
 
                             else {
-
                                 this.ObsList.push(new UserRolesItemClass(item, this.NewUserPM, this));
                             }
 

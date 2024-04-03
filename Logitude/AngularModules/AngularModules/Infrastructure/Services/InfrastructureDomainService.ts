@@ -102,7 +102,27 @@ export class InfrastructureDomainService {
             }),catchError(ServiceHelper.HandleServiceError));
         });
     }
+    GetAllowedFeaturesForRole(roleId){
+        var url = `${this._apiUrl}/GetAllowedFeaturesForRole?roleId=${roleId}`;
 
+        return defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var listJason = response;
+
+                var _mappedArray: Array<FeaturePM> = [];
+
+                for (var key in listJason) {
+
+                    var entity: FeaturePM;
+                    entity = this.MapJsonToFeaturePM(listJason[key]);
+                    _mappedArray.push(entity);
+                }
+                var myResponse = new ServiceResponse();
+                myResponse.Result = _mappedArray;
+                return myResponse;
+            }),catchError(ServiceHelper.HandleServiceError));
+        });
+    }
     GetAllowedFeaturesForLoggedUser() {
         var url = this._apiUrl + '/GetAllowedFeaturesForLoggedUser';
 
@@ -873,6 +893,7 @@ export class InfrastructureDomainService {
 
         return entityList;
     }
+
 }
 
 export class FeaturesUpdateHelper {

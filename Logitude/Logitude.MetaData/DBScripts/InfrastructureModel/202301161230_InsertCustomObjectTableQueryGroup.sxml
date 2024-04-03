@@ -1,0 +1,7 @@
+﻿<Script DBType="Main" Module="Infrastructure">
+	<Sql Version="1">
+		<![CDATA[
+		insert into QueryGroups Values('CUOB', 'CustomObjectTable  Query Group', 0)
+    ]]>
+	</Sql> 
+</Script>

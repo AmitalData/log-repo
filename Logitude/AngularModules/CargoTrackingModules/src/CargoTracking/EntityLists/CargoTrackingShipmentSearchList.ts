@@ -15,6 +15,7 @@ export class CargoTrackingShipmentSearchList {
 	ShipmentId: string;
 	IsPublic: boolean;
 	ReferenceType: string;
+	ReferenceFromShipmentId: string;
 	
 }
  

@@ -45,6 +45,11 @@ namespace Logitude.Infrastructure.Data.EntityPOCOs
 	    public bool Inactive { get; set; }
         [Column("Steps")]
 	    public string Steps { get; set; }
+        [ForeignKey("UnitOfMeasurement")]
+        [Column("UnitOfMeasurementCode")]
+	    public string UnitOfMeasurementCode { get; set; }
+	      
+        public virtual WeightUnit UnitOfMeasurement { get; set; }
     }
 }
 	 

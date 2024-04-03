@@ -351,8 +351,11 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                     Swift = card.Swift,
                     IBANNumber = card.IBANNumber,
                     InvitationDate = card.InvitationDate,
+                    CargoTrackingInvitationDate = card.CargoTrackingInvitationDate,
                     SharedLogisticsInvitationStatusCode = card.SharedLogisticsInvitationStatusCode,
                     SharedLogisticsInvitationStatusName = card.SharedLogisticsInvitationStatus != null ? card.SharedLogisticsInvitationStatus.Name : null,
+                    CargoTrackingInvitationStatusCode = card.CargoTrackingInvitationStatusCode,
+                    CargoTrackingInvitationStatusName = card.CargoTrackingInvitationStatus != null ? card.CargoTrackingInvitationStatus.Name : null,
                     LastLoginDate = card.LastLoginDate,
                     PrimaryContactId = card.PrimaryContactId,
                     EnableConsolidationInvoices = card.EnableConsolidationInvoices,
@@ -365,7 +368,9 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                     SalesmanUserId = card.Customer == null ? null : card.Customer.SalesmanUserId,
                     SalesmanBusinessUnitId = card.Customer == null ? null : (card.Customer.SalesmanUser == null ? null : card.Customer.SalesmanUser.BusinessUnitId),
                     AccountManagerUserName = card.Customer == null ? null : (card.Customer.AccountManagerUser == null ? null : (card.Customer.AccountManagerUser.Contact.EnglishName)),
+                    TeamName = card.Customer == null ? null : (card.Customer.CustomerTeam == null ? null : (card.Customer.CustomerTeam.Name)),
                     AccountManagerUserId = card.Customer == null ? null : card.Customer.AccountManagerUserId,
+                    TeamId = card.Customer == null ? null : card.Customer.TeamId,
                     CASSCode = card.Agent == null ? null : card.Agent.CASSCode,
                     IATACode = card.Agent == null ? null : card.Agent.IATACode,
                     RegulatedAgentCode = card.Agent == null ? null : card.Agent.RegulatedAgentCode,
@@ -451,8 +456,11 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                                                Swift = card.Swift,
                                                IBANNumber = card.IBANNumber,
                                                InvitationDate = card.InvitationDate,
+                                               CargoTrackingInvitationDate = card.CargoTrackingInvitationDate,
                                                SharedLogisticsInvitationStatusCode = card.SharedLogisticsInvitationStatusCode,
                                                SharedLogisticsInvitationStatusName = card.SharedLogisticsInvitationStatus != null ? card.SharedLogisticsInvitationStatus.Name : null,
+                                               CargoTrackingInvitationStatusCode = card.CargoTrackingInvitationStatusCode,
+                                               CargoTrackingInvitationStatusName = card.CargoTrackingInvitationStatus != null ? card.CargoTrackingInvitationStatus.Name : null,
                                                LastLoginDate = card.LastLoginDate,
                                                PrimaryContactId = card.PrimaryContactId,
                                                EnableConsolidationInvoices = card.EnableConsolidationInvoices,
@@ -464,8 +472,10 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                                                KCExpirationDate = card.Customer == null ? null : card.Customer.KCExpirationDate,
                                                SalesmanUserId = card.Customer == null ? null : card.Customer.SalesmanUserId,
                                                AccountManagerUserId = card.Customer == null ? null : card.Customer.AccountManagerUserId,
+                                               TeamId = card.Customer == null ? null : card.Customer.TeamId,
                                                SalesmanBusinessUnitId = card.Customer == null ? null : (card.Customer.SalesmanUser == null ? null : card.Customer.SalesmanUser.BusinessUnitId),
                                                AccountManagerUserName = card.Customer == null ? null : (card.Customer.AccountManagerUser == null ? null : (card.Customer.AccountManagerUser.Contact.EnglishName)),
+                                               TeamName = card.Customer == null ? null : (card.Customer.CustomerTeam == null ? null : (card.Customer.CustomerTeam.Name)),
                                                CASSCode = card.Agent == null ? null : card.Agent.CASSCode,
                                                IATACode = card.Agent == null ? null : card.Agent.IATACode,
                                                RegulatedAgentCode = card.Agent == null ? null : card.Agent.RegulatedAgentCode,
@@ -541,8 +551,11 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                                                Swift = card.Swift,
                                                IBANNumber = card.IBANNumber,
                                                InvitationDate = card.InvitationDate,
+                                               CargoTrackingInvitationDate = card.CargoTrackingInvitationDate,
                                                SharedLogisticsInvitationStatusCode = card.SharedLogisticsInvitationStatusCode,
                                                SharedLogisticsInvitationStatusName = card.SharedLogisticsInvitationStatus != null ? card.SharedLogisticsInvitationStatus.Name : null,
+                                               CargoTrackingInvitationStatusCode = card.CargoTrackingInvitationStatusCode,
+                                               CargoTrackingInvitationStatusName = card.CargoTrackingInvitationStatus != null ? card.CargoTrackingInvitationStatus.Name : null,
                                                LastLoginDate = card.LastLoginDate,
                                                SalesmanUserEnglishName = card.Customer != null ? (card.Customer.SalesmanUser != null ? card.Customer.SalesmanUser.Contact.EnglishName : null) : null,
                                                CustomerStatusCode = card.Customer != null ? (card.Customer.CustomerStatus != null ? card.Customer.CustomerStatus.Code : null) : null,
@@ -559,7 +572,9 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                                                SalesmanUserId = card.Customer == null ? null : card.Customer.SalesmanUserId,
                                                SalesmanBusinessUnitId = card.Customer == null ? null : (card.Customer.SalesmanUser == null ? null : card.Customer.SalesmanUser.BusinessUnitId),
                                                AccountManagerUserName = card.Customer == null ? null : (card.Customer.AccountManagerUser == null ? null : (card.Customer.AccountManagerUser.Contact.EnglishName)),
+                                               TeamName = card.Customer == null ? null : (card.Customer.CustomerTeam == null ? null : (card.Customer.CustomerTeam.Name)),
                                                AccountManagerUserId = card.Customer == null ? null : card.Customer.AccountManagerUserId,
+                                               TeamId = card.Customer == null ? null : card.Customer.TeamId,
                                                CASSCode = card.Agent == null ? null : card.Agent.CASSCode,
                                                IATACode = card.Agent == null ? null : card.Agent.IATACode,
                                                RegulatedAgentCode = card.Agent == null ? null : card.Agent.RegulatedAgentCode,
@@ -733,8 +748,11 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                                                Swift = card.Swift,
                                                IBANNumber = card.IBANNumber,
                                                InvitationDate = card.InvitationDate,
+                                               CargoTrackingInvitationDate = card.CargoTrackingInvitationDate,
                                                SharedLogisticsInvitationStatusCode = card.SharedLogisticsInvitationStatusCode,
                                                SharedLogisticsInvitationStatusName = card.SharedLogisticsInvitationStatus != null ? card.SharedLogisticsInvitationStatus.Name : null,
+                                               CargoTrackingInvitationStatusCode = card.CargoTrackingInvitationStatusCode,
+                                               CargoTrackingInvitationStatusName = card.CargoTrackingInvitationStatus != null ? card.CargoTrackingInvitationStatus.Name : null,
                                                LastLoginDate = card.LastLoginDate,
                                                PrimaryContactId = card.PrimaryContactId,
                                                EnableConsolidationInvoices = card.EnableConsolidationInvoices,
@@ -867,8 +885,11 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                                                Swift = card.Swift,
                                                IBANNumber = card.IBANNumber,
                                                InvitationDate = card.InvitationDate,
+                                               CargoTrackingInvitationDate = card.CargoTrackingInvitationDate,
                                                SharedLogisticsInvitationStatusCode = card.SharedLogisticsInvitationStatusCode,
                                                SharedLogisticsInvitationStatusName = card.SharedLogisticsInvitationStatus != null ? card.SharedLogisticsInvitationStatus.Name : null,
+                                               CargoTrackingInvitationStatusCode = card.CargoTrackingInvitationStatusCode,
+                                               CargoTrackingInvitationStatusName = card.CargoTrackingInvitationStatus != null ? card.CargoTrackingInvitationStatus.Name : null,
                                                LastLoginDate = card.LastLoginDate,
                                                PrimaryContactId = card.PrimaryContactId,
                                                EnableConsolidationInvoices = card.EnableConsolidationInvoices,
@@ -881,7 +902,9 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                                                SalesmanUserId = card.Customer == null ? null : card.Customer.SalesmanUserId,
                                                SalesmanBusinessUnitId = card.Customer == null ? null : (card.Customer.SalesmanUser == null ? null : card.Customer.SalesmanUser.BusinessUnitId),
                                                AccountManagerUserName = card.Customer == null ? null : (card.Customer.AccountManagerUser == null ? null : (card.Customer.AccountManagerUser.Contact.EnglishName)),
+                                               TeamName = card.Customer == null ? null : (card.Customer.CustomerTeam == null ? null : (card.Customer.CustomerTeam.Name)),
                                                AccountManagerUserId = card.Customer == null ? null : card.Customer.AccountManagerUserId,
+                                               TeamId = card.Customer == null ? null : card.Customer.TeamId,
                                                CASSCode = card.Agent == null ? null : card.Agent.CASSCode,
                                                IATACode = card.Agent == null ? null : card.Agent.IATACode,
                                                RegulatedAgentCode = card.Agent == null ? null : card.Agent.RegulatedAgentCode,
@@ -1134,8 +1157,11 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                 WebSite = card.Website,
                 SearchFields = card.SearchFields,
                 InvitationDate = card.InvitationDate,
+                CargoTrackingInvitationDate = card.CargoTrackingInvitationDate,
                 SharedLogisticsInvitationStatusCode = card.SharedLogisticsInvitationStatusCode,
                 SharedLogisticsInvitationStatusName = card.SharedLogisticsInvitationStatus != null ? card.SharedLogisticsInvitationStatus.Name : null,
+                CargoTrackingInvitationStatusCode = card.CargoTrackingInvitationStatusCode,
+                CargoTrackingInvitationStatusName = card.CargoTrackingInvitationStatus != null ? card.CargoTrackingInvitationStatus.Name : null,
                 LastLoginDate = card.LastLoginDate,
                 PrimaryContactId = card.PrimaryContactId,
                 CityName = card.CityName,
@@ -1216,8 +1242,11 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                                                Prefix = al.Prefix,
                                                ICAO = al.ICAO,
                                                InvitationDate = card.InvitationDate,
+                                               CargoTrackingInvitationDate = card.CargoTrackingInvitationDate,
                                                SharedLogisticsInvitationStatusCode = card.SharedLogisticsInvitationStatusCode,
                                                SharedLogisticsInvitationStatusName = card.SharedLogisticsInvitationStatus != null ? card.SharedLogisticsInvitationStatus.Name : null,
+                                               CargoTrackingInvitationStatusCode = card.CargoTrackingInvitationStatusCode,
+                                               CargoTrackingInvitationStatusName = card.CargoTrackingInvitationStatus != null ? card.CargoTrackingInvitationStatus.Name : null,
                                                LastLoginDate = card.LastLoginDate,
                                                PrimaryContactId = card.PrimaryContactId,
                                                CityName = card.CityName,
@@ -1288,8 +1317,11 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                                               Prefix = al.Prefix,
                                               ICAO = al.ICAO,
                                               InvitationDate = card.InvitationDate,
+                                              CargoTrackingInvitationDate = card.CargoTrackingInvitationDate,
                                               SharedLogisticsInvitationStatusCode = card.SharedLogisticsInvitationStatusCode,
                                               SharedLogisticsInvitationStatusName = card.SharedLogisticsInvitationStatus != null ? card.SharedLogisticsInvitationStatus.Name : null,
+                                              CargoTrackingInvitationStatusCode = card.CargoTrackingInvitationStatusCode,
+                                              CargoTrackingInvitationStatusName = card.CargoTrackingInvitationStatus != null ? card.CargoTrackingInvitationStatus.Name : null,
                                               LastLoginDate = card.LastLoginDate,
                                               PrimaryContactId = card.PrimaryContactId,
                                               CityName = card.CityName,
@@ -1454,8 +1486,11 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                                               Prefix = al.Prefix,
                                               ICAO = al.ICAO,
                                               InvitationDate = card.InvitationDate,
+                                              CargoTrackingInvitationDate = card.CargoTrackingInvitationDate,
                                               SharedLogisticsInvitationStatusCode = card.SharedLogisticsInvitationStatusCode,
                                               SharedLogisticsInvitationStatusName = card.SharedLogisticsInvitationStatus != null ? card.SharedLogisticsInvitationStatus.Name : null,
+                                              CargoTrackingInvitationStatusCode = card.CargoTrackingInvitationStatusCode,
+                                              CargoTrackingInvitationStatusName = card.CargoTrackingInvitationStatus != null ? card.CargoTrackingInvitationStatus.Name : null,
                                               LastLoginDate = card.LastLoginDate,
                                               PrimaryContactId = card.PrimaryContactId,
                                               CityName = card.CityName,
@@ -1596,8 +1631,11 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                                               Prefix = al.Prefix,
                                               ICAO = al.ICAO,
                                               InvitationDate = card.InvitationDate,
+                                              CargoTrackingInvitationDate = card.CargoTrackingInvitationDate,
                                               SharedLogisticsInvitationStatusCode = card.SharedLogisticsInvitationStatusCode,
                                               SharedLogisticsInvitationStatusName = card.SharedLogisticsInvitationStatus != null ? card.SharedLogisticsInvitationStatus.Name : null,
+                                              CargoTrackingInvitationStatusCode = card.CargoTrackingInvitationStatusCode,
+                                              CargoTrackingInvitationStatusName = card.CargoTrackingInvitationStatus != null ? card.CargoTrackingInvitationStatus.Name : null,
                                               LastLoginDate = card.LastLoginDate,
                                               PrimaryContactId = card.PrimaryContactId,
                                               CityName = card.CityName,
@@ -1693,7 +1731,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             return myResult;
         }
 
-        public SharedLogisticsStatusStatistics GetSharedLogisticsStatistics(int tenant)
+        public SharedLogisticsStatusStatistics GetSharedLogisticsStatistics(int tenant, string invitationStatusType)
         {
             SecurityUtility.AuthenticationOnTenant(tenant);
 
@@ -1710,10 +1748,10 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             {
                 customers = customers.Where(d => d.CustomerStatusCode == "ACT" && d.IsCustomer && !d.InActive);
 
-                dataClass.InvitedCustomersCount = customers.Where(d => d.SharedLogisticsInvitationStatusCode == 2).Count();
-                dataClass.NotInvitedCustomersCount = customers.Where(d => d.SharedLogisticsInvitationStatusCode == 1).Count();
-                dataClass.ActivatedCustomersCount = customers.Where(d => d.SharedLogisticsInvitationStatusCode == 3 && !d.IsActiveForMobile).Count();
-                dataClass.ActivatedCustomersForMobileCount = customers.Where(d => d.SharedLogisticsInvitationStatusCode == 3 && d.IsActiveForMobile).Count();
+                dataClass.InvitedCustomersCount = customers.Where(d => (invitationStatusType == "CargoTracking" ? d.CargoTrackingInvitationStatusCode == 2 : d.SharedLogisticsInvitationStatusCode == 2)).Count();
+                dataClass.NotInvitedCustomersCount = customers.Where(d => (invitationStatusType == "CargoTracking" ? d.CargoTrackingInvitationStatusCode == 1 : d.SharedLogisticsInvitationStatusCode == 1)).Count();
+                dataClass.ActivatedCustomersCount = customers.Where(d => (invitationStatusType == "CargoTracking" ? d.CargoTrackingInvitationStatusCode == 3 : d.SharedLogisticsInvitationStatusCode == 3) && !d.IsActiveForMobile).Count();
+                dataClass.ActivatedCustomersForMobileCount = customers.Where(d => (invitationStatusType == "CargoTracking" ? d.CargoTrackingInvitationStatusCode == 3 : d.SharedLogisticsInvitationStatusCode == 3) && d.IsActiveForMobile).Count();
             }
 
             if (cards != null)

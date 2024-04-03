@@ -131,9 +131,9 @@ function AssertPutCancleEntry() {
 export function ValidateRoutingsEntryFields(entryDetails: CrossDockDetails) {
     cy.Navigate(ShipmentSelectors.RoutingsTab)
     cy.Click(ShipmentSelectors.EditWarehouseLegPickups, null)
-    cy.get(ShipmentSelectors.ShipmentWarehouseLegExpectedEntryDate).should("have.value", GetTodayDate());
+    cy.get(ShipmentSelectors.ShipmentWarehouseLegExpectedEntryDate).should("have.value", entryDetails.ExpectedEntryDate);
     cy.get(ShipmentSelectors.ShipmentWarehouseLegExpectedEntryTime).should("have.value", entryDetails.ExpectedEntryTime);
-    cy.get(ShipmentSelectors.ShipmentWarehouseLegActualEntryDate).should("have.value", GetTodayDate());
+    cy.get(ShipmentSelectors.ShipmentWarehouseLegActualEntryDate).should("have.value", entryDetails.ActualEntryDate);
     cy.get(ShipmentSelectors.ShipmentWarehouseLegActualEntryTime).should("have.value", entryDetails.ActualEntryTime);
     cy.Click(ShipmentSelectors.WarehouseOKBtn, null)
 }
@@ -216,9 +216,9 @@ function AssertPutCrossdockRelease() {
 export function ValidateRoutingsReleaseFields(releaseDetails: CrossDockDetails) {
     cy.Navigate(ShipmentSelectors.RoutingsTab)
     cy.Click(ShipmentSelectors.EditWarehouseLegPickups, null)
-    BaseAssertion.AssertElementHaveValue(ShipmentSelectors.ShipmentWarehouseLegExpectedReleaseDate, GetTodayDate())
+    BaseAssertion.AssertElementHaveValue(ShipmentSelectors.ShipmentWarehouseLegExpectedReleaseDate, releaseDetails.ExpectedReleaseDate)
     BaseAssertion.AssertElementHaveValue(ShipmentSelectors.ShipmentWarehouseLegExpectedReleaseTime, releaseDetails.ExpectedReleaseTime)
-    BaseAssertion.AssertElementHaveValue(ShipmentSelectors.ShipmentWarehouseLegActualReleaseDate, GetTodayDate())
+    BaseAssertion.AssertElementHaveValue(ShipmentSelectors.ShipmentWarehouseLegActualReleaseDate, releaseDetails.ActualReleaseDate)
     BaseAssertion.AssertElementHaveValue(ShipmentSelectors.ShipmentWarehouseLegActualReleaseTime, releaseDetails.ActualReleaseTime)
     cy.Click(ShipmentSelectors.WarehouseOKBtn, null)
 }
@@ -240,9 +240,9 @@ export function ValidateRoutingsReleaseDeliveryLegFields(deliveryDetails: Delive
     cy.get(ShipmentSelectors.RoutingDeliveryLeg).should("contain.text", deliveryDetails.ATDDepartureDate)
     cy.Click(ShipmentSelectors.EditDelivery, null)
     BaseAssertion.AssertElementHaveValue(ShipmentSelectors.DeliveryToPartnerName, deliveryDetails.ToPartner)
-    BaseAssertion.AssertElementHaveValue(ShipmentSelectors.PickUpDeliveryETDDate, GetTodayDate())
+    BaseAssertion.AssertElementHaveValue(ShipmentSelectors.PickUpDeliveryETDDate, deliveryDetails.ETDDepartureDate)
     BaseAssertion.AssertElementHaveValue(ShipmentSelectors.PickUpDeliveryETDTime, deliveryDetails.ETDDepartureTime)
-    BaseAssertion.AssertElementHaveValue(ShipmentSelectors.PickUpDeliveryATDDate, GetTodayDate())
+    BaseAssertion.AssertElementHaveValue(ShipmentSelectors.PickUpDeliveryATDDate, deliveryDetails.ATDDepartureDate)
     BaseAssertion.AssertElementHaveValue(ShipmentSelectors.PickUpDeliveryATDTime, deliveryDetails.ATDDepartureTime)
 }
 export function FillReleaseDate(releaseDetails: CrossDockDetails) {
@@ -251,7 +251,7 @@ export function FillReleaseDate(releaseDetails: CrossDockDetails) {
 }
 export function FillCrossDockDate(selector: string, date: string) {
     if (date == "Today") {
-        cy.FillDate(selector, GetTodayDate())
+        cy.FillDate(selector, ".")
     }
     else {
         cy.FillDate(selector, date)

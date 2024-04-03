@@ -26,7 +26,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string CalculatedFileName { get; set; }
         public ChangeSetOperation changeOp { get; set; }
         public string FileExtension { get; set; }
-
+        public string DocumentTypeId { get; set; }
 
     }
 }

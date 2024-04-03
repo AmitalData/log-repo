@@ -124,6 +124,18 @@
                                 <td><div></div></td>
                             </tr>
 
+                            <!-- IsEquipment -->
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'IsEquipment'" [ObjectTableName]="ObjectTableName"
+                                              [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td>
+                                    <CheckBox [IsChecked]="TaxReportLinePM.IsEquipment" (Checked)="TaxReportLinePM.IsEquipment = $event" [IsEnabled]="TaxReportLinePM.OutputOrInput=='I' ||TaxReportLinePM.IsExternalLine "></CheckBox>
+                                </td>
+                                <td><div></div></td>
+                            </tr>
+
                             <tr><td><div></div></td></tr>
                         </table>
                     </td>
@@ -135,9 +147,9 @@
 
 
     </tr>
-    <tr  style="height: 22px;">
+    <tr  style="height: 32px;" *ngIf="UpdateMessage">
         <td colspan="4">
-            <div class="DisbleBox" style="margin: 0 auto;position: absolute;width: 100%;text-align: center;left: 0;right: 0;">
+            <div class="DisbleBox" style="margin: 0 auto 5px;position: absolute;width: 100%;text-align: center;left: 0;right: 0;">
                 {{UpdateMessage}}
             </div>
         </td>
@@ -146,7 +158,7 @@
         <td colspan="4" style="vertical-align: bottom">
             <table style="height: 22px;">
                 <tr>
-                   
+
                     <td>
                         <div></div>
                     </td>

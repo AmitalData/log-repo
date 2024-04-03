@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { BaseComponent } from '../../Components/LogitudeComponents/BaseComponent';
 import { AppTool } from '../../Tools';
 import { SessionLocator } from '../../Utilities/SessionLocator';
@@ -59,6 +59,19 @@ export class RatioBoxComponent extends BaseComponent implements OnInit, OnDestro
             this.DataContext[this.ObjectFieldName] = this.iRatio;
             this.Validate();
 
+            this.CurrentSession.FireEvent("RatioBoxValueChanged");
+        }
+    }
+
+    private selectedValue: number;
+    @Input() public get SelectedValue() {
+        return this.selectedValue;
+    }
+    public set SelectedValue(newValue: number) {
+        if (this.selectedValue != newValue) {
+            this.selectedValue = newValue;
+
+            this.DataContext[this.ObjectFieldName] = this.selectedValue;
             this.CurrentSession.FireEvent("RatioBoxValueChanged");
         }
     }

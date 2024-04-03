@@ -8,6 +8,9 @@ using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.Customs.Data.Utils;
+using Logitude.Accounting.Data;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Data.Repositories;
 
 namespace Logitude.BL.CommonDataModel.CustomFilters
 {
@@ -64,7 +67,18 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
                             queryableData = queryableData.Where(d => d.EnglishName.StartsWith(value) || d.Code.StartsWith(value) || d.LocalName.StartsWith(value));
                         }
                     }
+                    if (item.FieldName == "ActiveGLAccount")
+                    {
+                        bool value = Convert.ToBoolean(item.FieldValue);
+                        if (value)
+                        {
+                            GLAccountRepository glAccountRepository = new GLAccountRepository(tenant);
+                            List<String> allGLAccountInActivityListId = glAccountRepository.GetAllInActivityAccountsByTenant(tenant).Select(g => g.Id).ToList();
+                            queryableData = queryableData.Where(d => !allGLAccountInActivityListId.Contains(d.GLAccountId) && d.GLAccountId != null);
+                        }
+                    }
                 }
+                
             }
 
             #region Freelancer

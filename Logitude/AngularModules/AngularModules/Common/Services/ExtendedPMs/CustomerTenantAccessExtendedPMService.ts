@@ -49,5 +49,17 @@ export class CustomerTenantAccessExtendedPMService {
         });
     }
 
- 
+    GetByCompanyVatNumber(companyVatNumber: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+        var callTime = new Date();
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetByCompanyVatNumber?' + 'companyVatNumber=' + companyVatNumber, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = response;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
 }

@@ -149,6 +149,19 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="CargoTrackingInvitationStatusCode"
+    ShortName="CargoTracInvitationStatCode"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CargoTrackingInvitationDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="LastLoginDate"
     Type="datetime">
     <Constraints
@@ -265,7 +278,7 @@
   <Column
     Name="CityName"
     Type="nvarchar"
-    Size="25">
+    Size="40">
     <Constraints
       Nullable="true" />
   </Column>
@@ -439,6 +452,75 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="InsruedcreditLimit"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="RegimenFiscalCode"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SATCustomerName"
+    Type="nvarchar"
+    Size="200">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ImportLocalCustomerGroupId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ExportLocalCustomerGroupId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="EORInumber"
+    Type="varchar"
+    Size="25">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SingleInvoiceTemplateId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CustomsInvoiceTemplateId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ConsolidationInvoiceTemplateId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ManifestInvoiceTemplateId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="InvoiceCurrencyId"
     ReferencedTable="Currencies"
@@ -471,6 +553,11 @@
     ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="SharedLogisticsInvitationStatusCode"
+    ReferencedTable="SharedLogisticsInvitationStatus"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="CargoTrackingInvitationStatusCode"
     ReferencedTable="SharedLogisticsInvitationStatus"
     ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
@@ -513,6 +600,41 @@
     ForeignKeyColumn="UsoCFDICode"
     ReferencedTable="UsoCFDIs"
     ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="RegimenFiscalCode"
+    ReferencedTable="RegimenFiscals"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ImportLocalCustomerGroupId"
+    ReferencedTable="CustomerGroups"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ExportLocalCustomerGroupId"
+    ReferencedTable="CustomerGroups"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="SingleInvoiceTemplateId"
+    ReferencedTable="DocumentTypeTemplates"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="CustomsInvoiceTemplateId"
+    ReferencedTable="DocumentTypeTemplates"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ConsolidationInvoiceTemplateId"
+    ReferencedTable="DocumentTypeTemplates"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ManifestInvoiceTemplateId"
+    ReferencedTable="DocumentTypeTemplates"
+    ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Index
     Columns="Tenant,CreateDate" />

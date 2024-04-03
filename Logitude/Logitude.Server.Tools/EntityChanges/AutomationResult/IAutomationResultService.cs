@@ -8,7 +8,10 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
 {
    public interface IAutomationResultService
     {
+        bool DependencyOnLastEntityUpdate { get; }
+        List<AutomationQueueArgs> AutomationQueues { get; set; }
 
+        string ResultCode { get; }
         void Run(AutomationResultArgs automationResultArgs);
     }
 }

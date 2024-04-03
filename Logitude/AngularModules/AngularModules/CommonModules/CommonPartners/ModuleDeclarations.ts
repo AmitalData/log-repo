@@ -43,6 +43,9 @@ import { AddEditPartnerAddressComponent } from './Components/AddEdit/AddEditPart
 import { UploadPartnersComponent } from './Components/Maintenance/UploadPartnersComponent';
 import { StorageDefaultsComponents } from './Components/EditTabs/Warehouse/StorageDefaultsComponents';
 import { ShippingAgentGeneralTabComponent } from './Components/EditTabs/ShippingAgent/ShippingAgentGeneralTabComponent';
+import { ServiceLinesTabComponent } from './Components/EditTabs/ServiceLinesTabComponent';
+import { AddEditServiceLineComponent } from './Components/AddEdit/AddEditServiceLineComponent';
+import { PartnerARInvoiceDocumentTypeTemplateComponent } from './Components/Templates/PartnerARInvoiceDocumentTypeTemplateComponent';
 
 export const Components =
     [
@@ -91,6 +94,9 @@ export const Components =
         UploadPartnersComponent,
         StorageDefaultsComponents,
         ShippingAgentGeneralTabComponent,
+        ServiceLinesTabComponent,
+        AddEditServiceLineComponent,
+        PartnerARInvoiceDocumentTypeTemplateComponent,
     ];
 
 export class ModuleDeclarations {
@@ -144,6 +150,9 @@ export class ModuleDeclarations {
             case "UploadPartnersComponent": { myResult = UploadPartnersComponent; break; }
             case "StorageDefaultsComponents": { myResult = StorageDefaultsComponents; break; }
             case "ShippingAgentGeneralTabComponent": { myResult = ShippingAgentGeneralTabComponent; break; }
+            case "ServiceLinesTabComponent": { myResult = ServiceLinesTabComponent; break; }
+            case "AddEditServiceLineComponent": { myResult = AddEditServiceLineComponent; break; }
+            case "PartnerARInvoiceDocumentTypeTemplateComponent": { myResult = PartnerARInvoiceDocumentTypeTemplateComponent; break; }
         }
 
         return myResult;

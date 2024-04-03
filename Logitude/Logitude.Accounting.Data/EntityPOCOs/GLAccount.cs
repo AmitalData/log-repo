@@ -43,8 +43,15 @@ namespace Logitude.Accounting.Data.EntityPOCOs
         [ForeignKey("Currency")]
         [Column("CurrencyId")]
 	    public string CurrencyId { get; set; }
-	      
         public virtual Currency Currency { get; set; }
+
+
+        [ForeignKey("PaymentTerm")]
+        [Column("PaymentTerms")]
+	    public string PaymentTerms { get; set; }
+        public virtual PaymentTerm PaymentTerm { get; set; }
+
+
         [ForeignKey("RevenueExpense")]
         [Column("RevenueExpenseType")]
 	    public string RevenueExpenseType { get; set; }
@@ -180,6 +187,8 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public bool ActiveForInterestCreditInvoice { get; set; }
         [Column("InterestCreditLimit")]
 	    public decimal? InterestCreditLimit { get; set; }
+        [Column("InterestOpenBalance")]
+        public decimal? InterestOpenBalance { get; set; }
         [Column("NameForPrintingCheques")]
 	    public string NameForPrintingCheques { get; set; }
         [Column("Smallcashbook")]
@@ -197,6 +206,8 @@ namespace Logitude.Accounting.Data.EntityPOCOs
         public virtual GLAccountCardsData GLAccountCardsData { get; set; }
         [Column("PostponedChequesCommission")]
 	    public decimal? PostponedChequesCommission { get; set; }
+        [Column("DateFormat")]
+        public string DateFormat { get; set; }
     }
 }
 	 

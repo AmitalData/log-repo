@@ -9,6 +9,7 @@ import { db } from '../../../app/mem.data';
 import { CargoTrackingBrandingData } from '../../DataContracts/CargoTrackingBrandingData';
 import { CargoTrackingBrandingDataExtendedService } from 'src/CargoTracking/Services/Others/CargoTrackingBrandingDataExtendedService';
 import { ServiceResponse } from 'src/CargoTracking/DataContracts/ServiceResponse';
+import { Location } from '@angular/common';
 
 
 @Component({
@@ -27,7 +28,9 @@ export class PublicGateComponent
     companyName: string = "Unifreight Cloud Services";
     _Tenant: number;
     BackGroundImg:string;
-    constructor(private cargoTrackingDataExtendedService: CargoTrackingBrandingDataExtendedService, private activerouter: ActivatedRoute, private router: Router)
+    constructor(private cargoTrackingDataExtendedService: CargoTrackingBrandingDataExtendedService,
+         private activerouter: ActivatedRoute, private router: Router,
+         private location: Location)
     {
 
         this.GetDataFromURL();
@@ -37,8 +40,10 @@ export class PublicGateComponent
 
     private getcargoTrackingData()
     {
-        this.cargoTrackingDataExtendedService.get(this._Tenant).subscribe((response: ServiceResponse) =>
+        this.cargoTrackingDataExtendedService.get(this._Tenant).subscribe((response: any) =>
         {
+            if(response?.Result?.ForceHttps)
+                this.RedirectAppToHttps();
 
             CargoTrackingBrandingData.MainColor = response.Result.MainColor;
             if(CargoTrackingBrandingData.MainColor) {
@@ -56,6 +61,11 @@ export class PublicGateComponent
             this.BackGroundImg=response.Result.BackgroundImg!=null? "url("+ response.Result.BackgroundImg+")":"url('../assets/images/misc/map-bg.svg')";
             this.listenToRouterEvents();
         });
+    }
+    RedirectAppToHttps(){
+        if (location.protocol === 'http:') {
+            window.location.href = location.href.replace('http', 'https');
+        }
     }
     private GetDataFromURL()
     {

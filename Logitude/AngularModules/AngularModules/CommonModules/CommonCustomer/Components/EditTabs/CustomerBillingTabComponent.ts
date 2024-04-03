@@ -25,8 +25,11 @@ export class CustomerBillingTabComponent extends BaseComponent implements OnInit
     public IsCreditLimitActivated: boolean = false;
     public LocalCurrencyCode: string;
     public IsAccountingActivated: boolean;
+    public SatInterfaceSettingCode: string;
+    public Profact4Enabled: boolean = false;
 
     @ViewChild('BillingChild', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
+    @ViewChild('ARInvoiceDocumentTypeTemplateArea', { read: ViewContainerRef, static: false }) documentTemplateViewContainerRef: ViewContainerRef;
     public DisplaySATSettings: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs) {
@@ -46,6 +49,8 @@ export class CustomerBillingTabComponent extends BaseComponent implements OnInit
 
         if (SessionLocator.SATInterfaceSettings.SATInterfaceCode != "NONE") {
             this.DisplaySATSettings = true;
+            this.SatInterfaceSettingCode = SessionLocator.SATInterfaceSettings.SATInterfaceCode;
+            this.Profact4Enabled = SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF40";
         }
 
         this.Listen();
@@ -54,7 +59,7 @@ export class CustomerBillingTabComponent extends BaseComponent implements OnInit
     ngAfterViewInit(): void {
         this.IsAccountingActivated = SessionLocator.TenantPM.AccountingActivated;
         this.SetUIProperties();
-        this.RunComponent();
+        this.LoadGeneratedComponents();
         this.LoadCreditLimitData();
     }
 
@@ -65,20 +70,18 @@ export class CustomerBillingTabComponent extends BaseComponent implements OnInit
         // this.LoadCreditLimitData();
     }
 
-    RunComponent() {
-        if (this.viewContainerRef) {
-            this.LoadChildComponent();
+    LoadGeneratedComponents() {
+        if (!this.viewContainerRef) {
+            this.RunComponentTimer("Child");
+            return;
         }
-
-        else {
-            this.RunComponentTimer();
-        }
+        this.LoadChildComponent(this.viewContainerRef);
     }
 
     private Retries: number = 0;
     private timerToken: any;
     private GeneratedComponent: any;
-    private RunComponentTimer() {
+    private RunComponentTimer(componentName: String) {
         this.Retries++;
 
         if (this.timerToken) {
@@ -86,10 +89,10 @@ export class CustomerBillingTabComponent extends BaseComponent implements OnInit
         }
 
         if (this.Retries < 20) {
-            this.timerToken = setTimeout(() => this.RunComponent(), 1);
+            this.timerToken = componentName == "ARInvoiceDocumentTypeTemplateComponent" ? setTimeout(() => this.LoadARInvoiceDocumentTypeTemplateComponent(), 1) : setTimeout(() => this.LoadGeneratedComponents(), 1);
         }
     }
-    private LoadChildComponent() {
+    private LoadChildComponent(viewContainerRef) {
         SessionLocator.DynamicLoader.Load('./Infrastructure/GenericComponents/GeneratedComponent', this.viewContainerRef)
             .then(cmpRef => {
                 this.GeneratedComponent = cmpRef.instance;
@@ -100,8 +103,25 @@ export class CustomerBillingTabComponent extends BaseComponent implements OnInit
 
                 var screenCode = "Customer.BillingTabScreen";
                 cmpRef.instance.Run(this.EntityPM, this.ObjectTableName, screenCode);
+                if (viewContainerRef == this.viewContainerRef) this.LoadARInvoiceDocumentTypeTemplateComponent();
             });
     }
+
+    IsARInvoiceDocumentTypeTemplateAreaLoaded: boolean = false;
+    public LoadARInvoiceDocumentTypeTemplateComponent() {
+        if (this.IsARInvoiceDocumentTypeTemplateAreaLoaded) return;
+        this.Retries = 0;
+        if (!this.documentTemplateViewContainerRef) {
+            this.RunComponentTimer("ARInvoiceDocumentTypeTemplateComponent");
+            return;
+        }
+        SessionLocator.DynamicLoader.Load('./CommonModules/CommonPartners/Components/Templates/PartnerARInvoiceDocumentTypeTemplateComponent', this.documentTemplateViewContainerRef)
+            .then(cmpRef => {
+                cmpRef.instance.Run(this.EntityPM);
+            });
+        this.IsARInvoiceDocumentTypeTemplateAreaLoaded = true;
+    }
+
     SetUIProperties_GeneratedComponent() {
         if (this.GeneratedComponent) {
             var enabled: boolean = true;
@@ -122,8 +142,8 @@ export class CustomerBillingTabComponent extends BaseComponent implements OnInit
     }
 
     private SetInsuredCreditLimitEnablitity() {
-        this.UIProperties.SetEnabled("InsuredcreditLimit", this.ObjectTableName, this.HasEditCreditAmountFeature);
-        this.EntityPM.UIProperties.SetEnabled("InsuredcreditLimit", this.ObjectTableName, this.HasEditCreditAmountFeature);
+        this.UIProperties.SetEnabled("InsuredcreditLimit", this.ObjectTableName, true);
+        this.EntityPM.UIProperties.SetEnabled("InsuredcreditLimit", this.ObjectTableName, true);
     }
 
     public CreditLimitAmountLabel: string;
@@ -317,10 +337,24 @@ export class CustomerBillingTabComponent extends BaseComponent implements OnInit
         }
     }
 
+    get RegimenFiscalCode() { return this.EntityPM.RegimenFiscalCode; }
+    set RegimenFiscalCode(newValue: string) {
+        if (this.EntityPM.RegimenFiscalCode != newValue) {
+            this.EntityPM.RegimenFiscalCode = newValue;
+        }
+    }
+
     get SATForeignRFC() { return this.EntityPM.SATForeignRFC; }
     set SATForeignRFC(newValue: string) {
         if (this.EntityPM.SATForeignRFC != newValue) {
             this.EntityPM.SATForeignRFC = newValue;
+        }
+    }
+
+    get SATCustomerName() { return this.EntityPM.SATCustomerName; }
+    set SATCustomerName(newValue: string) {
+        if (this.EntityPM.SATCustomerName != newValue) {
+            this.EntityPM.SATCustomerName = newValue;
         }
     }
 

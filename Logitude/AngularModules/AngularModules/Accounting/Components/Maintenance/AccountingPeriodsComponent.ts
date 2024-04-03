@@ -167,7 +167,9 @@ export class AccountingPeriodsComponent extends BaseComponent {
     }
 
     CreateRecord() {
+        this.CurrentSession.StartBusyIndicatorSaving();
         this._AccountingPeriodExtendedPMService.createDefaultPeriods(this.year).subscribe((myResult: any) => {
+            this.CurrentSession.StopBusyIndicator();
             var result = myResult.Result;
             this.BrowseButtonClicked();
 

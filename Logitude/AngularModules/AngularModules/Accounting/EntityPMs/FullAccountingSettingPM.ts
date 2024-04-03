@@ -15,11 +15,11 @@ import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/Propert
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
 export class FullAccountingSettingPM {
-
+      
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-          this.UIProperties = new UIProperties(this); 
+                    this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -272,6 +272,61 @@ export class FullAccountingSettingPM {
     private thirdsPeriodsMonths: string;
     public get ThirdsPeriodsMonths() { return this.thirdsPeriodsMonths; }
     public set ThirdsPeriodsMonths(newValue: string) { if (this.thirdsPeriodsMonths != newValue) { this.thirdsPeriodsMonths = newValue; this.MarkAsDirty("ThirdsPeriodsMonths"); } }
+       
+	 
+    private isSecurityLevelActivated: boolean;
+    public get IsSecurityLevelActivated() { return this.isSecurityLevelActivated; }
+    public set IsSecurityLevelActivated(newValue: boolean) { if (this.isSecurityLevelActivated != newValue) { this.isSecurityLevelActivated = newValue; this.MarkAsDirty("IsSecurityLevelActivated"); } }
+       
+	 
+    private vATreportEveryTwoMonths: boolean;
+    public get VATreportEveryTwoMonths() { return this.vATreportEveryTwoMonths; }
+    public set VATreportEveryTwoMonths(newValue: boolean) { if (this.vATreportEveryTwoMonths != newValue) { this.vATreportEveryTwoMonths = newValue; this.MarkAsDirty("VATreportEveryTwoMonths"); } }
+       
+	 
+    private createRevaluationJournal: boolean;
+    public get CreateRevaluationJournal() { return this.createRevaluationJournal; }
+    public set CreateRevaluationJournal(newValue: boolean) { if (this.createRevaluationJournal != newValue) { this.createRevaluationJournal = newValue; this.MarkAsDirty("CreateRevaluationJournal"); } }
+       
+	 
+    private taxInstitutionGLAccountId: string;
+    public get TaxInstitutionGLAccountId() { return this.taxInstitutionGLAccountId; }
+    public set TaxInstitutionGLAccountId(newValue: string) { if (this.taxInstitutionGLAccountId != newValue) { this.taxInstitutionGLAccountId = newValue; this.MarkAsDirty("TaxInstitutionGLAccountId"); } }
+       
+	 
+    private hSM: string;
+    public get HSM() { return this.hSM; }
+    public set HSM(newValue: string) { if (this.hSM != newValue) { this.hSM = newValue; this.MarkAsDirty("HSM"); } }
+       
+	 
+    private hSMtoken: string;
+    public get HSMtoken() { return this.hSMtoken; }
+    public set HSMtoken(newValue: string) { if (this.hSMtoken != newValue) { this.hSMtoken = newValue; this.MarkAsDirty("HSMtoken"); } }
+       
+	 
+    private hSMaddress: string;
+    public get HSMaddress() { return this.hSMaddress; }
+    public set HSMaddress(newValue: string) { if (this.hSMaddress != newValue) { this.hSMaddress = newValue; this.MarkAsDirty("HSMaddress"); } }
+       
+	 
+    private allowEditingExchangeRate: boolean;
+    public get AllowEditingExchangeRate() { return this.allowEditingExchangeRate; }
+    public set AllowEditingExchangeRate(newValue: boolean) { if (this.allowEditingExchangeRate != newValue) { this.allowEditingExchangeRate = newValue; this.MarkAsDirty("AllowEditingExchangeRate"); } }
+       
+	 
+    private amountForConfirmationNumber: number;
+    public get AmountForConfirmationNumber() { return this.amountForConfirmationNumber; }
+    public set AmountForConfirmationNumber(newValue: number) { if (this.amountForConfirmationNumber != newValue) { this.amountForConfirmationNumber = newValue; this.MarkAsDirty("AmountForConfirmationNumber"); } }
+       
+	 
+    private numberingByChartOfAccount: boolean;
+    public get NumberingByChartOfAccount() { return this.numberingByChartOfAccount; }
+    public set NumberingByChartOfAccount(newValue: boolean) { if (this.numberingByChartOfAccount != newValue) { this.numberingByChartOfAccount = newValue; this.MarkAsDirty("NumberingByChartOfAccount"); } }
+       
+	 
+    private oppositeAccountNumber: boolean;
+    public get OppositeAccountNumber() { return this.oppositeAccountNumber; }
+    public set OppositeAccountNumber(newValue: boolean) { if (this.oppositeAccountNumber != newValue) { this.oppositeAccountNumber = newValue; this.MarkAsDirty("OppositeAccountNumber"); } }
        
 	 
 

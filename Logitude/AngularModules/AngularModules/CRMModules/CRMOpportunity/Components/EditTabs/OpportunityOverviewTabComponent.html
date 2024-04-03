@@ -306,11 +306,11 @@
                                                                                                 <td style="width:50px">Quotes</td>
                                                                                                 <td></td>
                                                                                                 <td style="width:40px">
-                                                                                                    <button id="{{'AddQuote' | IdGeneratorPipe}}"  class="Button" [disabled]="!IsAddRemoveEnabled" (click)="NewQuote()">Add</button>
+                                                                                                    <button id="{{'AddQuote' | IdGeneratorAsyncPipe | async}}"  class="Button" [disabled]="!IsAddRemoveEnabled" (click)="NewQuote()">Add</button>
                                                                                                 </td>
                                                                                                 <td style="width:3px"></td>
                                                                                                 <td style="width:40px">
-                                                                                                    <button id="{{'ConnectQuote' | IdGeneratorPipe}}"  class="Button" [disabled]="!IsAddRemoveEnabled" (click)="ConnectQuotesMethod()">Connect</button>
+                                                                                                    <button id="{{'ConnectQuote' | IdGeneratorAsyncPipe | async}}"  class="Button" [disabled]="!IsAddRemoveEnabled" (click)="ConnectQuotesMethod()">Connect</button>
                                                                                                 </td>
                                                                                                 <td style="width:3px"></td>
                                                                                             </tr>
@@ -327,8 +327,6 @@
                                                                                                     <li class="RecentEntityItem" *ngFor="let item of QuotesObslist" (click)="EditQuote(item)">
                                                                                                         <table>
                                                                                                             <tr>
-
-
                                                                                                                 <td style="width:5px;min-width:5px; overflow: hidden;" rowspan="2" [ngStyle]="{background: item.RatingCode | StringToColorPipe:'QuoteRatingCode'}">
                                                                                                                     <div>
 
@@ -347,8 +345,10 @@
                                                                                                                 </td>
 
                                                                                                                 <td rowspan="2">
-                                                                                                                    <div style="height:50%"></div>
-                                                                                                                    <div style="float:left;padding-left:30%  ">{{item.OpenDate |  DateTimePipe:'SD'}}</div>
+                                                                                                                    <div style="height: 50%; width: 100px; float: left; padding-left: 30%; font-size:11px;">
+                                                                                                                        <label [ngStyle]="{color: item.StageName | StringToColorPipe}">{{item.StageName}}</label>
+                                                                                                                    </div>
+                                                                                                                    <div style="float:left;padding-left:30%">{{item.OpenDate |  DateTimePipe:'SD'}}</div>
                                                                                                                 </td>
 
                                                                                                                 <td style="width:7px; height: 100%;" rowspan="2">
@@ -362,9 +362,6 @@
                                                                                                                                 <div title="{{item.DirectionName}}" style="height: 100%;width:100%; position:relative;">
                                                                                                                                     <img style="height:16px;width:16px" class="CenterCenter" src="./Images/Directions/{{item.DirectionId}}.png" />
                                                                                                                                 </div>
-
-
-
                                                                                                                             </td>
                                                                                                                         </tr>
 
@@ -373,17 +370,10 @@
                                                                                                                                 <div title="{{item.TransportModeName}}" style="position:relative;height:100%">
                                                                                                                                     <img style="height:16px;width:16px" class="CenterCenter" src="./Images/Icons/{{item.TransportModeId}}.png" />
                                                                                                                                 </div>
-
-
                                                                                                                             </td>
                                                                                                                         </tr>
                                                                                                                     </table>
-
-
                                                                                                                 </td>
-
-
-
 
                                                                                                                 <td style="width: 10px;">
                                                                                                                     <div></div>
@@ -430,7 +420,7 @@
                                                                                                             <td style="width:90px">
                                                                                                                 <div class="dropdown" style="float:right;">
 
-                                                                                                                    <div tabindex="1" class="ToggleButton" style="margin: auto; width: 90px !important; float:right;padding-right:5px">
+                                                                                                                    <div tabindex="1" [attr.data-cy]="'AdditionalServicesToggleButton'" class="ToggleButton" style="margin: auto; width: 90px !important; float:right;padding-right:5px">
                                                                                                                         <label>Add/Remove</label>
                                                                                                                         <img src="./Images/ToggleIcon.png" />
                                                                                                                         <div style="float:right;z-index:3;right:-80px;top:-252px" [attr.id]="SearchTextAdditionalServiceModeDropButtonId" class="ToggleButtonMenu">
@@ -455,7 +445,7 @@
                                                                                                                                                 <div style="width:22px">
 
                                                                                                                                                     <!--<input type="checkbox" [disabled]="!item.IsCheckBoxEnabled" [(ngModel)]="item.IsChecked" (click)="ProductsToggleButtonClicked(item,i)" (focus)="setToggleButtonMenuTemp();" (blur)="setToggleButtonMenu();" />-->
-                                                                                                                                                    <CheckBox [IsChecked]="item.IsChecked" (Checked)="item.IsChecked = $event"></CheckBox>
+                                                                                                                                                    <CheckBox DataCy="AdditionalServicesCheckBox" [IsChecked]="item.IsChecked" (Checked)="item.IsChecked = $event"></CheckBox>
 
                                                                                                                                                 </div>
                                                                                                                                             </td>
@@ -541,7 +531,7 @@
 
 
                                                                                                                                                                         <div class="DeleteButton" style="width:20px;float:right">
-                                                                                                                                                                            <IconButton [Name]="'Delete'" [IsSmall]="true" style="display: block; float: right;padding-right:1px" (click)="DeleteItemServiceObsList(Item)"></IconButton>
+                                                                                                                                                                            <IconButton DataCy="DeleteItemServiceObsList" [Name]="'Delete'" [IsSmall]="true" style="display: block; float: right;padding-right:1px" (click)="DeleteItemServiceObsList(Item)"></IconButton>
                                                                                                                                                                         </div>
                                                                                                                                                                         <div class="DeleteButton" style="width:20px;float:right">
                                                                                                                                                                             <IconButton [Name]="'Edit'" [IsSmall]="true" style="display: block; float: right;padding-right:1px" (click)="EditItemServiceObsList(Item)"></IconButton>
@@ -617,7 +607,7 @@
                                                                                                             <td style="width:90px">
                                                                                                                 <div class="dropdown" style="float:right;">
 
-                                                                                                                    <div tabindex="1" class="ToggleButton" style="margin: auto; width: 90px !important; float:right;padding-right:5px">
+                                                                                                                    <div tabindex="1" [attr.data-cy]="'CompetitorsToggleButton'" class="ToggleButton" style="margin: auto; width: 90px !important; float:right;padding-right:5px">
                                                                                                                         <label>Add/Remove</label>
                                                                                                                         <img src="./Images/ToggleIcon.png" />
                                                                                                                         <div style="float:right;z-index:3;right:-80px;top:-252px" [attr.id]="SearchTextCompetitorsDropButtonId" class="ToggleButtonMenu">
@@ -642,7 +632,7 @@
                                                                                                                                                 <div style="width:22px">
 
                                                                                                                                                     <!--<input type="checkbox" [disabled]="!item.IsCheckBoxEnabled" [(ngModel)]="item.IsChecked" (click)="ProductsToggleButtonClicked(item,i)" (focus)="setToggleButtonMenuTemp();" (blur)="setToggleButtonMenu();" />-->
-                                                                                                                                                    <CheckBox [IsChecked]="item.IsChecked" (Checked)="item.IsChecked = $event"></CheckBox>
+                                                                                                                                                    <CheckBox DataCy="CompetitorsCheckBox" [IsChecked]="item.IsChecked" (Checked)="item.IsChecked = $event"></CheckBox>
 
                                                                                                                                                 </div>
                                                                                                                                             </td>
@@ -720,7 +710,7 @@
                                                                                                                                                         <td style="width: auto;">
 
                                                                                                                                                             <div class="DeleteButton" style="width:20px;float:right">
-                                                                                                                                                                <IconButton [Name]="'Delete'" [IsSmall]="true" style="display: block; float: right;padding-right:5px" (click)="DeleteItemCompetitorList(Item)"></IconButton>
+                                                                                                                                                                <IconButton DataCy="DeleteItemCompetitorList" [Name]="'Delete'" [IsSmall]="true" style="display: block; float: right;padding-right:5px" (click)="DeleteItemCompetitorList(Item)"></IconButton>
                                                                                                                                                             </div>
                                                                                                                                                         </td>
                                                                                                                                                         <td></td>
@@ -796,7 +786,7 @@
                                                                                                 <table>
                                                                                                     <tr>
                                                                                                         <td style="width: 35px;">
-                                                                                                            <button id="{{'AddPhoneCall' | IdGeneratorPipe}}" class="Button" (click)="AddActivity('CL')">
+                                                                                                            <button id="{{'AddPhoneCall' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="AddActivity('CL')">
                                                                                                                 <img style="left:5px;" src="./Images/Buttons/Add.over.png" />
                                                                                                                 <img style="left:5px;" src="./Images/Buttons/Call.png" />
                                                                                                             </button>
@@ -807,7 +797,7 @@
                                                                                                         </td>
 
                                                                                                         <td style="width: 35px;">
-                                                                                                            <button id="{{'AddTask' | IdGeneratorPipe}}" class="Button" (click)="AddActivity('TS')">
+                                                                                                            <button id="{{'AddTask' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="AddActivity('TS')">
                                                                                                                 <img style="left:5px;" src="./Images/Buttons/Add.over.png" />
                                                                                                                 <img style="left:5px;" src="./Images/Buttons/Task.png" />
                                                                                                             </button>
@@ -818,7 +808,7 @@
                                                                                                         </td>
 
                                                                                                         <td style="width: 35px;">
-                                                                                                            <button id="{{'AddAppointment' | IdGeneratorPipe}}" class="Button" (click)="AddActivity('AP')">
+                                                                                                            <button id="{{'AddAppointment' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="AddActivity('AP')">
                                                                                                                 <img style="left:5px;" src="./Images/Buttons/Add.over.png" />
                                                                                                                 <img style="left:5px;" src="./Images/Buttons/Appointment.png" />
                                                                                                             </button>
@@ -829,7 +819,7 @@
                                                                                                         </td>
 
                                                                                                         <td style="width: 35px;">
-                                                                                                            <button id="{{'SendEMail' | IdGeneratorPipe}}" class="Button" (click)="AddEmail()">
+                                                                                                            <button id="{{'SendEMail' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="AddEmail()">
                                                                                                                 <img style="left:5px;" src="./Images/Buttons/Add.over.png" />
                                                                                                                 <img style="left:5px;" src="./Images/Buttons/Email.png" />
                                                                                                             </button>
@@ -969,7 +959,7 @@
 
                                                                                                     <div style="position: absolute; right: 130px;top:10px;">
                                                                                                         <div *ngIf="item.CompleteButtonVisibility" class="CompleteButton">
-                                                                                                            <button style="width:75px;height:22px;" class="Button" (click)="item.CompleteClicked()">Complete</button>
+                                                                                                            <button [attr.data-cy]="'CompleteButton'" style="width:75px;height:22px;" class="Button" (click)="item.CompleteClicked()">Complete</button>
                                                                                                         </div>
                                                                                                         <div *ngIf="item.ReopenButtonVisibility" class="CompleteButton">
                                                                                                             <button style="width:75px;height:22px;" class="Button" (click)="item.ReopenClicked()">Incomplete</button>

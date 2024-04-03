@@ -28,7 +28,7 @@ export class GLAccountTaxWithholdingTabComponent extends BaseComponent {
     public  ObjectTableName:string= "GLAccount";
     public DataContext: any = this;
     public Lines: ObservableCollection = new ObservableCollection([]);
-    entityPM: GLAccountPM;
+    EntityPM: GLAccountPM = null;
     EntityResourceService: EntityResourceService = new EntityResourceService();
     visible: boolean;
     FilterSelectedValue: string = 'Active';
@@ -39,35 +39,47 @@ export class GLAccountTaxWithholdingTabComponent extends BaseComponent {
             this.EntityResourceService.getEntityResourceByTableName("GLAccount").subscribe((response: any) => {
 
                 this.visible = true;
-                this.entityPM = entityArgs.EntityPM;
+                this.EntityPM = entityArgs.EntityPM;
                 this.InactiveFilter = false;
 
               this.BuildGLAccountTaxWithholdingLinesList();
               this.Listen();
             });
         });
+        
     }
 
-  private Listen() {
+private SaveCompletedEvent: any = null;
+private LoadCompletedEvent: any = null;
+public CurrentEditComponentId: string;
+Listen() {
+
+
     if (this.CurrentSession.CurrentEditComponent != null) {
+        this.CurrentEditComponentId = this.CurrentSession.CurrentEditComponent.ComponentId;
 
+        //
+        if (this.SaveCompletedEvent == null) {
+            this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                if (isSaveSuccess) {
+                    this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                    this.BuildGLAccountTaxWithholdingLinesList();
+                }
+            });
+        }
 
-      this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
-        this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isLoadSuccess: boolean) => {
-          if (isLoadSuccess && this.CurrentSession.CurrentEditComponent) {
-            this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
-
-            this.BuildGLAccountTaxWithholdingLinesList();
-
-
-          }
-        })
-      );
-
+        //
+        if (this.LoadCompletedEvent == null) {
+            this.LoadCompletedEvent = this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                if (isLoadSuccess) {
+                    this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                    this.BuildGLAccountTaxWithholdingLinesList();
+                }
+            });
+        }
 
     }
-  }
-
+}
 
     InactiveFilter: boolean= null
     FilterItemClicked(filtervalue: string) {
@@ -90,45 +102,45 @@ export class GLAccountTaxWithholdingTabComponent extends BaseComponent {
     }
 
 
-    get DeductionTypeId() { return this.entityPM.DeductionTypeId; }
+    get DeductionTypeId() { return this.EntityPM.DeductionTypeId; }
     set DeductionTypeId(value: string) {
-        if (this.entityPM.DeductionTypeId != value) {
-            this.entityPM.DeductionTypeId = value;
+        if (this.EntityPM.DeductionTypeId != value) {
+            this.EntityPM.DeductionTypeId = value;
         }
     }
 
 
-    get ConsolidationVat() { return this.entityPM.ConsolidationVat; }
+    get ConsolidationVat() { return this.EntityPM.ConsolidationVat; }
     set ConsolidationVat(value: string) {
-        if (this.entityPM.ConsolidationVat != value) {
-            this.entityPM.ConsolidationVat = value;
+        if (this.EntityPM.ConsolidationVat != value) {
+            this.EntityPM.ConsolidationVat = value;
         }
     }
 
-    get DeductionFileNumber() { return this.entityPM.DeductionFileNumber; }
+    get DeductionFileNumber() { return this.EntityPM.DeductionFileNumber; }
     set DeductionFileNumber(value: string) {
-        if (this.entityPM.DeductionFileNumber != value) {
-            this.entityPM.DeductionFileNumber = value;
+        if (this.EntityPM.DeductionFileNumber != value) {
+            this.EntityPM.DeductionFileNumber = value;
         }
     }
 
-    get DeductionFileTypeId() { return this.entityPM.DeductionFileTypeId; }
+    get DeductionFileTypeId() { return this.EntityPM.DeductionFileTypeId; }
     set DeductionFileTypeId(value: string) {
-        if (this.entityPM.DeductionFileTypeId != value) {
-            this.entityPM.DeductionFileTypeId = value;
+        if (this.EntityPM.DeductionFileTypeId != value) {
+            this.EntityPM.DeductionFileTypeId = value;
         }
     }
-    get AssessingOfficeCode() { return this.entityPM.AssessingOfficeCode; }
+    get AssessingOfficeCode() { return this.EntityPM.AssessingOfficeCode; }
     set AssessingOfficeCode(value: string) {
-        if (this.entityPM.AssessingOfficeCode != value) {
-            this.entityPM.AssessingOfficeCode = value;
+        if (this.EntityPM.AssessingOfficeCode != value) {
+            this.EntityPM.AssessingOfficeCode = value;
         }
     }
 
-    get Occupation() { return this.entityPM.Occupation; }
+    get Occupation() { return this.EntityPM.Occupation; }
     set Occupation(value: string) {
-        if (this.entityPM.Occupation != value) {
-            this.entityPM.Occupation = value;
+        if (this.EntityPM.Occupation != value) {
+            this.EntityPM.Occupation = value;
         }
     }
 
@@ -136,13 +148,13 @@ export class GLAccountTaxWithholdingTabComponent extends BaseComponent {
        var  sequence:number= 0;
         this.Lines.Clear();
         if (this.InactiveFilter != null) {
-            for (let item of this.entityPM.GLAccountWithholdingTaxes.filter(d => d.Inactive == this.InactiveFilter)) {
+            for (let item of this.EntityPM.GLAccountWithholdingTaxes.filter(d => d.Inactive == this.InactiveFilter)) {
                 sequence += 1;
                 this.Lines.Insert(new GLAccountTaxLine(item, this,sequence));
             }
         }
         else {
-            for (let item of this.entityPM.GLAccountWithholdingTaxes) {
+            for (let item of this.EntityPM.GLAccountWithholdingTaxes) {
                 sequence += 1;
                 this.Lines.Insert(new GLAccountTaxLine(item, this, sequence ));
             }
@@ -179,7 +191,7 @@ export class GLAccountTaxWithholdingTabComponent extends BaseComponent {
       }
     else {
       //this.ValidationErrorsList = [];
-      var activeItems = this.entityPM.GLAccountWithholdingTaxes.filter(d => !d.Inactive);
+      var activeItems = this.EntityPM.GLAccountWithholdingTaxes.filter(d => !d.Inactive);
       var items = activeItems.sort((a, b) => { return (a.LineNumber === b.LineNumber) ? 0 : (a.LineNumber < b.LineNumber) ? -1 : 1 });
 
       var item = items[this.Lines.Collection.length - 1];
@@ -187,8 +199,8 @@ export class GLAccountTaxWithholdingTabComponent extends BaseComponent {
         this.LastLineToDate = item.ToDate;
       }
       var windowArgs: any = {};
-      windowArgs.GLAccountWithholdinTax = new GLAccountWithholdingTaxPM(this.entityPM);
-      windowArgs.GLAccount = this.entityPM;
+      windowArgs.GLAccountWithholdinTax = new GLAccountWithholdingTaxPM(this.EntityPM);
+      windowArgs.GLAccount = this.EntityPM;
       windowArgs.LastLineToDate = this.LastLineToDate;
       windowArgs.IsNew = true;
       var windowTitle = TextCodeTranslator.Translate("Accounting.O.TaxLineTitle");
@@ -218,10 +230,10 @@ export class GLAccountTaxWithholdingTabComponent extends BaseComponent {
             var line: number = 0;
 
 
-            var items = this.entityPM.GLAccountWithholdingTaxes.sort((a, b) => { return (a.LineNumber === b.LineNumber) ? 0 : (a.LineNumber < b.LineNumber) ? -1 : 1 });
+            var items = this.EntityPM.GLAccountWithholdingTaxes.sort((a, b) => { return (a.LineNumber === b.LineNumber) ? 0 : (a.LineNumber < b.LineNumber) ? -1 : 1 });
             if (items.length == 0) line = 0;
             else {
-                line = items[this.entityPM.GLAccountWithholdingTaxes.length - 1].LineNumber;
+                line = items[this.EntityPM.GLAccountWithholdingTaxes.length - 1].LineNumber;
             }
             line += 1;
             //var item = items[this.Lines.Collection.length - 1];
@@ -229,8 +241,8 @@ export class GLAccountTaxWithholdingTabComponent extends BaseComponent {
             //    this.LastLineToDate = item.ToDate;
             //}
             var item: GLAccountWithholdingTaxPM =s.entity;
-            item.GLAccountId = this.entityPM.Id;
-            item.Tenant = this.entityPM.Tenant;
+            item.GLAccountId = this.EntityPM.Id;
+            item.Tenant = this.EntityPM.Tenant;
             item.LineNumber = line;
             item.CreateDate = new Date();
             item.CreatedByUserId = SessionLocator.LoggedUserId;
@@ -240,7 +252,7 @@ export class GLAccountTaxWithholdingTabComponent extends BaseComponent {
             this.LastLineToDate = s.ToDate;
 
             item.Inactive = false;
-            this.entityPM.AddGLAccountWithholdingTax(item);
+            this.EntityPM.AddGLAccountWithholdingTax(item);
             if (this.FilterSelectedValue == "Active") this.InactiveFilter = false;
             else if (this.FilterSelectedValue == "Inactive") this.InactiveFilter = true;
             else this.InactiveFilter = null;
@@ -347,7 +359,7 @@ export class GLAccountTaxLine extends BaseComponent {
 
         var windowArgs: any = {};
         windowArgs.GLAccountWithholdinTax =this.entity;
-        windowArgs.GLAccount = this.parent.entityPM;
+        windowArgs.GLAccount = this.parent.EntityPM;
         windowArgs.IsNew = false;
 
         var windowTitle = TextCodeTranslator.Translate("Accounting.O.EditTaxPeriod");

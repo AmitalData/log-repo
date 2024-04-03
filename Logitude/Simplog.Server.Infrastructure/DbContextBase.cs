@@ -23,6 +23,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Reflection;
+using IsolationLevel = System.Transactions.IsolationLevel;
 
 namespace Simplog.Server.Infrastructure
 {
@@ -38,7 +39,9 @@ namespace Simplog.Server.Infrastructure
 
         public DbContextBase(DbConnection connection, DbCompiledModel model)
 : base(connection, model, contextOwnsConnection: false)
-        { }
+        {
+            Database.Connection.StateChange += Connection_StateChange;
+        }
 
         public DbContextBase()
             : base()
@@ -53,13 +56,13 @@ namespace Simplog.Server.Infrastructure
                 }
             }
 
-
+            Database.Connection.StateChange += Connection_StateChange;
             ///this.Database.CommandTimeout = 240;
             InitLog();
         }
         public override int SaveChanges()
         {
-            bool suppressThrow = false; 
+            bool suppressThrow = false;
             var saveChangeLogger = CreateLogger();
             var commandTimeout = this.Database.CommandTimeout;
             try
@@ -74,7 +77,14 @@ namespace Simplog.Server.Infrastructure
                 {
                     this.Database.CommandTimeout = to;
                 }
-
+                else if(ApplicationAppInfo.WorkerRoleCall)
+                {
+                    this.Database.CommandTimeout = 10; 
+                }
+                else if (!ApplicationAppInfo.WorkerRoleCall)
+                {
+                    this.Database.CommandTimeout = 15; 
+                }
                 var intSave = base.SaveChanges();
                 var testEx = false;
                 if (testEx)
@@ -89,7 +99,7 @@ namespace Simplog.Server.Infrastructure
                 AmitalDebuggerUtil.Break(AmitalDebuggerLevel.Information);
                 if (suppressThrow)
                 {
-                    return - 999;
+                    return -999;
                 }
                 throw e1;
             }
@@ -158,7 +168,7 @@ namespace Simplog.Server.Infrastructure
                 myHeader += ":";
             }
             catch { }
-            return myHeader + "~" +  mySaveLog + "~" + myStack; ;
+            return myHeader + "~" + mySaveLog + "~" + myStack; ;
 
 
 
@@ -279,9 +289,13 @@ Simplog.Server.Infrastructure.DbContextBaseUtil.ToLog =true;");
         {
             try
             {
+
+
                 if (this.Database != null)
                 {
                     this.Database.Log -= EnqueueLog;
+                    Database.Connection.StateChange -= Connection_StateChange;
+
                 }
             }
             catch (Exception)
@@ -295,14 +309,73 @@ Simplog.Server.Infrastructure.DbContextBaseUtil.ToLog =true;");
         public DbContextBase(string nameOrConnectionString)
             : base(nameOrConnectionString)
         {
+            Database.Connection.StateChange += Connection_StateChange;
             InitLog();
         }
         public DbContextBase(DbConnection existingConnection, bool contextOwnsConnection)
             : base(existingConnection, contextOwnsConnection)
         {
+            Database.Connection.StateChange += Connection_StateChange;
             InitLog();
         }
-        static string _UserSlashPass = null;
+
+        private void Connection_StateChange(object sender, StateChangeEventArgs args)
+        {
+            if (LogitudeSettings.System2RedirectFraction == 0)
+            {
+                return;
+            }
+            if (ApplySnapshotIsolation())
+            {
+                SetTransactionIsolationLevel(args);
+            }
+        }
+
+        private bool ApplySnapshotIsolation()
+        {
+            Random random = new Random();
+            var LuckyNumber = random.Next(1, 101);
+            return ((LuckyNumber % LogitudeSettings.System2RedirectFraction) == 0);
+        }
+
+        private void SetTransactionIsolationLevel(StateChangeEventArgs args)
+        {
+            if (args.CurrentState == ConnectionState.Open && args.OriginalState != ConnectionState.Open)
+            {
+               
+                    using (var command = Database.Connection.CreateCommand())
+                    {
+                        if (Transaction.Current == null)
+                        {
+                            command.CommandText = "SET TRANSACTION ISOLATION LEVEL SNAPSHOT";
+                        }
+       
+                        else
+                        {
+                            switch (Transaction.Current.IsolationLevel)
+                            {
+                                case IsolationLevel.ReadCommitted:
+                                    command.CommandText = "SET TRANSACTION ISOLATION LEVEL READ COMMITTED";
+                                    break;
+                                case IsolationLevel.ReadUncommitted:
+                                    command.CommandText = "SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED";
+                                    break;
+                                case IsolationLevel.Snapshot:
+                                    command.CommandText = "SET TRANSACTION ISOLATION LEVEL SNAPSHOT";
+                                    break;
+                                case IsolationLevel.Serializable:
+                                    command.CommandText = "SET TRANSACTION ISOLATION LEVEL SERIALIZABLE";
+                                    break;
+                                default:
+                                    throw new ArgumentOutOfRangeException();
+                            }
+                            command.ExecuteNonQuery();
+                        }
+                }
+            }
+        }
+
+ static string _UserSlashPass = null;
         public void ExecuteInSys(string mainConnectionString, List<string> unifreightTables, Func<string> GetConnetionStringFunc)
         {
             var UserSlashPass = _UserSlashPass??GetConnetionStringFunc();
@@ -547,7 +620,7 @@ Simplog.Server.Infrastructure.DbContextBaseUtil.ToLog =true;");
                 }
                 command.CommandText = sqlReturn1Row;
 
-                
+
                 using (var dataReader = command.ExecuteReader(CommandBehavior.CloseConnection | CommandBehavior.SingleResult)
                     )
                 {
@@ -576,17 +649,17 @@ Simplog.Server.Infrastructure.DbContextBaseUtil.ToLog =true;");
 
         }
 
-        public int  ExecuteNonQuery (string sqlReturn1Row )
+        public int ExecuteNonQuery(string sqlReturn1Row)
         {
 
-            
-           
+
+
 
             Debug.WriteLine(sqlReturn1Row);
 
 
 
-            using (var connection = 
+            using (var connection =
               new OracleConnection(
                   /*"User Id=Scott;Password=tiger;Data Source=Ora;"*/
                   this.Database.Connection.ConnectionString)
@@ -596,7 +669,7 @@ Simplog.Server.Infrastructure.DbContextBaseUtil.ToLog =true;");
                 {
                     ///AddParams(command, MyParams);
                     command.CommandType = CommandType.Text;
-                    int  rowsAffected = command.ExecuteNonQuery();
+                    int rowsAffected = command.ExecuteNonQuery();
                     // todo get affected ????????????
                     //For UPDATE, INSERT, and DELETE statements, the return value is the number of rows affected by the command. For all other types of statements, the return value is -1. If a rollback occurs, the return value is also -1.
 
@@ -605,7 +678,7 @@ Simplog.Server.Infrastructure.DbContextBaseUtil.ToLog =true;");
 
                 }
             }
-            
+
             //using (var command = this.Database.Connection.CreateCommand())
             //{
 
@@ -849,7 +922,7 @@ Simplog.Server.Infrastructure.DbContextBaseUtil.ToLog =true;");
             return oraCSB;
         }
 
-        public static string GetSchemaAMITAL_DB(int tenantSeed=1)
+        public static string GetSchemaAMITAL_DB(int tenantSeed = 1)
         {
             Devart.Data.Oracle.OracleConnectionStringBuilder csb = null;
             if (true)
@@ -906,9 +979,9 @@ Simplog.Server.Infrastructure.DbContextBaseUtil.ToLog =true;");
 
 
     public static class DbContextBaseSqlServerExt
-        //4 Accounting streaming 
+    //4 Accounting streaming 
     {
-        
+
 
         /// <summary> 
         /// Execute stored procedure with single table value parameter. 

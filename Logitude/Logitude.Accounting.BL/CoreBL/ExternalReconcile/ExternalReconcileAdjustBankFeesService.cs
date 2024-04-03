@@ -1,5 +1,7 @@
 ﻿using Logitude.Accounting.BL.Validators;
+using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityLists;
+using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Server.Infrastructure;
@@ -107,7 +109,8 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
         public void PrapareAndValid(int tenant, List<string> reconcileExternalPageLineIdList, string adjustGLAccountId, out List<ReconcileExternalPageLineList> listOfpageLineList, out List<ReconcileExternalPageList> listOfpageList
             ,bool CheckWhileStreaming, 
             List<string> ledgerTransactionIds,
-            out string accountingCurrencyId, out List<LedgerTransactionPM> ledgerTransactionList)
+            
+            out string accountingCurrencyId, out List<LedgerTransactionPM> ledgerTransactionList, bool skipAccountValidation = false)
         {
             
             accountingCurrencyId = null;
@@ -120,10 +123,10 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             var bankGLAccountList = _ExternalReconcileDataProvider.GetBankAccountFromReconcileExternalPageLineId(reconcileExternalPageLineId, tenant);
             accountingCurrencyId =this._ExternalReconcileDataProvider.GetaccountingCurrencyId(tenant);
 
-            Validate(tenant, reconcileExternalPageLineIdList, adjustGLAccountId, listOfpageLineList, listOfpageList, CheckWhileStreaming, ledgerTransactionList, ledgerTransactionIds, bankGLAccountList, accountingCurrencyId);
+            Validate(tenant, reconcileExternalPageLineIdList, adjustGLAccountId, listOfpageLineList, listOfpageList, CheckWhileStreaming, ledgerTransactionList, ledgerTransactionIds, bankGLAccountList, accountingCurrencyId, skipAccountValidation);
             if (_ErrorList.Count() > 0)
             {
-                throw new Exception(string.Join(Environment.NewLine, _ErrorList.ToArray()));
+                throw new ApplicationException(string.Join(Environment.NewLine, _ErrorList.ToArray()));
             }
         }
 
@@ -160,7 +163,7 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
                     //GetFirstJournalLine(tenant, adjustGLAccountId, listOfpageLineList, bankGLAccountList, screenNotes, PageLineForeignAmount, PageLineLocalAmount, ledgerForeignAmount, ledgerLocalAmountDebit, creditTheBank);
                     GetFirstJournalLineSum(tenant, adjustGLAccountId, listOfpageLineList, bankGLAccountList, screenNotes, foreignTotalAmount, localTotalAmountConvertFromforeign, creditTheBank);
                 LstJL.Line = 2;
-                LstJL.ActionTypeCodeEnum = creditTheBank ? MyJournalActionTypeEnum.Debit : MyJournalActionTypeEnum.Credit;
+                LstJL.ActionTypeCodeEnum = creditTheBank ? JournalActionTypeEnum.Debit : JournalActionTypeEnum.Credit;
 
                 //int line = TheNewJournal.JournalLines.Max(r => r.Line);
                 TheNewJournal.JournalLines.Add(firstJL);
@@ -185,13 +188,18 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             TheNewJournal.JournalExternalReconciles = listOfpageLineList.Select(r => GetJournalExternalReconcile(r, ref line)).ToList();
 
             TheNewJournal.JournalExternalReconciles.AddRange(GetJournalExternalReconcileFromLedger(ledgerTransactionList));
+            IAccountingContext accountingContext = AccountingContext.GetContext(tenant);
+            var journalExternalReconcileRepository = new JournalExternalReconcileRepository(accountingContext);
+
+            var existingExternalJournalsReconcilies = journalExternalReconcileRepository.GetJournalExternalReconcilesByLedgerTransactionsIds(
+                TheNewJournal.JournalExternalReconciles.Where(a => a.LedgerTransactionId != null).Select(x => x.LedgerTransactionId).ToList());
+
+            if (existingExternalJournalsReconcilies.Any())
+            {
+                throw new ApplicationException("ישנן תנועות שסומנו ונמצאות בתהליך התאמה על ידי משתמש או סשן אחר, יש לבצע רענון לצאת ממסך התאמות ללא שמירת השורות ולהיכנס מחדש.");
+            }
             
-            //if (!accumalateV2)
-            //{
-            //    CreateJournalLineToadjustGLAccountId(adjustGLAccountId, bankGLAccountList);
-            //    Accumalation2jounrnalLine();
-            //}
-            
+
         }
         private JournalLinePM GetFirstJournalLineSum(int tenant, string adjustGLAccountId, List<ReconcileExternalPageLineList> listOfpageLineList, GLAccountList bankGLAccountList, string screenNotes, decimal ForeignAmount, decimal LocalAmount, bool creditTheBank)
         {
@@ -230,12 +238,12 @@ new JournalLinePM()
 
 
     ///if r.DebitAmount != 0 then credit else debit 
-    ActionTypeCodeEnum = creditTheBank ? MyJournalActionTypeEnum.Credit : MyJournalActionTypeEnum.Debit,
+    ActionTypeCodeEnum = creditTheBank ? JournalActionTypeEnum.Credit : JournalActionTypeEnum.Debit,
     CreditAccountId = creditTheBank ? bankGLAccountList.Id : adjustGLAccountId,
     DebitAccountId = creditTheBank ? adjustGLAccountId : bankGLAccountList.Id,
     LocalAmount = creditTheBank ? (LocalAmount ) : -1 * (LocalAmount),
     ForeignAmount = creditTheBank ? (ForeignAmount) : -1 * (ForeignAmount),
-    Notes = screenNotes + Environment.NewLine + listOfpageLineList.First().Notes,
+    Notes = screenNotes,
     Reference1 = listOfpageLineList.First().Reference,
     ChangeSetOp = ChangeSetOperation.Insert
 };
@@ -280,7 +288,7 @@ new JournalLinePM()
     
 
     ///if r.DebitAmount != 0 then credit else debit 
-    ActionTypeCodeEnum = creditTheBank ? MyJournalActionTypeEnum.Credit : MyJournalActionTypeEnum.Debit,
+    ActionTypeCodeEnum = creditTheBank ? JournalActionTypeEnum.Credit : JournalActionTypeEnum.Debit,
     CreditAccountId = creditTheBank ? bankGLAccountList.Id : adjustGLAccountId,
     DebitAccountId = creditTheBank ?  adjustGLAccountId: bankGLAccountList.Id,
     LocalAmount = creditTheBank? (PageLineLocalAmount + ledgerLocalAmountDebit) : -1* (PageLineLocalAmount + ledgerLocalAmountDebit),
@@ -297,7 +305,7 @@ new JournalLinePM()
             var jlPage = TheNewJournal.JournalLines.First();
             var jlAdjust = TheNewJournal.JournalLines.Last();
 
-            jlPage.ActionTypeCodeEnum = jlAdjust.ActionTypeCodeEnum == MyJournalActionTypeEnum.Credit ? MyJournalActionTypeEnum.Debit : MyJournalActionTypeEnum.Credit;
+            jlPage.ActionTypeCodeEnum = jlAdjust.ActionTypeCodeEnum == JournalActionTypeEnum.Credit ? JournalActionTypeEnum.Debit : JournalActionTypeEnum.Credit;
 
             jlPage.CreditAccountId = jlAdjust.CreditAccountId;
             jlPage.DebitAccountId = jlAdjust.DebitAccountId;
@@ -327,7 +335,7 @@ new JournalLinePM()
                 TheNewJournal.JournalLines.Last() != jlAdjust
                 )
             {
-                throw new Exception("accumalation failed");
+                throw new ApplicationException("accumalation failed");
             }
             jlAdjust.Line = 2;
 
@@ -379,7 +387,7 @@ new JournalLinePM()
                 ForeignAmount = r.LocalAmountDebit != 0 ? r.ForeignAmountDebit : r.ForeignAmountCredit, //r.DebitAmount != 0 ? r.DebitAmount : r.CreditAmount,
 
                 ///if r.DebitAmount != 0 then credit else debit 
-                ActionTypeCodeEnum = r.LocalAmountDebit != 0 ? MyJournalActionTypeEnum.Credit : MyJournalActionTypeEnum.Debit,
+                ActionTypeCodeEnum = r.LocalAmountDebit != 0 ? JournalActionTypeEnum.Credit : JournalActionTypeEnum.Debit,
                 DebitAccountId = r.LocalAmountDebit != 0 ? adjustGLAccountId : bankGLAccountList.Id,
                 CreditAccountId = r.LocalAmountDebit != 0 ? bankGLAccountList.Id : adjustGLAccountId,
                 LocalAmount = r.LocalAmountDebit != 0 ? r.LocalAmountDebit : r.LocalAmountCredit, //Convert2LocalAmount(bankGLAccountList.CurrencyId, accountingCurrencyId, r),
@@ -423,19 +431,19 @@ new JournalLinePM()
 
         private void CreateJournalLineToadjustGLAccountId(string adjustGLAccountId, GLAccountList bankGLAccountList)
         {
-            decimal totDebitlocal = TheNewJournal.JournalLines.Where(r => r.ActionTypeCodeEnum == MyJournalActionTypeEnum.Debit).Sum(r => r.LocalAmount);
-            decimal totCreditlocal = TheNewJournal.JournalLines.Where(r => r.ActionTypeCodeEnum == MyJournalActionTypeEnum.Credit).Sum(r => r.LocalAmount);
+            decimal totDebitlocal = TheNewJournal.JournalLines.Where(r => r.ActionTypeCodeEnum == JournalActionTypeEnum.Debit).Sum(r => r.LocalAmount);
+            decimal totCreditlocal = TheNewJournal.JournalLines.Where(r => r.ActionTypeCodeEnum == JournalActionTypeEnum.Credit).Sum(r => r.LocalAmount);
 
 
 
-            decimal totDebitForiegn = TheNewJournal.JournalLines.Where(r => r.ActionTypeCodeEnum == MyJournalActionTypeEnum.Debit).Sum(r => r.ForeignAmount);
-            decimal totCreditForiegn = TheNewJournal.JournalLines.Where(r => r.ActionTypeCodeEnum == MyJournalActionTypeEnum.Credit).Sum(r => r.ForeignAmount);
-            MyJournalActionTypeEnum myJournalActionTypeEnum = MyJournalActionTypeEnum.Credit;
+            decimal totDebitForiegn = TheNewJournal.JournalLines.Where(r => r.ActionTypeCodeEnum == JournalActionTypeEnum.Debit).Sum(r => r.ForeignAmount);
+            decimal totCreditForiegn = TheNewJournal.JournalLines.Where(r => r.ActionTypeCodeEnum == JournalActionTypeEnum.Credit).Sum(r => r.ForeignAmount);
+            JournalActionTypeEnum myJournalActionTypeEnum = JournalActionTypeEnum.Credit;
             string debitAccountId = bankGLAccountList.Id;
             string creditAccountId = adjustGLAccountId;
             if (totDebitlocal - totCreditlocal < 0)
             {
-                myJournalActionTypeEnum =MyJournalActionTypeEnum.Debit;
+                myJournalActionTypeEnum =JournalActionTypeEnum.Debit;
                 debitAccountId = adjustGLAccountId;
                 creditAccountId = bankGLAccountList.Id;
 
@@ -499,7 +507,7 @@ new JournalLinePM()
                 ForeignAmount = r.DebitAmount != 0 ? r.DebitAmount : r.CreditAmount,
 
                 ///if r.DebitAmount != 0 then credit else debit 
-                ActionTypeCodeEnum = r.DebitAmount != 0 ? MyJournalActionTypeEnum.Credit : MyJournalActionTypeEnum.Debit,
+                ActionTypeCodeEnum = r.DebitAmount != 0 ? JournalActionTypeEnum.Credit : JournalActionTypeEnum.Debit,
                 DebitAccountId = r.DebitAmount != 0 ?  adjustGLAccountId: bankGLAccountList.Id,
                 CreditAccountId = r.DebitAmount != 0 ? bankGLAccountList.Id : adjustGLAccountId,
                 LocalAmount = Convert2LocalAmount(bankGLAccountList.CurrencyId, accountingCurrencyId, r),
@@ -577,11 +585,11 @@ new JournalLinePM()
 
         }
 
-        private void Validate(int tenant, List<string> reconcileExternalPageLineIdList, string adjustGLAccountId, List<Data.EntityLists.ReconcileExternalPageLineList> listOfpageLineList, List<Data.EntityLists.ReconcileExternalPageList> listOfpageList, bool CheckWhileStreaming, List<LedgerTransactionPM> ledgerTransactionList, List<string> ledgerTransactionIds, BankAccountPM bankAccountFromReconcileExternalPageLine, string accountingCurrencyId)
+        private void Validate(int tenant, List<string> reconcileExternalPageLineIdList, string adjustGLAccountId, List<Data.EntityLists.ReconcileExternalPageLineList> listOfpageLineList, List<Data.EntityLists.ReconcileExternalPageList> listOfpageList, bool CheckWhileStreaming, List<LedgerTransactionPM> ledgerTransactionList, List<string> ledgerTransactionIds, BankAccountPM bankAccountFromReconcileExternalPageLine, string accountingCurrencyId , bool skipAccountValidation = false)
         {
             AllLineAreExistAndSameBankAccount(tenant, reconcileExternalPageLineIdList, listOfpageLineList, listOfpageList);
             AllPageLineCheckInProgressByWhileStreaming(listOfpageLineList, CheckWhileStreaming);
-            if (adjustGLAccountId== bankAccountFromReconcileExternalPageLine.GLAccountId)
+            if (!skipAccountValidation && adjustGLAccountId == bankAccountFromReconcileExternalPageLine?.GLAccountId)
             {
                 _ErrorList.Add(M_AdjustAccoutMustBeDiffFromBank);//"החשבון להפרשים חייב להיות שונה מהבנק";
             }
@@ -622,7 +630,7 @@ new JournalLinePM()
             {
                 if (!ledgerTransactionList.TrueForAll(r => r.InProgressExternalReconcile))
                 {
-                    _ErrorList.Add(M_WhileStreaming_All_InProgressExternalReconcile);
+                    //_ErrorList.Add(M_WhileStreaming_All_InProgressExternalReconcile);
                 }
             }
             //if (ledgerTransactionList.Any(r => r.IsReconciled))
@@ -734,6 +742,6 @@ new JournalLinePM()
         void MustInit(IExternalReconcileDataProvider externalReconcileDataProvider);
         void PrapareAndValid(int tenant, List<string> reconcileExternalPageLineIdList, string adjustGLAccountId, out List<ReconcileExternalPageLineList> listOfpageLineList, out List<ReconcileExternalPageList> listOfpageList, bool CheckWhileStreaming,
             List<string> ledgerTransactionIds,
-            out string accountingCurrencyId, out List<LedgerTransactionPM> ledgerTransactionList);
+            out string accountingCurrencyId, out List<LedgerTransactionPM> ledgerTransactionList, bool skipAccountValidation);
     }
 }

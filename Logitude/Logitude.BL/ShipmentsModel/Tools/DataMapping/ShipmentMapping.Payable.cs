@@ -33,8 +33,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             itemPoco.ValueDate = TenantServerConfigration.GetCurrentDateTime(itemPM.Tenant);
             itemPoco.UpdateDate = TenantServerConfigration.GetCurrentDateTime(itemPM.Tenant);
             itemPoco.UpdateByUserId = loggedContactId;
-
-
             itemPM.Quantity = MethodHelper.Round(itemPM.Quantity, 3);
             itemPM.UnitPrice = MethodHelper.Round(itemPM.UnitPrice, 3);
             itemPM.Rate = MethodHelper.Round(itemPM.Rate, 5);
@@ -49,6 +47,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             itemPM.OpenAmountInLocalCurrency = MethodHelper.Round(itemPM.OpenAmountInLocalCurrency, 2);
             itemPM.OpenAmountInProfitCurrency = MethodHelper.Round(itemPM.OpenAmountInProfitCurrency, 2);
             itemPM.CorrectionAmount = MethodHelper.Round(itemPM.CorrectionAmount, 2);
+            itemPM.ProratedAmountInLocalCurrency = MethodHelper.Round(itemPM.ProratedAmountInLocalCurrency, 2);
+            itemPM.ProratedAmountInProfitCurrency = MethodHelper.Round(itemPM.ProratedAmountInProfitCurrency, 2);
 
             itemPoco.Quantity = itemPM.Quantity;
             itemPoco.UnitPrice = itemPM.UnitPrice;
@@ -93,8 +93,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             itemPoco.TariffNumber = itemPM.TariffNumber;
             itemPoco.TariffLineId = itemPM.TariffLineId;
             itemPoco.TariffVersion = itemPM.TariffVersion;
+            itemPoco.IsCustomsChargesTariff = itemPM.IsCustomsChargesTariff;
             itemPoco.VatAmountLocal = itemPM.VatAmountLocal;
             itemPoco.VatAmountProfit = itemPM.VatAmountProfit;
+            itemPoco.ProratedAmountInLocalCurrency = itemPM.ProratedAmountInLocalCurrency;
+            itemPoco.ProratedAmountInProfitCurrency = itemPM.ProratedAmountInProfitCurrency;
         }
     }
 }

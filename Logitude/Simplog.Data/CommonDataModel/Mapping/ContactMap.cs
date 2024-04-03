@@ -53,6 +53,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.UserType).HasColumnName("UserType");
             this.Property(t => t.DontShowLocalLabels).HasColumnName("DontShowLocalLabels");
             this.Property(t => t.BirthdayReminder).HasColumnName("BirthdayReminder");
+            this.Property(t => t.DigitalPortalLanguage).HasColumnName("DigitalPortalLanguage");
             this.Property(t => t.AnniversaryReminder).HasColumnName("AnniversaryReminder");
             this.Property(t => t.DoneDate).HasColumnName("DoneDate");
             this.Property(t => t.BirthDayOfYear).HasColumnName("BirthDayOfYear");

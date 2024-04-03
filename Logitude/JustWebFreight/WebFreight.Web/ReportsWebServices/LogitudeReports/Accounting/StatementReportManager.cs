@@ -19,6 +19,7 @@ using System.Linq;
 using System.Web;
 using System.Xml.Serialization;
 using WebFreight.Web.DataProviders;
+using WebFreight.Web.Services;
 
 namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 {
@@ -39,7 +40,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         private AddressRepository addressRepository;
         private CustomFieldResolver customFieldResolver;
         private StatementDataProvider dataProvider;
-
+        private ARInvoiceTotalVATRepository arInvoiceTotalVATRepository;
+        private APInvoiceTotalVATRepository apInvoiceTotalVATRepository;
         public StatementReportManager(byte[] xmlFilters, int tenant)
         {
             this.tenant = tenant;
@@ -135,17 +137,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         public byte[] GetData()
         {
             StatementDataProvider myDataProvider = new StatementDataProvider();
-
             myDataProvider = this.LoadDataProvider();
-
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(StatementDataProvider));
-            MemoryStream memoryStream = new MemoryStream();
-            xmlSerializer.Serialize(memoryStream, myDataProvider);
-            memoryStream.Seek(0, SeekOrigin.Begin);
-            StreamReader streamReader = new StreamReader(memoryStream);
-            string content = streamReader.ReadToEnd();
-            byte[] bytearray = memoryStream.ToArray();
-            return bytearray;
+            return new ReportMemoryStreamService().Convert(myDataProvider, typeof(StatementDataProvider), tenant);
         }
 
         private StatementDataProvider LoadDataProvider()
@@ -154,7 +147,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             dataProvider.StatementRecordList = new List<StatementRecord>();
             dataProvider.StatementAgingSummaryRecordList = new List<StatmentAging>();
 
-            customFieldResolver = new CustomFieldResolver();            
+            customFieldResolver = new CustomFieldResolver(tenant);            
             commonContext = CommonDataContext.GetContext(tenant);                       
             ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
             addressRepository = new AddressRepository(commonContext);
@@ -243,20 +236,41 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                                  group p by p.Currency into g
                                                  select new StatementGroup()
                                                  {
+                                                   
                                                      Currency = g.Key,
                                                      StatementRecordList = g.ToList(),
                                                  }).ToList();
 
+
             foreach (StatementGroup group in finalResults)
             {
+                this.HandelStatementRecordListOfGroup(group);
                 List<StatmentAging> agingList = dataProvider.StatementAgingSummaryRecordList.Where(d => d.Currency == group.Currency).ToList();
-                group.StatementAgingSummaryRecordList = agingList;
+                group.StatementAgingSummaryRecordList = agingList;        
             }
 
             dataProvider.StatementGroupList = finalResults.OrderBy(d => d.Currency).ToList();            
             return dataProvider;
         }
-        
+
+        private void HandelStatementRecordListOfGroup(StatementGroup group)
+        {
+            var statementRecordListGroup = group.StatementRecordList;
+            foreach (StatementRecord record in statementRecordListGroup)
+            {
+                int i = statementRecordListGroup.IndexOf(record);
+                if (i == 0)
+                {
+                    record.Balance = statementRecordListGroup[0].Credit != null ? -1 * statementRecordListGroup[0].Credit : statementRecordListGroup[0].Debit;
+                }
+
+                if (i < statementRecordListGroup.Count && i != 0)
+                {
+                    record.Balance = statementRecordListGroup[i - 1].Balance + (statementRecordListGroup[i].Credit != null ? -1 * statementRecordListGroup[i].Credit : statementRecordListGroup[i].Debit);
+                }
+            }
+        }
+
         private void FillGeneralData()
         {
             FillFiltersFieldsValuesInDataProvider();
@@ -320,6 +334,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             ARPaymentRepository aRPaymentRepository = new ARPaymentRepository(invoiceContext);
             APPaymentRepository aPPaymentRepository = new APPaymentRepository(invoiceContext);
             APInvoiceRepository aPInvoiceRepository = new APInvoiceRepository(invoiceContext);
+            arInvoiceTotalVATRepository = new ARInvoiceTotalVATRepository(invoiceContext);
+            apInvoiceTotalVATRepository = new APInvoiceTotalVATRepository(invoiceContext);
 
             List<StatementRecord> list_ARInvoices = new List<StatementRecord>();
             List<StatementRecord> list_APInvoices = new List<StatementRecord>();
@@ -646,7 +662,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                     IQueryable<ARInvoice> iQueryable_ARInvoice = aRInvoiceRepository.GetUnpaidAndDraftARInvoices(tenant);
                                     IQueryable<ARPayment> iQueryable_ARPayment = aRPaymentRepository.GetOpenedARPayments(tenant);
 
+                                    
+
+
+
                                     iQueryable_ARInvoice = iQueryable_ARInvoice.Where(d => !d.IsConstituentInvoice);
+                                   
 
                                     if (!includeDraftInvoices)
                                     {
@@ -695,7 +716,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
                                         }
                                     }
-                                
+
+                                   
+
                                     list_ARInvoices = this.BuildList_ARInvoice(iQueryable_ARInvoice);
                                     list_ARPayments = this.BuildList_ARPayment(iQueryable_ARPayment);
                                     break;
@@ -734,6 +757,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                             iQueryable_APPayment = iQueryable_APPayment.Where(d => d.RegisterDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.RegisterDate) >= System.Data.Entity.DbFunctions.TruncateTime(fromDate));
                                         }
                                     }
+
 
                                     if (toDate != null)
                                     {
@@ -843,6 +867,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
             List<string> allShipmentIds = totalList.Select(s => s.ShipmentId).ToList();
             List<ShipmentEntityClass> allShipmentData = (from d in shipmentsContext.Shipments.Include("ShipperCard").Include("ConsigneeCard").Include("Direction")
+                                                         join sc in shipmentsContext.ShipmentComputedFields on d.Id equals sc.Id into shipmentJoin
+                                                         join ms in shipmentsContext.ShipmentMasterDatas on d.Id equals ms.Id into masterJoin
+                                                         from m in shipmentJoin.DefaultIfEmpty()
+                                                         from master in masterJoin.DefaultIfEmpty()
                                                          where d.Tenant == tenant && allShipmentIds.Contains(d.Id)
                                                          select new ShipmentEntityClass
                                                          {
@@ -853,6 +881,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                                              DescriptionOfGoods = d.DescriptionOfGoods,
                                                              ConsigneeName = d.ConsigneeCard == null ? null : d.ConsigneeCard.EnglishName,
                                                              Direction = d.Direction == null ? null : d.Direction.Name,
+                                                             ContainersNumbersArray = m.ContainersNumbers,
+                                                             ProjectNumber = d.ProjectNumber,
+                                                             NumberOfContainers = d.NumberOfContainers,
+                                                             FinalDestinationETA =  master.MainCarriageFinalDestinationETA,
+                                                             FinalDestinationETD = m.FinalDeliveryETD == null ? master.MainCarriageETD : m.FinalDeliveryETD,                                    
                                                          }).ToList();
 
             List<Branch> branches = (from d in commonContext.Branches where d.Tenant == tenant select d).ToList();
@@ -872,11 +905,13 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 if (record.Debit != null)
                 {
                     record.Debit = (double)Math.Abs((decimal)record.Debit);
+                    record.DebitWithZero = record.Debit.Value;
                 }
 
                 if (record.Credit != null)
                 {
                     record.Credit = (double)Math.Abs((decimal)record.Credit);
+                    record.CreditWithZero = record.Credit.Value;
                 }
 
                 Card card = allCards.Where(d => d.Id == record.BillToVendorId).FirstOrDefault();
@@ -910,6 +945,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     record.Shipper = shipmentEntity.ShipperName;
                     record.Consignee = shipmentEntity.ConsigneeName;
                     record.ShipmentDirection = shipmentEntity.Direction;
+                    record.ContainersNumbersArray = shipmentEntity.ContainersNumbersArray;
+                    record.ProjectNumber = shipmentEntity.ProjectNumber;
+                    record.ContainersQuantity = shipmentEntity.NumberOfContainers;
+                    record.FinalDestinationETA = shipmentEntity.FinalDestinationETA;
+                    record.FinalDestinationETD = shipmentEntity.FinalDestinationETD;
                 }
 
                 if (record.BranchId != null)
@@ -929,7 +969,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         private List<StatementRecord> BuildList_ARInvoice(IQueryable<ARInvoice> iQueryable)
         {
             List<StatementRecord> myList = new List<StatementRecord>();
-            List<ARInvoice> iQueryableList = iQueryable.ToList();
+            List<ARInvoice> iQueryableList = iQueryable.ToList();           
             foreach (ARInvoice d in iQueryableList)
             {
                 StatementRecord item = new StatementRecord();
@@ -944,7 +984,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 item.CurrencyId = d.InvoiceCurrencyId;
                 item.Type = d.ARInvoiceTypeCode == "CD" ? "Credit Note" : (d.ARInvoiceTypeCode == "CC" ? "Customs Credit Note" : (d.ARInvoiceTypeCode == "CI" ? "Customs Invoice" : "A\\R Invoice"));
                 item.Debit = d.AmountDue == null ? null : ((d.ARInvoiceTypeCode == "CD" || d.ARInvoiceTypeCode == "CC") ? null : d.AmountDue);
+                item.DebitWithZero = d.AmountDue == null ? 0 : ((d.ARInvoiceTypeCode == "CD" || d.ARInvoiceTypeCode == "CC") ? 0 : d.AmountDue.Value);
                 item.Credit = d.AmountDue == null ? null : ((d.ARInvoiceTypeCode != "CD" && d.ARInvoiceTypeCode != "CC") ? null : d.AmountDue);
+                item.CreditWithZero = d.AmountDue == null ? 0 : ((d.ARInvoiceTypeCode != "CD" && d.ARInvoiceTypeCode != "CC") ? 0 : d.AmountDue.Value);
                 item.Notes = d.InternalNotes;
                 item.BillToVendorId = d.BillToId;
                 item.InvoiceStatus = d.Status == null ? null : d.Status.Name;
@@ -955,6 +997,14 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 item.BranchId = d.BranchId;
                 item.ShipmentNumber = d.MainEntityReference;
                 item.OriginalAmount = d.AmountInInvoiceCurrency;
+
+                item.DebitSubtotalInvoiceCurrency = d.SubTotalInInvoiceCurrency == null ? null : ((d.ARInvoiceTypeCode == "CD" || d.ARInvoiceTypeCode == "CC") ? null : d.SubTotalInInvoiceCurrency);
+                item.DebitSubtotalLocalCurrency = d.SubTotalInLocalCurrency == null ? null : ((d.ARInvoiceTypeCode == "CD" || d.ARInvoiceTypeCode == "CC") ? null : d.SubTotalInLocalCurrency);
+                item.CreditSubtotalInvoiceCurrency = d.SubTotalInInvoiceCurrency == null ? null : ((d.ARInvoiceTypeCode != "CD" && d.ARInvoiceTypeCode != "CC") ? null : d.SubTotalInInvoiceCurrency);
+                item.CreditSubtotalLocalCurrency = d.SubTotalInLocalCurrency == null ? null : ((d.ARInvoiceTypeCode != "CD" && d.ARInvoiceTypeCode != "CC") ? null : d.SubTotalInLocalCurrency);
+                item.PaymentTerm = d.PaymentTerm == null ? null : d.PaymentTerm.EnglishName;
+                this.ComputeARTotalVATs(item, d);
+
                 customFieldResolver.SetDataProviderCustomFieldsValues("ARInvoice", tenant, d, item);
 
                 myList.Add(item);
@@ -962,85 +1012,137 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
             return myList;
         }
+        private void ComputeARTotalVATs(StatementRecord item, ARInvoice invoice)
+        {
+            IQueryable<ARInvoiceTotalVAT> totalVATs = arInvoiceTotalVATRepository.GetInvoiceTotalVatsForInvoice(invoice.Id, invoice.Tenant);
+
+            if (totalVATs != null)
+            {
+                double? totalVATs_Invoice = totalVATs.Sum(s => s.InvoiceCurrencyVATAmount);
+                double? totalVATs_Local = totalVATs.Sum(s => s.LocalVATAmount);               
+
+                item.DebitVATAmountInvoiceCurrency = totalVATs_Invoice == null ? null : ((invoice.ARInvoiceTypeCode == "CD" || invoice.ARInvoiceTypeCode == "CC") ? null : totalVATs_Invoice);
+                item.DebitVATAmountLocalCurrency = totalVATs_Local == null ? null : ((invoice.ARInvoiceTypeCode == "CD" || invoice.ARInvoiceTypeCode == "CC") ? null : totalVATs_Local);
+                item.CreditVATAmountInvoiceCurrency = totalVATs_Invoice == null ? null : ((invoice.ARInvoiceTypeCode != "CD" && invoice.ARInvoiceTypeCode != "CC") ? null : totalVATs_Invoice);
+                item.CreditVATAmountLocalCurrency = totalVATs_Local == null ? null : ((invoice.ARInvoiceTypeCode != "CD" && invoice.ARInvoiceTypeCode != "CC") ? null : totalVATs_Local);
+            }
+        }
+
         private List<StatementRecord> BuildList_APInvoice(IQueryable<APInvoice> iQueryable)
         {
-            List<StatementRecord> myList =
-                (from d in iQueryable
-                 select new StatementRecord()
-                 {
-                     MasterNumber = d.MasterNumber,
-                     Desicription = d.Description + " " + d.MainEntityReference,
-                     ShipmentId = d.MainEntityId,
-                     HouseNumber = d.HouseNumber,
-                     Date = d.InvoiceDate.Value,
-                     DueDate = d.DueDate.Value,
-                     OurRefrence = d.InternalNumber,
-                     CurrencyId = d.InvoiceCurrencyId,
-                     Type = "A\\P Invoice",
-                     Debit = d.AmountDue == null ? null : (d.AmountDue > 0 ? null : d.AmountDue),
-                     Credit = d.AmountDue == null ? null : (d.AmountDue > 0 ? d.AmountDue : null),
-                     Notes = d.InternalNotes,
-                     YourRefrence = d.InvoiceNumber,
-                     BillToVendorId = d.VendorId,
-                     InvoiceStatus = d.Status == null ? null : d.Status.Name,
-                     InvoiceAmount = d.AmountInLocalCurrency,
-                     AmountPaid = d.AmountInLocalCurrency - d.AmountDueInLocalCurrency,
-                     InvoiceAmountInInvoiceCurrency = d.AmountInInvoiceCurrency,
-                     AmountPaidInInvoiceCurrency = d.AmountInInvoiceCurrency - d.AmountDue,
-                     BranchId = d.BranchId,
-                     ShipmentNumber = d.MainEntityReference,
-                     OriginalAmount = d.AmountInInvoiceCurrency
-                 }).ToList();
+            List<StatementRecord> myList = new List<StatementRecord>();
+            List<APInvoice> iQueryableList = iQueryable.ToList();
+            foreach (APInvoice d in iQueryableList)
+            {
+                StatementRecord item = new StatementRecord();
+                item.MasterNumber = d.MasterNumber;
+                item.Desicription = d.Description + " " + d.MainEntityReference;
+                item.ShipmentId = d.MainEntityId;
+                item.HouseNumber = d.HouseNumber;
+                item.Date = d.InvoiceDate.Value;
+                item.DueDate = d.DueDate.Value;
+                item.OurRefrence = d.InternalNumber;
+                item.CurrencyId = d.InvoiceCurrencyId;
+                item.Type = "A\\P Invoice";
+                item.Debit = d.AmountDue == null ? null : (d.AmountDue > 0 ? null : d.AmountDue);
+                item.DebitWithZero = d.AmountDue == null ? 0 : (d.AmountDue > 0 ? 0 : d.AmountDue.Value);
+                item.Credit = d.AmountDue == null ? null : (d.AmountDue > 0 ? d.AmountDue : null);
+                item.CreditWithZero = d.AmountDue == null ? 0 : (d.AmountDue > 0 ? d.AmountDue.Value : 0);
+                item.Notes = d.InternalNotes;
+                item.YourRefrence = d.InvoiceNumber;
+                item.BillToVendorId = d.VendorId;
+                item.InvoiceStatus = d.Status == null ? null : d.Status.Name;
+                item.InvoiceAmount = d.AmountInLocalCurrency;
+                item.AmountPaid = d.AmountInLocalCurrency - d.AmountDueInLocalCurrency;
+                item.InvoiceAmountInInvoiceCurrency = d.AmountInInvoiceCurrency;
+                item.AmountPaidInInvoiceCurrency = d.AmountInInvoiceCurrency - d.AmountDue;
+                item.BranchId = d.BranchId;
+                item.ShipmentNumber = d.MainEntityReference;
+                item.OriginalAmount = d.AmountInInvoiceCurrency;
+                item.DebitSubtotalInvoiceCurrency = d.SubTotalInInvoiceCurrency == null ? null : (d.SubTotalInInvoiceCurrency > 0 ? null : d.SubTotalInInvoiceCurrency);
+                item.DebitSubtotalLocalCurrency = d.SubTotalInLocalCurrency == null ? null : (d.SubTotalInLocalCurrency > 0 ? null : d.SubTotalInLocalCurrency);
+                item.CreditSubtotalInvoiceCurrency = d.SubTotalInInvoiceCurrency == null ? null : (d.SubTotalInInvoiceCurrency > 0 ? d.SubTotalInInvoiceCurrency : null);
+                item.CreditSubtotalLocalCurrency = d.SubTotalInLocalCurrency == null ? null : (d.SubTotalInLocalCurrency > 0 ? d.SubTotalInLocalCurrency : null);
+                item.PaymentTerm = d.PaymentTerm == null ? null : d.PaymentTerm.EnglishName;
+                this.ComputeAPTotalVATs(item, d);
+                myList.Add(item);
+            }
 
             return myList;
+        }
+        private void ComputeAPTotalVATs(StatementRecord item, APInvoice invoice)
+        {
+            IQueryable<APInvoiceTotalVAT> totalVATs = apInvoiceTotalVATRepository.GetInvoiceTotalVatsByInvoiceId(invoice.Id, invoice.Tenant);
+
+            if (totalVATs != null)
+            {
+                double? totalVATs_Invoice = totalVATs.Sum(s => s.InvoiceCurrencyVATAmount);
+                double? totalVATs_Local = totalVATs.Sum(s => s.LocalVATAmount);
+
+                item.DebitVATAmountInvoiceCurrency = totalVATs_Invoice == null ? null : (totalVATs_Invoice > 0 ? null : totalVATs_Invoice);
+                item.DebitVATAmountLocalCurrency = totalVATs_Local == null ? null : (totalVATs_Local > 0 ? null : totalVATs_Local);
+                item.CreditVATAmountInvoiceCurrency = totalVATs_Invoice == null ? null : (totalVATs_Invoice > 0 ? totalVATs_Invoice : null);
+                item.CreditVATAmountLocalCurrency = totalVATs_Local == null ? null : (totalVATs_Local > 0 ? totalVATs_Local : null);
+            }
         }
         private List<StatementRecord> BuildList_ARPayment(IQueryable<ARPayment> iQueryable)
         {
-            List<StatementRecord> myList =
-                (from d in iQueryable
-                 select new StatementRecord()
-                 {
-                     Date = d.CreateDate.Value,
-                     DueDate = d.ValueDate != null ? d.ValueDate.Value : d.CreateDate.Value,
-                     OurRefrence = d.PaymentNo,
-                     CurrencyId = d.PaymentCurrencyId,
-                     Type = "A\\R Payment",
-                     Credit = d.OpenAmount == null ? null : d.OpenAmount,
-                     Notes = d.InternalNotes,
-                     RegisterDate = d.RegisterDate,
-                     ValueDate = d.ValueDate,
-                     PaymentMethod = d.AccountingPaymentMethod == null ? null : d.AccountingPaymentMethod.Name,
-                     BillToVendorId = d.BillToId,
-                     BranchId = d.BranchId,
-                     PaymentStatus = d.Status == null ? null : d.Status.Name,
-                     ShipmentNumber = d.ShipmentNumber,
-                     OriginalAmount = d.AmountInPaymentCurrency
-                 }).ToList();
+            List<StatementRecord> myList = new List<StatementRecord>();
+            List<ARPayment> iQueryableList = iQueryable.ToList();
+
+            foreach (ARPayment d in iQueryableList)
+            {
+                StatementRecord item = new StatementRecord();
+                item.Date = d.CreateDate.Value;
+                item.DueDate = d.ValueDate != null ? d.ValueDate.Value : d.CreateDate.Value;
+                item.OurRefrence = d.PaymentNo;
+                item.CurrencyId = d.PaymentCurrencyId;
+                item.Type = "A\\R Payment";
+                item.Credit = d.OpenAmount == null ? null : d.OpenAmount;
+                item.CreditWithZero = d.OpenAmount == null ? 0 : d.OpenAmount.Value;
+                item.Notes = d.InternalNotes;
+                item.RegisterDate = d.RegisterDate;
+                item.ValueDate = d.ValueDate;
+                item.PaymentMethod = d.AccountingPaymentMethod == null ? null : d.AccountingPaymentMethod.Name;
+                item.BillToVendorId = d.BillToId;
+                item.BranchId = d.BranchId;
+                item.PaymentStatus = d.Status == null ? null : d.Status.Name;
+                item.ShipmentNumber = d.ShipmentNumber;
+                item.OriginalAmount = d.AmountInPaymentCurrency;
+                myList.Add(item);
+            }
 
             return myList;
         }
+
+
         private List<StatementRecord> BuildList_APPayment(IQueryable<APPayment> iQueryable)
         {
-            List<StatementRecord> myList =
-                (from d in iQueryable
-                 select new StatementRecord()
-                 {
-                     Date = d.CreateDate.Value,
-                     DueDate = d.ValueDate != null ? d.ValueDate.Value : d.CreateDate.Value,
-                     OurRefrence = d.PaymentNo,
-                     CurrencyId = d.PaymentCurrencyId,
-                     Type = "A\\P Payment",
-                     Debit = d.OpenAmount == null ? null : d.OpenAmount,
-                     Notes = d.InternalNotes,
-                     RegisterDate = d.RegisterDate,
-                     ValueDate = d.ValueDate,
-                     PaymentMethod = d.AccountingPaymentMethod == null ? null : d.AccountingPaymentMethod.Name,
-                     BillToVendorId = d.VendorId,
-                     BranchId = d.BranchId,
-                     PaymentStatus = d.Status == null ? null : d.Status.Name,
-                     OriginalAmount = d.AmountInPaymentCurrency
-                 }).ToList();
 
+            List<StatementRecord> myList = new List<StatementRecord>();
+            List<APPayment> iQueryableList = iQueryable.ToList();
+
+            foreach (APPayment d in iQueryableList)
+            {
+                StatementRecord item = new StatementRecord();
+                item.Date = d.CreateDate.Value;
+                item.DueDate = d.ValueDate != null ? d.ValueDate.Value : d.CreateDate.Value;
+                item.OurRefrence = d.PaymentNo;
+                item.CurrencyId = d.PaymentCurrencyId;
+                item.Type = "A\\P Payment";
+                item.Debit = d.OpenAmount == null ? null : d.OpenAmount;
+                item.DebitWithZero = d.OpenAmount == null ? 0 : d.OpenAmount.Value;
+                item.Notes = d.InternalNotes;
+                item.RegisterDate = d.RegisterDate;
+                item.ValueDate = d.ValueDate;
+                item.PaymentMethod = d.AccountingPaymentMethod == null ? null : d.AccountingPaymentMethod.Name;
+                item.BillToVendorId = d.VendorId;
+                item.BranchId = d.BranchId;
+                item.PaymentStatus = d.Status == null ? null : d.Status.Name;
+                item.OriginalAmount = d.AmountInPaymentCurrency;
+
+                myList.Add(item);
+            }
             return myList;
         }
         private void FillFiltersFieldsValuesInDataProvider()
@@ -1062,5 +1164,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         public string ShipperRef2 { get; set; }
         public string DescriptionOfGoods { get; set; }
         public string Direction { get; set; }
+        public string ContainersNumbersArray { get; set; }
+        public string ProjectNumber { get; set; }
+        public int? NumberOfContainers { get; set; }
+        public DateTime? FinalDestinationETD { get; set; }
+        public DateTime? FinalDestinationETA { get; set; }
     }
 }

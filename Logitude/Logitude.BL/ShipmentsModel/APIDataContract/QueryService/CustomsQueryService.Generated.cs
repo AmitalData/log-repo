@@ -10,6 +10,8 @@ using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.QuoteModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
@@ -40,40 +42,38 @@ using Simplog.Data.ShipmentsModel;
         }
 
 		
-		public Customs GetCustomsById(string Id,int Tenant,string ComputingPartnerName = "")
+		public Customs GetCustomsById(string Id,int Tenant, string include, string ComputingPartnerName = "")
         { 
 		    try
             {
-
-				
-				var temp = query.GetSinglePM(Id,Tenant);				
+								
+				var temp = query.GetSinglePMWithInclude(Id, Tenant, include);
 				 if (temp == null)
                     throw new ApplicationException("Shipment with Id " + Id + " doesn't exist");
 
 				return CustomsDataMapping(temp,Tenant,ComputingPartnerName);
 			}
+
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }
 		
-		public Customs GetCustomsByShipmentNumber(string ShipmentNumber,int Tenant,string ComputingPartnerName = "")
+		public Customs GetCustomsByShipmentNumber(string ShipmentNumber,int Tenant, string include, string ComputingPartnerName = "")
         { 
 		    try
             {
-
-				
-				var temp = query.GetSinglePMByShipmentNumber(ShipmentNumber,Tenant);				
+								
+				var temp = query.GetSinglePMWithIncludeByShipmentNumber(ShipmentNumber, Tenant, include);
 				 if (temp == null)
                     throw new ApplicationException("Shipment with ShipmentNumber " + ShipmentNumber + " doesn't exist");
 
 				return CustomsDataMapping(temp,Tenant,ComputingPartnerName);
 			}
+
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }
@@ -258,7 +258,14 @@ using Simplog.Data.ShipmentsModel;
 				   
 				   temp.ShipperName = MyEntityPM.ShipperName;
 				   temp.DeclarationXMLData = MyEntityPM.DeclarationXMLData;
-				   temp.DeclarationDate = MyEntityPM.DeclarationDate;					
+				   temp.DeclarationDate = MyEntityPM.DeclarationDate;
+				   temp.Notify1Reference = MyEntityPM.Notify1Reference;
+				   temp.Notify1Reference2 = MyEntityPM.Notify1Reference2;
+				   temp.CustomerReference3 = MyEntityPM.CustomerReference3;
+				   temp.CustomerReference2 = MyEntityPM.CustomerReference2;
+				   temp.ShipperReference3 = MyEntityPM.ShipperReference3;
+				   temp.ConsigneeReference3 = MyEntityPM.ConsigneeReference3;
+				   temp.CustomerReference1 = MyEntityPM.CustomerReference1;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -280,12 +287,14 @@ using Simplog.Data.ShipmentsModel;
 					
 					if (!string.IsNullOrEmpty(MyEntity.ShipmentNumber))
 					{
-						temp = query.GetSinglePMByShipmentNumber(MyEntity.ShipmentNumber, Tenant);
-					} 					   
-					if(temp == null)
+						temp = query.GetSinglePMByShipmentNumber(MyEntity.ShipmentNumber, Tenant  );
+					} 
+					
+			  	   if(temp == null)
 					{   
 					    throw new ApplicationException("Shipment with ShipmentNumber " + MyEntity.ShipmentNumber + " doesn't exist");
 					} 
+				 
 										 
 					if(IsUpdate == true)
 					{
@@ -319,7 +328,7 @@ using Simplog.Data.ShipmentsModel;
 
 						 
 							if(!IsUpdate)
-							{								//throw new ApplicationException("ShipmentType Can't be update"); 
+							{								
 								temp.ShipmentTypeId = myShipmentTypePM.Id;
 						  
 							}  
@@ -340,7 +349,7 @@ using Simplog.Data.ShipmentsModel;
 
 						 
 							if(!IsUpdate)
-							{								//throw new ApplicationException("TransportMode Can't be update"); 
+							{								
 								temp.TransportModeId = myTransportModePM.Id;
 						  
 							}  
@@ -361,7 +370,7 @@ using Simplog.Data.ShipmentsModel;
 
 						 
 							if(!IsUpdate)
-							{								//throw new ApplicationException("Shipper Can't be update"); 
+							{								
 								temp.ShipperId = myShipperPM.Id;
 						  
 							}  
@@ -373,17 +382,17 @@ using Simplog.Data.ShipmentsModel;
 			
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.ShipperReference1))
-					{							//throw new ApplicationException("ShipperReference1 Can't be update"); 
-							temp.ShipperReference1 = MyEntity.ShipperReference1;
+					if(!IsUpdate)
+					{							
+						temp.ShipperReference1 = MyEntity.ShipperReference1;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.ShipperReference2))
-					{							//throw new ApplicationException("ShipperReference2 Can't be update"); 
-							temp.ShipperReference2 = MyEntity.ShipperReference2;
+					if(!IsUpdate)
+					{							
+						temp.ShipperReference2 = MyEntity.ShipperReference2;
 
 										}  
 
@@ -398,7 +407,7 @@ using Simplog.Data.ShipmentsModel;
 
 						 
 							if(!IsUpdate)
-							{								//throw new ApplicationException("Consignee Can't be update"); 
+							{								
 								temp.ConsigneeId = myConsigneePM.Id;
 						  
 							}  
@@ -410,17 +419,17 @@ using Simplog.Data.ShipmentsModel;
 			
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.ConsigneeReference1))
-					{							//throw new ApplicationException("ConsigneeReference1 Can't be update"); 
-							temp.ConsigneeReference1 = MyEntity.ConsigneeReference1;
+					if(!IsUpdate)
+					{							
+						temp.ConsigneeReference1 = MyEntity.ConsigneeReference1;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.ConsigneeReference2))
-					{							//throw new ApplicationException("ConsigneeReference2 Can't be update"); 
-							temp.ConsigneeReference2 = MyEntity.ConsigneeReference2;
+					if(!IsUpdate)
+					{							
+						temp.ConsigneeReference2 = MyEntity.ConsigneeReference2;
 
 										}  
 
@@ -435,7 +444,7 @@ using Simplog.Data.ShipmentsModel;
 
 						 
 							if(!IsUpdate)
-							{								//throw new ApplicationException("Customer Can't be update"); 
+							{								
 								temp.CustomerId = myCustomerPM.Id;
 						  
 							}  
@@ -456,7 +465,7 @@ using Simplog.Data.ShipmentsModel;
 
 						 
 							if(!IsUpdate)
-							{								//throw new ApplicationException("FromPort Can't be update"); 
+							{								
 								temp.FromPortId = myFromPortPM.Id;
 						  
 							}  
@@ -477,7 +486,7 @@ using Simplog.Data.ShipmentsModel;
 
 						 
 							if(!IsUpdate)
-							{								//throw new ApplicationException("ToPort Can't be update"); 
+							{								
 								temp.ToPortId = myToPortPM.Id;
 						  
 							}  
@@ -498,7 +507,7 @@ using Simplog.Data.ShipmentsModel;
 
 						 
 							if(!IsUpdate)
-							{								//throw new ApplicationException("GrossWeightUnit Can't be update"); 
+							{								
 								temp.GrossWeightUnitCode = myGrossWeightUnitPM.Code;
 						  
 							}  
@@ -519,7 +528,7 @@ using Simplog.Data.ShipmentsModel;
 
 						 
 							if(!IsUpdate)
-							{								//throw new ApplicationException("ChargeableWeightUnit Can't be update"); 
+							{								
 								temp.ChargeableWeightUnitCode = myChargeableWeightUnitPM.Code;
 						  
 							}  
@@ -540,7 +549,7 @@ using Simplog.Data.ShipmentsModel;
 
 						 
 							if(!IsUpdate)
-							{								//throw new ApplicationException("VolumeUnit Can't be update"); 
+							{								
 								temp.VolumeUnitCode = myVolumeUnitPM.Code;
 						  
 							}  
@@ -561,7 +570,7 @@ using Simplog.Data.ShipmentsModel;
 
 						 
 							if(!IsUpdate)
-							{								//throw new ApplicationException("Incoterm Can't be update"); 
+							{								
 								temp.IncotermId = myIncotermPM.Id;
 						  
 							}  
@@ -573,25 +582,25 @@ using Simplog.Data.ShipmentsModel;
 			
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.HouseNo))
-					{							//throw new ApplicationException("HouseNo Can't be update"); 
-							temp.House = MyEntity.HouseNo;
+					if(!IsUpdate)
+					{							
+						temp.House = MyEntity.HouseNo;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && MyEntity.HouseDate != null)
-					{							//throw new ApplicationException("HouseDate Can't be update"); 
-							temp.HAWBDate = MyEntity.HouseDate;
+					if(!IsUpdate)
+					{							
+						temp.HAWBDate = MyEntity.HouseDate;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.DescriptionOfGoods))
-					{							//throw new ApplicationException("DescriptionOfGoods Can't be update"); 
-							temp.DescriptionOfGoods = MyEntity.DescriptionOfGoods;
+					if(!IsUpdate)
+					{							
+						temp.DescriptionOfGoods = MyEntity.DescriptionOfGoods;
 
 										}  
 
@@ -602,8 +611,8 @@ using Simplog.Data.ShipmentsModel;
 						AirPackageQueryService AirPackageService15 = new AirPackageQueryService(Tenant);
 						  
 						if(!IsUpdate)
-						{								//throw new ApplicationException("AirPackages Can't be update"); 
-								temp.ShipmentPackages = AirPackageService15.AirPackageCustomDataMappingAndValidatin(MyEntity,MyEntity.AirPackages,Tenant,ComputingPartnerName);
+						{								
+							temp.ShipmentPackages = AirPackageService15.AirPackageCustomDataMappingAndValidatin(MyEntity,MyEntity.AirPackages,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 						}  
@@ -618,8 +627,8 @@ using Simplog.Data.ShipmentsModel;
 						OceanOrInlandPackageQueryService OceanOrInlandPackageService15 = new OceanOrInlandPackageQueryService(Tenant);
 						  
 						if(!IsUpdate)
-						{								//throw new ApplicationException("OceanOrInlandPackages Can't be update"); 
-								temp.ShipmentPackages = OceanOrInlandPackageService15.OceanOrInlandPackageCustomDataMappingAndValidatin(MyEntity,MyEntity.OceanOrInlandPackages,Tenant,ComputingPartnerName);
+						{								
+							temp.ShipmentPackages = OceanOrInlandPackageService15.OceanOrInlandPackageCustomDataMappingAndValidatin(MyEntity,MyEntity.OceanOrInlandPackages,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 						}  
@@ -634,8 +643,8 @@ using Simplog.Data.ShipmentsModel;
 						ContainerQueryService ContainerService15 = new ContainerQueryService(Tenant);
 						  
 						if(!IsUpdate)
-						{								//throw new ApplicationException("Containers Can't be update"); 
-								temp.ShipmentPackages = ContainerService15.ContainerCustomDataMappingAndValidatin(MyEntity,MyEntity.Containers,Tenant,ComputingPartnerName);
+						{								
+							temp.ShipmentPackages = ContainerService15.ContainerCustomDataMappingAndValidatin(MyEntity,MyEntity.Containers,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 						}  
@@ -645,9 +654,9 @@ using Simplog.Data.ShipmentsModel;
 
 								 
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Commodity))
-					{							//throw new ApplicationException("Commodity Can't be update"); 
-							temp.AWBCommodityItemNumber = MyEntity.Commodity;
+					if(!IsUpdate)
+					{							
+						temp.AWBCommodityItemNumber = MyEntity.Commodity;
 
 										}  
 
@@ -662,7 +671,7 @@ using Simplog.Data.ShipmentsModel;
 
 						 
 							if(!IsUpdate)
-							{								//throw new ApplicationException("Branch Can't be update"); 
+							{								
 								temp.BranchId = myBranchPM.Id;
 						  
 							}  
@@ -683,7 +692,7 @@ using Simplog.Data.ShipmentsModel;
 
 						 
 							if(!IsUpdate)
-							{								//throw new ApplicationException("Department Can't be update"); 
+							{								
 								temp.DepartmentId = myDepartmentPM.Id;
 						  
 							}  
@@ -695,81 +704,81 @@ using Simplog.Data.ShipmentsModel;
 			
 					
                     
-					if(!IsUpdate)// && MyEntity.TEU != null)
-					{							//throw new ApplicationException("TEU Can't be update"); 
-							temp.TEU = MyEntity.TEU;
+					if(!IsUpdate)
+					{							
+						temp.TEU = MyEntity.TEU;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && MyEntity.NumberOfPackages != null)
-					{							//throw new ApplicationException("NumberOfPackages Can't be update"); 
-							temp.NumberOfPackages = MyEntity.NumberOfPackages;
+					if(!IsUpdate)
+					{							
+						temp.NumberOfPackages = MyEntity.NumberOfPackages;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && MyEntity.GrossWeight != null)
-					{							//throw new ApplicationException("GrossWeight Can't be update"); 
-							temp.GrossWeight = MyEntity.GrossWeight;
+					if(!IsUpdate)
+					{							
+						temp.GrossWeight = MyEntity.GrossWeight;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && MyEntity.Volume != null)
-					{							//throw new ApplicationException("Volume Can't be update"); 
-							temp.Volume = MyEntity.Volume;
+					if(!IsUpdate)
+					{							
+						temp.Volume = MyEntity.Volume;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && MyEntity.VolumetricWeight != null)
-					{							//throw new ApplicationException("VolumetricWeight Can't be update"); 
-							temp.VolumetricWeight = MyEntity.VolumetricWeight;
+					if(!IsUpdate)
+					{							
+						temp.VolumetricWeight = MyEntity.VolumetricWeight;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && MyEntity.ChargeableWeight != null)
-					{							//throw new ApplicationException("ChargeableWeight Can't be update"); 
-							temp.ChargeableWeight = MyEntity.ChargeableWeight;
+					if(!IsUpdate)
+					{							
+						temp.ChargeableWeight = MyEntity.ChargeableWeight;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.ShipmentNumber))
-					{							//throw new ApplicationException("ShipmentNumber Can't be update"); 
-							temp.ShipmentNumber = MyEntity.ShipmentNumber;
+					if(!IsUpdate)
+					{							
+						temp.ShipmentNumber = MyEntity.ShipmentNumber;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Master))
-					{							//throw new ApplicationException("Master Can't be update"); 
-							temp.Master = MyEntity.Master;
+					if(!IsUpdate)
+					{							
+						temp.Master = MyEntity.Master;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && MyEntity.CustomsClearanceDate != null)
-					{							//throw new ApplicationException("CustomsClearanceDate Can't be update"); 
-							temp.CustomsClearanceDate = MyEntity.CustomsClearanceDate;
+					if(!IsUpdate)
+					{							
+						temp.CustomsClearanceDate = MyEntity.CustomsClearanceDate;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.DeclarationNumber))
-					{							//throw new ApplicationException("DeclarationNumber Can't be update"); 
-							temp.DeclarationNumber = MyEntity.DeclarationNumber;
+					if(!IsUpdate)
+					{							
+						temp.DeclarationNumber = MyEntity.DeclarationNumber;
 
 										}  
 
@@ -784,7 +793,7 @@ using Simplog.Data.ShipmentsModel;
 
 						 
 							if(!IsUpdate)
-							{								//throw new ApplicationException("MainCarriageCarrier Can't be update"); 
+							{								
 								temp.MainCarriageCarrierId = myMainCarriageCarrierPM.Id;
 						  
 							}  
@@ -803,25 +812,77 @@ using Simplog.Data.ShipmentsModel;
 			
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.ShipperName))
-					{							//throw new ApplicationException("ShipperName Can't be update"); 
-							temp.ShipperName = MyEntity.ShipperName;
+					if(!IsUpdate)
+					{							
+						temp.ShipperName = MyEntity.ShipperName;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.DeclarationXMLData))
-					{							//throw new ApplicationException("DeclarationXMLData Can't be update"); 
-							temp.DeclarationXMLData = MyEntity.DeclarationXMLData;
+					if(!IsUpdate)
+					{							
+						temp.DeclarationXMLData = MyEntity.DeclarationXMLData;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && MyEntity.DeclarationDate != null)
-					{							//throw new ApplicationException("DeclarationDate Can't be update"); 
-							temp.DeclarationDate = MyEntity.DeclarationDate;
+					if(!IsUpdate)
+					{							
+						temp.DeclarationDate = MyEntity.DeclarationDate;
+
+										}  
+
+					
+                    							
+						temp.Notify1Reference = MyEntity.Notify1Reference;
+
+					 
+
+					
+                    							
+						temp.Notify1Reference2 = MyEntity.Notify1Reference2;
+
+					 
+
+					
+                    
+					if(!IsUpdate)
+					{							
+						temp.CustomerReference3 = MyEntity.CustomerReference3;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)
+					{							
+						temp.CustomerReference2 = MyEntity.CustomerReference2;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)
+					{							
+						temp.ShipperReference3 = MyEntity.ShipperReference3;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)
+					{							
+						temp.ConsigneeReference3 = MyEntity.ConsigneeReference3;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)
+					{							
+						temp.CustomerReference1 = MyEntity.CustomerReference1;
 
 										}  
 
@@ -834,6 +895,8 @@ using Simplog.Data.ShipmentsModel;
                 throw ex;
             } 
         }
-		 
+
+
+						   
    }
 }

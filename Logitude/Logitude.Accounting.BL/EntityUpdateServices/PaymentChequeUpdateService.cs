@@ -1,7 +1,9 @@
-﻿using Logitude.Accounting.BL.EntityQueryServices;
+﻿using Logitude.Accounting.BL.CloseTables;
+using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs;
+using Logitude.Accounting.Def.EntityUpdateServicesExt;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Helpers;
@@ -95,8 +97,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                             AddJournalLines(paymentChequePM, paymentPM, journal, creditAccount);
 
                             JournalUpdateService journalUpdateService = new JournalUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
-                            journalUpdateService.Update(journal, true);
 
+                            journalUpdateService.Update(journal, true);
+                            AddAccountingEntitieJournal(journal, AccountingEntityJournalActions.PaymentCheque);
                             paymentChequePM.JournalNumber = journal.JournalNumber;
                         }
                     }
@@ -114,6 +117,11 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             {
                 paymentChequePM.UpdatedByUserId = contact.Id;
             }
+        }
+        private void AddAccountingEntitieJournal(JournalPM entityPM, string action, string ChildEntityId = null)
+        {
+            IAccountingEntityJournalUpdateServiceExt service = ContainerAccessor.Container.Resolve(typeof(IAccountingEntityJournalUpdateServiceExt), "AccountingEntityJournalUpdateServiceExt", new ParameterOverride("", 1)) as IAccountingEntityJournalUpdateServiceExt;
+            service.AddAccountingEntitieJournal(entityPM, action, ChildEntityId);
         }
         private static bool CheckIfPaymentChequeHasAjournal(PaymentChequePM paymentCheque)
         {
@@ -152,8 +160,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 ForeignAmount = (decimal)entityPM.ForeignAmount,
                 ExchangeRate = entityPM.ExchangeRate,
                 ChangeSetOp = ChangeSetOperation.Insert,
-                Reference1 = paymentPM != null ? paymentPM.PaymentNo : null,
-                Reference2 = entityPM.ChequeNumber,
+                Reference1 = entityPM.ChequeNumber,
+                Reference2 = null,
                 Notes = entityPM.PaymentChequeLines.First().Notes
 
             };
@@ -169,8 +177,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 ForeignAmount = (decimal)entityPM.ForeignAmount,
                 ExchangeRate = entityPM.ExchangeRate,
                 ChangeSetOp = ChangeSetOperation.Insert,
-                Reference1 = paymentPM != null ? paymentPM.PaymentNo : null,
-                Reference2 = entityPM.ChequeNumber,
+                Reference1 = entityPM.ChequeNumber,
+                Reference2 = null,
                 Notes = entityPM.PaymentChequeLines.First().Notes
 
 
@@ -217,17 +225,24 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             BankAccountPM bankAccount = bankAccountService.GetSingle(entityPM.BankAccountId, false, false);
             if (bankAccount.ChequeCounter == null)
             {
-                throw new Exception("The cheque counter did not defined for the choosen bank");
+                throw new ApplicationException("The cheque counter did not defined for the choosen bank");
             }
             else
             {
-                entityPM.ChequeNumber = entityPM.ChequeNumber == null?  bankAccount.ChequeCounter.ToString() : entityPM.ChequeNumber;
-                entityPM.UniqueField = entityPM.ChequeNumber;
+                if (string.IsNullOrEmpty(entityPM.ChequeNumber))
+                {
+                    entityPM.ChequeNumber = bankAccount.ChequeCounter.ToString();
+                    entityPM.UniqueField = entityPM.ChequeNumber;
 
-                BankAccountUpdateService bankAccountUpdateService = new BankAccountUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
-                bankAccount.ChequeCounter += 1;
-                bankAccount.ChangeSetOp = ChangeSetOperation.Update;
-                bankAccountUpdateService.Update(bankAccount, true);
+                    BankAccountUpdateService bankAccountUpdateService = new BankAccountUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
+                    bankAccount.ChequeCounter += 1;
+                    bankAccount.ChangeSetOp = ChangeSetOperation.Update;
+                    bankAccountUpdateService.Update(bankAccount, true);
+                }
+                else
+                {
+                    entityPM.UniqueField = entityPM.ChequeNumber;
+                }
             }
 
             return bankAccount;
@@ -327,7 +342,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             {
                 
                
-                throw new Exception(TranslateTextsClass.Translate("Accounting.General.O.PaymentChequeExist", entityPM.Tenant, showLocals));
+                throw new ApplicationException(TranslateTextsClass.Translate("Accounting.General.O.PaymentChequeExist", entityPM.Tenant, showLocals));
 
 
             }
@@ -356,7 +371,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         public void PreventCancellingPaymentCheque(PaymentChequePM paymentCheque)
         {
-            throw new Exception("You cant cancel an internal payment cheque, you need to cancel APPayment.");
+            throw new ApplicationException("You cant cancel an internal payment cheque, you need to cancel APPayment.");
         }
         public static Func<int, ContactPM> OverrideGetLoggedContactFunc { get; set; }
         bool showLocals;
@@ -375,7 +390,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             {
                 if (account.AccountTypeCode == "3")
                 {
-                    throw new Exception(TranslateTextsClass.Translate("Accounting.General.O.VendorsGLAccount", entityPM.Tenant, showLocals));
+                    throw new ApplicationException(TranslateTextsClass.Translate("Accounting.General.O.VendorsGLAccount", entityPM.Tenant, showLocals));
                 }
             }
 

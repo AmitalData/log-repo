@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BLExt\IAutoReconcileARPaymentService.cs" />
+    <Compile Include="EntityPMs\AccountingEntityJournalActions.cs" />
     <Compile Include="EntityPMs\AccountingEnum.Shared.cs" />
     <Compile Include="EntityPMs\AccountingIntegrityCheckPM.cs" />
     <Compile Include="EntityPMs\AccountingPeriodPM.cs" />
@@ -68,12 +69,14 @@
     <Compile Include="EntityPMs\AutomaticReconcilePM.cs" />
     <Compile Include="EntityPMs\ChartOfAccountPM.cs" />
     <Compile Include="EntityPMs\Generated\AccountingCompanyTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\AccountingEntityJournalPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\AccountingEntityPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\AccountingIntegrityCheckPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\AccountingNotePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\AccountingPeriodPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ARPaymentChequePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ARPaymentChequeStatusPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ARPaymentsJournalPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\AutomaticExternalReconcileMethodPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\AutomaticReconcileMethodPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\AutomaticReconcilePM.Generated.cs" />
@@ -95,6 +98,7 @@
     <Compile Include="EntityPMs\Generated\Category5PM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ChartOfAccountPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ChartOfAccountsTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CopyFromTenant0PM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ExternalPageAdditionalDataPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ExternalReconciliationLinePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ExternalReconciliationPM.Generated.cs" />
@@ -168,6 +172,7 @@
     <Compile Include="EntityPMs\GLAccountTypePM.cs" />
     <Compile Include="EntityPMs\JournalActionTypePM.cs" />
     <Compile Include="EntityPMs\JournalLinePM.cs" />
+    <Compile Include="EntityPMs\JournalLite.cs" />
     <Compile Include="EntityPMs\JournalPM.cs" />
     <Compile Include="EntityPMs\JournalStatusTypePM.cs" />
     <Compile Include="EntityPMs\LedgerTransactionPM.cs" />
@@ -181,14 +186,18 @@
     <Compile Include="EntityQueryServicesExt\ICashBookQueryServiceExt.cs" />
     <Compile Include="EntityQueryServicesExt\IGLAccountCardsDataQueryServiceExt.cs" />
     <Compile Include="EntityQueryServicesExt\IGLAccountCurrencyQueryServiceExt.cs" />
+    <Compile Include="EntityQueryServicesExt\ILedgerTransactionQueryService.cs" />
     <Compile Include="EntityQueryServicesExt\IInterestTransactionQueryServiceExt.cs" />
     <Compile Include="EntityQueryServicesExt\IFullAccountingSettingQueryServiceExt.cs" />
     <Compile Include="EntityQueryServicesExt\IGLAccountQueryServiceExt.cs" />
     <Compile Include="EntityQueryServicesExt\IGLAccountWithholdingTaxQueryServiceExt.cs" />
     <Compile Include="EntityQueryServicesExt\IJournalQueryServiceExt.cs" />
     <Compile Include="EntityQueryServicesExt\IPaymentChequeQueryServiceExt.cs" />
+    <Compile Include="EntityUpdateServicesExt\AccountingEntityJournalUpdateServiceExt.cs" />
+    <Compile Include="EntityUpdateServicesExt\IAPPaymentInvoicesTransactionFetcherExt.cs" />
     <Compile Include="EntityUpdateServicesExt\IARPaymentChequeUpdateServiceExt.cs" />
     <Compile Include="EntityUpdateServicesExt\GLAccountCardsDataUpdateServiceExt.cs" />
+    <Compile Include="EntityUpdateServicesExt\IHSMSignFileService.cs" />
     <Compile Include="EntityUpdateServicesExt\IInterestReportsConnectedInvoiceUpdateServiceExt.cs" />
     <Compile Include="EntityUpdateServicesExt\IInterestReportUpdateServiceExt.cs" />
     <Compile Include="EntityUpdateServicesExt\IBankCodeUpdateServiceExt.cs" />

@@ -18,6 +18,7 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Logitude.BL.Helpers;
+using WebFreight.Web.Services;
 
 namespace WebFreight.Web.ReportsWebServices.LogitudeReports
 {
@@ -74,15 +75,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
         public byte[] GetData()
         {
             RacingQuoteDataProvider myDataProvider = this.LoadDataProvider();
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(RacingQuoteDataProvider));
-            MemoryStream memoryStream = new MemoryStream();
-            xmlSerializer.Serialize(memoryStream, myDataProvider);
-            memoryStream.Seek(0, SeekOrigin.Begin);
-
-            StreamReader streamReader = new StreamReader(memoryStream);
-            string content = streamReader.ReadToEnd();
-            byte[] bytearray = memoryStream.ToArray();
-            return bytearray;
+            return new ReportMemoryStreamService().Convert(myDataProvider, typeof(RacingQuoteDataProvider), tenant);
         }
 
         private RacingQuoteDataProvider LoadDataProvider()
@@ -267,7 +260,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                     }
 
                 }
-                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
                 customFieldResolver.SetDataProviderCustomFieldsValues("Quote", tenant, item, myRecord);
 
 

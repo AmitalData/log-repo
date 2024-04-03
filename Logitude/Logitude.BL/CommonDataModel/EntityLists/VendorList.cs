@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Logitude.BL.InfrastructureModel.EntityLists;
 using System.ComponentModel.DataAnnotations;
 
 namespace Logitude.BL.CommonDataModel.EntityLists
 {
-    public class VendorList
+    public class VendorList : CustomFieldList
     {
         [Key]
         public string Id { get; set; }
@@ -33,14 +33,13 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string SATForeignRFC { get; set; }
         public string MetodoPagoCode { get; set; }
         public string UsoCFDICode { get; set; }
-
         public string PrimaryContactName { get; set; }
         public string PrimaryContactEmail { get; set; }
         public string PrimaryContactPhone { get; set; }
         public string CreatedByPartner { get; set; }
         public string StateName { get; set; }
-
+        public string RegimenFiscalCode { get; set; }
+        public string SATReceptorName { get; set; }
         public string GLAccountNumber { get; set; }
-
     }
 }

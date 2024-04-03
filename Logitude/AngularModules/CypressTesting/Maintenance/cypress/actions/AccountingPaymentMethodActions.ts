@@ -53,7 +53,7 @@ function AssertPostAccountingPaymentMethod() {
 }
 
 function ReCreateAccountingPaymentMethod() {
-    let randomCode = GenerateRandomNumberAndString(4);
+    let randomCode = GenerateRandomNumberAndString(2);
     cy.FillLogTextBox(AccountingPaymentMethodSelectors.Code, randomCode)
     CreateAccountingPaymentMethod();
     AssertCreateAccountingPaymentMethod();
@@ -92,6 +92,7 @@ export function EditAccountingPaymentMethodGeneralTab(accountingPaymentMethodDet
 
 export function FillAccountingPaymentMethodAccountingTab(accountingPaymentMethodDetails: AccountingPaymentMethodDetails) {
     cy.FillLogTextBox(AccountingPaymentMethodSelectors.AccountingARExternalID, " ");
+    cy.wait(1000)
     cy.FillLogTextBox(AccountingPaymentMethodSelectors.AccountingARExternalID, accountingPaymentMethodDetails.ARExternalID);
     cy.FillLogTextBox(AccountingPaymentMethodSelectors.AccountingAPExternalID, accountingPaymentMethodDetails.APExternalID);
 }

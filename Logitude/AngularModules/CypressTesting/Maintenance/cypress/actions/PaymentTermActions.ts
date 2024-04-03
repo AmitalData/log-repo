@@ -23,10 +23,11 @@ export function FillRequiredData(code: string) {
 }
 
 export function FillPaymentTermDetails(paymentTermDetails: PaymentTermDetails, codeDigits: number) {
+    cy.get(PaymentTermsSelectors.NewPaymentTerm).click()
     cy.FillLogTextBox(PaymentTermsSelectors.Name, gr.GenerateCurrentDatetimeString("_"))
     cy.FillLogTextBox(PaymentTermsSelectors.LocalName, paymentTermDetails.LocalName);
     cy.FillLogTextBox(PaymentTermsSelectors.Code, gr.GenerateRandomNumberAndString(codeDigits));
-    Actions.FillCheckBoxProcess(PaymentTermsSelectors.CurrentMonthCheckBox + BaseSelectors.LastElement, paymentTermDetails.CurrentMonth)
+    Actions.FillCheckBoxProcess(PaymentTermsSelectors.CurrentMonthCheckBox , paymentTermDetails.CurrentMonth)
     cy.FillLogLov(PaymentTermsSelectors.FromDate, paymentTermDetails.FromDate, true);
     cy.FillLogTextBox(PaymentTermsSelectors.Days, paymentTermDetails.Days);
     cy.FillLogTextBox(PaymentTermsSelectors.Description, paymentTermDetails.Description);
@@ -96,12 +97,14 @@ function AssertPaymentTermGetSingle() {
 }
 
 export function EditPaymentTermGeneralTab(paymentTermDetails: PaymentTermDetails) {
+    cy.FillLogTextBox(PaymentTermsSelectors.Description, "   ");
     cy.FillLogTextBox(PaymentTermsSelectors.Description, paymentTermDetails.Description);
     cy.FillLogTextBox(PaymentTermsSelectors.LocalDescription, paymentTermDetails.LocalDescription);
-    cy.ClickCheckBox(PaymentTermsSelectors.InActiveCheckBox)
+    Actions.FillCheckBoxProcess(PaymentTermsSelectors.InActiveCheckBox, paymentTermDetails.InactiveCheckBox)
 }
 
 export function FillPaymentTermAccountingTab(paymentTermDetails: PaymentTermDetails) {
+    cy.FillLogTextBox(PaymentTermsSelectors.AccountingExternalID, "   ");
     cy.FillLogTextBox(PaymentTermsSelectors.AccountingExternalID, paymentTermDetails.AccountingExternalID);
 }
 

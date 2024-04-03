@@ -2,18 +2,20 @@ import {Component, OnInit, OnDestroy, Output,Input, EventEmitter, AfterViewInit,
 import {SessionLocator} from '../Infrastructure/Utilities/SessionLocator';
 import {AppTool} from '../Infrastructure/Tools'
 import {ObjectsLocator} from '../Infrastructure/Locators/ObjectsLocator';
+import { TextCodeTranslator } from '../Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
     selector: 'ComboBox',
 
     templateUrl: './ComboBox.html',
-    inputs: ['ItemsSource', 'SelectedItem', 'Binding', 'IsDisabled', 'WaterMark', 'IsBlueBox', 'IsGreenButton', 'FocusOnMe', 'SelectedValue', 'SelectedValuePath', 'MaxHeight', 'WithCheckBoxes', 'WithIcons'],
+    inputs: ['ItemsSource', 'SelectedItem', 'Binding', 'IsDisabled', 'WaterMark', 'IsBlueBox', 'IsGreenButton', 'FocusOnMe', 'SelectedValue', 'SelectedValuePath', 'MaxHeight', 'WithCheckBoxes', 'WithIcons', 'CyData','ListType', 'AdditionalTitleBinding', 'BindingTextCode'],
 })
 
 export class ComboBox implements OnInit, AfterViewInit, OnDestroy {
     public Text: string = null;
     public WaterMark: string = null;
     private itemsSource: any[];
+
     dropdownTimertoken: any;
     get ItemsSource() { return this.itemsSource; }
     set ItemsSource(value: any[]) {
@@ -39,6 +41,7 @@ export class ComboBox implements OnInit, AfterViewInit, OnDestroy {
     public WithIcons: boolean = false;
     public WithCheckBoxes: boolean = false;
     public Binding: string = null;
+    public AdditionalTitleBinding: string = null;
     public ControlId: string = null;
     public DropdownId: string = null;
     public ListControlId: string = null;
@@ -56,6 +59,10 @@ export class ComboBox implements OnInit, AfterViewInit, OnDestroy {
     @Output() LostFocus: EventEmitter<boolean> = new EventEmitter<boolean>();
     private CurrentSession = SessionLocator.SelectedSession;
     public SearchTextId: string = "SearchTextId";
+    public CyData: string;
+    public ListType: string;
+    public BindingTextCode: string = null;
+
     constructor(private cd: ChangeDetectorRef) {
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
 
@@ -75,6 +82,7 @@ export class ComboBox implements OnInit, AfterViewInit, OnDestroy {
             this.ListControlId = "List_" + idIndex;
             this.SearchTextId = "SearchText_" + idIndex;
         }
+        
     }
 
     private MouseDownEvent: any = null;
@@ -275,7 +283,7 @@ export class ComboBox implements OnInit, AfterViewInit, OnDestroy {
 
                 else {
                     if (this.Binding == null) {
-                        myDisplayText = this.SelectedItem;
+                        myDisplayText = this.BindingTextCode ? TextCodeTranslator.Translate(this.SelectedItem[this.BindingTextCode]) : this.SelectedItem;
                     }
 
                     else {

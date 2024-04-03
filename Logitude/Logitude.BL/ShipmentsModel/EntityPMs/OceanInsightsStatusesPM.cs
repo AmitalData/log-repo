@@ -18,6 +18,8 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string ContentDocumentId { get; set; }
         public string CommunicationLogId { get; set; }
         public DateTime CreateDate { get; set; }
-     
-    }
+		public string XML { get; set; }
+
+
+	}
 }

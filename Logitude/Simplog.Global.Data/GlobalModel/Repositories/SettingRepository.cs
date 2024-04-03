@@ -30,8 +30,6 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
                     select a.ReportsRunUsingWR).FirstOrDefault();
         }
 
-
-
         public Setting GetSingleSetting(string id)
         {
 

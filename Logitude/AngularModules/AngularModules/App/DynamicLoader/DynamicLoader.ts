@@ -85,7 +85,6 @@ export class DynamicLoader {
     switch (iPathParts[1]) {
       case "InfrastructureModules":
         case "QuoteModules":
-        case "QuoteOPModules":
       case "ShipmentModules":
       case "Logitude_Modules":
       case "CommonModules":
@@ -113,6 +112,9 @@ export class DynamicLoader {
 
   private static async GetModuleProfile(iModuleName: string) {
 
+    if(iModuleName == "WorkFlow"){
+      iModuleName = "Workflow"
+    }
     let Profile = await this.ModulesBank.filter(f => f.ModuleName == iModuleName)[0];
 
     if (!Profile) {

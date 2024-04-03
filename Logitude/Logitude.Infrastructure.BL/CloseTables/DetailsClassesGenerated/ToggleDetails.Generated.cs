@@ -1,4 +1,4 @@
-
+﻿
    
 using System;
 using System.Collections.Generic;
@@ -271,14 +271,6 @@ namespace Logitude.Infrastructure.BL
 			 
             all.Add(new ToggleDetails()
             {    
-                Name = "Reports in Shared Logistics", 
-                Code = "RSL", 
-                SearchFields = "RSL,Reports in Shared Logistics", 
-                Description = "Reports in Shared Logistics", 
-			});
-			 
-            all.Add(new ToggleDetails()
-            {    
                 Code = "CTL", 
                 Name = "CollaborationTool", 
                 SearchFields = "CTL,CollaborationTool", 
@@ -300,14 +292,719 @@ namespace Logitude.Infrastructure.BL
                 Description = "Lock Counter Procedure", 
                 Code = "LCP", 
 			});
+ 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "CPT", 
+                Name = "Carta Porte", 
+                Description = "Carta Porte", 
+                SearchFields = "CPT,Carta Porte", 
+			});
 			 
             all.Add(new ToggleDetails()
+            {    
+                Code = "OPD", 
+                Name = "Standalone Pickups/Deliveries Only ", 
+                SearchFields = "OPD,Standalone Pickups/Deliveries Only ", 
+                Description = "Only Allow Pickups/Deliveries to be Created with a Standalone Shipment", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "OIU", 
+                Name = "Shipment Update from Container", 
+                SearchFields = "OIU,Shipment Update from Container", 
+                Description = "Shipment Update from Container", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "SFC", 
+                Name = "Show file name as computed", 
+                SearchFields = "Show file name as computed,SFC", 
+                Description = "Show file name as computed", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "POD", 
+                Name = "Convert POD Image to Pdf File", 
+                SearchFields = "POD,Convert POD Image to Pdf File", 
+                Description = "Convert POD Image to Pdf File", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "BAF", 
+                Name = "ARInvoices DWH", 
+                SearchFields = "BAF,ARInvoices DWH,Allow Tenants to Show ARInvoices Fact on the BI Report Screen", 
+                Description = "Allow Tenants to Show ARInvoice Fact on the BI Report Screen", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "MLS", 
+                Name = "Shipment Number In Generic Interface", 
+                SearchFields = "MLS,Shipment Number In Generic Interface", 
+                Description = "Sending shipment number for multiple AP invoice in generic interface", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "IDS", 
+                Name = "InlandDomesticShipments DWH", 
+                SearchFields = "IDS,InlandDomesticShipments DWH", 
+                Description = "Allow Tenants to Show InlandDomesticShipments  Fact on the BI Report Screen", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Name = "Ocean Insights Sending Automatically Logic", 
+                Code = "AOI", 
+                SearchFields = "AOI,Ocean Insights Sending Automatically Logic", 
+                Description = "Ocean Insights Sending Automatically Logic", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "SAL", 
+                Name = "Use Security Access Level", 
+                SearchFields = "SAL,Use Security Access Level", 
+                Description = "Use Security Access Level", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Name = "Same User Login Enabled", 
+                Description = "User can login to different environment at the same time", 
+                Code = "ULE", 
+                SearchFields = "ULE,Same User Login Enabled", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "AFO", 
+                Name = "Advanced Filters Options", 
+                SearchFields = "AFO,Advanced Filters Options,Enable New Option for Date Advanced Filters", 
+                Description = "Enable New Option for Date Advanced Filters", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "QBT", 
+                Name = "QBO Tax Id Calculations", 
+                SearchFields = "QBT,QBO Tax Id Calculations", 
+                Description = "QBO Tax Id Calculations", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "OPS", 
+                Name = "Operational Status", 
+                SearchFields = "OPS,Operational Status", 
+                Description = "Operational Status", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "ODA", 
+                Name = "On Update Document Automation Tab", 
+                SearchFields = "ODA,On Update Document Automation Tab", 
+                Description = "On Update Document Automation Tab", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "FHR", 
+                Name = "FixHtmlResolverVariable", 
+                SearchFields = "FHR,FixHtmlResolverVariable", 
+                Description = "Fix Html Resolver Variable", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "OPF", 
+                Name = "Open Format RTL", 
+                SearchFields = "OPF,Open Format RTL", 
+                Description = "Open Format RTL Issues", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "CUS", 
+                Name = "Customization", 
+                SearchFields = "CUS,Customization", 
+                Description = "Customization screen and actions", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "EST", 
+                Name = "Entity Status", 
+                Description = "Allow to Display and Edit Entity Status", 
+                SearchFields = "EST,Entity Status,Allow to Display and Edit Entity Status", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "AVT", 
+                Name = "API Credential Valid Key Token", 
+                SearchFields = "AVT,API Credential Valid Key Token", 
+                Description = "API Credential Valid Key Token", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "DFF", 
+                SearchFields = "DFF,support forwarding file format in External Document", 
+                Name = "support forwarding file format in External Document", 
+                Description = "Support forwarding file format in External Document", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "VSL", 
+                Name = "Vessel Free Text", 
+                SearchFields = "VSL,Vessel Free Text", 
+                Description = "Vessel Free Text", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "CCT", 
+                Name = "Customs Charges Tariffs", 
+                SearchFields = "CCT,Customs Charges Tariffs", 
+                Description = "Customs Charges Tariffs", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "DFP", 
+                Name = "Sharing Documents Via Shared links", 
+                SearchFields = "DFP,Sharing Documents Via Shared links Permission", 
+                Description = "Sharing Documents Via Shared links Permission", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "CTF", 
+                Name = "Customer Team Field", 
+                SearchFields = "CTF,Customer Team Field", 
+                Description = "Show Customer Team Field", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Name = "INTTRA FROB", 
+                Description = "INTTRA option to manage FROB ", 
+                SearchFields = "INTTRA FROB,FOB", 
+                Code = "FOB", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "TAU", 
+                Name = "Ticket Entity In Automation", 
+                SearchFields = "TAU,Ticket Entity In Automation", 
+                Description = "Use Ticket Entity In Automation", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Name = "Managing Destination Warehouse Leg", 
+                Description = "Managing Destination Warehouse Leg in Drop Shipments", 
+                SearchFields = "MDW,Managing Destination Warehouse Leg", 
+                Code = "MDW", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "TTS", 
+                Name = "Total Traslado SAT Issue", 
+                SearchFields = "TTS,Total Traslado SAT Issue", 
+                Description = "Build a new XML to solve total traslado SAT issue", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "ARN", 
+                Name = "Aging Report Get From GLAccountAgingData", 
+                Description = "Aging Report Get From GLAccountAgingData, new method new way", 
+                SearchFields = "Aging Report Get From GLAccountAgingData, new method new way,ARN", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "TSV", 
+                Name = "Test Server Validations", 
+                SearchFields = "TSV,Test Server Validations", 
+                Description = "Test Operational/ Accounting close rules validations in server side", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "BAR", 
+                Name = "ARInvoice BI Report Scheduler", 
+                SearchFields = "BAR,ARInvoice BI Report Scheduler", 
+                Description = "ARInvoice BI Report Scheduler", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "BCH", 
+                Name = "Shipment Charges BI Report Scheduler", 
+                SearchFields = "BCH,Shipment Charges BI Report Scheduler", 
+                Description = "Shipment Charges BI Report Scheduler", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "BCO", 
+                Name = "Container BI Report Scheduler", 
+                SearchFields = "BCO,Container BI Report Scheduler", 
+                Description = "Container BI Report Scheduler", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "BID", 
+                Name = "Inland Domestic Shipments BI Report Scheduler", 
+                SearchFields = "BID,Inland Domestic Shipments BI Report Scheduler", 
+                Description = "Inland Domestic Shipments BI Report Scheduler", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "BIN", 
+                Name = "Invoice BI Report Scheduler", 
+                SearchFields = "BIN,Invoice BI Report Scheduler", 
+                Description = "Invoice BI Report Scheduler", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "BMC", 
+                Name = "Master Charges BI Report Scheduler", 
+                SearchFields = "BMC, Master Charges BI Report Scheduler", 
+                Description = "Master Charges BI Report Scheduler", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "BMA", 
+                Name = "Master BI Report Scheduler", 
+                SearchFields = "BMA,Master BI Report Scheduler", 
+                Description = "Master BI Report Scheduler", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "BQU", 
+                Name = "Quote BI Report Scheduler", 
+                SearchFields = "BQU,Quote BI Report Scheduler", 
+                Description = "Quote BI Report Scheduler", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "BSH", 
+                Name = "Shipment BI Report Scheduler", 
+                SearchFields = "BSH,Shipment BI Report Scheduler", 
+                Description = "Shipment BI Report Scheduler", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Name = "Show Agents in Opportunities' Customers LOV", 
+                Description = "Show Agents in Opportunities' Customers LOV", 
+                Code = "SAC", 
+                SearchFields = "Show Agents in Opportunities' Customers LOV", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "CCR", 
+                Name = "Activate Customer Nested Of Card In Html Editor", 
+                Description = "Activate Customer Nested Of Card In Html Editor", 
+                SearchFields = "CCR,Activate Customer Nested Of Card In Html Editor", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "HDF", 
+                Name = "HTML Editor Style Fixed", 
+                SearchFields = "HDF , HTML Editor Style Fixed", 
+                Description = "HTML Editor Style Fixed", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "VIP", 
+                Name = "Container Tracking - Pilot Customer", 
+                SearchFields = "VIP,Container Tracking - Pilot Customer", 
+                Description = "Container Tracking - Pilot Customer", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "SCD", 
+                Name = "Second context DB", 
+                SearchFields = "SCD,Second context DB", 
+                Description = "to get the secondary database for the context ", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "EHA", 
+                Name = "House Entity Automation Test", 
+                SearchFields = "EHA,House Entity Automation Test", 
+                Description = "House Entity Automation Test", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "QPI", 
+                Name = "Query Performance Inhancement", 
+                SearchFields = "QPI,Query Performance Inhancement", 
+                Description = "Query Performance Inhancement", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "QMU", 
+                SearchFields = "QMU,Quote Markup Currency", 
+                Name = "Quote Markup Currency", 
+                Description = "Quote Markup Currency", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "ARS", 
+                Name = "ARInvoice Sent Icon", 
+                SearchFields = "ARS,ARInvoice Sent Icon", 
+                Description = "ARInvoice Sent Icon", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "BRS", 
+                Name = "BI Report Security", 
+                SearchFields = "BRS,BI Report Security", 
+                Description = "BI Report Security", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "UNV", 
+                Name = "Unicargo Server Validations", 
+                SearchFields = "Unicargo Server Validations", 
+                Description = "Unicargo Server Validations", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "OT2", 
+                Name = "Only TLS 12 For Tranzilla", 
+                SearchFields = "Only TLS 12 For Tranzilla", 
+                Description = "Only TLS 12 For Tranzilla", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "CTT", 
+                Name = "Connect Tranzilla on Test Links", 
+                SearchFields = "Connect Tranzilla on Test Links", 
+                Description = "Connect Tranzilla on Test Links", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "ABD", 
+                Name = "Auto Build in Document Send", 
+                SearchFields = "ABD,Auto Build in Document Send", 
+                Description = "Auto Build in Document Send", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "PUP", 
+                Name = "Patch Update", 
+                SearchFields = "PUP,Patch Update", 
+                Description = "Enable Patch Update", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "SPB", 
+                Name = "Separate Per Branch in Counters", 
+                SearchFields = "SPB,Separate Per Branch in Counters", 
+                Description = "Separate Per Branch in Counters", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "ADL", 
+                Name = "Audit Log", 
+                SearchFields = "ADL, Audit Log", 
+                Description = "Audit Logs", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "XUP", 
+                Name = "Export To Excel Using Parallel", 
+                SearchFields = "XUP,Export To Excel Using Parallel", 
+                Description = "Export To Excel Using Parallel", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "NWR", 
+                Name = "Run worker on new environment'' ", 
+                SearchFields = "NWR,Run worker on new environment", 
+                Description = "Run worker on new environment'' ", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "LCT", 
+                Name = "Login Cargo Tracking", 
+                SearchFields = "CTL,Login Cargo Tracking", 
+                Description = "Cargo Tracking Login For Normal Users", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Name = "AR Invoice Printing", 
+                Code = "ARP", 
+                SearchFields = "ARP,AR Invoice Printing", 
+                Description = "AR Invoice Printing", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "DCS", 
+                Name = "Disable Storage Cache", 
+                SearchFields = "DCS,Disable Storage Cache", 
+                Description = "Disable Storage Cache", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "CTI", 
+                Name = "Customers API", 
+                SearchFields = "CTI,Customers API", 
+                Description = "Customers API", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "DMS", 
+                Name = "Dispose Memory Stream", 
+                SearchFields = "DMS,Dispose Memory Stream", 
+                Description = "Dispose Memory Stream", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "CXE", 
+                Name = "Cargo Tracking Excel sheet export features", 
+                SearchFields = "CXE,Cargo Tracking Excel sheet export features", 
+                Description = "Cargo Tracking Excel sheet export features", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "INU", 
+                Name = "Invoice Concurrency", 
+                SearchFields = "INU, Invoice Concurrency", 
+                Description = "", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "SKP", 
+                Name = "Use synch kafka producer", 
+                SearchFields = "SKP,Use synch kafka producer", 
+                Description = "Use synch kafka producer", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "AVC", 
+                Name = "AR Invoice VATs Calculation per line", 
+                SearchFields = "AVC,AR Invoice VATs Calculation per line", 
+                Description = "AR Invoice VATs Calculation per line", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "SSP", 
+                Name = "Stimulsoft Printing", 
+                SearchFields = "SSP,Stimulsoft Printing", 
+                Description = "Stimulsoft Printing", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "RDT", 
+                Name = "Digital Portal Required Documents", 
+                Description = "Toggle Feature for Digital Portal Required Documents", 
+                SearchFields = "RDT,Digital Portal Required Documents", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Name = "Remove Exception Logic", 
+                Code = "REL", 
+                SearchFields = "REL,Remove Exception Logic", 
+                Description = "Remove Exception Logic", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "DBA", 
+                Name = "Dashboard Analytics", 
+                SearchFields = "DBA,Dashboard Analytics", 
+                Description = "Dashboard Analytics", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Name = "Remove Shared Logistics", 
+                Code = "RSL", 
+                Description = "Remove Shared Logistics Tab Feature", 
+                SearchFields = "RSL,Remove Shared Logistics Tab Feature", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "WRR", 
+                Name = "Run reconciliation using WorkerRole", 
+                SearchFields = "WRR,Run reconciliation using WorkerRole", 
+                Description = "Run reconciliation using WorkerRole", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "UDD", 
+                Name = "Upload File using Drag and Drop", 
+                SearchFields = "UDD,Upload File using Drag and Drop", 
+                Description = "Upload File using Drag and Drop", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "DE2", 
+                Name = "Document Execution WR Version 2", 
+                SearchFields = "DE2,Document Execution WR Version 2", 
+                Description = "Document Execution WR Version 2", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "ICC", 
+                Name = "AR Invoice Customized Counter", 
+                SearchFields = "ICC,AR Invoice Customized Counter", 
+                Description = "AR Invoice Customized Counter", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "EVG", 
+                Name = "Enable Virtual Grid", 
+                SearchFields = "EVG,Enable Virtual Grid", 
+                Description = "Enable Virtual Grid", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "AHS", 
+                Name = "Automation Master House Set Field Value", 
+                SearchFields = "AHS,Automation Master House Set Field Value", 
+                Description = "Automation Master House Set Field Value", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "CPI", 
+                Name = "Centralized POD images when convert to PDF files", 
+                SearchFields = "CPI,Centralized POD images when convert to PDF files", 
+                Description = "Centralized POD images when convert to PDF files", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                SearchFields = "PSR, Payment Status based on Reco", 
+                Code = "PSR", 
+                Description = "Payment Status based on Reco", 
+                Name = " A/P Invoice Payment Status based on Reconciliation", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "RE2", 
+                Name = "Reports Execution WR Version 2", 
+                SearchFields = "RE2, Reports Execution WR Version 2", 
+                Description = "Reports Execution WR Version 2", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "JAM", 
+                Name = "Journal Approval MultiThreading", 
+                SearchFields = "JAM, Journal Approval MultiThreading", 
+                Description = "Journal Approval MultiThreading 2", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                SearchFields = "UAD, Update GLA Aging Data using WR", 
+                Code = "UAD", 
+                Description = "Update GLA Aging Data using WR", 
+                Name = "Update GLA Aging Data using WR", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "SML", 
+                Name = "Select More Lines", 
+                SearchFields = "SML, Select More Lines", 
+                Description = "Select 2000 Lines ", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "MC1", 
+                Name = "IsMulti With ReconcileMethodCode Equal One", 
+                SearchFields = "MC1", 
+                Description = "×œ×�×¤×©×¨ ×”×’×“×¨×ª ×›×¨×˜×™×¡ ×ž×•×œ×˜×™ ×›×›×¨×˜×™×¡ ×©×ž×•×ª×�×� ×‘×ž×˜×–", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "UQD", 
+                Name = "Update Quote Documents", 
+                SearchFields = "UQD,Update Quote Documents", 
+                Description = "Update Quote Documents", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
+                Code = "ILO", 
+                Name = "Invoice Status According To Ledger Open Amount", 
+                SearchFields = "ILO,Invoice Status According To Ledger Open Amount", 
+                Description = "Invoice Status According To Ledger Open Amount", 
+			});
+
+             all.Add(new ToggleDetails()
             {    
                 Code = "TCR", 
                 Name = "Toggle OCR", 
                 SearchFields = "TOCR", 
                 Description = "Toggle for OCR", 
 			});
+			
 			
             return all;
        }

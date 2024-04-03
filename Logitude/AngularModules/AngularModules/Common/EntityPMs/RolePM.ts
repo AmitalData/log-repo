@@ -20,7 +20,7 @@ export class RolePM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-          this.UIProperties = new UIProperties(this); 
+		            this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -68,6 +68,11 @@ export class RolePM {
     private isCustomRole: boolean;
     public get IsCustomRole() { return this.isCustomRole; }
     public set IsCustomRole(newValue: boolean) { if (this.isCustomRole != newValue) { this.isCustomRole = newValue; this.MarkAsDirty("IsCustomRole"); } }
+       
+	 
+    private inactive: boolean;
+    public get Inactive() { return this.inactive; }
+    public set Inactive(newValue: boolean) { if (this.inactive != newValue) { this.inactive = newValue; this.MarkAsDirty("Inactive"); } }
        
 	 
     private exists: boolean;

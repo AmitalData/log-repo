@@ -38,6 +38,8 @@ using System.Xml;
 using System.Net.Http;
 using Newtonsoft.Json;
 using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.CToolWorkflows;
+using WebFreight.Web.Helpers.CallBack;
 
 namespace CommunicationWorkerRole
 {
@@ -52,6 +54,7 @@ namespace CommunicationWorkerRole
         private string toPartner;
         private string queueName;
         private const int AttachmentsBytesMaximumSize = 20;
+        private string callBackDetails = string.Empty;
         public EmailsWorkerRole(string communicationLogTypeCode, string toPartner)
         {
             this.communicationLogTypeCode = communicationLogTypeCode;
@@ -123,6 +126,7 @@ namespace CommunicationWorkerRole
                             {
                                 string communicationLogId = response.MessageValues["CommunicationLogId"].ToString();
                                 int.TryParse(response.MessageValues["Tenant"].ToString(), out tenant);
+                                callBackDetails = response.MessageValues.ContainsKey("CallBackDetails") ? response.MessageValues["CallBackDetails"] : "";
                                 context = CommonDataContext.GetContext(tenant);
                                 CommunicationLogRepository communicationLogRep = new CommunicationLogRepository(context);
                                 CommunicationLog cl = communicationLogRep.GetSingleCommunicationLog(communicationLogId, tenant);
@@ -206,6 +210,12 @@ namespace CommunicationWorkerRole
                                                 AzureLog.SaveLogsInStorage("couldn't find communication log and the message is completed: " + communicationLogId + " ,tenant:" + tenant + ",retry number(DeliveryCount):" + response.RetryNumber
                                                     + ",at utc time:" + DateTime.UtcNow + ",at email worker role.", "L", DateTime.UtcNow, "", "", 0, null, null, null);
                                             }
+                                        }
+
+                                        // Send Kafka message to CTool
+                                        if (FeatureToggleHelper.HasFeatureToggle("CTL", tenant))
+                                        {
+                                            EntityChangesMessageProducer.ProduceSendEmailMessage(cl);
                                         }
                                     }
                                 }
@@ -602,31 +612,6 @@ namespace CommunicationWorkerRole
                 }
             }
 
-
-            //string sentByUser = string.IsNullOrEmpty(currentLog.CreatedByUser.Contact.EnglishName) ? "Simplgo User" : currentLog.CreatedByUser.Contact.EnglishName;
-            string sentByUser = "";
-            if (currentLog != null)
-            {
-                if (currentLog.CreatedByUser != null)
-                {
-                    if (currentLog.CreatedByUser.Contact != null)
-                    {
-                        if (!string.IsNullOrEmpty(currentLog.CreatedByUser.Contact.EnglishName))
-                        {
-                            sentByUser = currentLog.CreatedByUser.Contact.EnglishName;
-                        }
-                    }
-                }
-            }
-            if (!string.IsNullOrEmpty(currentLog.From))
-            {
-                if (currentLog.From.Contains("no-reply"))
-                {
-                    sentByUser = "";
-                }
-            }
-
-
             CommunicationLogRepository commLogrepository = new CommunicationLogRepository(context);
 
             if (!ValidateAttachmenstSize(attachmentsList))
@@ -687,9 +672,9 @@ namespace CommunicationWorkerRole
                         {
                             calculatedFileName = ca.Document.CalculatedFileName.Replace(" ", "") + "." + ca.Document.Extension;
                         }
-
                         else if (docCopy != null)
                         {
+
                             DocumentOut documentOut = documentOutRepository.GetSingleDocumentOut(docCopy.DocumentOutId, ca.Tenant);
                             DocumentType documentType = documentTypeRepository.GetSingleDocumentTypes(documentOut.DocumentsFiling.DocumentTypeId, ca.Tenant);
                             DocumentTypeCopy documentTypeCopy = documentTypeCopyRepository.GetSingleDocumentTypeCopy(docCopy.DocumentTypeCopyId);
@@ -706,12 +691,11 @@ namespace CommunicationWorkerRole
                                     name = docCopy.DocumentTypeCopy.Name;
                                 }
                             }
+
                         }
                         else
                         {
                             DocumentsFilingRepository rep = new DocumentsFilingRepository(context);
-
-
                             DocumentsFiling docIn = rep.GetSingleDocumentsFiling(ca.DocumentId, ca.Tenant);
                             if (docIn != null)
                             {
@@ -740,7 +724,6 @@ namespace CommunicationWorkerRole
                 IsBodyHtml = true,
                 Tenant = currentLog.Tenant,
                 Body = htmlTemplate.ToString(),
-                SentByUser = sentByUser,
                 Subject = currentLog.Subject,
                 Retries = currentLog.Retries,
             };
@@ -749,23 +732,15 @@ namespace CommunicationWorkerRole
 
             if (!string.IsNullOrEmpty(currentLog.ReplyToList) && !string.IsNullOrWhiteSpace(currentLog.ReplyToList))
             {
-
                 string[] replyToList = currentLog.ReplyToList.Split(';');
                 foreach (string replyto in replyToList)
                 {
                     parameters.ReplyToList.Add(replyto);
                 }
-
-
             }
 
-            string contactName = "";
 
-            if (!string.IsNullOrEmpty(parameters.From) && parameters.From.Contains('@'))
-            {
-                ContactRepository contactRepository = new ContactRepository(currentLog.Tenant);
-                contactName = contactRepository.GetConactNameByemail(parameters.From, currentLog.Tenant);
-            }
+            parameters.SentByUser = GetSentByUserName(currentLog, parameters);
 
             if (parameters.ReplyToList != null && parameters.ReplyToList.Count > 0)
             {
@@ -773,11 +748,6 @@ namespace CommunicationWorkerRole
                 {
                     parameters.From = parameters.From.Split('@')[0] + "@" + parameters.ReplyToList[0].Split('@')[1];
                 }
-            }
-
-            if (!string.IsNullOrEmpty(contactName))
-            {
-                parameters.SentByUser = contactName;
             }
 
             parameters.CommunicationLogId = currentLog.Id;
@@ -788,7 +758,7 @@ namespace CommunicationWorkerRole
             // After sent successfully, change status to done 
 
             EmailProvider provider = EmailingHelper.GetEmailProvider(parameters.Tenant, parameters.Retries, parameters.IsProviderNumberSpecified, parameters.ProviderNumber);
- 
+
             if (provider != null && provider.SupportsEmailDelivery)
             {
                 currentLog.CommunicationStatusTypeCode = "C";
@@ -803,8 +773,28 @@ namespace CommunicationWorkerRole
             currentLog.LastStatusDateUTC = DateTime.UtcNow;
             commLogrepository.Update(currentLog);
             commLogrepository.SubmitChanges();
+
+            if (!string.IsNullOrEmpty(callBackDetails))
+            {
+                CallBackService.Notifiy(callBackDetails, null);
+            }
         }
-         
+
+        private string GetSentByUserName(CommunicationLog currentLog, EmailParameters emailParameters)
+        {
+            string sentByUser = (currentLog?.CreatedByUser?.Contact?.EnglishName) ?? "";
+            if (!string.IsNullOrEmpty(currentLog.From) && currentLog.From.Contains("no-reply")) sentByUser = "";
+
+
+            if (string.IsNullOrEmpty(emailParameters.From) || !emailParameters.From.Contains('@')) return sentByUser;
+            ContactRepository contactRepository = new ContactRepository(currentLog.Tenant);
+            string contactMe = contactRepository.GetConactNameByemail(emailParameters.From, currentLog.Tenant);
+            if (contactMe == null && currentLog.From == "info@logitudeworld.com" && LogitudeSettings.DeploymentStage == "Simplog") 
+                contactMe = contactRepository.GetConactNameByemail(emailParameters.From, LogitudeSettings.LogitudeCRMTenantNumber);
+
+            return string.IsNullOrEmpty(contactMe) ? sentByUser : contactMe;
+        }
+
         private bool ValidateAttachmenstSize(List<CommunicationAttachment> attachmentsList)
         {
             double? attachementsSize = GetBytesAttachmentSize(attachmentsList); 

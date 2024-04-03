@@ -33,7 +33,7 @@ export class ARInvoicePM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-          this.UIProperties = new UIProperties(this); 
+		            this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -81,6 +81,11 @@ export class ARInvoicePM {
     private aRInvoiceTypeCode: string;
     public get ARInvoiceTypeCode() { return this.aRInvoiceTypeCode; }
     public set ARInvoiceTypeCode(newValue: string) { if (this.aRInvoiceTypeCode != newValue) { this.aRInvoiceTypeCode = newValue; this.MarkAsDirty("ARInvoiceTypeCode"); } }
+       
+	 
+    private aRInvoiceTypeName: string;
+    public get ARInvoiceTypeName() { return this.aRInvoiceTypeName; }
+    public set ARInvoiceTypeName(newValue: string) { if (this.aRInvoiceTypeName != newValue) { this.aRInvoiceTypeName = newValue; this.MarkAsDirty("ARInvoiceTypeName"); } }
        
 	 
     private mainEntityStatus: string;
@@ -178,6 +183,11 @@ export class ARInvoicePM {
     public set IsFromInterestBatchInvoice(newValue: boolean) { if (this.isFromInterestBatchInvoice != newValue) { this.isFromInterestBatchInvoice = newValue; this.MarkAsDirty("IsFromInterestBatchInvoice"); } }
        
 	 
+    private hasDoc: boolean;
+    public get HasDoc() { return this.hasDoc; }
+    public set HasDoc(newValue: boolean) { if (this.hasDoc != newValue) { this.hasDoc = newValue; this.MarkAsDirty("HasDoc"); } }
+       
+	 
     private billToAddressId: string;
     public get BillToAddressId() { return this.billToAddressId; }
     public set BillToAddressId(newValue: string) { if (this.billToAddressId != newValue) { this.billToAddressId = newValue; this.MarkAsDirty("BillToAddressId"); } }
@@ -216,6 +226,11 @@ export class ARInvoicePM {
     private issuedByUserId: string;
     public get IssuedByUserId() { return this.issuedByUserId; }
     public set IssuedByUserId(newValue: string) { if (this.issuedByUserId != newValue) { this.issuedByUserId = newValue; this.MarkAsDirty("IssuedByUserId"); } }
+       
+	 
+    private isSigned: string;
+    public get IsSigned() { return this.isSigned; }
+    public set IsSigned(newValue: string) { if (this.isSigned != newValue) { this.isSigned = newValue; this.MarkAsDirty("IsSigned"); } }
        
 	 
     private invoiceCurrencyId: string;
@@ -381,6 +396,11 @@ export class ARInvoicePM {
     private masterNumber: string;
     public get MasterNumber() { return this.masterNumber; }
     public set MasterNumber(newValue: string) { if (this.masterNumber != newValue) { this.masterNumber = newValue; this.MarkAsDirty("MasterNumber"); } }
+       
+	 
+    private mainEntityMasterShipmentNumbers: string;
+    public get MainEntityMasterShipmentNumbers() { return this.mainEntityMasterShipmentNumbers; }
+    public set MainEntityMasterShipmentNumbers(newValue: string) { if (this.mainEntityMasterShipmentNumbers != newValue) { this.mainEntityMasterShipmentNumbers = newValue; this.MarkAsDirty("MainEntityMasterShipmentNumbers"); } }
        
 	 
     private description: string;
@@ -698,6 +718,21 @@ export class ARInvoicePM {
     public set ShipmentsNumbers(newValue: string) { if (this.shipmentsNumbers != newValue) { this.shipmentsNumbers = newValue; this.MarkAsDirty("ShipmentsNumbers"); } }
        
 	 
+    private masterNumbers: string;
+    public get MasterNumbers() { return this.masterNumbers; }
+    public set MasterNumbers(newValue: string) { if (this.masterNumbers != newValue) { this.masterNumbers = newValue; this.MarkAsDirty("MasterNumbers"); } }
+       
+	 
+    private masterShipmentNumbers: string;
+    public get MasterShipmentNumbers() { return this.masterShipmentNumbers; }
+    public set MasterShipmentNumbers(newValue: string) { if (this.masterShipmentNumbers != newValue) { this.masterShipmentNumbers = newValue; this.MarkAsDirty("MasterShipmentNumbers"); } }
+       
+	 
+    private houseNumbers: string;
+    public get HouseNumbers() { return this.houseNumbers; }
+    public set HouseNumbers(newValue: string) { if (this.houseNumbers != newValue) { this.houseNumbers = newValue; this.MarkAsDirty("HouseNumbers"); } }
+       
+	 
     private bankAccountLiteId: string;
     public get BankAccountLiteId() { return this.bankAccountLiteId; }
     public set BankAccountLiteId(newValue: string) { if (this.bankAccountLiteId != newValue) { this.bankAccountLiteId = newValue; this.MarkAsDirty("BankAccountLiteId"); } }
@@ -962,6 +997,16 @@ export class ARInvoicePM {
     public set UsoCFDICode(newValue: string) { if (this.usoCFDICode != newValue) { this.usoCFDICode = newValue; this.MarkAsDirty("UsoCFDICode"); } }
        
 	 
+    private periodCode: string;
+    public get PeriodCode() { return this.periodCode; }
+    public set PeriodCode(newValue: string) { if (this.periodCode != newValue) { this.periodCode = newValue; this.MarkAsDirty("PeriodCode"); } }
+       
+	 
+    private regimenFiscalCode: string;
+    public get RegimenFiscalCode() { return this.regimenFiscalCode; }
+    public set RegimenFiscalCode(newValue: string) { if (this.regimenFiscalCode != newValue) { this.regimenFiscalCode = newValue; this.MarkAsDirty("RegimenFiscalCode"); } }
+       
+	 
     private isDraft: boolean;
     public get IsDraft() { return this.isDraft; }
     public set IsDraft(newValue: boolean) { if (this.isDraft != newValue) { this.isDraft = newValue; this.MarkAsDirty("IsDraft"); } }
@@ -1067,6 +1112,11 @@ export class ARInvoicePM {
     public set RegionalTaxPercentage(newValue: number) { if (this.regionalTaxPercentage != newValue) { this.regionalTaxPercentage = newValue; this.MarkAsDirty("RegionalTaxPercentage"); } }
        
 	 
+    private paidStatus: string;
+    public get PaidStatus() { return this.paidStatus; }
+    public set PaidStatus(newValue: string) { if (this.paidStatus != newValue) { this.paidStatus = newValue; this.MarkAsDirty("PaidStatus"); } }
+       
+	 
     private paidDate: Date;
     public get PaidDate() { return this.paidDate; }
     public set PaidDate(newValue: Date) { if (this.paidDate != newValue) { this.paidDate = newValue; this.MarkAsDirty("PaidDate"); } }
@@ -1075,6 +1125,108 @@ export class ARInvoicePM {
     private partnerId: string;
     public get PartnerId() { return this.partnerId; }
     public set PartnerId(newValue: string) { if (this.partnerId != newValue) { this.partnerId = newValue; this.MarkAsDirty("PartnerId"); } }
+       
+	 
+    private globalTaxCalculation: string;
+    public get GlobalTaxCalculation() { return this.globalTaxCalculation; }
+    public set GlobalTaxCalculation(newValue: string) { if (this.globalTaxCalculation != newValue) { this.globalTaxCalculation = newValue; this.MarkAsDirty("GlobalTaxCalculation"); } }
+       
+	 
+    private interestReportNumber: string;
+    public get InterestReportNumber() { return this.interestReportNumber; }
+    public set InterestReportNumber(newValue: string) { if (this.interestReportNumber != newValue) { this.interestReportNumber = newValue; this.MarkAsDirty("InterestReportNumber"); } }
+       
+	 
+    private interestReportId: string;
+    public get InterestReportId() { return this.interestReportId; }
+    public set InterestReportId(newValue: string) { if (this.interestReportId != newValue) { this.interestReportId = newValue; this.MarkAsDirty("InterestReportId"); } }
+       
+	 
+    private paymentReferences: string;
+    public get PaymentReferences() { return this.paymentReferences; }
+    public set PaymentReferences(newValue: string) { if (this.paymentReferences != newValue) { this.paymentReferences = newValue; this.MarkAsDirty("PaymentReferences"); } }
+       
+	 
+    private agentReference1: string;
+    public get AgentReference1() { return this.agentReference1; }
+    public set AgentReference1(newValue: string) { if (this.agentReference1 != newValue) { this.agentReference1 = newValue; this.MarkAsDirty("AgentReference1"); } }
+       
+	 
+    private agentReference2: string;
+    public get AgentReference2() { return this.agentReference2; }
+    public set AgentReference2(newValue: string) { if (this.agentReference2 != newValue) { this.agentReference2 = newValue; this.MarkAsDirty("AgentReference2"); } }
+       
+	 
+    private billToIsCustomer: boolean;
+    public get BillToIsCustomer() { return this.billToIsCustomer; }
+    public set BillToIsCustomer(newValue: boolean) { if (this.billToIsCustomer != newValue) { this.billToIsCustomer = newValue; this.MarkAsDirty("BillToIsCustomer"); } }
+       
+	 
+    private resendToSAT: boolean;
+    public get ResendToSAT() { return this.resendToSAT; }
+    public set ResendToSAT(newValue: boolean) { if (this.resendToSAT != newValue) { this.resendToSAT = newValue; this.MarkAsDirty("ResendToSAT"); } }
+       
+	 
+    private sATCancelReasonCode: string;
+    public get SATCancelReasonCode() { return this.sATCancelReasonCode; }
+    public set SATCancelReasonCode(newValue: string) { if (this.sATCancelReasonCode != newValue) { this.sATCancelReasonCode = newValue; this.MarkAsDirty("SATCancelReasonCode"); } }
+       
+	 
+    private isDigitalDueDateColorRed: boolean;
+    public get IsDigitalDueDateColorRed() { return this.isDigitalDueDateColorRed; }
+    public set IsDigitalDueDateColorRed(newValue: boolean) { if (this.isDigitalDueDateColorRed != newValue) { this.isDigitalDueDateColorRed = newValue; this.MarkAsDirty("IsDigitalDueDateColorRed"); } }
+       
+	 
+    private totalEquation: string;
+    public get TotalEquation() { return this.totalEquation; }
+    public set TotalEquation(newValue: string) { if (this.totalEquation != newValue) { this.totalEquation = newValue; this.MarkAsDirty("TotalEquation"); } }
+       
+	 
+    private isFromAutomation: boolean;
+    public get IsFromAutomation() { return this.isFromAutomation; }
+    public set IsFromAutomation(newValue: boolean) { if (this.isFromAutomation != newValue) { this.isFromAutomation = newValue; this.MarkAsDirty("IsFromAutomation"); } }
+       
+	 
+    private documentTemplateId: string;
+    public get DocumentTemplateId() { return this.documentTemplateId; }
+    public set DocumentTemplateId(newValue: string) { if (this.documentTemplateId != newValue) { this.documentTemplateId = newValue; this.MarkAsDirty("DocumentTemplateId"); } }
+       
+	 
+    private isUpdatedByQBO: boolean;
+    public get IsUpdatedByQBO() { return this.isUpdatedByQBO; }
+    public set IsUpdatedByQBO(newValue: boolean) { if (this.isUpdatedByQBO != newValue) { this.isUpdatedByQBO = newValue; this.MarkAsDirty("IsUpdatedByQBO"); } }
+       
+	 
+    private isUpdatedBySAT: boolean;
+    public get IsUpdatedBySAT() { return this.isUpdatedBySAT; }
+    public set IsUpdatedBySAT(newValue: boolean) { if (this.isUpdatedBySAT != newValue) { this.isUpdatedBySAT = newValue; this.MarkAsDirty("IsUpdatedBySAT"); } }
+       
+	 
+    private isUpdatedByPrint: boolean;
+    public get IsUpdatedByPrint() { return this.isUpdatedByPrint; }
+    public set IsUpdatedByPrint(newValue: boolean) { if (this.isUpdatedByPrint != newValue) { this.isUpdatedByPrint = newValue; this.MarkAsDirty("IsUpdatedByPrint"); } }
+       
+	 
+    private transferStatusCode_Original: string;
+    public get TransferStatusCode_Original() { return this.transferStatusCode_Original; }
+    public set TransferStatusCode_Original(newValue: string) { if (this.transferStatusCode_Original != newValue) { this.transferStatusCode_Original = newValue; this.MarkAsDirty("TransferStatusCode_Original"); } }
+       
+	 
+    private isTransferStarted_Original: boolean;
+    public get IsTransferStarted_Original() { return this.isTransferStarted_Original; }
+    public set IsTransferStarted_Original(newValue: boolean) { if (this.isTransferStarted_Original != newValue) { this.isTransferStarted_Original = newValue; this.MarkAsDirty("IsTransferStarted_Original"); } }
+       
+	 
+    private transferError_Original: string;
+    public get TransferError_Original() { return this.transferError_Original; }
+    public set TransferError_Original(newValue: string) { if (this.transferError_Original != newValue) { this.transferError_Original = newValue; this.MarkAsDirty("TransferError_Original"); } }
+       
+	 
+	 
+	 
+    private vatsAmountsManulAdjuested: boolean;
+    public get VatsAmountsManulAdjuested() { return this.vatsAmountsManulAdjuested; }
+    public set VatsAmountsManulAdjuested(newValue: boolean) { if (this.vatsAmountsManulAdjuested != newValue) { this.vatsAmountsManulAdjuested = newValue; this.MarkAsDirty("VatsAmountsManulAdjuested"); } }
        
 	 
 
@@ -1105,4 +1257,4 @@ export class ARInvoicePM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

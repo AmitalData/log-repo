@@ -75,6 +75,10 @@ Given("{string} as shipment sub type name", (name) => {
     MaintenanceActions.FillShipmentSubTypeName(name)
 });
 
+Given("the user inactivate the shipment sub type", () => {
+    cy.ClickCheckBox(MaintenanceSelectors.InActiveShipmentSubTypeCheckBox)
+});
+
 When("update shipment sub type", () => {
     MaintenanceActions.UpdateShipmentSubType()
 });

@@ -11,6 +11,7 @@ namespace Logitude.BL.InvoiceModel.Tools
     public class FullAccountingARPaymentValidatorArguments
     {
         public List<ARPaymentChequeReplicaPM> ChequeReplicas { get; set; }
+        public List<ARPaymentBankTranferPM> bankTransfers { get; set; }
         public int Tenant { get; set; }
         public string BillToId { get; set; }
         public string PaymentCurrencyId { get; set; }
@@ -24,5 +25,8 @@ namespace Logitude.BL.InvoiceModel.Tools
         public string Branch { get; set; }
         public string Account { get; set; }
         public string Bank { get; set; }
+        public bool IsFromReconcileScreen { get; set; }
+        public bool IsExternalEntity { get; set; }
+
     }
 }

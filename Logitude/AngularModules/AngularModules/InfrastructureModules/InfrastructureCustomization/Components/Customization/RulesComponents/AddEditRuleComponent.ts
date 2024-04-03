@@ -388,7 +388,7 @@ export class AddEditRuleComponent extends BaseComponent {
 
         this._entityResourceService.getEntityResourceByTableName("SystemData").subscribe((response:any) => {
 
-            if (table) {
+            if (table && !table.IsCustom) {
                 this._entityResourceService.getEntityResourceByTableName(tableName).subscribe((response:any) => {
                     this.ViewDataField(tableId);
                 });
@@ -442,6 +442,10 @@ export class AddEditRuleComponent extends BaseComponent {
                     this.ValidationErrorsList.push("Condition field is required");
                 }
             }
+        }
+
+        if(this.DataContext.RuleTypeCode == "EVAL" && AppTool.IsNullOrEmpty(this.DataContext.OutputMessage)){
+            this.ValidationErrorsList.push("Output Message field is required");
         }
 
         if (AppTool.IsNullOrEmpty(this.DataContext.RuleCode)) {

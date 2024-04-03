@@ -88,7 +88,30 @@ namespace Simplog.Data.CommonDataModel
 
             return context;
         }
+        public static CommonDataContext GetFullContext(int tenant)
+        {
+            GlobalDB currentDb;
+            //using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            //{
+            currentDb = GlobalDbHelper.GetGlobalDB(tenant);
+            //}
+            string dbConnectionInfo = currentDb.DBConnection;
+            string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
 
+            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo, dbSeconderyConnectionInfo);
+            CommonDataContext context = new CommonDataContext(connection);
+
+            return context;
+        }
+        public static ICommonDataContext GetSecContext(int tenant)
+        {
+            GlobalDB currentDb;
+            currentDb = GlobalDbHelper.GetGlobalDB(tenant);
+            string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
+            DbConnection connection = DatabaseInitializer.GetConnection(dbSeconderyConnectionInfo, null, null);
+            CommonDataContext context = new CommonDataContext(connection);
+            return context;
+        }
         public static CommonDataContext GetContextByDBId(string dbId)
         {
             GlobalDB currentDb;
@@ -255,6 +278,8 @@ namespace Simplog.Data.CommonDataModel
             modelBuilder.Configurations.Add(new QuoteMap());
             modelBuilder.Configurations.Add(new QuoteTypeMap());
             modelBuilder.Configurations.Add(new RankMap());
+            modelBuilder.Configurations.Add(new CustomerTeamMap());
+            modelBuilder.Configurations.Add(new CustomerGroupMap());
             modelBuilder.Configurations.Add(new RateClassMap());
             modelBuilder.Configurations.Add(new RatesTableMap());
             modelBuilder.Configurations.Add(new RestrictionMap());
@@ -453,6 +478,7 @@ namespace Simplog.Data.CommonDataModel
             modelBuilder.Configurations.Add(new DocumentsExecutionLogMap());
             modelBuilder.Configurations.Add(new CardContactAdditionalServiceMap()); 
             modelBuilder.Configurations.Add(new UserLastSettingsMap());
+            modelBuilder.Configurations.Add(new DigitalContactLastSettingMap());
             modelBuilder.Configurations.Add(new CustomerOpenFilesAmountMap());
             modelBuilder.Configurations.Add(new CustomsInterfaceMap());
             modelBuilder.Configurations.Add(new TariffCarrierTranslationMap());
@@ -462,9 +488,16 @@ namespace Simplog.Data.CommonDataModel
             modelBuilder.Configurations.Add(new WarehouseStoragePricingMap());
             modelBuilder.Configurations.Add(new CardSearchMap());
             modelBuilder.Configurations.Add(new HorseMap());
-
+            modelBuilder.Configurations.Add(new CargoTenantMilestoneDefinitionMap());
             modelBuilder.Configurations.Add(new DWHEnvironmentSettingMap());
-
+            modelBuilder.Configurations.Add(new PortTimeZoneMap());
+            modelBuilder.Configurations.Add(new UnassignedEntityMap());
+            modelBuilder.Configurations.Add(new HTSCodeMap());
+            modelBuilder.Configurations.Add(new ProductItemMap());
+            modelBuilder.Configurations.Add(new MentionMap());
+            modelBuilder.Configurations.Add(new CarrierServiceLineMap());
+            modelBuilder.Configurations.Add(new HorseGenderMap());
+            modelBuilder.Configurations.Add(new CustomFieldsMainObjectMap());
 
 
             base.OnModelCreating(modelBuilder);
@@ -492,6 +525,8 @@ namespace Simplog.Data.CommonDataModel
         public IDbSet<CardContact> CardContacts { get; set; }
         public IDbSet<PartnerType> PartnerTypes { get; set; }
         public IDbSet<Rank> Ranks { get; set; }
+        public IDbSet<CustomerTeam> CustomerTeams { get; set; }
+        public IDbSet<CustomerGroup> CustomerGroups { get; set; }
         public IDbSet<User> Users { get; set; }
         public IDbSet<Department> Departments { get; set; }
         public IDbSet<Branch> Branches { get; set; }
@@ -956,6 +991,11 @@ namespace Simplog.Data.CommonDataModel
             get;
             set;
         }
+        public IDbSet<CargoTenantMilestoneDefinition> CargoTenantMilestoneDefinitions
+        {
+            get;
+            set;
+        }
         public IDbSet<ComputingPartner> ComputingPartners { get; set; }
         public IDbSet<ComputingPartnerCode> ComputingPartnerCodes { get; set; }
         public IDbSet<ComputingPartnerTable> ComputingPartnerTables { get; set; }
@@ -1001,6 +1041,8 @@ namespace Simplog.Data.CommonDataModel
         public IDbSet<ChargesExternalAccountsByProduct> ChargesExternalAccountsByProducts { get; set; }
         public IDbSet<RegistryDateType> RegistryDateTypes { get; set; }
         public IDbSet<UsoCFDI> UsoCFDIs { get; set; }
+        public IDbSet<RegimenFiscal> RegimenFiscals { get; set; }
+        public IDbSet<PostalCode> PostalCodes { get; set; }
         public IDbSet<ReportsTemplate> ReportsTemplates { get; set; }
         public IDbSet<ReportsTemplatesVersion> ReportsTemplatesVersions { get; set; }
         public IDbSet<FeatureChange> FeatureChanges { get; set; }
@@ -1032,6 +1074,16 @@ namespace Simplog.Data.CommonDataModel
         public IDbSet<ProductItem> ProductItems { get; set; }
         public IDbSet<HTSCode> HTSCodes { get; set; }
         public IDbSet<DWHEnvironmentSetting> DWHEnvironmentSettings { get; set; }
+
+        public IDbSet<PortTimeZone> PortTimeZones { get; set; }
+        public IDbSet<UnassignedEntity> UnassignedEntitys { get; set; }
+        public IDbSet<Mention> Mentions { get; set; }
+        public IDbSet<CarrierServiceLine> CarrierServiceLines { get; set; }
+        public IDbSet<HorseGender> HorseGenders { get; set; }
+        public IDbSet<DigitalContactLastSetting> DigitalContactLastSettings { get; set; }
+        public IDbSet<PortGroup> PortGroups { get; set; }
+
+        public IDbSet<CustomFieldsMainObject> CustomFieldsMainObjects { get; set; }
 
 
 

@@ -1,23 +1,35 @@
 <style>
-    .Tips:hover{
-        cursor:pointer;
+    .Tips:hover {
+        cursor: pointer;
+    }
+    .tip {
+        position: relative;
+        left: 33px;
     }
 </style>
 
-<div class="TabHolder" >
+ 
+
+<div class="TabHolder">
+
     <table>
+        <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px">
+            <td colspan="4">
+                <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="false"></ValidationSummary>
+            </td>
+        </tr>
         <tr style="height:35px" *ngIf="IsShowTipArea">
             <td style="width: 30px; vertical-align: top;">
                 <img class="Tips" style="height:30px;width:30px;" (click)="TipVisibilityChanged()" src="./Images/lightbulb.png" />
             </td>
         </tr>
         <tr *ngIf="IsShowTipArea && IsTipsOpened" style="height:90px">
-            <td>               
-             
-                          <div style="height:100%;width:100%">
-                             <TipsComponent [ObjectTableName]="'CustomerTenantAccessCard'" [Code]="'NCDT'" [IsInternalTips]="'true'" [IsFirstTipLoad]="IsFirstTipLoad" (TipVisibilityChangedEvent)="TipVisibilityChanged()"></TipsComponent>
-                          </div>
-                                    </td>
+            <td>
+
+                <div style="height:100%;width:100%">
+                    <TipsComponent [ObjectTableName]="'CustomerTenantAccessCard'" [Code]="'NCDT'" [IsInternalTips]="'true'" [IsFirstTipLoad]="IsFirstTipLoad" (TipVisibilityChangedEvent)="TipVisibilityChanged()"></TipsComponent>
+                </div>
+            </td>
         </tr>
         <tr style="height:22px">
             <td>
@@ -26,12 +38,12 @@
                         <td></td>
                         <td style="width:22px;min-width:22px"><IconButton [Name]="'Refresh'" (click)="RefreshRelatedCustomers()"> </IconButton></td>
                         <td style="width:10px;min-width:10px"></td>
-                        <td style="width:22px;min-width:22px"><IconButton [Name]="'Add'" [IsEnabled]="IsAddEnabled"  (click)="AddRelatedCustomer()"> </IconButton></td>
+                        <td style="width:22px;min-width:22px"><IconButton [Name]="'Add'" [IsEnabled]="IsAddEnabled" (click)="AddRelatedCustomer()"> </IconButton></td>
                     </tr>
                 </table>
             </td>
         </tr>
-        <tr style="height:30%;max-height:30%">
+        <tr [style.height] ="BatchVisibility? '30%': '100%'" [style.max-height]="BatchVisibility? '30%': '100%'">
             <td>
                 <div class="MediaFill">
                     <div class="SimpleGridView">
@@ -44,8 +56,9 @@
                                     <td style="width: 200px; min-width: 200px;max-width:200px">{{'CustomerTenantAccess.O.RelatedCustomers.CreateDate'    | TextCodeTranslationPipe}}</td>
                                     <td style="width: 200px; min-width: 200px;max-width:200px">{{'CustomerTenantAccess.O.RelatedCustomers.CreatedBy'     | TextCodeTranslationPipe}}</td>
                                     <td style="width: 200px; min-width: 200px;max-width:200px">{{'CustomerTenantAccess.O.RelatedCustomers.UpdateDateTime'| TextCodeTranslationPipe}}</td>
-                                    
-                                      <td class="LastChild"></td>
+                                    <td style="width: 60px; min-width: 60px;max-width:60px">{{'CustomerTenantAccess.O.RelatedCustomers.IsCustomsActivated'| TextCodeTranslationPipe}}</td>
+                                    <td style="width: 60px; min-width: 60px;max-width:60px">{{'CustomerTenantAccess.O.RelatedCustomers.IsExportActivated'| TextCodeTranslationPipe}}</td>
+                                    <td class="LastChild"></td>
 
                                 </tr>
                             </table>
@@ -53,7 +66,7 @@
 
                         <div class="SimpleGridViewBody" style="overflow-y:auto">
                             <table>
-                                <tr class="SimpleGridViewRow RowHover RowSelected" (click)="SelectedItem = item" [class.RowSelected]="item === SelectedItem" *ngFor="let item of ObsList"  >
+                                <tr class="SimpleGridViewRow RowHover RowSelected" (click)="SelectedItem = item" [class.RowSelected]="item === SelectedItem" *ngFor="let item of ObsList">
                                     <td class="GridViewCell" style="width:150px; min-width: 150px;max-width:150px">
                                         <div>{{item.CustomerCode}}</div>
                                     </td>
@@ -62,17 +75,40 @@
                                     </td>
 
                                     <td class="GridViewCell" style="width: 100px; min-width: 100px;max-width:100px">
-                                        <span class="Value"  [ngStyle]="{color: item.StatusType | StringToColorPipe}" >{{item.StatusType}}</span>
+                                        <span class="Value" [ngStyle]="{color: item.StatusType | StringToColorPipe}">{{item.StatusType}}</span>
                                     </td>
                                     <td class="GridViewCell" style="width: 200px; min-width: 200px;max-width:200px">
-                                        <span class="Value" >{{item.CreateDate | DateTimePipe:'DTL12NW'}}</span>
+                                        <span class="Value">{{item.CreateDate | DateTimePipe:'DTL12NW'}}</span>
                                     </td>
                                     <td class="GridViewCell" style="width: 200px; min-width: 200px;max-width:200px">
-                                        <span class="Value" >{{item.CreateByUserId}}</span>
+                                        <span class="Value">{{item.CreateByUserId}}</span>
                                     </td>
                                     <td class="GridViewCell" style="width: 200px; min-width: 200px;max-width:200px">
-                                        <span class="Value" >{{item.UpdateDateTime | DateTimePipe:'DTL12NW'}}</span>
+                                        <span class="Value">{{item.UpdateDateTime | DateTimePipe:'DTL12NW'}}</span>
                                     </td>
+
+                                    <td class="GridViewCell" style="width: 60px; min-width: 60px;max-width:60px ">
+
+                                        <div class="CheckBox">
+                                            <input [disabled]="!IsCustomsActivated || item.StatusType == 'InActive'" class="CenterCenter" style="text-align:center" (click)="CheckIsImportActivated(item)" [attr.id]="'ImportCheckBox' + item.CustomerCode" type="checkbox" [(ngModel)]="item.IsCustomsActivated" />
+                                            <label class="CenterCenter" [attr.for]="'ImportCheckBox' + item.CustomerCode"></label>
+                                            <HelpIcon class="tip" *ngIf="!IsCustomsActivated" [IconSize]="14" [Header]="''" [Text]="'Customs option is not activated'"></HelpIcon>
+                                        </div>
+
+
+                                    </td>
+
+                                    <td class="GridViewCell" style="width: 60px; min-width: 60px;max-width:60px ">
+
+                                        <div class="CheckBox">
+                                            <input [disabled]="!IsExportActivated || item.StatusType == 'InActive'" class="CenterCenter" style="text-align:center" (click)="CheckIsExportActivated(item)" [attr.id]="'ExportCheckBox' + item.CustomerCode" type="checkbox" [(ngModel)]="  item.IsExportActivated" />
+                                            <label class="CenterCenter" [attr.for]="'ExportCheckBox' + item.CustomerCode"></label>
+                                            <HelpIcon class="tip" *ngIf="!IsExportActivated" [IconSize]="14" [Header]="''" [Text]="'Export option is not activated'"></HelpIcon>
+
+                                        </div>
+
+                                    </td>
+
 
                                     <td class="LastChild"><IconButton [Name]="'Edit'" (click)="EditRelatedCustomer(item)"> </IconButton></td>
 
@@ -84,16 +120,16 @@
 
             </td>
         </tr>
-      <tr *ngIf="!BatchVisibility">
-          <td></td>
-      </tr>
+        <tr *ngIf="!BatchVisibility">
+            <td></td>
+        </tr>
         <tr *ngIf="BatchVisibility" style="height:70%">
             <td>
 
                 <table>
                     <tr style="height:30px;border-top:1px solid gray">
                         <td class="BlueTitle" style="font-size:large">
-                        {{BatchTitle}}
+                            {{BatchTitle}}
                         </td>
                     </tr>
                     <tr>
@@ -233,7 +269,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td>
-                                                        <div class="MediaFill" >
+                                                        <div class="MediaFill">
                                                             <div class="SimpleGridView">
                                                                 <div class="SimpleGridViewHeader">
                                                                     <table>
@@ -242,7 +278,7 @@
                                                                             <td style="width: 100px; min-width: 100px;max-width:100px">Status</td>
                                                                             <td style="width: 200px; min-width: 200px;max-width:200px">Name</td>
                                                                             <td style="width: 80px; min-width: 80px;max-width:80px">Retries</td>
-                                                                            <td style="width: 180px; min-width: 180px;max-width:180px">Create Date</td>                                                                           
+                                                                            <td style="width: 180px; min-width: 180px;max-width:180px">Create Date</td>
                                                                             <td class="LastChild"></td>
 
                                                                         </tr>
@@ -267,7 +303,7 @@
                                                                             </td>
                                                                             <td class="GridViewCell" style="width: 180px; min-width: 180px;max-width:180px">
                                                                                 <div>{{item.CreateDateTime  | DateTimePipe:'DT'}}</div>
-                                                                            </td>                                                                          
+                                                                            </td>
                                                                             <td class="LastChild"></td>
 
                                                                         </tr>
@@ -303,7 +339,7 @@
                                                 </tr>
                                                 <tr>
                                                     <td>
-                                                        <div class="MediaFill" >
+                                                        <div class="MediaFill">
                                                             <div class="SimpleGridView">
                                                                 <div class="SimpleGridViewHeader">
                                                                     <table>
@@ -346,13 +382,13 @@
                                                                             </td>
 
                                                                             <td class="GridViewCell" style="width: 90px; min-width: 90px;max-width:90px">
-                                                                                <button class="Button"  (click)="ViewLog(item)">View</button>
+                                                                                <button class="Button" (click)="ViewLog(item)">View</button>
                                                                             </td>
 
                                                                             <td class="GridViewCell" style="width: 90px; min-width: 90px;max-width:90px">
                                                                                 <button class="Button" (click)="ViewLog(item)">View</button>
-                                                                              </td>
-                                                                          
+                                                                            </td>
+
 
                                                                             <td class="LastChild"></td>
 

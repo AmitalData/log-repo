@@ -91,6 +91,8 @@ public dynamic GetPMTSNameSpace(string destinationFolder)
 	string importString = BuildImportEntitesString(entity,pmName);
 	string parentname = "";
 	bool hasParent = false;
+    bool hasCompstionCustomField = false;
+
 	if(entity.NoTS.GetType() == typeof(string))
       	{
 	    	if(entity.NoTS == "true")
@@ -118,6 +120,10 @@ public dynamic GetPMTSNameSpace(string destinationFolder)
 			importString  += Environment.NewLine + "import {"+pmName+"CustomCode} from '../EntityPMCustomCode/" + pmName + "CustomCode';";
     }
 
+   if(entity.AllowCustomFields.GetType() == typeof(string)  && entity.AllowCustomFields == "true" && entity.IsComposition.GetType() == typeof(string)  && entity.IsComposition == "true")
+    {
+	   hasCompstionCustomField = true;
+    }
 
 	if(tableName.ToString().Trim('"').Contains("."))
     {
@@ -161,9 +167,14 @@ import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
 import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
+<#+ if(entity.SupportSubEntity.ToString() == "true") {#>import { CustomChildEntity } from '../../Infrastructure/EntityPMs/CustomChildEntity';
+<#+}#>
+<#+ if(entity.ApplyGenericCustomFields.ToString() == "true") {#>import { ObjectCustomFieldPM } from '../../Infrastructure/EntityPMs/ObjectCustomFieldPM';
+<#+}#>
+<#+ if(hasCompstionCustomField){#> import { ChildEntitiesCustomFieldPM } from '../../Infrastructure/EntityPMs/ChildEntitiesCustomFieldPMExtended';<#+}#>
 
-export class <#=tableName #>PM {
-
+export class <#=tableName #>PM<#+ if(hasCompstionCustomField){#> extends ChildEntitiesCustomFieldPM<#+}#><#+ if(entity.ApplyGenericCustomFields.ToString() == "true"){#> extends ObjectCustomFieldPM<#+}#> {
+      
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  <#+
@@ -171,15 +182,35 @@ if(hasParent)
 {
 #>      <#+
 #>constructor(_entityParentPM: any) {
+	  <#+
+if(hasCompstionCustomField)
+{
+#>      <#+
+#>
+		  super("<#=tableName #>");
           this.EntityParentPM = _entityParentPM;
           this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
+<#+
+}
+else{
+#>
+		        <#+ if(entity.ApplyGenericCustomFields.ToString() == "true"){#>super("<#=tableName #>");
+<#+}#>
+                this.EntityParentPM = _entityParentPM;
+                this.UIProperties = new UIProperties(this);
+                this.IsDirty = false;
+<#+
+} 
+	   #>
       }
 
 <#+
 }
 else{
 #>constructor() {
+          <#+ if(entity.ApplyGenericCustomFields.ToString() == "true"){#>super("<#=tableName #>");
+<#+}#>
           this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
@@ -217,7 +248,7 @@ else{
            }
 	 }
 
-	  
+	  if(entity.SupportSubEntity.ToString() == "true") {WriteTypeScriptSubEntityProperty();}
 
 	 #>
 
@@ -362,6 +393,18 @@ else
   
  }
 #>
+
+<#+
+public void WriteTypeScriptSubEntityProperty(){
+#>
+    private customChildEntities: CustomChildEntity[];
+    public get CustomChildEntities() { return this.customChildEntities; }
+    public set CustomChildEntities(newValue: CustomChildEntity[]) { if (this.customChildEntities != newValue) { this.customChildEntities = newValue; this.MarkAsDirty("CustomChildEntities"); } }
+
+<#+
+}
+#>
+
 <#+
 public  string FirstCharacterToLowerTS(string str)
 {

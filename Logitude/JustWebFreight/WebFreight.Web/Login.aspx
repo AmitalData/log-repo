@@ -692,6 +692,16 @@
 
     <script type="text/javascript">
 
+        let newSystemTenant = getCookie("newSystemTenant");
+        if (newSystemTenant != "") {
+            if (document.location.href.indexOf("system.logitudeworld") > 0) {
+                document.location.href = document.location.href.replace("system.", "systemnew.");
+            } else if (document.location.href.indexOf("staging.logitudeworld") > 0) {
+                document.location.href = document.location.href.replace("staging.", "stagingnew.");
+            } else if (document.location.href.indexOf("test.logitudeworld") > 0) {
+                document.location.href = document.location.href.replace("test.", "testnew.");
+            }
+        }
 
         function getTwoFactorKeys() {
             var allKeys = [];
@@ -1397,6 +1407,10 @@
             var linkArray = link.split('login');
             url = linkArray[0];
 
+            if (url.indexOf('/?tenant=') > -1) {
+                url = url.split('/?tenant=')[0];
+            }
+
             if (url.endsWith('/')) {
                 url += "SharedLogisticPage.aspx";
             }
@@ -1415,6 +1429,15 @@
 
 
         LoginToAngular = function (userdata) {
+
+            if (document && document.location && document.location.href &&  document.location.href.indexOf('?HowToDownloadPage=') > 0) {
+                let documentArgs = document.location.href.split('?HowToDownloadPage=');
+                let documentId = documentArgs.length > 1 ? documentArgs[1] : null;
+                if (documentId) {
+                    OpenHowToDownloadPage(userdata, documentId);
+                    return;
+                }
+            }
             var isTenantAllowed = false;
             var Tenant = userdata.CurrentTenant;
             if (Tenant == 42 || Tenant == 1232 || Tenant == 1586 || Tenant == 1637 || Tenant == 1638 || Tenant == 341) {
@@ -1492,6 +1515,28 @@
 
             }
 
+            let prodNewEnvTenants = [2889, 341, 1, 42, 1489, 0, 1688, 2655, 2138, 3018, 2086, 1604, 3017, 558, 2860, 194, 2915,
+                2838, 2780, 2779, 2770, 2742, 2601, 2591, 2580, 2531, 2526, 2511, 2331, 2240, 2037, 1681,
+                1595, 1530, 1445, 807, 3000, 2999, 2998, 2983, 2964, 2961, 2935, 2927, 2921, 2915, 2899,
+                2886, 2878, 2838, 2780, 2779, 2770, 2742, 2741, 2740, 2713, 2711, 2680, 2679, 2601, 2591,
+                2580, 2531, 2526, 2511, 2510, 2470, 2450, 2448, 2383, 2366, 2331, 2268, 2240, 2219, 2211,
+                2199, 2170, 2169, 2086, 2037, 1681, 1604, 1595, 1530, 1484, 1469, 1445, 1433, 1151, 1056,
+                807, 802, 799, 468, 331, 293, 291, 289, 288, 286, 284, 283, 282, 281, 277, 275, 274, 272,
+                270, 268, 266, 255, 253, 252, 251, 250, 248, 247, 242, 239, 237, 235];
+            let testNewEnvTenants = [951, 1022];
+
+            let newSystemTenant = getCookie("newSystemTenant");
+            if (newSystemTenant == "") {
+                if (document.location.href.indexOf("system.logitudeworld") > 0 || document.location.href.indexOf("staging.logitudeworld")>0) {
+                    if (prodNewEnvTenants.indexOf(Tenant) >= 0) {
+                        setCookie("newSystemTenant", Tenant, 70);
+                    }
+                } else if (document.location.href.indexOf("test.logitudeworld") > 0) {
+                    if (testNewEnvTenants.indexOf(Tenant) >= 0) {
+                        setCookie("newSystemTenant", Tenant, 70);
+                    }
+                }
+            }
             if (document.location.href.indexOf('?Menu=') > 0) {
                 document.location.href = document.location.href.replace("/Login.aspx", "/").replace("/login.aspx", "/").split('?')[0] + angularUrl;
             }
@@ -1502,6 +1547,52 @@
             $("#loginBusyindicator").hide();
 
         };
+
+        OpenHowToDownloadPage = function (userdata, DocumentId) {
+            var url = document.location.href.replace("/Login.aspx", "/").split('?')[0] + 'WebPages/HowToDownloadPage.aspx?id=' + DocumentId;
+            var params = [{ name: "Token", value: userdata.DocumentDownloadToken }, { name: "Code", value: DocumentId }]
+            var form = document.createElement("form");
+            form.target = "_self";
+            form.method = "POST";
+            form.action = url;
+            for (var i = 0; i < params.length; i++) {
+                var input = PrepareInput(params[i]);
+                form.appendChild(input);
+            }
+            document.body.appendChild(form);
+            form.submit();
+            document.body.removeChild(form);
+        }
+        PrepareInput = function (input) {
+            var mappedInput = document.createElement("input");
+            mappedInput.type = "hidden";
+            mappedInput.name = input.name;
+            mappedInput.setAttribute("value", input.value);
+            return mappedInput;
+        }
+
+        function setCookie(cname, cvalue, exdays) {
+            const d = new Date();
+            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+            let expires = "expires=" + d.toUTCString();
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+        }
+
+        function getCookie(cname) {
+            let name = cname + "=";
+            let decodedCookie = decodeURIComponent(document.cookie);
+            let ca = decodedCookie.split(';');
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) == 0) {
+                    return c.substring(name.length, c.length);
+                }
+            }
+            return "";
+        }
 
 
         function ShowVerificationForm(userdata) {
@@ -1853,6 +1944,7 @@
                     var Key = hashSplit[1];
                     if (hashSplit[1]) {
                         BrandingTenant = hashSplit[1].split('=')[1];
+                        BrandingTenant = BrandingTenant.split('/')[0];
                     }
                 }
 

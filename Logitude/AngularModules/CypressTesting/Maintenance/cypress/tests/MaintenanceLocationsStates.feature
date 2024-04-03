@@ -1,4 +1,4 @@
-@release @stable @all
+@release @stable
 Feature: Create State, Inactivate and activate it from Maintenance
     The user creates a State, Inactivates it,
     selects it to edit and activates it from the Maintenance module.
@@ -6,7 +6,7 @@ Feature: Create State, Inactivate and activate it from Maintenance
     Scenario: Add StateCode with lenght more than 10
         Given the user logged in and navigate to "States" in maintenance menu
         When add "StateCode123" as state code
-        Then a validation message with "Code Field must be less than 10" error should appear
+        Then a validation message with "Code Field length must be less than 10" error should appear
 
     Scenario: Add state
         Given a state with the following details

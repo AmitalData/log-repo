@@ -14,5 +14,7 @@ export class CustomerTenantAccessRequestList {
 		RequestDateTime: Date;
 		RequestStatus: string;
 		StatusName: string;
+		IsCustoms: boolean;
+		IsExport: boolean;
 	
 }

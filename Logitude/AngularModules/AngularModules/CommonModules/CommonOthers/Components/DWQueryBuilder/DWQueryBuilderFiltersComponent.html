@@ -433,9 +433,9 @@
                         <table>
                             <tr>
                                 <td style="width:1%;"></td>
-                                <td style="width:1%;"><span id="{{'AddFilters' | IdGeneratorPipe}}" class="LinkBtn" (click)="AddFilterToGroup(item)">Add Filter</span></td>
+                                <td style="width:1%;"><span id="{{'AddFilters' | IdGeneratorAsyncPipe | async}}" class="LinkBtn" (click)="AddFilterToGroup(item)">Add Filter</span></td>
                                 <td style="width:1%;"></td>
-                                <td style="width:10%;"><span id="{{'AddGroupFilters' | IdGeneratorPipe}}" class="LinkBtn" (click)="AddGroup(item)">Add Group</span></td>
+                                <td style="width:10%;"><span id="{{'AddGroupFilters' | IdGeneratorAsyncPipe | async}}" class="LinkBtn" (click)="AddGroup(item)">Add Group</span></td>
                                 <td style="width:4%;"></td>
                                 <td style="width:30%;"></td>
                             </tr>

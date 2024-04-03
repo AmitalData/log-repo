@@ -7,6 +7,7 @@ import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 import { ShipmentTool } from '../../../../Shipment/Tools';
+import { AppTool } from '../../../../Infrastructure/Tools';
 
 @Component({
     
@@ -22,6 +23,8 @@ export class AddEditPartnerComponent implements OnInit {
     private oldCustomerPartnerId: string = null;
     public ValidationErrorsList: string[];
     private CurrentSession = SessionLocator.SelectedSession;
+    private oldCustomAgentExportId: string = null;
+    private oldCustomAgentImportId: string = null;
     constructor() {
 
     }
@@ -35,6 +38,9 @@ export class AddEditPartnerComponent implements OnInit {
         this.EntityPM = dataContext.EntityPM;
         this.isMyCustomer = dataContext.IsCustomer;
         this.oldCustomerPartnerId = this.EntityPM.CustomerId;
+        this.oldCustomAgentExportId = this.EntityPM.CustomAgentExportId;
+        this.oldCustomAgentImportId = this.EntityPM.CustomAgentImportId;
+
         this.Clone();
     }
 
@@ -139,8 +145,7 @@ export class AddEditPartnerComponent implements OnInit {
             }
 
             else {
-                this.CurrentSession.CloseCurrentWindowEmit("OK");
-                this.CurrentSession.FireEvent("ShipmentPartnersChanged");
+                this.CloseWindow();                
             }
         }
     }
@@ -150,10 +155,55 @@ export class AddEditPartnerComponent implements OnInit {
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
                 this.EntityPM.ShipmentProductItems = [];
-                this.CurrentSession.CloseCurrentWindowEmit("OK");
-                this.CurrentSession.FireEvent("ShipmentPartnersChanged");
+                this.CloseWindow();
             }
         });
+    }
+
+    private CloseWindow() {
+        if (this.EntityPM.ShipmentPayables.filter(d => d.IsCustomsChargesTariff).length > 0) {
+            var fireEvent: boolean = false;
+            if (this.DataContext.Code == "CSAEX") {
+                if (!AppTool.IsNullOrEmpty(this.oldCustomAgentExportId) && this.oldCustomAgentExportId != this.EntityPM.CustomAgentExportId) {
+                    if (this.EntityPM.ShipmentPayables.filter(d => d.IsCustomsChargesTariff && d.VendorId == this.oldCustomAgentExportId).length > 0) {
+                        fireEvent = true;
+                        if (AppTool.IsNullOrEmpty(SessionLocator.ChangedShipmentPartnersIds)) {
+                            SessionLocator.ChangedShipmentPartnersIds = this.oldCustomAgentExportId;
+                        }
+
+                        else {
+                            if (SessionLocator.ChangedShipmentPartnersIds.indexOf(this.oldCustomAgentExportId) == -1) {
+                                SessionLocator.ChangedShipmentPartnersIds = SessionLocator.ChangedShipmentPartnersIds + "," + this.oldCustomAgentExportId;
+                            }
+                        }
+                    }
+                }
+            }
+
+            else if (this.DataContext.Code == "CSAIM") {
+                if (!AppTool.IsNullOrEmpty(this.oldCustomAgentImportId) && this.oldCustomAgentImportId != this.EntityPM.CustomAgentImportId) {
+                    if (this.EntityPM.ShipmentPayables.filter(d => d.IsCustomsChargesTariff && d.VendorId == this.oldCustomAgentImportId).length > 0) {
+                        fireEvent = true;
+                        if (AppTool.IsNullOrEmpty(SessionLocator.ChangedShipmentPartnersIds)) {
+                            SessionLocator.ChangedShipmentPartnersIds = this.oldCustomAgentImportId;
+                        }
+
+                        else {
+                            if (SessionLocator.ChangedShipmentPartnersIds.indexOf(this.oldCustomAgentImportId) == -1) {
+                                SessionLocator.ChangedShipmentPartnersIds = SessionLocator.ChangedShipmentPartnersIds + "," + this.oldCustomAgentImportId;
+                            }
+                        }
+                    }
+                }
+            }
+
+            if (fireEvent) {
+                this.CurrentSession.FireEvent("UpdateCustomsCharges");
+            }
+        }
+
+        this.CurrentSession.CloseCurrentWindowEmit("OK");
+        this.CurrentSession.FireEvent("ShipmentPartnersChanged");
     }
 
     private myCloner: Cloner;

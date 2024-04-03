@@ -45,6 +45,11 @@
             this.cmdServices = new System.Windows.Forms.ComboBox();
             this.btnPaymentTerms = new System.Windows.Forms.Button();
             this.ActionNames = new System.Windows.Forms.ComboBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.UserEmailTextBox = new System.Windows.Forms.TextBox();
+            this.UserPasswordTextBox = new System.Windows.Forms.TextBox();
+            this.LoginButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnSendXml
@@ -194,7 +199,7 @@
             // 
             // btnRunTest
             // 
-            this.btnRunTest.Location = new System.Drawing.Point(668, 37);
+            this.btnRunTest.Location = new System.Drawing.Point(668, 99);
             this.btnRunTest.Margin = new System.Windows.Forms.Padding(4);
             this.btnRunTest.Name = "btnRunTest";
             this.btnRunTest.Size = new System.Drawing.Size(204, 37);
@@ -209,6 +214,7 @@
             this.cmdServices.Items.AddRange(new object[] {
             "Warehouse",
             "Customer",
+            "FreightForwarder",
             "Vendor",
             "Agent",
             "Airline",
@@ -220,11 +226,13 @@
             "Shipment Pickups & Deliveries",
             "ShipmentWarehouseLeg",
             "ShipmentTrucker",
-            "ShipmentAssginedtoCustomsAgent",
+            "Shipment CustomAgentImportId",
+            "Shipment PaymentRequestDateTime",
             "AccountingPartner",
             "Hybrid Tenant State",
-            "Address"});
-            this.cmdServices.Location = new System.Drawing.Point(49, 50);
+            "Address",
+            "EntityStatus"});
+            this.cmdServices.Location = new System.Drawing.Point(49, 99);
             this.cmdServices.Margin = new System.Windows.Forms.Padding(4);
             this.cmdServices.Name = "cmdServices";
             this.cmdServices.Size = new System.Drawing.Size(357, 24);
@@ -233,7 +241,7 @@
             // 
             // btnPaymentTerms
             // 
-            this.btnPaymentTerms.Location = new System.Drawing.Point(668, 86);
+            this.btnPaymentTerms.Location = new System.Drawing.Point(669, 144);
             this.btnPaymentTerms.Margin = new System.Windows.Forms.Padding(4);
             this.btnPaymentTerms.Name = "btnPaymentTerms";
             this.btnPaymentTerms.Size = new System.Drawing.Size(203, 37);
@@ -245,7 +253,7 @@
             // ActionNames
             // 
             this.ActionNames.FormattingEnabled = true;
-            this.ActionNames.Location = new System.Drawing.Point(414, 49);
+            this.ActionNames.Location = new System.Drawing.Point(414, 99);
             this.ActionNames.Margin = new System.Windows.Forms.Padding(4);
             this.ActionNames.Name = "ActionNames";
             this.ActionNames.Size = new System.Drawing.Size(238, 24);
@@ -253,11 +261,59 @@
             this.ActionNames.Visible = false;
             this.ActionNames.SelectedIndexChanged += new System.EventHandler(this.ActionNames_SelectedIndexChanged);
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(46, 22);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(76, 17);
+            this.label1.TabIndex = 17;
+            this.label1.Text = "User Email";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(46, 54);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(69, 17);
+            this.label2.TabIndex = 18;
+            this.label2.Text = "Password";
+            // 
+            // UserEmailTextBox
+            // 
+            this.UserEmailTextBox.Location = new System.Drawing.Point(156, 19);
+            this.UserEmailTextBox.Name = "UserEmailTextBox";
+            this.UserEmailTextBox.Size = new System.Drawing.Size(275, 22);
+            this.UserEmailTextBox.TabIndex = 19;
+            // 
+            // UserPasswordTextBox
+            // 
+            this.UserPasswordTextBox.Location = new System.Drawing.Point(156, 51);
+            this.UserPasswordTextBox.Name = "UserPasswordTextBox";
+            this.UserPasswordTextBox.Size = new System.Drawing.Size(275, 22);
+            this.UserPasswordTextBox.TabIndex = 20;
+            // 
+            // LoginButton
+            // 
+            this.LoginButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LoginButton.Location = new System.Drawing.Point(473, 19);
+            this.LoginButton.Name = "LoginButton";
+            this.LoginButton.Size = new System.Drawing.Size(179, 54);
+            this.LoginButton.TabIndex = 21;
+            this.LoginButton.Text = "Login";
+            this.LoginButton.UseVisualStyleBackColor = true;
+            this.LoginButton.Click += new System.EventHandler(this.LoginButton_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1352, 703);
+            this.Controls.Add(this.LoginButton);
+            this.Controls.Add(this.UserPasswordTextBox);
+            this.Controls.Add(this.UserEmailTextBox);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.ActionNames);
             this.Controls.Add(this.btnPaymentTerms);
             this.Controls.Add(this.cmdServices);
@@ -279,6 +335,7 @@
             this.Name = "Form1";
             this.Text = "Form1";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -301,6 +358,11 @@
         private System.Windows.Forms.ComboBox cmdServices;
         private System.Windows.Forms.Button btnPaymentTerms;
         private System.Windows.Forms.ComboBox ActionNames;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox UserEmailTextBox;
+        private System.Windows.Forms.TextBox UserPasswordTextBox;
+        private System.Windows.Forms.Button LoginButton;
     }
 }
 

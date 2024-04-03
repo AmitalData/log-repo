@@ -22,6 +22,7 @@ import {NewShipmentComponentArgs} from '../../../Shipment/Args';
 import {ShipmentDomainService} from '../../../Shipment/Services/ShipmentDomainService';
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {QuoteDomainService} from '../../../Quote/Services/QuoteDomainService';
+import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
 
 export class QuoteMenuButtonsHandler {
     public EntityPM: QuotePM;
@@ -562,6 +563,10 @@ export class QuoteMenuButtonsHandler {
             if (res == "QuantitiesUpdated") {
                 //this.CheckButtonState(this.allMenuButtons);
             }
+
+            if (res == "ReloadNewQuote") {
+                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+            }
         });
 
         this.EntityPM.PropertyChanged.subscribe(s => {
@@ -922,6 +927,7 @@ export class QuoteMenuButtonsHandler {
 
             var logWindow = new LogitudeWindow();
             logWindow.WindowArgs = args;
+            args.ShowClosingReasonNotes = true;
             logWindow.Width = 450;
             logWindow.Height = 300;
             logWindow.Title = TextCodeTranslator.Translate("Quote.B.Accept");
@@ -946,7 +952,7 @@ export class QuoteMenuButtonsHandler {
             args.EntityPM = this.EntityPM;
             args.NotesHeader = TextCodeTranslator.Translate("Quote.F.Notes");
             args.ShowClosingReason = true;
-
+            args.ShowClosingReasonNotes = true;
             var logWindow = new LogitudeWindow();
             logWindow.WindowArgs = args;
             logWindow.Width = 450;
@@ -967,6 +973,36 @@ export class QuoteMenuButtonsHandler {
 
     private IsRunQuotation: boolean = false;
     private RunQuotationScreen() {
+        var isAmitalCloudEnvironment = this.CheckAmitalCloudEnviroment();
+        if (isAmitalCloudEnvironment) {
+            this.RunQuotationScreenCloud();
+        }
+        else {
+            this.RunQuotationScreenLogitude();
+        }
+    }
+
+    CheckAmitalCloudEnviroment() {
+        var amitalEnvironment = "amitalstorage";
+        var isAmitalCloudEnvironment = false;
+        if (ObjectsLocator.GlobalSetting.DeploymentStage == amitalEnvironment) {
+            isAmitalCloudEnvironment = true;
+        }
+        return isAmitalCloudEnvironment;
+    }
+
+    RunQuotationScreenLogitude() {
+        if (this.EntityPM && this.EntityPM.IsDirty) {
+            this.Validate();
+            if (this.isValid) {
+                this.IsRunQuotation = true;
+                this.entityArgs.EditComponent.SaveChanges();
+            }
+        } else {
+            this.OpenQuotationWindow();
+        }
+    }
+    RunQuotationScreenCloud() {
         if (this.EntityPM.QuoteTypeCode == "A") {
             this.isLCL = QuoteUtilities.IsLCLQuote(this.EntityPM);
             this.CheckUpdateQuantities();
@@ -985,18 +1021,17 @@ export class QuoteMenuButtonsHandler {
         }
 
         else {
-            if (this.EntityPM && this.EntityPM.IsDirty) {
-                this.Validate();
-                if (this.isValid) {
-                    this.IsRunQuotation = true;
-                    this.entityArgs.EditComponent.SaveChanges();
-                }
-            } else {
-                this.OpenQuotationWindow();
+        if (this.EntityPM && this.EntityPM.IsDirty) {
+            this.Validate();
+            if (this.isValid) {
+                this.IsRunQuotation = true;
+                this.entityArgs.EditComponent.SaveChanges();
             }
+        } else {
+            this.OpenQuotationWindow();
         }
     }
-
+    }
     public UpdateQuantitiesMessage: string;
     public IsUpdateQuantitiesVisible: boolean = false;
     CheckUpdateQuantities() {
@@ -1096,10 +1131,10 @@ export class QuoteMenuButtonsHandler {
 
                     //"PRVL"
                     entityQuantity = this.EntityPM.ValueOfGoods;
-                    if (this.EntityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "PRVL" && f.CostQuantity != entityQuantity).length > 0) {
+                    if (this.EntityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "PRVL" && f.CostQuantity == null && f.CostQuantity != entityQuantity).length > 0) {
                         displayUpdateMessage = true;
                     }
-                    else if (this.EntityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "PRVL" && f.SaleQuantity != entityQuantity).length > 0) {
+                    else if (this.EntityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "PRVL" && f.SaleQuantity == null && f.SaleQuantity != entityQuantity).length > 0) {
                         displayUpdateMessage = true;
                     }
 
@@ -1107,8 +1142,11 @@ export class QuoteMenuButtonsHandler {
                     if (this.EntityPM.QuoteCharges.filter(f => f.ChargesGroupCode == "FRT").length > 0) {
                         if (this.EntityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "PRFR" || f.SaleMeasurementCode == "PRFR").length > 0) {
 
-                            var FRT_CostQuantity = this.EntityPM.QuoteCharges.filter(f => f.ChargesGroupCode == "FRT")[0].CostTotalAmount;
-                            var FRT_SaleQuantity = this.EntityPM.QuoteCharges.filter(f => f.ChargesGroupCode == "FRT")[0].SaleTotalAmount;
+                            var FRT_CostQuantity = AppTool.Round(ArrayTool.Sum(this.EntityPM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT"), "CostTotalAmount"), 3);
+                            var FRT_SaleQuantity = AppTool.Round(ArrayTool.Sum(this.EntityPM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT"), "SaleTotalAmount"), 3);
+
+                            //var FRT_CostQuantity = this.EntityPM.QuoteCharges.filter(f => f.ChargesGroupCode == "FRT")[0].CostTotalAmount;
+                            //var FRT_SaleQuantity = this.EntityPM.QuoteCharges.filter(f => f.ChargesGroupCode == "FRT")[0].SaleTotalAmount;
 
                             if (AppTool.IsNullOrZero(FRT_CostQuantity)) {
                                 FRT_CostQuantity = 0;
@@ -1176,15 +1214,15 @@ export class QuoteMenuButtonsHandler {
                     displayUpdateMessage = true;
                 }
 
-                if (this.EntityPM.QuoteCharges.filter(d => d.SaleUnitPrice != null || d.CostUnitPrice != null).length > 0) {
-                    if (this.EntityPM.QuoteCharges.filter(d => (d.CostMeasurementCode == "PRVL" && d.CostQuantity != this.EntityPM.ValueOfGoods) || (d.CostMeasurementCode == "PRVL" && d.CostQuantity != this.EntityPM.ValueOfGoods)).length > 0) {
-                        updateMessage = "Please update charge screen by pressing on \"Update\" button first";
-                    }
+                //if (this.EntityPM.QuoteCharges.filter(d => d.SaleUnitPrice != null || d.CostUnitPrice != null).length > 0) {
+                //    if (this.EntityPM.QuoteCharges.filter(d => d.CostQuantity == null && (d.CostMeasurementCode == "PRVL" && d.CostQuantity != this.EntityPM.ValueOfGoods)).length > 0) {
+                //        updateMessage = "Please update charge screen by pressing on \"Update\" button first";
+                //    }
 
-                    else if (this.EntityPM.QuoteCharges.filter(d => d.SaleMeasurementCode == "PRVL" && d.SaleQuantity != this.EntityPM.ValueOfGoods).length > 0) {
-                        updateMessage = "Please update charge screen by pressing on \"Update\" button first";
-                    }
-                }
+                //    else if (this.EntityPM.QuoteCharges.filter(d => d.SaleMeasurementCode == "PRVL" && d.SaleQuantity != this.EntityPM.ValueOfGoods).length > 0) {
+                //        updateMessage = "Please update charge screen by pressing on \"Update\" button first";
+                //    }
+                //}
 
                 if (displayUpdateMessage && AppTool.IsNullOrEmpty(updateMessage)) {
                     updateMessage = "Please update charge screen by pressing on \"Update\" button first";

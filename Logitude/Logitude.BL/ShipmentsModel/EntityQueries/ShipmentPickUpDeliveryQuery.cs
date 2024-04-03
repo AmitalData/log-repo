@@ -1,4 +1,5 @@
 ﻿using Logitude.BL.ShipmentsModel.EntityPMs;
+using Logitude.Server.Tools.CustomFields;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -295,6 +296,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         pickUp.ToAddressCity_Dummy = entityPOCO.ToAddressCity;
                     }
                     #endregion
+
+
+                 
+
                 }
 
                 else
@@ -547,7 +552,20 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         delivery.ToAddressCity_Dummy = entityPOCO.ToAddressCity;
                     }
                     #endregion
-                }                
+                }
+
+                new ChildEntitiesCustomFieldService().Set(new ChildEntitiesCustomFieldArgs()
+                {
+                    Tenant = tenant,
+                    EntityId = entityPOCO.ShipmentId,
+                    ObjectTableName = "Shipment",
+                    ChildObjectTableName = "ShipmentPickUpDelivery",
+                    ChildEntityId = entityPOCO.Id,
+                    ChildEntities = pickUp != null ? new List<object>() { pickUp  }.ToList() : new List<object>() { delivery }.ToList(),
+                });
+
+                
+      
             }
 
             if (entityPOCO == null)
@@ -573,7 +591,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                select a.CarrierId).FirstOrDefault();
             return entityId;
 
-        }      
-
+        }
+        
     }
 }

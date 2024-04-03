@@ -1,4 +1,4 @@
-@release @all @stable
+@release @stable
 Feature: Vendor Create, Search and Edit from Maintenance
     The user creates a vendor, searches for and edits it from the Maintenance Module.
 
@@ -45,4 +45,3 @@ Feature: Vendor Create, Search and Edit from Maintenance
     Scenario: Save and close the vendor
         When save and close vendor
         Then the vendor should close successfully
-

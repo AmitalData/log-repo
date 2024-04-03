@@ -243,8 +243,10 @@ namespace Logitude.Server.Tools
                     LastStatusDateUTC = DateTime.UtcNow,
                     QueueName = communicationParams.QueueName,
                     Priority = communicationParams.Priority,
-                    AdditionalFields = communicationParams.AdditionalFields
-
+                    AdditionalFields = communicationParams.AdditionalFields,
+                    ExceptionMessage = communicationParams.ExceptionMessage,
+                    UniqueNumber = communicationParams.UniqueNumber,
+                    WasAnalyzed = communicationParams.WasAnalyzed,
                 };
                 communicationLogRepository.Add(commLog);
                 communicationLogRepository.SubmitChanges();
@@ -581,11 +583,11 @@ namespace Logitude.Server.Tools
         }
 
 
-        public static void AddEmailCommunicationLogQueue(EmailCommunicationParams communicationParams, int tenant)
+        public static string AddEmailCommunicationLogQueue(EmailCommunicationParams communicationParams, int tenant)
         {
             if (!string.IsNullOrEmpty(communicationParams.To) && communicationParams.To.Contains("system@tenant"))
             {
-                return;
+                return string.Empty;
             }
             ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
             DocumentRepository documentRepository = new DocumentRepository(commonContext);
@@ -673,7 +675,8 @@ namespace Logitude.Server.Tools
 
 			DbQueueService queueservice = new DbQueueService("EmailQueue", tenant);
 			queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", commLog.Id }, { "Tenant", commLog.Tenant.ToString() } }, commLog.Tenant);
-		}
+            return commLog.Id;
+        }
 
     }
 
@@ -736,7 +739,9 @@ namespace Logitude.Server.Tools
 
         public Dictionary<string, string> QueueParameters { get; set; }
         public string AdditionalFields { get; set; }
-
+        public string ExceptionMessage { get; set; }
+        public string UniqueNumber { get; set; }
+        public bool? WasAnalyzed { get; set; }
     }
 
 

@@ -84,6 +84,7 @@ namespace WebFreight.Web.Controllers.SocialModel.Extended
                 ConversationHeaderParticipantUpdateService service = new ConversationHeaderParticipantUpdateService(socialContext, new Dictionary<string, IContext>(), authToken.Tenant);
                 foreach (ConversationHeaderParticipantPM entityPm in conversationHeaderParticipantPMLists)
                 {
+                    SecurityUtility.AuthenticationOnEntityTenant("ConversationHeaderParticipant", entityPm.Tenant, authToken.Tenant);
                     entityPm.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
                     service.Update(entityPm, true);
 

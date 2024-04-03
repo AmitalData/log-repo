@@ -1,5 +1,5 @@
-﻿using Logitude.Test.Base.Extensions;
-using Logitude.Test.Base.Models.PartnersPreparation;
+﻿using Logitude.Base.Extensions;
+using Logitude.Base.Models.Partners;
 using System;
 using System.Collections.Generic;
 using TechTalk.SpecFlow;

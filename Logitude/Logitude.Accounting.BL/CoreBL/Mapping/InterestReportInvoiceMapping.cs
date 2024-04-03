@@ -23,6 +23,7 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
         public ARInvoicePM MapARInvoice(InterestReportArgs interestReportArgs, InterestReportPM interestReport, TenantPM tenantPM, UserPM userPM, CardPM cardPM)
         {
             var CreditAllotmentCommission = interestReport.CalCreditAllotmentCommission != null ? interestReport.CalCreditAllotmentCommission : 0;
+            var calculatedPostponedChequesCommision = interestReport.CalculatedPostponedChequesCommision != null ? interestReport.CalculatedPostponedChequesCommision : 0;
             ARInvoicePM aRInvoicePM = new ARInvoicePM();
             aRInvoicePM.IsFromInterestBatchInvoice = true;
             aRInvoicePM.ARInvoiceTypeCode = "IT";
@@ -30,14 +31,14 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
             aRInvoicePM.BillToId = interestReport.CustomerId;
             aRInvoicePM.Tenant = interestReportArgs.Tenant;
             aRInvoicePM.BillToPartnerTypeId = "CS";
-            aRInvoicePM.AmountInLocalCurrency = (double?)(interestReport.TotalAmount + CreditAllotmentCommission);
+            aRInvoicePM.AmountInLocalCurrency = (double?)(interestReport.TotalAmount + CreditAllotmentCommission + calculatedPostponedChequesCommision);
             aRInvoicePM.LocalCurrencyId = tenantPM.CurrencyId;
             aRInvoicePM.InvoiceCurrencyId = tenantPM.CurrencyId;
             aRInvoicePM.ProfitCurrencyId = tenantPM.ProfitCurrencyId;
             aRInvoicePM.ProfitCurrencyCode = tenantPM.ProfitCurrencyCode;
             aRInvoicePM.InvoiceCurrencyCode = tenantPM.CurrencyCode;
-            aRInvoicePM.AmountInInvoiceCurrency = (double?)(interestReport.TotalAmount + CreditAllotmentCommission);
-            aRInvoicePM.AmountInProfitCurrency = (double?)(interestReport.TotalAmount + CreditAllotmentCommission);
+            aRInvoicePM.AmountInInvoiceCurrency = (double?)(interestReport.TotalAmount + CreditAllotmentCommission + calculatedPostponedChequesCommision);
+            aRInvoicePM.AmountInProfitCurrency = (double?)(interestReport.TotalAmount + CreditAllotmentCommission + calculatedPostponedChequesCommision);
             aRInvoicePM.BranchId = userPM.BranchId;
             //aRInvoicePM.InvoiceDate = TenantServerConfigration.GetCurrentDateTime(interestReportArgs.Tenant);
             aRInvoicePM.CreateDate = TenantServerConfigration.GetCurrentDateTime(interestReportArgs.Tenant);
@@ -49,6 +50,9 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
             aRInvoicePM.HouseNumber = null;
             aRInvoicePM.MainEntityReference = null;
             aRInvoicePM.MasterNumber = null;
+            aRInvoicePM.MasterShipmentNumbers = null;
+            aRInvoicePM.MasterNumbers = null;
+            aRInvoicePM.HouseNumbers = null;
             aRInvoicePM.Description = null;
             aRInvoicePM.IsGeneralInvoice = true;
             aRInvoicePM.IsFullAccounting = true;
@@ -131,6 +135,7 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
         public ARInvoiceLinePM MapARInvoiceLine(InterestReportPM interestReport, TenantPM tenantPM, ChargesTypePM chargesType, VatTypePercentagePM vatTypePercentagePM)
         {
             var CreditAllotmentCommission = interestReport.CalCreditAllotmentCommission != null ? interestReport.CalCreditAllotmentCommission : 0;
+            var calculatedPostponedChequesCommision = interestReport.CalculatedPostponedChequesCommision != null ? interestReport.CalculatedPostponedChequesCommision : 0;
             ARInvoiceLinePM aRInvoiceLinePM = new ARInvoiceLinePM();
             aRInvoiceLinePM.Tenant = tenantPM.Id;
             aRInvoiceLinePM.InvoiceLocalCurrencyCode = tenantPM.CurrencyCode;
@@ -148,16 +153,16 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
             else
             {
                 aRInvoiceLinePM.UnitPrice = (double?)interestReport.TotalAmount;
-                aRInvoiceLinePM.ForiegnCurrencyAmount = (double?)(interestReport.TotalAmount + CreditAllotmentCommission);
-                aRInvoiceLinePM.InvoiceCurrencyAmount = (double?)(interestReport.TotalAmount + CreditAllotmentCommission);
-                aRInvoiceLinePM.ProfitCurrencyAmount = (double?)(interestReport.TotalAmount + CreditAllotmentCommission);
-                aRInvoiceLinePM.LocalCurrencyAmount = (double?)(interestReport.TotalAmount + CreditAllotmentCommission);
+                aRInvoiceLinePM.ForiegnCurrencyAmount = (double?)(interestReport.TotalAmount + CreditAllotmentCommission + calculatedPostponedChequesCommision);
+                aRInvoiceLinePM.InvoiceCurrencyAmount = (double?)(interestReport.TotalAmount + CreditAllotmentCommission + calculatedPostponedChequesCommision);
+                aRInvoiceLinePM.ProfitCurrencyAmount = (double?)(interestReport.TotalAmount + CreditAllotmentCommission + calculatedPostponedChequesCommision);
+                aRInvoiceLinePM.LocalCurrencyAmount = (double?)(interestReport.TotalAmount + CreditAllotmentCommission + calculatedPostponedChequesCommision);
             }
             aRInvoiceLinePM.Quantity = 1;
             //aRInvoiceLinePM.Description = "Interest For Date " + interestReport.InterestCalculationDate.ToString("dd/MM/yyyy");
             //aRInvoiceLinePM.LocalDescription = "חישוב ריבית לתאריך " + interestReport.InterestCalculationDate.ToString("dd/MM/yyyy");
-            aRInvoiceLinePM.Description = "Interest between "+ interestReport.InterestReportLinesByDates.First().FromDate.ToString("dd/MM/yyyy") + " and " + interestReport.InterestReportLinesByDates.Last().ToDate.ToString("dd/MM/yyyy");
-            aRInvoiceLinePM.LocalDescription = "ריבית לתאריכים " + interestReport.InterestReportLinesByDates.First().FromDate.ToString("dd/MM/yyyy") + " עד " + interestReport.InterestReportLinesByDates.Last().ToDate.ToString("dd/MM/yyyy");
+            aRInvoiceLinePM.Description = string.Concat("Interest  For", " ", interestReport.InterestReportLinesByDates.Last().ToDate.ToString("dd/MM/yyyy"));
+            aRInvoiceLinePM.LocalDescription = string.Concat("ריבית ל", " ", interestReport.InterestReportLinesByDates.Last().ToDate.ToString("dd/MM/yyyy"));
             aRInvoiceLinePM.ChargesTypeId = chargesType.Id;
             aRInvoiceLinePM.VatTypeId = chargesType.VatTypeId;
             aRInvoiceLinePM.VatPercentage = vatTypePercentagePM.Percentage;
@@ -273,7 +278,7 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
 
                             if (myComparativeDate != null)
                             {
-                                if (myPaymentTerm.CurrentMonth)
+                                if (myPaymentTerm.EndOfMonth)
                                 {
                                     myComparativeDate = myComparativeDate.Value.AddMonths(1);
 

@@ -2,6 +2,9 @@ import {TenantManagementPM} from '../EntityPMs/TenantManagementPM';
 import {AppTool} from '../Tools';
 import {Validator} from './Validator';
 import {TextCodeTranslator} from '../Utilities/TextCodeTranslator';
+import { ObjectsLocator } from '../Locators/ObjectsLocator';
+import { SessionLocator } from '../Utilities/SessionLocator';
+import { FeatureLocator } from '../Utilities/FeatureLocator';
 
 export class TenantManagementValidator {
 

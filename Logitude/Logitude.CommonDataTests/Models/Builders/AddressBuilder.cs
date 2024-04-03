@@ -1,6 +1,6 @@
-﻿using Logitude.Test.Base.Models.LocationsPreparation;
-using Logitude.Test.Base.Models.PartnersPreparation;
-using Logitude.Test.Base.Models.UserTenantPreparation;
+﻿using Logitude.Base.Models.Locations;
+using Logitude.Base.Models.Partners;
+using Logitude.Base.Models.UserTenant;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
 

@@ -86,4 +86,6 @@
   </Column>
   <Index
     Columns="LogDateTimeGMT" />
+  <Index
+   Columns="LogDateTimeLocal" />
 </Table>

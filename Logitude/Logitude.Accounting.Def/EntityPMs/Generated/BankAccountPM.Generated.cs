@@ -963,7 +963,53 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-   }
+	  private string totalOpenExternalTransactions ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TotalOpenExternalTransactions  
+	   {
+	    
+	     get
+		{
+		   return totalOpenExternalTransactions;
+		 }
+		 set
+		 {
+		   if(totalOpenExternalTransactions != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TotalOpenExternalTransactions",OldValue=totalOpenExternalTransactions,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   totalOpenExternalTransactions=value;
+		   }
+			
+		 }
+	   }
+	  private string totalOpenPagesLines ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TotalOpenPagesLines  
+	   {
+	    
+	     get
+		{
+		   return totalOpenPagesLines;
+		 }
+		 set
+		 {
+		   if(totalOpenPagesLines != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TotalOpenPagesLines",OldValue=totalOpenPagesLines,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   totalOpenPagesLines=value;
+		   }
+			
+		 }
+	   }
+	    }
    
 }
 	 

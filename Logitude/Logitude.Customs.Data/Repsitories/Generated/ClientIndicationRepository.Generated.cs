@@ -49,7 +49,7 @@ namespace Logitude.Customs.Data.Repsitories
                     where a.IndicationId == keys.IndicationId && a.ClientId == keys.ClientId
                     select a).FirstOrDefault();
         }
-		         
+		 		                 
         partial void onAdd();//Partial Methods Definition in Generated
         public void Add(ClientIndication entity)
         {

@@ -22,6 +22,7 @@ import { PartnersDomainService } from '../../Common/Services/PartnersDomainServi
 import { WarehouseStoragePricingPM } from '../../Common/EntityPMs/WarehouseStoragePricingPM';
 import { ShipmentStoragePricingPM } from '../../Shipment/EntityPMs/ShipmentStoragePricingPM';
 import { CardList } from '../../Common/EntityLists/CardList';
+import { ShipmentTool } from 'Shipment/Tools';
 
 export class WarehouseHelper {
     validator: ClassLevelValidator;
@@ -36,7 +37,7 @@ export class WarehouseHelper {
     SetShipmentWarehouseLeg(shipmentPM: ShipmentPM, warehouseEntity: any, type: string) {
         if (shipmentPM && warehouseEntity && !AppTool.IsNullOrEmpty(type)) {
 
-            if (AppTool.IsNullOrEmpty(shipmentPM.WarehouseLegWarehouseId)) {
+            if (AppTool.IsNullOrEmpty(shipmentPM.WarehouseLegWarehouseId) && !ShipmentTool.IsInlandDomestic(shipmentPM)) {
                 if (shipmentPM.DirectionId != "C" && (shipmentPM.ShipmentLevelCode == "D" || shipmentPM.ShipmentLevelCode == "H")) {
                     shipmentPM.WarehouseLegWarehouseId = warehouseEntity.WarehouseId;
                     this.SetIsCFSWarehouseProperities(shipmentPM, warehouseEntity.WarehouseId);
@@ -79,6 +80,7 @@ export class WarehouseHelper {
         });
     }
     SetWarehouseData(result: CardList, shipmentPM: ShipmentPM) {
+        shipmentPM.WarehouseLegAddressId = AppTool.IsNullOrEmpty(shipmentPM.WarehouseLegAddressId) ? result.MainAddressId : shipmentPM.WarehouseLegAddressId;
         if (result.WarehouseTypeCode == "CFS") {
             shipmentPM.IsCFSWarehouse = true;
             this.SetStorageDefaults(result, shipmentPM);
@@ -166,7 +168,26 @@ export class WarehouseHelper {
         }
     }
 
+    ShowSelectionAddChooseWarehouseEntryWindow(windowArgs: any) {
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 450;
+        logWindow.Height = 180;
+        logWindow.Title = "Add Cross Dock Entry";
+        logWindow.WindowArgs = windowArgs;
+        logWindow.ShowCloseButton = true;
+        logWindow.Show("./Warehouse/Components/SelectionAddChooseWarehouseEntryComponent");
+        logWindow.WindowClosed.subscribe((event: any) => {
+            if (event == "NewCrossDockEntry") {
+                this.ShowNewWarehouseEntryComponent(windowArgs);
+            }
+            else if (event == "ChooseCrossDockEntry") {
+                this.ShowChooseWarehouseEntryComponent(windowArgs);
+            }
+        });
+    }
+
     ShowNewWarehouseEntryComponent(windowArgs: any) {
+        this.CurrentSession.StopBusyIndicator();
 
     var shipmentPackages: any[] = [];
     var entityPM: ShipmentPM = windowArgs.EntityPM;
@@ -194,6 +215,18 @@ export class WarehouseHelper {
         });
     }
 
+    ShowChooseWarehouseEntryComponent(windowArgs: any) {
+        this.CurrentSession.StopBusyIndicator();
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 1010;
+        logWindow.Height = 620;
+        logWindow.Title = "Choose Cross Dock Entry";
+        logWindow.WindowArgs = windowArgs;
+        logWindow.Show("./Warehouse/Components/ChooseWarehouseEntryComponent");
+        logWindow.WindowClosed.subscribe((event: any) => {
+            //
+        });
+    }
 
     FullWarehouseEntryPackagePM(shipmentPackages: any, entityPM: ShipmentPM, packageType: string = null ) {
         var warehouseEntryPackagesLists: WarehouseEntryPackagePM[] = [];
@@ -345,7 +378,7 @@ export class WarehouseHelper {
                                 //    this.SaveChanges();
                                 //    if (IsRefreshWareHouseLeg) this.CurrentSession.FireEvent("RefreshWareHouseLeg");
                                 //}
-
+                                this.LoadParentComponentConnectedWarehouseEntry(viewModel);
                                 this.CurrentSession.StopBusyIndicator();
                                 this.CurrentSession.CurrentWindow.Close("Refresh");
                             }
@@ -369,6 +402,11 @@ export class WarehouseHelper {
 
 
 
+
+    private LoadParentComponentConnectedWarehouseEntry(viewModel: any) {
+        if (!viewModel.ParentComponent) return;
+        viewModel.ParentComponent.LoadConnectedWarehouseEntry();
+    }
 
     CreateWarehouseRelease(entityPM: WarehouseReleasePM, viewModel: any) {
 

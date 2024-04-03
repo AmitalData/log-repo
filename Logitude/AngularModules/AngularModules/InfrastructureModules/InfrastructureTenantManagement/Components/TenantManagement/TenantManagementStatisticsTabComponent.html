@@ -776,6 +776,93 @@
                                 </td>
                             </tr>
 
+                            <!-- DigitalPortal + Mobile -->
+                            <tr>
+                                <td style="width:420px;">
+                                    <fieldset class="FieldSet">
+                                        <legend style="color:#1B90CB; margin-left:5px; font-size:11px;">Digital Portal Statistics</legend>
+                                        <table style="margin:5px;">
+                                            <tr class="StatRow">
+                                                <td style="width:265px;">
+                                                    <LogLabel [ObjectFieldName]="'DigitalPortalLastDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+                                                <td style="width: 65px;" [ngStyle]="{color: DigitalPortalLastDateColor}">{{DigitalPortalLastDate | DateTimeToDatePipe}}</td>
+                                                <td style="width:10px;">
+                                                    <div></div>
+                                                </td>
+                                                <td style="width: 30px; text-align: right;" [ngStyle]="{color: DigitalPortalLastDateColor}">{{DigitalPortalLastDate | DateTimeToTimePipe: 'S12'}}</td>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                            <tr class="StatRow">
+                                                <td style="width:265px;">
+                                                    <LogLabel [ObjectFieldName]="'DigitalPortalTotalLastWeek'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+                                                <td colspan="3">{{DigitalPortalTotalLastWeek}}</td>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                            <tr class="StatRow">
+                                                <td style="width:265px;">
+                                                    <LogLabel [ObjectFieldName]="'DigitalPortalTotalLastMonth'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+                                                <td colspan="3">{{DigitalPortalTotalLastMonth}}</td>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </fieldset>
+                                </td>
+                                <td style="width:10px;"></td>
+                                <td style="width:420px;">
+                                    <fieldset class="FieldSet">
+                                        <legend style="color:#1B90CB; margin-left:5px; font-size:11px;">Digital Portal Mobile Statistics</legend>
+                                        <table style="margin:5px;">
+                                            <tr class="StatRow">
+                                                <td style="width:265px;">
+                                                    <LogLabel [ObjectFieldName]="'DigitalPortalMobileLastDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+                                                <td style="width: 65px;" [ngStyle]="{color: DigitalPortalMobileLastDateColor}">{{DigitalPortalMobileLastDate | DateTimeToDatePipe}}</td>
+                                                <td style="width:10px;">
+                                                    <div></div>
+                                                </td>
+                                                <td style="width: 30px; text-align: right;" [ngStyle]="{color: DigitalPortalMobileLastDateColor}">{{DigitalPortalMobileLastDate | DateTimeToTimePipe: 'S12'}}</td>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                            <tr class="StatRow">
+                                                <td style="width:265px;">
+                                                    <LogLabel [ObjectFieldName]="'DigitalPortalMobTotalLastWeek'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+                                                <td colspan="3">{{DigitalPortalMobTotalLastWeek}}</td>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                            <tr class="StatRow">
+                                                <td style="width:265px;">
+                                                    <LogLabel [ObjectFieldName]="'DigitalPortalMobTotalLastMonth'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+                                                <td colspan="3">{{DigitalPortalMobTotalLastMonth}}</td>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </fieldset>
+                                </td>
+                                <td></td>
+                            </tr>
+                            <tr style="height:10px;">
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                            
                             <!--SharedAgent + INTTRA -->
                             <tr>
                                 <td style="width:420px;">

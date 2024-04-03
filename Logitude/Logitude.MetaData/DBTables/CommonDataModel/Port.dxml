@@ -220,6 +220,20 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="PortTimeZoneCode"
+    Type="varchar"
+    Size="150">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PortGroupId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CountryId"
     ReferencedTable="Countries"
@@ -230,10 +244,22 @@
     ReferencedTable="States"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="PortTimeZoneCode"
+    ReferencedTable="PortTimeZones"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="PortGroupId"
+    ReferencedTable="PortGroups"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
   <Index
     Columns="Tenant,InActive,IsAir,EnglishName" />
   <Index
     Columns="AutomaticLastUpdateDate" />
+  <Index
+    Columns="Tenant,CombinedCode" />
   <UniqueConstraint
     Columns="Tenant,Code,CountryId" />
 </Table>

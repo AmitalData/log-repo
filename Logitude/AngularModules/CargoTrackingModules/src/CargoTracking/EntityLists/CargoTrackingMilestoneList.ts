@@ -13,6 +13,7 @@ export class CargoTrackingMilestoneList {
 	SearchFields: string;
 	LocalName: string;
 	Inactive: boolean;
+	Weight: number;
 	
 }
  

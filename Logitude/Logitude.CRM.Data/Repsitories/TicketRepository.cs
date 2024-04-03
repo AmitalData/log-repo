@@ -44,6 +44,11 @@ namespace Logitude.CRM.Data.Repsitories
             return (from a in context.Tickets where a.TicketNumber == ticketNumber && a.Tenant == tenant select a.Id).FirstOrDefault();
         }
 
+        public string GetIdByQuoteId(string quoteId)
+        {
+            return (from a in context.Tickets where a.QuoteId == quoteId select a.Id).FirstOrDefault();
+        }
+
     }
 
 }

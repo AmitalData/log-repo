@@ -6,11 +6,20 @@ using System.Collections.Generic;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System.Linq;
+using System.Web;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
+using WebFreight.Web.Security;
 
 public class LedgerTransactionBalanceFilterCreateLTBFilter
 {
     public   LedgerTransactionBalanceFilter CreateLTBFilter(ApiQueryFilters filters, int tenant, QueryOperations queryOperations = null)
     {
+        string token = HttpContext.Current.Request.Headers["Token"];
+        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+        SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+        SecurityUtility.AuthenticationOnTenant(tenant);
+
         LedgerTransactionBalanceFilter LTBFilter = new LedgerTransactionBalanceFilter();
 
         List<ObjectField> LedgerTransactionObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("LedgerTransaction", tenant);
@@ -28,6 +37,9 @@ public class LedgerTransactionBalanceFilterCreateLTBFilter
             var includeRelatedCurrenciesAccount = filters_list.Where(d => d.FieldName == "IncludeRelatedCurrenciesAccount").FirstOrDefault().FieldValue;
             var includeChildAccounts = filters_list.Where(d => d.FieldName == "IncludeChildAccounts").FirstOrDefault().FieldValue;
             string _dateTypeCode = filters_list.Where(d => d.FieldName == "DateTypeCode").FirstOrDefault().FieldValue.ToString();
+            LTBFilter.TaxreportId = filters_list.Where(d => d.FieldName == "TaxReportId").FirstOrDefault()?.FieldValue.ToString();
+            LTBFilter.NotIncludedInAnyTaxReport = Convert.ToBoolean(filters_list.Where(d => d.FieldName == "NotIncludedInAnyTaxReport").FirstOrDefault().FieldValue);
+            LTBFilter.UseTaxreportFilter = Convert.ToBoolean(filters_list.Where(d => d.FieldName == "UseTaxreportFilter").FirstOrDefault().FieldValue);
 
             // dates
             var createDateFilter = filters_list.Where(d => d.FieldName == "AccountingDate").FirstOrDefault();
@@ -41,6 +53,24 @@ public class LedgerTransactionBalanceFilterCreateLTBFilter
                 var to = createDateFilter.FieldValue2.ToString();
                 string[] toDate = to.ToString().Split(';');
                 LTBFilter.To = new DateTime(int.Parse(toDate[0]), int.Parse(toDate[1]) + 1, int.Parse(toDate[2]), 23, 59, 59);
+
+
+            }
+
+            string date2TypeCode = filters_list.Where(d => d.FieldName == "Date2TypeCode").FirstOrDefault()?.FieldValue.ToString();
+            LTBFilter.Date2TypeCode = date2TypeCode;
+
+            var date2Filter = filters_list.Where(d => d.FieldName == "Date2Filter").FirstOrDefault();
+            if (date2Filter != null)
+            {
+
+                var from = date2Filter.FieldValue.ToString();
+                string[] fromDate = from.ToString().Split(';');
+                LTBFilter.FromDate2 = new DateTime(int.Parse(fromDate[0]), int.Parse(fromDate[1]) + 1, int.Parse(fromDate[2]), 0, 0, 0);
+
+                var to = date2Filter.FieldValue2.ToString();
+                string[] toDate = to.ToString().Split(';');
+                LTBFilter.ToDate2 = new DateTime(int.Parse(toDate[0]), int.Parse(toDate[1]) + 1, int.Parse(toDate[2]), 23, 59, 59);
 
 
             }
@@ -60,7 +90,7 @@ public class LedgerTransactionBalanceFilterCreateLTBFilter
                 var searchFields = searchFieldsf.FieldValue.ToString();
                 LTBFilter.SearchFields = searchFields;
             }
-
+           
             LTBFilter.GLAccountId = glAccountId;
             LTBFilter.DateTypeCode = _dateTypeCode;
             //LTBFilter.From = Convert.ToDateTime(from);

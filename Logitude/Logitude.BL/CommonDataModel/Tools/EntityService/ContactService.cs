@@ -43,6 +43,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private Contact oldSimilarContact = null;
         private List<CardContact> allCardContact;
         private CardContactAdditionalServiceRepository cardContactAdditionalServiceRepository;
+        private CardContactProductRepository cardContactProductRepository;
         public ContactService(ICommonDataContext objectContext, int tenant)
         {
             this.tenant = tenant;
@@ -54,6 +55,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.contactTenantRoleRepository = new ContactTenantRoleRepository(objectContext);
             this.allCardContact = new List<CardContact>();
             this.cardContactAdditionalServiceRepository = new CardContactAdditionalServiceRepository(objectContext);
+            this.cardContactProductRepository = new CardContactProductRepository(objectContext);
         }
 
         public void Create(ContactPM entityPM)
@@ -79,6 +81,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                         Id = IdCounter.GetNumber("Contact", entityPM.Tenant).ToString(),
                         UserType = "R",
                         CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
+                        UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
                     };
 
                     this.entityPM.Id = this.Poco.Id;
@@ -132,7 +135,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         internal string DisableOldContact(string disableOldContactId, int tenant)
         {
             //update contacts  set inactive=1, computedkey  = id  where id='1-10622'
-            var oldContact =entityRepository.GetSingleContactForUpdate(disableOldContactId, tenant);
+            var oldContact = entityRepository.GetSingleContactForUpdate(disableOldContactId, tenant);
             oldContact.InActive = true;
             oldContact.Email = (disableOldContactId + oldContact.Email) ?? "";
             oldContact.Email = oldContact.Email.Substring(0, Math.Min(70, oldContact.Email.Length));
@@ -177,6 +180,12 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                             this.DeleteAdditionalService(service);
                         }
 
+                        foreach (CardContactProductPM product in entityPM.CardContactProducts)
+                        {
+                            this.DeleteProduct(product);
+                        }
+
+                        AddDisconectFromContactKafkaQueueMessage(myCardContact);
                         CardContactRepository.Remove(myCardContact);
                         CardContactRepository.SubmitChanges();
                     }
@@ -184,7 +193,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     else
                     {
                         this.UpdateAdditionalServicesCollection(entityPM.CardContactAdditionalServices, myCardContact);
-
+                        this.UpdateProductsCollection(entityPM.CardContactProducts, myCardContact);
                         MapCardContactToContact(myCardContact, entityPM);
                         CardContactRepository.Update(myCardContact);
                     }
@@ -234,6 +243,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 this.isConnectedToCard = true;
                 this.allCardContact = CardContactRepository.GetCardContactsByCardId(entityPM.CardId).ToList();
             }
+
+            entityPM.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
         }
         private void ValidateContactExists()
         {
@@ -337,36 +348,44 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
                     if (myCard != null)
                     {
-                        if (!string.IsNullOrEmpty(entityPM.Email))
-                        {
-                            if (string.IsNullOrEmpty(myCard.SearchFields))
-                            {
-                                myCard.SearchFields = entityPM.Email;
-                            }
-
-                            else if (!myCard.SearchFields.Contains(entityPM.Email.ToLower()))
-                            {
-                                myCard.SearchFields += "," + entityPM.Email;
-                            }
-                        }
-
-                        if (!string.IsNullOrEmpty(entityPM.EnglishName))
-                        {
-                            if (string.IsNullOrEmpty(myCard.SearchFields))
-                            {
-                                myCard.SearchFields = entityPM.EnglishName;
-                            }
-
-                            else if (!myCard.SearchFields.Contains(entityPM.EnglishName))
-                            {
-                                myCard.SearchFields += "," + entityPM.EnglishName;
-                            }
-                        }
-
+                        UpdateCardSearchFields(myCard);
                         myCardRepository.Update(myCard);
                         myCardRepository.SubmitChanges();
                     }
                 }
+            }
+        }
+        private void UpdateCardSearchFields(Card myCard)
+        {
+            if (!string.IsNullOrEmpty(entityPM.Email))
+            {
+                if (string.IsNullOrEmpty(myCard.SearchFields))
+                {
+                    myCard.SearchFields = entityPM.Email;
+                }
+
+                else if (!myCard.SearchFields.Contains(entityPM.Email.ToLower()))
+                {
+                    myCard.SearchFields += "," + entityPM.Email;
+                }
+            }
+
+            if (!string.IsNullOrEmpty(entityPM.EnglishName))
+            {
+                if (string.IsNullOrEmpty(myCard.SearchFields))
+                {
+                    myCard.SearchFields = entityPM.EnglishName;
+                }
+
+                else if (!myCard.SearchFields.Contains(entityPM.EnglishName))
+                {
+                    myCard.SearchFields += "," + entityPM.EnglishName;
+                }
+            }
+
+            if (myCard.SearchFields.Length > 1000)
+            {
+                myCard.SearchFields = myCard.SearchFields.Substring(0, 1000);
             }
         }
         private void InitializeGlobalContact()
@@ -668,6 +687,86 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             if (itemPoco != null)
             {
                 cardContactAdditionalServiceRepository.Remove(itemPoco);
+            }
+        }
+
+        private void UpdateProductsCollection(List<CardContactProductPM> productPMs, CardContact cardContact)
+        {
+            if (productPMs != null)
+            {
+                foreach (CardContactProductPM itemPM in productPMs)
+                {
+                    switch (itemPM.ChangeSetOp)
+                    {
+                        case ChangeSetOperation.Insert:
+                            {
+                                this.CreateProduct(itemPM, cardContact);
+                                break;
+                            }
+
+                        case ChangeSetOperation.Update:
+                            {
+                                this.UpdateProduct(itemPM);
+                                break;
+                            }
+
+                        case ChangeSetOperation.Delete:
+                            {
+                                this.DeleteProduct(itemPM);
+                                break;
+                            }
+
+                        default: { break; }
+                    }
+                }
+            }
+        }
+        private void CreateProduct(CardContactProductPM itemPM, CardContact cardContact)
+        {
+            itemPM.Id = IdCounter.GetNumber("CardContactProduct", tenant).ToString();
+            itemPM.CardContactId = cardContact.Id;
+            itemPM.Tenant = tenant;
+
+            CardContactProduct itemPoco = new CardContactProduct()
+            {
+                Id = itemPM.Id,
+                CardContactId = itemPM.CardContactId,
+                ProductTypeCode = itemPM.ProductTypeCode,
+                Tenant = tenant
+            };
+
+            CardContactProductMapping.MapEntity(itemPM, itemPoco, true);
+            cardContactProductRepository.Add(itemPoco);
+        }
+        private void UpdateProduct(CardContactProductPM itemPM)
+        {
+            CardContactProduct itemPoco = cardContactProductRepository.GetSingleCardContactProduct(itemPM.Id, tenant);
+            if (itemPoco != null)
+            {
+                CardContactProductMapping.MapEntity(itemPM, itemPoco, false);
+                cardContactProductRepository.Update(itemPoco);
+            }
+        }
+        private void DeleteProduct(CardContactProductPM itemPM)
+        {
+            CardContactProduct itemPoco = cardContactProductRepository.GetSingleCardContactProduct(itemPM.Id, tenant);
+            if (itemPoco != null)
+            {
+                cardContactProductRepository.Remove(itemPoco);
+            }
+        }
+
+        private void AddDisconectFromContactKafkaQueueMessage(CardContact cardContact)
+        {
+            if (FeatureToggleHelper.HasFeatureToggle("CTL", entityPM.Tenant))
+            {
+                IQueueService queueservice = new DbQueueService();
+                queueservice.InitializeQueue("CToolLookups", 0);
+                var queueMessage = new Dictionary<string, string>() {
+                { "Entity", "DisconectFromContact" },
+                { "EntityId", "{" + "\"ContactId\":" + "\"" + cardContact.ContactId + "\"," + "\"CardId\":" + "\"" + cardContact.CardId + "\"," + "\"Tenant\":" + tenant + "}" },
+                { "Tenant", tenant.ToString()}};
+                queueservice.Send(queueMessage, tenant);
             }
         }
 

@@ -129,7 +129,7 @@ namespace WebFreight.Web
             {
                 IsSecureConnection = context.Request.Headers["X-IsSecure"];
             } 
-            if (IsSecureConnection != "true" && enableHttps && LogitudeSettings.ForceHttps)
+            if (IsSecureConnection?.ToLower() != "true" && enableHttps && LogitudeSettings.ForceHttps)
             {
                 SecurityUtility.RedirectToHttps();
             }

@@ -33,7 +33,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                                ExchangeRateDiffGLAccountId = a.ExchangeRateDiffGLAccountId,
                                                                VATInputsGLAccountId = a.VATInputsGLAccountId,
                                                                Tenant = a.Tenant,
-
+                                                               AllowEditingExchangeRate= a.AllowEditingExchangeRate,
                                                                CustomerControlAccountId = a.CustomerControlAccountId,
                                                                CustomerControlAccountNumber = a.CustomerControlAccount != null ? a.CustomerControlAccount.DisplayNumber : null,
                                                                CustomerControlAccountName = a.CustomerControlAccount != null ? a.CustomerControlAccount.EnglishName : null,
@@ -64,9 +64,12 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
                                                                ExternalReconciliationDefault = a.ExternalReconciliationDefault,
                                                                DefaultDifferencesGLAccountId = a.DefaultDifferencesGLAccountId,
-                                                               DefaultExternalDiffGLAccountId= a.DefaultExternalDiffGLAccountId,
+                                                               DefaultExternalDiffGLAccountId = a.DefaultExternalDiffGLAccountId,
                                                                DefaultTaxWithholdPercentage = a.DefaultTaxWithholdPercentage,
                                                                GLAccounterCounterLength = a.GLAccounterCounterLength,
+                                                               IsSecurityLevelActivated = a.IsSecurityLevelActivated,
+                                                               VATOutputGLAccountId = a.VATOutputGLAccountId,
+                                                               TaxInstitutionGLAccountId = a.TaxInstitutionGLAccountId
                                                            });
             return query;
         }

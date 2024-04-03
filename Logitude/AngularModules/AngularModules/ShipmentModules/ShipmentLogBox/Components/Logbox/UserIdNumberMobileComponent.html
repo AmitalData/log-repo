@@ -8,7 +8,7 @@
         padding-right: 10px;
         margin-top: 5px;
     }
-
+   
     .BackButton {
         float: left;
         margin-left: 7px;
@@ -108,7 +108,7 @@
     }
 </style>
 <BusyIndicator [Text]="BusyIndicatorText" [IsBusy]="ShowBusyIndicator"></BusyIndicator>
-<div class="MediaFillAbsolute" style="background:transparent;">
+<div class="MediaFillAbsolute" style="background:transparent;" *ngIf="!orianStyle">
     <table class="LogitudeWindow" *ngIf="ShowFinalMessage == false">
         <tr>
             <td>
@@ -340,3 +340,76 @@
     </tr>
 
 </table>
+
+<div class="root" *ngIf="orianStyle && ShowFinalMessage == false">
+    <div class="container personal-info">
+  
+      <div class="section-header">
+        <div class="section-header-right">
+          <h1 class="header">PERSONAL INFO</h1>
+          <div>
+            <h3 class="subheader">הזנת פרטים למשלוח</h3>
+            <h3 class="shipment">משלוח # {{Hawb}}</h3>
+          </div>
+        </div>
+        <div class="section-header-left">
+          <img
+            src="./Images/mobile_payment/personal_info_mobile.png"
+            alt="">
+        </div>
+      </div>
+  
+      <div class="details">
+        <section class="section">
+          <h3>פרטי הלקוח</h3>
+          <p><span>לכבוד: {{CustomerName}}</span></p>
+          <p><span>כתובת: {{CustomerAddress}}</span></p>
+        </section>
+  
+        <section class="section">
+          <h3>פרטי השולח</h3>
+          <p><span>מאת: {{SenderDetails}}</span></p>
+          <p><span>תיאור טובין: {{GoodsDescritpion}}</span></p>
+        </section>
+  
+        <section class="section">
+          <h3>פרטי חבילה</h3>
+          <p><span>ערך משלוח: {{ShipmentValueInNIS | number : '1.0-1'}}</span></p>
+          <p><span>כמות אריזות: {{Quantity}}</span></p>
+          <p><span>משקל: {{Weight}} ק"ג</span></p>
+        </section>
+      </div>
+  
+      <div class="section-3">        
+          <h4 class="idnumber-label">נא להזין תעודת זהות (מעל גיל 18)</h4>
+          <input class="idnumber" type="number" [(ngModel)]="UserIdNumber">        
+      </div>
+  
+      <div class="btn-payment">
+        <button (click)="SendButtonClicked()">עדכן נתונים</button>
+      </div>
+      <p class="vlidation-msg" *ngIf="ValidationList != null && ValidationList.length != 0">{{ValidationList}}</p>
+  
+      <div class="footer">
+        <div class="footer-right">
+          <span>לברורים בנושא עלויות או כל מידע נוסף אודות המשלוח</span>
+          <br>
+          <a  href="mailto:{{EcommerceSupportEmail}}?subject=Shipment <{{Hawb}}> ">לחץ כאן</a>
+        </div>
+        <div class="footer-left">
+          <img src="./Images/mobile_payment/orian_logo_mobile.png" />
+        </div>
+      </div>`
+    </div>
+    <div class="modal" *ngIf="showDialogUserAcceptSave">
+        <div [@dialog] class="modal-body">
+          <h1 class="header">שאלה קטנה...</h1>
+          <p>לצורך טיפול מהיר ביותר במשלוחים עתידיים אנא אשר לחברת אוריין לשמור את פרטייך בצורה מאובטחת</p>
+          <div>
+            <button (click)="$userAcceptSave.next(true)">אני מסכים</button>
+            <button (click)="$userAcceptSave.next(false)" class="btn-not-agreed">איני מסכים</button>
+          </div>
+        </div>
+      </div>
+  </div>
+  

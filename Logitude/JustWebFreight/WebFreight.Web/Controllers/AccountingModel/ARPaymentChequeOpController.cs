@@ -24,6 +24,7 @@ using System.Transactions;
 using System.Web.Script.Serialization;
 using WebFreight.Web.DataContracts;
 using Logitude.Accounting.BL.Utils;
+using Logitude.Accounting.BL.CoreBL;
 
 namespace WebFreight.Web.Controllers.AccountingModel 
 {
@@ -41,7 +42,9 @@ namespace WebFreight.Web.Controllers.AccountingModel
 
 
                 string token = HttpContext.Current.Request.Headers["Token"];
-
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 PostDatedChequesRedemptionBatch postDatedChequesRedemptionBatch = new PostDatedChequesRedemptionBatch();
                 postDatedChequesRedemptionBatch.RunAllPayablePostDatedARPaymentCheques(tenant);
                 string responseText = postDatedChequesRedemptionBatch.ResponseText();
@@ -143,9 +146,33 @@ namespace WebFreight.Web.Controllers.AccountingModel
 
         }
 
+        public HttpResponseMessage PostReturnChequeToCustomer([FromUri] ARPaymentChequeReturnServiceArguments serviceArguments)
+        {
+            try
+            {
+                AuthinticateTenant();
+                using (TransactionScope scope = TransactionFactory.GetTransaction())
+                {
+                    ARPaymentChequeReturnService chequeReturnService = new ARPaymentChequeReturnService(serviceArguments);
+                    chequeReturnService.ReturnChequeToCustomer();
+                    scope.Complete();
+                    return Request.CreateResponse(HttpStatusCode.OK);
+                }
+            }
 
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
 
+        }
 
+        private static void AuthinticateTenant()
+        {
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+        }
     }
 
 

@@ -23,11 +23,13 @@ import { InvoiceTool } from '../../Tools';
 
 import { reject } from 'q';
 import { InvoiceDomainService } from '../../Services/InvoiceDomainService';
+import { LedgerTransactionPM } from 'Accounting/EntityPMs/LedgerTransactionPM';
 
 export class APPaymentMenuButtonsHandler {
     public EntityPM: APPaymentPM;
     public entityArgs: EntityArgs
     public customValidator: APPaymentValidator = new APPaymentValidator();
+    ReconcileInternalTrans:LedgerTransactionPM[];
     private isApproval: boolean;
     private isCancelApproval: boolean;
     private isVoided: boolean;
@@ -61,6 +63,9 @@ export class APPaymentMenuButtonsHandler {
             this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    if(this.EntityPM.ReconcileInternalTrans) {
+                        this.ReconcileInternalTrans = this.EntityPM.ReconcileInternalTrans;
+                    }
                     if (this.isApproval) {
                         this.isApproval = false;
 
@@ -519,8 +524,9 @@ export class APPaymentMenuButtonsHandler {
     }
 
     ContinueSaving(event: string) {
-
-
+        if(this.ReconcileInternalTrans) {
+            this.EntityPM.ReconcileInternalTrans = this.ReconcileInternalTrans;
+        }
         if (event && event != "Cancel") {
             var splittedstring = event.split(",");
             this.EntityPM.PaymentChequeCreationPayToName = splittedstring[0];

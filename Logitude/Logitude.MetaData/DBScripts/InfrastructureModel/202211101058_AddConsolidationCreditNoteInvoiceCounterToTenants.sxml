@@ -1,0 +1,51 @@
+﻿<Script DBType="Main"  Module="Infrastructure" Env="Logitude,local,test,cloud">
+  <Sql Version="5">
+    <![CDATA[
+ 
+  
+declare @Tenant as int
+declare @NewEntityId as varchar(15)
+declare @ARInvoiceCounterId as varchar(15)
+
+declare @InvoiceObjectTableId as varchar(15)
+set @InvoiceObjectTableId = (select Id from ObjectTables where Name = 'ARInvoice')
+
+declare @Prefix as varchar(10)
+declare @UniquePerPrefix as bit
+
+
+BEGIN
+		DECLARE TenantsCursor CURSOR READ_ONLY
+		FOR
+		SELECT Id
+		FROM Tenants
+		OPEN TenantsCursor FETCH NEXT FROM TenantsCursor INTO @Tenant
+		WHILE @@FETCH_STATUS = 0
+			BEGIN
+
+				if not exists (select * from Counters where Tenant = @Tenant AND Code = 'INVC' AND ObjectTableId = @InvoiceObjectTableId)
+				begin
+					EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'Counter'
+					insert into Counters (Id, Tenant, Code, Name, ObjectTableId) values (@NewEntityId, @Tenant, 'INVC', 'A/R Invoice',@InvoiceObjectTableId)
+				end
+
+				set @ARInvoiceCounterId = (select Id from Counters where Tenant = @Tenant and ObjectTableId = @InvoiceObjectTableId and Code = 'INVC')
+                if (@ARInvoiceCounterId is not null)
+				begin
+				if not exists (select * from CounterDefinitions where Tenant = @Tenant AND CounterId = @ARInvoiceCounterId AND Parameter1 = 'COD')
+				begin
+					EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'CounterDefinition'
+					insert into CounterDefinitions (Id, Tenant, Parameter1, StartNumber, CounterId, Prefix, UniquePerPrefix, InActive)
+					values (@NewEntityId, @Tenant, 'COD', 1000, @ARInvoiceCounterId, 'COD', 0, 1)
+				end
+				end
+
+			FETCH NEXT FROM TenantsCursor INTO @Tenant
+			END
+		CLOSE TenantsCursor
+		DEALLOCATE TenantsCursor
+END
+
+    ]]>
+  </Sql>
+</Script>

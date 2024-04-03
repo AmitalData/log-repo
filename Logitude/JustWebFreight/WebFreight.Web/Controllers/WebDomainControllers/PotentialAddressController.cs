@@ -29,6 +29,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                    SecurityUtility.AuthenticationOnTenant(entityPM.Tenant);
+                    SecurityUtility.AuthenticationOnEntityTenant("Address",entityPM.Tenant, authToken.Tenant);
 
                     ICommonDataContext MyContext = CommonDataContext.GetContext(entityPM.Tenant);
                     AddressService service = new AddressService(MyContext, entityPM.Tenant);
@@ -56,6 +58,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                    SecurityUtility.AuthenticationOnTenant(entityPM.Tenant);
+                    SecurityUtility.AuthenticationOnEntityTenant("Address", entityPM.Tenant, authToken.Tenant);
 
                     string entityName = "Address" + entityPM.Id + entityPM.Tenant;
                     string entityPmName = "AddressPM" + entityPM.Id + entityPM.Tenant;

@@ -29,7 +29,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         CreateDate, 
 	         CreatedByUserId, 
 	         SearchFields, 
-	         IsCancelled,
+	         IsCancelled, 
+	         CrossYearReconcile,
 	      }
 
 
@@ -49,7 +50,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         AccountCurrencyId, 
 	         IsCancelled, 
 	         BankAccountId, 
-	         AccountLocalName,
+	         AccountLocalName, 
+	         CrossYearReconcile,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -91,6 +93,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsCancelled))
             {
 				entityPOCO.IsCancelled = entityPM.IsCancelled;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CrossYearReconcile))
+            {
+				entityPOCO.CrossYearReconcile = entityPM.CrossYearReconcile;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -139,6 +146,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.IsCancelled = entityPOCO.IsCancelled;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CrossYearReconcile))
+            {
+					entityPM.CrossYearReconcile = entityPOCO.CrossYearReconcile;
+            }
+
 		}
 
 		public void PMToOldPM(ExternalReconciliationPM entityPM, ExternalReconciliationPM oldEntityPM)
@@ -178,6 +190,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsCancelled))
             {
                 oldEntityPM.IsCancelled = entityPM.IsCancelled;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CrossYearReconcile))
+            {
+                oldEntityPM.CrossYearReconcile = entityPM.CrossYearReconcile;
             }
 			
 		}

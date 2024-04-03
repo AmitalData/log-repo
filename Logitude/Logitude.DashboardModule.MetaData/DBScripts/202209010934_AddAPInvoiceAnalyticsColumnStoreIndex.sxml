@@ -1,0 +1,53 @@
+﻿<Script DBType="Main" Module="Dashboard" Env="Logitude,local,test">
+  <Sql Version="2">
+    <![CDATA[
+      BEGIN
+          IF EXISTS (SELECT *  FROM sys.indexes  WHERE NAME='IX_APInvoiceAnalytics_ColumnStore' AND object_id = OBJECT_ID('[APInvoiceAnalytics]'))
+          BEGIN
+				DROP INDEX IX_APInvoiceAnalytics_ColumnStore ON APInvoiceAnalytics;
+          END
+		  CREATE COLUMNSTORE INDEX IX_APInvoiceAnalytics_ColumnStore ON APInvoiceAnalytics (
+      
+
+
+Id
+,Tenant
+,InternalNumber
+,InvoiceNumber
+,VendorId
+,VATNumber
+,InvoiceDate
+,PaymentTermId
+,DueDate
+,InvoiceCurrencyId
+,LocalCurrencyId
+,SubTotalInLocalCurrency
+,AmountInLocalCurrency
+,StatusCode
+,CreateDate
+,CreatedByUserId
+,IsClosed
+,ProfitCurrencyId
+,AmountInProfitCurrency
+,UpdatedByUserId
+,UpdateDate
+,MainEntityReference
+,AmountDueInLocalCurrency
+,AmountDueInProfitCurrency
+,BranchId
+,IsTransferStarted
+,TransferStatusCode
+,IsMultipleEntities
+,ApprovedDate
+,ApprovedByUserId
+,OperationalDate
+,FirstApproveDate
+,TotalVATOnly
+,PaidDate
+                
+                );
+      END
+
+    ]]>       
+  </Sql>
+</Script>

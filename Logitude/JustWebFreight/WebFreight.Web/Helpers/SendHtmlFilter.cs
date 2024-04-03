@@ -21,6 +21,8 @@ namespace WebFreight.Web.Helpers
         public string UserId { get; set; }
         public string EntityId { get; set; }
         public string ObjectTableId { get; set; }
+        public string ChildObjectTableId { get; set; }
+        public string ChildEntityId { get; set; }
         public string Attachments { get; set; }
         public string EntityReference { get; set; }
         public bool ExportQuotationsToIntegratedSystem { get; set; }
@@ -30,6 +32,7 @@ namespace WebFreight.Web.Helpers
         public string EventTypeCode { get; set; }
         public bool IsCRM { get; set; }
         public string DocumentTypeCode { get; set; }
+        public string DocumentTypeId { get; set; }
         public string HeaderHtml { get; set; }
         public string FooterHtml { get; set; }
 

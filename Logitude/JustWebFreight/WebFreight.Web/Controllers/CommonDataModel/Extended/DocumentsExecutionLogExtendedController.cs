@@ -51,9 +51,9 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
             DocumentsExecutionLogRepository documentsExecutionLogRepository = new DocumentsExecutionLogRepository(documentsExecutionLogList.Tenant);
             DocumentsExecutionLog documentsExecutionLog = documentsExecutionLogRepository.GetSingleDocumentsExecutionLog(documentsExecutionLogList.Id, documentsExecutionLogList.Tenant);
             if (documentsExecutionLog != null)
-            {
+            {     
+                documentsExecutionLog.ExceptionMessage = "Building document reached Timeout.Please try again.If the issue is persistent then please kindly contact our Customer Support";
                 documentsExecutionLog.StatusCode = "T";
-                documentsExecutionLog.ExceptionMessage = "The document failed to build.Please try again.";
                 documentsExecutionLogRepository.Update(documentsExecutionLog);
                 documentsExecutionLogRepository.SubmitChanges();
             }

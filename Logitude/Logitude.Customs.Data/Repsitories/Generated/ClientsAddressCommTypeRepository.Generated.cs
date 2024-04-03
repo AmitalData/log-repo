@@ -49,7 +49,7 @@ namespace Logitude.Customs.Data.Repsitories
                     where a.ClientId == keys.ClientId && a.AddressId == keys.AddressId && a.Line == keys.Line
                     select a).FirstOrDefault();
         }
-		         
+		 		                 
         partial void onAdd();//Partial Methods Definition in Generated
         public void Add(ClientsAddressCommType entity)
         {

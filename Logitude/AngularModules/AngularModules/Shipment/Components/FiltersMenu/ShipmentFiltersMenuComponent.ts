@@ -84,6 +84,7 @@ export class ShipmentFiltersMenuComponent implements AfterViewInit {
             }
 
             this.apiQueryFilters.addAdditionalFilter("TransportModeId", itemValue, null, null, "Equals", false, true, false, "string", (itemValue == "All" ? true : false));
+
             if (itemValue == "All") {
                 RemoveFilter = true;
             }
@@ -199,6 +200,10 @@ export class ShipmentFiltersMenuComponent implements AfterViewInit {
 
             this.apiQueryFilters.addAdditionalFilter("DirectionId", itemValue, null, null, "Equals", false, true, false, "string", (itemValue == "All" ? true : false));
 
+            if (itemValue == "All") {
+                RemoveFilter = true;
+            }
+
             this.SelectedValueChanged.emit({ Filters: this.apiQueryFilters, RemoveFilter: RemoveFilter });
             this.ApplyDirectionSelectedStyle();
         }
@@ -212,7 +217,6 @@ export class ShipmentFiltersMenuComponent implements AfterViewInit {
             var img_C: HTMLElement;
             if (this.itmImportShipments)
                 img_C = document.getElementById(this.DirectionFilter_C);
-            //var img_C = document.getElementById("DirectionFilter_C");
 
             switch (itemValue) {
                 case "E": {
@@ -238,7 +242,6 @@ export class ShipmentFiltersMenuComponent implements AfterViewInit {
                 case "C": {
                     if (this.itmImportShipments)
                         img_C.setAttribute("src", "./Images/Directions/C.png");
-                    //img_C.setAttribute("src", "./Images/Directions/C.png");
                     break;
                 }
             }
@@ -253,7 +256,6 @@ export class ShipmentFiltersMenuComponent implements AfterViewInit {
             var img_C: HTMLElement;
             if (this.itmImportShipments)
                 img_C = document.getElementById(this.DirectionFilter_C);
-            //var img_C = document.getElementById("DirectionFilter_C");
 
             switch (itemValue) {
                 case "E": {
@@ -279,7 +281,6 @@ export class ShipmentFiltersMenuComponent implements AfterViewInit {
                 case "C": {
                     if (this.itmImportShipments)
                         img_C.setAttribute("src", "./Images/Directions/C.png");
-                    //img_C.setAttribute("src", "./Images/Directions/C_g.png");
                     break;
                 }
             }
@@ -345,122 +346,28 @@ export class ShipmentFiltersMenuComponent implements AfterViewInit {
         if (this.LevelCodeSelectedValue != itemValue) {
             this.LevelCodeSelectedValue = itemValue;
             var RemoveFilter = false;
+
             if (this.apiQueryFilters.AdditionalFilters.length > 0) {
                 this.apiQueryFilters.AdditionalFilters = this.apiQueryFilters.AdditionalFilters.filter(a => a.FieldName != "ShipmentLevelCode");
             }
 
-
             this.apiQueryFilters.addAdditionalFilter("ShipmentLevelCode", itemValue, null, null, "Equals", false, true, false, "string", (itemValue == "All" ? true : false));
 
-            this.SelectedValueChanged.emit({ Filters: this.apiQueryFilters, RemoveFilter: RemoveFilter });
+            if (itemValue == "All") {
+                RemoveFilter = true;
+            }
 
-            //var img_E = document.getElementById(this.DirectionFilter_E);
-            //var img_I = document.getElementById(this.DirectionFilter_I);
-            //var img_R = document.getElementById(this.DirectionFilter_R);
-            //var img_D = document.getElementById(this.DirectionFilter_D);
-            ////var img_C = document.getElementById("DirectionFilter_C");
-            //img_E.setAttribute("src", "./Images/Directions/E_g.png");
-            //img_I.setAttribute("src", "./Images/Directions/I_g.png");
-            //img_R.setAttribute("src", "./Images/Directions/R_G.png");
-            //img_D.setAttribute("src", "./Images/Directions/D_G.png");
-            ////img_C.setAttribute("src", "./Images/Directions/C_G.png");
-
-            //switch (itemValue) {
-            //    case "E": {
-            //        img_E.setAttribute("src", "./Images/Directions/E_w.png");
-            //        break;
-            //    }
-
-            //    case "I": {
-            //        img_I.setAttribute("src", "./Images/Directions/I_w.png");
-            //        break;
-            //    }
-
-            //    case "R": {
-            //        img_R.setAttribute("src", "./Images/Directions/R_w.png");
-            //        break;
-            //    }
-
-            //    case "D": {
-            //        img_D.setAttribute("src", "./Images/Directions/D_w.png");
-            //        break;
-            //    }
-
-            //    case "C": {
-            //        //img_C.setAttribute("src", "./Images/Directions/C_w.png");
-            //        break;
-            //    }
-            //}
+            this.SelectedValueChanged.emit({ Filters: this.apiQueryFilters, RemoveFilter: RemoveFilter });            
         }
     }
     LevelCodeMouseOver(itemValue: string) {
         if (this.LevelCodeSelectedValue != itemValue) {
-            //var img_E = document.getElementById(this.DirectionFilter_E);
-            //var img_I = document.getElementById(this.DirectionFilter_I);
-            //var img_R = document.getElementById(this.DirectionFilter_R);
-            //var img_D = document.getElementById(this.DirectionFilter_D);
-
-            //switch (itemValue) {
-            //    case "E": {
-            //        img_E.setAttribute("src", "./Images/Directions/E.png");
-            //        break;
-            //    }
-
-            //    case "I": {
-            //        img_I.setAttribute("src", "./Images/Directions/I.png");
-            //        break;
-            //    }
-
-            //    case "R": {
-            //        img_R.setAttribute("src", "./Images/Directions/R.png");
-            //        break;
-            //    }
-
-            //    case "D": {
-            //        img_D.setAttribute("src", "./Images/Directions/D.png");
-            //        break;
-            //    }
-
-            //    case "C": {
-            //        //img_C.setAttribute("src", "./Images/Directions/C.png");
-            //        break;
-            //    }
-            //}
+         
         }
     }
     LevelCodeMouseLeave(itemValue: string) {
         if (this.LevelCodeSelectedValue != itemValue) {
-            //var img_E = document.getElementById(this.DirectionFilter_E);
-            //var img_I = document.getElementById(this.DirectionFilter_I);
-            //var img_R = document.getElementById(this.DirectionFilter_R);
-            //var img_D = document.getElementById(this.DirectionFilter_D);
-
-            //switch (itemValue) {
-            //    case "E": {
-            //        img_E.setAttribute("src", "./Images/Directions/E_g.png");
-            //        break;
-            //    }
-
-            //    case "I": {
-            //        img_I.setAttribute("src", "./Images/Directions/I_g.png");
-            //        break;
-            //    }
-
-            //    case "R": {
-            //        img_R.setAttribute("src", "./Images/Directions/R_g.png");
-            //        break;
-            //    }
-
-            //    case "D": {
-            //        img_D.setAttribute("src", "./Images/Directions/D_g.png");
-            //        break;
-            //    }
-
-            //    case "C": {
-            //        //img_C.setAttribute("src", "./Images/Directions/C_g.png");
-            //        break;
-            //    }
-            //}
+           
         }
     }
 }

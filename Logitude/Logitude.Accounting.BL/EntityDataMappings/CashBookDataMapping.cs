@@ -67,8 +67,15 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 }
             }
 
+            GLAccountMoreDataQueryService gLAccountMoreDataQueryService = new GLAccountMoreDataQueryService(entityPOCO.Tenant);
+            var accountMoreData = gLAccountMoreDataQueryService.GetSingle(entityPOCO.AccountId, false, false);
+            if (accountMoreData != null)
+            {
+                //entityPM.TotalAmount = accountMoreData.BalanceInForeignCurrency;
+                entityPM.BalanceInForeignCurrency = accountMoreData.BalanceInForeignCurrency;
 
-            if (entityPOCO.AccountId != null)
+            }
+                if (entityPOCO.AccountId != null)
             {
                 GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(entityPOCO.Tenant);
                 GLAccountPM account = gLAccountQueryService.GetSingle(entityPOCO.AccountId, false, true);

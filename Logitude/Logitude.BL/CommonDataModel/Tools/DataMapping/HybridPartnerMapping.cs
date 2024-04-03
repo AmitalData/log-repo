@@ -23,6 +23,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPOCO.IsExternalPartner = entityPM.IsExternalPartner;
             entityPOCO.ReceiveAllStatuses = entityPM.ReceiveAllStatuses;
             entityPOCO.AllowSendingDocsToAgent = entityPM.AllowSendingDocsToAgent;
+            entityPOCO.InActive = entityPM.InActive;
             BuildSearchFields(entityPM, entityPOCO);
         }
 

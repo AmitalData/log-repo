@@ -74,6 +74,14 @@ namespace Simplog.Data.CommonDataModel.Mapping
                 .HasMaxLength(500)
                 .IsUnicode(true);
 
+            this.Property(t => t.ObjectTableId)
+                .HasMaxLength(15)
+                .IsUnicode(false);
+
+            this.Property(t => t.EntityId)
+                .HasMaxLength(15)
+                .IsUnicode(false);
+
             // Table & Column Mappings
             this.ToTable("ReportsTemplates");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -96,7 +104,9 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.ReplyTo).HasColumnName("ReplyTo");
             this.Property(t => t.CC).HasColumnName("CC");
             this.Property(t => t.Subject).HasColumnName("Subject");
-
+            this.Property(t => t.IsSystemReportFixed).HasColumnName("IsSystemReportFixed");
+            this.Property(t => t.ObjectTableId).HasColumnName("ObjectTableId");
+            this.Property(t => t.EntityId).HasColumnName("EntityId");
 
 
             //#if ORACLE_DB

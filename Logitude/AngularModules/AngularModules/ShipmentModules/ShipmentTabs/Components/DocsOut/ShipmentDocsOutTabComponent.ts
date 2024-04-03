@@ -50,7 +50,7 @@ export class ShipmentDocsOutTabComponent implements OnInit {
                 if (!pmResponse.HasError) {
                     var myResult = pmResponse.Result;
 
-                    var childrenDocTypes_invoices = myResult.filter(d => d.Code == "999S" || d.Code == "999M" || d.Code == "999CI");
+                    var childrenDocTypes_invoices = myResult.filter(d => d.Code == "999S" || d.Code == "999M" || d.Code == "999CI" || d.Code == "ARINV");
 
                     if (childrenDocTypes_invoices.length > 0) {
                         childrenDocTypes_invoices.forEach((typeList) => {

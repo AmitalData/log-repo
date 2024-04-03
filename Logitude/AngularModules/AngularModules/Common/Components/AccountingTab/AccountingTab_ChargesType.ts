@@ -167,6 +167,7 @@ export class AccountingTab_ChargesType extends BaseComponent implements OnDestro
     set PayableDebitGLAcountId(value: string) {
         if (this.EntityPM.PayableDebitGLAcountId != value) {
             this.EntityPM.PayableDebitGLAcountId = value;
+            if (this.EntityPM.PayableDebitGLAcountId == null) this.EntityPM.PayDebitGLAcountLocalName = null;
         }
     }
     
@@ -181,6 +182,7 @@ export class AccountingTab_ChargesType extends BaseComponent implements OnDestro
     set ReceivableCreditGLAccountId(value: string) {
         if (this.EntityPM.ReceivableCreditGLAccountId != value) {
             this.EntityPM.ReceivableCreditGLAccountId = value;
+            if (this.EntityPM.ReceivableCreditGLAccountId == null) this.EntityPM.RecCreditGLAcountLocalName = null;
         }
     }
 

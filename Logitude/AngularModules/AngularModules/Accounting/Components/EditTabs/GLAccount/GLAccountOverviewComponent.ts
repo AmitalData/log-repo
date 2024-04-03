@@ -27,11 +27,12 @@ import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCod
 import { AgingReportParameters } from '../../../DataContracts/AgingReportParameters';
 import { PeriodM } from '../../../DataContracts/PeriodM';
 import { GLAccountList } from '../../../EntityLists/GLAccountList';
-import { GLAccountFollowUpDataPM } from '../../../EntityPMs/GLaccountFollowUpDataPM';
+import { GLAccountFollowUpDataPM } from '../../../EntityPMs/GLAccountFollowUpDataPM';
 import { GLaccountFollowUpDataExtendedPMService } from 'Accounting/Services/ExtendedPMs/GLaccountFollowUpDataExtendedPMService';
 import { GLAccountCardsDataPMService } from '../../../Services/StandardPMs/GLAccountCardsDataPMService';
 import { GLAccountExtendedPMService } from '../../../Services/ExtendedPMs/GLAccountExtendedPMService';
-
+import { PaymentTermPMService } from 'Common/Services/StandardPMs/PaymentTermPMService';
+declare var makeAmBarChart;
 @Component({
 
     templateUrl: './GLAccountOverviewComponent.html',
@@ -55,7 +56,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
     public CreditLimitAmount: number = 0;
     public InsuredCreditLimit: number = 0;
     public gLAccountFollowUpDataPM: GLAccountFollowUpDataPM;
-   
+
     //Services
     _GLAccountExtendedPMService: GLAccountExtendedPMService = new GLAccountExtendedPMService();
     _EntityResourceService: EntityResourceService = new EntityResourceService();
@@ -66,6 +67,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
     _AccountingNotePMService: AccountingNotePMService = new AccountingNotePMService();
     _CardListService: CardListService = new CardListService();
     private gLAccountFollowUpDataPMService: GLaccountFollowUpDataExtendedPMService = new GLaccountFollowUpDataExtendedPMService();
+    private paymentTermPMService: PaymentTermPMService = new PaymentTermPMService();
     private gLAccountCardsDataPMService: GLAccountCardsDataPMService = new GLAccountCardsDataPMService();
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private entityArgs: EntityArgs, private CD: ChangeDetectorRef) {
@@ -143,10 +145,10 @@ export class GLAccountOverviewComponent extends BaseComponent {
     }
     //LoadGLAccountFollowUpData() {
     //    this.gLAccountFollowUpDataPMService.getByAccountId(this.EntityPM.Id).subscribe((myResult: any) => {
-         
+
     //        var mm: ServiceResponse = myResult;
     //        if (!mm.HasError) {
-    //            this.gLAccountFollowUpDataPM = mm.Result;             
+    //            this.gLAccountFollowUpDataPM = mm.Result;
     //        }
     //        else {
     //        }
@@ -164,9 +166,9 @@ export class GLAccountOverviewComponent extends BaseComponent {
     TenantCurrency:string;
     accountCardlist: CardList[];
     accountCardnumberLists:string[]=[];
-    GLaccountConnectedMoreOneCardText:string =TextCodeTranslator.Translate("GLAccount.O.GLaccountConnectedMoreOneCard"); 
-    Connected10CardsText:string =TextCodeTranslator.Translate("GLAccount.O.Connected10Cards"); 
-
+    GLaccountConnectedMoreOneCardText:string =TextCodeTranslator.Translate("GLAccount.O.GLaccountConnectedMoreOneCard");
+    Connected10CardsText:string =TextCodeTranslator.Translate("GLAccount.O.Connected10Cards");
+    firstConnectedCardPaymentTermName;
     private LoadExternalTransactionTotal()
     {
         this._GLAccountExtendedListService.GetGLAccountExternalTransactionsTotal(this.EntityPM.Id).subscribe((myResult: any) =>
@@ -188,7 +190,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
         this._GLAccountMoreDataListService.getSingle(this.EntityPM.Id).subscribe((myResult:any) => {
             this.CurrentSession.StopBusyIndicator();
             console.log("_GLAccountMoreDataListService.getSingle", myResult);
-         
+
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
                 this.GLAccountMoreData = mm.Result;
@@ -212,7 +214,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
         });
 
 
-      
+
             this._GLAccountExtendedPMService.GetConnectedCardsForGLAccount(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
                 var connectedCards = myResponse.Result;
                 this.accountCardlist = connectedCards;
@@ -221,7 +223,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
                     var IsAllCardHasOpenShipmentNull:boolean=true;
                     this.CreditLimitAmount=0;
                     this.OpenShipments = 0;
-                  
+
                     this.accountCardlist.forEach(s=>{
                         this.accountCardnumberLists.push(s.Code);
                         if(s.OpenShipments!=null){
@@ -229,8 +231,12 @@ export class GLAccountOverviewComponent extends BaseComponent {
                             IsAllCardHasOpenShipmentNull=false;
                         }
                         if(s.CreditLimitAmount!=null){
-                            IsAllCardHasCriedtLimitNull=false;
-                            this.CreditLimitAmount+=s.CreditLimitAmount;
+                            IsAllCardHasCriedtLimitNull = false;
+                            this.CreditLimitAmount += s.CreditLimitAmount + s.AccountingPartnerCreditLimit;
+                        }
+                        if (s.AccountingPartnerCreditLimit != null) {
+                            IsAllCardHasCriedtLimitNull = false;
+                            this.CreditLimitAmount += s.AccountingPartnerCreditLimit;
                         }
                     });
                     if(this.accountCardlist.length >= 10){
@@ -240,7 +246,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
                         this.GLaccountConnectedMoreOneCardText+=" ";
                         this.GLaccountConnectedMoreOneCardText+= this.accountCardnumberLists.toString();
                     }
-             
+
                     if(IsAllCardHasCriedtLimitNull){
                         this.CreditLimitAmount=null;
                     }
@@ -252,9 +258,9 @@ export class GLAccountOverviewComponent extends BaseComponent {
 
             });
 
-  
-    
- 
+
+
+
 
         // Get connect card
         // this._CardListService.getSingle(this.EntityPM.CardId).subscribe((myResult:any) => {
@@ -328,7 +334,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
                 }
 
             }, 100);
-    
+
     }
     OnMouseLeave(ElementId:string) {
           this.isMouseIn = false;
@@ -351,7 +357,6 @@ export class GLAccountOverviewComponent extends BaseComponent {
             var editWindow = new LogitudeWindow();
 
             editWindow.ShowHeaderButtons = true;
-            //editWindow.Title = windowTitle;
             editWindow.Height = 770;
             editWindow.Width = 1500;
             editWindow.IsHideHeader  = true;
@@ -391,11 +396,16 @@ export class GLAccountOverviewComponent extends BaseComponent {
                 windowArgs.GLAccountPM = this.EntityPM;
                 windowArgs.openAmountCurrency = openAmountCurrency;
                 windowArgs.originalAmountCurrency = originalAmountCurrency;
+
+                this.FillPaymentTermName(windowArgs);
+
+
                 var logitudeWindow = new LogitudeWindow();
                 logitudeWindow.Width = (screenWidth > 1024) ? (screenWidth > 1200 ? 1500 : screenWidth - 20) : 900;
                 logitudeWindow.Height = (screenHeight > 768) ? (screenHeight > 800 ? 700 : screenHeight - 70) : screenHeight - 70;
+                logitudeWindow.IsHideHeader = true;
 
-                logitudeWindow.Title = TextCodeTranslator.Translate("Accounting.General.O.Reconcile"); //"Reconcile";
+                // logitudeWindow.Title = TextCodeTranslator.Translate("Accounting.General.O.Reconcile"); //"Reconcile";
 
                 logitudeWindow.WindowArgs = windowArgs;
                 logitudeWindow.Show('./Accounting/Components/Others/ReconcileComponent');
@@ -407,6 +417,17 @@ export class GLAccountOverviewComponent extends BaseComponent {
 
             }
         });
+    }
+
+    private FillPaymentTermName(windowArgs: any)
+    {
+        let firstAccount = this.accountCardlist.length > 0 ? this.accountCardlist[0] : null;
+        let paymentTermName = '';
+        if (firstAccount) {
+            const showLocals = !SessionLocator.LoggedUserPM.DontShowLocalLabels;
+            paymentTermName = showLocals ? (firstAccount.PaymentTermLocalName || firstAccount.PaymentTermEnglishName): (firstAccount.PaymentTermEnglishName || firstAccount.PaymentTermLocalName);
+        }
+        windowArgs.PaymentTermName = paymentTermName;
     }
 
     GetNonReconciledTransactionsCount() {
@@ -458,7 +479,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
 
     get GLAccountFollowUpRemarks() { return this.EntityPM.GLAccountFollowUpRemarks; }
     set GLAccountFollowUpRemarks(value: string) {
-        if (this.EntityPM.GLAccountFollowUpRemarks != value) {         
+        if (this.EntityPM.GLAccountFollowUpRemarks != value) {
             this.EntityPM.GLAccountFollowUpRemarks = value;
         }
     }
@@ -696,7 +717,6 @@ export class GLAccountOverviewComponent extends BaseComponent {
                 (this.GLAccountMoreData.BalanceInLocalCurrency ? this.GLAccountMoreData.BalanceInLocalCurrency : 0)
             +   (this.GLAccountMoreData.TotalOpenChequesInLocalCur ? this.GLAccountMoreData.TotalOpenChequesInLocalCur : 0)
             +   (this.GLAccountMoreData.TotFutureOpenChequesInLocalCur ? this.GLAccountMoreData.TotFutureOpenChequesInLocalCur : 0)
-            +   (this.externalTransactionsTotal  ? this.externalTransactionsTotal  : 0)
             + (this.OpenShipments?this.OpenShipments:0 );
 
             this.accountTotal = percentage;
@@ -724,15 +744,16 @@ export class GLAccountOverviewComponent extends BaseComponent {
         this.gLAccountCardsDataPMService.get(this.EntityPM.CardsDataId).subscribe((myResult: ServiceResponse) => {
             var myResult: ServiceResponse ;
             if (!myResult.HasError) {
-                this.InsuredCreditLimit = myResult.Result.InsuredcreditLimit;
+                this.InsuredCreditLimit =myResult.Result? myResult.Result.InsuredcreditLimit: null;
             }
         });
     }
 
     DisplayChequelistClicked(id) {
-
+        
        var windowArgs: any = {};
         windowArgs.EntityPM = this.EntityPM;
+        windowArgs.IsUnpaidChecks = true;
         var logWindow = new LogitudeWindow();
         logWindow.Width = 1100;
         logWindow.Height = 600;
@@ -743,6 +764,22 @@ export class GLAccountOverviewComponent extends BaseComponent {
         logWindow.Show('./Accounting/Components/EditTabs/GLAccount/GLAccountChequeListComponent');
     }
 
+    DisplayFutureChequelistClicked(id) {
+
+        var windowArgs: any = {};
+         windowArgs.EntityPM = this.EntityPM;
+         windowArgs.IsFutureOpenCheques = true;
+         var logWindow = new LogitudeWindow();
+         logWindow.Width = 1100;
+         logWindow.Height = 600;
+         logWindow.Title = TextCodeTranslator.Translate('GLAccount.O.ChequesList');
+         logWindow.ShowCloseButton = false;
+         logWindow.WindowArgs = windowArgs;
+         logWindow.WindowClosed.subscribe(($event: any) => { });
+         logWindow.Show('./Accounting/Components/EditTabs/GLAccount/GLAccountChequeListComponent');
+     }
+
+    
     CardIndexClicked(){
         this.DisplayTransactionsLinkClicked();
     }
@@ -762,6 +799,12 @@ export class GLAccountOverviewComponent extends BaseComponent {
 
     IsInsuredCreditLimitDefined() {
         return this.InsuredCreditLimit != 0;
+    }
+
+    GetTotalObligo() {
+        return this.OpenShipments +
+            ((this.GLAccountMoreData.TotFutureOpenChequesInLocalCur ? this.GLAccountMoreData.TotFutureOpenChequesInLocalCur : 0)) +
+            (this.GLAccountMoreData.BalanceInLocalCurrency ?this. GLAccountMoreData.BalanceInLocalCurrency : 0);
     }
     //
 
@@ -941,12 +984,14 @@ export class GLAccountOverviewComponent extends BaseComponent {
 
         var poisition = this.isRTL == true ? "right" : "left";
 
-    //    makeAmBarChart(this.chartId, Graphs, DataProvider, max, null, null, null, null, poisition);
+        makeAmBarChart(this.chartId, Graphs, DataProvider, max, null, null, null, null, poisition);
 
     }
     //
 
     //#endregion
+
+
 
 
 }

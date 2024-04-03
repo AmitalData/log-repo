@@ -40,7 +40,11 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                 mytenant = authToken.Tenant;
 
                 if (filters.Tenant != null)
+                {
                     mytenant = filters.Tenant.Value;
+                    SecurityUtility.AuthenticationOnTenant(filters.Tenant.Value);
+                }
+                
 
                 QueryOperations queryOperations = new QueryOperations()
                 {
@@ -152,8 +156,11 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                                                   WebSite = card.Website,
                                                   SearchFields = card.SearchFields,
                                                   InvitationDate = card.InvitationDate,
+                                                  CargoTrackingInvitationDate = card.CargoTrackingInvitationDate,
                                                   SharedLogisticsInvitationStatusCode = card.SharedLogisticsInvitationStatusCode,
                                                   SharedLogisticsInvitationStatusName = card.SharedLogisticsInvitationStatus != null ? card.SharedLogisticsInvitationStatus.Name : null,
+                                                  CargoTrackingInvitationStatusCode = card.CargoTrackingInvitationStatusCode,
+                                                  CargoTrackingInvitationStatusName = card.CargoTrackingInvitationStatus != null ? card.CargoTrackingInvitationStatus.Name : null,
                                                   LastLoginDate = card.LastLoginDate,
                                                   PrimaryContactId = card.PrimaryContactId,
                                                   CityName = card.CityName,

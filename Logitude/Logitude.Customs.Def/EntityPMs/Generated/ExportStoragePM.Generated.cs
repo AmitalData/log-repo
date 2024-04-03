@@ -1009,7 +1009,7 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private string containerTypeWCO ;
+ 	  private string containerTypeWCO ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
@@ -1033,6 +1033,6 @@ namespace Logitude.Customs.Def.EntityPMs
 		 }
 	   }
    }
-   
+    
 }
 	 

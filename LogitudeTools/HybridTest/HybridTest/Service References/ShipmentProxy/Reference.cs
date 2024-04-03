@@ -161,6 +161,9 @@ namespace HypredTest.ShipmentProxy {
         private System.Nullable<System.DateTime> AccountingCloseDateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string AccountingClosedByUserIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string AccountingInformation1Field;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -212,6 +215,9 @@ namespace HypredTest.ShipmentProxy {
         private bool AdditionalHandlingInfoEditedField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string AgentField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string AgentAddressCountryCodeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -254,6 +260,9 @@ namespace HypredTest.ShipmentProxy {
         private string ApprovedByField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> ApprovedCargoReadyDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<System.DateTime> ArrivalNoticeSentDateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -266,9 +275,6 @@ namespace HypredTest.ShipmentProxy {
         private System.Nullable<System.DateTime> AssginedToCustomsAgentDateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string AssginedtoCustomsAgentIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<System.DateTime> AssignedToTruckerDateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -279,6 +285,9 @@ namespace HypredTest.ShipmentProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string BasketIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string BillingStatusIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string BookingConfNumber_OriginalField;
@@ -447,6 +456,9 @@ namespace HypredTest.ShipmentProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string ConcurrencyGUIDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private HypredTest.ShipmentProxy.ShipmentPackagePM[] ConnectedMasterPackagesField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int ConnectedShipmentsField;
@@ -785,6 +797,12 @@ namespace HypredTest.ShipmentProxy {
         private bool DocsSentToAgentField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DocumentFilingIdsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> DocumentInspectionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string DocumentsApprovedByUserNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -837,6 +855,9 @@ namespace HypredTest.ShipmentProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<System.DateTime> ExpectedArrivalNoticeSentDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ExternalStatusesField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool FBLIsFromStockField;
@@ -1058,18 +1079,6 @@ namespace HypredTest.ShipmentProxy {
         private System.Nullable<System.DateTime> FlightDateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<System.DateTime> FollowUpDateField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string FollowUpIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string FollowUpNotesField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string FollowUpTypeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private HypredTest.ShipmentProxy.ShipmentFollowUpPM[] FollowUpsField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -1079,7 +1088,13 @@ namespace HypredTest.ShipmentProxy {
         private string ForwarderPartnerIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ForwarderPickUpDeliveryTypeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string ForwarderShipmentNumberField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ForwarderStandaloneShipmentIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string ForwardingPartnerIdField;
@@ -1178,6 +1193,12 @@ namespace HypredTest.ShipmentProxy {
         private string FromPortNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> GatepassDocumentsReadyField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> GoodsClassificationField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<double> GrossWeightField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -1205,6 +1226,9 @@ namespace HypredTest.ShipmentProxy {
         private System.Nullable<System.DateTime> HAWBDateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string HandlerUserIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool HasContainerExceptionField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -1217,7 +1241,13 @@ namespace HypredTest.ShipmentProxy {
         private bool HasOnCarriageField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool HasOnForwardingField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool HasPreCarriageField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool HasPreForwardingField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string HouseField;
@@ -1391,6 +1421,30 @@ namespace HypredTest.ShipmentProxy {
         private string IncotermNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string InlandDomesticFromCityField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string InlandDomesticFromCountryIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string InlandDomesticFromTypeCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string InlandDomesticFromZipCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string InlandDomesticToCityField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string InlandDomesticToCountryIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string InlandDomesticToTypeCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string InlandDomesticToZipCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string InterlineIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -1460,6 +1514,12 @@ namespace HypredTest.ShipmentProxy {
         private bool IsFlightDateActualField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsGroupageHousesUpdatedField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsHTSMissingField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool IsHybridField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -1491,6 +1551,9 @@ namespace HypredTest.ShipmentProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool IsPaymentRequiredField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsProductItemsUpdatedField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool IsRefreshFollowUpField;
@@ -1535,6 +1598,9 @@ namespace HypredTest.ShipmentProxy {
         private bool IsShipmentComputedFieldChangeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsStandalonePickupDeliveryField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool IsStatusChangeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -1554,6 +1620,9 @@ namespace HypredTest.ShipmentProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool IsUpdatedByINTTRAAnalyzerField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsUpdatedOceanInsightsAnalyzerField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool IsUserIDNumberRequiredField;
@@ -1748,6 +1817,9 @@ namespace HypredTest.ShipmentProxy {
         private string MainCarriageFromPartnerIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string MainCarriageFromPortAddressField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string MainCarriageFromPortCodeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -1788,6 +1860,9 @@ namespace HypredTest.ShipmentProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string MainCarriageToPartnerIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string MainCarriageToPortAddressField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string MainCarriageToPortCodeField;
@@ -1946,6 +2021,9 @@ namespace HypredTest.ShipmentProxy {
         private string Notify1ReferenceField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string Notify1Reference2Field;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string Notify1StateIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -2099,6 +2177,87 @@ namespace HypredTest.ShipmentProxy {
         private string OnCarriageVesselNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> OnForwardingATAField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> OnForwardingATA_OriginalField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> OnForwardingATDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> OnForwardingATD_OriginalField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string OnForwardingAdditionalTransportModeCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string OnForwardingCarrierCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string OnForwardingCarrierIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string OnForwardingCarrierNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string OnForwardingCarrierNumberField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string OnForwardingCarrierWebSiteField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> OnForwardingETAField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> OnForwardingETA_OriginalField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> OnForwardingETDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> OnForwardingETD_OriginalField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string OnForwardingFromPortCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string OnForwardingFromPortCountryCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string OnForwardingFromPortCountryNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string OnForwardingFromPortIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string OnForwardingFromPortNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string OnForwardingToPortCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string OnForwardingToPortCountryCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string OnForwardingToPortCountryNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string OnForwardingToPortIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string OnForwardingToPortNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string OnForwardingTransportModeIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string OnForwardingVesselIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string OnForwardingVesselNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<double> OpenPayablesInLocalCurrencyField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -2118,6 +2277,9 @@ namespace HypredTest.ShipmentProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<System.DateTime> OperationalDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string OperationalStatusIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<double> OrderChargeableWeightField;
@@ -2145,6 +2307,18 @@ namespace HypredTest.ShipmentProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string OriginMainCarriageFromPortIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string OriginOnCarriageFromPortIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string OriginOnCarriageToPortIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string OriginPreCarriageFromPortIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string OriginPreCarriageToPortIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string OriginShipmentIdField;
@@ -2228,13 +2402,28 @@ namespace HypredTest.ShipmentProxy {
         private string PackagesTypesPrintAsField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ParentShipmentDirectionIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ParentShipmentNumberField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ParentShipmentTypeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<System.DateTime> PaymentDateTimeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> PaymentRequestDateTimeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string PaymentRequestXMLField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string PickUpAddressIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> PlannedCargoReadyDateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<System.DateTime> PreAlertSentDateField;
@@ -2316,6 +2505,93 @@ namespace HypredTest.ShipmentProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string PreCarriageVesselNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> PreForwardingATAField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> PreForwardingATA_OriginalField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> PreForwardingATDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> PreForwardingATD_OriginalField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PreForwardingCarrierCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PreForwardingCarrierIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PreForwardingCarrierNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PreForwardingCarrierNumberField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PreForwardingCarrierWebSiteField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> PreForwardingETAField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> PreForwardingETA_OriginalField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> PreForwardingETDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> PreForwardingETD_OriginalField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PreForwardingFromPortCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PreForwardingFromPortCountryCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PreForwardingFromPortCountryNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PreForwardingFromPortIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PreForwardingFromPortNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PreForwardingToPortCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PreForwardingToPortCountryCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PreForwardingToPortCountryNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PreForwardingToPortIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PreForwardingToPortNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PreForwardingTransportModeIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PreForwardingVesselIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PreForwardingVesselNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool PrivateLabelIncludeDeliveryField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool PrivateLabelIncludePickupField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PrivateLabelInvoiceNumberField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string ProductCodeField;
@@ -2406,6 +2682,9 @@ namespace HypredTest.ShipmentProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int RequestedDocumentsCountField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> RequestedFlightDateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private HypredTest.ShipmentProxy.DocumentsFilingPM[] RequiredDocumentsField;
@@ -2514,6 +2793,9 @@ namespace HypredTest.ShipmentProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private HypredTest.ShipmentProxy.ShipmentPickUpPM[] ShipmentPickUpsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private HypredTest.ShipmentProxy.ShipmentProductItemPM[] ShipmentProductItemsField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string ShipmentReceivableStatusCodeField;
@@ -2636,7 +2918,19 @@ namespace HypredTest.ShipmentProxy {
         private bool SplitOnCarriageField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool SplitOnForwardingField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string StackAirlineIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string StandalonePickupDeliveryIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string StandalonePickupDeliveryNumberField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string StandaloneShipmentIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<System.DateTime> StatusDateField;
@@ -2775,6 +3069,9 @@ namespace HypredTest.ShipmentProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string TotalContainersField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string TotalTaxField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string TrailerNumberField;
@@ -3176,6 +3473,9 @@ namespace HypredTest.ShipmentProxy {
         private System.Nullable<System.DateTime> WarehouseLegCutOffDateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string WarehouseLegEnglishNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<System.DateTime> WarehouseLegEntryDateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -3186,6 +3486,9 @@ namespace HypredTest.ShipmentProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<System.DateTime> WarehouseLegLastFreeDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string WarehouseLegLocalNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string WarehouseLegReferenceField;
@@ -3829,6 +4132,19 @@ namespace HypredTest.ShipmentProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string AccountingClosedByUserId {
+            get {
+                return this.AccountingClosedByUserIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.AccountingClosedByUserIdField, value) != true)) {
+                    this.AccountingClosedByUserIdField = value;
+                    this.RaisePropertyChanged("AccountingClosedByUserId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string AccountingInformation1 {
             get {
                 return this.AccountingInformation1Field;
@@ -4050,6 +4366,19 @@ namespace HypredTest.ShipmentProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Agent {
+            get {
+                return this.AgentField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.AgentField, value) != true)) {
+                    this.AgentField = value;
+                    this.RaisePropertyChanged("Agent");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string AgentAddressCountryCode {
             get {
                 return this.AgentAddressCountryCodeField;
@@ -4232,6 +4561,19 @@ namespace HypredTest.ShipmentProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> ApprovedCargoReadyDate {
+            get {
+                return this.ApprovedCargoReadyDateField;
+            }
+            set {
+                if ((this.ApprovedCargoReadyDateField.Equals(value) != true)) {
+                    this.ApprovedCargoReadyDateField = value;
+                    this.RaisePropertyChanged("ApprovedCargoReadyDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public System.Nullable<System.DateTime> ArrivalNoticeSentDate {
             get {
                 return this.ArrivalNoticeSentDateField;
@@ -4284,19 +4626,6 @@ namespace HypredTest.ShipmentProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string AssginedtoCustomsAgentId {
-            get {
-                return this.AssginedtoCustomsAgentIdField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.AssginedtoCustomsAgentIdField, value) != true)) {
-                    this.AssginedtoCustomsAgentIdField = value;
-                    this.RaisePropertyChanged("AssginedtoCustomsAgentId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
         public System.Nullable<System.DateTime> AssignedToTruckerDate {
             get {
                 return this.AssignedToTruckerDateField;
@@ -4344,6 +4673,19 @@ namespace HypredTest.ShipmentProxy {
                 if ((object.ReferenceEquals(this.BasketIdField, value) != true)) {
                     this.BasketIdField = value;
                     this.RaisePropertyChanged("BasketId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string BillingStatusId {
+            get {
+                return this.BillingStatusIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BillingStatusIdField, value) != true)) {
+                    this.BillingStatusIdField = value;
+                    this.RaisePropertyChanged("BillingStatusId");
                 }
             }
         }
@@ -5072,6 +5414,19 @@ namespace HypredTest.ShipmentProxy {
                 if ((object.ReferenceEquals(this.ConcurrencyGUIDField, value) != true)) {
                     this.ConcurrencyGUIDField = value;
                     this.RaisePropertyChanged("ConcurrencyGUID");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public HypredTest.ShipmentProxy.ShipmentPackagePM[] ConnectedMasterPackages {
+            get {
+                return this.ConnectedMasterPackagesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ConnectedMasterPackagesField, value) != true)) {
+                    this.ConnectedMasterPackagesField = value;
+                    this.RaisePropertyChanged("ConnectedMasterPackages");
                 }
             }
         }
@@ -6533,6 +6888,32 @@ namespace HypredTest.ShipmentProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string DocumentFilingIds {
+            get {
+                return this.DocumentFilingIdsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DocumentFilingIdsField, value) != true)) {
+                    this.DocumentFilingIdsField = value;
+                    this.RaisePropertyChanged("DocumentFilingIds");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> DocumentInspection {
+            get {
+                return this.DocumentInspectionField;
+            }
+            set {
+                if ((this.DocumentInspectionField.Equals(value) != true)) {
+                    this.DocumentInspectionField = value;
+                    this.RaisePropertyChanged("DocumentInspection");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string DocumentsApprovedByUserName {
             get {
                 return this.DocumentsApprovedByUserNameField;
@@ -6762,6 +7143,19 @@ namespace HypredTest.ShipmentProxy {
                 if ((this.ExpectedArrivalNoticeSentDateField.Equals(value) != true)) {
                     this.ExpectedArrivalNoticeSentDateField = value;
                     this.RaisePropertyChanged("ExpectedArrivalNoticeSentDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ExternalStatuses {
+            get {
+                return this.ExternalStatusesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ExternalStatusesField, value) != true)) {
+                    this.ExternalStatusesField = value;
+                    this.RaisePropertyChanged("ExternalStatuses");
                 }
             }
         }
@@ -7716,58 +8110,6 @@ namespace HypredTest.ShipmentProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<System.DateTime> FollowUpDate {
-            get {
-                return this.FollowUpDateField;
-            }
-            set {
-                if ((this.FollowUpDateField.Equals(value) != true)) {
-                    this.FollowUpDateField = value;
-                    this.RaisePropertyChanged("FollowUpDate");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string FollowUpId {
-            get {
-                return this.FollowUpIdField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.FollowUpIdField, value) != true)) {
-                    this.FollowUpIdField = value;
-                    this.RaisePropertyChanged("FollowUpId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string FollowUpNotes {
-            get {
-                return this.FollowUpNotesField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.FollowUpNotesField, value) != true)) {
-                    this.FollowUpNotesField = value;
-                    this.RaisePropertyChanged("FollowUpNotes");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string FollowUpType {
-            get {
-                return this.FollowUpTypeField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.FollowUpTypeField, value) != true)) {
-                    this.FollowUpTypeField = value;
-                    this.RaisePropertyChanged("FollowUpType");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
         public HypredTest.ShipmentProxy.ShipmentFollowUpPM[] FollowUps {
             get {
                 return this.FollowUpsField;
@@ -7807,6 +8149,19 @@ namespace HypredTest.ShipmentProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ForwarderPickUpDeliveryType {
+            get {
+                return this.ForwarderPickUpDeliveryTypeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ForwarderPickUpDeliveryTypeField, value) != true)) {
+                    this.ForwarderPickUpDeliveryTypeField = value;
+                    this.RaisePropertyChanged("ForwarderPickUpDeliveryType");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string ForwarderShipmentNumber {
             get {
                 return this.ForwarderShipmentNumberField;
@@ -7815,6 +8170,19 @@ namespace HypredTest.ShipmentProxy {
                 if ((object.ReferenceEquals(this.ForwarderShipmentNumberField, value) != true)) {
                     this.ForwarderShipmentNumberField = value;
                     this.RaisePropertyChanged("ForwarderShipmentNumber");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ForwarderStandaloneShipmentId {
+            get {
+                return this.ForwarderStandaloneShipmentIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ForwarderStandaloneShipmentIdField, value) != true)) {
+                    this.ForwarderStandaloneShipmentIdField = value;
+                    this.RaisePropertyChanged("ForwarderStandaloneShipmentId");
                 }
             }
         }
@@ -8236,6 +8604,32 @@ namespace HypredTest.ShipmentProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> GatepassDocumentsReady {
+            get {
+                return this.GatepassDocumentsReadyField;
+            }
+            set {
+                if ((this.GatepassDocumentsReadyField.Equals(value) != true)) {
+                    this.GatepassDocumentsReadyField = value;
+                    this.RaisePropertyChanged("GatepassDocumentsReady");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> GoodsClassification {
+            get {
+                return this.GoodsClassificationField;
+            }
+            set {
+                if ((this.GoodsClassificationField.Equals(value) != true)) {
+                    this.GoodsClassificationField = value;
+                    this.RaisePropertyChanged("GoodsClassification");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public System.Nullable<double> GrossWeight {
             get {
                 return this.GrossWeightField;
@@ -8353,6 +8747,19 @@ namespace HypredTest.ShipmentProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string HandlerUserId {
+            get {
+                return this.HandlerUserIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.HandlerUserIdField, value) != true)) {
+                    this.HandlerUserIdField = value;
+                    this.RaisePropertyChanged("HandlerUserId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public bool HasContainerException {
             get {
                 return this.HasContainerExceptionField;
@@ -8405,6 +8812,19 @@ namespace HypredTest.ShipmentProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool HasOnForwarding {
+            get {
+                return this.HasOnForwardingField;
+            }
+            set {
+                if ((this.HasOnForwardingField.Equals(value) != true)) {
+                    this.HasOnForwardingField = value;
+                    this.RaisePropertyChanged("HasOnForwarding");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public bool HasPreCarriage {
             get {
                 return this.HasPreCarriageField;
@@ -8413,6 +8833,19 @@ namespace HypredTest.ShipmentProxy {
                 if ((this.HasPreCarriageField.Equals(value) != true)) {
                     this.HasPreCarriageField = value;
                     this.RaisePropertyChanged("HasPreCarriage");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool HasPreForwarding {
+            get {
+                return this.HasPreForwardingField;
+            }
+            set {
+                if ((this.HasPreForwardingField.Equals(value) != true)) {
+                    this.HasPreForwardingField = value;
+                    this.RaisePropertyChanged("HasPreForwarding");
                 }
             }
         }
@@ -9159,6 +9592,110 @@ namespace HypredTest.ShipmentProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string InlandDomesticFromCity {
+            get {
+                return this.InlandDomesticFromCityField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.InlandDomesticFromCityField, value) != true)) {
+                    this.InlandDomesticFromCityField = value;
+                    this.RaisePropertyChanged("InlandDomesticFromCity");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string InlandDomesticFromCountryId {
+            get {
+                return this.InlandDomesticFromCountryIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.InlandDomesticFromCountryIdField, value) != true)) {
+                    this.InlandDomesticFromCountryIdField = value;
+                    this.RaisePropertyChanged("InlandDomesticFromCountryId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string InlandDomesticFromTypeCode {
+            get {
+                return this.InlandDomesticFromTypeCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.InlandDomesticFromTypeCodeField, value) != true)) {
+                    this.InlandDomesticFromTypeCodeField = value;
+                    this.RaisePropertyChanged("InlandDomesticFromTypeCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string InlandDomesticFromZipCode {
+            get {
+                return this.InlandDomesticFromZipCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.InlandDomesticFromZipCodeField, value) != true)) {
+                    this.InlandDomesticFromZipCodeField = value;
+                    this.RaisePropertyChanged("InlandDomesticFromZipCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string InlandDomesticToCity {
+            get {
+                return this.InlandDomesticToCityField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.InlandDomesticToCityField, value) != true)) {
+                    this.InlandDomesticToCityField = value;
+                    this.RaisePropertyChanged("InlandDomesticToCity");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string InlandDomesticToCountryId {
+            get {
+                return this.InlandDomesticToCountryIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.InlandDomesticToCountryIdField, value) != true)) {
+                    this.InlandDomesticToCountryIdField = value;
+                    this.RaisePropertyChanged("InlandDomesticToCountryId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string InlandDomesticToTypeCode {
+            get {
+                return this.InlandDomesticToTypeCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.InlandDomesticToTypeCodeField, value) != true)) {
+                    this.InlandDomesticToTypeCodeField = value;
+                    this.RaisePropertyChanged("InlandDomesticToTypeCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string InlandDomesticToZipCode {
+            get {
+                return this.InlandDomesticToZipCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.InlandDomesticToZipCodeField, value) != true)) {
+                    this.InlandDomesticToZipCodeField = value;
+                    this.RaisePropertyChanged("InlandDomesticToZipCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string InterlineId {
             get {
                 return this.InterlineIdField;
@@ -9458,6 +9995,32 @@ namespace HypredTest.ShipmentProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsGroupageHousesUpdated {
+            get {
+                return this.IsGroupageHousesUpdatedField;
+            }
+            set {
+                if ((this.IsGroupageHousesUpdatedField.Equals(value) != true)) {
+                    this.IsGroupageHousesUpdatedField = value;
+                    this.RaisePropertyChanged("IsGroupageHousesUpdated");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsHTSMissing {
+            get {
+                return this.IsHTSMissingField;
+            }
+            set {
+                if ((this.IsHTSMissingField.Equals(value) != true)) {
+                    this.IsHTSMissingField = value;
+                    this.RaisePropertyChanged("IsHTSMissing");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public bool IsHybrid {
             get {
                 return this.IsHybridField;
@@ -9596,6 +10159,19 @@ namespace HypredTest.ShipmentProxy {
                 if ((this.IsPaymentRequiredField.Equals(value) != true)) {
                     this.IsPaymentRequiredField = value;
                     this.RaisePropertyChanged("IsPaymentRequired");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsProductItemsUpdated {
+            get {
+                return this.IsProductItemsUpdatedField;
+            }
+            set {
+                if ((this.IsProductItemsUpdatedField.Equals(value) != true)) {
+                    this.IsProductItemsUpdatedField = value;
+                    this.RaisePropertyChanged("IsProductItemsUpdated");
                 }
             }
         }
@@ -9783,6 +10359,19 @@ namespace HypredTest.ShipmentProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsStandalonePickupDelivery {
+            get {
+                return this.IsStandalonePickupDeliveryField;
+            }
+            set {
+                if ((this.IsStandalonePickupDeliveryField.Equals(value) != true)) {
+                    this.IsStandalonePickupDeliveryField = value;
+                    this.RaisePropertyChanged("IsStandalonePickupDelivery");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public bool IsStatusChange {
             get {
                 return this.IsStatusChangeField;
@@ -9869,6 +10458,19 @@ namespace HypredTest.ShipmentProxy {
                 if ((this.IsUpdatedByINTTRAAnalyzerField.Equals(value) != true)) {
                     this.IsUpdatedByINTTRAAnalyzerField = value;
                     this.RaisePropertyChanged("IsUpdatedByINTTRAAnalyzer");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsUpdatedOceanInsightsAnalyzer {
+            get {
+                return this.IsUpdatedOceanInsightsAnalyzerField;
+            }
+            set {
+                if ((this.IsUpdatedOceanInsightsAnalyzerField.Equals(value) != true)) {
+                    this.IsUpdatedOceanInsightsAnalyzerField = value;
+                    this.RaisePropertyChanged("IsUpdatedOceanInsightsAnalyzer");
                 }
             }
         }
@@ -10706,6 +11308,19 @@ namespace HypredTest.ShipmentProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string MainCarriageFromPortAddress {
+            get {
+                return this.MainCarriageFromPortAddressField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.MainCarriageFromPortAddressField, value) != true)) {
+                    this.MainCarriageFromPortAddressField = value;
+                    this.RaisePropertyChanged("MainCarriageFromPortAddress");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string MainCarriageFromPortCode {
             get {
                 return this.MainCarriageFromPortCodeField;
@@ -10883,6 +11498,19 @@ namespace HypredTest.ShipmentProxy {
                 if ((object.ReferenceEquals(this.MainCarriageToPartnerIdField, value) != true)) {
                     this.MainCarriageToPartnerIdField = value;
                     this.RaisePropertyChanged("MainCarriageToPartnerId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string MainCarriageToPortAddress {
+            get {
+                return this.MainCarriageToPortAddressField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.MainCarriageToPortAddressField, value) != true)) {
+                    this.MainCarriageToPortAddressField = value;
+                    this.RaisePropertyChanged("MainCarriageToPortAddress");
                 }
             }
         }
@@ -11564,6 +12192,19 @@ namespace HypredTest.ShipmentProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Notify1Reference2 {
+            get {
+                return this.Notify1Reference2Field;
+            }
+            set {
+                if ((object.ReferenceEquals(this.Notify1Reference2Field, value) != true)) {
+                    this.Notify1Reference2Field = value;
+                    this.RaisePropertyChanged("Notify1Reference2");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string Notify1StateId {
             get {
                 return this.Notify1StateIdField;
@@ -12227,6 +12868,357 @@ namespace HypredTest.ShipmentProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> OnForwardingATA {
+            get {
+                return this.OnForwardingATAField;
+            }
+            set {
+                if ((this.OnForwardingATAField.Equals(value) != true)) {
+                    this.OnForwardingATAField = value;
+                    this.RaisePropertyChanged("OnForwardingATA");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> OnForwardingATA_Original {
+            get {
+                return this.OnForwardingATA_OriginalField;
+            }
+            set {
+                if ((this.OnForwardingATA_OriginalField.Equals(value) != true)) {
+                    this.OnForwardingATA_OriginalField = value;
+                    this.RaisePropertyChanged("OnForwardingATA_Original");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> OnForwardingATD {
+            get {
+                return this.OnForwardingATDField;
+            }
+            set {
+                if ((this.OnForwardingATDField.Equals(value) != true)) {
+                    this.OnForwardingATDField = value;
+                    this.RaisePropertyChanged("OnForwardingATD");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> OnForwardingATD_Original {
+            get {
+                return this.OnForwardingATD_OriginalField;
+            }
+            set {
+                if ((this.OnForwardingATD_OriginalField.Equals(value) != true)) {
+                    this.OnForwardingATD_OriginalField = value;
+                    this.RaisePropertyChanged("OnForwardingATD_Original");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string OnForwardingAdditionalTransportModeCode {
+            get {
+                return this.OnForwardingAdditionalTransportModeCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.OnForwardingAdditionalTransportModeCodeField, value) != true)) {
+                    this.OnForwardingAdditionalTransportModeCodeField = value;
+                    this.RaisePropertyChanged("OnForwardingAdditionalTransportModeCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string OnForwardingCarrierCode {
+            get {
+                return this.OnForwardingCarrierCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.OnForwardingCarrierCodeField, value) != true)) {
+                    this.OnForwardingCarrierCodeField = value;
+                    this.RaisePropertyChanged("OnForwardingCarrierCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string OnForwardingCarrierId {
+            get {
+                return this.OnForwardingCarrierIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.OnForwardingCarrierIdField, value) != true)) {
+                    this.OnForwardingCarrierIdField = value;
+                    this.RaisePropertyChanged("OnForwardingCarrierId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string OnForwardingCarrierName {
+            get {
+                return this.OnForwardingCarrierNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.OnForwardingCarrierNameField, value) != true)) {
+                    this.OnForwardingCarrierNameField = value;
+                    this.RaisePropertyChanged("OnForwardingCarrierName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string OnForwardingCarrierNumber {
+            get {
+                return this.OnForwardingCarrierNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.OnForwardingCarrierNumberField, value) != true)) {
+                    this.OnForwardingCarrierNumberField = value;
+                    this.RaisePropertyChanged("OnForwardingCarrierNumber");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string OnForwardingCarrierWebSite {
+            get {
+                return this.OnForwardingCarrierWebSiteField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.OnForwardingCarrierWebSiteField, value) != true)) {
+                    this.OnForwardingCarrierWebSiteField = value;
+                    this.RaisePropertyChanged("OnForwardingCarrierWebSite");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> OnForwardingETA {
+            get {
+                return this.OnForwardingETAField;
+            }
+            set {
+                if ((this.OnForwardingETAField.Equals(value) != true)) {
+                    this.OnForwardingETAField = value;
+                    this.RaisePropertyChanged("OnForwardingETA");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> OnForwardingETA_Original {
+            get {
+                return this.OnForwardingETA_OriginalField;
+            }
+            set {
+                if ((this.OnForwardingETA_OriginalField.Equals(value) != true)) {
+                    this.OnForwardingETA_OriginalField = value;
+                    this.RaisePropertyChanged("OnForwardingETA_Original");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> OnForwardingETD {
+            get {
+                return this.OnForwardingETDField;
+            }
+            set {
+                if ((this.OnForwardingETDField.Equals(value) != true)) {
+                    this.OnForwardingETDField = value;
+                    this.RaisePropertyChanged("OnForwardingETD");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> OnForwardingETD_Original {
+            get {
+                return this.OnForwardingETD_OriginalField;
+            }
+            set {
+                if ((this.OnForwardingETD_OriginalField.Equals(value) != true)) {
+                    this.OnForwardingETD_OriginalField = value;
+                    this.RaisePropertyChanged("OnForwardingETD_Original");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string OnForwardingFromPortCode {
+            get {
+                return this.OnForwardingFromPortCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.OnForwardingFromPortCodeField, value) != true)) {
+                    this.OnForwardingFromPortCodeField = value;
+                    this.RaisePropertyChanged("OnForwardingFromPortCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string OnForwardingFromPortCountryCode {
+            get {
+                return this.OnForwardingFromPortCountryCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.OnForwardingFromPortCountryCodeField, value) != true)) {
+                    this.OnForwardingFromPortCountryCodeField = value;
+                    this.RaisePropertyChanged("OnForwardingFromPortCountryCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string OnForwardingFromPortCountryName {
+            get {
+                return this.OnForwardingFromPortCountryNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.OnForwardingFromPortCountryNameField, value) != true)) {
+                    this.OnForwardingFromPortCountryNameField = value;
+                    this.RaisePropertyChanged("OnForwardingFromPortCountryName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string OnForwardingFromPortId {
+            get {
+                return this.OnForwardingFromPortIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.OnForwardingFromPortIdField, value) != true)) {
+                    this.OnForwardingFromPortIdField = value;
+                    this.RaisePropertyChanged("OnForwardingFromPortId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string OnForwardingFromPortName {
+            get {
+                return this.OnForwardingFromPortNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.OnForwardingFromPortNameField, value) != true)) {
+                    this.OnForwardingFromPortNameField = value;
+                    this.RaisePropertyChanged("OnForwardingFromPortName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string OnForwardingToPortCode {
+            get {
+                return this.OnForwardingToPortCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.OnForwardingToPortCodeField, value) != true)) {
+                    this.OnForwardingToPortCodeField = value;
+                    this.RaisePropertyChanged("OnForwardingToPortCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string OnForwardingToPortCountryCode {
+            get {
+                return this.OnForwardingToPortCountryCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.OnForwardingToPortCountryCodeField, value) != true)) {
+                    this.OnForwardingToPortCountryCodeField = value;
+                    this.RaisePropertyChanged("OnForwardingToPortCountryCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string OnForwardingToPortCountryName {
+            get {
+                return this.OnForwardingToPortCountryNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.OnForwardingToPortCountryNameField, value) != true)) {
+                    this.OnForwardingToPortCountryNameField = value;
+                    this.RaisePropertyChanged("OnForwardingToPortCountryName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string OnForwardingToPortId {
+            get {
+                return this.OnForwardingToPortIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.OnForwardingToPortIdField, value) != true)) {
+                    this.OnForwardingToPortIdField = value;
+                    this.RaisePropertyChanged("OnForwardingToPortId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string OnForwardingToPortName {
+            get {
+                return this.OnForwardingToPortNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.OnForwardingToPortNameField, value) != true)) {
+                    this.OnForwardingToPortNameField = value;
+                    this.RaisePropertyChanged("OnForwardingToPortName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string OnForwardingTransportModeId {
+            get {
+                return this.OnForwardingTransportModeIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.OnForwardingTransportModeIdField, value) != true)) {
+                    this.OnForwardingTransportModeIdField = value;
+                    this.RaisePropertyChanged("OnForwardingTransportModeId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string OnForwardingVesselId {
+            get {
+                return this.OnForwardingVesselIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.OnForwardingVesselIdField, value) != true)) {
+                    this.OnForwardingVesselIdField = value;
+                    this.RaisePropertyChanged("OnForwardingVesselId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string OnForwardingVesselName {
+            get {
+                return this.OnForwardingVesselNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.OnForwardingVesselNameField, value) != true)) {
+                    this.OnForwardingVesselNameField = value;
+                    this.RaisePropertyChanged("OnForwardingVesselName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public System.Nullable<double> OpenPayablesInLocalCurrency {
             get {
                 return this.OpenPayablesInLocalCurrencyField;
@@ -12313,6 +13305,19 @@ namespace HypredTest.ShipmentProxy {
                 if ((this.OperationalDateField.Equals(value) != true)) {
                     this.OperationalDateField = value;
                     this.RaisePropertyChanged("OperationalDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string OperationalStatusId {
+            get {
+                return this.OperationalStatusIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.OperationalStatusIdField, value) != true)) {
+                    this.OperationalStatusIdField = value;
+                    this.RaisePropertyChanged("OperationalStatusId");
                 }
             }
         }
@@ -12430,6 +13435,58 @@ namespace HypredTest.ShipmentProxy {
                 if ((object.ReferenceEquals(this.OriginMainCarriageFromPortIdField, value) != true)) {
                     this.OriginMainCarriageFromPortIdField = value;
                     this.RaisePropertyChanged("OriginMainCarriageFromPortId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string OriginOnCarriageFromPortId {
+            get {
+                return this.OriginOnCarriageFromPortIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.OriginOnCarriageFromPortIdField, value) != true)) {
+                    this.OriginOnCarriageFromPortIdField = value;
+                    this.RaisePropertyChanged("OriginOnCarriageFromPortId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string OriginOnCarriageToPortId {
+            get {
+                return this.OriginOnCarriageToPortIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.OriginOnCarriageToPortIdField, value) != true)) {
+                    this.OriginOnCarriageToPortIdField = value;
+                    this.RaisePropertyChanged("OriginOnCarriageToPortId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string OriginPreCarriageFromPortId {
+            get {
+                return this.OriginPreCarriageFromPortIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.OriginPreCarriageFromPortIdField, value) != true)) {
+                    this.OriginPreCarriageFromPortIdField = value;
+                    this.RaisePropertyChanged("OriginPreCarriageFromPortId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string OriginPreCarriageToPortId {
+            get {
+                return this.OriginPreCarriageToPortIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.OriginPreCarriageToPortIdField, value) != true)) {
+                    this.OriginPreCarriageToPortIdField = value;
+                    this.RaisePropertyChanged("OriginPreCarriageToPortId");
                 }
             }
         }
@@ -12786,6 +13843,45 @@ namespace HypredTest.ShipmentProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ParentShipmentDirectionId {
+            get {
+                return this.ParentShipmentDirectionIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ParentShipmentDirectionIdField, value) != true)) {
+                    this.ParentShipmentDirectionIdField = value;
+                    this.RaisePropertyChanged("ParentShipmentDirectionId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ParentShipmentNumber {
+            get {
+                return this.ParentShipmentNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ParentShipmentNumberField, value) != true)) {
+                    this.ParentShipmentNumberField = value;
+                    this.RaisePropertyChanged("ParentShipmentNumber");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ParentShipmentType {
+            get {
+                return this.ParentShipmentTypeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ParentShipmentTypeField, value) != true)) {
+                    this.ParentShipmentTypeField = value;
+                    this.RaisePropertyChanged("ParentShipmentType");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public System.Nullable<System.DateTime> PaymentDateTime {
             get {
                 return this.PaymentDateTimeField;
@@ -12794,6 +13890,19 @@ namespace HypredTest.ShipmentProxy {
                 if ((this.PaymentDateTimeField.Equals(value) != true)) {
                     this.PaymentDateTimeField = value;
                     this.RaisePropertyChanged("PaymentDateTime");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> PaymentRequestDateTime {
+            get {
+                return this.PaymentRequestDateTimeField;
+            }
+            set {
+                if ((this.PaymentRequestDateTimeField.Equals(value) != true)) {
+                    this.PaymentRequestDateTimeField = value;
+                    this.RaisePropertyChanged("PaymentRequestDateTime");
                 }
             }
         }
@@ -12820,6 +13929,19 @@ namespace HypredTest.ShipmentProxy {
                 if ((object.ReferenceEquals(this.PickUpAddressIdField, value) != true)) {
                     this.PickUpAddressIdField = value;
                     this.RaisePropertyChanged("PickUpAddressId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> PlannedCargoReadyDate {
+            get {
+                return this.PlannedCargoReadyDateField;
+            }
+            set {
+                if ((this.PlannedCargoReadyDateField.Equals(value) != true)) {
+                    this.PlannedCargoReadyDateField = value;
+                    this.RaisePropertyChanged("PlannedCargoReadyDate");
                 }
             }
         }
@@ -13171,6 +14293,383 @@ namespace HypredTest.ShipmentProxy {
                 if ((object.ReferenceEquals(this.PreCarriageVesselNameField, value) != true)) {
                     this.PreCarriageVesselNameField = value;
                     this.RaisePropertyChanged("PreCarriageVesselName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> PreForwardingATA {
+            get {
+                return this.PreForwardingATAField;
+            }
+            set {
+                if ((this.PreForwardingATAField.Equals(value) != true)) {
+                    this.PreForwardingATAField = value;
+                    this.RaisePropertyChanged("PreForwardingATA");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> PreForwardingATA_Original {
+            get {
+                return this.PreForwardingATA_OriginalField;
+            }
+            set {
+                if ((this.PreForwardingATA_OriginalField.Equals(value) != true)) {
+                    this.PreForwardingATA_OriginalField = value;
+                    this.RaisePropertyChanged("PreForwardingATA_Original");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> PreForwardingATD {
+            get {
+                return this.PreForwardingATDField;
+            }
+            set {
+                if ((this.PreForwardingATDField.Equals(value) != true)) {
+                    this.PreForwardingATDField = value;
+                    this.RaisePropertyChanged("PreForwardingATD");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> PreForwardingATD_Original {
+            get {
+                return this.PreForwardingATD_OriginalField;
+            }
+            set {
+                if ((this.PreForwardingATD_OriginalField.Equals(value) != true)) {
+                    this.PreForwardingATD_OriginalField = value;
+                    this.RaisePropertyChanged("PreForwardingATD_Original");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PreForwardingCarrierCode {
+            get {
+                return this.PreForwardingCarrierCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PreForwardingCarrierCodeField, value) != true)) {
+                    this.PreForwardingCarrierCodeField = value;
+                    this.RaisePropertyChanged("PreForwardingCarrierCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PreForwardingCarrierId {
+            get {
+                return this.PreForwardingCarrierIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PreForwardingCarrierIdField, value) != true)) {
+                    this.PreForwardingCarrierIdField = value;
+                    this.RaisePropertyChanged("PreForwardingCarrierId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PreForwardingCarrierName {
+            get {
+                return this.PreForwardingCarrierNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PreForwardingCarrierNameField, value) != true)) {
+                    this.PreForwardingCarrierNameField = value;
+                    this.RaisePropertyChanged("PreForwardingCarrierName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PreForwardingCarrierNumber {
+            get {
+                return this.PreForwardingCarrierNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PreForwardingCarrierNumberField, value) != true)) {
+                    this.PreForwardingCarrierNumberField = value;
+                    this.RaisePropertyChanged("PreForwardingCarrierNumber");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PreForwardingCarrierWebSite {
+            get {
+                return this.PreForwardingCarrierWebSiteField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PreForwardingCarrierWebSiteField, value) != true)) {
+                    this.PreForwardingCarrierWebSiteField = value;
+                    this.RaisePropertyChanged("PreForwardingCarrierWebSite");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> PreForwardingETA {
+            get {
+                return this.PreForwardingETAField;
+            }
+            set {
+                if ((this.PreForwardingETAField.Equals(value) != true)) {
+                    this.PreForwardingETAField = value;
+                    this.RaisePropertyChanged("PreForwardingETA");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> PreForwardingETA_Original {
+            get {
+                return this.PreForwardingETA_OriginalField;
+            }
+            set {
+                if ((this.PreForwardingETA_OriginalField.Equals(value) != true)) {
+                    this.PreForwardingETA_OriginalField = value;
+                    this.RaisePropertyChanged("PreForwardingETA_Original");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> PreForwardingETD {
+            get {
+                return this.PreForwardingETDField;
+            }
+            set {
+                if ((this.PreForwardingETDField.Equals(value) != true)) {
+                    this.PreForwardingETDField = value;
+                    this.RaisePropertyChanged("PreForwardingETD");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> PreForwardingETD_Original {
+            get {
+                return this.PreForwardingETD_OriginalField;
+            }
+            set {
+                if ((this.PreForwardingETD_OriginalField.Equals(value) != true)) {
+                    this.PreForwardingETD_OriginalField = value;
+                    this.RaisePropertyChanged("PreForwardingETD_Original");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PreForwardingFromPortCode {
+            get {
+                return this.PreForwardingFromPortCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PreForwardingFromPortCodeField, value) != true)) {
+                    this.PreForwardingFromPortCodeField = value;
+                    this.RaisePropertyChanged("PreForwardingFromPortCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PreForwardingFromPortCountryCode {
+            get {
+                return this.PreForwardingFromPortCountryCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PreForwardingFromPortCountryCodeField, value) != true)) {
+                    this.PreForwardingFromPortCountryCodeField = value;
+                    this.RaisePropertyChanged("PreForwardingFromPortCountryCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PreForwardingFromPortCountryName {
+            get {
+                return this.PreForwardingFromPortCountryNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PreForwardingFromPortCountryNameField, value) != true)) {
+                    this.PreForwardingFromPortCountryNameField = value;
+                    this.RaisePropertyChanged("PreForwardingFromPortCountryName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PreForwardingFromPortId {
+            get {
+                return this.PreForwardingFromPortIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PreForwardingFromPortIdField, value) != true)) {
+                    this.PreForwardingFromPortIdField = value;
+                    this.RaisePropertyChanged("PreForwardingFromPortId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PreForwardingFromPortName {
+            get {
+                return this.PreForwardingFromPortNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PreForwardingFromPortNameField, value) != true)) {
+                    this.PreForwardingFromPortNameField = value;
+                    this.RaisePropertyChanged("PreForwardingFromPortName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PreForwardingToPortCode {
+            get {
+                return this.PreForwardingToPortCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PreForwardingToPortCodeField, value) != true)) {
+                    this.PreForwardingToPortCodeField = value;
+                    this.RaisePropertyChanged("PreForwardingToPortCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PreForwardingToPortCountryCode {
+            get {
+                return this.PreForwardingToPortCountryCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PreForwardingToPortCountryCodeField, value) != true)) {
+                    this.PreForwardingToPortCountryCodeField = value;
+                    this.RaisePropertyChanged("PreForwardingToPortCountryCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PreForwardingToPortCountryName {
+            get {
+                return this.PreForwardingToPortCountryNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PreForwardingToPortCountryNameField, value) != true)) {
+                    this.PreForwardingToPortCountryNameField = value;
+                    this.RaisePropertyChanged("PreForwardingToPortCountryName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PreForwardingToPortId {
+            get {
+                return this.PreForwardingToPortIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PreForwardingToPortIdField, value) != true)) {
+                    this.PreForwardingToPortIdField = value;
+                    this.RaisePropertyChanged("PreForwardingToPortId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PreForwardingToPortName {
+            get {
+                return this.PreForwardingToPortNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PreForwardingToPortNameField, value) != true)) {
+                    this.PreForwardingToPortNameField = value;
+                    this.RaisePropertyChanged("PreForwardingToPortName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PreForwardingTransportModeId {
+            get {
+                return this.PreForwardingTransportModeIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PreForwardingTransportModeIdField, value) != true)) {
+                    this.PreForwardingTransportModeIdField = value;
+                    this.RaisePropertyChanged("PreForwardingTransportModeId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PreForwardingVesselId {
+            get {
+                return this.PreForwardingVesselIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PreForwardingVesselIdField, value) != true)) {
+                    this.PreForwardingVesselIdField = value;
+                    this.RaisePropertyChanged("PreForwardingVesselId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PreForwardingVesselName {
+            get {
+                return this.PreForwardingVesselNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PreForwardingVesselNameField, value) != true)) {
+                    this.PreForwardingVesselNameField = value;
+                    this.RaisePropertyChanged("PreForwardingVesselName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool PrivateLabelIncludeDelivery {
+            get {
+                return this.PrivateLabelIncludeDeliveryField;
+            }
+            set {
+                if ((this.PrivateLabelIncludeDeliveryField.Equals(value) != true)) {
+                    this.PrivateLabelIncludeDeliveryField = value;
+                    this.RaisePropertyChanged("PrivateLabelIncludeDelivery");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool PrivateLabelIncludePickup {
+            get {
+                return this.PrivateLabelIncludePickupField;
+            }
+            set {
+                if ((this.PrivateLabelIncludePickupField.Equals(value) != true)) {
+                    this.PrivateLabelIncludePickupField = value;
+                    this.RaisePropertyChanged("PrivateLabelIncludePickup");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PrivateLabelInvoiceNumber {
+            get {
+                return this.PrivateLabelInvoiceNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PrivateLabelInvoiceNumberField, value) != true)) {
+                    this.PrivateLabelInvoiceNumberField = value;
+                    this.RaisePropertyChanged("PrivateLabelInvoiceNumber");
                 }
             }
         }
@@ -13561,6 +15060,19 @@ namespace HypredTest.ShipmentProxy {
                 if ((this.RequestedDocumentsCountField.Equals(value) != true)) {
                     this.RequestedDocumentsCountField = value;
                     this.RaisePropertyChanged("RequestedDocumentsCount");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> RequestedFlightDate {
+            get {
+                return this.RequestedFlightDateField;
+            }
+            set {
+                if ((this.RequestedFlightDateField.Equals(value) != true)) {
+                    this.RequestedFlightDateField = value;
+                    this.RaisePropertyChanged("RequestedFlightDate");
                 }
             }
         }
@@ -14029,6 +15541,19 @@ namespace HypredTest.ShipmentProxy {
                 if ((object.ReferenceEquals(this.ShipmentPickUpsField, value) != true)) {
                     this.ShipmentPickUpsField = value;
                     this.RaisePropertyChanged("ShipmentPickUps");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public HypredTest.ShipmentProxy.ShipmentProductItemPM[] ShipmentProductItems {
+            get {
+                return this.ShipmentProductItemsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ShipmentProductItemsField, value) != true)) {
+                    this.ShipmentProductItemsField = value;
+                    this.RaisePropertyChanged("ShipmentProductItems");
                 }
             }
         }
@@ -14554,6 +16079,19 @@ namespace HypredTest.ShipmentProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool SplitOnForwarding {
+            get {
+                return this.SplitOnForwardingField;
+            }
+            set {
+                if ((this.SplitOnForwardingField.Equals(value) != true)) {
+                    this.SplitOnForwardingField = value;
+                    this.RaisePropertyChanged("SplitOnForwarding");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string StackAirlineId {
             get {
                 return this.StackAirlineIdField;
@@ -14562,6 +16100,45 @@ namespace HypredTest.ShipmentProxy {
                 if ((object.ReferenceEquals(this.StackAirlineIdField, value) != true)) {
                     this.StackAirlineIdField = value;
                     this.RaisePropertyChanged("StackAirlineId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string StandalonePickupDeliveryId {
+            get {
+                return this.StandalonePickupDeliveryIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.StandalonePickupDeliveryIdField, value) != true)) {
+                    this.StandalonePickupDeliveryIdField = value;
+                    this.RaisePropertyChanged("StandalonePickupDeliveryId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string StandalonePickupDeliveryNumber {
+            get {
+                return this.StandalonePickupDeliveryNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.StandalonePickupDeliveryNumberField, value) != true)) {
+                    this.StandalonePickupDeliveryNumberField = value;
+                    this.RaisePropertyChanged("StandalonePickupDeliveryNumber");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string StandaloneShipmentId {
+            get {
+                return this.StandaloneShipmentIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.StandaloneShipmentIdField, value) != true)) {
+                    this.StandaloneShipmentIdField = value;
+                    this.RaisePropertyChanged("StandaloneShipmentId");
                 }
             }
         }
@@ -15160,6 +16737,19 @@ namespace HypredTest.ShipmentProxy {
                 if ((object.ReferenceEquals(this.TotalContainersField, value) != true)) {
                     this.TotalContainersField = value;
                     this.RaisePropertyChanged("TotalContainers");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string TotalTax {
+            get {
+                return this.TotalTaxField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TotalTaxField, value) != true)) {
+                    this.TotalTaxField = value;
+                    this.RaisePropertyChanged("TotalTax");
                 }
             }
         }
@@ -16894,6 +18484,19 @@ namespace HypredTest.ShipmentProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string WarehouseLegEnglishName {
+            get {
+                return this.WarehouseLegEnglishNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.WarehouseLegEnglishNameField, value) != true)) {
+                    this.WarehouseLegEnglishNameField = value;
+                    this.RaisePropertyChanged("WarehouseLegEnglishName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public System.Nullable<System.DateTime> WarehouseLegEntryDate {
             get {
                 return this.WarehouseLegEntryDateField;
@@ -16941,6 +18544,19 @@ namespace HypredTest.ShipmentProxy {
                 if ((this.WarehouseLegLastFreeDateField.Equals(value) != true)) {
                     this.WarehouseLegLastFreeDateField = value;
                     this.RaisePropertyChanged("WarehouseLegLastFreeDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string WarehouseLegLocalName {
+            get {
+                return this.WarehouseLegLocalNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.WarehouseLegLocalNameField, value) != true)) {
+                    this.WarehouseLegLocalNameField = value;
+                    this.RaisePropertyChanged("WarehouseLegLocalName");
                 }
             }
         }
@@ -17273,6 +18889,2067 @@ namespace HypredTest.ShipmentProxy {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ShipmentPackagePM", Namespace="http://schemas.datacontract.org/2004/07/Logitude.BL.ShipmentsModel.EntityPMs")]
+    [System.SerializableAttribute()]
+    public partial class ShipmentPackagePM : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CarrierSealField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CeficClassField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Simplog.Server.Infrastructure.ChangeSetOperation ChangeSetOpField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ChassisNumberField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ClassNumberField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ColorField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CommodityIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CommodityNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CommodityNumberField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ContainerEntityIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ContainerNumberField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int ContainerSizeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ContainerStatusSourceCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CountryIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CountryNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> DeliveryATAField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> DeliveryATDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> DeliveryETAField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> DeliveryETDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DeliveryFromField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DeliveryIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DeliveryToField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DeliveryTransportModeCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DescriptionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DummyIdGuidField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ECRTransportModeCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string EMSField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> ETAField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> ETDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> EmptyContainerReturnATAField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> EmptyContainerReturnATDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> EmptyContainerReturnETAField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> EmptyContainerReturnETDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string EmptyContainerReturnFromField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string EmptyContainerReturnIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string EmptyContainerReturnToField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string FlashPointField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string FlashPointTemperatureUnitCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string HarmonizeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool HasContainerExceptionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> HeightField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string HorseIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string HorseNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string IMDGCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string IdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int InUseField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private HypredTest.ShipmentProxy.InsideShipmentPackagePM[] InsideShipmentPackagesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private HypredTest.ShipmentProxy.InsideShipmentPackagePM[] InsideShipmentPackagesChangeSetField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsAWBWizardDefaultField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsContainerField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsContainerRefrigeratedField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsCreatedFromPickupDeliveryField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsDangerousField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsDeliveryFUField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsEmptyContainerReturnFUField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsFromSplitField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsMultiHarmonizeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsPackageAddedManuallyField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsPackageCheckedInLegField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsVehicleField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string KelmerCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string LCLContainerTypeIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string LastStatusCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> LastStatusDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string LastStatusNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> LengthField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string MakeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool MarinePollutantField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string MarksAndNumbersField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string MaterialDescriptionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string MethodUsedField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ModelField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool NonActiveContainerField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NotesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int NumberOfInsidePackagesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NumberOfInsidePackagesDetailsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> OnCarriageATAField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> OnCarriageATDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> OnCarriageETAField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> OnCarriageETDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string OriginalShipmentPackageIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PackageTypeCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PackageTypeIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool PackageTypeIsAirField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool PackageTypeIsInlandField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool PackageTypeIsOceanField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PackageTypeLocalNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PackageTypeNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PackageTypeNoteField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private decimal PackageTypeVolumeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PackagingGroupField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PrintAsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ProperShippingNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<int> QuantityField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string Reference1Field;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string Reference2Field;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string Reference3Field;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string Reference4Field;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string RegistrationNumberField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string RoutingField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string RoutingIdsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<int> SOCField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ShipmentIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ShipmentNumberField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private HypredTest.ShipmentProxy.ShipmentPM ShipmentPMField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ShipmentPMIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private HypredTest.ShipmentProxy.ShipmentPackageHarmonizePM[] ShipmentPackageHarmonizesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private HypredTest.ShipmentProxy.ShipmentPackageHarmonizePM[] ShipmentPackageHarmonizesChangeSetField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private HypredTest.ShipmentProxy.ShipmentPackageItemPM[] ShipmentPackageItemsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private HypredTest.ShipmentProxy.ShipmentPackageItemPM[] ShipmentPackageItemsChangeSetField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ShipperSealField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int SplitIndexField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private double TEUField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> TareField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string TemperatureField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string TemperatureUnitCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int TenantField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string UnNumberField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<decimal> VGMField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> VentilationField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> VolumeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> VolumetricWeightField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string VoyageTripNumberField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string WarehouseReleaseNumberField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> WeightField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> WidthField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string YearField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CarrierSeal {
+            get {
+                return this.CarrierSealField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CarrierSealField, value) != true)) {
+                    this.CarrierSealField = value;
+                    this.RaisePropertyChanged("CarrierSeal");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CeficClass {
+            get {
+                return this.CeficClassField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CeficClassField, value) != true)) {
+                    this.CeficClassField = value;
+                    this.RaisePropertyChanged("CeficClass");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Simplog.Server.Infrastructure.ChangeSetOperation ChangeSetOp {
+            get {
+                return this.ChangeSetOpField;
+            }
+            set {
+                if ((this.ChangeSetOpField.Equals(value) != true)) {
+                    this.ChangeSetOpField = value;
+                    this.RaisePropertyChanged("ChangeSetOp");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ChassisNumber {
+            get {
+                return this.ChassisNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ChassisNumberField, value) != true)) {
+                    this.ChassisNumberField = value;
+                    this.RaisePropertyChanged("ChassisNumber");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ClassNumber {
+            get {
+                return this.ClassNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ClassNumberField, value) != true)) {
+                    this.ClassNumberField = value;
+                    this.RaisePropertyChanged("ClassNumber");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Color {
+            get {
+                return this.ColorField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ColorField, value) != true)) {
+                    this.ColorField = value;
+                    this.RaisePropertyChanged("Color");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CommodityId {
+            get {
+                return this.CommodityIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CommodityIdField, value) != true)) {
+                    this.CommodityIdField = value;
+                    this.RaisePropertyChanged("CommodityId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CommodityName {
+            get {
+                return this.CommodityNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CommodityNameField, value) != true)) {
+                    this.CommodityNameField = value;
+                    this.RaisePropertyChanged("CommodityName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CommodityNumber {
+            get {
+                return this.CommodityNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CommodityNumberField, value) != true)) {
+                    this.CommodityNumberField = value;
+                    this.RaisePropertyChanged("CommodityNumber");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ContainerEntityId {
+            get {
+                return this.ContainerEntityIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ContainerEntityIdField, value) != true)) {
+                    this.ContainerEntityIdField = value;
+                    this.RaisePropertyChanged("ContainerEntityId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ContainerNumber {
+            get {
+                return this.ContainerNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ContainerNumberField, value) != true)) {
+                    this.ContainerNumberField = value;
+                    this.RaisePropertyChanged("ContainerNumber");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int ContainerSize {
+            get {
+                return this.ContainerSizeField;
+            }
+            set {
+                if ((this.ContainerSizeField.Equals(value) != true)) {
+                    this.ContainerSizeField = value;
+                    this.RaisePropertyChanged("ContainerSize");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ContainerStatusSourceCode {
+            get {
+                return this.ContainerStatusSourceCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ContainerStatusSourceCodeField, value) != true)) {
+                    this.ContainerStatusSourceCodeField = value;
+                    this.RaisePropertyChanged("ContainerStatusSourceCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CountryId {
+            get {
+                return this.CountryIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CountryIdField, value) != true)) {
+                    this.CountryIdField = value;
+                    this.RaisePropertyChanged("CountryId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CountryName {
+            get {
+                return this.CountryNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CountryNameField, value) != true)) {
+                    this.CountryNameField = value;
+                    this.RaisePropertyChanged("CountryName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> DeliveryATA {
+            get {
+                return this.DeliveryATAField;
+            }
+            set {
+                if ((this.DeliveryATAField.Equals(value) != true)) {
+                    this.DeliveryATAField = value;
+                    this.RaisePropertyChanged("DeliveryATA");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> DeliveryATD {
+            get {
+                return this.DeliveryATDField;
+            }
+            set {
+                if ((this.DeliveryATDField.Equals(value) != true)) {
+                    this.DeliveryATDField = value;
+                    this.RaisePropertyChanged("DeliveryATD");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> DeliveryETA {
+            get {
+                return this.DeliveryETAField;
+            }
+            set {
+                if ((this.DeliveryETAField.Equals(value) != true)) {
+                    this.DeliveryETAField = value;
+                    this.RaisePropertyChanged("DeliveryETA");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> DeliveryETD {
+            get {
+                return this.DeliveryETDField;
+            }
+            set {
+                if ((this.DeliveryETDField.Equals(value) != true)) {
+                    this.DeliveryETDField = value;
+                    this.RaisePropertyChanged("DeliveryETD");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string DeliveryFrom {
+            get {
+                return this.DeliveryFromField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DeliveryFromField, value) != true)) {
+                    this.DeliveryFromField = value;
+                    this.RaisePropertyChanged("DeliveryFrom");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string DeliveryId {
+            get {
+                return this.DeliveryIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DeliveryIdField, value) != true)) {
+                    this.DeliveryIdField = value;
+                    this.RaisePropertyChanged("DeliveryId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string DeliveryTo {
+            get {
+                return this.DeliveryToField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DeliveryToField, value) != true)) {
+                    this.DeliveryToField = value;
+                    this.RaisePropertyChanged("DeliveryTo");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string DeliveryTransportModeCode {
+            get {
+                return this.DeliveryTransportModeCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DeliveryTransportModeCodeField, value) != true)) {
+                    this.DeliveryTransportModeCodeField = value;
+                    this.RaisePropertyChanged("DeliveryTransportModeCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Description {
+            get {
+                return this.DescriptionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DescriptionField, value) != true)) {
+                    this.DescriptionField = value;
+                    this.RaisePropertyChanged("Description");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string DummyIdGuid {
+            get {
+                return this.DummyIdGuidField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DummyIdGuidField, value) != true)) {
+                    this.DummyIdGuidField = value;
+                    this.RaisePropertyChanged("DummyIdGuid");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ECRTransportModeCode {
+            get {
+                return this.ECRTransportModeCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ECRTransportModeCodeField, value) != true)) {
+                    this.ECRTransportModeCodeField = value;
+                    this.RaisePropertyChanged("ECRTransportModeCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string EMS {
+            get {
+                return this.EMSField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.EMSField, value) != true)) {
+                    this.EMSField = value;
+                    this.RaisePropertyChanged("EMS");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> ETA {
+            get {
+                return this.ETAField;
+            }
+            set {
+                if ((this.ETAField.Equals(value) != true)) {
+                    this.ETAField = value;
+                    this.RaisePropertyChanged("ETA");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> ETD {
+            get {
+                return this.ETDField;
+            }
+            set {
+                if ((this.ETDField.Equals(value) != true)) {
+                    this.ETDField = value;
+                    this.RaisePropertyChanged("ETD");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> EmptyContainerReturnATA {
+            get {
+                return this.EmptyContainerReturnATAField;
+            }
+            set {
+                if ((this.EmptyContainerReturnATAField.Equals(value) != true)) {
+                    this.EmptyContainerReturnATAField = value;
+                    this.RaisePropertyChanged("EmptyContainerReturnATA");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> EmptyContainerReturnATD {
+            get {
+                return this.EmptyContainerReturnATDField;
+            }
+            set {
+                if ((this.EmptyContainerReturnATDField.Equals(value) != true)) {
+                    this.EmptyContainerReturnATDField = value;
+                    this.RaisePropertyChanged("EmptyContainerReturnATD");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> EmptyContainerReturnETA {
+            get {
+                return this.EmptyContainerReturnETAField;
+            }
+            set {
+                if ((this.EmptyContainerReturnETAField.Equals(value) != true)) {
+                    this.EmptyContainerReturnETAField = value;
+                    this.RaisePropertyChanged("EmptyContainerReturnETA");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> EmptyContainerReturnETD {
+            get {
+                return this.EmptyContainerReturnETDField;
+            }
+            set {
+                if ((this.EmptyContainerReturnETDField.Equals(value) != true)) {
+                    this.EmptyContainerReturnETDField = value;
+                    this.RaisePropertyChanged("EmptyContainerReturnETD");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string EmptyContainerReturnFrom {
+            get {
+                return this.EmptyContainerReturnFromField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.EmptyContainerReturnFromField, value) != true)) {
+                    this.EmptyContainerReturnFromField = value;
+                    this.RaisePropertyChanged("EmptyContainerReturnFrom");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string EmptyContainerReturnId {
+            get {
+                return this.EmptyContainerReturnIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.EmptyContainerReturnIdField, value) != true)) {
+                    this.EmptyContainerReturnIdField = value;
+                    this.RaisePropertyChanged("EmptyContainerReturnId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string EmptyContainerReturnTo {
+            get {
+                return this.EmptyContainerReturnToField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.EmptyContainerReturnToField, value) != true)) {
+                    this.EmptyContainerReturnToField = value;
+                    this.RaisePropertyChanged("EmptyContainerReturnTo");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string FlashPoint {
+            get {
+                return this.FlashPointField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FlashPointField, value) != true)) {
+                    this.FlashPointField = value;
+                    this.RaisePropertyChanged("FlashPoint");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string FlashPointTemperatureUnitCode {
+            get {
+                return this.FlashPointTemperatureUnitCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.FlashPointTemperatureUnitCodeField, value) != true)) {
+                    this.FlashPointTemperatureUnitCodeField = value;
+                    this.RaisePropertyChanged("FlashPointTemperatureUnitCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Harmonize {
+            get {
+                return this.HarmonizeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.HarmonizeField, value) != true)) {
+                    this.HarmonizeField = value;
+                    this.RaisePropertyChanged("Harmonize");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool HasContainerException {
+            get {
+                return this.HasContainerExceptionField;
+            }
+            set {
+                if ((this.HasContainerExceptionField.Equals(value) != true)) {
+                    this.HasContainerExceptionField = value;
+                    this.RaisePropertyChanged("HasContainerException");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> Height {
+            get {
+                return this.HeightField;
+            }
+            set {
+                if ((this.HeightField.Equals(value) != true)) {
+                    this.HeightField = value;
+                    this.RaisePropertyChanged("Height");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string HorseId {
+            get {
+                return this.HorseIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.HorseIdField, value) != true)) {
+                    this.HorseIdField = value;
+                    this.RaisePropertyChanged("HorseId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string HorseName {
+            get {
+                return this.HorseNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.HorseNameField, value) != true)) {
+                    this.HorseNameField = value;
+                    this.RaisePropertyChanged("HorseName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string IMDGCode {
+            get {
+                return this.IMDGCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.IMDGCodeField, value) != true)) {
+                    this.IMDGCodeField = value;
+                    this.RaisePropertyChanged("IMDGCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.IdField, value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int InUse {
+            get {
+                return this.InUseField;
+            }
+            set {
+                if ((this.InUseField.Equals(value) != true)) {
+                    this.InUseField = value;
+                    this.RaisePropertyChanged("InUse");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public HypredTest.ShipmentProxy.InsideShipmentPackagePM[] InsideShipmentPackages {
+            get {
+                return this.InsideShipmentPackagesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.InsideShipmentPackagesField, value) != true)) {
+                    this.InsideShipmentPackagesField = value;
+                    this.RaisePropertyChanged("InsideShipmentPackages");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public HypredTest.ShipmentProxy.InsideShipmentPackagePM[] InsideShipmentPackagesChangeSet {
+            get {
+                return this.InsideShipmentPackagesChangeSetField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.InsideShipmentPackagesChangeSetField, value) != true)) {
+                    this.InsideShipmentPackagesChangeSetField = value;
+                    this.RaisePropertyChanged("InsideShipmentPackagesChangeSet");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsAWBWizardDefault {
+            get {
+                return this.IsAWBWizardDefaultField;
+            }
+            set {
+                if ((this.IsAWBWizardDefaultField.Equals(value) != true)) {
+                    this.IsAWBWizardDefaultField = value;
+                    this.RaisePropertyChanged("IsAWBWizardDefault");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsContainer {
+            get {
+                return this.IsContainerField;
+            }
+            set {
+                if ((this.IsContainerField.Equals(value) != true)) {
+                    this.IsContainerField = value;
+                    this.RaisePropertyChanged("IsContainer");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsContainerRefrigerated {
+            get {
+                return this.IsContainerRefrigeratedField;
+            }
+            set {
+                if ((this.IsContainerRefrigeratedField.Equals(value) != true)) {
+                    this.IsContainerRefrigeratedField = value;
+                    this.RaisePropertyChanged("IsContainerRefrigerated");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsCreatedFromPickupDelivery {
+            get {
+                return this.IsCreatedFromPickupDeliveryField;
+            }
+            set {
+                if ((this.IsCreatedFromPickupDeliveryField.Equals(value) != true)) {
+                    this.IsCreatedFromPickupDeliveryField = value;
+                    this.RaisePropertyChanged("IsCreatedFromPickupDelivery");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsDangerous {
+            get {
+                return this.IsDangerousField;
+            }
+            set {
+                if ((this.IsDangerousField.Equals(value) != true)) {
+                    this.IsDangerousField = value;
+                    this.RaisePropertyChanged("IsDangerous");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsDeliveryFU {
+            get {
+                return this.IsDeliveryFUField;
+            }
+            set {
+                if ((this.IsDeliveryFUField.Equals(value) != true)) {
+                    this.IsDeliveryFUField = value;
+                    this.RaisePropertyChanged("IsDeliveryFU");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsEmptyContainerReturnFU {
+            get {
+                return this.IsEmptyContainerReturnFUField;
+            }
+            set {
+                if ((this.IsEmptyContainerReturnFUField.Equals(value) != true)) {
+                    this.IsEmptyContainerReturnFUField = value;
+                    this.RaisePropertyChanged("IsEmptyContainerReturnFU");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsFromSplit {
+            get {
+                return this.IsFromSplitField;
+            }
+            set {
+                if ((this.IsFromSplitField.Equals(value) != true)) {
+                    this.IsFromSplitField = value;
+                    this.RaisePropertyChanged("IsFromSplit");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsMultiHarmonize {
+            get {
+                return this.IsMultiHarmonizeField;
+            }
+            set {
+                if ((this.IsMultiHarmonizeField.Equals(value) != true)) {
+                    this.IsMultiHarmonizeField = value;
+                    this.RaisePropertyChanged("IsMultiHarmonize");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsPackageAddedManually {
+            get {
+                return this.IsPackageAddedManuallyField;
+            }
+            set {
+                if ((this.IsPackageAddedManuallyField.Equals(value) != true)) {
+                    this.IsPackageAddedManuallyField = value;
+                    this.RaisePropertyChanged("IsPackageAddedManually");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsPackageCheckedInLeg {
+            get {
+                return this.IsPackageCheckedInLegField;
+            }
+            set {
+                if ((this.IsPackageCheckedInLegField.Equals(value) != true)) {
+                    this.IsPackageCheckedInLegField = value;
+                    this.RaisePropertyChanged("IsPackageCheckedInLeg");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsVehicle {
+            get {
+                return this.IsVehicleField;
+            }
+            set {
+                if ((this.IsVehicleField.Equals(value) != true)) {
+                    this.IsVehicleField = value;
+                    this.RaisePropertyChanged("IsVehicle");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string KelmerCode {
+            get {
+                return this.KelmerCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.KelmerCodeField, value) != true)) {
+                    this.KelmerCodeField = value;
+                    this.RaisePropertyChanged("KelmerCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string LCLContainerTypeId {
+            get {
+                return this.LCLContainerTypeIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LCLContainerTypeIdField, value) != true)) {
+                    this.LCLContainerTypeIdField = value;
+                    this.RaisePropertyChanged("LCLContainerTypeId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string LastStatusCode {
+            get {
+                return this.LastStatusCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LastStatusCodeField, value) != true)) {
+                    this.LastStatusCodeField = value;
+                    this.RaisePropertyChanged("LastStatusCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> LastStatusDate {
+            get {
+                return this.LastStatusDateField;
+            }
+            set {
+                if ((this.LastStatusDateField.Equals(value) != true)) {
+                    this.LastStatusDateField = value;
+                    this.RaisePropertyChanged("LastStatusDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string LastStatusName {
+            get {
+                return this.LastStatusNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.LastStatusNameField, value) != true)) {
+                    this.LastStatusNameField = value;
+                    this.RaisePropertyChanged("LastStatusName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> Length {
+            get {
+                return this.LengthField;
+            }
+            set {
+                if ((this.LengthField.Equals(value) != true)) {
+                    this.LengthField = value;
+                    this.RaisePropertyChanged("Length");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Make {
+            get {
+                return this.MakeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.MakeField, value) != true)) {
+                    this.MakeField = value;
+                    this.RaisePropertyChanged("Make");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool MarinePollutant {
+            get {
+                return this.MarinePollutantField;
+            }
+            set {
+                if ((this.MarinePollutantField.Equals(value) != true)) {
+                    this.MarinePollutantField = value;
+                    this.RaisePropertyChanged("MarinePollutant");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string MarksAndNumbers {
+            get {
+                return this.MarksAndNumbersField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.MarksAndNumbersField, value) != true)) {
+                    this.MarksAndNumbersField = value;
+                    this.RaisePropertyChanged("MarksAndNumbers");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string MaterialDescription {
+            get {
+                return this.MaterialDescriptionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.MaterialDescriptionField, value) != true)) {
+                    this.MaterialDescriptionField = value;
+                    this.RaisePropertyChanged("MaterialDescription");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string MethodUsed {
+            get {
+                return this.MethodUsedField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.MethodUsedField, value) != true)) {
+                    this.MethodUsedField = value;
+                    this.RaisePropertyChanged("MethodUsed");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Model {
+            get {
+                return this.ModelField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ModelField, value) != true)) {
+                    this.ModelField = value;
+                    this.RaisePropertyChanged("Model");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool NonActiveContainer {
+            get {
+                return this.NonActiveContainerField;
+            }
+            set {
+                if ((this.NonActiveContainerField.Equals(value) != true)) {
+                    this.NonActiveContainerField = value;
+                    this.RaisePropertyChanged("NonActiveContainer");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Notes {
+            get {
+                return this.NotesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NotesField, value) != true)) {
+                    this.NotesField = value;
+                    this.RaisePropertyChanged("Notes");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int NumberOfInsidePackages {
+            get {
+                return this.NumberOfInsidePackagesField;
+            }
+            set {
+                if ((this.NumberOfInsidePackagesField.Equals(value) != true)) {
+                    this.NumberOfInsidePackagesField = value;
+                    this.RaisePropertyChanged("NumberOfInsidePackages");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string NumberOfInsidePackagesDetails {
+            get {
+                return this.NumberOfInsidePackagesDetailsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NumberOfInsidePackagesDetailsField, value) != true)) {
+                    this.NumberOfInsidePackagesDetailsField = value;
+                    this.RaisePropertyChanged("NumberOfInsidePackagesDetails");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> OnCarriageATA {
+            get {
+                return this.OnCarriageATAField;
+            }
+            set {
+                if ((this.OnCarriageATAField.Equals(value) != true)) {
+                    this.OnCarriageATAField = value;
+                    this.RaisePropertyChanged("OnCarriageATA");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> OnCarriageATD {
+            get {
+                return this.OnCarriageATDField;
+            }
+            set {
+                if ((this.OnCarriageATDField.Equals(value) != true)) {
+                    this.OnCarriageATDField = value;
+                    this.RaisePropertyChanged("OnCarriageATD");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> OnCarriageETA {
+            get {
+                return this.OnCarriageETAField;
+            }
+            set {
+                if ((this.OnCarriageETAField.Equals(value) != true)) {
+                    this.OnCarriageETAField = value;
+                    this.RaisePropertyChanged("OnCarriageETA");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> OnCarriageETD {
+            get {
+                return this.OnCarriageETDField;
+            }
+            set {
+                if ((this.OnCarriageETDField.Equals(value) != true)) {
+                    this.OnCarriageETDField = value;
+                    this.RaisePropertyChanged("OnCarriageETD");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string OriginalShipmentPackageId {
+            get {
+                return this.OriginalShipmentPackageIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.OriginalShipmentPackageIdField, value) != true)) {
+                    this.OriginalShipmentPackageIdField = value;
+                    this.RaisePropertyChanged("OriginalShipmentPackageId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PackageTypeCode {
+            get {
+                return this.PackageTypeCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PackageTypeCodeField, value) != true)) {
+                    this.PackageTypeCodeField = value;
+                    this.RaisePropertyChanged("PackageTypeCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PackageTypeId {
+            get {
+                return this.PackageTypeIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PackageTypeIdField, value) != true)) {
+                    this.PackageTypeIdField = value;
+                    this.RaisePropertyChanged("PackageTypeId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool PackageTypeIsAir {
+            get {
+                return this.PackageTypeIsAirField;
+            }
+            set {
+                if ((this.PackageTypeIsAirField.Equals(value) != true)) {
+                    this.PackageTypeIsAirField = value;
+                    this.RaisePropertyChanged("PackageTypeIsAir");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool PackageTypeIsInland {
+            get {
+                return this.PackageTypeIsInlandField;
+            }
+            set {
+                if ((this.PackageTypeIsInlandField.Equals(value) != true)) {
+                    this.PackageTypeIsInlandField = value;
+                    this.RaisePropertyChanged("PackageTypeIsInland");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool PackageTypeIsOcean {
+            get {
+                return this.PackageTypeIsOceanField;
+            }
+            set {
+                if ((this.PackageTypeIsOceanField.Equals(value) != true)) {
+                    this.PackageTypeIsOceanField = value;
+                    this.RaisePropertyChanged("PackageTypeIsOcean");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PackageTypeLocalName {
+            get {
+                return this.PackageTypeLocalNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PackageTypeLocalNameField, value) != true)) {
+                    this.PackageTypeLocalNameField = value;
+                    this.RaisePropertyChanged("PackageTypeLocalName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PackageTypeName {
+            get {
+                return this.PackageTypeNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PackageTypeNameField, value) != true)) {
+                    this.PackageTypeNameField = value;
+                    this.RaisePropertyChanged("PackageTypeName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PackageTypeNote {
+            get {
+                return this.PackageTypeNoteField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PackageTypeNoteField, value) != true)) {
+                    this.PackageTypeNoteField = value;
+                    this.RaisePropertyChanged("PackageTypeNote");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public decimal PackageTypeVolume {
+            get {
+                return this.PackageTypeVolumeField;
+            }
+            set {
+                if ((this.PackageTypeVolumeField.Equals(value) != true)) {
+                    this.PackageTypeVolumeField = value;
+                    this.RaisePropertyChanged("PackageTypeVolume");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PackagingGroup {
+            get {
+                return this.PackagingGroupField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PackagingGroupField, value) != true)) {
+                    this.PackagingGroupField = value;
+                    this.RaisePropertyChanged("PackagingGroup");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PrintAs {
+            get {
+                return this.PrintAsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PrintAsField, value) != true)) {
+                    this.PrintAsField = value;
+                    this.RaisePropertyChanged("PrintAs");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ProperShippingName {
+            get {
+                return this.ProperShippingNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ProperShippingNameField, value) != true)) {
+                    this.ProperShippingNameField = value;
+                    this.RaisePropertyChanged("ProperShippingName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<int> Quantity {
+            get {
+                return this.QuantityField;
+            }
+            set {
+                if ((this.QuantityField.Equals(value) != true)) {
+                    this.QuantityField = value;
+                    this.RaisePropertyChanged("Quantity");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Reference1 {
+            get {
+                return this.Reference1Field;
+            }
+            set {
+                if ((object.ReferenceEquals(this.Reference1Field, value) != true)) {
+                    this.Reference1Field = value;
+                    this.RaisePropertyChanged("Reference1");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Reference2 {
+            get {
+                return this.Reference2Field;
+            }
+            set {
+                if ((object.ReferenceEquals(this.Reference2Field, value) != true)) {
+                    this.Reference2Field = value;
+                    this.RaisePropertyChanged("Reference2");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Reference3 {
+            get {
+                return this.Reference3Field;
+            }
+            set {
+                if ((object.ReferenceEquals(this.Reference3Field, value) != true)) {
+                    this.Reference3Field = value;
+                    this.RaisePropertyChanged("Reference3");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Reference4 {
+            get {
+                return this.Reference4Field;
+            }
+            set {
+                if ((object.ReferenceEquals(this.Reference4Field, value) != true)) {
+                    this.Reference4Field = value;
+                    this.RaisePropertyChanged("Reference4");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string RegistrationNumber {
+            get {
+                return this.RegistrationNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.RegistrationNumberField, value) != true)) {
+                    this.RegistrationNumberField = value;
+                    this.RaisePropertyChanged("RegistrationNumber");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Routing {
+            get {
+                return this.RoutingField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.RoutingField, value) != true)) {
+                    this.RoutingField = value;
+                    this.RaisePropertyChanged("Routing");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string RoutingIds {
+            get {
+                return this.RoutingIdsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.RoutingIdsField, value) != true)) {
+                    this.RoutingIdsField = value;
+                    this.RaisePropertyChanged("RoutingIds");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<int> SOC {
+            get {
+                return this.SOCField;
+            }
+            set {
+                if ((this.SOCField.Equals(value) != true)) {
+                    this.SOCField = value;
+                    this.RaisePropertyChanged("SOC");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ShipmentId {
+            get {
+                return this.ShipmentIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ShipmentIdField, value) != true)) {
+                    this.ShipmentIdField = value;
+                    this.RaisePropertyChanged("ShipmentId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ShipmentNumber {
+            get {
+                return this.ShipmentNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ShipmentNumberField, value) != true)) {
+                    this.ShipmentNumberField = value;
+                    this.RaisePropertyChanged("ShipmentNumber");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public HypredTest.ShipmentProxy.ShipmentPM ShipmentPM {
+            get {
+                return this.ShipmentPMField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ShipmentPMField, value) != true)) {
+                    this.ShipmentPMField = value;
+                    this.RaisePropertyChanged("ShipmentPM");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ShipmentPMId {
+            get {
+                return this.ShipmentPMIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ShipmentPMIdField, value) != true)) {
+                    this.ShipmentPMIdField = value;
+                    this.RaisePropertyChanged("ShipmentPMId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public HypredTest.ShipmentProxy.ShipmentPackageHarmonizePM[] ShipmentPackageHarmonizes {
+            get {
+                return this.ShipmentPackageHarmonizesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ShipmentPackageHarmonizesField, value) != true)) {
+                    this.ShipmentPackageHarmonizesField = value;
+                    this.RaisePropertyChanged("ShipmentPackageHarmonizes");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public HypredTest.ShipmentProxy.ShipmentPackageHarmonizePM[] ShipmentPackageHarmonizesChangeSet {
+            get {
+                return this.ShipmentPackageHarmonizesChangeSetField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ShipmentPackageHarmonizesChangeSetField, value) != true)) {
+                    this.ShipmentPackageHarmonizesChangeSetField = value;
+                    this.RaisePropertyChanged("ShipmentPackageHarmonizesChangeSet");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public HypredTest.ShipmentProxy.ShipmentPackageItemPM[] ShipmentPackageItems {
+            get {
+                return this.ShipmentPackageItemsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ShipmentPackageItemsField, value) != true)) {
+                    this.ShipmentPackageItemsField = value;
+                    this.RaisePropertyChanged("ShipmentPackageItems");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public HypredTest.ShipmentProxy.ShipmentPackageItemPM[] ShipmentPackageItemsChangeSet {
+            get {
+                return this.ShipmentPackageItemsChangeSetField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ShipmentPackageItemsChangeSetField, value) != true)) {
+                    this.ShipmentPackageItemsChangeSetField = value;
+                    this.RaisePropertyChanged("ShipmentPackageItemsChangeSet");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ShipperSeal {
+            get {
+                return this.ShipperSealField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ShipperSealField, value) != true)) {
+                    this.ShipperSealField = value;
+                    this.RaisePropertyChanged("ShipperSeal");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int SplitIndex {
+            get {
+                return this.SplitIndexField;
+            }
+            set {
+                if ((this.SplitIndexField.Equals(value) != true)) {
+                    this.SplitIndexField = value;
+                    this.RaisePropertyChanged("SplitIndex");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public double TEU {
+            get {
+                return this.TEUField;
+            }
+            set {
+                if ((this.TEUField.Equals(value) != true)) {
+                    this.TEUField = value;
+                    this.RaisePropertyChanged("TEU");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> Tare {
+            get {
+                return this.TareField;
+            }
+            set {
+                if ((this.TareField.Equals(value) != true)) {
+                    this.TareField = value;
+                    this.RaisePropertyChanged("Tare");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Temperature {
+            get {
+                return this.TemperatureField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TemperatureField, value) != true)) {
+                    this.TemperatureField = value;
+                    this.RaisePropertyChanged("Temperature");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string TemperatureUnitCode {
+            get {
+                return this.TemperatureUnitCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.TemperatureUnitCodeField, value) != true)) {
+                    this.TemperatureUnitCodeField = value;
+                    this.RaisePropertyChanged("TemperatureUnitCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Tenant {
+            get {
+                return this.TenantField;
+            }
+            set {
+                if ((this.TenantField.Equals(value) != true)) {
+                    this.TenantField = value;
+                    this.RaisePropertyChanged("Tenant");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string UnNumber {
+            get {
+                return this.UnNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UnNumberField, value) != true)) {
+                    this.UnNumberField = value;
+                    this.RaisePropertyChanged("UnNumber");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<decimal> VGM {
+            get {
+                return this.VGMField;
+            }
+            set {
+                if ((this.VGMField.Equals(value) != true)) {
+                    this.VGMField = value;
+                    this.RaisePropertyChanged("VGM");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> Ventilation {
+            get {
+                return this.VentilationField;
+            }
+            set {
+                if ((this.VentilationField.Equals(value) != true)) {
+                    this.VentilationField = value;
+                    this.RaisePropertyChanged("Ventilation");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> Volume {
+            get {
+                return this.VolumeField;
+            }
+            set {
+                if ((this.VolumeField.Equals(value) != true)) {
+                    this.VolumeField = value;
+                    this.RaisePropertyChanged("Volume");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> VolumetricWeight {
+            get {
+                return this.VolumetricWeightField;
+            }
+            set {
+                if ((this.VolumetricWeightField.Equals(value) != true)) {
+                    this.VolumetricWeightField = value;
+                    this.RaisePropertyChanged("VolumetricWeight");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string VoyageTripNumber {
+            get {
+                return this.VoyageTripNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.VoyageTripNumberField, value) != true)) {
+                    this.VoyageTripNumberField = value;
+                    this.RaisePropertyChanged("VoyageTripNumber");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string WarehouseReleaseNumber {
+            get {
+                return this.WarehouseReleaseNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.WarehouseReleaseNumberField, value) != true)) {
+                    this.WarehouseReleaseNumberField = value;
+                    this.RaisePropertyChanged("WarehouseReleaseNumber");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> Weight {
+            get {
+                return this.WeightField;
+            }
+            set {
+                if ((this.WeightField.Equals(value) != true)) {
+                    this.WeightField = value;
+                    this.RaisePropertyChanged("Weight");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> Width {
+            get {
+                return this.WidthField;
+            }
+            set {
+                if ((this.WidthField.Equals(value) != true)) {
+                    this.WidthField = value;
+                    this.RaisePropertyChanged("Width");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Year {
+            get {
+                return this.YearField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.YearField, value) != true)) {
+                    this.YearField = value;
+                    this.RaisePropertyChanged("Year");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="ShipmentFollowUpPM", Namespace="http://schemas.datacontract.org/2004/07/Logitude.BL.ShipmentsModel.EntityPMs")]
     [System.SerializableAttribute()]
     public partial class ShipmentFollowUpPM : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -17347,7 +21024,7 @@ namespace HypredTest.ShipmentProxy {
         private bool ManualActivatedFollowUpField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string NoteField;
+        private string NotesField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string OwnerUserIdField;
@@ -17658,14 +21335,14 @@ namespace HypredTest.ShipmentProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Note {
+        public string Notes {
             get {
-                return this.NoteField;
+                return this.NotesField;
             }
             set {
-                if ((object.ReferenceEquals(this.NoteField, value) != true)) {
-                    this.NoteField = value;
-                    this.RaisePropertyChanged("Note");
+                if ((object.ReferenceEquals(this.NotesField, value) != true)) {
+                    this.NotesField = value;
+                    this.RaisePropertyChanged("Notes");
                 }
             }
         }
@@ -21564,6 +25241,18 @@ namespace HypredTest.ShipmentProxy {
         private System.Nullable<double> OAMTReceivables_Profit_NoParentField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string OnForwardingFromPortIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string OnForwardingToPortIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PreForwardingFromPortIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PreForwardingToPortIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string ShipmentNumberField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -22031,6 +25720,58 @@ namespace HypredTest.ShipmentProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string OnForwardingFromPortId {
+            get {
+                return this.OnForwardingFromPortIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.OnForwardingFromPortIdField, value) != true)) {
+                    this.OnForwardingFromPortIdField = value;
+                    this.RaisePropertyChanged("OnForwardingFromPortId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string OnForwardingToPortId {
+            get {
+                return this.OnForwardingToPortIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.OnForwardingToPortIdField, value) != true)) {
+                    this.OnForwardingToPortIdField = value;
+                    this.RaisePropertyChanged("OnForwardingToPortId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PreForwardingFromPortId {
+            get {
+                return this.PreForwardingFromPortIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PreForwardingFromPortIdField, value) != true)) {
+                    this.PreForwardingFromPortIdField = value;
+                    this.RaisePropertyChanged("PreForwardingFromPortId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PreForwardingToPortId {
+            get {
+                return this.PreForwardingToPortIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PreForwardingToPortIdField, value) != true)) {
+                    this.PreForwardingToPortIdField = value;
+                    this.RaisePropertyChanged("PreForwardingToPortId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string ShipmentNumber {
             get {
                 return this.ShipmentNumberField;
@@ -22130,10 +25871,16 @@ namespace HypredTest.ShipmentProxy {
         private string[] AllConnectedPackagesIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string BookingConfirmationNumberField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string CarrierCodeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string CarrierIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CarrierLocalNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string CarrierNameField;
@@ -22146,6 +25893,9 @@ namespace HypredTest.ShipmentProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private Simplog.Server.Infrastructure.ChangeSetOperation ChangeSetOpField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<int> ChildDeliveryIndexField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string ConnectedPackageIdField;
@@ -22232,6 +25982,9 @@ namespace HypredTest.ShipmentProxy {
         private bool IsCancelledField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsConnectedToStandaloneField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool IsFromSplitField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -22242,6 +25995,9 @@ namespace HypredTest.ShipmentProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<double> PackageTEUField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ParentPickUpDeliveryIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string PickUpDeliveryFromTypeCodeField;
@@ -22272,6 +26028,12 @@ namespace HypredTest.ShipmentProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int SplitIndexField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string StandaloneShipmentIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string StandaloneShipmentNumberField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int TenantField;
@@ -22409,6 +26171,19 @@ namespace HypredTest.ShipmentProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string BookingConfirmationNumber {
+            get {
+                return this.BookingConfirmationNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BookingConfirmationNumberField, value) != true)) {
+                    this.BookingConfirmationNumberField = value;
+                    this.RaisePropertyChanged("BookingConfirmationNumber");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string CarrierCode {
             get {
                 return this.CarrierCodeField;
@@ -22430,6 +26205,19 @@ namespace HypredTest.ShipmentProxy {
                 if ((object.ReferenceEquals(this.CarrierIdField, value) != true)) {
                     this.CarrierIdField = value;
                     this.RaisePropertyChanged("CarrierId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CarrierLocalName {
+            get {
+                return this.CarrierLocalNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CarrierLocalNameField, value) != true)) {
+                    this.CarrierLocalNameField = value;
+                    this.RaisePropertyChanged("CarrierLocalName");
                 }
             }
         }
@@ -22482,6 +26270,19 @@ namespace HypredTest.ShipmentProxy {
                 if ((this.ChangeSetOpField.Equals(value) != true)) {
                     this.ChangeSetOpField = value;
                     this.RaisePropertyChanged("ChangeSetOp");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<int> ChildDeliveryIndex {
+            get {
+                return this.ChildDeliveryIndexField;
+            }
+            set {
+                if ((this.ChildDeliveryIndexField.Equals(value) != true)) {
+                    this.ChildDeliveryIndexField = value;
+                    this.RaisePropertyChanged("ChildDeliveryIndex");
                 }
             }
         }
@@ -22851,6 +26652,19 @@ namespace HypredTest.ShipmentProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsConnectedToStandalone {
+            get {
+                return this.IsConnectedToStandaloneField;
+            }
+            set {
+                if ((this.IsConnectedToStandaloneField.Equals(value) != true)) {
+                    this.IsConnectedToStandaloneField = value;
+                    this.RaisePropertyChanged("IsConnectedToStandalone");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public bool IsFromSplit {
             get {
                 return this.IsFromSplitField;
@@ -22898,6 +26712,19 @@ namespace HypredTest.ShipmentProxy {
                 if ((this.PackageTEUField.Equals(value) != true)) {
                     this.PackageTEUField = value;
                     this.RaisePropertyChanged("PackageTEU");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ParentPickUpDeliveryId {
+            get {
+                return this.ParentPickUpDeliveryIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ParentPickUpDeliveryIdField, value) != true)) {
+                    this.ParentPickUpDeliveryIdField = value;
+                    this.RaisePropertyChanged("ParentPickUpDeliveryId");
                 }
             }
         }
@@ -23028,6 +26855,32 @@ namespace HypredTest.ShipmentProxy {
                 if ((this.SplitIndexField.Equals(value) != true)) {
                     this.SplitIndexField = value;
                     this.RaisePropertyChanged("SplitIndex");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string StandaloneShipmentId {
+            get {
+                return this.StandaloneShipmentIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.StandaloneShipmentIdField, value) != true)) {
+                    this.StandaloneShipmentIdField = value;
+                    this.RaisePropertyChanged("StandaloneShipmentId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string StandaloneShipmentNumber {
+            get {
+                return this.StandaloneShipmentNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.StandaloneShipmentNumberField, value) != true)) {
+                    this.StandaloneShipmentNumberField = value;
+                    this.RaisePropertyChanged("StandaloneShipmentNumber");
                 }
             }
         }
@@ -23589,1987 +27442,6 @@ namespace HypredTest.ShipmentProxy {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ShipmentPackagePM", Namespace="http://schemas.datacontract.org/2004/07/Logitude.BL.ShipmentsModel.EntityPMs")]
-    [System.SerializableAttribute()]
-    public partial class ShipmentPackagePM : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string CarrierSealField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string CeficClassField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Simplog.Server.Infrastructure.ChangeSetOperation ChangeSetOpField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ChassisNumberField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ClassNumberField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ColorField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string CommodityIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string CommodityNameField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string CommodityNumberField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ContainerNumberField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int ContainerSizeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string CountryIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string CountryNameField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<System.DateTime> DeliveryATAField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<System.DateTime> DeliveryATDField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<System.DateTime> DeliveryETAField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<System.DateTime> DeliveryETDField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string DeliveryFromField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string DeliveryIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string DeliveryToField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string DeliveryTransportModeCodeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string DescriptionField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string DummyIdGuidField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ECRTransportModeCodeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string EMSField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<System.DateTime> ETAField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<System.DateTime> ETDField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<System.DateTime> EmptyContainerReturnATAField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<System.DateTime> EmptyContainerReturnATDField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<System.DateTime> EmptyContainerReturnETAField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<System.DateTime> EmptyContainerReturnETDField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string EmptyContainerReturnFromField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string EmptyContainerReturnIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string EmptyContainerReturnToField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string FlashPointField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string FlashPointTemperatureUnitCodeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string HarmonizeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool HasContainerExceptionField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<double> HeightField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string HorseIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string HorseNameField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string IMDGCodeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string IdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int InUseField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private HypredTest.ShipmentProxy.InsideShipmentPackagePM[] InsideShipmentPackagesField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private HypredTest.ShipmentProxy.InsideShipmentPackagePM[] InsideShipmentPackagesChangeSetField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool IsAWBWizardDefaultField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool IsContainerField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool IsContainerRefrigeratedField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool IsDangerousField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool IsDeliveryFUField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool IsEmptyContainerReturnFUField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool IsFromSplitField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool IsMultiHarmonizeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool IsPackageAddedManuallyField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool IsVehicleField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string KelmerCodeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string LastStatusCodeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<System.DateTime> LastStatusDateField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string LastStatusNameField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<double> LengthField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string MakeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool MarinePollutantField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string MarksAndNumbersField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string MaterialDescriptionField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string MethodUsedField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ModelField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool NonActiveContainerField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string NotesField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int NumberOfInsidePackagesField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string NumberOfInsidePackagesDetailsField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<System.DateTime> OnCarriageATAField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<System.DateTime> OnCarriageATDField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<System.DateTime> OnCarriageETAField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<System.DateTime> OnCarriageETDField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string OriginalShipmentPackageIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string PackageTypeCodeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string PackageTypeIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool PackageTypeIsAirField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool PackageTypeIsInlandField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool PackageTypeIsOceanField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string PackageTypeLocalNameField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string PackageTypeNameField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string PackageTypeNoteField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private decimal PackageTypeVolumeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string PackagingGroupField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string PrintAsField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ProperShippingNameField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<int> QuantityField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string Reference1Field;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string Reference2Field;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string Reference3Field;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string Reference4Field;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string RegistrationNumberField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string RoutingField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string RoutingIdsField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<int> SOCField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ShipmentIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ShipmentNumberField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private HypredTest.ShipmentProxy.ShipmentPM ShipmentPMField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ShipmentPMIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private HypredTest.ShipmentProxy.ShipmentPackageHarmonizePM[] ShipmentPackageHarmonizesField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private HypredTest.ShipmentProxy.ShipmentPackageHarmonizePM[] ShipmentPackageHarmonizesChangeSetField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private HypredTest.ShipmentProxy.ShipmentPackageItemPM[] ShipmentPackageItemsField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private HypredTest.ShipmentProxy.ShipmentPackageItemPM[] ShipmentPackageItemsChangeSetField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ShipperSealField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int SplitIndexField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private double TEUField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<double> TareField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string TemperatureField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string TemperatureUnitCodeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int TenantField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string UnNumberField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<decimal> VGMField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<double> VentilationField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<double> VolumeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<double> VolumetricWeightField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string VoyageTripNumberField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string WarehouseReleaseNumberField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<double> WeightField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<double> WidthField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string YearField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string CarrierSeal {
-            get {
-                return this.CarrierSealField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.CarrierSealField, value) != true)) {
-                    this.CarrierSealField = value;
-                    this.RaisePropertyChanged("CarrierSeal");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string CeficClass {
-            get {
-                return this.CeficClassField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.CeficClassField, value) != true)) {
-                    this.CeficClassField = value;
-                    this.RaisePropertyChanged("CeficClass");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public Simplog.Server.Infrastructure.ChangeSetOperation ChangeSetOp {
-            get {
-                return this.ChangeSetOpField;
-            }
-            set {
-                if ((this.ChangeSetOpField.Equals(value) != true)) {
-                    this.ChangeSetOpField = value;
-                    this.RaisePropertyChanged("ChangeSetOp");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ChassisNumber {
-            get {
-                return this.ChassisNumberField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ChassisNumberField, value) != true)) {
-                    this.ChassisNumberField = value;
-                    this.RaisePropertyChanged("ChassisNumber");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ClassNumber {
-            get {
-                return this.ClassNumberField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ClassNumberField, value) != true)) {
-                    this.ClassNumberField = value;
-                    this.RaisePropertyChanged("ClassNumber");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Color {
-            get {
-                return this.ColorField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ColorField, value) != true)) {
-                    this.ColorField = value;
-                    this.RaisePropertyChanged("Color");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string CommodityId {
-            get {
-                return this.CommodityIdField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.CommodityIdField, value) != true)) {
-                    this.CommodityIdField = value;
-                    this.RaisePropertyChanged("CommodityId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string CommodityName {
-            get {
-                return this.CommodityNameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.CommodityNameField, value) != true)) {
-                    this.CommodityNameField = value;
-                    this.RaisePropertyChanged("CommodityName");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string CommodityNumber {
-            get {
-                return this.CommodityNumberField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.CommodityNumberField, value) != true)) {
-                    this.CommodityNumberField = value;
-                    this.RaisePropertyChanged("CommodityNumber");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ContainerNumber {
-            get {
-                return this.ContainerNumberField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ContainerNumberField, value) != true)) {
-                    this.ContainerNumberField = value;
-                    this.RaisePropertyChanged("ContainerNumber");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int ContainerSize {
-            get {
-                return this.ContainerSizeField;
-            }
-            set {
-                if ((this.ContainerSizeField.Equals(value) != true)) {
-                    this.ContainerSizeField = value;
-                    this.RaisePropertyChanged("ContainerSize");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string CountryId {
-            get {
-                return this.CountryIdField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.CountryIdField, value) != true)) {
-                    this.CountryIdField = value;
-                    this.RaisePropertyChanged("CountryId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string CountryName {
-            get {
-                return this.CountryNameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.CountryNameField, value) != true)) {
-                    this.CountryNameField = value;
-                    this.RaisePropertyChanged("CountryName");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<System.DateTime> DeliveryATA {
-            get {
-                return this.DeliveryATAField;
-            }
-            set {
-                if ((this.DeliveryATAField.Equals(value) != true)) {
-                    this.DeliveryATAField = value;
-                    this.RaisePropertyChanged("DeliveryATA");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<System.DateTime> DeliveryATD {
-            get {
-                return this.DeliveryATDField;
-            }
-            set {
-                if ((this.DeliveryATDField.Equals(value) != true)) {
-                    this.DeliveryATDField = value;
-                    this.RaisePropertyChanged("DeliveryATD");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<System.DateTime> DeliveryETA {
-            get {
-                return this.DeliveryETAField;
-            }
-            set {
-                if ((this.DeliveryETAField.Equals(value) != true)) {
-                    this.DeliveryETAField = value;
-                    this.RaisePropertyChanged("DeliveryETA");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<System.DateTime> DeliveryETD {
-            get {
-                return this.DeliveryETDField;
-            }
-            set {
-                if ((this.DeliveryETDField.Equals(value) != true)) {
-                    this.DeliveryETDField = value;
-                    this.RaisePropertyChanged("DeliveryETD");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string DeliveryFrom {
-            get {
-                return this.DeliveryFromField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.DeliveryFromField, value) != true)) {
-                    this.DeliveryFromField = value;
-                    this.RaisePropertyChanged("DeliveryFrom");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string DeliveryId {
-            get {
-                return this.DeliveryIdField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.DeliveryIdField, value) != true)) {
-                    this.DeliveryIdField = value;
-                    this.RaisePropertyChanged("DeliveryId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string DeliveryTo {
-            get {
-                return this.DeliveryToField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.DeliveryToField, value) != true)) {
-                    this.DeliveryToField = value;
-                    this.RaisePropertyChanged("DeliveryTo");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string DeliveryTransportModeCode {
-            get {
-                return this.DeliveryTransportModeCodeField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.DeliveryTransportModeCodeField, value) != true)) {
-                    this.DeliveryTransportModeCodeField = value;
-                    this.RaisePropertyChanged("DeliveryTransportModeCode");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Description {
-            get {
-                return this.DescriptionField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.DescriptionField, value) != true)) {
-                    this.DescriptionField = value;
-                    this.RaisePropertyChanged("Description");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string DummyIdGuid {
-            get {
-                return this.DummyIdGuidField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.DummyIdGuidField, value) != true)) {
-                    this.DummyIdGuidField = value;
-                    this.RaisePropertyChanged("DummyIdGuid");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ECRTransportModeCode {
-            get {
-                return this.ECRTransportModeCodeField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ECRTransportModeCodeField, value) != true)) {
-                    this.ECRTransportModeCodeField = value;
-                    this.RaisePropertyChanged("ECRTransportModeCode");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string EMS {
-            get {
-                return this.EMSField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.EMSField, value) != true)) {
-                    this.EMSField = value;
-                    this.RaisePropertyChanged("EMS");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<System.DateTime> ETA {
-            get {
-                return this.ETAField;
-            }
-            set {
-                if ((this.ETAField.Equals(value) != true)) {
-                    this.ETAField = value;
-                    this.RaisePropertyChanged("ETA");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<System.DateTime> ETD {
-            get {
-                return this.ETDField;
-            }
-            set {
-                if ((this.ETDField.Equals(value) != true)) {
-                    this.ETDField = value;
-                    this.RaisePropertyChanged("ETD");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<System.DateTime> EmptyContainerReturnATA {
-            get {
-                return this.EmptyContainerReturnATAField;
-            }
-            set {
-                if ((this.EmptyContainerReturnATAField.Equals(value) != true)) {
-                    this.EmptyContainerReturnATAField = value;
-                    this.RaisePropertyChanged("EmptyContainerReturnATA");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<System.DateTime> EmptyContainerReturnATD {
-            get {
-                return this.EmptyContainerReturnATDField;
-            }
-            set {
-                if ((this.EmptyContainerReturnATDField.Equals(value) != true)) {
-                    this.EmptyContainerReturnATDField = value;
-                    this.RaisePropertyChanged("EmptyContainerReturnATD");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<System.DateTime> EmptyContainerReturnETA {
-            get {
-                return this.EmptyContainerReturnETAField;
-            }
-            set {
-                if ((this.EmptyContainerReturnETAField.Equals(value) != true)) {
-                    this.EmptyContainerReturnETAField = value;
-                    this.RaisePropertyChanged("EmptyContainerReturnETA");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<System.DateTime> EmptyContainerReturnETD {
-            get {
-                return this.EmptyContainerReturnETDField;
-            }
-            set {
-                if ((this.EmptyContainerReturnETDField.Equals(value) != true)) {
-                    this.EmptyContainerReturnETDField = value;
-                    this.RaisePropertyChanged("EmptyContainerReturnETD");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string EmptyContainerReturnFrom {
-            get {
-                return this.EmptyContainerReturnFromField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.EmptyContainerReturnFromField, value) != true)) {
-                    this.EmptyContainerReturnFromField = value;
-                    this.RaisePropertyChanged("EmptyContainerReturnFrom");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string EmptyContainerReturnId {
-            get {
-                return this.EmptyContainerReturnIdField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.EmptyContainerReturnIdField, value) != true)) {
-                    this.EmptyContainerReturnIdField = value;
-                    this.RaisePropertyChanged("EmptyContainerReturnId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string EmptyContainerReturnTo {
-            get {
-                return this.EmptyContainerReturnToField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.EmptyContainerReturnToField, value) != true)) {
-                    this.EmptyContainerReturnToField = value;
-                    this.RaisePropertyChanged("EmptyContainerReturnTo");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string FlashPoint {
-            get {
-                return this.FlashPointField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.FlashPointField, value) != true)) {
-                    this.FlashPointField = value;
-                    this.RaisePropertyChanged("FlashPoint");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string FlashPointTemperatureUnitCode {
-            get {
-                return this.FlashPointTemperatureUnitCodeField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.FlashPointTemperatureUnitCodeField, value) != true)) {
-                    this.FlashPointTemperatureUnitCodeField = value;
-                    this.RaisePropertyChanged("FlashPointTemperatureUnitCode");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Harmonize {
-            get {
-                return this.HarmonizeField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.HarmonizeField, value) != true)) {
-                    this.HarmonizeField = value;
-                    this.RaisePropertyChanged("Harmonize");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool HasContainerException {
-            get {
-                return this.HasContainerExceptionField;
-            }
-            set {
-                if ((this.HasContainerExceptionField.Equals(value) != true)) {
-                    this.HasContainerExceptionField = value;
-                    this.RaisePropertyChanged("HasContainerException");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<double> Height {
-            get {
-                return this.HeightField;
-            }
-            set {
-                if ((this.HeightField.Equals(value) != true)) {
-                    this.HeightField = value;
-                    this.RaisePropertyChanged("Height");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string HorseId {
-            get {
-                return this.HorseIdField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.HorseIdField, value) != true)) {
-                    this.HorseIdField = value;
-                    this.RaisePropertyChanged("HorseId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string HorseName {
-            get {
-                return this.HorseNameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.HorseNameField, value) != true)) {
-                    this.HorseNameField = value;
-                    this.RaisePropertyChanged("HorseName");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string IMDGCode {
-            get {
-                return this.IMDGCodeField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.IMDGCodeField, value) != true)) {
-                    this.IMDGCodeField = value;
-                    this.RaisePropertyChanged("IMDGCode");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Id {
-            get {
-                return this.IdField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.IdField, value) != true)) {
-                    this.IdField = value;
-                    this.RaisePropertyChanged("Id");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int InUse {
-            get {
-                return this.InUseField;
-            }
-            set {
-                if ((this.InUseField.Equals(value) != true)) {
-                    this.InUseField = value;
-                    this.RaisePropertyChanged("InUse");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public HypredTest.ShipmentProxy.InsideShipmentPackagePM[] InsideShipmentPackages {
-            get {
-                return this.InsideShipmentPackagesField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.InsideShipmentPackagesField, value) != true)) {
-                    this.InsideShipmentPackagesField = value;
-                    this.RaisePropertyChanged("InsideShipmentPackages");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public HypredTest.ShipmentProxy.InsideShipmentPackagePM[] InsideShipmentPackagesChangeSet {
-            get {
-                return this.InsideShipmentPackagesChangeSetField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.InsideShipmentPackagesChangeSetField, value) != true)) {
-                    this.InsideShipmentPackagesChangeSetField = value;
-                    this.RaisePropertyChanged("InsideShipmentPackagesChangeSet");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool IsAWBWizardDefault {
-            get {
-                return this.IsAWBWizardDefaultField;
-            }
-            set {
-                if ((this.IsAWBWizardDefaultField.Equals(value) != true)) {
-                    this.IsAWBWizardDefaultField = value;
-                    this.RaisePropertyChanged("IsAWBWizardDefault");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool IsContainer {
-            get {
-                return this.IsContainerField;
-            }
-            set {
-                if ((this.IsContainerField.Equals(value) != true)) {
-                    this.IsContainerField = value;
-                    this.RaisePropertyChanged("IsContainer");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool IsContainerRefrigerated {
-            get {
-                return this.IsContainerRefrigeratedField;
-            }
-            set {
-                if ((this.IsContainerRefrigeratedField.Equals(value) != true)) {
-                    this.IsContainerRefrigeratedField = value;
-                    this.RaisePropertyChanged("IsContainerRefrigerated");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool IsDangerous {
-            get {
-                return this.IsDangerousField;
-            }
-            set {
-                if ((this.IsDangerousField.Equals(value) != true)) {
-                    this.IsDangerousField = value;
-                    this.RaisePropertyChanged("IsDangerous");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool IsDeliveryFU {
-            get {
-                return this.IsDeliveryFUField;
-            }
-            set {
-                if ((this.IsDeliveryFUField.Equals(value) != true)) {
-                    this.IsDeliveryFUField = value;
-                    this.RaisePropertyChanged("IsDeliveryFU");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool IsEmptyContainerReturnFU {
-            get {
-                return this.IsEmptyContainerReturnFUField;
-            }
-            set {
-                if ((this.IsEmptyContainerReturnFUField.Equals(value) != true)) {
-                    this.IsEmptyContainerReturnFUField = value;
-                    this.RaisePropertyChanged("IsEmptyContainerReturnFU");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool IsFromSplit {
-            get {
-                return this.IsFromSplitField;
-            }
-            set {
-                if ((this.IsFromSplitField.Equals(value) != true)) {
-                    this.IsFromSplitField = value;
-                    this.RaisePropertyChanged("IsFromSplit");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool IsMultiHarmonize {
-            get {
-                return this.IsMultiHarmonizeField;
-            }
-            set {
-                if ((this.IsMultiHarmonizeField.Equals(value) != true)) {
-                    this.IsMultiHarmonizeField = value;
-                    this.RaisePropertyChanged("IsMultiHarmonize");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool IsPackageAddedManually {
-            get {
-                return this.IsPackageAddedManuallyField;
-            }
-            set {
-                if ((this.IsPackageAddedManuallyField.Equals(value) != true)) {
-                    this.IsPackageAddedManuallyField = value;
-                    this.RaisePropertyChanged("IsPackageAddedManually");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool IsVehicle {
-            get {
-                return this.IsVehicleField;
-            }
-            set {
-                if ((this.IsVehicleField.Equals(value) != true)) {
-                    this.IsVehicleField = value;
-                    this.RaisePropertyChanged("IsVehicle");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string KelmerCode {
-            get {
-                return this.KelmerCodeField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.KelmerCodeField, value) != true)) {
-                    this.KelmerCodeField = value;
-                    this.RaisePropertyChanged("KelmerCode");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string LastStatusCode {
-            get {
-                return this.LastStatusCodeField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.LastStatusCodeField, value) != true)) {
-                    this.LastStatusCodeField = value;
-                    this.RaisePropertyChanged("LastStatusCode");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<System.DateTime> LastStatusDate {
-            get {
-                return this.LastStatusDateField;
-            }
-            set {
-                if ((this.LastStatusDateField.Equals(value) != true)) {
-                    this.LastStatusDateField = value;
-                    this.RaisePropertyChanged("LastStatusDate");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string LastStatusName {
-            get {
-                return this.LastStatusNameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.LastStatusNameField, value) != true)) {
-                    this.LastStatusNameField = value;
-                    this.RaisePropertyChanged("LastStatusName");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<double> Length {
-            get {
-                return this.LengthField;
-            }
-            set {
-                if ((this.LengthField.Equals(value) != true)) {
-                    this.LengthField = value;
-                    this.RaisePropertyChanged("Length");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Make {
-            get {
-                return this.MakeField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.MakeField, value) != true)) {
-                    this.MakeField = value;
-                    this.RaisePropertyChanged("Make");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool MarinePollutant {
-            get {
-                return this.MarinePollutantField;
-            }
-            set {
-                if ((this.MarinePollutantField.Equals(value) != true)) {
-                    this.MarinePollutantField = value;
-                    this.RaisePropertyChanged("MarinePollutant");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string MarksAndNumbers {
-            get {
-                return this.MarksAndNumbersField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.MarksAndNumbersField, value) != true)) {
-                    this.MarksAndNumbersField = value;
-                    this.RaisePropertyChanged("MarksAndNumbers");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string MaterialDescription {
-            get {
-                return this.MaterialDescriptionField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.MaterialDescriptionField, value) != true)) {
-                    this.MaterialDescriptionField = value;
-                    this.RaisePropertyChanged("MaterialDescription");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string MethodUsed {
-            get {
-                return this.MethodUsedField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.MethodUsedField, value) != true)) {
-                    this.MethodUsedField = value;
-                    this.RaisePropertyChanged("MethodUsed");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Model {
-            get {
-                return this.ModelField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ModelField, value) != true)) {
-                    this.ModelField = value;
-                    this.RaisePropertyChanged("Model");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool NonActiveContainer {
-            get {
-                return this.NonActiveContainerField;
-            }
-            set {
-                if ((this.NonActiveContainerField.Equals(value) != true)) {
-                    this.NonActiveContainerField = value;
-                    this.RaisePropertyChanged("NonActiveContainer");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Notes {
-            get {
-                return this.NotesField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.NotesField, value) != true)) {
-                    this.NotesField = value;
-                    this.RaisePropertyChanged("Notes");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int NumberOfInsidePackages {
-            get {
-                return this.NumberOfInsidePackagesField;
-            }
-            set {
-                if ((this.NumberOfInsidePackagesField.Equals(value) != true)) {
-                    this.NumberOfInsidePackagesField = value;
-                    this.RaisePropertyChanged("NumberOfInsidePackages");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string NumberOfInsidePackagesDetails {
-            get {
-                return this.NumberOfInsidePackagesDetailsField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.NumberOfInsidePackagesDetailsField, value) != true)) {
-                    this.NumberOfInsidePackagesDetailsField = value;
-                    this.RaisePropertyChanged("NumberOfInsidePackagesDetails");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<System.DateTime> OnCarriageATA {
-            get {
-                return this.OnCarriageATAField;
-            }
-            set {
-                if ((this.OnCarriageATAField.Equals(value) != true)) {
-                    this.OnCarriageATAField = value;
-                    this.RaisePropertyChanged("OnCarriageATA");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<System.DateTime> OnCarriageATD {
-            get {
-                return this.OnCarriageATDField;
-            }
-            set {
-                if ((this.OnCarriageATDField.Equals(value) != true)) {
-                    this.OnCarriageATDField = value;
-                    this.RaisePropertyChanged("OnCarriageATD");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<System.DateTime> OnCarriageETA {
-            get {
-                return this.OnCarriageETAField;
-            }
-            set {
-                if ((this.OnCarriageETAField.Equals(value) != true)) {
-                    this.OnCarriageETAField = value;
-                    this.RaisePropertyChanged("OnCarriageETA");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<System.DateTime> OnCarriageETD {
-            get {
-                return this.OnCarriageETDField;
-            }
-            set {
-                if ((this.OnCarriageETDField.Equals(value) != true)) {
-                    this.OnCarriageETDField = value;
-                    this.RaisePropertyChanged("OnCarriageETD");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string OriginalShipmentPackageId {
-            get {
-                return this.OriginalShipmentPackageIdField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.OriginalShipmentPackageIdField, value) != true)) {
-                    this.OriginalShipmentPackageIdField = value;
-                    this.RaisePropertyChanged("OriginalShipmentPackageId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string PackageTypeCode {
-            get {
-                return this.PackageTypeCodeField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.PackageTypeCodeField, value) != true)) {
-                    this.PackageTypeCodeField = value;
-                    this.RaisePropertyChanged("PackageTypeCode");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string PackageTypeId {
-            get {
-                return this.PackageTypeIdField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.PackageTypeIdField, value) != true)) {
-                    this.PackageTypeIdField = value;
-                    this.RaisePropertyChanged("PackageTypeId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool PackageTypeIsAir {
-            get {
-                return this.PackageTypeIsAirField;
-            }
-            set {
-                if ((this.PackageTypeIsAirField.Equals(value) != true)) {
-                    this.PackageTypeIsAirField = value;
-                    this.RaisePropertyChanged("PackageTypeIsAir");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool PackageTypeIsInland {
-            get {
-                return this.PackageTypeIsInlandField;
-            }
-            set {
-                if ((this.PackageTypeIsInlandField.Equals(value) != true)) {
-                    this.PackageTypeIsInlandField = value;
-                    this.RaisePropertyChanged("PackageTypeIsInland");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool PackageTypeIsOcean {
-            get {
-                return this.PackageTypeIsOceanField;
-            }
-            set {
-                if ((this.PackageTypeIsOceanField.Equals(value) != true)) {
-                    this.PackageTypeIsOceanField = value;
-                    this.RaisePropertyChanged("PackageTypeIsOcean");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string PackageTypeLocalName {
-            get {
-                return this.PackageTypeLocalNameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.PackageTypeLocalNameField, value) != true)) {
-                    this.PackageTypeLocalNameField = value;
-                    this.RaisePropertyChanged("PackageTypeLocalName");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string PackageTypeName {
-            get {
-                return this.PackageTypeNameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.PackageTypeNameField, value) != true)) {
-                    this.PackageTypeNameField = value;
-                    this.RaisePropertyChanged("PackageTypeName");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string PackageTypeNote {
-            get {
-                return this.PackageTypeNoteField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.PackageTypeNoteField, value) != true)) {
-                    this.PackageTypeNoteField = value;
-                    this.RaisePropertyChanged("PackageTypeNote");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public decimal PackageTypeVolume {
-            get {
-                return this.PackageTypeVolumeField;
-            }
-            set {
-                if ((this.PackageTypeVolumeField.Equals(value) != true)) {
-                    this.PackageTypeVolumeField = value;
-                    this.RaisePropertyChanged("PackageTypeVolume");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string PackagingGroup {
-            get {
-                return this.PackagingGroupField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.PackagingGroupField, value) != true)) {
-                    this.PackagingGroupField = value;
-                    this.RaisePropertyChanged("PackagingGroup");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string PrintAs {
-            get {
-                return this.PrintAsField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.PrintAsField, value) != true)) {
-                    this.PrintAsField = value;
-                    this.RaisePropertyChanged("PrintAs");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ProperShippingName {
-            get {
-                return this.ProperShippingNameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ProperShippingNameField, value) != true)) {
-                    this.ProperShippingNameField = value;
-                    this.RaisePropertyChanged("ProperShippingName");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<int> Quantity {
-            get {
-                return this.QuantityField;
-            }
-            set {
-                if ((this.QuantityField.Equals(value) != true)) {
-                    this.QuantityField = value;
-                    this.RaisePropertyChanged("Quantity");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Reference1 {
-            get {
-                return this.Reference1Field;
-            }
-            set {
-                if ((object.ReferenceEquals(this.Reference1Field, value) != true)) {
-                    this.Reference1Field = value;
-                    this.RaisePropertyChanged("Reference1");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Reference2 {
-            get {
-                return this.Reference2Field;
-            }
-            set {
-                if ((object.ReferenceEquals(this.Reference2Field, value) != true)) {
-                    this.Reference2Field = value;
-                    this.RaisePropertyChanged("Reference2");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Reference3 {
-            get {
-                return this.Reference3Field;
-            }
-            set {
-                if ((object.ReferenceEquals(this.Reference3Field, value) != true)) {
-                    this.Reference3Field = value;
-                    this.RaisePropertyChanged("Reference3");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Reference4 {
-            get {
-                return this.Reference4Field;
-            }
-            set {
-                if ((object.ReferenceEquals(this.Reference4Field, value) != true)) {
-                    this.Reference4Field = value;
-                    this.RaisePropertyChanged("Reference4");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string RegistrationNumber {
-            get {
-                return this.RegistrationNumberField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.RegistrationNumberField, value) != true)) {
-                    this.RegistrationNumberField = value;
-                    this.RaisePropertyChanged("RegistrationNumber");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Routing {
-            get {
-                return this.RoutingField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.RoutingField, value) != true)) {
-                    this.RoutingField = value;
-                    this.RaisePropertyChanged("Routing");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string RoutingIds {
-            get {
-                return this.RoutingIdsField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.RoutingIdsField, value) != true)) {
-                    this.RoutingIdsField = value;
-                    this.RaisePropertyChanged("RoutingIds");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<int> SOC {
-            get {
-                return this.SOCField;
-            }
-            set {
-                if ((this.SOCField.Equals(value) != true)) {
-                    this.SOCField = value;
-                    this.RaisePropertyChanged("SOC");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ShipmentId {
-            get {
-                return this.ShipmentIdField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ShipmentIdField, value) != true)) {
-                    this.ShipmentIdField = value;
-                    this.RaisePropertyChanged("ShipmentId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ShipmentNumber {
-            get {
-                return this.ShipmentNumberField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ShipmentNumberField, value) != true)) {
-                    this.ShipmentNumberField = value;
-                    this.RaisePropertyChanged("ShipmentNumber");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public HypredTest.ShipmentProxy.ShipmentPM ShipmentPM {
-            get {
-                return this.ShipmentPMField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ShipmentPMField, value) != true)) {
-                    this.ShipmentPMField = value;
-                    this.RaisePropertyChanged("ShipmentPM");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ShipmentPMId {
-            get {
-                return this.ShipmentPMIdField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ShipmentPMIdField, value) != true)) {
-                    this.ShipmentPMIdField = value;
-                    this.RaisePropertyChanged("ShipmentPMId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public HypredTest.ShipmentProxy.ShipmentPackageHarmonizePM[] ShipmentPackageHarmonizes {
-            get {
-                return this.ShipmentPackageHarmonizesField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ShipmentPackageHarmonizesField, value) != true)) {
-                    this.ShipmentPackageHarmonizesField = value;
-                    this.RaisePropertyChanged("ShipmentPackageHarmonizes");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public HypredTest.ShipmentProxy.ShipmentPackageHarmonizePM[] ShipmentPackageHarmonizesChangeSet {
-            get {
-                return this.ShipmentPackageHarmonizesChangeSetField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ShipmentPackageHarmonizesChangeSetField, value) != true)) {
-                    this.ShipmentPackageHarmonizesChangeSetField = value;
-                    this.RaisePropertyChanged("ShipmentPackageHarmonizesChangeSet");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public HypredTest.ShipmentProxy.ShipmentPackageItemPM[] ShipmentPackageItems {
-            get {
-                return this.ShipmentPackageItemsField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ShipmentPackageItemsField, value) != true)) {
-                    this.ShipmentPackageItemsField = value;
-                    this.RaisePropertyChanged("ShipmentPackageItems");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public HypredTest.ShipmentProxy.ShipmentPackageItemPM[] ShipmentPackageItemsChangeSet {
-            get {
-                return this.ShipmentPackageItemsChangeSetField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ShipmentPackageItemsChangeSetField, value) != true)) {
-                    this.ShipmentPackageItemsChangeSetField = value;
-                    this.RaisePropertyChanged("ShipmentPackageItemsChangeSet");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ShipperSeal {
-            get {
-                return this.ShipperSealField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ShipperSealField, value) != true)) {
-                    this.ShipperSealField = value;
-                    this.RaisePropertyChanged("ShipperSeal");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int SplitIndex {
-            get {
-                return this.SplitIndexField;
-            }
-            set {
-                if ((this.SplitIndexField.Equals(value) != true)) {
-                    this.SplitIndexField = value;
-                    this.RaisePropertyChanged("SplitIndex");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public double TEU {
-            get {
-                return this.TEUField;
-            }
-            set {
-                if ((this.TEUField.Equals(value) != true)) {
-                    this.TEUField = value;
-                    this.RaisePropertyChanged("TEU");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<double> Tare {
-            get {
-                return this.TareField;
-            }
-            set {
-                if ((this.TareField.Equals(value) != true)) {
-                    this.TareField = value;
-                    this.RaisePropertyChanged("Tare");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Temperature {
-            get {
-                return this.TemperatureField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.TemperatureField, value) != true)) {
-                    this.TemperatureField = value;
-                    this.RaisePropertyChanged("Temperature");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string TemperatureUnitCode {
-            get {
-                return this.TemperatureUnitCodeField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.TemperatureUnitCodeField, value) != true)) {
-                    this.TemperatureUnitCodeField = value;
-                    this.RaisePropertyChanged("TemperatureUnitCode");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int Tenant {
-            get {
-                return this.TenantField;
-            }
-            set {
-                if ((this.TenantField.Equals(value) != true)) {
-                    this.TenantField = value;
-                    this.RaisePropertyChanged("Tenant");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string UnNumber {
-            get {
-                return this.UnNumberField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.UnNumberField, value) != true)) {
-                    this.UnNumberField = value;
-                    this.RaisePropertyChanged("UnNumber");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<decimal> VGM {
-            get {
-                return this.VGMField;
-            }
-            set {
-                if ((this.VGMField.Equals(value) != true)) {
-                    this.VGMField = value;
-                    this.RaisePropertyChanged("VGM");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<double> Ventilation {
-            get {
-                return this.VentilationField;
-            }
-            set {
-                if ((this.VentilationField.Equals(value) != true)) {
-                    this.VentilationField = value;
-                    this.RaisePropertyChanged("Ventilation");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<double> Volume {
-            get {
-                return this.VolumeField;
-            }
-            set {
-                if ((this.VolumeField.Equals(value) != true)) {
-                    this.VolumeField = value;
-                    this.RaisePropertyChanged("Volume");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<double> VolumetricWeight {
-            get {
-                return this.VolumetricWeightField;
-            }
-            set {
-                if ((this.VolumetricWeightField.Equals(value) != true)) {
-                    this.VolumetricWeightField = value;
-                    this.RaisePropertyChanged("VolumetricWeight");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string VoyageTripNumber {
-            get {
-                return this.VoyageTripNumberField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.VoyageTripNumberField, value) != true)) {
-                    this.VoyageTripNumberField = value;
-                    this.RaisePropertyChanged("VoyageTripNumber");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string WarehouseReleaseNumber {
-            get {
-                return this.WarehouseReleaseNumberField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.WarehouseReleaseNumberField, value) != true)) {
-                    this.WarehouseReleaseNumberField = value;
-                    this.RaisePropertyChanged("WarehouseReleaseNumber");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<double> Weight {
-            get {
-                return this.WeightField;
-            }
-            set {
-                if ((this.WeightField.Equals(value) != true)) {
-                    this.WeightField = value;
-                    this.RaisePropertyChanged("Weight");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<double> Width {
-            get {
-                return this.WidthField;
-            }
-            set {
-                if ((this.WidthField.Equals(value) != true)) {
-                    this.WidthField = value;
-                    this.RaisePropertyChanged("Width");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Year {
-            get {
-                return this.YearField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.YearField, value) != true)) {
-                    this.YearField = value;
-                    this.RaisePropertyChanged("Year");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="ShipmentPayablePM", Namespace="http://schemas.datacontract.org/2004/07/Logitude.BL.ShipmentsModel.EntityPMs")]
     [System.SerializableAttribute()]
     public partial class ShipmentPayablePM : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -25630,6 +27502,9 @@ namespace HypredTest.ShipmentProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string CreatedByUserIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CreatedByUserNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string CurrencyCodeField;
@@ -25773,10 +27648,19 @@ namespace HypredTest.ShipmentProxy {
         private string UpdateByUserIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string UpdateByUserNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<System.DateTime> UpdateDateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.DateTime ValueDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> VatAmountLocalField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> VatAmountProfitField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string VatTypeIdField;
@@ -26030,6 +27914,19 @@ namespace HypredTest.ShipmentProxy {
                 if ((object.ReferenceEquals(this.CreatedByUserIdField, value) != true)) {
                     this.CreatedByUserIdField = value;
                     this.RaisePropertyChanged("CreatedByUserId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CreatedByUserName {
+            get {
+                return this.CreatedByUserNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CreatedByUserNameField, value) != true)) {
+                    this.CreatedByUserNameField = value;
+                    this.RaisePropertyChanged("CreatedByUserName");
                 }
             }
         }
@@ -26646,6 +28543,19 @@ namespace HypredTest.ShipmentProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string UpdateByUserName {
+            get {
+                return this.UpdateByUserNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UpdateByUserNameField, value) != true)) {
+                    this.UpdateByUserNameField = value;
+                    this.RaisePropertyChanged("UpdateByUserName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public System.Nullable<System.DateTime> UpdateDate {
             get {
                 return this.UpdateDateField;
@@ -26667,6 +28577,32 @@ namespace HypredTest.ShipmentProxy {
                 if ((this.ValueDateField.Equals(value) != true)) {
                     this.ValueDateField = value;
                     this.RaisePropertyChanged("ValueDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> VatAmountLocal {
+            get {
+                return this.VatAmountLocalField;
+            }
+            set {
+                if ((this.VatAmountLocalField.Equals(value) != true)) {
+                    this.VatAmountLocalField = value;
+                    this.RaisePropertyChanged("VatAmountLocal");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> VatAmountProfit {
+            get {
+                return this.VatAmountProfitField;
+            }
+            set {
+                if ((this.VatAmountProfitField.Equals(value) != true)) {
+                    this.VatAmountProfitField = value;
+                    this.RaisePropertyChanged("VatAmountProfit");
                 }
             }
         }
@@ -26755,10 +28691,16 @@ namespace HypredTest.ShipmentProxy {
         private string AgentNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string BookingConfirmationNumberField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string CarrierCodeField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string CarrierIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CarrierLocalNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string CarrierNameField;
@@ -26771,6 +28713,9 @@ namespace HypredTest.ShipmentProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private Simplog.Server.Infrastructure.ChangeSetOperation ChangeSetOpField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<int> ChildPickUpIndexField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string CustomerIdField;
@@ -26851,6 +28796,9 @@ namespace HypredTest.ShipmentProxy {
         private string IdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsConnectedToStandaloneField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string MasterNumberField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -26858,6 +28806,9 @@ namespace HypredTest.ShipmentProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<double> PackageTEUField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ParentPickUpDeliveryIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string PickUpDeliveryFromTypeCodeField;
@@ -26885,6 +28836,12 @@ namespace HypredTest.ShipmentProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string ShippingLineField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string StandaloneShipmentIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string StandaloneShipmentNumberField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int TenantField;
@@ -27009,6 +28966,19 @@ namespace HypredTest.ShipmentProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string BookingConfirmationNumber {
+            get {
+                return this.BookingConfirmationNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BookingConfirmationNumberField, value) != true)) {
+                    this.BookingConfirmationNumberField = value;
+                    this.RaisePropertyChanged("BookingConfirmationNumber");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string CarrierCode {
             get {
                 return this.CarrierCodeField;
@@ -27030,6 +29000,19 @@ namespace HypredTest.ShipmentProxy {
                 if ((object.ReferenceEquals(this.CarrierIdField, value) != true)) {
                     this.CarrierIdField = value;
                     this.RaisePropertyChanged("CarrierId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CarrierLocalName {
+            get {
+                return this.CarrierLocalNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CarrierLocalNameField, value) != true)) {
+                    this.CarrierLocalNameField = value;
+                    this.RaisePropertyChanged("CarrierLocalName");
                 }
             }
         }
@@ -27082,6 +29065,19 @@ namespace HypredTest.ShipmentProxy {
                 if ((this.ChangeSetOpField.Equals(value) != true)) {
                     this.ChangeSetOpField = value;
                     this.RaisePropertyChanged("ChangeSetOp");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<int> ChildPickUpIndex {
+            get {
+                return this.ChildPickUpIndexField;
+            }
+            set {
+                if ((this.ChildPickUpIndexField.Equals(value) != true)) {
+                    this.ChildPickUpIndexField = value;
+                    this.RaisePropertyChanged("ChildPickUpIndex");
                 }
             }
         }
@@ -27425,6 +29421,19 @@ namespace HypredTest.ShipmentProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsConnectedToStandalone {
+            get {
+                return this.IsConnectedToStandaloneField;
+            }
+            set {
+                if ((this.IsConnectedToStandaloneField.Equals(value) != true)) {
+                    this.IsConnectedToStandaloneField = value;
+                    this.RaisePropertyChanged("IsConnectedToStandalone");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string MasterNumber {
             get {
                 return this.MasterNumberField;
@@ -27459,6 +29468,19 @@ namespace HypredTest.ShipmentProxy {
                 if ((this.PackageTEUField.Equals(value) != true)) {
                     this.PackageTEUField = value;
                     this.RaisePropertyChanged("PackageTEU");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ParentPickUpDeliveryId {
+            get {
+                return this.ParentPickUpDeliveryIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ParentPickUpDeliveryIdField, value) != true)) {
+                    this.ParentPickUpDeliveryIdField = value;
+                    this.RaisePropertyChanged("ParentPickUpDeliveryId");
                 }
             }
         }
@@ -27576,6 +29598,32 @@ namespace HypredTest.ShipmentProxy {
                 if ((object.ReferenceEquals(this.ShippingLineField, value) != true)) {
                     this.ShippingLineField = value;
                     this.RaisePropertyChanged("ShippingLine");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string StandaloneShipmentId {
+            get {
+                return this.StandaloneShipmentIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.StandaloneShipmentIdField, value) != true)) {
+                    this.StandaloneShipmentIdField = value;
+                    this.RaisePropertyChanged("StandaloneShipmentId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string StandaloneShipmentNumber {
+            get {
+                return this.StandaloneShipmentNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.StandaloneShipmentNumberField, value) != true)) {
+                    this.StandaloneShipmentNumberField = value;
+                    this.RaisePropertyChanged("StandaloneShipmentNumber");
                 }
             }
         }
@@ -27852,6 +29900,291 @@ namespace HypredTest.ShipmentProxy {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ShipmentProductItemPM", Namespace="http://schemas.datacontract.org/2004/07/Logitude.BL.ShipmentsModel.EntityPMs")]
+    [System.SerializableAttribute()]
+    public partial class ShipmentProductItemPM : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ASINField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool ApprovedByCustomerField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string BrandField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Simplog.Server.Infrastructure.ChangeSetOperation ChangeSetOpField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DescriptionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string HTSCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string IdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsEmptyLineField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string OriginCountryIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string OriginCountryNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ProductItemIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string SKUField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ShipmentIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int TenantField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string UPCField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ASIN {
+            get {
+                return this.ASINField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ASINField, value) != true)) {
+                    this.ASINField = value;
+                    this.RaisePropertyChanged("ASIN");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool ApprovedByCustomer {
+            get {
+                return this.ApprovedByCustomerField;
+            }
+            set {
+                if ((this.ApprovedByCustomerField.Equals(value) != true)) {
+                    this.ApprovedByCustomerField = value;
+                    this.RaisePropertyChanged("ApprovedByCustomer");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Brand {
+            get {
+                return this.BrandField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BrandField, value) != true)) {
+                    this.BrandField = value;
+                    this.RaisePropertyChanged("Brand");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Simplog.Server.Infrastructure.ChangeSetOperation ChangeSetOp {
+            get {
+                return this.ChangeSetOpField;
+            }
+            set {
+                if ((this.ChangeSetOpField.Equals(value) != true)) {
+                    this.ChangeSetOpField = value;
+                    this.RaisePropertyChanged("ChangeSetOp");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Description {
+            get {
+                return this.DescriptionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DescriptionField, value) != true)) {
+                    this.DescriptionField = value;
+                    this.RaisePropertyChanged("Description");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string HTSCode {
+            get {
+                return this.HTSCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.HTSCodeField, value) != true)) {
+                    this.HTSCodeField = value;
+                    this.RaisePropertyChanged("HTSCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.IdField, value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsEmptyLine {
+            get {
+                return this.IsEmptyLineField;
+            }
+            set {
+                if ((this.IsEmptyLineField.Equals(value) != true)) {
+                    this.IsEmptyLineField = value;
+                    this.RaisePropertyChanged("IsEmptyLine");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Name {
+            get {
+                return this.NameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NameField, value) != true)) {
+                    this.NameField = value;
+                    this.RaisePropertyChanged("Name");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string OriginCountryId {
+            get {
+                return this.OriginCountryIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.OriginCountryIdField, value) != true)) {
+                    this.OriginCountryIdField = value;
+                    this.RaisePropertyChanged("OriginCountryId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string OriginCountryName {
+            get {
+                return this.OriginCountryNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.OriginCountryNameField, value) != true)) {
+                    this.OriginCountryNameField = value;
+                    this.RaisePropertyChanged("OriginCountryName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ProductItemId {
+            get {
+                return this.ProductItemIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ProductItemIdField, value) != true)) {
+                    this.ProductItemIdField = value;
+                    this.RaisePropertyChanged("ProductItemId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string SKU {
+            get {
+                return this.SKUField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.SKUField, value) != true)) {
+                    this.SKUField = value;
+                    this.RaisePropertyChanged("SKU");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ShipmentId {
+            get {
+                return this.ShipmentIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ShipmentIdField, value) != true)) {
+                    this.ShipmentIdField = value;
+                    this.RaisePropertyChanged("ShipmentId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Tenant {
+            get {
+                return this.TenantField;
+            }
+            set {
+                if ((this.TenantField.Equals(value) != true)) {
+                    this.TenantField = value;
+                    this.RaisePropertyChanged("Tenant");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string UPC {
+            get {
+                return this.UPCField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UPCField, value) != true)) {
+                    this.UPCField = value;
+                    this.RaisePropertyChanged("UPC");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="ShipmentReceivablePM", Namespace="http://schemas.datacontract.org/2004/07/Logitude.BL.ShipmentsModel.EntityPMs")]
     [System.SerializableAttribute()]
     public partial class ShipmentReceivablePM : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -27900,6 +30233,9 @@ namespace HypredTest.ShipmentProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string CreatedByUserIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CreatedByUserNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string CurrencyCodeField;
@@ -28010,7 +30346,16 @@ namespace HypredTest.ShipmentProxy {
         private string UpdateByUserIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string UpdateByUserNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<System.DateTime> UpdateDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> VatAmountLocalField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> VatAmountProfitField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string VatTypeIdField;
@@ -28206,6 +30551,19 @@ namespace HypredTest.ShipmentProxy {
                 if ((object.ReferenceEquals(this.CreatedByUserIdField, value) != true)) {
                     this.CreatedByUserIdField = value;
                     this.RaisePropertyChanged("CreatedByUserId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CreatedByUserName {
+            get {
+                return this.CreatedByUserNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CreatedByUserNameField, value) != true)) {
+                    this.CreatedByUserNameField = value;
+                    this.RaisePropertyChanged("CreatedByUserName");
                 }
             }
         }
@@ -28679,6 +31037,19 @@ namespace HypredTest.ShipmentProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string UpdateByUserName {
+            get {
+                return this.UpdateByUserNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.UpdateByUserNameField, value) != true)) {
+                    this.UpdateByUserNameField = value;
+                    this.RaisePropertyChanged("UpdateByUserName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public System.Nullable<System.DateTime> UpdateDate {
             get {
                 return this.UpdateDateField;
@@ -28687,6 +31058,32 @@ namespace HypredTest.ShipmentProxy {
                 if ((this.UpdateDateField.Equals(value) != true)) {
                     this.UpdateDateField = value;
                     this.RaisePropertyChanged("UpdateDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> VatAmountLocal {
+            get {
+                return this.VatAmountLocalField;
+            }
+            set {
+                if ((this.VatAmountLocalField.Equals(value) != true)) {
+                    this.VatAmountLocalField = value;
+                    this.RaisePropertyChanged("VatAmountLocal");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> VatAmountProfit {
+            get {
+                return this.VatAmountProfitField;
+            }
+            set {
+                if ((this.VatAmountProfitField.Equals(value) != true)) {
+                    this.VatAmountProfitField = value;
+                    this.RaisePropertyChanged("VatAmountProfit");
                 }
             }
         }
@@ -28950,1111 +31347,6 @@ namespace HypredTest.ShipmentProxy {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="DocumentsFilingMetaDataValuePM", Namespace="http://schemas.datacontract.org/2004/07/Logitude.BL.CommonDataModel.EntityPMs")]
-    [System.SerializableAttribute()]
-    public partial class DocumentsFilingMetaDataValuePM : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Simplog.Server.Infrastructure.ChangeSetOperation ChangeSetOpField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string DocumentsFilingIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string DocumentsMetaDataTypeCodeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string DocumentsMetaDataTypeIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string IdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string MetaDataValueField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int TenantField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public Simplog.Server.Infrastructure.ChangeSetOperation ChangeSetOp {
-            get {
-                return this.ChangeSetOpField;
-            }
-            set {
-                if ((this.ChangeSetOpField.Equals(value) != true)) {
-                    this.ChangeSetOpField = value;
-                    this.RaisePropertyChanged("ChangeSetOp");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string DocumentsFilingId {
-            get {
-                return this.DocumentsFilingIdField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.DocumentsFilingIdField, value) != true)) {
-                    this.DocumentsFilingIdField = value;
-                    this.RaisePropertyChanged("DocumentsFilingId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string DocumentsMetaDataTypeCode {
-            get {
-                return this.DocumentsMetaDataTypeCodeField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.DocumentsMetaDataTypeCodeField, value) != true)) {
-                    this.DocumentsMetaDataTypeCodeField = value;
-                    this.RaisePropertyChanged("DocumentsMetaDataTypeCode");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string DocumentsMetaDataTypeId {
-            get {
-                return this.DocumentsMetaDataTypeIdField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.DocumentsMetaDataTypeIdField, value) != true)) {
-                    this.DocumentsMetaDataTypeIdField = value;
-                    this.RaisePropertyChanged("DocumentsMetaDataTypeId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Id {
-            get {
-                return this.IdField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.IdField, value) != true)) {
-                    this.IdField = value;
-                    this.RaisePropertyChanged("Id");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string MetaDataValue {
-            get {
-                return this.MetaDataValueField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.MetaDataValueField, value) != true)) {
-                    this.MetaDataValueField = value;
-                    this.RaisePropertyChanged("MetaDataValue");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int Tenant {
-            get {
-                return this.TenantField;
-            }
-            set {
-                if ((this.TenantField.Equals(value) != true)) {
-                    this.TenantField = value;
-                    this.RaisePropertyChanged("Tenant");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="CommodityPackagePM", Namespace="http://schemas.datacontract.org/2004/07/Logitude.BL.ShipmentsModel.EntityPMs")]
-    [System.SerializableAttribute()]
-    public partial class CommodityPackagePM : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Simplog.Server.Infrastructure.ChangeSetOperation ChangeSetOpField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string CommodityIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string DescriptionField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<double> HeightField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string IdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<double> LengthField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int NumberOfInsidePackagesField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string NumberOfInsidePackagesDetailsField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string PackageTypeIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<int> QuantityField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ShipmentIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ShipmentNumberField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int TenantField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<double> VolumeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<double> VolumetricWeightField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<double> WeightField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<double> WidthField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public Simplog.Server.Infrastructure.ChangeSetOperation ChangeSetOp {
-            get {
-                return this.ChangeSetOpField;
-            }
-            set {
-                if ((this.ChangeSetOpField.Equals(value) != true)) {
-                    this.ChangeSetOpField = value;
-                    this.RaisePropertyChanged("ChangeSetOp");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string CommodityId {
-            get {
-                return this.CommodityIdField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.CommodityIdField, value) != true)) {
-                    this.CommodityIdField = value;
-                    this.RaisePropertyChanged("CommodityId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Description {
-            get {
-                return this.DescriptionField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.DescriptionField, value) != true)) {
-                    this.DescriptionField = value;
-                    this.RaisePropertyChanged("Description");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<double> Height {
-            get {
-                return this.HeightField;
-            }
-            set {
-                if ((this.HeightField.Equals(value) != true)) {
-                    this.HeightField = value;
-                    this.RaisePropertyChanged("Height");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Id {
-            get {
-                return this.IdField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.IdField, value) != true)) {
-                    this.IdField = value;
-                    this.RaisePropertyChanged("Id");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<double> Length {
-            get {
-                return this.LengthField;
-            }
-            set {
-                if ((this.LengthField.Equals(value) != true)) {
-                    this.LengthField = value;
-                    this.RaisePropertyChanged("Length");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int NumberOfInsidePackages {
-            get {
-                return this.NumberOfInsidePackagesField;
-            }
-            set {
-                if ((this.NumberOfInsidePackagesField.Equals(value) != true)) {
-                    this.NumberOfInsidePackagesField = value;
-                    this.RaisePropertyChanged("NumberOfInsidePackages");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string NumberOfInsidePackagesDetails {
-            get {
-                return this.NumberOfInsidePackagesDetailsField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.NumberOfInsidePackagesDetailsField, value) != true)) {
-                    this.NumberOfInsidePackagesDetailsField = value;
-                    this.RaisePropertyChanged("NumberOfInsidePackagesDetails");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string PackageTypeId {
-            get {
-                return this.PackageTypeIdField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.PackageTypeIdField, value) != true)) {
-                    this.PackageTypeIdField = value;
-                    this.RaisePropertyChanged("PackageTypeId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<int> Quantity {
-            get {
-                return this.QuantityField;
-            }
-            set {
-                if ((this.QuantityField.Equals(value) != true)) {
-                    this.QuantityField = value;
-                    this.RaisePropertyChanged("Quantity");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ShipmentId {
-            get {
-                return this.ShipmentIdField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ShipmentIdField, value) != true)) {
-                    this.ShipmentIdField = value;
-                    this.RaisePropertyChanged("ShipmentId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ShipmentNumber {
-            get {
-                return this.ShipmentNumberField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ShipmentNumberField, value) != true)) {
-                    this.ShipmentNumberField = value;
-                    this.RaisePropertyChanged("ShipmentNumber");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int Tenant {
-            get {
-                return this.TenantField;
-            }
-            set {
-                if ((this.TenantField.Equals(value) != true)) {
-                    this.TenantField = value;
-                    this.RaisePropertyChanged("Tenant");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<double> Volume {
-            get {
-                return this.VolumeField;
-            }
-            set {
-                if ((this.VolumeField.Equals(value) != true)) {
-                    this.VolumeField = value;
-                    this.RaisePropertyChanged("Volume");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<double> VolumetricWeight {
-            get {
-                return this.VolumetricWeightField;
-            }
-            set {
-                if ((this.VolumetricWeightField.Equals(value) != true)) {
-                    this.VolumetricWeightField = value;
-                    this.RaisePropertyChanged("VolumetricWeight");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<double> Weight {
-            get {
-                return this.WeightField;
-            }
-            set {
-                if ((this.WeightField.Equals(value) != true)) {
-                    this.WeightField = value;
-                    this.RaisePropertyChanged("Weight");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<double> Width {
-            get {
-                return this.WidthField;
-            }
-            set {
-                if ((this.WidthField.Equals(value) != true)) {
-                    this.WidthField = value;
-                    this.RaisePropertyChanged("Width");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="HouseContainerPackage", Namespace="http://schemas.datacontract.org/2004/07/Logitude.BL.ShipmentsModel.EntityPMs")]
-    [System.SerializableAttribute()]
-    public partial class HouseContainerPackage : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ConsoleIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string IdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<int> QuantityField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ConsoleId {
-            get {
-                return this.ConsoleIdField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ConsoleIdField, value) != true)) {
-                    this.ConsoleIdField = value;
-                    this.RaisePropertyChanged("ConsoleId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Id {
-            get {
-                return this.IdField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.IdField, value) != true)) {
-                    this.IdField = value;
-                    this.RaisePropertyChanged("Id");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<int> Quantity {
-            get {
-                return this.QuantityField;
-            }
-            set {
-                if ((this.QuantityField.Equals(value) != true)) {
-                    this.QuantityField = value;
-                    this.RaisePropertyChanged("Quantity");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="ShipmentPickUpDeliveryPackagePM", Namespace="http://schemas.datacontract.org/2004/07/Logitude.BL.ShipmentsModel.EntityPMs")]
-    [System.SerializableAttribute()]
-    public partial class ShipmentPickUpDeliveryPackagePM : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Simplog.Server.Infrastructure.ChangeSetOperation ChangeSetOpField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ChassisNumberField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ColorField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ContainerNumberField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string CountryIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string DescriptionField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string HarmonizeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<double> HeightField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string IdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private bool IsMultiHarmonizeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<double> LengthField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string MakeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ModelField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string OriginalShipmentPackageIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string PackageTypeIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string PackageTypeNameField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<double> PackageTypeTEUField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private HypredTest.ShipmentProxy.PickUpDeliveryPackageHarmonizePM[] PickUpDeliveryPackageHarmonizesField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private HypredTest.ShipmentProxy.PickUpDeliveryPackageHarmonizePM[] PickUpDeliveryPackageHarmonizesChangeSetField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<int> QuantityField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string RegistrationNumberField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ShipmentPickUpDeliveryIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string ShipperSealField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int TenantField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<double> VolumeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<double> WeightField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private System.Nullable<double> WidthField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string YearField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public Simplog.Server.Infrastructure.ChangeSetOperation ChangeSetOp {
-            get {
-                return this.ChangeSetOpField;
-            }
-            set {
-                if ((this.ChangeSetOpField.Equals(value) != true)) {
-                    this.ChangeSetOpField = value;
-                    this.RaisePropertyChanged("ChangeSetOp");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ChassisNumber {
-            get {
-                return this.ChassisNumberField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ChassisNumberField, value) != true)) {
-                    this.ChassisNumberField = value;
-                    this.RaisePropertyChanged("ChassisNumber");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Color {
-            get {
-                return this.ColorField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ColorField, value) != true)) {
-                    this.ColorField = value;
-                    this.RaisePropertyChanged("Color");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ContainerNumber {
-            get {
-                return this.ContainerNumberField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ContainerNumberField, value) != true)) {
-                    this.ContainerNumberField = value;
-                    this.RaisePropertyChanged("ContainerNumber");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string CountryId {
-            get {
-                return this.CountryIdField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.CountryIdField, value) != true)) {
-                    this.CountryIdField = value;
-                    this.RaisePropertyChanged("CountryId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Description {
-            get {
-                return this.DescriptionField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.DescriptionField, value) != true)) {
-                    this.DescriptionField = value;
-                    this.RaisePropertyChanged("Description");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Harmonize {
-            get {
-                return this.HarmonizeField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.HarmonizeField, value) != true)) {
-                    this.HarmonizeField = value;
-                    this.RaisePropertyChanged("Harmonize");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<double> Height {
-            get {
-                return this.HeightField;
-            }
-            set {
-                if ((this.HeightField.Equals(value) != true)) {
-                    this.HeightField = value;
-                    this.RaisePropertyChanged("Height");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Id {
-            get {
-                return this.IdField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.IdField, value) != true)) {
-                    this.IdField = value;
-                    this.RaisePropertyChanged("Id");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public bool IsMultiHarmonize {
-            get {
-                return this.IsMultiHarmonizeField;
-            }
-            set {
-                if ((this.IsMultiHarmonizeField.Equals(value) != true)) {
-                    this.IsMultiHarmonizeField = value;
-                    this.RaisePropertyChanged("IsMultiHarmonize");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<double> Length {
-            get {
-                return this.LengthField;
-            }
-            set {
-                if ((this.LengthField.Equals(value) != true)) {
-                    this.LengthField = value;
-                    this.RaisePropertyChanged("Length");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Make {
-            get {
-                return this.MakeField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.MakeField, value) != true)) {
-                    this.MakeField = value;
-                    this.RaisePropertyChanged("Make");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Model {
-            get {
-                return this.ModelField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ModelField, value) != true)) {
-                    this.ModelField = value;
-                    this.RaisePropertyChanged("Model");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string OriginalShipmentPackageId {
-            get {
-                return this.OriginalShipmentPackageIdField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.OriginalShipmentPackageIdField, value) != true)) {
-                    this.OriginalShipmentPackageIdField = value;
-                    this.RaisePropertyChanged("OriginalShipmentPackageId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string PackageTypeId {
-            get {
-                return this.PackageTypeIdField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.PackageTypeIdField, value) != true)) {
-                    this.PackageTypeIdField = value;
-                    this.RaisePropertyChanged("PackageTypeId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string PackageTypeName {
-            get {
-                return this.PackageTypeNameField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.PackageTypeNameField, value) != true)) {
-                    this.PackageTypeNameField = value;
-                    this.RaisePropertyChanged("PackageTypeName");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<double> PackageTypeTEU {
-            get {
-                return this.PackageTypeTEUField;
-            }
-            set {
-                if ((this.PackageTypeTEUField.Equals(value) != true)) {
-                    this.PackageTypeTEUField = value;
-                    this.RaisePropertyChanged("PackageTypeTEU");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public HypredTest.ShipmentProxy.PickUpDeliveryPackageHarmonizePM[] PickUpDeliveryPackageHarmonizes {
-            get {
-                return this.PickUpDeliveryPackageHarmonizesField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.PickUpDeliveryPackageHarmonizesField, value) != true)) {
-                    this.PickUpDeliveryPackageHarmonizesField = value;
-                    this.RaisePropertyChanged("PickUpDeliveryPackageHarmonizes");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public HypredTest.ShipmentProxy.PickUpDeliveryPackageHarmonizePM[] PickUpDeliveryPackageHarmonizesChangeSet {
-            get {
-                return this.PickUpDeliveryPackageHarmonizesChangeSetField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.PickUpDeliveryPackageHarmonizesChangeSetField, value) != true)) {
-                    this.PickUpDeliveryPackageHarmonizesChangeSetField = value;
-                    this.RaisePropertyChanged("PickUpDeliveryPackageHarmonizesChangeSet");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<int> Quantity {
-            get {
-                return this.QuantityField;
-            }
-            set {
-                if ((this.QuantityField.Equals(value) != true)) {
-                    this.QuantityField = value;
-                    this.RaisePropertyChanged("Quantity");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string RegistrationNumber {
-            get {
-                return this.RegistrationNumberField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.RegistrationNumberField, value) != true)) {
-                    this.RegistrationNumberField = value;
-                    this.RaisePropertyChanged("RegistrationNumber");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ShipmentPickUpDeliveryId {
-            get {
-                return this.ShipmentPickUpDeliveryIdField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ShipmentPickUpDeliveryIdField, value) != true)) {
-                    this.ShipmentPickUpDeliveryIdField = value;
-                    this.RaisePropertyChanged("ShipmentPickUpDeliveryId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string ShipperSeal {
-            get {
-                return this.ShipperSealField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.ShipperSealField, value) != true)) {
-                    this.ShipperSealField = value;
-                    this.RaisePropertyChanged("ShipperSeal");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int Tenant {
-            get {
-                return this.TenantField;
-            }
-            set {
-                if ((this.TenantField.Equals(value) != true)) {
-                    this.TenantField = value;
-                    this.RaisePropertyChanged("Tenant");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<double> Volume {
-            get {
-                return this.VolumeField;
-            }
-            set {
-                if ((this.VolumeField.Equals(value) != true)) {
-                    this.VolumeField = value;
-                    this.RaisePropertyChanged("Volume");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<double> Weight {
-            get {
-                return this.WeightField;
-            }
-            set {
-                if ((this.WeightField.Equals(value) != true)) {
-                    this.WeightField = value;
-                    this.RaisePropertyChanged("Weight");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public System.Nullable<double> Width {
-            get {
-                return this.WidthField;
-            }
-            set {
-                if ((this.WidthField.Equals(value) != true)) {
-                    this.WidthField = value;
-                    this.RaisePropertyChanged("Width");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Year {
-            get {
-                return this.YearField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.YearField, value) != true)) {
-                    this.YearField = value;
-                    this.RaisePropertyChanged("Year");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="PickUpDeliveryPackageHarmonizePM", Namespace="http://schemas.datacontract.org/2004/07/Logitude.BL.ShipmentsModel.EntityPMs")]
-    [System.SerializableAttribute()]
-    public partial class PickUpDeliveryPackageHarmonizePM : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
-        
-        [System.NonSerializedAttribute()]
-        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private Simplog.Server.Infrastructure.ChangeSetOperation ChangeSetOpField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string HarmonizeField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string IdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private string PackageIdField;
-        
-        [System.Runtime.Serialization.OptionalFieldAttribute()]
-        private int TenantField;
-        
-        [global::System.ComponentModel.BrowsableAttribute(false)]
-        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
-            get {
-                return this.extensionDataField;
-            }
-            set {
-                this.extensionDataField = value;
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public Simplog.Server.Infrastructure.ChangeSetOperation ChangeSetOp {
-            get {
-                return this.ChangeSetOpField;
-            }
-            set {
-                if ((this.ChangeSetOpField.Equals(value) != true)) {
-                    this.ChangeSetOpField = value;
-                    this.RaisePropertyChanged("ChangeSetOp");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Harmonize {
-            get {
-                return this.HarmonizeField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.HarmonizeField, value) != true)) {
-                    this.HarmonizeField = value;
-                    this.RaisePropertyChanged("Harmonize");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string Id {
-            get {
-                return this.IdField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.IdField, value) != true)) {
-                    this.IdField = value;
-                    this.RaisePropertyChanged("Id");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public string PackageId {
-            get {
-                return this.PackageIdField;
-            }
-            set {
-                if ((object.ReferenceEquals(this.PackageIdField, value) != true)) {
-                    this.PackageIdField = value;
-                    this.RaisePropertyChanged("PackageId");
-                }
-            }
-        }
-        
-        [System.Runtime.Serialization.DataMemberAttribute()]
-        public int Tenant {
-            get {
-                return this.TenantField;
-            }
-            set {
-                if ((this.TenantField.Equals(value) != true)) {
-                    this.TenantField = value;
-                    this.RaisePropertyChanged("Tenant");
-                }
-            }
-        }
-        
-        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-        
-        protected void RaisePropertyChanged(string propertyName) {
-            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null)) {
-                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
-            }
-        }
-    }
-    
-    [System.Diagnostics.DebuggerStepThroughAttribute()]
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="InsideShipmentPackagePM", Namespace="http://schemas.datacontract.org/2004/07/Logitude.BL.ShipmentsModel.EntityPMs")]
     [System.SerializableAttribute()]
     public partial class InsideShipmentPackagePM : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -30097,6 +31389,12 @@ namespace HypredTest.ShipmentProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<double> HeightField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string HorseIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string HorseNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string IdField;
@@ -30365,6 +31663,32 @@ namespace HypredTest.ShipmentProxy {
                 if ((this.HeightField.Equals(value) != true)) {
                     this.HeightField = value;
                     this.RaisePropertyChanged("Height");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string HorseId {
+            get {
+                return this.HorseIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.HorseIdField, value) != true)) {
+                    this.HorseIdField = value;
+                    this.RaisePropertyChanged("HorseId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string HorseName {
+            get {
+                return this.HorseNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.HorseNameField, value) != true)) {
+                    this.HorseNameField = value;
+                    this.RaisePropertyChanged("HorseName");
                 }
             }
         }
@@ -31102,6 +32426,1127 @@ namespace HypredTest.ShipmentProxy {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="DocumentsFilingMetaDataValuePM", Namespace="http://schemas.datacontract.org/2004/07/Logitude.BL.CommonDataModel.EntityPMs")]
+    [System.SerializableAttribute()]
+    public partial class DocumentsFilingMetaDataValuePM : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Simplog.Server.Infrastructure.ChangeSetOperation ChangeSetOpField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DocumentsFilingIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DocumentsMetaDataTypeCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DocumentsMetaDataTypeIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string IdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string MetaDataValueField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int TenantField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Simplog.Server.Infrastructure.ChangeSetOperation ChangeSetOp {
+            get {
+                return this.ChangeSetOpField;
+            }
+            set {
+                if ((this.ChangeSetOpField.Equals(value) != true)) {
+                    this.ChangeSetOpField = value;
+                    this.RaisePropertyChanged("ChangeSetOp");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string DocumentsFilingId {
+            get {
+                return this.DocumentsFilingIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DocumentsFilingIdField, value) != true)) {
+                    this.DocumentsFilingIdField = value;
+                    this.RaisePropertyChanged("DocumentsFilingId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string DocumentsMetaDataTypeCode {
+            get {
+                return this.DocumentsMetaDataTypeCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DocumentsMetaDataTypeCodeField, value) != true)) {
+                    this.DocumentsMetaDataTypeCodeField = value;
+                    this.RaisePropertyChanged("DocumentsMetaDataTypeCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string DocumentsMetaDataTypeId {
+            get {
+                return this.DocumentsMetaDataTypeIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DocumentsMetaDataTypeIdField, value) != true)) {
+                    this.DocumentsMetaDataTypeIdField = value;
+                    this.RaisePropertyChanged("DocumentsMetaDataTypeId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.IdField, value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string MetaDataValue {
+            get {
+                return this.MetaDataValueField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.MetaDataValueField, value) != true)) {
+                    this.MetaDataValueField = value;
+                    this.RaisePropertyChanged("MetaDataValue");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Tenant {
+            get {
+                return this.TenantField;
+            }
+            set {
+                if ((this.TenantField.Equals(value) != true)) {
+                    this.TenantField = value;
+                    this.RaisePropertyChanged("Tenant");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="CommodityPackagePM", Namespace="http://schemas.datacontract.org/2004/07/Logitude.BL.ShipmentsModel.EntityPMs")]
+    [System.SerializableAttribute()]
+    public partial class CommodityPackagePM : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Simplog.Server.Infrastructure.ChangeSetOperation ChangeSetOpField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CommodityIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DescriptionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> HeightField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string IdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> LengthField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int NumberOfInsidePackagesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NumberOfInsidePackagesDetailsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PackageTypeIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<int> QuantityField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ShipmentIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ShipmentNumberField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int TenantField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> VolumeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> VolumetricWeightField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> WeightField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> WidthField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Simplog.Server.Infrastructure.ChangeSetOperation ChangeSetOp {
+            get {
+                return this.ChangeSetOpField;
+            }
+            set {
+                if ((this.ChangeSetOpField.Equals(value) != true)) {
+                    this.ChangeSetOpField = value;
+                    this.RaisePropertyChanged("ChangeSetOp");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CommodityId {
+            get {
+                return this.CommodityIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CommodityIdField, value) != true)) {
+                    this.CommodityIdField = value;
+                    this.RaisePropertyChanged("CommodityId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Description {
+            get {
+                return this.DescriptionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DescriptionField, value) != true)) {
+                    this.DescriptionField = value;
+                    this.RaisePropertyChanged("Description");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> Height {
+            get {
+                return this.HeightField;
+            }
+            set {
+                if ((this.HeightField.Equals(value) != true)) {
+                    this.HeightField = value;
+                    this.RaisePropertyChanged("Height");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.IdField, value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> Length {
+            get {
+                return this.LengthField;
+            }
+            set {
+                if ((this.LengthField.Equals(value) != true)) {
+                    this.LengthField = value;
+                    this.RaisePropertyChanged("Length");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int NumberOfInsidePackages {
+            get {
+                return this.NumberOfInsidePackagesField;
+            }
+            set {
+                if ((this.NumberOfInsidePackagesField.Equals(value) != true)) {
+                    this.NumberOfInsidePackagesField = value;
+                    this.RaisePropertyChanged("NumberOfInsidePackages");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string NumberOfInsidePackagesDetails {
+            get {
+                return this.NumberOfInsidePackagesDetailsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NumberOfInsidePackagesDetailsField, value) != true)) {
+                    this.NumberOfInsidePackagesDetailsField = value;
+                    this.RaisePropertyChanged("NumberOfInsidePackagesDetails");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PackageTypeId {
+            get {
+                return this.PackageTypeIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PackageTypeIdField, value) != true)) {
+                    this.PackageTypeIdField = value;
+                    this.RaisePropertyChanged("PackageTypeId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<int> Quantity {
+            get {
+                return this.QuantityField;
+            }
+            set {
+                if ((this.QuantityField.Equals(value) != true)) {
+                    this.QuantityField = value;
+                    this.RaisePropertyChanged("Quantity");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ShipmentId {
+            get {
+                return this.ShipmentIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ShipmentIdField, value) != true)) {
+                    this.ShipmentIdField = value;
+                    this.RaisePropertyChanged("ShipmentId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ShipmentNumber {
+            get {
+                return this.ShipmentNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ShipmentNumberField, value) != true)) {
+                    this.ShipmentNumberField = value;
+                    this.RaisePropertyChanged("ShipmentNumber");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Tenant {
+            get {
+                return this.TenantField;
+            }
+            set {
+                if ((this.TenantField.Equals(value) != true)) {
+                    this.TenantField = value;
+                    this.RaisePropertyChanged("Tenant");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> Volume {
+            get {
+                return this.VolumeField;
+            }
+            set {
+                if ((this.VolumeField.Equals(value) != true)) {
+                    this.VolumeField = value;
+                    this.RaisePropertyChanged("Volume");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> VolumetricWeight {
+            get {
+                return this.VolumetricWeightField;
+            }
+            set {
+                if ((this.VolumetricWeightField.Equals(value) != true)) {
+                    this.VolumetricWeightField = value;
+                    this.RaisePropertyChanged("VolumetricWeight");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> Weight {
+            get {
+                return this.WeightField;
+            }
+            set {
+                if ((this.WeightField.Equals(value) != true)) {
+                    this.WeightField = value;
+                    this.RaisePropertyChanged("Weight");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> Width {
+            get {
+                return this.WidthField;
+            }
+            set {
+                if ((this.WidthField.Equals(value) != true)) {
+                    this.WidthField = value;
+                    this.RaisePropertyChanged("Width");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="HouseContainerPackage", Namespace="http://schemas.datacontract.org/2004/07/Logitude.BL.ShipmentsModel.EntityPMs")]
+    [System.SerializableAttribute()]
+    public partial class HouseContainerPackage : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ConsoleIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string IdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<int> QuantityField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ConsoleId {
+            get {
+                return this.ConsoleIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ConsoleIdField, value) != true)) {
+                    this.ConsoleIdField = value;
+                    this.RaisePropertyChanged("ConsoleId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.IdField, value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<int> Quantity {
+            get {
+                return this.QuantityField;
+            }
+            set {
+                if ((this.QuantityField.Equals(value) != true)) {
+                    this.QuantityField = value;
+                    this.RaisePropertyChanged("Quantity");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="ShipmentPickUpDeliveryPackagePM", Namespace="http://schemas.datacontract.org/2004/07/Logitude.BL.ShipmentsModel.EntityPMs")]
+    [System.SerializableAttribute()]
+    public partial class ShipmentPickUpDeliveryPackagePM : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Simplog.Server.Infrastructure.ChangeSetOperation ChangeSetOpField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ChassisNumberField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ColorField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ContainerEntityIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ContainerNumberField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string CountryIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DescriptionField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string HarmonizeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> HeightField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string IdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsMultiHarmonizeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> LengthField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string MakeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ModelField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string OriginalShipmentPackageIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PackageTypeIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PackageTypeNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> PackageTypeTEUField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private HypredTest.ShipmentProxy.PickUpDeliveryPackageHarmonizePM[] PickUpDeliveryPackageHarmonizesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private HypredTest.ShipmentProxy.PickUpDeliveryPackageHarmonizePM[] PickUpDeliveryPackageHarmonizesChangeSetField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<int> QuantityField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string RegistrationNumberField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ShipmentPickUpDeliveryIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ShipperSealField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int TenantField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> VolumeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> WeightField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<double> WidthField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string YearField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Simplog.Server.Infrastructure.ChangeSetOperation ChangeSetOp {
+            get {
+                return this.ChangeSetOpField;
+            }
+            set {
+                if ((this.ChangeSetOpField.Equals(value) != true)) {
+                    this.ChangeSetOpField = value;
+                    this.RaisePropertyChanged("ChangeSetOp");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ChassisNumber {
+            get {
+                return this.ChassisNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ChassisNumberField, value) != true)) {
+                    this.ChassisNumberField = value;
+                    this.RaisePropertyChanged("ChassisNumber");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Color {
+            get {
+                return this.ColorField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ColorField, value) != true)) {
+                    this.ColorField = value;
+                    this.RaisePropertyChanged("Color");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ContainerEntityId {
+            get {
+                return this.ContainerEntityIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ContainerEntityIdField, value) != true)) {
+                    this.ContainerEntityIdField = value;
+                    this.RaisePropertyChanged("ContainerEntityId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ContainerNumber {
+            get {
+                return this.ContainerNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ContainerNumberField, value) != true)) {
+                    this.ContainerNumberField = value;
+                    this.RaisePropertyChanged("ContainerNumber");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string CountryId {
+            get {
+                return this.CountryIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.CountryIdField, value) != true)) {
+                    this.CountryIdField = value;
+                    this.RaisePropertyChanged("CountryId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Description {
+            get {
+                return this.DescriptionField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DescriptionField, value) != true)) {
+                    this.DescriptionField = value;
+                    this.RaisePropertyChanged("Description");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Harmonize {
+            get {
+                return this.HarmonizeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.HarmonizeField, value) != true)) {
+                    this.HarmonizeField = value;
+                    this.RaisePropertyChanged("Harmonize");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> Height {
+            get {
+                return this.HeightField;
+            }
+            set {
+                if ((this.HeightField.Equals(value) != true)) {
+                    this.HeightField = value;
+                    this.RaisePropertyChanged("Height");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.IdField, value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsMultiHarmonize {
+            get {
+                return this.IsMultiHarmonizeField;
+            }
+            set {
+                if ((this.IsMultiHarmonizeField.Equals(value) != true)) {
+                    this.IsMultiHarmonizeField = value;
+                    this.RaisePropertyChanged("IsMultiHarmonize");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> Length {
+            get {
+                return this.LengthField;
+            }
+            set {
+                if ((this.LengthField.Equals(value) != true)) {
+                    this.LengthField = value;
+                    this.RaisePropertyChanged("Length");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Make {
+            get {
+                return this.MakeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.MakeField, value) != true)) {
+                    this.MakeField = value;
+                    this.RaisePropertyChanged("Make");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Model {
+            get {
+                return this.ModelField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ModelField, value) != true)) {
+                    this.ModelField = value;
+                    this.RaisePropertyChanged("Model");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string OriginalShipmentPackageId {
+            get {
+                return this.OriginalShipmentPackageIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.OriginalShipmentPackageIdField, value) != true)) {
+                    this.OriginalShipmentPackageIdField = value;
+                    this.RaisePropertyChanged("OriginalShipmentPackageId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PackageTypeId {
+            get {
+                return this.PackageTypeIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PackageTypeIdField, value) != true)) {
+                    this.PackageTypeIdField = value;
+                    this.RaisePropertyChanged("PackageTypeId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PackageTypeName {
+            get {
+                return this.PackageTypeNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PackageTypeNameField, value) != true)) {
+                    this.PackageTypeNameField = value;
+                    this.RaisePropertyChanged("PackageTypeName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> PackageTypeTEU {
+            get {
+                return this.PackageTypeTEUField;
+            }
+            set {
+                if ((this.PackageTypeTEUField.Equals(value) != true)) {
+                    this.PackageTypeTEUField = value;
+                    this.RaisePropertyChanged("PackageTypeTEU");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public HypredTest.ShipmentProxy.PickUpDeliveryPackageHarmonizePM[] PickUpDeliveryPackageHarmonizes {
+            get {
+                return this.PickUpDeliveryPackageHarmonizesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PickUpDeliveryPackageHarmonizesField, value) != true)) {
+                    this.PickUpDeliveryPackageHarmonizesField = value;
+                    this.RaisePropertyChanged("PickUpDeliveryPackageHarmonizes");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public HypredTest.ShipmentProxy.PickUpDeliveryPackageHarmonizePM[] PickUpDeliveryPackageHarmonizesChangeSet {
+            get {
+                return this.PickUpDeliveryPackageHarmonizesChangeSetField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PickUpDeliveryPackageHarmonizesChangeSetField, value) != true)) {
+                    this.PickUpDeliveryPackageHarmonizesChangeSetField = value;
+                    this.RaisePropertyChanged("PickUpDeliveryPackageHarmonizesChangeSet");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<int> Quantity {
+            get {
+                return this.QuantityField;
+            }
+            set {
+                if ((this.QuantityField.Equals(value) != true)) {
+                    this.QuantityField = value;
+                    this.RaisePropertyChanged("Quantity");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string RegistrationNumber {
+            get {
+                return this.RegistrationNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.RegistrationNumberField, value) != true)) {
+                    this.RegistrationNumberField = value;
+                    this.RaisePropertyChanged("RegistrationNumber");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ShipmentPickUpDeliveryId {
+            get {
+                return this.ShipmentPickUpDeliveryIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ShipmentPickUpDeliveryIdField, value) != true)) {
+                    this.ShipmentPickUpDeliveryIdField = value;
+                    this.RaisePropertyChanged("ShipmentPickUpDeliveryId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ShipperSeal {
+            get {
+                return this.ShipperSealField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ShipperSealField, value) != true)) {
+                    this.ShipperSealField = value;
+                    this.RaisePropertyChanged("ShipperSeal");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Tenant {
+            get {
+                return this.TenantField;
+            }
+            set {
+                if ((this.TenantField.Equals(value) != true)) {
+                    this.TenantField = value;
+                    this.RaisePropertyChanged("Tenant");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> Volume {
+            get {
+                return this.VolumeField;
+            }
+            set {
+                if ((this.VolumeField.Equals(value) != true)) {
+                    this.VolumeField = value;
+                    this.RaisePropertyChanged("Volume");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> Weight {
+            get {
+                return this.WeightField;
+            }
+            set {
+                if ((this.WeightField.Equals(value) != true)) {
+                    this.WeightField = value;
+                    this.RaisePropertyChanged("Weight");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<double> Width {
+            get {
+                return this.WidthField;
+            }
+            set {
+                if ((this.WidthField.Equals(value) != true)) {
+                    this.WidthField = value;
+                    this.RaisePropertyChanged("Width");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Year {
+            get {
+                return this.YearField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.YearField, value) != true)) {
+                    this.YearField = value;
+                    this.RaisePropertyChanged("Year");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="PickUpDeliveryPackageHarmonizePM", Namespace="http://schemas.datacontract.org/2004/07/Logitude.BL.ShipmentsModel.EntityPMs")]
+    [System.SerializableAttribute()]
+    public partial class PickUpDeliveryPackageHarmonizePM : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private Simplog.Server.Infrastructure.ChangeSetOperation ChangeSetOpField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string HarmonizeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string IdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PackageIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int TenantField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public Simplog.Server.Infrastructure.ChangeSetOperation ChangeSetOp {
+            get {
+                return this.ChangeSetOpField;
+            }
+            set {
+                if ((this.ChangeSetOpField.Equals(value) != true)) {
+                    this.ChangeSetOpField = value;
+                    this.RaisePropertyChanged("ChangeSetOp");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Harmonize {
+            get {
+                return this.HarmonizeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.HarmonizeField, value) != true)) {
+                    this.HarmonizeField = value;
+                    this.RaisePropertyChanged("Harmonize");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Id {
+            get {
+                return this.IdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.IdField, value) != true)) {
+                    this.IdField = value;
+                    this.RaisePropertyChanged("Id");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PackageId {
+            get {
+                return this.PackageIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PackageIdField, value) != true)) {
+                    this.PackageIdField = value;
+                    this.RaisePropertyChanged("PackageId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int Tenant {
+            get {
+                return this.TenantField;
+            }
+            set {
+                if ((this.TenantField.Equals(value) != true)) {
+                    this.TenantField = value;
+                    this.RaisePropertyChanged("Tenant");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="TraceEventPM", Namespace="http://schemas.datacontract.org/2004/07/Logitude.BL.InfrastructureModel.EntityPMs" +
         "")]
     [System.SerializableAttribute()]
@@ -31779,6 +34224,9 @@ namespace HypredTest.ShipmentProxy {
         private string AdditionalChargesIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string AgentField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string AgentComputedField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -31806,6 +34254,9 @@ namespace HypredTest.ShipmentProxy {
         private string ApprovedByUserNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> ApprovedCargoReadyDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string ArchivedTextField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -31819,6 +34270,9 @@ namespace HypredTest.ShipmentProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string BasketIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string BillingStatusIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string BookingConfirmationNumberField;
@@ -32044,6 +34498,9 @@ namespace HypredTest.ShipmentProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<System.DateTime> EstimatedFinalArrivalDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ExactStatusNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<System.DateTime> ExceptionDateField;
@@ -32313,6 +34770,15 @@ namespace HypredTest.ShipmentProxy {
         private System.Nullable<double> GrossWeightPerTonField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string GrossWeightUnitCodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string HandlerUserIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string HandlerUserNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool HasExceptionField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -32436,6 +34902,9 @@ namespace HypredTest.ShipmentProxy {
         private bool IsFSRSentField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsHTSMissingField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool IsImporterApprovalRequriedField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -32461,6 +34930,9 @@ namespace HypredTest.ShipmentProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool IsShipmentTrackingField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool IsStandalonePickupDeliveryField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string IssuingCarrierAgentIdField;
@@ -32697,6 +35169,9 @@ namespace HypredTest.ShipmentProxy {
         private string Notify1ReferenceField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string Notify1Reference2Field;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string Notify2ReferenceField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -32727,6 +35202,9 @@ namespace HypredTest.ShipmentProxy {
         private string OnCarriageToPortIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string OnForwardingToPortIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<double> OpenPayablesInLocalCurrencyField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -32748,6 +35226,9 @@ namespace HypredTest.ShipmentProxy {
         private System.Nullable<System.DateTime> OperationalDateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string OperationalStatusIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<double> OrderChargeableWeightField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
@@ -32760,16 +35241,43 @@ namespace HypredTest.ShipmentProxy {
         private System.Nullable<int> PackagesQuantityField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ParentShipmentDirectionIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ParentShipmentNumberField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ParentShipmentTypeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string PartnerLogoIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string PartnerNameField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> PlannedCargoReadyDateField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<System.DateTime> PreCarriageETDField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string PreCarriageFromPortIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> PreForwardingETDField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PreForwardingFromPortIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool PrivateLabelIncludeDeliveryField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private bool PrivateLabelIncludePickupField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string PrivateLabelInvoiceNumberField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string ProductCodeField;
@@ -32803,6 +35311,9 @@ namespace HypredTest.ShipmentProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private int RequestedDocumentsCountField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private System.Nullable<System.DateTime> RequestedFlightDateField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private bool ResultFromDocumentField;
@@ -32890,6 +35401,9 @@ namespace HypredTest.ShipmentProxy {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string SpecialServicesTypeNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string StandalonePickupDeliveryIdField;
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private System.Nullable<System.DateTime> StatusDateField;
@@ -33347,6 +35861,19 @@ namespace HypredTest.ShipmentProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Agent {
+            get {
+                return this.AgentField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.AgentField, value) != true)) {
+                    this.AgentField = value;
+                    this.RaisePropertyChanged("Agent");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string AgentComputed {
             get {
                 return this.AgentComputedField;
@@ -33464,6 +35991,19 @@ namespace HypredTest.ShipmentProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> ApprovedCargoReadyDate {
+            get {
+                return this.ApprovedCargoReadyDateField;
+            }
+            set {
+                if ((this.ApprovedCargoReadyDateField.Equals(value) != true)) {
+                    this.ApprovedCargoReadyDateField = value;
+                    this.RaisePropertyChanged("ApprovedCargoReadyDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string ArchivedText {
             get {
                 return this.ArchivedTextField;
@@ -33524,6 +36064,19 @@ namespace HypredTest.ShipmentProxy {
                 if ((object.ReferenceEquals(this.BasketIdField, value) != true)) {
                     this.BasketIdField = value;
                     this.RaisePropertyChanged("BasketId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string BillingStatusId {
+            get {
+                return this.BillingStatusIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.BillingStatusIdField, value) != true)) {
+                    this.BillingStatusIdField = value;
+                    this.RaisePropertyChanged("BillingStatusId");
                 }
             }
         }
@@ -34499,6 +37052,19 @@ namespace HypredTest.ShipmentProxy {
                 if ((this.EstimatedFinalArrivalDateField.Equals(value) != true)) {
                     this.EstimatedFinalArrivalDateField = value;
                     this.RaisePropertyChanged("EstimatedFinalArrivalDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ExactStatusName {
+            get {
+                return this.ExactStatusNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ExactStatusNameField, value) != true)) {
+                    this.ExactStatusNameField = value;
+                    this.RaisePropertyChanged("ExactStatusName");
                 }
             }
         }
@@ -35661,6 +38227,45 @@ namespace HypredTest.ShipmentProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string GrossWeightUnitCode {
+            get {
+                return this.GrossWeightUnitCodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.GrossWeightUnitCodeField, value) != true)) {
+                    this.GrossWeightUnitCodeField = value;
+                    this.RaisePropertyChanged("GrossWeightUnitCode");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string HandlerUserId {
+            get {
+                return this.HandlerUserIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.HandlerUserIdField, value) != true)) {
+                    this.HandlerUserIdField = value;
+                    this.RaisePropertyChanged("HandlerUserId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string HandlerUserName {
+            get {
+                return this.HandlerUserNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.HandlerUserNameField, value) != true)) {
+                    this.HandlerUserNameField = value;
+                    this.RaisePropertyChanged("HandlerUserName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public bool HasException {
             get {
                 return this.HasExceptionField;
@@ -36194,6 +38799,19 @@ namespace HypredTest.ShipmentProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsHTSMissing {
+            get {
+                return this.IsHTSMissingField;
+            }
+            set {
+                if ((this.IsHTSMissingField.Equals(value) != true)) {
+                    this.IsHTSMissingField = value;
+                    this.RaisePropertyChanged("IsHTSMissing");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public bool IsImporterApprovalRequried {
             get {
                 return this.IsImporterApprovalRequriedField;
@@ -36306,6 +38924,19 @@ namespace HypredTest.ShipmentProxy {
                 if ((this.IsShipmentTrackingField.Equals(value) != true)) {
                     this.IsShipmentTrackingField = value;
                     this.RaisePropertyChanged("IsShipmentTracking");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool IsStandalonePickupDelivery {
+            get {
+                return this.IsStandalonePickupDeliveryField;
+            }
+            set {
+                if ((this.IsStandalonePickupDeliveryField.Equals(value) != true)) {
+                    this.IsStandalonePickupDeliveryField = value;
+                    this.RaisePropertyChanged("IsStandalonePickupDelivery");
                 }
             }
         }
@@ -37325,6 +39956,19 @@ namespace HypredTest.ShipmentProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Notify1Reference2 {
+            get {
+                return this.Notify1Reference2Field;
+            }
+            set {
+                if ((object.ReferenceEquals(this.Notify1Reference2Field, value) != true)) {
+                    this.Notify1Reference2Field = value;
+                    this.RaisePropertyChanged("Notify1Reference2");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string Notify2Reference {
             get {
                 return this.Notify2ReferenceField;
@@ -37455,6 +40099,19 @@ namespace HypredTest.ShipmentProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string OnForwardingToPortId {
+            get {
+                return this.OnForwardingToPortIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.OnForwardingToPortIdField, value) != true)) {
+                    this.OnForwardingToPortIdField = value;
+                    this.RaisePropertyChanged("OnForwardingToPortId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public System.Nullable<double> OpenPayablesInLocalCurrency {
             get {
                 return this.OpenPayablesInLocalCurrencyField;
@@ -37546,6 +40203,19 @@ namespace HypredTest.ShipmentProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string OperationalStatusId {
+            get {
+                return this.OperationalStatusIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.OperationalStatusIdField, value) != true)) {
+                    this.OperationalStatusIdField = value;
+                    this.RaisePropertyChanged("OperationalStatusId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public System.Nullable<double> OrderChargeableWeight {
             get {
                 return this.OrderChargeableWeightField;
@@ -37598,6 +40268,45 @@ namespace HypredTest.ShipmentProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ParentShipmentDirectionId {
+            get {
+                return this.ParentShipmentDirectionIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ParentShipmentDirectionIdField, value) != true)) {
+                    this.ParentShipmentDirectionIdField = value;
+                    this.RaisePropertyChanged("ParentShipmentDirectionId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ParentShipmentNumber {
+            get {
+                return this.ParentShipmentNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ParentShipmentNumberField, value) != true)) {
+                    this.ParentShipmentNumberField = value;
+                    this.RaisePropertyChanged("ParentShipmentNumber");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ParentShipmentType {
+            get {
+                return this.ParentShipmentTypeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ParentShipmentTypeField, value) != true)) {
+                    this.ParentShipmentTypeField = value;
+                    this.RaisePropertyChanged("ParentShipmentType");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public string PartnerLogoId {
             get {
                 return this.PartnerLogoIdField;
@@ -37624,6 +40333,19 @@ namespace HypredTest.ShipmentProxy {
         }
         
         [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> PlannedCargoReadyDate {
+            get {
+                return this.PlannedCargoReadyDateField;
+            }
+            set {
+                if ((this.PlannedCargoReadyDateField.Equals(value) != true)) {
+                    this.PlannedCargoReadyDateField = value;
+                    this.RaisePropertyChanged("PlannedCargoReadyDate");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
         public System.Nullable<System.DateTime> PreCarriageETD {
             get {
                 return this.PreCarriageETDField;
@@ -37645,6 +40367,71 @@ namespace HypredTest.ShipmentProxy {
                 if ((object.ReferenceEquals(this.PreCarriageFromPortIdField, value) != true)) {
                     this.PreCarriageFromPortIdField = value;
                     this.RaisePropertyChanged("PreCarriageFromPortId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> PreForwardingETD {
+            get {
+                return this.PreForwardingETDField;
+            }
+            set {
+                if ((this.PreForwardingETDField.Equals(value) != true)) {
+                    this.PreForwardingETDField = value;
+                    this.RaisePropertyChanged("PreForwardingETD");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PreForwardingFromPortId {
+            get {
+                return this.PreForwardingFromPortIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PreForwardingFromPortIdField, value) != true)) {
+                    this.PreForwardingFromPortIdField = value;
+                    this.RaisePropertyChanged("PreForwardingFromPortId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool PrivateLabelIncludeDelivery {
+            get {
+                return this.PrivateLabelIncludeDeliveryField;
+            }
+            set {
+                if ((this.PrivateLabelIncludeDeliveryField.Equals(value) != true)) {
+                    this.PrivateLabelIncludeDeliveryField = value;
+                    this.RaisePropertyChanged("PrivateLabelIncludeDelivery");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public bool PrivateLabelIncludePickup {
+            get {
+                return this.PrivateLabelIncludePickupField;
+            }
+            set {
+                if ((this.PrivateLabelIncludePickupField.Equals(value) != true)) {
+                    this.PrivateLabelIncludePickupField = value;
+                    this.RaisePropertyChanged("PrivateLabelIncludePickup");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string PrivateLabelInvoiceNumber {
+            get {
+                return this.PrivateLabelInvoiceNumberField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.PrivateLabelInvoiceNumberField, value) != true)) {
+                    this.PrivateLabelInvoiceNumberField = value;
+                    this.RaisePropertyChanged("PrivateLabelInvoiceNumber");
                 }
             }
         }
@@ -37788,6 +40575,19 @@ namespace HypredTest.ShipmentProxy {
                 if ((this.RequestedDocumentsCountField.Equals(value) != true)) {
                     this.RequestedDocumentsCountField = value;
                     this.RaisePropertyChanged("RequestedDocumentsCount");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public System.Nullable<System.DateTime> RequestedFlightDate {
+            get {
+                return this.RequestedFlightDateField;
+            }
+            set {
+                if ((this.RequestedFlightDateField.Equals(value) != true)) {
+                    this.RequestedFlightDateField = value;
+                    this.RaisePropertyChanged("RequestedFlightDate");
                 }
             }
         }
@@ -38165,6 +40965,19 @@ namespace HypredTest.ShipmentProxy {
                 if ((object.ReferenceEquals(this.SpecialServicesTypeNameField, value) != true)) {
                     this.SpecialServicesTypeNameField = value;
                     this.RaisePropertyChanged("SpecialServicesTypeName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string StandalonePickupDeliveryId {
+            get {
+                return this.StandalonePickupDeliveryIdField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.StandalonePickupDeliveryIdField, value) != true)) {
+                    this.StandalonePickupDeliveryIdField = value;
+                    this.RaisePropertyChanged("StandalonePickupDeliveryId");
                 }
             }
         }

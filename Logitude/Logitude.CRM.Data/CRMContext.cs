@@ -50,6 +50,16 @@ namespace Logitude.CRM.Data
             CRMContext context = new CRMContext(connection);
             return context;
         }
+        public static ICRMContext GetSecContext(int tenant)
+		{
+			GlobalDB currentDb;
+			currentDb = GlobalDbHelper.GetGlobalDB(tenant);
+			string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
+			DbConnection connection = DatabaseInitializer.GetConnection(dbSeconderyConnectionInfo, null, null);
+			CRMContext context = new CRMContext(connection);
+			return context;
+		}
+
         public override LogitudeDBSchema LogitudeDBSchema
         {
             get { return Simplog.Server.Infrastructure.LogitudeDBSchema.LOGITUDE_MAIN; }
@@ -758,8 +768,11 @@ namespace Logitude.CRM.Data
 	      get; set;
 	 
 	 }
-	  
+	 public IDbSet<OpportunityAnalytic> OpportunityAnalytics
+	 {
+	      get; set;	 
+	 }
  }
 
 
-}
+}

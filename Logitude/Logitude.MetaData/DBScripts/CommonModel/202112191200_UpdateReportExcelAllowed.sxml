@@ -1,0 +1,11 @@
+﻿<Script DBType="Main" Module="Common" TargetTableName="Reports">
+  <Sql Version="1">
+    <![CDATA[
+
+      update Reports
+      set IsExcelReportAllowed = 1
+      where Code IN ('AGER','LTRP','TRBR')
+      
+    ]]>
+  </Sql>
+</Script>

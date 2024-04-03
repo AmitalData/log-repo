@@ -83,14 +83,24 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+    <None Include="DBScripts\202301290901_FillContainersSettings.sxml" />
     <None Include="DBScripts\202008161345_RemoveCHWFeatureToggle.sxml" />
     <None Include="DBScripts\202006092059_SetPermissionToAllBIFolders.sxml" />
     <None Include="DBScripts\202101061212_SetTariffModuleToggleFeature.sxml" />
     <None Include="DBScripts\202101280122_RemoveTicketNumberAndLicenseManagementFeatureToggle.sxml" />
     <None Include="DBScripts\20210221_DeleteUnusedFeatureTogglesCodes.sxml" />
+    <None Include="DBScripts\20210715_DeleteRSLFeatureToggle.sxml" />
     <None Include="DBScripts\20210516_DeleteUnusedTogglesAndFeatureToggles.sxml" />
     <None Include="DBScripts\20210221_DeleteUnusedTogglesCodes.sxml" />
     <None Include="DBScripts\202103020855SetToggleForChildPickupDeliveryFeature.sxml" />
+    <None Include="DBScripts\20211117_DeleteBQFTogglesCodes.sxml" />
+    <None Include="DBScripts\20220208_DeleteBAFTogglesCodes.sxml" />
+    <None Include="DBScripts\20220906_DeleteProfactV4TogglesCodes.sxml" />
+    <None Include="DBScripts\20220728_DeleteSCGTogglesCodes.sxml" />
+    <None Include="DBScripts\20220619_DeletePLETogglesCodes.sxml" />
+    <None Include="DBScripts\20220208_DeleteBCFTogglesCodes.sxml" />
+    <None Include="DBScripts\20230222300_DeleteAevCauBcfToggles.sxml" />
+    <None Include="DBScripts\1_DigitalProfile.sxml" />
     <None Include="DBTables\BatchTaskExecution.dxml" />
     <None Include="DBTables\BatchTaskExecutionStatus.dxml" />
     <None Include="DBTables\BIFoldersPermission.dxml" />
@@ -100,6 +110,11 @@
     <None Include="DBTables\BIReportsType.dxml" />
     <None Include="DBTables\BusinessProcessQueue.dxml" />
     <None Include="DBTables\BusinessRole.dxml" />
+    <None Include="DBTables\DigitalFieldSecurity.dxml" />
+    <None Include="DBTables\DigitalPortalScreen.dxml" />
+    <None Include="DBTables\DigitalPreDefinedComponent.dxml" />
+    <None Include="DBTables\DigitalProfile.dxml" />
+    <None Include="DBTables\DigitalTextCode.dxml" />
     <None Include="DBTables\FeatureToggle.dxml" />
     <None Include="DBTables\LastRunDetail.dxml" />
     <None Include="DBTables\LBPTeamMember.dxml" />
@@ -108,6 +123,7 @@
     <None Include="DBTables\Team.dxml" />
     <None Include="DBTables\TeamMemberBusinessRole.dxml" />
     <None Include="DBTables\Toggle.dxml" />
+    <None Include="EntityFiles\AuditLog.lxml" />
     <None Include="EntityFiles\BatchTaskExecution.lxml" />
     <None Include="EntityFiles\BatchTaskExecutionStatus.lxml" />
     <None Include="EntityFiles\BIFoldersPermission.lxml" />
@@ -119,6 +135,13 @@
     <None Include="EntityFiles\BIReportsType.lxml" />
     <None Include="EntityFiles\BusinessProcessQueue.lxml" />
     <None Include="EntityFiles\BusinessRole.lxml" />
+    <None Include="EntityFiles\ContainerSetting.lxml" />
+    <None Include="EntityFiles\DigitalFieldSecurity.lxml" />
+    <None Include="EntityFiles\DigitalPortalLanguage.lxml" />
+    <None Include="EntityFiles\DigitalPortalScreen.lxml" />
+    <None Include="EntityFiles\DigitalPreDefinedComponent.lxml" />
+    <None Include="EntityFiles\DigitalProfile.lxml" />
+    <None Include="EntityFiles\DigitalTextCode.lxml" />
     <None Include="EntityFiles\FeatureToggle.lxml" />
     <None Include="EntityFiles\LastRunDetail.lxml" />
     <None Include="EntityFiles\LBPTeamMember.lxml" />

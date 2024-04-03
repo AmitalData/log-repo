@@ -35,6 +35,7 @@ import {QuoteFollowUpPM} from '../../EntityPMs/QuoteFollowUpPM';
 import {QuoteDocumentVersionPM} from '../../EntityPMs/QuoteDocumentVersionPM';
 import {QuoteTotalVATPM} from '../../EntityPMs/QuoteTotalVATPM';
 import {QuoteValidator} from '../../Validators/QuoteValidator';
+import { CustomChildObjectPMService } from '../../../Infrastructure/Services/ExtendedPMs/CustomChildObjectPMService';
 
 @Injectable()
 
@@ -183,7 +184,7 @@ export class QuotePMService {
         }
 
 		var customFields: Array<string> = [];
-        for (var i = 1; i < 11; i++) {
+        for (var i = 1; i < 21; i++) {
             customFields.push("Field" + i);
         }
             var jsonPMKeys = Object.keys(jsonPM);
@@ -218,7 +219,9 @@ export class QuotePMService {
                this.MapQuoteDocumentVersions(entityPM, jsonPM, mapParent); // Call composition tables map methods
                this.MapTotalVATs(entityPM, jsonPM, mapParent); // Call composition tables map methods
 			 
-            
+          let customChildObjectPMService: CustomChildObjectPMService = new CustomChildObjectPMService(entityPM, "Quote");
+          customChildObjectPMService.MapCustomChildEntities(jsonPM, mapParent);
+
 
 		if (mapParent) {
                 entityPM.OldEntityPM = this.clone(entityPM);
@@ -603,14 +606,35 @@ export class QuotePMService {
  			newQuotePackagePM.DisableMarkAsDirty = true;
                
             var pmKeysArray = Object.keys(jItem);
-            for (var pmKey in pmKeysArray) {
-                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+            //for (var pmKey in pmKeysArray) {
+            //    if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+            //        continue;
+            //    }
+            //    var pmProperty = pmKeysArray[pmKey];
+            //    newQuotePackagePM[pmProperty] = jItem[pmProperty];
+            //}
+            for (var key in pmKeysArray) {
+
+                if ((!mapParent && pmKeysArray[key] === "entityParentPM") || pmKeysArray[key] === "UIProperties" || pmKeysArray[key] === "PropertyChanged") {
                     continue;
                 }
-                var pmProperty = pmKeysArray[pmKey];
-                newQuotePackagePM[pmProperty] = jItem[pmProperty];
+
+                var customFields: Array<string> = [];
+                for (var i = 1; i < 51; i++) {
+                    customFields.push("Field" + i);
+                }
+
+                var property = pmKeysArray[key];
+                if (customFields.indexOf(property) > -1) {
+                    if (jItem[property]) {
+                        var customFieldClass: CustomFieldClass = new CustomFieldClass(jItem[property].Value, jItem[property].FieldName, jItem[property].TableName);
+                        newQuotePackagePM[property] = customFieldClass;
+                    }
+                }
+                else {
+                    newQuotePackagePM[property] = jItem[property];
+                }
             }
-           
 			 
             if (mapParent) {
                 newQuotePackagePM.UniqueKey = Guid.newGuid();

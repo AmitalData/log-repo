@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Logitude.BL.InfrastructureModel.EntityLists;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace Logitude.BL.CommonDataModel.EntityLists
 {
-    public class ChargesTypeList
+    public class ChargesTypeList: CustomFieldList
     {
         public string Code { get; set; }
 
@@ -25,7 +26,11 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string ChargesGroupId { get; set; }
         public string ChargesGroupCode { get; set; }
         public string ChargesGroupName { get; set; }
-        
+
+        public string QuoteChargesGroupCode { get; set; }
+        public string QuoteChargesGroupId { get; set; }
+        public string QuoteChargesGroupName { get; set; }
+
         public string VatTypeId { get; set; }
         public string VatTypeName { get; set; }
         public double VatTypePercentage { get; set; }
@@ -63,6 +68,8 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string PayablesChargesTypeExternalCode { get; set; }
         public string PayableDebitGLAcountId { get; set; }
         public string ReceivableCreditGLAccountId { get; set; }
+        public string RecCreditGLAcountLocalName { get; set; }
+        public string PayDebitGLAcountLocalName { get; set; }
         public bool IsBackToBack { get; set; }
         public bool IsAutoDisplayInCustoms { get; set; }
         public bool IsCustoms { get; set; }

@@ -303,10 +303,30 @@
     <Constraints
       Nullable="true" />
   </Column>
-   <Column
+  <Column
+    Name="UniqueNumber"
+    Type="varchar"
+    Size="20">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="AdditionalFields"
     Type="nvarchar"
     Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="WasAnalyzed"
+    Type="bit">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Channel"
+    Type="varchar"
+    Size="100">
     <Constraints
       Nullable="true" />
   </Column>
@@ -360,6 +380,8 @@
   <Index
     Columns="EntityId" />
   <Index
+    Columns="EntityId,Tenant" />
+  <Index
     Columns="CreateDateUTC,CommunicationStatusTypeCode" />
   <Index
     Columns="CreateDate,CommunicationStatusTypeCode" />
@@ -372,4 +394,8 @@
 	   Columns="EntityId,ObjectTableId,Tenant,InOut,CommunicationStatusTypeCode" />
 
 	
+  <Index
+    Columns="UniqueNumber,Tenant" />
+  <Index
+    Columns="Tenant,CommunicationLogTypeCode,CreateDate" />
 </Table>

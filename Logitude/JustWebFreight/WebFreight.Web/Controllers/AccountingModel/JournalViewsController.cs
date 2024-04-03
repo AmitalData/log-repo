@@ -78,7 +78,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 JournalListQueryService journalQuery = new JournalListQueryService(MyContext);
                 IQueryable<JournalList> myResult = journalQuery.GetLastActivityJournals(tenant, contact.Id, objectTable.Id).AsQueryable();
 
-                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
                 customFieldResolver.SetCustomFieldsValues("Journal", tenant, myResult.Cast<object>().ToList());
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult.ToList());

@@ -32,6 +32,10 @@ import {ComponentArgs} from '../../../Infrastructure/DataContracts/ComponentArgs
 import {ParameterComponentArgs} from '../../../Infrastructure/DataContracts/ParameterComponentArgs';
 import { DWObjectFieldExtendedPMService } from '../../Services/ExtendedPMs/DWObjectFieldExtendedPMService';
 import { MultiSelectedValue, ValueDetails } from '../../../InfrastructureModules/InfrastructureBIReport/Components/Workspaces/DWQueryBuilderBaseComponent';
+import { List } from '../../DataContracts/Dashboard/List';
+import { ServiceResponse } from '../../DataContracts/ServiceResponse';
+import { Observable, from, pipe, defer } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 
 @Component({
@@ -52,9 +56,11 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
     public ObjectFieldName: string;
     public LOVAdditionalColumns: string;
     public IsMultipleSelection: boolean;
+    public UseUnitSelection: boolean;
     public HasActiveField: boolean = false;
     public ObjectTableId: string;
     public columns: any[] = [];
+    public unitSelectionColumns: any[] = [];
     
     public ObjectFields: any[] = [];
     public AddButtonVisibility: boolean = false;
@@ -136,6 +142,9 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
                                     newItem["Value" + key] = valueDetails;
                                     i += 1;
                                 });
+                                if (res.ChooseOne) {
+                                    this.HandleUnitSelected(myComponent, newItem);
+                                }
                                 myComponent.SecondListValueItems.push(newItem);
                             }
                         }
@@ -145,9 +154,15 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
         });
     }
 
+    private HandleUnitSelected(myComponent: any, newItem: MultiSelectedValue) {
+        myComponent.ColumnName = myComponent.originalColumnName.substring(1).replace(']', ' (') + newItem?.Value?.Row + ')';
+        myComponent.SecondListValueItems = [];
+    }
+
     ngOnInit() {
         //this.ParentTableName = this.GetObjectTableName(this.ObjectTableName);
         this.BuildColumns();
+        this.UnitSelectionBuildColumns();
         //this.ColumnsReady.emit("");
     }
 
@@ -183,6 +198,9 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
         if (args.DataContext.IsMultipleSelection) {
             this.SetChargesGroupArgs(args);
         }
+        if (args.DataContext.UseUnitSelection) {
+            this.SetUnitsArgs(args);
+        }
     }
 
     private SetHasActiveField() {
@@ -205,6 +223,18 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
         this.FirstListTitle = "All Charge Types";
         this.SecondListTitle = "Selected Charge Types";
         this.DWLogHelpText = "In this screen you choose which charge types their amounts will be summed in one group";
+    }
+
+    private SetUnitsArgs(args: CustomEntityArgs) {
+        this.UseUnitSelection = args.DataContext.UseUnitSelection;
+        this.ColumnName = (!this.SecondListValueItems || (this.SecondListValueItems && this.SecondListValueItems.length == 0)) ? '' : args.DataContext.DisplayName;
+        this.OriginalColumnName = args.DataContext.Code;
+        this.SelectedFieldsDataSource = args.SelectedFieldsDataSource;
+        this.SelectedIndexOrder = args.DataContext.IndexOrder;
+        this.FirstListTitle = "All Units";
+        this.SecondListTitle = "";
+        this.DWLogHelpText = "In this screen you choose which unit code you want to display the weight with";
+        this.UIProperties.SetEnabled("ColumnName", this.ObjectTableName, false);
     }
 
     BuildAdditionalColumns(columns: string) {
@@ -275,7 +305,46 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
             HtmlListComponentUrl: './Infrastructure/Components/QueryColumnsComponents/DWLogSearchAddFieldsComponent',
         });
     }
-    
+
+    UnitSelectionBuildColumns() {
+        if (!this.UseUnitSelection) {
+            return;
+        }
+
+        this.unitSelectionColumns = [];
+
+        this.unitSelectionColumns.push({
+            FieldName: "Choose",
+            DataTypeCode: 'boolean',
+            Display: '',
+            IsCustomTemplate: true,
+            Styles: { width: '40px' },
+            HtmlListComponentName: 'DWLogSearchAddFieldsComponent',
+            HtmlListComponentUrl: './Infrastructure/Components/QueryColumnsComponents/DWLogSearchAddFieldsComponent',
+        });
+
+        this.unitSelectionColumns.push({
+            FieldName: 'Field',
+            DataTypeCode: 'text',
+            Display: 'Code',
+            Styles: { width: '120px' },
+            IsCustomTemplate: true,
+            HtmlListComponentName: 'DWLogSearchWindowFieldsComponent',
+            HtmlListComponentUrl: './Infrastructure/Components/QueryColumnsComponents/DWLogSearchWindowFieldsComponent',
+        });
+
+        this.unitSelectionColumns.push({
+            FieldName: 'Field1',
+            DataTypeCode: 'text',
+            Display: 'English Name',
+            Styles: { width: '120px' },
+            IsCustomTemplate: true,
+            HtmlListComponentName: 'DWLogSearchWindowFieldsComponent',
+            HtmlListComponentUrl: './Infrastructure/Components/QueryColumnsComponents/DWLogSearchWindowFieldsComponent',
+        });
+
+    }
+
     TextChanged(searchtext) {
         if (searchtext != null && searchtext != undefined) {
             this.searchFields = searchtext;
@@ -344,6 +413,37 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
         return this._entityListService.getDWDimByFilters(this.ObjectTableName, filters); 
     }
 
+    UnitSelectionDataSource = {
+        pageSize: 20,
+        rowCount: null,
+        sortingDir: "Ascending",
+        getRows: () => { return this.GetUnitSelectionRows(); },
+    };
+
+    GetUnitSelectionRows() {
+        let unitSelectionData: Array<UnitSelectionColumns> = [
+            { Field: "LB", Field1: "Pound", IsChecked: this.GetUnitSelectionRowsIsChecked("LB") },
+            { Field: "KG", Field1: "Kilogram", IsChecked: this.GetUnitSelectionRowsIsChecked("KG") },
+            { Field: "MT", Field1: "Metric Ton", IsChecked: this.GetUnitSelectionRowsIsChecked("MT") },
+        ];
+
+        const obsUsingCreate = Observable.create(observer => {
+            let serviceResponse: ServiceResponse = new ServiceResponse();
+            serviceResponse.Result = unitSelectionData;
+            serviceResponse.Count = 3;
+            observer.next(serviceResponse);
+            observer.complete()
+        });
+
+        return new Promise<any>((resolve) => {
+            resolve(obsUsingCreate);
+        });
+    }
+
+    GetUnitSelectionRowsIsChecked(unitCode: string) {
+        return this.SecondListValueItems[0]?.Value?.Row == unitCode;
+    }
+
     onRowSelected($event) {
         if (this.preventSelect == false) {
             if ($event != null) {
@@ -364,7 +464,7 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
     OkButtonClicked() {
         this.ValidationErrorsList = [];
 
-        if (AppTool.IsNullOrEmpty(this.ColumnName) && this.IsMultipleSelection) {
+        if (AppTool.IsNullOrEmpty(this.ColumnName) && (this.IsMultipleSelection || this.UseUnitSelection)) {
             this.ValidationErrorsList.push("Column Name is required");
         }
 
@@ -375,13 +475,17 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
             this.ValidationErrorsList.push("You should select at least one charge type");
         }
 
+        if (this.UseUnitSelection && (!this.SecondListValueItems || (this.SecondListValueItems && this.SecondListValueItems.length == 0))) {
+            this.ValidationErrorsList.push("You should select one unit");
+        }
+
         if (this.ValidationErrorsList.length == 0) {
             var textValue = this.GetTextValue(this.SecondListValueItems);
 
             if (this.ViewModel) {
                 this.ViewModel.MultiSelectedValueLists = this.SecondListValueItems;
             }
-            if (this.IsMultipleSelection) this.CurrentSession.CloseCurrentWindowEmit(this.ColumnName);
+            if (this.IsMultipleSelection || this.UseUnitSelection) this.CurrentSession.CloseCurrentWindowEmit(this.ColumnName + ','+ this.SecondListValueItems[0]?.Value?.Row);
             else this.CurrentSession.CloseCurrentWindowEmit(textValue);
         }
     }
@@ -401,18 +505,23 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
     BuildSecondListHeader() {
         var test: MultiSelectedValue[] = [];
 
-
-        if (this.ObjectFieldName) {
-            this.SecondListHeaderItems.push(this.ObjectFieldName.replace('[', '').replace(']', ''));
+        if (this.Args.DataContext.UseUnitSelection) {
+            this.SecondListHeaderItems.push('Code');
+            this.SecondListHeaderItems.push('English Name');
         }
+        else{
+            if (this.ObjectFieldName) {
+                this.SecondListHeaderItems.push(this.ObjectFieldName.replace('[', '').replace(']', ''));
+            }
 
-        var additionalColumns = [];
-        if (this.LOVAdditionalColumns) {
-            additionalColumns = this.LOVAdditionalColumns.split(',');
-            if (additionalColumns.length > 0) {
-                additionalColumns.forEach((field) => {
-                    this.SecondListHeaderItems.push(field.replace('[', '').replace(']', ''));
-                });
+            var additionalColumns = [];
+            if (this.LOVAdditionalColumns) {
+                additionalColumns = this.LOVAdditionalColumns.split(',');
+                if (additionalColumns.length > 0) {
+                    additionalColumns.forEach((field) => {
+                        this.SecondListHeaderItems.push(field.replace('[', '').replace(']', ''));
+                    });
+                }
             }
         }
 
@@ -522,7 +631,9 @@ export class DWLogSearchWindowComponent extends BaseComponent implements OnInit,
     }
     public set ColumnName(newValue: string) {
         var isEmpty: boolean = AppTool.IsNullOrEmpty(newValue);
-        this.UIProperties.SetRequired("ColumnName", this.ObjectTableName, isEmpty);
+        if (!this.UseUnitSelection) {
+            this.UIProperties.SetRequired("ColumnName", this.ObjectTableName, isEmpty);
+        }
         this.columnName = newValue;
     }
 
@@ -559,4 +670,16 @@ export class CustomEntityArgs {
 export class AddEntityArgs {
     public EntityPM: any;
     public ObjectTableName: string;
+}
+
+export class UnitSelectionColumns {
+    constructor(Field: string, Field1: string) {
+        //Field: Code
+        //Field1: EnglishName
+        this.Field = Field;
+        this.Field1 = Field1;
+    }
+    public Field: string;
+    public Field1: string;
+    public IsChecked: boolean = false;
 }

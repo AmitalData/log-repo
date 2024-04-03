@@ -59,7 +59,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 			    string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                
+                SecurityUtility.CheckContactFeature("ARPaymentCheque", "READ", authToken.Tenant);
+	                
                 IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
                 ARPaymentChequeQueryService aRPaymentChequeQuery = new ARPaymentChequeQueryService(MyContext);
 				aRPaymentChequeQuery.InitializeSettings();
@@ -91,7 +92,9 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                    
+                        SecurityUtility.CheckContactFeature("ARPaymentCheque", "NEW", authToken.Tenant);
+	                        SecurityUtility.AuthenticationOnEntityTenant("ARPaymentCheque", entityPM.Tenant, authToken.Tenant);
+	                    
                         IAccountingContext MyContext = AccountingContext.GetContext(entityPM.Tenant);
                         ARPaymentChequeUpdateService service = new ARPaymentChequeUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
                         entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
@@ -137,7 +140,9 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-
+                        SecurityUtility.CheckContactFeature("ARPaymentCheque", "UPDATE", authToken.Tenant);
+	                        SecurityUtility.AuthenticationOnEntityTenant("ARPaymentCheque", entityPM.Tenant, authToken.Tenant);
+	
                         IAccountingContext MyContext = AccountingContext.GetContext(entityPM.Tenant);
                         ARPaymentChequeUpdateService service = new ARPaymentChequeUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
 						service.InitializeEntityPM(entityPM);

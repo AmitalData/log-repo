@@ -15,7 +15,6 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string Name { get; set; }
         public int? YearOfBirth { get; set; }
         public string Color { get; set; }
-        public string Gender { get; set; }
         public string Breed { get; set; }
         public string Discipline { get; set; }
         public string TravelBehavior { get; set; }
@@ -31,9 +30,11 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public DateTime UpdateDate { get; set; }
         public string UpdatedByUserId { get; set; }
         public string SearchFields { get; set; }
+        public string GenderCode { get; set; }
 
         public virtual Country CountryOfBirth { get; set; }
         public virtual User CreatedByUser { get; set; }
         public virtual User UpdatedByUser { get; set; }
+        public virtual HorseGender HorseGender { get; set; }
     }
 }

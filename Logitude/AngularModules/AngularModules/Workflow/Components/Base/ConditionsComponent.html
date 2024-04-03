@@ -1,0 +1,50 @@
+<style>
+    .entity-conditions-container {
+        display: table;
+        width: max-content;
+    }
+
+    .entity-conditions-operation-container {
+        display: table-cell;
+        vertical-align: middle;
+        min-width: 70px;
+        padding-right: 10px;
+        border-right: 1px solid #808080;
+    }
+
+    .entity-condition-groups-container {
+        display: table-cell;
+    }
+
+    .padding-left-10 {
+        padding-left: 10px;
+    }
+</style>
+
+
+<div *ngIf="Conditions && Conditions.length > 0" class="entity-conditions-container">
+
+    <div *ngIf="ShowConditionsOperation" class="entity-conditions-operation-container">
+
+        <ComboBox [ItemsSource]="ConditionOperationsItems" [Binding]="'Name'"
+            [SelectedItem]="ConditionsOperation | ListItemPipe"
+            (SelectedItemChanged)="updateConditionsOperation($event)" [ListType]="''" [MaxHeight]="ComboBoxMaxHeight"
+            [CyData]="'ConditionsOperation'">
+        </ComboBox>
+
+    </div>
+
+    <div class="entity-condition-groups-container" [ngClass]="{'padding-left-10': ShowConditionsOperation}">
+
+        <ConditionGroups [EntityId]="EntityId" [ShowChangedOperator]="ShowChangedOperator" [(Conditions)]="Conditions"
+            [IsValidConditions]="IsValidConditions" (ConditionsChangedEvent)="conditionsChanged($event)"
+            [ConditionsCounter]="ConditionsCounter" [AtLeastOneCondition]="AtLeastOneCondition"
+            [FlowObject]="FlowObject" [CurrentNodeId]="CurrentNodeId" [IsEntityField]="IsEntityField"
+            [IsEntityFieldValue]="IsEntityFieldValue" [EnableAdd]="EnableAdd"
+            [IsOneLevelConditions]="IsOneLevelConditions" [IsDummyField]="IsDummyField"
+            [GetFieldFromFirstCondition]="GetFieldFromFirstCondition">
+        </ConditionGroups>
+
+    </div>
+
+</div>

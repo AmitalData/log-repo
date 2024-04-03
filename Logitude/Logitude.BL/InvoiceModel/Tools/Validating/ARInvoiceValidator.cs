@@ -752,7 +752,8 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     //   double? rate = MethodHelper.Round(entityPM.InvoiceCurrencyExchangeRate, 2);
                     double computedInvoiceAmount = (double)(entityPM.AmountInInvoiceCurrency * entityPM.InvoiceCurrencyExchangeRate.Value);
                     localAmount_Computed = MethodHelper.Round(localAmount_Computed, 2);
-                    if (localAmount != localAmount_Computed)
+                    var difference = Math.Abs((double)(localAmount - localAmount_Computed));
+                    if (localAmount != localAmount_Computed && difference > 0.011)
                     {
                         throw new ApplicationException("Wrong Invoice Local Amount");
                     }
@@ -1116,6 +1117,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                             ARInvoice lastApprovedInvoice = (from a in myContext.ARInvoices
                                                              where a.Tenant == entityPM.Tenant
                                                              && a.IsInvoiceNumberManuallySet == false
+                                                             && a.IsExternalEntity == false
                                                              && a.StatusCode != "DR"
                                                              && a.StatusCode != "VD"
                                                              && a.InvoiceNumber != a.Id
@@ -1159,7 +1161,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     CheckCardConnectedGLAccount(invoice.Tenant, invoice.BillToId);
                 }
                 CheckInvoiceCurrency(invoice);
-                CheckClosedMonth(invoice.InvoiceDate, invoice.Tenant, invoice.ARInvoiceTypeCode);
+                CheckClosedMonth(invoice.InvoiceDate, invoice.Tenant, invoice.ARInvoiceTypeCode, invoice.IsExternalAPI);
 
                 if (errorsList.Count > 0)
                     throw new ApplicationException(string.Join(";", errorsList));
@@ -1213,15 +1215,23 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
 
         }
 
-        private static void CheckClosedMonth(DateTime? accountingDate, int tenant ,string Type=null)
+        private static void CheckClosedMonth(DateTime? accountingDate, int tenant ,string Type=null, bool isExternalAPI = false)
         {
             AccountingPeriodList period = GetInvoiceAccountPeriodByYear(tenant, accountingDate.Value.Year, Type);
 
             if (period != null && accountingDate != null)
             {
                 var month = accountingDate.Value.Month;
-                if (month > period.OpenMonth || month < period.ClosedMonth)
-                    errorsList.Add(GetClosedMonthErrorMessage(tenant));
+                if (isExternalAPI)
+                {
+                    if (month < period.ClosedMonth)
+                        errorsList.Add(GetClosedMonthErrorMessage(tenant));
+                }
+                else {
+                    if (month > period.OpenMonth || month < period.ClosedMonth)
+                        errorsList.Add(GetClosedMonthErrorMessage(tenant));
+                }
+                
             }
             else
             {

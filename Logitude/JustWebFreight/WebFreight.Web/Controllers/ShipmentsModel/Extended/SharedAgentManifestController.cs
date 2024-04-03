@@ -47,6 +47,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 //SecurityUtility.CheckContactFeature("Shipment", "AgentSharedManifest", tenant);
 
 
@@ -830,6 +831,10 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
         {
             try
             {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 CardRepository cardRepository = new CardRepository(tenant);
                 string result = cardRepository.GetActiveCardIdByCode(code, tenant);
@@ -855,6 +860,8 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                        SecurityUtility.AuthenticationOnTenant(entityPM.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("AgentSharedManifest" , entityPM.Tenant, authToken.Tenant);
 
                         string entityName = "AgentSharedManifest" + entityPM.Id + entityPM.Tenant;
                         string entityPmName = "AgentSharedManifestPM" + entityPM.Id + entityPM.Tenant;
@@ -898,6 +905,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
                 ShipmentQuery shipmentQuery = new ShipmentQuery(authToken.Tenant);
 
@@ -919,6 +927,8 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
                 AgentSharedManifestsSummaryClass agentSharedManifestsSummaryClass = new AgentSharedManifestsSummaryClass();
 
                 AgentSharedManifestQuery agentSharedManifestQuery = new AgentSharedManifestQuery(authToken.Tenant);
@@ -951,6 +961,10 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
                 ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
 
                 if (longMaster == "null" || longMaster == "undefined") longMaster = null;
@@ -1503,6 +1517,8 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
 
                 List<ShipmentList> shipmentLists = shipmentQuery.GetShipmentListsByMasterIdAndTenant(entityId, tenant);

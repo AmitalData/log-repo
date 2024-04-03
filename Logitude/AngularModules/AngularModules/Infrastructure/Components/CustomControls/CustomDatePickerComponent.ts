@@ -1,17 +1,17 @@
 declare var window: any;
-import {Component, OnInit, Output, EventEmitter} from '@angular/core';
-import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
-import {AppTool, DateTool} from '../../../Infrastructure/Tools';
-import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import {FormGroup, FormBuilder} from '@angular/forms';
-import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
+import { AppTool, DateTool } from '../../../Infrastructure/Tools';
+import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { FormGroup, FormBuilder } from '@angular/forms';
+import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 
 @Component({
-    
+
 
     selector: 'CustomDatePicker',
     templateUrl: './CustomDatePickerComponent.html',
-    inputs: ['ObjectField', 'QueryId', 'QueryCode', 'IsDisabled']
+    inputs: ['ObjectField', 'QueryId', 'QueryCode', 'IsDisabled','DataCy']
 })
 
 export class CustomDatePickerComponent extends BaseComponent implements OnInit {
@@ -36,6 +36,8 @@ export class CustomDatePickerComponent extends BaseComponent implements OnInit {
     LastSevenDays: string;
     LastThirtyDays: string;
     CurrentYear: string;
+    LessThanToday: string;
+    LessThanOrEqualToday: string;
     LastYear: string;
     TodayDate: any;
     TommorowDate: any;
@@ -47,12 +49,14 @@ export class CustomDatePickerComponent extends BaseComponent implements OnInit {
     CurrentYearFromDate: any;
     CurrentYearToDate: any;
     CloseMenu: boolean = true;
-    IsMenuOpened: boolean = false; 
+    IsMenuOpened: boolean = false;
     NoDateVisibile: boolean = true;
     mouseOver: boolean = false;
+    DataCy: any;
     public IsDisabled: boolean = false;
     @Output() SelectedItemChanged: EventEmitter<any> = new EventEmitter();
     private CurrentSession = SessionLocator.SelectedSession;
+    public HasAdvancedFiltersOptionsToggle: boolean = false;
     constructor(fb: FormBuilder) {
         super();
         this.myForm = fb.group({});
@@ -76,8 +80,8 @@ export class CustomDatePickerComponent extends BaseComponent implements OnInit {
     }
 
     ngOnInit() {
-        
-        this.TommorowDate = DateTool.AddDays((new Date()), 1); 
+        this.checkAdvancedFiltersOptionsToggle();
+        this.TommorowDate = DateTool.AddDays((new Date()), 1);
         this.TommorowDate.setHours(0, 0, 0, 0);
         this.TodayDate = new Date();
         this.TodayDate.setHours(0, 0, 0, 0);
@@ -93,9 +97,11 @@ export class CustomDatePickerComponent extends BaseComponent implements OnInit {
         this.LastThirtyDays = (this.LastThirtyDaysDate.getDate() < 10 ? "0" : "") + this.LastThirtyDaysDate.getDate() + '-' + (this.LastThirtyDaysDate.getMonth() + 1 < 10 ? "0" : "") + (this.LastThirtyDaysDate.getMonth() + 1) + '-' + this.LastThirtyDaysDate.getFullYear() + " - " + this.Today;
         this.CurrentYearFromDate = new Date(new Date().getFullYear(), 0, 1);
         this.CurrentYearFromDate.setHours(0, 0, 0, 0);
-        this.CurrentYearToDate = DateTool.AddDays((new Date()), 1); 
+        this.CurrentYearToDate = DateTool.AddDays((new Date()), 1);
         this.CurrentYearToDate.setHours(0, 0, 0, 0);
         this.CurrentYear = '01-01-' + ((new Date()).getFullYear()) + ' - ' + 'Today';//(this.CurrentYearToDate.getDate() < 10 ? "0" : "") + (this.CurrentYearToDate.getDate()) + '-' + (this.CurrentYearToDate.getMonth() + 1 < 10 ? "0" : "") + (this.CurrentYearToDate.getMonth() + 1) + '-' + (this.CurrentYearToDate.getFullYear());
+        this.LessThanToday = ' < ' + (this.TodayDate.getDate() < 10 ? "0" : "") + this.TodayDate.getDate() + '-' + (this.TodayDate.getMonth() + 1 < 10 ? "0" : "") + (this.TodayDate.getMonth() + 1) + '-' + this.TodayDate.getFullYear();
+        this.LessThanOrEqualToday = ' <= ' + (this.TodayDate.getDate() < 10 ? "0" : "") + this.TodayDate.getDate() + '-' + (this.TodayDate.getMonth() + 1 < 10 ? "0" : "") + (this.TodayDate.getMonth() + 1) + '-' + this.TodayDate.getFullYear();
 
         //this.LastYearFromDate = DateTool.AddDays((new Date()), -365);
         //this.LastYearFromDate.setHours(0, 0, 0, 0);
@@ -135,13 +141,17 @@ export class CustomDatePickerComponent extends BaseComponent implements OnInit {
                 this.Text = "Less Than " + stringDate;
             }
             if (predefinedFilter.Operator == "Between") {
-                
+
                 var myDate = DateTool.GetDateParts(predefinedFilter.PredefinedValue);
                 var myDate1 = DateTool.GetDateParts(predefinedFilter.PredefinedValue2);
                 var stringDate = (myDate.Day < 10 ? "0" : "") + myDate.Day + '-' + (myDate.Month < 10 ? "0" : "") + myDate.Month + '-' + myDate.Year;
                 var endingDate = (myDate1.Day < 10 ? "0" : "") + myDate1.Day + '-' + (myDate1.Month < 10 ? "0" : "") + myDate1.Month + '-' + myDate1.Year;
                 this.SelectedItem = stringDate + " - " + endingDate;
                 this.Text = stringDate + " - " + endingDate;
+            }
+
+            if (this.QueryCode == 'LedgerTransaction.LedgerTransactions') {
+                this.SelectedItem = "Last Year";
             }
             //Between
         }
@@ -153,6 +163,13 @@ export class CustomDatePickerComponent extends BaseComponent implements OnInit {
         }
         if (this.ObjectField.FieldName == "CreateDateTime") {
             this.NoDateVisibile = false;
+        }
+    }
+
+    private checkAdvancedFiltersOptionsToggle() {
+        let advancedFiltersOptionsToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "AFO")[0];
+        if (advancedFiltersOptionsToggle) {
+            this.HasAdvancedFiltersOptionsToggle = true;
         }
     }
 
@@ -171,11 +188,9 @@ export class CustomDatePickerComponent extends BaseComponent implements OnInit {
                 this.SetControlPosition();
                 document.getElementById(this.DropdownId).style.width = item.offsetWidth + 50 + "px";
 
-
-                var itemsHeight = ((10 * 23) + 3);
-                if (this.ObjectField.IsRequiered == true) {
-                    itemsHeight = ((9 * 23) + 3);
-                }
+                var itemsCount = this.GetItemsCount();
+                var itemsHeight = ((itemsCount * 23) + 3);
+  
                 if (itemsHeight > this.MaxHeight) {
                     document.getElementById(this.DropdownId).style.height = this.MaxHeight + "px";
                     document.getElementById(this.ListControlId).style.height = itemsHeight + "px";
@@ -194,6 +209,17 @@ export class CustomDatePickerComponent extends BaseComponent implements OnInit {
 
     }
     private timerToken: any;
+    private GetItemsCount() {
+        var itemsCount = 9;
+        if (this.HasAdvancedFiltersOptionsToggle) {
+            itemsCount = itemsCount + 2;
+        }
+        if (this.ObjectField.IsRequiered == false) {
+            itemsCount = itemsCount + 1;
+        }
+        return itemsCount;
+    }
+
     private StopPositionTimer() {
         if (this.timerToken) {
             clearTimeout(this.timerToken);
@@ -232,7 +258,7 @@ export class CustomDatePickerComponent extends BaseComponent implements OnInit {
         var item = document.getElementById(this.ControlId);
         if (item != null) {
             this.IsOpened = !this.IsOpened;
-            
+
             if (!this.IsOpened) {
                 item.blur();
             }
@@ -338,6 +364,18 @@ export class CustomDatePickerComponent extends BaseComponent implements OnInit {
                         //this.SelectedItemChanged.emit(this.LastSevenDays);
                         break;
                     }
+                case "Less than Today":
+                    {
+                        this.Text = "Less than Today " + this.LessThanToday;
+                        this.SelectedItemChanged.emit({ FromDate: null, ToDate: this.YesterdayDate, Operation: "Equals", MyName: "Less than Today" });
+                        break;
+                    }
+                case "Less than or equal Today":
+                    {
+                        this.Text = "Less than or equal Today " + this.LessThanOrEqualToday;
+                        this.SelectedItemChanged.emit({ FromDate: null, ToDate: this.TodayDate, Operation: "Equals", MyName: "Less than or equal Today" });
+                        break;
+                    }
                 default: { break; }
             }
 
@@ -373,7 +411,7 @@ export class CustomDatePickerComponent extends BaseComponent implements OnInit {
     public set LesstextValue(newValue: any) {
         this.lesstextValue = newValue;
         if (newValue != null) {
-        this.greatertextValue = null;
+            this.greatertextValue = null;
             this.Text = "Less Than" + " " + newValue.getDate() + '/' + (newValue.getMonth() + 1) + '/' + newValue.getFullYear();
             this.SelectedItem = "Less Than";
             this.SelectedItemChanged.emit({ Date: newValue, Operation: "LessThan" });
@@ -397,26 +435,57 @@ export class CustomDatePickerComponent extends BaseComponent implements OnInit {
         this.GreaterTextValue = null;
         this.LesstextValue = null;
         var logitudeWindow = new LogitudeWindow();
+
+        var windowArgs: any = {};
+        windowArgs.QueryCode = this.QueryCode;
+        if (this.QueryCode == 'LedgerTransaction.LedgerTransactions') {
+            windowArgs.LastYearFromDate = this.LastYearFromDate;
+            windowArgs.LastYearToDate = this.LastYearToDate;
+        }
         logitudeWindow.Width = 408;
         logitudeWindow.Height = 330;
         logitudeWindow.Title = "Choose Dates";
+        logitudeWindow.WindowArgs = windowArgs;
+        
         logitudeWindow.Show('./Infrastructure/Components/CustomControls/ChooseDatesComponent');
         this.mouseOver = false;
         logitudeWindow.ComponentLoaded.subscribe((cmp) => {
             cmp.DateSelected.subscribe((res) => {
                 this.FromDate = res.From;
-                this.FromDate.setHours(0, 0, 0, 0); 
+                this.FromDate.setHours(0, 0, 0, 0);
                 this.ToDate = res.To;
                 this.ToDate.setHours(23, 59, 59, 999);
-                this.SelectedItemChanged.emit({ FromDate: this.FromDate, ToDate: this.ToDate, Operation: "Between" });
+                this.EmitBetweenChanges();
                 this.SelectedItem = this.FromDate.getDate() + '/' + (this.FromDate.getMonth() + 1) + '/' + this.FromDate.getFullYear() + "-" + this.ToDate.getDate() + '/' + (this.ToDate.getMonth() + 1) + '/' + this.ToDate.getFullYear();
                 this.Text = this.FromDate.getDate() + '/' + (this.FromDate.getMonth() + 1) + '/' + this.FromDate.getFullYear() + "-" + this.ToDate.getDate() + '/' + (this.ToDate.getMonth() + 1) + '/' + this.ToDate.getFullYear();
-                this.SetDisplayText(); 
+                this.SetDisplayText();
                 //alert(this.FromDate + " - " + this.ToDate);
             });
         });
         this.CloseMenu = true;
         this.OnLostFocus();
+    }
+
+    private EmitBetweenChanges() {
+        let fromDate = this.CloneDate(this.FromDate);
+        let toDate = this.CloneDate(this.ToDate)
+        fromDate.setHours(this.GetTimezoneOffsetHours(), 0, 0, 0);
+        toDate.setHours(23 + this.GetTimezoneOffsetHours(), 59, 59, 999);
+
+        this.SelectedItemChanged.emit({ FromDate: fromDate, ToDate: toDate, Operation: "Between" });
+    }
+
+    CloneDate(date) {
+        let clonedDate: Date = new Date();
+        clonedDate.setFullYear(date.getFullYear());
+        clonedDate.setMonth(date.getMonth());
+        clonedDate.setDate(date.getDate());
+        clonedDate.setHours(date.getHours());
+        clonedDate.setMinutes(date.getMinutes());
+        clonedDate.setSeconds(date.getSeconds());
+        clonedDate.setMilliseconds(date.getMilliseconds());
+
+        return clonedDate;
     }
 
     OnCalendarClick() {
@@ -439,5 +508,10 @@ export class CustomDatePickerComponent extends BaseComponent implements OnInit {
     }
     onMouseOut() {
         this.mouseOver = false;
+    }
+
+    GetTimezoneOffsetHours() {
+        let timezoneOffsetHours = new Date().getTimezoneOffset() / 60;
+        return timezoneOffsetHours * (-1);
     }
 }

@@ -680,28 +680,26 @@ namespace WebFreight.Web.Validators
 
         public bool ValidateConditionFieldsRule(object entity, List<RuleConditionField> ruleConditionFields, int tenant, string objectTableName)
         {
-            bool validcondition = true;
+            bool validateCondition = true;
             Type type1 = entity.GetType();
-            PropertyInfo propertyInf = null;
-
             foreach (RuleConditionField condfield in ruleConditionFields)
             {
-                propertyInf = type1.GetProperty(condfield.ObjectField.FieldName);
-                if (propertyInf != null)
-                {
-                    string value = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldStringValue(condfield.ObjectField, propertyInf.GetValue(entity, null));
-
-                    if (condfield.Value != value)
-                    {
-                        validcondition = false;
-                        break;
-                    }
-                }
+                PropertyInfo propertyInfo = type1.GetProperty(condfield.ObjectField.FieldName);
+                if (propertyInfo == null) continue;
+                validateCondition = ValidateRuleConditionField(condfield, propertyInfo, entity);
+                if (!validateCondition) break;
             }
 
-            return validcondition;
+            return validateCondition;
         }
+        private bool ValidateRuleConditionField(RuleConditionField ruleConditionField, PropertyInfo propertyInfo, object entity)
+        {
+            string value = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldStringValue(ruleConditionField.ObjectField, propertyInfo.GetValue(entity, null));
+            if (ruleConditionField.Operator == "Equals") return ruleConditionField.Value == value;
+            if (ruleConditionField.Operator == "NotEqual") return ruleConditionField.Value != value;
 
+            return ruleConditionField.Value == value;
+        }
         #endregion
 
         public List<ObjectField> GetObjectFieldsList(string objectTableName, int tenant)

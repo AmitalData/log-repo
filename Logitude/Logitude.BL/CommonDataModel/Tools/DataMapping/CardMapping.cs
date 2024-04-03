@@ -36,7 +36,9 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPOCO.VatTypeId = entityPM.VatTypeId;
             entityPOCO.InvoiceCurrencyId = entityPM.InvoiceCurrencyId;
             entityPOCO.InvitationDate = entityPM.InvitationDate;
+            entityPOCO.CargoTrackingInvitationDate = entityPM.CargoTrackingInvitationDate;
             entityPOCO.SharedLogisticsInvitationStatusCode = entityPM.SharedLogisticsInvitationStatusCode;
+            entityPOCO.CargoTrackingInvitationStatusCode = entityPM.CargoTrackingInvitationStatusCode;
             entityPOCO.LastLoginDate = entityPM.LastLoginDate;
             entityPOCO.ClassifierId = entityPM.ClassifierId;
             entityPOCO.CollectorId = entityPM.CollectorId;
@@ -59,7 +61,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPOCO.SATForeignRFC = entityPM.SATForeignRFC;
             entityPOCO.MetodoPagoCode = entityPM.MetodoPagoCode;
             entityPOCO.UsoCFDICode = entityPM.UsoCFDICode;
-            entityPOCO.UsoCFDICode = entityPM.UsoCFDICode;
+            entityPOCO.RegimenFiscalCode = entityPM.RegimenFiscalCode;
             entityPOCO.StateName = entityPM.StateName;
             entityPOCO.IsInternationalPartner = entityPM.IsInternationalPartner;
             entityPOCO.IsAutonomy = entityPM.IsAutonomy;
@@ -67,6 +69,13 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPOCO.AccountingVATSplit = entityPM.AccountingVATSplit;
             entityPOCO.GLAccountDisplayNumber = entityPM.GLAccountDisplayNumber;
             entityPOCO.BillToId = entityPM.BillToId;
+            entityPOCO.SATCustomerName = entityPM.SATCustomerName;
+            entityPOCO.ExportLocalCustomerGroupId = entityPM.ExportLocalCustomerGroupId;
+            entityPOCO.ImportLocalCustomerGroupId = entityPM.ImportLocalCustomerGroupId;
+            entityPOCO.SingleInvoiceTemplateId = entityPM.SingleInvoiceTemplateId;
+            entityPOCO.CustomsInvoiceTemplateId = entityPM.CustomsInvoiceTemplateId;
+            entityPOCO.ConsolidationInvoiceTemplateId = entityPM.ConsolidationInvoiceTemplateId;
+            entityPOCO.ManifestInvoiceTemplateId = entityPM.ManifestInvoiceTemplateId;
             BuildSearchFields(entityPM, entityPOCO);
         }
 

@@ -33,9 +33,31 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { CargoTrackingPortService } from '../CargoTracking/Services/Others/CargoTrackingPortService';
 import { CargoTrackingShipmentService } from '../CargoTracking/Services/Others/CargoTrackingShipmentService';
 import { DocumentDownloadService } from '../CargoTracking/Services/Others/DocumentDownloadService';
-import { MatDialogModule } from '@angular/material/dialog';
+import { MatDialogModule, MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MessageWindowComponent } from '../Infrastructure/Components/MessageWindow/MessageWindowComponent';
-
+import { ToolTipComponent } from 'src/Infrastructure/Components/ToolTip/ToolTipComponent';
+import { OverlayModule } from '@angular/cdk/overlay';
+import { MultipleSelectionComponent } from '../Infrastructure/Components/MultipleSelection/MultipleSelectionComponent';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSelectModule } from '@angular/material/select';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CargoTrackingShipmentOrderService } from '../CargoTracking/Services/Others/CargoTrackingShipmentOrderService';
+import { IconButtonComponent } from '../Infrastructure/Components/IconButton/IconButtonComponent';
+import { DateTimeFormatPipe } from '../Infrastructure/Pipes/DateTimeFormatPipe';
+import { CargoTrackingShipmentExtendedService } from 'src/CargoTracking/Services/Others/CargoTrackingShipmentExtendedService';
+import { SharedService } from 'src/CargoTracking/Services/Others/SharedService';
+import { CustomLabelComponent, LabelUtilContentDirective, LabelUtilElementDirective} from 'src/Infrastructure/Components/CustomLabel/CustomLabel.component';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { LogboxShipmentExportExcelService } from 'src/CargoTracking/Services/Others/LogboxShipmentExportExcelService';
+import { LogitudeGridExportToExcelService } from 'src/CargoTracking/Services/Others/LogitudeGridExportToExcelComponent';
+import { SafePipe } from 'src/Infrastructure/Pipes/SafePipe';
+import { StopLoopPipe } from 'src/Infrastructure/Pipes/StopLoopPipe';
+import { TenantManagementService } from 'src/CargoTracking/Services/Others/TenantManagementService';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 export function getBaseUrl() {
     return document.getElementsByTagName('base')[0].href;
@@ -63,7 +85,15 @@ export function getBaseUrl() {
         ResetPasswordComponent,
         ChangePasswordComponent,
         MessageWindowComponent,
-
+        ToolTipComponent,
+        MultipleSelectionComponent,
+        IconButtonComponent,
+        DateTimeFormatPipe,
+        SafePipe,
+        StopLoopPipe,
+        CustomLabelComponent,
+        LabelUtilContentDirective,
+        LabelUtilElementDirective,
 
         //Erros
         Error401Component
@@ -76,9 +106,18 @@ export function getBaseUrl() {
         HttpClientModule,
         AppRoutingModule,
         MatDialogModule,
+        MatNativeDateModule,
         ReactiveFormsModule,
         ScrollingModule,
+        OverlayModule,
+        MatInputModule,
+        MatSelectModule,
+        MatFormFieldModule,
+        MatIconModule,
         FormsModule, HttpClientModule, NoopAnimationsModule,
+        MatTooltipModule,
+        MatSlideToggleModule,
+        BrowserAnimationsModule
     ],
     providers: [
         CargoTrackingSearchService,
@@ -92,9 +131,21 @@ export function getBaseUrl() {
         AuthGuardService,
         AuthService,
         LoginServiceHelper,
+        CargoTrackingShipmentOrderService,
+        CargoTrackingShipmentExtendedService,
         DatePipe,
-        { provide: 'BASE_URL', useFactory: getBaseUrl, deps: [] }
+        DateTimeFormatPipe,
+        SafePipe,
+        StopLoopPipe,
+        SharedService,
+        LogboxShipmentExportExcelService,
+        LogitudeGridExportToExcelService,
+        TenantManagementService,
+        { provide: 'BASE_URL', useFactory: getBaseUrl, deps: [] },
+        { provide: MAT_DIALOG_DATA, useValue: {} },
+        { provide: MatDialogRef, useValue: {} }
     ],
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

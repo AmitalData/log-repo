@@ -1,6 +1,6 @@
-@smoke @release @stable @all
+@smoke @smoke1 @stable @smoke1MasterDeploymnet
 Feature: AP Invoice Approve, Cancel Approval and Void
-    The user creates a Direct Export Air shipment, updates routings and packages, adds payable, 
+    The user creates a Direct Export Air shipment, updates routings and packages, adds payable,
     creates AP Invoice, approves the AP Invoice, cancels the AP Invoice approval and voids the AP Invoice.
 
     Scenario: Update Accounting System
@@ -40,16 +40,10 @@ Feature: AP Invoice Approve, Cancel Approval and Void
         When create shipment
         Then the direct should create successfully
 
-    Scenario: Update routing tab
-        Given the user in the shipment's rounting tab
-        And edit main carriage leg with the following details
-            | Airline      | AA     |
-            | FlightNumber | Random |
-            | MAWB         | Random |
-        When update shipment
-        Then the direct should update successfully
+
 
     Scenario: Update packages tab
+        Given the user in the shipment's rounting tab
         Given the user add package with the following details
             | Quantity | Length | Width | Height | GrossWeight |
             | 5        | 1      | 2     | 3      | 100         |

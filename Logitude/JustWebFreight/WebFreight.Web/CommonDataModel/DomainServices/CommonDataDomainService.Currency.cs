@@ -279,7 +279,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
         }
 
         [Invoke]
-        public CurrencyList CopyCurrencyToTenant(string currencyId, int tenant, double currecyRate,DateTime ratedate)
+        public CurrencyList CopyCurrencyToTenant(string currencyId, int tenant, double currecyRate,DateTime ratedate,int? unit = 1)
         {
             
             SecurityUtility.CheckContactFeature("Currency", "NEW", tenant);
@@ -326,18 +326,35 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                 using (TransactionScope scope = TransactionFactory.GetTransaction())//TransactionFactory.GetTransaction())
                 {
                     IWebFreightContext webContext = WebFreightContext.GetContext(tenant);
-
-                    RatesTable rate = new RatesTable()
+                    RatesTable rate;
+                    if (IsFullAccountingActivated(tenant))
                     {
+                         rate = new RatesTable()
+                     {
                         Id = IdCounter.GetNumber("RatesTable", tenant),
                         BaseCurrencyId = tenantPoco.CurrencyId,
                         ForeignCurrencyId = tenantCurrency.Id,
                         LogDateTime = TenantServerConfigration.GetCurrentDateTime(tenant),
-                        Rate = currecyRate,
+                        Rate = CalculateRateAccordingUnit(currecyRate,unit),
+                        Unit = unit,
                         Tenant = tenant,
                         ValueDate = ratedate.Date,//TenantServerConfigration.GetCurrentDateTime(tenant),
 
-                    };
+                     };
+                    } else
+                    {
+                         rate = new RatesTable()
+                        {
+                            Id = IdCounter.GetNumber("RatesTable", tenant),
+                            BaseCurrencyId = tenantPoco.CurrencyId,
+                            ForeignCurrencyId = tenantCurrency.Id,
+                            LogDateTime = TenantServerConfigration.GetCurrentDateTime(tenant),
+                            Rate = currecyRate,
+                            Tenant = tenant,
+                            ValueDate = ratedate.Date,//TenantServerConfigration.GetCurrentDateTime(tenant),
+
+                        };
+                    }
 
                     webContext.RatesTable.Add(rate);
                     webContext.SaveChanges();
@@ -353,6 +370,27 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
         }
 
         [Invoke]
+
+        private double CalculateRateAccordingUnit(Double currecyRate, int? unit)
+        {
+             if (unit != null)
+             {
+                 if (unit > 0)
+                 {
+                   return (double)(currecyRate / unit);
+                 }
+             }
+              return (double)currecyRate;
+        }
+
+        private bool IsFullAccountingActivated(int tenant)
+        {
+            TenantRepository tenantRepository = new TenantRepository(tenant);
+            Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
+            bool isFullAccountingActivated = tenantPOCO.AccountingActivated;
+            return isFullAccountingActivated;
+        }
+
         public Currency CreateCurrency(Currency currency)
         {
             SecurityUtility.CheckContactFeature("Currency", "NEW", currency.Tenant);

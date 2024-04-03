@@ -83,4 +83,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Index
+    Columns="InActive"
+    Include="CreateDate" />
+  <Index
+	Columns="ClientType,InActive,ExpirationDate"/>
+  <Index
+	Columns="APIToken,InActive,ExpirationDate"/>
+  <Index
+	Columns="ExpirationDate"/>
 </Table>

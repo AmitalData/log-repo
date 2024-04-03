@@ -10,6 +10,8 @@ using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.QuoteModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
@@ -40,21 +42,21 @@ using Simplog.Data.InfrastructureModel;
         }
 
 		
-		public MoveType GetMoveTypeById(string Id,int Tenant,string ComputingPartnerName = "")
+		public MoveType GetMoveTypeById(string Id,int Tenant,  string ComputingPartnerName = "")
         { 
 		    try
             {
-
+				 
 				
-				var temp = query.GetSinglePM(Id,Tenant);				
+				var temp = query.GetSinglePM(Id, Tenant);				
 				 if (temp == null)
                     throw new ApplicationException("MoveType with Id " + Id + " doesn't exist");
 
 				return MoveTypeDataMapping(temp,Tenant,ComputingPartnerName);
 			}
+
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }
@@ -87,11 +89,13 @@ using Simplog.Data.InfrastructureModel;
 					{
 						temp = query.GetSinglePM(MyEntity.Id, Tenant);
 					} 
-										   
-					if(temp == null)
+					
+					
+			  	   if(temp == null)
 					{   
 					    throw new ApplicationException("MoveType with Id " + MyEntity.Id + " doesn't exist");
 					} 
+				 
 					
 					if(string.IsNullOrEmpty(temp.Id))
 					{
@@ -114,9 +118,8 @@ using Simplog.Data.InfrastructureModel;
 					   
 						 
 						if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Code))
-						{
-								//throw new ApplicationException("Code Can't be update"); 
-								temp.Code = MyEntity.Code;
+						{								
+							temp.Code = MyEntity.Code;
 								
 						
 						}  
@@ -124,17 +127,17 @@ using Simplog.Data.InfrastructureModel;
 						
 					}
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.MoveTypeEnglishName))
-					{							//throw new ApplicationException("MoveTypeEnglishName Can't be update"); 
-							temp.MoveTypeEnglishName = MyEntity.MoveTypeEnglishName;
+					if(!IsUpdate)
+					{							
+						temp.MoveTypeEnglishName = MyEntity.MoveTypeEnglishName;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.MoveTypeLocalName))
-					{							//throw new ApplicationException("MoveTypeLocalName Can't be update"); 
-							temp.MoveTypeLocalName = MyEntity.MoveTypeLocalName;
+					if(!IsUpdate)
+					{							
+						temp.MoveTypeLocalName = MyEntity.MoveTypeLocalName;
 
 										}  
 
@@ -147,6 +150,8 @@ using Simplog.Data.InfrastructureModel;
                 throw ex;
             } 
         }
-		 
+
+
+						   
    }
 }

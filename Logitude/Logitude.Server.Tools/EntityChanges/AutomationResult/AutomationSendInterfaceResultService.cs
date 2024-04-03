@@ -1,5 +1,4 @@
-﻿using Logitude.Server.Tools.EntityChanges.Service;
-using Logitude.Server.Tools.Helpers;
+﻿using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
 using Logitude.Server.Tools.StorageService;
 using Microsoft.Practices.Unity;
@@ -18,7 +17,15 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
 {
     public class AutomationSendInterfaceResultService : GeneralAutomationResultService, IAutomationResultService
     {
+
+        public List<AutomationQueueArgs> AutomationQueues { get; set; }
+
         private AutomationResultArgs automationResultArgs { get; set; }
+
+        public bool DependencyOnLastEntityUpdate { get { return true; } }
+        public string ResultCode { get { return "SENDINTERFACE"; } }
+
+
         private int tenant;
         private EntityChange entityChange;
 
@@ -27,10 +34,11 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
         public void Run(AutomationResultArgs automationResultArgs)
         {
             this.automationResultArgs = automationResultArgs;
+            AutomationQueues = new List<AutomationQueueArgs>();
             this.entityChange = automationResultArgs.EntityChange;
             this.tenant = this.entityChange.Tenant;
 
-            this.sendInterfaceAutomations = automationResultArgs.AutomationLists.Where(d => d.ResultCode == "SENDINTERFACE").ToList();
+            this.sendInterfaceAutomations = automationResultArgs.AutomationLists.Where(d => d.ResultCode == ResultCode).ToList();
             if (sendInterfaceAutomations.Count > 0)
             {
                 WriteEntityPMOnStorage(automationResultArgs);
@@ -50,7 +58,7 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
         {
             foreach (Automation automation in sendInterfaceAutomations)
             {
-                AddAutomationQueue(new AutomationQueueArgs() { EntityChangeId = entityChange.Id, AutomationId = automation.Id, AutomationType = automationResultArgs.EntityChangeArgs.ProcessType, EntityId = entityChange.EntityId, Tenant = automation.Tenant,   ExecutedImmediately = true });
+                AutomationQueues.Add(new AutomationQueueArgs() { EntityChangeId = entityChange.Id, AutomationId = automation.Id, AutomationType = automationResultArgs.EntityChangeArgs.ProcessType, EntityId = entityChange.EntityId, Tenant = automation.Tenant,   ExecutedImmediately = true, EntityReference = automationResultArgs.EntityReference });
             }
         }
 

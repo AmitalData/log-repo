@@ -47,7 +47,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         TransferGLAcccountId, 
 	         CurrencyId, 
 	         PrintingBranchNumber, 
-	         PrintingAccountNumber,
+	         PrintingAccountNumber, 
+	         TotalOpenExternalTransactions, 
+	         TotalOpenPagesLines,
 	      }
 
 
@@ -94,7 +96,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         PrintingBranchNumber, 
 	         PrintingAccountNumber, 
 	         BankCodeEnglishName, 
-	         BankCodeLocalName,
+	         BankCodeLocalName, 
+	         TotalOpenExternalTransactions, 
+	         TotalOpenPagesLines,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -226,6 +230,16 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PrintingAccountNumber))
             {
 				entityPOCO.PrintingAccountNumber = entityPM.PrintingAccountNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TotalOpenExternalTransactions))
+            {
+				entityPOCO.TotalOpenExternalTransactions = entityPM.TotalOpenExternalTransactions;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TotalOpenPagesLines))
+            {
+				entityPOCO.TotalOpenPagesLines = entityPM.TotalOpenPagesLines;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -364,6 +378,16 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.PrintingAccountNumber = entityPOCO.PrintingAccountNumber;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TotalOpenExternalTransactions))
+            {
+					entityPM.TotalOpenExternalTransactions = entityPOCO.TotalOpenExternalTransactions;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TotalOpenPagesLines))
+            {
+					entityPM.TotalOpenPagesLines = entityPOCO.TotalOpenPagesLines;
+            }
+
 		}
 
 		public void PMToOldPM(BankAccountPM entityPM, BankAccountPM oldEntityPM)
@@ -493,6 +517,16 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PrintingAccountNumber))
             {
                 oldEntityPM.PrintingAccountNumber = entityPM.PrintingAccountNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TotalOpenExternalTransactions))
+            {
+                oldEntityPM.TotalOpenExternalTransactions = entityPM.TotalOpenExternalTransactions;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TotalOpenPagesLines))
+            {
+                oldEntityPM.TotalOpenPagesLines = entityPM.TotalOpenPagesLines;
             }
 			
 		}

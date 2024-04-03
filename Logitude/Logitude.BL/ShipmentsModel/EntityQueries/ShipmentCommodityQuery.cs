@@ -72,7 +72,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                       VolumetricWeight = a.VolumetricWeight,
                                                       NumberOfPackages = a.NumberOfPackages,
                                                       IsFirstLine = a.IsFirstLine,
-                                                  }).ToList();
+                                                  }).OrderBy(a => a.Id).ToList();
 
             if (myResult.Count > 0)
             {

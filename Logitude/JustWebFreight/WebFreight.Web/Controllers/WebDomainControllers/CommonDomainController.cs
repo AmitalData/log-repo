@@ -12,9 +12,13 @@ using Logitude.BL.DataContracts;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.QuoteModel.EntityLists;
 using Logitude.BL.ShipmentsModel.EntityLists;
+using Logitude.BL.ShipmentsModel.EntityPMs;
+using Logitude.BL.ShipmentsModel.EntityQueries;
+using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BookingLib.Data.EntityLists;
 using Logitude.CRM.BL.EntityPMs;
 using Logitude.CRM.BL.EntityQueryServices;
+using Logitude.CRM.BL.EntityUpdateServices;
 using Logitude.CRM.Data;
 using Logitude.CRM.Data.EntityListQueryServices;
 using Logitude.CRM.Data.EntityLists;
@@ -72,6 +76,7 @@ using WebFreight.Web.AccountingModel.DomainServices;
 using WebFreight.Web.BookingModel.DomainServices;
 using WebFreight.Web.CommonDataModel.DomainServices;
 using WebFreight.Web.Controllers.CommonDataModel.Extended;
+using WebFreight.Web.Controllers.ShipmentsModel.ApiHelpers;
 using WebFreight.Web.CRMModel.DomainServices;
 using WebFreight.Web.CustomModel.DomainServices;
 using WebFreight.Web.DataContracts;
@@ -94,7 +99,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 int tenant = authToken.Tenant;
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 string loggedUserEmail = authToken.Email;
-                byte[] data = ExportPartnersUploadTemplateToExcel(tenant) ;
+                byte[] data = ExportPartnersUploadTemplateToExcel(tenant);
                 string fileName = "Partners Upload Template";
                 if (data != null)
                 {
@@ -146,7 +151,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                        {
                                            Code = a.Id,
                                            Name = a.Name,
-                                           
+
                                        }).ToList();
             }
         }
@@ -159,7 +164,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             sheet2.Range["A1"].CellStyle.Font.FontName = "Calibri";
             sheet2.Range["A1"].CellStyle.Font.Color = ExcelKnownColors.White;
             sheet2.Range["A1"].CellStyle.Color = System.Drawing.Color.Gray;
-            sheet2.Range["A1"].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignCenter;   
+            sheet2.Range["A1"].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignCenter;
             DataTable dataTable2 = this.ConvertToDataTable(partnersTypes_Sheet);
             sheet2.ImportDataTable(dataTable2, true, 1, 1);
         }
@@ -214,6 +219,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         Tenant = authToken.Tenant,
                         IsConfirmationByUser = filter.IsConfirmationByUser,
                         FileName = filter.FileName,
+                        ComputingPartnerCode = filter.ComputingPartnerCode,
                     };
 
                     if (string.IsNullOrEmpty(args.DocumentId))
@@ -306,7 +312,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
             }
 
-            
+
             return document != null ? document.Id : null;
         }
         private DataTable ConvertToDataTable<T>(IList<T> data)
@@ -406,7 +412,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        public HttpResponseMessage GetCopyCurrencyToTenant(string CurrencyId, double CurrencyRate, DateTime RateDate)
+        public HttpResponseMessage GetCopyCurrencyToTenant(string CurrencyId, double CurrencyRate, DateTime RateDate,int Unit = 1)
         {
             try
             {
@@ -421,7 +427,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     SecurityUtility.CheckContactFeature("Currency", "READ", tenant);
 
                     CommonDataDomainService commonDomain = new CommonDataDomainService();
-                    CurrencyList myResult = commonDomain.CopyCurrencyToTenant(CurrencyId, tenant, CurrencyRate, RateDate);
+                    CurrencyList myResult = commonDomain.CopyCurrencyToTenant(CurrencyId, tenant, CurrencyRate, RateDate,Unit);
                     //CurrencyList myResult = new CurrencyList();
 
                     scope.Complete();
@@ -546,7 +552,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        
+
         public HttpResponseMessage GetBlueSnapSecretToken(string VaultedShopperId, string countryname)
         {
             try
@@ -678,7 +684,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        
+
         public HttpResponseMessage GetPortCopyToCurrentTenant(string entityId)
         {
             try
@@ -689,7 +695,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     string loggedUserEmail = authToken.Email;
                     int tenant = authToken.Tenant;
-
+                    SecurityUtility.AuthenticationOnTenant(tenant);
                     CommonDataDomainService commonDomain = new CommonDataDomainService();
                     PortList myResult = commonDomain.GetPortCopyToCurrentTenant(entityId, tenant);
 
@@ -768,240 +774,278 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 if (!string.IsNullOrEmpty(ObjectTableName))
                 {
-                    bool isFullTextSearch = false;
-                    TenantRepository myTenantRepository = new TenantRepository(tenant);
-                    Tenant myTenant = myTenantRepository.GetSingleTenant(tenant);
-                    if (myTenant != null)
+                    /*  if (FeatureToggleHelper.HasFeatureToggle("RRS", tenant))
+                      {
+                          Task<HttpResponseMessage> task = Task<HttpResponseMessage>.Factory.StartNew(() => {
+                              return ExecuteQuickSearchOnSeconderyDB(ObjectTableName, SearchFields, tenant);
+                          });
+
+                          return task.Result;
+                      }*/
+                    // else
+                    // {
+
+                    return GetQuickSearch(ObjectTableName, SearchFields, tenant);
+
+                    // }
+
+                }
+                else
+                {
+                    object myResult = null;
+                    return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                }
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        private HttpResponseMessage GetQuickSearch(string ObjectTableName, string SearchFields, int tenant)
+        {
+            bool isFullTextSearch = false;
+            TenantRepository myTenantRepository = new TenantRepository(tenant);
+            Tenant myTenant = myTenantRepository.GetSingleTenant(tenant);
+            if (myTenant != null)
+            {
+                isFullTextSearch = myTenant.IsFullTextSearchEnabled;
+            }
+
+            QueryOperations myQueryOperations = new QueryOperations();
+            myQueryOperations.PageIndex = 0;
+            myQueryOperations.PageSize = 10;
+            if (ObjectTableName == "Airline")
+            {
+                myQueryOperations.PageSize = 8;
+            }
+
+            if (!string.IsNullOrEmpty(SearchFields))
+            {
+                myQueryOperations.SetFilter("SearchFields", SearchFields, false, "Contains", null, false);
+            }
+
+            FilterSerializer serializer = new FilterSerializer();
+            byte[] arrayOfBytes = serializer.SerializeFilterItems(myQueryOperations);
+
+            switch (ObjectTableName)
+            {
+                case "Shipment":
                     {
-                        isFullTextSearch = myTenant.IsFullTextSearchEnabled;
+                        ShipmentsDomainService myDomainService = new ShipmentsDomainService();
+                        if (isFullTextSearch)
+                        {
+                            IQueryable<ShipmentList> myResult = myDomainService.GetShipmentFullTextSearch(arrayOfBytes, tenant);
+                            return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                        }
+
+                        else
+                        {
+                            ShipmentAPiHelper.AddFilters(myQueryOperations, tenant);
+                            QueryOperations nonListQueryOperation = new QueryOperations();
+                            nonListQueryOperation.QueryFilterItems = myQueryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+
+                            IShipmentsContext iContext = ShipmentsContext.GetSecContext(tenant);
+                            IQueryable<Shipment> iQueryable = (from d in iContext.Shipments where d.Tenant == tenant select d);
+
+                            GenericFilter genericFilter = new GenericFilter();
+                            iQueryable = genericFilter.GetFilteredQuery<Shipment>(nonListQueryOperation, iQueryable);
+
+                            if (!string.IsNullOrEmpty(SearchFields))
+                            {
+                                iQueryable = iQueryable.Where(d => d.SearchFields != null);
+                                iQueryable = iQueryable.Where(d => d.SearchFields.ToLower().Contains(SearchFields.ToLower()));
+                            }
+
+                            iQueryable = iQueryable.OrderByDescending(d => d.CreateDateTime);
+                            iQueryable = System.Data.Entity.QueryableExtensions.Skip(iQueryable, () => 0);
+                            iQueryable = System.Data.Entity.QueryableExtensions.Take(iQueryable, () => 10);
+
+                            List<ShipmentList> myResult = (from x in iQueryable.Include("Direction").Include("TransportMode").Include("CustomerCard")
+                                                           join sm in iContext.ShipmentMasterDatas
+                                                           on x.MasterShipmentDataId equals sm.Id into shipmentJoin
+                                                           from m in shipmentJoin.DefaultIfEmpty()
+                                                           select new ShipmentList()
+                                                           {
+                                                               Id = x.Id,
+                                                               Tenant = x.Tenant,
+                                                               ShipmentNumber = x.ShipmentNumber,
+                                                               DirectionId = x.DirectionId,
+                                                               TransportModeId = x.TransportModeId,
+                                                               CustomerId = x.CustomerId,
+                                                               DirectionName = x.Direction == null ? null : x.Direction.Name,
+                                                               TransportModeName = x.TransportMode == null ? null : x.TransportMode.Name,
+                                                               CustomerName = x.CustomerCard == null ? null : x.CustomerCard.EnglishName,
+                                                               Master = m.Master,
+                                                               LongMaster = x.TransportModeId == "A" ? (!string.IsNullOrEmpty(m.AirlinePrefix) && !string.IsNullOrEmpty(m.Master) ? m.AirlinePrefix + "-" + m.Master : "") : m.Master,
+                                                               House = x.House,
+                                                               ShipmentLevelCode = x.ShipmentLevelCode,
+                                                               AgentName = x.AgentCard == null ? null : x.AgentCard.EnglishName,
+                                                               OpenPayablesInProfitCurrency = x.OpenPayablesInProfitCurrency,
+                                                               AccountedPayablesInProfitCurrency = x.AccountedPayablesInProfitCurrency,
+                                                               OpenPayablesInLocalCurrency = x.OpenPayablesInLocalCurrency,
+                                                               AccountedPayablesInLocalCurrency = x.AccountedPayablesInLocalCurrency,
+                                                           }).ToList();
+
+                            return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                        }
+
+                        //break;
                     }
 
-                    QueryOperations myQueryOperations = new QueryOperations();
-                    myQueryOperations.PageIndex = 0;
-                    myQueryOperations.PageSize = 10;
-                    if (ObjectTableName == "Airline")
+                case "Booking":
                     {
-                        myQueryOperations.PageSize = 8;
+                        BookingsDomainService myDomainService = new BookingsDomainService();
+                        List<BookingList> myResult = myDomainService.GetBookingFilters(arrayOfBytes, tenant);
+                        return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                        //break;
                     }
 
-                    if (!string.IsNullOrEmpty(SearchFields))
+                case "User":
                     {
-                        myQueryOperations.SetFilter("SearchFields", SearchFields, false, "Contains", null, false);
+                        ContactDomainService myDomainService = new ContactDomainService();
+                        List<UserList> myResult = myDomainService.GetUserFilters(arrayOfBytes, tenant);
+                        return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                        //break;
                     }
 
-                    FilterSerializer serializer = new FilterSerializer();
-                    byte[] arrayOfBytes = serializer.SerializeFilterItems(myQueryOperations);
-
-                    switch (ObjectTableName)
+                case "Ticket":
                     {
-                        case "Shipment":
-                            {
-                                ShipmentsDomainService myDomainService = new ShipmentsDomainService();
-                                if (isFullTextSearch)
-                                {
-                                    IQueryable<ShipmentList> myResult = myDomainService.GetShipmentFullTextSearch(arrayOfBytes, tenant);
-                                    return Request.CreateResponse(HttpStatusCode.OK, myResult);
-                                }
+                        CRMDomainService myDomainService = new CRMDomainService();
+                        List<TicketList> myResult = myDomainService.GetTicketFilters(arrayOfBytes, tenant).ToList();
+                        return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                        //break;
+                    }
 
-                                else
-                                {
-                                    IShipmentsContext iContext = ShipmentsContext.GetContext(tenant);
-                                    IQueryable<Shipment> iQueryable = (from d in iContext.Shipments where d.Tenant == tenant select d);
+                case "Quote":
+                    {
+                        QuotesDomainService myDomainService = new QuotesDomainService();
+                        List<QuoteList> myResult = myDomainService.GetQuoteFilters(arrayOfBytes, tenant).ToList();
+                        return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                        //break;
+                    }
 
-                                    if (!string.IsNullOrEmpty(SearchFields))
-                                    {
-                                        iQueryable = iQueryable.Where(d => d.SearchFields != null);
-                                        iQueryable = iQueryable.Where(d => d.SearchFields.ToLower().Contains(SearchFields.ToLower()));
-                                    }
+                case "CardGLAccount":
+                    {
+                        // Set Type Filter
+                        myQueryOperations.SetFilter("AccountTypeCode", "1", false, "Equals", null, false);
+                        arrayOfBytes = serializer.SerializeFilterItems(myQueryOperations);
 
-                                    iQueryable = iQueryable.OrderByDescending(d => d.CreateDateTime);
-                                    iQueryable = System.Data.Entity.QueryableExtensions.Skip(iQueryable, () => 0);
-                                    iQueryable = System.Data.Entity.QueryableExtensions.Take(iQueryable, () => 10);
+                        // Get the list
+                        AccountingDomainService myDomainService = new AccountingDomainService();
+                        List<GLAccountList> myResult = myDomainService.GetGLAccountFilters(arrayOfBytes, tenant);
+                        return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                        //break;
+                    }
 
-                                    List<ShipmentList> myResult = (from x in iQueryable.Include("Direction").Include("TransportMode").Include("CustomerCard")
-                                                                   join sm in iContext.ShipmentMasterDatas
-                                                                   on x.MasterShipmentDataId equals sm.Id into shipmentJoin
-                                                                   from m in shipmentJoin.DefaultIfEmpty()
-                                                                   select new ShipmentList()
-                                                                   {
-                                                                       Id = x.Id,
-                                                                       Tenant = x.Tenant,
-                                                                       ShipmentNumber = x.ShipmentNumber,
-                                                                       DirectionId = x.DirectionId,
-                                                                       TransportModeId = x.TransportModeId,
-                                                                       CustomerId = x.CustomerId,
-                                                                       DirectionName = x.Direction == null ? null : x.Direction.Name,
-                                                                       TransportModeName = x.TransportMode == null ? null : x.TransportMode.Name,
-                                                                       CustomerName = x.CustomerCard == null ? null : x.CustomerCard.EnglishName,
-                                                                       Master = m.Master,
-                                                                       LongMaster = x.TransportModeId == "A" ? (!string.IsNullOrEmpty(m.AirlinePrefix) && !string.IsNullOrEmpty(m.Master) ? m.AirlinePrefix + "-" + m.Master : "") : m.Master,
-                                                                       House = x.House,
-                                                                       ShipmentLevelCode = x.ShipmentLevelCode,
-                                                                       AgentName = x.AgentCard == null? null : x.AgentCard.EnglishName,
-                                                                       OpenPayablesInProfitCurrency = x.OpenPayablesInProfitCurrency,
-                                                                       AccountedPayablesInProfitCurrency = x.AccountedPayablesInProfitCurrency,
-                                                                       OpenPayablesInLocalCurrency = x.OpenPayablesInLocalCurrency,
-                                                                       AccountedPayablesInLocalCurrency = x.AccountedPayablesInLocalCurrency,
-                                                                   }).ToList();
+                case "CustomerGLAccount":
+                    {
+                        // Set Type Filter
+                        myQueryOperations.SetFilter("AccountTypeCode", "2", false, "Equals", null, false);
+                        arrayOfBytes = serializer.SerializeFilterItems(myQueryOperations);
 
-                                    return Request.CreateResponse(HttpStatusCode.OK, myResult);
-                                }
+                        // Get the list
+                        AccountingDomainService myDomainService = new AccountingDomainService();
+                        List<GLAccountList> myResult = myDomainService.GetGLAccountFilters(arrayOfBytes, tenant);
+                        return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                        //break;
+                    }
 
-                                //break;
-                            }
+                case "VendorGLAccount":
+                    {
+                        // Set Type Filter
+                        myQueryOperations.SetFilter("AccountTypeCode", "3", false, "Equals", null, false);
+                        arrayOfBytes = serializer.SerializeFilterItems(myQueryOperations);
 
-                        case "Booking":
-                            {
-                                BookingsDomainService myDomainService = new BookingsDomainService();
-                                List<BookingList> myResult = myDomainService.GetBookingFilters(arrayOfBytes, tenant);
-                                return Request.CreateResponse(HttpStatusCode.OK, myResult);
-                                //break;
-                            }
+                        // Get the list
+                        AccountingDomainService myDomainService = new AccountingDomainService();
+                        List<GLAccountList> myResult = myDomainService.GetGLAccountFilters(arrayOfBytes, tenant);
+                        return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                        //break;
+                    }
 
-                        case "User":
-                            {
-                                ContactDomainService myDomainService = new ContactDomainService();
-                                List<UserList> myResult = myDomainService.GetUserFilters(arrayOfBytes, tenant);
-                                return Request.CreateResponse(HttpStatusCode.OK, myResult);
-                                //break;
-                            }
+                case "Journal":
+                    {
+                        AccountingDomainService myDomainService = new AccountingDomainService();
+                        List<JournalList> myResult = myDomainService.GetJournalFilters(arrayOfBytes, tenant);
+                        return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                        //break;
+                    }
 
-                        case "Ticket":
-                            {
-                                CRMDomainService myDomainService = new CRMDomainService();
-                                List<TicketList> myResult = myDomainService.GetTicketFilters(arrayOfBytes, tenant).ToList();
-                                return Request.CreateResponse(HttpStatusCode.OK, myResult);
-                                //break;
-                            }
+                case "CashBook":
+                    {
+                        AccountingDomainService myDomainService = new AccountingDomainService();
+                        List<CashBookList> myResult = myDomainService.GetCashBookFilters(arrayOfBytes, tenant);
+                        return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                        //break;
+                    }
 
-                        case "Quote":
-                            {
-                                QuotesDomainService myDomainService = new QuotesDomainService();
-                                List<QuoteList> myResult = myDomainService.GetQuoteFilters(arrayOfBytes, tenant).ToList();
-                                return Request.CreateResponse(HttpStatusCode.OK, myResult);
-                                //break;
-                            }
+                case "BankDeposit":
+                    {
+                        AccountingDomainService myDomainService = new AccountingDomainService();
+                        List<BankDepositList> myResult = myDomainService.GetBankDepositFilters(arrayOfBytes, tenant);
+                        return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                        //break;
+                    }
 
-                        case "CardGLAccount":
-                            {
-                                // Set Type Filter
-                                myQueryOperations.SetFilter("AccountTypeCode", "1", false, "Equals", null, false);
-                                arrayOfBytes = serializer.SerializeFilterItems(myQueryOperations);
+                case "Customer":
+                    {
 
-                                // Get the list
-                                AccountingDomainService myDomainService = new AccountingDomainService();
-                                List<GLAccountList> myResult = myDomainService.GetGLAccountFilters(arrayOfBytes, tenant);
-                                return Request.CreateResponse(HttpStatusCode.OK, myResult);
-                                //break;
-                            }
-
-                        case "CustomerGLAccount":
-                            {
-                                // Set Type Filter
-                                myQueryOperations.SetFilter("AccountTypeCode", "2", false, "Equals", null, false);
-                                arrayOfBytes = serializer.SerializeFilterItems(myQueryOperations);
-
-                                // Get the list
-                                AccountingDomainService myDomainService = new AccountingDomainService();
-                                List<GLAccountList> myResult = myDomainService.GetGLAccountFilters(arrayOfBytes, tenant);
-                                return Request.CreateResponse(HttpStatusCode.OK, myResult);
-                                //break;
-                            }
-
-                        case "VendorGLAccount":
-                            {
-                                // Set Type Filter
-                                myQueryOperations.SetFilter("AccountTypeCode", "3", false, "Equals", null, false);
-                                arrayOfBytes = serializer.SerializeFilterItems(myQueryOperations);
-
-                                // Get the list
-                                AccountingDomainService myDomainService = new AccountingDomainService();
-                                List<GLAccountList> myResult = myDomainService.GetGLAccountFilters(arrayOfBytes, tenant);
-                                return Request.CreateResponse(HttpStatusCode.OK, myResult);
-                                //break;
-                            }
-
-                        case "Journal":
-                            {
-                                AccountingDomainService myDomainService = new AccountingDomainService();
-                                List<JournalList> myResult = myDomainService.GetJournalFilters(arrayOfBytes, tenant);
-                                return Request.CreateResponse(HttpStatusCode.OK, myResult);
-                                //break;
-                            }
-
-                        case "CashBook":
-                            {
-                                AccountingDomainService myDomainService = new AccountingDomainService();
-                                List<CashBookList> myResult = myDomainService.GetCashBookFilters(arrayOfBytes, tenant);
-                                return Request.CreateResponse(HttpStatusCode.OK, myResult);
-                                //break;
-                            }
-
-                        case "BankDeposit":
-                            {
-                                AccountingDomainService myDomainService = new AccountingDomainService();
-                                List<BankDepositList> myResult = myDomainService.GetBankDepositFilters(arrayOfBytes, tenant);
-                                return Request.CreateResponse(HttpStatusCode.OK, myResult);
-                                //break;
-                            }
-
-                        case "Customer":
-                            {
-
-                                PartnersDomainService myDomainService = new PartnersDomainService();
-                                List<CustomerList> myResult = myDomainService.GetCustomerFilters(arrayOfBytes, tenant);
-                                return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                        PartnersDomainService myDomainService = new PartnersDomainService();
+                        List<CustomerList> myResult = myDomainService.GetCustomerFilters(arrayOfBytes, tenant);
+                        return Request.CreateResponse(HttpStatusCode.OK, myResult);
 
 
-                                //partnerTypeId
-                            }
+                        //partnerTypeId
+                    }
 
-                        case "Contact":
-                            {
-                                ContactDomainService myDomainService = new ContactDomainService();
-                                List<ContactList> myResult = myDomainService.GetContactFilters(arrayOfBytes, tenant).ToList();
-                                return Request.CreateResponse(HttpStatusCode.OK, myResult);
-                            }
-                        case "Activity":
-                            {
-                                CRMDomainService myDomainService = new CRMDomainService();
-                                List<ActivityList> myResult = myDomainService.GetActivityFilters(arrayOfBytes, tenant).ToList();
-                                return Request.CreateResponse(HttpStatusCode.OK, myResult);
-                            }
-                        case "Opportunity":
-                            {
-                                CRMDomainService myDomainService = new CRMDomainService();
-                                List<OpportunityList> myResult = myDomainService.GetOpportunityFilters(arrayOfBytes, tenant).ToList();
-                                return Request.CreateResponse(HttpStatusCode.OK, myResult);
-                            }
+                case "Contact":
+                    {
+                        ContactDomainService myDomainService = new ContactDomainService();
+                        List<ContactList> myResult = myDomainService.GetContactFilters(arrayOfBytes, tenant).ToList();
+                        return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                    }
+                case "Activity":
+                    {
+                        CRMDomainService myDomainService = new CRMDomainService();
+                        List<ActivityList> myResult = myDomainService.GetActivityFilters(arrayOfBytes, tenant).ToList();
+                        return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                    }
+                case "Opportunity":
+                    {
+                        CRMDomainService myDomainService = new CRMDomainService();
+                        List<OpportunityList> myResult = myDomainService.GetOpportunityFilters(arrayOfBytes, tenant).ToList();
+                        return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                    }
 
-                        case "AgentSharedManifest":
-                            {
-                                ContactDomainService myDomainService = new ContactDomainService();
-                                List<AgentSharedManifestList> myResult = myDomainService.GetAgentSharedManifestFilters(arrayOfBytes, tenant).ToList();
-                                return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                case "AgentSharedManifest":
+                    {
+                        ContactDomainService myDomainService = new ContactDomainService();
+                        List<AgentSharedManifestList> myResult = myDomainService.GetAgentSharedManifestFilters(arrayOfBytes, tenant).ToList();
+                        return Request.CreateResponse(HttpStatusCode.OK, myResult);
 
-                            }
+                    }
 
-                        case "Airline":
-                            {
-                                myQueryOperations.SetFilter("IsAllowedInAirlinesRestriction", false, false, "Equals", null, false);
-                                arrayOfBytes = serializer.SerializeFilterItems(myQueryOperations);
+                case "Airline":
+                    {
+                        myQueryOperations.SetFilter("IsAllowedInAirlinesRestriction", false, false, "Equals", null, false);
+                        arrayOfBytes = serializer.SerializeFilterItems(myQueryOperations);
 
-                                PartnersDomainService myDomainService = new PartnersDomainService();
-                                List<AirlineList> myResult = myDomainService.GetAirlineFilters(arrayOfBytes, tenant).ToList();
-                                return Request.CreateResponse(HttpStatusCode.OK, myResult);
-                            }
+                        PartnersDomainService myDomainService = new PartnersDomainService();
+                        List<AirlineList> myResult = myDomainService.GetAirlineFilters(arrayOfBytes, tenant).ToList();
+                        return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                    }
 
-                        //
-                        //Customs
-                        case "Customs.Client":
-                            {
+                //
+                //Customs
+                case "Customs.Client":
+                    {
 
-                                CustomDomainService myDomainService = new CustomDomainService();
-                                List<ClientList> myResult = myDomainService.GetClientFilters(arrayOfBytes, tenant);
-                                return Request.CreateResponse(HttpStatusCode.OK, myResult);
-                            }
+                        CustomDomainService myDomainService = new CustomDomainService();
+                        List<ClientList> myResult = myDomainService.GetClientFilters(arrayOfBytes, tenant);
+                        return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                    }
 
                         case "Customs.ClientsTapag":
                             {
@@ -1018,50 +1062,51 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
                             }
                         case "Customs.CustomsItems":
-                            {
-                                ICustomContext ctx = CustomContext.GetContext(tenant);
-                                CustomsItemListQueryService query = new CustomsItemListQueryService(ctx);
 
-                                QueryOperations QO = new QueryOperations();
-                                QO.PageIndex = 0;
-                                QO.PageSize = 100;
-                                QO.SetFilter("FullClassification", SearchFields, false, "Contains", null, false);
-                                QO.SetFilter("CustomsItemCategoryID", "2,3", false, "InListInt", null, false);
+                    {
+                        ICustomContext ctx = CustomContext.GetContext(tenant);
+                        CustomsItemListQueryService query = new CustomsItemListQueryService(ctx);
 
-                                List<CustomsItemList> myResult = query.GetList(QO, tenant);
+                        QueryOperations QO = new QueryOperations();
+                        QO.PageIndex = 0;
+                        QO.PageSize = 100;
+                        QO.SetFilter("FullClassification", SearchFields, false, "Contains", null, false);
+                        QO.SetFilter("CustomsItemCategoryID", "2,3", false, "InListInt", null, false);
 
-                                return Request.CreateResponse(HttpStatusCode.OK, myResult);
-                            }
-                        case "Customs.CouriersVat":
-                            {
+                        List<CustomsItemList> myResult = query.GetList(QO, tenant);
 
-                                ICustomContext ctx = CustomContext.GetContext(tenant);
-                                CouriersVatListQueryService query = new CouriersVatListQueryService(ctx);
+                        return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                    }
+                case "Customs.CouriersVat":
+                    {
 
-                                QueryOperations QO = new QueryOperations();
-                                QO.PageIndex = 0;
-                                QO.PageSize = 100;
-                                QO.SetFilter("SearchFields", SearchFields, false, "Contains", null, false);
-                                QO.SetFilter("InActive", false, false, "Equals", null, false);
+                        ICustomContext ctx = CustomContext.GetContext(tenant);
+                        CouriersVatListQueryService query = new CouriersVatListQueryService(ctx);
 
-                                List<CouriersVatList> myResult = query.GetList(QO, tenant);
+                        QueryOperations QO = new QueryOperations();
+                        QO.PageIndex = 0;
+                        QO.PageSize = 100;
+                        QO.SetFilter("SearchFields", SearchFields, false, "Contains", null, false);
+                        QO.SetFilter("InActive", false, false, "Equals", null, false);
 
-                                return Request.CreateResponse(HttpStatusCode.OK, myResult);
-                            }
+                        List<CouriersVatList> myResult = query.GetList(QO, tenant);
 
-                        case "Customs.CustomsAirline":
-                            {
+                        return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                    }
 
-                                ICustomContext ctx = CustomContext.GetContext(tenant);
-                                CustomsAirlineListQueryService query = new CustomsAirlineListQueryService(ctx);
+                case "Customs.CustomsAirline":
+                    {
 
-                                QueryOperations QO = new QueryOperations();
-                                QO.PageIndex = 0;
-                                QO.PageSize = 100;
-                                QO.SetFilter("SearchFields", SearchFields, false, "Contains", null, false);
-                                QO.SetFilter("InActive", false, false, "Equals", null, false);
+                        ICustomContext ctx = CustomContext.GetContext(tenant);
+                        CustomsAirlineListQueryService query = new CustomsAirlineListQueryService(ctx);
 
-                                List<CustomsAirlineList> myResult = query.GetList(QO, tenant);
+                        QueryOperations QO = new QueryOperations();
+                        QO.PageIndex = 0;
+                        QO.PageSize = 100;
+                        QO.SetFilter("SearchFields", SearchFields, false, "Contains", null, false);
+                        QO.SetFilter("InActive", false, false, "Equals", null, false);
+
+                        List<CustomsAirlineList> myResult = query.GetList(QO, tenant);
 
                                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
                             }
@@ -1082,28 +1127,24 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                                 List<JoinCustomsItemList> myResult = query.GetListJoinCustomsItem(QO, tenant);
 
-                                return Request.CreateResponse(HttpStatusCode.OK, myResult);
-                            }
-                        default:
-                            {
-                                object myResult = null;
-                                return Request.CreateResponse(HttpStatusCode.OK, myResult);
-                            }
+                        return Request.CreateResponse(HttpStatusCode.OK, myResult);
                     }
-                }
-
-                else
-                {
-                    object myResult = null;
-                    return Request.CreateResponse(HttpStatusCode.OK, myResult);
-                }
-            }
-
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+                default:
+                    {
+                        object myResult = null;
+                        return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                    }
             }
         }
+
+        private HttpResponseMessage ExecuteQuickSearchOnSeconderyDB(string ObjectTableName, string SearchFields, int tenant)
+        {
+            DatabaseInitializer.RunOnSeconderyDB = true;
+            HttpResponseMessage result = GetQuickSearch(ObjectTableName, SearchFields, tenant);
+            DatabaseInitializer.RunOnSeconderyDB = false;
+            return result;
+        }
+
         public HttpResponseMessage GetDashboardSpotlightCounts(int tenant)
         {
 
@@ -1112,6 +1153,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 CommonDataDomainService commonDomain = new CommonDataDomainService();
                 DailySpotlightClass myResult = commonDomain.GetDashboardSpotlightCounts(tenant);
 
@@ -1134,6 +1176,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 CommonDataDomainService commonDomain = new CommonDataDomainService();
 
@@ -1159,6 +1202,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 ContactSummary summaryClass = new ContactSummary() { Id = tenant };
                 ContactDomainService service = new ContactDomainService();
@@ -1179,6 +1223,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 CommonDataDomainService commonDomain = new CommonDataDomainService();
                 var result = commonDomain.GetGettingStartedData(tenant);
@@ -1204,6 +1249,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 //contact.DisplayGettingStarted = displayGettingStarted;
                 //repo.Update(contact);
                 //repo.SubmitChanges();
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 ContactQuery query = new ContactQuery(tenant);
                 ContactPM contact = query.GetSingleContact(email, tenant);
@@ -1224,6 +1270,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             try
             {
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
                 var tempstate = Guid.NewGuid().ToString("N");
                 TenantAdditionalDataRepository Repo = new TenantAdditionalDataRepository(tenant);
                 var currentTenant = Repo.GetSingleTenantAdditionalData(tenant);
@@ -1282,6 +1330,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             try
             {
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 DropBoxActionsHelper helper = new DropBoxActionsHelper(tenant);
                 List<QueueTask> tasks = new List<QueueTask>();
                 tasks.Add(new QueueTask() { Action = "NewImporterShipment", Parameters = new List<Logitude.Server.Tools.Parameter>() { new Logitude.Server.Tools.Parameter { Name = "ImporterShipment", Value = "sssssssssssss" } } });
@@ -1299,6 +1348,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             try
             {
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
                 TenantAdditionalDataRepository Repo = new TenantAdditionalDataRepository(tenant);
                 var currentTenant = Repo.GetSingleTenantAdditionalData(tenant);
 
@@ -1314,6 +1365,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             try
             {
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
                 TenantAdditionalDataRepository Repo = new TenantAdditionalDataRepository(tenant);
                 var currentTenant = Repo.GetSingleTenantAdditionalData(tenant);
                 if (currentTenant != null)
@@ -1333,6 +1386,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             try
             {
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
                 DropBoxActionsHelper helper = new DropBoxActionsHelper(tenant);
                 List<string> tasks = new List<string>();
                 tasks.Add(Guid.NewGuid().ToString());
@@ -1360,6 +1415,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             try
             {
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
                 DropBoxActionsHelper helper = new DropBoxActionsHelper(tenant);
                 var ByteData = Encoding.ASCII.GetBytes(FullText); //LogitudeXmlSerializer.SerializeObject(FullText);
                 if (!FileName.Contains("."))
@@ -1382,6 +1439,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 PartnersDomainService commonDomain = new PartnersDomainService();
                 commonDomain.UpdateCustomerActualData(entityId, tenant);
@@ -1400,6 +1458,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 VATTypesGroupQuery entityQuery = new VATTypesGroupQuery(tenant);
                 List<VATTypesGroupPM> myResult = entityQuery.GetVATTypesGroups(tenant);
@@ -1419,32 +1478,49 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 List<ContactList> myResult = new List<ContactList>();
+                List<ContactList> DisinctContactEmail = new List<ContactList>();
                 if (!string.IsNullOrEmpty(emails))
                 {
                     List<string> emailsList = emails.ToLower().Split(';').Select(p => p.Trim()).ToList().Where(s => !string.IsNullOrWhiteSpace(s)).ToList();
                     if (emailsList.Count() > 0)
                     {
                         ICommonDataContext context = CommonDataContext.GetContext(tenant);
+                        foreach (var email in emailsList)
+                        {
+                            var contact = (from d in context.Contacts
+                                           where d.Tenant == tenant && d.Email == email
+                                           select new ContactList()
+                                           {
+                                               Id = d.Id,
+                                               Tenant = d.Tenant,
+                                               Email = d.Email,
+                                               EnglishName = d.EnglishName,
+                                               SearchFields = d.SearchFields,
+                                               InActive = d.InActive,
+                                           }).FirstOrDefault();
 
-                        myResult = (from d in context.Contacts.GroupBy(c => c.Email).Select(c => c.FirstOrDefault())
-                                    where d.Tenant == tenant
-                                    && d.Email != null
-                                    && emailsList.Contains(d.Email.ToLower())
-                                    select new ContactList()
-                                    {
-                                        Id = d.Id,
-                                        Tenant = d.Tenant,
-                                        Email = d.Email,
-                                        EnglishName = d.EnglishName,
-                                        SearchFields = d.SearchFields,
-                                        InActive = d.InActive,
-                                    }).ToList();
+                            if (contact != null) DisinctContactEmail.Add(contact);
+                        }
+                        //myResult = (from d in context.Contacts.GroupBy(c => c.Email).Select(c => c.FirstOrDefault())
+                        //            where d.Tenant == tenant
+                        //            && d.Email != null
+                        //            && emailsList.Contains(d.Email)
+                        //            select new ContactList()
+                        //            {
+                        //                Id = d.Id,
+                        //                Tenant = d.Tenant,
+                        //                Email = d.Email,
+                        //                EnglishName = d.EnglishName,
+                        //                SearchFields = d.SearchFields,
+                        //                InActive = d.InActive,
+                        //            }).ToList();
                     }
                 }
 
-                return Request.CreateResponse(HttpStatusCode.OK, myResult);
+                return Request.CreateResponse(HttpStatusCode.OK, DisinctContactEmail);
             }
 
             catch (Exception ex)
@@ -1459,6 +1535,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 List<UserList> myResult = new List<UserList>();
                 UserQuery query = new UserQuery(tenant);
@@ -1480,6 +1557,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 List<UserList> myResult = new List<UserList>();
                 UserQuery query = new UserQuery(tenant);
@@ -1505,6 +1583,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     int tenant = authToken.Tenant;
 
                     SecurityUtility.AuthenticationOnTenant(tenant);
+                    SecurityUtility.AuthenticationOnEntityTenant("", args.Tenant, tenant);
 
                     if (args != null)
                     {
@@ -1564,6 +1643,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 string loggedUserEmail = authToken.Email;
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("Airline", "READ", authToken.Tenant);
                 CommonDataDomainService service = new CommonDataDomainService();
                 DailySpotlightClass myResult = service.GetAirlineDashboardSpotlightCounts(tenant);
@@ -1583,6 +1663,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 string loggedUserEmail = authToken.Email;
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("Airline", "READ", authToken.Tenant);
                 CommonDataDomainService service = new CommonDataDomainService();
                 List<ChartingDataClass> myResult = service.GetDashBoardBookings(tenant);
@@ -1617,6 +1698,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             try
             {
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 CommonDataDomainService commonDomain = new CommonDataDomainService();
                 List<ComputingPartnerTranslationPM> myResult = commonDomain.GetComputingPartnerTranslationsByPartnerAndTableId(ComputingPartnerId, ObjectTableId, tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
@@ -1674,27 +1756,12 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 int tenant = authToken.Tenant;
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("CustomerTenantAccess", "READ", tenant);
+                ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
                 CommonDataDomainService service = new CommonDataDomainService();
                 List<CustomerTenantAccessCardsBatchPM> myResult = service.GetCustomerTenantAccessCardsBatchPMsByCustomerIdCustomerTenantAccessId(CustomerId, CustomerTenantAccessId, tenant).OrderByDescending(d => d.CreateDateTime).Skip(0).Take(100).ToList();
                 foreach (var item in myResult)
                 {
-                    var queueMessageMoreDetailsQuery = new QueueMessageMoreDetailsQuery(tenant);
-                    var AllQueues = queueMessageMoreDetailsQuery.GetIQueryableQueueMessageMoreDetailsPMByField1Field2(item.CustomerId, item.BatchNumber).Where(a => a.QueueDefinitionCode == "ImportersShipmentsBatchQueue");
-                    item.TotalFailed = AllQueues.Where(a => a.Status == -1).Count();
-                    item.Totalsucceeded = AllQueues.Where(a => a.Status == 1).Count();
-                    item.TotalShipment = AllQueues.Count();
-                    if (item.TotalFailed > 0)
-                    {
-                        item.Status = "Failed";
-                    }
-                    else if (item.TotalShipment == (item.TotalFailed + item.Totalsucceeded))
-                    {
-                        item.Status = "Done";
-                    }
-                    else if (item.TotalShipment != (item.TotalFailed + item.Totalsucceeded))
-                    {
-                        item.Status = "In Progress";
-                    }
+                    UpdateCustomerTenantAccessCardsBatch(item, tenant, commonContext);
                 }
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
@@ -1703,6 +1770,30 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
+        }
+
+        private static void UpdateCustomerTenantAccessCardsBatch(CustomerTenantAccessCardsBatchPM item, int tenant, ICommonDataContext commonContext)
+        {
+            if (item.Status == "Done" || item.Status == "Failed") return;
+
+            QueueMessageMoreDetailsQuery queueMessageMoreDetailsQuery = new QueueMessageMoreDetailsQuery(tenant);
+            var allImporterShipmentsQueues = queueMessageMoreDetailsQuery.GetIQueryableQueueMessageMoreDetailsPMByField1Field2(item.CustomerId, item.BatchNumber).Where(a => a.QueueDefinitionCode == "ImportersShipmentsBatchQueue" || a.QueueDefinitionCode == "ImporterShipmentOrderQueue");
+            const int failedStatusCode = -1;
+            const int doneStatusCode = 1;
+            item.TotalFailed = allImporterShipmentsQueues.Where(a => a.Status == failedStatusCode).Count();
+            item.Totalsucceeded = allImporterShipmentsQueues.Where(a => a.Status == doneStatusCode).Count();
+
+            item.Status = item.TotalShipment == (item.TotalFailed + item.Totalsucceeded) ? "Done" : "In Progress";
+            if (item.Status == "In Progress") return;
+
+            if (item.TotalFailed > 0)
+            {
+                item.Status = "Failed";
+            }
+
+            item.DoneDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+            CustomerTenantAccessCardsBatchService customerTenantAccessCardsBatchService = new CustomerTenantAccessCardsBatchService(commonContext, tenant, item);
+            customerTenantAccessCardsBatchService.Update();
         }
 
         public HttpResponseMessage GetSingleVatTypeByCode(string Code)
@@ -1734,6 +1825,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 string tenantString = tenant.ToString();
 
 
@@ -1829,6 +1921,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 string tenantString = tenant.ToString();
 
                 ICommonDataContext myContext = CommonDataContext.GetContext(tenant);
@@ -1888,6 +1981,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 string tenantString = tenant.ToString();
 
                 ICommonDataContext myContext = CommonDataContext.GetContext(tenant);
@@ -1917,6 +2011,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 AccountingSettingPM myResult = null;
 
@@ -2084,6 +2179,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 CustomsInterfaceSettingQuery query = new CustomsInterfaceSettingQuery(tenant);
                 List<CustomsInterfaceSettingList> result = new List<CustomsInterfaceSettingList>();
@@ -2464,6 +2560,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 TenantRepository entityRepository = new TenantRepository(tenant);
                 TenantQuery entityQuery = new TenantQuery(entityRepository);
@@ -2515,33 +2612,11 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             try
             {
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
-                string result = "";
-                BlobFileInfo fileInfo = new BlobFileInfo()
-                {
-                    FileName = "logo" + tenant,
-                    FolderName = "logos",
-                    Extension = "jpg",
-                    Tenant = tenant,
-                };
+                string result = GetTenantLogoUriBase64(tenant);
 
-                IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
-                byte[] datainByte = storageservice.Read(fileInfo);
-
-
-                if (datainByte != null)
-                {
-                    int height = LogitudeSettings.WorkEnvironment != "cloud" && tenant == 1245 ? 170 : 114;
-
-                    datainByte = ResizeImage(datainByte, 290, height, "jpg");
-                    string base64String = System.Convert.ToBase64String(datainByte, 0, datainByte.Length);
-                    result = "data:image/jpg;base64," + base64String;
-                    return Request.CreateResponse(HttpStatusCode.OK, result);
-                }
-
-                else return null;
-
-
+                return Request.CreateResponse(HttpStatusCode.OK, result);
             }
 
             catch (Exception e)
@@ -2557,6 +2632,74 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             try
             {
+                SecurityUtility.AuthenticationOnTenant(id);
+                TenantQuery tenantQuery = new TenantQuery(id);
+                TenantPM tenantPM = tenantQuery.GetTenantFromDB(id);
+                return Request.CreateResponse(HttpStatusCode.OK, tenantPM.EcommerceSupportEmail);
+
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetTenantLogoUriByShipmentSecurityKey(int tenant, string securityKey)
+        {
+            try
+            {
+                ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
+                if (!shipmentQuery.IsTenantHaveShipmentBySecurityKey(securityKey, tenant))
+                    throw new AutenticationException("Sorry! this user is not authorized!");
+
+                string result = GetTenantLogoUriBase64(tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+
+            catch (Exception e)
+            {
+                ExceptionHandler.HandleException(e, DateTime.Now, tenant, User != null ? User.Identity.Name : "", User != null ? User.Identity.Name : "", "BrandingController : GetTenantLogoUri Method", null);
+                return null;
+            }
+
+
+        }
+
+        private string GetTenantLogoUriBase64(int tenant)
+        {
+            string result = null;
+            BlobFileInfo fileInfo = new BlobFileInfo()
+            {
+                FileName = "logo" + tenant,
+                FolderName = "logos",
+                Extension = "jpg",
+                Tenant = tenant,
+            };
+
+            IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+            byte[] datainByte = storageservice.Read(fileInfo);
+
+            if (datainByte == null) return result;
+
+            int height = LogitudeSettings.WorkEnvironment != "cloud" && tenant == 1245 ? 170 : 114;
+            datainByte = ResizeImage(datainByte, 290, height, "jpg");
+            string base64String = System.Convert.ToBase64String(datainByte, 0, datainByte.Length);
+            result = "data:image/jpg;base64," + base64String;
+
+            return result;
+        }
+
+        public HttpResponseMessage GetTenantEcommerceSupportEmailByShipmentSecurityKey(int id, string securityKey)
+        {
+            try
+            {
+                ShipmentQuery shipmentQuery = new ShipmentQuery(id);
+                if (!shipmentQuery.IsTenantHaveShipmentBySecurityKey(securityKey, id))
+                {
+                    throw new AutenticationException("Sorry! this user is not authorized!");
+                }
 
                 TenantQuery tenantQuery = new TenantQuery(id);
                 TenantPM tenantPM = tenantQuery.GetTenantFromDB(id);
@@ -2740,6 +2883,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 CarrierAreaQuery entityQuery = new CarrierAreaQuery(tenant);
                 List<CarrierAreaList> myResult = entityQuery.GetCarrierAreasByCarrierId(carrierId, tenant);
@@ -2761,6 +2905,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 ICRMContext crmContext = CRMContext.GetContext(tenant);
                 ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
@@ -2837,9 +2982,10 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 ChargesTypeQuery chargesTypeQuery = new ChargesTypeQuery(authToken.Tenant);
 
-                ChargesTypeList chargesTypeList = chargesTypeQuery.GetSingleChargesTypeListByCode(code, authToken.Tenant);                
+                ChargesTypeList chargesTypeList = chargesTypeQuery.GetSingleChargesTypeListByCode(code, authToken.Tenant);
 
                 return Request.CreateResponse(HttpStatusCode.OK, chargesTypeList);
             }
@@ -2847,6 +2993,239 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
+        }
+
+        public HttpResponseMessage GetHTSCodesForProductItemsIds(string productItemIds, string toCountryId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                HTSCodeQuery hTSCodeQuery = new HTSCodeQuery(authToken.Tenant);
+                List<HTSCodePM> hTSCodePMs = hTSCodeQuery.GetHTSCodeByProductItemIdsAndCountry(productItemIds, toCountryId, authToken.Tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, hTSCodePMs);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+        public HttpResponseMessage GetCheckConnectaPanageaPartner()
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                int crmTenant = 341;
+                ICommonDataContext commonDataContext = CommonDataContext.GetContext(0);
+                ICRMContext crmContext = CRMContext.GetContext(0);
+                string tenantString = tenant.ToString();
+
+                var customer = (from a in commonDataContext.Cards.Include("Customer")
+                                where a.Tenant == crmTenant && !string.IsNullOrEmpty(a.ReceivablesAccountingCard) && a.ReceivablesAccountingCard == tenantString
+                                select new
+                                {
+                                    Id = a.Id,
+                                    Field2 = a.Customer != null ? a.Customer.Field2 : null
+                                }).FirstOrDefault();
+
+                var customerPartner = (from a in commonDataContext.Cards
+                                       where a.Tenant == crmTenant && a.Id == customer.Field2
+                                       select new
+                                       {
+                                           Id = a.Id,
+                                           Code = a.Code
+                                       }).FirstOrDefault();
+
+                var result = (customerPartner?.Code == "74158") ? customerPartner : null;
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+        public HttpResponseMessage GetChargifyAWBStock(bool isAWBStockChecked, int totalStocks, int totalPrice)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                string userId = GetSystemUserId(tenant);
+                ChargifyAWBStock chargifyAWBStock = new ChargifyAWBStock()
+                {
+                    IsAWBStockChecked = isAWBStockChecked,
+                    TotalPrice = totalPrice,
+                    TotalStocks = totalStocks,
+                    Tenant = tenant,
+                    UserId = userId
+                };
+
+                chargifyAWBStock.Customer = this.GetCRMCustomer(chargifyAWBStock);
+                this.CreateMessagingStock(chargifyAWBStock);
+                this.CreateOpportunity(chargifyAWBStock);
+                this.SendEmail(chargifyAWBStock);
+                return Request.CreateResponse(HttpStatusCode.OK, "");
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+        private CustomerPM GetCRMCustomer(ChargifyAWBStock chargifyAWBStock)
+        {
+            int crmTenant = 341;
+            var commonDataContext = CommonDataContext.GetContext(0);
+            var crmContext = CRMContext.GetContext(0);
+            int tenant = chargifyAWBStock.Tenant;
+            var userId = chargifyAWBStock.UserId;
+            var tenantString = tenant.ToString();
+            var customer = (from a in commonDataContext.Cards
+                            where a.Tenant == crmTenant && !string.IsNullOrEmpty(a.ReceivablesAccountingCard) && a.ReceivablesAccountingCard == tenantString
+                            select new CustomerPM
+                            {
+                                Id = a.Id,
+                                EnglishName = a.EnglishName,
+                                Code = a.Code,
+                                ReceivablesAccountingCard = a.ReceivablesAccountingCard,
+                                SalesmanUserId = a.SalesmanUserId,
+                                PrimaryContactId = a.PrimaryContactId,
+                            }).FirstOrDefault();
+
+            return customer;
+        }
+        private string GetSystemUserId(int tenant)
+        {
+            var email = "system@tenant" + tenant + ".com";
+            string userId = null;
+            ICommonDataContext commonDataContext = CommonDataContext.GetContext(tenant);
+            ContactRepository contactRep = new ContactRepository(commonDataContext);
+            Contact contact = contactRep.GetSingleContactByEmail(email, tenant);
+            if (contact != null)
+            {
+                userId = contact.Id;
+            }
+
+            return userId;
+        }
+
+        private void CreateMessagingStock(ChargifyAWBStock chargifyAWBStock)
+        {
+            IShipmentsContext iContext = ShipmentsContext.GetContext(0);
+            var todayDate = TenantServerConfigration.GetCurrentDateTime(chargifyAWBStock.Tenant);
+            MessagingStockPM messagingStock = new MessagingStockPM()
+            {
+                TenantNumber = chargifyAWBStock.Tenant,
+                Amount = chargifyAWBStock.TotalStocks,
+                StartDate = todayDate,
+                EndDate = todayDate.AddYears(1),
+                TotalPrice = chargifyAWBStock.TotalPrice,
+                StockType = chargifyAWBStock.IsAWBStockChecked ? "Champ" : "INTTRA",
+                CreatedByUserId = chargifyAWBStock.UserId,
+                UpdatedByUserId = chargifyAWBStock.UserId
+            };
+            MessagingStockService service = new MessagingStockService(iContext, messagingStock);
+            service.Create();
+        }
+        private void CreateOpportunity(ChargifyAWBStock chargifyAWBStock)
+        {
+            var newChargifyAWBStock = chargifyAWBStock;
+            int crmTenant = 341;
+            ICommonDataContext commonDataContext = CommonDataContext.GetContext(0);
+            ICRMContext crmContext = CRMContext.GetContext(0);
+            int tenant = chargifyAWBStock.Tenant;
+            string userId = chargifyAWBStock.UserId;
+            string tenantString = tenant.ToString();
+            var customer = chargifyAWBStock.Customer;
+            var ownerId = customer?.SalesmanUserId;
+            if (string.IsNullOrEmpty(ownerId))
+            {
+                var poolUser = (from a in commonDataContext.Contacts
+                                where a.Tenant == crmTenant && a.Email == "pool@logitudeworld.com"
+                                select a).FirstOrDefault();
+                ownerId = poolUser?.Id;
+            }
+
+            var stockType = chargifyAWBStock.IsAWBStockChecked ? "AWB Stock" : "INTTRA Stock";
+            var type = (from a in crmContext.OpportunityTypes
+                        where a.Tenant == crmTenant && a.Name == stockType
+                        select a).FirstOrDefault();
+
+            var stage = (from a in crmContext.Stages
+                         where a.Tenant == crmTenant && a.Code == "QUA"
+                         select a).FirstOrDefault();
+
+            OpportunityPM opportunityPM = new OpportunityPM()
+            {
+                Tenant = crmTenant,
+                CustomerId = customer?.Id,
+                ContactId = customer?.PrimaryContactId,
+                OwnerId = ownerId,
+                Subject = stockType,
+                ChangeSetOp = ChangeSetOperation.Insert,
+                CreatedByUserId = userId,
+                UpdatedByUserId = userId,
+                OpportunityTypeId = type?.Id,
+                StageId = stage?.Id
+            };
+
+            OpportunityUpdateService service = new OpportunityUpdateService(crmContext, new Dictionary<string, IContext>(), crmTenant);
+            opportunityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
+            service.Update(opportunityPM, true);
+        }
+        private void SendEmail(ChargifyAWBStock chargifyAWBStock)
+        {
+            var crmTenant = 341;
+            var subject = "AWB/INTTRA Stock E-mail Notification";
+            var fromEmail = "admin@fnarsoft.com";
+            var toEmails = "info@logitudeworld.com";
+            var stockType = chargifyAWBStock.IsAWBStockChecked ? "AWB Stock" : "INTTRA Stock";
+            StringBuilder HtmlTemplate = new StringBuilder();
+            HtmlTemplate.Append(
+                 "<p style='border-style:solid;border-radius:7px;border-color:#385D8A;background-color:#4F81BD;font-family:Century;text-align:center;color:white;vertical-align: middle;padding:5px'>"
+               + "Automatic e<span style='font-family:Arial'>-</span>mail Notification" + "<br />"
+               + "</p>"
+            );
+            HtmlTemplate.Append("<div style='text-align:left;font-size:16px;'>");
+            HtmlTemplate.Append("<p style='text-align:left;color:#000066;font-size:16px;'>");
+            HtmlTemplate.Append("Dear Sales Team,");
+            HtmlTemplate.Append("</p>");
+            HtmlTemplate.Append("<br/>");
+            HtmlTemplate.Append("<div style='text-align:left;font-family:Verdana;font-weight:bold;font-size:14px'>" + chargifyAWBStock.Customer?.EnglishName + " has purchased a new AWB/INTTRA stock with the following details:</div>");
+            HtmlTemplate.Append("</br>");
+            HtmlTemplate.Append("Customer: ").Append(chargifyAWBStock.Customer?.EnglishName);
+            HtmlTemplate.Append("</br>");
+            HtmlTemplate.Append("Tenant Number: ").Append(chargifyAWBStock.Tenant.ToString());
+            HtmlTemplate.Append("</br>");
+            HtmlTemplate.Append("Subject: ").Append(stockType);
+            HtmlTemplate.Append("</br>");
+            HtmlTemplate.Append("Stock Amount: ").Append(chargifyAWBStock.TotalStocks);
+            HtmlTemplate.Append("</br>");
+            HtmlTemplate.Append("Stock Price: ").Append(chargifyAWBStock.TotalPrice);
+            HtmlTemplate.Append("</br>");
+
+            EmailCommunicationParams emailParams = new EmailCommunicationParams()
+            {
+                Subject = subject,
+                From = fromEmail,
+                To = toEmails,
+                CC = null,
+                BCC = null,
+                EmailBody = HtmlTemplate.ToString(),
+                Tenant = crmTenant,
+                LoggingUserId = chargifyAWBStock.UserId,
+                IsBodySecured = false,
+            };
+
+            Communications.AddEmailCommunicationLogQueue(emailParams, crmTenant);
         }
     }
 }
@@ -2908,4 +3287,16 @@ public class PartnersUploadExcelParameter
     public string LoggedUserEmail { get; set; }
     public bool IsConfirmationByUser { get; set; }
     public string FileName { get; set; }
+    public string ComputingPartnerCode { get; set; }
+}
+
+public class ChargifyAWBStock
+{
+    public int Tenant { get; set; }
+    public bool IsAWBStockChecked { get; set; }
+    public int TotalStocks { get; set; }
+    public int TotalPrice { get; set; }
+    public string UserId { get; set; }
+    public CustomerPM Customer { get; set; }
+    public string UserName { get; set; }
 }

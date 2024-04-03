@@ -8,9 +8,10 @@ import {RatesTablePMService} from '../../../Infrastructure/Services/StandardPMs/
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {RatesTablePM} from '../../../Infrastructure/EntityPMs/RatesTablePM';
 import {TenantPM} from '../../EntityPMs/TenantPM';
-import {LastRate} from '../../../Common/Services/CurrencyRatesService';
+import {CurrencyRatesService, LastRate} from '../../../Common/Services/CurrencyRatesService';
 import {ConfirmWindow} from '../../../Controls/Windows/ConfirmWindow';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
+import { RatesTableExtendedService } from 'Infrastructure/Services/ExtendedPMs/RatesTableExtendedService';
 
 @Component({
     
@@ -30,9 +31,11 @@ export class EditLastRateComponent extends BaseComponent {
     public CurrentRate: number;
     public CurrentValueDate: Date;
     private CurrentSession = SessionLocator.SelectedSession;
+    IsAccountingActivated: boolean = false;
     constructor() {
         super();
         this.TenantPM = SessionLocator.TenantPM;
+        this.IsAccountingActivated = SessionLocator.TenantPM.AccountingActivated;
     }
 
     CreateRatesTablePM() {
@@ -40,6 +43,10 @@ export class EditLastRateComponent extends BaseComponent {
         this.RatesTable.Tenant = this.TenantPM.Id;
         this.RatesTable.BaseCurrencyId = this.TenantPM.CurrencyId;
         this.RatesTable.ForeignCurrencyId = this.EntityPM.ForeignCurrencyId;
+        if(this.IsAccountingActivated){
+            this.RatesTable.Unit = this.EntityPM.Unit;
+        }
+        
         this.RatesTable.LogDateTime = DateTool.GetCurrentDateAsUtc();      
     }
 
@@ -53,6 +60,15 @@ export class EditLastRateComponent extends BaseComponent {
         this.CreateRatesTablePM();
     }
 
+    get Unit() {
+        
+        if(this.RatesTable.Unit == null || this.RatesTable.Unit <= 0){
+            return 1;
+        }
+        return this.RatesTable.Unit;
+    
+    }
+    
     get Rate() { return this.RatesTable.Rate; }
     set Rate(value: number) {
         if (this.RatesTable.Rate != value) {
@@ -131,8 +147,8 @@ export class EditLastRateComponent extends BaseComponent {
 
         this.CurrentSession.StartBusyIndicatorSaving();
 
-        var myService: RatesTablePMService = new RatesTablePMService();
-        myService.insert(this.RatesTable).subscribe((myResponse: ServiceResponse) => {
+        var myService: RatesTableExtendedService = new RatesTableExtendedService();
+        myService.UpdateRate(this.RatesTable).subscribe((myResponse: ServiceResponse) => {
             if (myResponse != null) {
                 if (!myResponse.HasError) {
                     this.CurrentSession.CloseCurrentWindowEmit("ok");

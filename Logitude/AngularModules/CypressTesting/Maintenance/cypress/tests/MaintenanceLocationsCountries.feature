@@ -1,4 +1,4 @@
-@release @dev @all
+@release @stable
 Feature: Create Country, Edit, inactivate or activate it from Maintenance
     The user creates a Country, Inactivates it, then selects a different country,
     edits it and activates or inactivates it from the Maintenance module.
@@ -6,7 +6,7 @@ Feature: Create Country, Edit, inactivate or activate it from Maintenance
     Scenario: Add CountryCode with lenght more than 2
         Given the user logged in and navigate to "Countries" in maintenance menu
         When add "123" as country code
-        Then a validation message with "Code Field must be less than 2" error should appear
+        Then a validation message with "Code Field length must be less than 2" error should appear
 
     Scenario: Add Country
         Given a country with the following details

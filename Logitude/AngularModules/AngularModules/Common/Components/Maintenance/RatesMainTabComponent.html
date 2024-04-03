@@ -22,7 +22,8 @@
                             <tr>
                                 <td style="width: 100px;min-width: 100px">{{'RatesTable.F.ForeignCurrencyId' | TextCodeTranslationPipe}}</td>
                                 <td style="width: 100px;min-width: 100px">{{'RatesTable.O.ExchangeDate' | TextCodeTranslationPipe}}</td>
-                                <td style="width: 140px;min-width: 140px">{{'RatesTable.F.Rate' | TextCodeTranslationPipe}}</td>
+                                <td *ngIf="IsAccountingActivated" style="width: 160px;min-width: 160px">{{'RatesTable.F.Rate' | TextCodeTranslationPipe}}</td>
+                                <td *ngIf="!IsAccountingActivated" style="width: 140px;min-width: 140px">{{'RatesTable.F.Rate' | TextCodeTranslationPipe}}</td>
                                 <td style="width: 130px;min-width: 130px"> <div></div></td>
                                 <td class="LastChild">
                                     <div></div>
@@ -47,7 +48,8 @@
                                 <td class="GridViewCell" style="width: 140px;min-width: 140px" attr.data-cy="{{'Rate_' + item.Code}}">
                                     <table class="FixedTable">
                                         <tr>
-                                            <td style="width:10px;overflow:hidden;"> 1 </td>
+                                            <td *ngIf="IsAccountingActivated" style="width:30px;overflow:hidden;"> {{item.Unit}} </td>
+                                            <td *ngIf="!IsAccountingActivated" style="width:10px;overflow:hidden;"> 1 </td>
                                             <td style="width:30px;overflow:hidden;"> {{item.Code}}</td>
                                             <td style="width:15px;overflow:hidden;"> = </td>
                                             <td style="width:55px;overflow:hidden;" attr.data-cy="{{'CurrentRate_' + item.Code}}"> {{item.CurrentRate | RatesNumbersPipe:'N5'}} </td>
@@ -55,6 +57,9 @@
                                         </tr>
                                     </table>
                                 </td>
+
+                              
+
 
                                 <td style="width: 130px;min-width: 130px">
                                     <IconButton [Name]="'Edit'" [IsSmall]="true" style="display: block; float: left; margin-top:3px; margin-right:5px;margin-left:3px;" (click)="EditRate(item)" attr.data-cy="{{'EditButton_' + item.Code}}" ></IconButton>

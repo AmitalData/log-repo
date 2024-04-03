@@ -45,11 +45,11 @@ export class CurrencyRatesService {
             }), catchError(ServiceHelper.HandleServiceError));
         });
     }
-    GetCurrenciesExchangeRateByValueDate(currencyId: string, loadingDate: Date) {
+    GetCurrenciesExchangeRateByValueDate(currencyId: string, loadingDate: Date,calculateRateAccordingNumberUnit = false) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        var url = this._apiUrl + '/GetCurrenciesExchangeRateByValueDate?currencyId=' + currencyId + '&dateString=' + ServiceHelper.GetDateString(loadingDate);
+        var url = this._apiUrl + '/GetCurrenciesExchangeRateByValueDate?currencyId=' + currencyId + '&dateString=' + ServiceHelper.GetDateString(loadingDate)+"&calculateRateAccordingNumberUnit="+calculateRateAccordingNumberUnit;
 
         return defer(() => {
 
@@ -242,7 +242,10 @@ export class LastRate {
     ValueDate: Date;
     LogDateTime: Date;
     Rate: number;
+    Unit: number;
     HistoryCount: number;
+    UpdatedByUserId: string;
+    UpdatedByUserNameName: string; 
 }
 export class AccountingCurrencyHelper {
     TenantPM: TenantPM;

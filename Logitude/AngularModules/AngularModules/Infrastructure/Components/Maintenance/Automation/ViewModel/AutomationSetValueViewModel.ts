@@ -1,4 +1,6 @@
 
+declare var System: any;
+declare var window: any;
 import {AutomationPM} from '../../../../../Common/EntityPMs/AutomationPMExtended';
 import {AppTool, DateTool} from '../../../../../Infrastructure/Tools';
 
@@ -10,13 +12,17 @@ import {BaseComponent} from '../../../../../Infrastructure/Components/LogitudeCo
 import {FieldValueResolver} from '../../../../../Infrastructure/Utilities/FieldValueResolver';
 import {ApiQueryFilters} from '../../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {AutomationHelper} from '../../../../../Infrastructure/Helpers/AutomationHelper';
+import { TextCodeTranslationPipe } from '../../../../../Controls/Pipes/TextCodeTranslationPipe';
+import { AutomationEntityList } from './AutomationConditionViewModel';
+import { SessionLocator } from '../../../../Utilities/SessionLocator';
 export class AutomationSetValueViewModel extends BaseComponent implements OnInit {
     public CurrentEntityPM: AutomationSetValue;
 
     public AutomationCondationFieldListFilterItems: ApiQueryFilters;
     CustomAutomationCondationFieldListFilterItems: ApiQueryFilters;
     AutomationSetValuebjectFieldLists: ObjectFieldPM[];
-
+    AutomationEntityLists: AutomationEntityList[];
+    SelectedAutomationEntity: AutomationEntityList;
     BooleanList: boolean[] = [true, false];
 
     SelectedCustomField: ObjectFieldPM;
@@ -41,14 +47,26 @@ export class AutomationSetValueViewModel extends BaseComponent implements OnInit
     CustomObjectFieldCode: string = "";
     IsRefreshObjectFieldLov: boolean = false;
     AutomationHelper: AutomationHelper;
+    PartnerObjectFieldCode: string = null;
+    ObjectTableId: string;
+    ObjectTableName: string;
+    DisplayName: string;
+    IsMultiUpdateComponent: boolean;
     constructor(entityPM: AutomationSetValue, addEditAutomationsViewModel: any) {
         super();
         this.CurrentEntityPM = entityPM;
         this.AddEditAutomationsViewModel = addEditAutomationsViewModel;
+        this.IsMultiUpdateComponent = addEditAutomationsViewModel.IsMultiUpdateComponent;
         this.AutomationHelper = new AutomationHelper(this.CurrentEntityPM, this.AddEditAutomationsViewModel, this, "SetValue");
-        this.InitLOVFilters();
         this.AutomationSetValuebjectFieldLists = addEditAutomationsViewModel.AutomationSetValuebjectFieldLists;
         var objectField: ObjectFieldPM = this.AutomationSetValuebjectFieldLists.filter(d => d.FieldCode == this.CurrentEntityPM.ObjectFieldCode)[0];
+        this.PartnerObjectFieldCode = this.CurrentEntityPM.PartnerObjectFieldCode ? this.CurrentEntityPM.PartnerObjectFieldCode : null;
+
+        this.ObjectTableId = this.AddEditAutomationsViewModel.ObjectTableId;
+        this.ObjectTableName = this.AddEditAutomationsViewModel.IsMasterShipment ? "Master" : this.AddEditAutomationsViewModel.ObjectTableName;
+        this.DisplayName = this.AddEditAutomationsViewModel.AutomationItemClass ? this.AddEditAutomationsViewModel.AutomationItemClass.DisplayName : this.ObjectTableName;
+        this.InitLOVFilters();
+
 
         this.FieldValue = this.CurrentEntityPM.Value;
         this.DateTypeList = [];
@@ -61,8 +79,11 @@ export class AutomationSetValueViewModel extends BaseComponent implements OnInit
         this.OperatorList = [];
         this.OperatorList.push(new Operator("Set Constant Value", "SV"));
         this.OperatorList.push(new Operator("Set Value From [Field]", "SF"));
+        this.FillAutomationEntityObjectField();
 
         if (objectField) {
+
+
             this.ObjectFieldCode = objectField.FieldCode;
             this.SelectedCustomField = objectField;
             this.UIProperties.SetEnabled(this.SelectedCustomField.FieldName, this.AddEditAutomationsViewModel.ObjectTableName, true);
@@ -134,14 +155,27 @@ export class AutomationSetValueViewModel extends BaseComponent implements OnInit
         this.AutomationCondationFieldListFilterItems = new ApiQueryFilters();
         this.AutomationCondationFieldListFilterItems.addAdditionalFilter("ObjectTableId", this.AddEditAutomationsViewModel.ObjectTableId, null, null, "Equals", false, false, false, "string");
         this.AutomationCondationFieldListFilterItems.addAdditionalFilter("CanAutomateSetValue", true, null, null, "Equals", true, false, false, "boolean");
-
+        this.ExcludeObjectFields();
+        this.AddRecordTypeFilter();
 
     }
 
-    InitCustomLOVFilters(objectFieldPM: ObjectFieldPM) {
+
+    ExcludeObjectFields() {
+        if (this.IsMultiUpdateComponent) return;
+
+        let excludeFieldsCodes = "Shipment.IsAccountingClosed,Shipment.IsOperationalClosed";
+        this.AutomationCondationFieldListFilterItems.addAdditionalFilter("FieldCode", excludeFieldsCodes, null, null, "Exclude", false, false, false, "string");
+    }
+
+
+
+
+    InitCustomLOVFilters(objectFieldPM: ObjectFieldPM, objectTableId: string ) {
         this.CustomAutomationCondationFieldListFilterItems = new ApiQueryFilters();
-        this.CustomAutomationCondationFieldListFilterItems.addAdditionalFilter("ObjectTableId", this.AddEditAutomationsViewModel.ObjectTableId, null, null, "Equals", false, false, false, "string");
+        this.CustomAutomationCondationFieldListFilterItems.addAdditionalFilter("ObjectTableId", objectTableId, null, null, "Equals", false, false, false, "string");
         this.CustomAutomationCondationFieldListFilterItems.addAdditionalFilter("AllowedinAutomationConditions", true, null, null, "Equals", false, false, false, "boolean");
+        this.AddRecordTypeFilter();
 
         if (this.SelectedCustomField) {
             if (this.SelectedCustomField.DataTypeCode == "LookUp") {
@@ -149,6 +183,20 @@ export class AutomationSetValueViewModel extends BaseComponent implements OnInit
             }
             this.CustomAutomationCondationFieldListFilterItems.addAdditionalFilter("DataTypeCode", this.SelectedCustomField.DataTypeCode, null, null, "Equals", false, false, false, "string");
         }
+    }
+
+    private AddRecordTypeFilter() {
+        var recordType = this.GetRecordType();
+        if (!AppTool.IsNullOrEmpty(recordType)) {
+            this.AutomationCondationFieldListFilterItems.addAdditionalFilter("RecordType", recordType, null, null, "Equals", true, false, false, "string");
+        }
+    }
+
+    GetRecordType() {
+        if (!AppTool.IsNullOrEmpty(this.AddEditAutomationsViewModel?.DataViewModel?.ObjectTableName)) {
+            return this.AddEditAutomationsViewModel?.DataViewModel?.ObjectTableName;
+        }
+        return null;
     }
 
 
@@ -175,7 +223,7 @@ export class AutomationSetValueViewModel extends BaseComponent implements OnInit
 
                 if (this.SelectedCustomField) {
                     this.CustomObjectFieldCode = this.FieldValue;
-                    this.InitCustomLOVFilters(this.SelectedCustomField);
+                    this.InitCustomLOVFilters(this.SelectedCustomField, this.SelectedAutomationEntity.ObjectTableId);
 
                 }
                 this.IsRefreshObjectFieldLov = !this.IsRefreshObjectFieldLov;
@@ -211,6 +259,7 @@ export class AutomationSetValueViewModel extends BaseComponent implements OnInit
                 this.CurrentEntityPM.Value = "";
                 this.CustomObjectFieldCode = "";
                 this.AddEditAutomationsViewModel.IsChangeSetValue = true;
+                this.ObjectFieldCode = item.ObjectFieldCode;
 
 
                 if (item.DataTypeCode == "Boolean") this.IsChecked = false;
@@ -286,6 +335,70 @@ export class AutomationSetValueViewModel extends BaseComponent implements OnInit
         }
 
     }
+
+
+    FillAutomationEntityObjectField() {
+      
+        this.AutomationEntityLists = [];
+        this.AutomationEntityLists.push(new AutomationEntityList(this.ObjectTableName, this.ObjectTableId, null, this.DisplayName));
+
+
+        window.ObjectFields.filter(f => f.DisplayInAutomationAsEnitity == true && f.ObjectTableId == this.ObjectTableId && (!f.RecordType || (f.RecordType && f.RecordType.split(',').filter(d => d == this.ObjectTableName)[0]))).forEach((objectField) => {
+            var objectFieldName = objectField.FullNameTextCodeDefaultText == "Company" ? "Customer" : objectField.FullNameTextCodeDefaultText;
+            if (objectFieldName == "Ticket") {
+                this.AddTicketAutomationToEntityLists(objectFieldName, objectField);
+            }
+            else {
+                this.AutomationEntityLists.push(new AutomationEntityList(objectFieldName, objectField.LookUpTableId, objectField.FieldCode, objectFieldName));
+            }
+        });
+
+
+        this.SelectedAutomationEntity = this.AutomationEntityLists.filter(d => d.ObjectFieldCode == this.PartnerObjectFieldCode)[0];
+        if (!this.SelectedAutomationEntity) {
+            this.SelectedAutomationEntity = this.AutomationEntityLists.filter(d => d.ObjectTableId == this.AddEditAutomationsViewModel.ObjectTableId)[0];
+        }
+
+     
+
+    }
+
+
+
+    private AddTicketAutomationToEntityLists(objectFieldName: any, objectField: any) {
+        const TicketEntityAutomationFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "TAU")[0];
+        if (TicketEntityAutomationFeatureToggle != null) {
+            this.AutomationEntityLists.push(new AutomationEntityList(objectFieldName, objectField.LookUpTableId, objectField.FieldCode, objectFieldName));
+        }
+    }
+
+    AutomationEntityListValueChanged(entityField) {
+        if (entityField) {
+            this.PartnerObjectFieldCode = this.CurrentEntityPM.PartnerObjectFieldCode = entityField.ObjectFieldCode ? entityField.ObjectFieldCode : null;
+            this.SelectedAutomationEntity = this.AutomationEntityLists.filter(d => d.ObjectFieldCode == this.PartnerObjectFieldCode)[0];
+
+            if (!this.SelectedAutomationEntity) {
+                this.SelectedAutomationEntity = this.AutomationEntityLists.filter(d => d.ObjectTableId == this.AddEditAutomationsViewModel.ObjectTableId)[0];
+            }
+
+
+            this.FieldValue = this.CurrentEntityPM.Value = "";
+            this.IsRefrachCustomField = !this.IsRefrachCustomField;
+            this.AddEditAutomationsViewModel.IsChangeSetValue = true;
+
+            if (!this.SelectedAutomationEntity) return;
+
+            this.BuildCustomFromFieldbjectFieldLists();
+     
+
+        }
+    }
+
+
+
+
+
+
 
     ObjectFieldCondationValueChange(value) {
 

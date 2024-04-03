@@ -1,4 +1,4 @@
-﻿
+
 <style type="text/css">
     .BoxItemRow td:not(:first-child) {
         color: #0B3861;
@@ -72,7 +72,13 @@
                 </table>
             </td>
         </tr>
-
+        <tr style="height: 1px;" *ngIf="IsBlockingUnifreightCustomer">
+            <td>
+                <div class="OrangeInfo" style="margin: 5px;">
+                    <label class="Value">Customer connected to uni-freight, updates allowed from Unifreight only</label>
+                </div>
+            </td>
+        </tr>
         <tr>
             <td>
                 <div class="ScrollViewer">
@@ -117,6 +123,38 @@
                                                     <IconButton [Name]="'Disconnect'" [IsSmall]="true" (click)="DisconnectClicked(item)" title="Disconnect"></IconButton>
                                                 </td>
                                             </tr>
+
+                                        </table>
+                                    </td>
+                                </tr>
+                               
+
+                                <tr style="height: 22px;">
+                                    <td>
+                                        <table>
+                                            <tr>
+                                                <td style="font-size: 12px; vertical-align: top;" class="ColorBlue"></td>
+
+                                                <td style="width: 1px; right: 19px;" *ngIf="item.EmailForSending">
+                                                    <div>
+                                                        <span style="display:inline-block; color:#0075AF; font-size:11px;">Email for sending sing arinvoices</span>
+                                                        <span style="display:inline-block; width: 14px; height: 14px; margin-bottom: -2px; background: url('./Images/Menu/Person.png') center center; background-size: contain;"></span>
+                                                    </div>
+                                                </td>
+
+                                                <td style="width: 1px; right: 19px;" *ngIf="!item.EmailForSending">
+                                                    <div class="SetPrimary" (mousedown)="item.SetEmailForSendingSingArinvoices()">
+                                                        <span class="SetPrimaryText" style="font-size: 11px;">set as Email for sending sign invoices</span>
+                                                        <span class="SetPrimaryIcon" style="width: 14px; height: 14px; margin-bottom: -2px;"></span>
+                                                    </div>
+                                                </td>
+
+                                                <td style="width: 3px;padding-right: 23px;">
+                                                    <div></div>
+                                                </td>
+
+                                            </tr>
+                                            
                                         </table>
                                     </td>
                                 </tr>
@@ -179,7 +217,7 @@
                                                 <div style="position: absolute; right:0; bottom:0;" *ngIf="item.InActive">
                                                     <table>
                                                         <tr>
-                                                            <td><img style="float: left;" src="./Images/RedX2.png"/></td>
+                                                            <td><img style="float: left;" src="./Images/RedX2.png" /></td>
                                                             <td style="font-size: 11px; padding-left: 3px;" class="ColorRed">Inactive</td>
                                                         </tr>
                                                     </table>

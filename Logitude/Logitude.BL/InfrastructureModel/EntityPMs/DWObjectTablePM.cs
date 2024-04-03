@@ -29,6 +29,9 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public int MaxNumberOfCustomFields { get; set; }
         public bool HasCustomFields { get; set; }
         public string AdditionalFactRelationType { get; set; }
+        public string AdditionalConditions { get; set; }
+        public string Description { get; set; }
 
+        
     }
 }

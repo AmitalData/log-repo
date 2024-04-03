@@ -21,7 +21,21 @@
                             <div></div>
                         </td>
 
-                        <td style="width:1px">
+                        <td style="width: 5px;" *ngIf="IsApprovePendingDocumentsEnabled">
+                            <button [disabled]="!IsDigitalPortalInvitedCustomer" *ngIf="!IsDocumentsNeedApprove" class="Button">
+                                <span>Approve Pending Documents</span>
+                            </button>
+
+                            <button [disabled]="!IsDigitalPortalInvitedCustomer" class="EntityChangesButton" *ngIf="IsDocumentsNeedApprove" (click)="ApprovePendingDocuments()">
+                                <span>Approve Pending Documents</span>
+                            </button>
+                        </td>
+
+                        <td style="width: 5px;">
+                            <div></div>
+                        </td>
+
+                        <td style="width:5px">
                             <button *ngIf="DownloadAllVisibile" class="Button" (click)="DownloadAllClick()"
                                     [disabled]="!HasDocuments">
                                 <div style="display:inline">
@@ -154,7 +168,7 @@
                                     <tr>
 
                                         <td>
-                                            <div [style.width]="IsRTL ? 'initial' : '200px'" class="TextTrimming">
+                                            <div [style.width]="IsRTL ? 'initial' : '200px'">
                                                 {{item.FileName}}
                                             </div>
 
@@ -178,12 +192,12 @@
 
 
                                         <td class="CellStretched" [style.width]="IsRTL ? 'initial' : '190px'" [style.min-width]="IsRTL ? 'initial' : '190px'" [style.max-width]="IsRTL ? 'initial' : '190px'" style="position: relative;">
-                                            <button id="{{'SetReceivedDocumentbtn' | IdGeneratorPipe}}" *ngIf="item.SetReceivedButtonVisibility" style="display:inline;width:75px;height:20px;font-size:10px;vertical-align:top;text-align:left;margin-top:2px" class="Button" (click)="item.SetReceivedButtonClicked()">
+                                            <button id="{{'SetReceivedDocumentbtn' | IdGeneratorAsyncPipe | async}}" *ngIf="item.SetReceivedButtonVisibility" style="display:inline;width:75px;height:20px;font-size:10px;vertical-align:top;text-align:left;margin-top:2px" class="Button" (click)="item.SetReceivedButtonClicked()">
 
                                                 {{'DocsIn.B.SetReceived' | TextCodeTranslationPipe}}
                                             </button>
 
-                                            <button [style.margin-left]="item.SetReceivedButtonVisibility? '5px':'0px'" id="{{'UploadDocumentdbtn' | IdGeneratorPipe}}" [disabled]="IsClickToUpload" *ngIf="item.SetAttachedButtonVisibility" style="display:inline;height:20px;width:50px;font-size:10px;vertical-align:top;text-align:left;margin-top:2px;" class="Button" (click)="item.UploadButtonClicked()">
+                                            <button [style.margin-left]="item.SetReceivedButtonVisibility? '5px':'0px'" id="{{'UploadDocumentdbtn' | IdGeneratorAsyncPipe | async}}" [disabled]="IsClickToUpload" *ngIf="item.SetAttachedButtonVisibility" style="display:inline;height:20px;width:50px;font-size:10px;vertical-align:top;text-align:left;margin-top:2px;" class="Button" (click)="item.UploadButtonClicked()">
                                                 {{'DocsIn.B.Upload' | TextCodeTranslationPipe}}
                                             </button>
 
@@ -221,7 +235,7 @@
                                 <table>
                                     <tr>
                                         <td>
-                                            <div [style.width]="IsRTL ? 'initial' : '200px'" style="width:200px" class="TextTrimming">
+                                            <div [style.width]="IsRTL ? 'initial' : '200px'" style="width:200px">
                                                 {{item.Name}}
                                             </div>
 
@@ -261,7 +275,7 @@
                     </log-column>
 
                     <!--ReceivedBy-->
-                    <log-column [width]="'90'" [header]="'DocsIn.O.ReceivedBy' | TextCodeTranslationPipe">
+                    <log-column [width]="'115'" [header]="'DocsIn.O.ReceivedBy' | TextCodeTranslationPipe">
 
 
                         <ng-template let-item>
@@ -269,14 +283,24 @@
 
                                 <table>
                                     <tr>
-
-
-                                        <td class="GridViewCell" [style.width]="IsRTL ? 'initial' : '90px'" [style.min-width]="IsRTL ? 'initial' : '90px'" [style.max-width]="IsRTL ? 'initial' : '90px'" style="position: relative;">
-
-                                            {{item.ReceivedByUserName}}
-
+                                        <td>
+                                            <table>
+                                                <tr>
+                                                    <td class="GridViewCell" [style.width]="IsRTL ? 'initial' : '90px'" [style.min-width]="IsRTL ? 'initial' : '90px'" [style.max-width]="IsRTL ? 'initial' : '90px'" style="position: relative;">
+                                                        {{item.ReceivedByUserName}}
+                                                    </td>
+                                                    <td style="width: 3px;">
+                                                        <div></div>
+                                                    </td>
+                                                    <td style="width:18px">
+                                                        <CellTooltip [Height]="90" [Width]="330" [IconPath]="'./Images/CellIcons/Info_Gray.png'" [Head]="'Document Source'" *ngIf="item.ReceivedByPartner">
+                                                            <div *ngIf="item.ReceivedByPartner == 'Digital'" style="padding:7px">This document is received by Digital Portal</div>
+                                                            <div *ngIf="item.ReceivedByPartner == 'External'" style="padding:7px">This document is received by External Partner</div>
+                                                        </CellTooltip>
+                                                    </td>
+                                                </tr>
+                                            </table>
                                         </td>
-
                                     </tr>
                                 </table>
                             </log-cell-template>
@@ -329,17 +353,17 @@
                     </log-column>
 
                     <!--Note-->
-                    <log-column [width]="'150'" [header]="'DocsIn.O.Notes' | TextCodeTranslationPipe">
+                    <log-column [width]="'300'" [header]="'DocsIn.O.Notes' | TextCodeTranslationPipe">
 
                         <ng-template let-item>
                             <log-cell-template [IgnoreMods]="true" #logcelltemplate>
 
                                 <table>
                                     <tr>
-                                        <td [style.width]="IsRTL ? 'initial' : '150px'" [style.min-width]="IsRTL ? 'initial' : '150px'" [style.max-width]="IsRTL ? 'initial' : '150px'" style="position:relative;">
+                                        <td [style.width]="IsRTL ? 'initial' : '300px'" [style.min-width]="IsRTL ? 'initial' : '300px'" [style.max-width]="IsRTL ? 'initial' : '300px'" style="position:relative;">
 
                                             <input [attr.id]="item.Key" (change)="item.EditNote(item)"
-                                                   type="text" autocomplete="off" style="height:22px;width:140px" [(ngModel)]="item.Note" value="" />
+                                                   type="text" autocomplete="off" style="height:22px;width:290px" [(ngModel)]="item.Note" value="" />
 
                                         </td>
 

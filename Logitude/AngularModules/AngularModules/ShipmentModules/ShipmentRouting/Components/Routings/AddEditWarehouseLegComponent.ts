@@ -29,7 +29,6 @@ import { CurrencyListService } from '../../../../Common/Services/StandardLists/C
 import { CurrencyList } from '../../../../Common/EntityLists/CurrencyList';
 import { CurrencyRatesService, LastRate } from '../../../../Common/Services/CurrencyRatesService';
 import { WarehouseEntryListExtendedService } from '../../../../Warehouse/Services/ExtendedLists/WarehouseEntryListExtendedService';
-import { WarehouseExtendedListService } from '../../../../Common/Services/ExtendedLists/WarehouseExtendedListService';
 import { ShipmentStoragePricingPM } from '../../../../Shipment/EntityPMs/ShipmentStoragePricingPM';
 import { CardPM } from '../../../../Common/EntityPMs/CardPM';
 
@@ -73,13 +72,12 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
     private cardService: CardPMService;
     private cardListService: CardListService;
     private warehouseEntryListExtendedService: WarehouseEntryListExtendedService;
-    private warehouseExtendedListService: WarehouseExtendedListService;
+
     InitServices() {
         this.myAddressListService = new AddressListService();
         this.cardService = new CardPMService();
         this.cardListService = new CardListService();
         this.warehouseEntryListExtendedService = new WarehouseEntryListExtendedService();
-        this.warehouseExtendedListService = new WarehouseExtendedListService();
     }
 
     GetShipmentDirection() {
@@ -113,9 +111,12 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
             this.TransportModeId = this.EntityPM.TransportModeId;
             this.IsFCLEntity = AppTool.IsFCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
 
-            if (this.EntityPM.ShipmentLevelCode == "D" || this.EntityPM.ShipmentLevelCode == "H") {
+            if (this.LegType =="WarehouseLeg2") {
+                this.IsShowNewWarehouseEntryButton = false;
+            }
+            else if(this.EntityPM.ShipmentLevelCode == "D" || this.EntityPM.ShipmentLevelCode == "H") {
                 if (FeatureLocator.HasFeaturePermession("WarehouseEntry", "Module")) {
-                    this.IsShowNewWarehouseEntryButton = true;
+                    this.IsShowNewWarehouseEntryButton = this.EntityPM.DirectionId == "I";
                 }
             }
 
@@ -148,7 +149,7 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
 
                 this.GetShipmentDirection();
             }
-
+            
             if (this.IsImportShipment) {
                 if (!AppTool.IsNullOrEmpty(this.WarehouseLegWarehouseId)) {
                     this.cardListService.getSingle(this.WarehouseLegWarehouseId).subscribe((myResponse: ServiceResponse) => {
@@ -229,6 +230,17 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
         this.UIProperties.SetEnabled("WarehouseLegReference", this.ObjectTableName, isEditingEnabled);
         this.UIProperties.SetEnabled("TerminalAvailable", this.ObjectTableName, isEditingEnabled);
         this.UIProperties.SetRequired("WarehouseLegWarehouseId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.WarehouseLegWarehouseId) ? true : false);
+        this.UIProperties.SetEnabled("WarehouseLeg2WarehouseId", this.ObjectTableName, isEditingEnabled);
+        this.UIProperties.SetEnabled("WarehouseLeg2AddressId", this.ObjectTableName, isEditingEnabled);
+        this.UIProperties.SetEnabled("WarehouseLeg2TerminalCode", this.ObjectTableName, isEditingEnabled);
+        this.UIProperties.SetEnabled("WarehouseLeg2Remarks", this.ObjectTableName, isEditingEnabled);
+        this.UIProperties.SetEnabled("WarehouseLeg2LastFreeDate", this.ObjectTableName, isEditingEnabled);
+        this.UIProperties.SetEnabled("WarehouseLeg2ExpectedEntryDate", this.ObjectTableName, isEditingEnabled);
+        this.UIProperties.SetEnabled("WarehouseLeg2ExpectedReleaseDate", this.ObjectTableName, isEditingEnabled);
+        this.UIProperties.SetEnabled("WarehouseLeg2ActualEntryDate", this.ObjectTableName, isEditingEnabled);
+        this.UIProperties.SetEnabled("WarehouseLeg2ActualReleaseDate", this.ObjectTableName, isEditingEnabled);
+        this.UIProperties.SetEnabled("WarehouseLeg2Reference", this.ObjectTableName, isEditingEnabled);
+        this.UIProperties.SetRequired("WarehouseLeg2WarehouseId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.WarehouseLeg2WarehouseId) ? true : false);
 
         this.SetUIProperties_ValidateActualDates();
         this.SetUIProperties_Storage();
@@ -237,6 +249,8 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
 
         this.UIProperties.SetValidity("WarehouseLegActualEntryDate", this.ObjectTableName, true, null);
         this.UIProperties.SetValidity("WarehouseLegActualReleaseDate", this.ObjectTableName, true, null);
+        this.UIProperties.SetValidity("WarehouseLeg2ActualEntryDate", this.ObjectTableName, true, null);
+        this.UIProperties.SetValidity("WarehouseLeg2ActualReleaseDate", this.ObjectTableName, true, null);
 
         if (this.LegType == "WarehouseLeg_Pickups") {
             var date: Date = DateTool.GetCurrentDateAsUtc();
@@ -249,6 +263,17 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
             if (this.IsDateBigger(this.WarehouseLegActualReleaseDate, date)) {
                 var errorMessage = DateTool.ActualDateMessage.replace("Field", TextCodeTranslator.Translate("Shipment.O.Routings.WarehouseLegActualReleaseDate"));
                 this.UIProperties.SetValidity("WarehouseLegActualReleaseDate", this.ObjectTableName, false, errorMessage);
+            }
+        }
+        if (this.LegType == "WarehouseLeg2") {
+            if (!DateTool.IsActualDateValid(this.WarehouseLeg2ActualEntryDate)) {
+                var errorMessage = DateTool.ActualDateMessage.replace("Field", TextCodeTranslator.Translate("Shipment.O.Routings.WarehouseLegActualEntryDate"));
+                this.UIProperties.SetValidity("WarehouseLeg2ActualEntryDate", this.ObjectTableName, false, errorMessage);
+            }
+
+            if (!DateTool.IsActualDateValid(this.WarehouseLeg2ActualReleaseDate)) {
+                var errorMessage = DateTool.ActualDateMessage.replace("Field", TextCodeTranslator.Translate("Shipment.O.Routings.WarehouseLegActualReleaseDate"));
+                this.UIProperties.SetValidity("WarehouseLeg2ActualReleaseDate", this.ObjectTableName, false, errorMessage);
             }
         }
 
@@ -303,8 +328,7 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
             this.SetUIProperties();
         }         
     }
-
-    GetAddress() {        
+    GetAddress() {
         this.cardListService.getSingle(this.WarehouseLegWarehouseId).subscribe((myResponse: ServiceResponse) => {
             if (myResponse != null) {
                 if (!myResponse.HasError) {
@@ -333,6 +357,42 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
                         if (result.WarehouseTypeCode == "CFS" && this.IsCFSWarehouse) {
                             this.LoadWarehouseStoragePricing();
                         }
+                    }
+                }
+            }
+        });
+    }
+
+    get WarehouseLeg2WarehouseId() { return this.EntityPM.WarehouseLeg2WarehouseId; }
+    set WarehouseLeg2WarehouseId(newValue: string) {
+        if (this.EntityPM.WarehouseLeg2WarehouseId != newValue) {
+            this.EntityPM.WarehouseLeg2WarehouseId = newValue;
+
+            if (!AppTool.IsNullOrEmpty(newValue)) {
+                this.GetAddress2();
+            }
+
+            else {
+                this.WarehouseLeg2AddressId = null;
+                this.FatherComponent.WarehouseLeg2TerminalName = "";
+            }
+
+            this.SetUIProperties();
+        }
+    }
+    GetAddress2() {        
+        this.cardListService.getSingle(this.WarehouseLeg2WarehouseId).subscribe((myResponse: ServiceResponse) => {
+            if (myResponse != null) {
+                if (!myResponse.HasError) {
+                    var result: CardList = myResponse.Result;
+                    if (result) {
+                        this.WarehouseLeg2AddressId = result.MainAddressId;
+                        this.FatherComponent.WarehouseLeg2TerminalName = result.EnglishName;
+                        this.FatherComponent.EntityPM.WarehouseLeg2TerminalName = result.EnglishName;
+                        this.WarehouseLeg2TerminalCode = result.FirmCode;
+                        this.warehouseType = result.WarehouseTypeCode;
+                        this.EntityPM.IsCFSWarehouseChanged = false;
+                        this.SetIsCFSWarehouseProperities();
                     }
                 }
             }
@@ -526,6 +586,86 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
         }
     }
 
+
+    private myWarehouse2AddressList: AddressList;
+    get Warehouse2AddressList() { return this.myWarehouse2AddressList; }
+    set Warehouse2AddressList(newValue: AddressList) {
+        this.myWarehouse2AddressList = newValue;
+        this.FatherComponent.Warehouse2AddressList = newValue;
+    }
+
+    get WarehouseLeg2AddressId() { return this.EntityPM.WarehouseLeg2AddressId; }
+    set WarehouseLeg2AddressId(newValue: string) {
+        if (this.EntityPM.WarehouseLeg2AddressId != newValue) {
+            this.EntityPM.WarehouseLeg2AddressId = newValue;
+
+            if (AppTool.IsNullOrEmpty(newValue)) {
+                this.Warehouse2AddressList = null;
+            }
+
+            else {
+                this.myAddressListService.getSingle(newValue).subscribe((myResponse: ServiceResponse) => {
+                    if (!myResponse.HasError) {
+                        this.Warehouse2AddressList = myResponse.Result;
+                    }
+                });
+            }
+        }
+    }
+
+    get WarehouseLeg2TerminalCode() { return this.EntityPM.WarehouseLeg2TerminalCode; }
+    set WarehouseLeg2TerminalCode(newValue: string) {
+        if (this.EntityPM.WarehouseLeg2TerminalCode != newValue) {
+            this.EntityPM.WarehouseLeg2TerminalCode = newValue;
+        }
+    }
+
+    get WarehouseLeg2Reference() { return this.EntityPM.WarehouseLeg2Reference; }
+    set WarehouseLeg2Reference(newValue: string) {
+        if (this.EntityPM.WarehouseLeg2Reference != newValue) {
+            this.EntityPM.WarehouseLeg2Reference = newValue;
+        }
+    }
+
+    get WarehouseLeg2Remarks() { return this.EntityPM.WarehouseLeg2Remarks; }
+    set WarehouseLeg2Remarks(newValue: string) {
+        if (this.EntityPM.WarehouseLeg2Remarks != newValue) {
+            this.EntityPM.WarehouseLeg2Remarks = newValue;
+        }
+    }
+
+    get WarehouseLeg2ExpectedEntryDate() { return this.EntityPM.WarehouseLeg2ExpectedEntryDate; }
+    set WarehouseLeg2ExpectedEntryDate(value: Date) {
+        if (this.EntityPM.WarehouseLeg2ExpectedEntryDate != value) {
+            this.EntityPM.WarehouseLeg2ExpectedEntryDate = value;
+        }
+    }
+
+    get WarehouseLeg2ExpectedReleaseDate() { return this.EntityPM.WarehouseLeg2ExpectedReleaseDate; }
+    set WarehouseLeg2ExpectedReleaseDate(value: Date) {
+        if (this.EntityPM.WarehouseLeg2ExpectedReleaseDate != value) {
+            this.EntityPM.WarehouseLeg2ExpectedReleaseDate = value;
+        }
+    }
+
+    get WarehouseLeg2ActualEntryDate() { return this.EntityPM.WarehouseLeg2ActualEntryDate; }
+    set WarehouseLeg2ActualEntryDate(value: Date) {
+        if (this.EntityPM.WarehouseLeg2ActualEntryDate != value) {
+            this.EntityPM.WarehouseLeg2ActualEntryDate = value;
+            this.SetUIProperties_ValidateActualDates();
+        }
+    }
+
+    get WarehouseLeg2ActualReleaseDate() { return this.EntityPM.WarehouseLeg2ActualReleaseDate; }
+    set WarehouseLeg2ActualReleaseDate(value: Date) {
+        if (this.EntityPM.WarehouseLeg2ActualReleaseDate != value) {
+            this.EntityPM.WarehouseLeg2ActualReleaseDate = value;
+            this.SetUIProperties_ValidateActualDates();
+
+        }
+    }
+
+
     private SetStorageFreeDays() {
         if (this.WarehouseLegActualEntryDate != null && this.WarehouseLegLastFreeDate != null) {
             if (DateTool.GetDateFromDate(this.WarehouseLegLastFreeDate) >= DateTool.GetDateFromDate(this.WarehouseLegActualEntryDate)) {
@@ -561,6 +701,15 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
         }
     }
 
+    get Terminal2Available() { return this.EntityPM.Terminal2Available; }
+    set Terminal2Available(value: Date) {
+        if (this.EntityPM.Terminal2Available != value) {
+            this.EntityPM.Terminal2Available = value;
+            this.FatherComponent.EntityPM.Terminal2Available = value;
+        }
+    }
+
+
     get WarehouseLegCutOffDate() { return this.EntityPM.WarehouseLegCutOffDate; }
     set WarehouseLegCutOffDate(value: Date) {
         if (this.EntityPM.WarehouseLegCutOffDate != value) {
@@ -572,6 +721,13 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
     set WarehouseLegVGMCutOffDate(value: Date) {
         if (this.EntityPM.WarehouseLegVGMCutOffDate != value) {
             this.EntityPM.WarehouseLegVGMCutOffDate = value;            
+        }
+    }
+
+    get WarehouseLeg2VGMCutOffDate() { return this.EntityPM.WarehouseLeg2VGMCutOffDate; }
+    set WarehouseLeg2VGMCutOffDate(value: Date) {
+        if (this.EntityPM.WarehouseLeg2VGMCutOffDate != value) {
+            this.EntityPM.WarehouseLeg2VGMCutOffDate = value;
         }
     }
 
@@ -787,6 +943,12 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
             case "WarehouseLegExpectedEntryDate": {
                 this.WarehouseLegActualEntryDate = DateTool.GetDateParts(this.WarehouseLegExpectedEntryDate).DateObject; break;
             }
+            case "WarehouseLeg2ExpectedReleaseDate": {
+                this.WarehouseLeg2ActualReleaseDate = DateTool.GetDateParts(this.WarehouseLeg2ExpectedReleaseDate).DateObject; break;
+            }
+            case "WarehouseLeg2ExpectedEntryDate": {
+                this.WarehouseLeg2ActualEntryDate = DateTool.GetDateParts(this.WarehouseLeg2ExpectedEntryDate).DateObject; break;
+            }
         }
     }
 
@@ -798,8 +960,10 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
         var errors: string[] = [];
         var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
 
-        if (AppTool.IsNullOrEmpty(this.WarehouseLegWarehouseId)) {
-            errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("Shipment.O.Routings.WarehouseLegWarehouseId")));
+        if (this.LegType != "WarehouseLeg2") {
+            if (AppTool.IsNullOrEmpty(this.WarehouseLegWarehouseId)) {
+                errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("Shipment.O.Routings.WarehouseLegWarehouseId")));
+            }
         }
 
         // Series Dates
@@ -817,7 +981,15 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
                 errors.push(DateTool.ActualDateMessage.replace("Field", TextCodeTranslator.Translate("Shipment.O.Routings.WarehouseLegActualReleaseDate")));
             }
         }
+        else if (this.LegType == "WarehouseLeg2") {
+            if (!DateTool.IsActualDateValid(this.WarehouseLeg2ActualEntryDate)) {
+                errors.push(DateTool.ActualDateMessage.replace("Field", TextCodeTranslator.Translate("Shipment.O.Routings.WarehouseLegActualEntryDate")));
+            }
 
+            if (!DateTool.IsActualDateValid(this.WarehouseLeg2ActualReleaseDate)) {
+                errors.push(DateTool.ActualDateMessage.replace("Field", TextCodeTranslator.Translate("Shipment.O.Routings.WarehouseLegActualReleaseDate")));
+            }
+        }
         else {
             if (!DateTool.IsActualDateValid(this.WarehouseLegActualEntryDate)) {
                 errors.push(DateTool.ActualDateMessage.replace("Field", TextCodeTranslator.Translate("Shipment.O.Routings.WarehouseLegActualEntryDate")));
@@ -831,27 +1003,28 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
         this.ValidationErrorsList = errors;
 
         if (errors.length == 0) {
-            var date: Date = this.WarehouseLegActualReleaseDate;
-            if (this.isCalculateStorageClicked && date == null) {
-                date = this.WarehouseLegExpectedReleaseDate;
-            }
-
-            this.CheckStorageProperties(date);
-
-            if (this.StorageDays <= this.EntityPM.WarehouseStorageFreeDays) {
-                var storageReceivable: ShipmentReceivablePM = this.EntityPM.ShipmentReceivables.filter(d => d.ChargesTypeCode == "ISTOR" && d.MeasurementCode == "STFE" && AppTool.IsNullOrEmpty(d.ARInvoiceId))[0];
-
-                var invoicedStorageReceivable: ShipmentReceivablePM = this.EntityPM.ShipmentReceivables.filter(d => d.ChargesTypeCode == "ISTOR" && d.MeasurementCode == "STFE" && !AppTool.IsNullOrEmpty(d.ARInvoiceId))[0];
-                if (invoicedStorageReceivable && storageReceivable == null) {
-                    this.CreateReceivable(invoicedStorageReceivable.TotalAmount * -1);
+            if (this.LegType != "WarehouseLeg2") {
+                var date: Date = this.WarehouseLegActualReleaseDate;
+                if (this.isCalculateStorageClicked && date == null) {
+                    date = this.WarehouseLegExpectedReleaseDate;
                 }
 
-                else if (storageReceivable) {
-                    this.EntityPM.RemoveReceivable(storageReceivable);
-                    this.CurrentSession.FireEvent("StorageReceivableCalculationsChanged");
+                this.CheckStorageProperties(date);
+
+                if (this.StorageDays <= this.EntityPM.WarehouseStorageFreeDays) {
+                    var storageReceivable: ShipmentReceivablePM = this.EntityPM.ShipmentReceivables.filter(d => d.ChargesTypeCode == "ISTOR" && d.MeasurementCode == "STFE" && AppTool.IsNullOrEmpty(d.ARInvoiceId))[0];
+
+                    var invoicedStorageReceivable: ShipmentReceivablePM = this.EntityPM.ShipmentReceivables.filter(d => d.ChargesTypeCode == "ISTOR" && d.MeasurementCode == "STFE" && !AppTool.IsNullOrEmpty(d.ARInvoiceId))[0];
+                    if (invoicedStorageReceivable && storageReceivable == null) {
+                        this.CreateReceivable(invoicedStorageReceivable.TotalAmount * -1);
+                    }
+
+                    else if (storageReceivable) {
+                        this.EntityPM.RemoveReceivable(storageReceivable);
+                        this.CurrentSession.FireEvent("StorageReceivableCalculationsChanged");
+                    }
                 }
             }
-
             this.FatherComponent.BuildItemsCollection();
             this.CurrentSession.CloseCurrentWindowEmit("OK");
         }
@@ -1049,7 +1222,7 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
             oldItem.JobId = item.JobId;
             oldItem.LegType = item.LegType;
             oldItem.ManualActivatedFollowUp = item.ManualActivatedFollowUp;
-            oldItem.Note = item.Note;
+            oldItem.Notes = item.Notes;
             oldItem.OwnerUserId = item.OwnerUserId;
             oldItem.OwnerUserName = item.OwnerUserName;
             oldItem.ShipmentId = item.ShipmentId;
@@ -1078,6 +1251,17 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
         this.myCloner.AddField('WarehouseLegVGMCutOffDate');
         this.myCloner.AddField('WarehouseStorageFreeDays');
         this.myCloner.AddField('IsCFSWarehouse');
+        this.myCloner.AddField('WarehouseLeg2WarehouseId');
+        this.myCloner.AddField('WarehouseLeg2AddressId');
+        this.myCloner.AddField('WarehouseLeg2TerminalCode');
+        this.myCloner.AddField('WarehouseLeg2ExpectedReleaseDate');
+        this.myCloner.AddField('WarehouseLeg2ExpectedEntryDate');
+        this.myCloner.AddField('WarehouseLeg2ActualEntryDate');
+        this.myCloner.AddField('WarehouseLeg2ActualReleaseDate');
+        this.myCloner.AddField('WarehouseLeg2Remarks');
+        this.myCloner.AddField('WarehouseLeg2TerminalName');
+        this.myCloner.AddField('WarehouseLeg2CutOffDate');
+        this.myCloner.AddField('WarehouseLeg2VGMCutOffDate');
         this.myCloner.AddEntity(this.EntityPM);
         this.myCloner.AddEntity(this.WarehouseAddressList);
         this.myCloner.AddEntity(this.FatherComponent.WarehouseAddressList);
@@ -1126,12 +1310,15 @@ export class AddEditWarehouseLegComponent extends BaseComponent {
 
     private ComputeGrossWeight_PerStorageDays() {
         var StorageDays = DateTool.GetDaysBetweenDates(this.EntityPM.WarehouseLegActualReleaseDate, this.EntityPM.WarehouseLegActualEntryDate);
+        var freeDays = this.EntityPM.WarehouseStorageFreeDays;
+        if (freeDays == null) freeDays = 0;
+
         var weightPerStorageDays;
         if (this.EntityPM.TransportModeId != "A") {
-            weightPerStorageDays = Math.ceil(this.EntityPM.GrossWeightPerTon) * (StorageDays - this.EntityPM.WarehouseStorageFreeDays);
+            weightPerStorageDays = Math.ceil(this.EntityPM.GrossWeightPerTon) * (StorageDays - freeDays);
         }
         else {
-            weightPerStorageDays = this.EntityPM.ChargeableWeight * (StorageDays - this.EntityPM.WarehouseStorageFreeDays);
+            weightPerStorageDays = this.EntityPM.ChargeableWeight * (StorageDays - freeDays);
         }
         this.GrossWeightPerStorageDays = weightPerStorageDays < 0 ? 0 : weightPerStorageDays;
 

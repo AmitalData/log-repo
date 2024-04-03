@@ -33,5 +33,7 @@ namespace Logitude.CargoTracking.BL.APIDataContract.ApiV1
     public DateTime? CustomsPaymentDate { get; set; }
     
     public DateTime? ClearanceDate { get; set; }
+    
+    public string CurrentMilestoneExceptions { get; set; }
     }
 } 

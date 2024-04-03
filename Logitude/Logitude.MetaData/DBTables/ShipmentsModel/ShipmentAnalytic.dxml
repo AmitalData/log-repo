@@ -1,0 +1,305 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="ShipmentAnalytics"
+  Schema="dbo"
+  DBType="Main"
+  Module="Shipment">
+	<Column
+	  Name="Id"
+	  Type="varchar"
+	  Size="15">
+		<Constraints
+		  PrimaryKey="true"
+		  Nullable="false" />
+	</Column>
+	<Column
+	  Name="Tenant"
+	  Type="int">
+		<Constraints
+		  Nullable="false" />
+	</Column>
+	<Column
+      Name="CreateDateTime"
+      Type="datetime">
+		<Constraints
+		  Nullable="false" />
+	</Column>
+	<Column
+	  Name="ShipmentNumber"
+	  Type="varchar"
+	  Size="20">
+		<Constraints
+		  Nullable="false" />
+	</Column>
+	<Column
+	  Name="BranchId"
+	  Type="varchar"
+	  Size="15">
+		<Constraints
+		  Nullable="false" />
+	</Column>
+	<Column
+	  Name="IncotermId"
+	  Type="varchar"
+	  Size="15">
+		<Constraints
+		  Nullable="true" />
+	</Column>
+	<Column
+	  Name="SalesmanUserId"
+	  Type="varchar"
+	  Size="15">
+		<Constraints
+		  Nullable="true" />
+	</Column>
+	<Column
+	  Name="AccountManagerUserId"
+	  Type="varchar"
+	  Size="15">
+		<Constraints
+		  Nullable="true" />
+	</Column>
+	<Column
+	  Name="ShipmentTypeId"
+	  Type="varchar"
+	  Size="4">
+		<Constraints
+		  Nullable="true" />
+	</Column>
+	<Column
+	  Name="TransportModeId"
+	  Type="char"
+	  Size="1">
+		<Constraints
+		  Nullable="false" />
+	</Column>
+	<Column
+	  Name="DirectionId"
+	  Type="char"
+	  Size="1">
+		<Constraints
+		  Nullable="false" />
+	</Column>
+	<Column
+	  Name="ShipmentLevelCode"
+	  Type="varchar"
+	  Size="1">
+		<Constraints
+		  Nullable="true" />
+	</Column>
+	<Column
+	  Name="ShipperId"
+	  Type="varchar"
+	  Size="15">
+		<Constraints
+		  Nullable="true" />
+	</Column>
+	<Column
+	  Name="ConsigneeId"
+	  Type="varchar"
+	  Size="15">
+		<Constraints
+		  Nullable="true" />
+	</Column>
+	<Column
+	  Name="AgentId"
+	  Type="varchar"
+	  Size="15">
+		<Constraints
+		  Nullable="true" />
+	</Column>
+	<Column
+	  Name="CustomerId"
+	  Type="varchar"
+	  Size="15">
+		<Constraints
+		  Nullable="true" />
+	</Column>
+	<Column
+	  Name="IsOperationalClosed"
+	  Type="bit">
+		<Constraints
+		  Nullable="false" />
+	</Column>
+	<Column
+	  Name="IsAccountingClosed"
+	  Type="bit">
+		<Constraints
+		  Nullable="false" />
+	</Column>
+	<Column
+	  Name="GrossWeightInKG"
+	  Type="float">
+		<Constraints
+		  Nullable="true" />
+	</Column>
+	<Column
+	  Name="ChargeableWeightInKG"
+	  Type="float">
+		<Constraints
+		  Nullable="true" />
+	</Column>
+	<Column
+	  Name="VolumeInCBM"
+	  Type="float">
+		<Constraints
+		  Nullable="true" />
+	</Column>
+	<Column
+	  Name="TEU"
+	  Type="float">
+		<Constraints
+		  Nullable="true" />
+	</Column>	
+	<Column
+	  Name="StatusId"
+	  Type="varchar"
+	  Size="15">
+		<Constraints
+		  Nullable="false" />
+	</Column>
+	<Column
+	  Name="IsCancelled"
+	  Type="bit">
+		<Constraints
+		  Nullable="false" />
+	</Column>
+	<Column
+	  Name="OpenReceivablesInLocalCurrency"
+	  Type="float">
+		<Constraints
+		  Nullable="false" />
+	</Column>
+	<Column
+	  Name="AccountedReceivablesInLocalCurrency"
+	  ShortName="AccountedReceivablesInLocal"
+	  Type="float">
+		<Constraints
+		  Nullable="false" />
+	</Column>
+	<Column
+	  Name="ProfitInLocalCurrency"
+	  Type="float">
+		<Constraints
+		  Nullable="false" />
+	</Column>
+	<Column
+	  Name="ProfitInProfitCurrency"
+	  Type="float">
+		<Constraints
+		  Nullable="true" />
+	</Column>
+	<Column
+	  Name="OpenReceivablesInProfitCurrency"
+	  ShortName="OpenReceivablesInProfit"
+	  Type="float">
+		<Constraints
+		  Nullable="true" />
+	</Column>
+	<Column
+	  Name="AccountedReceivablesInProfitCurrency"
+	  ShortName="AccountedReceivablesInProfit"
+	  Type="float">
+		<Constraints
+		  Nullable="true" />
+	</Column>
+	<Column
+	  Name="MainCarriageFromPortId"
+	  Type="varchar"
+	  Size="15">
+		<Constraints
+		  Nullable="true" />
+	</Column>
+	<Column
+	  Name="MainCarriageToPortId"
+	  Type="varchar"
+	  Size="15">
+		<Constraints
+		  Nullable="true" />
+	</Column>
+	<Column
+	  Name="OpenPayablesInLocalCurrency"
+	  Type="float">
+		<Constraints
+		  Nullable="true" />
+	</Column>
+	<Column
+	  Name="AccountedPayablesInLocalCurrency"
+	  ShortName="AccountedPayablesInLocal"
+	  Type="float">
+		<Constraints
+		  Nullable="true" />
+	</Column>
+	<Column
+	  Name="OpenPayablesInProfitCurrency"
+	  Type="float">
+		<Constraints
+		  Nullable="true" />
+	</Column>
+	<Column
+	  Name="AccountedPayablesInProfitCurrency"
+	  ShortName="AccountedPayablesInProfit"
+	  Type="float">
+		<Constraints
+		  Nullable="true" />
+	</Column>
+	<Column
+	  Name="ARInvoiceIssued"
+	  Type="bit">
+		<Constraints
+		  Nullable="false" />
+	</Column>
+	<Column
+	  Name="ShipmentSubTypeId"
+	  Type="varchar"
+	  Size="15">
+		<Constraints
+		  Nullable="true" />
+	</Column>
+	<Column
+	  Name="MainCarriageCarrierId"
+	  Type="varchar"
+	  Size="15">
+		<Constraints
+		  Nullable="true" />
+	</Column>
+	<Column
+	  Name="NumberOfPackages"
+	  Type="int">
+		<Constraints
+		  Nullable="true" />
+	</Column>
+	<Column
+	  Name="NumberOfContainers"
+	  Type="int">
+		<Constraints
+		  Nullable="true" />
+	</Column>
+	<Column
+	  Name="FromCountryId"
+	  Type="varchar"
+	  Size="15">
+		<Constraints
+		  Nullable="true" />
+	</Column>
+	<Column
+	  Name="ToCountryId"
+	  Type="varchar"
+	  Size="15">
+		<Constraints
+		  Nullable="true" />
+	</Column>
+	<Column
+	  Name="OperationalDate"
+	  Type="datetime">
+		<Constraints
+		  Nullable="true" />
+	</Column>
+	<Column
+	  Name="ProductCode"
+	  Type="varchar"
+	  Size="2">
+		<Constraints
+		  Nullable="true" />
+	</Column>
+</Table>

@@ -21,7 +21,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
         {
             Authentication();
             CommunicationLogQuery communicationLogQuery = new CommunicationLogQuery(tenant);
-            IQueryable<CommunicationLogPM>  myResult = communicationLogQuery.GetCommunicationLogPMsByEntityId(entityId, tenant);
+            List<CommunicationLogPM>  myResult = communicationLogQuery.GetCommunicationLogPMsByEntityId(entityId, tenant);
 
             return Request.CreateResponse(HttpStatusCode.OK, myResult);
         }

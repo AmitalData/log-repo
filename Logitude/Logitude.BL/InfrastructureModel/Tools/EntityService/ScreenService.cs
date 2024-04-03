@@ -23,7 +23,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
         bool isNewEntity;
         private int tenant;
         public Screen Poco { get; set; }
-
+        private int tenantZero = 0;
         public IWebFreightContext ObjectContext
         {
             get { return objectContext; }
@@ -64,10 +64,10 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             this.entityPM = theEntityPm;
             this.Poco = entityRepository.GetSingleScreen(theEntityPm.Id);
 
-            ScreenModification mod = entityRepository.GetScreenModificationByScreen(theEntityPm.Id, theEntityPm.UserTenant);
+            ScreenModification mod = this.Poco.Tenant == tenantZero ? entityRepository.GetScreenModificationByScreen(theEntityPm.Id, theEntityPm.UserTenant) : null;
             if ((this.Poco.NumberOfColumns != theEntityPm.NumberOfColumns) || (this.Poco.NumberOfRows != theEntityPm.NumberOfRows))
             {
-                if (mod == null)
+                if (mod == null && this.Poco.Tenant == tenantZero)
                 {
                     mod = new ScreenModification() { Tenant = theEntityPm.UserTenant, ScreenCode = theEntityPm.Code, Id = IdCounter.GetNumber("ScreenModification", theEntityPm.Tenant), };
                     this.ObjectContext.ScreenModifications.Add(mod);

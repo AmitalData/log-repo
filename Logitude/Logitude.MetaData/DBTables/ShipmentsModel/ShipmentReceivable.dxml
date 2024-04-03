@@ -113,7 +113,7 @@
   <Column
     Name="Notes"
     Type="nvarchar"
-    Size="250">
+    Size="1000">
     <Constraints
       Nullable="true" />
   </Column>
@@ -265,6 +265,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="PayableVendorId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="ShipmentId"
     ReferencedTable="Shipments"
@@ -333,6 +340,11 @@
   <Relation
     ForeignKeyColumn="ShipmentReceivableParentId"
     ReferencedTable="ShipmentReceivables"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="PayableVendorId"
+    ReferencedTable="Cards"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Index

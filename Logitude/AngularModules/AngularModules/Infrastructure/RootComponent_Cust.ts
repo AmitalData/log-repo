@@ -272,7 +272,7 @@ export class RootComponent_Cust implements AfterViewInit {
               SessionLocator.DynamicLoader.Load("./InfrastructureModules/InfrastructureOthers/Components/TermsOfUse/CustomTermsOfUse/DSVTermsOfUseStartupComponent", this.Child.Location)
                 .then(cmpRef => {
                   cmpRef.instance.ComponentRef = cmpRef;
-                  cmpRef.instance.Load(myResult.Version);
+                    cmpRef.instance.Load(myResult.PrivateLabelId, myResult.Id, myResult.VersionDocumentId);
                   cmpRef.instance.TermsOfUseCompleted.subscribe(($event: any) => {
 
                     if ($event == "Accept") {
@@ -289,7 +289,7 @@ export class RootComponent_Cust implements AfterViewInit {
               SessionLocator.DynamicLoader.Load("./InfrastructureModules/InfrastructureOthers/Components/TermsOfUse/TermsOfUseStartupComponent", this.Child.Location)
                 .then(cmpRef => {
                   cmpRef.instance.ComponentRef = cmpRef;
-                  cmpRef.instance.Load(myResult.Version);
+                  cmpRef.instance.Load(myResult.PrivateLabelId, myResult.Id, myResult.VersionDocumentId);
                   cmpRef.instance.TermsOfUseCompleted.subscribe(($event: any) => {
 
                     if ($event == "Accept") {

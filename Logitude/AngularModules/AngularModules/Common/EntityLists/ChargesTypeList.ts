@@ -21,7 +21,10 @@ export class ChargesTypeList {
     ChargesGroupId: string;
     ChargesGroupCode: string;
     ChargesGroupName: string;
-    VatTypeId: string;
+		QuoteChargesGroupCode: string;
+		QuoteChargesGroupId: string;
+		QuoteChargesGroupName: string;
+		VatTypeId: string;
     VatTypeName: string;
     VatTypePercentage: number;
     VatIsMultiPercentage: boolean;
@@ -51,7 +54,9 @@ export class ChargesTypeList {
     PayablesChargesTypeExternalCode: string;
     PayableDebitGLAcountId: string;
     ReceivableCreditGLAccountId: string;
-    IsBackToBack: boolean;
+		RecCreditGLAcountLocalName: string;
+		PayDebitGLAcountLocalName: string;
+		IsBackToBack: boolean;
     IsAutoDisplayInCustoms: boolean;
     IsCustoms: boolean;
     SATExternalId: string;
@@ -72,4 +77,4 @@ export class ChargesTypeList {
     IsActiveInDrop: boolean;
     QuoteGroupSectionID: string;
 
-}
+}

@@ -33,7 +33,9 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
 				SecurityUtility.AuthenticateAPICall(authToken.Tenant);
-				GLAccountQueryService Service = new GLAccountQueryService(tenant);
+                SecurityUtility.AuthenticateAccessibleAPI("GLAccount", authToken.Tenant);
+
+                GLAccountQueryService Service = new GLAccountQueryService(tenant);
                 ServiceResponse response = new ServiceResponse();
                 var Result = new GLAccount();
                 if (!string.IsNullOrEmpty(id))
@@ -76,7 +78,9 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         int tenant = entity.Tenant;
 						SecurityUtility.AuthenticateAPICall(authToken.Tenant);
-						if (entity != null)
+                        SecurityUtility.AuthenticateAccessibleAPI("GLAccount", authToken.Tenant);
+
+                        if (entity != null)
                         {
                             oldEntity = LogitudeXmlSerializer.DeserializeObject<GLAccount>(LogitudeXmlSerializer.SerializeObjectToXmlString(entity));
                         }
@@ -141,14 +145,16 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         int tenant = authToken.Tenant;
 						SecurityUtility.AuthenticateAPICall(authToken.Tenant);
-						if (entity != null)
+                        SecurityUtility.AuthenticateAccessibleAPI("GLAccount", authToken.Tenant);
+
+                        if (entity != null)
                         {
                             oldEntity = LogitudeXmlSerializer.DeserializeObject<GLAccount>(LogitudeXmlSerializer.SerializeObjectToXmlString(entity));
                         }
 
                         IAccountingContext MyContext = AccountingContext.GetContext(tenant);
                         GLAccountQueryService mappingService = new GLAccountQueryService(tenant);
-                        GLAccountPM entityPM = mappingService.GLAccountDataMappingAndValidatin(entity, tenant);
+                        GLAccountPM entityPM = mappingService.GLAccountDataMappingAndValidatinForExternalAPI(entity, tenant);
 
                         if (entity.Parent != null)
                         {

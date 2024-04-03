@@ -98,12 +98,10 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string Location { get; set; }
 
-        //[DataMember]
-        //[CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        //public string EventDateTime1 { get; set; }
-
-        //[DataMember]
-        //[CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        //public string EventDateTime2 { get; set; }
+        public string ChildEntityId { get; set; }
+        public string ChildObjectTableId { get; set; }
+        public string EntityStatusCode { get; set; }
+        public string EntityStatusName { get; set; }
+        
     }
 }

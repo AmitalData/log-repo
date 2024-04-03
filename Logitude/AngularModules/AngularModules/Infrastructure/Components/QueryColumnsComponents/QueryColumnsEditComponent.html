@@ -39,8 +39,27 @@
         .ListBoxItem:active {
             background-color: green;
         }
+        .ViewOnly {
+        height: 28px;
+        margin-right: 20px;
+        margin-top: 2px;
+        border: 1px solid orange;
+        border-radius: 3px; 
+        background-color: #FFFAB4;
+    }
+
 </style>
 <table>
+    <tr>
+        <td>
+            <div *ngIf="IsShowWarringMessage" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'" class="ViewOnly">
+                <div style="margin:3px 7px;font-weight:500">
+                    You are not allowed to edit or remove the filters of this view. It was shared with view only mode.  <Hyperlink style="margin-left:5px;margin-right:5px;" (click)="IsShowWarringMessage = false" [FontSize]="12" [Text]="'close'"></Hyperlink>
+
+                </div>
+            </div>
+        </td>
+    </tr>
     <tr>
         <td>
             <table>
@@ -84,12 +103,12 @@
                         </div>
                     </td>
                     <td style="width: 10%; vertical-align: middle;">
-                        <button (click)="btnAdd_Click()" class="Button" [disabled]="IsbtnAddEnabled" style="width:80px;margin: 7px;">
+                        <button (click)="btnAdd_Click()" class="Button" [disabled]="IsbtnAddEnabled || IsViewOnly" style="width:80px;margin: 7px;">
                             {{'General.B.Add' | TextCodeTranslationPipe}}
                             <img *ngIf="RTL == false" src="./Images/Icons/ArrowRight.png" style="width:16px;height:16px;vertical-align:middle;margin-left:3px;" />
                             <img *ngIf="RTL == true" src="./Images/Icons/ArrowLeft.png" style="width:16px;height:16px;vertical-align:middle;margin-left:3px;" />
                         </button>
-                        <button (click)="btnRemove_Click()" class="Button" [disabled]="IsbtnRemoveEnabled" style="width:80px;margin: 7px;">
+                        <button (click)="btnRemove_Click()" class="Button" [disabled]="IsbtnRemoveEnabled || IsViewOnly" style="width:80px;margin: 7px;">
                             <img *ngIf="RTL == false" src="./Images/Icons/ArrowLeft.png" style="width:16px;height:16px;vertical-align:middle;margin-left:3px;" />
                             <img *ngIf="RTL == true" src="./Images/Icons/ArrowRight.png" style="width:16px;height:16px;vertical-align:middle;margin-left:3px;" /> 
                             {{'General.B.Remove' | TextCodeTranslationPipe}} 
@@ -106,10 +125,10 @@
                                                 <!--{{General.O.AvailableColumns | TextCodeTranslationPipe}}-->
                                             </div>
                                             <div style="float:right;"> 
-                                                <button (click)="btnUp_Click()" class="Button" [disabled]="IsbtnDownEnabled" style="width:26px;margin-right: 2px;margin-top:3px;float:right;">
+                                                <button (click)="btnUp_Click()" class="Button" [disabled]="IsbtnDownEnabled || IsViewOnly" style="width:26px;margin-right: 2px;margin-top:3px;float:right;">
                                                     <img src="./Images/Icons/ArrowUp.png" style="height:16px;vertical-align:middle;" />
                                                 </button>
-                                                <button (click)="btnDown_Click()" class="Button" [disabled]="IsbtnUpEnabled" style="width:26px;margin-top:3px;margin-right: 5px; float:right;">
+                                                <button (click)="btnDown_Click()" class="Button" [disabled]="IsbtnUpEnabled || IsViewOnly" style="width:26px;margin-top:3px;margin-right: 5px; float:right;">
                                                     <img src="./Images/Icons/ArrowDown.png" style="height:16px;vertical-align:middle;" />
                                                 </button>
                                             </div>
@@ -154,7 +173,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="RedButton" (click)="SaveChanges()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                        <button class="RedButton" [disabled]="IsViewOnly" (click)="SaveChanges()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
                     </td>
                 </tr>
             </table>

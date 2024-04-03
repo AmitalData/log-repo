@@ -82,6 +82,14 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public int? ProcessProgress { get; set; }
         [Column("NeedsRebulid")]
 	    public bool NeedsRebulid { get; set; }
+        [Column("CreatedInTwoMonthsLogic")]
+	    public bool CreatedInTwoMonthsLogic { get; set; }
+        [Column("OutputTaxAmountRound")]
+	    public decimal? OutputTaxAmountRound { get; set; }
+        [Column("InputsTaxAmountRound")]
+	    public decimal? InputsTaxAmountRound { get; set; }
+        [Column("ReconciliationsNumbers")]
+	    public string ReconciliationsNumbers { get; set; }
     }
 }
 	 

@@ -23,10 +23,10 @@ export class ShipmentPickUpDeliveryPackagePM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	        constructor(_entityParentPM: any) {
-          this.EntityParentPM = _entityParentPM;
+	            this.EntityParentPM = _entityParentPM;
           this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
-      }
+       }
 
 	 
     
@@ -201,6 +201,11 @@ export class ShipmentPickUpDeliveryPackagePM {
     private containerEntityId: string;
     public get ContainerEntityId() { return this.containerEntityId; }
     public set ContainerEntityId(newValue: string) { if (this.containerEntityId != newValue) { this.containerEntityId = newValue; this.MarkAsDirty("ContainerEntityId"); } }
+       
+	 
+    private changeSet: string;
+    public get ChangeSet() { return this.changeSet; }
+    public set ChangeSet(newValue: string) { if (this.changeSet != newValue) { this.changeSet = newValue; this.MarkAsDirty("ChangeSet"); } }
        
 	 
 

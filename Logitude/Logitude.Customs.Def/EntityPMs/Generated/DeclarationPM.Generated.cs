@@ -6138,7 +6138,7 @@ namespace Logitude.Customs.Def.EntityPMs
              set {  deletedDeclarationPayments = value; }
 	    }
 
-	  private bool autoSending ;
+ 	  private bool autoSending ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
@@ -6185,6 +6185,6 @@ namespace Logitude.Customs.Def.EntityPMs
 		 }
 	   }
    }
-   
+    
 }
 	 

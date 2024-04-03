@@ -82,7 +82,7 @@ export class TenantList {
 		IsDocumentsArchive: boolean;
 		CustomerId: string;
 		CustomerName: string;
-		IsCustomerTenantShare: boolean;
+		CustomerTenantShareCustomsFile: boolean;
 		CustomerTenantShareImportFile: boolean;
 		CustomerTenantShareExportFile: boolean;
 		AllowAgentInCustomersLOV: boolean;
@@ -108,6 +108,14 @@ export class TenantList {
 		AllowCustomersInAgentsLOV: boolean;
 		VatUniquePartnerTypeCode: string;
 		SharedLogisMasterMessageLink: boolean;
+		ShowMultiUnitsOfMeasurements: boolean;
 		IsQuotesRequestActivatedInShared: boolean;
+		IsCargoTrackWebAccessActivated: boolean;
+		EnableDeliveryOptions: boolean;
+		EmptyReturnClosingDays: number;
+		ShipmentATAClosingDays: number;
+		IsDigitalPortalAccessActivated: boolean;
+		UseNewTermsOfUse: boolean;
+		ApproveUploadedDocuments: boolean;
 	
-}
+}

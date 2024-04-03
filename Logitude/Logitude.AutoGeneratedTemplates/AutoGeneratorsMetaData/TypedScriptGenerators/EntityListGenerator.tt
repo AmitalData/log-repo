@@ -140,8 +140,10 @@ void SaveListTSOutput(string outputFileName)
 //     the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
+<#+ if(entity.ApplyGenericCustomFields.ToString() == "true") {#>import { CustomFieldList } from '../../Infrastructure/EntityLists/CustomFieldList';
+<#+}#>
 
-export class <#=tableName #>List {
+export class <#=tableName #>List<#+ if(entity.ApplyGenericCustomFields.ToString() == "true"){#> extends CustomFieldList<#+}#> {
    <#+
    #>
 

@@ -44,6 +44,10 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
         public string TariffNumber { get; set; }
         public string TariffLineId { get; set; }
         public int TariffVersion { get; set; }
+        public string SaleTariffId { get; set; }
+        public string SaleTariffNumber { get; set; }
+        public string SaleTariffLineId { get; set; }
+        public int SaleTariffVersion { get; set; }
 
         // Sale                
         public string SaleCurrencyId { get; set; }
@@ -82,6 +86,11 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
         public string ContainerType3MarkUpTypeCode { get; set; }
         public string ContainerType4MarkUpTypeCode { get; set; }
         public string ContainerType5MarkUpTypeCode { get; set; }
+
+        public string MarkUpCurrencyId { get; set; }
+
+        [ForeignKey("MarkUpCurrencyId")]
+        public virtual Currency MarkUpCurrency { get; set; }
 
         [ForeignKey("QuoteId")]
         public virtual Quote Quote { get; set; }
@@ -130,8 +139,13 @@ namespace Simplog.Data.QuoteModel.EntityPOCOs
 
         [ForeignKey("VatTypeId")]
         public virtual VatType VatType { get; set; }
-
         public bool IsRegionalTax { get; set; }
 
+        public double? VATAmountInLocalCurrency { get; set; }
+        public double? VATAmountInQuoteSaleCurrency { get; set; }
+        public double? VATAmountInLineSaleCurrency { get; set; }
+        public double? SaleTotalAmountLocalIncludingVAT { get; set; }
+        public double? SaleAmountInSaleCurrencyIncludingVAT { get; set; }
+        public double? SaleTotalAmountIncludingVAT { get; set; }
     }
 }

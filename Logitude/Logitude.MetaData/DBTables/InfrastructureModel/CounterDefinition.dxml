@@ -32,7 +32,7 @@
     <Constraints
       Nullable="true" />
   </Column>
-  <Column
+    <Column
     Name="Prefix"
     Type="varchar"
     Size="20">
@@ -71,9 +71,28 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="InActive"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="UsePerBranch"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsCustomized"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="CounterId"
     ReferencedTable="Counters"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
+
 </Table>

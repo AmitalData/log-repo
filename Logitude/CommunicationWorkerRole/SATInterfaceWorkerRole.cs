@@ -4,11 +4,8 @@ using Logitude.BL.DataContracts;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.Server.Tools;
-using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.QueueService;
-using Logitude.Server.Tools.StorageService;
 using Logitude.SystemLogs;
-using Microsoft.Practices.Unity;
 using Microsoft.WindowsAzure.ServiceRuntime;
 using Profact.TimbraCFDI;
 using Simplog.Data.CommonDataModel;
@@ -16,16 +13,12 @@ using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
-using Simplog.Data.InfrastructureModel.Repositories;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
-using Profact.TimbraCFDI33;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.Repositories;
 using System.Xml;
@@ -33,38 +26,31 @@ using Simplog.Data.InvoiceModel;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.Server.Tools.Helpers;
 using Logitude.BL.InvoiceModel.Tools;
+using CommunicationWorkerRole.Services.SAT;
+using Logitude.BL.InvoiceModel.Tools.EntityService;
 
 namespace CommunicationWorkerRole
 {
 	public class SATInterfaceWorkerRole : WorkerEntryPoint
 	{
-
-		List<CommunicationLog> waitingcommlogs;
-
-		public List<CommunicationLog> WaitingCommLogs
-		{
-			get
-			{
-				if (waitingcommlogs == null)
-				{
-					waitingcommlogs = new List<CommunicationLog>();
-				}
-				return waitingcommlogs;
-			}
-			set { waitingcommlogs = value; }
-		}
+		private bool isConcurrencyToggleEnabled = false;
+		private IInvoiceContext invoiceContext;
+		private ARInvoiceRepository arInvoiceRepository;
+		private ARPaymentRepository arPaymentRepository;
+		private ARInvoiceQuery arInvoiceQuery;		
+		private ARPaymentQuery arPaymentQuery;
+		private CommunicationLog communicationLog;
+		private CommunicationLogRepository communicationLogRep;
+		private ICommonDataContext commonContext;
+		private int tenant = 0;
 		public override void Run()
 		{
-
-
 			while (IsRunning)
 			{
-
 				if (!General.IsUpdating())
 				{
 					try
 					{
-						int tenant = 0;
 						queueservice = new DbQueueService();
 						queueservice.InitializeQueue("SATInterface", 0);
 
@@ -76,27 +62,27 @@ namespace CommunicationWorkerRole
 
 							string communicationLogId = response.MessageValues["CommunicationLogId"].ToString();
 							int.TryParse(response.MessageValues["Tenant"].ToString(), out tenant);
-							context = CommonDataContext.GetContext(tenant);
-							CommunicationLogRepository communicationLogRep = new CommunicationLogRepository(context);
-							CommunicationLog cl = communicationLogRep.GetSingleCommunicationLog(communicationLogId, tenant);
+							commonContext = CommonDataContext.GetContext(tenant);
+							communicationLogRep = new CommunicationLogRepository(commonContext);
+							communicationLog = communicationLogRep.GetSingleCommunicationLog(communicationLogId, tenant);
+							isConcurrencyToggleEnabled = FeatureToggleHelper.HasFeatureToggle("INU", tenant);							
+							this.Initialize();
 
 							bool processEnebled = true;
 
 							if (processEnebled)
 							{
-								if (cl != null)
+								if (communicationLog != null)
 								{
-									if (cl.CommunicationStatusTypeCode == "D")
+									if (communicationLog.CommunicationStatusTypeCode == "D")
 									{
 										queueservice.Complete();
 									}
 									else
 									{
-										SendCommunicationLog(communicationLogId, tenant, cl, communicationLogRep);
+										SendCommunicationLog();
 										queueservice.Complete();
-
 										LogDoneItemInMemory();
-
 									}
 								}
 								else
@@ -115,7 +101,6 @@ namespace CommunicationWorkerRole
 
 										if (response.RetryNumber > 5 && response.RetryNumber <= 10)
 										{
-
 											queueservice.Delay(new TimeSpan(0, 0, 0, 10));
 											AzureLog.SaveLogsInStorage("couldn't find communication log: " + communicationLogId + " ,tenant:" + tenant + ",retry number(DeliveryCount):" + response.RetryNumber
 												+ ",at utc time:" + DateTime.UtcNow + ",at SATInterface worker role.", "L", DateTime.UtcNow, "", "", 0, null, null, null);
@@ -123,12 +108,10 @@ namespace CommunicationWorkerRole
 										}
 										if (response.RetryNumber == 11)
 										{
-
 											queueservice.Delay(new TimeSpan(0, 0, 2, 0));
 											AzureLog.SaveLogsInStorage("couldn't find communication log: " + communicationLogId + " ,tenant:" + tenant + ",retry number(DeliveryCount):" + response.RetryNumber
 											+ ",at utc time:" + DateTime.UtcNow + ",at SATInterface worker role.", "L", DateTime.UtcNow, "", "", 0, null, null, null);
 											Thread.Sleep(10000);
-
 										}
 									}
 									else
@@ -155,36 +138,26 @@ namespace CommunicationWorkerRole
 				}
 			}
 		}
-
-		public bool IsCommunicationLogProcessEnabled(string communicationLogId, int tenant)
+		private void Initialize()
 		{
-			bool isEnabled = true;
-			context = CommonDataContext.GetContext(tenant);
-			CommunicationLogRepository communicationLogRep = new CommunicationLogRepository(context);
-			CommunicationLog cl = communicationLogRep.GetSingleCommunicationLog(communicationLogId, tenant);
-
-
-			DateTime requestDate = DateTime.UtcNow;
-			if (requestDate < cl.NextTryDateTimeUTC)
-			{
-				isEnabled = false;
-
-			}
-
-			return isEnabled;
+			invoiceContext = InvoiceContext.GetContext(tenant);
+			arInvoiceRepository = new ARInvoiceRepository(invoiceContext);
+			arPaymentRepository = new ARPaymentRepository(invoiceContext);
+			arInvoiceQuery = new ARInvoiceQuery(arInvoiceRepository);
+			arPaymentQuery = new ARPaymentQuery(arPaymentRepository);
 		}
-		private void SetNextTryDateTime(CommunicationLog cl)
+
+		private void SetNextTryDateTime()
 		{
-			string newLog = null;
-			DateTime date = TenantServerConfigration.GetCurrentDateTime(cl.Tenant);
+			DateTime date = TenantServerConfigration.GetCurrentDateTime(tenant);
 			DateTime dateUtc = DateTime.UtcNow;
-			switch (cl.Retries)
+			switch (communicationLog.Retries)
 			{
 				case 1:
 				case 2:
 					{
-						cl.NextTryDateTime = date.AddSeconds(1);
-						cl.NextTryDateTimeUTC = dateUtc.AddSeconds(1);
+						communicationLog.NextTryDateTime = date.AddSeconds(1);
+						communicationLog.NextTryDateTimeUTC = dateUtc.AddSeconds(1);
 						queueservice.Delay(new TimeSpan(0, 0, 0, 1));
 
 						break;
@@ -192,15 +165,15 @@ namespace CommunicationWorkerRole
 				case 3:
 				case 4:
 					{
-						cl.NextTryDateTime = date.AddSeconds(5);
-						cl.NextTryDateTimeUTC = dateUtc.AddSeconds(5);
+						communicationLog.NextTryDateTime = date.AddSeconds(5);
+						communicationLog.NextTryDateTimeUTC = dateUtc.AddSeconds(5);
 						queueservice.Delay(new TimeSpan(0, 0, 0, 5));
 						break;
 					}
 				case 5:
 					{
-						cl.NextTryDateTime = date.AddMinutes(1);
-						cl.NextTryDateTimeUTC = dateUtc.AddMinutes(1);
+						communicationLog.NextTryDateTime = date.AddMinutes(1);
+						communicationLog.NextTryDateTimeUTC = dateUtc.AddMinutes(1);
 						queueservice.Delay(new TimeSpan(0, 0, 1));
 						break;
 					}
@@ -208,64 +181,60 @@ namespace CommunicationWorkerRole
 				case 7:
 				case 8:
 					{
-						cl.NextTryDateTime = date.AddMinutes(2);
-						cl.NextTryDateTimeUTC = dateUtc.AddMinutes(2);
+						communicationLog.NextTryDateTime = date.AddMinutes(2);
+						communicationLog.NextTryDateTimeUTC = dateUtc.AddMinutes(2);
 						queueservice.Delay(new TimeSpan(0, 0, 2));
 						break;
 					}
 				case 9:
 					{
-						cl.NextTryDateTime = date.AddMinutes(5);
-						cl.NextTryDateTimeUTC = dateUtc.AddMinutes(5);
+						communicationLog.NextTryDateTime = date.AddMinutes(5);
+						communicationLog.NextTryDateTimeUTC = dateUtc.AddMinutes(5);
 						queueservice.Delay(new TimeSpan(0, 0, 5));
 						break;
 					}
 				case 10:
 					{
-						cl.NextTryDateTime = date.AddMinutes(10);
-						cl.NextTryDateTimeUTC = dateUtc.AddMinutes(10);
+						communicationLog.NextTryDateTime = date.AddMinutes(10);
+						communicationLog.NextTryDateTimeUTC = dateUtc.AddMinutes(10);
 						queueservice.Delay(new TimeSpan(0, 0, 10));
 						break;
 					}
 				default:
 					{
-						cl.NextTryDateTime = date.AddMinutes(20);
-						cl.NextTryDateTimeUTC = dateUtc.AddMinutes(20);
+						communicationLog.NextTryDateTime = date.AddMinutes(20);
+						communicationLog.NextTryDateTimeUTC = dateUtc.AddMinutes(20);
 						queueservice.Delay(new TimeSpan(0, 0, 20));
 						break;
 					}
 			}
-			cl.Logs += Environment.NewLine + "Retry #" + cl.Retries + " Next Retry: " + cl.NextTryDateTimeUTC.ToString();
+			communicationLog.Logs += Environment.NewLine + "Retry #" + communicationLog.Retries + " Next Retry: " + communicationLog.NextTryDateTimeUTC.ToString();
 		}
 
 		#region SendCommunicationLog
 
-		ICommonDataContext context;
-		private void SendCommunicationLog(string communicationLogId, int tenant, CommunicationLog cl, CommunicationLogRepository communicationLogRep)
+		
+		private void SendCommunicationLog()
 		{
-
-
 			try
 			{
-				if (cl.Retries < 5)
+				if (communicationLog.Retries < 5)
 				{
-					SendWaitingCommunicationLog(cl, communicationLogRep);
+					SendWaitingCommunicationLog();
 				}
 
 				else
 				{
-					if (context != null)
+					if (commonContext != null)
 					{
-						SetRelatedEntityTransferStatusToTransferError(cl);
+						SetRelatedEntityTransferStatusToTransferError(communicationLog);
 
-						cl.CommunicationStatusTypeCode = "F";
-						cl.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(cl.Tenant);
-						communicationLogRep.Update(cl);
+						communicationLog.CommunicationStatusTypeCode = "F";
+						communicationLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+						communicationLogRep.Update(communicationLog);
 						communicationLogRep.SubmitChanges();
 						queueservice.Complete();
-
 					}
-
 				}
 			}
 
@@ -275,22 +244,22 @@ namespace CommunicationWorkerRole
 
 				//Change number of retries
 
-				cl.Retries++;
-				cl.ExceptionMessage = exc.Message;
+				communicationLog.Retries++;
+				communicationLog.ExceptionMessage = exc.Message;
 				if (exc.InnerException != null)
 				{
-					cl.ExceptionMessage = cl.ExceptionMessage + Environment.NewLine + exc.InnerException;
+					communicationLog.ExceptionMessage = communicationLog.ExceptionMessage + Environment.NewLine + exc.InnerException;
 				}
 				if (exc.StackTrace != null)
 				{
-					cl.ExceptionMessage = cl.ExceptionMessage + Environment.NewLine + "Stack trace: " + exc.StackTrace;
+					communicationLog.ExceptionMessage = communicationLog.ExceptionMessage + Environment.NewLine + "Stack trace: " + exc.StackTrace;
 				}
 
-				cl.ExceptionMessage = StringHelper.TruncateLongString(cl.ExceptionMessage, 7000);
-				SetNextTryDateTime(cl);
-				if (context != null)
+				communicationLog.ExceptionMessage = StringHelper.TruncateLongString(communicationLog.ExceptionMessage, 7000);
+				SetNextTryDateTime();
+				if (commonContext != null)
 				{
-					communicationLogRep.Update(cl);
+					communicationLogRep.Update(communicationLog);
 					communicationLogRep.SubmitChanges();
 				}
 				throw;
@@ -298,101 +267,115 @@ namespace CommunicationWorkerRole
 			}
 		}
 
-		private static void SetRelatedEntityTransferStatusToTransferError(CommunicationLog waitingCommLog)
+		private void SetRelatedEntityTransferStatusToTransferError(CommunicationLog waitingCommLog)
 		{
 			if (waitingCommLog.Subject == "Payment SAT Interface")
 			{
-				Simplog.Data.InvoiceModel.Repositories.ARPaymentRepository arpaymentRep = new Simplog.Data.InvoiceModel.Repositories.ARPaymentRepository(waitingCommLog.Tenant);
-				Simplog.Data.InvoiceModel.EntityPOCOs.ARPayment payment = arpaymentRep.GetSingleARPayment(waitingCommLog.EntityId);
-				if (payment != null)
+				if (isConcurrencyToggleEnabled)
 				{
-					if (payment.SATTransferStatusCode != "TE")
+					ARPaymentPM payment = arPaymentQuery.GetSinglePM(waitingCommLog.EntityId, waitingCommLog.Tenant);
+					if (payment != null && payment.SATTransferStatusCode != "TE")
+					{
+						payment.IsUpdatedBySAT = true;
+						payment.SATTransferStatusCode = "TE";
+						this.SaveARPayment_UpdateService(payment);
+					}
+				}
+
+				else
+                {
+					ARPayment payment = arPaymentRepository.GetSingleARPayment(waitingCommLog.EntityId, waitingCommLog.Tenant);
+					if (payment != null && payment.SATTransferStatusCode != "TE")
 					{
 						payment.SATTransferStatusCode = "TE";
-						//payment.TransmissionError = transError;
-						arpaymentRep.Update(payment);
-						arpaymentRep.SubmitChanges();
+						this.SaveARPayment_Repository(payment);
 					}
 				}
 			}
 			else
 			{
-				Simplog.Data.InvoiceModel.Repositories.ARInvoiceRepository arinvoiceRep = new Simplog.Data.InvoiceModel.Repositories.ARInvoiceRepository(waitingCommLog.Tenant);
-				Simplog.Data.InvoiceModel.EntityPOCOs.ARInvoice invoice = arinvoiceRep.GetSingleInvoice(waitingCommLog.EntityId);
-				if (invoice.SATTransferStatusCode != "TE")
+				if (isConcurrencyToggleEnabled)
 				{
-					invoice.SATTransferStatusCode = "TE";
-					//invoice.TransmissionError = transError;
-					arinvoiceRep.Update(invoice);
-					arinvoiceRep.SubmitChanges();
+					ARInvoicePM invoice = arInvoiceQuery.GetSinglePM(waitingCommLog.EntityId, waitingCommLog.Tenant);
+					if (invoice != null && invoice.SATTransferStatusCode != "TE")
+					{
+						invoice.IsUpdatedBySAT = true;
+						invoice.SATTransferStatusCode = "TE";
+						this.SaveARInvoice_UpdateService(invoice);
+					}
+				}
+
+				else
+                {
+					ARInvoice invoice = arInvoiceRepository.GetSingleARInvoice(waitingCommLog.EntityId, waitingCommLog.Tenant);
+					if (invoice != null && invoice.SATTransferStatusCode != "TE")
+					{
+						invoice.SATTransferStatusCode = "TE";
+						this.SaveARInvoice_Repository(invoice);
+					}
 				}
 			}
 		}
 
-		private void SendWaitingCommunicationLog(CommunicationLog waitingCommLog, CommunicationLogRepository communicationLogRep)
+		private void SendWaitingCommunicationLog()
 		{
-			switch (waitingCommLog.Subject)
+			switch (communicationLog.Subject)
 			{
 				case "SAT Interface Cancellation Request":
-					SendProfactCancellationRequest(waitingCommLog, communicationLogRep);
+					SendProfactCancellationRequest();
 					break;
+
 				case "Payment SAT Interface Cancellation":
-					SendPaymentProfactCancellationRequest(waitingCommLog, communicationLogRep);
+					SendPaymentProfactCancellationRequest();
 					break;
+
 				default:
-					SendProfactRequest(waitingCommLog, communicationLogRep);
+					SendProfactRequest();
 					break;
-
 			}
-
 		}
 
 		#endregion
 
 		#region SendProfactRequest
 
-		private void SendProfactRequest(CommunicationLog waitingCommLog, CommunicationLogRepository communicationLogRep)
+		private void SendProfactRequest()
 		{
-			if (waitingCommLog.Document != null)
+			if (communicationLog.Document != null)
 			{
-				string filename = waitingCommLog.DocumentId + "." + waitingCommLog.Document.Extension;
-
+				string filename = communicationLog.DocumentId + "." + communicationLog.Document.Extension;
 
 				Logitude.Server.Tools.BlobFileInfo fileInfo = new Logitude.Server.Tools.BlobFileInfo()
 				{
-					FileName = waitingCommLog.Document.Id,
-					FolderName = waitingCommLog.Document.Folder,
-					Extension = waitingCommLog.Document.Extension,
-					Tenant = waitingCommLog.Document.Tenant,
-					FileSize = waitingCommLog.Document.FileSize,
+					FileName = communicationLog.Document.Id,
+					FolderName = communicationLog.Document.Folder,
+					Extension = communicationLog.Document.Extension,
+					Tenant = communicationLog.Document.Tenant,
+					FileSize = communicationLog.Document.FileSize,
 				};
+
 				Logitude.Server.Tools.StorageService.IBlobService storageservice = Logitude.Server.Tools.ContainerAccessor.Container.Resolve(typeof(Logitude.Server.Tools.StorageService.IBlobService), "StorageService", new Microsoft.Practices.Unity.ParameterOverride("", 1)) as Logitude.Server.Tools.StorageService.IBlobService;
 				byte[] datainByte = storageservice.Read(fileInfo);
 
-
 				if (datainByte != null)
 				{
-
-
-
-
-					Simplog.Data.InvoiceModel.Repositories.SATInterfaceSettingRepository sATInterfaceSettingRepository = new Simplog.Data.InvoiceModel.Repositories.SATInterfaceSettingRepository(waitingCommLog.Tenant);
-					Simplog.Data.InvoiceModel.EntityPOCOs.SATInterfaceSetting satSetting = sATInterfaceSettingRepository.GetSingleSATInterfaceSetting(waitingCommLog.Tenant);
+					SATInterfaceSettingRepository sATInterfaceSettingRepository = new SATInterfaceSettingRepository(tenant);
+					SATInterfaceSetting satSetting = sATInterfaceSettingRepository.GetSingleSATInterfaceSetting(tenant);
 					if (satSetting != null)
 					{
-
-						SendProfact33Request(waitingCommLog, communicationLogRep, datainByte, satSetting);
-
-
+						if (satSetting.SATInterfaceCode == "PROF40")
+						{
+							SATProfact40Service sATProfact40Service = new SATProfact40Service(commonContext, queueservice);
+							sATProfact40Service.SendRequest(new SATProfact40ServiceArgs { WaitingCommLog = communicationLog, CommunicationLogRep = communicationLogRep, DatainByte = datainByte, SatSetting = satSetting });
+						}
+						else
+							SendProfact33Request(datainByte, satSetting);
 					}
-
 				}
-
 			}
 		}
 
-
-		private void SendProfact33Request(CommunicationLog waitingCommLog, CommunicationLogRepository communicationLogRep, byte[] datainByte, Simplog.Data.InvoiceModel.EntityPOCOs.SATInterfaceSetting satSetting)
+		private void SendProfact33Request(byte[] datainByte, SATInterfaceSetting satSetting)
 		{
 			SATInterfaceHelper sATInterfaceHelper = new SATInterfaceHelper();
 
@@ -407,17 +390,12 @@ namespace CommunicationWorkerRole
 			//Timbramos el CFDI por medio del conector y guardamos resultado
 			ResultadoTimbre resultadoTimbre = conector.TimbraCFDI(comprobante);
 
-			Simplog.Data.InvoiceModel.Repositories.ARInvoiceRepository arinvoiceRep = new Simplog.Data.InvoiceModel.Repositories.ARInvoiceRepository(waitingCommLog.Tenant);
-			Simplog.Data.InvoiceModel.Repositories.ARPaymentRepository arpaymentRep = new Simplog.Data.InvoiceModel.Repositories.ARPaymentRepository(waitingCommLog.Tenant);
-
-
-
 			//Verificamos el resultado
 			if (resultadoTimbre.Exitoso)
 			{
-				if (waitingCommLog.Subject == "Payment SAT Interface")
+				if (communicationLog.Subject == "Payment SAT Interface")
 				{
-					Simplog.Data.InvoiceModel.EntityPOCOs.ARPayment payment = arpaymentRep.GetSingleARPayment(waitingCommLog.EntityId);
+					ARPaymentPM payment = arPaymentQuery.GetSinglePM(communicationLog.EntityId, tenant);
 					if (payment != null)
 					{
 						SATAdditionalFields additional = new SATAdditionalFields()
@@ -430,15 +408,32 @@ namespace CommunicationWorkerRole
 							additional.QRImage = Convert.ToBase64String(resultadoTimbre.CodigoBidimensional);//imagedetail.Id;//
 						}
 
-                        payment.SATApprovalDate = GetSATApprovalDateFromComplemento(waitingCommLog, comprobante.Complemento);
-                         
-						payment.SATAdditionalFieldsXML = LogitudeXmlSerializer.SerializeObjectToXmlString(additional);
-						payment.SATXML = resultadoTimbre.Xml;
-						payment.SATTransferStatusCode = "TD";
-                        payment.TransmissionError = null;
-                        arpaymentRep.Update(payment);
-						arpaymentRep.SubmitChanges();
-						sATInterfaceHelper.UpdatePaymentInvoicesSATStatus(payment, comprobante, arinvoiceRep, arpaymentRep);
+						if (isConcurrencyToggleEnabled)
+						{
+							payment.IsUpdatedBySAT = true;
+							payment.SATApprovalDate = GetSATApprovalDateFromComplemento(comprobante.Complemento.Any);
+							payment.SATAdditionalFieldsXML = LogitudeXmlSerializer.SerializeObjectToXmlString(additional);
+							payment.SATXML = resultadoTimbre.Xml;
+							payment.SATTransferStatusCode = "TD";
+							payment.TransmissionError = null;
+							this.SaveARPayment_UpdateService(payment);
+						}
+
+						else
+                        {
+							ARPayment paymentPOCO = arPaymentRepository.GetSingleARPayment(communicationLog.EntityId, tenant);
+							if(paymentPOCO != null)
+                            {
+								paymentPOCO.SATApprovalDate = GetSATApprovalDateFromComplemento(comprobante.Complemento.Any);
+								paymentPOCO.SATAdditionalFieldsXML = LogitudeXmlSerializer.SerializeObjectToXmlString(additional);
+								paymentPOCO.SATXML = resultadoTimbre.Xml;
+								paymentPOCO.SATTransferStatusCode = "TD";
+								paymentPOCO.TransmissionError = null;
+								this.SaveARPayment_Repository(paymentPOCO);
+							}
+						}
+
+						sATInterfaceHelper.UpdatePaymentInvoicesSATStatus(payment.Id, tenant, comprobante.Complemento.Any[0], arInvoiceRepository, arPaymentRepository);
 
 						Encoding encoding = Encoding.UTF8;
 						byte[] xmlfile = encoding.GetBytes(resultadoTimbre.Xml);
@@ -446,20 +441,17 @@ namespace CommunicationWorkerRole
 
 						EventTracer.CreateTraceEvent(new EventTracerArgs()
 						{
-							EntityId = waitingCommLog.EntityId,
-							ObjectTableName = waitingCommLog.ObjectTable.Name,
-							Tenant = waitingCommLog.Tenant,
-							UserId = waitingCommLog.CreatedByUserId,
+							EntityId = communicationLog.EntityId,
+							ObjectTableName = communicationLog.ObjectTable.Name,
+							Tenant = tenant,
+							UserId = communicationLog.CreatedByUserId,
 							EventTypeCode = "PAAS",
 						});
-
-
 					}
 				}
 				else
 				{
-					Simplog.Data.InvoiceModel.EntityPOCOs.ARInvoice invoice = arinvoiceRep.GetSingleInvoice(waitingCommLog.EntityId);
-
+					ARInvoicePM invoice = arInvoiceQuery.GetSinglePM(communicationLog.EntityId, tenant);
 					if (invoice != null)
 					{
 						SATAdditionalFields additional = new SATAdditionalFields()
@@ -473,18 +465,33 @@ namespace CommunicationWorkerRole
 						}
 
 						Profact.TimbraCFDI33.Comprobante resultComprobante = Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI33.Comprobante>(resultadoTimbre.Xml);
-                        invoice.SATApprovalDate = GetSATApprovalDateFromComplemento(waitingCommLog, resultComprobante.Complemento);
-                         
 
-						invoice.SATXML = resultadoTimbre.Xml;
-						invoice.SATTransferStatusCode = "TD";
-                        invoice.TransmissionError = null;
-                        invoice.SATInvoiceStatusCode = "OP";
+						if (isConcurrencyToggleEnabled)
+						{
+							invoice.SATApprovalDate = GetSATApprovalDateFromComplemento(resultComprobante.Complemento.Any);
+							invoice.IsUpdatedBySAT = true;
+							invoice.SATXML = resultadoTimbre.Xml;
+							invoice.SATTransferStatusCode = "TD";
+							invoice.TransmissionError = null;
+							invoice.SATInvoiceStatusCode = "OP";
+							invoice.SATAdditionalFieldsXML = LogitudeXmlSerializer.SerializeObjectToXmlString(additional);
+							this.SaveARInvoice_UpdateService(invoice);
+						}
 
-						invoice.SATAdditionalFieldsXML = LogitudeXmlSerializer.SerializeObjectToXmlString(additional);
-
-						arinvoiceRep.Update(invoice);
-						arinvoiceRep.SubmitChanges();
+                        else 
+						{
+							ARInvoice invoicePOCO = arInvoiceRepository.GetSingleARInvoice(communicationLog.EntityId, tenant);
+							if(invoicePOCO != null)
+                            {
+								invoicePOCO.SATApprovalDate = GetSATApprovalDateFromComplemento(resultComprobante.Complemento.Any);
+								invoicePOCO.SATXML = resultadoTimbre.Xml;
+								invoicePOCO.SATTransferStatusCode = "TD";
+								invoicePOCO.TransmissionError = null;
+								invoicePOCO.SATInvoiceStatusCode = "OP";
+								invoicePOCO.SATAdditionalFieldsXML = LogitudeXmlSerializer.SerializeObjectToXmlString(additional);
+								this.SaveARInvoice_Repository(invoicePOCO);
+							}
+						}
 
 						Encoding encoding = Encoding.UTF8;
 						byte[] xmlfile = encoding.GetBytes(resultadoTimbre.Xml);
@@ -493,23 +500,22 @@ namespace CommunicationWorkerRole
 
 						EventTracer.CreateTraceEvent(new EventTracerArgs()
 						{
-							EntityId = waitingCommLog.EntityId,
-							ObjectTableName = waitingCommLog.ObjectTable.Name,
-							Tenant = waitingCommLog.Tenant,
-							UserId = waitingCommLog.CreatedByUserId,
+							EntityId = communicationLog.EntityId,
+							ObjectTableName = communicationLog.ObjectTable.Name,
+							Tenant = tenant,
+							UserId = communicationLog.CreatedByUserId,
 							EventTypeCode = "INAS",
 						});
 					}
 				}
 
-				waitingCommLog.CommunicationStatusTypeCode = "D";
-				waitingCommLog.DoneDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
-				waitingCommLog.DoneDateUTC = DateTime.UtcNow;
-				waitingCommLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
-				waitingCommLog.LastStatusDateUTC = DateTime.UtcNow;
-				communicationLogRep.Update(waitingCommLog);
+				communicationLog.CommunicationStatusTypeCode = "D";
+				communicationLog.DoneDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+				communicationLog.DoneDateUTC = DateTime.UtcNow;
+				communicationLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+				communicationLog.LastStatusDateUTC = DateTime.UtcNow;
+				communicationLogRep.Update(communicationLog);
 				communicationLogRep.SubmitChanges();
-
 
 			}
 			else
@@ -517,83 +523,50 @@ namespace CommunicationWorkerRole
 
 				if (resultadoTimbre.Descripcion != null && resultadoTimbre.Descripcion.Contains("Este CFDI ya ha sido timbrado con UUID"))
 				{
-					GetProfactSentXML(waitingCommLog, communicationLogRep, conector, resultadoTimbre, arinvoiceRep, arpaymentRep);
+					GetProfactSentXML(conector, resultadoTimbre);
 				}
 				else
 				{
-					string transError = resultadoTimbre.Descripcion;
-                    //if (waitingCommLog.Retries == 4)
-                    //{
+					string transError = resultadoTimbre.Descripcion;					
+					if (!string.IsNullOrEmpty(resultadoTimbre.Descripcion))
+					{
+						transError = resultadoTimbre.Descripcion.Replace("Error en la validación de estructura xsd:", "").ToString().Trim();
+						if (!string.IsNullOrEmpty(resultadoTimbre.DescripcionInterna))
+						{
+							transError += Environment.NewLine + resultadoTimbre.DescripcionInterna;
+						}
+					}
 
-                    //}
-
-                    if (!string.IsNullOrEmpty(resultadoTimbre.Descripcion))
-                    {
-                        transError = resultadoTimbre.Descripcion.Replace("Error en la validación de estructura xsd:", "").ToString().Trim();
-                        if (!string.IsNullOrEmpty(resultadoTimbre.DescripcionInterna))
-                        {
-                            transError += Environment.NewLine + resultadoTimbre.DescripcionInterna;
-                        }
-
-                    }
-
-                    if (waitingCommLog.Subject == "Payment SAT Interface")
-                    {
-                        Simplog.Data.InvoiceModel.EntityPOCOs.ARPayment payment = arpaymentRep.GetSingleARPayment(waitingCommLog.EntityId);
-                        if (payment != null)
-                        {
-                            //if (transError != payment.TransmissionError || payment.SATTransferStatusCode != "TE")
-                            //{
-                            //    payment.SATTransferStatusCode = "TE";
-                            //    payment.TransmissionError = transError;
-                            //    arpaymentRep.Update(payment);
-                            //    arpaymentRep.SubmitChanges();
-                            //}
-
-                            HandlePaymentError(waitingCommLog, arpaymentRep, communicationLogRep, transError);
-                        }
-                    }
-                    else
-                    {
-                        Simplog.Data.InvoiceModel.EntityPOCOs.ARInvoice invoice = arinvoiceRep.GetSingleInvoice(waitingCommLog.EntityId);
-                        //if (transError != invoice.TransmissionError || invoice.SATTransferStatusCode != "TE")
-                        //{
-                        //    invoice.SATTransferStatusCode = "TE";
-                        //    invoice.TransmissionError = transError;
-
-                        //    arinvoiceRep.Update(invoice);
-                        //    arinvoiceRep.SubmitChanges();
-                        //}
-
-                        HandleInvoiceError(waitingCommLog, arinvoiceRep, communicationLogRep, transError, invoice);
-                    }
-
-
-                    //throw new Exception("Failed," + transError);
+					if (communicationLog.Subject == "Payment SAT Interface")
+					{						
+							HandlePaymentError(transError);						
+					}
+					else
+					{
+						ARInvoicePM invoice = arInvoiceQuery.GetSinglePM(communicationLog.EntityId, tenant);						
+						HandleInvoiceError(transError, invoice);
+					}
 				}
-
 			}
 		}
 
-
-
-		private void GetProfactSentXML(CommunicationLog waitingCommLog, CommunicationLogRepository communicationLogRep, Profact.TimbraCFDI33.Conector conector, ResultadoTimbre resultadoTimbre, Simplog.Data.InvoiceModel.Repositories.ARInvoiceRepository arinvoiceRep, Simplog.Data.InvoiceModel.Repositories.ARPaymentRepository arpaymentRep)
+		private void GetProfactSentXML(Profact.TimbraCFDI33.Conector conector, ResultadoTimbre resultadoTimbre)
 		{
 			SATInterfaceHelper sATInterfaceHelper = new SATInterfaceHelper();
 			string transError = ResolveTransmisionError(resultadoTimbre);
 			string[] descrip = resultadoTimbre.Descripcion.Split(':');
-			ICommonDataContext commonContext = CommonDataContext.GetContext(waitingCommLog.Tenant);
+			ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
 			TenantRepository tenantRepository = new TenantRepository(commonContext);
-			Tenant currentTenant = tenantRepository.GetSingleTenant(waitingCommLog.Tenant);
+			Tenant currentTenant = tenantRepository.GetSingleTenant(tenant);
 
-			if (waitingCommLog.Subject == "Payment SAT Interface")
+			if (communicationLog.Subject == "Payment SAT Interface")
 			{
 				if (descrip.Length > 1)
 				{
-                    string folioFiscal = descrip[descrip.Length - 1];
+					string folioFiscal = descrip[descrip.Length - 1];
 					string rfcEmisor = currentTenant.VatNumber;
 					ResultadoConsulta resultadoConsulta = conector.ObtieneCFDI(rfcEmisor, folioFiscal);
-					Simplog.Data.InvoiceModel.EntityPOCOs.ARPayment payment = arpaymentRep.GetSingleARPayment(waitingCommLog.EntityId);
+					ARPaymentPM payment = arPaymentQuery.GetSinglePM(communicationLog.EntityId, tenant);
 
 					if (payment != null && resultadoConsulta.Exitoso)
 					{
@@ -609,63 +582,79 @@ namespace CommunicationWorkerRole
 							additional.QRImage = Convert.ToBase64String(resultadoConsulta.CodigoBidimensional);//imagedetail.Id;//
 						}
 
-                        payment.SATApprovalDate = GetSATApprovalDateFromComplemento(waitingCommLog, paymentComprobante.Complemento);
-                        payment.SATAdditionalFieldsXML = LogitudeXmlSerializer.SerializeObjectToXmlString(additional);
-						payment.SATXML = resultadoConsulta.Xml;
-						payment.SATTransferStatusCode = "TD";
-                        payment.TransmissionError = null;
-                        arpaymentRep.Update(payment);
-						arpaymentRep.SubmitChanges();
-						sATInterfaceHelper.UpdatePaymentInvoicesSATStatus(payment, paymentComprobante, arinvoiceRep, arpaymentRep);
+						if (isConcurrencyToggleEnabled)
+						{
+							payment.IsUpdatedBySAT = true;
+							payment.SATApprovalDate = GetSATApprovalDateFromComplemento(paymentComprobante.Complemento.Any);
+							payment.SATAdditionalFieldsXML = LogitudeXmlSerializer.SerializeObjectToXmlString(additional);
+							payment.SATXML = resultadoConsulta.Xml;
+							payment.SATTransferStatusCode = "TD";
+							payment.TransmissionError = null;
+							this.SaveARPayment_UpdateService(payment);
+						}
+
+						else
+                        {
+							ARPayment paymentPOCO = arPaymentRepository.GetSingleARPayment(communicationLog.EntityId, tenant);
+							if(paymentPOCO != null)
+                            {
+								paymentPOCO.SATApprovalDate = GetSATApprovalDateFromComplemento(paymentComprobante.Complemento.Any);
+								paymentPOCO.SATAdditionalFieldsXML = LogitudeXmlSerializer.SerializeObjectToXmlString(additional);
+								paymentPOCO.SATXML = resultadoConsulta.Xml;
+								paymentPOCO.SATTransferStatusCode = "TD";
+								paymentPOCO.TransmissionError = null;
+								this.SaveARPayment_Repository(paymentPOCO);
+							}
+						}
+
+						sATInterfaceHelper.UpdatePaymentInvoicesSATStatus(payment.Id, tenant, paymentComprobante.Complemento.Any[0], arInvoiceRepository, arPaymentRepository);
 
 						Encoding encoding = Encoding.UTF8;
 						byte[] xmlfile = encoding.GetBytes(resultadoConsulta.Xml);
 
 						CreateSATPaymentDocument(payment, xmlfile, true);
 
-						waitingCommLog.CommunicationStatusTypeCode = "D";
-						waitingCommLog.DoneDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
-						waitingCommLog.DoneDateUTC = DateTime.UtcNow;
-						waitingCommLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
-						waitingCommLog.LastStatusDateUTC = DateTime.UtcNow;
-						communicationLogRep.Update(waitingCommLog);
+						communicationLog.CommunicationStatusTypeCode = "D";
+						communicationLog.DoneDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+						communicationLog.DoneDateUTC = DateTime.UtcNow;
+						communicationLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+						communicationLog.LastStatusDateUTC = DateTime.UtcNow;
+						communicationLogRep.Update(communicationLog);
 						communicationLogRep.SubmitChanges();
-						
+
 						EventTracer.CreateTraceEvent(new EventTracerArgs()
 						{
-							EntityId = waitingCommLog.EntityId,
-							ObjectTableName = waitingCommLog.ObjectTable.Name,
-							Tenant = waitingCommLog.Tenant,
-							UserId = waitingCommLog.CreatedByUserId,
+							EntityId = communicationLog.EntityId,
+							ObjectTableName = communicationLog.ObjectTable.Name,
+							Tenant = tenant,
+							UserId = communicationLog.CreatedByUserId,
 							EventTypeCode = "PAAS",
 						});
 					}
 					else
 					{
-						HandlePaymentError(waitingCommLog, arpaymentRep, communicationLogRep, transError);
+						HandlePaymentError(transError);
 					}
 				}
 				else
 				{
-					HandlePaymentError(waitingCommLog, arpaymentRep, communicationLogRep, transError);
+					HandlePaymentError(transError);
 				}
 			}
 			else
 			{
-                //Este CFDI ya ha sido timbrado con UUID: { 0}
-                //Este CFDI ya ha sido timbrado con UUID: 09acd5a4 - c544 - 45af - b897 - f64b13f60606
+				//Este CFDI ya ha sido timbrado con UUID: { 0}
+				//Este CFDI ya ha sido timbrado con UUID: 09acd5a4 - c544 - 45af - b897 - f64b13f60606
 
-                Simplog.Data.InvoiceModel.EntityPOCOs.ARInvoice invoice = arinvoiceRep.GetSingleInvoice(waitingCommLog.EntityId);
+				ARInvoicePM invoice = arInvoiceQuery.GetSinglePM(communicationLog.EntityId, tenant);
 				descrip = resultadoTimbre.Descripcion.Split(':');
 				if (descrip.Length > 1)
 				{
-
-                    string folioFiscal = descrip[descrip.Length - 1];
-                    string rfcEmisor = currentTenant.VatNumber;
+					string folioFiscal = descrip[descrip.Length - 1];
+					string rfcEmisor = currentTenant.VatNumber;
 					ResultadoConsulta resultadoConsulta = conector.ObtieneCFDI(rfcEmisor, folioFiscal);
 					if (resultadoConsulta.Exitoso)
 					{
-
 						SATAdditionalFields additional = new SATAdditionalFields()
 						{
 							CadenaOriginal = resultadoConsulta.CadenaTimbre,
@@ -678,89 +667,97 @@ namespace CommunicationWorkerRole
 
 						Profact.TimbraCFDI33.Comprobante invoiceComprobante = Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI33.Comprobante>(resultadoConsulta.Xml);
 
-                        invoice.SATApprovalDate  = GetSATApprovalDateFromComplemento(waitingCommLog, invoiceComprobante.Complemento);
+						if (isConcurrencyToggleEnabled)
+						{
+							invoice.IsUpdatedBySAT = true;
+							invoice.SATApprovalDate = GetSATApprovalDateFromComplemento(invoiceComprobante.Complemento.Any);
+							invoice.SATXML = resultadoConsulta.Xml;
+							invoice.SATAdditionalFieldsXML = LogitudeXmlSerializer.SerializeObjectToXmlString<SATAdditionalFields>(additional);
+							invoice.SATTransferStatusCode = "TD";
+							invoice.TransmissionError = null;
+							this.SaveARInvoice_UpdateService(invoice);
+						}
 
-                      
-
-						string SATAdditionalFieldsXML = LogitudeXmlSerializer.SerializeObjectToXmlString<SATAdditionalFields>(additional);
-
-						invoice.SATXML = resultadoConsulta.Xml;
-						invoice.SATAdditionalFieldsXML = LogitudeXmlSerializer.SerializeObjectToXmlString<SATAdditionalFields>(additional);
-						invoice.SATTransferStatusCode = "TD";
-                        invoice.TransmissionError = null;
-                        arinvoiceRep.Update(invoice);
-						arinvoiceRep.SubmitChanges();
+						else
+                        {
+							ARInvoice invoicePOCO = arInvoiceRepository.GetSingleARInvoice(communicationLog.EntityId, tenant);
+							if(invoicePOCO != null)
+                            {
+								invoicePOCO.SATApprovalDate = GetSATApprovalDateFromComplemento(invoiceComprobante.Complemento.Any);
+								invoicePOCO.SATXML = resultadoConsulta.Xml;
+								invoicePOCO.SATAdditionalFieldsXML = LogitudeXmlSerializer.SerializeObjectToXmlString<SATAdditionalFields>(additional);
+								invoicePOCO.SATTransferStatusCode = "TD";
+								invoicePOCO.TransmissionError = null;
+								this.SaveARInvoice_Repository(invoicePOCO);
+							}
+						}
 
 						Encoding encoding = Encoding.UTF8;
 						byte[] xmlfile = encoding.GetBytes(resultadoConsulta.Xml);
 
 						CreateSATDocument(invoice, xmlfile, true);
 
-
-						waitingCommLog.CommunicationStatusTypeCode = "D";
-						waitingCommLog.DoneDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
-						waitingCommLog.DoneDateUTC = DateTime.UtcNow;
-						waitingCommLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
-						waitingCommLog.LastStatusDateUTC = DateTime.UtcNow;
-						communicationLogRep.Update(waitingCommLog);
+						communicationLog.CommunicationStatusTypeCode = "D";
+						communicationLog.DoneDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+						communicationLog.DoneDateUTC = DateTime.UtcNow;
+						communicationLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+						communicationLog.LastStatusDateUTC = DateTime.UtcNow;
+						communicationLogRep.Update(communicationLog);
 						communicationLogRep.SubmitChanges();
-
 
 						EventTracer.CreateTraceEvent(new EventTracerArgs()
 						{
-							EntityId = waitingCommLog.EntityId,
-							ObjectTableName = waitingCommLog.ObjectTable.Name,
-							Tenant = waitingCommLog.Tenant,
-							UserId = waitingCommLog.CreatedByUserId,
+							EntityId = communicationLog.EntityId,
+							ObjectTableName = communicationLog.ObjectTable.Name,
+							Tenant = tenant,
+							UserId = communicationLog.CreatedByUserId,
 							EventTypeCode = "INAS",
 						});
 
 					}
 					else
 					{
-						HandleInvoiceError(waitingCommLog, arinvoiceRep, communicationLogRep, transError, invoice);
-
+						HandleInvoiceError(transError, invoice);
 					}
 				}
 				else
 				{
-					HandleInvoiceError(waitingCommLog, arinvoiceRep, communicationLogRep, transError, invoice);
+					HandleInvoiceError(transError, invoice);
 				}
-
 			}
 		}
 
-        private DateTime GetSATApprovalDateFromComplemento(CommunicationLog waitingCommLog, Profact.TimbraCFDI33.ComprobanteComplemento complemento)
-        {
-            if (complemento.Any != null)
-            {
-                List<System.Xml.XmlElement> myLXmlComplementos = complemento.Any.ToList<System.Xml.XmlElement>();
-                var timbreFiscalDigitalElement = myLXmlComplementos.Where(el => el.Name == "tfd:TimbreFiscalDigital").FirstOrDefault();
-                if (timbreFiscalDigitalElement != null)
-                {
-                    Profact.TimbraCFDI.TimbreFiscalDigital digitalTi = Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI.TimbreFiscalDigital>(timbreFiscalDigitalElement.OuterXml);
+		private DateTime GetSATApprovalDateFromComplemento(XmlElement[] anycomplemento)
+		{
+			if (anycomplemento != null)
+			{
+				List<System.Xml.XmlElement> myLXmlComplementos = anycomplemento.ToList<System.Xml.XmlElement>();
+				var timbreFiscalDigitalElement = myLXmlComplementos.Where(el => el.Name == "tfd:TimbreFiscalDigital").FirstOrDefault();
+				if (timbreFiscalDigitalElement != null)
+				{
+					Profact.TimbraCFDI.TimbreFiscalDigital digitalTi = Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI.TimbreFiscalDigital>(timbreFiscalDigitalElement.OuterXml);
 
-                    if (digitalTi.FechaTimbrado != null && !digitalTi.FechaTimbrado.Equals(DateTime.MinValue))
-                    {
-                        return digitalTi.FechaTimbrado;
-                    }
-                    else
-                    {
-                       return TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
-                    }
-                }
-                else
-                {
-                    return TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
-                }
-            }
-            else
-            {
-                return TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
-            }
-        }
+					if (digitalTi.FechaTimbrado != null && !digitalTi.FechaTimbrado.Equals(DateTime.MinValue))
+					{
+						return digitalTi.FechaTimbrado;
+					}
+					else
+					{
+						return TenantServerConfigration.GetCurrentDateTime(tenant);
+					}
+				}
+				else
+				{
+					return TenantServerConfigration.GetCurrentDateTime(tenant);
+				}
+			}
+			else
+			{
+				return TenantServerConfigration.GetCurrentDateTime(tenant);
+			}
+		}
 
-        private string ResolveTransmisionError(ResultadoTimbre resultadoTimbre)
+		private string ResolveTransmisionError(ResultadoTimbre resultadoTimbre)
 		{
 			string transError = resultadoTimbre.Descripcion;
 			if (!string.IsNullOrEmpty(resultadoTimbre.Descripcion))
@@ -776,80 +773,84 @@ namespace CommunicationWorkerRole
 			return transError;
 		}
 
-		private void HandlePaymentError(CommunicationLog waitingCommLog, Simplog.Data.InvoiceModel.Repositories.ARPaymentRepository arpaymentRep, CommunicationLogRepository communicationLogRep, string transError)
-        {
-            //if (waitingCommLog.Retries == 4)
-            //{
-                Simplog.Data.InvoiceModel.EntityPOCOs.ARPayment payment = arpaymentRep.GetSingleARPayment(waitingCommLog.EntityId);
-                if (payment != null)
-                {
-                    if (transError != payment.TransmissionError || payment.SATTransferStatusCode != "TE")
-                    {
-                        payment.SATTransferStatusCode = "TE";
-                        payment.TransmissionError = transError;
-                        arpaymentRep.Update(payment);
-                        arpaymentRep.SubmitChanges();
-                    }
-                }
-			// }
-
-			SaveCommunicationLogAsDoneWithSATError(waitingCommLog, communicationLogRep, transError);
-
-        }
-
-        private void HandleInvoiceError(CommunicationLog waitingCommLog, Simplog.Data.InvoiceModel.Repositories.ARInvoiceRepository arinvoiceRep, CommunicationLogRepository communicationLogRep, string transError, Simplog.Data.InvoiceModel.EntityPOCOs.ARInvoice invoice)
+		private void HandlePaymentError(string transError)
 		{
-			//if (waitingCommLog.Retries == 4)
-			//{
-				if (transError != invoice.TransmissionError || invoice.SATTransferStatusCode != "TE")
+			ARPaymentPM payment = arPaymentQuery.GetSinglePM(communicationLog.EntityId, tenant);
+			if (payment != null)
+			{
+				if (transError != payment.TransmissionError || payment.SATTransferStatusCode != "TE")
 				{
+					if (isConcurrencyToggleEnabled)
+					{
+						payment.IsUpdatedBySAT = true;
+						payment.SATTransferStatusCode = "TE";
+						payment.TransmissionError = transError;
+						SaveARPayment_UpdateService(payment);
+					}
+
+					else
+                    {
+						ARPayment paymentPOCO = arPaymentRepository.GetSingleARPayment(communicationLog.EntityId, tenant);
+						if(paymentPOCO != null)
+                        {
+							paymentPOCO.SATTransferStatusCode = "TE";
+							paymentPOCO.TransmissionError = transError;
+							SaveARPayment_Repository(paymentPOCO);
+						}
+					}
+				}
+			}
+
+			SaveCommunicationLogAsDoneWithSATError(transError);
+		}
+
+		private void HandleInvoiceError(string transError, ARInvoicePM invoice)
+		{
+			if (transError != invoice.TransmissionError || invoice.SATTransferStatusCode != "TE")
+			{
+				if (isConcurrencyToggleEnabled)
+				{
+					invoice.IsUpdatedBySAT = true;
 					invoice.SATTransferStatusCode = "TE";
 					invoice.TransmissionError = transError;
-
-					arinvoiceRep.Update(invoice);
-					arinvoiceRep.SubmitChanges();
+					SaveARInvoice_UpdateService(invoice);
 				}
-			//}
 
-			SaveCommunicationLogAsDoneWithSATError(waitingCommLog, communicationLogRep, transError);
-        }
+                else
+                {
+					ARInvoice invoicePOCO = arInvoiceRepository.GetSingleARInvoice(communicationLog.EntityId, tenant);
+					if(invoicePOCO != null)
+                    {
+						invoicePOCO.SATTransferStatusCode = "TE";
+						invoicePOCO.TransmissionError = transError;
+						SaveARInvoice_Repository(invoicePOCO);
+					}
+				}
+			}
 
-		private void SaveCommunicationLogAsDoneWithSATError(CommunicationLog waitingCommLog, CommunicationLogRepository communicationLogRep, string transError)
+			SaveCommunicationLogAsDoneWithSATError(transError);
+		}
+
+		private void SaveCommunicationLogAsDoneWithSATError(string transError)
 		{
 			string exceptionMessage = "Done, with SAT Error: " + transError;
-			waitingCommLog.CommunicationStatusTypeCode = "D";
-			waitingCommLog.ExceptionMessage = StringHelper.TruncateLongString(exceptionMessage, 7000);
-			waitingCommLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
+			communicationLog.CommunicationStatusTypeCode = "D";
+			communicationLog.ExceptionMessage = StringHelper.TruncateLongString(exceptionMessage, 7000);
+			communicationLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(tenant);
 
-			if (context != null)
+			if (commonContext != null)
 			{
-				communicationLogRep.Update(waitingCommLog);
+				communicationLogRep.Update(communicationLog);
 				communicationLogRep.SubmitChanges();
 			}
 
 			queueservice.Complete();
 		}
-		private void SaveCommunicationLogAsFailed(CommunicationLog waitingCommLog, CommunicationLogRepository communicationLogRep, string transError)
-        {
-            string exceptionMessage = "Failed," + transError;
-            waitingCommLog.CommunicationStatusTypeCode = "F";
-            waitingCommLog.ExceptionMessage = StringHelper.TruncateLongString(exceptionMessage, 7000);
-            waitingCommLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
+		#endregion
 
-            if (context != null)
-            {
-                communicationLogRep.Update(waitingCommLog);
-                communicationLogRep.SubmitChanges();
-            }
-
-            queueservice.Complete();
-        }
-        #endregion
-
-        #region CreateSATDocument
-        private void CreateSATDocument(Simplog.Data.InvoiceModel.EntityPOCOs.ARInvoice invoice, byte[] fileData, bool checkIfExists = false)
+		#region CreateSATDocument
+		private void CreateSATDocument(ARInvoicePM invoice, byte[] fileData, bool checkIfExists = false)
 		{
-
 			int tenant = invoice.Tenant;
 			ICommonDataContext objectContext = CommonDataContext.GetContext(invoice.Tenant);
 			DocumentTypeRepository documentTypeRep = new DocumentTypeRepository(objectContext);
@@ -859,16 +860,10 @@ namespace CommunicationWorkerRole
 			Simplog.Data.InfrastructureModel.EntityPOCOs.ObjectTable shipmentObjectTable = tableRepository.GetObjectTableByName("Shipment", 0, false);
 			Simplog.Data.InfrastructureModel.EntityPOCOs.ObjectTable masterObjectTable = tableRepository.GetObjectTableByName("Master", 0, false);
 
-
 			ObjectTable entityObjectTable = shipmentObjectTable;
-
-
-			ARInvoiceQuery arInvoiceQuery = new ARInvoiceQuery(tenant);
 			ARInvoicePM invoicePM = arInvoiceQuery.GetSinglePM(invoice.Id, invoice.Tenant);
 			ContactRepository contactRepository = new ContactRepository(tenant);
 			Contact systemUser = contactRepository.GetSingleContactByEmail("system@tenant" + tenant + ".com", tenant, true);
-
-
 			DocumentType docType = documentTypeRep.GetDocumentTypeByCode("SATXML", invoice.Tenant);
 
 			if (docType == null)
@@ -900,8 +895,6 @@ namespace CommunicationWorkerRole
 				}
 			}
 
-
-
 			Logitude.BL.CommonDataModel.Tools.EntityService.DocumentsFilingService documentsService = new Logitude.BL.CommonDataModel.Tools.EntityService.DocumentsFilingService(objectContext, invoice.Tenant);
 
 			Logitude.BL.CommonDataModel.EntityPMs.DocumentsFilingPM extDocPM = new Logitude.BL.CommonDataModel.EntityPMs.DocumentsFilingPM()
@@ -924,62 +917,53 @@ namespace CommunicationWorkerRole
 				Received = true,
 				ReceivedDate = DateTime.Now,
 				ReceivedByUserId = systemUser.Id,
-
 				Description = "SAT XML",
 				IsFromUnifreightPodMobile = true,
-
-				//EntityId = invoice.Id,
-				//ObjectTableId = arObjectTable.Id,
-				//EntityNumber = invoice.InvoiceNumber,
 				EntityId = string.IsNullOrEmpty(invoice.MainEntityId) ? invoice.Id : invoice.MainEntityId,
-				//ObjectTableId = entityObjectTable.Id,
 				EntityNumber = string.IsNullOrEmpty(invoice.MainEntityReference) ? invoice.InvoiceNumber : invoice.MainEntityReference,
-
 				ChildEntityId = invoice.Id,
 				ChildObjectTableId = arObjectTable.Id,
 				ChildEntityReference = invoice.InvoiceNumber,
-
 			};
+
 			extDocPM.ObjectTableId = !invoice.IsConsolidationInvoice ? entityObjectTable.Id : arObjectTable.Id;
-
-            documentsService.Create(extDocPM, fileData, systemUser.Id, false);
-
+			documentsService.Create(extDocPM, fileData, systemUser.Id, false);
 		}
-
-
 		#endregion
 
 		#region SendProfactCancellationRequest
-		private void SendProfactCancellationRequest(CommunicationLog waitingCommLog, CommunicationLogRepository communicationLogRep)
+		private void SendProfactCancellationRequest()
 		{
-
-			Simplog.Data.InvoiceModel.Repositories.ARInvoiceRepository arinvoiceRep = new Simplog.Data.InvoiceModel.Repositories.ARInvoiceRepository(waitingCommLog.Tenant);
-			Simplog.Data.InvoiceModel.EntityPOCOs.ARInvoice invoice = arinvoiceRep.GetSingleInvoice(waitingCommLog.EntityId);
+			ARInvoice invoicePOCO = arInvoiceRepository.GetSingleInvoice(communicationLog.EntityId);
+			ARInvoicePM invoice = arInvoiceQuery.GetSinglePM(communicationLog.EntityId, tenant);
 			if (!string.IsNullOrEmpty(invoice.SATXML))
 			{
-				Simplog.Data.InvoiceModel.Repositories.SATInterfaceSettingRepository sATInterfaceSettingRepository = new Simplog.Data.InvoiceModel.Repositories.SATInterfaceSettingRepository(waitingCommLog.Tenant);
-				Simplog.Data.InvoiceModel.EntityPOCOs.SATInterfaceSetting satSetting = sATInterfaceSettingRepository.GetSingleSATInterfaceSetting(waitingCommLog.Tenant);
+				SATInterfaceSettingRepository sATInterfaceSettingRepository = new SATInterfaceSettingRepository(tenant);
+				SATInterfaceSetting satSetting = sATInterfaceSettingRepository.GetSingleSATInterfaceSetting(tenant);
 				if (satSetting != null)
 				{
-
-					SendProfactCancellation33(waitingCommLog, communicationLogRep, arinvoiceRep, invoice, satSetting);
-
+					if (satSetting.SATInterfaceCode == "PROF40")
+						SATInvoiceProfact40CancellationService.SendRequest(new SATInvoiceProfact40CancellationServiceArgs { WaitingCommLog = communicationLog, CommunicationLogRep = communicationLogRep, ARInvoice = invoicePOCO, ARInvoicePM = invoice, ARInvoiceRep = arInvoiceRepository, SatSetting = satSetting });
+					else
+						SendProfactCancellation33(invoice, satSetting);
 				}
 			}
 		}
 
 
-		private void SendProfactCancellation33(CommunicationLog waitingCommLog, CommunicationLogRepository communicationLogRep, Simplog.Data.InvoiceModel.Repositories.ARInvoiceRepository arinvoiceRep, Simplog.Data.InvoiceModel.EntityPOCOs.ARInvoice invoice, Simplog.Data.InvoiceModel.EntityPOCOs.SATInterfaceSetting satSetting)
+		private void SendProfactCancellation33(ARInvoicePM invoice, SATInterfaceSetting satSetting)
 		{
-			Profact.TimbraCFDI33.Comprobante comprobante = Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI33.Comprobante>(invoice.SATXML);
 			bool isProduction = satSetting.Token != "mvpNUXmQfK8=";
 			Profact.TimbraCFDI33.Conector conector = new Profact.TimbraCFDI33.Conector(isProduction);
 			//Establecemos las credenciales para el permiso de conexión
 			conector.EstableceCredenciales(satSetting.Token);
 
-			if (comprobante.Complemento.Any != null)
+			ComprobanteDetails comprobanteDetails = GetcomprobanteDetails(invoice.SATXML);
+			ARInvoice invoicePOCO = arInvoiceRepository.GetSingleARInvoice(invoice.Id, tenant);
+
+			if (comprobanteDetails.ComplementoAny != null && invoicePOCO != null)
 			{
-				List<System.Xml.XmlElement> myLXmlComplementos = comprobante.Complemento.Any.ToList<System.Xml.XmlElement>();
+				List<System.Xml.XmlElement> myLXmlComplementos = comprobanteDetails.ComplementoAny.ToList<System.Xml.XmlElement>();
 				var timbreFiscalDigitalElement = myLXmlComplementos.Where(el => el.Name == "tfd:TimbreFiscalDigital").FirstOrDefault();
 				if (timbreFiscalDigitalElement != null)
 				{
@@ -987,7 +971,7 @@ namespace CommunicationWorkerRole
 
 
 					//Rfc Emisor
-					string rfcEmisor = comprobante.Emisor.Rfc.Trim();
+					string rfcEmisor = comprobanteDetails.RfcEmisor;
 
 					//Folio Fiscal - UUID
 					string folioFiscal = digitalTi.UUID.Trim();
@@ -1000,18 +984,32 @@ namespace CommunicationWorkerRole
 					{
 						//El comprobante fue cancelado exitosamente
 						//MessageBox.Show("Cancelación exitosa " + resultadoCancelacion.Descripcion);
-						waitingCommLog.CommunicationStatusTypeCode = "D";
-						waitingCommLog.DoneDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
-						waitingCommLog.DoneDateUTC = DateTime.UtcNow;
-						waitingCommLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
-						waitingCommLog.LastStatusDateUTC = DateTime.UtcNow;
-						communicationLogRep.Update(waitingCommLog);
+						communicationLog.CommunicationStatusTypeCode = "D";
+						communicationLog.DoneDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+						communicationLog.DoneDateUTC = DateTime.UtcNow;
+						communicationLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+						communicationLog.LastStatusDateUTC = DateTime.UtcNow;
+						communicationLogRep.Update(communicationLog);
 						communicationLogRep.SubmitChanges();
 
-						invoice.SATTransferStatusCode = "TD";
-                        invoice.TransmissionError = null;
-                        arinvoiceRep.Update(invoice);
-						arinvoiceRep.SubmitChanges();
+						if (isConcurrencyToggleEnabled)
+						{
+							invoice.IsUpdatedBySAT = true;
+							invoice.SATTransferStatusCode = "TD";
+							invoice.TransmissionError = null;
+							SaveARInvoice_UpdateService(invoice);
+						}
+
+						else
+                        {
+							
+							if(invoicePOCO != null)
+                            {
+								invoicePOCO.SATTransferStatusCode = "TD";
+								invoicePOCO.TransmissionError = null;
+								SaveARInvoice_Repository(invoicePOCO);
+							}
+                        }
 					}
 					else
 					{
@@ -1021,21 +1019,30 @@ namespace CommunicationWorkerRole
 						if ((transError == "Comprobante ya está en proceso de cancelación" && resultadoCancelacion.TipoExcepcion == "EstatusSat") || transError == "El comprobante será cancelado")
 
 						{
-							waitingCommLog.CommunicationStatusTypeCode = "D";
-							waitingCommLog.DoneDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
-							waitingCommLog.DoneDateUTC = DateTime.UtcNow;
-							waitingCommLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
-							waitingCommLog.LastStatusDateUTC = DateTime.UtcNow;
-							communicationLogRep.Update(waitingCommLog);
+							communicationLog.CommunicationStatusTypeCode = "D";
+							communicationLog.DoneDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+							communicationLog.DoneDateUTC = DateTime.UtcNow;
+							communicationLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+							communicationLog.LastStatusDateUTC = DateTime.UtcNow;
+							communicationLogRep.Update(communicationLog);
 							communicationLogRep.SubmitChanges();
 
-							invoice.SATTransferStatusCode = "CS";
-							arinvoiceRep.Update(invoice);
-							arinvoiceRep.SubmitChanges();
+							if (isConcurrencyToggleEnabled)
+							{
+								invoice.IsUpdatedBySAT = true;
+								invoice.SATTransferStatusCode = "CS";
+								SaveARInvoice_UpdateService(invoice);
+							}
+
+							else
+							{
+								invoicePOCO.SATTransferStatusCode = "CS";
+								SaveARInvoice_Repository(invoicePOCO);
+							}
 						}
 						else
 						{
-							if (waitingCommLog.Retries == 4)
+							if (communicationLog.Retries == 4)
 							{
 								if (!string.IsNullOrEmpty(resultadoCancelacion.Descripcion) && invoice != null)
 								{
@@ -1046,10 +1053,19 @@ namespace CommunicationWorkerRole
 									}
 									if (transError != invoice.TransmissionError || invoice.SATTransferStatusCode != "TE")
 									{
-										invoice.SATTransferStatusCode = "TE";
-										invoice.TransmissionError = transError;
-										arinvoiceRep.Update(invoice);
-										arinvoiceRep.SubmitChanges();
+										if (isConcurrencyToggleEnabled)
+										{
+											invoice.IsUpdatedBySAT = true;
+											invoice.SATTransferStatusCode = "TE";
+											invoice.TransmissionError = transError;
+											SaveARInvoice_UpdateService(invoice);
+										}
+
+										else
+										{
+											invoicePOCO.SATTransferStatusCode = "CS";
+											SaveARInvoice_Repository(invoicePOCO);
+										}
 									}
 								}
 							}
@@ -1057,48 +1073,69 @@ namespace CommunicationWorkerRole
 							throw new Exception("Failed," + transError);
 						}
 					}
-
-
-
 				}
+			}
+		}
+
+		public static ComprobanteDetails GetcomprobanteDetails(string sATXML)
+		{
+			try
+			{
+				Profact.TimbraCFDI33.Comprobante comprobante = Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI33.Comprobante>(sATXML);
+				return new ComprobanteDetails
+				{
+					ComplementoAny = comprobante.Complemento.Any,
+					RfcEmisor = comprobante.Emisor.Rfc.Trim()
+				};
+			}
+			catch (Exception ex)
+			{
+				Profact.TimbraCFDI40.Comprobante comprobante = Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI40.Comprobante>(sATXML);
+				return new ComprobanteDetails
+				{
+					ComplementoAny = comprobante.Complemento.Any,
+					RfcEmisor = comprobante.Emisor.Rfc.Trim()
+				};
 			}
 		}
 
 		#endregion
 
 		#region SendPaymentProfactCancellationRequest
-		private void SendPaymentProfactCancellationRequest(CommunicationLog waitingCommLog, CommunicationLogRepository communicationLogRep)
+		private void SendPaymentProfactCancellationRequest()
 		{
-
-			Simplog.Data.InvoiceModel.Repositories.ARPaymentRepository arPaymentRep = new Simplog.Data.InvoiceModel.Repositories.ARPaymentRepository(waitingCommLog.Tenant);
-			Simplog.Data.InvoiceModel.Repositories.ARInvoiceRepository arInvoiceRep = new Simplog.Data.InvoiceModel.Repositories.ARInvoiceRepository(waitingCommLog.Tenant);
-
-			Simplog.Data.InvoiceModel.EntityPOCOs.ARPayment payment = arPaymentRep.GetSingleARPayment(waitingCommLog.EntityId);
+			ARPayment paymentPOCO = arPaymentRepository.GetSingleARPayment(communicationLog.EntityId);
+			ARPaymentPM payment = arPaymentQuery.GetSinglePM(communicationLog.EntityId, tenant);
 			if (!string.IsNullOrEmpty(payment.SATXML))
 			{
-				Simplog.Data.InvoiceModel.Repositories.SATInterfaceSettingRepository sATInterfaceSettingRepository = new Simplog.Data.InvoiceModel.Repositories.SATInterfaceSettingRepository(waitingCommLog.Tenant);
-				Simplog.Data.InvoiceModel.EntityPOCOs.SATInterfaceSetting satSetting = sATInterfaceSettingRepository.GetSingleSATInterfaceSetting(waitingCommLog.Tenant);
+				SATInterfaceSettingRepository sATInterfaceSettingRepository = new SATInterfaceSettingRepository(tenant);
+				SATInterfaceSetting satSetting = sATInterfaceSettingRepository.GetSingleSATInterfaceSetting(tenant);
 				if (satSetting != null)
 				{
-					SendPaymentProfactCancellation33(waitingCommLog, communicationLogRep, arPaymentRep, payment, satSetting, arInvoiceRep);
+					if (satSetting.SATInterfaceCode == "PROF40")
+						SATPaymentProfact40CancellationService.SendRequest(new SATPaymentProfact40CancellationServiceArgs { WaitingCommLog = communicationLog, CommunicationLogRep = communicationLogRep, ARPaymentRep = arPaymentRepository, ARPayment = paymentPOCO, ARPaymentPM =  payment,  ARInvoiceRep = arInvoiceRepository, SatSetting = satSetting });
+					else
+						SendPaymentProfactCancellation33(payment, satSetting);
 				}
 			}
 		}
 
 
-		private void SendPaymentProfactCancellation33(CommunicationLog waitingCommLog, CommunicationLogRepository communicationLogRep, Simplog.Data.InvoiceModel.Repositories.ARPaymentRepository arPaymentRep, Simplog.Data.InvoiceModel.EntityPOCOs.ARPayment payment, Simplog.Data.InvoiceModel.EntityPOCOs.SATInterfaceSetting satSetting, ARInvoiceRepository arInvoiceRep)
+		private void SendPaymentProfactCancellation33(ARPaymentPM payment, SATInterfaceSetting satSetting)
 		{
 			SATInterfaceHelper sATInterfaceHelper = new SATInterfaceHelper();
 
-			Profact.TimbraCFDI33.Comprobante comprobante = Logitude.Server.Tools.LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI33.Comprobante>(payment.SATXML);
+
 			bool isProduction = satSetting.Token != "mvpNUXmQfK8=";
 			Profact.TimbraCFDI33.Conector conector = new Profact.TimbraCFDI33.Conector(isProduction);
 			//Establecemos las credenciales para el permiso de conexión
 			conector.EstableceCredenciales(satSetting.Token);
 
-			if (comprobante.Complemento.Any != null)
+			ComprobanteDetails comprobanteDetails = GetcomprobanteDetails(payment.SATXML);
+			ARPayment paymentPOCO = arPaymentRepository.GetSingleARPayment(payment.Id, tenant);
+			if (comprobanteDetails.ComplementoAny != null && paymentPOCO != null)
 			{
-				List<System.Xml.XmlElement> myLXmlComplementos = comprobante.Complemento.Any.ToList<System.Xml.XmlElement>();
+				List<System.Xml.XmlElement> myLXmlComplementos = comprobanteDetails.ComplementoAny.ToList<System.Xml.XmlElement>();
 				var timbreFiscalDigitalElement = myLXmlComplementos.Where(el => el.Name == "tfd:TimbreFiscalDigital").FirstOrDefault();
 				if (timbreFiscalDigitalElement != null)
 				{
@@ -1106,7 +1143,7 @@ namespace CommunicationWorkerRole
 
 
 					//Rfc Emisor
-					string rfcEmisor = comprobante.Emisor.Rfc.Trim();
+					string rfcEmisor = comprobanteDetails.RfcEmisor;
 
 					//Folio Fiscal - UUID
 					string folioFiscal = digitalTi.UUID.Trim();
@@ -1119,21 +1156,32 @@ namespace CommunicationWorkerRole
 					{
 						//El comprobante fue cancelado exitosamente
 						//MessageBox.Show("Cancelación exitosa " + resultadoCancelacion.Descripcion);
-						waitingCommLog.CommunicationStatusTypeCode = "D";
-						waitingCommLog.DoneDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
-						waitingCommLog.DoneDateUTC = DateTime.UtcNow;
-						waitingCommLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
-						waitingCommLog.LastStatusDateUTC = DateTime.UtcNow;
-						communicationLogRep.Update(waitingCommLog);
+						communicationLog.CommunicationStatusTypeCode = "D";
+						communicationLog.DoneDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+						communicationLog.DoneDateUTC = DateTime.UtcNow;
+						communicationLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+						communicationLog.LastStatusDateUTC = DateTime.UtcNow;
+						communicationLogRep.Update(communicationLog);
 						communicationLogRep.SubmitChanges();
 
-						payment.SATXML = null;
-						payment.SATTransferStatusCode = "TD";
-                        payment.TransmissionError = null;
-                        arPaymentRep.Update(payment);
-						arPaymentRep.SubmitChanges();
+						if (isConcurrencyToggleEnabled)
+						{
+							payment.IsUpdatedBySAT = true;
+							payment.SATXML = null;
+							payment.SATTransferStatusCode = "TD";
+							payment.TransmissionError = null;
+							this.SaveARPayment_UpdateService(payment);
+						}
 
-						sATInterfaceHelper.UpdatePaymentInvoicesSATStatus(payment, comprobante, arInvoiceRep, arPaymentRep);
+						else
+                        {
+							paymentPOCO.SATXML = null;
+							paymentPOCO.SATTransferStatusCode = "TD";
+							paymentPOCO.TransmissionError = null;
+							this.SaveARPayment_Repository(paymentPOCO);
+						}
+
+						sATInterfaceHelper.UpdatePaymentInvoicesSATStatus(payment.Id, tenant, comprobanteDetails.ComplementoAny[0], arInvoiceRepository, arPaymentRepository);
 
 					}
 					else
@@ -1141,21 +1189,30 @@ namespace CommunicationWorkerRole
 						string transError = resultadoCancelacion.Descripcion;
 						if ((transError == "Comprobante ya está en proceso de cancelación" && resultadoCancelacion.TipoExcepcion == "EstatusSat") || transError == "El comprobante será cancelado")
 						{
-							waitingCommLog.CommunicationStatusTypeCode = "D";
-							waitingCommLog.DoneDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
-							waitingCommLog.DoneDateUTC = DateTime.UtcNow;
-							waitingCommLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(waitingCommLog.Tenant);
-							waitingCommLog.LastStatusDateUTC = DateTime.UtcNow;
-							communicationLogRep.Update(waitingCommLog);
+							communicationLog.CommunicationStatusTypeCode = "D";
+							communicationLog.DoneDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+							communicationLog.DoneDateUTC = DateTime.UtcNow;
+							communicationLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+							communicationLog.LastStatusDateUTC = DateTime.UtcNow;
+							communicationLogRep.Update(communicationLog);
 							communicationLogRep.SubmitChanges();
 
-							payment.SATTransferStatusCode = "CS";
-							arPaymentRep.Update(payment);
-							arPaymentRep.SubmitChanges();
+							if (isConcurrencyToggleEnabled)
+							{
+								payment.IsUpdatedBySAT = true;
+								payment.SATTransferStatusCode = "CS";
+								this.SaveARPayment_UpdateService(payment);
+							}
+
+							else
+                            {
+								paymentPOCO.SATTransferStatusCode = "CS";
+								this.SaveARPayment_Repository(paymentPOCO);
+							}
 						}
 						else
 						{
-							if (waitingCommLog.Retries == 4)
+							if (communicationLog.Retries == 4)
 							{
 								//No se pudo cancelar, mostramos respuesta
 								//MessageBox.Show(resultadoCancelacion.Descripcion);
@@ -1168,11 +1225,20 @@ namespace CommunicationWorkerRole
 									}
 									if (transError != payment.TransmissionError || payment.SATTransferStatusCode != "TE")
 									{
-										payment.SATTransferStatusCode = "TE";
-										payment.TransmissionError = transError;
+										if (isConcurrencyToggleEnabled)
+										{
+											payment.SATTransferStatusCode = "TE";
+											payment.TransmissionError = transError;
+											payment.IsUpdatedBySAT = true;
+											this.SaveARPayment_UpdateService(payment);
+										}
 
-										arPaymentRep.Update(payment);
-										arPaymentRep.SubmitChanges();
+										else
+										{
+											paymentPOCO.SATTransferStatusCode = "TE";
+											paymentPOCO.TransmissionError = transError;
+											this.SaveARPayment_Repository(paymentPOCO);
+										}
 									}
 								}
 							}
@@ -1180,9 +1246,6 @@ namespace CommunicationWorkerRole
 							throw new Exception("Failed," + transError);
 						}
 					}
-
-
-
 				}
 			}
 		}
@@ -1191,7 +1254,7 @@ namespace CommunicationWorkerRole
 
 
 		#region CreateSATPaymentDocument
-		private void CreateSATPaymentDocument(Simplog.Data.InvoiceModel.EntityPOCOs.ARPayment payment, byte[] fileData, bool checkIfExists)
+		private void CreateSATPaymentDocument(ARPaymentPM payment, byte[] fileData, bool checkIfExists)
 		{
 
 			int tenant = payment.Tenant;
@@ -1325,9 +1388,33 @@ namespace CommunicationWorkerRole
 			}
 		}
 
+		private void SaveARInvoice_UpdateService(ARInvoicePM invoice)
+		{
+			ARInvoiceService invoiceService = new ARInvoiceService(invoiceContext, invoice.Tenant);
+			invoiceService.Update(invoice);
+		}
+		private void SaveARPayment_UpdateService(ARPaymentPM payment)
+		{
+			ARPaymentService paymentService = new ARPaymentService(invoiceContext, payment.Tenant);
+			paymentService.Update(payment);
+		}
 
-
+		private void SaveARInvoice_Repository(ARInvoice invoice)
+		{
+			arInvoiceRepository.Update(invoice);
+			arInvoiceRepository.SubmitChanges();
+		}
+		private void SaveARPayment_Repository(ARPayment payment)
+		{
+			arPaymentRepository.Update(payment);
+			arPaymentRepository.SubmitChanges();
+		}
 	}
 
+	public class ComprobanteDetails
+	{
+		public XmlElement[] ComplementoAny { get; set; }
+		public string RfcEmisor { get; set; }
+	}
 
 }

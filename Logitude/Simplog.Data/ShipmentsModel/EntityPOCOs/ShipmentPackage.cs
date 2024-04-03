@@ -149,5 +149,6 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         [ForeignKey("LCLContainerTypeId")]
         public virtual PackageType LCLPackageType { get; set; }
         public string ContainerEntityId { get; set; }
+        public DateTime? ContainerStrippedDate { get; set; }
     }
 }

@@ -36,6 +36,10 @@ export class TaxReportLineList {
 	OriginalReference: string;
 	UpdatedBUserName: string;
 	PreviousReference: string;
+	VatAmountRound: number;
+	LedgerTransactionId: string;
+	SubTotalInLocalCurrency: number;
+	ConfirmationNumber: string;
 	
 }
  

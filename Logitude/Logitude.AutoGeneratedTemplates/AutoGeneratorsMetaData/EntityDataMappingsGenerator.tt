@@ -194,11 +194,12 @@ void SaveMappingClassOutput(string outputFileName,bool isCustom)
 	{
 	   entityPMsPath="Logitude.CargoTracking.Def.EntityPMs;";
 	}
-	if(pocosspacestring.Contains("QuoteOPM"))
+ 
+     if(pocosspacestring.Contains("ShipmentOrderModule"))
 	{
-	   entityPMsPath="Amital.QuoteOPM.Def.EntityPMs;";
+	   entityPMsPath="Logitude.ShipmentOrderModule.Def.EntityPMs;";
 	}
-	string pmsspacestring =   entityPMsPath;
+ 	string pmsspacestring =   entityPMsPath;
      
 	string dataprojectnamespace = mapnamespacestring.ToString().Substring(0,mapnamespacestring.ToString().LastIndexOf('.')).Replace("BL","Data;");
 	 
@@ -210,7 +211,14 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
+<#+ 
+if(tableName != "Task" && tableName != "TaskStatus")
+{
+#>
 using System.Threading.Tasks;
+<#+
+}
+#>
 using System.ComponentModel.DataAnnotations;
 using Logitude.Server.Tools; 
 using <#= pocosspacestring #>
@@ -297,11 +305,12 @@ namespace <#= mapnamespacestring #>
 	{
 	   entityPMsPath="Logitude.CargoTracking.Def.EntityPMs;";
 	}
-	if(pocosspacestring.Contains("QuoteOPM"))
+ 
+	if(pocosspacestring.Contains("ShipmentOrderModule"))
 	{
-	   entityPMsPath="Amital.QuoteOPM.Def.EntityPMs;";
+	   entityPMsPath="Logitude.ShipmentOrderModule.Def.EntityPMs;";
 	}
-	string pmsspacestring =   entityPMsPath;
+ 	string pmsspacestring =   entityPMsPath;
 	 string dataprojectnamespace = mapnamespacestring.ToString().Substring(0,mapnamespacestring.ToString().LastIndexOf('.')).Replace("BL","Data;");
 	 
 	 pocosspacestring = pocosspacestring.Replace("BL","Data");
@@ -312,12 +321,23 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
+<#+ 
+if(tableName != "Task" && tableName != "TaskStatus")
+{
+#>
 using System.Threading.Tasks;
+<#+
+}
+#>
 using System.ComponentModel.DataAnnotations;
 using Logitude.Server.Tools;  
 using Simplog.Server.Infrastructure;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Server.Infrastructure.DataContracts;
+<#+ if(entity.SupportSubEntity.ToString() == "true") {#>using Logitude.BL.InfrastructureModel.Tools.EntityService;
+<#+}#>
+<#+ if(entity.ApplyGenericCustomFields.ToString() == "true") {#>using Logitude.Server.Tools.CustomFields;
+<#+}#>
 using <#= pocosspacestring #>
 using <#= pmsspacestring #> 
 using <#= dataprojectnamespace #>
@@ -426,6 +446,20 @@ namespace <#= mapnamespacestring #>
 		 }
          
 		 }
+
+		 if(entity.ApplyGenericCustomFields.ToString() == "true"){
+		 #>
+
+			new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "<#=tableName #>", EntityId = entityPM.Id, Tenant = entityPM.Tenant, Type = "PM", Entities = new List<<#=tableName #>PM> { entityPM }.Cast<object>().ToList() }).Update();
+		 <#+
+		 }
+		 if(entity.SupportSubEntity.ToString() == "true"){
+		 #>
+
+			new CustomChildEntityService(new CustomChildEntityArgs() { ParentEntity = entityPM, ParentEntityId = entityPM.Id, ParentObjectTableName = "<#=tableName #>", Tenant = entityPM.Tenant }).Update();
+		 <#+
+		 }
+
          if (IsSearchable)
          { 
 		 #>
@@ -478,6 +512,19 @@ namespace <#= mapnamespacestring #>
 		 }
          
 		 }
+		 }
+		 if(entity.ApplyGenericCustomFields.ToString() == "true"){
+		 #>
+
+			new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "<#=tableName #>", Tenant = entityPM.Tenant, Type = "PM", Entities = new List<<#=tableName #>PM> { entityPM }.Cast<object>().ToList() }).Set();
+
+		 <#+
+		 }
+		 if(entity.SupportSubEntity.ToString() == "true"){
+		 #>
+
+			new CustomChildEntityService(new CustomChildEntityArgs() { ParentEntity = entityPM, ParentEntityId = entityPM.Id, ParentObjectTableName = "<#=tableName #>", Tenant = entityPM.Tenant }).Set();
+		 <#+
 		 }
 		 #>
 

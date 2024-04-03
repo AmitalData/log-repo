@@ -82,7 +82,7 @@
                                 </td>
 
                                 <td style="width: 57px;">
-                                    <button class="RedButton" id="{{'SaveSplittedbyCurrency' | IdGeneratorPipe}}"  (click)="OkButtonClicked()">{{'General.B.Save' | TextCodeTranslationPipe}}</button>
+                                    <button class="RedButton" id="{{'SaveSplittedbyCurrency' | IdGeneratorAsyncPipe | async}}"  (click)="OkButtonClicked()">{{'General.B.Save' | TextCodeTranslationPipe}}</button>
                                 </td>
                             </tr>
                         </table>

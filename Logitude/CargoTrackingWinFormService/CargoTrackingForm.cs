@@ -27,7 +27,7 @@ namespace CargoTrackingWinFormService.Forms
     {
  
 
-        private string FromLocalConectionstring = "Logitude2-5_Main,sa,Saas256,.";
+        private string FromLocalConectionstring = "2022R1_Main,sa,Saas256,.";
         private string FromTestConectionstring = "LogitudeMain-Test2,sa,Saas256,logitudetestdb.westeurope.cloudapp.azure.com";
         private string FromCloudConectionstring = "Main,CloudApp,London2020!,amitaldata.cloudapp.net";
         private string ToLocalConectionstring = "CargoTracking,sa,Saas256,.";
@@ -95,7 +95,7 @@ namespace CargoTrackingWinFormService.Forms
             this.numericUpDown2.Value = 1;
             this.numericUpDown2.Enabled = false;
             this.checkBox3.Checked = true;
-            this.checkBox3.Enabled = false;
+            this.checkBox3.Enabled = true;
             CargoTableLists = CargoTrackingTableList.GetCargoTrackingTableList();
             string [] DBTabkeNames = CargoTableLists.Select(s=>s.DBTableName).ToArray();
             this.comboBox2.Items.AddRange(DBTabkeNames);

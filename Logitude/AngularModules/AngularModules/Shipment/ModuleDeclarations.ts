@@ -38,6 +38,11 @@ import { AnalyzeChampXMLComponent } from './Components/Helpers/AnalyzeChampXMLCo
 import { ShipmenDirectionConvertComponent } from './Components/MenuButtons/ShipmenDirectionConvertComponent';
 import { CustomsTransferHeaderHelperComponent } from './Components/Helpers/CustomsTransferHeaderHelperComponent';
 import { ContainerHelperComponent } from './Components/Helpers/ContainerHelperComponent';
+import { SupplierConsigneeListTemplate } from './Components/ListTemplates/SupplierConsigneeListTemplate';
+import { UpdateUnassigedDataComponent } from './Components/UnassigedData/UpdateUnassigedDataComponent';
+import { ContainerShortTitleComponent } from './Components/ShortTitles/ContainerShortTitleComponent';
+import { ContainerComponent } from './Components/Workspaces/ContainerComponent';
+import { ContainerViewsGraphComponent } from './Components/Templates/ContainerViewsGraphComponent';
 
 export const Components =
     [
@@ -79,6 +84,11 @@ export const Components =
         AnalyzeChampXMLComponent,
         ShipmenDirectionConvertComponent,
         CustomsTransferHeaderHelperComponent,
+        SupplierConsigneeListTemplate,
+        UpdateUnassigedDataComponent,
+        ContainerShortTitleComponent,
+        ContainerComponent,
+        ContainerViewsGraphComponent
     ];
 
 export const ControlsComponents =
@@ -131,6 +141,11 @@ export class ModuleDeclarations {
             case "AnalyzeChampXMLComponent": { myResult = AnalyzeChampXMLComponent; break; }
             case "ShipmenDirectionConvertComponent": { myResult = ShipmenDirectionConvertComponent; break; }
             case "CustomsTransferHeaderHelperComponent": { myResult = CustomsTransferHeaderHelperComponent; break; }
+            case "SupplierConsigneeListTemplate": { myResult = SupplierConsigneeListTemplate; break; } 
+            case "UpdateUnassigedDataComponent": { myResult = UpdateUnassigedDataComponent; break; }
+            case "ContainerShortTitleComponent": { myResult = ContainerShortTitleComponent; break; }
+            case "ContainerComponent": { myResult = ContainerComponent; break; }
+            case "ContainerViewsGraphComponent": { myResult = ContainerViewsGraphComponent; break; }
         }
 
         return myResult;

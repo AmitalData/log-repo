@@ -57,5 +57,9 @@ export class HybridTenantStateComponent extends BaseComponent implements OnInit 
         this.CurrentSession.CloseCurrentWindow();
     }
 
+    RefreshButtonClick() {
+        this.CurrentSession.StartBusyIndicatorLoading();
+        this.LoadData();    
+    } 
 }
 

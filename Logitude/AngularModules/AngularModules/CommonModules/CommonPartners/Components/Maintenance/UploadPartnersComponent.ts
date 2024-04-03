@@ -53,6 +53,14 @@ export class UploadPartnersComponent extends BaseComponent implements OnDestroy 
         });
     }
 
+    private computingPartnerCode: string;
+    get ComputingPartnerCode() { return this.computingPartnerCode; }
+    set ComputingPartnerCode(newValue: string) {
+        if (this.computingPartnerCode != newValue) {
+            this.computingPartnerCode = newValue;
+        }
+    }
+
     OnFileChanged(fileEvent) {
         var file = fileEvent.target.files[0];
 
@@ -113,6 +121,7 @@ export class UploadPartnersComponent extends BaseComponent implements OnDestroy 
             context.partnersUploadExcelParameter = new PartnersUploadExcelParameter();
             context.partnersUploadExcelParameter.FileData = window.btoa(binary);
             context.partnersUploadExcelParameter.FileName = context.FileName;
+            context.partnersUploadExcelParameter.ComputingPartnerCode = context.ComputingPartnerCode;
             context.SendExcelToServer(context.partnersUploadExcelParameter);
         };
 
@@ -171,6 +180,7 @@ export class UploadPartnersComponent extends BaseComponent implements OnDestroy 
                                 parameter.IsConfirmationByUser = true;
                                 parameter.FileName = this.partnersUploadExcelParameter.FileName;
                                 parameter.DocumentId = this.partnersUploadExcelParameter.DocumentId;
+                                parameter.ComputingPartnerCode = this.partnersUploadExcelParameter.ComputingPartnerCode;
                                 this.SendExcelToServer(parameter);
                             }
                         });

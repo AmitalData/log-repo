@@ -33,6 +33,8 @@ using System.Web.Http;
 using Logitude.BL.Helpers;
 using System.Web.Script.Serialization;
 using WebFreight.Web.DataContracts;
+using Logitude.Server.Tools.TreeFilterQuery.Interpreter;
+using Logitude.Server.Tools.TreeFilterQuery;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Simplog.Data.InvoiceModel;
@@ -82,7 +84,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
 			    }
 				if (entityList != null)
 				{
-                	CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                	CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
                 	customFieldResolver.SetCustomFieldsValues("APInvoice",  authToken.Tenant, new List<APInvoiceList> { entityList }.Cast<object>().ToList());
  	
 					entityList = APInvoiceAPiHelper.ApplyFilters(entityList, authToken.Tenant);
@@ -119,7 +121,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
 				entityLists = entityLists.OrderBy(d => d.Id);
 				List<APInvoiceList> listResult = entityLists.ToList();
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
-                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
                 customFieldResolver.SetCustomFieldsValues("APInvoice", authToken.Tenant, listResult.Cast<object>().ToList());
 										
 				return Request.CreateResponse(HttpStatusCode.OK, listResult);
@@ -187,7 +189,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
                             object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
 
                             //queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList);
-							queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList,field.IsCustom,field.DataTypeCode);
+							queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList,field.IsCustom,field.DataTypeCode, field.IsListFilter);
                         }
                         else
                             queryOperations.SetFilter(filterName, filterValue1, false, filterOperator, filterValue2, true);
@@ -216,7 +218,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
                             object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
 
                             //queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList);
-							queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList,field.IsCustom,field.DataTypeCode);
+							queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList,field.IsCustom,field.DataTypeCode, field.IsListFilter);
                         }
                         else
                         {
@@ -229,6 +231,16 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
                 APInvoiceAPiHelper.AddFilters(queryOperations, tenant);
                 GenericFilter genericFilter = new GenericFilter();
                 GenericSort sortClass = new GenericSort();
+                
+                TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
+                 { 
+                     AdditionalTreeFilter = filters.TreeFilters,
+                     ObjectTableName = "APInvoice",
+                     ParentEntityId = filters.ParentEntityId,
+                     ParentObjectTableName = filters.ParentObjectTableName, 
+                     Tenant = tenant ,
+                     ParentEntity = filters.ParentEntity
+                 };
 
 								
                 IInvoiceContext MyContext = InvoiceContext.GetContext(tenant);
@@ -238,9 +250,9 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
                 APInvoiceQuery aPInvoiceQuery = new APInvoiceQuery(aPInvoiceRepository);
                 
 				QueryOperations nonListQueryOperation = new QueryOperations();
-                nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+                nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false && !d.IsListFilter).ToList();
                 QueryOperations listQueryOperation = new QueryOperations();
-                listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+                listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true || d.IsListFilter).ToList();
 				                
 				APInvoiceCustomFilter customfilters = new APInvoiceCustomFilter(tenant);
                 entityPocos = customfilters.GetFilteredQuery(queryOperations, entityPocos);
@@ -251,6 +263,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
                 IQueryable<APInvoiceList> entityLists = aPInvoiceQuery.GetIQueryableEntityList(entityPocos);
 
                 entityLists = genericFilter.GetFilteredQuery<APInvoiceList>(listQueryOperation, entityLists);
+                entityLists = new TreeFilterQueryService().Apply<APInvoiceList>(entityLists , treeFilterQueryArgs);
 
 		      
 			  								
@@ -337,7 +350,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.ListControllers
 
 				}
 			   List<APInvoiceList> listResult = entityLists.ToList();
-               CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+               CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
                customFieldResolver.SetCustomFieldsValues("APInvoice", authToken.Tenant, listResult.Cast<object>().ToList());
 
                response.Result = listResult;

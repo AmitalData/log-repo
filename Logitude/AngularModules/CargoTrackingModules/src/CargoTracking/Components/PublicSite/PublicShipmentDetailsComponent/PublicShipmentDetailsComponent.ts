@@ -8,7 +8,11 @@ import { AppHelper } from 'src/CargoTracking/Utilities/AppHelper';
 import { CargoTrackingMilestoneService } from 'src/CargoTracking/Services/Others/CargoTrackingMilestoneService';
 import { CargoTrackingMilestoneList } from 'src/CargoTracking/EntityLists/CargoTrackingMilestoneList';
 import { CargoTrackingMilestones } from 'src/CargoTracking/DataContracts/CargoTrackingMilestones';
+import { MilestoneCodes } from 'src/CargoTracking/Constants/MilestoneCodes';
+import { MatDialog } from '@angular/material/dialog';
+import { MessageWindowComponent } from 'src/Infrastructure/Components/MessageWindow/MessageWindowComponent';
 
+const shipmentOrderEntityType = 'O';
 @Component({
     selector: 'PublicShipmentDetailsComponent',
     styleUrls: ['./PublicShipmentDetailsComponent.css'],
@@ -26,9 +30,11 @@ export class PublicShipmentDetailsComponent implements OnInit
     ShipmentQuantity:number=0;
     ShipmentContainers:string[]=[];
     previousUrl: string;
-
+    ReferencesViewCount = 2;
     constructor(private route: ActivatedRoute,
         private router: Router,
+        public dialog: MatDialog,
+
         private location: Location,
         private searchService: CargoTrackingSearchService,
         private milestonesService: CargoTrackingMilestoneService)
@@ -49,6 +55,11 @@ export class PublicShipmentDetailsComponent implements OnInit
     get tenant(){
        return CargoTrackingBrandingData.Tenant;
     }
+
+    get isShipmentOrder(){
+        return this.Shipment.EntityType == shipmentOrderEntityType;
+     }
+
 
     milestones:CargoTrackingMilestoneList[];
 
@@ -96,9 +107,30 @@ export class PublicShipmentDetailsComponent implements OnInit
 
     private setViews()
     {
-        this.innerWidth = window.innerWidth;
-        this.isMobileView = this.innerWidth <= 479;
-        this.isTabletView = this.innerWidth <= 1000;
+        if(this.IsWebView) {
+            this.innerWidth = window.innerWidth;
+            this.isMobileView = window.innerWidth <= 479;
+            this.isTabletView = window.innerWidth <= 1000;
+        }else{
+            const isLandscapeView = window.innerWidth > window.innerHeight;
+            if(isLandscapeView){
+                this.innerWidth = window.innerWidth;
+                this.isMobileView = window.innerHeight <= 479;
+                this.isTabletView = window.innerHeight <= 1000;
+            }else{
+
+                this.innerWidth = window.innerWidth;
+                this.isMobileView = window.innerWidth <= 479;
+                this.isTabletView = window.innerWidth <= 1000;
+            }
+        }
+    }
+
+    get IsWebView(){
+        if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent))
+            return false;
+        else
+            return true;
     }
 
     // private GetShipmentFromDB()
@@ -171,6 +203,9 @@ export class PublicShipmentDetailsComponent implements OnInit
     }
 
     Delivered: boolean = false;
+    InvoicedDone: boolean = false;
+
+    AssignedTruckerDone: boolean = false;
     InProgressShipment: boolean = false;
     DileveredIconColor: string;
 
@@ -200,11 +235,22 @@ export class PublicShipmentDetailsComponent implements OnInit
             this.SetCargoTrackingContainers(result);
             if (this.ShipmentWithMilestones) {
                 this.Shipment = result.ShipmentList;
-                this.ShipmentReferences =result.ShipmentList.CustomerReference? result.ShipmentList.CustomerReference.split(','):null;
+
+                this.ShipmentReferences = this.getShipmentReferences();
+                
                 if (this.Shipment.CurrentMilestoneCode == CargoTrackingMilestones.Delivered) {
                     this.Delivered = true;
                     this.DileveredIconColor = CargoTrackingBrandingData.SecondaryColor;
-                }else if(this.Shipment.CurrentMilestoneCode){
+                }
+                else if (this.Shipment.CurrentMilestoneCode == CargoTrackingMilestones.Invoiced) {
+                    this.InvoicedDone = true;
+                    this.DileveredIconColor = CargoTrackingBrandingData.SecondaryColor;
+                }
+                else if (this.Shipment.CurrentMilestoneCode == CargoTrackingMilestones.AssignedToTrucker) {
+                    this.AssignedTruckerDone = true;
+                    this.DileveredIconColor = CargoTrackingBrandingData.SecondaryColor;
+                }
+                else if (this.Shipment.CurrentMilestoneCode && this.Shipment.CurrentMilestoneCode != CargoTrackingMilestones.Created) {
                     this.Delivered = false;
                     this.InProgressShipment = true;
                     this.DileveredIconColor = "#B5B5B5";
@@ -214,17 +260,60 @@ export class PublicShipmentDetailsComponent implements OnInit
                     this.DileveredIconColor = "#B5B5B5";
                 }
                 this.SetMilestonesFields(result);
+                this.SetEventsFields(result);
 
             }
             this.SetShipmentDetails();
 
         });
     }
+    getShipmentReferences(): string[] {
+        var references = [];
+        var houseReferences = this.getHouseReferences();
+        references = this.Shipment.CustomerReference? this.Shipment.CustomerReference.split(','):[];
+        references = references.filter(e=>e && e.length> 0);
+        references = references.filter((el, i, a) => i === a.indexOf(el));
+        return [...houseReferences , ...references];
+    }
+    getHouseReferences(): string[] {
+        var houseReferences:string[] = [];
+        if(this.Shipment.House && !houseReferences.find(e=>e == this.Shipment.House)){
+            houseReferences.push(this.Shipment.House);
+        }
+        if(this.Shipment.ForwardingHouse && !houseReferences.find(e=>e == this.Shipment.ForwardingHouse)){
+            houseReferences.push(this.Shipment.ForwardingHouse);
+        }
+        if(this.Shipment.SHOHouse && !houseReferences.find(e=>e == this.Shipment.SHOHouse)){
+            houseReferences.push(this.Shipment.SHOHouse);
+        }
+        return houseReferences;
+    }
+    OpenReferencesMessageWindow(references: any[],event) {
+        if(!references)
+            return;
+
+        references = references.filter(d=>d).map(x => x.trim());
+        this.dialog.open(MessageWindowComponent, {
+            data: {
+                title: 'References',
+                description: this.GetReferencesMessageText(references,this.ReferencesViewCount),
+            }
+           ,
+              position: {
+                top: event.clientY + 'px',
+                left: event.clientX + 'px',
+              },
+          
+        });
+    }
+    GetReferencesMessageText(references,skip){
+        return references.slice(skip, references.length + 1).join("\n");
+    }
     public ShipmentLabel: string;
     public ShipmentReference: string;
 
     SetShipmentDetails() {
-        if (this.Shipment.ShipmentLevelCode == ShipmentLevels.Direct) {
+        if (this.Shipment.ShipmentLevelCode == ShipmentLevels.Direct.toString()) {
             this.ShipmentLabel = "Master";
             this.ShipmentReference = this.Shipment.Master;
         }
@@ -245,16 +334,15 @@ export class PublicShipmentDetailsComponent implements OnInit
     }
     SetMilestonesFields(result: CargoTrackingShipmentWithMilestones)
     {
-        
+
         this.AllMilestoneFields = result.Milestones;
         if (this.AllMilestoneFields) {
             this.AllMilestoneFields.forEach(S =>
             {
-
-                if (S.IsEstimation) {
+                if (S.IsEstimation || (S.EstimationDate && !S.Date)) {
 
                     this.FuturesMilestoneFields.push(S);
-                    if (S.IsEstimation && S.EstimationDate != null) {
+                    if (S.IsEstimation || (S.EstimationDate != null || S.Date != null)) {
 
                         this.isPlannedMilestonesExist = true;
                     }
@@ -268,32 +356,44 @@ export class PublicShipmentDetailsComponent implements OnInit
 
                     this.CurrentMilestoneField = S;
                 }
+                if(S.Code ==  MilestoneCodes.BookingNote && S.Notes){
+                    S.Notes = 'Booking Conf. Num: '+ S.Notes;
+                }
+
             });
         }
 
-        if (this.Shipment.CurrentMilestoneCode ==  CargoTrackingMilestones.Delivered) {
-            this.Date = this.CompletedMilestoneFields[0].Date;
-        }
-        else {
-            this.Date = this.CurrentMilestoneField.Date;
 
-        }
+        // if (this.Shipment.CurrentMilestoneCode ==  CargoTrackingMilestones.Delivered) {
+        //     this.Date = this.CompletedMilestoneFields[0].Date;
+        // }
+        // else {
+            this.Date = this.CurrentMilestoneField.Date;
+       // }
         if (this.CompletedMilestoneFields.length > 0 || this.FuturesMilestoneFields.filter(d => d.EstimationDate).length > 0 || this.Shipment.CurrentMilestoneCode) {
             this.MilstonesExist = true;
         }
     }
-
-    public ShipmentWithMilestones: CargoTrackingShipmentWithMilestones;
+    SetEventsFields(result: CargoTrackingShipmentWithMilestones)
+    {        
+        this.Events = result?.Events;
+        this.IsShowEvents = result?.ShipmentList?.CargoTrackingPublicShowEvents;
+    }
+  
+    public ShipmentWithMilestones: any;
     public AllMilestoneFields: Milestone[];
     public CompletedMilestoneFields: Milestone[] = [];
     public FuturesMilestoneFields: Milestone[] = [];
     public CurrentMilestoneField: Milestone = new Milestone();
+    public Events: Events [] = [];
 
 
     ShipmentReferences: string[] = [];
     IsLoadingReferences = false;
     showMoreReferences: boolean  = false;
     showMoreContainers: boolean  = false;
+    showMoreEvents: boolean  = false;
+    IsShowEvents: boolean  = false;
 
     GetPublicShipmentReferences()
     {
@@ -308,27 +408,59 @@ export class PublicShipmentDetailsComponent implements OnInit
 
     }
 
-
+    get GetContainerLabel()
+    {
+        return "(" + ShipmentTypeLabel.get(this.Shipment.ShipmentTypeCode) + " " + ShipmentLevels[this.Shipment.ShipmentLevelCode] + ")";
+    }
 }
 
 
- enum ShipmentLevels {
-    Direct = "D",
-    House = "H"
+enum ShipmentLevels {
+    Customs = <any>"A",
+    Console = <any>"C",
+    Direct = <any>"D",
+    House = <any>"H"
 }
+
+export enum ShipmentTypes {
+    Air = "Air",
+    FCL = "FCL",
+    FCLD = "FCLD",
+    FTL = "FTL",
+    LCL = "LCL",
+    LCLD = "LCLD",
+    LTL = "LTL",
+    MyGI = "MyGI",
+    MyGO = "MyGO"
+}
+
+export const ShipmentTypeLabel = new Map<string, string>([
+    [ShipmentTypes.Air, 'Air'],
+    [ShipmentTypes.FCL, 'FCL'],
+    [ShipmentTypes.FCLD, 'FCL'],
+    [ShipmentTypes.FTL, 'FTL'],
+    [ShipmentTypes.LCL, 'LCL'],
+    [ShipmentTypes.LCLD, 'LCL'],
+    [ShipmentTypes.LTL, 'LTL'],
+    [ShipmentTypes.MyGI, 'My Groupage Inland'],
+    [ShipmentTypes.MyGO, 'My Groupage Ocean'],
+  ]);
 
 export class Milestone
 {
 
     public Id: number;
+    public Weight: number;
     public Code: string;
     public Name: string;
+    public LocalName: string;
     public Notes: string;
     public Date: Date;
     public EstimationDate: Date;
     public Done: boolean;
     public IsEstimation: boolean;
     public IsCurrent: boolean;
+    public InActive: boolean;
 }
 
 
@@ -336,5 +468,16 @@ export class CargoTrackingShipmentWithMilestones
 {
     public Milestones: Milestone[];
     public ShipmentList: CargoTrackingShipmentList;
+    public Events: Events[];
+
+}
+export class Events
+{
+    public LocalName: string;
+    public EventDatetime: Date;
+    public Notes: string;
+    public  IsChoose: boolean;
+    public  PartnerTypeId: string;
+    public  EntityType: string;
 
 }

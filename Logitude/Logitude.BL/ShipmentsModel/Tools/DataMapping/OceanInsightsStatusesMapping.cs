@@ -20,7 +20,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
 
             itemPoco.CommunicationLogId = itemPM.CommunicationLogId;
             itemPoco.ContentDocumentId = itemPM.ContentDocumentId; 
-            itemPoco.OceanInsightsRequestId = itemPM.OceanInsightsRequestId; 
-        }
-    }
+            itemPoco.OceanInsightsRequestId = itemPM.OceanInsightsRequestId;
+			itemPoco.XML = itemPM.XML;
+
+		}
+	}
 }

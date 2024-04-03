@@ -4,14 +4,14 @@
     <tr style="height:21px;">
         <td>
             <ul class="PagesMenu">
-                <!-- <li id="{{'FAMain' | IdGeneratorPipe}}" *ngIf="IsMainTabVisibile" float-start [class.SelectedPageMenu]="SelectedItem == 'Main'" (click)="SelectedItem = 'Main'">{{ 'Accounting.General.O.Main' | TextCodeTranslationPipe }}</li> -->
-                <li id="{{'FACS' | IdGeneratorPipe}}" *ngIf="IsCustomersTabVisibile" float-start [class.SelectedPageMenu]="SelectedItem == 'CS'" (click)="SelectedItem = 'CS'">{{ 'Accounting.General.O.Customers' | TextCodeTranslationPipe }}</li>
-                <li id="{{'FAVND' | IdGeneratorPipe}}" *ngIf="IsVendorsTabVisibile" float-start [class.SelectedPageMenu]="SelectedItem == 'VND'" (click)="SelectedItem = 'VND'">{{ 'Accounting.General.O.Vendors' | TextCodeTranslationPipe }}</li>
-                <li id="{{'FABNKS' | IdGeneratorPipe}}" *ngIf="IsBanksTabVisibile" float-start [class.SelectedPageMenu]="SelectedItem == 'BNKS'" (click)="SelectedItem = 'BNKS'">{{ 'Accounting.General.O.Banks' | TextCodeTranslationPipe }}</li>
-                <li id="{{'FAJournal' | IdGeneratorPipe}}" float-start *ngIf="IsJournalTabVisibile" [class.SelectedPageMenu]="SelectedItem == 'JORN'" (click)="SelectedItem = 'JORN'">{{ 'Accounting.O.Journals' | TextCodeTranslationPipe }}</li>
-                <li id="{{'FAGLAccouts' | IdGeneratorPipe}}" *ngIf="IsGLAccountsTabVisibile" float-start [class.SelectedPageMenu]="SelectedItem == 'GLAccounts'" (click)="SelectedItem = 'GLAccounts'">{{ 'Accounting.O.GLAccounts' | TextCodeTranslationPipe }}</li>
-                <li id="{{'FAInterest' | IdGeneratorPipe}}" *ngIf="IsInterestTabVisibile" float-start [class.SelectedPageMenu]="SelectedItem == 'Interest'" (click)="SelectedItem = 'Interest'">{{ 'Accounting.General.O.Interest' | TextCodeTranslationPipe }}</li>
-                <li id="{{'FAMISC' | IdGeneratorPipe}}" *ngIf="IsMiscTabVisibile" float-start [class.SelectedPageMenu]="SelectedItem == 'MISC'" (click)="SelectedItem = 'MISC'">{{ 'Accounting.General.O.Misc' | TextCodeTranslationPipe }}</li>
+                <!-- <li id="{{'FAMain' | IdGeneratorAsyncPipe | async}}" *ngIf="IsMainTabVisibile" float-start [class.SelectedPageMenu]="SelectedItem == 'Main'" (click)="SelectedItem = 'Main'">{{ 'Accounting.General.O.Main' | TextCodeTranslationPipe }}</li> -->
+                <li id="{{'FACS' | IdGeneratorAsyncPipe | async}}" *ngIf="IsCustomersTabVisibile" float-start [class.SelectedPageMenu]="SelectedItem == 'CS'" (click)="SelectedItem = 'CS'">{{ 'Accounting.General.O.Customers' | TextCodeTranslationPipe }}</li>
+                <li id="{{'FAVND' | IdGeneratorAsyncPipe | async}}" *ngIf="IsVendorsTabVisibile" float-start [class.SelectedPageMenu]="SelectedItem == 'VND'" (click)="SelectedItem = 'VND'">{{ 'Accounting.General.O.Vendors' | TextCodeTranslationPipe }}</li>
+                <li id="{{'FABNKS' | IdGeneratorAsyncPipe | async}}" *ngIf="IsBanksTabVisibile" float-start [class.SelectedPageMenu]="SelectedItem == 'BNKS'" (click)="SelectedItem = 'BNKS'">{{ 'Accounting.General.O.Banks' | TextCodeTranslationPipe }}</li>
+                <li id="{{'FAJournal' | IdGeneratorAsyncPipe | async}}" float-start *ngIf="IsJournalTabVisibile" [class.SelectedPageMenu]="SelectedItem == 'JORN'" (click)="SelectedItem = 'JORN'">{{ 'Accounting.O.Journals' | TextCodeTranslationPipe }}</li>
+                <li id="{{'FAGLAccouts' | IdGeneratorAsyncPipe | async}}" *ngIf="IsGLAccountsTabVisibile" float-start [class.SelectedPageMenu]="SelectedItem == 'GLAccounts'" (click)="SelectedItem = 'GLAccounts'">{{ 'Accounting.O.GLAccounts' | TextCodeTranslationPipe }}</li>
+                <li id="{{'FAInterest' | IdGeneratorAsyncPipe | async}}" *ngIf="IsInterestTabVisibile" float-start [class.SelectedPageMenu]="SelectedItem == 'Interest'" (click)="SelectedItem = 'Interest'">{{ 'Accounting.General.O.Interest' | TextCodeTranslationPipe }}</li>
+                <li id="{{'FAMISC' | IdGeneratorAsyncPipe | async}}" *ngIf="IsMiscTabVisibile" float-start [class.SelectedPageMenu]="SelectedItem == 'MISC'" (click)="SelectedItem = 'MISC'">{{ 'Accounting.General.O.Misc' | TextCodeTranslationPipe }}</li>
             </ul>
         </td>
     </tr>

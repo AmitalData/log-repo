@@ -80,6 +80,36 @@ namespace Logitude.Accounting.Data.EntityLists
        public decimal? CalCreditAllotmentCommission  { get; set; }
        [DataMember]
        public decimal? CalculatedPostponedChequesCommision  { get; set; }
+       [DataMember]
+       public string Category1Name  { get; set; }
+       [DataMember]
+       public string Category2Name  { get; set; }
+       [DataMember]
+       public string Category3Name  { get; set; }
+       [DataMember]
+       public string Category4Name  { get; set; }
+       [DataMember]
+       public string Category5Name  { get; set; }
+       [DataMember]
+       public string Category1LocalName  { get; set; }
+       [DataMember]
+       public string Category2LocalName  { get; set; }
+       [DataMember]
+       public string Category3LocalName  { get; set; }
+       [DataMember]
+       public string Category4LocalName  { get; set; }
+       [DataMember]
+       public string Category5LocalName  { get; set; }
+       [DataMember]
+       public string Category1Id  { get; set; }
+       [DataMember]
+       public string Category2Id  { get; set; }
+       [DataMember]
+       public string Category3Id  { get; set; }
+       [DataMember]
+       public string Category4Id  { get; set; }
+       [DataMember]
+       public string Category5Id  { get; set; }
    }
 
 }

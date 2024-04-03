@@ -29,6 +29,34 @@ export class CommonDomainService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/CommonDomain';
     }
 
+    public GetCheckConnectaPanageaPartner() {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetCheckConnectaPanageaPartner?', ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = myResult;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
+    public GetChargifyAWBStock(isAWBStockChecked, totalStocks, totalPrice) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetChargifyAWBStock?isAWBStockChecked=' + isAWBStockChecked + "&totalStocks=" + totalStocks + "&totalPrice=" + totalPrice , ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = myResult;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
     DownloadUploadPartnersTemplate() {
         var url = this._apiUrl + '/GetDownloadUploadPartnersTemplate';
         return defer(() => {
@@ -138,11 +166,11 @@ export class CommonDomainService {
             }),catchError(ServiceHelper.HandleServiceError));
         });
     }
-    CopyCurrencyToTenant(CurrencyId: string, CurrencyRate: number, RateDate: string) {
+    CopyCurrencyToTenant(CurrencyId: string, CurrencyRate: number, RateDate: string,Unit:number = 1) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
-        var url = this._apiUrl + '/GetCopyCurrencyToTenant?CurrencyId=' + CurrencyId + '&CurrencyRate=' + CurrencyRate + '&RateDate=' + RateDate;
+        var url = this._apiUrl + '/GetCopyCurrencyToTenant?CurrencyId=' + CurrencyId + '&CurrencyRate=' + CurrencyRate + '&RateDate=' + RateDate + '&Unit=' + Unit;
 
         return defer(() => {
             return this._http.get(url,ServiceHelper.GetHttpHeaders()).pipe(map(response => {                
@@ -1138,6 +1166,39 @@ export class CommonDomainService {
         });
     }
 
+    GetTenantLogoUriByShipmentSecurityKey(Id: number, securityKey: string) {
+        
+        let url = this._apiUrl + '/GetTenantLogoUriByShipmentSecurityKey?tenant=' + Id + '&securityKey=' + securityKey;
+
+        return defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpHeadersWithoutToken()).pipe(map(response => {
+
+                var myResult = response;
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = myResult;
+                return serviceResponse;
+
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
+    GetTenantEcommerceSupportEmailByShipmentSecurityKey(id: number, securityKey: string) {
+
+        let url = this._apiUrl + '/GetTenantEcommerceSupportEmailByShipmentSecurityKey?' + 'id=' + id + '&securityKey=' + securityKey;
+
+        return defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpHeadersWithoutToken()).pipe(map(response => {
+                var pm = response;
+
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.Result = pm;
+                return serviceResponse;
+
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
     MapJsonToAccountingSettingPM(jsonPM: any, mapParent: boolean = true, entityPM: AccountingSettingPM = null) {
         if (!entityPM) {
 
@@ -1256,6 +1317,26 @@ export class CommonDomainService {
             return pmresponse;
         }), catchError(ServiceHelper.HandleServiceError));
     }
+
+    GetHTSCodesForProductItemsIds(productItemIds: string, toCountryId: string) {
+        var callTime = new Date();
+
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
+        var url = this._apiUrl + '/GetHTSCodesForProductItemsIds?productItemIds=' + productItemIds + '&toCountryId=' + toCountryId;
+
+        return defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                serviceResponse.CallTime = callTime;
+                serviceResponse.Result = response;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
 }
 
 export class TranslationHeader {
@@ -1313,6 +1394,8 @@ export class CustomApiQueryFilters {
     public AdditionalFilters: FilterItem[] = [];
     public ForceCacheRefresh: boolean = false;
     public IsClosedTable: boolean = false;
+    public ParentObjectTableName: string;
+    public ParentObjectTableId: string;
     addAdditionalFilter(
         FieldName: string,
         FieldValue: any,
@@ -1472,4 +1555,5 @@ export class PartnersUploadExcelParameter {
     FileName: string;
     IsConfirmationByUser: boolean;
     DocumentId: string;
+    ComputingPartnerCode: string;
 }

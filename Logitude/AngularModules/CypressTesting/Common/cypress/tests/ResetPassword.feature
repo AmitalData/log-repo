@@ -1,4 +1,4 @@
- @stable @all
+@release @stable @all
 Feature: Reset password test
 
     Scenario: Enter a password and mismatch password confirmation

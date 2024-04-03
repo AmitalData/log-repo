@@ -66,7 +66,7 @@
             style="margin: 0px 2px;">
        {{button.LabelTextCodeCode | TextCodeTranslationPipe}}
     </button>-->
-            <!--id="{{ button.LabelTextCodeCode | IdGeneratorPipe}}"-->
+            <!--id="{{ button.LabelTextCodeCode | IdGeneratorAsyncPipe | async}}"-->
 
             <div [style.width.px]="button.MenuButtonType == 'menuitem' ? 0 : button.Width"
                 [style.opacity]="button.IsDisabled?'0.5':'1'" [style.pointer-events]="button.IsDisabled?'none':'all'"
@@ -74,10 +74,13 @@
                 <MenuButtonsComponentLoader [EntityPM]="EntityPM" [ObjectTable]="ObjectTable" [MenuButton]="button"
                     *ngIf="button.MenuButtonType=='control' && !button.IsHidden"></MenuButtonsComponentLoader>
             </div>
-            <button *ngIf="button.MenuButtonType=='button' && !button.IsHidden" type="button"
-                [attr.id]="button.LabelTextCodeCode | IdGeneratorPipe" (click)="OnClick(button)"
-                [class]="button.Style == 'RedButtonStyle' ? 'RedButton' : (button.Style == 'ApproveButtonStyle' ? 'GreenButton' : 'Button')"
-                [disabled]="button.IsDisabled" [style.width.px]="button.Width"
+ 
+            <button *ngIf="button.MenuButtonType=='button' && !button.IsHidden"
+                    type="button"
+                    [attr.id]="button.LabelTextCodeCode | IdGeneratorAsyncPipe | async"
+                    (click)="OnClick(button)"
+                    [class]="button.Style == 'RedButtonStyle' ? 'RedButton' : ((button.Style == 'ApproveButtonStyle' || button.Style == 'ExportButtonStyle') ? 'GreenButton' : 'Button')"
+                 [disabled]="button.IsDisabled" [style.width.px]="button.Width"
                 style="margin: 0px 2px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;"
                 [attr.title]="button.LabelTextCodeCode | TextCodeTranslationPipe">
                 <img *ngIf="button.DisplayText=='הומכל'" src="./Images/Icons/MiniGreenTick.png"
@@ -85,12 +88,10 @@
                 {{button.DisplayText}}
             </button>
 
-            <div [style.opacity]="IsDisableMenuOther && button.LabelTextCodeCode == 'Quote.B.Actions' ?'0.5':'1'"
-                [style.pointer-events]="IsDisableMenuOther && button.LabelTextCodeCode == 'Quote.B.Actions'?'none':'all'"
-                *ngIf="button.MenuButtonType=='dropdownbutton' && !button.IsHidden" style="margin: 0px 2px;">
-                <div id="{{ 'MenuButtons' | IdGeneratorPipe}}" tabindex="0" class="ToggleButton"
-                    [style.width.px]="ToggleButtonWidth">
-                    <!--<label>{{button.LabelTextCodeCode | TextCodeTranslationPipe}}</label>-->
+ 
+            <div [style.opacity]="IsDisableMenuOther && button.LabelTextCodeCode == 'Quote.B.Actions' ?'0.5':'1'" [style.pointer-events]="IsDisableMenuOther && button.LabelTextCodeCode == 'Quote.B.Actions'?'none':'all'" *ngIf="button.MenuButtonType=='dropdownbutton' && !button.IsHidden" style="margin: 0px 2px;">
+                <div id="{{ 'MenuButtons' | IdGeneratorAsyncPipe | async}}" tabindex="0" class="ToggleButton" [style.width.px]="ToggleButtonWidth">
+                     <!--<label>{{button.LabelTextCodeCode | TextCodeTranslationPipe}}</label>-->
                     <table>
                         <tr>
                             <td style="width: 2px;">
@@ -116,7 +117,7 @@
 
                     <div class="ToggleButtonMenu" [ngStyle]="LayoutDirection == 'rtl' ? {'left': '0', 'right' : 'initial' , top: ToggleButtonTop} : {top: ToggleButtonTop}">
                         <div *ngFor="let menuItem of MenuButtons | MenuButtonsItemsPipe:button.Id; let menuItemIndex=index">
-                            <button id="{{ menuItem.LabelTextCodeCode | IdGeneratorPipe}}" *ngIf="menuItem.MenuButtonType=='menuitem' && !menuItem.IsHidden" (click)="OnClick(menuItem)" [disabled]="menuItem.IsDisabled" [ngStyle]="LayoutDirection == 'rtl' ? {'text-align': 'right'} : {'text-align': 'left'}">
+                             <button id="{{ menuItem.LabelTextCodeCode | IdGeneratorPipe}}" *ngIf="menuItem.MenuButtonType=='menuitem' && !menuItem.IsHidden" (click)="OnClick(menuItem)" [disabled]="menuItem.IsDisabled" [ngStyle]="LayoutDirection == 'rtl' ? {'text-align': 'right'} : {'text-align': 'left'}">
                                 <div *ngIf="menuItem.LabelTextCodeCode!=null">{{menuItem.LabelTextCodeCode | TextCodeTranslationPipe}}
                                 <img *ngIf="menuItem.EventCode == 'LoadExcelSupplierInvoices'" title="Export To Excel"
                                         style="position: relative; margin-top: 9px; width: 13px; opacity: 0.9;"
@@ -125,6 +126,7 @@
                                 <img *ngIf="menuItem.EventCode == 'LoadExcelSupplierInvoices'" title="Export To Excel"
                                     style="position: relative; margin-top: 9px; width: 13px; opacity: 0.9;"
                                     src="./Images/Buttons/excelicon.png" /></div>
+ 
                             
                             </button>
                             <div *ngIf="menuItem.MenuButtonType=='separator' && !menuItem.IsHidden"

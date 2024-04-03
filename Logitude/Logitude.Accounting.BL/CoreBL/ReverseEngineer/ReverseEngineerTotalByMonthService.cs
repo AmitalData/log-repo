@@ -206,9 +206,12 @@ namespace Logitude.Accounting.BL.CoreBL
                                          ForeignAmountDebit = totalByMonth.ForeignAmountDebit - joinr.ForeignAmountDebit,
                                          CHANGE_TYPE = Const_qDiff
                                      });
+
                         var GLAccountTotalByMonthsList =
                             //qNotinLedgerTransaction.Union(qNotinTotalByMonth).Union(qDiff).ToList();
-                            qNotinLedgerTransaction.Concat(qNotinTotalByMonth).Concat(qDiff).ToList();
+                            qNotinLedgerTransaction.Take(30)
+                            .Concat(qNotinTotalByMonth.Take(30))
+                            .Concat(qDiff.Take(30)).ToList();
                         ;
                         GLAccountTotalByMonthsList.ForEach(
                             r =>
@@ -230,6 +233,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         GLAccountTotalByMonthsList = myGLAccountTotalByMonthsList,
                         Took = sw.Elapsed
                     };
+                    Convert2DisplayNumber(CompareReport.GLAccountTotalByMonthsList, _Tenant);
                 }
 
             }
@@ -239,6 +243,33 @@ namespace Logitude.Accounting.BL.CoreBL
             }
 
 
+        }
+        private void Convert2DisplayNumber(List<GLAccountTotalByMonthsDTO> rows, int tenant)
+        {
+            if (rows == null)
+            {
+                return;
+            }
+            try
+            {
+                var AccountIdList = rows.Where(r => !string.IsNullOrWhiteSpace(r.AccountId)).Select(x => x.AccountId).Distinct().ToList();
+                var repo = new GLAccountRepository(tenant);
+                var res = repo.GetDisplayNumberList(AccountIdList.ToHashSet(), tenant);
+                foreach (var item in rows)
+                {
+                    var display = res.FirstOrDefault(r => r.Key == item.AccountId);
+                    if (string.IsNullOrEmpty(display.Value))
+                    {
+                        continue;
+                    }
+                    item.AccountDisplayNumber = display.Value;
+                }
+            }
+            catch (Exception)
+            {
+
+                
+            }
         }
 
         private const string const_qNotinLedgerTransaction ="qNotinLedgerTransaction";
@@ -257,10 +288,21 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 throw new Exception("is ok - nothing done  !!!!");
             }
-            if (this.CompareReport.GLAccountTotalByMonthsList.Any( r=>r.CHANGE_TYPE == const_qNotinLedgerTransaction))
+            if (this.CompareReport.GLAccountTotalByMonthsList.Any(r => r.CHANGE_TYPE == const_qNotinLedgerTransaction))
             {
-                throw new Exception("contains qNotinLedgerTransaction FIX - the problem there is Total but any LedgerTransaction" +
-                    "Deleting GLAccountTotalByMonths Requires A deeper examination - U do That not me!!!!");
+                var res = this.CompareReport.GLAccountTotalByMonthsList.Where(r => r.CHANGE_TYPE == const_qNotinLedgerTransaction).ToList();
+                /// OHAD 2022 11 10 - NEW FEATURE CREATE 170020
+                if (res.Any(r => r.ForeignAmountCredit != 0)
+                    || res.Any(r => r.ForeignAmountDebit != 0)
+                    || res.Any(r => r.LocalAmountCredit != 0)
+                    || res.Any(r => r.LocalAmountDebit != 0)
+                    )
+                {
+                    var row = res.First();
+                    string total = $"Example- GLAccountTotalByMonth DateType:{row.DateTypeValue}  Year:{row.Year} Month:{row.Month} AccountId:{row.AccountId} ";
+                    throw new Exception("contains qNotinLedgerTransaction FIX - the problem there is Total but any LedgerTransaction" +
+                    "Deleting GLAccountTotalByMonths Requires A deeper examination - U do That not me!!!! " + total);
+                }
             }
             using (var scope = TransactionFactory.GetNewSerializableTransaction())
             {

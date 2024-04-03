@@ -33,10 +33,6 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
                                                                   StatusCode = a.StatusCode,
 
-                                                                  ParametersXML = a.ParametersXML,
-
-                                                                  ResultXML = a.ResultXML,
-
                                                                   HasException = a.HasException,
 
                                                                   DoneDateTimeUTC = a.DoneDateTimeUTC,

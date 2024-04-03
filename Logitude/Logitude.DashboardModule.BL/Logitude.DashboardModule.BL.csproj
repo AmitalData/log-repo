@@ -1,0 +1,188 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D3F9042C-8B29-4882-BCCE-73AB5A06290B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Logitude.DashboardModule.BL</RootNamespace>
+    <AssemblyName>Logitude.DashboardModule.BL</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.DomainServices.Server">
+      <HintPath>..\packages\ServiceModel.1.0.0\lib\Net40\System.ServiceModel.DomainServices.Server.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="APIDataContract\AnalyticData.cs" />
+    <Compile Include="APIDataContract\WidgetPartArguments.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\MeasureTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\PermissionLevelDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\WidgetTypeDetails.Generated.cs" />
+    <Compile Include="DataProviders\CommonGlobalFilterProvider.cs" />
+    <Compile Include="DataProviders\DataProviderFactory.cs" />
+    <Compile Include="DataProviders\BaseDataProviderService.cs" />
+    <Compile Include="DataProviders\BaseTablesDataProvider.cs" />
+    <Compile Include="DataProviders\GlobalFilterService.cs" />
+    <Compile Include="DataProviders\Models\GroupByFieldQueryParts.cs" />
+    <Compile Include="DataProviders\Models\KpiChart.cs" />
+    <Compile Include="DataProviders\TablesDataProviders\APInvoiceDataProviderService.cs" />
+    <Compile Include="DataProviders\TablesDataProviders\ARInvoiceDataProviderService.cs" />
+    <Compile Include="DataProviders\TablesDataProviders\OpportunityDataProviderService.cs" />
+    <Compile Include="DataProviders\TablesDataProviders\QuoteDataProviderService.cs" />
+    <Compile Include="DataProviders\TablesDataProviders\ContainerDataProviderService .cs" />
+    <Compile Include="DataProviders\TablesDataProviders\ShipmentDataProviderService.cs" />
+    <Compile Include="DataProviders\WidgetDataSource.cs" />
+    <Compile Include="DataProviders\WidgetsDataProviders\ChartDataProviderService.cs" />
+    <Compile Include="DataProviders\WidgetsDataProviders\KpiDataProviderService.cs" />
+    <Compile Include="EntityDataMappings\AnalyticsFactsFieldsMetaDataDataMapping.cs" />
+    <Compile Include="EntityDataMappings\AnalyticsFactsMetaDataDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DashboardDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DashboardGlobalFilterDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DashboardGlobalPresetFilterDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DashboardSharedUserDataMapping.cs" />
+    <Compile Include="EntityDataMappings\DashboardsUserSettingDataMapping.cs" />
+    <Compile Include="EntityDataMappings\Generated\AnalyticsFactsFieldsMetaDataDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\AnalyticsFactsMetaDataDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DashboardDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DashboardGlobalFilterDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DashboardGlobalPresetFilterDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DashboardSharedUserDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\DashboardsUserSettingDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\MeasureTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\PermissionLevelDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\WidgetDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\WidgetMeasureDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\WidgetTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\MeasureTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\PermissionLevelDataMapping.cs" />
+    <Compile Include="EntityDataMappings\WidgetDataMapping.cs" />
+    <Compile Include="EntityDataMappings\WidgetMeasureDataMapping.cs" />
+    <Compile Include="EntityDataMappings\WidgetTypeDataMapping.cs" />
+    <Compile Include="EntityPMs\Generated\AnalyticsFactsFieldsMetaDataPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\AnalyticsFactsMetaDataPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\DashboardGlobalFilterPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\DashboardGlobalPresetFilterPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\DashboardPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\DashboardSharedUserPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\DashboardsUserSettingPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\MeasureTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\PermissionLevelPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\WidgetMeasurePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\WidgetPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\WidgetTypePM.Generated.cs" />
+    <Compile Include="EntityQueryServices\AnalyticsFactsFieldsMetaDataQueryService.cs" />
+    <Compile Include="EntityQueryServices\DashboardQueryService.cs" />
+    <Compile Include="EntityQueryServices\Generated\AnalyticsFactsFieldsMetaDataQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\AnalyticsFactsMetaDataQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\DashboardGlobalFilterQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\DashboardGlobalPresetFilterQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\DashboardQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\DashboardSharedUserQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\DashboardsUserSettingQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\MeasureTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\PermissionLevelQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\WidgetMeasureQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\WidgetQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\WidgetTypeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\DashboardsUserSettingQueryService.cs" />
+    <Compile Include="EntityQueryServices\WidgetQueryService.cs" />
+    <Compile Include="EntityUpdateServices\DashboardGlobalFilterUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\DashboardSharedUserUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\DashboardUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\Generated\AnalyticsFactsFieldsMetaDataUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\AnalyticsFactsMetaDataUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\DashboardGlobalFilterUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\DashboardSharedUserUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\DashboardsUserSettingUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\DashboardUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\MeasureTypeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\PermissionLevelUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\WidgetMeasureUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\WidgetTypeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\WidgetUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\DashboardsUserSettingUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\WidgetMeasureUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\WidgetUpdateService.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Validators\DashboardModuleClassLevelValidator.cs" />
+    <Compile Include="Validators\DashboardModuleValidationClass.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="CloseTables\EnumGenerated\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Logitude.BL\Logitude.BL.csproj">
+      <Project>{A663E7EF-B858-4BB6-BC33-E473F51B8E56}</Project>
+      <Name>Logitude.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.CRM.Data\Logitude.CRM.Data.csproj">
+      <Project>{4733F914-0E16-4412-84DF-D98232DD43E9}</Project>
+      <Name>Logitude.CRM.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.DashboardModule.Data\Logitude.DashboardModule.Data.csproj">
+      <Project>{156bdc54-4d7d-4964-9b48-c0b86b571de9}</Project>
+      <Name>Logitude.DashboardModule.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.Server.Tools\Logitude.Server.Tools.csproj">
+      <Project>{9b477a08-8ee2-4457-88fe-17e8a6ec4d00}</Project>
+      <Name>Logitude.Server.Tools</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simplog.Data\Simplog.Data.csproj">
+      <Project>{78ec8434-e6ad-4e93-9b17-c746f5403f7b}</Project>
+      <Name>Simplog.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simplog.Server.Infrastructure\Simplog.Server.Infrastructure.csproj">
+      <Project>{acc2ea9e-e150-4099-8aa1-66326ab14be8}</Project>
+      <Name>Simplog.Server.Infrastructure</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

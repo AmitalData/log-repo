@@ -1,6 +1,9 @@
-﻿using Logitude.Accounting.Def.EntityQueryServicesExt;
+﻿using Logitude.Accounting.Def.EntityPMs;
+using Logitude.Accounting.Def.EntityQueryServicesExt;
 using Logitude.BL.CommonDataModel.APIDataContract;
 using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.InvoiceModel.APIDataContract.ApiV1;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.EntityQueries;
@@ -9,6 +12,7 @@ using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.Helpers;
 using Microsoft.Practices.Unity;
 using Simplog.Data.InvoiceModel.Repositories;
 using System;
@@ -139,6 +143,100 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
             return invoicePM;
           
          }
+
+        public ARInvoice SetARInvoiceSystemUser(ARInvoice entity)
+        {
+            String systemUserId = "";
+            UserPM myCreatedByUserPM = null;
+            User systemUser = null;
+            if (entity.CreatedByUser != null)
+            {
+                UserQuery query = new UserQuery(entity.Tenant);
+                myCreatedByUserPM = query.UserCustomDataMappingAndValidatin(entity.CreatedByUser, entity.Tenant);
+            }
+
+
+
+            if (entity.CreatedByUser == null || myCreatedByUserPM == null)
+            {
+                systemUserId = AuthenticationUtil.ResolveSystemUserId(entity.Tenant);
+                if (!String.IsNullOrEmpty(systemUserId))
+                {
+                    entity.CreatedByUser = null;
+
+                    UserQueryService userQueryService = new UserQueryService(entity.Tenant);
+                    systemUser = userQueryService.GetUserById(systemUserId, entity.Tenant);
+                    if (systemUser != null)
+                    {
+                        entity.CreatedByUser = new User();
+                        entity.CreatedByUser.Id = systemUser.Id;
+                        entity.CreatedByUser.EnglishName = systemUser.EnglishName;
+                        entity.CreatedByUser.ExternalCode = systemUser.ExternalCode;
+                        entity.CreatedByUser.LocalName = systemUser.LocalName;
+
+                    }
+                }
+            }
+
+
+            UserPM myIssuedByUserPM = null;
+            if (entity.IssuedByUser != null)
+            {
+                UserQuery query = new UserQuery(entity.Tenant);
+                myIssuedByUserPM = query.UserCustomDataMappingAndValidatin(entity.IssuedByUser, entity.Tenant);
+            }
+
+
+
+            if (entity.IssuedByUser == null || myIssuedByUserPM == null)
+            {
+                entity.IssuedByUser = null;
+                if (systemUser != null)
+                {
+                    entity.IssuedByUser = new User();
+                    entity.IssuedByUser.Id = systemUser.Id;
+                    entity.IssuedByUser.EnglishName = systemUser.EnglishName;
+                    entity.IssuedByUser.ExternalCode = systemUser.ExternalCode;
+                    entity.IssuedByUser.LocalName = systemUser.LocalName;
+
+                }
+            }
+
+
+
+            return entity;
+        }
+
+
+
+        public JournalPM GetARInvoiceExistingJournalPM(ARInvoice entity)
+        {
+            JournalPM journalPM = null;
+            if (String.IsNullOrWhiteSpace(entity.ExistingExternalJournal) && entity.DoNotCreateJournal.HasValue && entity.DoNotCreateJournal.Value == true)
+            {
+                throw new ApplicationException("ExistingExternalJournal is required when DoNotCreateJournal==true");
+            }
+
+            if (!String.IsNullOrWhiteSpace(entity.ExistingExternalJournal) && !(entity.DoNotCreateJournal.HasValue && entity.DoNotCreateJournal.Value == true))
+            {
+                throw new ApplicationException("DoNotCreateJournal required to be true when ExistingExternalJournal is present");
+            }
+
+            if (!String.IsNullOrWhiteSpace(entity.ExistingExternalJournal) && entity.DoNotCreateJournal.HasValue && entity.DoNotCreateJournal.Value == true)
+            {
+                IJournalQueryServiceExt journalQuery = ContainerAccessor.Container.Resolve(typeof(IJournalQueryServiceExt), "JournalQueryServiceExt", new ParameterOverride("", 1)) as IJournalQueryServiceExt;
+                journalPM = GetSingleJournalByExternalNoAndExternalSystem(entity.ExistingExternalJournal, "AMITAL", entity.Tenant);
+
+                if (journalPM == null)
+                {
+                    throw new ApplicationException("ExistingExternalJournal " + entity.ExistingExternalJournal + " from AMITAL is not found");
+                }
+            }
+            return journalPM;
+        }
+
+
+
         public ARInvoice ARInvoiceDataMappingAndValidatin(ARInvoicePM MyEntity, int Tenant, string ComputingPartnerName = "")
         {
             try
@@ -367,6 +465,40 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
             }
         }
 
+        public ARInvoiceLite GetARInvoiceLiteByInvoiceNumber(string number, int tenant)
+        {
+            try
+            {
+
+
+                string aRInvoiceId = query.GetSingleInvoiceIdByInvoiceNumber(number, tenant);
+
+                return new ARInvoiceLite() { Id = aRInvoiceId };
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+
+        public ARInvoiceLite GetARInvoiceLiteById(string invoiceId, int tenant, string ComputingPartnerName = "")
+        {
+            try
+            {
+                string aRInvoiceId = query.GetCheckInvoiceId(invoiceId, tenant);
+
+                return new ARInvoiceLite() { Id = aRInvoiceId };
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+
         public string GetGLAccountNumberById(string id, int tenant )
         {
             IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
@@ -407,7 +539,13 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
             }
         }
 
+        private JournalPM GetSingleJournalByExternalNoAndExternalSystem(string externalNo, string externalSystem, int tenant)
+        {
+            IJournalQueryServiceExt journalQuery = ContainerAccessor.Container.Resolve(typeof(IJournalQueryServiceExt), "JournalQueryServiceExt", new ParameterOverride("", 1)) as IJournalQueryServiceExt;
+            return journalQuery.GetSingleJournalByExternalNoAndExternalSystem(externalNo, externalSystem, tenant);
 
+
+        }
 
 
     }

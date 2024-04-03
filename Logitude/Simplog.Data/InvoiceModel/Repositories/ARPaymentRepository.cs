@@ -121,7 +121,12 @@ namespace Simplog.Data.InvoiceModel.Repositories
                     where a.Tenant == tenant
                     select a);
         }
-       
+
+        public IQueryable<ARPayment> GetARPayments()
+        {
+            return context.ARPayments;
+        }
+
         public bool IsARPaymentNumberExists(string arPaymentNo,int tenant)
         {
             return context.ARPayments.Where(d => d.PaymentNo == arPaymentNo && d.Tenant == tenant).Any();
@@ -187,6 +192,14 @@ namespace Simplog.Data.InvoiceModel.Repositories
             string arpaymentno = (from a in context.ARPayments
                                   where a.Tenant == tenant && a.Id == arPaymentId
                                   select a.PaymentNo).FirstOrDefault();
+            return arpaymentno;
+        }
+
+        public string GetBillToId(string id, int tenant)
+        {
+            string arpaymentno = (from a in context.ARPayments
+                                  where a.Tenant == tenant && a.Id == id
+                                  select a.BillToId).FirstOrDefault();
             return arpaymentno;
         }
     }

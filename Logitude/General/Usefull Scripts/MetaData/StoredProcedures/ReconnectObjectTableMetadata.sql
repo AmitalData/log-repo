@@ -1,10 +1,5 @@
 
 
-update DWHBuildStatus set IsFullBuildDWRunning =0 , IsIncrementalDWRunning = 0
-select * from ObjectFields where CopyToDW = 1
-
-
-
 IF OBJECT_ID('[dbo].[usp_ReconnectObjectTableMetadata]', 'P') IS NOT NULL
 drop PROCEDURE [dbo].[usp_ReconnectObjectTableMetadata]
 GO

@@ -92,7 +92,9 @@ namespace Simplog.Data.InfrastructureModel.Repositories
         {
             string entityName = "ObjectTable" + id + tenant;
             ObjectTable entity;
-            if (getFromCache)
+            getFromCache = true;
+
+			if (getFromCache)
             {
                
                     if (CacheManager.CacheWrapper.Get(entityName) == null)
@@ -115,8 +117,8 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             }
             else
             {
-                entity = context.ObjectTables.Where(d => d.Id == id && (d.Tenant == tenant || d.Tenant == 0)).FirstOrDefault();
- 
+                entity = context.ObjectTables.Include("FullNameTextCode").Where(d => d.Id == id && (d.Tenant == tenant || d.Tenant == 0)).FirstOrDefault();
+
             }
             return entity; 
         }
@@ -324,6 +326,14 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                     select a.Id).FirstOrDefault();
         }
 
+        public string GetObjectTableIdByName(string tablename , int tenant)
+        {
+            return (from a in context.ObjectTables
+                    where a.Name == tablename && (a.Tenant ==tenant || a.Tenant == 0)
+                    select a.Id).FirstOrDefault();
+        }
+
+
         public List<ObjectTable> GetAllCacheOnClient(int tenant)
         {
             
@@ -342,6 +352,25 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             var currentTenantTables = q.ToList();
             return currentTenantTables;
         }
+
+        public static string GetNameById(string id , int tenant)
+        {
+            IWebFreightContext webFreightContext = WebFreightContext.GetContext(tenant);
+            return (from a in webFreightContext.ObjectTables
+                    where a.Id == id
+                    select a.Name).FirstOrDefault();
+        }
+
+        public static bool  IsApplyGenericCustomFields(string name , int tenant)
+        {
+            IWebFreightContext webFreightContext = WebFreightContext.GetContext(tenant);
+
+            return (from a in webFreightContext.ObjectTables
+                        where a.Name == name  && !a.IsCustom 
+                        select a.ApplyGenericCustomFields).FirstOrDefault();
+         
+        }
+
     }
 
 

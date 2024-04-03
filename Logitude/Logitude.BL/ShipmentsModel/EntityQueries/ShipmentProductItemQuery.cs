@@ -26,7 +26,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         public ShipmentProductItemPM GetSinglePM(string id, int tenant)
         {
             ShipmentProductItemPM myResult
-                = (from a in repository.context.ShipmentProductItems.Include("OriginCountry")
+                = (from a in repository.context.ShipmentProductItems.Include("OriginCountry").Include("Shipper")
                    where a.Id == id && a.Tenant == tenant
                    select new ShipmentProductItemPM()
                    {
@@ -44,6 +44,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                        UPC = a.UPC,
                        OriginCountryId = a.OriginCountryId,
                        OriginCountryName = a.OriginCountry == null ? null : a.OriginCountry.EnglishName,
+                       VATPercentage = a.VATPercentage,
+                       DutiesPercentage = a.DutiesPercentage,
+                       OtherDuties = a.OtherDuties,
+                       Remarks = a.Remarks,
+                       ShipperId = a.ShipperId,
+                       ShipperName = a.Shipper == null ? null : a.Shipper.EnglishName,
                    }).FirstOrDefault();
 
             return myResult;
@@ -52,7 +58,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         public List<ShipmentProductItemPM> GetShipmentProductItems(string shipmentId, int tenant)
         {
             List<ShipmentProductItemPM> shipmentProductItems
-                = (from a in repository.context.ShipmentProductItems.Include("OriginCountry")
+                = (from a in repository.context.ShipmentProductItems.Include("OriginCountry").Include("Shipper")
                    where a.ShipmentId == shipmentId && a.Tenant == tenant
                    select new ShipmentProductItemPM()
                    {
@@ -70,7 +76,13 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                        UPC = a.UPC,
                        OriginCountryId = a.OriginCountryId,
                        OriginCountryName = a.OriginCountry == null ? null : a.OriginCountry.EnglishName,
-                   }).ToList();
+                       VATPercentage = a.VATPercentage,
+                       DutiesPercentage = a.DutiesPercentage,
+                       OtherDuties = a.OtherDuties,
+                       Remarks = a.Remarks,
+                       ShipperId = a.ShipperId,
+                       ShipperName = a.Shipper == null ? null : a.Shipper.EnglishName,
+                   }).OrderBy(a => a.Id).ToList();
 
             return shipmentProductItems;
         }

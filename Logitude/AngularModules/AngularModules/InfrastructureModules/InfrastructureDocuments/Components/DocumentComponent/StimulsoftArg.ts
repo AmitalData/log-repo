@@ -16,6 +16,7 @@ export class StimulsoftArg {
     EditDocumentComponent: EditDocumentComponent;
     public DocumentTypeId: string;
     public ReportsPreviewComponent: any;
+    public TemplateType: string;
     public BuildStimulReportResult: BuildStimulReportResult;
 
 
@@ -26,6 +27,7 @@ export class StimulsoftArg {
     IsShowExportMicrosoftExcel: boolean = false;
     IsShowSendButton: boolean = false;
     IsSchedulerReport: boolean = false;
+    IsExcelReportAllowed: boolean = false;
     ReportKey: string;
     NumberOfPage: number;
     PagesCount: number;
@@ -43,6 +45,10 @@ export class StimulsoftArg {
     ReportFilterConmponent: any;
     TemplateDescription: string;
     IsReset: boolean;
+    MessageTemplateLists: ReportsTemplateList[] = [];
+    DefaultMessageTemplateId: string;
+    ResultType: string;
+    ObjectTableId: string;
     constructor() {
 
     }

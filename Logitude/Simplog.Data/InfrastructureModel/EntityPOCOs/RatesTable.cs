@@ -14,6 +14,7 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public string BaseCurrencyId { get; set; }
         public string ForeignCurrencyId { get; set; }
         public double? Rate { get; set; }
+        public int? Unit { get; set; }
         public DateTime? ValueDate { get; set; }
         public DateTime LogDateTime { get; set; }
 
@@ -28,6 +29,11 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public virtual Currency ForeignCurrency { get; set; }
 
         //public List<ShipmentReceivable> ShipmentReceivables { get; set; }
+        public string UpdatedByUserId { get; set; }
+
+        [ForeignKey("UpdatedByUserId")]
+        public virtual User UpdatedByUser { get; set; }
+        public DateTime? UpdatedDate { get; set; }
 
     }
 

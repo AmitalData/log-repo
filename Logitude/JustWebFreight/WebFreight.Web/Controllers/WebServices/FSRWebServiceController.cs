@@ -60,6 +60,8 @@ namespace WebFreight.Web.Controllers.WebServices
                 string loggedUserEmail = authToken.Email;
 
                 SecurityUtility.AuthenticationOnTenant(tenant);
+                SecurityUtility.AuthenticationOnTenant(entityPM.Tenant);
+                SecurityUtility.AuthenticationOnEntityTenant("Shipment", entityPM.Tenant, tenant);
 
                 FSRManager fSRManager = new FSRManager(tenant, loggedUserEmail);
                 FSRResultClass myResult = fSRManager.SendShipmentFSR(entityPM);

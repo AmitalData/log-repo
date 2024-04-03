@@ -16,7 +16,7 @@ namespace Logitude.BL.QuoteModel.BusinessUnitFilters
     {
         private int myCurrentTenant;
         private string loggedUserEmail;
-        private User loggedUser;
+        public User loggedUser;
         public QuoteBusinessUnitFilter(int tenant)
         {
             this.myCurrentTenant = tenant;
@@ -28,8 +28,9 @@ namespace Logitude.BL.QuoteModel.BusinessUnitFilters
 
         public IQueryable<Quote> RunFilter(IQueryable<Quote> iQueryableData)
         {
+            if (loggedUser == null) return iQueryableData;
             List<RoleFeature> myFeatureRoles = this.GetFeaturesRoles();
-
+    
             if (myFeatureRoles.Count > 0)
             {
                 if (!myFeatureRoles.Where(d => d.FeatureAccessLevelCode == "OR").Any())
@@ -184,7 +185,7 @@ namespace Logitude.BL.QuoteModel.BusinessUnitFilters
             return null;
         }
 
-        private List<RoleFeature> GetFeaturesRoles()
+        public List<RoleFeature> GetFeaturesRoles()
         {
             List<RoleFeature> myFeatureRoles = new List<RoleFeature>();
 

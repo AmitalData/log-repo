@@ -2,6 +2,7 @@
 using Logitude.BL.Helpers;
 using Logitude.BL.QuoteModel.APIDataContract.ApiV1;
 using Logitude.Server.Tools;
+using Logitude.Server.Tools.EntityChanges;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.StorageService;
 using Microsoft.Practices.Unity;
@@ -33,6 +34,7 @@ namespace WebFreight.Web.App_Code
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnEntityTenant("Automation", htmlEditorResolveArgs.Tenant, authToken.Tenant);
 
                 if (htmlEditorResolveArgs.Tenant != authToken.Tenant)
                 {
@@ -111,6 +113,7 @@ namespace WebFreight.Web.App_Code
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 if (tenant != authToken.Tenant)
                 {
@@ -150,6 +153,7 @@ namespace WebFreight.Web.App_Code
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnEntityTenant("SendHtml", filter.Tenant, authToken.Tenant);
 
 
 
@@ -209,9 +213,9 @@ namespace WebFreight.Web.App_Code
 
 
                     DocumentPopulateAutomaticDateUpdateService documentPopulateAutomaticDateUpdateService = new DocumentPopulateAutomaticDateUpdateService();
-                    documentPopulateAutomaticDateUpdateService.Update(new DocumentPopulateAutomaticDateArgs() { EntityId = filter.EntityId, ObjectTableName = filter.ObjectTableName, DocumentTypeCode = filter.DocumentTypeCode, ProcessType = "Send", Tenant = filter.Tenant });
+                    documentPopulateAutomaticDateUpdateService.Update(new DocumentPopulateAutomaticDateArgs() { EntityId = filter.EntityId, ObjectTableName = filter.ObjectTableName, ChildObjectTableId = filter.ChildObjectTableId, ChildEntityId = filter.ChildEntityId, DocumentTypeCode = filter.DocumentTypeCode, ProcessType = "Send", Tenant = filter.Tenant });
 
-
+                    RunAutomation(filter, reslut, "OnDocumentUpdate");
                 }
                 else throw new Exception("Sorry you’re not authenticated to send this email");
                 return Request.CreateResponse(HttpStatusCode.OK, reslut);
@@ -223,6 +227,18 @@ namespace WebFreight.Web.App_Code
 
         }
 
+        private void RunAutomation(SendHtmlFilter filter, string documentId, string automationType)
+        {
+            GeneralEntityChangeService generalEntityChangeService = new GeneralEntityChangeService();
+            EntityDetails entityDetails = generalEntityChangeService.GetEntityDetails(filter.EntityId, filter.ObjectTableName, filter.Tenant);
+
+            bool isHaveAutomation = generalEntityChangeService.CheckIfEntityHaveAutomation(entityDetails.CombinedObjectTableName, automationType, filter.Tenant);
+            if (!isHaveAutomation) return;
+
+            MainEntityChangeService mainEntityChangeService = new MainEntityChangeService(new EntityChangeArgs() { EntityPM = entityDetails.EntityPM, ProcessType = automationType, ObjectTableName = entityDetails.ObjectTableName, EntityId = filter.EntityId, Tenant = filter.Tenant, StartDate = DateTime.Now, ExtraDetails = new OnUpdateDocumentDetails { Type = "Send", DocumentId = documentId, DocumentTypeId = filter.DocumentTypeId }, OtherObjectTableName = entityDetails.OtherObjectTableName, EntityReference = filter.EntityReference});
+            mainEntityChangeService.AddEntityChange();
+        }
+
         //Pdf Document Template Html
         public HttpResponseMessage PutSaveEditedReportToServer(FroalaEditorFilters filter)
         {
@@ -232,6 +248,7 @@ namespace WebFreight.Web.App_Code
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnEntityTenant("FroalaEditor", filter.Tenant, authToken.Tenant);
 
                 if (filter.Tenant != authToken.Tenant)
                 {
@@ -243,7 +260,12 @@ namespace WebFreight.Web.App_Code
                 string reslut = "";
                 string htmlString = filter.HtmlString;
                 if (string.IsNullOrEmpty(htmlString)) htmlString = "";
-                htmlString = htmlString.Replace("\"", "'");
+             
+                if(!FeatureToggleHelper.HasFeatureToggle("HDF", authToken.Tenant))
+                {
+                    htmlString = htmlString.Replace("\"", "'");
+                }
+                htmlString = htmlEditorHelper.FixPageBreakInlineStyle(htmlString);
 
                 byte[] htmlDataFile = GetBytes(htmlString);
                 byte[] pdfDataFile = htmlEditorHelper.BuildPdfDocumentHtml(htmlString);

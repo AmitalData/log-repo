@@ -22,7 +22,7 @@
         public bool IsAgentView { get; set; }
         public bool IsSharedLogisticsEnabled { get; set; }
         public bool AllowedInAutomation { get; set; }
-        
+
         //public int StatusWeight { get; set; }
     }
 }

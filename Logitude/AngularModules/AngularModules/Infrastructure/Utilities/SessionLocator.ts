@@ -20,6 +20,7 @@ export class SessionLocator {
     public static SignalRChannelService: SignalRChannelService;
     public static DisableEntityValidation: boolean = false;
     public static UseCachedData: boolean = true;
+    public static UseMemoryCachedData: boolean = false;
     public static IsExternalParams: boolean = false;
     public static IsSiguOut: boolean = false;
     public static HomeComponent: HomeComponent;
@@ -46,11 +47,13 @@ export class SessionLocator {
     public static ApplicationLocation: ViewContainerRef;  
     public static SATInterfaceSettings: SATInterfaceSettingPM;
     public static FeatureToggles: FeatureToggleList[] = [];
+    public static TenantZeroFeatureToggles: FeatureToggleList[] = [];
     public static SelectedSession: SessionComponent;
     public static ShowUserNewReleaseToolTip: boolean = true;
     public static AllSessions: Array<SessionComponent>;
     public static ProtractorEmails: Array<string> = [];
     public static WorkerRoleName: string = null;
+    public static ChangedShipmentPartnersIds: string = "";
     public static AddSession(mySession: SessionComponent) {
         if (SessionLocator.AllSessions == null) {
             SessionLocator.AllSessions = new Array<SessionComponent>();

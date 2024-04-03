@@ -14,13 +14,14 @@ using System.Xml;
 
 namespace Cloud.Sign.App
 {
-    public partial class InternalWindow : Form
+    public partial class InternalWindow : BaseForm
     {
         MainWindow MainForm = null;
-        string Environment = ConfigurationManager.AppSettings["Environment"].ToString();
         public InternalWindow(X509Certificate2 SelectedCert, string LoggedEmail, MainWindow Window)
         {
             InitializeComponent();
+            SetBaseControls();
+            InitView();
             if (SelectedCert == null)
             {
                 lblCertName.Text = "No Card Connected";
@@ -57,6 +58,13 @@ namespace Cloud.Sign.App
                 lblLoggedCompany.Text = MainForm.Company;
             } 
             SetLastSignDate();
+        }
+
+        private void SetBaseControls()
+        {
+            this.notifyIcon = ni;
+            this.pictureBox = pictureBox1;
+            this.label = label1;
         }
 
         private void InternalWindow_Resize(object sender, EventArgs e)
@@ -481,6 +489,7 @@ namespace Cloud.Sign.App
                     lblLoggedCompany.Text = MainForm.Company;
                 }
             }
+            InitView();
             //lblLastSigned.Text = LastSigned.ToShortDateString() + " " + LastSigned.ToShortTimeString();
             ShowMeInvoker = this.Invoke((MethodInvoker)delegate
             {

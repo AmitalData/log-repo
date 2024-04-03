@@ -49,5 +49,8 @@ namespace Logitude.BL.GlobalModel.EntityLists
         public string ZipCode { get; set; }
         public string Street { get; set; }
         public bool IsUserEmailSent { get; set; }
+        public string ClientId { get; set; }
+        public string LeadOrigin { get; set; }
+        public string Campaign { get; set; }
     }
 }

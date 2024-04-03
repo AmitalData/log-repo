@@ -36,6 +36,7 @@ import { ShipmentSubTypeListService } from '../../services/standardlists/shipmen
 import { ShipmentSubTypeList } from '../../EntityLists/ShipmentSubTypeList';
 import { FeatureToggleList } from '../../../Infrastructure/EntityLists/FeatureToggleList';
 import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
+import { VesselList } from '../../../Common/EntityLists/VesselList';
 
 @Component({
     templateUrl: './NewMasterComponent.html',
@@ -57,6 +58,8 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
     public AgentDependencyProperty1IsList: boolean = false;
     @ViewChild(ChildDirective) Child: ChildDirective;
     private CurrentSession = SessionLocator.SelectedSession;
+    public IsChooseVesselVisible: boolean = false;
+    public IsVesselFreeTextVisible: boolean = false;
     constructor() {
         super();
       this.SessionIndex = this.CurrentSession.SessionIndex;
@@ -127,6 +130,11 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
             this.IsCopyFromShipment = args.IsCopyFromShipment;
             this.IsBuildFromQuote = args.IsBuildFromQuote;
             this.IsMasterCreatedFromHouse = args.IsMasterCreatedFromHouse;
+
+            var featureToggle: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "VSL")[0];
+            if (featureToggle) {
+                this.IsVesselFreeTextVisible = true;
+            }
 
             this.BuildFiltersLists();
             this.SetUIProperties();
@@ -376,6 +384,7 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
         this.UIProperties.SetEnabled("MainCarriageCarrierNumber", this.ObjectTableName, isScreenEnabled);
         this.UIProperties.SetEnabled("Master", this.ObjectTableName, isScreenEnabled);
         this.UIProperties.SetEnabled("MAWBOBLDate", this.ObjectTableName, isScreenEnabled);
+        this.UIProperties.SetEnabled("MainCarriageVesselName", this.ObjectTableName, isScreenEnabled);
         this.UIProperties.SetEnabled("MainCarriageVesselId", this.ObjectTableName, isScreenEnabled);
         this.UIProperties.SetEnabled("FreightPrepaidCollectId", this.ObjectTableName, isScreenEnabled);
         this.UIProperties.SetEnabled("OtherPrepaidCollectId", this.ObjectTableName, isScreenEnabled);
@@ -709,6 +718,11 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
     }
 
     SetUIProperties() {
+        this.IsChooseVesselVisible = false;
+        if (this.TransportModeId == "O") {
+            this.IsChooseVesselVisible = true;
+        }
+
         this.SetUIProperties_Agent();
         this.SetUIProperties_Ports();
         this.SetUIProperties_MasterField();
@@ -1122,6 +1136,39 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
         if (this.EntityPM.MainCarriageVesselId != newValue) {
             this.EntityPM.MainCarriageVesselId = newValue;
         }
+    }
+
+    private mainCarriageVessel: VesselList;
+    get MainCarriageVessel() { return this.mainCarriageVessel; }
+    set MainCarriageVessel(value: VesselList) {
+        if (this.mainCarriageVessel != value) {
+            this.mainCarriageVessel = value;
+        }
+
+        this.MainCarriageVesselName = null;
+        if (!AppTool.IsNullOrEmpty(value)) {
+            this.MainCarriageVesselName = value.EnglishName;
+        }
+    }
+
+    get MainCarriageVesselName() { return this.EntityPM.MainCarriageVesselName; }
+    set MainCarriageVesselName(newValue: string) {
+        if (this.EntityPM.MainCarriageVesselName != newValue) {
+            this.EntityPM.MainCarriageVesselName = newValue;
+
+            if (this.IsVesselFreeTextVisible) {
+                this.MainCarriageVesselId = null;
+            }
+        }
+    }
+
+    ChooseVesselClicked() {
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Width = 775;
+        logitudeWindow.Height = 570;
+        logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, IdProperty: "MainCarriageVesselId", NameProperty: "MainCarriageVesselName" };
+        logitudeWindow.Title = "Vessel Search";
+        logitudeWindow.Show("./ShipmentModules/ShipmentRouting/Components/Routings/ChooseVesselComponent");
     }
 
     get Notes() { return this.EntityPM.Notes; }
@@ -1869,6 +1916,7 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
 
                 if (!this.IsMasterFieldValid) {
                     this.ValidationErrorsList.push(this.MasterFieldValidityMessage);
+                    this.CurrentSession.StopBusyIndicator();
                 }
 
                 else {
@@ -1896,7 +1944,6 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
         this.SetPartnersOnFinish();
         this.SetCountryECOnFinish();
         this.SetOrderPackagesOnFinish();
-        this.SetPickupDeliveryOnFinish();
         this.SetInlandDomesticOnFinish();
     }
     SetPartnersOnFinish() {
@@ -2030,50 +2077,6 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
             }
         }
     }
-    SetPickupDeliveryOnFinish() {
-        //this.EntityPM.ShipmentPickUps = [];
-        //this.EntityPM.ShipmentDeliveries = [];
-
-        //if (this.IncludePickUp) {
-        //    var typeCode = "PART";
-        //    if (AppTool.IsNullOrEmpty(this.PickUpAddressId)) {
-        //        typeCode = "CASL";
-        //    }
-
-        //    var newPickUp = new ShipmentPickUpPM(this.EntityPM);
-        //    newPickUp.Tenant = SessionLocator.Tenant;
-        //    newPickUp.PickUpDeliveryTypeCode = "PICK";
-        //    newPickUp.PickUpDeliveryFromTypeCode = typeCode;
-        //    newPickUp.FromAddressCity = this.FromAddressCity;
-        //    newPickUp.FromAddressCountryId = this.FromAddressCountryId;
-        //    newPickUp.FromAddressZipCode = this.FromAddressZipCode;
-        //    newPickUp.FromPartnerCardId = this.ShipperId;
-        //    newPickUp.FromAddressId = this.PickUpAddressId;
-        //    newPickUp.PickUpDeliveryToTypeCode = "PORT";
-        //    newPickUp.ToPortId = this.MainCarriageFromPortId;
-        //    this.EntityPM.AddPickUp(newPickUp);
-        //}
-
-        //if (this.IncludeDelivery) {
-        //    var typeCode = "PART";
-        //    if (AppTool.IsNullOrEmpty(this.DeliveryAddressId)) {
-        //        typeCode = "CASL";
-        //    }
-
-        //    var newDelivery = new ShipmentDeliveryPM(this.EntityPM);
-        //    newDelivery.Tenant = SessionLocator.Tenant;
-        //    newDelivery.PickUpDeliveryTypeCode = "DELV";
-        //    newDelivery.PickUpDeliveryFromTypeCode = "PORT";
-        //    newDelivery.FromPortId = this.MainCarriageToPortId;
-        //    newDelivery.PickUpDeliveryToTypeCode = typeCode;
-        //    newDelivery.ToAddressCity = this.ToAddressCity;
-        //    newDelivery.ToAddressCountryId = this.ToAddressCountryId;
-        //    newDelivery.ToAddressZipCode = this.ToAddressZipCode;
-        //    newDelivery.ToPartnerCardId = this.ConsigneeId;
-        //    newDelivery.ToAddressId = this.DeliveryAddressId;
-        //    this.EntityPM.AddDelivery(newDelivery);
-        //}
-    }
 
     SetInlandDomesticOnFinish() {
         if (this.IsInlandDomestic) {
@@ -2134,6 +2137,8 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
                                     }
 
                                     else {
+                                        this.CurrentSession.StopBusyIndicator();
+
                                         var confirmWindow = new ConfirmWindow();
                                         confirmWindow.Title = "AWB exists in the stock";
                                         confirmWindow.Show("Do you want to get this awb from stock?");
@@ -2248,6 +2253,8 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
     }
 
     CompleteSubmitCreatingShipment() {
+        this.CurrentSession.StartBusyIndicator("Creating...");
+
         this.myShipmentPMService.insert(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
 
             this.CurrentSession.StopBusyIndicator();

@@ -63,6 +63,29 @@ export class DocumentTypeTemplatePMExtendedService {
         }),catchError(ServiceHelper.HandleServiceError));
     }
 
+
+    GetDocumentTypeTemplatesForDocumentTypeCode(documentTypeCode: string, templateType: string, tenant: number) {
+
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken())
+
+        return this._http.get(this._apiUrl + '/getDocumentTypeTemplatesForDocumentTypeCode?documentTypeCode=' + documentTypeCode + '&templateType=' + templateType + '&tenant=' + tenant,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            var result :any = response;
+            var entity: DocumentTypeTemplatePM;
+            var DocumentTypeTemplatePMLists: DocumentTypeTemplatePM[];
+            DocumentTypeTemplatePMLists = new Array<DocumentTypeTemplatePM>();
+            result.forEach((item) => {
+                entity = this.MapJsonToEntityPM(item);
+                DocumentTypeTemplatePMLists.push(entity);
+            });
+            var pmresponse: ServiceResponse;
+            pmresponse = new ServiceResponse();
+
+            pmresponse.Result = DocumentTypeTemplatePMLists;
+            return pmresponse;
+        }),catchError(ServiceHelper.HandleServiceError));
+    }
+
     GetTemplateBodyByDocumentTemplateId(documentTypeTemplateId: string, tenant: number) {
 
         var authHeader = new Headers();
@@ -91,11 +114,11 @@ export class DocumentTypeTemplatePMExtendedService {
     }
   
     //string documentTypeId, int tenant
-    getDocumentTypeTemplatesByDocumentTypeIdForAutomations(documentTypeId: string, editorToolCode:string ,tenant: number) {
+    getDocumentTypeTemplatesByDocumentTypeIdAndEditorToolCode(documentTypeId: string, editorToolCode:string ,tenant: number) {
 
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken())
-        return this._http.get(this._apiUrl + '/getdocumenttypetemplatesbydocumenttypeidforautomations/?' + 'documentTypeId=' + documentTypeId + '&editorToolCode=' + editorToolCode+ '&tenant=' + tenant,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return this._http.get(this._apiUrl + '/getdocumenttypetemplatesbydocumenttypeidandeditortoolcode/?' + 'documentTypeId=' + documentTypeId + '&editorToolCode=' + editorToolCode+ '&tenant=' + tenant,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
        
             var result :any = response;
             var entity: DocumentTypeTemplatePM;
@@ -113,6 +136,16 @@ export class DocumentTypeTemplatePMExtendedService {
         }),catchError(ServiceHelper.HandleServiceError));
     }
 
+    getDocumentTypeTemplatesByDocumentTypeCode(documentTypeCode: string, tenant: number) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken())
+        return this._http.get(this._apiUrl + '/getDocumentTypeTemplatesByDocumentTypeCode/?' + 'documentTypeCode=' + documentTypeCode + '&tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            var pmresponse: ServiceResponse;
+            pmresponse = new ServiceResponse();
+            pmresponse.Result = response;
+            return pmresponse;
+        }), catchError(ServiceHelper.HandleServiceError));
+    }
     SaveDocumentTemplate(filter: any) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());

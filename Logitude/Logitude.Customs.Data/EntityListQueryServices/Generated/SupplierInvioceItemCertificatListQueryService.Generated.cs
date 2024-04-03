@@ -25,7 +25,11 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             this.context = context;
         }
 
-        public List<SupplierInvioceItemCertificatList> GetList(QueryOperations queryOperations, int tenant)
+        public List<SupplierInvioceItemCertificatList> GetList(QueryOperations queryOperations, int tenant ){
+		     return GetList(queryOperations,tenant, new TreeFilterQueryArgs());
+		 }
+
+        public List<SupplierInvioceItemCertificatList> GetList(QueryOperations queryOperations, int tenant , TreeFilterQueryArgs treeFilterQueryArgs)
         {
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
@@ -36,9 +40,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             			iQueryable = ApplyCustomFilters(queryOperations, iQueryable,tenant);
 
             QueryOperations nonListQueryOperation = new QueryOperations();
-            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false && !d.IsListFilter).ToList();
             QueryOperations listQueryOperation = new QueryOperations();
-            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true || d.IsListFilter).ToList();
 
             iQueryable = filter.GetFilteredQuery<SupplierInvioceItemCertificat>(nonListQueryOperation, iQueryable);
 
@@ -47,6 +51,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<SupplierInvioceItemCertificatList> query2 = GetIqueryableList(iQueryable);
            
             query2 = filter.GetFilteredQuery<SupplierInvioceItemCertificatList>(listQueryOperation, query2);
+		    query2 = InjectionUtil.Instance.ApplyTreeFilter<SupplierInvioceItemCertificatList>(query2, treeFilterQueryArgs);
 
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
@@ -143,7 +148,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
            
         }
 
-        public int GetListCount(QueryOperations queryOperations, int tenant)
+
+		
+        public int GetListCount(QueryOperations queryOperations, int tenant ){
+		 		  return GetListCount(queryOperations,tenant, new TreeFilterQueryArgs());
+
+		 }
+
+        public int GetListCount(QueryOperations queryOperations, int tenant  ,TreeFilterQueryArgs treeFilterQueryArgs )
         {
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
@@ -154,20 +166,24 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			  			iQueryable = ApplyCustomFilters(queryOperations, iQueryable,tenant);
 
             QueryOperations nonListQueryOperation = new QueryOperations();
-            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false && !d.IsListFilter).ToList();
             QueryOperations listQueryOperation = new QueryOperations();
-            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true || d.IsListFilter).ToList();
             
 			iQueryable = filter.GetFilteredQuery<SupplierInvioceItemCertificat>(nonListQueryOperation, iQueryable);
+
+
 
             IQueryable<SupplierInvioceItemCertificatList> query2 = GetIqueryableList(iQueryable);
 
             query2 = filter.GetFilteredQuery<SupplierInvioceItemCertificatList>(listQueryOperation, query2);
+		    query2 = InjectionUtil.Instance.ApplyTreeFilter<SupplierInvioceItemCertificatList>(query2, treeFilterQueryArgs);
+
             int count = query2.Count();
             return count;
         }
 
-      
+
     }
 }
 	 

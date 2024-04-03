@@ -1,0 +1,76 @@
+<Script DBType="Main" Module="Shipment" AOT="true" TargetTableName="Shipments" Env="local,test,Logitude">
+	<Sql Version="1">
+		<![CDATA[
+      If(OBJECT_ID('tempdb..#temp') Is Not Null)
+      Begin
+       Drop Table #temp
+      End
+
+      If(OBJECT_ID('tempdb..#temp_Shipments') Is Not Null)
+      Begin
+        Drop Table #temp_Shipments
+      End
+
+      CREATE TABLE #temp_Shipments(ShipmentId varchar(15) not null,SearchFields nvarchar(4000) null)
+      
+      select Shipments.Id,Shipments.Tenant,Shipments.MasterShipmentDataId,Shipments.SearchFields, ShipmentMasterDatas.TrailerNumber 
+      into #temp
+      from Shipments 
+	  join ShipmentMasterDatas on ShipmentMasterDatas.Id = Shipments.MasterShipmentDataId
+	  where  Shipments.TransportModeId = 'I' and ShipmentMasterDatas.TrailerNumber is not null and $LastCounterWhere$
+	  declare @Tenant as int
+	  declare @MasterId as varchar(15)
+	  declare @TrailerNumber as varchar(15)
+	  declare @SearchFields as nvarchar(4000)
+	  declare @Id as varchar(15)
+	  declare @Count as int
+      set @Count = 0;
+
+      BEGIN
+            DECLARE DataCursor CURSOR READ_ONLY
+            FOR
+            SELECT Id,Tenant,MasterShipmentDataId,SearchFields,TrailerNumber
+            FROM #temp
+            OPEN DataCursor FETCH NEXT FROM DataCursor INTO @Id, @Tenant,@MasterId, @SearchFields, @TrailerNumber
+            WHILE @@FETCH_STATUS = 0
+            BEGIN
+			if(@TrailerNumber is not null)
+			begin
+				declare @NewSearchFieldValue nvarchar(4000) = @SearchFields
+				set @NewSearchFieldValue = @NewSearchFieldValue + ',' + @TrailerNumber			
+				insert into #temp_Shipments(ShipmentId, SearchFields) values (@Id, @NewSearchFieldValue)
+                set @Count = @Count + 1;
+			end
+
+            if(@Count = 1000)
+            begin
+                update Shipments
+				set SearchFields = #temp_Shipments.SearchFields 
+				FROM Shipments
+				INNER JOIN #temp_Shipments
+				on Shipments.Id = #temp_Shipments.ShipmentId
+				truncate table #temp_Shipments
+                set @Count = 0
+              end
+
+            FETCH NEXT FROM DataCursor INTO @Id, @Tenant,@MasterId, @SearchFields, @TrailerNumber
+            END
+            CLOSE DataCursor
+            DEALLOCATE DataCursor
+       END
+              
+       if (@Count > 0)
+       begin
+            update Shipments
+            set SearchFields = #temp_Shipments.SearchFields 
+            FROM Shipments
+            INNER JOIN #temp_Shipments
+            on Shipments.Id = #temp_Shipments.ShipmentId
+            truncate table #temp_Shipments
+        end
+
+    drop table #temp
+    drop table #temp_Shipments
+    ]]>
+	</Sql>
+</Script>

@@ -265,12 +265,12 @@ export class AdvanceSearchComponent implements OnInit {
 
                 if (this.ObjectFields) {
 
-                    this.allFilterFields = window.ObjectFields.filter(o => o.ObjectTableId == this.ObjectTableId && o.CanFilter == true && o.DataTypeCode != "Constant" && ((o.ValidForQuerySection1 == this.currentQuery.QuerySection || o.ValidForQuerySection2 == this.currentQuery.QuerySection || (o.AdditionalQuerySections && o.AdditionalQuerySections.split(',').indexOf(this.currentQuery.QuerySection) > -1)) || o.IsCustom == true) && o.IsCustomFilter == false);
+                    this.allFilterFields = window.ObjectFields.filter(o => o.ObjectTableId == this.ObjectTableId && o.CanFilter == true && o.DataTypeCode != "Constant" && ((o.ValidForQuerySection1 == this.currentQuery.QuerySection || o.ValidForQuerySection2 == this.currentQuery.QuerySection || (o.AdditionalQuerySections && o.AdditionalQuerySections.split(',').indexOf(this.currentQuery.QuerySection) > -1)) || o.IsCustom == true) && (o.IsCustomFilter == false || o.FieldName == "ViaPortId"));
 
                     this.constantFilterFieldsList = window.ObjectFields.filter(o => o.ObjectTableId == this.ObjectTableId && o.CanFilter == true && o.DataTypeCode == "Constant" && ((o.ValidForQuerySection1 == this.currentQuery.QuerySection || o.ValidForQuerySection2 == this.currentQuery.QuerySection || (o.AdditionalQuerySections && o.AdditionalQuerySections.split(',').indexOf(this.currentQuery.QuerySection) > -1)) || o.IsCustom == true) && o.IsCustomFilter == false);
 
                     this.timeFilterFieldsClass.AddFiltersList(window.ObjectFields.filter(o => o.ObjectTableId == this.ObjectTableId && o.CanFilter == true && o.FieldName != "TimeFrameFilter" && o.IsTimeFrameFilter == true && (o.ValidForQuerySection1 == this.currentQuery.QuerySection || o.ValidForQuerySection2 == this.currentQuery.QuerySection || (o.AdditionalQuerySections && o.AdditionalQuerySections.split(',').indexOf(this.currentQuery.QuerySection) > -1))), this.currentQuery.Id, myResult);
-                    var MyFields = window.ObjectFields.filter(o => o.ObjectTableId == this.ObjectTableId && o.CanFilter == true && o.DataTypeCode != "Constant" && ((o.ValidForQuerySection1 == this.currentQuery.QuerySection || o.ValidForQuerySection2 == this.currentQuery.QuerySection || (o.AdditionalQuerySections && o.AdditionalQuerySections.split(',').indexOf(this.currentQuery.QuerySection) > -1)) || o.IsCustom == true) && o.IsCustomFilter == false);
+                    var MyFields = window.ObjectFields.filter(o => o.ObjectTableId == this.ObjectTableId && o.CanFilter == true && o.DataTypeCode != "Constant" && ((o.ValidForQuerySection1 == this.currentQuery.QuerySection || o.ValidForQuerySection2 == this.currentQuery.QuerySection || (o.AdditionalQuerySections && o.AdditionalQuerySections.split(',').indexOf(this.currentQuery.QuerySection) > -1)) || o.IsCustom == true) && (o.IsCustomFilter == false || o.FieldName == "ViaPortId"));
                     var MyFilteredFields: any[] = [];
                     MyFields.forEach((item, key) => {
                         var Temp = MyFilteredFields.filter(a => a.FieldName == item.FieldName);
@@ -349,7 +349,7 @@ export class AdvanceSearchComponent implements OnInit {
         entityPM.IsDirty = false;
         return entityPM;
     }
-    SelectedObjectFields: FilterField[];
+    SelectedObjectFields: FilterField[] = [];
     public AddFilterField(field: ObjectFieldPM) {
         if (this.SelectedObjectFields == undefined) {
             this.SelectedObjectFields = [];
@@ -357,6 +357,7 @@ export class AdvanceSearchComponent implements OnInit {
         var filters = this.AdvancedQueryFilterPMs.filter(d => d.ObjectFieldCode == field.FieldCode);
         if (filters != null && filters[0] != null && filters[0].IsPredefined == true) {
             var value = this.AdvancedQueryFilterPMs.filter(d => d.IsPredefined == true && d.ObjectFieldCode == field.FieldCode)[0].PredefinedValue;
+            if (value == "#logged-user") filters[0].PredefinedValue = SessionLocator.LoggedUserPM.DontShowLocal ? SessionInfo.LoggedUserPM.EnglishName : SessionLocator.LoggedUserPM.LocalName;
             this.FieldsValues.SetFieldValue(field.Id, value);
         }
         if (this.SelectedObjectFields.filter(a => a.FieldName == field.FieldName).length == 0) {
@@ -558,6 +559,7 @@ export class AdvanceSearchComponent implements OnInit {
             advanceFilter.Operator = field.Operation.Code;
             advanceFilter.PredefinedValue = predefinedValue;
             advanceFilter.IsPredefined = isPredifined;
+            advanceFilter.CustomPredefined = field.ObjectField.CustomPredefined;
             advanceFilter.UserId = SessionInfo.LoggedUserId;
             advanceFilter.ObjectFieldCode = field.ObjectField.FieldCode;
 

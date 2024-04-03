@@ -355,7 +355,7 @@
   <Column
     Name="SplitComponentPath"
     Type="nvarchar"
-    Size="500">
+    Size="-1">
     <Constraints
       Nullable="true" />
   </Column>
@@ -413,10 +413,8 @@
     <Constraints
       Nullable="true" />
   </Column>
-  <!--try fix-->
   <Column
     Name="AllowedInTicket"
-    
     Type="bit">
     <Constraints
       Nullable="false" />
@@ -447,6 +445,65 @@
     Size="-1">
     <Constraints
       Nullable="true" />
+  </Column>
+  <Column
+    Name="ParentObjectTableName"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="AvailableInCustomization"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ParentObjectTableId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IsCustom"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="SupportSubEntity"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ApplyGenericCustomFields"
+    OldNames="NewMechanismForCustomFields"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="FullNameTextCodeId"
+    Type="varchar"
+    Size="30">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="FullNameTextCodeCode"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="AvailableInDocumentTypes"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
   <Relation
     ForeignKeyColumn="HeaderScreenId"
@@ -480,6 +537,12 @@
   <Index
     Columns="CacheOnClient,IsClosed" />
 
+  <Relation
+    ForeignKeyColumn="FullNameTextCodeId"
+    ReferencedTable="TextCodes"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo"
+    Ignore="true" />
   <UniqueConstraint
     Columns="Name,Tenant" />
 </Table>

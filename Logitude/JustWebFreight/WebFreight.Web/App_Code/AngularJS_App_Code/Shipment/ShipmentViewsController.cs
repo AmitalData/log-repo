@@ -160,7 +160,10 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 ShipmentAPiHelper.AddFilters(queryOperations, tenant);
 
                 ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
-
+                if (FeatureToggleHelper.HasFeatureToggle("SCD", tenant))
+                {
+                    shipmentRepository.SetSecondDBforContext(tenant);
+                }
                 TenantQuery tenantQuery = new TenantQuery(tenant);
                 TenantPM currentTenant = tenantQuery.GetSinglePM(tenant);
                 GenericFilter genericFilter = new GenericFilter();
@@ -313,7 +316,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 {
                     response.Count = listQuery.Count();
                 }
-                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
                 customFieldResolver.SetCustomFieldsValues("Shipment", tenant, listQuery.Cast<object>().ToList());
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
                 if (filters.GetCount)

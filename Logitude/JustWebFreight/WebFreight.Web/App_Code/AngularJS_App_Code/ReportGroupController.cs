@@ -12,6 +12,7 @@ using System.Net.Http;
 using System.Web;
 using System.Web.Http;
 using WebFreight.Web.Helpers;
+using WebFreight.Web.Security;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code
 {
@@ -21,6 +22,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         {
             try
             {
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 ReportGroupRepository reportGroupRepository = new ReportGroupRepository(tenant);
                 ReportGroupQuery reportGroupQuery = new ReportGroupQuery(reportGroupRepository);
                 IQueryable<ReportGroup> ReportGroups = reportGroupRepository.GetReportGroups(tenant);
@@ -39,6 +41,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 ReportGroupRepository reportGroupRepository = new ReportGroupRepository(authToken.Tenant);
                 ReportGroupQuery reportGroupQuery = new ReportGroupQuery(reportGroupRepository);
                 ReportGroup reportGroup = reportGroupRepository.GetReportGroupByCode(code,0);

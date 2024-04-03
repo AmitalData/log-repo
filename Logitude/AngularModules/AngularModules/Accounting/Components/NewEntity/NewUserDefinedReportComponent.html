@@ -59,7 +59,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button id="{{'cancel-AddUserDefinedReport' | IdGeneratorPipe}}"  class="Button" (click)="CancelButtonClicked()">{{'Accounting.General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                        <button id="{{'cancel-AddUserDefinedReport' | IdGeneratorAsyncPipe | async}}"  class="Button" (click)="CancelButtonClicked()">{{'Accounting.General.B.Cancel' | TextCodeTranslationPipe}}</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -67,7 +67,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button id="{{'ok-AddUserDefinedReport' | IdGeneratorPipe}}"  class="RedButton" (click)="OkButtonClicked()">{{'Accounting.General.B.OK' | TextCodeTranslationPipe}}</button>
+                        <button id="{{'ok-AddUserDefinedReport' | IdGeneratorAsyncPipe | async}}"  class="RedButton" (click)="OkButtonClicked()">{{'Accounting.General.B.OK' | TextCodeTranslationPipe}}</button>
                     </td>
                 </tr>
             </table>

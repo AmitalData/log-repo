@@ -73,7 +73,10 @@ export class WarehouseEntryPackagesReleasePM {
     public OldEntityPM: WarehouseEntryPackagesReleasePM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -81,6 +84,7 @@ export class WarehouseEntryPackagesReleasePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "WarehouseEntryPackagesRelease");
            
         }
+       }
     }
 
     private MyClone: WarehouseEntryPackagesReleasePM;

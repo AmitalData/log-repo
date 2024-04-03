@@ -24,6 +24,7 @@ using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Logitude.BL.Helpers;
 using Logitude.BL.DataContracts;
+using Logitude.Server.Tools.CustomFields;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -134,6 +135,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             cardRepository.Add(entityCard);
             entityRepository.Add(entityPOCO);
             entityRepository.SubmitChanges();
+            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Vendor", EntityId = entityPM.Id, Tenant = entityPM.Tenant, Type = "PM", Entities = new List<VendorPM> { entityPM }.Cast<object>().ToList() }).Update();
 
             //TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Vendor");
             //TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Card");
@@ -207,6 +209,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             cardRepository.Update(entityCard);
             entityRepository.Update(entityPOCO);
             entityRepository.SubmitChanges();
+            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Vendor", EntityId = entityPM.Id, Tenant = entityPM.Tenant, Type = "PM", Entities = new List<VendorPM> { entityPM }.Cast<object>().ToList() }).Update();
             cardService.HandleGLAccountCardData(entityCard.Id, entityCard.GLAccountId, entityCard.Tenant);
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (!LogitudeSettings.IsCostomsDeploy)
@@ -412,6 +415,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             itemContactPM.CardId = this.entityPM.Id;
             itemContactPM.CompanyName = this.entityPM.EnglishName;
+            itemContactPM.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
 
             if (itemContactPM.IsCreatedWithPartner)
             {
@@ -501,6 +505,23 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     #endregion
 
                     #endregion
+                }
+                else
+                {
+                    Contact newContact = contactRepository.GetSingleContact(itemContactPM.Id, itemContactPM.Tenant);
+
+                    ContactMapping.MapEntity(itemContactPM, newContact, isNewEntity);
+                    contactRepository.Update(newContact);
+                }
+
+                if (isNewEntity)
+                {
+                    if (itemContactPM.SetAsPrimaryForCard)
+                    {
+                        entityPM.PrimaryContactId = itemContactPM.Id;
+                        entityPM.PrimaryContactPhone = itemContactPM.BusinessPhone;
+                        entityPM.PrimaryContactName = itemContactPM.EnglishName;
+                    }
                 }
 
                 CardContact newCardContact = new CardContact()

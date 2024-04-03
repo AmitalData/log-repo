@@ -8,6 +8,7 @@ using Logitude.Customs.BL.Validators;
 using Logitude.Customs.Def.EntityQueryServicesExt;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.TreeFilterQuery;
 using Logitude.Server.Tools.Utils;
 using Microsoft.Practices.Unity;
 using Simplog.Server.Infrastructure.Helpers;
@@ -149,7 +150,7 @@ namespace AmitalCustomsWindowsService
             string prodInfo = "";
 
             try
-            {
+            { 
                 var assemblyUtil = new Logitude.Server.Tools.Helpers.AssemblyUtil();
                 prodInfo = assemblyUtil.GetProductInfo(typeof(Program).Assembly);
                 Logger.LogMe(prodInfo, false);
@@ -157,7 +158,7 @@ namespace AmitalCustomsWindowsService
                 Action<bool, bool, bool> BuildObjectTablesZipFilesDataAction = WebFreight.Web.MetaDataUpdate.TenantsUpdateClass.BuildObjectTablesZipFilesData;
                 CustomsWorkerRole.CustomsWorkerEntryPoint.StartStatic(false, BuildObjectTablesZipFilesDataAction, prodInfo, SecurityUtility.CheckContactFeature);
 
-                InjectionUtil.Init(null, null, null, () => (new ByteCompressorUtil()) as IByteCompressorUtil, null,null,null);
+                InjectionUtil.Init(null, null, null, () => (new ByteCompressorUtil()) as IByteCompressorUtil, null,null,null, null , () => (new TreeFilterQueryService()) as ITreeFilterQueryService);
                 ProxyUtil.SecurityUtilityCheckFeature = SecurityUtility.CheckFeature;
                 InjectionUtil.GetRequiredFieldErrorsForCourierDeclarationIsValid =
                     (string courierMasterId, int tenant) =>

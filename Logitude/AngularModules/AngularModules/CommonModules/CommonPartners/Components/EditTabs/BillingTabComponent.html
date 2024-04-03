@@ -71,6 +71,31 @@
                                     </td>
                                 </tr>
 
+                                <tr *ngIf="Profact4Enabled" class="FormFieldRow">
+                                    <td style="width: 140px;">
+                                        <LogLabel [ObjectFieldName]="'RegimenFiscalCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <LogLov [ObjectFieldName]="'RegimenFiscalCode'"
+                                                [SelectedValue]="RegimenFiscalCode"
+                                                [ObjectTableName]="ObjectTableName"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'RegimenFiscal'">
+                                        </LogLov>
+                                    </td>
+                                </tr>
+
+                                <tr *ngIf="Profact4Enabled" class="FormFieldRow">
+                                    <td style="width: 140px;">
+                                        <LogLabel [ObjectFieldName]="'SATReceptorName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [ShowTitle]="true"></LogLabel>
+                                    </td>
+
+                                    <td>
+                                        <LogTextBox [ObjectFieldName]="'SATReceptorName'" [Text]="SATReceptorName" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                    </td>
+                                </tr>
+
                                 <tr class="FormFieldRow">
                                     <td style="width: 140px;">
                                         <LogLabel [ObjectFieldName]="'SATForeignRFC'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
@@ -94,6 +119,14 @@
                         </td>
                     </tr>
                 </table>
+            </td>
+        </tr>
+
+        <tr style="height: 1px;">
+            <td>
+                <div style="width: 100%; position: relative;">
+                    <div class="LocationDirective" #ARInvoiceDocumentTypeTemplateArea></div>
+                </div>
             </td>
         </tr>
 

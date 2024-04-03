@@ -42,6 +42,12 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
                    select a).FirstOrDefault();
         }
 
+        public TenantManagmentPrivateLabels GetSingleTenantManagmentPrivateLabelsByHybridPartnerId(string hybridPartnerId)
+        {
+            return (from a in context.TenantManagmentPrivateLabels
+                    where a.HybridPartnerId == hybridPartnerId && !a.InActive
+                    select a).FirstOrDefault();
+        }
 
         public TenantManagmentPrivateLabels GetSingleTenantManagmentPrivateLabels(string id,int tenant)
         {

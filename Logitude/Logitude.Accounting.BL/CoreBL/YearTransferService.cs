@@ -8,6 +8,7 @@ using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Accounting.Def.EntityUpdateServicesExt;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.Helpers;
+using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -84,7 +85,17 @@ namespace Logitude.Accounting.BL.CoreBL
                 tenant);
             var JournalUP = new JournalUpdateService(accountingContext, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), tenant);
             JournalUP.Update(journalPM, true);
+
+            AddAccountingEntityJournal(journalPM, AccountingEntityJournalActions.YearTransferApprove);
+
             return journalPM;
+        }
+
+        public void AddAccountingEntityJournal(JournalPM journal, string actionName, string childEntityId = null)
+        {
+            IAccountingContext context = AccountingContext.GetContext(journal.Tenant);
+            AccountingEntityJournalUpdateService service = new AccountingEntityJournalUpdateService(context, new Dictionary<string, IContext>(), journal.Tenant);
+            service.AddAccountingEntitieJournal(journal, actionName, childEntityId);
         }
 
         public void CheckThrowExceptionIfNeeded(IAccountingContext accountingContext, int YYyear, int tenant)
@@ -108,7 +119,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         {
                             transText = "Closed Month";
                         }
-                        throw new Exception(transText);
+                        throw new ApplicationException(transText);
                     }
                 }
                 DateTime accountingDateFrom = accountingDate.AddYears(-1);//1.1.yyyy
@@ -121,7 +132,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     JournalPM journalNotLT = journalsNotLT.FirstOrDefault();
                     if (journalNotLT != null)
                     {
-                        throw new Exception(NotLTMessage(journalNotLT.JournalNumber));
+                        throw new ApplicationException(NotLTMessage(journalNotLT.JournalNumber));
                     }
                 }
 
@@ -132,7 +143,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     JournalPM yearTransferjournalNotLT = yearTransferJournalsNotLT.FirstOrDefault();
                     if (yearTransferjournalNotLT != null)
                     {
-                        throw new Exception(NotLTMessage(yearTransferjournalNotLT.JournalNumber));
+                        throw new ApplicationException(NotLTMessage(yearTransferjournalNotLT.JournalNumber));
                     }
                 }
 
@@ -174,7 +185,7 @@ namespace Logitude.Accounting.BL.CoreBL
                             transText = "The chosen year is transferred already, In order to transfer it again, you must void Journal " + journalNo;
                         }
 
-                        throw new Exception(transText);
+                        throw new ApplicationException(transText);
                     }
                 }
 
@@ -204,6 +215,9 @@ namespace Logitude.Accounting.BL.CoreBL
         {
             JournalPM originalPM = CheckCancelYear(accountingContext, YYyear, tenant);
             JournalPM stornoJournalPM = DoCancelYear(accountingContext, originalPM, tenant);
+
+            AddAccountingEntityJournal(stornoJournalPM, AccountingEntityJournalActions.YearTransferCancel);
+
             return stornoJournalPM;
         }
 
@@ -232,12 +246,12 @@ namespace Logitude.Accounting.BL.CoreBL
                 catch (Exception e)
                 {
                     string text = $"Journal {origPM.JournalNumber} Storno issue failed";
-                    throw new Exception($"{text} ", e);
+                    throw new ApplicationException($"{text} ", e);
                 }
             }
             else
             {
-                throw new Exception("Original Journal not found");
+                throw new ApplicationException("Original Journal not found");
             }
 
             return stornoPM;
@@ -265,7 +279,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         {
                             transText = "Closed Month";
                         }
-                        throw new Exception(transText);
+                        throw new ApplicationException(transText);
                     }
                 }
 
@@ -276,7 +290,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     JournalPM yearTransferjournalNotLT = yearTransferJournalsNotLT.FirstOrDefault();
                     if (yearTransferjournalNotLT != null)
                     {
-                        throw new Exception(NotLTMessage(yearTransferjournalNotLT.JournalNumber));
+                        throw new ApplicationException(NotLTMessage(yearTransferjournalNotLT.JournalNumber));
                     }
                 }
 
@@ -292,7 +306,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         transText = "The chosen year is not yet transferred";
                     }
 
-                    throw new Exception(transText);
+                    throw new ApplicationException(transText);
 
                 }
 
@@ -349,7 +363,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         }
                         transText = $"{transText_1}{journalNo}{transText_22}";
 
-                        throw new Exception(transText);
+                        throw new ApplicationException(transText);
                     }
                 }
 
@@ -401,9 +415,9 @@ namespace Logitude.Accounting.BL.CoreBL
             //         CreateJLinesAganistMainREGLAcc(RevenueExpenseGLAccountId, listallRevenueExpenseCards, totalBalance, journal,RevenueType, MyJournalActionTypeEnum.Debit);
 
             //         CreateJLinesAganistMainREGLAcc(RevenueExpenseGLAccountId, listallRevenueExpenseCards, totalBalance, journal, ExpenseType, MyJournalActionTypeEnum.Credit);
-            CreateJLinesAganistMainREGLAcc(RevenueExpenseGLAccountId, listallRevenueExpenseCards, totalBalance, journal, RevenueType, MyJournalActionTypeEnum.Credit);
+            CreateJLinesAganistMainREGLAcc(RevenueExpenseGLAccountId, listallRevenueExpenseCards, totalBalance, journal, RevenueType, JournalActionTypeEnum.Credit);
 
-            CreateJLinesAganistMainREGLAcc(RevenueExpenseGLAccountId, listallRevenueExpenseCards, totalBalance, journal, ExpenseType, MyJournalActionTypeEnum.Debit);
+            CreateJLinesAganistMainREGLAcc(RevenueExpenseGLAccountId, listallRevenueExpenseCards, totalBalance, journal, ExpenseType, JournalActionTypeEnum.Debit);
 
 
 
@@ -420,27 +434,27 @@ namespace Logitude.Accounting.BL.CoreBL
             return journal;
         }
 
-        private MyJournalActionTypeEnum GetMyEnum(string revenueExpenseType)
+        private JournalActionTypeEnum GetMyEnum(string revenueExpenseType)
         {
             switch (revenueExpenseType)
             {
 
                 case RevenueType:
                    // return MyJournalActionTypeEnum.Credit;
-                    return MyJournalActionTypeEnum.Debit;
+                    return JournalActionTypeEnum.Debit;
 
                     break;
 
                 case ExpenseType:
                 default:
                    // return MyJournalActionTypeEnum.Debit;
-                    return MyJournalActionTypeEnum.Credit;
+                    return JournalActionTypeEnum.Credit;
                     break;
 
             }
         }
 
-        private void CreateJLinesAganistMainREGLAcc(string RevenueExpenseGLAccountId, List<GLAccountAndMoreDTO> allRevenueExpenseCards, List<CurrencySum> totalBalance, JournalPM journal, string revenueExpenseType,MyJournalActionTypeEnum journalActionTypeEnum)
+        private void CreateJLinesAganistMainREGLAcc(string RevenueExpenseGLAccountId, List<GLAccountAndMoreDTO> allRevenueExpenseCards, List<CurrencySum> totalBalance, JournalPM journal, string revenueExpenseType,JournalActionTypeEnum journalActionTypeEnum)
         {
             var Type1Ids = allRevenueExpenseCards.Where(r => r.RevenueExpenseType == revenueExpenseType).Select(r => r.Id).ToList();
 
@@ -475,7 +489,7 @@ namespace Logitude.Accounting.BL.CoreBL
         }
 
 
-        private JournalLinePM GetJournalLine(MyJournalActionTypeEnum journalActionTypeEnum, CurrencySum myCurrencySum, JournalPM journal, string RevenueExpenseGLAccountId, string revenueExpenseType)
+        private JournalLinePM GetJournalLine(JournalActionTypeEnum journalActionTypeEnum, CurrencySum myCurrencySum, JournalPM journal, string RevenueExpenseGLAccountId, string revenueExpenseType)
         {
             if (string.IsNullOrWhiteSpace(RevenueExpenseGLAccountId))
             {
@@ -508,16 +522,16 @@ namespace Logitude.Accounting.BL.CoreBL
             int actionCode = 0;
             switch (journalActionTypeEnum)
             {
-                case MyJournalActionTypeEnum.Credit:
-                    journalLine.ActionTypeCodeEnum = MyJournalActionTypeEnum.Credit;
-                    actionCode = (int)MyJournalActionTypeEnum.Credit;
+                case JournalActionTypeEnum.Credit:
+                    journalLine.ActionTypeCodeEnum = JournalActionTypeEnum.Credit;
+                    actionCode = (int)JournalActionTypeEnum.Credit;
                     journalLine.ActionCode = actionCode.ToString();
                     journalLine.CreditAccountId = myCurrencySum.AccountId; //
                     journalLine.DebitAccountId= RevenueExpenseGLAccountId; //
                     break;
-                case MyJournalActionTypeEnum.Debit:
-                    journalLine.ActionTypeCodeEnum = MyJournalActionTypeEnum.Debit;
-                    actionCode = (int)MyJournalActionTypeEnum.Debit;
+                case JournalActionTypeEnum.Debit:
+                    journalLine.ActionTypeCodeEnum = JournalActionTypeEnum.Debit;
+                    actionCode = (int)JournalActionTypeEnum.Debit;
                     journalLine.ActionCode = actionCode.ToString();
                     journalLine.DebitAccountId = myCurrencySum.AccountId; //
                     journalLine.CreditAccountId = RevenueExpenseGLAccountId; //
@@ -555,7 +569,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
             endAccountBalanceService.CalculateBalance(
 openBalancePlease_ReCalcYearTransfer, 
-GLAccountTotalDateTypeValues.Accountingdate, CalculateBalanceIsNotIncludeSo_endOfYearUserInputPlus1,false, false, true,false);
+GLAccountTotalDateTypeValues.Accountingdate, CalculateBalanceIsNotIncludeSo_endOfYearUserInputPlus1,false, false, true,false,false);
 
             var totals = (from rec in endAccountBalanceService.AccountBalance.verbose.CurrencySumUntillMounth.Union(endAccountBalanceService.AccountBalance.verbose.TheMounthCurrencySum)
                           group rec by new
@@ -604,14 +618,14 @@ GLAccountTotalDateTypeValues.Accountingdate, CalculateBalanceIsNotIncludeSo_endO
             var myFullAccountingSettingPM =myFullAccountingSettingQueryService.GetSingleFullAccountingSetting(tenant);
             if (myFullAccountingSettingPM == null)
             {
-                throw new Exception("No FullAccountingSettingPM  for tenant ");
+                throw new ApplicationException("No FullAccountingSettingPM  for tenant ");
             }
             if (string.IsNullOrWhiteSpace(myFullAccountingSettingPM.RevenueExpenseGLAccountId))
             {
-                //   throw new Exception("No myFullAccountingSettingPM.RevenueExpenseGLAccountId  for tenant ");
+                //   throw new ApplicationException("No myFullAccountingSettingPM.RevenueExpenseGLAccountId  for tenant ");
                 text = TranslateTextsClassTranslate("YearTransfer.O.RevenueExpenseType", 0, useLocal);
                 // A year transfer account is undefined or not configured correctly
-                throw new Exception(text);
+                throw new ApplicationException(text);
             }
             else
             {
@@ -621,7 +635,7 @@ GLAccountTotalDateTypeValues.Accountingdate, CalculateBalanceIsNotIncludeSo_endO
                 {
                     text = TranslateTextsClassTranslate("YearTransfer.O.RevenueExpenseType", 0, useLocal);
                     // A year transfer account is undefined or not configured correctly
-                    throw new Exception(text);
+                    throw new ApplicationException(text);
                 }
             }
             return myFullAccountingSettingPM;
@@ -630,17 +644,33 @@ GLAccountTotalDateTypeValues.Accountingdate, CalculateBalanceIsNotIncludeSo_endO
 
         private DateTime CheckYear(int YYyear)
         {
-            if (YYyear.ToString().Length != 2)
+            bool useLocal = true;
+            int yylen = YYyear.ToString().Length;
+            if (yylen != 2 && yylen != 4)
             {
-                throw new Exception("You must enter two characters only, חובה להזין רק שני תווים בשדה");
+                string text = TranslateTextsClassTranslate("YearTransfer.O.TwoOrFourDigits", 0, useLocal);
+                if (String.IsNullOrEmpty(text)) text = "Enter year in either two or four digits only";
+                throw new ApplicationException(text); //("Enter year in either two or four digits only, יש להזין שנה בשתי ספרות או בארבע ספרות בלבד");
             }
+
             DateTime endOfYearUserInput = DateTime.MaxValue;
-            string OldDateStr = "YY-12-31";
-            OldDateStr = OldDateStr.Replace("YY", YYyear.ToString());
-            DateTime.TryParseExact(OldDateStr, "yy-MM-dd", null, DateTimeStyles.AllowWhiteSpaces, out endOfYearUserInput);
+            if (yylen == 4)
+            {
+                string OldDateStr = "YYYY-12-31";
+                OldDateStr = OldDateStr.Replace("YYYY", YYyear.ToString());
+                DateTime.TryParseExact(OldDateStr, "yyyy-MM-dd", null, DateTimeStyles.AllowWhiteSpaces, out endOfYearUserInput);
+            }
+            else
+            {
+                string OldDateStr = "YY-12-31";
+                OldDateStr = OldDateStr.Replace("YY", YYyear.ToString());
+                DateTime.TryParseExact(OldDateStr, "yy-MM-dd", null, DateTimeStyles.AllowWhiteSpaces, out endOfYearUserInput);
+            }
             if (endOfYearUserInput.Year >= DateTime.Now.Year)
             {
-                throw new Exception("“ You must choose past years only” “אתה חייב לבחור שנים קודמות בלבד");
+                string text = TranslateTextsClassTranslate("YearTransfer.O.PastYears", 0, useLocal);
+                if (String.IsNullOrEmpty(text)) text = "Enter past years only";
+                throw new ApplicationException(text); //Enter past years only, יש להזין שנים קודמות בלבד");
             }
             return endOfYearUserInput;
 

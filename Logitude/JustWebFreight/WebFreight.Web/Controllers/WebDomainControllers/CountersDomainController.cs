@@ -2,7 +2,9 @@
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.BL.InfrastructureModel.Services.CustomizedCounter;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
+using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
@@ -148,6 +150,18 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     IWebFreightContext Context = WebFreightContext.GetContext(tenant);
                     TenantSettingService myTenantSettingService = new TenantSettingService(Context, tenant);
                     CounterDefinitionService myCounterDefinitionService = new CounterDefinitionService(Context, loggedUserEmail, tenant);
+                    CounterDefinitionQuery myCounterDefinitionQuery = new CounterDefinitionQuery(tenant);
+                    CustomizedARInvoiceCounterService myCustomizedARInvoiceCounterService = new CustomizedARInvoiceCounterService(tenant, myCounterDefinitionService);
+                    bool hasCustomizedARInvoiceCounterFeature = FeatureToggleHelper.HasFeatureToggle("ICC", tenant);
+                    if (args.IsCustomized && hasCustomizedARInvoiceCounterFeature)
+                    {
+                        myCustomizedARInvoiceCounterService.Run(args.CounterDefinitions, args.CounterId);
+                        args.CounterDefinitions = myCounterDefinitionQuery.GetCustomizedCounterDefinitionsByCounterId(args.CounterId, tenant).ToList();
+                        scope.Complete();
+                        return Request.CreateResponse(HttpStatusCode.OK, args);
+                    }
+
+                    myCustomizedARInvoiceCounterService.RemoveCustomizedCounterDefinitionsByCounterId(args.CounterId);
 
                     foreach (CounterDefinitionPM item in args.CounterDefinitions)
                     {
@@ -162,7 +176,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         }
                     }
 
-                    if (args.CounterPM.Code == "HAWB")
+                    if (args.CounterPM?.Code == "HAWB")
                     {
                         foreach (TenantSettingPM item in args.TenantSettings)
                         {
@@ -178,7 +192,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         }
                     }
 
-                    CounterDefinitionQuery myCounterDefinitionQuery = new CounterDefinitionQuery(tenant);
                     args.CounterDefinitions = myCounterDefinitionQuery.GetCounterDefinitionsByCounterId(args.CounterId, tenant).ToList();
 
                     scope.Complete();
@@ -254,6 +267,27 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             
             return Request.CreateResponse(HttpStatusCode.OK, myResult);
         }
+        //public HttpResponseMessage GetLargestLastValueFromCounterStatByCounterId(string counterId)
+        //{
+        //    try
+        //    {
+        //        string token = HttpContext.Current.Request.Headers["Token"];
+        //        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+        //        int tenant = authToken.Tenant;
+
+        //        SecurityUtility.AuthenticationOnTenant(tenant);
+
+        //        CounterStatRepository counterStatRepository = new CounterStatRepository(tenant);
+        //        int myResult = counterStatRepository.GetLargestLastValueOfCounterStatsByCounterId(counterId, tenant);
+
+        //        return Request.CreateResponse(HttpStatusCode.OK, myResult);
+        //    }
+
+        //    catch (Exception ex)
+        //    {
+        //        return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+        //    }
+        //}
     }
 
     public class CounterAPIHelper
@@ -264,6 +298,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         public CounterPM CounterPM { get; set; }
         public List<TenantSettingPM> TenantSettings { get; set; }
         public List<CounterDefinitionPM> CounterDefinitions { get; set; }
+        public bool IsCustomized { get; set; }
     }
 
     public class CounterProperties

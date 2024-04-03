@@ -7,46 +7,86 @@
         background: #ff7920 !important;
     }
 
-    .circleDraw {
-        background: #00b1e9;
+    .whiteCircle {
+        background-color: white;
         margin: 0 auto;
         margin-top: 9px;
-        width: 7px;
-        height: 7px;
-        border-radius: 50%;
+        width: 10px;
+        height: 10px;
+        border-radius: 45%;
         display: block;
-    }
-    .circleWrapper{
-        /*padding: 9px;*/
+        border: #000 solid 0.005px;
     }
 
+    .circleDraw {
+        background-color: #00b1e9;
+        margin: 0 auto;
+        margin-top: 9px;
+        width: 10px;
+        height: 10px;
+        border-radius: 45%;
+        display: block;
+        border: #000 solid 0.005px;
+    }
 
+    .circleWrapper:hover {
+        background-color: #e1dede;
+    }
+
+    .circleWrapper {}
 </style>
 <div>
-    <div *ngIf="fieldName == 'Indicator' && rowData['OpenAmount'] != 0" [attr.title]="GetIndicatorText()" class="circleWrapper CenterCenter">
-        <div class="circleDraw"
-             [class.orangeCircle]="(rowData['LocalAmountDebit'] >0 && rowData['OpenAmount'] != CalculateOriginalAmount()) || (rowData['LocalAmountCredit'] >0 && rowData['OpenAmount'] != -1*CalculateOriginalAmount())"></div>
+    <div (click)="$event.stopPropagation();OpenManageReconciliations(rowData,GetGLAccountIndicatorText())"
+        *ngIf="fieldName == 'Indicator' " [attr.title]="GetIndicatorText()" class="circleWrapper CenterCenter">
+        <div *ngIf="rowData['OpenAmount'] != 0" class="circleDraw"
+            [class.orangeCircle]="(rowData['LocalAmountDebit'] != 0 && rowData['OpenAmount'] != CalculateOriginalAmount()) || (rowData['LocalAmountCredit'] != 0 && rowData['OpenAmount'] != -1*CalculateOriginalAmount())">
+        </div>
+        <div *ngIf="rowData['OpenAmount'] == 0" class="whiteCircle"></div>
     </div>
 
-
-    <div *ngIf="fieldName == 'GLAccountIndicator' && rowData['OpenAmount'] != 0" [attr.title]="GetGLAccountIndicatorText()" class="circleWrapper CenterCenter">
-        <div class="circleDraw"
-             [class.orangeCircle]="(rowData['LocalAmountDebit'] != 0 && rowData['OpenAmount'] != CalculateOriginalAmount()) || (rowData['LocalAmountCredit'] != 0 && rowData['OpenAmount'] != -1*CalculateOriginalAmount())"></div>
+    <div (click)="$event.stopPropagation();OpenManageReconciliations(rowData,GetGLAccountIndicatorText())"
+        *ngIf="ChartOfAccountsTypeCode != ChartOfAccountsTypeBankCode && fieldName == 'GLAccountIndicator' "
+        [attr.title]="GetGLAccountIndicatorText()" class="circleWrapper CenterCenter">
+        <div *ngIf="rowData['OpenAmount'] != 0" class="circleDraw"
+            [class.orangeCircle]="(rowData['LocalAmountDebit'] != 0 && rowData['OpenAmount'] != CalculateOriginalAmount()) || (rowData['LocalAmountCredit'] != 0 && rowData['OpenAmount'] != -1*CalculateOriginalAmount())">
+        </div>
+        <div *ngIf="rowData['OpenAmount'] == 0" class="whiteCircle"></div>
     </div>
 
-    <div [style.text-align]="isRTL ? 'right' : 'left'" class="TextTrimming" *ngIf="fieldName == 'CreateDate'">{{ rowData[fieldName] | DateTimePipe:'SD' }}</div>
+    <div (click)="$event.stopPropagation();OpenManageReconciliations(rowData,GetGLAccountIndicatorText())"
+        *ngIf="ChartOfAccountsTypeCode== ChartOfAccountsTypeBankCode && rowData['IsExternalReconcile'] == false && fieldName == 'GLAccountIndicator'"
+        [attr.title]="GetGLAccountIndicatorText()" class="circleWrapper CenterCenter">
+        <div *ngIf="rowData['OpenAmount'] != 0" class="circleDraw"
+            [class.orangeCircle]="(rowData['LocalAmountDebit'] != 0 && rowData['OpenAmount'] != CalculateOriginalAmount()) || (rowData['LocalAmountCredit'] != 0 && rowData['OpenAmount'] != -1*CalculateOriginalAmount())">
+        </div>
+        <div *ngIf="rowData['OpenAmount'] == 0" class="whiteCircle"></div>
+    </div>
 
-    <div [style.text-align]="isRTL ? 'right' : 'left'" class="TextTrimming" *ngIf="fieldName == 'AccountingDate'">{{ rowData[fieldName] | DateTimePipe:'SD' }}</div>
+    <div [style.text-align]="isRTL ? 'right' : 'left'" class="TextTrimming" *ngIf="fieldName == 'CreateDate'">{{
+        rowData[fieldName] | DateTimePipe:'SD' }}</div>
 
-    <div [style.text-align]="isRTL ? 'right' : 'left'" class="TextTrimming" *ngIf="fieldName == 'DocumentDate'">{{ rowData[fieldName] | DateTimePipe:'SD' }}</div>
+    <div [style.text-align]="isRTL ? 'right' : 'left'" class="TextTrimming" *ngIf="fieldName == 'AccountingDate'">{{
+        rowData[fieldName] | DateTimePipe:'SD' }}</div>
 
-    <div [style.text-align]="isRTL ? 'right' : 'left'" class="TextTrimming" *ngIf="fieldName == 'PaymentValueDate'">{{ rowData[fieldName] | DateTimePipe:'SD' }}</div>
+    <div [style.text-align]="isRTL ? 'right' : 'left'" class="TextTrimming" *ngIf="fieldName == 'DocumentDate'">{{
+        rowData[fieldName] | DateTimePipe:'SD' }}</div>
 
-    <div [style.text-align]="isRTL ? 'right' : 'left'" class="TextTrimming" *ngIf="fieldName == 'GroupHash'">{{ rowData[fieldName] }}</div>
+    <div [style.text-align]="isRTL ? 'right' : 'left'" class="TextTrimming" *ngIf="fieldName == 'PaymentValueDate'">{{
+        rowData[fieldName] | DateTimePipe:'SD' }}</div>
+
+    <div [style.text-align]="isRTL ? 'right' : 'left'" class="TextTrimming" *ngIf="fieldName == 'GroupHash'">{{
+        rowData[fieldName] }}</div>
 
     <div [style.text-align]="isRTL ? 'right' : 'left'" class="TextTrimming" *ngIf="fieldName == 'JournalNumber'">
-        <a href="javascript:;" (click)="OpenJournal(rowData['JournalId'])">
+        <a href="javascript:;" (click)="$event.stopPropagation();OpenJournal(rowData['JournalId'])">
             {{ rowData['JournalNumber'] }}
+        </a>
+    </div>
+
+    <!-- Original Account -->
+    <div [style.text-align]="isRTL ? 'right' : 'left'" class="TextTrimming" *ngIf="fieldName == 'AccountDisplayNumber'">
+        <a href="javascript:;" (click)="OpenGLAccount('AccountId')">
+            {{ rowData['AccountDisplayNumber'] }}
         </a>
     </div>
 
@@ -54,77 +94,125 @@
     <div style="padding: 0px 7px;text-align: left;" class="TextTrimming" *ngIf="fieldName == 'Source'">
 
         <span title="{{rowData['SourceType']}}" *ngIf="rowData['IconCode']"
-              [class]="'SourceTypeIcon color-' + rowData['SourceTypeCode']"
-              (click)="OpenSource(rowData['SourceId'])">{{rowData['IconCode']}}</span>
+            [class]="'SourceTypeIcon color-' + rowData['SourceTypeCode']"
+            (click)="OpenSource(rowData['SourceId'])">{{rowData['IconCode']}}</span>
 
-        <a href="javascript:;" (click)="OpenSource(rowData['SourceId'])">
+        <a href="javascript:;" (click)="$event.stopPropagation();OpenSource(rowData['SourceId'])">
             {{rowData['SourceNumber']}}
         </a>
     </div>
 
+    <!-- TaxReportId -->
+    <div style="padding: 0px 7px;text-align: left;" class="TextTrimming" *ngIf="fieldName == 'TaxReportId'">
+        <a href="javascript:;" (click)="$event.stopPropagation();OpenTaxReportId(rowData['TaxReportId'])" *ngIf="rowData['TaxReportId']">
+            {{ rowData['TaxReportNumber'] }}
+        </a>
+    </div>
+
     <!-- DueDate -->
-    <div [style.text-align]="isRTL ? 'right' : 'left'" class="TextTrimming" *ngIf="fieldName == 'DueDate'">{{ rowData[fieldName] | DateTimePipe:'SD' }}</div>
+    <div [style.text-align]="isRTL ? 'right' : 'left'" class="TextTrimming" *ngIf="fieldName == 'DueDate'">{{
+        rowData[fieldName] | DateTimePipe:'SD' }}</div>
 
     <!-- LocalAmountCredit -->
-    <div class="TextTrimming" *ngIf="fieldName == 'LocalAmountCredit'" style="color:#00a24d; text-align: right; padding: 0px 2px;direction: ltr;" [class.red]='rowData["IsLocalAmountCreditPos"]'>
-        {{  rowData["CalculatedLocalAmount"]   | NumbersPipe:'N2' }}
+    <div class="TextTrimming" *ngIf="fieldName == 'LocalAmountCredit'"
+        style="color:#00a24d; text-align: right; padding: 0px 2px;direction: ltr;"
+        [class.red]='rowData["IsLocalAmountCreditPos"]'>
+        {{ rowData["CalculatedLocalAmount"] | NumbersPipe:'N2' }}
     </div>
 
     <!-- CumulativeLocalAmount -->
-    <div class="TextTrimming" *ngIf="fieldName == 'CumulativeLocalAmount'" style="color:#000; text-align: right; padding: 0px 2px; direction: ltr;">
+    <div class="TextTrimming" *ngIf="fieldName == 'CumulativeLocalAmount'"
+        style="color:#000; text-align: right; padding: 0px 2px; direction: ltr;">
         {{ rowData[fieldName] | NumbersPipe:'N2' }}
     </div>
 
 
-    <div class="TextTrimming" *ngIf="fieldName == 'Notes'" text-start [attr.title]="rowData[fieldName]">{{ rowData[fieldName] }}</div>
+    <div class="TextTrimming" *ngIf="fieldName == 'Notes'" text-start [attr.title]="rowData[fieldName]">{{
+        rowData[fieldName] }}</div>
 
 
+    <div *ngIf="fieldName == 'AmountInNIS'">
+        <div class="TextTrimming" style="color:#00a24d; text-align: right; padding: 0px 2px;direction: ltr;"
+            [class.red]='rowData["IsLocalAmountCreditPos"]'>
 
+            {{ rowData[fieldName]| NumbersPipe:'N2' }}
+            <!--{{ CalculatOriginalCurruncy() }} -->
+        </div>
+    </div>
     <!-- ForeignAmountCredit -->
-    <div class="TextTrimming" *ngIf="fieldName == 'ForeignAmountCredit'" style="color:#00a24d; text-align: right; padding: 0px 2px;direction: ltr;" [class.red]='rowData["IsForeignAmountCreditPos"]'>
-        {{  rowData["CalculatedForeignAmount"]   | NumbersPipe:'N2' }} {{rowData['CurrencySign']}}
+    <div class="TextTrimming" *ngIf="fieldName == 'ForeignAmountCredit'"
+        style="color:#00a24d; text-align: right; padding: 0px 2px;direction: ltr;"
+        [class.red]='rowData["IsForeignAmountCreditPos"]'>
+        {{ rowData["CalculatedForeignAmount"] | NumbersPipe:'N2' }} {{rowData['CurrencySign']}}
     </div>
 
     <!-- CumulativeForeignAmount -->
-    <div class="TextTrimming" *ngIf="fieldName == 'CumulativeForeignAmount'" style="color:#000; text-align: right; padding: 0px 2px;direction: ltr;">
-        {{ rowData[fieldName] | NumbersPipe:'N2'  }} {{rowData['CurrencySign']}}
+    <div class="TextTrimming" *ngIf="fieldName == 'CumulativeForeignAmount'"
+        style="color:#000; text-align: right; padding: 0px 2px;direction: ltr;">
+        {{ rowData[fieldName] | NumbersPipe:'N2' }} {{rowData['CurrencySign']}}
     </div>
 
     <!-- OppositeAccount -->
-    <div [style.text-align]="isRTL ? 'right' : 'left'" [title]="rowData['OppositeAccountDisplayNumber']" class="TextTrimming" *ngIf="fieldName == 'OppositeAccountLocalName'">
-        <a (click)="OpenGLAccount()">{{ rowData['OppositeAccountLocalName'] }}</a>
+                                                                        <!-- title = toolTip -->
+    <div [style.text-align]="isRTL ? 'right' : 'left'" [title]="rowData['OppositeAccountDisplayNumber']" 
+        class="TextTrimming" *ngIf="fieldName == 'OppositeAccountLocalName'">
+        <a (click)="OpenGLAccount('OppositeAccountId')">{{ rowData['OppositeAccountLocalName'] }}</a>
+
+    </div>
+    <div [style.text-align]="isRTL ? 'right' : 'left'" [title]="rowData['OppositeAccountLocalName']"
+        class="TextTrimming" *ngIf="fieldName == 'OppositeAccountDisplayNumber'">
+        <a (click)="OpenGLAccount('OppositeAccountId')">{{ rowData['OppositeAccountDisplayNumber'] }}</a>
 
     </div>
 
 
-
+    
     <!-- **** -->
     <!-- Reconcile Window -->
     <div class="TextTrimming" *ngIf="fieldName == 'SelectCheckBox'" style="padding: 4px 7px;">
-        <CheckBox [IsEnabled]="rowData['InReconcileProgress'] == false" (Checked)="CheckBoxClicked($event)" [IsChecked]="rowData['IsChecked']"></CheckBox>
+        <CheckBox float-start [IsEnabled]="rowData['InReconcileProgress'] == false && IsCheckBoxEnabled"
+            (Checked)="CheckBoxClicked($event)" [IsChecked]="rowData['IsChecked']"></CheckBox>
 
+        <svg float-start *ngIf="rowData['AccountId'] == transferAccountId" xmlns="http://www.w3.org/2000/svg"
+            version="1.0" style=" float: left; margin: 0 4px; width: 17px;" width="16.000000pt" height="16.000000pt"
+            viewBox="0 0 16.000000 16.000000" preserveAspectRatio="xMidYMid meet">
+
+            <g transform="translate(0.000000,16.000000) scale(0.003125,-0.003125)" fill="#4E9C3A" stroke="none">
+                <path
+                    d="M3613 4570 c-44 -10 -76 -33 -110 -76 l-28 -37 -3 -309 -3 -308 -665 0 c-733 0 -693 3 -752 -64 -78 -89 -45 -238 62 -287 39 -18 80 -19 811 -19 727 0 772 1 810 19 46 21 79 54 94 94 6 16 11 100 11 190 l0 162 415 -415 415 -415 -412 -413 -413 -412 -5 178 c-5 177 -5 179 -33 215 -59 78 30 72 -1124 75 l-1033 2 0 292 c0 273 -1 294 -20 334 -39 80 -139 122 -226 94 -32 -10 -167 -140 -708 -679 -386 -385 -674 -680 -682 -698 -20 -47 -18 -127 5 -171 25 -48 1315 -1334 1361 -1357 69 -35 165 -19 217 37 50 53 53 77 53 388 l0 290 665 0 c734 0 694 -3 753 64 78 89 45 238 -62 287 -39 18 -80 19 -811 19 -727 0 -772 -1 -810 -19 -46 -21 -79 -54 -94 -94 -6 -16 -11 -100 -11 -190 l0 -162 -415 415 -415 415 412 413 413 412 5 -178 c5 -177 5 -179 33 -215 59 -78 -30 -72 1125 -75 l1032 -2 0 -292 c0 -273 1 -294 20 -334 39 -80 139 -122 226 -94 32 10 167 140 708 679 386 385 674 680 682 698 20 46 18 127 -5 171 -11 21 -313 330 -683 698 -624 623 -666 662 -710 673 -52 12 -50 12 -95 1z" />
+            </g>
+            <title>{{'ExternalReconciliation.O.AccoountFilter.TransferTransaction' | TextCodeTranslationPipe}}</title>
+        </svg>
         <!--<div class="CheckBox" style="padding: 4px;">
-            <input id="ddd" type="checkbox" [(ngModel)]="rowData['SelectCheckBox']" (click)="CheckBoxClicked($event)" />
-            <label for="ddd"></label>
-        </div>-->
+                <input id="ddd" type="checkbox" [(ngModel)]="rowData['SelectCheckBox']" (click)="CheckBoxClicked($event)" />
+                <label for="ddd"></label>
+            </div>-->
 
     </div>
 
-    <div class="TextTrimming" *ngIf="fieldName == 'PaymentChequeStatus'"  [style.text-align]="isRTL ? 'right' : 'left'"  [ngStyle]="{color: GetChequeStatusColor(rowData['PaymentChequeStatus'])}">
+    <div class="TextTrimming" *ngIf="fieldName == 'PaymentChequeStatus'" [style.text-align]="isRTL ? 'right' : 'left'"
+        [ngStyle]="{color: GetChequeStatusColor(rowData['PaymentChequeStatus'])}">
         {{ rowData[fieldName] }}
     </div>
 
-    <div class="TextTrimming" *ngIf="fieldName == 'OpenAmount'" style="text-align: right; padding: 0px 2px;direction: ltr;">
-        {{ rowData[fieldName] | NumbersPipe:'N2'  }} <!--{{rowData["OpenAmountCurrencySign"]}}-->
+    <div class="TextTrimming" *ngIf="fieldName == 'OpenAmount'"
+        style="text-align: right; padding: 0px 2px;direction: ltr;">
+        {{ rowData[fieldName] | NumbersPipe:'N2' }}
+        <!--{{rowData["OpenAmountCurrencySign"]}}-->
     </div>
-    <div class="TextTrimming" *ngIf="fieldName == 'ForeignAmount'" style="color:#00a24d; text-align: right; padding: 0px 2px;direction: ltr;" [class.red]='rowData["IsLocalAmountCreditPos"]'>
-        {{ rowData[fieldName] | NumbersPipe:'N2'  }} <!--{{rowData["OpenAmountCurrencySign"]}}-->
+    <div class="TextTrimming" *ngIf="fieldName == 'ForeignAmount'"
+        style="color:#00a24d; text-align: right; padding: 0px 2px;direction: ltr;"
+        [class.red]='rowData["IsLocalAmountCreditPos"]'>
+        {{ rowData[fieldName] | NumbersPipe:'N2' }}
+        <!--{{rowData["OpenAmountCurrencySign"]}}-->
     </div>
 
     <div *ngIf="fieldName == 'OriginalAmount'">
-        <div class="TextTrimming" style="color:#00a24d; text-align: right; padding: 0px 2px;direction: ltr;" [class.red]='rowData["IsLocalAmountCreditPos"]'>
+        <div class="TextTrimming" style="color:#00a24d; text-align: right; padding: 0px 2px;direction: ltr;"
+            [class.red]='rowData["IsLocalAmountCreditPos"]'>
 
-            {{ rowData[fieldName]| NumbersPipe:'N2'  }} <!--{{ CalculatOriginalCurruncy() }} -->
+            {{ rowData[fieldName]| NumbersPipe:'N2' }}
+            <!--{{ CalculatOriginalCurruncy() }} -->
         </div>
     </div>
 

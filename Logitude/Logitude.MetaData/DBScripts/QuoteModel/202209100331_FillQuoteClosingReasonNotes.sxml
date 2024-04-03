@@ -1,0 +1,96 @@
+﻿<Script DBType="Main" Module="Quote" AOT="true" TargetTableName="Quotes">
+  <Sql Version="1">
+    <![CDATA[
+
+	If(OBJECT_ID('tempdb..#temp') Is Not Null)
+	Begin
+		Drop Table #temp
+	End
+
+	If(OBJECT_ID('tempdb..#temp_QuoteComputedFields') Is Not Null)
+	Begin
+		Drop Table #temp_QuoteComputedFields
+	End
+
+	CREATE TABLE #temp_QuoteComputedFields
+	(
+		Id varchar(15) not null,
+		Notes nvarchar(500) null,
+		SearchFields nvarchar(1500) null
+	)
+
+	declare @ObjectTableId as varchar(15)
+	set @ObjectTableId = (select Id from ObjectTables where Name = 'Quote')
+
+	select Quotes.Id,TraceEvents.Notes, Quotes.SearchFields
+	into #temp
+	FROM Quotes
+	left outer join TraceEvents 
+	on TraceEvents.Id = 
+	(
+		select top 1 TraceEvents.Id from TraceEvents
+		left outer join EventTypes on TraceEvents.EventTypeId = EventTypes.Id
+		where TraceEvents.ObjectTableId=@ObjectTableId and (EventTypes.Code  = 'QTCP' or EventTypes.Code  = 'QTDL') 
+		and TraceEvents.Tenant = Quotes.Tenant
+		and EntityId =  Quotes.Id
+		order by TraceEvents.EventDateTime desc
+	)
+	where $LastCounterWhere$
+	declare @Id as varchar(15)
+	declare @Tenant as int
+	declare @Notes as nvarchar(500)
+	declare @SearchFields as nvarchar(1500)
+	declare @NewSearchFields as nvarchar(MAX)
+
+	declare @Count as int
+	set @Count = 0;
+
+	DECLARE DataCursor CURSOR READ_ONLY
+	FOR
+	SELECT Id, Notes, SearchFields
+	FROM #temp	
+	OPEN DataCursor FETCH NEXT FROM DataCursor INTO @Id, @Notes, @SearchFields
+	WHILE @@FETCH_STATUS = 0
+	BEGIN
+
+	    
+	   If (@Notes IS NOT NULL)
+	   begin
+		set @NewSearchFields = @SearchFields + ','+ @Notes
+		insert into #temp_QuoteComputedFields(Id, Notes, SearchFields) values(@Id, @Notes, @NewSearchFields)
+		set @Count = @Count + 1;
+	   end 
+		
+		if(@Count = 1000)
+		begin		
+			update Quotes
+			set
+			QuoteClosingReasonNotes = #temp_QuoteComputedFields.Notes, SearchFields = #temp_QuoteComputedFields.SearchFields
+			FROM Quotes
+			INNER JOIN #temp_QuoteComputedFields
+			on Quotes.Id  COLLATE SQL_Latin1_General_CP1_CI_AS= #temp_QuoteComputedFields.Id  COLLATE SQL_Latin1_General_CP1_CI_AS
+			truncate table #temp_QuoteComputedFields
+			set @Count = 0
+		end
+	FETCH NEXT FROM DataCursor INTO @Id, @Notes, @SearchFields
+	END
+	CLOSE DataCursor
+	DEALLOCATE DataCursor
+
+
+	if (@Count > 0)
+	begin
+			update Quotes
+			set
+			QuoteClosingReasonNotes = #temp_QuoteComputedFields.Notes, SearchFields = #temp_QuoteComputedFields.SearchFields
+			FROM Quotes
+			INNER JOIN #temp_QuoteComputedFields
+			on Quotes.Id  COLLATE SQL_Latin1_General_CP1_CI_AS= #temp_QuoteComputedFields.Id  COLLATE SQL_Latin1_General_CP1_CI_AS
+	end
+
+	drop table #temp
+	drop table #temp_QuoteComputedFields
+
+    ]]>
+  </Sql>
+</Script>

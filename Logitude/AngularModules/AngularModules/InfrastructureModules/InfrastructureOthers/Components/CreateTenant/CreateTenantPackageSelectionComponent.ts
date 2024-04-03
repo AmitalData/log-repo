@@ -128,5 +128,10 @@ export class SignUpInfoClass {
     public CountryName: string;
     public CountryCode: string;
     public ObjecttableName: string;
+    public VatNumber: string;
+    public TimeZoneOffset: number;
+    public City: string;
+    public IsCreateLogboxTenantFromCloud: boolean;
+    public AdditionalEmail: string;
     
 }

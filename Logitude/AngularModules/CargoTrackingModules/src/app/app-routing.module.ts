@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule, RouteReuseStrategy } from '@angular/router';
 import { LoginComponent } from 'src/Infrastructure/Components/LoginComponent/Login.Component';
 import { Error401Component } from 'src/CargoTracking/Components/Errors/Error401Component';
 import { HomeComponent } from 'src/CargoTracking/Components/PublicSite/HomeComponent/HomeComponent';
@@ -12,6 +12,7 @@ import { UserDashboardComponent } from 'src/CargoTracking/Components/UserDashboa
 import { ResetPasswordComponent } from 'src/Infrastructure/Components/LoginComponent/ResetPassword.Component';
 import { ChangePasswordComponent } from 'src/Infrastructure/Components/LoginComponent/ChangePassword.Component';
 import { AuthGuardService as AuthGuard } from 'src/Infrastructure/Services/auth-guard.service';
+import { CustomRouteReuseStrategy } from './custom-route-reuse-strategy.service';
 const routes: Routes = [
 
     { path: 'Cargo-Tracking', redirectTo: "cargo-tracking/login", pathMatch: "full" },
@@ -19,6 +20,8 @@ const routes: Routes = [
     { path: 'cargo-tracking/login', component: LoginComponent },
     { path: 'cargo-tracking/resetpassword', component: ResetPasswordComponent },
     { path: 'cargo-tracking/changepassword', component: ChangePasswordComponent },
+    { path: 'cargo-tracking/shipment-link', component: ShipmentDetailsComponent, data:{isSharedLink: true} },
+    { path: 'cargo-tracking/declaration-link', component: ShipmentDetailsComponent, data:{isSharedLink: true, isDeclaration: true} },
     {
         path: 'cargo-tracking',
         component: UserDashboardComponent,
@@ -36,21 +39,20 @@ const routes: Routes = [
         path: 'public-tracking/search',
         component: HomeComponent,
         children: [
-            { path: "", component: SearchComponent },  
+            { path: "", component: SearchComponent },
             { path: "shipment/:SecurityKey", component: PublicShipmentDetailsComponent },
             { path: "shipment", redirectTo: 'public-tracking/search' },
             { path: ":searchKey", component: SearchComponent },
             { path: '**', redirectTo: 'public-tracking/search', pathMatch: 'full' },
         ]
     },
-
-    
     { path: 'Error401', component: Error401Component },
     { path: '', redirectTo: 'public-tracking/search', pathMatch: 'full' },
     { path: '**', redirectTo: 'public-tracking/search', pathMatch: 'full' },
 ];
 @NgModule({
     imports: [RouterModule.forRoot(routes)], //, { useHash: true}
-    exports: [RouterModule]
+    exports: [RouterModule],
+    providers: [{ provide: RouteReuseStrategy, useClass: CustomRouteReuseStrategy }]
 })
 export class AppRoutingModule { }

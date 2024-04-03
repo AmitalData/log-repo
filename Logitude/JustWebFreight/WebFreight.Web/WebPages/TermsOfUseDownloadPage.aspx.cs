@@ -14,7 +14,10 @@ namespace WebFreight.Web.WebPages
 {
     public partial class TermsOfUseDownloadPage : System.Web.UI.Page
     {
-        int? tenant = null;  
+        int? tenant = null;
+        string documentId = null;
+        //CheckIfDocumentExist
+
         public void Page_Load(object sender, EventArgs e)
         { 
             string token = Request["tempId"] ?? "";
@@ -23,7 +26,8 @@ namespace WebFreight.Web.WebPages
             SecurityDocumentResult securityDocumentResult = SecurityDocumentHelper.ValidationDocumentToken(token);
             bool isValid = false; 
             tenant = securityDocumentResult.Tenant;
-             
+            documentId = CheckDocumentId(Request["DocumentId"]);
+
             isValid = IsValidUser(isValid, securityDocumentResult.Email); 
 
             if (isValid)
@@ -35,29 +39,41 @@ namespace WebFreight.Web.WebPages
                ShowExceptionMessage(securityDocumentResult.ExceptionResult);
             }
         }
-         
+
+        private string CheckDocumentId(string documentId)
+        {
+            if (string.IsNullOrEmpty(documentId) || tenant == null) return documentId;
+            if (new TermsofUseQuery(0).CheckIfDocumentExist((int)tenant, documentId)) return documentId;
+            return null;
+
+        }
+
         private bool IsValidUser(bool isValid, string email)
         {
             if (IsUser(email, (int)tenant) && CheckAvailablityTenantsForEmail(email, (int)tenant) || tenant == 0) isValid = true;
             return isValid;
         }
 
-        private byte[] DownloadTermsOfUse(string privateLabeldId)
+        private void DownloadTermsOfUse(string privateLabeldId)
         {
             byte[] datainByte;
 
-            string documentId = GetTermOfUseDocumentId(privateLabeldId);
+            if (!string.IsNullOrEmpty(privateLabeldId) && privateLabeldId != "null")
+            {
+                documentId = GetTermOfUseDocumentId(privateLabeldId);
+            }
+
             Document termsOfUseDocument = GetDocument(documentId);
 
             if (termsOfUseDocument == null)
             {
                 this.ShowExceptionMessage("Document Not Found!");
+                return ;
 
             }
             datainByte = DownloadFileFromStorage(termsOfUseDocument);
 
             WriteFileToPageResponse(datainByte, termsOfUseDocument);
-            return datainByte;
         }
 
         private static void WriteFileToPageResponse(byte[] datainByte, Document termsOfUseDocument)

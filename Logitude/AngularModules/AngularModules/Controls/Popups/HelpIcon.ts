@@ -1,20 +1,22 @@
-import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
-import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
-import {ObjectsLocator} from '../../Infrastructure/Locators/ObjectsLocator';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { SessionLocator } from '../../Infrastructure/Utilities/SessionLocator';
+import { ObjectsLocator } from '../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
-    
+
     selector: "HelpIcon",
-    inputs: ['Header', 'Text', 'HideHeader', 'IconSize', 'IconPath'],
+    inputs: ['Header', 'Text', 'HideHeader', 'IconSize', 'IconPath', 'V2Grid', 'Position', 'Height'],
     templateUrl: './HelpIcon.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
 export class HelpIcon implements OnInit {
     public Width: number = null;
+    public Position: number = null;
     public Height: number = null;
     public IconSize: number = 17;
     public HideHeader: boolean = false;
+    public V2Grid: boolean = false;
     public IsVisible: boolean;
     public TooltipId: string = null;
     public TooltipContentId: string = null;
@@ -82,6 +84,12 @@ export class HelpIcon implements OnInit {
             }
         }
 
+
+        if (this.V2Grid) {
+            this.SetToolTipPositionInV2Grid();
+            return;
+        }
+
         document.getElementById(this.TooltipContentId).style.position = "fixed";
         document.getElementById(this.TooltipContentId).style.top = (itemRect.top - this.Height + 5) + 'px';
 
@@ -89,10 +97,20 @@ export class HelpIcon implements OnInit {
             document.getElementById(this.TooltipContentId).style.backgroundImage = "url('./_Resources/Images/Icons/Tooltips/Tootip.png')";
             document.getElementById(this.TooltipContentId).style.left = (itemRect.left + 5) + 'px';
         }
-
         else {
             document.getElementById(this.TooltipContentId).style.backgroundImage = "url('./_Resources/Images/Icons/Tooltips/TootipFlipped.png')";
             document.getElementById(this.TooltipContentId).style.left = (itemRect.left - this.Width) + 'px';
+        }
+    }
+
+    SetToolTipPositionInV2Grid() {
+        if (this.Position > 3) {
+            document.getElementById(this.TooltipContentId).style.marginTop = ((this.Height - 5) * -1) + 'px';
+            document.getElementById(this.TooltipContentId).style.backgroundImage = "url('./_Resources/Images/Icons/Tooltips/Tootip.png')";
+        }
+        else {
+            document.getElementById(this.TooltipContentId).style.backgroundImage = "url('./_Resources/Images/Icons/Tooltips/TootipBottom.png')";
+            document.getElementById(this.TooltipContentId).style.paddingTop = '20px';
         }
     }
 }

@@ -206,7 +206,7 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
 
 
             GLAccountPM glaccount = GetGLAccount(tenant, externalRecoPM.GLAccountId);
-            autoRecoService.InitMust(glaccount, journalPM, AutoReconcileRecordList);
+            autoRecoService.InitMust(glaccount, journalPM, AutoReconcileRecordList, "2");
             autoRecoService.InsertJournalReconcile();
         }
 
@@ -253,7 +253,7 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
                 Line = lineNumber,
                 JournalId = journal.Id,
                 ActionCode = "2",
-                ActionTypeCodeEnum = MyJournalActionTypeEnum.Debit,
+                ActionTypeCodeEnum = JournalActionTypeEnum.Debit,
 
                 DebitAccountId = bankAccountPM.TransferGLAcccountId,
                 //DebitControlAccountId = null,
@@ -289,7 +289,7 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
                 Line = lineNumber,
                 JournalId = journal.Id,
                 ActionCode = "1",
-                ActionTypeCodeEnum = MyJournalActionTypeEnum.Credit,
+                ActionTypeCodeEnum = JournalActionTypeEnum.Credit,
 
                 DebitAccountId = bankAccountPM.GLAccountId,
                 //DebitControlAccountId = null,

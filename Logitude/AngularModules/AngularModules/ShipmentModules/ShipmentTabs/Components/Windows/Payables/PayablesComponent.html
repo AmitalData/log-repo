@@ -3,7 +3,7 @@
     <tr>
         <td>
             <div class="MediaFill">
-                <logitude-edit-grid GridWidth="100%" [HeaderHeight]="35" GridHeight="100%" [ItemSource]="ItemsSource">
+                <logitude-edit-grid GridWidth="100%" [HeaderHeight]="35" GridHeight="100%" [ItemSource]="ItemsSource" [UseVirtuallization]="IsUsingVirtuallization">
 
                     <!-- Code -->
                     <log-column [width]="'50'" [header]="'Shipment.O.Receivables.Code' | TextCodeTranslationPipe">
@@ -373,7 +373,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                        <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -381,7 +381,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="RedButton" [disabled]="!IsOkButtonEnabled" (click)="OkButtonClicked()">Ok</button>
+                        <button class="RedButton" [disabled]="!IsOkButtonEnabled" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
                     </td>
                 </tr>
             </table>

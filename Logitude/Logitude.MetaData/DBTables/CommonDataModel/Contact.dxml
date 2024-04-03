@@ -217,6 +217,20 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="UpdateDate"
+    Type="datetime"
+    DefaultValue="'1975-01-01T00:00:00.000'">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="DigitalPortalLanguage"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="ImageDetailId"
     ReferencedTable="ImageDetails"
@@ -232,6 +246,11 @@
     ReferencedTable="ContactDoneMethods"
     ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
+  <!--<Relation
+    ForeignKeyColumn="DigitalPortalLanguage"
+    ReferencedTable="DigitalPortalLanguages"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />-->
   <Index
     Columns="Tenant,Email" />
   <Index
@@ -241,7 +260,8 @@
   <Index
     Columns="AutomaticLastUpdateDate" />
   <Index
-   Columns="Email" />
-<UniqueConstraint Env="cloud"
-  Columns="Tenant,ComputedKey" />
+    Columns="Email" />
+  <UniqueConstraint
+    Env="cloud"
+    Columns="Tenant,ComputedKey" />
 </Table>

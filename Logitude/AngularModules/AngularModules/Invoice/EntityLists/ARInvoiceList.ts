@@ -100,6 +100,7 @@ export class ARInvoiceList {
 		AccountingExternalCode: string;
 		ReadyForTransfer: boolean;
 		IsDueDateColorRed: boolean;
+		IsDigitalDueDateColorRed: boolean;
 		IsExpectedPaymentDateColorRed: boolean;
 		ApprovedDate: Date;
 		ApprovedByUserId: string;
@@ -119,6 +120,9 @@ export class ARInvoiceList {
 		CreditedByARInvoiceTypeCode: string;
 		MetodoPagoCode: string;
 		UsoCFDICode: string;
+		PeriodCode: string;
+		RegimenFiscalCode: string;
+		Period: string;
 		SATTransferStatusCode: string;
 		SATTransferStatusName: string;
 		TransmissionError: string;
@@ -143,9 +147,24 @@ export class ARInvoiceList {
 		BillToGLAccountId: string;
 		RegionalTaxId: string;
 		RegionalTaxPercentage: number;
+		PaidStatus: string;
 		PaidDate: Date;
 		PartnerId: string;
 		PartnerName: string;
 		ShipmentsNumbers: string;
+		MasterNumbers: string;
+		MasterShipmentNumbers: string;
+		HouseNumbers: string;
+		GlobalTaxCalculation: string;
+		PaymentReferences: string;
+		SATCancelReasonCode: string;
+		DigitalPortalSearchFields: string;
+		TotalExamptFortaxReport: number;
+		DocumentTemplateId: string;
+		ConcurrencyGUID: string;
+		TotalAmountNotForTaxReport: number;
+		
+		IsSigned: string;
+		IsSignedName: string;
 	
 }

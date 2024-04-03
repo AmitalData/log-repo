@@ -26,7 +26,7 @@ namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
                     EventTypeCode = "CREV",
                     UserId = loggedContact.Id,
                     EntityId = entityPM.Id,
-                    ObjectTableName = "PaymentMethod",
+                    ObjectTableName = "AccountingPaymentMethod",
                 });
             }
 
@@ -49,7 +49,7 @@ namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
                     EventTypeCode = "UPEV",
                     UserId = loggedContact.Id,
                     EntityId = entityPM.Id,
-                    ObjectTableName = "PaymentMethod",
+                    ObjectTableName = "AccountingPaymentMethod",
                     Notes = notes,
                 });
             }

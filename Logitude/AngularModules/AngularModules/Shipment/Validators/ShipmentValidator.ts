@@ -15,6 +15,7 @@ export class ShipmentValidator implements IShipmentValidator {
     private Errors: string[] = [];
     private entityPM: ShipmentPM;
     private IsInlandDomestic: boolean = false;
+    private IsStandAloneShipment: boolean = false;
     private IsLCLEntity: boolean = false;
     private IsFCLEntity: boolean = false;
     private message: string;
@@ -29,6 +30,7 @@ export class ShipmentValidator implements IShipmentValidator {
 
         if (entityPM && !SessionLocator.TenantPM.IsDocumentsArchive) {
             this.IsInlandDomestic = this.entityPM.TransportModeId == "I" && this.entityPM.DirectionId == "D" ? true : false;
+            this.IsStandAloneShipment = this.entityPM.IsStandalonePickupDelivery;
             this.IsLCLEntity = AppTool.IsLCLEntity(this.entityPM.TransportModeId, this.entityPM.ShipmentTypeId);
             this.IsFCLEntity = AppTool.IsFCLEntity(this.entityPM.TransportModeId, this.entityPM.ShipmentTypeId);
 
@@ -58,7 +60,7 @@ export class ShipmentValidator implements IShipmentValidator {
             this.ValidateDeliveries();
             this.ValidatePayables();
             this.ValidateReceivables();
-            this.ValidateProductItems();
+            //this.ValidateProductItems();
             RoutingHelper.ValidateRoutingsActualDates(entityPM, this.Errors);
             RoutingHelper.ValidateRoutingsSeriesDates(entityPM, this.Errors);
         }
@@ -93,7 +95,7 @@ export class ShipmentValidator implements IShipmentValidator {
             //        this.Errors.push(this.message.replace("%FieldName", TextCodeTranslator.Translate("Shipment.F.ShipperId")));
             //    }
 
-            if (this.IsInlandDomestic) {
+            if (this.IsInlandDomestic && !this.IsStandAloneShipment) {
                 if (AppTool.IsNullOrEmpty(this.entityPM.ConsigneeId)) {
                     this.Errors.push(this.message.replace("%FieldName", TextCodeTranslator.Translate("Shipment.F.ConsigneeId")));
                 }
@@ -133,6 +135,9 @@ export class ShipmentValidator implements IShipmentValidator {
             else if (this.entityPM.ShipmentLevelCode == "H") {
                 this.Errors.push("House inland domestic shipments are not allowed");
             }
+
+            this.ValidateFrom();
+            this.ValidateTo();
         }
     }
     private ValidatePickup() {
@@ -275,13 +280,75 @@ export class ShipmentValidator implements IShipmentValidator {
         });
     }
     private ValidateProductItems() {
-        this.entityPM.ShipmentProductItems.forEach(item => {
+        this.entityPM.ShipmentProductItems.filter(d => !d.IsEmptyLine).forEach(item => {
             Validator.TryValidateObject(item, "ShipmentProductItem", this.Errors);
 
             if (AppTool.IsNullOrEmpty(item.SKU)) {
                 this.Errors.push("Product Item SKU is required");
             }
         });
+    }
+    private ValidateFrom() {
+        switch (this.entityPM.InlandDomesticFromTypeCode) {
+            case "PART":
+                {
+                    if (AppTool.IsNullOrEmpty(this.entityPM.MainCarriageFromPartnerId)) {
+                        this.Errors.push("From Partner field is required");
+                    }
+                    break;
+                }
+
+            case "PORT":
+                {
+                    if (AppTool.IsNullOrEmpty(this.entityPM.MainCarriageFromPortId)) {
+                        this.Errors.push("From Port field is required");
+                    }
+                    break;
+                }
+
+            case "CASL":
+                {
+                    if (AppTool.IsNullOrEmpty(this.entityPM.InlandDomesticFromCity)) {
+                        this.Errors.push("From City field is required");
+                    }
+
+                    if (AppTool.IsNullOrEmpty(this.entityPM.InlandDomesticFromCountryId)) {
+                        this.Errors.push("From Country field is required");
+                    }
+                    break;
+                }
+        }
+    }
+    private ValidateTo() {
+        switch (this.entityPM.InlandDomesticToTypeCode) {
+            case "PART":
+                {
+                    if (AppTool.IsNullOrEmpty(this.entityPM.MainCarriageToPartnerId)) {
+                        this.Errors.push("To Partner field is required");
+                    }
+                    break;
+                }
+
+            case "PORT":
+                {
+                    if (AppTool.IsNullOrEmpty(this.entityPM.MainCarriageToPortId)) {
+                        this.Errors.push("To Port field is required");
+                    }
+                    break;
+                }
+
+            case "CASL":
+                {
+                    if (AppTool.IsNullOrEmpty(this.entityPM.InlandDomesticToCity)) {
+                        this.Errors.push("To City field is required");
+                    }
+
+                    if (AppTool.IsNullOrEmpty(this.entityPM.InlandDomesticToCountryId)) {
+                        this.Errors.push("To Country field is required");
+                    }
+                    break;
+                }
+        }
     }
 }
 

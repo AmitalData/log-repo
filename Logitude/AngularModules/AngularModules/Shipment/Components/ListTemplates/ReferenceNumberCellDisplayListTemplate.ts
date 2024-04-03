@@ -16,7 +16,7 @@ import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceRe
                 <td style="width:10%;">
                     <div></div>
                 </td>
-                <td *ngIf="ToggleIsExportShipments">
+                <td>
                        <div style="text-indent: 10px; overflow: hidden; text-overflow: ellipsis;float:left;">
                         <img width="18" height="15" style="vertical-align: middle;margin-left: -7px;" [src]="DirectionSRC" title="{{rowData ? rowData['DirectionName']:''}}" />
                        </div>
@@ -26,13 +26,22 @@ import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceRe
                         <img width="18" height="15" style="vertical-align: middle;margin-left: -7px;" [src]="TransportModSRC" title="{{rowData ? rowData['TransportModeName']:''}}" />
                        </div>
                 </td>
+                <td style="width:4%;" *ngIf="IsSHOVisible(rowData)">
+                    <div></div>
+                </td>
+                <td *ngIf="IsSHOVisible(rowData)">
+                    <div style="font-size: 9px;color: white;background: black;border: 2px solid black;border-radius: 15px 15px;padding-right: 3px;padding-left: 3px;font-weight: bold;display: inline;">
+                        SHO
+                    </div>
+                </td>
                 <td style="width:10%;">
                     <div></div>
                 </td>
                 <td style="width:100%;">
-                        <div style="text-indent: 10px; overflow: hidden; text-overflow: ellipsis;float:left; position: absolute;top: 0;bottom: 0;left: 0;right: 0;">
-                        <span style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;" *ngIf="fieldName == 'My Shipments'">{{rowData ? rowData['CustomerReference1']:''}}</span>
-                        <span style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;" *ngIf="fieldName != 'My Shipments'">{{rowData ? rowData['ForwarderShipmentNumber']:''}}</span>
+                        <div style="text-indent: 10px; overflow: hidden; text-overflow: ellipsis;float:left; position: absolute;top: 0;bottom: 0;left: 0;right: 0;text-align: right;padding-right:10px;">
+                        <span style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;" *ngIf="fieldName == 'ForwarderShipmentNumber'" title="{{rowData ? (rowData['ForwarderShipmentNumber'] ? rowData['ForwarderShipmentNumber'] : rowData['CustomerReference1']) : ''}}">{{rowData ? (rowData['ForwarderShipmentNumber'] ? rowData['ForwarderShipmentNumber'] : rowData['CustomerReference1']) : ''}}</span>
+                        <span style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;" *ngIf="fieldName == 'My Shipments'" title="{{rowData ? rowData['CustomerReference1']:''}}">{{rowData ? rowData['CustomerReference1']:''}}</span>
+                        <span style="text-overflow: ellipsis;overflow: hidden;white-space: nowrap;" *ngIf="fieldName != 'My Shipments' && fieldName != 'ForwarderShipmentNumber'" title="{{rowData ? rowData['ForwarderShipmentNumber']:''}}">{{rowData ? rowData['ForwarderShipmentNumber']:''}}</span>
                         </div>
                 </td>
                 </tr>
@@ -51,20 +60,20 @@ export class ReferenceNumberCellDisplayListTemplate {
 
     //public Imgs: Logosdictionary[];
     private CurrentSession = SessionLocator.SelectedSession;
-    public ToggleIsExportShipments: boolean = false;
+ 
     constructor(private CD: ChangeDetectorRef) {
         if (!this.CurrentSession.Imgs) {
             this.CurrentSession.Imgs = [];
-        }
-        var FeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "LEX")[0];
-        if (FeatureToggle) {
-            this.ToggleIsExportShipments = true;
-        }
+        } 
     }
 
     setVariables(rowData: any, fieldName: string) {
         this.rowData = rowData;
         this.fieldName = fieldName;
+        this.TransportModSRC = '';
+        this.DirectionSRC = '';
+        this.Source = '';
+        
         if (this.rowData['TransportModeId']) {
             this.TransportModSRC = './Images/TransportModes/' + rowData['TransportModeId'] + '.png';
         }
@@ -107,6 +116,9 @@ export class ReferenceNumberCellDisplayListTemplate {
         }
     }
 
+    public IsSHOVisible(selectedShipment: any): boolean {
+        return selectedShipment && selectedShipment.DirectionId != 'C' && selectedShipment.TransportModeId == 'O' && selectedShipment.IsShipmentOrder == true;
+    }
 }
 
 export class Logosdictionary {

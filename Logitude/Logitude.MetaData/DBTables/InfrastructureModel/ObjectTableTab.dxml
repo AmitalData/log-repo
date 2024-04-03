@@ -37,7 +37,7 @@
     Type="varchar"
     Size="30">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="IndexOrder"
@@ -64,7 +64,7 @@
     Type="varchar"
     Size="100">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="FeatureUniqeCode"
@@ -80,6 +80,7 @@
     <Constraints
       Nullable="true" />
   </Column>
+    
   <Column
     Name="HtmlComponentUrl"
     Type="varchar"
@@ -87,7 +88,43 @@
     <Constraints
       Nullable="true" />
   </Column>
-  <Relation
+
+
+    <Column
+      Name="Type"
+      Type="varchar"
+      DefaultValue="'Predefined'"
+      Size="50">
+        <Constraints
+          Nullable="true"
+          />
+    </Column>
+    <Column
+      Name="ScreenCode"
+      Type="varchar"
+      Size="100">
+        <Constraints
+          Nullable="true" />
+    </Column>
+    <Column
+      Name="OriginalTabCode"
+      Type="varchar"
+      Size="50">
+        <Constraints
+          Nullable="true" />
+    </Column>
+	<Column
+    Name="HideTabNameInScreen"
+    Type="bit">
+		<Constraints
+		  Nullable="false" />
+	</Column>
+
+
+
+
+
+    <Relation
     ForeignKeyColumn="ObjectTableId"
     ReferencedTable="ObjectTables"
     ReferencedColumn="Id"

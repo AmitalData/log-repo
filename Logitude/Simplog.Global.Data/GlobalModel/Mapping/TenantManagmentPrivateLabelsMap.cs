@@ -26,7 +26,11 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.LoginProgressImageId).HasMaxLength(15);
             this.Property(t => t.ForgetPasswordImageId).HasMaxLength(15);
             this.Property(t => t.SecondaryColor).HasMaxLength(100).IsUnicode(false);
-
+            this.Property(t => t.DocumentTypeHighlightColor).HasMaxLength(100);
+            this.Property(t => t.MainTabHighlightColor).HasMaxLength(100);
+            this.Property(t => t.QueryFiltersHighlightColor).HasMaxLength(100);
+            this.Property(t => t.FilingInboxDomain).HasMaxLength(100).IsUnicode(false);
+            this.Property(t => t.DistributorCode).HasMaxLength(15).IsUnicode(true);
 
             this.ToTable("TenantManagmentPrivateLabels");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -49,8 +53,15 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.ForgetPasswordImageId).HasColumnName("ForgetPasswordImageId");
             this.Property(t => t.SecondaryColor).HasColumnName("SecondaryColor");
             this.Property(t => t.HasLogboxAccess).HasColumnName("HasLogboxAccess");
-
-
+            this.Property(t => t.MainTabHighlightColor).HasColumnName("MainTabHighlightColor");
+            this.Property(t => t.DocumentTypeHighlightColor).HasColumnName("DocumentTypeHighlightColor");
+            this.Property(t => t.IsCustomsActivated).HasColumnName("IsCustomsActivated");
+            this.Property(t => t.IsExportActivated).HasColumnName("IsExportActivated");
+            this.Property(t => t.QueryFiltersHighlightColor).HasColumnName("QueryFiltersHighlightColor");
+            this.Property(t => t.CreateShipmentsWithoutDocs).HasColumnName("CreateShipmentsWithoutDocs");
+            this.Property(t => t.CreateOShipmentsWithoutDocs).HasColumnName("CreateOShipmentsWithoutDocs");
+            this.Property(t => t.FilingInboxDomain).HasColumnName("FilingInboxDomain");
+            this.Property(t => t.DistributorCode).HasColumnName("DistributorCode");
             //this.HasRequired(t => t.GlobalTenant).WithOptional(t => t.TenantManagement);
             //this.HasOptional(t => t.MainLogoId).WithMany().HasForeignKey(d => d.LogoId);
         }

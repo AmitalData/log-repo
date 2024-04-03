@@ -1,4 +1,4 @@
-import { CargoTrackingShipmentFilters } from 'src/CargoTracking/DataContracts/CargoTrackingShipmentFilters';
+import { CargoTrackingShipmentSearchInput } from 'src/CargoTracking/DataContracts/CargoTrackingShipmentFilters';
 
 export class SessionInfo{
 
@@ -25,8 +25,17 @@ export class SessionInfo{
     public static LoggedUser: any;
     public static LoggedUserCompanyLogins: any[] = [];
 
-    public static ShipmentsFilters: CargoTrackingShipmentFilters;
+    public static ShipmentsFilters: CargoTrackingShipmentSearchInput;
 
     public static LoggedUserPM: any;
+    public static LoggedContact: any;
+    
+    private static isAdmin: string;
+    public static get IsAdmin(): string { return this.isAdmin; }
+    public static set IsAdmin(newValue: string) { this.isAdmin = newValue; }
+
+    private static displayCookies: boolean;
+    public static get DisplayCookies(): boolean { return this.displayCookies; }
+    public static set DisplayCookies(newValue: boolean) { this.displayCookies = newValue; }
 
 }

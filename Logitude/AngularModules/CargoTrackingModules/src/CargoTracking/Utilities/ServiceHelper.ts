@@ -1,4 +1,4 @@
-import { HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { SessionInfo } from '../../Infrastructure/Utilities/SessionInfo';
 import { CargoTrackingBrandingData } from '../DataContracts/CargoTrackingBrandingData';
 import { CargoTrackingBrandingDataRequest } from '../DataContracts/CargoTrackingBrandingDataRequest';
@@ -6,7 +6,7 @@ import { CargoTrackingImage } from '../DataContracts/CargoTrackingImage';
 
 export  class ServiceHelper{
 
-
+    public static HttpClient: HttpClient;
    public static favIcon: HTMLLinkElement = document.querySelector('#appIcon');
     private static testDomain: string;
     
@@ -26,8 +26,27 @@ export  class ServiceHelper{
 
     }
 
+    public static GetLogitudeURL() {
+
+        var logitude_url = location.href.replace('index.html', '');
+
+        if (location.href.indexOf('localhost') > -1) {
+            logitude_url = 'http://localhost:9996/';//test.logitudeworld.com/test/';//
+        }
+
+        else {
+            var urlArr = location.href.split("/index.html");
+            var url = urlArr[0];
+            url = url.replace(url.substring(url.lastIndexOf('/'), url.length), "");
+            logitude_url = url + "/";
+        }
+
+        return logitude_url;
+    }
+
     public static GetcargoTrackingDataRequest(baseUrl:string)
     {   var BackgroundId:string = this.GetImageIdFromStorage("BackgroundImg");
+        var MobileBackgroundId:string = this.GetImageIdFromStorage("MobileBackgroundImg");
         var CompanyLogoId:string = this.GetImageIdFromStorage("CompanyLogoImg");
         var InvertedLogoId:string = this.GetImageIdFromStorage("InvertedLogoImg");
         var BrowserIconId:string = this.GetImageIdFromStorage("BrowserIconImg");
@@ -35,6 +54,7 @@ export  class ServiceHelper{
 
         var BrandingDataRequest:CargoTrackingBrandingDataRequest = new CargoTrackingBrandingDataRequest();
         BrandingDataRequest.BackgroundId = BackgroundId;
+        BrandingDataRequest.MobileBackgroundId = MobileBackgroundId;
         BrandingDataRequest.ComapnylogoId = CompanyLogoId;
         BrandingDataRequest.InvertedLogoId = InvertedLogoId;
         BrandingDataRequest.BrowserIconId = BrowserIconId;
@@ -48,6 +68,7 @@ export  class ServiceHelper{
     public static SetCargoTrackingDate(brandingData:any,baseUrl:string){
 
         CargoTrackingBrandingData.Tenant = brandingData.Tenant;
+        CargoTrackingBrandingData.EnableExportToExcel = brandingData.EnableExportToExcel;
         CargoTrackingBrandingData.MainColor = brandingData.MainColor || "#000000";
         CargoTrackingBrandingData.SecondaryColor = brandingData.SecondaryColor || "#002664";
 
@@ -77,19 +98,40 @@ export  class ServiceHelper{
 
     private static SetBackgroundImg(BrandingData:any,baseUrl:string)
     {
+        var isMobile = this.IsMobile(BrandingData);
         if(BrandingData.BackgroundBytes){
-            CargoTrackingBrandingData.BackgroundURL = "url("+ServiceHelper.GetImageFromBytes(BrandingData.BackgroundBytes)+")";
-            this.StoreImageInStorage("BackgroundImg",BrandingData.BackgroundId,BrandingData.BackgroundBytes);
+        CargoTrackingBrandingData.BackgroundURL = "url("+ServiceHelper.GetImageFromBytes(BrandingData.BackgroundBytes)+")";
+        this.StoreImageInStorage("BackgroundImg",BrandingData.BackgroundId,BrandingData.BackgroundBytes);
+        }
+        else if(isMobile && BrandingData.MobileBackgroundBytes){
+            CargoTrackingBrandingData.BackgroundURL = "url("+ServiceHelper.GetImageFromBytes(BrandingData.MobileBackgroundBytes)+")";
+            this.StoreImageInStorage("ImageBackgroundImg",BrandingData.MobileBackgroundId,BrandingData.MobileBackgroundBytes);
         }
         else{
+           
+            if(isMobile && BrandingData.BackgroundId)
             var StorageBackground:CargoTrackingImage = ServiceHelper.GetImageFromStorage("BackgroundImg");
-                if(StorageBackground && StorageBackground.Id!=null && StorageBackground.Id == BrandingData.BackgroundId){
-                    CargoTrackingBrandingData.BackgroundURL ="url("+ServiceHelper.GetImageFromBytes(StorageBackground.Data)+")";
-                }
-                else{
-                    CargoTrackingBrandingData.BackgroundURL ="url('"+baseUrl+"assets/images/misc/map-bg.svg')"
-                }
+            else if(isMobile)
+            var StorageBackground:CargoTrackingImage = ServiceHelper.GetImageFromStorage("ImageBackgroundImg"); 
+            else 
+            var StorageBackground:CargoTrackingImage = ServiceHelper.GetImageFromStorage("BackgroundImg");
+
+            if(StorageBackground && StorageBackground.Id!=null && StorageBackground.Id == BrandingData.BackgroundId){
+                CargoTrackingBrandingData.BackgroundURL ="url("+ServiceHelper.GetImageFromBytes(StorageBackground.Data)+")";
+            }
+            else{
+                CargoTrackingBrandingData.BackgroundURL ="url('"+baseUrl+"assets/images/misc/map-bg.svg')"
+            }
         }
+    }
+
+    private static  IsMobile(BrandingData:any)
+    {
+        const mobileScreenMaxWidth = 470;
+        const isPortrait = window.innerHeight > window.innerWidth;
+        if((window.innerWidth <= mobileScreenMaxWidth && isPortrait)|| ( window.innerHeight <= mobileScreenMaxWidth && !isPortrait))
+        return true;
+        return false;
     }
 
     private static SetCompanyLogo(BrandingData:any,baseUrl:string)
@@ -195,4 +237,8 @@ export  class ServiceHelper{
     public static GetLDocumentDownloadToken() {
         return SessionInfo.DocumentDownloadToken;
     }
+    public static GetLoggedUserToken() {
+        return SessionInfo.Token;
+    }
+    
 }

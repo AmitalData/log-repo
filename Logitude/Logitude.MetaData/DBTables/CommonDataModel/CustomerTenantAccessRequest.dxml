@@ -19,13 +19,6 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="ForwarderId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
     Name="RequestDateTime"
     Type="datetime">
     <Constraints
@@ -38,14 +31,33 @@
     <Constraints
       Nullable="false" />
   </Column>
-  <Relation
-    ForeignKeyColumn="ForwarderId"
-    ReferencedTable="HybridPartners"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
+  <Column
+    Name="ForwarderId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsCustoms"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsExport"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="RequestStatus"
     ReferencedTable="CustomerTenantAccessStatusTypes"
     ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ForwarderId"
+    ReferencedTable="HybridPartners"
+    ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
 </Table>

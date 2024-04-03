@@ -151,6 +151,28 @@
                                 <tr>
                                     <td style="width:360px;">
                                         <table>
+
+                                            <!-- PartnerTypes Filter -->
+                                            <tr  class="customtrclass">
+                                                <td style="width:120px; height: 25px; padding-left: 10px; ">
+                                                    {{ 'ARInvoice.F.PartnerType' | TextCodeTranslationPipe }}
+                                                </td>
+
+                                                <td style="width:230px;" [style.padding-right]="isRTL ? 'initial' : '36px'" [style.padding-left]="isRTL ? '36px' : 'initial'">
+                                                    <ComboBox [ItemsSource]="PartnerTypes"
+                                                              [Binding]="'Name'"
+                                                              [SelectedItem]="SelectedPartnerType"
+                                                              (SelectedItemChanged)="SelectedPartnerType = $event"
+                                                              [IsDisabled]="DisabledPartnerTypes"></ComboBox>
+
+                                                </td>
+
+                                                <td>
+                                                    <div></div>
+                                                </td>
+
+                                            </tr>
+
                                             <!-- BillToId -->
                                             <tr class="customtrclass">
                                                 <td style="width:120px; height:25px; ">
@@ -160,15 +182,22 @@
                                                 </td>
 
                                                 <td style="width:230px; ">
-                                                    <LogLov [ObjectFieldName]="'BillToId'"
-                                                            [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
-                                                            [SelectedValue]="BillToId" [LookUpTableName]="'Card'"
-                                                            [DependencyFilter1Value]="'CS,AG,AL,CG,SG,SL,TR,VD,WH'"
-                                                            [DependencyFilter1IsList]="true"
-                                                            [DisplayFieldsFromList]="DisplayFieldsFromList"
-                                                            [DisplayLocalFieldsFromList]="DisplayLocalFieldsFromList"
-                                                            [CustomizedWidth]="BillToLovSizeForFullAccounting">
-                                                    </LogLov>
+                                                <LogLov [ObjectFieldName]="'BillToId'"
+                                                        [ObjectTableName]="ObjectTableName"
+                                                        [DataContext]="DataContext"
+                                                        [SelectedValue]="BillToId"
+                                                        [LookUpTableName]="'Card'"
+                                                        [DependencyFilter1Value]="filterByPartnerTypeCode"
+                                                        [DisplayFieldsFromList]="DisplayFieldsFromList"
+                                                        [DisplayLocalFieldsFromList]="DisplayLocalFieldsFromList"
+
+                                                        [CustomizedWidth]="BillToLovSizeForFullAccounting"
+                                                        [StartSearchFromChar]="3"
+                                                        [StartSearchFromNumber]="6"
+                                                        [QueryFilterItems]="BillToFilter">
+
+                                                </LogLov>
+
                                                 </td>
 
                                                 <td>
@@ -463,6 +492,26 @@
                         </td>
 
                     </tr>
+
+                    <!-- Multiple bank transfers-->
+
+                    <tr style="height:22px" *ngIf="EntityPM.ARPaymentBankTranfers.length > 1 && AccountingPaymentMethodCode == 'BT'">
+                        <td colspan="2">
+                            <table>
+                                <tr>
+                                    <!-- <td style="width:200px" colspan="2"></td>-->
+                                    <td>
+                                        <div style="width:500px;margin:0 400px;">
+                                            <div class="DisbleBox">
+                                                {{'ARPayment.M.MoreThanPaymentBankTransfer' | TextCodeTranslationPipe }}
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td style="width:100%"></td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
                     <!-- Cheque -->
                     <tr style="height:1px;" *ngIf="CollapsedIfCash">
                         <td>
@@ -475,7 +524,10 @@
                                     <td>
                                         <table>
                                             <tr class="TabTitleRow">
-                                                <td colspan="8">{{PaymentMethodDetailsLabel}}</td>
+                                                <td colspan="8">{{PaymentMethodDetailsLabel}}
+                                                    <span style="font-size:14px" *ngIf="AccountingPaymentMethodCode == 'BT' && EntityPM.ARPaymentBankTranfers.length > 0">
+                                                         ({{EntityPM.ARPaymentBankTranfers.length}})
+                                                    </span></td>
                                             </tr>
 
                                             <tr class="customtrclass">
@@ -550,7 +602,7 @@
                                             </tr>
 
                                             <tr>
-                                                <td style="width:150px;" *ngIf="AccountingPaymentMethodCode != 'CH'">
+                                                <td style="width:150px;" *ngIf="AccountingPaymentMethodCode != 'CH' && AccountingPaymentMethodCode != 'BT'">
                                                     <LogTextBox [ObjectFieldName]="'AmountInPaymentCurrency'"
                                                                 [DigitsAfterPoint]="2" [Text]="AmountInPaymentCurrency"
                                                                 [InputType]="'double'" [ObjectTableName]="ObjectTableName"
@@ -561,6 +613,15 @@
 
                                                     <LogTextBox [ObjectFieldName]="'ChequeAmount'"
                                                                 [Text]="ChequeAmount"
+                                                                [InputType]="'double'"
+                                                                [DataContext]="DataContext"
+                                                                [NoObjectField]="true"
+                                                                [ObjectTableName]="ObjectTableName"></LogTextBox>
+                                                </td>
+                                                <td style="width:150px;" *ngIf="isFullAccounting && AccountingPaymentMethodCode == 'BT'">
+
+                                                    <LogTextBox [ObjectFieldName]="'BankTransferAmount'"
+                                                                [Text]="BankTransferAmount"
                                                                 [InputType]="'double'"
                                                                 [DataContext]="DataContext"
                                                                 [NoObjectField]="true"
@@ -585,7 +646,8 @@
                                                             [SelectedValue]="BankAccountId"
                                                             [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
                                                             [DisplayMemberPath]="'LocalName'"
-                                                            [LookUpTableName]="'BankAccount'">
+                                                            [LookUpTableName]="'BankAccount'"
+                                                            [QueryFilterItems]="BankAccountsFilterItems">
                                                     </LogLov>
                                                 </td>
 
@@ -642,8 +704,22 @@
                                                                 <div *ngIf="EntityPM.StatusCode !='AD'">
                                                                     <IconButton [Name]="'Add'" [IsSmall]="true" (click)="AddChequesButtonClicked()"></IconButton>
                                                                 </div>
-                                                                <div *ngIf="isMultipleCheques && EntityPM.StatusCode=='AD'">
+                                                                <div *ngIf="EntityPM.StatusCode=='AD'">
                                                                     <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="DisplayChequesButtonClicked()"></IconButton>
+                                                                </div>
+                                                            </td>
+
+                                                            <td *ngIf="isFullAccounting && AccountingPaymentMethodCode == 'BT' && !EntityPM.BankTransferPaymentArguments" style="width:50px">
+                                                                <!-- [style.float]="isRTL ? 'left' : 'right'" -->
+                                                                <div *ngIf="EntityPM.StatusCode =='DR' && (EntityPM.ARPaymentBankTranfers.length === 0 || EntityPM.ARPaymentBankTranfers.length === 1)">
+                                                                    <IconButton [ngStyle]="{'position': (isRTL) ? 'relative' : 'initial', 'left': (isRTL) ? '35px' : '0px'}"
+                                                                                [Name]="'Add'" [IsSmall]="true" (click)="AddBankTransfersButtonClicked()"></IconButton>
+                                                                    <div [ngStyle]="{'margin-left': '30px', 'position': (isRTL) ? 'relative' : 'initial', 'right': (isRTL) ? '30px' : '0px'}">
+                                                                        <HelpIcon [Header]="'ARPayment.M.BankTransfers' | TextCodeTranslationPipe" [Text]="'ARPayment.M.AddBankTransfersHint' | TextCodeTranslationPipe"></HelpIcon>
+                                                                    </div>
+                                                                </div>
+                                                                <div *ngIf="EntityPM.ARPaymentBankTranfers.length > 1 || EntityPM.StatusCode !='DR'">
+                                                                    <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="ShowMultiBankTransfersScreen()"></IconButton>
                                                                 </div>
                                                             </td>
                                                             <td>
@@ -665,7 +741,7 @@
                         </td>
                     </tr>
 
-                 
+
                     <tr style="height:10px;">
                         <td>
                             <div></div>
@@ -682,10 +758,13 @@
                                     <td style="width: 1px; padding-left: 5px;">
                                         ({{TransactionsList?.Length}})
                                     </td>
-                                <!--    <td> <span class="HiddenBtn" (click)="GetData()">R</span></td>-->
+                                    <!--    <td> <span class="HiddenBtn" (click)="GetData()">R</span></td>-->
                                     <td width="5px"></td>
-                                    <td *ngIf="isMultipleCheques " style="width:20px">
+                                    <!-- <td *ngIf="isMultipleCheques " style="width:20px">
                                         <img style="width:21px" src="./Images/Icons/RedX.png" title="{{'ARPayment.O.CantPerformReconciliation' | TextCodeTranslationPipe}}" />
+                                    </td> -->
+                                    <td *ngIf="EntityPM.ARPaymentBankTranfers.length > 1 " style="width:20px">
+                                        <img style="width:21px" src="./Images/Icons/RedX.png" title="{{'ARPayment.O.ReconciliationInMultipleTransfers' | TextCodeTranslationPipe }}" />
                                     </td>
                                     <td>
                                         <div></div>
@@ -716,7 +795,7 @@
                                             <log-cell-template [IgnoreMods]="true">
                                                 <CheckBox [IsChecked]="item.IsChecked || item.IsReconciled || item.PaymentReconciledAmount != 0"
                                                           (Checked)="item.IsChecked = $event"
-                                                          [IsEnabled]="!item.IsReconciled && (item.PaymentReconciledAmount == 0) && !(IsGridReadOnly || IsDisplayOnly) && !isMultipleCheques">
+                                                          [IsEnabled]="!item.IsReconciled && (item.PaymentReconciledAmount == 0) && !(IsGridReadOnly || IsDisplayOnly) && !isMultipleBankTransfers">
                                                 </CheckBox>
                                             </log-cell-template>
                                         </ng-template>
@@ -735,6 +814,16 @@
                                             </log-cell-template>
                                         </ng-template>
                                     </log-column>
+
+                                    <!-- Reference -->
+                                    <log-column [width]="'100'" [header]="'Journal.CH.AccountingEntityNameListLable' | TextCodeTranslationPipe"
+                                    [Alignment]="isRTL ? 'right' : 'left'">
+                                    <ng-template let-item>
+                                        <log-cell-template #logcelltemplate [TabIndex]="-1">
+                                            {{item.Reference3}}
+                                        </log-cell-template>
+                                    </ng-template>
+                                  </log-column>
 
                                     <!-- InvoiceAmount -->
                                     <log-column [width]="'130'" [header]="InvoiceAmountCurrency" [Alignment]="'right'">
@@ -785,8 +874,9 @@
                                                                 [InputType]="'decimal'" [DigitsAfterPoint]="2"
                                                                 [DataContext]="item" [ObjectTableName]="item.ObjectTableName"
                                                                 [HideColumns]="true" [Text]="item.AmountToReconcile"
-                                                                [ForceDisable]="IsDisplayOnly || isMultipleCheques"
-                                                                (LostFocus)="item.OnAmountToReconcileLostFocus(logcelltemplate,AmountToReconcileTextBox)">
+                                                                [ForceDisable]="IsDisplayOnly "
+                                                                (LostFocus)="item.OnAmountToReconcileLostFocus(logcelltemplate,AmountToReconcileTextBox)"
+                                                                (dblclick)="item.AutomaticallyFillAmountToReconciledblclick(logcelltemplate,AmountToReconcileTextBox)">
                                                     </LogTextBox>
                                                 </div>
                                             </log-cell-template>
@@ -845,9 +935,10 @@
                                             </log-cell-template>
                                         </ng-template>
                                     </log-column>
+
                                 </logitude-edit-grid>
 
-                                <div *ngIf="TransactionsList?.Length == 0 && !_loading" id="{{'ARPaymentSpinner' | IdGeneratorPipe}}" class="NoDataText">
+                                <div *ngIf="TransactionsList?.Length == 0 && !_loading" id="{{'ARPaymentSpinner' | IdGeneratorAsyncPipe | async}}" class="NoDataText">
                                     {{'ARPayment.S.NoInvoicesFound' | TextCodeTranslationPipe}}
                                 </div>
                                 <div *ngIf="_loading" class="NoDataText">
@@ -914,7 +1005,7 @@
                                                 <td style="vertical-align: middle;" class="arp-footer">
                                                     <div float-start class="amount-div">
                                                         <div class="amount">{{PaymenyAmount | NumbersPipe:'N2'
-                                                }}</div>
+                                                            }}</div>
                                                         <div class="label">
                                                             {{'Accounting.O.ARP.PaymentAmount' | TextCodeTranslationPipe}}
                                                         </div>
@@ -1031,7 +1122,7 @@
                                     <tr style="height: 1px;">
                                         <td>
                                             <LogLabel [ObjectFieldName]="'PrintNotes'"
-                                                [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
+                                                      [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
                                             </LogLabel>
                                         </td>
                                     </tr>
@@ -1040,8 +1131,8 @@
                                         <td>
                                             <div>
                                                 <LogTextBox [ObjectFieldName]="'PrintNotes'" [Text]="PrintNotes"
-                                                    [InputType]="'ntext'" [ObjectTableName]="ObjectTableName"
-                                                    [DataContext]="DataContext" [IsMultiline]="true" [RowsCount]="2">
+                                                            [InputType]="'ntext'" [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext" [IsMultiline]="true" [RowsCount]="2">
                                                 </LogTextBox>
                                             </div>
                                         </td>

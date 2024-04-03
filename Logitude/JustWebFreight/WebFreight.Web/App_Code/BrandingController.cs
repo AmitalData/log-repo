@@ -14,6 +14,8 @@ using System.Linq;
 using System.Net;
 using System.Net.Http; 
 using System.Web.Http;
+using WebFreight.Web.DataContracts;
+using WebFreight.Web.Helpers;
 
 namespace WebFreight.Web.App_Code
 { 
@@ -251,9 +253,6 @@ namespace WebFreight.Web.App_Code
         }
         #endregion
     }
-
-
-
 }
 public class BrandingResult
 {

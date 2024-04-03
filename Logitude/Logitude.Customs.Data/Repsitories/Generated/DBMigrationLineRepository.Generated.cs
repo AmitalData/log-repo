@@ -48,7 +48,7 @@ namespace Logitude.Customs.Data.Repsitories
                     where a.DBMigrationId == keys.DBMigrationId && a.CounterKey == keys.CounterKey
                     select a).FirstOrDefault();
         }
-		         
+		 		                 
         partial void onAdd();//Partial Methods Definition in Generated
         public void Add(DBMigrationLine entity)
         {

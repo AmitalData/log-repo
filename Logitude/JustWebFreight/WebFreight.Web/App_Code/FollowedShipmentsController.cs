@@ -81,7 +81,7 @@ namespace WebFreight.Web.App_Code
 
             try
             {
-                Authentication();
+                Authentication(tenant);
                 ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
                 string entityId = shipmentQuery.GetEntitiyIdByShipmentNumber(shipmentNumber, tenant);
                 SharedFollowedShipmentRepository sharedFollowedShipmentRepository = new SharedFollowedShipmentRepository(tenant);
@@ -99,11 +99,12 @@ namespace WebFreight.Web.App_Code
         }
 
 
-        private static void Authentication()
+        private static void Authentication(int tenant)
         {
             string token = HttpContext.Current.Request.Headers["Token"];
             AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
             SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+            SecurityUtility.AuthenticationOnTenant(tenant);
 
         }
 

@@ -41,18 +41,25 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                                       Width = a.Width,
                                                                       VolumetricWeight = a.VolumetricWeight,
                                                                       ContainerTypeId = a.PackageTypeId,
-                                                                  }).ToList();
+                                                                      ContainerNumber = a.ContainerNumber,
+                                                                  }).OrderBy(a => a.Id).ToList();
 
             foreach (ShipmentOrderPackagePM package in shipmentOrderPackages)
             {
                 PackageType packageType = PackageTypeRepository.GetSinglePackageType(package.PackageTypeId, package.Tenant, true);
                 if (packageType != null)
                 {
-                    package.PackageTypeName = packageType.EnglishName;
+                    MapPackageTypeDetails(package, packageType);
                 }
                 package.Dimensions = packageType != null && packageType.IsContainer ? "" : package.Length + "-" + package.Width + "-" + package.Height;
             }
             return shipmentOrderPackages;
+        }
+
+        private void MapPackageTypeDetails(ShipmentOrderPackagePM package, PackageType packageType)
+        {
+            package.PackageTypeName = packageType.EnglishName;
+            package.PackageTypeCode = packageType.Code;
         }
 
         public ShipmentOrderPackagePM GetSingleShipmentOrderPackagePM(string id)
@@ -74,6 +81,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         Height = a.Height,
                         Width = a.Width,
                         VolumetricWeight = a.VolumetricWeight,
+                        ContainerNumber = a.ContainerNumber,
                     }).FirstOrDefault();
         }
     }

@@ -4,18 +4,22 @@ using System.Runtime.Serialization;
 using Simplog.Server.Infrastructure;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
+using Simplog.Server.Infrastructure.DataContracts;
+using Logitude.BL.InfrastructureModel.EntityPMs;
 
 namespace Logitude.BL.CommonDataModel.EntityPMs
 {
     [CustomValidation(typeof(Validators.ClassLevelValidator), "ValidateClass")]
     [DataContract]
-    public class TruckerPM
+    public class TruckerPM : ObjectCustomFieldDataContractPM
     {
         [Key]
         [DataMember]
         public string Id { get; set; }
+
         [DataMember]
         public int Tenant { get; set; }
+
         [DataMember]
         public bool IsSecured { get; set; }
 
@@ -186,6 +190,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [Include]
         [Association("TruckerCarrier", "Id", "Id")]
+        [DataMember]
         public virtual CardPM Card { get; set; }
 
         private List<AddressPM> addresses;
@@ -276,10 +281,25 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [DataMember]
         public string GLAccountNumber { get; set; }
+
         [DataMember]
         public string BillToId { get; set; }
         [DataMember]
         public bool TransmitToPort { get; set; }
 
+
+        [DataMember]
+        public string RegimenFiscalCode { get; set; }
+
+        [DataMember]
+        public string SATReceptorName { get; set; }
+
+        [DataMember]
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string ImportLocalCustomerGroupId { get; set; }
+
+        [DataMember]
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string ExportLocalCustomerGroupId { get; set; }
     }
 }

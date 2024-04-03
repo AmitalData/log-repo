@@ -240,6 +240,40 @@ namespace Simplog.Data.CommonDataModel.Mocks
             }
         }
 
+        List<CustomerTeam> customerTeams;
+        MockObjectSet<CustomerTeam> customerTeamObjectSet;
+        public IDbSet<CustomerTeam> CustomerTeams
+        {
+            get
+            {
+                if (customerTeams == null)
+                {
+                    customerTeams = new List<CustomerTeam>() {
+                        new CustomerTeam() { Id = "1-1", Name = "CT1", InActive = false, Tenant = 1},
+                        new CustomerTeam() { Id = "1-2", Name = "CT2", InActive = false, Tenant = 2 } };
+                    rankObjectSet = new MockObjectSet<Rank>(ranks);
+                }
+                return customerTeamObjectSet;
+            }
+        }
+
+        List<CustomerGroup> customerGroups;
+        MockObjectSet<CustomerGroup> customerGroupObjectSet;
+        public IDbSet<CustomerGroup> CustomerGroups
+        {
+            get
+            {
+                if (customerGroups == null)
+                {
+                    customerGroups = new List<CustomerGroup>() {
+                        new CustomerGroup() { Id = "1-1", Name = "General", InActive = false, Tenant = 1}};
+                    customerGroupObjectSet = new MockObjectSet<CustomerGroup>(customerGroups);
+                }
+                return customerGroupObjectSet;
+            }
+        }
+
+
         public IDbSet<User> Users
         {
             get { return new MockObjectSet<User>(new List<User>() { new User() { BranchId = "1-1", DepartmentId = "1-1", Id = "1-3", Tenant = 1,Contact=Contacts.Where(d=>d.Id=="1-3").FirstOrDefault()  },
@@ -1154,7 +1188,6 @@ namespace Simplog.Data.CommonDataModel.Mocks
             get { throw new NotImplementedException(); }
         }
 
-       
 
         List<TermsofUse> termOfUses;
         MockObjectSet<TermsofUse> termOfUsesObjectSet;
@@ -2358,6 +2391,20 @@ namespace Simplog.Data.CommonDataModel.Mocks
                 throw new NotImplementedException();
             }
         }
+        public IDbSet<RegimenFiscal> RegimenFiscals
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+        public IDbSet<PostalCode> PostalCodes
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
         public IDbSet<ReportsTemplate> ReportsTemplates
         {
             get
@@ -2689,8 +2736,6 @@ namespace Simplog.Data.CommonDataModel.Mocks
                 throw new NotImplementedException();
             }
         }
-
-
         public IDbSet<DocumentsExecutionLog> DocumentsExecutionLogs
         {
             get
@@ -2703,11 +2748,6 @@ namespace Simplog.Data.CommonDataModel.Mocks
                 throw new NotImplementedException();
             }
         }
-
-
-
-
-
         public IDbSet<AccountingPartner> AccountingPartners
         {
             get
@@ -2720,7 +2760,6 @@ namespace Simplog.Data.CommonDataModel.Mocks
                 throw new NotImplementedException();
             }
         }
-
         public IDbSet<CardContactAdditionalService> CardContactAdditionalServices
         {
             get
@@ -2795,6 +2834,17 @@ namespace Simplog.Data.CommonDataModel.Mocks
                 throw new NotImplementedException();
             }
         }
+        public IDbSet<CargoTenantMilestoneDefinition> CargoTenantMilestoneDefinitions
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
 
         public IDbSet<TariffCarrierTranslation> TariffCarrierTranslations => throw new NotImplementedException();
 
@@ -2804,12 +2854,18 @@ namespace Simplog.Data.CommonDataModel.Mocks
         public IDbSet<WarehouseStoragePricing> WarehouseStoragePricings { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public IDbSet<CardSearch> CardSearches { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public IDbSet<Horse> Horses { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
-
         public IDbSet<DWHEnvironmentSetting> DWHEnvironmentSettings { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public IDbSet<PortTimeZone> PortTimeZones => throw new NotImplementedException();
+        public IDbSet<UnassignedEntity> UnassignedEntitys => throw new NotImplementedException();
 
+        IDbSet<UnassignedEntity> ICommonDataContext.UnassignedEntitys { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public IDbSet<Mention> Mentions { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
-
+        public IDbSet<CarrierServiceLine> CarrierServiceLines { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public IDbSet<HorseGender> HorseGenders { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public IDbSet<DigitalContactLastSetting> DigitalContactLastSettings { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public IDbSet<PortGroup> PortGroups { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public IDbSet<CustomFieldsMainObject> CustomFieldsMainObjects { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
 
 

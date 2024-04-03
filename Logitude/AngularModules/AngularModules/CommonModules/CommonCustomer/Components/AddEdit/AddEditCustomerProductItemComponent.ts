@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
-import {AppTool} from '../../../../Infrastructure/Tools';
+import {AppTool, ArrayTool} from '../../../../Infrastructure/Tools';
 import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import { ProductItemPM } from '../../../../Common/EntityPMs/ProductItemPM';
@@ -61,7 +61,7 @@ export class AddEditCustomerProductItemComponent extends BaseComponent {
         }
     }
 
-    CancelButtonClicked() {
+    CancelButtonClicked() {        
         this.RejectChanges();
         this.CurrentSession.CloseCurrentWindow();
     }
@@ -154,6 +154,13 @@ export class AddEditCustomerProductItemComponent extends BaseComponent {
         this.myCloner.AddField('UPC');
         this.myCloner.AddField('OriginCountryId');
         this.myCloner.AddField('OriginCountryName');
+        this.myCloner.AddField('ShipperId');
+        this.myCloner.AddField('ShipperName');
+
+        this.myCloner.AddField('ProductValue');
+        this.myCloner.AddField('ProductValueCurrencyId');
+        this.myCloner.AddField('Quantity');
+        this.myCloner.AddField('ProductValueCurrencyCode');
         this.myCloner.AddEntity(this.EntityPM);
         this.myCloner.AddEntity(this.DataContext.CustomerPM);
     }
@@ -161,5 +168,6 @@ export class AddEditCustomerProductItemComponent extends BaseComponent {
     private RejectChanges() {
         this.DataContext.ResetHTSCodes();
         this.myCloner.RejectChanges();
+        this.DataContext.maxHTSCodesLineNumber = ArrayTool.Max(this.EntityPM.HTSCodes, "LineNumber");
     }
 }

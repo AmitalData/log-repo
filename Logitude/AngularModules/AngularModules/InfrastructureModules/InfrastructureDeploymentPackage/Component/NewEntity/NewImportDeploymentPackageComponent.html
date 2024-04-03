@@ -1,0 +1,289 @@
+<style>
+    .myBar {
+        width: 0%;
+        height: 18px;
+        background: #C2DFED;
+    }
+</style>
+
+<div style="height: 30px; padding: 3px;" *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0">
+    <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+
+</div>
+<div *ngIf="!IsNextClicked && !HasErrorsWhileImporting" style="padding-left: 20px; padding-right: 10px; padding-bottom: 20px; padding-top:10px">
+
+    <table>
+
+        <!-- Package Details -->
+        <tr>
+            <td style="width:10px;">
+                <div>
+                </div>
+            </td>
+            <td colspan="5" style="height: 1px;" class="TabTitleRow">
+                Package Details
+            </td>
+        </tr>
+        <tr><td colspan="6" style="height: 10px"></td></tr>
+
+        <tr>
+            <td style="width:10px;">
+                <div>
+                </div>
+            </td>
+            <td colspan="5" style="padding-left:15px;">
+                <table>
+
+                    <tr class="FormFieldRow">
+                        <td [style.width.px]="120">
+                            <table style="table-layout: fixed;">
+                                <tr>
+                                    <td style="width:10px; vertical-align: middle;">
+                                        <div *ngIf="!Name" style="width: 7px; height: 7px; background: #E45A26; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px;"></div>
+                                    </td>
+                                    <td class="TextTrimming" style="text-align: left; vertical-align:middle;">
+                                        <label class="Label" [style.color]="Name ? '#6E7172':'red'" style="color:#6E7172">Name:</label>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+
+                        <td [style.width.px]="300">
+                            <LogTextBox [ObjectFieldName]="'Name'" [Text]="Name" [DataContext]="DataContext"></LogTextBox>
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+
+                    <tr class="FormFieldRow">
+                        <td [style.width.px]="120">
+                            <table style="table-layout: fixed;">
+                                <tr>
+                                    <td style="width:10px; vertical-align: middle;">
+                                        <div *ngIf="!Code" style="width: 7px; height: 7px; background: #E45A26; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px;"></div>
+                                    </td>
+                                    <td class="TextTrimming" style="text-align: left; vertical-align:middle;">
+                                        <label class="Label" [style.color]="Code ? '#6E7172':'red'" style="color:#6E7172">Code:</label>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+
+                        <td [style.width.px]="300">
+                            <LogTextBox [ObjectFieldName]="'Code'" [Text]="Code" [DataContext]="DataContext"></LogTextBox>
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+
+                    <tr style="height: 7px"></tr>
+
+                    <tr class="FormFieldRow">
+                        <td [style.width.px]="120">
+                            <LogLabel [ObjectFieldName]="'Description'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        </td>
+
+                        <td [style.width.px]="300">
+                            <LogTextBox [ObjectFieldName]="'Description'" [DataContext]="DataContext"
+                                        [Text]="Description" [IsMultiline]="true"></LogTextBox>
+                        </td>
+                        <td></td>
+                    </tr>
+
+                </table>
+            </td>
+
+        </tr>
+
+        <tr><td colspan="6" style="height: 40px"></td></tr>
+
+        <!-- Upload Package -->
+        <tr>
+            <td style="width:10px;">
+                <div>
+                </div>
+            </td>
+            <td colspan="5" style="height: 1px;" class="TabTitleRow">
+                Upload Package
+            </td>
+        </tr>
+        <tr><td colspan="6" style="height: 10px"></td></tr>
+
+        <tr style="height:10px">
+            <td style="width:10px;">
+                <div>
+                </div>
+            </td>
+            <td colspan="5" style="padding-left:15px;">
+                <div>
+                    <label class="Label">Please select the file that contains the package that you exported, then click on Next to continue Importing this package</label>
+                </div>
+            </td>
+        </tr>
+
+        <tr style="height:40px">
+            <td style="width:10px;">
+                <div>
+                </div>
+            </td>
+            <td style="width: 62px; text-align: left; padding-left: 15px;" colspan="5">
+
+                <div *ngIf="IsUploadVisibile">
+                    <button class="Button" style="width:100px" (click)="BrowseButtonClicked()">Browse</button>
+                    <input [attr.id]="UploadFileId" type="file" accept=".zip" [(ngModel)]="FileData" (change)="UploadFile($event)" style="display:none;width:65px" class="upload" />
+                </div>
+                <div *ngIf="IsShowProgressBar" style="display: inline-flex">
+                    <div style="height: 20px; width: 500px;border:1px solid gray; border-radius: 3px">
+                        <div *ngIf="!UploadedSuccessfully" class="myBar" [attr.id]="ProgressBarId" style="height:16px;margin:1px;"></div>
+                        <div *ngIf="UploadedSuccessfully" style="height: 16px; margin: 1px; width: 99.4%; background: #C2DFED "></div>
+                    </div>
+                    <div style="width: 30px; padding-left:4px;">
+                        <label class="Label">{{ProgressBarPercentText}}</label>
+                    </div>
+                </div>
+
+            </td>
+        </tr>
+
+        <tr style="height:30px">
+            <td style="width:10px;"><div></div> </td>
+            <td style="width: 62px; text-align: left; padding-left: 15px;"><span style="font-size:11px;color:dimgray">File Name:</span></td>
+            <td colspan="4" style="text-align:left"><span style="text-align:left;width:350px;overflow:hidden;text-overflow: ellipsis;white-space: nowrap;display:inline-block;color:dimgray;font-size:11px;vertical-align:central;margin-top:6px">{{FileName}}</span></td>
+
+        </tr>
+
+        <tr style="height:20px">
+            <td style="width:10px;"><div></div> </td>
+            <td style="width: 62px; text-align: left; padding-left: 15px;"><span style="font-size:11px;color:dimgray">File Size:</span></td>
+            <td style="text-align:left"><span style="font-size:11px;color:dimgray">{{FileSize}}</span></td>
+            <td colspan="3"><div></div></td>
+        </tr>
+
+
+        <tr *ngIf="UploadedSuccessfully" style="height:20px">
+            <td style="width:10px;"><div></div> </td>
+            <td style="width: 62px; text-align: left; font-size: 11px; color: dimgray; padding-left: 15px;"><span></span></td>
+            <td id="{{'FileUploadedSuccessfully' | IdGeneratorAsyncPipe | async}}" style="text-align:left"><span style="color:#009161;font-size:11px;text-align:left">File Uploaded Successfully</span></td>
+            <td colspan="3"><div></div></td>
+        </tr>
+
+        <tr><td colspan="6"><div></div></td></tr>
+
+    </table>
+
+</div>
+
+<div *ngIf="IsNextClicked && !HasErrorsWhileImporting" style="padding-left: 20px; padding-right: 10px; padding-bottom: 20px ">
+    <table>
+
+        <tr style="height:40px">
+            <td>
+                <div>
+                    <label class="Label">List of components in the package</label>
+                </div>
+            </td>
+        </tr>
+        <tr style="height: 380px">
+            <td>
+                <div class="MediaFill" style="overflow-x: hidden;">
+                    <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="DeploymentPackageDetailsCollection">
+
+                        <!-- ComponentName -->
+                        <log-column [header]="'Component Name'" [width]="'200'" [Alignment]="'left'">
+                            <ng-template let-item>
+                                <log-cell-template #logcelltemplate [IgnoreMods]="true">
+                                    <div class="TextTrimming">
+                                        <span>{{item.ComponentName}}</span>
+                                    </div>
+                                </log-cell-template>
+                            </ng-template>
+                        </log-column>
+
+                        <!-- Type -->
+                        <log-column [header]="'Type'" [width]="'200'" [Alignment]="'left'">
+                            <ng-template let-item>
+                                <log-cell-template #logcelltemplate [IgnoreMods]="true">
+                                    <div class="TextTrimming">
+                                        <span>{{item.Type}}</span>
+                                    </div>
+                                </log-cell-template>
+                            </ng-template>
+                        </log-column>
+
+                        <!-- Entity -->
+                        <log-column [header]="'Entity'" [width]="'200'" [Alignment]="'left'">
+                            <ng-template let-item>
+                                <log-cell-template #logcelltemplate [IgnoreMods]="true">
+                                    <div class="TextTrimming">
+                                        <span>{{item.Entity}}</span>
+                                    </div>
+                                </log-cell-template>
+                            </ng-template>
+                        </log-column>
+
+                        <!-- Empty -->
+                        <log-column [header]="' '" [width]="'20'" [Alignment]="'left'">
+                            <ng-template let-item>
+                                <log-cell-template #logcelltemplate [IgnoreMods]="true">
+                                    <div class="TextTrimming">
+                                        <span></span>
+                                    </div>
+                                </log-cell-template>
+                            </ng-template>
+                        </log-column>
+
+
+                    </logitude-edit-grid>
+                </div>
+            </td>
+        </tr>
+
+    </table>
+</div>
+
+<div *ngIf="HasErrorsWhileImporting" style="padding-left: 20px; padding-right: 10px; padding-bottom: 20px ">
+    <table>
+
+        <tr style="height:40px">
+            <td>
+                <div>
+                    <label class="Label">The following errors prevent completing the deployment process</label>
+                </div>
+            </td>
+        </tr>
+        <tr style="height: 380px">
+            <td>
+                <div class="MediaFill" style="overflow-x: hidden;">
+                    <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="ExceptionsCollection">
+
+                        <!-- ComponentName -->
+                        <log-column [header]="'Errors List'" [width]="'600'" [Alignment]="'left'">
+                            <ng-template let-item>
+                                <log-cell-template #logcelltemplate [IgnoreMods]="true">
+                                    <div class="TextTrimming">
+                                        <span>{{item}}</span>
+                                    </div>
+                                </log-cell-template>
+                            </ng-template>
+                        </log-column>
+
+
+                        <!-- Empty -->
+                        <log-column [header]="' '" [width]="'20'" [Alignment]="'left'">
+                            <ng-template let-item>
+                                <log-cell-template #logcelltemplate [IgnoreMods]="true">
+                                    <div class="TextTrimming">
+                                        <span></span>
+                                    </div>
+                                </log-cell-template>
+                            </ng-template>
+                        </log-column>
+
+
+                    </logitude-edit-grid>
+                </div>
+            </td>
+        </tr>
+
+    </table>
+</div>

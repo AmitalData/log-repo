@@ -11,181 +11,178 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { defer, of } from 'rxjs';
-import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
-import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
-import {Guid} from '../../../Infrastructure/Utilities/Guid';
-import {InfraSettings} from '../../../Infrastructure/Utilities/InfraSettings';
-import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
-import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
-import {CustomFieldClass} from '../../../Infrastructure/DataContracts/CustomFieldClass'
-import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
+import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
+import { ClassLevelValidator } from '../../../Infrastructure/Validators/ClassLevelValidator';
+import { Guid } from '../../../Infrastructure/Utilities/Guid';
+import { InfraSettings } from '../../../Infrastructure/Utilities/InfraSettings';
+import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
+import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
+import { CustomFieldClass } from '../../../Infrastructure/DataContracts/CustomFieldClass'
+import { PerformanceLogger } from '../../../Infrastructure/Utilities/PerformanceLogger';
 
-import {APPaymentPM} from '../../EntityPMs/APPaymentPM';
+import { APPaymentPM } from '../../EntityPMs/APPaymentPM';
 
-import {APPaymentInvoicePM} from '../../EntityPMs/APPaymentInvoicePM';
-import {APPaymentValidator} from '../../Validators/APPaymentValidator';
+import { APPaymentInvoicePM } from '../../EntityPMs/APPaymentInvoicePM';
+import { APPaymentValidator } from '../../Validators/APPaymentValidator';
 
 @Injectable()
 
 export class APPaymentPMService {
- private _http: HttpClient;
- private _apiUrl: string;
- constructor() {
+    private _http: HttpClient;
+    private _apiUrl: string;
+    constructor() {
         this._http = ServiceHelper.HttpClient;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/appayments';      
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/appayments';
     }
 
-	get(id: string) {       
+    get(id: string) {
 
-		var callTime = new Date();		
+        var callTime = new Date();
 
-		return defer(() => {
-			return this._http.get(this._apiUrl + '/getsingle?' + 'id=' + id, ServiceHelper.GetHttpFullHeaders())
-				.pipe(
-					map((response: HttpResponse<any>) => {
-						var pm = response.body;
-				
-						var entity: APPaymentPM;
-						if (pm) {
-							entity = this.MapJsonToEntityPM(pm);
-						}
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/getsingle?' + 'id=' + id, ServiceHelper.GetHttpFullHeaders())
+                .pipe(
+                    map((response: HttpResponse<any>) => {
+                        var pm = response.body;
 
-						var serviceResponse: ServiceResponse = new ServiceResponse();
-						serviceResponse.Result = entity;
-              
-						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "APPayment", "GetSinglePM", 'id=' + id);
-				 
-						return serviceResponse;
+                        var entity: APPaymentPM;
+                        if (pm) {
+                            entity = this.MapJsonToEntityPM(pm);
+                        }
 
-					}),
-					
-					catchError(ServiceHelper.HandleServiceError));
-		});                    
-	}
+                        var serviceResponse: ServiceResponse = new ServiceResponse();
+                        serviceResponse.Result = entity;
 
-	insert(entityPM: APPaymentPM) {
- 
-		var callTime = new Date();  
-		
-		return defer(() => {
+                        var servertime = response.headers.get('ServerExecutionTime');
+                        PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "APPayment", "GetSinglePM", 'id=' + id);
 
-			var serviceResponse: ServiceResponse = new ServiceResponse();
-			var validator: ClassLevelValidator = new ClassLevelValidator();                
-			var errorsArray = validator.Validate("APPayment", entityPM);
+                        return serviceResponse;
 
-			var customValidator :APPaymentValidator = new APPaymentValidator();
-			var validationErrorsArr = customValidator.Validate(entityPM);
-			if(validationErrorsArr)
-			{
-				errorsArray = errorsArray.concat(validationErrorsArr);
-			}
+                    }),
 
-			if (errorsArray.length == 0) {
+                    catchError(ServiceHelper.HandleServiceError));
+        });
+    }
 
-				var mappedEntity: APPaymentPM = this.MapJsonToEntityPM(entityPM, false);
-				
-				return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
-					.pipe(
-						map((response: HttpResponse<any>) => {
+    insert(entityPM: APPaymentPM) {
 
-							var pm = response.body;
-							if (pm) {
-								var mappedResult: APPaymentPM = this.MapJsonToEntityPM(pm, true, entityPM);
-								serviceResponse.Result = mappedResult;
-							}						
+        var callTime = new Date();
 
-							var servertime = response.headers.get('ServerExecutionTime');
-							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "APPayment", "SaveChanges", "");                    
-												                             
-							return serviceResponse;
-						}),
+        return defer(() => {
 
-						catchError(ServiceHelper.HandleServiceError));
-			}
+            var serviceResponse: ServiceResponse = new ServiceResponse();
+            var validator: ClassLevelValidator = new ClassLevelValidator();
+            var errorsArray = validator.Validate("APPayment", entityPM);
 
-			else {
-				serviceResponse.HasError = true;
-				serviceResponse.ErrorsArray = errorsArray;
-				return of(serviceResponse);
-			}
-		});
-	}
+            var customValidator: APPaymentValidator = new APPaymentValidator();
+            var validationErrorsArr = customValidator.Validate(entityPM);
+            if (validationErrorsArr) {
+                errorsArray = errorsArray.concat(validationErrorsArr);
+            }
 
-	update(entityPM: APPaymentPM) {
+            if (errorsArray.length == 0) {
 
-		var callTime = new Date();     
-		
-		return defer(() => {
+                var mappedEntity: APPaymentPM = this.MapJsonToEntityPM(entityPM, false);
 
-			var serviceResponse: ServiceResponse = new ServiceResponse();
-			var validator: ClassLevelValidator = new ClassLevelValidator();               
-			var errorsArray = validator.Validate("APPayment", entityPM);
+                return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
+                    .pipe(
+                        map((response: HttpResponse<any>) => {
 
-			var customValidator :APPaymentValidator = new APPaymentValidator();
-			var validationErrorsArr = customValidator.Validate(entityPM);
-			if(validationErrorsArr)
-			{
-				errorsArray = errorsArray.concat(validationErrorsArr);
-			}
+                            var pm = response.body;
+                            if (pm) {
+                                var mappedResult: APPaymentPM = this.MapJsonToEntityPM(pm, true, entityPM);
+                                serviceResponse.Result = mappedResult;
+                            }
 
-			if (errorsArray.length == 0) {
+                            var servertime = response.headers.get('ServerExecutionTime');
+                            PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "APPayment", "SaveChanges", "");
 
-				var mappedEntity: APPaymentPM = this.MapJsonToEntityPM(entityPM, false);
-				
-				return this._http.put(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
-					.pipe(
-						map((response: HttpResponse<any>) => {
-                 
-							var pm = response.body;
-							if (pm) {
-								var mappedResult: APPaymentPM = this.MapJsonToEntityPM(pm, true, entityPM);
-								serviceResponse.Result = mappedResult;
-							}
-							 
-							var servertime = response.headers.get('ServerExecutionTime');
-							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "APPayment", "SaveChanges", "");                    
-					                           
-							return serviceResponse;
-						}),
+                            return serviceResponse;
+                        }),
 
-						catchError(ServiceHelper.HandleServiceError));
-			}
+                        catchError(ServiceHelper.HandleServiceError));
+            }
 
-			else {
-				serviceResponse.HasError = true;
-				serviceResponse.ErrorsArray = errorsArray;
-				return of(serviceResponse);
-			}
-		});
-	}
+            else {
+                serviceResponse.HasError = true;
+                serviceResponse.ErrorsArray = errorsArray;
+                return of(serviceResponse);
+            }
+        });
+    }
 
-   
+    update(entityPM: APPaymentPM) {
 
-	  MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: APPaymentPM = null) {
+        var callTime = new Date();
 
-         
+        return defer(() => {
+
+            var serviceResponse: ServiceResponse = new ServiceResponse();
+            var validator: ClassLevelValidator = new ClassLevelValidator();
+            var errorsArray = validator.Validate("APPayment", entityPM);
+
+            var customValidator: APPaymentValidator = new APPaymentValidator();
+            var validationErrorsArr = customValidator.Validate(entityPM);
+            if (validationErrorsArr) {
+                errorsArray = errorsArray.concat(validationErrorsArr);
+            }
+
+            if (errorsArray.length == 0) {
+
+                var mappedEntity: APPaymentPM = this.MapJsonToEntityPM(entityPM, false);
+
+                return this._http.put(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
+                    .pipe(
+                        map((response: HttpResponse<any>) => {
+
+                            var pm = response.body;
+                            if (pm) {
+                                var mappedResult: APPaymentPM = this.MapJsonToEntityPM(pm, true, entityPM);
+                                serviceResponse.Result = mappedResult;
+                            }
+
+                            var servertime = response.headers.get('ServerExecutionTime');
+                            PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "APPayment", "SaveChanges", "");
+
+                            return serviceResponse;
+                        }),
+
+                        catchError(ServiceHelper.HandleServiceError));
+            }
+
+            else {
+                serviceResponse.HasError = true;
+                serviceResponse.ErrorsArray = errorsArray;
+                return of(serviceResponse);
+            }
+        });
+    }
+
+
+
+    MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: APPaymentPM = null) {
+
+
         if (!entityPM) {
-            
+
             entityPM = new APPaymentPM();
-			entityPM.DisableMarkAsDirty = true;
+            entityPM.DisableMarkAsDirty = true;
         }
 
-		var customFields: Array<string> = [];
+        var customFields: Array<string> = [];
         for (var i = 1; i < 11; i++) {
             customFields.push("Field" + i);
         }
-            var jsonPMKeys = Object.keys(jsonPM);
+        var jsonPMKeys = Object.keys(jsonPM);
 
-            for (var key in jsonPMKeys) {
-			 if (jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "PropertyChanged") {
+        for (var key in jsonPMKeys) {
+            if (jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "PropertyChanged") {
 
                 continue;
             }
-                var property = jsonPMKeys[key];
-				
-			  if(customFields.indexOf(property) > -1)
-                {
+            var property = jsonPMKeys[key];
+
+            if (customFields.indexOf(property) > -1) {
                 if (jsonPM[property]) {
                     var customFieldClass: CustomFieldClass = new CustomFieldClass(jsonPM[property].Value, jsonPM[property].FieldName, jsonPM[property].TableName);
                     entityPM[property] = customFieldClass;
@@ -194,32 +191,32 @@ export class APPaymentPMService {
             else {
                 entityPM[property] = jsonPM[property];
             }
-                 
-            }
-			
-               this.MapPaymentInvoices(entityPM, jsonPM, mapParent); // Call composition tables map methods
-			 
-            
 
-		if (mapParent) {
-                entityPM.OldEntityPM = this.clone(entityPM);
-			   			   
+        }
+
+        this.MapPaymentInvoices(entityPM, jsonPM, mapParent); // Call composition tables map methods
+
+
+
+        if (mapParent) {
+            entityPM.OldEntityPM = this.clone(entityPM);
+
             entityPM.OldEntityPM.PaymentInvoices = [];
             for (var item in entityPM.PaymentInvoices) {
-            var myAPPaymentInvoicePM = entityPM.PaymentInvoices[item];
-            var newAPPaymentInvoicePM: APPaymentInvoicePM = this.clone(myAPPaymentInvoicePM);
-						
-							 
-            entityPM.OldEntityPM.PaymentInvoices.push(newAPPaymentInvoicePM);
+                var myAPPaymentInvoicePM = entityPM.PaymentInvoices[item];
+                var newAPPaymentInvoicePM: APPaymentInvoicePM = this.clone(myAPPaymentInvoicePM);
+
+
+                entityPM.OldEntityPM.PaymentInvoices.push(newAPPaymentInvoicePM);
             }
-			   
-		}
+
+        }
         else {
 
             entityPM.OldEntityPM = null;
         }
-		entityPM.IsDirty = false;
-	    entityPM.DisableMarkAsDirty = false;
+        entityPM.IsDirty = false;
+        entityPM.DisableMarkAsDirty = false;
 
         return entityPM;
     }
@@ -238,34 +235,33 @@ export class APPaymentPMService {
                 continue;
             }
             var newAPPaymentInvoicePM: APPaymentInvoicePM;
-	  
+
             if (mapParent) {
                 newAPPaymentInvoicePM = new APPaymentInvoicePM(entityPM);
             }
-            else
-            {
+            else {
                 newAPPaymentInvoicePM = new APPaymentInvoicePM(null);
             }
- 			newAPPaymentInvoicePM.DisableMarkAsDirty = true;
-               
+            newAPPaymentInvoicePM.DisableMarkAsDirty = true;
+
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
-                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM") || pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
                 var pmProperty = pmKeysArray[pmKey];
                 newAPPaymentInvoicePM[pmProperty] = jItem[pmProperty];
             }
-           
-			 
+
+
             if (mapParent) {
                 newAPPaymentInvoicePM.UniqueKey = Guid.newGuid();
                 newAPPaymentInvoicePM.ChangeSetOp = "None";
                 jItem.ChangeSetOp = "None";
                 newAPPaymentInvoicePM.OldEntityPM = this.clone(newAPPaymentInvoicePM);
-//file not found! child composition APPaymentInvoice
+                //file not found! child composition APPaymentInvoice
 
-				
+
             }
             else {
                 if (newAPPaymentInvoicePM.UniqueKey) {
@@ -274,28 +270,28 @@ export class APPaymentPMService {
                         newAPPaymentInvoicePM.ChangeSetOp = "Update";
                 }
                 else {
-                        newAPPaymentInvoicePM.ChangeSetOp = "Insert";
+                    newAPPaymentInvoicePM.ChangeSetOp = "Insert";
                 }
-//file not found! child composition APPaymentInvoice
- 
+                //file not found! child composition APPaymentInvoice
+
                 newAPPaymentInvoicePM.OldEntityPM = null;
                 newAPPaymentInvoicePM.EntityParentPM = null;
             }
-			 newAPPaymentInvoicePM.DisableMarkAsDirty = false;
-			 newAPPaymentInvoicePM.IsDirty = false;
+            newAPPaymentInvoicePM.DisableMarkAsDirty = false;
+            newAPPaymentInvoicePM.IsDirty = false;
             entityPM.PaymentInvoices.push(newAPPaymentInvoicePM);
         }
         if (oldPaymentInvoices) {
-            
+
             for (var itemKey in oldPaymentInvoices) {
-                if (entityPM.PaymentInvoices.filter(p=> p.UniqueKey === oldPaymentInvoices[itemKey].UniqueKey).length === 0) {
-				
+                if (entityPM.PaymentInvoices.filter(p => p.UniqueKey === oldPaymentInvoices[itemKey].UniqueKey).length === 0) {
+
                     if (oldPaymentInvoices[itemKey]) {
                         //oldPaymentInvoices[itemKey].ChangeSetOp = "Delete";
                         //entityPM.PaymentInvoices.push(oldPaymentInvoices[itemKey]);
-						var oldItemJson = oldPaymentInvoices[itemKey];
+                        var oldItemJson = oldPaymentInvoices[itemKey];
                         var deletedPM: APPaymentInvoicePM = new APPaymentInvoicePM(null);
-						deletedPM.DisableMarkAsDirty = true;
+                        deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -307,11 +303,11 @@ export class APPaymentPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-					    deletedPM.DisableMarkAsDirty = false;
+                        deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
-                        
-//file not found! child composition APPaymentInvoice
+
+                        //file not found! child composition APPaymentInvoice
                         deletedPM.OldEntityPM = null;
                         entityPM.PaymentInvoices.push(deletedPM);
                     }
@@ -319,15 +315,15 @@ export class APPaymentPMService {
             }
         }
     }
-//file not found! for child composition APPaymentInvoice
+    //file not found! for child composition APPaymentInvoice
 
-	  public clone(jsonPM: any) {
+    public clone(jsonPM: any) {
         var entityPM: any;
         entityPM = {};
 
         var jsonPMKeys = Object.keys(jsonPM);
         for (var key in jsonPMKeys) {
-            
+
             if ((jsonPMKeys[key] === "entityParentPM") || jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "OldEntityPM" || jsonPMKeys[key] === "PropertyChanged") {
                 continue;
             }
@@ -339,12 +335,12 @@ export class APPaymentPMService {
         return entityPM;
     }
 
-	  public GetNewEntityPM() {		 
-		    var entityPM: APPaymentPM;
-			entityPM = new APPaymentPM();
-			entityPM.Tenant = InfraSettings.TenantPM.Id;
-			return entityPM;
+    public GetNewEntityPM() {
+        var entityPM: APPaymentPM;
+        entityPM = new APPaymentPM();
+        entityPM.Tenant = InfraSettings.TenantPM.Id;
+        return entityPM;
     }
-		 
+
 
 }

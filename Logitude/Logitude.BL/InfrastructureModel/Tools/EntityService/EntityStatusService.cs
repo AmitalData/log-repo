@@ -14,6 +14,7 @@ using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.Tools.Validating;
 using Logitude.BL.InfrastructureModel.Tools.TraceEvents;
 using Logitude.BL.InfrastructureModel.Tools.DataMapping;
+using Logitude.Server.Tools.QueueService;
 
 namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 {
@@ -55,7 +56,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             EntityStatusMapping.MapEntity(theEntityPm, Poco, isNewEntity);
             entityRepository.Add(Poco);
             entityRepository.SubmitChanges();
-
+            AddQueueMessages();
         }
 
         public void Update(EntityStatusPM theEntityPm)
@@ -84,7 +85,54 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             EntityStatusMapping.MapEntity(theEntityPm, Poco, isNewEntity);
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
+            AddQueueMessages();
+        }
+        private void AddPortKafkaQueueMessage()
+        {
+            if (!FeatureToggleHelper.HasFeatureToggle("CTL", entityPM.Tenant))
+            {
+                return;
+            }
+            AddKafkaQueueMessage();
         }
 
+        private void AddKafkaQueueMessage()
+        {
+            IQueueService queueservice = new DbQueueService();
+            queueservice.InitializeQueue("CToolLookups", 0);
+            var queueMessage = new Dictionary<string, string>() {
+                { "Entity", "EntityStatus" },
+                { "EntityId", entityPM.Id },
+                { "Tenant", tenant.ToString()}};
+            queueservice.Send(queueMessage, tenant);
+        }
+
+        private void AddQueueMessages()
+        {
+            AddPortKafkaQueueMessage();
+            AddImporterQueueMessage();
+        }
+        private void AddImporterQueueMessage()
+        {
+            if (entityPM.IsFromWorkerRole) return;
+            if (tenant != 0) return;
+            if (!IsCloudEnvironment() && !IsTestEnvironment()) return;
+            IQueueService queueservice = new DbQueueService();
+            queueservice.InitializeQueue("ImporterEntityStatusesQueue", 0);
+            Dictionary<string, string> importerQueueMessage = new Dictionary<string, string>() {
+                { "EntityStatusId", entityPM.Id },
+                { "Tenant", tenant.ToString()}
+            };
+            queueservice.Send(importerQueueMessage, tenant);
+        }
+        private bool IsCloudEnvironment()
+        {
+            return LogitudeSettings.WorkEnvironment?.ToLower() == "cloud";
+        }
+
+        private bool IsTestEnvironment()
+        {
+            return LogitudeSettings.DeploymentStage?.ToLower() == "test2";
+        }
     }
 }

@@ -14,6 +14,7 @@ using Simplog.Data.Helpers;
 using Logitude.Server.Tools.Counters;
 using Simplog.Server.Infrastructure;
 using System.Threading.Tasks;
+using Simplog.Global.Data.GlobalModel;
 
 namespace CommunicationWorkerRole.Analyzers
 {
@@ -23,14 +24,14 @@ namespace CommunicationWorkerRole.Analyzers
         private int queuePriority = 1;
         private string communicationId;
         private List<QueueTask> externalTasksQueueTasksEnvelope;
-
+        private AnalyzeQueueRepository analyzeQueueReposiory;
         public void Run()
         {
             var loginToExternalServiceTask = LoginToExternalService();
             loginToExternalServiceTask.Wait();
             if (loginToExternalServiceTask.Result != null && loginToExternalServiceTask.Result.HasError)
             {
-                throw new Exception(loginToExternalServiceTask.Result.ErrorMessage);
+                throw new ApplicationException(loginToExternalServiceTask.Result.ErrorMessage);
             }
             token = loginToExternalServiceTask.Result.Result;
             this.ReadContainerStatusRequestToOceanInsightSevice();
@@ -116,7 +117,7 @@ namespace CommunicationWorkerRole.Analyzers
                 }
                 if (envelopeResponse.HasError)
                 {
-                    throw new Exception(envelopeResponse.ErrorMessage);
+                    externalTasksQueueWcfService.Close();
                 }
                 var oceanInsightsPushUpdate = envelopeResponse?.Tasks?.Where(a => a.Action == "OceanInsights.PushUpdate").FirstOrDefault();
                 if (oceanInsightsPushUpdate != null)
@@ -130,18 +131,31 @@ namespace CommunicationWorkerRole.Analyzers
 
         private async void MarkTaskAsDone(ExternalTasksQueueWcfServiceClient externalTasksQueueWcfService)
         {
-            System.Threading.Tasks.Task<CommunicationWorkerRole.ExternalTasksQueueWcfService.Response> response;
-            using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)externalTasksQueueWcfService.InnerChannel))
+            try
             {
-                System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", token);
-                response = externalTasksQueueWcfService.MarkTaskAsDoneAsync(communicationId, LogitudeSettings.OITenantNumber, queuePriority);
+                System.Threading.Tasks.Task<CommunicationWorkerRole.ExternalTasksQueueWcfService.Response> response;
+                using (new System.ServiceModel.OperationContextScope((System.ServiceModel.IClientChannel)externalTasksQueueWcfService.InnerChannel))
+                {
+                    System.ServiceModel.Web.WebOperationContext.Current.OutgoingRequest.Headers.Add("Token", token);
+                    response = externalTasksQueueWcfService.MarkTaskAsDoneAsync(communicationId, LogitudeSettings.OITenantNumber, queuePriority);
+                }
+                var communicationLogResponse = await response;
+                externalTasksQueueWcfService.Close();
+                if (communicationLogResponse.HasError)
+                {
+                    externalTasksQueueWcfService.Close();
+                    throw new ApplicationException(communicationLogResponse.ErrorMessage);
+                }
             }
-            var communicationLogResponse = await response;
-            if (communicationLogResponse.HasError)
+            catch (Exception exception)
             {
-                throw new Exception(communicationLogResponse.ErrorMessage);
+                externalTasksQueueWcfService.Close();
+                throw new ApplicationException(exception.Message);
             }
-            externalTasksQueueWcfService.Close();
+            finally
+            {
+                externalTasksQueueWcfService.Close();
+            }
         }
 
         private void ReadExternalTasksQueueWcfServiceResponse(Envelope envelopeResponse)
@@ -153,31 +167,38 @@ namespace CommunicationWorkerRole.Analyzers
 
         private void InsertNewAnalyzeQueue()
         {
-            Type myType = externalTasksQueueTasksEnvelope.GetType();
-            MemoryStream myMemoryStream = new MemoryStream();
-            XmlSerializer ser = new XmlSerializer(myType);
-            ser.Serialize(myMemoryStream, externalTasksQueueTasksEnvelope);
-            myMemoryStream.Seek(0, SeekOrigin.Begin);
-            var reader = new StreamReader(myMemoryStream);
-            string content = reader.ReadToEnd();
-            byte[] bytearray = myMemoryStream.ToArray();
-            AnalyzeQueueRepository analyzeQueueReposiory = new AnalyzeQueueRepository();
+            IGlobalContext globalContext = GlobalContext.GetContext();
+            analyzeQueueReposiory = new AnalyzeQueueRepository(globalContext);
+            byte[] analyzeQueueMessageBody = this.GetAnalyzeQueueByteArray();
+            
             AnalyzeQueue analyzeQueue = new AnalyzeQueue()
             {
                 CreateDate = TenantServerConfigration.GetCurrentDateTime(0),
                 From = "ContainerStatusesReceiver",
                 Id = IdCounter.GetNumber("AnalyzeQueue", 0),
-                MessageBody = bytearray,
+                MessageBody = analyzeQueueMessageBody,
                 Status = "W",
                 Retries = 0,
                 ConnectedToEntity = false,
                 ConnectedToTenant = false,
-                FileSize = bytearray.Length,
+                FileSize = analyzeQueueMessageBody.Length,
                 Tenant = 0,
             };
             analyzeQueue.SearchFields = analyzeQueue.From + ',' + analyzeQueue.Status;
             analyzeQueueReposiory.Add(analyzeQueue);
             analyzeQueueReposiory.SubmitChanges();
         }
+
+        private byte[] GetAnalyzeQueueByteArray()
+        {
+            Type myType = externalTasksQueueTasksEnvelope.GetType();
+            MemoryStream myMemoryStream = new MemoryStream();
+            XmlSerializer ser = new XmlSerializer(myType);
+            ser.Serialize(myMemoryStream, externalTasksQueueTasksEnvelope);
+            myMemoryStream.Seek(0, SeekOrigin.Begin);
+            byte[] bytearray = myMemoryStream.ToArray();
+            return bytearray;
+        }
+
     }
 }

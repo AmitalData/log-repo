@@ -10,6 +10,7 @@ using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,6 +34,7 @@ namespace Logitude.BL.InfrastructureModel.APIDataContract.Messages
         private string foreignCurrencyId;
         private RatesTable rateList;
         private ICommonDataContext objectContext;
+        private bool isFullAccounting;
         public RatesUpdateService(RatesUpdate ratesUpdate, int tenant)
         {
             this.ratesUpdate = ratesUpdate;
@@ -41,6 +43,7 @@ namespace Logitude.BL.InfrastructureModel.APIDataContract.Messages
             this.ratesTableService = new RatesTableService(iWebFreightContext, tenant);
             this.currencyQuery = new CurrencyQuery(tenant);
             this.objectContext = CommonDataContext.GetContext(tenant);
+            isFullAccounting = IsFullAccountingActivated(tenant);
         }
         public void CleanXMLText()
         {
@@ -165,16 +168,53 @@ namespace Logitude.BL.InfrastructureModel.APIDataContract.Messages
             entityPM.ForeignCurrencyId = foreignCurrencyId;
             entityPM.LogDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
             entityPM.ValueDate = item.RateDate;
-            entityPM.Rate = item.Rate;
+
+            if (isFullAccounting) {
+                entityPM.Rate = CalculateRateAccordingUnit(item);
+                entityPM.Unit = item.Unit;
+            } else {
+                entityPM.Rate = item.Rate;
+            }
+            
             ratesTableService.Create(entityPM);
         }
         private void UpdateRate(RateUpdate item, string rateId)
         {
             RatesTablePM entityPM = this.ratesTableQuery.GetSinglePM(rateId, tenant);
-            entityPM.Rate = item.Rate;
+
+            if (isFullAccounting)
+            {
+                entityPM.Rate = CalculateRateAccordingUnit(item);
+                entityPM.Unit = item.Unit;
+            } else
+            {
+                entityPM.Rate = item.Rate;
+            }
+            
             entityPM.ValueDate = item.RateDate;
             entityPM.LogDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
             ratesTableService.Update(entityPM);
+        }
+
+        private double CalculateRateAccordingUnit(RateUpdate item)
+        {
+            if(item.Unit != null)
+            {
+                if(item.Unit > 0)
+                {
+                    return (double) (item.Rate/item.Unit);
+                }
+            }
+            return (double)item.Rate;
+
+        }
+
+        private bool IsFullAccountingActivated(int tenant)
+        {
+            TenantRepository tenantRepository = new TenantRepository(tenant);
+            Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
+            bool isFullAccountingActivated = tenantPOCO.AccountingActivated;
+            return isFullAccountingActivated;
         }
         private void GetRates()
         {

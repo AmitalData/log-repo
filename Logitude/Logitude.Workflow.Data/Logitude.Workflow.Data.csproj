@@ -1,0 +1,275 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{726A5395-1875-44B9-AAA2-0951B8AF8084}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Logitude.Workflow.Data</RootNamespace>
+    <AssemblyName>Logitude.Workflow.Data</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Devart.Data">
+      <HintPath>..\packages\DevArt.9.9.872\lib\Net40\Devart.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Devart.Data.Linq">
+      <HintPath>..\packages\DevArt.9.9.872\lib\Net40\Devart.Data.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="Devart.Data.Oracle">
+      <HintPath>..\packages\DevArt.9.9.872\lib\Net40\Devart.Data.Oracle.dll</HintPath>
+    </Reference>
+    <Reference Include="Devart.Data.Oracle.Entity">
+      <HintPath>..\packages\DevArt.9.9.872\lib\Net40\Devart.Data.Oracle.Entity.dll</HintPath>
+    </Reference>
+    <Reference Include="Devart.Data.Oracle.Linq">
+      <HintPath>..\packages\DevArt.9.9.872\lib\Net40\Devart.Data.Oracle.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="Devart.Data.Oracle.Web">
+      <HintPath>..\packages\DevArt.9.9.872\lib\Net40\Devart.Data.Oracle.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.0.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Storage, Version=4.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\WindowsAzure.Storage.8.0.1\lib\net45\Microsoft.WindowsAzure.Storage.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CustomFilters\TaskCustomFilter.cs" />
+    <Compile Include="EntityKeys\ServiceProviderSubscriptionKeys.cs" />
+    <Compile Include="EntityKeys\TaskExtendedKeys.cs" />
+    <Compile Include="EntityKeys\TaskKeys.cs" />
+    <Compile Include="EntityKeys\TaskPriorityKeys.cs" />
+    <Compile Include="EntityKeys\TaskStatusKeys.cs" />
+    <Compile Include="EntityKeys\TaskTypeKeys.cs" />
+    <Compile Include="EntityKeys\WorkFlowTriggerTypeKeys.cs" />
+    <Compile Include="EntityListQueryServices\Generated\ServiceProviderSubscriptionListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\TaskExtendedListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\TaskListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\TaskPriorityListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\TaskStatusListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\TaskTypeListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\WorkFlowTriggerTypeListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\ServiceProviderSubscriptionListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\TaskExtendedListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\TaskListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\TaskPriorityListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\TaskStatusListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\TaskTypeListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\WorkFlowTriggerTypeListQueryService.cs" />
+    <Compile Include="EntityLists\Generated\ServiceProviderSubscriptionList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\TaskExtendedList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\TaskList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\TaskPriorityList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\TaskStatusList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\TaskTypeList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\WorkFlowTriggerTypeList.Generated.cs" />
+    <Compile Include="EntityMapping\ServiceProviderSubscriptionMap.cs" />
+    <Compile Include="EntityMapping\TaskExtendedMap.cs" />
+    <Compile Include="EntityMapping\TaskMap.cs" />
+    <Compile Include="EntityMapping\TaskPriorityMap.cs" />
+    <Compile Include="EntityMapping\TaskStatusMap.cs" />
+    <Compile Include="EntityMapping\TaskTypeMap.cs" />
+    <Compile Include="EntityMapping\WorkFlowTriggerTypeMap.cs" />
+    <Compile Include="EntityPOCOs\ServiceProviderSubscription.cs" />
+    <Compile Include="EntityPOCOs\Task.cs" />
+    <Compile Include="EntityPOCOs\TaskExtended.cs" />
+    <Compile Include="EntityPOCOs\TaskPriority.cs" />
+    <Compile Include="EntityPOCOs\TaskStatus.cs" />
+    <Compile Include="EntityPOCOs\TaskType.cs" />
+    <Compile Include="EntityPOCOs\WorkFlowTriggerType.cs" />
+    <Compile Include="Repositories\Generated\ServiceProviderSubscriptionRepository.Generated.cs" />
+    <Compile Include="Repositories\Generated\TaskExtendedRepository.Generated.cs" />
+    <Compile Include="Repositories\Generated\TaskPriorityRepository.Generated.cs" />
+    <Compile Include="Repositories\Generated\TaskRepository.Generated.cs" />
+    <Compile Include="Repositories\Generated\TaskStatusRepository.Generated.cs" />
+    <Compile Include="Repositories\Generated\TaskTypeRepository.Generated.cs" />
+    <Compile Include="Repositories\Generated\WorkFlowTriggerTypeRepository.Generated.cs" />
+    <Compile Include="Repositories\ServiceProviderSubscriptionRepository.cs" />
+    <Compile Include="Repositories\TaskExtendedRepository.cs" />
+    <Compile Include="Repositories\TaskPriorityRepository.cs" />
+    <Compile Include="Repositories\TaskRepository.cs" />
+    <Compile Include="Repositories\TaskStatusRepository.cs" />
+    <Compile Include="Repositories\TaskTypeRepository.cs" />
+    <Compile Include="Repositories\WorkFlowTriggerTypeRepository.cs" />
+    <Compile Include="WorkflowStorage\ArchivedJsonConverters\WorkflowInstanceVariableListConverter.cs" />
+    <Compile Include="WorkflowStorage\WorkflowAzureStorage.cs" />
+    <Compile Include="WorkflowStorage\WorkflowStorageContainers.cs" />
+    <Compile Include="WorkflowStorage\WorkflowInstanceStorage.cs" />
+    <Compile Include="EntityKeys\ExpressionCategoryKeys.cs" />
+    <Compile Include="EntityKeys\ExpressionKeys.cs" />
+    <Compile Include="EntityKeys\OperatorCategoryKeys.cs" />
+    <Compile Include="EntityKeys\OperatorKeys.cs" />
+    <Compile Include="EntityKeys\WorkFlowInstanceActivityKeys.cs" />
+    <Compile Include="EntityKeys\WorkFlowInstanceActivityStatusKeys.cs" />
+    <Compile Include="EntityKeys\WorkFlowInstanceKeys.cs" />
+    <Compile Include="EntityKeys\WorkFlowInstanceStatusKeys.cs" />
+    <Compile Include="EntityKeys\WorkFlowInstanceVariableKeys.cs" />
+    <Compile Include="EntityKeys\WorkFlowKeys.cs" />
+    <Compile Include="EntityKeys\WorkFlowStatusKeys.cs" />
+    <Compile Include="EntityKeys\WorkFlowVersionKeys.cs" />
+    <Compile Include="EntityKeys\WorkFlowVersionStatusKeys.cs" />
+    <Compile Include="EntityListQueryServices\ExpressionCategoryListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\ExpressionListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\Generated\ExpressionCategoryListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\ExpressionListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\OperatorCategoryListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\OperatorListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\WorkFlowInstanceActivityListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\WorkFlowInstanceActivityStatusListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\WorkFlowInstanceListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\WorkFlowInstanceStatusListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\WorkFlowInstanceVariableListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\WorkFlowListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\WorkFlowStatusListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\WorkFlowVersionListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\WorkFlowVersionStatusListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\OperatorCategoryListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\OperatorListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\WorkFlowInstanceActivityListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\WorkFlowInstanceActivityStatusListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\WorkFlowInstanceListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\WorkFlowInstanceStatusListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\WorkFlowInstanceVariableListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\WorkFlowListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\WorkFlowStatusListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\WorkFlowVersionListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\WorkFlowVersionStatusListQueryService.cs" />
+    <Compile Include="EntityLists\Generated\ExpressionCategoryList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ExpressionList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\OperatorCategoryList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\OperatorList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\WorkFlowInstanceActivityList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\WorkFlowInstanceActivityStatusList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\WorkFlowInstanceList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\WorkFlowInstanceStatusList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\WorkFlowInstanceVariableList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\WorkFlowList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\WorkFlowStatusList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\WorkFlowVersionList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\WorkFlowVersionStatusList.Generated.cs" />
+    <Compile Include="EntityMapping\ExpressionCategoryMap.cs" />
+    <Compile Include="EntityMapping\ExpressionMap.cs" />
+    <Compile Include="EntityMapping\OperatorCategoryMap.cs" />
+    <Compile Include="EntityMapping\OperatorMap.cs" />
+    <Compile Include="EntityMapping\WorkFlowInstanceActivityMap.cs" />
+    <Compile Include="EntityMapping\WorkFlowInstanceActivityStatusMap.cs" />
+    <Compile Include="EntityMapping\WorkFlowInstanceMap.cs" />
+    <Compile Include="EntityMapping\WorkFlowInstanceStatusMap.cs" />
+    <Compile Include="EntityMapping\WorkFlowInstanceVariableMap.cs" />
+    <Compile Include="EntityMapping\WorkFlowMap.cs" />
+    <Compile Include="EntityMapping\WorkFlowStatusMap.cs" />
+    <Compile Include="EntityMapping\WorkFlowVersionMap.cs" />
+    <Compile Include="EntityMapping\WorkFlowVersionStatusMap.cs" />
+    <Compile Include="EntityPOCOs\Expression.cs" />
+    <Compile Include="EntityPOCOs\ExpressionCategory.cs" />
+    <Compile Include="EntityPOCOs\Operator.cs" />
+    <Compile Include="EntityPOCOs\OperatorCategory.cs" />
+    <Compile Include="EntityPOCOs\WorkFlow.cs" />
+    <Compile Include="EntityPOCOs\WorkFlowInstance.cs" />
+    <Compile Include="EntityPOCOs\WorkFlowInstanceActivity.cs" />
+    <Compile Include="EntityPOCOs\WorkFlowInstanceActivityStatus.cs" />
+    <Compile Include="EntityPOCOs\WorkFlowInstanceStatus.cs" />
+    <Compile Include="EntityPOCOs\WorkFlowInstanceVariable.cs" />
+    <Compile Include="EntityPOCOs\WorkFlowStatus.cs" />
+    <Compile Include="EntityPOCOs\WorkFlowVersion.cs" />
+    <Compile Include="EntityPOCOs\WorkFlowVersionStatus.cs" />
+    <Compile Include="IWorkflowContext.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\ExpressionCategoryRepository.cs" />
+    <Compile Include="Repositories\ExpressionRepository.cs" />
+    <Compile Include="Repositories\Generated\ExpressionCategoryRepository.Generated.cs" />
+    <Compile Include="Repositories\Generated\ExpressionRepository.Generated.cs" />
+    <Compile Include="Repositories\Generated\OperatorCategoryRepository.Generated.cs" />
+    <Compile Include="Repositories\Generated\OperatorRepository.Generated.cs" />
+    <Compile Include="Repositories\Generated\WorkFlowInstanceActivityRepository.Generated.cs" />
+    <Compile Include="Repositories\Generated\WorkFlowInstanceActivityStatusRepository.Generated.cs" />
+    <Compile Include="Repositories\Generated\WorkFlowInstanceRepository.Generated.cs" />
+    <Compile Include="Repositories\Generated\WorkFlowInstanceStatusRepository.Generated.cs" />
+    <Compile Include="Repositories\Generated\WorkFlowInstanceVariableRepository.Generated.cs" />
+    <Compile Include="Repositories\Generated\WorkFlowRepository.Generated.cs" />
+    <Compile Include="Repositories\Generated\WorkFlowStatusRepository.Generated.cs" />
+    <Compile Include="Repositories\Generated\WorkFlowVersionRepository.Generated.cs" />
+    <Compile Include="Repositories\Generated\WorkFlowVersionStatusRepository.Generated.cs" />
+    <Compile Include="Repositories\OperatorCategoryRepository.cs" />
+    <Compile Include="Repositories\OperatorRepository.cs" />
+    <Compile Include="Repositories\WorkFlowInstanceActivityRepository.cs" />
+    <Compile Include="Repositories\WorkFlowInstanceActivityStatusRepository.cs" />
+    <Compile Include="Repositories\WorkFlowInstanceRepository.cs" />
+    <Compile Include="Repositories\WorkFlowInstanceStatusRepository.cs" />
+    <Compile Include="Repositories\WorkFlowInstanceVariableRepository.cs" />
+    <Compile Include="Repositories\WorkFlowRepository.cs" />
+    <Compile Include="Repositories\WorkFlowStatusRepository.cs" />
+    <Compile Include="Repositories\WorkFlowVersionRepository.cs" />
+    <Compile Include="Repositories\WorkFlowVersionStatusRepository.cs" />
+    <Compile Include="WorkflowContext.cs" />
+    <Compile Include="WorkflowStorage\ArchivedJsonDeserializer.cs" />
+    <Compile Include="WorkflowValidation\Constants\ExternalApiURLs.cs" />
+    <Compile Include="WorkflowValidation\Exceptions\Builders\WorkflowValidationExceptionBuilder.cs" />
+    <Compile Include="WorkflowValidation\Exceptions\WorkflowValidationException.cs" />
+    <Compile Include="WorkflowValidation\Models\WorkflowActivationError.cs" />
+    <Compile Include="WorkflowValidation\Models\WorkflowValidationResponse.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Simplog.Data\Simplog.Data.csproj">
+      <Project>{78ec8434-e6ad-4e93-9b17-c746f5403f7b}</Project>
+      <Name>Simplog.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simplog.Global.Data\Simplog.Global.Data.csproj">
+      <Project>{6d7ffad2-35b6-4133-8700-cf73e58d0c85}</Project>
+      <Name>Simplog.Global.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simplog.Server.Infrastructure\Simplog.Server.Infrastructure.csproj">
+      <Project>{acc2ea9e-e150-4099-8aa1-66326ab14be8}</Project>
+      <Name>Simplog.Server.Infrastructure</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

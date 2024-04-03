@@ -120,6 +120,96 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
         }
 
+        public static List<ObjectField> GetObjectFieldsByObjectTableNameWithNoIncludes(string objectTableName, int tenant)
+        {
+
+            string zerolistName = "tabletenantzeroobjectfields" + objectTableName.ToLower();
+            string tenantListName = "tabletenantobjectfields" + objectTableName.ToLower() + tenant;
+
+            List<ObjectField> result = new List<ObjectField>();
+
+            List<ObjectField> currentTenantObjectFields = new List<ObjectField>();
+            List<ObjectField> zeroTenantObjectFields = new List<ObjectField>();
+
+
+
+            #region Current Tenant Fields
+
+            if (tenant != 0)
+            {
+
+                if (CacheManager.CacheWrapper.Get(tenantListName) == null)
+                {
+
+                    using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                    {
+                        IWebFreightContext context = WebFreightContext.GetContext(tenant);
+                        var TableId = (from a in context.ObjectTables
+                                       where a.Name == objectTableName
+                                       select a.Id).FirstOrDefault();
+                        currentTenantObjectFields = (from a in context.ObjectFields//.Include("ObjectTable")//.Include("ObjectTable_LookUpTable").Include("FullNameTextCode").Include("ShortNameTextCode").Include("ListTextCode").Include("HelpTextCode").Include("ObjectTable")
+                                                     where (a.Tenant == tenant) && a.ObjectTableId == TableId && a.InActive == false
+                                                     select a).ToList();
+
+                        scope.Complete();
+                    }
+
+
+
+                    CacheManager.CacheWrapper.Insert(tenantListName, currentTenantObjectFields, null, System.DateTime.UtcNow.AddHours(12), TimeSpan.Zero);
+                }
+                else
+                {
+                    currentTenantObjectFields = (List<ObjectField>)CacheManager.CacheWrapper.Get(tenantListName);
+                }
+
+
+            }
+
+
+            #endregion
+
+            #region Tenant Zero Fields
+
+
+            if (CacheManager.CacheWrapper.Get(zerolistName) == null)
+            {
+
+                using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                {
+                    IWebFreightContext context = WebFreightContext.GetContext(tenant);
+                    var TableId = (from a in context.ObjectTables
+                                   where a.Name == objectTableName
+                                   select a.Id).FirstOrDefault();
+                    zeroTenantObjectFields = (from a in context.ObjectFields//.Include("ObjectTable")//.Include("ObjectTable_LookUpTable").Include("FullNameTextCode").Include("ShortNameTextCode").Include("ListTextCode").Include("HelpTextCode").Include("ObjectTable")
+                                              where (a.Tenant == 0) && a.ObjectTableId == TableId && a.InActive == false
+                                              select a).ToList();
+
+                    scope.Complete();
+                }
+
+
+
+                CacheManager.CacheWrapper.Insert(zerolistName, zeroTenantObjectFields, null, System.DateTime.UtcNow.AddHours(12), TimeSpan.Zero);
+            }
+            else
+            {
+                zeroTenantObjectFields = (List<ObjectField>)CacheManager.CacheWrapper.Get(zerolistName);
+            }
+
+
+            #endregion
+
+
+            result = zeroTenantObjectFields.Concat(currentTenantObjectFields).ToList();
+
+
+
+            return result;
+
+
+        }
+
         public List<ObjectField> GetCustomObjectFields(string objectTableId, int tenant)
         {
             return context.ObjectFields.Where(t => t.Tenant == tenant && t.ObjectTableId == objectTableId && t.IsCustom == true).ToList();
@@ -165,7 +255,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                         {
 
                             currentTenantObjectFields = (from a in context.ObjectFields.Include("ObjectTable_LookUpTable").Include("FullNameTextCode").Include("ShortNameTextCode").Include("ListTextCode").Include("HelpTextCode").Include("ObjectTable")
-                                                         where (a.Tenant == tenant) && a.ObjectTableId == objectTableId && a.InActive == false && (a.AllowedinAutomationConditions == true || a.DisplayInAutomationAsEnitity == true || a.AutomationEmailRecipient == true || a.IsCustom || a.FieldName == "DescriptionOfGoods" || a.FieldName == "MainCarriageFinalDestinationETA" || a.FieldName == "MainCarriageFinalDestinationATA" || a.FieldName == "MainCarriageETD" || a.FieldName == "MainCarriageATD")
+                                                         where (a.Tenant == tenant || (a.DisplayInAutomationAsEnitity == true && a.Tenant == 0)) && a.ObjectTableId == objectTableId && a.InActive == false && (a.AllowedinAutomationConditions == true || a.CanAutomateSetValue == true || a.DisplayInAutomationAsEnitity == true || a.AutomationEmailRecipient == true || a.IsCustom || a.FieldName == "DescriptionOfGoods" || a.FieldName == "MainCarriageFinalDestinationETA" || a.FieldName == "MainCarriageFinalDestinationATA" || a.FieldName == "MainCarriageETD" || a.FieldName == "MainCarriageATD")
                                                          select a).ToList();
                             currentTenantObjectFields = currentTenantObjectFields.Concat(GetEntityAutomationObjectFields(tenant, currentTenantObjectFields)).ToList();
                             scope.Complete();
@@ -193,7 +283,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                     {
                         zeroTenantObjectFields = (from a in context.ObjectFields.Include("ObjectTable_LookUpTable").Include("FullNameTextCode").Include("ShortNameTextCode").Include("ListTextCode").Include("HelpTextCode").Include("ObjectTable")
-                                                  where (a.Tenant == 0) && a.ObjectTableId == objectTableId && a.InActive == false && (a.AllowedinAutomationConditions == true || a.DisplayInAutomationAsEnitity == true || a.AutomationEmailRecipient == true || a.IsCustom || a.FieldName == "DescriptionOfGoods" || a.FieldName == "MainCarriageFinalDestinationETA" || a.FieldName == "MainCarriageFinalDestinationATA" || a.FieldName == "MainCarriageETD" || a.FieldName == "MainCarriageATD")
+                                                  where (a.Tenant == 0) && a.ObjectTableId == objectTableId && a.InActive == false && (a.AllowedinAutomationConditions == true || a.CanAutomateSetValue == true || a.DisplayInAutomationAsEnitity == true || a.AutomationEmailRecipient == true || a.IsCustom || a.FieldName == "DescriptionOfGoods" || a.FieldName == "MainCarriageFinalDestinationETA" || a.FieldName == "MainCarriageFinalDestinationATA" || a.FieldName == "MainCarriageETD" || a.FieldName == "MainCarriageATD")
                                                   select a).ToList();
                         zeroTenantObjectFields = zeroTenantObjectFields.Concat(GetEntityAutomationObjectFields(0, zeroTenantObjectFields)).ToList();
 
@@ -213,9 +303,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             #endregion
 
 
-            result = zeroTenantObjectFields.Concat(currentTenantObjectFields).ToList();
-
-
+            result = zeroTenantObjectFields.Union(currentTenantObjectFields).ToList();
 
 
 
@@ -223,7 +311,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
 
         }
-        private List<ObjectField> GetEntityAutomationObjectFields(int tenant, List<ObjectField> currentTenantObjectFields)
+        private List<ObjectField> GetEntityAutomationObjectFields(int tenant,  List<ObjectField> currentTenantObjectFields)
         {
             List<ObjectField> automationEntityObjectFieldLists = new List<ObjectField>();
             if (currentTenantObjectFields != null && currentTenantObjectFields.Count > 0)
@@ -231,9 +319,12 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                 List<string> entityAutomationObjectTableIds = currentTenantObjectFields.Where(d => d.DisplayInAutomationAsEnitity && !string.IsNullOrEmpty(d.LookUpTableId)).GroupBy(d => d.LookUpTableId).Select(d => d.First().LookUpTableId).ToList();
                 if (entityAutomationObjectTableIds.Count > 0)
                 {
+
                     automationEntityObjectFieldLists = (from a in context.ObjectFields.Include("ObjectTable_LookUpTable").Include("FullNameTextCode").Include("ShortNameTextCode").Include("ListTextCode").Include("HelpTextCode").Include("ObjectTable")
-                                                        where (a.Tenant == tenant) && entityAutomationObjectTableIds.Contains(a.ObjectTableId) && (a.AllowedinAutomationConditions == true || a.AutomationEmailRecipient == true)
-                                                        select a).ToList();
+                                                 where (a.Tenant == tenant) && entityAutomationObjectTableIds.Contains(a.ObjectTableId) && a.InActive == false && (a.AllowedinAutomationConditions == true || a.CanAutomateSetValue == true || a.DisplayInAutomationAsEnitity == true || a.AutomationEmailRecipient == true || a.IsCustom || a.FieldName == "DescriptionOfGoods" || a.FieldName == "MainCarriageFinalDestinationETA" || a.FieldName == "MainCarriageFinalDestinationATA" || a.FieldName == "MainCarriageETD" || a.FieldName == "MainCarriageATD")
+                                                 select a).ToList();
+
+
                 }
             }
 
@@ -428,19 +519,19 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
         public void Add(ObjectField entity)
         {
-            context.ObjectFields.Add(entity);
+            context.ObjectFieldsDbSet.Add(entity);
 
         }
 
         public void Remove(ObjectField entity)
         {
-            context.ObjectFields.Attach(entity);
-            context.ObjectFields.Remove(entity);
+            context.ObjectFieldsDbSet.Attach(entity);
+            context.ObjectFieldsDbSet.Remove(entity);
         }
 
         public void Update(ObjectField entity)
         {
-            context.ObjectFields.Attach(entity);
+            context.ObjectFieldsDbSet.Attach(entity);
             context.SetAsModified(entity);
         }
 
@@ -459,8 +550,20 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             context.SaveChanges();
         }
 
-        public ObjectField GetSingleObjectFieldById(string id, int tenant)
+        public ObjectField GetSingleObjectFieldById(string id, int tenant, bool includeMetaDataFields = false)
         {
+            if (includeMetaDataFields)
+            {
+                var myField = (from a in context.ObjectFieldsDbSet.Include("FullNameTextCode").Include("ListTextCode")
+                             where a.Id == id
+                             select a).FirstOrDefault();
+                if (myField == null)
+                    myField = (from a in context.ObjectFieldsDbSet.Include("FullNameTextCode").Include("ListTextCode")
+                             where a.FieldCode == id
+                             select a).FirstOrDefault();
+
+                return myField;
+            }
             var field = (from a in context.ObjectFields.Include("FullNameTextCode").Include("ListTextCode")
                          where a.Id == id
                          select a).FirstOrDefault();
@@ -482,7 +585,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
         public ObjectField GetSingleObjectFieldByFieldCode(string fieldCode, int tenant)
         {
-            return (from a in context.ObjectFields
+            return (from a in context.ObjectFields.Include("FullNameTextCode")
                     where a.FieldCode == fieldCode
                     select a).FirstOrDefault();
         }
@@ -500,11 +603,26 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                     select a).FirstOrDefault();
         }
 
-        public IQueryable<ObjectField> GetObjectFieldsFromTenanZeroAndMyTenant(int tenant)
+        public IQueryable<ObjectField> GetObjectFieldsFromTenanZeroAndMyTenant(int tenant,bool IncludeMetaDataFields = false)
         {
+            if (IncludeMetaDataFields)
+            {
+                return context.ObjectFieldsDbSet.Include("FullNameTextCode").Include("ListTextCode").Where(t => (t.Tenant == tenant || t.Tenant == 0) && t.FieldName.ToLower() != "tenant");
+            }
             return context.ObjectFields.Include("FullNameTextCode").Include("ListTextCode").Where(t => t.Tenant == tenant || t.Tenant == 0);
         }
 
+        public IQueryable<ObjectField> GetDigitalObjectFieldsFromTenanZeroAndMyTenant(int tenant, bool IncludeMetaDataFields = false)
+        {
+            if (IncludeMetaDataFields)
+            {
+                return context.ObjectFieldsDbSet.Include("FullNameTextCode").Include("ListTextCode")
+                    .Where(t => ((t.Tenant == 0 && !t.FieldName.ToLower().StartsWith("Field")) || (t.Tenant == tenant && t.IsCustom == true))
+                                   && t.FieldName.ToLower() != "tenant");
+            }
+            return context.ObjectFields.Include("FullNameTextCode").Include("ListTextCode")
+                .Where(t => (t.Tenant == 0 && !t.FieldName.ToLower().StartsWith("Field")) || (t.Tenant == tenant && t.IsCustom == true));
+        }
 
         public List<ObjectField> GetMulti(Simplog.Server.Infrastructure.EntityKeyFields entityKeys)
         {
@@ -565,6 +683,18 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             return (ObjectField)CacheManager.CacheWrapper.Get(fieldCacheKey);
         }
 
+        public bool IsExistsCustomObjectFieldByCode(string code, string objectTableId, int tenant)
+        {
+            return (from a in context.ObjectFields
+                    where a.Code == code && a.ObjectTableId == objectTableId && a.Tenant == tenant && a.IsCustom == true
+                    select a).Any();
+        }
 
+        public int GetCustomObjectFieldCountByCodeAndCopies(string code, string objectTableId, int tenant)
+        {
+            return (from a in context.ObjectFields
+                    where (a.Code == code || (a.Code.Contains(code) && a.Code.Contains("Copy"))) && a.ObjectTableId == objectTableId && a.Tenant == tenant && a.IsCustom == true
+                    select a).Count();
+        }
     }
 }

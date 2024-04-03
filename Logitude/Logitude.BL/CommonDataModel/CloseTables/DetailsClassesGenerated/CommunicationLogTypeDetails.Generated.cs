@@ -38,8 +38,8 @@ namespace Logitude.BL.CommonDataModel
             all.Add(new CommunicationLogTypeDetails()
             {    
                 Code = "E", 
-                SearchFields = "E,Email,", 
-                Name = "Email", 
+                SearchFields = "E,Outgoing Email,", 
+                Name = "Outgoing Email", 
 			});
 			 
             all.Add(new CommunicationLogTypeDetails()
@@ -68,6 +68,13 @@ namespace Logitude.BL.CommonDataModel
                 Code = "Lead", 
                 Name = "LogitudeLead", 
                 SearchFields = "Lead,LogitudeLead", 
+			});
+			 
+            all.Add(new CommunicationLogTypeDetails()
+            {    
+                Code = "IE", 
+                SearchFields = "IE,Incoming Email", 
+                Name = "Incoming Email", 
 			});
 			
             return all;

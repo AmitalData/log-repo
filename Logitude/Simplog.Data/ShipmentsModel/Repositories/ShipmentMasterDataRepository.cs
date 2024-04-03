@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
@@ -33,6 +34,13 @@ namespace Simplog.Data.ShipmentsModel.Repositories
         public ShipmentMasterData GetSingleMasterData(string id)
         {
             return (from a in context.ShipmentMasterDatas
+                    where a.Id == id
+                    select a).FirstOrDefault();
+        }
+
+        public ShipmentMasterData GetSingleMasterDataWithTransShipmentReferences(string id)
+        {
+            return (from a in context.ShipmentMasterDatas.Include("Transshipment1FromPort")
                     where a.Id == id
                     select a).FirstOrDefault();
         }

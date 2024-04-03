@@ -15,7 +15,7 @@ using System.Web;
 using System.Xml.Serialization;
 using WebFreight.Web.DataProviders;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
-
+using WebFreight.Web.Services;
 
 namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
 {
@@ -29,6 +29,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
         private string mainCarriageFinalDestinationPortId = null;
         private string clearingAgentId = null;
         private string consigneeId = null;
+        private string shipperId = null;
+        private DateTime? cutOffDate;
         private PortRepository portRepository;
         private CardRepository cardRepository;
         private ContactRepository contactRepository;
@@ -59,6 +61,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
             QueryFilterItem filterItem_FinalDestinationPortId = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "MainCarriageFinalDestinationPortId").FirstOrDefault();
             QueryFilterItem filterItem_ClearingAgentId = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "ClearingAgentId").FirstOrDefault();
             QueryFilterItem filterItem_ConsigneeId = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "ConsigneeId").FirstOrDefault();
+            QueryFilterItem filterItem_ShipperId = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "ShipperId").FirstOrDefault();
+            QueryFilterItem filterItem_CutOffDate = myQueryOperations.QueryFilterItems.Where(d => d.FieldName == "CutOffDate").FirstOrDefault();
 
             if (filterItem_FromDate != null)
             {
@@ -109,21 +113,28 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
                     consigneeId = filterItem_ConsigneeId.FieldValue.ToString();
                 }
             }
+
+            if (filterItem_ShipperId != null)
+            {
+                if (filterItem_ShipperId.FieldValue != null)
+                {
+                    shipperId = filterItem_ShipperId.FieldValue.ToString();
+                }
+            }
+
+            if (filterItem_CutOffDate != null)
+            {
+                if (filterItem_CutOffDate.FieldValue != null)
+                {
+                    cutOffDate = Convert.ToDateTime(filterItem_CutOffDate.FieldValue);
+                }
+            }
         }
 
         public byte[] GetData()
         {
             FlightBookingsManifestDataProvider myDataProvider = this.LoadDataProvider();
-                
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(FlightBookingsManifestDataProvider));
-            MemoryStream memoryStream = new MemoryStream();
-            xmlSerializer.Serialize(memoryStream, myDataProvider);
-            memoryStream.Seek(0, SeekOrigin.Begin);
-
-            StreamReader streamReader = new StreamReader(memoryStream);
-            string content = streamReader.ReadToEnd();
-            byte[] bytearray = memoryStream.ToArray();
-            return bytearray;
+            return new ReportMemoryStreamService().Convert(myDataProvider, typeof(FlightBookingsManifestDataProvider), tenant);
         }
 
         private FlightBookingsManifestDataProvider LoadDataProvider()
@@ -133,11 +144,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
             IQueryable<ShipmentJoinPackageList> shipmentPackageList = this.BuildShipmentPackageList();
             List<ShipmentJoinPackageList> filteredShipmentPackageList = this.Filter(shipmentPackageList);
 
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
 
             if (filteredShipmentPackageList != null && filteredShipmentPackageList.Count > 0)
             {
-                List<ReportGroupData> myDataList = new List<ReportGroupData>();
+                //List<ReportGroupData> myDataList = new List<ReportGroupData>();
                 foreach (ShipmentJoinPackageList shipmentPackage in filteredShipmentPackageList)
                 {
                     ReportGroupData myDataRecord = new ReportGroupData();
@@ -165,7 +176,55 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
                     myDataRecord.PackageReference2 = shipmentPackage.ShipmentPackageReference2;
                     myDataRecord.PackageReference3 = shipmentPackage.ShipmentPackageReference3;
                     myDataRecord.PackageReference4 = shipmentPackage.ShipmentPackageReference4;
+                    myDataRecord.PackagesNotes = shipmentPackage.ContainerNotes;
                     myDataRecord.Routing = shipmentPackage.Routing;
+                    myDataRecord.ShipperId = shipmentPackage.ShipperId;
+                    myDataRecord.CutOffDate = shipmentPackage.CutOffDate;
+                    myDataRecord.MainCarriageFromPortName = shipmentPackage.MainCarriageFromPortName;
+                    myDataRecord.MainCarriageToPortName = shipmentPackage.MainCarriageToPortName;
+                    myDataRecord.Transshipment1FromPortName = shipmentPackage.Transshipment1FromPortName;
+                    myDataRecord.Transshipment1ToPortName = shipmentPackage.Transshipment1ToPortName;
+                    myDataRecord.Transshipment2FromPortName = shipmentPackage.Transshipment2FromPortName;
+                    myDataRecord.Transshipment2ToPortName = shipmentPackage.Transshipment2ToPortName;
+                    myDataRecord.Transshipment3FromPortName = shipmentPackage.Transshipment3FromPortName;
+                    myDataRecord.Transshipment3ToPortName = shipmentPackage.Transshipment3ToPortName;
+                    myDataRecord.Transshipment1ATA = shipmentPackage.Transshipment1ATA;
+                    myDataRecord.Transshipment1ATD = shipmentPackage.Transshipment1ATD;
+                    myDataRecord.Transshipment1ETA = shipmentPackage.Transshipment1ETA;
+                    myDataRecord.Transshipment1ETD = shipmentPackage.Transshipment1ETD;
+                    myDataRecord.Transshipment2ATA = shipmentPackage.Transshipment2ATA;
+                    myDataRecord.Transshipment2ATD = shipmentPackage.Transshipment2ATD;
+                    myDataRecord.Transshipment2ETA = shipmentPackage.Transshipment2ETA;
+                    myDataRecord.Transshipment2ETD = shipmentPackage.Transshipment2ETD;
+                    myDataRecord.Transshipment3ATA = shipmentPackage.Transshipment3ATA;
+                    myDataRecord.Transshipment3ATD = shipmentPackage.Transshipment3ATD;
+                    myDataRecord.Transshipment3ETA = shipmentPackage.Transshipment3ETA;
+                    myDataRecord.Transshipment3ETD = shipmentPackage.Transshipment3ETD;
+                    myDataRecord.MainCarriageATA = shipmentPackage.MainCarriageATA;
+                    myDataRecord.MainCarriageATD = shipmentPackage.MainCarriageATD;
+                    myDataRecord.MainCarriageETA = shipmentPackage.MainCarriageETA;
+                    myDataRecord.MainCarriageETD = shipmentPackage.MainCarriageETD;
+                    myDataRecord.MainCarriageCarrierName = shipmentPackage.MainCarriageCarrierName;
+
+                    string flightNumber = null;
+                    if(!string.IsNullOrEmpty(shipmentPackage.MainCarriageCarrierCode))
+                    {
+                        flightNumber = shipmentPackage.MainCarriageCarrierCode;
+                    }
+
+                    if (!string.IsNullOrEmpty(shipmentPackage.MainCarriageCarrierNumber))
+                    {
+                        if (string.IsNullOrEmpty(flightNumber))
+                        {
+                            flightNumber = shipmentPackage.MainCarriageCarrierNumber;
+                        }
+                        else
+                        {
+                            flightNumber = flightNumber + shipmentPackage.MainCarriageCarrierNumber;
+                        }
+                    }
+
+                    myDataRecord.FlightNumber = flightNumber;
 
                     if (shipmentPackage.PackageWidth != null && shipmentPackage.PackageWidth != 0
                         && shipmentPackage.PackageLength != null && shipmentPackage.PackageLength != 0
@@ -176,12 +235,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
 
                     customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, shipmentPackage, myDataRecord);
 
-                    myDataList.Add(myDataRecord);
+                    myDataProvider.NoGroupDataList.Add(myDataRecord);
                 }
 
-                if (myDataList.Count > 0)
+                if (myDataProvider.NoGroupDataList.Count > 0)
                 {
-                    List<ReportGroup> commodityAgentResults = (from p in myDataList
+                    List<ReportGroup> commodityAgentResults = (from p in myDataProvider.NoGroupDataList
                                                                group p by new { p.CommodityNumber, p.CustomAgentImportId, p.CustomAgentImportName } 
                                                                into g
                                                                orderby g.Key.CommodityNumber 
@@ -193,9 +252,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
                                                                    ReportGroupDataList = g.ToList(),
                                                                }).ToList();
 
-                    List<ReportGroup> masterCommodityAgentResults = (from p in myDataList
+                    List<ReportGroup> masterCommodityAgentResults = (from p in myDataProvider.NoGroupDataList
                                                                      group p by new { p.Master, p.CommodityNumber, p.CustomAgentImportId, p.CustomAgentImportName,
-                                                                     p.CommodityName ,p.MasterLong, p.ATD, p.ETD} 
+                                                                     p.CommodityName ,p.MasterLong, p.ATD, p.ETD, p.FlightNumber } 
                                                                      into g
                                                                      orderby g.Key.Master
                                                                      select new ReportGroup()
@@ -209,9 +268,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
                                                                          ATD = g.Key.ATD,
                                                                          ETD = g.Key.ETD,
                                                                          ReportGroupDataList = g.ToList(),
+                                                                         FlightNumber = g.Key.FlightNumber,
                                                                      }).ToList();
 
-                    List<ReportGroup> reference4Results = (from p in myDataList
+                    List<ReportGroup> reference4Results = (from p in myDataProvider.NoGroupDataList
                                                            group p by new { p.PackageReference4 } 
                                                            into g
                                                            orderby g.Key.PackageReference4
@@ -268,7 +328,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
                 (from shipment in context.Shipments.Include("MoveType").Include("CustomAgentImportCard")
                  join shipmentPackage in context.ShipmentPackages.Include("PackageType")
                  on shipment.Id equals shipmentPackage.ShipmentId into JoinedData
-                 join masterData in context.ShipmentMasterDatas.Include("MainCarriageFromPort").Include("MainCarriageFinalDestinationPort")
+                 join masterData in context.ShipmentMasterDatas.Include("MainCarriageFromPort").Include("MainCarriageFinalDestinationPort").Include("MainCarriageToPort")
+                                                               .Include("Transshipment1ToPort").Include("Transshipment2ToPort").Include("Transshipment3ToPort")
+                                                               .Include("Transshipment1FromPort").Include("Transshipment2FromPort").Include("Transshipment3FromPort")
+                                                               .Include("MainCarriageCarrierCard")
                  on shipment.MasterShipmentDataId equals masterData.Id into shipmentJoin
                  from master in shipmentJoin.DefaultIfEmpty()
                  from package in JoinedData
@@ -330,10 +393,42 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
                      Field38 = shipment.Field38,
                      Field39 = shipment.Field39,
                      Field40 = shipment.Field40,
+                     Field41 = shipment.Field41,
+                     Field42 = shipment.Field42,
+                     Field43 = shipment.Field43,
+                     Field44 = shipment.Field44,
+                     Field45 = shipment.Field45,
+                     Field46 = shipment.Field46,
+                     Field47 = shipment.Field47,
+                     Field48 = shipment.Field48,
+                     Field49 = shipment.Field49,
+                     Field50 = shipment.Field50,
+                     Field51 = shipment.Field51,
+                     Field52 = shipment.Field52,
+                     Field53 = shipment.Field53,
+                     Field54 = shipment.Field54,
+                     Field55 = shipment.Field55,
+                     Field56 = shipment.Field56,
+                     Field57 = shipment.Field57,
+                     Field58 = shipment.Field58,
+                     Field59 = shipment.Field59,
+                     Field60 = shipment.Field60,
+                     Field61 = shipment.Field61,
+                     Field62 = shipment.Field62,
+                     Field63 = shipment.Field63,
+                     Field64 = shipment.Field64,
+                     Field65 = shipment.Field65,
+                     Field66 = shipment.Field66,
+                     Field67 = shipment.Field67,
+                     Field68 = shipment.Field68,
+                     Field69 = shipment.Field69,
+                     Field70 = shipment.Field70,
                      Routing = shipment.Routing,
                      //Master
                      MainCarriageFromPortId = master.MainCarriageFromPortId,
                      MainCarriageFromPortName = master.MainCarriageFromPort != null ? master.MainCarriageFromPort.EnglishName : null,
+                     MainCarriageToPortId = master.MainCarriageToPortId,
+                     MainCarriageToPortName = master.MainCarriageToPort != null ? master.MainCarriageToPort.EnglishName : null,
                      MainCarriageFinalDestinationPortId = master.MainCarriageFinalDestinationPortId,
                      MainCarriageFinalDestinationPortName = master.MainCarriageFinalDestinationPort != null ? master.MainCarriageFinalDestinationPort.EnglishName : null,
                      MasterNumber = master.Master,
@@ -342,8 +437,41 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
                      MainCarriageETD = master.MainCarriageETD,
                      MainCarriageATD = master.MainCarriageATD,
                      MainCarriageETA = master.MainCarriageETA,
+                     MainCarriageATA = master.MainCarriageATA,
+
                      MainCarriageDateFilter = master.MainCarriageATD != null ? master.MainCarriageATD : master.MainCarriageETD,
                      AirlinePrefix = master.AirlinePrefix,
+                     //Transhipments
+                     Transshipment1ToPortId = master.Transshipment1ToPortId,
+                     Transshipment1ToPortName = master.Transshipment1ToPort != null ? master.Transshipment1ToPort.EnglishName : null,
+                     Transshipment1FromPortId = master.Transshipment1FromPortId,
+                     Transshipment1FromPortName = master.Transshipment1FromPort != null ? master.Transshipment1FromPort.EnglishName : null,
+
+                     Transshipment2ToPortId = master.Transshipment2ToPortId,
+                     Transshipment2ToPortName = master.Transshipment2ToPort != null ? master.Transshipment2ToPort.EnglishName : null,
+                     Transshipment2FromPortId = master.Transshipment2FromPortId,
+                     Transshipment2FromPortName = master.Transshipment2FromPort != null ? master.Transshipment2FromPort.EnglishName : null,
+
+                     Transshipment3ToPortId = master.Transshipment3ToPortId,
+                     Transshipment3ToPortName = master.Transshipment3ToPort != null ? master.Transshipment3ToPort.EnglishName : null,
+                     Transshipment3FromPortId = master.Transshipment3FromPortId,
+                     Transshipment3FromPortName = master.Transshipment3FromPort != null ? master.Transshipment3FromPort.EnglishName : null,
+
+                     Transshipment1ETD = master.Transshipment1ETD,
+                     Transshipment1ATD = master.Transshipment1ATD,
+                     Transshipment1ETA = master.Transshipment1ETA,
+                     Transshipment1ATA = master.Transshipment1ATA,
+
+                     Transshipment2ETD = master.Transshipment2ETD,
+                     Transshipment2ATD = master.Transshipment2ATD,
+                     Transshipment2ETA = master.Transshipment2ETA,
+                     Transshipment2ATA = master.Transshipment2ATA,
+
+                     Transshipment3ETD = master.Transshipment3ETD,
+                     Transshipment3ATD = master.Transshipment3ATD,
+                     Transshipment3ETA = master.Transshipment3ETA,
+                     Transshipment3ATA = master.Transshipment3ATA,
+
                      //Package
                      PackageId = package.Id,
                      CommodityNumber = package.CommodityNumber,
@@ -360,7 +488,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
                      PackageWidth = package.Width,
                      PackageLength = package.Length,
                      PackageHeight = package.Height,
-                     
+                     CutOffDate = master.CutoffDate,
+                     MainCarriageCarrierName = master.MainCarriageCarrierCard == null ? null : master.MainCarriageCarrierCard.EnglishName,
                  });
 
             return dataList;
@@ -406,6 +535,16 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Operational
             if (!string.IsNullOrEmpty(consigneeId))
             {
                 shipmentPackageList = shipmentPackageList.Where(d => d.ConsigneeId == consigneeId);
+            }
+
+            if (!string.IsNullOrEmpty(shipperId))
+            {
+                shipmentPackageList = shipmentPackageList.Where(d => d.ShipperId == shipperId);
+            }
+
+            if (cutOffDate != null)
+            {
+                shipmentPackageList = shipmentPackageList.Where(d => d.CutOffDate != null && System.Data.Entity.DbFunctions.TruncateTime(d.CutOffDate) == System.Data.Entity.DbFunctions.TruncateTime(cutOffDate));
             }
 
             return shipmentPackageList.ToList();

@@ -11,6 +11,8 @@ using Simplog.Server.Infrastructure;
 using Logitude.BL.Helpers;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.EntityPMs;
+using Logitude.Server.Tools.CustomFields;
+using System.Linq;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -59,8 +61,11 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             ChargesTypeTracing.Trace(entityPM, Poco, isNewEntity);
             ChargesTypeMapping.MapEntity(entityPM, Poco, isNewEntity);
+
             entityRepository.Add(Poco);
             entityRepository.SubmitChanges();
+
+            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() {ObjectTableName = "ChargesType", EntityId = entityPM.Id , Tenant = entityPM.Tenant , Type = "PM" , Entities = new List<ChargesTypePM> { entityPM }.Cast<object>().ToList() }).Update();
 
             TableLastUpdateClass.UpdateTableHistory(tenant, "ChargesType");
         }
@@ -89,6 +94,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             ChargesTypeMapping.MapEntity(entityPM, Poco, isNewEntity);
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
+            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "ChargesType", EntityId = entityPM.Id, Tenant = entityPM.Tenant, Type = "PM", Entities = new List<ChargesTypePM> { entityPM }.Cast<object>().ToList() }).Update();
 
             TableLastUpdateClass.UpdateTableHistory(tenant, "ChargesType");
         }

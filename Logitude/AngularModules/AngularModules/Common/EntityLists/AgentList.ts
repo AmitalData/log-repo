@@ -24,6 +24,7 @@ export class AgentList {
 		PaymentTermId: string;
 		SearchFields: string;
 		SharedLogisticsInvitationStatusName: string;
+		CargoTrackingInvitationStatusName: string;
 		LastLoginDate: Date;
 		EnableConsolidationInvoices: boolean;
 		CityName: string;
@@ -53,5 +54,7 @@ export class AgentList {
 		StateName: string;
 		StorageFreeDays: number;
 		GLAccountNumber: string;
+		RegimenFiscalCode: string;
+		SATReceptorName: string;
 	
 }

@@ -58,14 +58,11 @@ namespace CommunicationWorkerRole
     public class LeadsWrokerRole : WorkerEntryPoint
     {
         private LogitudeLeadRepository leadRepository = null;
-
+        private UserRepository userRepository;
         public override void Run()
         {
-
-
             while (IsRunning)
             {
-
                 if (!General.IsUpdating())
                 {
                     try
@@ -103,6 +100,7 @@ namespace CommunicationWorkerRole
                                         }
                                         catch (Exception exc)
                                         {
+                                            ExceptionHandler.HandleException(exc, DateTime.Now, 0, null, "LogitudeLead worker", null, null);
 
                                             commLog.Retries++;
                                             commLog.ExceptionMessage = GetExceptionMessage(exc);
@@ -234,513 +232,496 @@ namespace CommunicationWorkerRole
         private void CreateTenant(LogitudeLead lead)
         {
 
-                int crmTenant = LogitudeSettings.LogitudeCRMTenantNumber;
-                int demoTenant = GetDemoTenant(lead);
+            int crmTenant = LogitudeSettings.LogitudeCRMTenantNumber;
+            int demoTenant = GetDemoTenant(lead);
 
-                ICommonDataContext commonContext = CommonDataContext.GetContext(crmTenant);
+            ICommonDataContext commonContext = CommonDataContext.GetContext(crmTenant);
 
-                UserRepository userRepository = new UserRepository(demoTenant);
-                UserQuery userQuery = new UserQuery(userRepository);
-                BranchRepository branchRepository = new BranchRepository(demoTenant);
-                DepartmentRepository departmentRepository = new DepartmentRepository(demoTenant);
-                RoleRepository roleRepository = new RoleRepository(demoTenant);
+            userRepository = new UserRepository(demoTenant);
+            UserQuery userQuery = new UserQuery(userRepository);
+            BranchRepository branchRepository = new BranchRepository(demoTenant);
+            DepartmentRepository departmentRepository = new DepartmentRepository(demoTenant);
+            RoleRepository roleRepository = new RoleRepository(demoTenant);
 
 
-                ICRMContext crmContext = CRMContext.GetContext(crmTenant);
+            ICRMContext crmContext = CRMContext.GetContext(crmTenant);
 
-                BranchRepository branchRep = new BranchRepository(commonContext);
-                DepartmentRepository departmentRep = new DepartmentRepository(commonContext);
-                RoleRepository roleRep = new RoleRepository(commonContext);
-                ContactRepository contactRepository = new ContactRepository(commonContext);
+            BranchRepository branchRep = new BranchRepository(commonContext);
+            DepartmentRepository departmentRep = new DepartmentRepository(commonContext);
+            RoleRepository roleRep = new RoleRepository(commonContext);
+            ContactRepository contactRepository = new ContactRepository(commonContext);
 
-                OpportunityUpdateService opportunityService = new OpportunityUpdateService(crmContext);
-                OpportunityRepository opportunityRepository = new OpportunityRepository(crmContext);
-                StageRepository stageRepository = new StageRepository(crmContext);
-                LeadSourceRepository leadSourceRepository = new LeadSourceRepository(commonContext);
-                CountryRepository countryRepository = new CountryRepository(commonContext);
-                BusinessUnitRepository businessUnitRepository = new BusinessUnitRepository(commonContext);
-                OpportunityTypeRepository opportunityTypeRepository = new OpportunityTypeRepository(crmContext);
+            OpportunityUpdateService opportunityService = new OpportunityUpdateService(crmContext);
+            OpportunityRepository opportunityRepository = new OpportunityRepository(crmContext);
+            StageRepository stageRepository = new StageRepository(crmContext);
+            LeadSourceRepository leadSourceRepository = new LeadSourceRepository(commonContext);
+            CountryRepository countryRepository = new CountryRepository(commonContext);
+            BusinessUnitRepository businessUnitRepository = new BusinessUnitRepository(commonContext);
+            OpportunityTypeRepository opportunityTypeRepository = new OpportunityTypeRepository(crmContext);
 
-                string ownerEmail = "pool@logitudeworld.com";
-                if (LogitudeSettings.DeploymentStage == "logboxwe1" || LogitudeSettings.DeploymentStage == "Dev")
+            string ownerEmail = "pool@logitudeworld.com";
+            if (LogitudeSettings.DeploymentStage == "logboxwe1" || LogitudeSettings.DeploymentStage == "Dev")
+            {
+                ownerEmail = "system@tenant" + crmTenant + ".com";
+            }
+
+            User ownerUser = userRepository.GetSingleUserByEmail(ownerEmail, crmTenant, false);
+            Branch branch = branchRep.GetBranchByName("Main Office", crmTenant);
+            Simplog.Data.CommonDataModel.EntityPOCOs.Department department = departmentRep.GetDepartmentByName("Management", crmTenant);
+            Simplog.Data.CommonDataModel.EntityPOCOs.Role role = roleRep.GetSingleByCode("ADMN", 0);
+
+
+            ObjectTableRepository objectTableRepository = new ObjectTableRepository(0);
+            ObjectTable table = objectTableRepository.GetObjectTableByName("Opportunity", 0, false);
+
+            string toEmail = lead.Email;
+
+            if (LogitudeSettings.DeploymentStage == "Dev")
+            {
+                toEmail = "islam@logitudeworld.com;jalal@logitudeworld.com";
+            }
+
+
+
+            StringBuilder HtmlTemplate = new StringBuilder();
+
+            if (lead.IsSentToCustomer == false && lead.IsEmailVerified == false)
+            {
+                Contact leadContact = contactRepository.GetSingleContactByEmail(lead.Email, crmTenant);
+                if (leadContact != null)
                 {
-                    ownerEmail = "system@tenant" + crmTenant + ".com";
-                }
-
-                User ownerUser = userRepository.GetSingleUserByEmail(ownerEmail, crmTenant, false);
-                Branch branch = branchRep.GetBranchByName("Main Office", crmTenant);
-                Simplog.Data.CommonDataModel.EntityPOCOs.Department department = departmentRep.GetDepartmentByName("Management", crmTenant);
-                Simplog.Data.CommonDataModel.EntityPOCOs.Role role = roleRep.GetSingleByCode("ADMN", 0);
+                    //string emailbody = "<div style='text-align:left;font-family:Verdana;font-weight:bold;font-size:14px'>The contact received is already found in the CRM tenant:</div>" + htmlString;
 
 
-                ObjectTableRepository objectTableRepository = new ObjectTableRepository(0);
-                ObjectTable table = objectTableRepository.GetObjectTableByName("Opportunity", 0, false);
+                    HtmlTemplate.Append("<div style='text-align:left'>");
+                    HtmlTemplate.Append("Dear " + leadContact.EnglishName);
+                    HtmlTemplate.Append("<br /><br />");
+                    HtmlTemplate.Append("Thank you for your interest in Logitude World, the first Freight Forwarding solution built in the cloud.");
+                    HtmlTemplate.Append("<br /><br />");
+                    HtmlTemplate.Append("We value your inquiry to get new access to our demo environment. Your details are currently available in our database and one of our dedicated team members will get in touch with you shortly.");
+                    HtmlTemplate.Append("<br /><br />");
+                    HtmlTemplate.Append("If you have any questions or inquiries please, feel free to contact us at");
+                    HtmlTemplate.Append("<br />");
+                    HtmlTemplate.Append("<a href='mailto:info@logitudeworld.com'>info@logitudeworld.com</a>");
+                    HtmlTemplate.Append("<br /><br />");
+                    HtmlTemplate.Append("Best Regards,");
+                    HtmlTemplate.Append("<br />");
+                    HtmlTemplate.Append("<div style='text-align:left;font-weight:bold;color:#1F497D'>The Logitude Team</div>");
+                    HtmlTemplate.Append("<a href='http://www.Logitudeworld.com'>www.Logitudeworld.com</a>");
+                    HtmlTemplate.Append("<br />");
+                    HtmlTemplate.Append("<img width='258' height='150' src='cid:logo0' />");
+                    HtmlTemplate.Append("</div>");
+                    string emailbody = HtmlTemplate.ToString();
 
-                string toEmail = lead.Email;
-
-                if (LogitudeSettings.DeploymentStage == "Dev")
-                {
-                    toEmail = "islam@logitudeworld.com;jalal@logitudeworld.com";
-                }
-
-
-
-                StringBuilder HtmlTemplate = new StringBuilder();
-
-                if (lead.IsSentToCustomer == false && lead.IsEmailVerified == false)
-                {
-                    Contact leadContact = contactRepository.GetSingleContactByEmail(lead.Email, crmTenant);
-                    if (leadContact != null)
-                    {
-                        //string emailbody = "<div style='text-align:left;font-family:Verdana;font-weight:bold;font-size:14px'>The contact received is already found in the CRM tenant:</div>" + htmlString;
-
-
-                        HtmlTemplate.Append("<div style='text-align:left'>");
-                        HtmlTemplate.Append("Dear " + leadContact.EnglishName + ", " + (!string.IsNullOrEmpty(lead.CompanyName) && lead.CompanyName != "Unassigned" ? lead.CompanyName : ""));// " (" + lead.Country + ")");
-                        HtmlTemplate.Append("<br /><br />");
-                        HtmlTemplate.Append("Thank you for your interest in Logitude World, the first Freight Forwarding solution built in the cloud.");
-                        HtmlTemplate.Append("<br /><br />");
-                        HtmlTemplate.Append("We value your inquiry to get new access to our demo environment. Your details are currently available in our database and one of our dedicated team members will get in touch with you shortly.");
-                        HtmlTemplate.Append("<br /><br />");
-                        HtmlTemplate.Append("If you have any questions or inquiries please, feel free to contact us at <a href='mailto:info@logitudeworld.com'>info@logitudeworld.com</a>");
-                        HtmlTemplate.Append("<br /><br />");
-                        HtmlTemplate.Append("Best Regards,");
-                        HtmlTemplate.Append("<br />");
-                        HtmlTemplate.Append("<div style='text-align:left;font-weight:bold;color:#1F497D'>The Logitude Team</div>");
-                        HtmlTemplate.Append("<a href='http://www.Logitudeworld.com'>www.Logitudeworld.com</a>");
-                        HtmlTemplate.Append("<br />");
-                        HtmlTemplate.Append("<img width='258' height='101' src='cid:logo0' />");
-                        HtmlTemplate.Append("</div>");
-                        string emailbody = HtmlTemplate.ToString();
-
-                        EmailCommunicationParams emailParams = new EmailCommunicationParams();
-                        if (LogitudeSettings.DeploymentStage == "Simplog")
-                        {
-
-                            emailParams = new EmailCommunicationParams()
-                            {
-                                From = "info@logitudeworld.com",
-                                To = leadContact.Email,
-                                CC = "info@logitudeworld.com",
-                                Subject = "Your inquiry re Logitude World demo",
-                                EmailBody = emailbody,
-                                Tenant = crmTenant,
-                            };
-                        }
-                        else
-                        {
-
-
-                            emailParams = new EmailCommunicationParams()
-                            {
-                                From = "admin@fnarsoft.com",
-                                To = "islam@logitudeworld.com;jalal@logitudeworld.com",
-                                Subject = "Your inquiry re Logitude World demo",
-                                EmailBody = emailbody,
-                                Tenant = crmTenant,
-                            };
-
-
-                        }
-
-
-                        Communications.AddEmailCommunicationLogQueue(emailParams, crmTenant);
-
-                        lead.StatusCode = "Completed";
-                        leadRepository.Update(lead);
-                        leadRepository.SubmitChanges();
-                        return;
-                    }
-
-
-                    using (TransactionScope scope = TransactionFactory.GetTransaction())
+                    EmailCommunicationParams emailParams = new EmailCommunicationParams();
+                    if (LogitudeSettings.DeploymentStage == "Simplog")
                     {
 
-                        Contact customercontact = new Contact()
+                        emailParams = new EmailCommunicationParams()
                         {
-                            Id = IdCounter.GetNumber("Contact", crmTenant),
-                            Email = TruncateLongString(lead.Email, 70),
-                            EnglishName = TruncateLongString(lead.ContactName, 60),
-                            BusinessPhone = TruncateLongString(lead.PhoneNumber, 25),
+                            From = "info@logitudeworld.com",
+                            To = leadContact.Email,
+                            CC = "info@logitudeworld.com",
+                            Subject = "Your inquiry re Logitude World demo",
+                            EmailBody = emailbody,
                             Tenant = crmTenant,
-                            LocalName = TruncateLongString(lead.ContactName, 60),
-                            UserType = "R",
+                            LoggingUserId = GetCrmUserId(crmTenant),
                         };
+                    }
+                    else
+                    {
 
-                        customercontact.ComputedKey = (!string.IsNullOrEmpty(customercontact.Email) ? customercontact.Email : customercontact.Id);
-                        contactRepository.Add(customercontact);
-                        contactRepository.SubmitChanges();
 
-
-                        Country country = countryRepository.GetSingleCountryByName(lead.Country, crmTenant);
-                        if (country == null)
+                        emailParams = new EmailCommunicationParams()
                         {
-                            country = countryRepository.GetSingleCountryByCode("--", crmTenant);
-
-                        }
-
-                        CustomerPM customerPM = new CustomerPM()
-                        {
-                            Code = CodeCounter.GetNumber("Customer", crmTenant).ToString(),
-                            PartnerTypeId = "PO",
+                            From = "admin@fnarsoft.com",
+                            To = "islam@logitudeworld.com;jalal@logitudeworld.com",
+                            Subject = "Your inquiry re Logitude World demo",
+                            EmailBody = emailbody,
                             Tenant = crmTenant,
-                            EnglishName = TruncateLongString(lead.CompanyName, 70),
-                            LocalName = TruncateLongString(lead.CompanyName, 100),
-                            CustomerStatusCode = "POT",
-                            IsCustomer = true,
-                            PhoneNumber = lead.PhoneNumber,
-                            Notes = lead.Country,
-                            IsHybrid = true,
-                            CountryId_Potential = country.Id,
-                            PhoneNumber_Potential = lead.PhoneNumber,
-                            City_Potential = "Unassigned",
-                            PrimaryContactId = customercontact.Id,
-                            VatNumber = lead.VatNumber,
                         };
 
 
-                        CustomerQuery customerQuery = new CustomerQuery(crmTenant);
-                        CustomerList logitudeReseller = customerQuery.GetSingleCustomerListByCode("73946", crmTenant);
-
-                        string resellerId = "Atlas";
-                        if (lead.LeadSource == "Aerolineas")
-                        {
-                            customerPM.Field2 = new Simplog.Server.Infrastructure.DataContracts.CustomFieldClass() { FieldName = "Field2", TableName = "Customer", Value = "Aerolinea" };
-                            customerPM.Field4 = new Simplog.Server.Infrastructure.DataContracts.CustomFieldClass() { FieldName = "Field4", TableName = "Customer", Value = lead.IATACode };
-                            customerPM.Field5 = new Simplog.Server.Infrastructure.DataContracts.CustomFieldClass() { FieldName = "Field5", TableName = "Customer", Value = lead.CASSCode };
-
-                        }
-                        else if (lead.LeadSource == "Atlas")
-                        {
-
-                            CustomerList customerList = customerQuery.GetSingleCustomerListByCode("75228", crmTenant);
-
-                            if (customerList != null) resellerId = customerList.Id;
-                            customerPM.Field2 = new Simplog.Server.Infrastructure.DataContracts.CustomFieldClass() { FieldName = "Field2", TableName = "Customer", Value = resellerId };
-                            customerPM.Field4 = new Simplog.Server.Infrastructure.DataContracts.CustomFieldClass() { FieldName = "Field4", TableName = "Customer", Value = lead.IATACode };
-                            customerPM.Field5 = new Simplog.Server.Infrastructure.DataContracts.CustomFieldClass() { FieldName = "Field5", TableName = "Customer", Value = lead.CASSCode };
-
-
-                            LeadSourceQuery leadSourceQuery = new LeadSourceQuery(crmTenant);
-                            LeadSourcePM leadSourcePM = leadSourceQuery.GetLeadSourceByCode("PA", crmTenant);
-                            if (leadSourcePM != null) customerPM.LeadSourceId = leadSourcePM.Id;
-
-                            // 
-                        }
-                        else if (LogitudeSettings.DeploymentStage == "Simplog" && logitudeReseller != null)
-                        {
-                            customerPM.Field2 = new Simplog.Server.Infrastructure.DataContracts.CustomFieldClass() { FieldName = "Field2", TableName = "Customer", Value = logitudeReseller.Id };
-                        }
-
-                        customerPM.Contacts.Add(new ContactPM()
-                        {
-                            Id = customercontact.Id,
-                            Email = customercontact.Email,
-                            EnglishName = customercontact.EnglishName,
-                            BusinessPhone = customercontact.BusinessPhone,
-                            Tenant = customercontact.Tenant,
-                            LocalName = customercontact.LocalName,
-                            IsCreatedWithPartner = true,
-                        });
-
-
-                        CustomerService service = new CustomerService(commonContext, customerPM, ownerUser.Id);
-                        service.Create();
-                        CustomerTracing customerTracingClass = new CustomerTracing(customerPM, service.entityPOCO, ownerUser.Id, true);
-                        customerTracingClass.Trace();
-
-                        commonContext.SaveChanges();
-
-                        //if (lead.RequestType != "LogBox")
-                        //{
-                        IQueryable<BusinessUnit> businessUnitList = businessUnitRepository.GetBusinessUnits(crmTenant);
-                        BusinessUnit businessUnit = businessUnitList.Where(b => b.Name == "Organization").FirstOrDefault();
-                        // BusinessUnit businessUnit = businessUnitRepository.GetBusinessUnits(crmTenant);.Where(b => b.Name == "Organization").FirstOrDefault();
-
-                        LeadSource leadsouce = leadSourceRepository.GetSingleLeadSourceByCode("WB", crmTenant);
-                        Stage stage = stageRepository.GetStageByCode("QUA", crmTenant);
-                        OpportunityType type = opportunityTypeRepository.GetOpportunityTypeByCode("N", crmTenant);
-
-                        DateTime? todayDate = TenantServerConfigration.GetCurrentDateTime(crmTenant);
-
-                        Opportunity opportunity = new Opportunity()
-                        {
-                            Id = IdCounter.GetNumber("Opportunity", crmTenant),
-                            Tenant = crmTenant,
-                            CreatedByUserId = ownerUser.Id,
-                            UpdatedByUserId = ownerUser.Id,
-                            CreateDate = todayDate,
-                            UpdateDate = todayDate,
-                            LastStageDate = todayDate,
-                            OpportunityTypeId = type.Id,
-                            Subject = "New Business",
-                            CustomerId = customerPM.Id,
-                            OwnerId = ownerUser.Id,
-                            RatingCode = "N",
-                            StageId = stage.Id,
-                            LeadSourceId = leadsouce.Id,
-                            Notes = lead.Comments,
-                            NumberOfShipments = lead.NumberOfUsers,
-                            BusinessUnitId = businessUnit.Id,
-                            ConcurrencyGUID = Guid.NewGuid().ToString(),
-                            ContactId = customercontact.Id,
-                            Probability = stage.Probability,
-                        };
-
-
-                        if (lead.LeadSource == "Atlas")
-                        {
-                            opportunity.Field1 = resellerId;
-                        }
-                        else if (LogitudeSettings.DeploymentStage == "Simplog" && logitudeReseller != null)
-                        {
-                            opportunity.Field1 = logitudeReseller.Id;
-                        }
-
-                        BuildOpportunitySearchFields(opportunity);
-
-                        opportunityRepository.Add(opportunity);
-                        opportunityRepository.SubmitChanges();
-                        lead.OpportunityId = opportunity.Id;
-                        // }
-
-                        EventTracer.CreateTraceEvent(new EventTracerArgs()
-                        {
-                            Tenant = crmTenant,
-                            EventTypeCode = "CROP",
-                            UserId = ownerUser.Id,
-                            EntityId = opportunity.Id,
-                            ObjectTableName = "Opportunity",
-                            Notes = null
-                        });
-
-                        lead.CustomerId = customerPM.Id;
-                        scope.Complete();
                     }
 
 
-                    if (lead.RequestType == "LogBox")
-                    {
-                        lead.StatusCode = "Completed";
-                        leadRepository.Update(lead);
-                        leadRepository.SubmitChanges();
-                        return;
-                    }
+                    Communications.AddEmailCommunicationLogQueue(emailParams, crmTenant);
 
-                    if (lead.LeadSource == "Aerolineas" || lead.LeadSource == "Atlas")
-                    {
-                        lead.StatusCode = "Completed";
-                    }
-
-                    lead.IsSentToCustomer = true;
+                    lead.StatusCode = "Completed";
                     leadRepository.Update(lead);
                     leadRepository.SubmitChanges();
+                    return;
+                }
 
 
+                using (TransactionScope scope = TransactionFactory.GetTransaction())
+                {
 
-                    if (lead.LeadSource == "Aerolineas" || lead.LeadSource == "Atlas")
+                    Contact customercontact = new Contact()
+                    {
+                        Id = IdCounter.GetNumber("Contact", crmTenant),
+                        Email = TruncateLongString(lead.Email, 70),
+                        EnglishName = TruncateLongString(lead.ContactName, 60),
+                        BusinessPhone = TruncateLongString(lead.PhoneNumber, 25),
+                        Tenant = crmTenant,
+                        LocalName = TruncateLongString(lead.ContactName, 60),
+                        UserType = "R",
+                    };
+
+                    customercontact.ComputedKey = (!string.IsNullOrEmpty(customercontact.Email) ? customercontact.Email : customercontact.Id);
+                    contactRepository.Add(customercontact);
+                    contactRepository.SubmitChanges();
+
+
+                    Country country = countryRepository.GetSingleCountryByName(lead.Country, crmTenant);
+                    if (country == null)
+                    {
+                        country = countryRepository.GetSingleCountryByCode("--", crmTenant);
+
+                    }
+
+                    CustomerPM customerPM = new CustomerPM()
+                    {
+                        Code = CodeCounter.GetNumber("Customer", crmTenant).ToString(),
+                        PartnerTypeId = "PO",
+                        Tenant = crmTenant,
+                        EnglishName = TruncateLongString(lead.CompanyName, 70),
+                        LocalName = TruncateLongString(lead.CompanyName, 100),
+                        CustomerStatusCode = "POT",
+                        IsCustomer = true,
+                        PhoneNumber = lead.PhoneNumber,
+                        Notes = lead.Country,
+                        IsHybrid = true,
+                        CountryId_Potential = country.Id,
+                        PhoneNumber_Potential = lead.PhoneNumber,
+                        City_Potential = "Unassigned",
+                        PrimaryContactId = customercontact.Id,
+                        VatNumber = lead.VatNumber,
+                    };
+
+
+                    CustomerQuery customerQuery = new CustomerQuery(crmTenant);
+                    CustomerList logitudeReseller = customerQuery.GetSingleCustomerListByCode("73946", crmTenant);
+
+                    string resellerId = "Atlas";
+                    if (lead.LeadSource == "Aerolineas")
+                    {
+                        customerPM.Field2 = new Simplog.Server.Infrastructure.DataContracts.CustomFieldClass() { FieldName = "Field2", TableName = "Customer", Value = "Aerolinea" };
+                        customerPM.Field4 = new Simplog.Server.Infrastructure.DataContracts.CustomFieldClass() { FieldName = "Field4", TableName = "Customer", Value = lead.IATACode };
+                        customerPM.Field5 = new Simplog.Server.Infrastructure.DataContracts.CustomFieldClass() { FieldName = "Field5", TableName = "Customer", Value = lead.CASSCode };
+
+                    }
+                    else if (lead.LeadSource == "Atlas")
                     {
 
-                        string subject = lead.LeadSource == "Aerolineas" ? "Inquiry from Logitude-Aerolineas for a new environment from " + lead.CompanyName : "Inquiry from Logitude-Atlas for a new environment from " + lead.CompanyName;
+                        CustomerList customerList = customerQuery.GetSingleCustomerListByCode("75228", crmTenant);
+
+                        if (customerList != null) resellerId = customerList.Id;
+                        customerPM.Field2 = new Simplog.Server.Infrastructure.DataContracts.CustomFieldClass() { FieldName = "Field2", TableName = "Customer", Value = resellerId };
+                        customerPM.Field4 = new Simplog.Server.Infrastructure.DataContracts.CustomFieldClass() { FieldName = "Field4", TableName = "Customer", Value = lead.IATACode };
+                        customerPM.Field5 = new Simplog.Server.Infrastructure.DataContracts.CustomFieldClass() { FieldName = "Field5", TableName = "Customer", Value = lead.CASSCode };
 
 
+                        LeadSourceQuery leadSourceQuery = new LeadSourceQuery(crmTenant);
+                        LeadSourcePM leadSourcePM = leadSourceQuery.GetLeadSourceByCode("PA", crmTenant);
+                        if (leadSourcePM != null) customerPM.LeadSourceId = leadSourcePM.Id;
 
-                        HtmlTemplate.Append("<div style='text-align:left'>");
-                        HtmlTemplate.Append("<Table style='text-align:left'>");
+                        // 
+                    }
+                    else if (LogitudeSettings.DeploymentStage == "Simplog" && logitudeReseller != null)
+                    {
+                        customerPM.Field2 = new Simplog.Server.Infrastructure.DataContracts.CustomFieldClass() { FieldName = "Field2", TableName = "Customer", Value = logitudeReseller.Id };
+                    }
 
-                        HtmlTemplate.Append("<tr><td> Company Name : </td><td>" + lead.CompanyName + "</td></tr>");
-                        HtmlTemplate.Append("<tr><td> Contact Name : </td><td>" + lead.ContactName + "</td></tr>");
-                        HtmlTemplate.Append("<tr><td> Phone Number : </td><td>" + lead.PhoneNumber + "</td></tr>");
-                        HtmlTemplate.Append("<tr><td> E-mail : </td><td>" + lead.Email + "</td></tr>");
-                        HtmlTemplate.Append("<tr><td> Country : </td><td>" + lead.Country + "</td></tr>");
-                        HtmlTemplate.Append("<tr><td> City : </td><td>" + lead.City + "</td></tr>");
-                        HtmlTemplate.Append("<tr><td> State : </td><td>" + lead.State + "</td></tr>");
-                        HtmlTemplate.Append("<tr><td> Street : </td><td>" + lead.Street + "</td></tr>");
-                        HtmlTemplate.Append("<tr><td> Create Date : </td><td>" + lead.CreateDate.ToString() + "</td></tr>");
-                        HtmlTemplate.Append("<tr><td> Number of Branches : </td><td>" + lead.NumberOfBranches + "</td></tr>");
-                        HtmlTemplate.Append("<tr><td> Number of Users : </td><td>" + lead.NumberOfUsers + "</td></tr>");
-                        HtmlTemplate.Append("<tr><td> Comments : </td><td>" + lead.Comments + "</td></tr>");
-                        // HtmlTemplate.Append("<tr><td> Package Code : </td><td>" + lead.PackageCode + "</td></tr>");
-                        // HtmlTemplate.Append("<tr><td> Status Code : </td><td>" + lead.StatusCode + "</td></tr>");
-                        HtmlTemplate.Append("<tr><td> Zip Code : </td><td>" + lead.ZipCode + "</td></tr>");
-                        HtmlTemplate.Append("<tr><td> IATA Code : </td><td>" + lead.IATACode + "</td></tr>");
-                        HtmlTemplate.Append("<tr><td> CASS Code : </td><td>" + lead.CASSCode + "</td></tr>");
+                    customerPM.Contacts.Add(new ContactPM()
+                    {
+                        Id = customercontact.Id,
+                        Email = customercontact.Email,
+                        EnglishName = customercontact.EnglishName,
+                        BusinessPhone = customercontact.BusinessPhone,
+                        Tenant = customercontact.Tenant,
+                        LocalName = customercontact.LocalName,
+                        IsCreatedWithPartner = true,
+                    });
 
-                        HtmlTemplate.Append("<Table/>");
-                        HtmlTemplate.Append("<div/>");
-                        string emailbody = HtmlTemplate.ToString();
-                        //string Emails = "info@logitudeworld.com, Leandro.Martinez@aerolineas.com.ar, mcerruti@aerolineas.com.ar  ";
-                        string Emails = lead.LeadSource == "Aerolineas" ? "registration@logitudeworld.com;Leandro.Martinez@aerolineas.com.ar;mcerruti@aerolineas.com.ar" : "Mirjam.Schubert@champ.aero;info@logitudeworld.com";
 
-                        EmailParameters parameters = new EmailParameters();
+                    CustomerService service = new CustomerService(commonContext, customerPM, ownerUser.Id);
+                    service.Create();
+                    CustomerTracing customerTracingClass = new CustomerTracing(customerPM, service.entityPOCO, ownerUser.Id, true);
+                    customerTracingClass.Trace();
+                    commonContext.SaveChanges();
+
+                    IQueryable<BusinessUnit> businessUnitList = businessUnitRepository.GetBusinessUnits(crmTenant);
+                    BusinessUnit businessUnit = businessUnitList.Where(b => b.Name == "Organization").FirstOrDefault();
+
+                    LeadSource leadsouce = leadSourceRepository.GetSingleLeadSourceByCode("WB", crmTenant);
+                    Stage stage = stageRepository.GetStageByCode("QUA", crmTenant);
+                    OpportunityType type = opportunityTypeRepository.GetOpportunityTypeByCode("N", crmTenant);
+
+                    DateTime? todayDate = TenantServerConfigration.GetCurrentDateTime(crmTenant);
+
+                    Opportunity opportunity = new Opportunity()
+                    {
+                        Id = IdCounter.GetNumber("Opportunity", crmTenant),
+                        Tenant = crmTenant,
+                        CreatedByUserId = ownerUser.Id,
+                        UpdatedByUserId = ownerUser.Id,
+                        CreateDate = todayDate,
+                        UpdateDate = todayDate,
+                        LastStageDate = todayDate,
+                        OpportunityTypeId = type.Id,
+                        Subject = "New Business",
+                        CustomerId = customerPM.Id,
+                        OwnerId = ownerUser.Id,
+                        RatingCode = "N",
+                        StageId = stage.Id,
+                        LeadSourceId = leadsouce.Id,
+                        Notes = lead.Comments,
+                        NumberOfShipments = lead.NumberOfUsers,
+                        BusinessUnitId = businessUnit.Id,
+                        ConcurrencyGUID = Guid.NewGuid().ToString(),
+                        ContactId = customercontact.Id,
+                        Probability = stage.Probability,
+                        ClientId = lead.ClientId,
+                        LeadOrigin = lead.LeadOrigin,
+                        Campaign = lead.Campaign,
+                    };
+
+                    if (lead.LeadSource == "Atlas")
+                    {
+                        opportunity.Field1 = resellerId;
+                    }
+                    else if (LogitudeSettings.DeploymentStage == "Simplog" && logitudeReseller != null)
+                    {
+                        opportunity.Field1 = logitudeReseller.Id;
+                    }
+
+                    BuildOpportunitySearchFields(opportunity);
+
+                    opportunityRepository.Add(opportunity);
+                    opportunityRepository.SubmitChanges();
+
+                    this.SendToGoogleAnalytics(crmTenant, lead.Street, stage.Name);
+
+                    lead.OpportunityId = opportunity.Id;
+
+
+                    EventTracer.CreateTraceEvent(new EventTracerArgs()
+                    {
+                        Tenant = crmTenant,
+                        EventTypeCode = "CROP",
+                        UserId = ownerUser.Id,
+                        EntityId = opportunity.Id,
+                        ObjectTableName = "Opportunity",
+                        Notes = null
+                    });
+
+                    lead.CustomerId = customerPM.Id;
+                    scope.Complete();
+                }
+
+
+                if (lead.RequestType == "LogBox")
+                {
+                    lead.StatusCode = "Completed";
+                    leadRepository.Update(lead);
+                    leadRepository.SubmitChanges();
+                    return;
+                }
+
+                if (lead.LeadSource == "Aerolineas" || lead.LeadSource == "Atlas")
+                {
+                    lead.StatusCode = "Completed";
+                }
+
+                lead.IsSentToCustomer = true;
+                leadRepository.Update(lead);
+                leadRepository.SubmitChanges();
+
+                if (lead.LeadSource == "Aerolineas" || lead.LeadSource == "Atlas")
+                {
+                    string subject = lead.LeadSource == "Aerolineas" ? "Inquiry from Logitude-Aerolineas for a new environment from " + lead.CompanyName : "Inquiry from Logitude-Atlas for a new environment from " + lead.CompanyName;
+
+                    HtmlTemplate.Append("<div style='text-align:left'>");
+                    HtmlTemplate.Append("<Table style='text-align:left'>");
+                    HtmlTemplate.Append("<tr><td> Company Name : </td><td>" + lead.CompanyName + "</td></tr>");
+                    HtmlTemplate.Append("<tr><td> Contact Name : </td><td>" + lead.ContactName + "</td></tr>");
+                    HtmlTemplate.Append("<tr><td> Phone Number : </td><td>" + lead.PhoneNumber + "</td></tr>");
+                    HtmlTemplate.Append("<tr><td> E-mail : </td><td>" + lead.Email + "</td></tr>");
+                    HtmlTemplate.Append("<tr><td> Country : </td><td>" + lead.Country + "</td></tr>");
+                    HtmlTemplate.Append("<tr><td> City : </td><td>" + lead.City + "</td></tr>");
+                    HtmlTemplate.Append("<tr><td> State : </td><td>" + lead.State + "</td></tr>");
+                    HtmlTemplate.Append("<tr><td> Street : </td><td>" + lead.Street + "</td></tr>");
+                    HtmlTemplate.Append("<tr><td> Create Date : </td><td>" + lead.CreateDate.ToString() + "</td></tr>");
+                    HtmlTemplate.Append("<tr><td> Number of Branches : </td><td>" + lead.NumberOfBranches + "</td></tr>");
+                    HtmlTemplate.Append("<tr><td> Number of Users : </td><td>" + lead.NumberOfUsers + "</td></tr>");
+                    HtmlTemplate.Append("<tr><td> Comments : </td><td>" + lead.Comments + "</td></tr>");
+                    HtmlTemplate.Append("<tr><td> Zip Code : </td><td>" + lead.ZipCode + "</td></tr>");
+                    HtmlTemplate.Append("<tr><td> IATA Code : </td><td>" + lead.IATACode + "</td></tr>");
+                    HtmlTemplate.Append("<tr><td> CASS Code : </td><td>" + lead.CASSCode + "</td></tr>");
+                    HtmlTemplate.Append("<tr><td> Client Id : </td><td>" + lead.ClientId + "</td></tr>");
+                    HtmlTemplate.Append("<tr><td> Lead Origin : </td><td>" + lead.LeadOrigin + "</td></tr>");
+                    HtmlTemplate.Append("<tr><td> Campaign : </td><td>" + lead.Campaign + "</td></tr>");
+
+                    HtmlTemplate.Append("<Table/>");
+                    HtmlTemplate.Append("<div/>");
+                    string emailbody = HtmlTemplate.ToString();
+                    string Emails = lead.LeadSource == "Aerolineas" ? "registration@logitudeworld.com;Leandro.Martinez@aerolineas.com.ar;mcerruti@aerolineas.com.ar" : "Mirjam.Schubert@champ.aero;info@logitudeworld.com";
+
+                    EmailParameters parameters = new EmailParameters();
+                    parameters = new EmailParameters()
+                    {
+                        From = "registration@logitudeworld.com",
+                        To = Emails,
+                        Cc = "",
+                        Bcc = "",
+                        Subject = subject,
+                        Body = emailbody,
+                        IsBodyHtml = true,
+                        Tenant = demoTenant,
+                        EmailView = System.Net.Mime.MediaTypeNames.Text.Html,
+
+                    };
+
+                    SendEmail(crmTenant, ownerUser, lead, table, emailbody, parameters, false);
+                }
+                else
+                {
+
+                    #region send email to customer
+                    string path = LogitudeSettings.LogitudeURL + "/SignUpVerification.aspx?id=" + lead.Id;
+                    HtmlTemplate.Append("<div style='text-align:left;font-family: Calibri;font-size: 16px;'>");
+                    HtmlTemplate.Append("Dear " + lead.ContactName);
+                    HtmlTemplate.Append("<br /><br />");
+                    HtmlTemplate.Append("Thank You for your interest in Logitude World, the first Freight Forwarding Software built totally in the cloud.");
+                    HtmlTemplate.Append("<br /><br />");
+                    HtmlTemplate.Append("In order to proceed with the demo environment. Please, confirm your details in the following link:");
+                    HtmlTemplate.Append("<br />");
+                    HtmlTemplate.Append("<a href='" + path + "'>" + path + "</a>");
+                    HtmlTemplate.Append("<br /><br />");
+                    HtmlTemplate.Append("As a result, we will send you an email with a username and password for Logitude's demo environment and a Quick Tour Guide.");
+                    HtmlTemplate.Append("<br /><br />");
+                    HtmlTemplate.Append("If you have any questions or inquiries. Please, feel free to contact us at");
+                    HtmlTemplate.Append("<br />");
+                    HtmlTemplate.Append("<a href='mailto:info@logitudeworld.com'>info@logitudeworld.com</a>");
+                    HtmlTemplate.Append("<br /><br />");
+                    HtmlTemplate.Append("Best Regards,");
+                    HtmlTemplate.Append("<br />");
+                    HtmlTemplate.Append("<div style='text-align:left;font-weight:bold;color:#4472C4'>The Logitude Team</div>");
+                    HtmlTemplate.Append("<a href='http://www.Logitudeworld.com'>www.Logitudeworld.com</a>");
+                    HtmlTemplate.Append("<br />");
+                    HtmlTemplate.Append("<img width='258' height='150' src='cid:logo0' />");
+                    HtmlTemplate.Append("</div>");
+                    string emailbody = HtmlTemplate.ToString();
+                    EmailParameters parameters = new EmailParameters();
+                    if (LogitudeSettings.DeploymentStage == "Dev")
+                    {
                         parameters = new EmailParameters()
                         {
-                            From = "registration@logitudeworld.com",
-                            To = Emails,
+                            From = "info@logitudeworld.com",
+                            To = toEmail,
                             Cc = "",
                             Bcc = "",
-                            Subject = subject,
+                            Subject = "Complete the Signup Request with Logitude World",
                             Body = emailbody,
                             IsBodyHtml = true,
                             Tenant = demoTenant,
                             EmailView = System.Net.Mime.MediaTypeNames.Text.Html,
 
                         };
-
-                        SendEmail(crmTenant, ownerUser, lead, table, emailbody, parameters, false);
-
-                        // Aerolineas 
                     }
                     else
                     {
-
-                        #region send email to customer
-                        string path = LogitudeSettings.LogitudeURL + "/SignUpVerification.aspx?id=" + lead.Id;
-                        HtmlTemplate.Append("<div style='text-align:left;font-family: Calibri;font-size: 16px;color:#4472C4'>");
-                        HtmlTemplate.Append("Dear " + (!string.IsNullOrEmpty(lead.ContactName) && lead.ContactName != "Unassigned" ? (lead.ContactName + ", ") : ",") + (!string.IsNullOrEmpty(lead.CompanyName) && lead.CompanyName != "Unassigned" ? lead.CompanyName : ""));// " (" + lead.Country + ")");
-                        HtmlTemplate.Append("<br /><br />");
-                        HtmlTemplate.Append("Thank You for your interest in Logitude World, the first Freight Forwarding Software built totally in the cloud.");
-                        HtmlTemplate.Append("<br /><br />");
-                        HtmlTemplate.Append("In order to proceed with the demo environment. Please, confirm your details in the following link: <a href='" + path + "'/>" + path + "</a>");
-                        HtmlTemplate.Append("<br /><br />");
-                        HtmlTemplate.Append("As a result, we will send you an email with a username and password for Logitude's demo environment and a Quick Tour Guide.");
-                        HtmlTemplate.Append("<br /><br />");
-                        HtmlTemplate.Append("If you have any questions or inquiries. Please, feel free to contact us at <a href='mailto:info@logitudeworld.com'>info@logitudeworld.com</a>");
-                        HtmlTemplate.Append("<br /><br />");
-                        HtmlTemplate.Append("Best Regards,");
-                        HtmlTemplate.Append("<br />");
-                        HtmlTemplate.Append("<div style='text-align:left;font-weight:bold;color:#4472C4'>The Logitude Team</div>");
-                        HtmlTemplate.Append("<a href='http://www.Logitudeworld.com'>www.Logitudeworld.com</a>");
-                        HtmlTemplate.Append("<br />");
-                        HtmlTemplate.Append("<img width='258' height='101' src='cid:logo0' />");
-                        HtmlTemplate.Append("</div>");
-                        string emailbody = HtmlTemplate.ToString();
-                        EmailParameters parameters = new EmailParameters();
-                        if (LogitudeSettings.DeploymentStage == "Dev")
+                        parameters = new EmailParameters()
                         {
-                            parameters = new EmailParameters()
-                            {
-                                From = "info@logitudeworld.com",
-                                To = toEmail,
-                                Cc = "",
-                                Bcc = "",
-                                Subject = "Complete the Signup Request with Logitude World",
-                                Body = emailbody,
-                                IsBodyHtml = true,
-                                Tenant = demoTenant,
-                                EmailView = System.Net.Mime.MediaTypeNames.Text.Html,
+                            From = "info@logitudeworld.com",
+                            To = toEmail,
+                            Cc = "info@logitudeworld.com",
+                            Bcc = "jalal@logitudeworld.com",
+                            Subject = "Complete the Signup Request with Logitude World",
+                            Body = emailbody,
+                            IsBodyHtml = true,
+                            Tenant = demoTenant,
+                            EmailView = System.Net.Mime.MediaTypeNames.Text.Html,
 
-                            };
-                        }
-                        else
-                        {
-                            parameters = new EmailParameters()
-                            {
-                                From = "info@logitudeworld.com",
-                                To = toEmail,
-                                Cc = "info@logitudeworld.com",
-                                Bcc = "jalal@logitudeworld.com",
-                                Subject = "Complete the Signup Request with Logitude World",
-                                Body = emailbody,
-                                IsBodyHtml = true,
-                                Tenant = demoTenant,
-                                EmailView = System.Net.Mime.MediaTypeNames.Text.Html,
-
-                            };
-                        }
-
-                        SendEmail(crmTenant, ownerUser, lead, table, emailbody, parameters, false);
-
-                        #endregion
+                        };
                     }
+
+                    SendEmail(crmTenant, ownerUser, lead, table, emailbody, parameters, false);
+
+                    #endregion
                 }
-
-                else if (lead.IsEmailVerified)
-                {
-
-                    if (lead.RequestType == "DemoTenant")
-                    {
-
-                        UserPM user = userQuery.GetSingleUserPMByEmail(lead.Email, demoTenant, true);
-                        if (user == null)
-                        {
-                            UserPM createdUser = AddNewUserToDemoTenant(demoTenant, lead, userRepository, branchRepository, departmentRepository, roleRepository);
-
-
-                            CustomerRepository customerRepository = new CustomerRepository(commonContext);
-                            AddressRepository addressRepository = new AddressRepository(commonContext);
-
-                            Opportunity opportunity = opportunityRepository.GetSingle(lead.OpportunityId, LogitudeSettings.LogitudeCRMTenantNumber);
-                            if (opportunity != null)
-                            {
-                                Stage stage = stageRepository.GetStageByCode("UPS", LogitudeSettings.LogitudeCRMTenantNumber);
-                                DateTime? todayDateTime = TenantServerConfigration.GetCurrentDateTime(opportunity.Tenant);
-
-                                OpportunityStage opportunityStage = new OpportunityStage()
-                                {
-                                    Id = IdCounter.GetNumber("OpportunityStage", opportunity.Tenant),
-                                    OpportunityId = opportunity.Id,
-                                    Tenant = opportunity.Tenant,
-                                    FromStageId = opportunity.StageId,
-                                    ToStageId = stage.Id,
-                                    StartDate = opportunity.LastStageDate,
-                                    EndDate = todayDateTime,
-                                };
-
-                                opportunity.LastStageDate = todayDateTime;
-
-                                OpportunityStageRepository opportunityStageRepository = new OpportunityStageRepository(crmContext);
-                                opportunityStageRepository.Add(opportunityStage);
-                                opportunityStageRepository.SubmitChanges();
-
-                                opportunity.StageId = stage.Id;
-                                opportunityRepository.SubmitChanges();
-                            }
-
-
-
-                            #region send email to customer care
-                            SendPasswordEmailToUser(demoTenant, crmTenant, ownerUser, lead, table, HtmlTemplate, createdUser);
-
-                            #endregion
-
-                            lead.IsUserOpened = true;
-                            lead.IsUserEmailSent = true;
-                            lead.StatusCode = "Completed";
-
-                            leadRepository.Update(lead);
-                            leadRepository.SubmitChanges();
-
-                            LogDoneItemInMemory();
-                        }
-                        else
-                        {
-
-                            //if (!lead.IsUserEmailSent)
-                            //{
-                            //    SendPasswordEmailToUser(demoTenant, crmTenant, ownerUser, lead, table, HtmlTemplate, user);
-                            //}
-
-                            //lead.IsUserEmailSent = true;
-                            lead.IsUserOpened = true;
-                            lead.StatusCode = "Completed";
-                            leadRepository.Update(lead);
-                            leadRepository.SubmitChanges();
-                            LogDoneItemInMemory();
-                        }
-
-
-                    }
-                    else
-                    {
-
-                    }
-
-
-                }
-
             }
 
+            else if (lead.IsEmailVerified)
+            {
+                if (lead.RequestType == "DemoTenant")
+                {
+                    UserPM user = userQuery.GetSingleUserPMByEmail(lead.Email, demoTenant, true);
+                    if (user == null)
+                    {
+                        UserPM createdUser = AddNewUserToDemoTenant(demoTenant, lead, userRepository, branchRepository, departmentRepository, roleRepository);
+
+
+                        CustomerRepository customerRepository = new CustomerRepository(commonContext);
+                        AddressRepository addressRepository = new AddressRepository(commonContext);
+
+                        Opportunity opportunity = opportunityRepository.GetSingle(lead.OpportunityId, LogitudeSettings.LogitudeCRMTenantNumber);
+                        if (opportunity != null)
+                        {
+                            Stage stage = stageRepository.GetStageByCode("UPS", LogitudeSettings.LogitudeCRMTenantNumber);
+                            DateTime? todayDateTime = TenantServerConfigration.GetCurrentDateTime(opportunity.Tenant);
+
+                            OpportunityStage opportunityStage = new OpportunityStage()
+                            {
+                                Id = IdCounter.GetNumber("OpportunityStage", opportunity.Tenant),
+                                OpportunityId = opportunity.Id,
+                                Tenant = opportunity.Tenant,
+                                FromStageId = opportunity.StageId,
+                                ToStageId = stage.Id,
+                                StartDate = opportunity.LastStageDate,
+                                EndDate = todayDateTime,
+                            };
+
+                            opportunity.LastStageDate = todayDateTime;
+
+                            OpportunityStageRepository opportunityStageRepository = new OpportunityStageRepository(crmContext);
+                            opportunityStageRepository.Add(opportunityStage);
+                            opportunityStageRepository.SubmitChanges();
+
+                            opportunity.StageId = stage.Id;
+                            opportunityRepository.SubmitChanges();
+                        }
+
+                        #region send email to customer care
+                        SendPasswordEmailToUser(demoTenant, crmTenant, ownerUser, lead, table, HtmlTemplate, createdUser);
+
+                        #endregion
+
+                        lead.IsUserOpened = true;
+                        lead.IsUserEmailSent = true;
+                        lead.StatusCode = "Completed";
+
+                        leadRepository.Update(lead);
+                        leadRepository.SubmitChanges();
+
+                        LogDoneItemInMemory();
+                    }
+                    else
+                    {
+                        lead.IsUserOpened = true;
+                        lead.StatusCode = "Completed";
+                        leadRepository.Update(lead);
+                        leadRepository.SubmitChanges();
+                        LogDoneItemInMemory();
+                    }
+                }
+                else
+                {
+
+                }
+            }
+        }
 
         public static UserPM AddNewUserToDemoTenant(int tenant, LogitudeLead lead, UserRepository userRepository, BranchRepository branchRepository, DepartmentRepository departmentRepository, RoleRepository roleRepository)
         {
@@ -805,8 +786,8 @@ namespace CommunicationWorkerRole
 
         private void SendPasswordEmailToUser(int demoTenant, int crmTenant, User ownerUser, LogitudeLead lead, ObjectTable table, StringBuilder HtmlTemplate, UserPM createdUser)
         {
-            HtmlTemplate.Append("<div style='text-align:left;font-family: Calibri;font-size: 16px;color:#4472C4'>");
-            HtmlTemplate.Append("Dear " + lead.ContactName + " , " + lead.CompanyName + " (" + lead.Country + ") ");
+            HtmlTemplate.Append("<div style='text-align:left;font-family: Calibri;font-size: 16px;'>");
+            HtmlTemplate.Append("Dear " + lead.ContactName);
             HtmlTemplate.Append("<br /><br />");
             HtmlTemplate.Append("Thank you for verifying your account!");
             HtmlTemplate.Append("<br /><br />");
@@ -819,7 +800,7 @@ namespace CommunicationWorkerRole
             HtmlTemplate.Append("In order to log in. Please, follow the link below (or copy and paste it into your browser):");
 
             HtmlTemplate.Append("<br />");
-            HtmlTemplate.Append("<a href='" + LogitudeSettings.LogitudeURL + "'/>" + LogitudeSettings.LogitudeURL + "</a>");
+            HtmlTemplate.Append("<a href='" + LogitudeSettings.LogitudeURL + "'>" + LogitudeSettings.LogitudeURL + "</a>");
 
             HtmlTemplate.Append("<br /><br />");
             HtmlTemplate.Append("The access is to Logitude's demo environment where other customers might be using at the same time, and kindly note that the trial period ends in 7 days.");
@@ -829,13 +810,6 @@ namespace CommunicationWorkerRole
 
 
             HtmlTemplate.Append("<a href='https://logitudeworld.com/wp-content/uploads/2019/09/getting_around.pdf'>https://logitudeworld.com/wp-content/uploads/2019/09/getting_around.pdf</a>");
-            HtmlTemplate.Append("<br /><br />");
-
-            HtmlTemplate.Append("The demo environment provides access to majority of Logitude modules, including the e-AWB module, which was also designed to be run as a stand-alone application.");
-            HtmlTemplate.Append("<br /><br />");
-            HtmlTemplate.Append("Please use the following link for a Quick Tour Guide of the e-AWB module:");
-            HtmlTemplate.Append("<br />");
-            HtmlTemplate.Append("<a href='https://logitudeworld.com/wp-content/uploads/2021/01/eawb_quicktour.pdf'>https://logitudeworld.com/wp-content/uploads/2021/01/eawb_quicktour.pdf</a>");
 
             HtmlTemplate.Append("<br /><br />");
             HtmlTemplate.Append("If you want to explore our Logitude World in more detail, we can create a private environment for you. To get the 30-days free trial Please let us know.");
@@ -848,7 +822,7 @@ namespace CommunicationWorkerRole
             HtmlTemplate.Append("<div style='text-align:left;font-weight:bold;color:#4472C4'>The Logitude Team</div>");
             HtmlTemplate.Append("<a href='http://www.Logitudeworld.com'>www.Logitudeworld.com</a>");
             HtmlTemplate.Append("<br />");
-            HtmlTemplate.Append("<img width='258' height='101' src='cid:logo0' />");
+            HtmlTemplate.Append("<img width='258' height='150' src='cid:logo0' />");
             HtmlTemplate.Append("</div>");
 
             string emailbody = HtmlTemplate.ToString();
@@ -865,6 +839,7 @@ namespace CommunicationWorkerRole
                     EmailBody = emailbody,
                     Tenant = demoTenant,
                     IsBodySecured = true,
+                    LoggingUserId = GetCrmUserId(crmTenant),
                 };
             }
             else
@@ -890,7 +865,7 @@ namespace CommunicationWorkerRole
             System.Text.UTF8Encoding enc = new System.Text.UTF8Encoding();
             byte[] messageByte = enc.GetBytes(emailbody);
 
-            string txtMessage = emailbody.Replace("<div style='text-align:left'>", "").Replace("<br />", Environment.NewLine).Replace("<img width='258' height='101' src='cid:logo0' />", "").Replace("<a href='mailto:info@logitudeworld.com'>info@logitudeworld.com</a>", "info@logitudeworld.com")
+            string txtMessage = emailbody.Replace("<div style='text-align:left'>", "").Replace("<br />", Environment.NewLine).Replace("<img width='258' height='150' src='cid:logo0' />", "").Replace("<a href='mailto:info@logitudeworld.com'>info@logitudeworld.com</a>", "info@logitudeworld.com")
                 .Replace("<a href='http://www.Logitudeworld.com'>www.Logitudeworld.com</a>", "http://www.Logitudeworld.com").Replace(" <a href='", "").Replace("</a>", "").Replace("<div style='text-align:left;font-weight:bold;color:#1F497D'>The Logitude Team</div>", "").Replace("</div>", "")
                 .Replace("<b>", "").Replace("</b>", "").Replace("<div style='text-align:right;margin-right:150px'>", "").Replace("<div style='text-align:left;'>", "");
             byte[] messagetxtByte = enc.GetBytes(txtMessage);
@@ -1098,7 +1073,7 @@ namespace CommunicationWorkerRole
                 ActivityUpdateService service = new ActivityUpdateService(crmContext, new Dictionary<string, IContext>(), tenant);
                 activityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
 
-                List<Contact> contacts = contactRepository.GetActiveContacts(tenant).ToList();
+                var contacts = contactRepository.GetActiveContacts(tenant);
 
                 if (!string.IsNullOrEmpty(toEmail))
                 {
@@ -1229,18 +1204,28 @@ namespace CommunicationWorkerRole
                 EmailBody = emailbody,
                 Tenant = crmTenant,
                 IsBodySecured = isBodySecured,
+                LoggingUserId = GetCrmUserId(crmTenant),
+
             };
             Communications.AddEmailCommunicationLogQueue(emailParams, crmTenant);
             System.Text.UTF8Encoding enc = new System.Text.UTF8Encoding();
             byte[] messageByte = enc.GetBytes(emailbody);
 
-            string txtMessage = emailbody.Replace("<div style='text-align:left'>", "").Replace("<br />", Environment.NewLine).Replace("<img width='258' height='101' src='cid:logo0' />", "").Replace("<a href='mailto:info@logitudeworld.com'>info@logitudeworld.com</a>", "info@logitudeworld.com")
+            string txtMessage = emailbody.Replace("<div style='text-align:left'>", "").Replace("<br />", Environment.NewLine).Replace("<img width='258' height='150' src='cid:logo0' />", "").Replace("<a href='mailto:info@logitudeworld.com'>info@logitudeworld.com</a>", "info@logitudeworld.com")
                 .Replace("<a href='http://www.Logitudeworld.com'>www.Logitudeworld.com</a>", "http://www.Logitudeworld.com").Replace(" <a href='" + path + "'/>", "")
                 .Replace("</a>", "").Replace("<div style='text-align:left;font-weight:bold;color:#1F497D'>The Logitude Team</div>", "").Replace("</div>", "");
             byte[] messagetxtByte = enc.GetBytes(txtMessage);
 
             SendHtmlDocumentForOpportunity(messageByte, messagetxtByte, crmTenant, parameters.To, parameters.Subject, parameters.Cc, parameters.Bcc, ownerUser.Id, lead.OpportunityId, lead.CustomerId, table.Id, null, null);
         }
+
+        private string GetCrmUserId(int crmTenant)
+        {
+            if (LogitudeSettings.DeploymentStage != "Simplog") return null;
+            var crmUserEmail = "info@logitudeworld.com";
+            return userRepository.GetSingleUserByEmail(crmUserEmail, crmTenant, false)?.Id;
+        }
+
         private void BuildOpportunitySearchFields(Opportunity entity)
         {
             string result = "";
@@ -1273,8 +1258,6 @@ namespace CommunicationWorkerRole
             entity.SearchFields = result;
 
         }
-
-
 
         public override bool OnStart()
         {
@@ -1317,5 +1300,50 @@ namespace CommunicationWorkerRole
             }
         }
 
+        private void SendToGoogleAnalytics(int tenant, string clientId, string stageName)
+        {
+            string postDataString = this.BuildPostDataString(clientId, stageName);
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("http://www.google-analytics.com/collect");
+            request.Method = "POST";
+            request.ContentLength = Encoding.UTF8.GetByteCount(postDataString);
+            using (var writer = new StreamWriter(request.GetRequestStream()))
+            {
+                writer.Write(postDataString);
+            }
+
+            try
+            {
+                var webResponse = (HttpWebResponse)request.GetResponse();
+                if (webResponse.StatusCode != HttpStatusCode.OK)
+                {
+                    throw new HttpException((int)webResponse.StatusCode,
+                                            "Google Analytics tracking did not return OK 200");
+                }
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandleException(ex, DateTime.Now, tenant, "", "Google Analytics tracking failed", "", null);
+            }
+        }
+
+        private string BuildPostDataString(string clientId, string stageName)
+        {
+            string logitudeTrackingId = "UA-25875416-1";
+
+            Dictionary<string, string> postData = new Dictionary<string, string>
+                           {
+                               { "v", "1" },
+                               { "tid", logitudeTrackingId },
+                               { "cid", clientId },
+                               { "t", "event" },
+                               { "ec", "crm" },
+                               { "ea", "update" },
+                               { "cd3", stageName },
+                               { "el", "Stage" },
+                           };
+
+            return postData.Aggregate("", (data, next) => string.Format("{0}&{1}={2}", data, next.Key,
+                                                             HttpUtility.UrlEncode(next.Value))).TrimEnd('&');
+        }
     }
 }

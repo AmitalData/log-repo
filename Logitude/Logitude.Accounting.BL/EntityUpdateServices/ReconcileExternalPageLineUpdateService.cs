@@ -34,10 +34,53 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 entityPM.Id = IdCounter.GetNumber("ReconcileExternalPageLine", entityPM.Tenant);
 
             entityPM.ReconcileExternalPageId = entityParentPM.Id;
-
+            //this.UpdateBankAccount(entityPM);
             base.OnCreating(entityPM, entityParentPM);
         }
+        protected override void OnUpdating(ReconcileExternalPageLinePM entityPM, ReconcileExternalPageLine entityPOCO)
+        {
+            if(entityPM.IsReconciled != entityPOCO.IsReconciled)
+            {
+                //this.UpdateBankAccount(entityPM);
+            }
+            base.OnUpdating(entityPM, entityPOCO);
+        }
 
+        internal void UpdateBankAccount(ReconcileExternalPageLinePM entityPM)
+        {
+            BankAccountQueryService qs = new BankAccountQueryService((MainContext as IAccountingContext));
+            ReconcileExternalPageQueryService reconcileExternalPageQs = new ReconcileExternalPageQueryService((MainContext as IAccountingContext));
+            var reconcileExternalPage = reconcileExternalPageQs.GetSingle(entityPM.ReconcileExternalPageId, false, false);
+            if (reconcileExternalPage != null)
+            {
+                BankAccountUpdateService service = new BankAccountUpdateService(MainContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+                var bankAccount = qs.GetByGLAccountId(reconcileExternalPage.GLAccountId, entityPM.Tenant);
+                if (bankAccount != null)
+                {
+                    var totalOpenPagesLines = 0;
+                    if (entityPM.IsReconciled)
+                    {
+                        Int32.TryParse(bankAccount.TotalOpenPagesLines, out totalOpenPagesLines);
+                        if (totalOpenPagesLines > 0)
+                        {
+                            totalOpenPagesLines--;
+                        }
+                        bankAccount.TotalOpenPagesLines = totalOpenPagesLines.ToString();
+                    }
+                    else
+                    {
+                        Int32.TryParse(bankAccount.TotalOpenExternalTransactions, out totalOpenPagesLines);
+                        if (totalOpenPagesLines > 0)
+                        {
+                            totalOpenPagesLines++;
+                        }
+                        bankAccount.TotalOpenPagesLines = totalOpenPagesLines.ToString();
+                    }
+                    bankAccount.ChangeSetOp = ChangeSetOperation.Update;
+                    service.Update(bankAccount, true);
+                }
+            }
+        }
 
         internal void Update_InProgressExternalReconcile(List<string> listReconcileExternalPageLineId, int tenant, bool Value_ExternalReconcileInProgress)
         {
@@ -50,7 +93,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 {
                     if (item.InProgressExternalReconcile)
                     {
-                        throw new Exception("Already InReconcileProgress");
+                        throw new ApplicationException("יש התאמות בתהליך");
                     }
                 }
                 item.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;

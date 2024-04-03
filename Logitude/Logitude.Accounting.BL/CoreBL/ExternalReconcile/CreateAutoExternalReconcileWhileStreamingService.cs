@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Logitude.Accounting.BL.CoreBL.ExternalReconcile.CancelDeposit;
 using Logitude.Accounting.BL.CoreBL.ExternalReconcile.Utils;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.Validators;
@@ -47,14 +48,20 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
 
             var myExternalReconcileTypeService = new ExternalReconcileTypeService();
             myExternalReconcileTypeService.MustInit(_ExternalReconcileDataProvider);
-
+            
 
             bool isCreateAutoExternalReconcileMoveBankCheckFromTransferService = //TypeIs_CreateAutoExternalReconcileMoveBankCheckFromTransfer();
                 myExternalReconcileTypeService.GetExternalReconcileTypeFromJournal(_JournalPM)
                 == ExternalReconcileType.MoveBankCheckFromTransferExternalReconcile;
-
+            if (!string.IsNullOrWhiteSpace(base._JournalPM.OriginalJournalId))//
+            {
+                var command = new CreateAutoExternalReconcileWhileStreamingCancelDeposit();
+                command.MustInit(_ExternalReconcileDataProvider, _JournalPM, _NewLedgerTransactionsWithCounters);
+                command.CancelDeposit();
+                this.ExternalReconciliationList = command.ExternalReconciliationList;
+            }
             //if (_JournalPM.JournalExternalReconciles.Any(r => string.IsNullOrWhiteSpace(r.LedgerTransactionId)))
-            if (!isCreateAutoExternalReconcileMoveBankCheckFromTransferService)
+            else if (!isCreateAutoExternalReconcileMoveBankCheckFromTransferService)
             {
                 //while create  ExternalReconcileAdjustBankFeesService the bank lines are  string.IsNullOrWhiteSpace(r.LedgerTransactionId) 
                 var command = new CreateAutoExternalReconcileWhileStreamingFeesService();
@@ -103,11 +110,11 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
         {
             string adjustGLAccountId = "";
             var journalLineToadjustGLAccount = myJournalPM.JournalLines.Last();
-            if (journalLineToadjustGLAccount.ActionTypeCodeEnum == MyJournalActionTypeEnum.Credit)
+            if (journalLineToadjustGLAccount.ActionTypeCodeEnum == JournalActionTypeEnum.Credit)
             {
                 adjustGLAccountId = journalLineToadjustGLAccount.CreditAccountId;
             }
-            else if (journalLineToadjustGLAccount.ActionTypeCodeEnum == MyJournalActionTypeEnum.Debit)
+            else if (journalLineToadjustGLAccount.ActionTypeCodeEnum == JournalActionTypeEnum.Debit)
             {
                 adjustGLAccountId = journalLineToadjustGLAccount.DebitAccountId;
             }

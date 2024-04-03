@@ -1,18 +1,18 @@
-﻿using Logitude.Accounting.BL.CloseTables;
+﻿
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Def.EntityPMs;
+using Logitude.Accounting.Def.EntityQueryServicesExt;
+using Logitude.Server.Tools;
+using Microsoft.Practices.Unity;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
-using Simplog.Data.InvoiceModel.EntityPOCOs;
-using Simplog.Data.InvoiceModel.Repositories;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Logitude.Accounting.BL.CoreBL
 {
@@ -20,6 +20,11 @@ namespace Logitude.Accounting.BL.CoreBL
     {
         int tenant;
         DateTime endOfTodayDate;
+        GLAccountPM _mainCardGLA = new GLAccountPM();
+        List<GLAccountMoreDataPM> _glaccountMoreDatas = new List<GLAccountMoreDataPM>();
+        GLAccountMoreDataPM _mainGlaccountMoreData = new GLAccountMoreDataPM();
+        List<string> _splittedGlaccountIds = new List<string>();
+
         public GLAccountChequesTotalCalculator(int tenant)
         {
             this.tenant = tenant;
@@ -28,52 +33,64 @@ namespace Logitude.Accounting.BL.CoreBL
 
         public void RecalculateChequesTotalForBillToAccount(string billToAccountId)
         {
-            GLAccountMoreDataPM glaccountMoreData = GetGLAccountMoreDataConnectedToBillToAccount(tenant, billToAccountId);
-
-            ResetChequesTotals(glaccountMoreData);
-
-            List<ARPaymentChequePM> cheques = GetChequesOfPaymentBillToAccount(tenant, billToAccountId);
-            foreach (ARPaymentChequePM cheque in cheques)
-                AddChequeAmountToTotal(glaccountMoreData, cheque);
-
-            SubmiGLAccountMoreData(tenant, glaccountMoreData);
-        }
-
-        private void ResetChequesTotals(GLAccountMoreDataPM glaccountMoreData)
-        {
-            glaccountMoreData.TotFutureOpenChequesInLocalCur = 0;
-            glaccountMoreData.TotalOpenChequesInLocalCur = 0;
-        }
-
-        private void AddChequeAmountToTotal(GLAccountMoreDataPM glaccountMoreData, ARPaymentChequePM cheque)
-        {
-            if (cheque.StatusCode != ARPaymentChequeStatusValues.Redeemed && cheque.StatusCode != ARPaymentChequeStatusValues.ReturnedToCustomer)
+            _mainCardGLA = GetCardGLAccount(billToAccountId, tenant);
+            _glaccountMoreDatas = GetGLAccountMoreDataConnectedToBillToAccount(tenant);
+            ResetChequesTotals(_glaccountMoreDatas);
+            LedgerTransactionQueryService transactionsQuery = new LedgerTransactionQueryService(tenant);
+            foreach (var glMoreData in _glaccountMoreDatas)
             {
-                if (cheque.ValueDate > endOfTodayDate)
-                    glaccountMoreData.TotFutureOpenChequesInLocalCur += cheque.LocalAmount;
-                else
-                    glaccountMoreData.TotalOpenChequesInLocalCur += cheque.LocalAmount;
+                var totalOpenChequesInLocalCur = transactionsQuery.GetTotalOpenChequesLocalAmount(glMoreData.AccountId) ?? 0;
+                var totFutureOpenChequesInLocalCur = transactionsQuery.GetTotFutureOpenChequesLocalAmount(glMoreData.AccountId, endOfTodayDate) ?? 0;
+                glMoreData.TotalOpenChequesInLocalCur = totalOpenChequesInLocalCur;
+                glMoreData.TotFutureOpenChequesInLocalCur = totFutureOpenChequesInLocalCur;
+                SubmiGLAccountMoreData(tenant, glMoreData);
             }
         }
 
-        private GLAccountMoreDataPM GetGLAccountMoreDataConnectedToBillToAccount(int tenant, string billToAccountId)
+        private void ResetChequesTotals(List<GLAccountMoreDataPM> glaccountMoreDatas)
         {
-            string glaccountId = GetBillToGLAccountId(tenant, billToAccountId);
-            GLAccountMoreDataPM glaccountMoreData = GetGLAccountMoreDataPM(tenant, glaccountId);
-            return glaccountMoreData;
+
+            _mainGlaccountMoreData.TotFutureOpenChequesInLocalCur = 0;
+            _mainGlaccountMoreData.TotalOpenChequesInLocalCur = 0;
+            for (int i = 0; i < glaccountMoreDatas.Count; i++)
+            {
+                glaccountMoreDatas[i].TotFutureOpenChequesInLocalCur = 0;
+                glaccountMoreDatas[i].TotalOpenChequesInLocalCur = 0;
+            }
+        }
+        private List<GLAccountMoreDataPM> GetGLAccountMoreDataConnectedToBillToAccount(int tenant)
+        {
+
+            _mainGlaccountMoreData = GetGLAccountMoreDataPM(tenant, _mainCardGLA.Id);
+            _glaccountMoreDatas.Add(_mainGlaccountMoreData);
+            foreach (var splittedGLAId in _splittedGlaccountIds)
+            {
+                _glaccountMoreDatas.Add(GetGLAccountMoreDataPM(tenant, splittedGLAId));
+            }
+            return _glaccountMoreDatas;
         }
 
-        private List<ARPaymentChequePM> GetChequesOfPaymentBillToAccount(int tenant, string billToAccountId)
+        private GLAccountPM GetCardGLAccount(string billToId, int tenant)
         {
-            List<ARPayment> payments = GetBillToPayments(tenant, billToAccountId);
+            GLAccountPM glaAccount = null;
+            CardRepository cardRep = new CardRepository(tenant);
+            Card card = cardRep.GetSingleCard(billToId, tenant);
+            IAccountingContext MyContext = AccountingContext.GetContext(tenant);
+            if (card != null)
+            {
+                IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
+                glaAccount = glAccountQuery.GetSingleGLAccountPM(card.GLAccountId, tenant);
 
-            var paymentIds = payments.Select(d => d.Id).ToList();
+                var gLAccountCurrencyQueryService = new GLAccountCurrencyQueryService(MyContext);
+                var glAccountCurrencies = gLAccountCurrencyQueryService.GetRelatedCurrenciesAccounts(tenant, glaAccount.Id).ToList();
+                if (glAccountCurrencies.Count > 0)
+                {
+                    _splittedGlaccountIds = glAccountCurrencies;
+                }
 
-            List<ARPaymentChequePM> cheques = GetChequesOfPayments(tenant, paymentIds);
-            return cheques;
+            }
+            return glaAccount;
         }
-
-
         private void SubmiGLAccountMoreData(int tenant, GLAccountMoreDataPM glaccountMoreDataPM)
         {
             IAccountingContext MyContext = AccountingContext.GetContext(tenant);
@@ -88,27 +105,6 @@ namespace Logitude.Accounting.BL.CoreBL
             GLAccountMoreDataQueryService moreDataQueryService = new GLAccountMoreDataQueryService(tenant);
             GLAccountMoreDataPM moreDataPM = moreDataQueryService.GetSingle(GLAccountId, false, false);
             return moreDataPM;
-        }
-
-        private string GetBillToGLAccountId(int tenant, string billTo)
-        {
-            CardRepository cardRepo = new CardRepository(tenant);
-            string GLAccountId = cardRepo.GetGLAccountIdByCardId(billTo, tenant);
-            return GLAccountId;
-        }
-
-        private List<ARPaymentChequePM> GetChequesOfPayments(int tenant, List<string> paymentIds)
-        {
-            ARPaymentChequeQueryService queryService = new ARPaymentChequeQueryService(tenant);
-            List<ARPaymentChequePM> aRPaymentChequePMs = queryService.GetARPaymentChequesByPaymentIds(paymentIds, tenant);
-            return aRPaymentChequePMs;
-        }
-
-        private List<ARPayment> GetBillToPayments(int tenant, string paymentBillToId)
-        {
-            ARPaymentRepository repo = new ARPaymentRepository(tenant);
-            List<ARPayment> payments = repo.GetARPaymentsByBillTo(paymentBillToId, tenant);
-            return payments;
         }
 
     }

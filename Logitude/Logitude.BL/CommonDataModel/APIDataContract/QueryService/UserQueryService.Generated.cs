@@ -10,6 +10,8 @@ using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.QuoteModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
@@ -40,59 +42,59 @@ using Simplog.Data.CommonDataModel;
         }
 
 		
-		public User GetUserById(string Id,int Tenant,string ComputingPartnerName = "")
+		public User GetUserById(string Id,int Tenant,  string ComputingPartnerName = "")
         { 
 		    try
             {
-
+				 
 				
-				var temp = query.GetSinglePM(Id,Tenant);				
+				var temp = query.GetSinglePM(Id, Tenant);				
 				 if (temp == null)
                     throw new ApplicationException("User with Id " + Id + " doesn't exist");
 
 				return UserDataMapping(temp,Tenant,ComputingPartnerName);
 			}
+
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }
 		
-		public User GetUserByCode(string Code,int Tenant,string ComputingPartnerName = "")
+		public User GetUserByCode(string Code,int Tenant,  string ComputingPartnerName = "")
         { 
 		    try
             {
-
+				 
 				
-				var temp = query.GetSinglePMByCode(Code,Tenant);				
+				var temp = query.GetSinglePMByCode(Code, Tenant);				
 				 if (temp == null)
                     throw new ApplicationException("User with Code " + Code + " doesn't exist");
 
 				return UserDataMapping(temp,Tenant,ComputingPartnerName);
 			}
+
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }
 		
-		public User GetUserByEmail(string Email,int Tenant,string ComputingPartnerName = "")
+		public User GetUserByEmail(string Email,int Tenant,  string ComputingPartnerName = "")
         { 
 		    try
             {
-
+				 
 				
-				var temp = query.GetSinglePMByEmail(Email,Tenant);				
+				var temp = query.GetSinglePMByEmail(Email, Tenant);				
 				 if (temp == null)
                     throw new ApplicationException("User with Email " + Email + " doesn't exist");
 
 				return UserDataMapping(temp,Tenant,ComputingPartnerName);
 			}
+
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }
@@ -131,11 +133,11 @@ using Simplog.Data.CommonDataModel;
 					
 					if (!string.IsNullOrEmpty(MyEntity.ExternalCode))
 					{
-						temp = query.GetSinglePMByCode(MyEntity.ExternalCode, Tenant);
+						temp = query.GetSinglePMByCode(MyEntity.ExternalCode, Tenant  );
 					} 
 					if (!string.IsNullOrEmpty(MyEntity.Code))
 					{
-						temp = query.GetSinglePMByEmail(MyEntity.Code, Tenant);
+						temp = query.GetSinglePMByEmail(MyEntity.Code, Tenant  );
 					} 
 					if (!string.IsNullOrEmpty(MyEntity.PartnerCode))
 					{
@@ -147,16 +149,17 @@ using Simplog.Data.CommonDataModel;
 						{
 						  throw new ApplicationException("User with Partner Code " + MyEntity.PartnerCode + " doesn't match any record");
 						}
-						temp = query.GetSinglePMByEmail(MyCode, Tenant);
+						temp = query.GetSinglePMByEmail(MyCode, Tenant );
 						
 						
 					}
 					
-					   					   
-					if(temp == null)
+					
+			  	   if(temp == null)
 					{   
 					    throw new ApplicationException("User with Code " + MyEntity.Code + " doesn't exist");
 					} 
+				 
 					
 					if(string.IsNullOrEmpty(temp.Id))
 					{
@@ -175,17 +178,17 @@ using Simplog.Data.CommonDataModel;
 						
 					}
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.EnglishName))
-					{							//throw new ApplicationException("EnglishName Can't be update"); 
-							temp.EnglishName = MyEntity.EnglishName;
+					if(!IsUpdate)
+					{							
+						temp.EnglishName = MyEntity.EnglishName;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.LocalName))
-					{							//throw new ApplicationException("LocalName Can't be update"); 
-							temp.LocalName = MyEntity.LocalName;
+					if(!IsUpdate)
+					{							
+						temp.LocalName = MyEntity.LocalName;
 
 										}  
 
@@ -195,9 +198,8 @@ using Simplog.Data.CommonDataModel;
 					   
 						 
 						if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.ExternalCode))
-						{
-								//throw new ApplicationException("ExternalCode Can't be update"); 
-								temp.Code = MyEntity.ExternalCode;
+						{								
+							temp.Code = MyEntity.ExternalCode;
 								
 						
 						}  
@@ -205,17 +207,17 @@ using Simplog.Data.CommonDataModel;
 						
 					}
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Code))
-					{							//throw new ApplicationException("Code Can't be update"); 
-							temp.Email = MyEntity.Code;
+					if(!IsUpdate)
+					{							
+						temp.Email = MyEntity.Code;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.PartnerCode))
-					{							//throw new ApplicationException("PartnerCode Can't be update"); 
-							temp.Email = MyEntity.PartnerCode;
+					if(!IsUpdate)
+					{							
+						temp.Email = MyEntity.PartnerCode;
 
 										}  
 
@@ -228,6 +230,8 @@ using Simplog.Data.CommonDataModel;
                 throw ex;
             } 
         }
-		 
+
+
+						   
    }
 }

@@ -29,6 +29,7 @@ using Simplog.Data.Helpers;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using System.Data.Entity;
+using WebFreight.Web.WebServices;
 
 namespace WebFreight.Web.ReportsWebServices
 {
@@ -47,33 +48,44 @@ namespace WebFreight.Web.ReportsWebServices
         private CountryRepository countryRepository;
         private ICommonDataContext commonContext;
         private IWebFreightContext webFreightContext;
-
+        private ContactRepository contactRepository;
+        private AddressRepository addressRepository;
+        private WebServiceHelper servicHelper;
+        public ShipmentPM shipmentPM;
         [WebMethod]
         public byte[] GetProfitData(string shipmentId, int tenant, string accountingCurrencyId, string currentUser)
         {
+            servicHelper = new WebServiceHelper(tenant);
             ShipmentProfitDataProvider provider = GetProfitDataProvider(shipmentId, tenant, accountingCurrencyId, currentUser);
             XmlSerializer serializer = new XmlSerializer(typeof(ShipmentProfitDataProvider));
-            MemoryStream memstream = new MemoryStream();
-            serializer.Serialize(memstream, provider);
-            memstream.Seek(0, SeekOrigin.Begin);
-            var reader = new StreamReader(memstream);
-            string content = reader.ReadToEnd();
-            byte[] bytearray = memstream.ToArray();
-            return bytearray;
+            using (MemoryStream memstream = new MemoryStream())
+            {
+                serializer.Serialize(memstream, provider);
+                memstream.Seek(0, SeekOrigin.Begin);
+                var reader = new StreamReader(memstream);
+                string content = reader.ReadToEnd();
+                byte[] bytearray = memstream.ToArray();
+                return bytearray;
+            }
+            
         }
 
         [WebMethod]
         public byte[] GetProfitInvoicesData(string shipmentId, int tenant, string accountingCurrencyId, string currentUser)
         {
+            servicHelper = new WebServiceHelper(tenant);
             ShipmentProfitInvoicesDataProvider provider = this.BuildProfitInvoicesProvider(shipmentId, tenant, accountingCurrencyId, currentUser);
             XmlSerializer serializer = new XmlSerializer(typeof(ShipmentProfitInvoicesDataProvider));
-            MemoryStream memstream = new MemoryStream();
-            serializer.Serialize(memstream, provider);
-            memstream.Seek(0, SeekOrigin.Begin);
-            var reader = new StreamReader(memstream);
-            string content = reader.ReadToEnd();
-            byte[] bytearray = memstream.ToArray();
-            return bytearray;
+            using (MemoryStream memstream = new MemoryStream())
+            {
+                serializer.Serialize(memstream, provider);
+                memstream.Seek(0, SeekOrigin.Begin);
+                var reader = new StreamReader(memstream);
+                string content = reader.ReadToEnd();
+                byte[] bytearray = memstream.ToArray();
+                return bytearray;
+            }
+            
         }
 
         public ShipmentProfitDataProvider GetProfitDataProvider(string shipmentId, int tenant, string accountingCurrencyId, string currentUser)
@@ -85,15 +97,16 @@ namespace WebFreight.Web.ReportsWebServices
             ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
             ShipmentQuery shipmentQuery = new ShipmentQuery(shipmentRepository);
             CurrencyRepository currencyRepository = new CurrencyRepository(commonContext);
-            AddressRepository addressRepository = new AddressRepository(commonContext);
+            addressRepository = new AddressRepository(commonContext);
             VatTypeRepository vatTypeRepository = new VatTypeRepository(commonContext);
             VatTypeQuery vatTypeQuery = new VatTypeQuery(vatTypeRepository);
             List<Currency> listCurrency = currencyRepository.GetCurrencies(tenant).ToList();
-            ShipmentPM shipmentPM = shipmentQuery.GetSinglePM(shipmentId, tenant);
+            shipmentPM = shipmentQuery.GetSinglePM(shipmentId, tenant);
             portRepository = new PortRepository(commonContext);
             countryRepository = new CountryRepository(commonContext);
             TenantRepository tenantRepository = new TenantRepository(tenant);
             Tenant tenantSettings = (from a in commonContext.Tenants where a.Id == tenant select a).FirstOrDefault();
+            contactRepository = new ContactRepository(commonContext);
 
             provider.IssueDate = TenantServerConfigration.GetCurrentDateTime(tenant);
 
@@ -251,6 +264,7 @@ namespace WebFreight.Web.ReportsWebServices
                 provider.VolumeUnitCode = shipmentPM.VolumeUnitCode;
                 provider.IsAccrualsApproved = shipmentPM.IsAccrualsApproved;
                 provider.AccrualsApprovalDate = shipmentPM.AccrualsApprovalDate;
+                provider.QuoteNumber = shipmentPM.QuoteNumber;
                 #endregion
 
                 #region Group by ChargeType
@@ -449,6 +463,7 @@ namespace WebFreight.Web.ReportsWebServices
                 #endregion
 
                 #region Other Fields
+                provider.ProjectNumber = ServiceStringConvertor(shipmentPM.ProjectNumber);
                 provider.Notes = ServiceStringConvertor(shipmentPM.Notes);
                 provider.ShipmentNumber = ServiceStringConvertor(shipmentPM.ShipmentNumber);
                 provider.DescriptionOfGoods = ServiceStringConvertor(shipmentPM.DescriptionOfGoods);
@@ -565,7 +580,7 @@ namespace WebFreight.Web.ReportsWebServices
                 provider.AgentAddress = varAgentAddress;
                 provider.ShipperAddress = varShipperAddress;
                 provider.ConsigneeAddress = varConsigneeAddress;
-
+                this.FillCustomerFields(provider, shipmentPM);
                 #endregion
 
                 #region Lables
@@ -594,26 +609,15 @@ namespace WebFreight.Web.ReportsWebServices
                             carrierLable = "Shipping line";
                             carrierNumberLabel = "Vessel/Voyage No";
 
-                            string vesselName = String.Empty;
-                            if (!string.IsNullOrEmpty(shipmentPM.MainCarriageVesselId))
+                            if (!string.IsNullOrEmpty(shipmentPM.MainCarriageVesselName))
                             {
-                                VesselRepository vesselRepository = new VesselRepository(tenant);
-                                Vessel vessel = vesselRepository.GetSingleVessel(shipmentPM.MainCarriageVesselId, tenant);
-                                if (vessel != null)
-                                {
-                                    vesselName = vessel.EnglishName;
-                                }
-                            }
-
-                            if (!string.IsNullOrEmpty(vesselName))
-                            {
-                                carrierNumber = vesselName + "/" + shipmentPM.MainCarriageCarrierCode + shipmentPM.MainCarriageCarrierNumber;
+                                carrierNumber = shipmentPM.MainCarriageVesselName + "/" + shipmentPM.MainCarriageCarrierCode + shipmentPM.MainCarriageCarrierNumber;
                             }
                             else
                             {
                                 carrierNumber = shipmentPM.MainCarriageCarrierCode + shipmentPM.MainCarriageCarrierNumber;
 
-                            }
+                            }                            
                             break;
                         }
 
@@ -750,19 +754,21 @@ namespace WebFreight.Web.ReportsWebServices
                 #region Inland + Domestic shipment
                 if (shipmentPM.DirectionId == "D" && shipmentPM.TransportModeId == "I")
                 {
-                    Address fromAddress = addressRepository.GetSingleAddress(shipmentPM.MainCarriageFromAddressId,tenant);
-                    Address toAddress = addressRepository.GetSingleAddress(shipmentPM.MainCarriageToAddressId,tenant);
-                  
-
-                    if (fromAddress != null)
+                    InlandDomesticArgs args = new InlandDomesticArgs()
                     {
-                        provider.FromLocation = fromAddress.City + " " + (fromAddress.Country != null ? fromAddress.Country.Code : "");
-                    }
-
-                    if (toAddress != null)
-                    {
-                        provider.ToLocation = toAddress.City + " " + (toAddress.Country != null ? toAddress.Country.Code : "");
-                    }
+                        InlandDomesticFromTypeCode = shipmentPM.InlandDomesticFromTypeCode,
+                        MainCarriageFromAddressId = shipmentPM.MainCarriageFromAddressId,
+                        MainCarriageFromPortId = shipmentPM.MainCarriageFromPortId,
+                        InlandDomesticFromCity = shipmentPM.InlandDomesticFromCity,
+                        InlandDomesticFromCountryId = shipmentPM.InlandDomesticFromCountryId,
+                        InlandDomesticToTypeCode = shipmentPM.InlandDomesticToTypeCode,
+                        MainCarriageToAddressId = shipmentPM.MainCarriageToAddressId,
+                        InlandDomesticToCity = shipmentPM.InlandDomesticToCity,
+                        InlandDomesticToCountryId = shipmentPM.InlandDomesticToCountryId,
+                        MainCarriageToPortId = shipmentPM.MainCarriageToPortId,
+                    };
+                    provider.FromLocation = servicHelper.GetInlandDomesticFromLocation(args);
+                    provider.ToLocation = servicHelper.GetInlandDomesticToLocation(args);
                 }
                 else
                 {
@@ -784,7 +790,7 @@ namespace WebFreight.Web.ReportsWebServices
                 }
                 #endregion
 
-                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
                 customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, shipmentPM, provider);
             }
 
@@ -1058,7 +1064,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                         if (invoice.IsMultipleEntities) {
                             invoiceProvider.AmountInLocalCurrency = invoice.InvoiceMultipleShipments.Where(p => p.ShipmentId == shipment.Id).Sum(s => s.SubTotalInLocalCurrency) == null ? 0 : invoice.InvoiceMultipleShipments.Where(p => p.ShipmentId == shipment.Id).Sum(s => s.SubTotalInLocalCurrency.Value);
-                            invoiceProvider.AmountInProfitCurrency = invoice.InvoiceMultipleShipments.Where(p => p.ShipmentId == shipment.Id).Sum(s => s.SubTotalInInvoiceCurrency) == null ? 0 : invoice.InvoiceMultipleShipments.Where(p => p.ShipmentId == shipment.Id).Sum(s => s.SubTotalInInvoiceCurrency.Value);
+                            invoiceProvider.AmountInProfitCurrency = invoice.InvoiceMultipleShipments.Where(p => p.ShipmentId == shipment.Id).Sum(s => s.SubTotalInInvoiceCurrency) == null ? 0 : invoice.InvoiceMultipleShipments.Where(p => p.ShipmentId == shipment.Id).Sum(s => s.SubTotalInInvoiceCurrency.Value);                            
                          }
 
                         else
@@ -1128,6 +1134,19 @@ namespace WebFreight.Web.ReportsWebServices
             }
 
             return provider;
+        }
+
+        private void FillCustomerFields(ShipmentProfitDataProvider provider, ShipmentPM shipmentPM)
+        {
+            provider.CustomerName = ServiceStringConvertor(shipmentPM.CustomerName);
+            if (!string.IsNullOrEmpty(shipmentPM.CustomerAddressId))
+            {
+                Address address = addressRepository.GetSingleAddress(shipmentPM.CustomerAddressId, shipmentPM.Tenant);
+                provider.CustomerAddress = DataProviders.General.GetAddress(address);
+            }
+            Contact customerContact = contactRepository.GetSingleContact(shipmentPM.CustomerContactId, tenant);
+            provider.CustomerContactName = customerContact?.EnglishName;
+            provider.CustomerContactEmail = customerContact?.Email;
         }
 
         private void ComputeOriginCountryAndLocationVariables(ShipmentProfitInvoicesDataProvider provider, Shipment shipment, ShipmentMasterData masterData)
@@ -1210,14 +1229,10 @@ namespace WebFreight.Web.ReportsWebServices
 
         private string GetCarrierNumberByVessel(ShipmentMasterData shipmentMasterData)
         {
-            if (!string.IsNullOrEmpty(shipmentMasterData.MainCarriageVesselId))
+            if (!string.IsNullOrEmpty(shipmentMasterData.MainCarriageVesselName))            
             {
-                Vessel maincarriagevessel = (from a in commonContext.Vessels
-                                             where a.Id == shipmentMasterData.MainCarriageVesselId
-                                             select a).FirstOrDefault();
-
-               if(maincarriagevessel != null)
-                    return maincarriagevessel.EnglishName + " " + shipmentMasterData.MainCarriageCarrierNumber;
+               if(shipmentMasterData.MainCarriageVesselName != null)
+                    return shipmentMasterData.MainCarriageVesselName + " " + shipmentMasterData.MainCarriageCarrierNumber;
             }
             return null;
         }

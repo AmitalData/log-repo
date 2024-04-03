@@ -10,7 +10,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
         {
             this.HasKey(t => t.Id);
             this.Property(t => t.Id).IsRequired().HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.Notes).HasMaxLength(250).IsUnicode(true);
+            this.Property(t => t.Notes).HasMaxLength(1000).IsUnicode(true);
             this.Property(t => t.ShipmentId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ChargesTypeId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ShipmentPayableLineStatusCode).IsRequired().HasMaxLength(4).IsUnicode(false);
@@ -32,6 +32,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.TariffId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.TariffNumber).HasMaxLength(20).IsUnicode(false);
             this.Property(t => t.TariffLineId).HasMaxLength(20).IsUnicode(false);
+
             // Table & Column Mappings
             this.ToTable("ShipmentPayables");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -83,6 +84,9 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.TariffLineId).HasColumnName("TariffLineId");
             this.Property(t => t.TariffId).HasColumnName("TariffId");
             this.Property(t => t.TariffVersion).HasColumnName("TariffVersion");
+            this.Property(t => t.IsCustomsChargesTariff).HasColumnName("IsCustomsChargesTariff");
+            this.Property(t => t.ProratedAmountInLocalCurrency).HasColumnName("ProratedAmountInLocalCurrency");
+            this.Property(t => t.ProratedAmountInProfitCurrency).HasColumnName("ProratedAmountInProfitCurrency");
 
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");

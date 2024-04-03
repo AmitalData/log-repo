@@ -199,7 +199,7 @@ namespace CommunicationWorkerRole
                                             //    {
 
 
-                                            var GetURI = URI + "ImporterShipmentsBatch/GetIfShipmentExists?importertenant=" + importerTenant + "&Tenant=" + tenant + "&shipmentnumber=" + Shipment.ShipmentNumber;
+                                            var GetURI = URI + "ImporterShipments/GetIfShipmentExists?importertenant=" + importerTenant + "&Tenant=" + tenant + "&shipmentnumber=" + Shipment.ShipmentNumber;
                                             bool IsShipmentExist = false;
                                             using (var client = new HttpClient())
                                             {
@@ -226,7 +226,7 @@ namespace CommunicationWorkerRole
                                             LogPM.Tenant = Shipment.Tenant;
                                             using (var client = new HttpClient())
                                             {
-                                                string ImporterShipmentsURI = URI + "ImporterShipmentsBatch";
+                                                string ImporterShipmentsURI = URI + "ImporterShipments";
                                                 client.DefaultRequestHeaders.Add("Token", Token);
                                                 client.DefaultRequestHeaders.Add("CorrelationId", CorrelationId);
                                                 ICommonDataContext commoncontext = CommonDataContext.GetContext(Shipment.Tenant);
@@ -352,6 +352,7 @@ namespace CommunicationWorkerRole
                                                         MainCarriageATA = Shipment.MainCarriageATA,
                                                         MainCarriageETA = Shipment.MainCarriageETA,
                                                         MainCarriageATD = Shipment.MainCarriageATD,
+                                                        MainCarriageETD = Shipment.MainCarriageETD,
                                                         OnCarriageATA = Shipment.OnCarriageATA,
                                                         OnCarriageATD = Shipment.OnCarriageATD,
                                                         PreCarriageATA = Shipment.PreCarriageATA,
@@ -370,6 +371,7 @@ namespace CommunicationWorkerRole
                                                         CustomerReference1 = Shipment.CustomerReference1,
                                                         ConsigneeReference2 = Shipment.ConsigneeReference2,
                                                         CustomerReference2 = Shipment.CustomerReference2,
+                                                        CustomerReference3 = Shipment.CustomerReference3,
                                                         ShipmentCustomerTypeCode = Shipment.ShipmentCustomerTypeCode,
                                                         IsCancelled = Shipment.IsCancelled,
                                                         ShipperName = Shipment.ShipperName,
@@ -395,6 +397,10 @@ namespace CommunicationWorkerRole
                                                         DimensionsUnitCode = Shipment.DimensionsUnitCode,
                                                         VolumeUnitCode = Shipment.VolumeUnitCode,
                                                         ForwardingPartnerTenant = Shipment.ForwardingPartnerId,
+                                                        IsDangerouseOfGoods = Shipment.OrderIsDangerouseGoods,
+                                                        AgentName = Shipment.PrivateLabelAgentName,
+                                                        IsShipmentOrder = Shipment.IsShipmentOrder,
+                                                        ConsigneeName = Shipment.ConsigneeName,
                                                         Customer = new CodeProperties()
                                                         {
                                                             Code = CustomerCode
@@ -477,6 +483,9 @@ namespace CommunicationWorkerRole
 
                                                         shipmentAM.ShipmentPackagesAM.Add(MyPackage);
                                                     }
+
+                                                    shipmentAM.ConsigneeReference2 = GetFirstReferenceFromUNFSideOnly(shipmentAM.ConsigneeReference2);
+                                                    shipmentAM.CustomerReference2 = GetFirstReferenceFromUNFSideOnly(shipmentAM.CustomerReference2);
                                                     //if (TakeDate)
                                                     //{
                                                     //    shipmentAM.StatusDate = Shipment.StatusDate;
@@ -591,6 +600,7 @@ namespace CommunicationWorkerRole
                                                         MainCarriageATA = Shipment.MainCarriageATA,
                                                         MainCarriageETA = Shipment.MainCarriageETA,
                                                         MainCarriageATD = Shipment.MainCarriageATD,
+                                                        MainCarriageETD = Shipment.MainCarriageETD,
                                                         OnCarriageATA = Shipment.OnCarriageATA,
                                                         OnCarriageATD = Shipment.OnCarriageATD,
                                                         PreCarriageATA = Shipment.PreCarriageATA,
@@ -608,9 +618,11 @@ namespace CommunicationWorkerRole
                                                         CustomerReference1 = Shipment.CustomerReference1,
                                                         ConsigneeReference2 = Shipment.ConsigneeReference2,
                                                         CustomerReference2 = Shipment.CustomerReference2,
+                                                        CustomerReference3 = Shipment.CustomerReference3,
                                                         ShipmentCustomerTypeCode = Shipment.ShipmentCustomerTypeCode,
                                                         IsCancelled = Shipment.IsCancelled,
                                                         ShipperName = Shipment.ShipperName,
+                                                        ConsigneeName = Shipment.ConsigneeName,
                                                         CarrierTransportDocumentNumber = Shipment.CarrierTransportDocumentNumber,
                                                         //ForwarderPartnerId = Partner.Id,
                                                         FreightPrepaidCollectId = Shipment.FreightPrepaidCollectId,
@@ -628,6 +640,15 @@ namespace CommunicationWorkerRole
                                                         DimensionsUnitCode = Shipment.DimensionsUnitCode,
                                                         VolumeUnitCode = Shipment.VolumeUnitCode,
                                                         ForwardingPartnerTenant = Shipment.ForwardingPartnerId,
+                                                        IsDangerouseOfGoods = Shipment.OrderIsDangerouseGoods,
+                                                        AgentName = Shipment.PrivateLabelAgentName,
+                                                        IsShipmentOrder = Shipment.IsShipmentOrder,
+                                                        Notes = Shipment.Notes,
+                                                        DeclarationXMLData = Shipment.DeclarationXMLData,
+                                                        IsImporterApprovalRequired = Shipment.IsImporterApprovalRequired,
+                                                        VersionApproved = Shipment.VersionApproved,
+                                                        ApproveDateTime = Shipment.ApproveDateTime,
+                                                        CustomerShipmentNumber = Shipment.CustomerShipmentNumber,
                                                         Customer = new CodeProperties()
                                                         {
                                                             Code = CustomerCode
@@ -709,6 +730,9 @@ namespace CommunicationWorkerRole
 
                                                         shipmentAM.ShipmentPackagesAM.Add(MyPackage);
                                                     }
+
+                                                    shipmentAM.ConsigneeReference2 = GetFirstReferenceFromUNFSideOnly(shipmentAM.ConsigneeReference2);
+                                                    shipmentAM.CustomerReference2 = GetFirstReferenceFromUNFSideOnly(shipmentAM.CustomerReference2);
                                                     //if (TakeDate)
                                                     //{
                                                     //    shipmentAM.StatusDate = Shipment.StatusDate;
@@ -811,7 +835,7 @@ namespace CommunicationWorkerRole
 
 
                                                         queueservice.InitializeQueue("ImportersShipmentsDocsQueueBuilderQueue", 0);//"ImportersShipmentsDocsScheduleQueue", 0);
-                                                        queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", Shipment.Id }, { "Tenant", tenant.ToString() },  { "CustomerId", customerTenantAccessCardsBatch.CustomerId }, { "BatchNumber", customerTenantAccessCardsBatch.BatchNumber } }, tenant, null, customerTenantAccessCardsBatch.CustomerId, customerTenantAccessCardsBatch.BatchNumber);
+                                                        queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", Shipment.Id }, { "Tenant", tenant.ToString() }, { "CustomerId", customerTenantAccessCardsBatch.CustomerId }, { "BatchNumber", customerTenantAccessCardsBatch.BatchNumber } }, tenant, null, customerTenantAccessCardsBatch.CustomerId, customerTenantAccessCardsBatch.BatchNumber);
                                                         queueservice.Complete();
                                                         //if (response.RetryNumber == 0)
                                                         //{
@@ -926,7 +950,7 @@ namespace CommunicationWorkerRole
                                 {
                                     if (customerTenantAccessCardsBatch != null)
                                     {
-                                        customerTenantAccessCardsBatch = customerTenantAccessCardBatchQuery.GetSinglePM(BatchNumber, tenant); 
+                                        customerTenantAccessCardsBatch = customerTenantAccessCardBatchQuery.GetSinglePM(BatchNumber, tenant);
                                         if (customerTenantAccessCardsBatch.TotalShipment == (customerTenantAccessCardsBatch.Totalsucceeded + customerTenantAccessCardsBatch.TotalFailed))
                                         {
                                             customerTenantAccessCardsBatch.Status = "Done";
@@ -975,6 +999,15 @@ namespace CommunicationWorkerRole
                 ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "importer shipments worker role start", null, null);
                 Thread.Sleep(10000);
             }
+        }
+
+        private string GetFirstReferenceFromUNFSideOnly(string customerReference)
+        {
+            if (!string.IsNullOrEmpty(customerReference))
+            {
+                return customerReference.Split(',')[0];
+            }
+            return customerReference;
         }
 
         private void ConnectClient()

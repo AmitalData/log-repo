@@ -4,20 +4,27 @@ import {AppTool, DateTool} from '../../Infrastructure/Tools';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 import {TextCodeTranslator} from '../../Infrastructure/Utilities/TextCodeTranslator';
 
+const approvedStatus = '2';
 export class JournalValidator
 {
     private static CurrentSession = SessionLocator.SelectedSession;
-  
+    public static SetAccountingDateInValid = false;
+
 
     public static ValidateJournal(entityPM: any)
     {
         return [];
     }
 
-    public static ValidateAccountingDate(entityPM: any) {
+    public static ValidateAccountingDate() {
+        var errors = [];
 
+        if(this.SetAccountingDateInValid){
+           errors.push(TextCodeTranslator.Translate("AccountingPeriods.O.ClosedMonth"));
+        }
+        SessionLocator.SelectedSession.CurrentEditComponent.ValidationErrorsList=errors;
 
-        return [];
+        return errors;
     }
 
 
@@ -51,13 +58,8 @@ export class JournalValidator
                     errors.push(TextCodeTranslator.Translate("Accounting.General.O.chooseCurrency") + " " + line.Line  ); //You must choose Currency for line
 
                 }
-
-                // Amount
-                if (!line.LocalAmount || !line.ForeignAmount) {
-                    //Amount is missing
-                    errors.push(TextCodeTranslator.Translate("Accounting.General.O.AmountIsMissing") + " " + line.Line  ); //Amount is missing for line
-
-                }
+               
+               
 
 
                 // Credit and Debit account (same currency)
@@ -70,7 +72,7 @@ export class JournalValidator
                     }
                 }
 
-                
+
                 // Ref. + Due Dates
                 if (!line.DocumentDate) {
                     errors.push(TextCodeTranslator.Translate("Accounting.General.O.chooseRefDate") + " " + line.Line  ); //You should choose Ref. Date for line
@@ -97,7 +99,7 @@ export class JournalValidator
 
         var errors = [];
 
-        if (entityPM.StatusCode == "1" || entityPM.StatusCode == "2" || entityPM.StatusCode == "3")
+        if (entityPM.StatusCode == "1" || entityPM.StatusCode == "2" || entityPM.StatusCode == "3" || entityPM.StatusCode == "6" )
         {
 
             var cSum: number = 0;
@@ -150,31 +152,36 @@ export class JournalValidator
       }
     errorList: string[];
     public Validate(entityPM: JournalPM) {
+        
+        var oldEntity:any = entityPM.OldEntityPM;
+        if(oldEntity && oldEntity?.statusCode == approvedStatus)
+            return [];
+
 
         JournalValidator.CurrentSession = SessionLocator.SelectedSession;
 
         this.errorList = [];
         var result = [];
-      
+
         // Validate last row of journal lines
         //if (!AppTool.IsNullOrEmpty(entityPM.JournalLines)) {
         //    var lastRow = entityPM.JournalLines[entityPM.JournalLines.length - 1];
         //}
-       
+
+        result = JournalValidator.ValidateAccountingDate();
+        this.FillErrorList(result);
+
         for (var line in entityPM.JournalLines) {
             var journalLine = entityPM.JournalLines[line];
             result = JournalValidator.ValidateJournalLines(journalLine);
-            this.FillErrorList(result); 
+            this.FillErrorList(result);
         }
 
 
         // Validate Totals
         result = JournalValidator.ValidateTotals(entityPM)
-        if (result.length > 0) {
-            this.FillErrorList(result); 
-            return this.errorList;
-        }
-
+        this.FillErrorList(result);
+      
         return this.errorList ;
     }
 

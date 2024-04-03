@@ -60,25 +60,28 @@ export class ContainersFUsComponent implements OnInit {
     }
 
     public IsContainersToggleFeatureUp: boolean = false;
+    public IsContainersFeatureActivated: boolean = false;
     private SetContainersQueriesVisibility() {
         this.IsContainersToggleFeatureUp = false;
-        var isOceanInsightsContainersFeatureToggleUp: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "OIC")[0];
-        if (isOceanInsightsContainersFeatureToggleUp && this.IsQueryVisible_AllContainers) {
-            this.IsContainersToggleFeatureUp = true;
+        this.IsContainersFeatureActivated = false;
+
+        
+
+        if (FeatureLocator.HasFeaturePermession("Container", "ContainersActivated")) {
+            this.IsContainersFeatureActivated = true;
         }
     }
 
     public IsQueryVisible_InTransit: boolean = false;
     public IsQueryVisible_ArrivedNotDelivered: boolean = false;
     public IsQueryVisible_DeliveredNotReturned: boolean = false;
-    public IsQueryVisible_MyViewsGroup: boolean = false;
-    public IsQueryVisible_AllContainers: boolean = false;
+   
     private SetQueriesVisibility() {
         this.IsQueryVisible_InTransit = FeatureLocator.HasFeaturePermession("ContainerFollowUp", "InTransit") ? true : false;
         this.IsQueryVisible_ArrivedNotDelivered = FeatureLocator.HasFeaturePermession("ContainerFollowUp", "ArrivedNotDelivered") ? true : false;
         this.IsQueryVisible_DeliveredNotReturned = FeatureLocator.HasFeaturePermession("ContainerFollowUp", "DeliveredNotReturned") ? true : false;
-        this.IsQueryVisible_MyViewsGroup = FeatureLocator.HasFeaturePermession("General", "BUILDQUERIES") ? true : false;
-        this.IsQueryVisible_AllContainers = FeatureLocator.HasFeaturePermession("Container", "Container.Q.AllContainers") ? true : false;
+        
+
     }
 
     public InTransit: string;
@@ -118,11 +121,7 @@ export class ContainersFUsComponent implements OnInit {
                     ServiceLocator.SendTotangoUserActivity("Container F/U", "In Transit View");
                     break;
                 }
-                case "All Containers": {
-                    ServiceLocator.SendTotangoUserActivity("Container", "All Containers");
-                    objectTableName = "Container";
-                    break;
-                }
+
             }
 
 

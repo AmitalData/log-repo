@@ -5,6 +5,7 @@ using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Resolvers;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -62,6 +63,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             CreateCustomerStatusesByAgingPeriods(agingPeriods);
 
             SortCustomerStatuses();
+            FillPrintingInformation();
 
             return dataProvider;
         }
@@ -235,6 +237,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 //credit details
 
                 CreditLimit = (decimal)customerPeriods.First().CreditLimitAmount,
+                InsuredCreditLimit = (decimal)customerPeriods.First().InsuredCreditLimit,
                 CreditStatus = customerPeriods.First().CreditStatusAmount ?? 0,
                 TotalFutureOpenCheques = customerPeriods.First().TotalFutureOpenCheques ?? 0,
                 TotalOpenCheques = customerPeriods.First().TotalOpenCheques ?? 0,
@@ -250,7 +253,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 AccountSalesmanLocalName = customerPeriods.First().AccountSalesmanLocalName,
                 AccountCollectorName = customerPeriods.First().AccountCollectorName,
                 AccountCollectorLocalName = customerPeriods.First().AccountCollectorLocalName,
-                Category1Name = customerPeriods.First().Category1Name,
+				CustomerVatNumber = customerPeriods.First().CustomerVatNumber,
+
+				Category1Name = customerPeriods.First().Category1Name,
                 Category2Name = customerPeriods.First().Category2Name,
                 Category3Name = customerPeriods.First().Category3Name,
                 Category4Name = customerPeriods.First().Category4Name,
@@ -262,8 +267,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 Category4LocalName = customerPeriods.First().Category4LocalName,
                 Category5LocalName = customerPeriods.First().Category5LocalName,
                 Category6LocalName = customerPeriods.First().Category6LocalName,
-
-            };
+                SumTotalCredit = sumTotalCredit
+			};
             return customerStatus;
         }
 
@@ -299,8 +304,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             };
             return statusPeriod;
         }
-
-        private List<PeriodCurrencySummary> GetCurrencyPeriodsSummaries(List<PeriodMExtended> currencyPeriods)
+        decimal sumTotalCredit = 0;
+		private List<PeriodCurrencySummary> GetCurrencyPeriodsSummaries(List<PeriodMExtended> currencyPeriods)
         {
             var periodCurrencySummaries = new List<PeriodCurrencySummary>();
 
@@ -313,7 +318,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     TotalDebit = currencyPeriod.OpenDebit,
                     CurrencyCode = currencyPeriod.CurrencyCode
                 };
-                periodCurrencySummaries.Add(summary);
+                sumTotalCredit += summary.TotalCredit;
+
+				periodCurrencySummaries.Add(summary);
             }
 
             return periodCurrencySummaries;
@@ -432,6 +439,43 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             }
 
             return default(T);
+        }
+
+        private void FillPrintingInformation()
+        {
+            string loggedContactName = GetLoggedContactName();
+            dataProvider.PrintedByUser = loggedContactName;
+        }
+
+        private string GetContactName(ContactPM loggedContact)
+        {
+            return loggedContact.DontShowLocal ? loggedContact.EnglishName : loggedContact.LocalName;
+        }
+
+        private ContactPM GetContactByEmail(string email)
+        {
+            ContactQuery contactQuery = new ContactQuery(tenant);
+            return contactQuery.GetContactByEmailOnly(email, tenant);
+        }
+       
+        private ContactPM GetLoggedContact()
+        {
+            return LoggedContactResolver.GetLoggedContact(tenant);
+
+        }
+        private string GetLoggedContactName()
+        {
+            ContactPM loggedContact;
+            if (AuthenticationUtil.AuthenticatedUserEmail != null)
+            {
+                loggedContact = GetContactByEmail(AuthenticationUtil.AuthenticatedUserEmail);
+                return GetContactName(loggedContact);
+            }
+            else
+            {
+                loggedContact = GetLoggedContact();
+                return GetContactName(loggedContact);
+            }
         }
 
     }

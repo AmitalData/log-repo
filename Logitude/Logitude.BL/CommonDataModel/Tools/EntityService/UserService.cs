@@ -8,6 +8,7 @@ using Logitude.BL.Helpers;
 using Logitude.BL.Security;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.QueueService;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -126,12 +127,12 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 UserTracing.Trace(entityPM, Poco, isNewEntity);
             }
             
-            entityPm.UserRoles = this.ComputeUserRoles();
+            entityPm.UserRoles = this.ComputeNewUserRoles();
             CheckDocumentFilingInbox(entityPm, Poco);
             UserMapping.MapEntity(entityPm, Poco, isNewEntity);
             entityRepository.Add(Poco);
             entityRepository.SubmitChanges();
-            
+            AddUserKafkaQueueMessage();
             if (!entityPM.IsHybrid)
             {
                 UpdateRolePM(entityPM);
@@ -256,7 +257,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 UserTracing.Trace(entityPM, Poco, isNewEntity);
             }
 
-            entityPm.UserRoles = this.ComputeUserRoles();
+            entityPm.UserRoles = this.ComputeUpdatedUserRoles();
             CheckDocumentFilingInbox(entityPM, Poco);
             ContactService service = new ContactService(objectContext, entityPM.Tenant);
             if (!String.IsNullOrWhiteSpace(this._DisableOldContactId))
@@ -272,8 +273,28 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
-
+            AddUserKafkaQueueMessage();
             TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "User");
+        }
+
+        private void AddUserKafkaQueueMessage()
+        {
+            if (!FeatureToggleHelper.HasFeatureToggle("CTL", entityPm.Tenant))
+            {
+                return;
+            }
+            AddKafkaQueueMessage();
+        }
+
+        private void AddKafkaQueueMessage()
+        {
+            IQueueService queueservice = new DbQueueService();
+            queueservice.InitializeQueue("CToolLookups", 0);
+            var queueMessage = new Dictionary<string, string>() {
+                { "Entity", "Contact" },
+                { "EntityId", entityPm.Id },
+                { "Tenant", tenant.ToString()}};
+            queueservice.Send(queueMessage, tenant);
         }
 
         private void CheckNumberOfUsers()
@@ -381,7 +402,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
         private void ChangeContactToCurrentUserRemoveOldGlobalContact(GlobalContactRepository globalContactRepository, GlobalContact globalContact)
         {
-            if (LogitudeSettings.IsCostomsDeploy && globalContact.Email != entityPm.Email)
+            if ( globalContact.Email != entityPm.Email)
             {
                 if (!string.IsNullOrWhiteSpace(entityPm.Email) && LogitudeSettings.IsCostomsDeploy)
                 {
@@ -407,7 +428,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 }
             }
         }
-
+ 
         private void MapUserToContact(UserPM user, Contact contact)
         {
             contact.Anniversary = user.Anniversary;
@@ -485,6 +506,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             newContact.Id = IdCounter.GetNumber("Contact", entityPM.Tenant).ToString();
             newContact.ComputedKey = (!string.IsNullOrEmpty(newContact.Email) ? newContact.Email : newContact.Id);
             newContact.UserType = "R";
+            newContact.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
             newContact.IndexColor = rnd.Next(1, 20);
             RoleQuery roleQuery = new RoleQuery(roleRepository);
 
@@ -581,6 +603,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
 
             contact.UserType = "R";
+            contact.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
             if (!string.IsNullOrEmpty(contact.Email))
             {
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -874,10 +897,68 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
         }
 
-        private string ComputeUserRoles()
+        private string ComputeNewUserRoles()
+        {
+            string userRoles = "";
+            if (!entityPm.SignupRole)
+            {
+                userRoles = this.GetUserRoles_New();
+                bool hasRoles = this.IsUserHasRoles(userRoles);
+                if (!hasRoles)
+                {
+                    string message = TranslateTextsClass.Translate("User.M.AddRoleToUser", this.tenant);
+                    throw new ApplicationException(message);
+                }
+            }
+            return userRoles;
+        }
+        private string GetUserRoles_New()
+        {
+            if(this.entityPm == null || (this.entityPm!= null && this.entityPm.RolePMLists == null))
+            {
+                return null;
+            }
+
+            string roles = "";
+            foreach (RolePM role in this.entityPm.RolePMLists)
+            {
+                if (role != null)
+                {
+                    if (string.IsNullOrEmpty(roles))
+                    {
+                        roles = role.Name;
+                    }
+
+                    else
+                    {
+                        roles = roles + ", " + role.Name;
+                    }
+                }
+            }
+            return roles;
+        }
+
+        private string ComputeUpdatedUserRoles()
+        {
+            string userRoles = "";
+            userRoles = this.GetUserRoles_Update();
+            if (!entityPm.SignupRole)
+            {
+                bool hasRoles = this.IsUserHasRoles(userRoles);
+                if (!hasRoles)
+                {
+                    string message = TranslateTextsClass.Translate("User.M.AddRoleToUser", this.tenant);
+                    throw new ApplicationException(message);
+                }
+            }
+            return userRoles;
+        }
+
+    
+
+        private string GetUserRoles_Update()
         {
             string myResult = "";
-
             ContactTenant contacttenant = (from a in this.objectContext.ContactTenants
                                            where a.ContactId == entityPm.Id && a.TenantId == tenant
                                            select a).FirstOrDefault();
@@ -891,15 +972,26 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             if (contacttenant != null)
             {
-                List<ContactTenantRole> contactTenantRoles = (from a in this.objectContext.ContactTenantRoles
-                                                              where a.ContactTenantId == contacttenant.Id && a.Tenant == tenant
-                                                              select a).ToList();
-                
-                foreach (ContactTenantRole contacttenantrole in contactTenantRoles)
+                var query = (from a in this.objectContext.ContactTenantRoles
+                             where a.ContactTenantId == contacttenant.Id && a.Tenant == tenant
+                             select a);
+
+
+
+                   List<ContactTenantRolePM> ContactTenantRole= query.Select(e => new ContactTenantRolePM()
+                             {
+                                 Tenant = e.Tenant,
+                                 ContactTenantId = e.ContactTenantId,
+                                 RoleId = e.RoleId,
+                                 Id = e.Id
+
+                             }).ToList();
+
+                foreach (ContactTenantRolePM contacttenantrole in ContactTenantRole)
                 {
                     Role role = this.objectContext.Roles.Where(a => a.Id == contacttenantrole.RoleId && (a.Tenant == tenant || a.Tenant == 0)).FirstOrDefault();
-                    
-                    if(role != null)
+
+                    if (role != null)
                     {
                         if (string.IsNullOrEmpty(myResult))
                         {
@@ -914,34 +1006,27 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 }
             }
 
+            return myResult;
+        }
 
-            if (!entityPm.SignupRole)
+        private bool IsUserHasRoles(string roles)
+        {
+            bool hasRoles = true;
+            if (this.isNewEntity)
             {
-                bool hasRoles = true;
-
-                if (this.isNewEntity)
+                if (entityPm.Roles.Count == 0)
                 {
-                    if (entityPm.Roles.Count == 0)
-                    {
-                        hasRoles = false;
-                    }
-                }
-
-                else
-                {
-                    if (string.IsNullOrEmpty(myResult))
-                    {
-                        hasRoles = false;
-                    }
-                }
-
-                if (!hasRoles)
-                {
-                    string message = TranslateTextsClass.Translate("User.M.AddRoleToUser", this.tenant);
-                    throw new ApplicationException(message);
+                    hasRoles = false;
                 }
             }
-            return myResult;
+            else
+            {
+                if (string.IsNullOrEmpty(roles))
+                {
+                    hasRoles = false;
+                }
+            }
+            return hasRoles;
         }
 
         public bool CheckIsUserCustomerCareById(string id)

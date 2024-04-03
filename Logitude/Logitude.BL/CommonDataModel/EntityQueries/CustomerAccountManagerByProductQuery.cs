@@ -64,7 +64,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                CustomerId = a.CustomerId,
                                                                Tenant = a.Tenant,
                                                                AccountManagerId = a.AccountManagerId,
-                                                             AccountManagerName = a.AccountManagerUser != null? a.AccountManagerUser.Contact.EnglishName : null,
+                                                               AccountManagerName = a.AccountManagerUser == null ? null : string.IsNullOrEmpty(a.AccountManagerUser.Contact.EnglishName)? a.AccountManagerUser.Contact.Name : a.AccountManagerUser.Contact.EnglishName,
                                                            }).ToList();
             return entityPMs;
         }

@@ -33,9 +33,20 @@
                 <td style="width:200px"><button class="Button" (click)="_ButtonReverseTotalFIXControl_Click()">FIX TOTAL from  Ledger ***control**"</button></td>
                 <td style="width:200px"><button class="Button" (click)="_ButtonFixDueLocalBalance_Click()">FixDueLocalBalance</button></td>
                 <td style="width:200px"><button class="Button" (click)="RebuildFIXGLAccountAgingData_Click()">Rebuild FIX GLAccountAgingData</button></td>
-                
+                <td style="width:200px"><button class="Button" (click)="BatchYearlyFIX_Click()">Batch Yearly FIX </button></td>
 
             </tr>
+
+            <tr>
+                <td style="width:200px"><button class="Button" (click)="Change2MultiCurrency_Click()">GLAccount Change2MultiCurrency</button></td>
+                <td style="width:200px"></td>
+                <td style="width:200px"></td>
+                <td style="width:200px"></td>
+                <td style="width:200px"></td>
+                <td style="width:200px"></td>
+
+            </tr>
+
         </table>
     </div>
     <div *ngIf="SelectedItem=='Reports'">
@@ -43,6 +54,9 @@
             <tr>
                 <td style="width:200px">
                     <button class="Button" (click)="_TrailReport_Click()">TrailReport</button>
+                </td>
+                <td style="width:200px">
+                    <button class="Button" (click)="_InterestReport_Click()">InterestReport</button>
                 </td>
                 <td style="width:200px">
                     <button class="Button" (click)="CardIndexNew_Click()">CardIndexNew</button>
@@ -55,11 +69,16 @@
                     <button class="Button" (click)="Aging_Click()">Aging Report</button>
                 </td>
                 <td style="width:200px">
+                    <button class="Button" (click)="closingVATReportClick()">Closing VAT Report</button>
                 </td>
                 <td style="width:200px"></td>
                 <td style="width:200px"></td>
             </tr>
-
+            <tr>
+                <td style="width:200px">
+                    <button class="Button" (click)="CancelReport()">Cancel Report</button>
+                </td>
+            </tr>
         </table>
 
 
@@ -79,7 +98,9 @@
                 <td style="width:200px">
                     <button class="Button" (click)="JournalApproveQueue_Click()">Queue</button>
                 </td>
-                <td style="width:200px"></td>
+                <td style="width:200px">
+                    <button class="Button" (click)="JournalApproveQueue_Click()">return to queue</button>
+                </td>
                 <td style="width:200px"></td>
             </tr>
 
@@ -146,7 +167,7 @@
                     <button class="Button" (click)="SendGLaccount_Click()">SendGLaccount</button>
                 </td>
                 <td style="width:200px">
-            
+                    <button class="Button" (click)="UploadExpenses_Click()">Upload Deduction details</button>
                 </td>
                 <td style="width:200px">
             
@@ -164,6 +185,26 @@
     <div *ngIf="SelectedItem=='Alex'">
         <table>
 
+            <tr>
+                <td style="width:200px">
+                    <button class="Button" (click)="ButtonReconcileStageANoBatch_Click()">ReconcileStageA NoBatch</button>
+                </td>
+                <td style="width:200px">
+                    <button class="Button" (click)="ButtonReconcileStageABatch_Click()">ReconcileStageA Batch</button>
+                </td>
+                <td style="width:200px"></td>
+                <td style="width:200px"></td>
+            </tr>
+            <tr>
+                <td style="width:200px">
+                    <button class="Button" (click)="ButtonReconcileStageBNoBatch_Click()">ReconcileStageB NoBatch</button>
+                </td>
+                <td style="width:200px">
+                    <button class="Button" (click)="ButtonReconcileStageBBatch_Click()">ReconcileStageB Batch</button>
+                </td>
+                <td style="width:200px"></td>
+                <td style="width:200px"></td>
+            </tr>
             <tr>
                 <td style="width:200px">
                     <button class="Button" (click)="ButtonReconcileStageCNoBatch_Click()">ReconcileStageC NoBatch</button>
@@ -188,6 +229,9 @@
                 <td style="width:200px">
                     <button class="Button" (click)="ButtonCardGLAccountConnect_Click()">CardGLAccountConnect</button>
                 </td>
+                <td style="width:200px">
+                    <button class="Button" (click)="ButtonAPInvoiceStatusUpdate_Click()">A/P Invoice Status Update</button>
+                </td>
                 <td style="width:200px"></td>
                 <td style="width:200px"></td>
             </tr>
@@ -195,19 +239,75 @@
                 <td style="width:200px">
                     <button class="Button" (click)="ButtonLoadConsolTaxRep_Click()">Load Consol. Tax Rep.(Tenant)</button>
                 </td>
+                <td style="width:200px">
+                    <button class="Button" (click)="ButtonBanksCCExternalReco_Click()">Banks/Credit Cards External Reco.</button>
+                </td>
                 <td style="width:200px"></td>
+            </tr>
+            <!-- <tr>
+        <td style="width:200px">
+            <button class="Button" (click)="ButtonLoadJournals_ISL_Click()">Load Journals from .csv (ISL) (Tenant)</button>
+        </td>
+        <td style="width:200px"></td>
+        <td style="width:200px"></td>
+    </tr> -->
+            <tr>
+                <td style="width:200px">
+                    <button class="Button" (click)="ButtonLoadChargeTypes_Click()">Load Charge Types from .csv (Tenant)</button>
+                </td>
+                <td style="width:200px">
+                    <button class="Button" (click)="ButtonGLAccountMultiToCurrency_Click()">Convert Multi GLAccount to Currency</button>
+                </td>
                 <td style="width:200px"></td>
             </tr>
             <tr>
                 <td style="width:200px">
-                    <button class="Button" (click)="ButtonLoadJournals_ISL_Click()">Load Journals from .csv (ISL) (Tenant)</button>
+                    <button class="Button" (click)="ButtonRunOneRevaluationNoBatch_Click()">Run One Revaluation NoBatch</button>
+                </td>
+                <td style="width:200px">
+                    <button class="Button" (click)="ButtonAllOpenRevaluationsNoBatch_Click()">All Open Revaluations NoBatch</button>
                 </td>
                 <td style="width:200px"></td>
                 <td style="width:200px"></td>
             </tr>
             <tr>
                 <td style="width:200px">
-                    <button class="Button" (click)="ButtonLoadChargeTypes_Click()">Load Charge Types from .csv (Tenant)</button>
+                    <button class="Button" (click)="ButtonLoadInterestTransactions_Click()">Load Interest Transactions from .csv (Tenant)</button>
+                </td>
+                <td style="width:200px"></td>
+                <td style="width:200px"></td>
+            </tr>
+            <tr>
+                <td style="width:200px">
+                    <button class="Button" (click)="ButtonLoadGLAccounts_Click()">Load GLAccounts from .csv (Tenant)</button>
+                </td>
+                <td style="width:200px"></td>
+                <td style="width:200px"></td>
+            </tr>
+            <tr>
+                <td style="width:200px">
+                    <button class="Button" (click)="ButtonCheckInterestTransactionsFromAccounts_Click()">Check Interest Transactions from Accounts (Tenant)</button>
+                </td>
+                <td style="width:200px"></td>
+                <td style="width:200px"></td>
+            </tr>
+            <tr>
+                <td style="width:200px">
+                    <button class="Button" (click)="ButtonCheckInterestReportBalance_Click()">Check Interest Report Balance (Tenant)</button>
+                </td>
+                <td style="width:200px"></td>
+                <td style="width:200px"></td>
+            </tr>
+            <tr>
+                <td style="width:200px">
+                    <button class="Button" (click)="ButtonGLAccountInterestActivationBalance_Click()">GLAccount Interest Activation Balance (Tenant)</button>
+                </td>
+                <td style="width:200px"></td>
+                <td style="width:200px"></td>
+            </tr>
+            <tr>
+                <td style="width:200px">
+                    <button class="Button" (click)="ButtonGLAccountInterestDeactivationBalance_Click()">GLAccount Interest Deactivation Balance (Tenant)</button>
                 </td>
                 <td style="width:200px"></td>
                 <td style="width:200px"></td>

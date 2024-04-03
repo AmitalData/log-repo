@@ -157,6 +157,8 @@ export class InvoiceTool {
             invoicePartners.push(new InvoicePartnerType("SL", "SL", "Shipping line"));
             invoicePartners.push(new InvoicePartnerType("TR", "TR", "Trucker"));
             invoicePartners.push(new InvoicePartnerType("VD", "VD", "Vendor"));
+            invoicePartners.push(new InvoicePartnerType("WH", "WH", "Warehouse"));
+
             if (SessionLocator.TenantPM.AccountingActivated) {
                 invoicePartners.push(new InvoicePartnerType("AC", "AC", "Accounting Partner"));
             }
@@ -244,16 +246,18 @@ export class InvoiceTool {
                                     var dateMonth = myComparativeDate.getUTCMonth() + 1;
                                     var dateDay = myComparativeDate.getUTCDate();
 
-                                    if (list.CurrentMonth) {
-                                        dateMonth += 1;
-                                        dateDay = 1;
+                                    if (list.EndOfMonth) {
+                                        dateMonth += list.NumberOfMonths;
+                                        dateDay = 0;
                                     }
-
+                                    else {
+                                        dateMonth -= 1;
+                                    }
                                     var myDate = new Date();
                                     myDate.setUTCMonth(0);
                                     myDate.setUTCDate(1);
                                     myDate.setUTCFullYear(dateYear);
-                                    myDate.setUTCMonth(dateMonth - 1);
+                                    myDate.setUTCMonth(dateMonth);
                                     myDate.setUTCDate(dateDay);
                                     myDate.setUTCHours(0);
                                     myDate.setUTCMinutes(0);
@@ -319,16 +323,19 @@ export class InvoiceTool {
                                     var dateMonth = myComparativeDate.getUTCMonth() + 1;
                                     var dateDay = myComparativeDate.getUTCDate();
 
-                                    if (list.CurrentMonth) {
-                                        dateMonth += 1;
-                                        dateDay = 1;
+                                    if (list.EndOfMonth) {
+                                        dateMonth += list.NumberOfMonths;
+                                        dateDay = 0;
+                                    }
+                                    else {
+                                        dateMonth -= 1;
                                     }
 
                                     var myDate = new Date();
                                     myDate.setUTCMonth(0);
                                     myDate.setUTCDate(1);
                                     myDate.setUTCFullYear(dateYear);
-                                    myDate.setUTCMonth(dateMonth - 1);
+                                    myDate.setUTCMonth(dateMonth);
                                     myDate.setUTCDate(dateDay);
                                     myDate.setUTCHours(0);
                                     myDate.setUTCMinutes(0);
@@ -394,7 +401,7 @@ export class InvoiceTool {
                                     var dateMonth = myComparativeDate.getUTCMonth() + 1;
                                     var dateDay = myComparativeDate.getUTCDate();
 
-                                    if (list.CurrentMonth) {
+                                    if (list.EndOfMonth) {
                                         dateMonth += 1;
                                         dateDay = 1;
                                     }
@@ -432,19 +439,19 @@ export class InvoiceTool {
                 var days = DateTool.GetDaysBetweenDates(entityPM.DueDate, entityPM.InvoiceDate);
 
                 var myService = new PaymentTermListService();
-                myService.getAll().subscribe((myResponse: ServiceResponse) => {
+                myService.getAllFromCache().subscribe((myResponse: ServiceResponse) => {
                     if (!myResponse.HasError) {
-                        var all: PaymentTermList[] = myResponse.Result;
-                        var list = all.filter(f => f.Days == days)[0];
+                        var allPaymentTerms: PaymentTermList[] = myResponse.Result;
+                        var suitablePaymentTerm = allPaymentTerms.filter(f => f.Days == days)[0];
 
-                        if (list != null) {
-                            myPaymentTermId = list.Id;
+                        if (suitablePaymentTerm != null && !suitablePaymentTerm.EndOfMonth) {
+                            myPaymentTermId = suitablePaymentTerm.Id;
                         }
 
                         else {
-                            var list = all.filter(f => f.Days == 0 && f.IsManuallySet == true)[0];
-                            if (list != null) {
-                                myPaymentTermId = list.Id;
+                            var manuallySetPaymentTerm = allPaymentTerms.filter(f => f.Days == 0 && f.IsManuallySet == true)[0];
+                            if (manuallySetPaymentTerm != null) {
+                                myPaymentTermId = manuallySetPaymentTerm.Id;
                             }
                         }
 
@@ -462,19 +469,19 @@ export class InvoiceTool {
                 var days = DateTool.GetDaysBetweenDates(entityPM.DueDate, entityPM.InvoiceDate);
 
                 var myService = new PaymentTermListService();
-                myService.getAll().subscribe((myResponse: ServiceResponse) => {
+                myService.getAllFromCache().subscribe((myResponse: ServiceResponse) => {
                     if (!myResponse.HasError) {
-                        var all: PaymentTermList[] = myResponse.Result;
-                        var list = all.filter(f => f.Days == days)[0];
+                        var allPaymentTerms: PaymentTermList[] = myResponse.Result;
+                        var suitablePaymentTerm = allPaymentTerms.filter(f => f.Days == days)[0];
 
-                        if (list != null) {
-                            myPaymentTermId = list.Id;
+                        if (suitablePaymentTerm != null && !suitablePaymentTerm.EndOfMonth) {
+                            myPaymentTermId = suitablePaymentTerm.Id;
                         }
 
                         else {
-                            var list = all.filter(f => f.Days == 0 && f.IsManuallySet == true)[0];
-                            if (list != null) {
-                                myPaymentTermId = list.Id;
+                            var manuallySetPaymentTerm = allPaymentTerms.filter(f => f.Days == 0 && f.IsManuallySet == true)[0];
+                            if (manuallySetPaymentTerm != null) {
+                                myPaymentTermId = manuallySetPaymentTerm.Id;
                             }
                         }
 

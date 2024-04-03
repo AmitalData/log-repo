@@ -78,7 +78,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button id="{{'CancelAdvanceCommandBtn' | IdGeneratorPipe}}" class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                        <button id="{{'CancelAdvanceCommandBtn' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -86,7 +86,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button id="{{'OKAdvanceCommandBtn' | IdGeneratorPipe}}" class="RedButton" (click)="OkButtonClicked()" [disabled]="!IsEditingEnabled">Ok</button>
+                        <button id="{{'OKAdvanceCommandBtn' | IdGeneratorAsyncPipe | async}}" class="RedButton" (click)="OkButtonClicked()" [disabled]="!IsEditingEnabled">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
                     </td>
                 </tr>
             </table>

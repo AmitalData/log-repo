@@ -1,5 +1,7 @@
 ﻿using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.Repositories;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
@@ -26,6 +28,10 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
 
         public void CheckDbIntegrity()
         {
+            TenantQuery tenantQuery = new TenantQuery(_Tenant);
+            TenantPM tPM = tenantQuery.GetSinglePM(_Tenant);
+            string accountingCurrencyId = tPM.CurrencyId;
+
             var sw = Stopwatch.StartNew();
             using (var scope = TransactionFactory.GetNewTransaction(TimeSpan.FromMinutes(10)))
             {
@@ -38,11 +44,12 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
 
 
 
-                var q = (from c in myCashBookRepository.GetAll(_Tenant)
+                var qAccountingCurrencyId = (from c in myCashBookRepository.GetAll(_Tenant).Where( r=>r.CurrencyId == accountingCurrencyId )
                          join a in myGLAccountMoreDataRepository.GetAll(_Tenant)
                          on c.AccountId equals a.AccountId
-                         where a.LocalBalanceInDue!= c.TotalAmount 
+                         where a.BalanceInLocalCurrency!= c.TotalAmount 
 
+                    
 
                          select new GLAccountBalanceDTO
                          {
@@ -53,15 +60,30 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
                          }
                          );
 
+                var qForeignCurrencyId = (from c in myCashBookRepository.GetAll(_Tenant).Where(r => r.CurrencyId != accountingCurrencyId)
+                                             join a in myGLAccountMoreDataRepository.GetAll(_Tenant)
+                                             on c.AccountId equals a.AccountId
+                                             where a.BalanceInForeignCurrency != c.TotalAmount
 
-          
+
+
+                                             select new GLAccountBalanceDTO
+                                             {
+                                                 AccountId = c.AccountId,
+                                                 BalanceInLocalCurrency = c.TotalAmount ?? 0 - a.BalanceInLocalCurrency,
+                                                 CHANGE_TYPE = c.LocalName + "  היתרה מטח בקופה שונה מהיתרה בכרטיס הנחש"
+
+                                             }
+                         );
 
 
 
-                
 
-           
-                var l = q.ToList();
+
+
+
+
+                var l = qAccountingCurrencyId.Take(30).Union(qForeignCurrencyId.Take(30)).ToList();
                 CompareReport = new CompareReportM()
                 {
                     CompareReportName = "ReverseEngineerCashBook",

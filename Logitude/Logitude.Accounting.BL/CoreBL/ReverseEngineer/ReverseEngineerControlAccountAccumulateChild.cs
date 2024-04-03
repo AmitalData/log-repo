@@ -130,7 +130,7 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
            }
 
            );
-                var l = qDiff.ToList();
+                var l = qDiff.Take(30).ToList();
                 CompareReport = new CompareReportM()
                 {
                     CompareReportName = "totalControl=totalChilds",
@@ -139,6 +139,37 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
                     ///TotalOpenReconciliation = myTotalOpenReconciliation,
                     Took = sw.Elapsed
                 };
+                Convert2DisplayNumber(CompareReport.GLAccountBalanceList, _Tenant);
+
+
+            }
+        }
+
+        private void Convert2DisplayNumber(List<GLAccountBalanceDTO> rows, int tenant)
+        {
+            if (rows == null)
+            {
+                return;
+            }
+            try
+            {
+                var AccountIdList = rows.Where(r => !string.IsNullOrWhiteSpace(r.AccountId)).Select(x => x.AccountId).Distinct().ToList();
+                var repo = new GLAccountRepository(tenant);
+                var res = repo.GetDisplayNumberList(AccountIdList.ToHashSet(), tenant);
+                foreach (var item in rows)
+                {
+                    var display = res.FirstOrDefault(r => r.Key == item.AccountId);
+                    if (string.IsNullOrEmpty(display.Value))
+                    {
+                        continue;
+                    }
+                    item.AccountDisplayNumber= display.Value;
+                }
+            }
+            catch (Exception)
+            {
+
+
             }
         }
     }

@@ -55,4 +55,8 @@
     ReferencedTable="Contacts"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
+  <Index
+    Columns="LoginDateTime,Tenant,CardId" />
+  <Index
+    Columns="Via" />
 </Table>

@@ -23,6 +23,7 @@ using System.Data.Entity.Core.Objects;
 using System.Data.Entity;
 using Logitude.BL.Helpers;
 using Simplog.Data.CommonDataModel;
+using WebFreight.Web.Services;
 
 namespace WebFreight.Web.ShipmentPackageModel
 {
@@ -40,15 +41,8 @@ namespace WebFreight.Web.ShipmentPackageModel
         public byte[] RegisterShipments(byte[] xmlFilters, int tenant, string partnerId)
         {
             RegisterShipmentPackageDataProvider data = this.BeginRegister(xmlFilters, tenant, partnerId);
+            return new ReportMemoryStreamService().Convert(data, typeof(RegisterShipmentPackageDataProvider), tenant);
 
-            XmlSerializer serializer = new XmlSerializer(typeof(RegisterShipmentPackageDataProvider));
-            MemoryStream memstream = new MemoryStream();
-            serializer.Serialize(memstream, data);
-            memstream.Seek(0, SeekOrigin.Begin);
-            var reader = new StreamReader(memstream);
-            string content = reader.ReadToEnd();
-            byte[] bytearray = memstream.ToArray();
-            return bytearray;
         }
 
         private RegisterShipmentPackageDataProvider BeginRegister(byte[] xmlFilters, int tenant, string partnerId)
@@ -64,7 +58,6 @@ namespace WebFreight.Web.ShipmentPackageModel
             TenantRepository tenantRep = new TenantRepository(commonContext);
             AddressRepository addressRepository = new AddressRepository(commonContext);
             PortRepository portRepository = new PortRepository(commonContext);
-            VesselRepository vesselRepository = new VesselRepository(commonContext);
             Tenant ten = tenantRep.GetSingleTenant(tenant);
 
             MemoryStream memorystream = new MemoryStream(xmlFilters);
@@ -310,64 +303,29 @@ namespace WebFreight.Web.ShipmentPackageModel
                 {
                     provider.LastATA = shipment.Transshipment3ATA;
                     provider.LastETA = shipment.Transshipment3ETA;
+                    provider.LastVessel = shipment.Transshipment3VesselName;
 
-                    if (!string.IsNullOrEmpty(shipment.Transshipment3VesselId))
-                    {
-                        Vessel vessel = vesselRepository.GetSingleVessel(shipment.Transshipment3VesselId, tenant);
-
-                        if (vessel != null)
-                        {
-                            provider.LastVessel = vessel.EnglishName;
-                        }
-                    }
                 }
 
                 else if (!string.IsNullOrEmpty(shipment.Transshipment2FromPortId))
                 {
+                    provider.LastVessel = shipment.Transshipment2VesselName;
                     provider.LastATA = shipment.Transshipment2ATA;
                     provider.LastETA = shipment.Transshipment2ETA;
-
-                    if (!string.IsNullOrEmpty(shipment.Transshipment2VesselId))
-                    {
-                        Vessel vessel = vesselRepository.GetSingleVessel(shipment.Transshipment2VesselId, tenant);
-
-                        if (vessel != null)
-                        {
-                            provider.LastVessel = vessel.EnglishName;
-                        }
-                    }
                 }
 
                 else if (!string.IsNullOrEmpty(shipment.Transshipment1FromPortId))
                 {
+                    provider.LastVessel = shipment.Transshipment1VesselName;
                     provider.LastATA = shipment.Transshipment1ATA;
                     provider.LastETA = shipment.Transshipment1ETA;
-
-                    if (!string.IsNullOrEmpty(shipment.Transshipment1VesselId))
-                    {
-                        Vessel vessel = vesselRepository.GetSingleVessel(shipment.Transshipment1VesselId, tenant);
-
-                        if (vessel != null)
-                        {
-                            provider.LastVessel = vessel.EnglishName;
-                        }
-                    }
                 }
 
                 else if (!string.IsNullOrEmpty(shipment.MainCarriageFromPortId))
                 {
+                    provider.LastVessel = shipment.MainCarriageVesselName;
                     provider.LastATA = shipment.MainCarriageATA;
                     provider.LastETA = shipment.MainCarriageETA;
-
-                    if (!string.IsNullOrEmpty(shipment.MainCarriageVesselId))
-                    {
-                        Vessel vessel = vesselRepository.GetSingleVessel(shipment.MainCarriageVesselId, tenant);
-
-                        if (vessel != null)
-                        {
-                            provider.LastVessel = vessel.EnglishName;
-                        }
-                    }
                 }
 
                 if (shipment.SplitOnCarriage == true)
@@ -593,26 +551,20 @@ namespace WebFreight.Web.ShipmentPackageModel
                     provider.Type = "";
                 }
 
-                provider.Vessel_Voyage = shipment.Voyage;                
+                provider.Vessel_Voyage = shipment.Voyage;
 
-                if (!string.IsNullOrEmpty(shipment.VesselId))
+                if (!string.IsNullOrEmpty(shipment.VesselName))
                 {
-                    VesselRepository rep = new VesselRepository(tenant);
-                    Vessel vessel = rep.GetSingleVessel(shipment.VesselId, tenant);
+                    provider.VesselName = shipment.VesselName;
 
-                    if (vessel != null)
+                    if (string.IsNullOrEmpty(provider.Vessel_Voyage))
                     {
-                        provider.VesselName = vessel.EnglishName;
+                        provider.Vessel_Voyage = shipment.VesselName;
+                    }
 
-                        if (string.IsNullOrEmpty(provider.Vessel_Voyage))
-                        {
-                            provider.Vessel_Voyage = vessel.EnglishName;
-                        }
-
-                        else
-                        {
-                            provider.Vessel_Voyage = vessel.EnglishName + " - " + shipment.Voyage;
-                        }
+                    else
+                    {
+                        provider.Vessel_Voyage = shipment.VesselName + " - " + shipment.Voyage;
                     }
                 }
 
@@ -669,7 +621,7 @@ namespace WebFreight.Web.ShipmentPackageModel
 
                 provider.OurInvoice = inv;
 
-                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
                 customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, shipment, provider);
 
                 if (string.IsNullOrEmpty(provider.ContainerNumber))

@@ -108,6 +108,22 @@ namespace Logitude.Accounting.Data.EntityLists
        public string SecondPeriodsMonths  { get; set; }
        [DataMember]
        public string ThirdsPeriodsMonths  { get; set; }
+       [DataMember]
+       public bool IsSecurityLevelActivated  { get; set; }
+       [DataMember]
+       public bool CreateRevaluationJournal  { get; set; }
+       [DataMember]
+       public string TaxInstitutionGLAccountId  { get; set; }
+       [DataMember]
+       public string HSM  { get; set; }
+       [DataMember]
+       public string HSMtoken  { get; set; }
+       [DataMember]
+       public string HSMaddress  { get; set; }
+       [DataMember]
+       public bool AllowEditingExchangeRate  { get; set; }
+       [DataMember]
+       public bool OppositeAccountNumber  { get; set; }
    }
 
 }

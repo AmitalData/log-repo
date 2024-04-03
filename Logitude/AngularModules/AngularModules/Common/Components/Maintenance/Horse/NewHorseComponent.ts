@@ -19,7 +19,6 @@ export class NewHorseComponent extends BaseComponent {
     public EntityPM: HorsePM;
     private CurrentSession = SessionLocator.SelectedSession;
     public Years: number[];
-    public Genders: string[];
     constructor() {
         super();
 
@@ -36,14 +35,10 @@ export class NewHorseComponent extends BaseComponent {
 
     private FillComboBoxes() {
         this.Years = [];
-        this.Genders = [];
 
         for (var i = new Date().getFullYear(); i >= 1950; i--) {
             this.Years.push(i);
         }
-
-        this.Genders.push("Male");
-        this.Genders.push("Female");
     }
 
     private SetUIProperties() {
@@ -71,10 +66,10 @@ export class NewHorseComponent extends BaseComponent {
         }
     }
 
-    get Gender() { return this.EntityPM.Gender; }
-    set Gender(newValue: string) {
-        if (this.EntityPM.Gender != newValue) {
-            this.EntityPM.Gender = newValue;
+    get GenderCode() { return this.EntityPM.GenderCode; }
+    set GenderCode(newValue: string) {
+        if (this.EntityPM.GenderCode != newValue) {
+            this.EntityPM.GenderCode = newValue;
         }
     }
 

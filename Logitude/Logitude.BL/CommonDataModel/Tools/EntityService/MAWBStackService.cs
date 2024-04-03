@@ -95,57 +95,74 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         public void DeleteMAWBStacksOperation(string stackId, string airlineId, bool isSeriesDelete, string loggedUserId)
         {
             MAWBStack entity = entityRepository.GetSingleMAWBStack(stackId, tenant);
+            string notes = "";
+            string eventCode = "";
 
             if (!isSeriesDelete)
             {
-                entityRepository.Remove(entity);
-
-                if (loggedUserId != null)
-                {
-                    EventTracer.CreateTraceEvent(new EventTracerArgs()
-                    {
-                        Tenant = tenant,
-                        EventTypeCode = "AWBR",
-                        UserId = loggedUserId,
-                        EntityId = airlineId,
-                        ObjectTableName = "Airline",
-                        Notes = "AWB  number [" + entity.Number + "] removed",
-                    });
-                }
+                this.DeleteSingleAirlineStock(entity, isSeriesDelete);
+                notes = "AWB  number [" + entity.Number + "] removed";
+                eventCode = "AWBR";
             }
 
             else
             {
                 List<MAWBStack> stacksList = entityRepository.GetMAWBStacksByInsertionDate(tenant, airlineId, entity.InsertionDate);
-
                 foreach (MAWBStack stack in stacksList)
                 {
-                    entityRepository.Remove(stack);
+                    this.DeleteSingleAirlineStock(stack, isSeriesDelete);
                 }
 
-                if (loggedUserId != null)
-                {
-                    EventTracer.CreateTraceEvent(new EventTracerArgs()
-                    {
-                        Tenant = tenant,
-                        EventTypeCode = "AWBD",
-                        UserId = loggedUserId,
-                        EntityId = airlineId,
-                        ObjectTableName = "Airline",
-                        Notes = "AWB stack inserted on [" + entity.InsertionDate.ToShortDateString() + "] at [" + entity.InsertionDate.ToShortTimeString() + "] removed",
-                    });
-                }
+                notes = "AWB stack inserted on [" + entity.InsertionDate.ToShortDateString() + "] at [" + entity.InsertionDate.ToShortTimeString() + "] removed";
+                eventCode = "AWBD";
             }
+            
+            this.TraceDeletingAirlineStock(eventCode, loggedUserId, airlineId, notes);
 
             TableLastUpdateClass.UpdateTableHistory(entity.Tenant, "MAWBStack");
             entityRepository.SubmitChanges();
         }
+        private void DeleteSingleAirlineStock(MAWBStack entity, bool isSeriesDelete)
+        {
+            if (entity.IsUsed)
+            {
+                this.ThrowDeleteAirlineStockException(entity, isSeriesDelete);
+            }
+
+            else
+            {
+                entityRepository.Remove(entity);                             
+            }
+        }
+        private void TraceDeletingAirlineStock(string eventCode, string loggedUserId, string airlineId, string notes)
+        {
+            if (loggedUserId != null)
+            {
+                EventTracer.CreateTraceEvent(new EventTracerArgs()
+                {
+                    Tenant = tenant,
+                    EventTypeCode = eventCode,
+                    UserId = loggedUserId,
+                    EntityId = airlineId,
+                    ObjectTableName = "Airline",
+                    Notes = notes,                    
+                });
+            }
+        }
+        private void ThrowDeleteAirlineStockException(MAWBStack entity, bool isSeriesDelete)
+        {
+            string message = "Can't remove stock since it being used in shipment or booking";
+            if(isSeriesDelete)
+            {
+                message = "Can't remove stock: " + entity .Number + " since it being used in shipment or booking";
+            }
+
+            throw new ApplicationException(message);
+        }
+
 
         public void CreateMAWBStacks(string airlineId, int startNumber, int endNumber, string assignedToId, string loggedUserId)
         {
-            MAWBStackQuery mawbStackQuery = new MAWBStackQuery(entityRepository);
-
-            List<MAWBStackPM> stacksList = mawbStackQuery.GetAllMAWBStackPMsByAirlineId(airlineId, tenant).ToList();
 
             DateTime insertionDate = TenantServerConfigration.GetCurrentDateTime(tenant);
 
@@ -165,7 +182,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     AssignedToId = assignedToId,
                 };
 
-                if (stacksList.Where(n => n.Number == newNumber).FirstOrDefault() == null)
+                if (!new MAWBStackQuery(entityRepository).CheckMAWBStackExistByAirlineIdAndNumber(airlineId, tenant, newNumber))
                 {
                     MAWBStack newEntity = new MAWBStack()
                     {

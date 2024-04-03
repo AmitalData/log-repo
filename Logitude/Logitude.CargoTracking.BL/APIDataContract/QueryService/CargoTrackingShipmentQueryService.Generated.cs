@@ -70,7 +70,8 @@ using Logitude.CargoTracking.Data;
 				   temp.ArrivalEstimationDate = MyEntityPM.ArrivalEstimationDate;
 				   temp.ArrivalDate = MyEntityPM.ArrivalDate;
 				   temp.CustomsPaymentDate = MyEntityPM.CustomsPaymentDate;
-				   temp.ClearanceDate = MyEntityPM.ClearanceDate;					
+				   temp.ClearanceDate = MyEntityPM.ClearanceDate;
+				   temp.CurrentMilestoneExceptions = MyEntityPM.CurrentMilestoneExceptions;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -106,7 +107,8 @@ using Logitude.CargoTracking.Data;
 					temp.ArrivalEstimationDate = MyEntity.ArrivalEstimationDate;
 					temp.ArrivalDate = MyEntity.ArrivalDate;
 					temp.CustomsPaymentDate = MyEntity.CustomsPaymentDate;
-					temp.ClearanceDate = MyEntity.ClearanceDate;					   
+					temp.ClearanceDate = MyEntity.ClearanceDate;
+					temp.CurrentMilestoneExceptions = MyEntity.CurrentMilestoneExceptions;					   
 					   return temp;
 		    }
             catch (Exception ex)

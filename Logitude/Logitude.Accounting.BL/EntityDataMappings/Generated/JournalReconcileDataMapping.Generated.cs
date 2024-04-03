@@ -41,7 +41,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         Line, 
 	         CurrencyId, 
 	         ReconciliationAmount, 
-	         IsPartial,
+	         IsPartial, 
+	         JournalNumber, 
+	         OriginalJournalId,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

@@ -78,6 +78,10 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpZipLib.0.86.0\lib\20\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Azure.KeyVault.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Azure.KeyVault.Core.1.0.0\lib\net40\Microsoft.Azure.KeyVault.Core.dll</HintPath>
       <Private>True</Private>
@@ -180,12 +184,37 @@
     <Compile Include="CacheMessageSender.cs" />
     <Compile Include="ChangeSetOperation.cs" />
     <Compile Include="Contracts\UnifreightGatewayProxy.cs" />
+    <Compile Include="DataContracts\Models\AddCustomFieldRequest.cs" />
+    <Compile Include="DataContracts\Models\CheckObjectFieldExistenceRequest.cs" />
+    <Compile Include="DataContracts\Models\DashboardModel.cs" />
+    <Compile Include="DataContracts\Models\DigitalContactLastSettingInfo.cs" />
+    <Compile Include="DataContracts\Models\DigitalDashboardSummary.cs" />
+    <Compile Include="DataContracts\Models\DigitalFeildSecurityObject.cs" />
+    <Compile Include="DataContracts\Models\DigitalFeildSecurityObjectModel.cs" />
+    <Compile Include="DataContracts\Models\DigitalFeildSecurityUpdateModel.cs" />
+    <Compile Include="DataContracts\Models\DigitalPortalScreenUpdateModel.cs" />
+    <Compile Include="DataContracts\Models\DigitalTextCodeObject.cs" />
+    <Compile Include="DataContracts\Models\DigitalTextCodeResponseModel.cs" />
+    <Compile Include="DataContracts\Models\DigitalTextCodeUpdateModel.cs" />
+    <Compile Include="DataContracts\Models\DigitalTextCodeUpdateObject.cs" />
+    <Compile Include="DataContracts\Models\DigitalUploaderInfo.cs" />
+    <Compile Include="DataContracts\Models\GeneralFilters.cs" />
+    <Compile Include="DataContracts\Models\InvoicesCounter.cs" />
+    <Compile Include="DataContracts\Models\InvoiceStatusDashboardModel.cs" />
+    <Compile Include="DataContracts\Models\SearchModel\GlobalSearchResult.cs" />
+    <Compile Include="DataContracts\Models\FilterSearchResponse.cs" />
+    <Compile Include="DataContracts\Models\SearchModel\InvoiceSearchResult.cs" />
+    <Compile Include="DataContracts\Models\SearchModel\QuoteSearchResult.cs" />
+    <Compile Include="DataContracts\Models\SearchModel\ShipmentSearchResult.cs" />
+    <Compile Include="DataContracts\TreeFilterQueryArgs.cs" />
     <Compile Include="DataContracts\AmitalRestrictOwnerModel.cs" />
     <Compile Include="DataContracts\ApiQueryFilters.cs" />
     <Compile Include="DataContracts\CodeProperties.cs" />
     <Compile Include="DataContracts\CustomApiQueryFilters.cs" />
     <Compile Include="DataContracts\CustomFieldClass.cs" />
+    <Compile Include="DataContracts\DigitalApiQueryFilters.cs" />
     <Compile Include="DataContracts\DocumentData.cs" />
+    <Compile Include="DataContracts\DWObjectFieldsDetails.cs" />
     <Compile Include="DataContracts\MessageFilters.shared.cs" />
     <Compile Include="DataContracts\PostFilters.shared.cs" />
     <Compile Include="DataContracts\QueryFilterItem.Shared.cs" />
@@ -198,9 +227,11 @@
     <Compile Include="Helpers\AppDataUtil.cs" />
     <Compile Include="Helpers\CacheManager.cs" />
     <Compile Include="Helpers\CacheWrapper.cs" />
+    <Compile Include="Helpers\CustomFieldList.cs" />
     <Compile Include="Helpers\DatabaseInitializer.cs" />
     <Compile Include="Helpers\AmitalDebuggerUtil.cs" />
     <Compile Include="Helpers\DbContextBaseTest.Ext.cs" />
+    <Compile Include="Helpers\EntityGetReflector.cs" />
     <Compile Include="Helpers\GenericFilter.cs" />
     <Compile Include="Helpers\GenericSort.cs" />
     <Compile Include="Helpers\ICacheWrapper.cs" />
@@ -220,8 +251,10 @@
     <Compile Include="Helpers\ServiceBusQueueHelper.cs" />
     <Compile Include="Helpers\SettingUtil.cs" />
     <Compile Include="Helpers\StringHelper.cs" />
+    <Compile Include="Helpers\SystemEnvironmentService.cs" />
     <Compile Include="Helpers\TransactionFactory.cs" />
     <Compile Include="Helpers\XLSUtil.cs" />
+    <Compile Include="Helpers\ZipFileService.cs" />
     <Compile Include="IContext.cs" />
     <Compile Include="Interfaces\IDateTimeUtil.cs" />
     <Compile Include="Interfaces\FieldShortNameGetter.cs" />

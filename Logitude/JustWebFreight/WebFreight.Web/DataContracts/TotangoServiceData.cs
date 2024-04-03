@@ -19,7 +19,6 @@ namespace WebFreight.Web.DataContracts
         public bool IsSharedLogisticsContact { get; set; }
         public string CardId { get; set; }
         public string PartnerTypeId { get; set; }
-
-
+        public string Via { get; set; }
     }
 }

@@ -978,11 +978,38 @@
                                    Grid.Column="0"
                                    VerticalAlignment="Center"
                                    Text="Can Filter:" />
+                        
                         <TextBlock Grid.Row="19"
                                    Grid.Column="0"
                                    VerticalAlignment="Center"
                                    Text="Custom Filter:" />
-                        <TextBlock Grid.Row="20"
+
+
+                        <StackPanel Grid.Row="20"
+                                    Grid.Column="0"
+                                    Height="22"                             
+                                    Orientation="Horizontal">
+
+                            <Image ToolTip="Used to filter this field in LIST not in POCO."
+                                   Source="Resources/question_mark_icon.png"
+                                   Height="16"
+                                   Margin="0 0 0 0"></Image>
+                            <TextBlock 
+                                   VerticalAlignment="Center"
+                                   FontWeight="{Binding CanFilterFontWeight}"
+                                   Text="Is List Filter:" 
+                                    Margin="2"/>
+                        </StackPanel>
+
+                        <CheckBox Grid.Row="20"
+                                  Grid.Column="1"
+                                  Height="22"
+                                  Margin="2"
+                                  VerticalAlignment="Center"
+                                  IsChecked="{Binding IsListFilter,
+                                                      Mode=TwoWay}" />
+
+                        <TextBlock Grid.Row="21"
                                    Grid.Column="0"
                                    VerticalAlignment="Center"
                                    FontWeight="{Binding CanFilterFontWeight}"
@@ -1002,7 +1029,7 @@
                                   VerticalAlignment="Center"
                                   IsChecked="{Binding IsCustomFilter,
                                                       Mode=TwoWay}" />
-                        <ComboBox Grid.Row="20"
+                        <ComboBox Grid.Row="21"
                                   Grid.Column="1"
                                   Height="22"
                                   Margin="2"
@@ -1010,7 +1037,7 @@
                                   ItemsSource="{Binding OperatorsList}"
                                   SelectedItem="{Binding Operator,
                                                          Mode=TwoWay}" />
-                        <Border Grid.Row="21"
+                        <Border Grid.Row="22"
                                 Grid.Column="0"
                                 Grid.ColumnSpan="2"
                                 Height="25"
@@ -1024,24 +1051,24 @@
                                        Foreground="#FF282E30"
                                        Text="Other Settings" />
                         </Border>
-                        <TextBlock Grid.Row="22"
+                        <TextBlock Grid.Row="23"
                                    Grid.Column="0"
                                    VerticalAlignment="Center"
                                    FontWeight="{Binding CanFilterFontWeight}"
                                    Text="Is Custom Field:" />
-                        <CheckBox Grid.Row="22"
+                        <CheckBox Grid.Row="23"
                                   Grid.Column="1"
                                   Height="22"
                                   Margin="2"
                                   VerticalAlignment="Center"
                                   IsChecked="{Binding IsCustom,
                                                       Mode=TwoWay}" />
-                        <TextBlock Grid.Row="23"
+                        <TextBlock Grid.Row="24"
                                    Grid.Column="0"
                                    VerticalAlignment="Center"
                                    FontWeight="{Binding CanFilterFontWeight}"
                                    Text="Has Template:" />
-                        <CheckBox Grid.Row="23"
+                        <CheckBox Grid.Row="24"
                                   Grid.Column="1"
                                   Height="22"
                                   Margin="2"
@@ -1049,13 +1076,13 @@
                                   IsChecked="{Binding HasTemplate,
                                                       Mode=TwoWay}" />
 
-                        <TextBlock Grid.Row="24"
+                        <TextBlock Grid.Row="25"
                                    Grid.Column="0"
                                    VerticalAlignment="Center"
                                    FontWeight="{Binding CanFilterFontWeight}"
                                    Text="Model Name:" />
 
-                        <TextBox  Grid.Row="24"
+                        <TextBox  Grid.Row="25"
                                   Grid.Column="1"
                                   Height="22"
                                   Margin="2"
@@ -1280,10 +1307,24 @@
                                    Grid.Column="0"
                                    VerticalAlignment="Center"
                                    Text="Order:" />
-                        <TextBlock Grid.Row="19"
+
+                        <StackPanel Grid.Row="19"
+                                   Grid.Column="0"
+                                  Height="22"
+                                  Margin="2"
+                                    Orientation="Horizontal">
+                            <Image ToolTip="Don't Create ObjectField has been changed logic to this field."
+                                   Source="Resources/question_mark_icon.png"
+                                   Height="16"
+                                   Margin="0 0 0 0"></Image>
+                            <TextBlock Grid.Row="19"
                                    Grid.Column="0"
                                    VerticalAlignment="Center"
-                                   Text="Don't Create ObjectField:" />
+                                   Text="For MetaData Only:"
+                                   Margin="10 0 0 0"/>
+                        </StackPanel>
+
+        
                         <TextBlock Grid.Row="20"
                                    Grid.Column="0"
                                    VerticalAlignment="Center"
@@ -1384,6 +1425,7 @@
                                  VerticalAlignment="Center"
                                  Text="{Binding Order,
                                                 Mode=TwoWay}" />
+                        
                         <CheckBox Grid.Row="19"
                                   Grid.Column="1"
                                   Height="22"

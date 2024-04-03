@@ -14,7 +14,7 @@ export class SendDocumentResultComponent extends BaseComponent implements OnInit
     SendViaClassLists: Operator[] = [];
     FTPFolderLists: Operator[] = [];
     IsCustomerCare: boolean = false;
-
+    public ObjectTableName: string;
     DataContext: any;
     constructor() {
         super();
@@ -31,7 +31,7 @@ export class SendDocumentResultComponent extends BaseComponent implements OnInit
     InitializeSendDocumentResultComponent() {
         this.SendViaClassLists = [];
         this.SendViaClassLists.push(new Operator("FTP", "FTP"));
-        this.SendViaClassLists.push(new Operator("Email", "EMAIL"));
+        this.SendViaClassLists.push(new Operator("Email", "EMAIL"));       
     }
 
     private sendViaSelected: Operator;
@@ -62,6 +62,10 @@ export class SendDocumentResultComponent extends BaseComponent implements OnInit
         if (this.automationSendDocument) {
             if (this.automationSendDocument.SendVia) {
                 this.SendViaSelected = this.SendViaClassLists.filter(d => d.Code == this.automationSendDocument.SendVia)[0];
+            }
+            else if (this.ObjectTableName == "Shipment") {
+                this.SendViaClassLists = this.SendViaClassLists.filter(d => d.Code !== "FTP");
+                this.SendViaSelected = this.SendViaClassLists.filter(d => d.Code == "EMAIL")[0];
             }
             else
                 this.SendViaSelected = this.SendViaClassLists[0];

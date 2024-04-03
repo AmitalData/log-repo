@@ -272,7 +272,9 @@
                                                             [DependencyFilter1Value]="false"
                                                             [QueryFilterItems]="ParentsFilterItems"
                                                             [LookUpTableName]="'GLAccount'"
-                                                            [HideColumns]="false">
+                                                            [HideColumns]="false"
+                                                            [StartSearchFromChar]="3"
+                                                            [StartSearchFromNumber]="6">
                                                     </LogLov>
                                                 </td>
                                                 <td><div></div></td>
@@ -431,6 +433,53 @@
                                                     <CheckBox [IsChecked]="ReportingAsAnotherDocument" (Checked)="ReportingAsAnotherDocument = $event"></CheckBox>
                                                 </td>
                                                 <td><div></div></td>
+                                            </tr>
+                                            <tr *ngIf="EnableFollowUpData || IsVendor">
+                                                <td style="width: 150px;">
+                                                    <LogLabel [ObjectFieldName]="'FollowupDate'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+                                                <td style="width:150px">
+                                                    <LogDatePicker [ObjectFieldName]="'FollowupDate'" [ObjectTableName]="ObjectTableName"
+                                                                   [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                                </td>
+                                                <td></td>
+                                            </tr>
+                                            <tr style="height:5px"></tr>
+                                            <tr *ngIf="EnableFollowUpData || IsVendor">
+                                                <td style="width: 150px;">
+                                                    <LogLabel [ObjectFieldName]="'FollowupNotes'" [ObjectTableName]="ObjectTableName"
+                                                              [DataContext]="DataContext"></LogLabel>
+                                                </td>
+                                                <td>
+                                                    <LogTextBox style="width:240px;" [IsMultiline]="true" [ObjectFieldName]="'FollowupNotes'"
+                                                         [HideColumns]="true" [ObjectTableName]="ObjectTableName" [InputType]="'nText'"
+                                                          [DataContext]="DataContext"></LogTextBox>
+
+                                                </td>
+                                                <td></td>
+                                            </tr>
+
+                                            <tr style="height:18px"></tr>
+
+
+                                              <!-- PaymentTerms -->
+                                            <tr *ngIf="ChartOfAccountsTypeCode == '4'" class="FormFieldRow" style="height:5px">
+                                                <td style="width: 150px;">
+                                                    <LogLabel [ObjectFieldName]="'PaymentTerms'"
+                                                        [ObjectTableName]="ObjectTableName"
+                                                        [DataContext]="DataContext"></LogLabel>
+                                                </td>
+                                                    
+                                                <td style="width:240px;">
+                                                    <LogLov [ObjectFieldName]="'PaymentTerms'"
+                                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
+                                                        [LookUpTableName]="'PaymentTerm'"
+                                                        [AutoCompleteSearchWindow]="false"
+                                                        [DisplayMemberPath]="GetDisplayMemberPath()"
+                                                        [HideColumns]="true">
+                                                    </LogLov>
+                                                </td>
                                             </tr>
                                             <tr><td><div></div></td></tr>
                                         </table>

@@ -4,11 +4,12 @@ using System.Runtime.Serialization;
 using Simplog.Server.Infrastructure;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
+using Logitude.BL.InfrastructureModel.EntityPMs;
 
 namespace Logitude.BL.CommonDataModel.EntityPMs
 {
     [CustomValidation(typeof(Validators.ClassLevelValidator), "ValidateClass")]
-    public class CardPM
+    public class CardPM : ObjectCustomFieldPM
     {
         [Key]
         public string Id { get; set; }
@@ -70,17 +71,18 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string SalesmanUserId { get; set; }
         public string AccountManagerUserId { get; set; }
+        public string TeamId { get; set; }
         public string SalesmanBusinessUnitId { get; set; }
 
         public string PartnerTypeName { get; set; }
         public string MainAddressId { get; set; }
         public string BillingAddressId { get; set; }
+        public string PickupDeliveryAddressId { get; set; }
         public string Website { get; set; }
         public string InvoiceCurrencyId { get; set; }
         public string VatTypeId { get; set; }
 
         public string Prefix { get; set; }
-
         public string CityName { get; set; }
         public string ImageDetailId { get; set; }
         public bool DisconectFromContact { get; set; }
@@ -93,7 +95,10 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string StateName { get; set; }
         public string RankId { get; set; }
         public string IndustryId { get; set; }
-
+        public string LeadDescription { get; set; }
+        public DateTime? StartWorkingDate { get; set; }
+        public string LeadSourceId { get; set; }
+        public string CustomerSizeId { get; set; }
         [Include]
         [Association("CardCustomAgent", "Id", "Id", IsForeignKey = true)]
         public virtual CustomAgentPM CustomAgent { get; set; }
@@ -111,7 +116,6 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [Include]
         [Association("CardVendor", "Id", "Id", IsForeignKey = true)]
         public virtual VendorPM Vendor { get; set; }
-       
         public string CountryId { get; set; }
         public string CountryName { get; set; }
         public string CountryCode { get; set; }
@@ -157,8 +161,11 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         }
 
         public DateTime? InvitationDate { get; set; }
+        public DateTime? CargoTrackingInvitationDate { get; set; }
         public int? SharedLogisticsInvitationStatusCode { get; set; }
         public string SharedLogisticsInvitationStatusName { get; set; }
+        public int? CargoTrackingInvitationStatusCode { get; set; }
+        public string CargoTrackingInvitationStatusName { get; set; }
         public DateTime? LastLoginDate { get; set; }
         public string CollectorId { get; set; }
         public string ClassifierId { get; set; }
@@ -186,6 +193,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
 
         public string UsoCFDICode { get; set; }
+        public string RegimenFiscalCode { get; set; }
         public bool IsInternationalPartner { get; set; }
         public bool IsAutonomy { get; set; }
 
@@ -208,5 +216,24 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [DataMember]
         public string BillToId { get; set; }
         public string ICAO { get; set; }
+        public bool AllowUnassignedEntry { get; set; }
+        public string SATCustomerName { get; set; }
+
+        [DataMember]
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string ImportLocalCustomerGroupId { get; set; }
+
+        [DataMember]
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string ExportLocalCustomerGroupId { get; set; }
+        public bool IsPotential { get; set; }
+
+        [DataMember]
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string EORInumber { get; set; }
+        public string SingleInvoiceTemplateId { get; set; }
+        public string CustomsInvoiceTemplateId { get; set; }
+        public string ConsolidationInvoiceTemplateId { get; set; }
+        public string ManifestInvoiceTemplateId { get; set; }
     }
 }

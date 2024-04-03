@@ -65,7 +65,7 @@ public void GenerateEntityController(string xmlFilePath,string outputFilePath,st
 
 		if( entity.IsClosed.GetType() == typeof(string))
       	{
-	    	if(entity.IsClosed == "true")
+	    	if(entity.IsClosed == "true" && entity.ObjectTableName.Trim('"') != "PortTimeZone")
 	    	{
 	    		return;
 	    	}
@@ -199,7 +199,7 @@ void SaveEntityControllerOutput(string outputFileName)
 	string keysName = tableName+"Keys";
 	string pocosspacestring = modelname+ ".Data.EntityPOCOs;";
 	string location="BL";
-	if(modelname.Contains("Accounting") || modelname.Contains("Customs") || modelname.Contains("CargoTracking")){
+	if(modelname.Contains("Accounting") || modelname.Contains("Customs") || modelname.Contains("CargoTracking") || modelname.Contains("ShipmentOrder")){
 	location="Def";
 	}
     if(modelname.Contains("QuoteOPM") ){
@@ -605,12 +605,7 @@ if(hasTenant && enableSecurity)
 	string keysName = tableName+"Keys";
 	string pocosspacestring = modelname+ ".Data.EntityPOCOs;";
 	string location="BL";
-	if(modelname.Contains("Accounting") || modelname.Contains("Customs")|| modelname.Contains("CargoTracking")   ){
-	location="Def";
-	}
-     
-     
-    if(modelname.Contains("QuoteOPM") ){
+	if(modelname.Contains("Accounting") || modelname.Contains("Customs")|| modelname.Contains("CargoTracking") || modelname.Contains("ShipmentOrder")){
 	  location="Def";
 	}
 	string pmsspacestring =  modelname + "."+ location +".EntityPMs;";
@@ -796,7 +791,7 @@ if(!isClosed && enableSecurity)
 <#+
 if(hasCustomFields){
 #>
-                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
                 customFieldResolver.SetCustomFieldsValues("<#= tableName #>",  authToken.Tenant, new List<<#= listName #>> { <#= FirstServiceCharacterToLowerTS(listName) #> }.Cast<object>().ToList());
 <#+
 }
@@ -835,7 +830,7 @@ if(!isClosed && enableSecurity)
 <#+
 if(hasCustomFields){
 #>
-                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
                 customFieldResolver.SetCustomFieldsValues("<#= tableName #>",  authToken.Tenant, result.Cast<object>().ToList());
 <#+
 }
@@ -925,7 +920,7 @@ if(tableName == "Port" || tableName == "Carrier"  || tableName == "Currency")
                             object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
 
                             //queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList);
-							  queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode);
+							  queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode, field.IsListFilter);
 
                         }
                         else
@@ -955,7 +950,7 @@ if(tableName == "Port" || tableName == "Carrier"  || tableName == "Currency")
                             object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
 
                             //queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList);
-							  queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode);
+							  queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode, field.IsListFilter);
 
                         }
                         else
@@ -966,10 +961,32 @@ if(tableName == "Port" || tableName == "Carrier"  || tableName == "Currency")
                 }
 
                 I<#= contextName #> MyContext = <#= contextName #>.GetContext(tenant);
+<#+ 
+                if(tableName == "Activity")
+{
+#>              
+
+                if (FeatureToggleHelper.HasFeatureToggle("SCD", tenant))
+                {
+                  MyContext = <#= contextName #>.GetSecContext(tenant);
+                }
+<#+
+}#>
 				<#= tableName #>ListQueryService <#= queryName #> = new <#= tableName #>ListQueryService(MyContext);
 
-                List<<#= listName #>> entityLists = <#= queryName #>.GetList(queryOperations, tenant);
-				
+                TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
+                 { 
+                     AdditionalTreeFilter = filters.TreeFilters,
+                     ObjectTableName = "<#= entity.ObjectTableName.Trim('"') #>",
+                     ParentEntityId = filters.ParentEntityId,
+                     ParentObjectTableName = filters.ParentObjectTableName, 
+                     Tenant = tenant ,
+                     ParentEntity = filters.ParentEntity
+                 };
+
+
+                List<<#= listName #>> entityLists = <#= queryName #>.GetList(queryOperations, tenant , treeFilterQueryArgs);
+
 				ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)
                 {
@@ -980,13 +997,13 @@ if(tableName == "Port" || tableName == "Carrier"  || tableName == "Currency")
 		 if(hasTenant)
          {
 #>
-                    int count = <#= queryName #>.GetListCount(queryOperations, tenant);
+                    int count = <#= queryName #>.GetListCount(queryOperations, tenant , treeFilterQueryArgs);
 <#+
          }
 		 else
          {
 #>
-                    int count = <#= queryName #>.GetListCount(queryOperations);
+                    int count = <#= queryName #>.GetListCount(queryOperations , treeFilterQueryArgs);
 <#+
          }
 #>
@@ -997,7 +1014,7 @@ if(tableName == "Port" || tableName == "Carrier"  || tableName == "Currency")
 <#+
 if(hasCustomFields){
 #>
-                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
                 customFieldResolver.SetCustomFieldsValues("<#= tableName #>",  authToken.Tenant, entityLists.Cast<object>().ToList());
 <#+
 }

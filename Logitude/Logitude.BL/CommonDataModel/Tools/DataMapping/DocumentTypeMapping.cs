@@ -45,6 +45,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             documentType.CustomerRoleId = documentTypePM.CustomerRoleId;
             documentType.IsAgentView = documentTypePM.IsAgentView;
             documentType.IsCustomerView = documentTypePM.IsCustomerView;
+            documentType.IsCustomerUploadPermission = documentTypePM.IsCustomerUploadPermission;
             documentType.IsReadOnly = documentTypePM.IsReadOnly;
             documentType.IsDocumentOneTimePrintLimited = documentTypePM.IsDocumentOneTimePrintLimited;
             documentType.LimitedPrintCopyId = documentTypePM.LimitedPrintCopyId;

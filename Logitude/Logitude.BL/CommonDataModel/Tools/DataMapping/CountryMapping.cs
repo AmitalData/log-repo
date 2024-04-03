@@ -31,6 +31,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.IsStateRequired = entityPM.IsStateRequired;
             poco.HasCitiesList = entityPM.HasCitiesList;
             poco.IsNorthAmerica = entityPM.IsNorthAmerica;
+            poco.IsGreaterChina = entityPM.IsGreaterChina;
             poco.SearchFields = entityPM.Code + "," + entityPM.EnglishName + "," + entityPM.LocalName;
         }
     }

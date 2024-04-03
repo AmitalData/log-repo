@@ -24,7 +24,8 @@ export const LazyWidgets: { path: string, loadChildren: () => Promise<NgModuleFa
    // Common Modules
    { loadChildren: () => import('../../Common/Module_COMN').then(m => m.LogitudeCommonModule), path: 'Common' },
    { loadChildren: () => import('../../CommonModules/CommonAgent/ModuleCommonAgent').then(m => m.ModuleCommonAgent), path: 'CommonAgent' },
-   { loadChildren: () => import('../../CommonModules/CommonAirline/ModuleCommonAirline').then(m => m.ModuleCommonAirline), path: 'CommonAirline' },
+  { loadChildren: () => import('../../CommonModules/CommonCustomerTeam/ModuleCommonCustomerTeam').then(m => m.ModuleCommonCustomerTeam), path: 'CommonCustomerTeam' },
+  { loadChildren: () => import('../../CommonModules/CommonAirline/ModuleCommonAirline').then(m => m.ModuleCommonAirline), path: 'CommonAirline' },
    { loadChildren: () => import('../../CommonModules/CommonCustomer/ModuleCommonCustomer').then(m => m.ModuleCommonCustomer), path: 'CommonCustomer' },
    { loadChildren: () => import('../../CommonModules/CommonFilingInbox/ModuleCommonFilingInbox').then(m => m.ModuleCommonFilingInbox), path: 'CommonFilingInbox' },
    { loadChildren: () => import('../../CommonModules/CommonFlightsSchedules/ModuleCommonFlightsSchedules').then(m => m.ModuleCommonFlightsSchedules), path: 'CommonFlightsSchedules' },
@@ -62,18 +63,11 @@ export const LazyWidgets: { path: string, loadChildren: () => Promise<NgModuleFa
     { loadChildren: () => import('../../CustomsModules/CustomsReport/ModuleCustomsReports').then(m => m.ModuleCustomsReports), path: 'CustomsReport' },
     { loadChildren: () => import('../../CustomsModules/CustomsCountry/ModuleCustomsCountry').then(m => m.ModuleCustomsCountry), path: 'CustomsCountry' },
   
-    // QuoteOPM Modules
-    { loadChildren: () => import('../../QuoteOPM/Module_QUPM').then(m => m.QuoteModule), path: 'QuoteOPM' },
-    { loadChildren: () => import('../../QuoteOPModules/QuoteCharges/ModuleQuoteCharges').then(m => m.ModuleQuoteCharges), path: 'QuoteCharges' },
-    { loadChildren: () => import('../../QuoteOPModules/QuoteOthers/ModuleQuoteOthers').then(m => m.ModuleQuoteOthers), path: 'QuoteOthers' },
-    { loadChildren: () => import('../../QuoteOPModules/QuoteTabs/ModuleQuoteTabs').then(m => m.ModuleQuoteTabs), path: 'QuoteTabs' },
-    { loadChildren: () => import('../../QuoteOPModules/QuoteTemplates/ModuleQuoteTemplates').then(m => m.ModuleQuoteOPTemplates), path: 'QuoteTemplates' },
-
+   
 ];
 
 export function LazyArrayToObjects() {
   const result = {};
-
   for (const w of LazyWidgets) {
     result[w.path] = w.loadChildren;
   }

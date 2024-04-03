@@ -22,6 +22,8 @@ using Simplog.Server.Infrastructure;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
 using System.Collections.Generic;
+using System;
+using Logitude.Server.Tools.CustomFields;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -107,6 +109,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             entityRepository.Add(Poco);
             entityRepository.SubmitChanges();
+            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", EntityId = entityPM.Id, Tenant = entityPM.Tenant, Type = "PM", Entities = new List<CardPM> { entityPM }.Cast<object>().ToList() }).Update();
 
             if (entityPM.Addresses != null)
             {
@@ -153,6 +156,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
+            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Card", EntityId = entityPM.Id, Tenant = entityPM.Tenant, Type = "PM", Entities = new List<CardPM> { entityPM }.Cast<object>().ToList() }).Update();
+
             //UpdateGLaccountCardsDara();
             TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Card");
 
@@ -160,10 +165,18 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             {
                 CardContactRepository CardContactRepository = new Simplog.Data.CommonDataModel.Repositories.CardContactRepository(objectContext);
                 CardContact cardContact = CardContactRepository.GetCardContactByContactAndCard(entityPM.Id, entityPM.ContactId, entityPM.Tenant);
+
+                Contact contact = contactRepository.GetSingleContact(cardContact.ContactId, cardContact.Tenant);
+                contact.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+
+                AddDisconectFromContactKafkaQueueMessage(cardContact);
+
+                contactRepository.Update(contact);
+                contactRepository.SubmitChanges();
                 CardContactRepository.Remove(cardContact);
                 CardContactRepository.SubmitChanges();
             }
-            if((entityPM.PartnerTypeId== PartnerTypes.Customer || entityPM.PartnerTypeId == PartnerTypes.Vendor) && entityPM.GLAccountId !=null)
+            if((entityPM.PartnerTypeId== PartnerTypes.Customer || entityPM.PartnerTypeId == PartnerTypes.Vendor || entityPM.PartnerTypeId == PartnerTypes.AccountingPartner) && entityPM.GLAccountId !=null)
             {
                 HandleGLAccountCardData(entityPM.Id,entityPM.GLAccountId,entityPM.Tenant);              
             }
@@ -276,6 +289,20 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
         }
 
+        private void AddDisconectFromContactKafkaQueueMessage(CardContact cardContact)
+        {
+            if (FeatureToggleHelper.HasFeatureToggle("CTL", entityPM.Tenant))
+            {
+                IQueueService queueservice = new DbQueueService();
+                queueservice.InitializeQueue("CToolLookups", 0);
+                var queueMessage = new Dictionary<string, string>() {
+                { "Entity", "DisconectFromContact" },
+                { "EntityId", "{" + "\"ContactId\":" + "\"" + cardContact.ContactId + "\"," + "\"CardId\":" + "\"" + cardContact.CardId + "\"," + "\"Tenant\":" + tenant + "}" },
+                { "Tenant", tenant.ToString()}};
+                queueservice.Send(queueMessage, tenant);
+            }
+        }
+
         private void AddCardKafkaQueueMessage()
         {
             if (!FeatureToggleHelper.HasFeatureToggle("CTL", entityPM.Tenant))
@@ -302,7 +329,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
         public static string Customer = "CS";
         public static string Vendor = "VD";
-     
-}
+        public static string AccountingPartner = "AC";
+
+    }
 }
 

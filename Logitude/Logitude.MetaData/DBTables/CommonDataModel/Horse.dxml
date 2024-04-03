@@ -72,13 +72,6 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="Gender"
-    Type="varchar"
-    Size="50">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="Breed"
     Type="varchar"
     Size="50">
@@ -147,6 +140,13 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="GenderCode"
+    Type="varchar"
+    Size="1">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"
@@ -161,5 +161,10 @@
     ForeignKeyColumn="CountryOfBirthId"
     ReferencedTable="Countries"
     ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="GenderCode"
+    ReferencedTable="HorseGenders"
+    ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
 </Table>

@@ -1,4 +1,6 @@
-﻿using Simplog.Data.InfrastructureModel.EntityPOCOs;
+﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -6,7 +8,9 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Threading;
+using System.Web;
 using System.Web.Http;
+using WebFreight.Web.Security;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code
 {
@@ -15,6 +19,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
         public HttpResponseMessage GetEntityResourceByTableName(string objectTableName, int tenant)
         {
+            SecurityUtility.AuthenticationOnTenant(tenant);
             byte[] zipfilebyte = null;
             ObjectTableRepository objectTabelRepository = new ObjectTableRepository(tenant);
             ObjectTable objectTable = objectTabelRepository.GetObjectTableByName(objectTableName, tenant, false);
@@ -24,7 +29,6 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             }
             return Request.CreateResponse(HttpStatusCode.OK, zipfilebyte);
         }
-
 
     }
 }

@@ -21,7 +21,8 @@ namespace Logitude.Server.Tools.Helpers
         {
             DocumentTypeRepository documentTypeRepository = new DocumentTypeRepository(documentPopulateAutomaticDateArgs.Tenant);
             DocumentType documentType = documentTypeRepository.GetSingleDocumentTypeByCode(documentPopulateAutomaticDateArgs.DocumentTypeCode, documentPopulateAutomaticDateArgs.Tenant);
-            if (documentType != null && !string.IsNullOrEmpty(documentPopulateAutomaticDateArgs.ObjectTableName))
+            string documentObjectTableName = GetDocumentObjectTableName(documentPopulateAutomaticDateArgs);
+            if (documentType != null && !string.IsNullOrEmpty(documentObjectTableName))
             {
                 string populateAutomaticDateFieldCode = GetPopulateAutomaticDateFieldCode(documentPopulateAutomaticDateArgs.ProcessType, documentType);
                 if (!string.IsNullOrEmpty(populateAutomaticDateFieldCode))
@@ -30,16 +31,29 @@ namespace Logitude.Server.Tools.Helpers
                     var populateAutomaticDateObjectField = objectFieldRepository.GetSingleObjectFieldByFieldCode(populateAutomaticDateFieldCode, documentPopulateAutomaticDateArgs.Tenant);
                     if (populateAutomaticDateObjectField != null)
                     {
-                        var entity = InjectionUtil.Instance.GetEntityByObjectTableNameAndEntityId(documentPopulateAutomaticDateArgs.ObjectTableName, documentPopulateAutomaticDateArgs.EntityId, documentPopulateAutomaticDateArgs.Tenant);
+                        string entityId = !string.IsNullOrEmpty(documentPopulateAutomaticDateArgs.ChildEntityId) ? documentPopulateAutomaticDateArgs.ChildEntityId : documentPopulateAutomaticDateArgs.EntityId;
+                        var entity = InjectionUtil.Instance.GetEntityByObjectTableNameAndEntityId(documentObjectTableName, entityId, documentPopulateAutomaticDateArgs.Tenant);
                         if (entity != null)
                         {
                             object documentPopulateAutomaticValue = GetDocumentPopulateAutomaticValue(documentPopulateAutomaticDateArgs, populateAutomaticDateObjectField);
                             SetPropertyValueToEntity(populateAutomaticDateObjectField, entity, documentPopulateAutomaticValue);
-                            InjectionUtil.Instance.UpdateEntity(entity, documentPopulateAutomaticDateArgs.ObjectTableName, documentPopulateAutomaticDateArgs.Tenant);
+                            InjectionUtil.Instance.UpdateEntity(entity, documentObjectTableName, documentPopulateAutomaticDateArgs.Tenant);
                         }
                     }
                 }
             }
+        }
+
+        private string GetDocumentObjectTableName(DocumentPopulateAutomaticDateArgs documentPopulateAutomaticDateArgs)
+        {
+            string objectTableName = documentPopulateAutomaticDateArgs.ObjectTableName;
+            if (string.IsNullOrEmpty(documentPopulateAutomaticDateArgs.ChildObjectTableId)) return objectTableName;
+
+            ObjectTableRepository objectTableRepository = new ObjectTableRepository(documentPopulateAutomaticDateArgs.Tenant);
+            ObjectTable objectTable = objectTableRepository.GetSingleObjectTable(documentPopulateAutomaticDateArgs.ChildObjectTableId, documentPopulateAutomaticDateArgs.Tenant, false);
+            objectTableName = objectTable != null ? objectTable.Name : objectTableName;
+
+            return objectTableName;
         }
 
         private  string GetPopulateAutomaticDateFieldCode(string processType, DocumentType documentType)
@@ -59,7 +73,7 @@ namespace Logitude.Server.Tools.Helpers
             {
                 return new CustomFieldClass(
                     objectField.FieldName,
-                    documentPopulateAutomaticDateArgs.ObjectTableName,
+                    GetDocumentObjectTableName(documentPopulateAutomaticDateArgs),
                     new CustomFieldClass().SetFieldDataType(objectField.DataTypeCode, currentDateTime)
                     );
             }
@@ -85,7 +99,8 @@ namespace Logitude.Server.Tools.Helpers
         public string DocumentTypeCode { get; set; }
         public int Tenant { get; set; }
         public string ProcessType { get; set; }
-
+        public string ChildObjectTableId { get; set; }
+        public string ChildEntityId { get; set; }
 
 
     }

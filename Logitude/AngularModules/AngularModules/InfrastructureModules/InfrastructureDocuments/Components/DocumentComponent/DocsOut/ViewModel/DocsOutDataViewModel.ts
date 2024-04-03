@@ -39,12 +39,13 @@ export class DocsOutDataViewModel {
     public VisiblePrintButton: boolean;
     public VisibleSendButton: boolean;
     public documentOutCopyId: string;
-    public IsSend: boolean; 
+    public IsSend: boolean;
     public EventRefreshName: string;
     Subject: string;
     ToSpecificeEmail: string = "";
 
     public EntityId: string;
+    public invoiceType: string;
     public DocsOutItemsList: DocsOutDataViewModel[];
     public CommunicationLogPMs : CommunicationLogPMViewModel[];
     public CommunicationLogObsList: CommunicationLogPMViewModel[];
@@ -77,17 +78,17 @@ export class DocsOutDataViewModel {
         this.DocumentTypePM = docType;
         this.DocumentTypeList = documentTypeList;
         this.EntityPM = entityPM;
-        this.EntityId = !AppTool.IsNullOrEmpty(entityId) ? entityId : "";   
-        this.ChildEntityId = !AppTool.IsNullOrEmpty(childEntityId) ? childEntityId : ""; 
-        this.ChildObjectTableId = !AppTool.IsNullOrEmpty(childObjectTableId) ? childObjectTableId : ""; 
-        this.ChildReference = !AppTool.IsNullOrEmpty(childReference) ? childReference : ""; 
-        this.CurrentObjectTableId = !AppTool.IsNullOrEmpty(currentObjectTableId) ? currentObjectTableId : ""; 
+        this.EntityId = !AppTool.IsNullOrEmpty(entityId) ? entityId : "";
+        this.ChildEntityId = !AppTool.IsNullOrEmpty(childEntityId) ? childEntityId : "";
+        this.ChildObjectTableId = !AppTool.IsNullOrEmpty(childObjectTableId) ? childObjectTableId : "";
+        this.ChildReference = !AppTool.IsNullOrEmpty(childReference) ? childReference : "";
+        this.CurrentObjectTableId = !AppTool.IsNullOrEmpty(currentObjectTableId) ? currentObjectTableId : "";
 
-       
-  
+
+
         this.DocumentType = this.DocumentTypePM ? this.DocumentTypePM : this.DocumentTypeList;
 
-        
+
         var table = window.ObjectTables.filter(d => d.Id == this.CurrentObjectTableId)[0];
 
         if (objectTableName) {
@@ -95,16 +96,16 @@ export class DocsOutDataViewModel {
         }
 
         if (table) {
-     
+
             this.ObjectTableName = table.Name;
-            this.CurrentObjectTableId = table.Id; 
+            this.CurrentObjectTableId = table.Id;
         }
 
 
         if (!AppTool.IsNullOrEmpty(this.ChildObjectTableId)) {
             var table = window.ObjectTables.filter(d => d.Id == this.ChildObjectTableId)[0];
             if (table) this.ChildObjectTableName = table.Name;
-           
+
         }
 
         this.generalDocumentFollowUpHelper = new GeneralDocumentFollowUpHelper(this.ObjectTableName, this.EntityId, this.ChildEntityId, this.ChildReference, "DocOut", this, entityPM);
@@ -116,7 +117,7 @@ export class DocsOutDataViewModel {
             else this.CurrentDocument = internalDocuments.filter(d => d.DocumentTypeId == this.DocumentType.Id)[0];
         }
 
-        
+
 
         if (this.CurrentDocument != null) {
 
@@ -125,13 +126,13 @@ export class DocsOutDataViewModel {
                 if (this.CommunicationLogObsList && this.CommunicationLogObsList.length > 0)
                     this.HasTree = true;
             }
-                
+
 
 
             if (this.CurrentDocument.DocumentOutCopies.length > 0 && this.DocumentType.TemplateFormatCode == "P") this.HasFile = true;
 
             else this.HasFile = false;
-   
+
             this.IssuedByUserName = this.CurrentDocument.IssuedByUserName;
             this.IssuedDate = this.CurrentDocument.IssuedDate;
             this.Exists = true;
@@ -146,7 +147,7 @@ export class DocsOutDataViewModel {
             this.DocumentTypeName = this.DocumentType.Name;
             this.TemplateType = this.DocumentType.TemplateFormatCode;
             this.DocumentTypeCode = this.DocumentType.Code;
-            
+
             if (this.DocumentType.TemplateFormatCode == "M") {
                 this.IsSendButtonsVisible = true;
                 this.IsBuildViewButtonsVisible = false;
@@ -156,16 +157,16 @@ export class DocsOutDataViewModel {
                 this.IsBuildViewButtonsVisible = true;
             }
         }
-       
 
-      
+
+
 
 
 
     }
 
- 
-   
+
+
 
     ViewTree() {
 
@@ -173,7 +174,7 @@ export class DocsOutDataViewModel {
 
         else {
             this.SetCommunicationLogListHeight();
-          
+
             this.IsViewTree = true;
         }
 
@@ -186,7 +187,7 @@ export class DocsOutDataViewModel {
         }
         else if (this.CommunicationLogObsList && this.CommunicationLogObsList.length == 2) {
             this.CommunicationLogObsListHeight = "90px";
-        } 
+        }
         else if (this.CommunicationLogObsList && this.CommunicationLogObsList.length == 3) {
             this.CommunicationLogObsListHeight = "120px";
         }
@@ -197,7 +198,7 @@ export class DocsOutDataViewModel {
         else if (this.CommunicationLogObsList && this.CommunicationLogObsList.length == 5 || this.CommunicationLogObsList.length > 5) {
             this.CommunicationLogObsListHeight = "170px";
         }
-      
+
     }
 
 
@@ -213,7 +214,7 @@ export class DocsOutDataViewModel {
 
         }
     }
-    
+
 
     get Issued() {
         if (this.CurrentDocument) {
@@ -276,7 +277,7 @@ export class DocsOutDataViewModel {
     //                this.CurrentDocument.Notes = value;
     //                break;
     //        }
-         
+
 
     //    }
 

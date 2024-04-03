@@ -12,6 +12,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { ServiceHelper } from '../../../../Infrastructure/Utilities/ServiceHelper';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { JournalExtendedPMService } from '../../../Services/ExtendedPMs/JournalExtendedPMService';
+import { TaxReportExtendedPMService } from 'Accounting/Services/ExtendedPMs/TaxReportExtendedPMService';
 declare var attachmentUploader, ResultAsArray: any;
 
 @Component({
@@ -32,6 +33,7 @@ export class AccountingMainTesterComponent extends BaseComponent {
 
     JournalId2Void: string = "1-5599183";
     OverrideStornoString: string = '{"AccountingEntityCode":"7","AccountingEntityReference":"Cash Deposit 7","AccountingEntityId":"1-22222"}';
+    OverrideTaxReportString: string = '{"taxReportId":"1-22222"}';
 
     _MenuList: string[] = [];
     public ValidationErrorsList: string[];
@@ -152,6 +154,18 @@ export class AccountingMainTesterComponent extends BaseComponent {
     YYY_Click() {
 
     }
+    CancelReport(){
+        let taxReportExtendedPMService: TaxReportExtendedPMService = new TaxReportExtendedPMService();
+        let OverrideTaxReportString1 = JSON.parse(this.OverrideTaxReportString);
+
+        taxReportExtendedPMService
+        .CancelTaxReportByTester(OverrideTaxReportString1.taxReportId,).subscribe(
+            r => { this._LabelLog = JSON.stringify(r); },
+            e => { this._LabelLog = JSON.stringify(e); },
+            () => { this.CurrentSession.StopBusyIndicator(); }
+
+        );
+    }
     Aging_Click() {
         let aging_params = {
             Tenant: 1,
@@ -192,6 +206,17 @@ export class AccountingMainTesterComponent extends BaseComponent {
             //}
         });
 
+    }
+
+    closingVATReportClick() {
+        const aging_params = {
+            reportNumber: '',
+            tenant:SessionLocator.Tenant
+        };        
+        const opr = "closingVATReport";
+        const callBack = () => this.JsonList = ["Finish, result: " + JSON.parse(this.JsonOut)];
+
+        this.StrandartOp(opr, aging_params, callBack);
     }
 
     RebuildFIXGLAccountAgingData_Click() {
@@ -290,6 +315,15 @@ export class AccountingMainTesterComponent extends BaseComponent {
         let obj = { Tenant: 1, JournalId: "1-55235" };
         this.StrandartOp(opr, obj, () => { });
     }
+
+
+    _InterestReport_Click() {
+        let opr = "InterestReport_Click";
+        let obj = { Tenant: 1, JournalId: "1-55235" };
+        this.StrandartOp(opr, obj, () => {  },true);
+    }
+
+
     _ButtonReverseTrans_Click() {
         let opr = "_ButtonReverseTrans_Click";
         let obj = { MyTenant: 1, MyDate: DateTool.AddDays(new Date(), -31), MyGLAccId: "1-131321" };
@@ -309,11 +343,24 @@ export class AccountingMainTesterComponent extends BaseComponent {
         this.StrandartOp(opr, obj, () => { });
 
     }
+    BatchYearlyFIX_Click() {
+        let opr = "BatchYearlyFIX_Click";
+        let obj = {
+            MyTenant: SessionLocator.Tenant, MyDate: DateTool.AddDays(new Date(), -31),
+            MyFixType: "ReverseEngineerTotalByMonthService", MyFixTypeOption: "ReverseEngineerTotalByMonthService,ReverseEngineerTotalByMonthServiceControl,TODOMORE"
+        };
+        this.StrandartOp(opr, obj, () => { });
+    }
     _ButtonReverseGLBalanceFIX_Click() {
         let opr = "_ButtonReverseGLBalanceFIX_Click";
         let obj = { MyTenant: SessionLocator.Tenant, MyDate: DateTool.AddDays(new Date(), -31), MyGLAccId: "1-131321" };
         this.StrandartOp(opr, obj, () => { });
 
+    }
+    Change2MultiCurrency_Click() {
+        let opr = "Change2MultiCurrency_Click";
+        let obj = { /*MyTenant: SessionLocator.Tenant,*/  MyGLAccId: "1-1234567" };
+        this.StrandartOp(opr, obj, () => { });
     }
     
 
@@ -450,17 +497,20 @@ Line3
 
     getHeaders() {
         let headers: string[] = [];
-        if (this.JsonList) {
+        if (!AppTool.IsNullOrEmpty( this.JsonList)) {
             this.JsonList.forEach((value) => {
-                Object.keys(value).forEach((key) => {
-                    if (!headers.find((header) => header == key)) {
-                        headers.push(key)
-                    }
-                })
-            })
+                if (!AppTool.IsNullOrEmpty(value)) {
+                    Object.keys(value).forEach((key) => {
+                        if (!headers.find((header) => header == key)) {
+                            headers.push(key);
+                        }
+                    });
+                }
+            });
         }
         return headers;
     }
+
     CreateJournalTask_Click() {
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Width = 750;
@@ -468,6 +518,14 @@ Line3
         logitudeWindow.Title = "Accounting Load Test";
         logitudeWindow.Show('./Accounting/Components/Maintenance/AccountingLoadTestComponent');
     }
+
+    UploadExpenses_Click() {
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Width = 750;
+        logitudeWindow.Title = "Upload Deduction details";
+        logitudeWindow.Show('./Accounting/Components/Maintenance/UploadExpensesComponent');
+    }
+
     BuildTenant_Click() {
         let paramDefault: any =
         {
@@ -511,6 +569,130 @@ Line3
         //let obj = { MyTenant: 1, MyDate: DateTool.AddDays(new Date(), -31), MyGLAccId: "1-131321" };
         this.StrandartOp(opr, paramDefault, () => { });
     }
+
+
+    ButtonReconcileStageABatch_Click() {
+        let defaultParam: any = {};
+        defaultParam.Tenant = 1;
+        defaultParam.FromExtNum = "1";
+        defaultParam.ToExtNum = "99";
+
+        if (AppTool.IsNullOrEmpty(this._TextBoxParam)) {
+            this._TextBoxParam = JSON.stringify(defaultParam);
+            return;
+        }
+        let objToCheck1 = JSON.parse(this._TextBoxParam);
+        let _ReconciliationStageAUrl = ServiceHelper.GetLogitudeURL() + '/api/ReconciliationAfterConversion';
+
+        var myUrl;
+        if (objToCheck1.FromExtNum == "" && objToCheck1.ToExtNum == "") {
+            myUrl = _ReconciliationStageAUrl + "?tenant=" + objToCheck1.Tenant;
+        }
+        else {
+            myUrl = _ReconciliationStageAUrl + "?tenant=" + objToCheck1.Tenant + "&fromExtNum=" + objToCheck1.FromExtNum + "&toExtNum=" + objToCheck1.ToExtNum;
+        }
+        this.CurrentSession.StartBusyIndicatorCreating();
+        let _http = ServiceHelper.HttpClient;
+        _http.get(myUrl, ServiceHelper.GetHttpFullHeaders())
+            .subscribe(
+                r => { this._LabelLog = JSON.stringify(r); },
+                e => { this._LabelLog = JSON.stringify(e); },
+                () => { this.CurrentSession.StopBusyIndicator(); }
+            );
+    }
+
+
+    ButtonReconcileStageANoBatch_Click() {
+        let defaultParam: any = {};
+        defaultParam.Tenant = 1;
+        defaultParam.FromExtNum = "1";
+        defaultParam.ToExtNum = "99";
+
+        if (AppTool.IsNullOrEmpty(this._TextBoxParam)) {
+            this._TextBoxParam = JSON.stringify(defaultParam);
+            return;
+        }
+        let objToCheck1 = JSON.parse(this._TextBoxParam);
+        let _ReconciliationStageAUrl = ServiceHelper.GetLogitudeURL() + '/api/ReconciliationAfterConversion';
+
+        var myUrl;
+        if (objToCheck1.FromExtNum == "" && objToCheck1.ToExtNum == "") {
+            myUrl = _ReconciliationStageAUrl + "?tenant=" + objToCheck1.Tenant + "&noBatch=1";
+        }
+        else {
+            myUrl = _ReconciliationStageAUrl + "?tenant=" + objToCheck1.Tenant + "&fromExtNum=" + objToCheck1.FromExtNum + "&toExtNum=" + objToCheck1.ToExtNum + "&noBatch=1";
+        }
+
+        this.CurrentSession.StartBusyIndicatorCreating();
+        let _http = ServiceHelper.HttpClient;
+        _http.get(myUrl, ServiceHelper.GetHttpFullHeaders())
+            .subscribe(
+                r => { this._LabelLog = JSON.stringify(r); },
+                e => { this._LabelLog = JSON.stringify(e); },
+                () => { this.CurrentSession.StopBusyIndicator(); }
+            );
+
+    }
+
+
+    ButtonReconcileStageBBatch_Click() {
+        let defaultParam: any = {};
+        defaultParam.Tenant = 1;
+
+        if (AppTool.IsNullOrEmpty(this._TextBoxParam)) {
+            this._TextBoxParam = JSON.stringify(defaultParam);
+            return;
+        }
+        let objToCheck1 = JSON.parse(this._TextBoxParam);
+        let _ReconciliationStageBUrl = ServiceHelper.GetLogitudeURL() + '/api/ReconciliationStageB';
+
+        let myUrl = _ReconciliationStageBUrl + "?tenant=" + objToCheck1.Tenant;
+
+        this.CurrentSession.StartBusyIndicatorCreating();
+        let _http = ServiceHelper.HttpClient;
+        _http.get(myUrl, ServiceHelper.GetHttpFullHeaders())
+            .subscribe(
+                r => { this._LabelLog = JSON.stringify(r); },
+                e => { this._LabelLog = JSON.stringify(e); },
+                () => { this.CurrentSession.StopBusyIndicator(); }
+            );
+    }
+
+
+    ButtonReconcileStageBNoBatch_Click() {
+        let defaultParam: any = {};
+        defaultParam.Tenant = 1;
+
+        if (AppTool.IsNullOrEmpty(this._TextBoxParam)) {
+            this._TextBoxParam = JSON.stringify(defaultParam);
+            return;
+        }
+        let objToCheck1 = JSON.parse(this._TextBoxParam);
+        let _ReconciliationStageBUrl = ServiceHelper.GetLogitudeURL() + '/api/ReconciliationStageB';
+
+        var myUrl;
+        if (objToCheck1.GLAccountId == "") {
+            myUrl = _ReconciliationStageBUrl + "?tenant=" + objToCheck1.Tenant + "&noBatch=1";
+        }
+        else {
+            myUrl = _ReconciliationStageBUrl + "?tenant=" + objToCheck1.Tenant + "&gLAccountId=" + objToCheck1.GLAccountId + "&noBatch=1";
+        }
+
+        this.CurrentSession.StartBusyIndicatorCreating();
+        let _http = ServiceHelper.HttpClient;
+        _http.get(myUrl, ServiceHelper.GetHttpFullHeaders())
+            .subscribe(
+                r => { this._LabelLog = JSON.stringify(r); },
+                e => { this._LabelLog = JSON.stringify(e); },
+                () => { this.CurrentSession.StopBusyIndicator(); }
+            );
+
+    }
+
+
+
+
+
     ButtonReconcileStageCBatch_Click() {
         let defaultParam: any = {};
         defaultParam.Tenant = 1;
@@ -583,6 +765,238 @@ Line3
             );
 
     }
+
+
+    ButtonCheckInterestTransactionsFromAccounts_Click() {
+        let defaultParam: any = {};
+        defaultParam.Tenant = 1;
+        defaultParam.GLAccountId = "Id, or empty value to get all";
+        defaultParam.AccountTypeCode = "Id, or empty value to get all (2=Client, 3=Vendor)";
+        // defaultParam.UpToDueDate = "01.01.2020";
+        defaultParam.LT_LinesMaximum = 50;
+        defaultParam.MaxPageSize = 1000;
+        defaultParam.SpecificJournalId = "";
+        defaultParam.LastMadeGLAccountId = "";
+        defaultParam.MaxGLAccountsPerQuery = 100;
+        if (AppTool.IsNullOrEmpty(this._TextBoxParam)) {
+            this._TextBoxParam = JSON.stringify(defaultParam);
+            return;
+        }
+        let objToCheck1 = JSON.parse(this._TextBoxParam);
+        let _InterestTransactionsCheckAUrl = ServiceHelper.GetLogitudeURL() + '/api/InterestTransactionsCheckA';
+        let myUrl = _InterestTransactionsCheckAUrl + "?tenant=" + objToCheck1.Tenant;
+        myUrl = myUrl + "&gLAccountId=" + objToCheck1.GLAccountId;
+        myUrl = myUrl + "&accountTypeCode=" + objToCheck1.AccountTypeCode;
+        // myUrl = myUrl + "&upToDueDate=" + objToCheck1.UpToDueDate;
+        myUrl = myUrl + "&lT_LinesMaximum=" + objToCheck1.LT_LinesMaximum;
+        myUrl = myUrl + "&maxPageSize=" + objToCheck1.MaxPageSize;
+        myUrl = myUrl + "&specificJournalId=" + objToCheck1.SpecificJournalId;
+        myUrl = myUrl + "&lastMadeGLAccountId=" + objToCheck1.LastMadeGLAccountId;
+        myUrl = myUrl + "&maxGLAccountsPerQuery=" + objToCheck1.MaxGLAccountsPerQuery;
+        this.CurrentSession.StartBusyIndicatorCreating();
+        let _http = ServiceHelper.HttpClient;
+        _http.get(myUrl, ServiceHelper.GetHttpFullHeaders())
+            .subscribe(
+                r => {
+                    this.CurrentSession.StopBusyIndicator();
+                    this._LabelLog = JSON.stringify(r);
+                    let resObj = JSON.parse(this.JsonOut);
+                    if (Array.isArray(resObj)) {
+                        this.JsonList = resObj;
+                    }
+                },
+                e => {
+                    this.CurrentSession.StopBusyIndicator();
+                    this._LabelLog = JSON.stringify(e);
+                },
+                () => { this.CurrentSession.StopBusyIndicator(); }
+            );
+    }
+
+    ButtonCheckInterestReportBalance_Click() {
+        let defaultParam: any = {};
+        defaultParam.Tenant = 1;
+        defaultParam.GLAccountId = "Id, or empty value to get all";
+        defaultParam.AccountTypeCode = "Id, or empty value to get all (2=Client, 3=Vendor)";
+        defaultParam.LT_LinesMaximum = 50;
+        defaultParam.MaxPageSize = 1000;
+        defaultParam.SpecificJournalId = "";
+        defaultParam.LastMadeGLAccountId = "";
+        defaultParam.MaxGLAccountsPerQuery = 100;
+        if (AppTool.IsNullOrEmpty(this._TextBoxParam)) {
+            this._TextBoxParam = JSON.stringify(defaultParam);
+            return;
+        }
+        let objToCheck1 = JSON.parse(this._TextBoxParam);
+        let _InterestTransactionsCheckBUrl = ServiceHelper.GetLogitudeURL() + '/api/InterestTransactionsCheckB';
+        let myUrl = _InterestTransactionsCheckBUrl + "?tenant=" + objToCheck1.Tenant;
+        myUrl = myUrl + "&gLAccountId=" + objToCheck1.GLAccountId;
+        myUrl = myUrl + "&accountTypeCode=" + objToCheck1.AccountTypeCode;
+        myUrl = myUrl + "&lT_LinesMaximum=" + objToCheck1.LT_LinesMaximum;
+        myUrl = myUrl + "&maxPageSize=" + objToCheck1.MaxPageSize;
+        myUrl = myUrl + "&specificJournalId=" + objToCheck1.SpecificJournalId;
+        myUrl = myUrl + "&lastMadeGLAccountId=" + objToCheck1.LastMadeGLAccountId;
+        myUrl = myUrl + "&maxGLAccountsPerQuery=" + objToCheck1.MaxGLAccountsPerQuery;
+        this.CurrentSession.StartBusyIndicatorCreating();
+        let _http = ServiceHelper.HttpClient;
+        _http.get(myUrl, ServiceHelper.GetHttpFullHeaders())
+            .subscribe(
+                r => {
+                    this.CurrentSession.StopBusyIndicator();
+                    this._LabelLog = JSON.stringify(r);
+                    let resObj = JSON.parse(this.JsonOut);
+                    if (Array.isArray(resObj)) {
+                        this.JsonList = resObj;
+                    }
+                },
+                e => {
+                    this.CurrentSession.StopBusyIndicator();
+                    this._LabelLog = JSON.stringify(e);
+                },
+                () => { this.CurrentSession.StopBusyIndicator(); }
+            );
+    }
+
+
+
+    ButtonGLAccountInterestActivationBalance_Click() {
+        let defaultParam: any = {};
+        defaultParam.Tenant = 1;
+        defaultParam.GLAccountId = "Id, or empty value to get all";
+        defaultParam.AccountTypeCode = "Id, or empty value to get all (2=Client, 3=Vendor)";
+        defaultParam.InterestActivationDate = "DD.MM.YYYY";
+        defaultParam.BatchIt = 0;
+        defaultParam.LastMadeGLAccountId = "";
+        defaultParam.MaxGLAccountsPerQuery = 100;
+        if (AppTool.IsNullOrEmpty(this._TextBoxParam)) {
+            this._TextBoxParam = JSON.stringify(defaultParam);
+            return;
+        }
+        let objToCheck1 = JSON.parse(this._TextBoxParam);
+        let _GLAccountInterestActivationBalanceUrl = ServiceHelper.GetLogitudeURL() + '/api/GLAccountInterestActivationBalance';
+        let myUrl = _GLAccountInterestActivationBalanceUrl + "?tenant=" + objToCheck1.Tenant;
+        myUrl = myUrl + "&gLAccountId=" + objToCheck1.GLAccountId;
+        myUrl = myUrl + "&accountTypeCode=" + objToCheck1.AccountTypeCode;
+        myUrl = myUrl + "&interestActivationDate=" + objToCheck1.InterestActivationDate;
+        myUrl = myUrl + "&batchIt=" + objToCheck1.BatchIt;
+        myUrl = myUrl + "&lastMadeGLAccountId=" + objToCheck1.LastMadeGLAccountId;
+        myUrl = myUrl + "&maxGLAccountsPerQuery=" + objToCheck1.MaxGLAccountsPerQuery;
+        this.CurrentSession.StartBusyIndicatorCreating();
+        let _http = ServiceHelper.HttpClient;
+        _http.get(myUrl, ServiceHelper.GetHttpFullHeaders())
+            .subscribe(
+                r => {
+                    this.CurrentSession.StopBusyIndicator();
+                    this._LabelLog = JSON.stringify(r);
+                    let resObj = JSON.parse(this.JsonOut);
+                    if (Array.isArray(resObj)) {
+                        this.JsonList = resObj;
+                    }
+                },
+                e => {
+                    this.CurrentSession.StopBusyIndicator();
+                    this._LabelLog = JSON.stringify(e);
+                },
+                () => { this.CurrentSession.StopBusyIndicator(); }
+            );
+    }
+
+
+    ButtonGLAccountInterestDeactivationBalance_Click() {
+        let defaultParam: any = {};
+        defaultParam.Tenant = 1;
+        defaultParam.GLAccountId = "Id - a must";
+//        defaultParam.AccountTypeCode = "Id, or empty value to get all (2=Client, 3=Vendor)";
+//        defaultParam.InterestActivationDate = "DD.MM.YYYY";
+        defaultParam.BatchIt = 0;
+//        defaultParam.LastMadeGLAccountId = "";
+//        defaultParam.MaxGLAccountsPerQuery = 100;
+        if (AppTool.IsNullOrEmpty(this._TextBoxParam)) {
+            this._TextBoxParam = JSON.stringify(defaultParam);
+            return;
+        }
+        let objToCheck1 = JSON.parse(this._TextBoxParam);
+        let _GLAccountInterestDeactivationBalanceUrl = ServiceHelper.GetLogitudeURL() + '/api/GLAccountInterestDeactivationBalance';
+        let myUrl = _GLAccountInterestDeactivationBalanceUrl + "?tenant=" + objToCheck1.Tenant;
+        myUrl = myUrl + "&gLAccountId=" + objToCheck1.GLAccountId;
+//        myUrl = myUrl + "&accountTypeCode=" + objToCheck1.AccountTypeCode;
+//        myUrl = myUrl + "&interestActivationDate=" + objToCheck1.InterestActivationDate;
+        myUrl = myUrl + "&batchIt=" + objToCheck1.BatchIt;
+//        myUrl = myUrl + "&lastMadeGLAccountId=" + objToCheck1.LastMadeGLAccountId;
+//        myUrl = myUrl + "&maxGLAccountsPerQuery=" + objToCheck1.MaxGLAccountsPerQuery;
+        this.CurrentSession.StartBusyIndicatorCreating();
+        let _http = ServiceHelper.HttpClient;
+        _http.get(myUrl, ServiceHelper.GetHttpFullHeaders())
+            .subscribe(
+                r => {
+                    this.CurrentSession.StopBusyIndicator();
+                    this._LabelLog = JSON.stringify(r);
+                    let resObj = JSON.parse(this.JsonOut);
+                    if (Array.isArray(resObj)) {
+                        this.JsonList = resObj;
+                    }
+                },
+                e => {
+                    this.CurrentSession.StopBusyIndicator();
+                    this._LabelLog = JSON.stringify(e);
+                },
+                () => { this.CurrentSession.StopBusyIndicator(); }
+            );
+    }
+
+
+
+
+    ButtonAllOpenRevaluationsNoBatch_Click() {
+        let defaultParam: any = {};
+        defaultParam.Tenant = 1;
+
+        if (AppTool.IsNullOrEmpty(this._TextBoxParam)) {
+            this._TextBoxParam = JSON.stringify(defaultParam);
+            return;
+        }
+        let objToCheck1 = JSON.parse(this._TextBoxParam);
+        let _RevaluationOpUrl = ServiceHelper.GetLogitudeURL() + '/api/RevaluationOp';
+        let myUrl = _RevaluationOpUrl + "?tenant=" + objToCheck1.Tenant;
+
+        this.CurrentSession.StartBusyIndicatorCreating();
+        let _http = ServiceHelper.HttpClient;
+        _http.get(myUrl, ServiceHelper.GetHttpFullHeaders())
+            .subscribe(
+                r => { this._LabelLog = JSON.stringify(r); },
+                e => { this._LabelLog = JSON.stringify(e); this.CurrentSession.StopBusyIndicator();},
+                () => { this.CurrentSession.StopBusyIndicator(); }
+            );
+
+    }
+
+
+    ButtonRunOneRevaluationNoBatch_Click() {
+        let defaultParam: any = {};
+        defaultParam.Tenant = 1;
+        defaultParam.RevaluationId = "RevaluationId, must be open";
+        if (AppTool.IsNullOrEmpty(this._TextBoxParam)) {
+            this._TextBoxParam = JSON.stringify(defaultParam);
+            return;
+        }
+        let objToCheck1 = JSON.parse(this._TextBoxParam);
+        let _RevaluationOpUrl = ServiceHelper.GetLogitudeURL() + '/api/RevaluationOp';
+        let myUrl = _RevaluationOpUrl + "?tenant=" + objToCheck1.Tenant;
+        myUrl = myUrl + "&revaluationId=" + objToCheck1.RevaluationId;
+
+        this.CurrentSession.StartBusyIndicatorCreating();
+        let _http = ServiceHelper.HttpClient;
+        _http.get(myUrl, ServiceHelper.GetHttpFullHeaders())
+            .subscribe(
+                r => { this._LabelLog = JSON.stringify(r); },
+                e => { this._LabelLog = JSON.stringify(e); this.CurrentSession.StopBusyIndicator();},
+                () => { this.CurrentSession.StopBusyIndicator(); }
+            );
+
+    }
+
+
+
     ButtonCardGLAccountConnect_Click() {
         let defaultParam: any = {};
         defaultParam.Tenant = 1;
@@ -602,6 +1016,108 @@ Line3
                 () => { this.CurrentSession.StopBusyIndicator(); }
             );
     }
+
+
+
+
+    ButtonAPInvoiceStatusUpdate_Click() {
+        let defaultParam: any = {};
+        defaultParam.Tenant = 1;
+        defaultParam.InvoiceNumber = ""
+        defaultParam.FromInvoiceDate = "01.01.2023";
+        defaultParam.ToInvoiceDate = "31.01.2023";
+        defaultParam.Batch = 1;
+        defaultParam.Comment = "Enter InvoiceNumber, or leave it empty but enter the dates";
+        if (AppTool.IsNullOrEmpty(this._TextBoxParam)) {
+            this._TextBoxParam = JSON.stringify(defaultParam);
+            return;
+        }
+        let objToCheck1 = JSON.parse(this._TextBoxParam);
+        let _APInvoiceStatusUpdateUrl = ServiceHelper.GetLogitudeURL() + '/api/APInvoiceStatusUpdate';
+        let myUrl = _APInvoiceStatusUpdateUrl + "?tenant=" + objToCheck1.Tenant;
+        myUrl = myUrl + "&invoiceNumber=" + objToCheck1.InvoiceNumber;
+        myUrl = myUrl + "&fromInvoiceDate=" + objToCheck1.FromInvoiceDate;
+        myUrl = myUrl + "&toInvoiceDate=" + objToCheck1.ToInvoiceDate;
+        myUrl = myUrl + "&batch=" + objToCheck1.Batch;
+
+        this.CurrentSession.StartBusyIndicatorCreating();
+        let _http = ServiceHelper.HttpClient;
+        _http.get(myUrl, ServiceHelper.GetHttpFullHeaders())
+            .subscribe(
+                r => { this._LabelLog = JSON.stringify(r); },
+                e => { this._LabelLog = JSON.stringify(e); },
+                () => { this.CurrentSession.StopBusyIndicator(); }
+            );
+    }
+
+
+
+    
+    ButtonBanksCCExternalReco_Click() {
+        let defaultParam: any = {};
+        defaultParam.Tenant = 1;
+        defaultParam.AccountId = "1-1234";
+        defaultParam.AccountDisplayNumber = "12345678";
+        defaultParam.ToAccountingDate = "30.04.2023";
+        defaultParam.Batch = 0;
+      //  defaultParam.Comment = "Enter InvoiceNumber, or leave it empty but enter the dates";
+        if (AppTool.IsNullOrEmpty(this._TextBoxParam)) {
+            this._TextBoxParam = JSON.stringify(defaultParam);
+            return;
+        }
+        let objToCheck1 = JSON.parse(this._TextBoxParam);
+        let _BanksCCExternalRecoUrl = ServiceHelper.GetLogitudeURL() + '/api/BanksCCExternalReco';
+        let myUrl = _BanksCCExternalRecoUrl + "?tenant=" + objToCheck1.Tenant;
+        myUrl = myUrl + "&accountId=" + objToCheck1.AccountId;
+        myUrl = myUrl + "&accountDisplayNumber=" + objToCheck1.AccountDisplayNumber;
+        myUrl = myUrl + "&toAccountingDate=" + objToCheck1.ToAccountingDate;
+        myUrl = myUrl + "&batch=" + objToCheck1.Batch;
+
+        this.CurrentSession.StartBusyIndicatorCreating();
+        let _http = ServiceHelper.HttpClient;
+        _http.get(myUrl, ServiceHelper.GetHttpFullHeaders())
+            .subscribe(
+                r => { this._LabelLog = JSON.stringify(r); this.CurrentSession.StopBusyIndicator(); },
+                e => { this._LabelLog = JSON.stringify(e); this.CurrentSession.StopBusyIndicator(); },
+                () => { this.CurrentSession.StopBusyIndicator(); }
+            );
+    }
+
+
+    ButtonGLAccountMultiToCurrency_Click() {
+        let defaultParam: any = {};
+        defaultParam.Tenant = 1;
+        defaultParam.AccountId = "";
+        defaultParam.AccountDisplayNumber = "12345678";
+        defaultParam.ToCurrencyId = "";
+        defaultParam.ToCurrencyCode = "USD";
+        defaultParam.Batch = 0;
+        if (AppTool.IsNullOrEmpty(this._TextBoxParam)) {
+            this._TextBoxParam = JSON.stringify(defaultParam);
+            return;
+        }
+        let objToCheck1 = JSON.parse(this._TextBoxParam);
+        let _GLAccountMultiToCurrencyUrl = ServiceHelper.GetLogitudeURL() + '/api/GLAccountMultiToCurrency';
+        let myUrl = _GLAccountMultiToCurrencyUrl + "?tenant=" + objToCheck1.Tenant;
+        myUrl = myUrl + "&accountId=" + objToCheck1.AccountId;
+        myUrl = myUrl + "&accountDisplayNumber=" + objToCheck1.AccountDisplayNumber;
+        myUrl = myUrl + "&toCurrencyId=" + objToCheck1.ToCurrencyId;
+        myUrl = myUrl + "&toCurrencyCode=" + objToCheck1.ToCurrencyCode;
+        myUrl = myUrl + "&batch=" + objToCheck1.Batch;
+
+        this.CurrentSession.StartBusyIndicatorCreating();
+        let _http = ServiceHelper.HttpClient;
+        _http.get(myUrl, ServiceHelper.GetHttpFullHeaders())
+            .subscribe(
+                r => { this._LabelLog = JSON.stringify(r); this.CurrentSession.StopBusyIndicator(); },
+                e => { this._LabelLog = JSON.stringify(e); this.CurrentSession.StopBusyIndicator(); },
+                () => { this.CurrentSession.StopBusyIndicator(); }
+            );
+    }
+
+
+
+
     ButtonLoadConsolTaxRep_Click() {
         let opr = "ButtonLoadConsolTaxRep_Click";
         let str: string =
@@ -613,16 +1129,18 @@ Line4
         this.PostOp(opr, str, () => { });
     }
 
-    ButtonLoadJournals_ISL_Click() {
-        let opr = "ButtonLoadJournals_ISL_Click";
+
+
+    ButtonLoadInterestTransactions_Click() {
+        let opr = "ButtonLoadInterestTransactions_Click";
         let str: string =
-            `Please insert page, you can add a header  //Tenant=1071
-Headers - this line will be deleted
+            `Please insert page  //Tenant=1071
+Line2
 Line3
-Line4
 `;
         this.PostOp(opr, str, () => { });
     }
+
 
 
     ButtonLoadChargeTypes_Click() {
@@ -635,6 +1153,20 @@ Line4
 `;
         this.PostOp(opr, str, () => { });
     }
+
+
+    ButtonLoadGLAccounts_Click() {
+        let opr = "ButtonLoadGLAccounts_Click";
+        let str: string =
+            `Please insert page, you HAVE to add a header  //Tenant=1071
+Headers - this line will be deleted
+Line3
+Line4
+`;
+        this.PostOp(opr, str, () => { });
+    }
+
+
 
 
 

@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Trigger
+  DBType="Main"
+  Name="TriggerOnCreate_AutomaticLastUpdateDateARInvoiceTransferStatus"
+  Schema="dbo"
+  Module="Invoice">
+  <SqlScript><![CDATA[
+CREATE TRIGGER TriggerOnCreate_AutomaticLastUpdateDateARInvoiceTransferStatus ON ARInvoiceTransferStatus AFTER Insert  AS  BEGIN UPDATE ARInvoiceTransferStatus SET AutomaticLastUpdateDate = GETDATE() WHERE Code IN (SELECT DISTINCT Code FROM Inserted)END;
+]]></SqlScript>
+  <OracleScript>
+</OracleScript>
+</Trigger>

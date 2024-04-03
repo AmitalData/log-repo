@@ -193,12 +193,23 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 IBookingContext MyContext = BookingContext.GetContext(tenant);
 				FlightsSchedulesRequestListQueryService flightsSchedulesRequestQuery = new FlightsSchedulesRequestListQueryService(MyContext);
 
-                List<FlightsSchedulesRequestList> entityLists = flightsSchedulesRequestQuery.GetList(queryOperations, tenant);
-				
+                TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
+                 { 
+                     AdditionalTreeFilter = filters.TreeFilters,
+                     ObjectTableName = "FlightsSchedulesRequest",
+                     ParentEntityId = filters.ParentEntityId,
+                     ParentObjectTableName = filters.ParentObjectTableName, 
+                     Tenant = tenant ,
+                     ParentEntity = filters.ParentEntity
+                 };
+
+
+                List<FlightsSchedulesRequestList> entityLists = flightsSchedulesRequestQuery.GetList(queryOperations, tenant , treeFilterQueryArgs);
+
 				ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)
                 {
-                    int count = flightsSchedulesRequestQuery.GetListCount(queryOperations, tenant);
+                    int count = flightsSchedulesRequestQuery.GetListCount(queryOperations, tenant , treeFilterQueryArgs);
                     response.Count = count;
                 }
 

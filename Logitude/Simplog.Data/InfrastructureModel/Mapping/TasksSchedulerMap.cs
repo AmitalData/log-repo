@@ -82,6 +82,10 @@ namespace Simplog.Data.InfrastructureModel.Mapping
                .HasMaxLength(20)
                .IsUnicode(true);
 
+            this.Property(t => t.ExecutedByServerName)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+
             // Table & Column Mappings
             this.ToTable("TasksScheduler");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -129,6 +133,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.ResultType).HasColumnName("ResultType");
             this.Property(t => t.Format).HasColumnName("Format");
             this.Property(t => t.AdvancedFormat).HasColumnName("AdvancedFormat");
+            this.Property(t => t.ExecutedByServerName).HasColumnName("ExecutedByServerName");
 
 
         }

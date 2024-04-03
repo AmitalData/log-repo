@@ -1,4 +1,7 @@
-﻿using Logitude.Accounting.BL.CoreBL.BuildTenant;
+﻿using Logitude.Accounting.BL.CoreBL.Batch;
+using Logitude.Accounting.BL.CoreBL.BuildTenant;
+using Logitude.Accounting.BL.CoreBL.Fix;
+using Logitude.Accounting.BL.CoreBL.InterestReport;
 using Logitude.Accounting.BL.CoreBL.Reports;
 using Logitude.Accounting.BL.CoreBL.Reports.Aging;
 using Logitude.Accounting.BL.EntityQueryServices;
@@ -18,6 +21,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
 using System.Web;
+using System.Xml.Serialization;
 
 namespace Logitude.Accounting.BL.CoreBL.Testers
 {
@@ -28,6 +32,12 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
             LogMessagingUtil.Instance.Clear();
             switch (operationId)
             {
+                
+                case "BatchYearlyFIX_Click":
+                    {
+                        return BatchYearlyFIX_Click(tenant, _TextBoxParam);
+                    }
+                    break;
                 case "_ButtonReverseTotal_Click":
                     {
                        return _ButtonReverseTotal_Click(tenant, _TextBoxParam);
@@ -48,6 +58,12 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
                         return _ButtonReverseGLBalanceFIX_Click(tenant, _TextBoxParam);
                     }
                     break;
+                case "Change2MultiCurrency_Click":
+                    {
+                        return Change2MultiCurrency_Click(tenant, _TextBoxParam);
+                    }
+                    break;
+
                 case "_ButtonReverseTotalFIXControl_Click":
                     {
                         return _ButtonReverseTotalFIXControl_Click(tenant, _TextBoxParam);
@@ -79,9 +95,20 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
                         return ButtonLoadJournals_ISL_Click(tenant, _TextBoxParam);
                     }
                     break;
+                case "ButtonLoadInterestTransactions_Click":
+                    {
+                        return ButtonLoadInterestTransactions_Click(tenant, _TextBoxParam);
+                    }
+                    break;
                 case "ButtonLoadChargeTypes_Click":
                     {
                         return ButtonLoadChargeTypes_Click(tenant, _TextBoxParam);
+                    }
+                    break;
+
+                case "ButtonLoadGLAccounts_Click":
+                    {
+                        return ButtonLoadGLAccounts_Click(tenant, _TextBoxParam);
                     }
                     break;
 
@@ -130,11 +157,19 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
                     }
                     break;
                 
-                case "BuildTenant_Click":
+                //case "BuildTenant_Click":
+                //    {
+                //        return BuildTenant_Click(tenant, _TextBoxParam);
+                //    }
+                 //   break;
+                case "InterestReport_Click":
                     {
-                        return BuildTenant_Click(tenant, _TextBoxParam);
+                        return InterestReport2_Click(tenant, _TextBoxParam);
                     }
                     break;
+
+                    case "closingVATReport":                   
+                        return ClosingVATReport(tenant, _TextBoxParam);                    
 
                 default:
                     return new GateWayTesterResult()
@@ -145,6 +180,8 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
                     break;
             }
         }
+
+       
 
         private GateWayTesterResult RebuildFIXGLAccountAgingData_Click(int tenant, string textBoxParam)
         {
@@ -190,8 +227,6 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
             }
             return gateWayTesterResult;
         }
-
-     
 
         private GateWayTesterResult Aging_Click(int tenant, string textBoxParam)
         {
@@ -271,9 +306,51 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
 
 
 
-        
+        private GateWayTesterResult InterestReport2_Click(int tenant, string textBoxParam)
+        {
+
+            var gateWayTesterResult = new GateWayTesterResult();
+            textBoxParam = @"<InterestReportArgs>
+  <InterestReportId>1-25607</InterestReportId>
+  <Tenant>3</Tenant>
+  <RecalculateData>true</RecalculateData>
+  <InvoiceDate>0001-01-01T00:00:00</InvoiceDate>
+  <CloseWithoutInvoice>false</CloseWithoutInvoice>
+</InterestReportArgs>";
+
+            try
+            {
+
+                System.IO.StringReader stringReader = new System.IO.StringReader(textBoxParam);
+                XmlSerializer serializer = new XmlSerializer(typeof(InterestReportArgs));
+                InterestReportArgs interestReportArgs = serializer.Deserialize(stringReader) as InterestReportArgs;
+
+
             
-        private GateWayTesterResult BuildTenant_Click(int tenant, string textBoxParam)
+                InterestReportDataCalculations interestReportDataCalculation = new InterestReportDataCalculations(interestReportArgs);
+                interestReportDataCalculation.StartCalculations();
+
+
+
+
+            }
+            catch (Exception eee)
+            {
+                //param = null;
+                //throw;
+                gateWayTesterResult.ExceptionMess = eee.ToString();
+            }
+            finally
+            {
+
+                gateWayTesterResult.Log = gateWayTesterResult.Log ?? "";
+                gateWayTesterResult.Log += LogMessagingUtil.Instance.ToString();
+            }
+            return gateWayTesterResult;
+        }
+
+        
+        private GateWayTesterResult InterestReport_Click(int tenant, string textBoxParam)
         {
 
             var gateWayTesterResult = new GateWayTesterResult();
@@ -657,6 +734,44 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
             }
             return gateWayTesterResult;
         }
+        private GateWayTesterResult BatchYearlyFIX_Click(int tenant, string textBoxParam)
+        {
+            var gateWayTesterResult = new GateWayTesterResult();
+
+
+            try
+            {
+                var param = LogitudeXmlSerializer.JsonConvertDeserializeTObject<ParamBasic>(textBoxParam);
+
+                var myBatchYearTransferService = new BatchYearlyFIXService(null);
+                var myBatchYearlyFIXParams = new BatchYearlyFIXParams()
+                {
+                    Tenant = tenant,
+                    Year = param.MyDate.Year,
+                    MyFixType = param.MyFixType
+                };
+                string subj = $"BatchYearly{param.MyFixType}({param.MyDate.Year})";
+                var taskExeId = myBatchYearTransferService.CreateQBatchTaskExecution<BatchYearlyFIXParams>(myBatchYearlyFIXParams,
+                    tenant,subj, false);
+
+
+                gateWayTesterResult.JsonOut = $"taskExeId={taskExeId}";
+
+            }
+            catch (Exception eee)
+            {
+                //param = null;
+                //throw;
+                gateWayTesterResult.ExceptionMess = eee.ToString();
+            }
+            finally
+            {
+
+
+                gateWayTesterResult.Log = LogMessagingUtil.Instance.ToString();
+            }
+            return gateWayTesterResult;
+        }
         private GateWayTesterResult _ButtonReverseTotalFIXControl_Click(int tenant, string textBoxParam)
         {
 
@@ -713,6 +828,44 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
                 s.FixDbIntegrityFromLedgeToTotal();
 
                 gateWayTesterResult.JsonOut = LogitudeXmlSerializer.SerializeObjectToJosnStringMax<List<GLAccountTotalByMonthsDTO>>(s.CompareReport.GLAccountTotalByMonthsList);
+
+
+            }
+            catch (Exception eee)
+            {
+                //param = null;
+                //throw;
+                gateWayTesterResult.ExceptionMess = eee.ToString();
+            }
+            finally
+            {
+
+
+                gateWayTesterResult.Log = LogMessagingUtil.Instance.ToString();
+            }
+            return gateWayTesterResult;
+        }
+        
+            private GateWayTesterResult Change2MultiCurrency_Click(int tenant, string textBoxParam)
+        {
+
+            var gateWayTesterResult = new GateWayTesterResult();
+
+
+            try
+            {
+
+
+                var param = LogitudeXmlSerializer.JsonConvertDeserializeTObject<ParamBasic>(textBoxParam);
+                var myTenant = (int)param.MyTenant;
+                string myGLAccId = (string)param.MyGLAccId;
+
+
+                var changeGLAccount2IsMultiCurrencyService = new ChangeGLAccount2IsMultiCurrencyService();
+                changeGLAccount2IsMultiCurrencyService.Change2MultiCurrency(myGLAccId, tenant);
+
+
+                //gateWayTesterResult.JsonOut = LogitudeXmlSerializer.SerializeObjectToJosnStringMax<List<GLAccountBalanceDTO>>(s.CompareReport.GLAccountBalanceList);
 
 
             }
@@ -876,6 +1029,84 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
         }
 
 
+        private GateWayTesterResult ButtonLoadInterestTransactions_Click(int tenant, string textBoxParam)
+        {
+
+            var gateWayTesterResult = new GateWayTesterResult();
+
+
+            try
+            {
+
+
+                string fileInterestTransactions = textBoxParam;
+
+
+                var myInterestTransactionsCSVFlatFileAnalyser = new InterestTransactionsCSVFlatFileAnalyser();
+                myInterestTransactionsCSVFlatFileAnalyser.Analyse(null, fileInterestTransactions);
+
+                gateWayTesterResult.JsonOut = "Interest Transactions Loaded Ok";
+
+
+
+
+            }
+            catch (Exception eee)
+            {
+                //param = null;
+                //throw;
+                gateWayTesterResult.ExceptionMess = eee.ToString();
+            }
+            finally
+            {
+
+                gateWayTesterResult.Log = gateWayTesterResult.Log ?? "";
+                gateWayTesterResult.Log += LogMessagingUtil.Instance.ToString();
+            }
+            return gateWayTesterResult;
+        }
+
+
+
+        private GateWayTesterResult ButtonLoadGLAccounts_Click(int tenant, string textBoxParam)
+        {
+
+            var gateWayTesterResult = new GateWayTesterResult();
+
+
+            try
+            {
+
+
+                string fileGLAccounts = textBoxParam;
+
+
+                var myGLAccountsCSVFlatFileAnalyser = new GLAccountsCSVFlatFileAnalyser();
+                myGLAccountsCSVFlatFileAnalyser.Analyse(null, fileGLAccounts);
+
+                gateWayTesterResult.JsonOut = "GLAccounts Loaded Ok";
+
+
+
+
+            }
+            catch (Exception eee)
+            {
+                //param = null;
+                //throw;
+                gateWayTesterResult.ExceptionMess = eee.ToString();
+            }
+            finally
+            {
+
+                gateWayTesterResult.Log = gateWayTesterResult.Log ?? "";
+                gateWayTesterResult.Log += LogMessagingUtil.Instance.ToString();
+            }
+            return gateWayTesterResult;
+        }
+
+
+
         private GateWayTesterResult ButtonLoadChargeTypes_Click(int tenant, string textBoxParam)
         {
 
@@ -945,6 +1176,40 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
             }
             return gateWayTesterResult;
         }
+
+        private GateWayTesterResult ClosingVATReport(int tenant, string textBoxParam)
+        {
+            var gateWayTesterResult = new GateWayTesterResult();
+
+            try
+            {
+                dynamic param = LogitudeXmlSerializer.JsonConvertDeserializeObject(textBoxParam);
+                TaxReport taxReportPM = new TaxReportQueryService(tenant).GetByReportNunber(param.reportNumber?.ToString());
+
+                string batchId = new BatchClosingTaxReportJournalTask(null)
+                    .CreateQBatchTaskExecution<BatchClosingTaxReportJournalTaskArgs>(
+                    new BatchClosingTaxReportJournalTaskArgs()
+                    {
+                        TaxReportId = taxReportPM.Id,
+                        Tenant = param.tenant,
+                    }
+                    , tenant, "Closing Tax Report Journal", false);
+
+                gateWayTesterResult.Log = "Success create batch";
+                gateWayTesterResult.JsonOut = batchId;
+            }
+            catch (Exception e)
+            {
+                gateWayTesterResult.ExceptionMess = e.ToString();
+            }
+            finally
+            {
+                gateWayTesterResult.Log = gateWayTesterResult.Log ?? "";
+                gateWayTesterResult.Log += LogMessagingUtil.Instance.ToString();
+            }
+
+            return gateWayTesterResult;
+        }
     }
 
 
@@ -965,5 +1230,6 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
 
         public bool ChangeSupplier2Customer { get; set; }
 
+        public string MyFixType { get; set; }
     }
 }

@@ -39,6 +39,7 @@ namespace WebFreight.Web.DataProviders
         public string ToAddressDescription { get; set; }
         public string DeliveryContactName { get; set; }
         public string DeliveryContactPhone { get; set; }
+        public string DeliveryContactEmail { get; set; }
         public string DeliveryDate { get; set; }
         public string DeliveryTime { get; set; }
         public DateTime? DeliveryTime_DateTime_New { get; set; }
@@ -95,6 +96,36 @@ namespace WebFreight.Web.DataProviders
         public string ShipmentField38 { get; set; }
         public string ShipmentField39 { get; set; }
         public string ShipmentField40 { get; set; }
+        public string ShipmentField41 { get; set; }
+        public string ShipmentField42 { get; set; }
+        public string ShipmentField43 { get; set; }
+        public string ShipmentField44 { get; set; }
+        public string ShipmentField45 { get; set; }
+        public string ShipmentField46 { get; set; }
+        public string ShipmentField47 { get; set; }
+        public string ShipmentField48 { get; set; }
+        public string ShipmentField49 { get; set; }
+        public string ShipmentField50 { get; set; }
+        public string ShipmentField51 { get; set; }
+        public string ShipmentField52 { get; set; }
+        public string ShipmentField53 { get; set; }
+        public string ShipmentField54 { get; set; }
+        public string ShipmentField55 { get; set; }
+        public string ShipmentField56 { get; set; }
+        public string ShipmentField57 { get; set; }
+        public string ShipmentField58 { get; set; }
+        public string ShipmentField59 { get; set; }
+        public string ShipmentField60 { get; set; }
+        public string ShipmentField61 { get; set; }
+        public string ShipmentField62 { get; set; }
+        public string ShipmentField63 { get; set; }
+        public string ShipmentField64 { get; set; }
+        public string ShipmentField65 { get; set; }
+        public string ShipmentField66 { get; set; }
+        public string ShipmentField67 { get; set; }
+        public string ShipmentField68 { get; set; }
+        public string ShipmentField69 { get; set; }
+        public string ShipmentField70 { get; set; }
         public string MoveTypeCode { get; set; }
         public string MoveTypeName { get; set; }
         public string HAWB { get; set; }
@@ -112,6 +143,14 @@ namespace WebFreight.Web.DataProviders
         public string MasterNumber { get; set; }
         public string ConsigneeRef1 { get; set; }
         public string ShipmentNotes { get; set; }
+        public string ShipmentTruckerVATNumber { get; set; }
+        public string ShipmentTruckerName { get; set; }
+        public string ShipmentTruckerAddress { get; set; }
+        public string ShipmentTruckerReference2 { get; set; }
+        public string ShipmentTruckerReference1 { get; set; }
+        public string ShipmentTruckerContactName { get; set; }
+        public string ShipmentTruckerContactMobileNumber { get; set; }
+
         public string ShipperName { get; set; }
         public string ShipperAddress { get; set; }
         public string ShipperReference2 { get; set; }
@@ -172,6 +211,10 @@ namespace WebFreight.Web.DataProviders
         public string ValueOfGoodsCurrency { get; set; }
         public string TruckerName { get; set; }
         public string CustomsClearancePointName { get; set; }
+        public string CustomsClearancePointFullAddress { get; set; }
+        public string CustomsClearancePointContactName { get; set; }
+        public string CustomsClearancePointContactEmail { get; set; }
+        public string CustomsClearancePointTelephoneNumber { get; set; }
         public string DeclarationNumber { get; set; }
         public string WarehouseReferenceNumber { get; set; }
         public int? StorageFreeDays { get; set; }
@@ -184,6 +227,18 @@ namespace WebFreight.Web.DataProviders
         public DateTime? PickupDeliveryDeparture { get; set; }//(ATD, if null then take ETD)
         public DateTime? PickupDeliveryArrival { get; set; }//(ATA, if null then take ETA)
         public string PickupDeliveryNumber { get; set; }
-        public string CarrierCode { get; set; }//(Airline code from Main carriage for example)
+        public string CarrierCode { get; set; }//(Airline code from Main carriage for example)        
+        public string ImportCustomsAgentFullDetails { get; set; }
+        public string ExportCustomsAgentFullDetails { get; set; }
+        public string MasterShipmentNumber { get; set; }
+        public string TruckerAddress { get; set; }
+        public string ContainerSeals { get; set; }
+        public string ShipmentType { get; set; }
+        public string OnCarriageToPortName { get; set; }
+        public string GrossWeightUnitCode { get; set; }
+        public string VolumeUnitCode { get; set; }
+        public DateTime? FinalDestinationETA { get; set; }
+        public string TrailerNumber { get; set; }
+        public string FromPartnerAddressName { get; set; }
     }
 }

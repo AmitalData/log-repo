@@ -33,6 +33,9 @@ namespace WebFreight.Web.Helpers.AutomationModel
         private Contact loggedContact = null;
         private string companyName = string.Empty;
         private string computingPartnerName = string.Empty;
+        private string interfaceName = string.Empty;
+        private string entityReference = string.Empty;
+
         public FTPAutomationService(FTPAutomationServiceArgs ftpAutomationServiceArgs)
         {
             tenant = ftpAutomationServiceArgs.Tenant;
@@ -45,6 +48,8 @@ namespace WebFreight.Web.Helpers.AutomationModel
             loggedContact = GetLoggedContact();
             companyName = GetCompanyName();
             computingPartnerName = GetComputingPartnerName(ftpAutomationServiceArgs.ComputingPartnerId);
+            interfaceName = ftpAutomationServiceArgs.InterfaceName;
+            entityReference = ftpAutomationServiceArgs.EntityReference;
         }
 
 
@@ -66,12 +71,13 @@ namespace WebFreight.Web.Helpers.AutomationModel
 
         private CommunicationLog GetNewCommunicationLog()
         {
+            string entityInterfaceName = !string.IsNullOrEmpty(interfaceName)? interfaceName.Replace("API", ""):"";
             return new CommunicationLog()
             {
                 Id = IdCounter.GetNumber("CommunicationLog", tenant),
                 To = fTPDetails.Host,
                 From = companyName,
-                Subject = string.IsNullOrEmpty(documentFileName) ? string.IsNullOrEmpty(computingPartnerName)? "Shipment Interface": ("Shipment Interface for "+ computingPartnerName):documentFileName,
+                Subject = string.IsNullOrEmpty(documentFileName) ? string.IsNullOrEmpty(computingPartnerName)? entityInterfaceName + " Automation Interface" : (entityInterfaceName + " Automation Interface for " + computingPartnerName):documentFileName,
                 LastStatusDate = TenantServerConfigration.GetCurrentDateTime(tenant),
                 LastStatusDateUTC = System.DateTime.UtcNow,
                 InOut = "O",
@@ -86,6 +92,7 @@ namespace WebFreight.Web.Helpers.AutomationModel
                 CreateDateUTC = System.DateTime.UtcNow,
                 LogSettings = this.GetCommunicationLogSettingAsJosnString(),
                 QueueName = "FTPCommunicationLogQueue",
+                EntityReference = entityReference
             };
         }
 
@@ -160,6 +167,8 @@ namespace WebFreight.Web.Helpers.AutomationModel
         public string ComputingPartnerId { get; set; }
         public string AdditionalFolderDetails { get; set; }
         public string DocumentFileName { get; set; }
+        public string InterfaceName { get; set; }
+        public string EntityReference { get; set; }
     }
 
     public class CommunicationLogSettings

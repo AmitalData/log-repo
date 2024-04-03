@@ -134,6 +134,36 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string Field38 { get; set; }
         public string Field39 { get; set; }
         public string Field40 { get; set; }
+        public string Field41 { get; set; }
+        public string Field42 { get; set; }
+        public string Field43 { get; set; }
+        public string Field44 { get; set; }
+        public string Field45 { get; set; }
+        public string Field46 { get; set; }
+        public string Field47 { get; set; }
+        public string Field48 { get; set; }
+        public string Field49 { get; set; }
+        public string Field50 { get; set; }
+        public string Field51 { get; set; }
+        public string Field52 { get; set; }
+        public string Field53 { get; set; }
+        public string Field54 { get; set; }
+        public string Field55 { get; set; }
+        public string Field56 { get; set; }
+        public string Field57 { get; set; }
+        public string Field58 { get; set; }
+        public string Field59 { get; set; }
+        public string Field60 { get; set; }
+        public string Field61 { get; set; }
+        public string Field62 { get; set; }
+        public string Field63 { get; set; }
+        public string Field64 { get; set; }
+        public string Field65 { get; set; }
+        public string Field66 { get; set; }
+        public string Field67 { get; set; }
+        public string Field68 { get; set; }
+        public string Field69 { get; set; }
+        public string Field70 { get; set; }
 
 
         public string SearchFields { get; set; }
@@ -315,7 +345,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string Notify1Name { get; set; }
         public string Notify1Note { get; set; }
         public string Notify1Reference { get; set; }
-
+        public string Notify1Reference2 { get; set; }
         public string Notify2Id { get; set; }
         public string Notify2AddressId { get; set; }
         public string Notify2ContactId { get; set; }
@@ -566,6 +596,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
 
         public DateTime? FreightRelease { get; set; }
         public DateTime? TerminalAvailable { get; set; }
+        public DateTime? Terminal2Available { get; set; }
         public string ISFNumber { get; set; }
         public DateTime? ISFDate { get; set; }
         public string ITNumber { get; set; }
@@ -599,7 +630,16 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public DateTime? WarehouseLegLastFreeDate { get; set; }
         public string WarehouseLegRemarks { get; set; }
         public string WarehouseLegReference { get; set; }
-
+        public string WarehouseLeg2WarehouseId { get; set; }
+        public string WarehouseLeg2TerminalName { get; set; }
+        public string WarehouseLeg2AddressId { get; set; }
+        public string WarehouseLeg2TerminalCode { get; set; }
+        public DateTime? WarehouseLeg2ExpectedEntryDate { get; set; }
+        public DateTime? WarehouseLeg2ActualEntryDate { get; set; }
+        public DateTime? WarehouseLeg2ExpectedReleaseDate { get; set; }
+        public DateTime? WarehouseLeg2ActualReleaseDate { get; set; }
+        public string WarehouseLeg2Remarks { get; set; }
+        public string WarehouseLeg2Reference { get; set; }
         #region followup fields
 
         public string FollowUpId { get; set; }
@@ -639,6 +679,20 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public DateTime? OnForwardingETA { get; set; }
         public DateTime? OnForwardingATA { get; set; }       
         public bool IsStandalonePickupDelivery { get; set; }
+        public string ParentShipmentNumber { get; set; }
+        public string ParentShipmentType { get; set; }
+        public string ParentShipmentDirectionId { get; set; }
         public bool IsHTSMissing { get; set; }
+        public DateTime? PlannedCargoReadyDate { get; set; }
+        public DateTime? ApprovedCargoReadyDate { get; set; }
+        public string HandlerUserId { get; set; }
+        public string HandlerUserName { get; set; }
+        public string ShipperNotExporterReference1 { get; set; }
+        public string ShipperNotExporterReference2 { get; set; }
+        public bool HasUnassignedData { get; set; }
+        public string OperationalStatusId { get; set; }
+        public string OperationalStatusName { get; set; }
+        public string DestinationWarehouseId { get; set; }
+        public string DestinationWarehouseName { get; set; }
     }
 }

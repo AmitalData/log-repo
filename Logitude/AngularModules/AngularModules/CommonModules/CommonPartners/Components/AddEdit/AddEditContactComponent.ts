@@ -21,6 +21,9 @@ export class AddEditContactComponent {
     public DataContext: ContactItemClass;
     public ValidationErrorsList: string[] = [];
     public DomainService: PartnersDomainService;
+    public IsHasExternalId = false;
+    public IsFromCustomerEdit = false;
+
     @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
@@ -35,6 +38,9 @@ export class AddEditContactComponent {
         if (dataContext.fatherComponent) {
             this.CardId = dataContext.fatherComponent.EntityId;
             this.DomainService = dataContext.fatherComponent.DomainService;
+
+            this.IsHasExternalId =  !AppTool.IsNullOrEmpty(dataContext.ExternalId)? true: false  ;
+
         }
         else {
             this.CardId = dataContext.EntityPM.CardId;
@@ -48,6 +54,7 @@ export class AddEditContactComponent {
     SetWindowArgs(args: any) {
         if (args) {
             this.ShowSecondPartOfWindow = args.ShowSecondPartOfWindow;
+            this.IsFromCustomerEdit = args.IsFromCustomerEdit;
         }
     }
 
@@ -185,6 +192,7 @@ export class AddEditContactComponent {
         args.PartnerId = this.EntityPM.CardId;
         args.Contact = this.EntityPM;
         args.IsContactDirty = this.EntityPM.IsDirty;
+        args.ExternalId = this.EntityPM.ExternalId;
 
         if (this.DataContext.fatherComponent) {
             args.IsPartnerDirty = this.DataContext.fatherComponent.EntityPM.IsDirty;
@@ -206,7 +214,7 @@ export class AddEditContactComponent {
             else {
                 this.DataContext.EntityPM = myResponse.Result.Contact;
 
-                if (!this.CurrentSession.CurrentEditComponent) {
+                if (!this.CurrentSession.CurrentEditComponent || this.IsFromCustomerEdit ) {
                     if (this.DataContext.IsNewEntity) {
                         this.DataContext.IsNewEntity = false;
                     }

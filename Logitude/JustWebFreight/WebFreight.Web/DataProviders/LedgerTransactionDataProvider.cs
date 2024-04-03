@@ -51,12 +51,13 @@ namespace WebFreight.Web.DataProviders
         public int Tenant { get; set; }
         public string JournalId { get; set; }
         public int JournalLineNumber { get; set; }
+        public string JournalCreatedByUser { get; set; }
         public DateTime CreateDate { get; set; }
         public string ControlAccountId { get; set; }
         public string AccountId { get; set; }
-        public DateTime AccountingDate { get; set; }
-        public DateTime DocumentDate { get; set; }
-        public DateTime DueDate { get; set; }
+        public string AccountingDate { get; set; }
+        public string DocumentDate { get; set; }
+        public string DueDate { get; set; }
         public decimal LocalAmountDebit { get; set; }
         public decimal LocalAmountCredit { get; set; }
         public string CurrencyId { get; set; }
@@ -193,6 +194,21 @@ namespace WebFreight.Web.DataProviders
         public string ForeignBalanceWithSign
         {
             get { return string.Format("{0:N2} {1}", BalanceForeign, ForeignCurrencySign); }
+        }
+        public decimal? LocalBalanceInDue { get; set; }
+        public decimal? BalanceInForeignCurrency { get; set; }
+        public decimal? ForeignBalanceInDue { get; set; }
+        public string LocalBalanceInDueWithSign
+        {
+            get { return string.Format("{0:N2} {1}", LocalBalanceInDue, LocalCurrencySign); }
+        }
+        public string BalanceInForeignCurrencyWithSign
+        {
+            get { return string.Format("{0:N2} {1}", BalanceInForeignCurrency, ForeignCurrencySign); }
+        }
+        public string ForeignBalanceInDueWithSign
+        {
+            get { return string.Format("{0:N2} {1}", ForeignBalanceInDue, ForeignCurrencySign); }
         }
     }
 }

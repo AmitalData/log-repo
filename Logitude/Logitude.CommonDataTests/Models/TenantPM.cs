@@ -91,7 +91,7 @@
         public object CustomerMobile { get; set; }
         public object CustomerPhone { get; set; }
         public bool IsDocumentsArchive { get; set; }
-        public bool IsCustomerTenantShare { get; set; }
+        public bool CustomerTenantShareCustomsFile { get; set; }
         public bool CustomerTenantShareImportFile { get; set; }
         public bool CustomerTenantShareExportFile { get; set; }
         public bool AllowAgentInCustomersLOV { get; set; }
@@ -124,6 +124,7 @@
         public string DefaultSLAId { get; set; }
         public object StockTypeCode { get; set; }
         public bool AutoArchiveOnInvoice { get; set; }
+        public bool AutoArchiveOnPODExport { get; set; }
         public object EcommerceSupportEmail { get; set; }
         public object CBSA { get; set; }
         public object CAAT { get; set; }
@@ -137,6 +138,7 @@
         public object VatUniquePartnerTypeCode { get; set; }
         public string TransferQuotationsToUnifreightTrigger { get; set; }
         public bool SharedLogisMasterMessageLink { get; set; }
+        public bool ShowMultiUnitsOfMeasurements { get; set; }
         public double AirRatio { get; set; }
         public double LCLRatio { get; set; }
         public double FCLRatio { get; set; }

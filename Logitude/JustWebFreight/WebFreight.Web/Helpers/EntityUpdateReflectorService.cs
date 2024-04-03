@@ -27,20 +27,30 @@ namespace WebFreight.Web.Helpers
         int tenant = 0;
         public  void UpdateEntity(object entityPM, string entityName, int tenant)
         {
-            this.tenant = tenant;
-            UpdateEntityServiceParameter prepareUpdateEntityResult = GetUpdateEntityServiceParameter(entityName, tenant);
-            if (prepareUpdateEntityResult.Type != null)
+            UpdateEntityByArgs(new UpdateEntityArgs
             {
-                object entityUpdateService = GentNewInStanceFromEntityUpdateService(entityPM, entityName, prepareUpdateEntityResult);
-                if (prepareUpdateEntityResult.IsNewModule) InitializeEntityUpdateService(entityPM, entityUpdateService);
-                MethodInfo updateMethodInfo = entityUpdateService.GetType().GetMethods().Where(d => d.Name == "Update").FirstOrDefault();
-                object[] parameters = GetUpdateMethodParameters(entityPM, entityName, updateMethodInfo);
-                if (updateMethodInfo != null) updateMethodInfo.Invoke(entityUpdateService, parameters);
-                else
-                {
-                    throw new Exception("Update" + entityName + "Service" + "not found!");
-                }
-            }
+                EntityPM = entityPM,
+                EntityName = entityName,
+                Tenant = tenant
+            });
+        }
+
+        public void UpdateEntity(UpdateEntityArgs updateEntityArgs)
+        {
+            UpdateEntityByArgs(updateEntityArgs);
+        }
+
+        private void UpdateEntityByArgs(UpdateEntityArgs updateEntityArgs)
+        {
+            this.tenant = updateEntityArgs.Tenant;
+            UpdateEntityServiceParameter prepareUpdateEntityResult = GetUpdateEntityServiceParameter(updateEntityArgs.EntityName, tenant);
+            if (prepareUpdateEntityResult.Type == null) return;
+            object entityUpdateService = GentNewInStanceFromEntityUpdateService(updateEntityArgs, prepareUpdateEntityResult);
+            if (prepareUpdateEntityResult.IsNewModule) InitializeEntityUpdateService(updateEntityArgs.EntityPM, entityUpdateService);
+            MethodInfo updateMethodInfo = entityUpdateService.GetType().GetMethods().Where(d => d.Name == "Update").FirstOrDefault();
+            object[] parameters = GetUpdateMethodParameters(updateEntityArgs.EntityPM, updateEntityArgs.EntityName, updateMethodInfo);
+            if (updateMethodInfo != null) updateMethodInfo.Invoke(entityUpdateService, parameters);
+            else throw new Exception("Update" + updateEntityArgs.EntityName + "Service" + "not found!");
         }
 
         private  void InitializeEntityUpdateService(object entityPM, object entityService)
@@ -140,10 +150,10 @@ namespace WebFreight.Web.Helpers
      
                     break;
                 case 2:
-                    parameters = new object[] { entityPM, true };
+                    parameters = entityName == "Shipment" ? new object[] { true, false } : (entityName == "Container" ? new object[] { entityPM, null } : new object[] { entityPM, true });
                     break;
                 case 3:
-                    parameters = new object[] { entityPM, true, null };
+                    parameters = entityName == "Shipment" ? new object[] { true, true, false } : new object[] { entityPM, true, null };
                     break;
 
             }
@@ -151,12 +161,13 @@ namespace WebFreight.Web.Helpers
             return parameters;
         }
 
-        private  object GentNewInStanceFromEntityUpdateService(object entityPM, string entityName, UpdateEntityServiceParameter PrepareUpdateEntityResult)
+        private  object GentNewInStanceFromEntityUpdateService(UpdateEntityArgs updateEntityArgs, UpdateEntityServiceParameter PrepareUpdateEntityResult)
         {
             object entityService = null;
-            if (entityName == "Shipment")
+            if (updateEntityArgs.EntityName == "Shipment")
             {
-                entityService = Activator.CreateInstance(PrepareUpdateEntityResult.Type, new object[] { PrepareUpdateEntityResult.ObjectContext, entityPM, AuthenticationUtil.GetLoggedUserEmail(this.tenant) });
+                entityService = Activator.CreateInstance(PrepareUpdateEntityResult.Type, new object[] { PrepareUpdateEntityResult.ObjectContext, updateEntityArgs.EntityPM, GetLoggedUserEmail(updateEntityArgs)
+            });
             }
             else if (PrepareUpdateEntityResult.IsNewModule)
             {
@@ -170,7 +181,10 @@ namespace WebFreight.Web.Helpers
             return entityService;
         }
 
-
+        private string GetLoggedUserEmail(UpdateEntityArgs updateEntityArgs)
+        {
+            return !string.IsNullOrEmpty(updateEntityArgs.LoggedUserEmail) ? updateEntityArgs.LoggedUserEmail : AuthenticationUtil.GetLoggedUserEmail(this.tenant);
+        }
     }
 
 

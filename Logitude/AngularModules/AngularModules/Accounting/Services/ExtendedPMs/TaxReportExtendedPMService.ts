@@ -12,15 +12,15 @@ import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {CustomFieldClass} from '../../../Infrastructure/DataContracts/CustomFieldClass'
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators'
- 
+
 @Injectable()
 
 export class TaxReportExtendedPMService {
-  
+
     private _apiUrl: string;
     private httpClient: HttpClient;
     constructor() {
-       
+
         this.httpClient = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/TaxReportOp';
     }
@@ -36,7 +36,7 @@ export class TaxReportExtendedPMService {
                 return serviceResponse;
             }),
             catchError(ServiceHelper.HandleServiceError));
-        
+
 
     }
 
@@ -52,12 +52,13 @@ export class TaxReportExtendedPMService {
                 return serviceResponse;
             }),
             catchError(ServiceHelper.HandleServiceError));
-       
+
 
     }
 
-    PostCreateTaxReportInBatch(taxReportPM: TaxReportPM) {
-        return this.httpClient.post(this._apiUrl + "/PostCreateTaxReportInBatch", JSON.stringify(taxReportPM),  ServiceHelper.GetHttpHeaders()).pipe(
+    CancelTaxReportInBatch(taxReportPM: TaxReportPM) {
+        var mappedEntity: TaxReportPM = this.MapJsonToEntityPM(taxReportPM, false);
+        return this.httpClient.post(this._apiUrl + "/CancelTaxReportInBatch", JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(
             map(res => {
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
@@ -68,7 +69,37 @@ export class TaxReportExtendedPMService {
             }),
             catchError(ServiceHelper.HandleServiceError));
 
-        
+    }
+
+    CancelTaxReportByTester(taxReportid: string) {
+        return this.httpClient.post(this._apiUrl+'/CancelTaxReportByTester?taxReportId='+taxReportid,  ServiceHelper.GetHttpHeaders()).pipe(
+            map(res => {
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                var result = res;
+                serviceResponse.Result = result;
+
+                return serviceResponse;
+            }),
+            catchError(ServiceHelper.HandleServiceError));
+
+    }
+
+
+    PostCreateTaxReportInBatch(taxReportPM: TaxReportPM) {
+        var mappedEntity: TaxReportPM = this.MapJsonToEntityPM(taxReportPM, false);
+        return this.httpClient.post(this._apiUrl + "/PostCreateTaxReportInBatch", JSON.stringify(mappedEntity),  ServiceHelper.GetHttpHeaders()).pipe(
+            map(res => {
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                var result = res;
+                serviceResponse.Result = result;
+
+                return serviceResponse;
+            }),
+            catchError(ServiceHelper.HandleServiceError));
+
+
       }
 
     GetReportLinesCounter(taxReportId: string) {
@@ -83,9 +114,38 @@ export class TaxReportExtendedPMService {
                 return serviceResponse;
             }),
             catchError(ServiceHelper.HandleServiceError));
-            
+
 
     }
+
+    GetTenantTransmittedTaxReports() {
+        return this.httpClient.get(this._apiUrl + '/GetTenantTransmittedTaxReports', ServiceHelper.GetHttpHeaders()).pipe(
+            map(response => {
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                var allLists = response;
+
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = allLists;
+                return serviceResponse;
+            }),
+            catchError(ServiceHelper.HandleServiceError));
+
+
+    }
+    GetReturnToDraftButtonStatus(createDate:Date) {
+        return this.httpClient.get(this._apiUrl + '/GetReturnToDraftButtonStatus?createDate=' + createDate, ServiceHelper.GetHttpHeaders()).pipe(
+            map(res => {
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                var result = res;
+                serviceResponse.Result = result;
+
+                return serviceResponse;
+            }),
+            catchError(ServiceHelper.HandleServiceError));
+    }
+
   CreateNewTaxReportLine(taxReportPM: TaxReportPM) {
     return this.httpClient.put(this._apiUrl + "/PutCreateTaxReportLine", JSON.stringify(taxReportPM), ServiceHelper.GetHttpHeaders()).pipe(
       map(res => {
@@ -101,7 +161,7 @@ export class TaxReportExtendedPMService {
 
     getErrorsCount(reportId: string) {
 	    var callTime = new Date();
-        
+
        return this.httpClient.get(this._apiUrl+'/GetErrorsCount/?'+'reportId=' + reportId,  ServiceHelper.GetHttpHeaders()).pipe(
         map(response => {
             var result = response;
@@ -109,9 +169,42 @@ export class TaxReportExtendedPMService {
             return result;
         }),
         catchError(ServiceHelper.HandleServiceError));
-       
+
     }
 
+
+    GetTaxReportReconciledLines(taxReportId: string)
+    {
+        return this.httpClient.get(this._apiUrl + '/GetTaxReportReconciledLines?taxReportId=' + taxReportId, ServiceHelper.GetHttpHeaders()).pipe(
+            map(response =>
+            {
+                let serviceResponse = response;
+                return serviceResponse;
+            }),
+            catchError(ServiceHelper.HandleServiceError));
+    }
+
+    CloseTaxReport(taxReportId: string)
+    {
+        return this.httpClient.post(this._apiUrl + '/PostClosingTaxReportJournal?taxReportId=' + taxReportId,null, ServiceHelper.GetHttpHeaders()).pipe(
+            map(response =>
+            {
+                let serviceResponse = response;
+                return serviceResponse;
+            }),
+            catchError(ServiceHelper.HandleServiceError));
+    }
+
+    CancelClosingJournal(taxReportId: string)
+    {
+        return this.httpClient.post(this._apiUrl + '/PostCancelClosingJournal?taxReportId=' + taxReportId,null, ServiceHelper.GetHttpHeaders()).pipe(
+            map(response =>
+            {
+                let serviceResponse = response;
+                return serviceResponse;
+            }),
+            catchError(ServiceHelper.HandleServiceError));
+    }
 
     MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: TaxReportPM = null) {
 

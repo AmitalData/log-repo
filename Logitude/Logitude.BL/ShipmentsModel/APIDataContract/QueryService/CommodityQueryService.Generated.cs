@@ -10,6 +10,8 @@ using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.QuoteModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
@@ -81,11 +83,13 @@ using Simplog.Data.ShipmentsModel;
 					{
 						temp = query.GetSinglePM(item.Id, Tenant);
 					} 
-										   
-					if(temp == null)
+					
+					
+			  	   if(temp == null)
 					{   
 					    throw new ApplicationException("ShipmentCommodity with Id " + item.Id + " doesn't exist");
 					} 
+				 
 					
 					if(string.IsNullOrEmpty(temp.Id))
 					{
@@ -104,73 +108,73 @@ using Simplog.Data.ShipmentsModel;
 						
 					}
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(item.DescriptionOfGoods))
-					{							//throw new ApplicationException("DescriptionOfGoods Can't be update"); 
-							temp.DescriptionOfGoods = item.DescriptionOfGoods;
+					if(!IsUpdate)
+					{							
+						temp.DescriptionOfGoods = item.DescriptionOfGoods;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && item.ChargeableWeight != null)
-					{							//throw new ApplicationException("ChargeableWeight Can't be update"); 
-							temp.ChargeableWeight = item.ChargeableWeight;
+					if(!IsUpdate)
+					{							
+						temp.ChargeableWeight = item.ChargeableWeight;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && item.ChargeRate != null)
-					{							//throw new ApplicationException("ChargeRate Can't be update"); 
-							temp.ChargeRate = item.ChargeRate;
+					if(!IsUpdate)
+					{							
+						temp.ChargeRate = item.ChargeRate;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && item.ChargeAmount != null)
-					{							//throw new ApplicationException("ChargeAmount Can't be update"); 
-							temp.ChargeAmount = item.ChargeAmount;
+					if(!IsUpdate)
+					{							
+						temp.ChargeAmount = item.ChargeAmount;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(item.CommodityNumber))
-					{							//throw new ApplicationException("CommodityNumber Can't be update"); 
-							temp.CommodityNumber = item.CommodityNumber;
+					if(!IsUpdate)
+					{							
+						temp.CommodityNumber = item.CommodityNumber;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && item.NumberOfPackages != null)
-					{							//throw new ApplicationException("NumberOfPackages Can't be update"); 
-							temp.NumberOfPackages = item.NumberOfPackages;
+					if(!IsUpdate)
+					{							
+						temp.NumberOfPackages = item.NumberOfPackages;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && item.GrossWeight != null)
-					{							//throw new ApplicationException("GrossWeight Can't be update"); 
-							temp.GrossWeight = item.GrossWeight;
+					if(!IsUpdate)
+					{							
+						temp.GrossWeight = item.GrossWeight;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && item.Volume != null)
-					{							//throw new ApplicationException("Volume Can't be update"); 
-							temp.Volume = item.Volume;
+					if(!IsUpdate)
+					{							
+						temp.Volume = item.Volume;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && item.VolumetricWeight != null)
-					{							//throw new ApplicationException("VolumetricWeight Can't be update"); 
-							temp.VolumetricWeight = item.VolumetricWeight;
+					if(!IsUpdate)
+					{							
+						temp.VolumetricWeight = item.VolumetricWeight;
 
 										}  
 
@@ -186,6 +190,8 @@ using Simplog.Data.ShipmentsModel;
                 throw ex;
             } 
         }
-		 
+
+
+						   
    }
 }

@@ -298,6 +298,10 @@ namespace Logitude.BL.QuoteModel.EntityLists
         public string PageNumberingTextDesignId { get; set; }
         public bool ShowRegionalTAXPackages { get; set; }
         public bool ShowRegionalTAXContainers { get; set; }
+        public bool ShowSaleIncludingVATContainers { get; set; }
+        public bool ShowSaleIncludingVATPackages { get; set; }
+        public bool ShowLocalSaleIncludingVATContainers { get; set; }
+        public bool ShowLocalSaleIncludingVATPackages { get; set; }
     }
 
 }

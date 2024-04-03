@@ -1,0 +1,40 @@
+﻿<Script DBType="Main"  Module="Common" Env="local" AOT="true" TargetTableName="DocumentsFilings">
+  <Sql Version="2">
+    <![CDATA[
+
+update DocumentsFilings set DocumentsFilings.ComputedForwarderDocumentId = DocumentsFilings.Id where DocumentsFilings.ComputedForwarderDocumentId is null And $LastCounterWhere$
+
+declare @Tenant as int
+declare @ComputedForwarderDocumentId as varchar(15)
+declare @KeepedDocumentId as varchar(15)
+
+BEGIN
+		DECLARE ComputedForwarderDocumentsTenantsCursor CURSOR READ_ONLY
+		FOR
+		SELECT Tenant,ComputedForwarderDocumentId
+		FROM DocumentsFilings
+      WHERE ComputedForwarderDocumentId IS NOT NULL
+      And $LastCounterWhere$
+		GROUP BY Tenant,ComputedForwarderDocumentId
+		HAVING COUNT(*) > 1
+		OPEN ComputedForwarderDocumentsTenantsCursor FETCH NEXT FROM ComputedForwarderDocumentsTenantsCursor INTO @Tenant,@ComputedForwarderDocumentId
+		WHILE @@FETCH_STATUS = 0
+			BEGIN
+			    SET @KeepedDocumentId = (SELECT TOP(1)Id FROM DocumentsFilings WHERE DocumentsFilings.Tenant = @Tenant and DocumentsFilings.ComputedForwarderDocumentId=@ComputedForwarderDocumentId and DocumentsFilings.IsDeleted = 0 ORDER BY DocumentsFilings.UpdateDate DESC)
+				IF (@KeepedDocumentId IS NOT NULL)
+				BEGIN
+					UPDATE DocumentsFilings SET IsDeleted = 1, ComputedForwarderDocumentId = ComputedForwarderDocumentId + '-IsDel-' + (CAST((IsDeleted) AS varchar)) + '-R' + (CAST((FLOOR( 1 + RAND( ) *60 ))AS varchar)) WHERE DocumentsFilings.Tenant = @Tenant and DocumentsFilings.ComputedForwarderDocumentId=@ComputedForwarderDocumentId and DocumentsFilings.Id <> @KeepedDocumentId
+				END
+				ELSE IF(@KeepedDocumentId IS NULL)
+				BEGIN
+					UPDATE DocumentsFilings SET ComputedForwarderDocumentId = ComputedForwarderDocumentId + '-IsDel-' + (CAST((IsDeleted) AS varchar)) + '-R' + (CAST((FLOOR( 1 + RAND( ) *60 ))AS varchar)) WHERE DocumentsFilings.Tenant = @Tenant and DocumentsFilings.ComputedForwarderDocumentId=@ComputedForwarderDocumentId
+				END
+			FETCH NEXT FROM ComputedForwarderDocumentsTenantsCursor INTO @Tenant,@ComputedForwarderDocumentId
+			END
+		CLOSE ComputedForwarderDocumentsTenantsCursor
+		DEALLOCATE ComputedForwarderDocumentsTenantsCursor
+END
+
+        ]]>
+  </Sql>
+</Script>

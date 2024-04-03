@@ -131,5 +131,10 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
                 insidePackageHarmonizesChangeSet = value;
             }
         }
+
+        public double? VolumeInCBM { get; set; }
+        public double? GrossWeightInKG { get; set; }
+        public double? GrossWeightInLB { get; set; }
+        public double? VolumeInCBF { get; set; }
     }
 }

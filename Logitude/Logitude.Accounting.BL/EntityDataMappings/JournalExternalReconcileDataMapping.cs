@@ -10,6 +10,8 @@ using Logitude.Server.Tools;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs; 
 using Logitude.Accounting.Data;
+using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.Accounting.Data.Repositories;
 
 namespace Logitude.Accounting.BL.EntityDataMappings
 {
@@ -39,8 +41,17 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 
         public void CustomPOCOToPM(JournalExternalReconcilePM entityPM, JournalExternalReconcile entityPOCO)
         {
-            //throw new NotImplementedException();
-        }
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.OriginalJournalId))
+			{
+                if(entityPOCO.LedgerTransactionId != null) { 
+				   LedgerTransactionRepository ledgerTransactionRepository = new LedgerTransactionRepository(entityPOCO.Tenant);
+				   var OriginalJournal = ledgerTransactionRepository.GetJournalByLedgerTransactionId(entityPOCO.LedgerTransactionId, entityPOCO.Tenant);
+				   entityPM.OriginalJournalId = OriginalJournal.OriginalJournalId;
+				   entityPM.JournalNumber = OriginalJournal.OriginalJournalNumber;
+				}
+			}
+			//throw new NotImplementedException();
+		}
    }
 
 

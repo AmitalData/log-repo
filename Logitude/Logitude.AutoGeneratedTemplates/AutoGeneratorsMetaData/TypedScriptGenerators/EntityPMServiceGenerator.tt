@@ -66,7 +66,7 @@ public void GenerateEntityPMService(string xmlFilePath,string outputFilePath,str
 
 		 if( entity.IsClosed.GetType() == typeof(string))
       	{
-	    	if(entity.IsClosed == "true")
+	    	if(entity.IsClosed == "true" && entity.ObjectTableName.Trim('"') != "PortTimeZone")
 	    	{
 	    		return;
 	    	}
@@ -177,6 +177,7 @@ void SaveEntityPMServiceOutput(string outputFileName)
     string listName = tableName + "List";
     string pmName = tableName + "PM";
 	string controllerName = dBTableName.ToLower();
+    int maxNumberOfCustomFields = entity.HasCustomFields == "true" && !String.IsNullOrEmpty(entity.MaxNumberOfCustomFields.ToString()) ? Int32.Parse(entity.MaxNumberOfCustomFields.ToString()) + 1 : 11;
 
    
 	   string importentitytring = Environment.NewLine + "import {"+pmName+"} from '../../EntityPMs/" + pmName + "';";
@@ -259,7 +260,9 @@ void SaveEntityPMServiceOutput(string outputFileName)
 			 infrastructureImportString += Environment.NewLine + "import {SessionInfo} from '../../Utilities/SessionInfo';";
 			 infrastructureImportString += Environment.NewLine + "import {PerformanceLogger} from '../../Utilities/PerformanceLogger';";
 			 infrastructureImportString += Environment.NewLine + "import {CustomFieldClass} from '../../DataContracts/CustomFieldClass'";
-
+			 if(entity.SupportSubEntity.ToString() == "true") {
+			 infrastructureImportString += Environment.NewLine + "import { CustomChildObjectPMService } from '../../Infrastructure/Services/ExtendedPMs/CustomChildObjectPMService'";
+			 }
 
          }
 		 else{
@@ -270,7 +273,9 @@ void SaveEntityPMServiceOutput(string outputFileName)
 			 infrastructureImportString += Environment.NewLine + "import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';";
 			 infrastructureImportString += Environment.NewLine + "import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';";	
 			 infrastructureImportString += Environment.NewLine + "import {CustomFieldClass} from '../../../Infrastructure/DataContracts/CustomFieldClass'";
-		  
+		     if(entity.SupportSubEntity.ToString() == "true") {
+			 infrastructureImportString += Environment.NewLine + "import { CustomChildObjectPMService } from '../../../Infrastructure/Services/ExtendedPMs/CustomChildObjectPMService'";
+			 }
 			
 			 infrastructureImportString += Environment.NewLine + "import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';";			  
          }
@@ -471,7 +476,7 @@ if(hasCustomValidator)
         }
 
 		var customFields: Array<string> = [];
-        for (var i = 1; i < 11; i++) {
+        for (var i = 1; i < <#= maxNumberOfCustomFields #>; i++) {
             customFields.push("Field" + i);
         }
             var jsonPMKeys = Object.keys(jsonPM);
@@ -522,6 +527,13 @@ if(hasCustomValidator)
 		   }
 		 
          }
+
+		 if(entity.SupportSubEntity.ToString() == "true") {
+		 #>
+		 let customChildObjectPMService: CustomChildObjectPMService = new CustomChildObjectPMService(entityPM, "<#= tableName#>");
+		 customChildObjectPMService.MapCustomChildEntities(jsonPM, mapParent);
+		 <#+
+		 }
 #>
 			 
             
@@ -761,9 +773,22 @@ private void GenerateCompositionFieldMap(dynamic entity,dynamic field,bool insid
 	 	
 	string fieldName = field.FieldName.ToString().Trim('"');
 	string pmname = multitableName + "PM";
+	bool hasCompstionCustomField = false;
+	int numberOfCustomFields = entity.HasCustomFields == "true" && !String.IsNullOrEmpty(entity.MaxNumberOfCustomFields.ToString()) ? Int32.Parse(entity.MaxNumberOfCustomFields.ToString()) + 1 : 51;
 
-	
-	
+		string templateDirectory2 = Path.GetDirectoryName(Host.TemplateFile);
+       string xmlFilePath2 = Path.Combine(templateDirectory2, SrcFolder) + "/"+multitableName + ".lxml";
+        if(Directory.Exists(xmlFilePath2) || File.Exists(xmlFilePath2))
+         {
+	       var childEntity = FromEntityPMServiceFile(xmlFilePath2);
+		   if(childEntity.AllowCustomFields.GetType() == typeof(string)  && childEntity.AllowCustomFields == "true" && childEntity.IsComposition.GetType() == typeof(string)  && childEntity.IsComposition == "true")
+             {
+	                     hasCompstionCustomField = true;
+              }
+ 
+	 }
+
+
 	
 	string parentpmname = GetFieldObjectTableName(field) + "PM";
 
@@ -807,8 +832,36 @@ private void GenerateCompositionFieldMap(dynamic entity,dynamic field,bool insid
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
+				  <#+
+if(hasCompstionCustomField)
+{
+#>      <#+
+#>
+             
+			    var customFields: Array<string> = [];
+                for (var i = 1; i < <#= numberOfCustomFields #>; i++) {
+                    customFields.push("Field" + i);
+                }
+
+                var property = pmKeys[key];
+                if (customFields.indexOf(property) > -1) {
+                    if (jItem[property]) {
+                        var customFieldClass: CustomFieldClass = new CustomFieldClass(jItem[property].Value, jItem[property].FieldName, jItem[property].TableName);
+                        new<#= pmname #>[property] = customFieldClass;
+                    }
+                }
+                else {
+                    new<#= pmname #>[property] = jItem[property];
+                }
+<#+
+}
+else{
+#>
                 var pmProperty = pmKeysArray[pmKey];
                 new<#= pmname #>[pmProperty] = jItem[pmProperty];
+<#+
+} 
+	   #>
             }
            
 			 

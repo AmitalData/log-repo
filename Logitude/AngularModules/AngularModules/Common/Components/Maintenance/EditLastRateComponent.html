@@ -54,6 +54,20 @@
                                     <div></div>
                                 </td>
                             </tr>
+
+                            <tr *ngIf="IsAccountingActivated" style="height:22px;">
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'Unit'" [DataContext]="DataContext" [TextCode]="'RatesTable.O.Unit'"></LogLabel>
+                                </td>
+
+                                <td>
+                                    {{EntityPM.Unit}}
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
                         </table>
                     </td>
                 </tr>

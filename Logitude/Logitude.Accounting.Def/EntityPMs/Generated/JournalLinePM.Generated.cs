@@ -873,7 +873,122 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-   }
+	  private string creditAccountCOACode ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CreditAccountCOACode  
+	   {
+	    
+	     get
+		{
+		   return creditAccountCOACode;
+		 }
+		 set
+		 {
+		   if(creditAccountCOACode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreditAccountCOACode",OldValue=creditAccountCOACode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   creditAccountCOACode=value;
+		   }
+			
+		 }
+	   }
+	  private string debitAccountCOACode ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DebitAccountCOACode  
+	   {
+	    
+	     get
+		{
+		   return debitAccountCOACode;
+		 }
+		 set
+		 {
+		   if(debitAccountCOACode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DebitAccountCOACode",OldValue=debitAccountCOACode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   debitAccountCOACode=value;
+		   }
+			
+		 }
+	   }
+	  private string debitAccountEnglishName ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string DebitAccountEnglishName  
+	   {
+	    
+	     get
+		{
+		   return debitAccountEnglishName;
+		 }
+		 set
+		 {
+		   if(debitAccountEnglishName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DebitAccountEnglishName",OldValue=debitAccountEnglishName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   debitAccountEnglishName=value;
+		   }
+			
+		 }
+	   }
+	  private string creditAccountEnglishName ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CreditAccountEnglishName  
+	   {
+	    
+	     get
+		{
+		   return creditAccountEnglishName;
+		 }
+		 set
+		 {
+		   if(creditAccountEnglishName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreditAccountEnglishName",OldValue=creditAccountEnglishName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   creditAccountEnglishName=value;
+		   }
+			
+		 }
+	   }
+	  private string confirmationNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ConfirmationNumber  
+	   {
+	    
+	     get
+		{
+		   return confirmationNumber;
+		 }
+		 set
+		 {
+		   if(confirmationNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ConfirmationNumber",OldValue=confirmationNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   confirmationNumber=value;
+		   }
+			
+		 }
+	   }
+	    }
    
 }
 	 

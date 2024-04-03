@@ -7,26 +7,40 @@ import { Component } from '@angular/core';
 import { ChangePasswordComponent } from '../../Components/ChangePasswordComponent';
 import { LoginService } from '../../LoginService';
 import { PasswordChangeService } from '../../PasswordChangeService';
+import { SessionInfo } from '../../SessionInfo';
 import { BrandingDataService } from '../Services/BrandingDataService';
+import { PrivateLabelsBrandingDataService } from '../Services/PrivateLabelsBrandingDataService';
 export var PrivateChangePasswordComponent = (function (_super) {
     __extends(PrivateChangePasswordComponent, _super);
-    function PrivateChangePasswordComponent(ss, ll) {
+    function PrivateChangePasswordComponent(ss, ll, privateLabelsBrandingDataService) {
         _super.call(this, ss, ll);
         this.ss = ss;
         this.ll = ll;
+        this.privateLabelsBrandingDataService = privateLabelsBrandingDataService;
         this.BackgroundImage = "";
         this.ForgetPasswordImage = "";
         this.MainLogo = "";
-        this.MainColor = null;
+        this.SecondaryColor = null;
     }
     PrivateChangePasswordComponent.prototype.ngOnInit = function () {
-        this.GetPrivateLabelsData();
+        this.privateUrl = SessionInfo.GetLogitudeURL();
+        this.GetImagesFromCash();
+        this.GetPrivateLabelsImages(this.privateUrl);
     };
-    PrivateChangePasswordComponent.prototype.GetPrivateLabelsData = function () {
+    PrivateChangePasswordComponent.prototype.GetImagesFromCash = function () {
         this.BackgroundImage = BrandingDataService.GetImage("BackgroundImage");
         this.MainLogo = BrandingDataService.GetImage("MainLogo");
         this.ForgetPasswordImage = BrandingDataService.GetImage("ForgetPasswordImage");
-        this.MainColor = BrandingDataService.GetColor("MainColor");
+        this.SecondaryColor = BrandingDataService.GetColor("SecondaryColor");
+    };
+    PrivateChangePasswordComponent.prototype.GetPrivateLabelsImages = function (privateUrl) {
+        var _this = this;
+        this.privateLabelsBrandingDataService.GetUserDashboardBrandingData(BrandingDataService.GetPrivateLabelsDataRequest(privateUrl)).subscribe(function (response) {
+            if (response.Result) {
+                BrandingDataService.SetPrivateLabelsDataRequest(response.Result, privateUrl);
+                _this.GetImagesFromCash();
+            }
+        });
     };
     PrivateChangePasswordComponent.decorators = [
         { type: Component, args: [{
@@ -40,6 +54,7 @@ export var PrivateChangePasswordComponent = (function (_super) {
     PrivateChangePasswordComponent.ctorParameters = [
         { type: PasswordChangeService, },
         { type: LoginService, },
+        { type: PrivateLabelsBrandingDataService, },
     ];
     return PrivateChangePasswordComponent;
 }(ChangePasswordComponent));

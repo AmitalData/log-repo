@@ -367,6 +367,8 @@
                                                                                         <img style="width: 16px; height: 16px; cursor: pointer; margin-bottom: -3px;" src="HtmlHelpers/Images/refresh.png" /></span>
                                                                                     <span id="ShipmentsQueryTitle">All Shipments</span>
                                                                                     <span id="ShipmentsQueryCount">(0)</span>
+                                                                                    <span id="ShipmentsQueryLimitMessage" style="color: #666666; font-size: 11px; width:1px;background-color:#FFFBDA;margin-left:5px"></span>
+
                                                                                 </div>
                                                                             </td>
 
@@ -526,6 +528,7 @@
                                                                                         <img style="width: 16px; height: 16px; cursor: pointer; margin-bottom: -3px;" src="HtmlHelpers/Images/refresh.png" /></span>
                                                                                     <span id="InvoicesQueryTitle">All Invoices</span>
                                                                                     <span id="InvoicesQueryCount">(0)</span>
+                                                                                    <span id="InvoicesQueryLimitMessage" style="color: #666666; font-size: 11px; width:1px;background-color:#FFFBDA;margin-left:5px"></span>
                                                                                 </div>
                                                                             </td>
 
@@ -691,6 +694,7 @@
                                                                                         <option>Pending Decision</option>
                                                                                         <option>Approved</option>
                                                                                         <option>Rejected</option>
+                                                                                        <option>All</option>
                                                                                     </select>
                                                                                 </div>
                                                                                 <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:35px;min-width:35px;color:black">From:</div>
@@ -921,26 +925,30 @@
 
 
                     <div style="height:24px; vertical-align:central;">
-                        <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:20px;min-width:20px;"></div>
+                        <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:35px; height:35px; position:relative">
+                            <div style="position: absolute;">
+                                <img id="#= Id #" OnClick="ViewQuotationDocument(id)" src="images/FileIcons/File-pdf-48.png" style="width: 30px; height: 30px; z-index:9; cursor: pointer;visibility: #= QuotationPreparedTickVisibility #;" />
+                            </div>        
+                        </div>
                         <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:50px;min-width:50px;">Quote \#:</div>
-                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:130px;min-width:130px;height:22px;color:\\#1B90CB;">${QuoteNumber}</div>
+                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:130px;min-width:130px;height:22px;color:\\#1B90CB;">${QuoteNumber}   <p style="display: inline-block; font-size: 10px; color: indianred;">${CreateDate}</p></div>
                         <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:50px;min-width:50px;">Subject:</div>
-                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:140px;min-width:140px;height:22px;" title="${Subject}">${Subject}</div>
+                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:200px;min-width:200px;height:22px;" title="${Subject}">${Subject}</div>
                         <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:50px;min-width:50px;">Status:</div>
-                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:175px;min-width:175px;height:22px;">${Status}</div>
-                        <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:120px;min-width:120px;visibility: #= QuotationPreparedTickVisibility #;">Comments:</div>
+                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:195px;min-width:195px;height:22px;color: #= QuotationStatusColor #;">${Status}</div>
+                        <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:120px;min-width:120px;visibility: #= QuotationPreparedTickVisibility #;">Last Comments:</div>
                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; height: 35px;visibility: #= QuotationPreparedTickVisibility #;">
                             <textarea readonly id="OLDComment#= Id #" style="height: 22px;max-height: 18px;max-width: 400px;" rows = "5" cols = "60">${Comments}</textarea>
                         </div>
                     </div>
                     <div style="height:23px; vertical-align:central;">
-                        <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:20px;"><img id="#= DocumentSecurityId #" OnClick="ViewQuotationDocument(id)" src="images/FileIcons/File-pdf-48.png" style="width: 20px; height: 20px; position:relative; cursor: pointer;visibility: #= QuotationPreparedTickVisibility #;" /></div>
+                        <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:35px;min-width:35px;"></div>
                         <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:80px;min-width:80px;">Requested by:</div>
                         <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:100px;min-width:100px;height:22px;" title="${ContactName}">${ContactName}</div>
                         <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:90px;min-width:90px;">Reference \#/PO:</div>
-                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:100px;min-width:100px;height:22px;" title="${ReferenceNumber}/${PONumber}">${ReferenceNumber}/${PONumber}</div>
+                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:160px;min-width:160px;height:22px;" title="${ReferenceNumber}/${PONumber}">${ReferenceNumber}/${PONumber}</div>
                         <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:95px;min-width:95px;visibility: #= QuotationPreparedTickVisibility #;">Updated Status:</div>
-                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:130px;height:22px;visibility: #= QuotationPreparedTickVisibility #;">
+                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:150px;height:22px;visibility: #= QuotationPreparedTickVisibility #;">
                             <select class="SelectOption" id="Option#= Id #" OnChange="SendApprovalQuotesRequstEmailFeedback(id)"  #= OptionDisabledProperty # >
                                 <option style="display:none">Updated Status</option>
                                 <option>Send Approval</option>
@@ -953,13 +961,13 @@
                         </div>
                     </div>
                     <div style="height:22px; vertical-align:central;">
-                      <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:20px;"></div>
+                      <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:35px;"></div>
 
                         <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:40px;min-width:40px;">Owner:</div>
                         <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:140px;min-width:140px;height:22px;" title="${OwnerName}">${OwnerName}</div>
                         
                         <div class="LabelTextStyle TemplateItem" style="display:inline-block; width:40px;min-width:40px;">Brand:</div>
-                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:150px;min-width:150px;height:22px;" title="${Brand}">${Brand}</div>
+                        <div class="ValueTextStyle TemplateItem" style="display:inline-block; width:210px;min-width:210px;height:22px;" title="${Brand}">${Brand}</div>
                     </div>
                 </div>
             </div>
@@ -1111,9 +1119,8 @@
             $('#Option' + selectedQuoteRequest.Id).css("background", "linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%)");
         }
 
-        function ViewQuotationDocument(QuotationDocumentSecurityId) {
-
-            var sharedDownloadURL = "WebPages/DownloadPage.aspx?securityId=" + QuotationDocumentSecurityId + "&tempId=";
+        function ViewQuotationDocument(QuoteRequestId) {
+            var sharedDownloadURL = GetSharedDownloadURL(QuoteRequestId);
             $.ajax({
                 url: "api/DocumentDownloadToken",
                 type: 'GET',
@@ -1130,6 +1137,16 @@
             });
         }
 
+        function GetSharedDownloadURL(QuoteRequestId) {
+            var selectedQuoteRequest = $.AllQuotesRequests.find(d => d.Id == QuoteRequestId);
+            var sharedDownloadURL = "WebPages/DownloadPage.aspx?securityId=" + selectedQuoteRequest.DocumentSecurityId + "&cardId=" + $.CurrentCardId + "&tempId=";
+
+            if (selectedQuoteRequest.DocumentSecurityId == null) {
+                sharedDownloadURL = "WebPages/DownloadPage.aspx?id=" + selectedQuoteRequest.DocumentId + "&tempId=";
+            }
+
+            return sharedDownloadURL;
+        }
         function SendApprovalQuotesRequstEmailFeedback(QuoteRequestOptionId) {
             var selectedQuoteRequest = $.AllQuotesRequests.find(d => d.Id == QuoteRequestOptionId.replace('Option', ''));
             var feedback = document.getElementById(QuoteRequestOptionId).value;

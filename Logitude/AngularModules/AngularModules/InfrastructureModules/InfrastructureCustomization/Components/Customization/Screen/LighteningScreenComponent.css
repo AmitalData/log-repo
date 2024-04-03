@@ -1,0 +1,13 @@
+.screen-section{
+    height: auto;
+    width: 750px;
+    vertical-align: top
+}
+.screen-section .section-button{
+    display: none;
+    margin-left: 10px;
+}
+
+.screen-section:hover .section-button{
+    display: block;
+}

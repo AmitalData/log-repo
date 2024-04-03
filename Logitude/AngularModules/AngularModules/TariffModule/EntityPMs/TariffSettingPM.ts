@@ -74,6 +74,16 @@ export class TariffSettingPM {
     public set DefaultCurrencyId(newValue: string) { if (this.defaultCurrencyId != newValue) { this.defaultCurrencyId = newValue; this.MarkAsDirty("DefaultCurrencyId"); } }
        
 	 
+    private airUnitOfMeasurementCode: string;
+    public get AirUnitOfMeasurementCode() { return this.airUnitOfMeasurementCode; }
+    public set AirUnitOfMeasurementCode(newValue: string) { if (this.airUnitOfMeasurementCode != newValue) { this.airUnitOfMeasurementCode = newValue; this.MarkAsDirty("AirUnitOfMeasurementCode"); } }
+       
+	 
+    private lCLUnitOfMeasurementCode: string;
+    public get LCLUnitOfMeasurementCode() { return this.lCLUnitOfMeasurementCode; }
+    public set LCLUnitOfMeasurementCode(newValue: string) { if (this.lCLUnitOfMeasurementCode != newValue) { this.lCLUnitOfMeasurementCode = newValue; this.MarkAsDirty("LCLUnitOfMeasurementCode"); } }
+       
+	 
 
     public OldEntityPM: TariffSettingPM;
 		

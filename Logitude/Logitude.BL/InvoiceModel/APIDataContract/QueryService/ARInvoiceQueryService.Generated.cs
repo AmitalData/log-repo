@@ -10,6 +10,8 @@ using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.QuoteModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
@@ -40,21 +42,21 @@ using Simplog.Data.InvoiceModel;
         }
 
 		
-		public ARInvoice GetARInvoiceById(string Id,int Tenant,string ComputingPartnerName = "")
+		public ARInvoice GetARInvoiceById(string Id,int Tenant,  string ComputingPartnerName = "")
         { 
 		    try
             {
-
+				 
 				
-				var temp = query.GetSinglePM(Id,Tenant);				
+				var temp = query.GetSinglePM(Id, Tenant);				
 				 if (temp == null)
                     throw new ApplicationException("ARInvoice with Id " + Id + " doesn't exist");
 
 				return ARInvoiceDataMapping(temp,Tenant,ComputingPartnerName);
 			}
+
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }
@@ -146,7 +148,7 @@ using Simplog.Data.InvoiceModel;
 				   temp.IsDraft = MyEntityPM.IsDraft;
 				   temp.ProfitCurrencyExchangeRate = MyEntityPM.ProfitCurrencyExchangeRate;
 				   temp.AmountInProfitCurrency = MyEntityPM.AmountInProfitCurrency; 
-
+				   temp.ConfirmationNumber = MyEntityPM.ConfirmationNumber;
 			  
 				   if(MyEntityPM.TransferStatusCode != null)
 				   {
@@ -177,7 +179,8 @@ using Simplog.Data.InvoiceModel;
 				   temp.IsMultiCurrency = MyEntityPM.IsMultiCurrency;
 				   temp.CreditARInvoice = MyEntityPM.CreditARInvoice;
 				   temp.ExternalAccountingEntityId = MyEntityPM.ExternalAccountingEntityId;
-				   temp.BillToGLAccount = MyEntityPM.BillToGLAccountId; 
+				   temp.BillToGLAccount = MyEntityPM.BillToGLAccountId;
+                   temp.ConfirmationNumber = MyEntityPM.ConfirmationNumber;
 
 			  
 				   if(MyEntityPM.StatusCode != null)
@@ -205,11 +208,13 @@ using Simplog.Data.InvoiceModel;
 					{
 						temp = query.GetSinglePM(MyEntity.Id, Tenant);
 					} 
-										   
-					if(temp == null)
+					
+					
+			  	   if(temp == null)
 					{   
 					    throw new ApplicationException("ARInvoice with Id " + MyEntity.Id + " doesn't exist");
 					} 
+				 
 										 
 					if(IsUpdate == true)
 					{
@@ -243,7 +248,7 @@ using Simplog.Data.InvoiceModel;
 
 						 
 							if(!IsUpdate)
-							{								//throw new ApplicationException("InvoiceType Can't be update"); 
+							{								
 								temp.ARInvoiceTypeCode = myInvoiceTypePM.Code;
 						  
 							}  
@@ -264,7 +269,7 @@ using Simplog.Data.InvoiceModel;
 
 						 
 							if(!IsUpdate)
-							{								//throw new ApplicationException("BillTo Can't be update"); 
+							{								
 								temp.BillToId = myBillToPM.Id;
 						  
 							}  
@@ -276,57 +281,57 @@ using Simplog.Data.InvoiceModel;
 			
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.InvoiceNumber))
-					{							//throw new ApplicationException("InvoiceNumber Can't be update"); 
-							temp.InvoiceNumber = MyEntity.InvoiceNumber;
+					if(!IsUpdate)
+					{							
+						temp.InvoiceNumber = MyEntity.InvoiceNumber;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && MyEntity.InvoiceDate != null)
-					{							//throw new ApplicationException("InvoiceDate Can't be update"); 
-							temp.InvoiceDate = MyEntity.InvoiceDate;
+					if(!IsUpdate)
+					{							
+						temp.InvoiceDate = MyEntity.InvoiceDate;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && MyEntity.PrintDate != null)
-					{							//throw new ApplicationException("PrintDate Can't be update"); 
-							temp.PrintDate = MyEntity.PrintDate;
+					if(!IsUpdate)
+					{							
+						temp.PrintDate = MyEntity.PrintDate;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && (MyEntity.IsPrinted != temp.IsPrinted))
-					{							//throw new ApplicationException("IsPrinted Can't be update"); 
-							temp.IsPrinted = MyEntity.IsPrinted;
+					if(!IsUpdate)
+					{							
+						temp.IsPrinted = MyEntity.IsPrinted;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.MainEntityReference))
-					{							//throw new ApplicationException("MainEntityReference Can't be update"); 
-							temp.MainEntityReference = MyEntity.MainEntityReference;
+					if(!IsUpdate)
+					{							
+						temp.MainEntityReference = MyEntity.MainEntityReference;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && (MyEntity.IsConstituentInvoice != temp.IsConstituentInvoice))
-					{							//throw new ApplicationException("IsConstituentInvoice Can't be update"); 
-							temp.IsConstituentInvoice = MyEntity.IsConstituentInvoice;
+					if(!IsUpdate)
+					{							
+						temp.IsConstituentInvoice = MyEntity.IsConstituentInvoice;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && (MyEntity.IsConsolidationInvoice != temp.IsConsolidationInvoice))
-					{							//throw new ApplicationException("IsConsolidationInvoice Can't be update"); 
-							temp.IsConsolidationInvoice = MyEntity.IsConsolidationInvoice;
+					if(!IsUpdate)
+					{							
+						temp.IsConsolidationInvoice = MyEntity.IsConsolidationInvoice;
 
 										}  
 
@@ -341,7 +346,7 @@ using Simplog.Data.InvoiceModel;
 
 						 
 							if(!IsUpdate)
-							{								//throw new ApplicationException("InvoiceCurrency Can't be update"); 
+							{								
 								temp.InvoiceCurrencyId = myInvoiceCurrencyPM.Id;
 						  
 							}  
@@ -353,17 +358,17 @@ using Simplog.Data.InvoiceModel;
 			
 					
                     
-					if(!IsUpdate)// && MyEntity.AmountInLocalCurrency != null)
-					{							//throw new ApplicationException("AmountInLocalCurrency Can't be update"); 
-							temp.AmountInLocalCurrency = MyEntity.AmountInLocalCurrency;
+					if(!IsUpdate)
+					{							
+						temp.AmountInLocalCurrency = MyEntity.AmountInLocalCurrency;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.CancelledByARInvoice))
-					{							//throw new ApplicationException("CancelledByARInvoice Can't be update"); 
-							temp.CancelledByARInvoiceId = MyEntity.CancelledByARInvoice;
+					if(!IsUpdate)
+					{							
+						temp.CancelledByARInvoiceId = MyEntity.CancelledByARInvoice;
 
 										}  
 
@@ -378,7 +383,7 @@ using Simplog.Data.InvoiceModel;
 
 						 
 							if(!IsUpdate)
-							{								//throw new ApplicationException("CreatedByUser Can't be update"); 
+							{								
 								temp.CreatedByUserId = myCreatedByUserPM.Id;
 						  
 							}  
@@ -390,9 +395,9 @@ using Simplog.Data.InvoiceModel;
 			
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.VATNumber))
-					{							//throw new ApplicationException("VATNumber Can't be update"); 
-							temp.VatNumber = MyEntity.VATNumber;
+					if(!IsUpdate)
+					{							
+						temp.VatNumber = MyEntity.VATNumber;
 
 										}  
 
@@ -407,7 +412,7 @@ using Simplog.Data.InvoiceModel;
 
 						 
 							if(!IsUpdate)
-							{								//throw new ApplicationException("BillToAddress Can't be update"); 
+							{								
 								temp.BillToAddressId = myBillToAddressPM.Id;
 						  
 							}  
@@ -419,9 +424,9 @@ using Simplog.Data.InvoiceModel;
 			
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.PrintNotes))
-					{							//throw new ApplicationException("PrintNotes Can't be update"); 
-							temp.PrintNotes = MyEntity.PrintNotes;
+					if(!IsUpdate)
+					{							
+						temp.PrintNotes = MyEntity.PrintNotes;
 
 										}  
 
@@ -436,7 +441,7 @@ using Simplog.Data.InvoiceModel;
 
 						 
 							if(!IsUpdate)
-							{								//throw new ApplicationException("IssuedByUser Can't be update"); 
+							{								
 								temp.IssuedByUserId = myIssuedByUserPM.Id;
 						  
 							}  
@@ -448,9 +453,9 @@ using Simplog.Data.InvoiceModel;
 			
 					
                     
-					if(!IsUpdate)// && MyEntity.InvoiceCurrencyExchangeRate != null)
-					{							//throw new ApplicationException("InvoiceCurrencyExchangeRate Can't be update"); 
-							temp.InvoiceCurrencyExchangeRate = MyEntity.InvoiceCurrencyExchangeRate;
+					if(!IsUpdate)
+					{							
+						temp.InvoiceCurrencyExchangeRate = MyEntity.InvoiceCurrencyExchangeRate;
 
 										}  
 
@@ -461,8 +466,8 @@ using Simplog.Data.InvoiceModel;
 						ARInvoiceLineQueryService ARInvoiceLineService10 = new ARInvoiceLineQueryService(Tenant);
 						  
 						if(!IsUpdate)
-						{								//throw new ApplicationException("ARInvoiceLines Can't be update"); 
-								temp.InvoiceLines = ARInvoiceLineService10.ARInvoiceLineCustomDataMappingAndValidatin(MyEntity,MyEntity.ARInvoiceLines,Tenant,ComputingPartnerName);
+						{								
+							temp.InvoiceLines = ARInvoiceLineService10.ARInvoiceLineCustomDataMappingAndValidatin(MyEntity,MyEntity.ARInvoiceLines,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 						}  
@@ -472,62 +477,70 @@ using Simplog.Data.InvoiceModel;
 
 								 
                     
-					if(!IsUpdate)// && MyEntity.DueDate != null)
-					{							//throw new ApplicationException("DueDate Can't be update"); 
-							temp.DueDate = MyEntity.DueDate;
+					if(!IsUpdate)
+					{							
+						temp.DueDate = MyEntity.DueDate;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && MyEntity.SubTotalInInvoiceCurrency != null)
-					{							//throw new ApplicationException("SubTotalInInvoiceCurrency Can't be update"); 
-							temp.SubTotalInInvoiceCurrency = MyEntity.SubTotalInInvoiceCurrency;
+					if(!IsUpdate)
+					{							
+						temp.SubTotalInInvoiceCurrency = MyEntity.SubTotalInInvoiceCurrency;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && MyEntity.SubTotalInLocalCurrency != null)
-					{							//throw new ApplicationException("SubTotalInLocalCurrency Can't be update"); 
-							temp.SubTotalInLocalCurrency = MyEntity.SubTotalInLocalCurrency;
+					if(!IsUpdate)
+					{							
+						temp.SubTotalInLocalCurrency = MyEntity.SubTotalInLocalCurrency;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && MyEntity.AmountInInvoiceCurrency != null)
-					{							//throw new ApplicationException("AmountInInvoiceCurrency Can't be update"); 
-							temp.AmountInInvoiceCurrency = MyEntity.AmountInInvoiceCurrency;
+					if(!IsUpdate)
+					{							
+						temp.AmountInInvoiceCurrency = MyEntity.AmountInInvoiceCurrency;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && (MyEntity.IsDraft != temp.IsDraft))
-					{							//throw new ApplicationException("IsDraft Can't be update"); 
-							temp.IsDraft = MyEntity.IsDraft;
+					if(!IsUpdate)
+					{							
+						temp.IsDraft = MyEntity.IsDraft;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && MyEntity.ProfitCurrencyExchangeRate != null)
-					{							//throw new ApplicationException("ProfitCurrencyExchangeRate Can't be update"); 
-							temp.ProfitCurrencyExchangeRate = MyEntity.ProfitCurrencyExchangeRate;
+					if(!IsUpdate)
+					{							
+						temp.ProfitCurrencyExchangeRate = MyEntity.ProfitCurrencyExchangeRate;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && MyEntity.AmountInProfitCurrency != null)
-					{							//throw new ApplicationException("AmountInProfitCurrency Can't be update"); 
-							temp.AmountInProfitCurrency = MyEntity.AmountInProfitCurrency;
+					if(!IsUpdate)
+					{							
+						temp.AmountInProfitCurrency = MyEntity.AmountInProfitCurrency;
 
-										}  
+										}
 
-					
-					ARInvoiceTransferStatusQueryService TransferStatusARInvoiceTransferStatusService = new ARInvoiceTransferStatusQueryService(Tenant);
+
+                    if (!IsUpdate)
+                    {
+                        temp.ConfirmationNumber = MyEntity.ConfirmationNumber;
+
+                                        }
+
+
+
+                    ARInvoiceTransferStatusQueryService TransferStatusARInvoiceTransferStatusService = new ARInvoiceTransferStatusQueryService(Tenant);
 					if(MyEntity.TransferStatus != null)
 					{
 						var myTransferStatusPM = TransferStatusARInvoiceTransferStatusService.ARInvoiceTransferStatusDataMappingAndValidatin(MyEntity.TransferStatus,Tenant,ComputingPartnerName,IsUpdate);
@@ -537,7 +550,7 @@ using Simplog.Data.InvoiceModel;
 
 						 
 							if(!IsUpdate)
-							{								//throw new ApplicationException("TransferStatus Can't be update"); 
+							{								
 								temp.TransferStatusCode = myTransferStatusPM.Code;
 						  
 							}  
@@ -558,7 +571,7 @@ using Simplog.Data.InvoiceModel;
 
 						 
 							if(!IsUpdate)
-							{								//throw new ApplicationException("Branch Can't be update"); 
+							{								
 								temp.BranchId = myBranchPM.Id;
 						  
 							}  
@@ -579,7 +592,7 @@ using Simplog.Data.InvoiceModel;
 
 						 
 							if(!IsUpdate)
-							{								//throw new ApplicationException("LocalCurrency Can't be update"); 
+							{								
 								temp.LocalCurrencyId = myLocalCurrencyPM.Id;
 						  
 							}  
@@ -591,41 +604,49 @@ using Simplog.Data.InvoiceModel;
 			
 					
                     
-					if(!IsUpdate)// && MyEntity.Tenant != null)
-					{							//throw new ApplicationException("Tenant Can't be update"); 
-							temp.Tenant = MyEntity.Tenant;
+					if(!IsUpdate)
+					{							
+						temp.Tenant = MyEntity.Tenant;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && (MyEntity.IsMultiCurrency != temp.IsMultiCurrency))
-					{							//throw new ApplicationException("IsMultiCurrency Can't be update"); 
-							temp.IsMultiCurrency = MyEntity.IsMultiCurrency;
+					if(!IsUpdate)
+					{							
+						temp.IsMultiCurrency = MyEntity.IsMultiCurrency;
+
+										}
+
+
+
+                if (!IsUpdate)
+                {
+                    temp.CreditARInvoice = MyEntity.CreditARInvoice;
+
+                }
+
+
+                if (!IsUpdate)
+                {
+                    temp.ConfirmationNumber = MyEntity.ConfirmationNumber;
+
+                }
+
+
+
+
+                if (!IsUpdate)
+					{							
+						temp.ExternalAccountingEntityId = MyEntity.ExternalAccountingEntityId;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.CreditARInvoice))
-					{							//throw new ApplicationException("CreditARInvoice Can't be update"); 
-							temp.CreditARInvoice = MyEntity.CreditARInvoice;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.ExternalAccountingEntityId))
-					{							//throw new ApplicationException("ExternalAccountingEntityId Can't be update"); 
-							temp.ExternalAccountingEntityId = MyEntity.ExternalAccountingEntityId;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.BillToGLAccount))
-					{							//throw new ApplicationException("BillToGLAccount Can't be update"); 
-							temp.BillToGLAccountId = MyEntity.BillToGLAccount;
+					if(!IsUpdate)
+					{							
+						temp.BillToGLAccountId = MyEntity.BillToGLAccount;
 
 										}  
 
@@ -640,7 +661,7 @@ using Simplog.Data.InvoiceModel;
 
 						 
 							if(!IsUpdate)
-							{								//throw new ApplicationException("Status Can't be update"); 
+							{								
 								temp.StatusCode = myStatusPM.Code;
 						  
 							}  
@@ -659,6 +680,8 @@ using Simplog.Data.InvoiceModel;
                 throw ex;
             } 
         }
-		 
+
+
+						   
    }
 }

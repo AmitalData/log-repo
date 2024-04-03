@@ -63,5 +63,12 @@ export class ShipmentComputedFieldsList {
 		ExpectedArrivalNoticeSent: Date;
 		ArrivalNoticeSent: Date;
 		T1Received: Date;
+		AccountingClosedByUserId: string;
+		MainCarriageETA: Date;
+		MainCarriageETD: Date;
+		MainCarriageATA: Date;
+		MainCarriageATD: Date;
+		PackagesQuantityAndType: string;
+		IsDocumentsNeedApprove: boolean;
 	
 }

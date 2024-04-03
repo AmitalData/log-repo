@@ -17,6 +17,8 @@ namespace Simplog.Server.Infrastructure.Helpers
         private Func<IByteCompressorUtil> _ByteCompressorUtilProvider;
         private Func<IHtmlEditorHelper> _HtmlEditorHelper;
         private Func<IEntityUpdateReflectorService> _EntityUpdateReflectorService;
+        private Func<IEntityGetReflectorService> entityGetReflectorService;
+        private Func<ITreeFilterQueryService> treeFilterQueryService;
 
         private I_IISManager _IISManager;
 
@@ -91,8 +93,9 @@ namespace Simplog.Server.Infrastructure.Helpers
             Func<IByteCompressorUtil> iByteCompressorUtilProvider,
             I_IISManager myIISManager,
             Func<IHtmlEditorHelper> myIHtmlEditorHelper,
-            Func<IEntityUpdateReflectorService> myEntityUpdateReflectorService
-
+            Func<IEntityUpdateReflectorService> myEntityUpdateReflectorService,
+            Func<IEntityGetReflectorService> myEntityGetReflectorService,
+            Func<ITreeFilterQueryService> treeFilterQueryService
             )
         {
             if (_Instance != null)
@@ -107,8 +110,10 @@ namespace Simplog.Server.Infrastructure.Helpers
             _Instance._HtmlEditorHelper = myIHtmlEditorHelper;
             _Instance._IISManager = myIISManager;
             _Instance._EntityUpdateReflectorService = myEntityUpdateReflectorService;
+            _Instance.entityGetReflectorService = myEntityGetReflectorService;
+            _Instance.treeFilterQueryService = treeFilterQueryService;
 
-
+            
         }
 
         public string CompressText(string text)
@@ -148,8 +153,31 @@ namespace Simplog.Server.Infrastructure.Helpers
         {
              _EntityUpdateReflectorService().UpdateEntity(entityPM, entityName, tenant);
         }
+        public void UpdateEntity(UpdateEntityArgs updateEntityArgs)
+        {
+            _EntityUpdateReflectorService().UpdateEntity(updateEntityArgs);
+        }
+        public object GetEntity(EntityGetReflector entityGetReflector)
+        {
+            return entityGetReflectorService().GetEntity(entityGetReflector);
+        }
 
+
+        public IQueryable<T> ApplyTreeFilter<T>(IQueryable<T> queryable, TreeFilterQueryArgs treeFilterQueryArgs)
+        {
+            return treeFilterQueryService().Apply<T>(queryable , treeFilterQueryArgs);
+
+        }
     }
+
+
+    public interface ITreeFilterQueryService
+    {
+        IQueryable<T> Apply<T>(IQueryable<T> queryable, TreeFilterQueryArgs treeFilterQueryArgs);
+    }
+
+
+
 
     public interface IByteCompressorUtil
     {
@@ -170,15 +198,24 @@ namespace Simplog.Server.Infrastructure.Helpers
         object GetEntity(string entityName, string entityId, int tenant);
 
     }
-
+    public class UpdateEntityArgs
+    {
+        public object EntityPM { get; set; }
+        public string EntityName { get; set; }
+        public int Tenant { get; set; }
+        public string LoggedUserEmail { get; set; }
+    }
 
     public interface IEntityUpdateReflectorService
     {
         void UpdateEntity(object entityPM, string entityName, int tenant);
+        void UpdateEntity(UpdateEntityArgs updateEntityArgs);
     }
 
-
-
+    public interface IEntityGetReflectorService
+    {
+        object GetEntity(EntityGetReflector entityGetReflector);
+    }
 }
 
 

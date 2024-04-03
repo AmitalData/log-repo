@@ -42,6 +42,7 @@ import {ARInvoiceMenuButtonsHandler} from './Components/MenuButtons/ARInvoiceMen
 import { ARPaymentMenuButtonsHandler } from './Components/MenuButtons/ARPaymentMenuButtonsHandler';
 import { ARInvoiceStockMenuButtonsHandler } from './Components/MenuButtons/ARInvoiceStockMenuButtonsHandler';
 import { ARInvoiceExtendedService } from './Services/ExtendedPMs/ARInvoiceExtendedService';
+import { QBOGlobalTaxCalculationListService } from './Services/StandardLists/QBOGlobalTaxCalculationListService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -93,7 +94,8 @@ export class ModuleProviders {
             case "ARInvoiceMenuButtonsHandler": { myResult = new ARInvoiceMenuButtonsHandler(); break; }
             case "ARPaymentMenuButtonsHandler": { myResult = new ARPaymentMenuButtonsHandler(); break; }
             case "ARInvoiceStockMenuButtonsHandler": { myResult = new ARInvoiceStockMenuButtonsHandler(); break; } 
-                 
+            case "QBOGlobalTaxCalculationListService": { myResult = new QBOGlobalTaxCalculationListService(); break; } 
+
         }
 
         return myResult;

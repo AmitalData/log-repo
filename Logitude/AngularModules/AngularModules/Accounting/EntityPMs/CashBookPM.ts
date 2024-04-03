@@ -16,11 +16,11 @@ import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/Propert
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
 export class CashBookPM {
-
+      
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-          this.UIProperties = new UIProperties(this); 
+                    this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -177,6 +177,21 @@ export class CashBookPM {
     private branchName: string;
     public get BranchName() { return this.branchName; }
     public set BranchName(newValue: string) { if (this.branchName != newValue) { this.branchName = newValue; this.MarkAsDirty("BranchName"); } }
+       
+	 
+    private inDepositingProgress: boolean;
+    public get InDepositingProgress() { return this.inDepositingProgress; }
+    public set InDepositingProgress(newValue: boolean) { if (this.inDepositingProgress != newValue) { this.inDepositingProgress = newValue; this.MarkAsDirty("InDepositingProgress"); } }
+       
+	 
+    private isTotalUpdatedByCC: boolean;
+    public get IsTotalUpdatedByCC() { return this.isTotalUpdatedByCC; }
+    public set IsTotalUpdatedByCC(newValue: boolean) { if (this.isTotalUpdatedByCC != newValue) { this.isTotalUpdatedByCC = newValue; this.MarkAsDirty("IsTotalUpdatedByCC"); } }
+       
+	 
+    private balanceInForeignCurrency: number;
+    public get BalanceInForeignCurrency() { return this.balanceInForeignCurrency; }
+    public set BalanceInForeignCurrency(newValue: number) { if (this.balanceInForeignCurrency != newValue) { this.balanceInForeignCurrency = newValue; this.MarkAsDirty("BalanceInForeignCurrency"); } }
        
 	 
 

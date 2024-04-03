@@ -112,6 +112,21 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="AccountingEntityCode"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Notes"
+    OldNames="InternalNotes"
+    Type="nvarchar"
+    Size="4000">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="GLAccountId"
     ReferencedTable="GLAccounts"
@@ -129,6 +144,10 @@
     ReferencedTableSchema="dbo" />
   <Index
     Columns="InterestEntityTypeCode,EntityId" />
+  <Index
+    Columns="AccountingEntityCode" />
+  <Index
+    Columns="AccountingEntityCode,EntityId" />
   <UniqueConstraint
     Columns="Tenant,InterestEntityTypeCode,EntityId,OriginalEntityLineNumber,GLAccountId" />
 </Table>

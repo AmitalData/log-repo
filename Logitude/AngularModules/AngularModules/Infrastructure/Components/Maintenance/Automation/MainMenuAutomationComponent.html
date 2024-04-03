@@ -1,4 +1,4 @@
-﻿
+
 
 
 <style type="text/css">
@@ -12,7 +12,7 @@
         white-space: nowrap;
     }
 
-   
+
 
     .BoxItem {
         float: left;
@@ -29,9 +29,16 @@
         -moz-box-shadow: 0px 0px 4px 2px rgba(209,209,209,0.5);
         box-shadow: 0px 0px 4px 2px rgba(209,209,209,0.5);
     }
+
+    .MenuTitle {
+        font-size: 18px;
+        color: #1B90CB;
+        margin: 5px;
+    }
+
 </style>
 
-
+<div *ngIf="!IsMainteneceView" class="Title MenuTitle">Automations</div>
 
 <table>
     <!--<tr style="height:10px"><td><div style="height:10px"></div></td></tr>-->
@@ -56,13 +63,13 @@
 
                                             <tr style="height:30px;">
                                                 <td style="vertical-align: central">
-                                                    <div (click)="ItemClicked(item)" class="Title" style="font-size:16px; color: #1B90CB; text-decoration: underline;">{{item.Name}}</div>
+                                                    <div [attr.data-cy]="item.Name" (click)="ItemClicked(item)" class="Title" style="font-size:16px; color: #1B90CB; text-decoration: underline;">{{item.Name}}</div>
                                                     <div *ngIf="item.Description"  class="Title" style="font-size:12px; color: #1B90CB;">{{item.Description}}</div>
                                                 </td>
                                             </tr>
 
                                             <tr>
-                                               <td><div></div></td>
+                                                <td><div></div></td>
                                             </tr>
                                         </table>
 
@@ -76,7 +83,7 @@
                         </li>
 
 
-                
+
 
                     </ul>
                 </div>
@@ -94,7 +101,7 @@
                         <div></div>
                     </td>
 
-                    <td style="width: 57px;">  
+                    <td style="width: 57px;">
                         <div>
                             <!-- <button class="RedButton" (click)="CloseButtonClicked()">Cancel</button>-->
                         </div>
@@ -104,7 +111,7 @@
                         <div></div>
                     </td>
 
-                    <td style="width: 57px;">
+                    <td *ngIf="IsMainteneceView"  style="width: 57px;">
                         <button class="Button" (click)="CloseButtonClicked()">Close</button>
                     </td>
                 </tr>

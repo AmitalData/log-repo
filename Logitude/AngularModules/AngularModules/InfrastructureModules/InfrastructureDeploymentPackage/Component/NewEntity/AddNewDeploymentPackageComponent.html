@@ -1,0 +1,89 @@
+<table>
+    
+    <tr>
+        <td>
+            <div class="FillParent CurvedArea">
+                <table>
+                    <tr>
+                        <td style="width: 160px; vertical-align: top" class="AppLeftMenuBackground">
+
+                            <table>
+                                <tr style="height: 1px">
+                                    <td>
+                                        <!-- Directions -->
+                                        <div style="margin: 10px;">
+                                            <div style="font-size: 13px; color: #6E7172;">{{'DeploymentPackage.F.DirectionId' | TextCodeTranslationPipe}}:</div>
+                                            <div style="margin-top: 10px;">
+                                                <div class="RadioButton" *ngFor="let item of DirectionsList" style="margin-bottom: 10px">
+                                                    <input [attr.id]="'DirectionRadio_' + SessionIndex + item.Code" type="radio" [attr.name]="'DirectionsRadio' + SessionIndex" [checked]="DirectionId == item.Code" (click)="DirectionId = item.Code" [disabled]="IsDirectionSelectionDisabled" />
+                                                    <label [attr.for]="'DirectionRadio_' + SessionIndex + item.Code" style="text-indent: 40px; font-size: 12px" [ngStyle]="{color: DirectionId == item.Code ? '#287828':'#282E30'}">
+                                                        <img class="LeftCenter" style="margin-left: 20px;" [attr.src]="'./Images/Directions/' + item.Code + '.png'" />
+                                                        {{item.Name}}
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+                            </table>
+
+                        </td>
+
+                        <td>
+                            <div class="MediaFill">
+                                <div class="MediaFillAbsolute MarginAbsolute10" [hidden]="DirectionId != 'E'">
+                                    <div LocationDirective Code="EXPORT"></div>
+                                </div>
+                                <div class="MediaFillAbsolute MarginAbsolute10" [hidden]="DirectionId != 'I'">
+                                    <div LocationDirective Code="IMPORT"></div>
+                                </div>
+                            </div>
+                            
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button id="{{'CancelButton' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="CancelButtonClicked()" [disabled]="IsControlButtonsDisabled">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;" *ngIf="DirectionId == 'E'">
+                        <button id="{{'CreateButton' | IdGeneratorAsyncPipe | async}}" class="RedButton" (click)="CreateButtonClicked()">{{'General.B.Create' | TextCodeTranslationPipe}}</button>
+                    </td>
+                    <td style="width: 57px;" *ngIf="IsNextButtonClicked && DirectionId == 'I'">
+                        <button id="{{'PreviousButton' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="PreviousButtonClicked()">{{'General.B.Previous' | TextCodeTranslationPipe}}</button>
+                    </td>
+                    <td style="width: 5px;" *ngIf="IsNextButtonClicked && DirectionId == 'I'">
+                        <div></div>
+                    </td>
+                    <td style="width: 57px;" *ngIf="DirectionId == 'I' && !HasErrorsWhileImporting">
+                        <button *ngIf="!IsNextButtonClicked" id="{{'NextButton' | IdGeneratorAsyncPipe | async}}" class="RedButton" (click)="NextButtonClicked()" [disabled]="IsControlButtonsDisabled">{{'General.B.Next' | TextCodeTranslationPipe}}</button>
+                        <button *ngIf="IsNextButtonClicked" id="{{'DeployButton' | IdGeneratorAsyncPipe | async}}" class="RedButton" (click)="DeployButtonClicked()" [disabled]="IsControlButtonsDisabled">Deploy</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

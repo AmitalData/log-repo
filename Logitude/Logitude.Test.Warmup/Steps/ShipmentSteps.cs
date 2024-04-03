@@ -1,14 +1,14 @@
 ﻿using FluentAssertions;
 using Logitude.ShipmentTests.Models;
 using Logitude.ShipmentTests.Models.Builders;
-using Logitude.Test.Base.Models.Api;
-using Logitude.Test.Base.Models.Shared;
-using Logitude.Test.Base.Models.UserTenantPreparation;
-using Logitude.Test.Base.Services;
+using Logitude.Base.Models.Api;
+using Logitude.Base.Models.Shared;
+using Logitude.Base.Models.UserTenant;
+using Logitude.Base.Services;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
 
-namespace Logitude.Test.Warmup.Steps
+namespace Logitude.Warmup.Steps
 {
     [Binding]
     public class ShipmentSteps

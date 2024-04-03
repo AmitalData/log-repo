@@ -144,6 +144,9 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.RegisteredAirlines).HasColumnName("RegisteredAirlines");
             this.Property(t => t.PendingAirlines).HasColumnName("PendingAirlines");
             this.Property(t => t.EnableBranding).HasColumnName("EnableBranding");
+            this.Property(t => t.EnableExportToExcel).HasColumnName("EnableExportToExcel");
+            this.Property(t => t.DeclarationMessage).HasColumnName("DeclarationMessage");
+            this.Property(t => t.ActivatedforDeclarationApprove).HasColumnName("ActivatedforDeclarationApprove");
             this.Property(t => t.CustomerURL).HasColumnName("CustomerURL");
             this.Property(t => t.HideSharedlogistics).HasColumnName("HideSharedlogistics");
             this.Property(t => t.ContactEmail).HasColumnName("ContactEmail");
@@ -164,6 +167,22 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.CountryName).HasColumnName("CountryName");
             this.Property(t => t.NoPaymentForChildTenants).HasColumnName("NoPaymentForChildTenants");
             this.Property(t => t.ScheduledTasksLimitPerReport).HasColumnName("ScheduledTasksLimitPerReport");
+            this.Property(t => t.WhatsAppMessagingPhoneNumber).HasColumnName("WhatsAppMessagingPhoneNumber");
+            this.Property(t => t.IsContainerTrackingPrepaid).HasColumnName("IsContainerTrackingPrepaid");
+            this.Property(t => t.ShowMoneyOrder).HasColumnName("ShowMoneyOrder");
+            this.Property(t => t.DigitalPortalLastDate).HasColumnName("DigitalPortalLastDate");
+            this.Property(t => t.DigitalPortalTotalLastWeek).HasColumnName("DigitalPortalTotalLastWeek");
+            this.Property(t => t.DigitalPortalTotalLastMonth).HasColumnName("DigitalPortalTotalLastMonth");
+            this.Property(t => t.DigitalPortalMobileLastDate).HasColumnName("DigitalPortalMobileLastDate");
+            this.Property(t => t.DigitalPortalMobTotalLastWeek).HasColumnName("DigitalPortalMobTotalLastWeek");
+            this.Property(t => t.DigitalPortalMobTotalLastMonth).HasColumnName("DigitalPortalMobTotalLastMonth");
+            this.Property(t => t.DPArchiveShipmentCreateFilter).HasColumnName("DPArchiveShipmentCreateFilter");
+            this.Property(t => t.DPArchiveShipmentArrivalFilter).HasColumnName("DPArchiveShipmentArrivalFilter");
+            this.Property(t => t.DPArchiveShipmentDepartFilter).HasColumnName("DPArchiveShipmentDepartFilter");
+
+            this.Property(t => t.CargoTrackingPublicShowEvents).HasColumnName("CargoTrackingPublicShowEvents");
+            this.Property(t => t.CargoTrackingPrivateShowEvents).HasColumnName("CargoTrackingPrivateShowEvents");
+
 
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")

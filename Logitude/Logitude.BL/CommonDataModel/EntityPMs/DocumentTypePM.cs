@@ -100,6 +100,8 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [DataMember]
         public bool IsCustomerView { get; set; }
         [DataMember]
+        public bool IsCustomerUploadPermission { get; set; }
+        [DataMember]
         public bool IsHybrid { get; set; }
 
         [DataMember]

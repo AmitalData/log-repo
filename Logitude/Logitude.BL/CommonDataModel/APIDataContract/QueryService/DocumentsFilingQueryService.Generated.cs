@@ -10,6 +10,8 @@ using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.QuoteModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
@@ -40,40 +42,40 @@ using Simplog.Data.CommonDataModel;
         }
 
 		
-		public DocumentsFiling GetDocumentsFilingById(string Id,int Tenant,string ComputingPartnerName = "")
+		public DocumentsFiling GetDocumentsFilingById(string Id,int Tenant,  string ComputingPartnerName = "")
         { 
 		    try
             {
-
+				 
 				
-				var temp = query.GetSinglePM(Id,Tenant);				
+				var temp = query.GetSinglePM(Id, Tenant);				
 				 if (temp == null)
                     throw new ApplicationException("DocumentsFiling with Id " + Id + " doesn't exist");
 
 				return DocumentsFilingDataMapping(temp,Tenant,ComputingPartnerName);
 			}
+
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }
 		
-		public DocumentsFiling GetDocumentsFilingByCode(string Code,int Tenant,string ComputingPartnerName = "")
+		public DocumentsFiling GetDocumentsFilingByCode(string Code,int Tenant,  string ComputingPartnerName = "")
         { 
 		    try
             {
-
+				 
 				
-				var temp = query.GetSinglePMByCode(Code,Tenant);				
+				var temp = query.GetSinglePMByCode(Code, Tenant);				
 				 if (temp == null)
                     throw new ApplicationException("DocumentsFiling with Code " + Code + " doesn't exist");
 
 				return DocumentsFilingDataMapping(temp,Tenant,ComputingPartnerName);
 			}
+
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }
@@ -141,12 +143,14 @@ using Simplog.Data.CommonDataModel;
 					
 					if (!string.IsNullOrEmpty(MyEntity.Code))
 					{
-						temp = query.GetSinglePMByCode(MyEntity.Code, Tenant);
-					} 					   
-					if(temp == null)
+						temp = query.GetSinglePMByCode(MyEntity.Code, Tenant  );
+					} 
+					
+			  	   if(temp == null)
 					{   
 					    throw new ApplicationException("DocumentsFiling with Code " + MyEntity.Code + " doesn't exist");
 					} 
+				 
 					
 					if(string.IsNullOrEmpty(temp.Id))
 					{
@@ -169,9 +173,8 @@ using Simplog.Data.CommonDataModel;
 					   
 						 
 						if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Code))
-						{
-								//throw new ApplicationException("Code Can't be update"); 
-								temp.Code = MyEntity.Code;
+						{								
+							temp.Code = MyEntity.Code;
 								
 						
 						}  
@@ -188,7 +191,7 @@ using Simplog.Data.CommonDataModel;
 
 						 
 							if(!IsUpdate)
-							{								//throw new ApplicationException("CreatedByUser Can't be update"); 
+							{								
 								temp.CreatedByUserId = myCreatedByUserPM.Id;
 						  
 							}  
@@ -200,9 +203,9 @@ using Simplog.Data.CommonDataModel;
 			
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.EntityNumber))
-					{							//throw new ApplicationException("EntityNumber Can't be update"); 
-							temp.EntityReference = MyEntity.EntityNumber;
+					if(!IsUpdate)
+					{							
+						temp.EntityReference = MyEntity.EntityNumber;
 
 										}  
 
@@ -217,7 +220,7 @@ using Simplog.Data.CommonDataModel;
 
 						 
 							if(!IsUpdate)
-							{								//throw new ApplicationException("EntityType Can't be update"); 
+							{								
 								temp.ObjectTableId = myEntityTypePM.Id;
 						  
 							}  
@@ -238,7 +241,7 @@ using Simplog.Data.CommonDataModel;
 
 						 
 							if(!IsUpdate)
-							{								//throw new ApplicationException("DocumentType Can't be update"); 
+							{								
 								temp.DocumentTypeId = myDocumentTypePM.Id;
 						  
 							}  
@@ -250,49 +253,49 @@ using Simplog.Data.CommonDataModel;
 			
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.BlobId))
-					{							//throw new ApplicationException("BlobId Can't be update"); 
-							temp.DocumentId = MyEntity.BlobId;
+					if(!IsUpdate)
+					{							
+						temp.DocumentId = MyEntity.BlobId;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && (MyEntity.IsDigitallySigned != temp.IsDigitallySigned))
-					{							//throw new ApplicationException("IsDigitallySigned Can't be update"); 
-							temp.IsDigitallySigned = MyEntity.IsDigitallySigned;
+					if(!IsUpdate)
+					{							
+						temp.IsDigitallySigned = MyEntity.IsDigitallySigned;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.SignersList))
-					{							//throw new ApplicationException("SignersList Can't be update"); 
-							temp.SignersList = MyEntity.SignersList;
+					if(!IsUpdate)
+					{							
+						temp.SignersList = MyEntity.SignersList;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.BlobName))
-					{							//throw new ApplicationException("BlobName Can't be update"); 
-							temp.FileName = MyEntity.BlobName;
+					if(!IsUpdate)
+					{							
+						temp.FileName = MyEntity.BlobName;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Description))
-					{							//throw new ApplicationException("Description Can't be update"); 
-							temp.Description = MyEntity.Description;
+					if(!IsUpdate)
+					{							
+						temp.Description = MyEntity.Description;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && (MyEntity.IsSharedWithCustomer != temp.IsSharedWithCustomer))
-					{							//throw new ApplicationException("IsSharedWithCustomer Can't be update"); 
-							temp.IsSharedWithCustomer = MyEntity.IsSharedWithCustomer;
+					if(!IsUpdate)
+					{							
+						temp.IsSharedWithCustomer = MyEntity.IsSharedWithCustomer;
 
 										}  
 
@@ -305,6 +308,8 @@ using Simplog.Data.CommonDataModel;
                 throw ex;
             } 
         }
-		 
+
+
+						   
    }
 }

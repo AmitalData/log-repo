@@ -90,7 +90,7 @@
                                 </td>
 
                                 <td style="width: 57px;">
-                                    <button class="Button CustomButton" id="{{ 'OnCarriageDateCancelBtn' | IdGeneratorPipe}}"  (click)="CancelButtonClicked()">Cancel</button>
+                                    <button class="Button CustomButton" id="{{ 'OnCarriageDateCancelBtn' | IdGeneratorAsyncPipe | async}}"  (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
                                 </td>
 
                                 <td style="width: 5px;">
@@ -98,7 +98,7 @@
                                 </td>
 
                                 <td style="width: 57px;">
-                                    <button class="RedButton CustomButton" id="{{ 'OnCarriageDateOKBtn' | IdGeneratorPipe}}"  [disabled]="!IsEnabled" (click)="OkButtonClicked()">Ok</button>
+                                    <button class="RedButton CustomButton" id="{{ 'OnCarriageDateOKBtn' | IdGeneratorAsyncPipe | async}}"  [disabled]="!IsEnabled" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
                                 </td>
                             </tr>
                         </table>

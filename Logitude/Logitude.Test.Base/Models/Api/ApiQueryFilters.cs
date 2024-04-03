@@ -1,4 +1,4 @@
-﻿namespace Logitude.Test.Base.Models.Api
+﻿namespace Logitude.Base.Models.Api
 {
     public class ApiQueryFilters
     {

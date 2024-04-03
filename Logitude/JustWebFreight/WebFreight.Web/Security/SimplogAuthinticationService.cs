@@ -280,6 +280,7 @@ namespace WebFreight.Web.Security
                     }
 
                     lastLogin.ComputerId = computerId;
+                    lastLogin.WorkEnvironment = LogitudeSettingConfigration.GetWorkEnvironment();
                     lastLogin.LoginDateTime = TenantServerConfigration.GetCurrentDateTime(tenant);
 
 

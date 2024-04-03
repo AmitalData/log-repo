@@ -77,7 +77,7 @@
 <style>
     .FiltersMenu li {
         /* width: fit-content !important; */
-        width: 75px;
+        width: 80px;
         padding: 0 7px;
         border-width: 1px;
         margin-right: -1px;
@@ -147,7 +147,9 @@
                                 [DataContext]="DataContext" [LookUpTableName]="'GLAccount'"
                                 [QueryFilterItems]="GLAccountFilterItems"
                                 (SelectedItemChanged)="GLAccount = $event" [ForceShowAddLink]="true" [HideAddLink]="true"
-                                [HideColumns]="true">
+                                [HideColumns]="true"
+                                [StartSearchFromChar]="3"
+                                [StartSearchFromNumber]="6">
                         </LogLov>
                     </td>
 
@@ -445,6 +447,71 @@
 
                 </tr>
 
+                <!-- Row 5 [hidden]="!IsSchedulerReport"-->
+                <!-- <tr  [hidden]="!IsSchedulerReport" class="FieldRow">
+                    <td style="width:150px">
+                        <LogLabel [ObjectFieldName]="'BalanceInLocalCurrency'" [ObjectTableName]="'GLAccount'"
+                                  [DataContext]="DataContext"></LogLabel>
+                    </td>
+                    <td style="width:245px">
+                        <LogTextBox style="display: block;width: 150px;" [ObjectFieldName]="'BalanceInLocalCurrency'" [InputType]="'decimal'" 
+                        [DataContext]="DataContext" [NoObjectField]="true" [ObjectTableName]="'GLAccount'" [HideColumns]="true" [Text]="BalanceInLocalCurrency"
+                        >
+                                </LogTextBox>
+                    </td>
+                </tr> -->
+                <tr [hidden]="!IsSchedulerReport" class="FieldRow">
+                    <td style="width:210px">
+                        <LogLabel [ObjectFieldName]="'BalanceInLocalCurrency'"
+                                  [Text]="'GLAccount.O.ClosedBalanceInLocalCurrency' | TextCodeTranslationPipe"
+                                  [ObjectTableName]="'GLAccount'" [DataContext]="DataContext">
+                        </LogLabel>
+                    </td>
+                    <td>
+                            <ComboBox style="display: block;width: 200px;" [ItemsSource]="operatorsList" [Binding]="'LocalName'"
+                                      [SelectedItem]="selectedAmountOperator"
+                                      (SelectedItemChanged)="AmountOperatorChanged($event)"></ComboBox>
+                    </td>
+
+                    <td style="width: 200px;" [style.text-align]="isRTL ? 'right' : 'left'">
+                       
+                        <LogTextBox style="display: block;width: 150px;" [ObjectFieldName]="'BalanceInLocalCurrency'" [InputType]="'decimal'"
+                        [DataContext]="DataContext" [NoObjectField]="true" [ObjectTableName]="'GLAccount'" [HideColumns]="true" [Text]="BalanceInLocalCurrency"
+                        ></LogTextBox>
+                    </td>
+                    <td style="width: 200px"><div></div></td>
+                    <td><div></div></td>
+                    <td>
+                        <div></div>
+                    </td>
+                    <td></td>
+                </tr>
+                <tr [hidden]="!IsSchedulerReport" class="FieldRow">
+                    <td style="width:210px">
+                        <LogLabel [ObjectFieldName]="'LocalBalanceInDue'"
+                                  [Text]="'GLAccount.O.ClosingBalanceAccordingToTheBalanceInDue' | TextCodeTranslationPipe"
+                                  [ObjectTableName]="'GLAccount'" [DataContext]="DataContext">
+                        </LogLabel>
+                    </td>
+                    <td>
+                            <ComboBox style="display: block;width: 200px;" [ItemsSource]="operatorsList" [Binding]="'LocalName'"
+                                      [SelectedItem]="selectedAmountOperatorLocalBalanceInDue"
+                                      (SelectedItemChanged)="AmountOperatorLocalBalanceInDueChanged($event)"></ComboBox>
+                    </td>
+
+                    <td style="width: 200px;" [style.text-align]="isRTL ? 'right' : 'left'">
+                       
+                        <LogTextBox style="display: block;width: 150px;" [ObjectFieldName]="'LocalBalanceInDue'" [InputType]="'decimal'"
+                        [DataContext]="DataContext" [NoObjectField]="true" [ObjectTableName]="'GLAccount'" [HideColumns]="true" [Text]="LocalBalanceInDue"
+                        ></LogTextBox>
+                    </td>
+                    <td style="width: 200px"><div></div></td>
+                    <td><div></div></td>
+                    <td>
+                        <div></div>
+                    </td>
+                    <td></td>
+                </tr>
                 <tr [hidden]="IsSchedulerReport && (ValidationErrorsList != null && ValidationErrorsList.length > 0)" style="height: 15px;">
                     <div></div>
                 </tr>

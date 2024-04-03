@@ -1,0 +1,11 @@
+﻿<Script DBType="Main" Module="Accounting">
+  <Sql Version="1">
+    <![CDATA[
+            update	T
+            set		T.AccountingEntityCode = TYP.AccountingEntityCode
+            from	InterestTransactions T
+            join	InterestEntityTypes TYP on T.InterestEntityTypeCode = TYP.Code
+            where   T.AccountingEntityCode is null
+     ]]>
+ </Sql>
+</Script>

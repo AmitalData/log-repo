@@ -94,6 +94,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               Received = a.Received,
                                               ReceivedDate = a.ReceivedDate,
                                               ReceivedByUserId = a.ReceivedByUserId,
+                                              ReceivedByByContactId = a.ReceivedByByContactId,
                                               Name = a.DocumentType != null ? a.DocumentType.Name : null,
                                               StatusCode = a.StatusCode,
                                               UpdateDate = a.UpdateDate,
@@ -127,29 +128,32 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               SignDueDate = a.SignDueDate,
                                               IsDigitalSignRequired = a.IsDigitalSignRequired,
                                               BackedupExternally = a.BackedupExternally,
+                                              IsTransferdToQBO =  a.IsTransferdToQBO,
+
+                                              IsAgentSharedInHouse = a.DocumentType != null ? a.DocumentType.IsAgentSharedInHouse : false,
+                                              IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
+                                              IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
+                                              ReceivedByPartner = a.ReceivedByPartner,
                                           }).FirstOrDefault();
 
 
             if (extDocPm != null)
             {
-                FollowUpRepository followUpRepository = new FollowUpRepository(tenant);
-                List<FollowUp> FollowUps = followUpRepository.GetFollowUps(tenant).ToList();
-                if (FollowUps != null)
-                {
-                    List<FollowUp> docFollowUp = FollowUps.Where(d => d.DocumentsFilingId == extDocPm.Id && d.Tenant == extDocPm.Tenant).ToList();
-                    if (docFollowUp.Count != 0)
-                    {
-                        extDocPm.FollowUpCount = docFollowUp.Count;
-                        extDocPm.FollowUpId = docFollowUp.FirstOrDefault().Id;
-                        extDocPm.HasFollowUp = docFollowUp.Any();
-                    }
-                }
-
-
+                SetDocumentFollowUp(extDocPm);
                 DocumentsFilingMetaDataValueQuery documentsFilingMetaDataValueQuery = new DocumentsFilingMetaDataValueQuery(tenant);
                 extDocPm.DocumentsFilingMetaDataValues = documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByDocumentIdTenant(extDocPm.Id, tenant).ToList();
             }
             return extDocPm;
+        }
+
+        private static void SetDocumentFollowUp(DocumentsFilingPM document, string followUpId = null)
+        {
+            if (followUpId == null) followUpId = new FollowUpRepository(document.Tenant).GetFollowUpIdByDocumentsFilingId(document.Tenant, document.Id);
+            if (string.IsNullOrEmpty(followUpId)) return;
+
+            document.FollowUpCount = 1;
+            document.HasFollowUp = true;
+            document.FollowUpId = followUpId;
         }
 
         public DocumentsFilingPM GetSinglePMByCode(string code, int tenant)
@@ -190,6 +194,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               Received = a.Received,
                                               ReceivedDate = a.ReceivedDate,
                                               ReceivedByUserId = a.ReceivedByUserId,
+                                              ReceivedByByContactId = a.ReceivedByByContactId,
                                               Name = a.DocumentType != null ? a.DocumentType.Name : null,
                                               StatusCode = a.StatusCode,
                                               UpdateDate = a.UpdateDate,
@@ -225,23 +230,17 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               SignDueDate = a.SignDueDate,
                                               IsDigitalSignRequired = a.IsDigitalSignRequired,
                                               BackedupExternally = a.BackedupExternally,
+                                              IsTransferdToQBO = a.IsTransferdToQBO,
+
+                                              IsAgentSharedInHouse = a.DocumentType != null ? a.DocumentType.IsAgentSharedInHouse : false,
+                                              IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
+                                              IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
+                                              ReceivedByPartner = a.ReceivedByPartner,
                                           }).FirstOrDefault();
 
             if (extDocPm != null)
             {
-                FollowUpRepository followUpRepository = new FollowUpRepository(tenant);
-                List<FollowUp> FollowUps = followUpRepository.GetFollowUps(tenant).ToList();
-                if (FollowUps != null)
-                {
-                    List<FollowUp> docFollowUp = FollowUps.Where(d => d.DocumentsFilingId == extDocPm.Id && d.Tenant == extDocPm.Tenant).ToList();
-                    if (docFollowUp.Count != 0)
-                    {
-                        extDocPm.FollowUpCount = docFollowUp.Count;
-                        extDocPm.FollowUpId = docFollowUp.FirstOrDefault().Id;
-                        extDocPm.HasFollowUp = docFollowUp.Any();
-                    }
-                }
-
+                SetDocumentFollowUp(extDocPm);
                 DocumentsFilingMetaDataValueQuery documentsFilingMetaDataValueQuery = new DocumentsFilingMetaDataValueQuery(tenant);
                 extDocPm.DocumentsFilingMetaDataValues = documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByDocumentIdTenant(extDocPm.Id, tenant).ToList();
             }
@@ -287,6 +286,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               Received = a.Received,
                                               ReceivedDate = a.ReceivedDate,
                                               ReceivedByUserId = a.ReceivedByUserId,
+                                              ReceivedByByContactId = a.ReceivedByByContactId,
                                               Name = a.DocumentType != null ? a.DocumentType.Name : null,
                                               StatusCode = a.StatusCode,
                                               UpdateDate = a.UpdateDate,
@@ -323,23 +323,17 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               IsDigitalSignRequired = a.IsDigitalSignRequired,
                                               BackedupExternally = a.BackedupExternally,
                                               SecurityId = a.SecurityId,
+                                              IsTransferdToQBO = a.IsTransferdToQBO,
+
+                                              IsAgentSharedInHouse = a.DocumentType != null ? a.DocumentType.IsAgentSharedInHouse : false,
+                                              IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
+                                              IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
+                                              ReceivedByPartner = a.ReceivedByPartner,
                                           }).FirstOrDefault();
 
             if (extDocPm != null)
             {
-                FollowUpRepository followUpRepository = new FollowUpRepository(tenant);
-                List<FollowUp> FollowUps = followUpRepository.GetFollowUps(tenant).ToList();
-                if (FollowUps != null)
-                {
-                    List<FollowUp> docFollowUp = FollowUps.Where(d => d.DocumentsFilingId == extDocPm.Id && d.Tenant == extDocPm.Tenant).ToList();
-                    if (docFollowUp.Count != 0)
-                    {
-                        extDocPm.FollowUpCount = docFollowUp.Count;
-                        extDocPm.FollowUpId = docFollowUp.FirstOrDefault().Id;
-                        extDocPm.HasFollowUp = docFollowUp.Any();
-                    }
-                }
-
+                SetDocumentFollowUp(extDocPm);
                 DocumentsFilingMetaDataValueQuery documentsFilingMetaDataValueQuery = new DocumentsFilingMetaDataValueQuery(tenant);
                 extDocPm.DocumentsFilingMetaDataValues = documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByDocumentIdTenant(extDocPm.Id, tenant).ToList();
             }
@@ -389,6 +383,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               Received = a.Received,
                                               ReceivedDate = a.ReceivedDate,
                                               ReceivedByUserId = a.ReceivedByUserId,
+                                              ReceivedByByContactId = a.ReceivedByByContactId,
                                               Name = a.DocumentType != null ? a.DocumentType.Name : null,
                                               StatusCode = a.StatusCode,
                                               UpdateDate = a.UpdateDate,
@@ -424,6 +419,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               SignDueDate = a.SignDueDate,
                                               IsDigitalSignRequired = a.IsDigitalSignRequired,
                                               BackedupExternally = a.BackedupExternally,
+                                              IsTransferdToQBO = a.IsTransferdToQBO,
+
+                                              IsAgentSharedInHouse = a.DocumentType != null ? a.DocumentType.IsAgentSharedInHouse : false,
+                                              IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
+                                              IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
+                                              ReceivedByPartner = a.ReceivedByPartner,
                                           }).FirstOrDefault();
 
             if (extDocPm != null)
@@ -446,6 +447,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     extDocPm.OcrReference = ocrDocumentRepository.GetSingleByDocId(id, tenant)?.Reference;
                 }
 
+                SetDocumentFollowUp(extDocPm);
                 DocumentsFilingMetaDataValueQuery documentsFilingMetaDataValueQuery = new DocumentsFilingMetaDataValueQuery(tenant);
                 extDocPm.DocumentsFilingMetaDataValues = documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByDocumentIdTenant(extDocPm.Id, tenant).ToList();
             }
@@ -455,7 +457,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         public DocumentsFilingPM GetSinglePMByForwarderId(string id, int tenant)
         {
             DocumentsFilingPM extDocPm = (from a in repository.context.DocumentsFilings.Include("CreatedByUser.Contact").Include("ReceivedByUser.Contact").Include("Document").Include("DocumentType").Include("Owner.Contact")
-                                          where a.ForwarderDocumentId == id && a.Tenant == tenant
+                                          where a.ForwarderDocumentId == id && a.IsDeleted == false && a.Tenant == tenant
                                           select new DocumentsFilingPM()
                                           {
                                               Id = a.Id,
@@ -490,6 +492,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               Received = a.Received,
                                               ReceivedDate = a.ReceivedDate,
                                               ReceivedByUserId = a.ReceivedByUserId,
+                                              ReceivedByByContactId = a.ReceivedByByContactId,
                                               Name = a.DocumentType != null ? a.DocumentType.Name : null,
                                               StatusCode = a.StatusCode,
                                               UpdateDate = a.UpdateDate,
@@ -524,25 +527,18 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               IsSharedOut = a.IsSharedOut,
                                               SignDueDate = a.SignDueDate,
                                               IsDigitalSignRequired = a.IsDigitalSignRequired,
+                                              IsTransferdToQBO = a.IsTransferdToQBO,
                                               BackedupExternally = a.BackedupExternally,
+
+                                              IsAgentSharedInHouse = a.DocumentType != null ? a.DocumentType.IsAgentSharedInHouse : false,
+                                              IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
+                                              IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
+                                              ReceivedByPartner = a.ReceivedByPartner,
                                           }).FirstOrDefault();
 
             if (extDocPm != null)
             {
-                FollowUpRepository followUpRepository = new FollowUpRepository(tenant);
-                List<FollowUp> FollowUps = followUpRepository.GetFollowUps(tenant).ToList();
-                if (FollowUps != null)
-                {
-                    List<FollowUp> docFollowUp = FollowUps.Where(d => d.DocumentsFilingId == extDocPm.Id && d.Tenant == extDocPm.Tenant).ToList();
-                    if (docFollowUp.Count != 0)
-                    {
-                        extDocPm.FollowUpCount = docFollowUp.Count;
-                        extDocPm.FollowUpId = docFollowUp.FirstOrDefault().Id;
-                        extDocPm.HasFollowUp = docFollowUp.Any();
-                    }
-                }
-
-
+                SetDocumentFollowUp(extDocPm);
                 DocumentsFilingMetaDataValueQuery documentsFilingMetaDataValueQuery = new DocumentsFilingMetaDataValueQuery(tenant);
                 extDocPm.DocumentsFilingMetaDataValues = documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByDocumentIdTenant(extDocPm.Id, tenant).ToList();
             }
@@ -552,7 +548,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         public DocumentsFilingPM GetSinglePMByCustomerId(string id, int tenant)
         {
             DocumentsFilingPM extDocPm = (from a in repository.context.DocumentsFilings.Include("CreatedByUser.Contact").Include("ReceivedByUser.Contact").Include("Document").Include("DocumentType").Include("Owner.Contact")
-                                          where a.CustomerDocumentId == id && a.Tenant == tenant
+                                          where a.CustomerDocumentId == id && a.IsDeleted == false && a.Tenant == tenant
                                           select new DocumentsFilingPM()
                                           {
                                               Id = a.Id,
@@ -587,6 +583,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               Received = a.Received,
                                               ReceivedDate = a.ReceivedDate,
                                               ReceivedByUserId = a.ReceivedByUserId,
+                                              ReceivedByByContactId = a.ReceivedByByContactId,
                                               Name = a.DocumentType != null ? a.DocumentType.Name : null,
                                               StatusCode = a.StatusCode,
                                               UpdateDate = a.UpdateDate,
@@ -622,24 +619,17 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               SignDueDate = a.SignDueDate,
                                               IsDigitalSignRequired = a.IsDigitalSignRequired,
                                               BackedupExternally = a.BackedupExternally,
+                                              IsTransferdToQBO = a.IsTransferdToQBO,
+
+                                              IsAgentSharedInHouse = a.DocumentType != null ? a.DocumentType.IsAgentSharedInHouse : false,
+                                              IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
+                                              IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
+                                              ReceivedByPartner = a.ReceivedByPartner,
                                           }).FirstOrDefault();
 
             if (extDocPm != null)
             {
-                FollowUpRepository followUpRepository = new FollowUpRepository(tenant);
-                List<FollowUp> FollowUps = followUpRepository.GetFollowUps(tenant).ToList();
-                if (FollowUps != null)
-                {
-                    List<FollowUp> docFollowUp = FollowUps.Where(d => d.DocumentsFilingId == extDocPm.Id && d.Tenant == extDocPm.Tenant).ToList();
-                    if (docFollowUp.Count != 0)
-                    {
-                        extDocPm.FollowUpCount = docFollowUp.Count;
-                        extDocPm.FollowUpId = docFollowUp.FirstOrDefault().Id;
-                        extDocPm.HasFollowUp = docFollowUp.Any();
-                    }
-                }
-
-
+                SetDocumentFollowUp(extDocPm);
                 DocumentsFilingMetaDataValueQuery documentsFilingMetaDataValueQuery = new DocumentsFilingMetaDataValueQuery(tenant);
                 extDocPm.DocumentsFilingMetaDataValues = documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByDocumentIdTenant(extDocPm.Id, tenant).ToList();
             }
@@ -684,6 +674,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               Received = a.Received,
                                               ReceivedDate = a.ReceivedDate,
                                               ReceivedByUserId = a.ReceivedByUserId,
+                                              ReceivedByByContactId = a.ReceivedByByContactId,
                                               Name = a.DocumentType != null ? a.DocumentType.Name : null,
                                               StatusCode = a.StatusCode,
                                               UpdateDate = a.UpdateDate,
@@ -719,24 +710,17 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               SignDueDate = a.SignDueDate,
                                               IsDigitalSignRequired = a.IsDigitalSignRequired,
                                               BackedupExternally = a.BackedupExternally,
+                                              IsTransferdToQBO = a.IsTransferdToQBO,
+
+                                              IsAgentSharedInHouse = a.DocumentType != null ? a.DocumentType.IsAgentSharedInHouse : false,
+                                              IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
+                                              IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
+                                              ReceivedByPartner = a.ReceivedByPartner,
                                           }).FirstOrDefault();
 
             if (extDocPm != null)
             {
-                FollowUpRepository followUpRepository = new FollowUpRepository(tenant);
-                List<FollowUp> FollowUps = followUpRepository.GetFollowUps(tenant).ToList();
-                if (FollowUps != null)
-                {
-                    List<FollowUp> docFollowUp = FollowUps.Where(d => d.DocumentsFilingId == extDocPm.Id && d.Tenant == extDocPm.Tenant).ToList();
-                    if (docFollowUp.Count != 0)
-                    {
-                        extDocPm.FollowUpCount = docFollowUp.Count;
-                        extDocPm.FollowUpId = docFollowUp.FirstOrDefault().Id;
-                        extDocPm.HasFollowUp = docFollowUp.Any();
-                    }
-                }
-
-
+                SetDocumentFollowUp(extDocPm);
                 DocumentsFilingMetaDataValueQuery documentsFilingMetaDataValueQuery = new DocumentsFilingMetaDataValueQuery(tenant);
                 extDocPm.DocumentsFilingMetaDataValues = documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByDocumentIdTenant(extDocPm.Id, tenant).ToList();
             }
@@ -781,6 +765,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                Received = a.Received,
                                                                ReceivedDate = a.ReceivedDate,
                                                                ReceivedByUserId = a.ReceivedByUserId,
+                                                               ReceivedByByContactId = a.ReceivedByByContactId,
                                                                Name = a.DocumentType != null ? a.DocumentType.Name : null,
                                                                StatusCode = a.StatusCode,
                                                                UpdateDate = a.UpdateDate,
@@ -814,12 +799,17 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                SignDueDate = a.SignDueDate,
                                                                IsDigitalSignRequired = a.IsDigitalSignRequired,
                                                                BackedupExternally = a.BackedupExternally,
+                                                               IsTransferdToQBO = a.IsTransferdToQBO,
+
+                                                               IsAgentSharedInHouse = a.DocumentType != null ? a.DocumentType.IsAgentSharedInHouse : false,
+                                                               IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
+                                                               IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
+                                                               ReceivedByPartner = a.ReceivedByPartner,
                                                            }).ToList();
 
             ICustomsDocumentQueryServiceExt customsDocumentQueryService = ContainerAccessor.Container.Resolve(typeof(ICustomsDocumentQueryServiceExt), "CustomsDocumentQueryServiceExt", new ParameterOverride("", 1)) as ICustomsDocumentQueryServiceExt;
             //CustomsDocumentQueryService customsDocumentQueryService = new CustomsDocumentQueryService(tenant);
-            FollowUpRepository followUpRepository = new FollowUpRepository(tenant);
-            List<FollowUp> FollowUps = followUpRepository.GetFollowUps(tenant).ToList();
+            var followUpIds = new FollowUpRepository(tenant).GetFollowUpIdByDocumentsFilingIds(tenant, externalDocumentPMs.Select(x => x.Id).ToArray());
 
             DocumentsFilingMetaDataValueQuery documentsFilingMetaDataValueQuery = new DocumentsFilingMetaDataValueQuery(tenant);
             //List<DocumentsFilingMetaDataValuePM> documentsFilingMetaDataValuesList = documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByTenantAndDocumentIds(tenant, externalDocumentPMs.Select(a => a.Id).ToArray()).ToList();
@@ -827,18 +817,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             foreach (DocumentsFilingPM extDocPm in externalDocumentPMs)
             {
                 List<DocumentsFilingMetaDataValuePM> documentsFilingMetaDataValuesList = documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByDocumentIdTenant(extDocPm.Id, tenant).ToList(); //documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByTenant(tenant).ToList();
-
-                if (FollowUps != null)
-                {
-                    List<FollowUp> docFollowUp = FollowUps.Where(d => d.DocumentsFilingId == extDocPm.Id && d.Tenant == extDocPm.Tenant).ToList();
-                    if (docFollowUp.Count != 0)
-                    {
-                        extDocPm.FollowUpCount = docFollowUp.Count;
-                        extDocPm.FollowUpId = docFollowUp.FirstOrDefault().Id;
-                        extDocPm.HasFollowUp = docFollowUp.Any();
-                    }
-                }
-
+                SetDocumentFollowUp(extDocPm, followUpIds.ContainsKey(extDocPm.Id) ? followUpIds[extDocPm.Id] : string.Empty);
                 CustomsDocumentPM customsDoc = customsDocumentQueryService.GetSingle(extDocPm.Id, false, false, tenant);
                 if (customsDoc != null)
                 {
@@ -891,6 +870,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                Received = a.Received,
                                                                ReceivedDate = a.ReceivedDate,
                                                                ReceivedByUserId = a.ReceivedByUserId,
+                                                               ReceivedByByContactId = a.ReceivedByByContactId,
                                                                Name = a.DocumentType != null ? a.DocumentType.Name : null,
                                                                StatusCode = a.StatusCode,
                                                                UpdateDate = a.UpdateDate,
@@ -928,30 +908,24 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                SignDueDate = a.SignDueDate,
                                                                IsDigitalSignRequired = a.IsDigitalSignRequired,
                                                                BackedupExternally = a.BackedupExternally,
+                                                               IsTransferdToQBO = a.IsTransferdToQBO,
+
+                                                               IsAgentSharedInHouse = a.DocumentType != null ? a.DocumentType.IsAgentSharedInHouse : false,
+                                                               IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
+                                                               IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
+                                                               ReceivedByPartner = a.ReceivedByPartner,
                                                            }).ToList();
 
             ICustomsDocumentQueryServiceExt customsDocumentQueryService = ContainerAccessor.Container.Resolve(typeof(ICustomsDocumentQueryServiceExt), "CustomsDocumentQueryServiceExt", new ParameterOverride("", 1)) as ICustomsDocumentQueryServiceExt;
             //CustomsDocumentQueryService customsDocumentQueryService = new CustomsDocumentQueryService(tenant);
-            FollowUpRepository followUpRepository = new FollowUpRepository(tenant);
-            List<FollowUp> FollowUps = followUpRepository.GetFollowUps(tenant).ToList();
+            var followUpIds = new FollowUpRepository(tenant).GetFollowUpIdByDocumentsFilingIds(tenant, externalDocumentPMs.Select(x => x.Id).ToArray());
             DocumentsFilingMetaDataValueQuery documentsFilingMetaDataValueQuery = new DocumentsFilingMetaDataValueQuery(tenant);
             //List<DocumentsFilingMetaDataValuePM> documentsFilingMetaDataValuesList = documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByTenantAndDocumentIds(tenant, externalDocumentPMs.Select(a=>a.Id).ToArray()).ToList();
 
             foreach (DocumentsFilingPM extDocPm in externalDocumentPMs)
             {
                 List<DocumentsFilingMetaDataValuePM> documentsFilingMetaDataValuesList = documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByDocumentIdTenant(extDocPm.Id, tenant).ToList(); //documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByTenant(tenant).ToList();
-
-                if (FollowUps != null)
-                {
-                    List<FollowUp> docFollowUp = FollowUps.Where(d => d.DocumentsFilingId == extDocPm.Id && d.Tenant == extDocPm.Tenant).ToList();
-                    if (docFollowUp.Count != 0)
-                    {
-                        extDocPm.FollowUpCount = docFollowUp.Count;
-                        extDocPm.FollowUpId = docFollowUp.FirstOrDefault().Id;
-                        extDocPm.HasFollowUp = docFollowUp.Any();
-                    }
-                }
-
+                SetDocumentFollowUp(extDocPm, followUpIds.ContainsKey(extDocPm.Id) ? followUpIds[extDocPm.Id] : string.Empty);
                 CustomsDocumentPM customsDoc = customsDocumentQueryService.GetSingle(extDocPm.Id, false, false,tenant);
                 if (customsDoc != null)
                 {
@@ -1024,6 +998,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        Received = a.Received,
                                        ReceivedDate = a.ReceivedDate,
                                        ReceivedByUserId = a.ReceivedByUserId,
+                                       ReceivedByByContactId = a.ReceivedByByContactId,
                                        Name = a.DocumentType != null ? a.DocumentType.Name : null,
                                        StatusCode = a.StatusCode,
                                        UpdateDate = a.UpdateDate,
@@ -1063,6 +1038,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        SignDueDate = a.SignDueDate,
                                        IsDigitalSignRequired = a.IsDigitalSignRequired,
                                        BackedupExternally = a.BackedupExternally,
+
+                                       IsAgentSharedInHouse = a.DocumentType != null ? a.DocumentType.IsAgentSharedInHouse : false,
+                                       IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
+                                       IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
+                                       ReceivedByPartner = a.ReceivedByPartner,
                                    });
 
             if (!string.IsNullOrEmpty(childEntityId)) externalDocumentPMs = externalDocumentPMs.Where(d => d.ChildEntityId == childEntityId);
@@ -1083,6 +1063,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     if (!contactIds.Contains(item.ReceivedByUserId)) contactIds.Add(item.ReceivedByUserId);
                 }
 
+                if (!string.IsNullOrEmpty(item.ReceivedByByContactId))
+                {
+                    if (!contactIds.Contains(item.ReceivedByByContactId)) contactIds.Add(item.ReceivedByByContactId);
+                }
             }
 
             List<Contact> contactLists = null;
@@ -1102,7 +1086,13 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                 if (!string.IsNullOrEmpty(item.ReceivedByUserId))
                 {
-                    Contact receivedByUser = contactLists.Where(d => d.Id == item.ReceivedByUserId).FirstOrDefault();
+                    var receivedByUserId = item.ReceivedByUserId;
+                    if (!string.IsNullOrEmpty(item.ReceivedByByContactId))
+                    {
+                        receivedByUserId = item.ReceivedByByContactId;
+                    }
+
+                    Contact receivedByUser = contactLists.Where(d => d.Id == receivedByUserId).FirstOrDefault();
                     if (receivedByUser != null) item.ReceivedByUserName = receivedByUser.EnglishName;
                 }
             }
@@ -1168,6 +1158,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            Received = a.Received,
                                            ReceivedDate = a.ReceivedDate,
                                            ReceivedByUserId = a.ReceivedByUserId,
+                                           ReceivedByByContactId = a.ReceivedByByContactId,
                                            Name = a.DocumentType != null ? a.DocumentType.Name : null,
                                            StatusCode = a.StatusCode,
                                            UpdateDate = a.UpdateDate,
@@ -1208,6 +1199,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            SignDueDate = a.SignDueDate,
                                            IsDigitalSignRequired = a.IsDigitalSignRequired,
                                            BackedupExternally = a.BackedupExternally,
+
+                                           IsAgentSharedInHouse = a.DocumentType != null ? a.DocumentType.IsAgentSharedInHouse : false,
+                                           IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
+                                           IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
+                                           ReceivedByPartner = a.ReceivedByPartner,
                                        }).ToList();
             }
             else
@@ -1248,6 +1244,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            Received = a.Received,
                                            ReceivedDate = a.ReceivedDate,
                                            ReceivedByUserId = a.ReceivedByUserId,
+                                           ReceivedByByContactId = a.ReceivedByByContactId,
                                            Name = a.DocumentType != null ? a.DocumentType.Name : null,
                                            StatusCode = a.StatusCode,
                                            UpdateDate = a.UpdateDate,
@@ -1286,14 +1283,18 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            SignDueDate = a.SignDueDate,
                                            IsDigitalSignRequired = a.IsDigitalSignRequired,
                                            BackedupExternally = a.BackedupExternally,
+
+                                           IsAgentSharedInHouse = a.DocumentType != null ? a.DocumentType.IsAgentSharedInHouse : false,
+                                           IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
+                                           IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
+                                           ReceivedByPartner = a.ReceivedByPartner,
                                        }).ToList();
             }
 
             //Islam: this code caused an exception in logitude!!! if you want to add a code like this which is only required for customs please check the settings.deployment first
             //ICustomsDocumentQueryServiceExt customsDocumentQueryService = ContainerAccessor.Container.Resolve(typeof(ICustomsDocumentQueryServiceExt), "CustomsDocumentQueryServiceExt", new ParameterOverride("", 1)) as ICustomsDocumentQueryServiceExt;
-            
-            FollowUpRepository followUpRepository = new FollowUpRepository(tenant);
-            List<FollowUp> FollowUps = followUpRepository.GetFollowUps(tenant).ToList();
+
+            var followUpIds = new FollowUpRepository(tenant).GetFollowUpIdByDocumentsFilingIds(tenant, externalDocumentPMs.Select(x => x.Id).ToArray());
             DocumentsFilingMetaDataValueQuery documentsFilingMetaDataValueQuery = new DocumentsFilingMetaDataValueQuery(tenant);
             //List<DocumentsFilingMetaDataValuePM> documentsFilingMetaDataValuesList = documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByTenantAndDocumentIds(tenant, externalDocumentPMs.Select(a => a.Id).ToArray()).ToList();
 
@@ -1316,17 +1317,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         }
                     }
                 }
-                if (FollowUps != null)
-                {
-                    List<FollowUp> docFollowUp = FollowUps.Where(d => d.DocumentsFilingId == extDocPm.Id && d.Tenant == extDocPm.Tenant).ToList();
-                    if (docFollowUp.Count != 0)
-                    {
-                        extDocPm.FollowUpCount = docFollowUp.Count;
-                        extDocPm.FollowUpId = docFollowUp.FirstOrDefault().Id;
-                        extDocPm.HasFollowUp = docFollowUp.Any();
-                    }
-                }
-
+                SetDocumentFollowUp(extDocPm, followUpIds.ContainsKey(extDocPm.Id) ? followUpIds[extDocPm.Id] : string.Empty);
                 //CustomsDocumentPM customsDoc = customsDocumentQueryService.GetSingle(extDocPm.Id, false, false,tenant);
                 //if (customsDoc != null)
                 //{
@@ -1396,6 +1387,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            Received = a.Received,
                                            ReceivedDate = a.ReceivedDate,
                                            ReceivedByUserId = a.ReceivedByUserId,
+                                           ReceivedByByContactId = a.ReceivedByByContactId,
                                            Name = a.DocumentType != null ? a.DocumentType.Name : null,
                                            StatusCode = a.StatusCode,
                                            UpdateDate = a.UpdateDate,
@@ -1431,6 +1423,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            SignDueDate = a.SignDueDate,
                                            IsDigitalSignRequired = a.IsDigitalSignRequired,
                                            BackedupExternally = a.BackedupExternally,
+                                           CalculatedFileName = a.Document != null ? a.Document.CalculatedFileName : null,
+
+                                           IsAgentSharedInHouse = a.DocumentType != null ? a.DocumentType.IsAgentSharedInHouse : false,
+                                           IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
+                                           IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
+                                           ReceivedByPartner = a.ReceivedByPartner,
                                        }).ToList();
             }
             else
@@ -1470,6 +1468,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            Received = a.Received,
                                            ReceivedDate = a.ReceivedDate,
                                            ReceivedByUserId = a.ReceivedByUserId,
+                                           ReceivedByByContactId = a.ReceivedByByContactId,
                                            Name = a.DocumentType != null ? a.DocumentType.Name : null,
                                            StatusCode = a.StatusCode,
                                            UpdateDate = a.UpdateDate,
@@ -1505,7 +1504,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            SignDueDate = a.SignDueDate,
                                            IsDigitalSignRequired = a.IsDigitalSignRequired,
                                            BackedupExternally = a.BackedupExternally,
+                                           CalculatedFileName = a.Document != null ? a.Document.CalculatedFileName : null,
 
+                                           IsAgentSharedInHouse = a.DocumentType != null ? a.DocumentType.IsAgentSharedInHouse : false,
+                                           IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
+                                           IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
+                                           ReceivedByPartner = a.ReceivedByPartner,
                                        }).ToList();
             }
             return externalDocumentPMs;
@@ -1553,6 +1557,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        Received = a.Received,
                                        ReceivedDate = a.ReceivedDate,
                                        ReceivedByUserId = a.ReceivedByUserId,
+                                       ReceivedByByContactId = a.ReceivedByByContactId,
                                        Name = a.DocumentType != null ? a.DocumentType.Name : null,
                                        StatusCode = a.StatusCode,
                                        UpdateDate = a.UpdateDate,
@@ -1590,30 +1595,23 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        SignDueDate = a.SignDueDate,
                                        IsDigitalSignRequired = a.IsDigitalSignRequired,
                                        BackedupExternally = a.BackedupExternally,
+
+                                       IsAgentSharedInHouse = a.DocumentType != null ? a.DocumentType.IsAgentSharedInHouse : false,
+                                       IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
+                                       IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
+                                       ReceivedByPartner = a.ReceivedByPartner,
                                    }).ToList();
 
             ICustomsDocumentQueryServiceExt customsDocumentQueryService = ContainerAccessor.Container.Resolve(typeof(ICustomsDocumentQueryServiceExt), "CustomsDocumentQueryServiceExt", new ParameterOverride("", 1)) as ICustomsDocumentQueryServiceExt;
             //CustomsDocumentQueryService customsDocumentQueryService = new CustomsDocumentQueryService(tenant);
-            FollowUpRepository followUpRepository = new FollowUpRepository(tenant);
-            List<FollowUp> FollowUps = followUpRepository.GetFollowUps(tenant).ToList();
+            var followUpIds = new FollowUpRepository(tenant).GetFollowUpIdByDocumentsFilingIds(tenant, externalDocumentPMs.Select(x => x.Id).ToArray());
             DocumentsFilingMetaDataValueQuery documentsFilingMetaDataValueQuery = new DocumentsFilingMetaDataValueQuery(tenant);
             //List<DocumentsFilingMetaDataValuePM> documentsFilingMetaDataValuesList = documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByTenantAndDocumentIds(tenant, externalDocumentPMs.Select(a => a.Id).ToArray()).ToList();
 
             foreach (DocumentsFilingPM extDocPm in externalDocumentPMs)
             {
                 List<DocumentsFilingMetaDataValuePM> documentsFilingMetaDataValuesList = documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByDocumentIdTenant(extDocPm.Id, tenant).ToList(); //documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByTenant(tenant).ToList();
-
-                if (FollowUps != null)
-                {
-                    List<FollowUp> docFollowUp = FollowUps.Where(d => d.DocumentsFilingId == extDocPm.Id && d.Tenant == extDocPm.Tenant).ToList();
-                    if (docFollowUp.Count != 0)
-                    {
-                        extDocPm.FollowUpCount = docFollowUp.Count;
-                        extDocPm.FollowUpId = docFollowUp.FirstOrDefault().Id;
-                        extDocPm.HasFollowUp = docFollowUp.Any();
-                    }
-                }
-
+                SetDocumentFollowUp(extDocPm, followUpIds.ContainsKey(extDocPm.Id) ? followUpIds[extDocPm.Id] : string.Empty);
                 CustomsDocumentPM customsDoc = customsDocumentQueryService.GetSingle(extDocPm.Id, false, false,tenant);
                 if (customsDoc != null)
                 {
@@ -1628,6 +1626,109 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return externalDocumentPMs;
         }
 
+        public List<DocumentsFilingPM> GetDocumentsFilingPMsByEntityIdWithoutCustomsDetails(string entityId, string directionCode, int tenant)
+        {
+
+            List<DocumentsFilingPM> externalDocumentPMs = new List<DocumentsFilingPM>();
+            externalDocumentPMs = (from a in repository.context.DocumentsFilings.Include("CreatedByUser.Contact").Include("ReceivedByUser.Contact").Include("Document").Include("DocumentType").Include("Owner.Contact")
+                                   where a.Tenant == tenant && a.EntityId == entityId && a.DirectionCode == directionCode && a.IsDeleted == false
+                                   select new DocumentsFilingPM()
+                                   {
+                                       Id = a.Id,
+                                       DocumentId = a.DocumentId,
+                                       Code = a.Code,
+                                       DirectionCode = a.DirectionCode,
+                                       Description = a.Description,
+                                       CreatedByUserId = a.CreatedByUserId,
+                                       CreateDate = a.CreateDate,
+                                       ObjectTableId = a.ObjectTableId,
+                                       ChildEntityId = a.ChildEntityId,
+                                       ChildObjectTableId = a.ChildObjectTableId,
+                                       ChildEntityReference = a.ChildEntityReference,
+                                       DocumentTypeId = a.DocumentTypeId,
+                                       EntityId = a.EntityId,
+                                       HasCopies = a.HasCopies,
+                                       Notes = a.Notes,
+                                       OwnerId = a.OwnerId,
+                                       SearchFields = a.SearchFields,
+                                       Tenant = a.Tenant,
+                                       FileExtension = a.Document != null ? a.Document.Extension : null,
+                                       HasFile = a.Document != null ? a.Document.HasFile : false,
+                                       FileName = a.Document != null ? a.Document.FileName : null,
+                                       FileSize = a.Document != null ? a.Document.FileSize : null,
+                                       Folder = a.Document != null ? a.Document.Folder : null,
+                                       DocumentTypeCode = a.DocumentType != null ? a.DocumentType.Code : null,
+                                       DocumentTypeName = a.DocumentType != null ? a.DocumentType.Name : null,
+                                       DoucmentTypeTemplateFormatCode = a.DocumentType != null ? a.DocumentType.TemplateFormatCode : null,
+                                       IsAgentView = a.DocumentType != null ? a.DocumentType.IsAgentView : false,
+                                       IsCustomerView = a.DocumentType != null ? a.DocumentType.IsCustomerView : false,
+                                       CreatedByUserName = a.CreatedByUser != null ? a.CreatedByUser.Contact.EnglishName : null,
+                                       Received = a.Received,
+                                       ReceivedDate = a.ReceivedDate,
+                                       ReceivedByUserId = a.ReceivedByUserId,
+                                       ReceivedByByContactId = a.ReceivedByByContactId,
+                                       Name = a.DocumentType != null ? a.DocumentType.Name : null,
+                                       StatusCode = a.StatusCode,
+                                       UpdateDate = a.UpdateDate,
+                                       UpdatedByUserId = a.UpdatedByUserId,
+                                       CustomsDocumentTypeCode = a.DocumentType != null ? a.DocumentType.Code : null,
+                                       CustomsDocumentTypeName = a.DocumentType != null ? a.DocumentType.Name : null,
+
+                                       EntityReference = a.EntityReference,
+                                       ExternalEntityName = a.ExternalEntityName,
+                                       ExternalEntityReference = a.ExternalEntityReference,
+                                       DepartmentId = a.DepartmentId,
+                                       BranchId = a.BranchId,
+                                       FolderId = a.FolderId,
+                                       IsDeleted = a.IsDeleted,
+                                       DeleteDateTime = a.DeleteDateTime,
+                                       DeletedByUserId = a.DeletedByUserId,
+                                       IsDigitallySigned = a.IsDigitallySigned,
+                                       SignersList = a.SignersList,
+                                       IsSharedWithCustomer = a.IsSharedWithCustomer,
+                                       IsSharedWithForwarder = a.IsSharedWithForwarder,
+                                       CustomerDocumentId = a.CustomerDocumentId,
+                                       ForwarderDocumentId = a.ForwarderDocumentId,
+                                       SecurityId = a.SecurityId,
+
+                                       LastVersion = a.LastVersion,
+                                       CustomerTenantNumber = a.CustomerTenantNumber,
+                                       IsRequested = a.IsRequested,
+                                       ReceivedByUserName = a.ReceivedByUser != null ? a.ReceivedByUser.Contact.EnglishName : null,
+                                       SignRequestByUserEmail = a.SignRequestByUserEmail,
+                                       CancellSignRequest = a.CancellSignRequest,
+                                       OrigionalDocumentId = a.OrigionalDocumentId,
+                                       LastShareDate = a.LastShareDate,
+                                       IsSharedIn = a.IsSharedIn,
+                                       IsSharedOut = a.IsSharedOut,
+                                       SignDueDate = a.SignDueDate,
+                                       IsDigitalSignRequired = a.IsDigitalSignRequired,
+                                       BackedupExternally = a.BackedupExternally,
+
+                                       IsAgentSharedInHouse = a.DocumentType != null ? a.DocumentType.IsAgentSharedInHouse : false,
+                                       IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
+                                       IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
+                                       ReceivedByPartner = a.ReceivedByPartner,
+                                   }).ToList();
+
+            var followUpIds = new FollowUpRepository(tenant).GetFollowUpIdByDocumentsFilingIds(tenant, externalDocumentPMs.Select(x => x.Id).ToArray());
+            DocumentsFilingMetaDataValueQuery documentsFilingMetaDataValueQuery = new DocumentsFilingMetaDataValueQuery(tenant);
+
+            foreach (DocumentsFilingPM extDocPm in externalDocumentPMs)
+            {
+                extDocPm.DocumentsFilingMetaDataValues = documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByDocumentIdTenant(extDocPm.Id, tenant).ToList();
+                SetDocumentFollowUp(extDocPm, followUpIds.ContainsKey(extDocPm.Id) ? followUpIds[extDocPm.Id] : string.Empty);
+            }
+
+            return externalDocumentPMs;
+        }
+
+        public bool HaveDocumentsFilingPMsByEntityIdAndDirectionCode(string entityId, string directionCode, int tenant)
+        {
+            return (from a in repository.context.DocumentsFilings
+                   where a.Tenant == tenant && a.EntityId == entityId && a.DirectionCode == directionCode && a.IsDeleted == false
+                   select a).Any();
+        }
 
         public IQueryable<DocumentsFilingList> GetIQueryableEntityList(IQueryable<DocumentsFilingsView> iQueryable)
         {
@@ -1737,6 +1838,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                          Received = a.Received,
                                                          ReceivedDate = a.ReceivedDate,
                                                          ReceivedByUserId = a.ReceivedByUserId,
+                                                         ReceivedByByContactId = a.ReceivedByByContactId,
                                                          Name = a.DocumentType != null ? a.DocumentType.Name : null,
                                                          StatusCode = a.StatusCode,
                                                          UpdateDate = a.UpdateDate,
@@ -1771,11 +1873,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                          SignDueDate = a.SignDueDate,
                                                          IsDigitalSignRequired = a.IsDigitalSignRequired,
                                                          BackedupExternally = a.BackedupExternally,
+                                                         ReceivedByPartner = a.ReceivedByPartner,
                                                      };
             return result;
         }
 
-
+ 
         private string AddFiltersToSqlScript(QueryFilterItem filter, string whereClose, string script, string dbms)
         {
             string value = filter.FieldValue.ToString();
@@ -2032,6 +2135,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            Received = a.Received,
                                            ReceivedDate = a.ReceivedDate,
                                            ReceivedByUserId = a.ReceivedByUserId,
+                                           ReceivedByByContactId = a.ReceivedByByContactId,
                                            Name = a.DocumentType != null ? a.DocumentType.Name : null,
                                            StatusCode = a.StatusCode,
                                            UpdateDate = a.UpdateDate,
@@ -2070,6 +2174,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            SignDueDate = a.SignDueDate,
                                            IsDigitalSignRequired = a.IsDigitalSignRequired,
                                            BackedupExternally = a.BackedupExternally,                                          
+
+                                           IsAgentSharedInHouse = a.DocumentType != null ? a.DocumentType.IsAgentSharedInHouse : false,
+                                           IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
+                                           IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
+                                           ReceivedByPartner = a.ReceivedByPartner,
                                        }).ToList();
 
             }
@@ -2115,6 +2224,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            Received = a.Received,
                                            ReceivedDate = a.ReceivedDate,
                                            ReceivedByUserId = a.ReceivedByUserId,
+                                           ReceivedByByContactId = a.ReceivedByByContactId,
                                            Name = a.DocumentType != null ? a.DocumentType.Name : null,
                                            StatusCode = a.StatusCode,
                                            UpdateDate = a.UpdateDate,
@@ -2152,6 +2262,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            SignDueDate = a.SignDueDate,
                                            IsDigitalSignRequired = a.IsDigitalSignRequired,
                                            BackedupExternally = a.BackedupExternally,
+
+                                           IsAgentSharedInHouse = a.DocumentType != null ? a.DocumentType.IsAgentSharedInHouse : false,
+                                           IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
+                                           IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
+                                           ReceivedByPartner = a.ReceivedByPartner,
                                        }).ToList();
             }
 
@@ -2200,6 +2315,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                     Received = a.Received,
                                                     ReceivedDate = a.ReceivedDate,
                                                     ReceivedByUserId = a.ReceivedByUserId,
+                                                    ReceivedByByContactId = a.ReceivedByByContactId,
                                                     Name = a.DocumentType != null ? a.DocumentType.Name : null,
                                                     StatusCode = a.StatusCode,
                                                     UpdateDate = a.UpdateDate,
@@ -2233,8 +2349,13 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                     OrigionalDocumentId = a.OrigionalDocumentId,
                                                     IsDigitalSignRequired = a.IsDigitalSignRequired,
                                                     BackedupExternally = a.BackedupExternally,
-                                             }).ToList();
-
+ 
+                                                    IsAgentSharedInHouse = a.DocumentType != null ? a.DocumentType.IsAgentSharedInHouse : false,
+                                                    IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
+                                                    IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
+                                                    ReceivedByPartner = a.ReceivedByPartner,
+                                                }).ToList();
+ 
                 externalDocumentPMs = externalDocumentPMs.Concat(docs).ToList();
 
 
@@ -2247,7 +2368,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             ICustomsDocumentQueryServiceExt customsDocumentQueryService = ContainerAccessor.Container.Resolve(typeof(ICustomsDocumentQueryServiceExt), "CustomsDocumentQueryServiceExt", new ParameterOverride("", 1)) as ICustomsDocumentQueryServiceExt;
             //CustomsDocumentQueryService customsDocumentQueryService = new CustomsDocumentQueryService(tenant);
-            FollowUpRepository followUpRepository = new FollowUpRepository(tenant);
+             FollowUpRepository followUpRepository = new FollowUpRepository(tenant);
             List<FollowUp> FollowUps=null;
 
           //  CustomsSettingQueryService settingService = new CustomsSettingQueryService(tenant);
@@ -2260,24 +2381,15 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 FollowUps = followUpRepository.GetFollowUps(tenant).ToList();
 
             }
-
+             var followUpIds = new FollowUpRepository(tenant).GetFollowUpIdByDocumentsFilingIds(tenant, externalDocumentPMs.Select(x => x.Id).ToArray());
+ 
             DocumentsFilingMetaDataValueQuery documentsFilingMetaDataValueQuery = new DocumentsFilingMetaDataValueQuery(tenant);
             //List<DocumentsFilingMetaDataValuePM> documentsFilingMetaDataValuesList = documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByTenantAndDocumentIds(tenant, externalDocumentPMs.Select(a => a.Id).ToArray()).ToList();
 
             foreach (DocumentsFilingPM extDocPm in externalDocumentPMs)
             {
                 List<DocumentsFilingMetaDataValuePM> documentsFilingMetaDataValuesList = documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByDocumentIdTenant(extDocPm.Id, tenant).ToList(); //documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByTenant(tenant).ToList();
-
-                if (FollowUps != null)
-                {
-                    List<FollowUp> docFollowUp = FollowUps.Where(d => d.DocumentsFilingId == extDocPm.Id && d.Tenant == extDocPm.Tenant).ToList();
-                    if (docFollowUp.Count != 0)
-                    {
-                        extDocPm.FollowUpCount = docFollowUp.Count;
-                        extDocPm.FollowUpId = docFollowUp.FirstOrDefault().Id;
-                        extDocPm.HasFollowUp = docFollowUp.Any();
-                    }
-                }
+                SetDocumentFollowUp(extDocPm, followUpIds.ContainsKey(extDocPm.Id) ? followUpIds[extDocPm.Id] : string.Empty);
 
                 CustomsDocumentPM customsDoc = customsDocumentQueryService.GetSingleByDocFileId(extDocPm.Id,tenant);
                 if (customsDoc != null)
@@ -2434,6 +2546,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               Received = a.Received,
                                               ReceivedDate = a.ReceivedDate,
                                               ReceivedByUserId = a.ReceivedByUserId,
+                                              ReceivedByByContactId = a.ReceivedByByContactId,
                                               Name = a.DocumentType != null ? a.DocumentType.Name : null,
                                               StatusCode = a.StatusCode,
                                               UpdateDate = a.UpdateDate,
@@ -2469,23 +2582,16 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               SignDueDate = a.SignDueDate,
                                               IsDigitalSignRequired = a.IsDigitalSignRequired,
                                               BackedupExternally = a.BackedupExternally,
+
+                                              IsAgentSharedInHouse = a.DocumentType != null ? a.DocumentType.IsAgentSharedInHouse : false,
+                                              IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
+                                              IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
+                                              ReceivedByPartner = a.ReceivedByPartner,
                                           }).FirstOrDefault();
 
             if (extDocPm != null)
             {
-                FollowUpRepository followUpRepository = new FollowUpRepository(tenant);
-                List<FollowUp> FollowUps = followUpRepository.GetFollowUps(tenant).ToList();
-                if (FollowUps != null)
-                {
-                    List<FollowUp> docFollowUp = FollowUps.Where(d => d.DocumentsFilingId == extDocPm.Id && d.Tenant == extDocPm.Tenant).ToList();
-                    if (docFollowUp.Count != 0)
-                    {
-                        extDocPm.FollowUpCount = docFollowUp.Count;
-                        extDocPm.FollowUpId = docFollowUp.FirstOrDefault().Id;
-                        extDocPm.HasFollowUp = docFollowUp.Any();
-                    }
-                }
-
+                SetDocumentFollowUp(extDocPm);
                 DocumentsFilingMetaDataValueQuery documentsFilingMetaDataValueQuery = new DocumentsFilingMetaDataValueQuery(tenant);
                 extDocPm.DocumentsFilingMetaDataValues = documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByDocumentIdTenant(extDocPm.Id, tenant).ToList();
             }
@@ -2531,6 +2637,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               Received = a.Received,
                                               ReceivedDate = a.ReceivedDate,
                                               ReceivedByUserId = a.ReceivedByUserId,
+                                              ReceivedByByContactId = a.ReceivedByByContactId,
                                               Name = a.DocumentType != null ? a.DocumentType.Name : null,
                                               StatusCode = a.StatusCode,
                                               UpdateDate = a.UpdateDate,
@@ -2563,23 +2670,16 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               SignDueDate = a.SignDueDate,
                                               IsDigitalSignRequired = a.IsDigitalSignRequired,
                                               BackedupExternally = a.BackedupExternally,
+
+                                              IsAgentSharedInHouse = a.DocumentType != null ? a.DocumentType.IsAgentSharedInHouse : false,
+                                              IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
+                                              IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
+                                              ReceivedByPartner = a.ReceivedByPartner,
                                           }).FirstOrDefault();
 
             if (extDocPm != null)
             {
-                FollowUpRepository followUpRepository = new FollowUpRepository(tenant);
-                List<FollowUp> FollowUps = followUpRepository.GetFollowUps(tenant).ToList();
-                if (FollowUps != null)
-                {
-                    List<FollowUp> docFollowUp = FollowUps.Where(d => d.DocumentsFilingId == extDocPm.Id && d.Tenant == extDocPm.Tenant).ToList();
-                    if (docFollowUp.Count != 0)
-                    {
-                        extDocPm.FollowUpCount = docFollowUp.Count;
-                        extDocPm.FollowUpId = docFollowUp.FirstOrDefault().Id;
-                        extDocPm.HasFollowUp = docFollowUp.Any();
-                    }
-                }
-
+                SetDocumentFollowUp(extDocPm);
                 DocumentsFilingMetaDataValueQuery documentsFilingMetaDataValueQuery = new DocumentsFilingMetaDataValueQuery(tenant);
                 extDocPm.DocumentsFilingMetaDataValues = documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByDocumentIdTenant(extDocPm.Id, tenant).ToList();
             }
@@ -2640,6 +2740,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               Received = a.Received,
                                               ReceivedDate = a.ReceivedDate,
                                               ReceivedByUserId = a.ReceivedByUserId,
+                                              ReceivedByByContactId = a.ReceivedByByContactId,
                                               Name = a.DocumentType != null ? a.DocumentType.Name : null,
                                               StatusCode = a.StatusCode,
                                               UpdateDate = a.UpdateDate,
@@ -2675,23 +2776,16 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               SignDueDate = a.SignDueDate,
                                               IsDigitalSignRequired = a.IsDigitalSignRequired,
                                               BackedupExternally = a.BackedupExternally,
+
+                                              IsAgentSharedInHouse = a.DocumentType != null ? a.DocumentType.IsAgentSharedInHouse : false,
+                                              IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
+                                              IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
+                                              ReceivedByPartner = a.ReceivedByPartner,
                                           }).FirstOrDefault();
 
             if (extDocPm != null)
             {
-                FollowUpRepository followUpRepository = new FollowUpRepository(tenant);
-                List<FollowUp> FollowUps = followUpRepository.GetFollowUps(tenant).ToList();
-                if (FollowUps != null)
-                {
-                    List<FollowUp> docFollowUp = FollowUps.Where(d => d.DocumentsFilingId == extDocPm.Id && d.Tenant == extDocPm.Tenant).ToList();
-                    if (docFollowUp.Count != 0)
-                    {
-                        extDocPm.FollowUpCount = docFollowUp.Count;
-                        extDocPm.FollowUpId = docFollowUp.FirstOrDefault().Id;
-                        extDocPm.HasFollowUp = docFollowUp.Any();
-                    }
-                }
-
+                SetDocumentFollowUp(extDocPm);
                 DocumentsFilingMetaDataValueQuery documentsFilingMetaDataValueQuery = new DocumentsFilingMetaDataValueQuery(tenant);
                 extDocPm.DocumentsFilingMetaDataValues = documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByDocumentIdTenant(extDocPm.Id, tenant).ToList();
             }
@@ -2978,7 +3072,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         private List<DocumentsFilingPM> GetDocumentFilingPMs(string entityId, int tenant)
         {
             return (from a in repository.context.DocumentsFilings.Include("DocumentType")
-                    where a.Tenant == tenant && a.EntityId == entityId && a.IsDeleted == false && a.DirectionCode == "I" && a.DocumentId != null
+                    where a.Tenant == tenant && a.EntityId == entityId && a.IsDeleted == false && a.DirectionCode == "I" && a.DocumentId != null && a.DocumentType.IsCustomerView == true
                     select new DocumentsFilingPM()
                     {
                         Id = a.Id,
@@ -3015,6 +3109,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         Received = a.Received,
                         ReceivedDate = a.ReceivedDate,
                         ReceivedByUserId = a.ReceivedByUserId,
+                        ReceivedByByContactId = a.ReceivedByByContactId,
                         Name = a.DocumentType != null ? a.DocumentType.Name : null,
                         StatusCode = a.StatusCode,
                         UpdateDate = a.UpdateDate,
@@ -3052,6 +3147,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         IsDigitalSignRequired = a.IsDigitalSignRequired,
                         BackedupExternally = a.BackedupExternally,
 
+                        IsAgentSharedInHouse = a.DocumentType != null ? a.DocumentType.IsAgentSharedInHouse : false,
+                        IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
+                        IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
+                        ReceivedByPartner = a.ReceivedByPartner,
                     }).ToList();
         }
 
@@ -3075,6 +3174,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                        DocumentTypeId = a.DocumentTypeId,
                                                        DocumentTypeCode = a.DocumentType != null ? a.DocumentType.Code : null,
                                                        DocumentTypeName = a.DocumentType != null ? a.DocumentType.Name : null,
+                                                       IsCustomerUploadPermission = a.DocumentType != null ? a.DocumentType.IsCustomerUploadPermission : false,
                                                        DoucmentTypeTemplateFormatCode = a.DocumentType != null ? a.DocumentType.TemplateFormatCode : null,
                                                        EntityId = a.EntityId,
                                                        HasCopies = a.HasCopies,
@@ -3095,6 +3195,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                        Received = a.Received,
                                                        ReceivedDate = a.ReceivedDate,
                                                        ReceivedByUserId = a.ReceivedByUserId,
+                                                       ReceivedByByContactId = a.ReceivedByByContactId,
                                                        Name = a.DocumentType != null ? a.DocumentType.Name : null,
                                                        StatusCode = a.StatusCode,
                                                        UpdateDate = a.UpdateDate,
@@ -3131,6 +3232,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                        SignDueDate = a.SignDueDate,
                                                        IsDigitalSignRequired = a.IsDigitalSignRequired,
                                                        BackedupExternally = a.BackedupExternally,
+
+                                                       IsAgentSharedInHouse = a.DocumentType != null ? a.DocumentType.IsAgentSharedInHouse : false,
+                                                       IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
+                                                       IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
+                                                       ReceivedByPartner = a.ReceivedByPartner,
                                                    };
                 return result.ToList();
         }
@@ -3173,6 +3279,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                        Received = a.Received,
                                                        ReceivedDate = a.ReceivedDate,
                                                        ReceivedByUserId = a.ReceivedByUserId,
+                                                       ReceivedByByContactId = a.ReceivedByByContactId,
                                                        Name = a.DocumentType != null ? a.DocumentType.Name : null,
                                                        StatusCode = a.StatusCode,
                                                        UpdateDate = a.UpdateDate,
@@ -3209,6 +3316,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                        SignDueDate = a.SignDueDate,
                                                        IsDigitalSignRequired = a.IsDigitalSignRequired,
                                                        BackedupExternally = a.BackedupExternally,
+
+                                                       IsAgentSharedInHouse = a.DocumentType != null ? a.DocumentType.IsAgentSharedInHouse : false,
+                                                       IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
+                                                       IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
+                                                       ReceivedByPartner = a.ReceivedByPartner,
                                                    };
             return result.ToList();
         }
@@ -3257,6 +3369,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            Received = a.Received,
                                            ReceivedDate = a.ReceivedDate,
                                            ReceivedByUserId = a.ReceivedByUserId,
+                                           ReceivedByByContactId = a.ReceivedByByContactId,
                                            Name = a.DocumentType != null ? a.DocumentType.Name : null,
                                            StatusCode = a.StatusCode,
                                            UpdateDate = a.UpdateDate,
@@ -3291,8 +3404,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            SignDueDate = a.SignDueDate,
                                            IsDigitalSignRequired = a.IsDigitalSignRequired,
                                            BackedupExternally = a.BackedupExternally,
-                                           DocumentCategoryCode = a.DocumentType.DocumentTypeCategoryCode
- 
+                                           DocumentCategoryCode = a.DocumentType.DocumentTypeCategoryCode,
+
+                                           IsAgentSharedInHouse = a.DocumentType != null ? a.DocumentType.IsAgentSharedInHouse : false,
+                                           IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
+                                           IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
+                                           ReceivedByPartner = a.ReceivedByPartner,
                                        }).ToList();
             }
             else
@@ -3333,6 +3450,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            Received = a.Received,
                                            ReceivedDate = a.ReceivedDate,
                                            ReceivedByUserId = a.ReceivedByUserId,
+                                           ReceivedByByContactId = a.ReceivedByByContactId,
                                            Name = a.DocumentType != null ? a.DocumentType.Name : null,
                                            StatusCode = a.StatusCode,
                                            UpdateDate = a.UpdateDate,
@@ -3367,6 +3485,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            SignDueDate = a.SignDueDate,
                                            IsDigitalSignRequired = a.IsDigitalSignRequired,
                                            BackedupExternally = a.BackedupExternally,
+
+                                           IsAgentSharedInHouse = a.DocumentType != null ? a.DocumentType.IsAgentSharedInHouse : false,
+                                           IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
+                                           IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
+                                           ReceivedByPartner = a.ReceivedByPartner,
                                        }).ToList();
             }
             if (externalEntityReferences != null)
@@ -3407,6 +3530,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                     Received = a.Received,
                                                     ReceivedDate = a.ReceivedDate,
                                                     ReceivedByUserId = a.ReceivedByUserId,
+                                                    ReceivedByByContactId = a.ReceivedByByContactId,
                                                     Name = a.DocumentType != null ? a.DocumentType.Name : null,
                                                     StatusCode = a.StatusCode,
                                                     UpdateDate = a.UpdateDate,
@@ -3437,31 +3561,25 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                     OrigionalDocumentId = a.OrigionalDocumentId,
                                                     IsDigitalSignRequired = a.IsDigitalSignRequired,
                                                     BackedupExternally = a.BackedupExternally,
+
+                                                    IsAgentSharedInHouse = a.DocumentType != null ? a.DocumentType.IsAgentSharedInHouse : false,
+                                                    IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
+                                                    IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
+                                                    ReceivedByPartner = a.ReceivedByPartner,
                                                 }).ToList();
                 externalDocumentPMs = externalDocumentPMs.Concat(docs).ToList();
             }
 
             ICustomsDocumentQueryServiceExt customsDocumentQueryService = ContainerAccessor.Container.Resolve(typeof(ICustomsDocumentQueryServiceExt), "CustomsDocumentQueryServiceExt", new ParameterOverride("", 1)) as ICustomsDocumentQueryServiceExt;
             //CustomsDocumentQueryService customsDocumentQueryService = new CustomsDocumentQueryService(tenant);
-            FollowUpRepository followUpRepository = new FollowUpRepository(tenant);
-            List<FollowUp> FollowUps = followUpRepository.GetFollowUps(tenant).ToList();
+            var followUpIds = new FollowUpRepository(tenant).GetFollowUpIdByDocumentsFilingIds(tenant, externalDocumentPMs.Select(x => x.Id).ToArray());
             DocumentsFilingMetaDataValueQuery documentsFilingMetaDataValueQuery = new DocumentsFilingMetaDataValueQuery(tenant);
             //List<DocumentsFilingMetaDataValuePM> documentsFilingMetaDataValuesList = documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByTenantAndDocumentIds(tenant, externalDocumentPMs.Select(a => a.Id).ToArray()).ToList();
 
             foreach (DocumentsFilingPM extDocPm in externalDocumentPMs)
             {
                 List<DocumentsFilingMetaDataValuePM> documentsFilingMetaDataValuesList = documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByDocumentIdTenant(extDocPm.Id, tenant).ToList(); //documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByTenant(tenant).ToList();
-
-                if (FollowUps != null)
-                {
-                    List<FollowUp> docFollowUp = FollowUps.Where(d => d.DocumentsFilingId == extDocPm.Id && d.Tenant == extDocPm.Tenant).ToList();
-                    if (docFollowUp.Count != 0)
-                    {
-                        extDocPm.FollowUpCount = docFollowUp.Count;
-                        extDocPm.FollowUpId = docFollowUp.FirstOrDefault().Id;
-                        extDocPm.HasFollowUp = docFollowUp.Any();
-                    }
-                }
+                SetDocumentFollowUp(extDocPm, followUpIds.ContainsKey(extDocPm.Id) ? followUpIds[extDocPm.Id] : string.Empty);
 
                 CustomsDocumentPM customsDoc = customsDocumentQueryService.GetSingleByDocFileId(extDocPm.Id,tenant);
                 if (customsDoc != null)
@@ -3526,6 +3644,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        Received = a.Received,
                                        ReceivedDate = a.ReceivedDate,
                                        ReceivedByUserId = a.ReceivedByUserId,
+                                       ReceivedByByContactId = a.ReceivedByByContactId,
                                        Name = a.DocumentType != null ? a.DocumentType.Name : null,
                                        StatusCode = a.StatusCode,
                                        UpdateDate = a.UpdateDate,
@@ -3556,31 +3675,25 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        OrigionalDocumentId = a.OrigionalDocumentId,
                                        IsDigitalSignRequired = a.IsDigitalSignRequired,
                                        BackedupExternally = a.BackedupExternally,
-                                       DocumentCategoryCode =a.DocumentType.DocumentTypeCategoryCode
+                                       DocumentCategoryCode =a.DocumentType.DocumentTypeCategoryCode,
+
+                                       IsAgentSharedInHouse = a.DocumentType != null ? a.DocumentType.IsAgentSharedInHouse : false,
+                                       IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
+                                       IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
+                                       ReceivedByPartner = a.ReceivedByPartner,
                                    }).ToList();
 
 
             ICustomsDocumentQueryServiceExt customsDocumentQueryService = ContainerAccessor.Container.Resolve(typeof(ICustomsDocumentQueryServiceExt), "CustomsDocumentQueryServiceExt", new ParameterOverride("", 1)) as ICustomsDocumentQueryServiceExt;
             //CustomsDocumentQueryService customsDocumentQueryService = new CustomsDocumentQueryService(tenant);
-            FollowUpRepository followUpRepository = new FollowUpRepository(tenant);
-            List<FollowUp> FollowUps = followUpRepository.GetFollowUps(tenant).ToList();
+            var followUpIds = new FollowUpRepository(tenant).GetFollowUpIdByDocumentsFilingIds(tenant, externalDocumentPMs.Select(x => x.Id).ToArray());
             DocumentsFilingMetaDataValueQuery documentsFilingMetaDataValueQuery = new DocumentsFilingMetaDataValueQuery(tenant);
             //List<DocumentsFilingMetaDataValuePM> documentsFilingMetaDataValuesList = documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByTenant(tenant).ToList();
             var documentsFilingMetaDataValuesList = documentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuePMsByTenant1(tenant);
 
             foreach (DocumentsFilingPM extDocPm in externalDocumentPMs)
             {
-                if (FollowUps != null)
-                {
-                    List<FollowUp> docFollowUp = FollowUps.Where(d => d.DocumentsFilingId == extDocPm.Id && d.Tenant == extDocPm.Tenant).ToList();
-                    if (docFollowUp.Count != 0)
-                    {
-                        extDocPm.FollowUpCount = docFollowUp.Count;
-                        extDocPm.FollowUpId = docFollowUp.FirstOrDefault().Id;
-                        extDocPm.HasFollowUp = docFollowUp.Any();
-                    }
-                }
-
+                SetDocumentFollowUp(extDocPm, followUpIds.ContainsKey(extDocPm.Id) ? followUpIds[extDocPm.Id] : string.Empty);
                 CustomsDocumentPM customsDoc = customsDocumentQueryService.GetSingle(extDocPm.Id, false, false,tenant);
                 if (customsDoc != null)
                 {
@@ -3666,6 +3779,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               Received = a.Received,
                                               ReceivedDate = a.ReceivedDate,
                                               ReceivedByUserId = a.ReceivedByUserId,
+                                              ReceivedByByContactId = a.ReceivedByByContactId,
                                               Name = a.DocumentType != null ? a.DocumentType.Name : null,
                                               StatusCode = a.StatusCode,
                                               UpdateDate = a.UpdateDate,
@@ -3701,6 +3815,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               SignDueDate = a.SignDueDate,
                                               IsDigitalSignRequired = a.IsDigitalSignRequired,
                                               BackedupExternally = a.BackedupExternally,
+
+                                              IsAgentSharedInHouse = a.DocumentType != null ? a.DocumentType.IsAgentSharedInHouse : false,
+                                              IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
+                                              IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
+                                              ReceivedByPartner = a.ReceivedByPartner,
                                           }).FirstOrDefault();
 
             //if (extDocPm != null)
@@ -3748,6 +3867,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                   DocumentId = a.Document != null ? a.Document.Id : "",
                                                                   FileSize = a.Document != null ? a.Document.FileSize : null,
                                                                   Extension = a.Document != null ? a.Document.Extension : "",
+                                                                  ReceivedByPartner = a.ReceivedByPartner,
                                                               }).ToList();
 
 
@@ -3771,6 +3891,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                   SecurityId = a.SecurityId,
                                                                   Code = a.Code,
                                                                   EntityReference = a.EntityReference,
+                                                                  ReceivedByPartner = a.ReceivedByPartner,
                                                               }).ToList();
 
 
@@ -3810,6 +3931,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                              DoucmentTypeTemplateFormatCode = a.DocumentType != null ? a.DocumentType.TemplateFormatCode : null,
                                                              EntityNumber = a.EntityNumber,
                                                              BackedupExternally = a.BackedupExternally,
+                                                             ReceivedByPartner = a.ReceivedByPartner,
                                                          }).ToList();
             return documentFilingPMs;
 
@@ -3878,6 +4000,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                        Received = a.Received,
                                                        ReceivedDate = a.ReceivedDate,
                                                        ReceivedByUserId = a.ReceivedByUserId,
+                                                       ReceivedByByContactId = a.ReceivedByByContactId,
                                                        Name = a.DocumentType != null ? a.DocumentType.Name : null,
                                                        StatusCode = a.StatusCode,
                                                        UpdateDate = a.UpdateDate,
@@ -3914,6 +4037,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                        SignDueDate = a.SignDueDate,
                                                        IsDigitalSignRequired = a.IsDigitalSignRequired,
                                                        BackedupExternally = a.BackedupExternally,
+
+                                                       IsAgentSharedInHouse = a.DocumentType != null ? a.DocumentType.IsAgentSharedInHouse : false,
+                                                       IsAgentSharedInDirect = a.DocumentType != null ? a.DocumentType.IsAgentSharedInDirect : false,
+                                                       IsAgentSharedInMaster = a.DocumentType != null ? a.DocumentType.IsAgentSharedInMaster : false,
+                                                       ReceivedByPartner = a.ReceivedByPartner,
                                                    };
             return result.ToList();
         }
@@ -3941,7 +4069,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                        CreateDate =a.CreateDate,
                                                        CreatedByUserId = a.CreatedByUserId,
                                                        SecurityId = a.SecurityId,
-
+                                                       ReceivedByPartner = a.ReceivedByPartner,
                                                    }).FirstOrDefault();
 
             return documentsFilingPM;
@@ -3960,6 +4088,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                         CreateDate = a.CreateDate,
                                                                         SecurityId = a.SecurityId,
                                                                         DocumentId = a.DocumentId,
+                                                                        ReceivedByPartner = a.ReceivedByPartner,
                                                                     });
             return documentsFilingLists;
         }

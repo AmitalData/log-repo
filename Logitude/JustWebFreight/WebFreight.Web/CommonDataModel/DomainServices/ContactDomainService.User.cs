@@ -34,6 +34,7 @@ using Logitude.BL.Helpers;
 using Logitude.CRM.Data.EntityPOCOs;
 using Logitude.CRM.Data.Repsitories;
 using Logitude.Server.Tools.Counters;
+using Simplog.Data.Helpers;
 
 namespace WebFreight.Web.CommonDataModel.DomainServices
 {
@@ -56,6 +57,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             UserLastLogin entity = repository.GetSingleUserLastLogin(currentEntity.Id, currentEntity.Tenant, false);
 
             entity.ComputerId = currentEntity.ComputerId;
+            entity.WorkEnvironment = LogitudeSettingConfigration.GetWorkEnvironment();
             repository.Update(entity);
         }
 
@@ -311,7 +313,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
 
             List<UserList> userLists = query2.ToList();
 
-            if (!string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
+            if (HttpContext.Current != null && !string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
             {
                 contactRepository = new ContactRepository(tenant);
                 Contact contact = (from a in contactRepository.context.Contacts

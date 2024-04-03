@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\librdkafka.redist.1.6.1\build\librdkafka.redist.props" Condition="Exists('..\packages\librdkafka.redist.1.6.1\build\librdkafka.redist.props')" />
+  <Import Project="..\packages\librdkafka.redist.1.8.2\build\librdkafka.redist.props" Condition="Exists('..\packages\librdkafka.redist.1.8.2\build\librdkafka.redist.props')" />
   <Import Project="..\packages\Microsoft.Net.Compilers.2.10.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.2.10.0\build\Microsoft.Net.Compilers.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -73,8 +73,8 @@
     <OutputPath>bin\None\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Confluent.Kafka, Version=1.6.3.0, Culture=neutral, PublicKeyToken=12c514ca49093d1e, processorArchitecture=MSIL">
-      <HintPath>..\packages\Confluent.Kafka.1.6.3\lib\net46\Confluent.Kafka.dll</HintPath>
+    <Reference Include="Confluent.Kafka, Version=1.8.2.0, Culture=neutral, PublicKeyToken=12c514ca49093d1e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Confluent.Kafka.1.8.2\lib\net46\Confluent.Kafka.dll</HintPath>
     </Reference>
     <Reference Include="Devart.Data, Version=5.0.2296.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
       <HintPath>..\packages\DevArt.9.9.872\lib\Net40\Devart.Data.dll</HintPath>
@@ -158,10 +158,6 @@
       <HintPath>..\packages\JWT.1.3.4\lib\3.5\JWT.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Logitude.Accounting.BL, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\JustWebFreight\WebFreight.Web\bin\Logitude.Accounting.BL.dll</HintPath>
-    </Reference>
     <Reference Include="Logitude.BL, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Logitude.BL\bin\Debug\Logitude.BL.dll</HintPath>
@@ -169,6 +165,14 @@
     <Reference Include="Logitude.SystemLogs, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Logitude.SystemLogs\bin\Debug\Logitude.SystemLogs.dll</HintPath>
+    </Reference>
+    <Reference Include="Logitude.WarehouseLib.BL, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Logitude.WarehouseLib.BL\bin\Debug\Logitude.WarehouseLib.BL.dll</HintPath>
+    </Reference>
+    <Reference Include="Logitude.WarehouseLib.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Logitude.WarehouseLib.Data\bin\Debug\Logitude.WarehouseLib.Data.dll</HintPath>
     </Reference>
     <Reference Include="Logitude.XSD, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -238,9 +242,11 @@
       <HintPath>..\packages\WindowsAzure.Storage.8.0.1\lib\net45\Microsoft.WindowsAzure.Storage.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\LogitudeTools\WorkerRoleSimulation\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json.Bson, Version=1.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.Bson.1.0.2\lib\net45\Newtonsoft.Json.Bson.dll</HintPath>
     </Reference>
     <Reference Include="nsoftware.IPWorksSSH, Version=16.0.6800.0, Culture=neutral, PublicKeyToken=cdc168f89cffe9cf, processorArchitecture=MSIL">
       <HintPath>..\packages\SFTP3.4.1.0\lib\Net40\nsoftware.IPWorksSSH.dll</HintPath>
@@ -259,14 +265,14 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Profact.TimbraCFDI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Profact3.3.1.2.0\lib\Net40\Profact.TimbraCFDI.dll</HintPath>
+      <HintPath>..\packages\Profact4.0.1.2.0\lib\Net40\Profact.TimbraCFDI.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp, Version=106.11.7.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\JustWebFreight\WebFreight.Web\Bin\RestSharp.dll</HintPath>
     </Reference>
     <Reference Include="SendGrid.SmtpApi">
       <HintPath>..\packages\SendGrid.SmtpApi.1.3.3\lib\SendGrid.SmtpApi.dll</HintPath>
-    </Reference>
-    <Reference Include="Simplog.Data.Global, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\JustWebFreight\WebFreight.Web\bin\Simplog.Data.Global.dll</HintPath>
     </Reference>
     <Reference Include="Simplog.Server.Infrastructure, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -291,6 +297,7 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data.Services.Client" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Memory, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Memory.4.5.0\lib\netstandard2.0\System.Memory.dll</HintPath>
     </Reference>
@@ -362,7 +369,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Logitude.AutoGeneratedTemplates\AutoGeneratorsMetaData\OldEntityDetailsGenerator.cs">
+      <Link>OldEntityDetailsGenerator.cs</Link>
+    </Compile>
     <Compile Include="Accounting\AccountingConversionJournalApproveWR.cs" />
+    <Compile Include="Accounting\AccountingJournalApproveMutliThreadingWR.cs" />
+    <Compile Include="Accounting\ReconciliationWorkerRole.cs" />
     <Compile Include="Accounting\AccountingJournalApproveWR.cs" />
     <Compile Include="Accounting\ARPaymentChequeRedemptionWorkerRole.cs" />
     <Compile Include="Accounting\RevaluationWorkerRole.cs" />
@@ -378,11 +390,86 @@
     <Compile Include="ArtemusAnalyzerWorkerRole.cs" />
     <Compile Include="AutoSignUpMailWorkerRole.cs" />
     <Compile Include="AutoSignUpWorkerRole.cs" />
+    <Compile Include="CargoDisconnectWorkerRole.cs" />
+    <Compile Include="CollaborationToolContainerUpdateWR.cs" />
     <Compile Include="CollaborationToolShipmentUpdateWR.cs" />
     <Compile Include="CollaborationToolTaskWR.cs" />
+    <Compile Include="CargoReferencesSyncWorkerRole.cs" />
+    <Compile Include="ContainerCreateWR.cs" />
     <Compile Include="ContainerStatusesConnecterWR.cs" />
     <Compile Include="ContainerRequestWorkeRole.cs" />
     <Compile Include="ContainerStatusesReceiverWR.cs" />
+    <Compile Include="ContainerUpdateWR.cs" />
+    <Compile Include="DeploymentPackageWorkerRole.cs" />
+    <Compile Include="DigitalPortalQueryExportExecutionLogWR.cs" />
+    <Compile Include="DocumentExecutionV2WorkerRole.cs" />
+    <Compile Include="EntityMapping\ShipmentOrderPmToAmMapping.cs" />
+    <Compile Include="CargoTrackingImporterApprovalReceivedWR.cs" />
+    <Compile Include="ImporterEntityStatusesWorkerRole.cs" />
+    <Compile Include="ImporterEventTypesWorkerRole.cs" />
+    <Compile Include="ImporterPortsWorkerRole.cs" />
+    <Compile Include="ImporterShipmentOrderDocumentsWorkerRole.cs" />
+    <Compile Include="OpportunityStageChangingWorkerRole.cs" />
+    <Compile Include="ReportExecutionLogV2WorkerRole.cs" />
+    <Compile Include="Services\AutomationDocumentOutBuildService.cs" />
+    <Compile Include="Services\ContainerTraking\ContainerTrackingWRService.cs" />
+    <Compile Include="Services\ContainerTraking\RequestContainerStatusService.cs" />
+    <Compile Include="Services\DelayAutomationFieldValueService.cs" />
+    <Compile Include="Services\DigitalQueryQueryExportLogExecutionService.cs" />
+    <Compile Include="Services\Logbox\APICredentialsAuthenticationService.cs" />
+    <Compile Include="Services\Logbox\CustomerTenantAccessUpdaterService.cs" />
+    <Compile Include="Services\Logbox\CustomerTenantAccessCreatorService.cs" />
+    <Compile Include="Services\Logbox\ImporterEntityStatusesService.cs" />
+    <Compile Include="Services\Logbox\ImporterEventTypesService.cs" />
+    <Compile Include="Services\Logbox\ImporterPortService.cs" />
+    <Compile Include="Services\SAT\SATBaseService.cs" />
+    <Compile Include="Services\SAT\SATData.cs" />
+    <Compile Include="Services\SAT\SATUpdateEntityHelper.cs" />
+    <Compile Include="Services\Scheduler\ConnectionStringConfiguration.cs" />
+    <Compile Include="Services\SignUp\QueueMessageCloudToLogboxSender.cs" />
+    <Compile Include="Tasks\DeleteOldBIReportsExecutionLogsTask.cs" />
+    <Compile Include="Tasks\DeleteOldReportExecutionLogsTask.cs" />
+    <Compile Include="Tasks\DeleteOldDocumentsExecutionLogsTask.cs" />
+    <Compile Include="Tasks\DeleteOldAnalyzeQueuesTask.cs" />
+    <Compile Include="Tasks\DeleteOldContactActivityLogsTask.cs" />
+    <Compile Include="Tasks\DeleteOldMobileNotificationLogsTask.cs" />
+    <Compile Include="Tasks\DeleteOldPerformanceLogsTask.cs" />
+    <Compile Include="Services\Logbox\CustomerTenantsURLService.cs" />
+    <Compile Include="Services\Logbox\ImporterBuilderShipmentsBatchService.cs" />
+    <Compile Include="Services\Logbox\ImporterBuilderShipmentsOrderBatchService.cs" />
+    <Compile Include="Services\Logbox\ImporterShipmentsBatchService.cs" />
+    <Compile Include="Services\Logbox\ImporterShipmentsDocumentsBatchService.cs" />
+    <Compile Include="Services\Logbox\LogboxExceptionHandler.cs" />
+    <Compile Include="ShipmentDocsInUploaderWorkerRole.cs" />
+    <Compile Include="Services\SAT\UpdateCanceledSATEntitiesStatusesService.cs" />
+    <Compile Include="Tasks\UpdateCanceledSATEntitiesStatusesTask.cs" />
+    <Compile Include="Tasks\ResetFullTextSearchIndexChangeTrackingTask.cs" />
+    <Compile Include="UpdateContainerStatusWorkerRole.cs" />
+    <Compile Include="CreateRequestContainerStatusWorkerRole.cs" />
+    <Compile Include="ImporterShipmentOrdersWorkerRole.cs" />
+    <Compile Include="MultiEntityUpdate\IMultiEntityUpdater.cs" />
+    <Compile Include="MultiEntityUpdate\MultiEntityUpdater.cs" />
+    <Compile Include="MultiEntityUpdate\ShipmentUpdater.cs" />
+    <Compile Include="QBODocumnetsUploaderWR.cs" />
+    <Compile Include="PODDocumnetUploaderWR.cs" />
+    <Compile Include="PODImageConverterWorkerRole.cs" />
+    <Compile Include="MultiEntityUpdateWorkerRole.cs" />
+    <Compile Include="Services\ContainerSchedulerTaskService.cs" />
+    <Compile Include="Services\FroalaEditorImageLibraryService.cs" />
+    <Compile Include="Services\ImporterShipmentOrdersService.cs" />
+    <Compile Include="Services\MultiEntityUpdateService.cs" />
+    <Compile Include="Services\BIReportSchedulerTaskService.cs" />
+    <Compile Include="Services\SAT\SATInvoiceProfact40CancellationService.cs" />
+    <Compile Include="Services\SAT\SATPaymentProfact40CancellationService.cs" />
+    <Compile Include="Services\SAT\SATProfact40Service.cs" />
+    <Compile Include="Services\ShipmentOrderDocuments\ShipmentOrderDocumentsFilingAMMap.cs" />
+    <Compile Include="Services\ShipmentOrderDocuments\ShipmentOrderDocumentsService.cs" />
+    <Compile Include="Stimulsoft\fonts\StimulsoftFontsService.cs" />
+    <Compile Include="Tasks\ContainerAutomaticallyClosingTask.cs" />
+    <Compile Include="Tasks\RecalculateCashbooksTotalsTask.cs" />
+    <Compile Include="Tasks\BIReportSchedulerTask.cs" />
+    <Compile Include="UpdatePortTimeZoneWR.cs" />
+    <Compile Include="WebHookCommunicationWorkerRole.cs" />
     <Compile Include="Service References\LoginServiceReference\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -471,7 +558,6 @@
     <Compile Include="EmailsWorkerRole.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="EntityChangeWorkerRole.cs" />
     <Compile Include="ExactOnlineWorkerRole.cs" />
     <Compile Include="ExportImportTextCodesWR.cs" />
     <Compile Include="ForwarderShipmentDocumentsWorkerRole.cs" />
@@ -744,19 +830,94 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\wsReference\Timbrado.wsdl" />
+    <None Include="Stimulsoft\fonts\century-gothic\GOTHIC.TTF">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Stimulsoft\fonts\century-gothic\GOTHICB.TTF">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Stimulsoft\fonts\century-gothic\GOTHICBI.TTF">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Stimulsoft\fonts\century-gothic\GOTHICI.TTF">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Stimulsoft\fonts\didot\GFSDidot-Regular.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Stimulsoft\fonts\garamond\GARA.TTF">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Stimulsoft\fonts\garamond\GARABD.TTF">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Stimulsoft\fonts\garamond\GARAIT.TTF">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Stimulsoft\fonts\lucida-bright\LBRITE.TTF">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Stimulsoft\fonts\lucida-bright\LBRITED.TTF">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Stimulsoft\fonts\lucida-bright\LBRITEDI.TTF">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Stimulsoft\fonts\lucida-bright\LBRITEI.TTF">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Stimulsoft\fonts\monaco\Monaco.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Stimulsoft\fonts\optima\OPTIMA.TTF">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Stimulsoft\fonts\optima\OPTIMA_B.TTF">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Stimulsoft\fonts\optima\Optima_Italic.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Stimulsoft\fonts\optima\Optima_Medium.ttf">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Stimulsoft\fonts\perpetua\PERBI___.TTF">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Stimulsoft\fonts\perpetua\PERB____.TTF">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Stimulsoft\fonts\perpetua\PERI____.TTF">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Stimulsoft\fonts\perpetua\PER_____.TTF">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\JustWebFreight\WebFreight.Web\WebFreight.Web.csproj">
       <Project>{8408e4e5-b4b7-46bc-8300-1ae163b36e2d}</Project>
       <Name>WebFreight.Web</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Logitude.Accounting.BL\Logitude.Accounting.BL.csproj">
+      <Project>{00e5d96d-dd45-47e8-aaa3-fdbfd8add61a}</Project>
+      <Name>Logitude.Accounting.BL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Logitude.Accounting.Data\Logitude.Accounting.Data.csproj">
       <Project>{a3799525-14a2-42fc-a2de-69ed3fd1c5d1}</Project>
       <Name>Logitude.Accounting.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Logitude.Accounting.Def\Logitude.Accounting.Def.csproj">
+      <Project>{91564685-7ee1-466d-afcd-183a1bf62259}</Project>
+      <Name>Logitude.Accounting.Def</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Logitude.BookingLib.Data\Logitude.BookingLib.Data.csproj">
       <Project>{147a706d-221a-4fd1-8f27-c12e4ab276cf}</Project>
       <Name>Logitude.BookingLib.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.CargoTracking.BL\Logitude.CargoTracking.BL.csproj">
+      <Project>{6b7fb227-28d2-45b8-b079-2e2f4251510d}</Project>
+      <Name>Logitude.CargoTracking.BL</Name>
     </ProjectReference>
     <ProjectReference Include="..\Logitude.CargoTracking.Data\Logitude.CargoTracking.Data.csproj">
       <Project>{7281A115-2213-41A3-A39A-22476F5A8DB8}</Project>
@@ -798,6 +959,18 @@
       <Project>{9b477a08-8ee2-4457-88fe-17e8a6ec4d00}</Project>
       <Name>Logitude.Server.Tools</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Logitude.ShipmentOrderModule.BL\Logitude.ShipmentOrderModule.BL.csproj">
+      <Project>{F37BF2F7-0206-4123-A873-290A087538F6}</Project>
+      <Name>Logitude.ShipmentOrderModule.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.ShipmentOrderModule.Data\Logitude.ShipmentOrderModule.Data.csproj">
+      <Project>{378DB1A8-43C3-45A1-A4A0-0B8961CFDB52}</Project>
+      <Name>Logitude.ShipmentOrderModule.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.ShipmentOrderModule.Def\Logitude.ShipmentOrderModule.Def.csproj">
+      <Project>{4148FDA0-EF43-49BF-8D5C-23FF1FA4BD0E}</Project>
+      <Name>Logitude.ShipmentOrderModule.Def</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Logitude.Social.BL\Logitude.Social.BL.csproj">
       <Project>{13ce8afb-6ada-4e96-b76c-67279095a018}</Project>
       <Name>Logitude.Social.BL</Name>
@@ -822,9 +995,21 @@
       <Project>{68f57541-574a-4ee9-b3fe-8c535c74456a}</Project>
       <Name>Logitude.TimeManagement.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Logitude.WarehouseLib.BL\Logitude.WarehouseLib.BL.csproj">
+      <Project>{7030AB59-9900-4AB9-B37C-59D424576E85}</Project>
+      <Name>Logitude.WarehouseLib.BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.WarehouseLib.Data\Logitude.WarehouseLib.Data.csproj">
+      <Project>{54A12A5C-659C-4410-A5E7-949ACD43F3A5}</Project>
+      <Name>Logitude.WarehouseLib.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Simplog.Data\Simplog.Data.csproj">
       <Project>{78ec8434-e6ad-4e93-9b17-c746f5403f7b}</Project>
       <Name>Simplog.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simplog.Global.Data\Simplog.Global.Data.csproj">
+      <Project>{6d7ffad2-35b6-4133-8700-cf73e58d0c85}</Project>
+      <Name>Simplog.Global.Data</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -1000,6 +1185,7 @@
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
@@ -1007,7 +1193,7 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.2.10.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.2.10.0\build\Microsoft.Net.Compilers.props'))" />
-    <Error Condition="!Exists('..\packages\librdkafka.redist.1.6.1\build\librdkafka.redist.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\librdkafka.redist.1.6.1\build\librdkafka.redist.props'))" />
+    <Error Condition="!Exists('..\packages\librdkafka.redist.1.8.2\build\librdkafka.redist.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\librdkafka.redist.1.8.2\build\librdkafka.redist.props'))" />
   </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -15,11 +15,11 @@ import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/Propert
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
 export class ChartOfAccountPM {
-
+      
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-          this.UIProperties = new UIProperties(this); 
+                    this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -77,6 +77,11 @@ export class ChartOfAccountPM {
     private searchFields: string;
     public get SearchFields() { return this.searchFields; }
     public set SearchFields(newValue: string) { if (this.searchFields != newValue) { this.searchFields = newValue; this.MarkAsDirty("SearchFields"); } }
+       
+	 
+    private chartOfAccountSecurityLevel: number;
+    public get ChartOfAccountSecurityLevel() { return this.chartOfAccountSecurityLevel; }
+    public set ChartOfAccountSecurityLevel(newValue: number) { if (this.chartOfAccountSecurityLevel != newValue) { this.chartOfAccountSecurityLevel = newValue; this.MarkAsDirty("ChartOfAccountSecurityLevel"); } }
        
 	 
 

@@ -14,6 +14,7 @@ using Logitude.BL.ShipmentsModel.EntityPMs;
 using Simplog.Data.ShipmentsModel;
 using System;
 using System.Text;
+using Logitude.BL.ShipmentsModel.APIDataContract;
 
 namespace Logitude.BL.InfrastructureModel.EntityQueries
 {
@@ -66,7 +67,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                        EventTypeLocalName = a.EventType.LocalName,
                                                        EventTypeCode = a.EventType.Code,
                                                        IsManualEntry = a.EventType.IsManualEntry,
-                                                       //EventTypeCategoryCode = a.EventType.EventTypeCategory != null ? a.EventType.EventTypeCategory.Code : null,
                                                        IsAgentView = a.EventType.IsAgentView,
                                                        IsCustomerView = a.EventType.IsCustomerView,
                                                        ExternalId = a.ExternalId,
@@ -74,6 +74,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                        CustomerCareUserEmail = a.CustomerCareUserEmail,
                                                        Location = a.Location,
                                                        PartnerName = a.PartnerName,
+                                                       ChildEntityId = a.ChildEntityId,
+                                                       ChildObjectTableId = a.ChildObjectTableId,
                                                    };
 
 
@@ -132,7 +134,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                        CustomerCareUserEmail = a.CustomerCareUserEmail,
                                                        Location = a.Location,
                                                        PartnerName = a.PartnerName,
-
+                                                       ChildEntityId = a.ChildEntityId,
+                                                       ChildObjectTableId = a.ChildObjectTableId,
                                                    };
 
 
@@ -188,7 +191,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                                        CustomerCareUserEmail = a.CustomerCareUserEmail,
                                                                        Location = a.Location,
                                                                        PartnerName = a.PartnerName,
-
+                                                                       ChildEntityId = a.ChildEntityId,
+                                                                       ChildObjectTableId = a.ChildObjectTableId,
                                                                    };
 
                         }
@@ -226,6 +230,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                        CustomerCareUserEmail = a.CustomerCareUserEmail,
                                                        Location = a.Location,
                                                        PartnerName = a.PartnerName,
+                                                       ChildEntityId = a.ChildEntityId,
+                                                       ChildObjectTableId = a.ChildObjectTableId,
                                                    };
             foreach (TraceEventPM trace in traceEvents)
             {
@@ -263,6 +269,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                       CustomerCareUserEmail = a.CustomerCareUserEmail,
                                       Location = a.Location,
                                       PartnerName = a.PartnerName,
+                                      ChildEntityId = a.ChildEntityId,
+                                      ChildObjectTableId = a.ChildObjectTableId,
                                   }).FirstOrDefault();
 
             Contact contact = ContactRepository.GetSingleContact(trace.UserId, trace.Tenant, true);
@@ -297,6 +305,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                       CustomerCareUserEmail = a.CustomerCareUserEmail,
                                       Location = a.Location,
                                       PartnerName = a.PartnerName,
+                                      ChildEntityId = a.ChildEntityId,
+                                      ChildObjectTableId = a.ChildObjectTableId,
                                   }).FirstOrDefault();
 
             Contact contact = ContactRepository.GetSingleContact(trace.UserId, trace.Tenant, true);
@@ -334,6 +344,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                        CustomerCareUserEmail = a.CustomerCareUserEmail,
                                                        Location = a.Location,
                                                        PartnerName = a.PartnerName,
+                                                       ChildEntityId = a.ChildEntityId,
+                                                       ChildObjectTableId = a.ChildObjectTableId,
 
                                                    };
             return traceEvents.FirstOrDefault();
@@ -407,7 +419,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                        CustomerCareUserEmail = a.CustomerCareUserEmail,
                                                        Location = a.Location,
                                                        PartnerName = a.PartnerName,
-
+                                                       ChildEntityId = a.ChildEntityId,
+                                                       ChildObjectTableId = a.ChildObjectTableId,
                                                    };
             return traceEvents.FirstOrDefault();
         }
@@ -451,6 +464,52 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                 "SELECT * FROM TraceEvent WHERE tenant = "  + tenant + " and objectTableId = "  + objectTableId  + " and id IN ({0})",
                 values);
             return sql;
+        }
+        public TraceEventPM GetLatestEntityStatusTraceEvent(int tenant, string entityId, string objectTableId)
+        {
+
+            return (from et in repository.context.EventType.Include("EventType.EntityStatus")
+                    join te in repository.context.TraceEvent on et.Id equals te.EventTypeId into teGroup
+                    from MyteJoin in teGroup.Where(t => t.EntityId == entityId && t.ObjectTableId == objectTableId && t.Deleted == false && t.EventType.EntityStatusId != null).DefaultIfEmpty()
+                    join er in repository.context.EventRemarks.Where(e => e.PartnerTypeId == "AG") on et.Id equals er.EventTypeId into erGroup
+                    from MyerJoin in erGroup.DefaultIfEmpty()
+                    where et.InActive == false
+                    && et.IsAgentView == true
+                    && et.Tenant == tenant
+                    && MyteJoin.EntityId == entityId
+                     && MyteJoin.ObjectTableId == objectTableId
+                    orderby MyteJoin.EventDateTime descending
+                    select new TraceEventPM()
+                    {
+                        EntityStatusCode = et.EntityStatus.Code,
+                        EntityStatusName = et.EntityStatus.Name,
+                        EventDateTime = MyteJoin.EventDateTime,
+                        Notes = (MyerJoin != null && MyerJoin.IsChoose == true) ? MyteJoin.Notes : null,
+                    }).FirstOrDefault();
+
+        }
+        public IQueryable<TraceEventPM> GetEntityStatusTraceEvents(int tenant, string entityId, string objectTableId)
+        {
+
+            return (from et in repository.context.EventType.Include("EventType.EntityStatus")
+                         join te in repository.context.TraceEvent on et.Id equals te.EventTypeId into teGroup
+                         from MyteJoin in teGroup.Where(t => t.EntityId == entityId && t.ObjectTableId == objectTableId && t.Deleted == false && t.EventType.EntityStatusId != null).DefaultIfEmpty()
+                         join er in repository.context.EventRemarks.Where(e => e.PartnerTypeId == "AG") on et.Id equals er.EventTypeId into erGroup
+                         from MyerJoin in erGroup.DefaultIfEmpty()
+                         where et.InActive == false
+                         && et.IsAgentView == true
+                         && et.Tenant == tenant
+                         && MyteJoin.EntityId == entityId
+                         && MyteJoin.ObjectTableId == objectTableId
+                         orderby MyteJoin.EventDateTime
+                         select new TraceEventPM()
+                         {
+                             EntityStatusCode = et.EntityStatus.Code,
+                             EntityStatusName = et.EntityStatus.Name,
+                             EventDateTime = MyteJoin.EventDateTime,
+                             Notes = (MyerJoin != null && MyerJoin.IsChoose == true) ? MyteJoin.Notes : null,
+                         });
+            
         }
     }
 }

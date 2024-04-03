@@ -34,7 +34,7 @@
                                                         </td>
 
                                                         <td style="width:230px;">
-                                                            <LogLov [ObjectFieldName]="'AWBMessagesCCSTypeCode'"
+                                                            <LogLov [HideLastColumn]="true" [ObjectFieldName]="'AWBMessagesCCSTypeCode'"
                                                                     [ObjectTableName]="ObjectTableName"
                                                                     [DataContext]="DataContext"
                                                                     [LookUpTableName]="'AWBMessagesCCSType'">
@@ -59,24 +59,32 @@
                                                     </tr>
 
                                                     <tr class="FormFieldRow">
-                                                        <td>
-                                                            <LogLabel [ObjectFieldName]="'TTY'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                        </td>
+                                                        <td colspan="5">
+                                                            <table>
+                                                                <tr>
+                                                                    <td style="width:140px;">
+                                                                        <LogLabel [ObjectFieldName]="'TTY'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                    </td>
 
-                                                        <td>
-                                                            <LogTextBox [ObjectFieldName]="'TTY'" [Text]="TTY" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
-                                                        </td>
+                                                                    <td style="width:230px;">
+                                                                        <LogTextBox [HideLastColumn]="true" [ObjectFieldName]="'TTY'" [Text]="TTY" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                    </td>
 
-                                                        <td>
-                                                            <div></div>
-                                                        </td>
+                                                                    <td style="width:20px;height:20px;">
+                                                                        <div class="CenterCenter" style="position:relative">
+                                                                            <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditTTYClicked()" [IsEnabled]="IsEditingAllowed"></IconButton>
+                                                                        </div>
+                                                                    </td>
 
-                                                        <td>
-                                                            <LogLabel [ObjectFieldName]="'IsCargonautEnabled'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                        </td>
+                                                                    <td style="width:170px;">
+                                                                        <LogLabel [ObjectFieldName]="'IsCargonautEnabled'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                    </td>
 
-                                                        <td>
-                                                            <LogCheckBox [ObjectFieldName]="'IsCargonautEnabled'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                                    <td style="width:20px;">
+                                                                        <LogCheckBox [ObjectFieldName]="'IsCargonautEnabled'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
                                                         </td>
 
                                                         <td>
@@ -86,23 +94,24 @@
 
                                                     <!-- PIMA | IsDEXXConnectionEnabled -->
                                                     <tr class="FormFieldRow">
-                                                        <td>
+
+                                                        <td style="width:140px;">
                                                             <LogLabel [ObjectFieldName]="'PIMA'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                         </td>
 
-                                                        <td>
-                                                            <LogTextBox [ObjectFieldName]="'PIMA'" [Text]="PIMA" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                        <td style="width:230px;">
+                                                            <LogTextBox [HideLastColumn]="true" [ObjectFieldName]="'PIMA'" [Text]="PIMA" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                                         </td>
 
                                                         <td>
                                                             <div></div>
                                                         </td>
 
-                                                        <td>
+                                                        <td style="width:170px;">
                                                             <LogLabel [ObjectFieldName]="'IsDEXXConnectionEnabled'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                         </td>
 
-                                                        <td>
+                                                        <td style="width:20px;">
                                                             <LogCheckBox [ObjectFieldName]="'IsDEXXConnectionEnabled'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
                                                         </td>
 

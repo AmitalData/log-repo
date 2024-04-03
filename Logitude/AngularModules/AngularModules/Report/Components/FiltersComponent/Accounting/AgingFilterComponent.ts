@@ -13,6 +13,10 @@ import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeName
 import { FullAccountingSettingPM } from '../../../../Accounting/EntityPMs/FullAccountingSettingPM';
 import { EntityListService } from '../../../../Infrastructure/Services/EntityListService';
 import { TenantPM } from '../../../../Common/EntityPMs/TenantPM';
+import { GLAccountList } from '../../../../Accounting/EntityLists/GLAccountList';
+import { GLAccountListService } from '../../../../Accounting/Services/StandardLists/GLAccountListService';
+import { ChartOfAccountListService } from '../../../../Accounting/Services/StandardLists/ChartOfAccountListService';
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
 
@@ -31,7 +35,8 @@ export class AgingFilterComponent extends BaseComponent implements OnInit
     private FullAccountingSetting: FullAccountingSettingPM = new FullAccountingSettingPM();
     public TenantPM: TenantPM = SessionLocator.TenantPM;
     private CurrentSession = SessionLocator.SelectedSession;
-
+    gLAccountListService: GLAccountListService = new GLAccountListService();
+    chartOfAccountListService: ChartOfAccountListService = new ChartOfAccountListService();
     entityResourceService: EntityResourceService = new EntityResourceService();
     public isRTL: boolean = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
 
@@ -86,17 +91,17 @@ export class AgingFilterComponent extends BaseComponent implements OnInit
     {
         this.entityResourceService.getEntityResourceByTableName("GLAccount").subscribe((response: any) => { this.isReady = true; });
     }
-
+    private loggedUser: any;
     GetSalesmanFeature()
     {
         var salesmanAging = FeatureLocator.HasFeaturePermession("GLAccount", "SalesmanAging");
         var isSalesmanRestrictionsEnabled = !!salesmanAging;
         console.log("[Salesman Aging]", salesmanAging);
 
-        var loggedUser = SessionLocator.LoggedUserPM;
-        if(loggedUser.IsSalesman && isSalesmanRestrictionsEnabled){
+        this.loggedUser = SessionLocator.LoggedUserPM;
+        if(this.loggedUser.IsSalesman && isSalesmanRestrictionsEnabled){
             this.IsSalesmanRestricted = true;
-            this.Salesman = loggedUser.Id;
+            this.Salesman = this.loggedUser.Id;
         }
     }
 
@@ -174,10 +179,23 @@ export class AgingFilterComponent extends BaseComponent implements OnInit
                 this.IsCategoryDisabled = false;
 
             this.SetUIProperties();
+            this.SetGLAccountChartOfAccountSecurityLevel();
 
         }
     }
-
+    private securityLevel: any;
+    SetGLAccountChartOfAccountSecurityLevel() {
+        this.gLAccountListService.getSingle(this.Customer).subscribe((response: ServiceResponse) => {
+            if (!response.HasError) {
+                this.chartOfAccountListService.getSingle(response.Result.ChartOfAccountsId).subscribe((response: ServiceResponse) => {
+                    if (!response.HasError) {
+                        var chartOfAccount = response.Result;
+                        this.securityLevel = chartOfAccount.ChartOfAccountSecurityLevel;
+                    }
+                });
+            }
+        });
+    }
     private _ChartOfAccountsTypeCode : string = "3";
     public get ChartOfAccountsTypeCode() : string {
         return this._ChartOfAccountsTypeCode;
@@ -186,14 +204,14 @@ export class AgingFilterComponent extends BaseComponent implements OnInit
         this._ChartOfAccountsTypeCode = v;
         this.ChartOfAccountsId_Dummy = null;
     }
-
+    private ChartOfAccountSecurityLevel: any;
     private chartOfAccount: any;
     public get ChartOfAccount() { return this.chartOfAccount; }
     public set ChartOfAccount(value: any)
     {
         if (this.chartOfAccount != value) {
             this.chartOfAccount = value;
-            // this.ChartOfAccountsId = value.Id;
+            this.ChartOfAccountSecurityLevel = value? value.ChartOfAccountSecurityLevel: null;
         }
     }
 
@@ -331,33 +349,48 @@ export class AgingFilterComponent extends BaseComponent implements OnInit
         }
     }
 
+    private fromBalance: number = null;
+    public get FromBalance() { return this.fromBalance; }
+    public set FromBalance(value: number) {
+        if (this.fromBalance != value) {
+            this.fromBalance = value;
+        }
+    }
+
+    private toBalance: number = null;
+    public get ToBalance() { return this.toBalance; }
+    public set ToBalance(value: number) {
+        if (this.toBalance != value) {
+            this.toBalance = value;
+        }
+    }
 
     //#endregion
-
+     private errors: string[];
     RunButtonClicked()
     {
         this.SetUIProperties();
 
-        var errors: string[] = [];
+         this.errors = [];
         var categoryValue = null;
         var categoryIndex = null;
         this.ValidationErrorsList = [];
 
         //#region requierd fields
-        if (!this.AgingForDate) { errors.push("Aging for date field is requierd"); }
+        if (!this.AgingForDate) { this.errors.push("Aging for date field is requierd"); }
         //if (!this.Customer) { errors.push("Customer field is requierd"); }
-        if (!this.NumberOfMonths) { errors.push("Number of months field is requierd"); }
+        if (!this.NumberOfMonths) { this.errors.push("Number of months field is requierd"); }
         //#endregion
 
         //#region Date validation
         var isDateValid = this.ValidateDate();
         if (!isDateValid)
-            errors.push(TextCodeTranslator.Translate("AgingReport.O.FutureDate"));
+            this.errors.push(TextCodeTranslator.Translate("AgingReport.O.FutureDate"));
         //#endregion
+        this.CheckIfChartOfAccountAndUserSecurityLevelAreMatched();
 
 
-
-        if (errors.length == 0) {
+        if (this.errors.length == 0) {
 
 
             // Selecting category
@@ -383,9 +416,15 @@ export class AgingFilterComponent extends BaseComponent implements OnInit
             myFilterItems.push(new QueryFilterItem("CategoryIndex", categoryIndex)); // 'Category1' , 'Category2' , ...
             myFilterItems.push(new QueryFilterItem("CategoryValue", categoryValue));
             myFilterItems.push(new QueryFilterItem("GroupByDate", this.DateFilterSelectedValue));
+            myFilterItems.push(new QueryFilterItem("CurrencyOriginalLocalValue", this.currencyFilterSelectedValue));
 
             myFilterItems.push(new QueryFilterItem("BalanceFilter", this.balanceFilterSelectedValue.replace("filter_", "")));
             myFilterItems.push(new QueryFilterItem("BalanceFilterValue", this.balance || 0, "decimal"));
+
+            if (this.balanceFilterSelectedValue == "filter_DebtBetween") {
+                myFilterItems.push(new QueryFilterItem("FromBalanceFilterValue", this.fromBalance, "decimal"));
+                myFilterItems.push(new QueryFilterItem("ToBalanceFilterValue", this.toBalance, "decimal"));
+            }
 
             myFilterItems.push(new QueryFilterItem("ChartOfAccountsTypeCode", this.ChartOfAccountsTypeCode ? this.ChartOfAccountsTypeCode : null));
             myFilterItems.push(new QueryFilterItem("ChartOfAccountsId", this.ChartOfAccountsId_Dummy));
@@ -400,10 +439,44 @@ export class AgingFilterComponent extends BaseComponent implements OnInit
             this.RunReportEvent.emit(myReportFliter);
 
         } else {
-            this.ValidationErrorsList = errors;
+            this.ValidationErrorsList = this.errors;
         }
     }
+   
+    private CheckGLAccountChartOfAccountSecurityLevel() {
+        if (this.Customer) {
+            return this.CheckSecurityLevel(this.securityLevel);
+        } else return true;
 
+    }
+    private CheckChartOfAccountSecurityLevel() {
+        if (this.ChartOfAccount) {
+            return this.CheckSecurityLevel(this.ChartOfAccountSecurityLevel);
+        }
+        else return true;
+    }
+    private CheckIfChartOfAccountAndUserSecurityLevelAreMatched() {
+
+        if (this.CheckGLAccountChartOfAccountSecurityLevel()) {
+
+            return this.CheckChartOfAccountSecurityLevel();
+        }
+        else return false;
+    }
+    private CheckSecurityLevel(securityLevel: any) {
+        if (!this.loggedUser.IsCustomerCare) {
+            if (securityLevel == undefined) {
+                securityLevel = 0;
+            }
+            if (!this.loggedUser.IsCustomerCare && securityLevel > this.loggedUser.SecurityLevel) {
+               this.errors.push(TextCodeTranslator.Translate("ChartOfAccounts.O.SecurityLevelErrorMessage"));
+                return false;
+            }
+            else return true;
+
+        }
+        else return true;
+    }
     private selectedAgingMethod: CodeNameClass;
     get SelectedAgingMethod() { return this.selectedAgingMethod; }
     set SelectedAgingMethod(value: CodeNameClass)
@@ -469,7 +542,8 @@ export class AgingFilterComponent extends BaseComponent implements OnInit
     }
     //#endregion
 
-    public balanceFilterSelectedValue: string = 'filter_All';
+    public balanceFilterSelectedValue: string = 'filter_Debtors';
+    public currencyFilterSelectedValue: string = 'filter_OriginalCurr';
     BalanceFilterItemClicked(itemValue: string)
     {
         if (this.balanceFilterSelectedValue != itemValue) {
@@ -487,7 +561,7 @@ export class AgingFilterComponent extends BaseComponent implements OnInit
             case 'filter_Debtors':
                 //   this.AccountTypeCode = '2';
                 break;
-            case 'filter_DebtAbove':
+            case 'filter_DebtBetween':
                 this.balance = 0;
                 break;
             default:
@@ -496,6 +570,13 @@ export class AgingFilterComponent extends BaseComponent implements OnInit
 
         this.SetUIProperties();
 
+    }
+
+    CurrencyFilterClicked(itemValue: string)
+    {
+        if (this.currencyFilterSelectedValue != itemValue) {
+            this.currencyFilterSelectedValue = itemValue;
+        }
     }
 
     // Filter Methods

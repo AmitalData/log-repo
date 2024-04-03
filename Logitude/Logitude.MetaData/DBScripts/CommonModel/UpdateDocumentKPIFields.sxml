@@ -1,0 +1,13 @@
+﻿<Script DBType="Main"  Module="Common" Pre="true">
+	<Sql Version="2">
+		<![CDATA[
+		update DocumentTypes set OnSendPopulateDateFieldName = 'Shipment.BookingConfirmationSentDate' where Code in ('BCO ','BDC')
+    update DocumentTypes set OnSendPopulateDateFieldName = 'Shipment.PreAlertSentDate' where Code in ('PAA ','PAO')
+    update DocumentTypes set OnSendPopulateDateFieldName = 'Shipment.DeliveryNoticeSentDate' where Code in ('DEOR')
+    update DocumentTypes set OnSendPopulateDateFieldName = 'Shipment.ExpectedArrivalNoticeSentDate' where Code in ('NAO ','NNA')
+    update DocumentTypes set OnSendPopulateDateFieldName = 'Shipment.ArrivalNoticeSentDate' where Code in ('ARNT ')
+    update DocumentTypes set OnSendPopulateDateFieldName = 'Shipment.T1ReceivedDate' where Code in ('T1 ')
+
+    ]]>
+	</Sql>
+</Script>

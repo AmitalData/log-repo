@@ -16,6 +16,7 @@ namespace Logitude.CRMTests.Hooks
             new ActivityTaskDataPreparation().Prepar();
             new ActivityAppointmentDataPreparation().Prepar();
             new ActivityPhoneCallDataPreparation().Prepar();
+            new OpportunityDataPreparation().Prepar();
         }
 
         [BeforeFeature("Pre-Prepare-Activity-Task")]
@@ -34,6 +35,12 @@ namespace Logitude.CRMTests.Hooks
         public static void SetUpPrepareDataBeforeFeatureRunActivityPhoneCall()
         {
             new ActivityPhoneCallDataPreparation().Prepar();
+        }      
+
+        [BeforeFeature("@Pre-Prepare-Activity-Opportunity")]
+        public static void SetUpPrepareDataBeforeFeatureRunOpportunity()
+        {
+            new OpportunityDataPreparation().Prepar();
         }
     }
 }

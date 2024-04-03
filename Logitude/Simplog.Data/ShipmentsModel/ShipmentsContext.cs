@@ -1,13 +1,10 @@
 using System.Data;
 using System.Data.Common;
 using System.Data.Entity;
-using System.Data.Entity.Core.EntityClient;
 using System.Data.Entity.Core.Objects;
 using System.Data.SqlClient;
-using System.Transactions;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Mapping;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Mapping;
 using Simplog.Data.InvoiceModel.Mapping;
 using Simplog.Data.QuoteModel.Mapping;
@@ -19,64 +16,65 @@ using Simplog.Global.Data.GlobalModel.Helpers;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Linq;
-using System.Data.Entity.ModelConfiguration.Conventions;
-using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
 
 namespace Simplog.Data.ShipmentsModel
 {
     public class ShipmentsContext : DbContextBase, IShipmentsContext
     {
-        public ShipmentsContext()
-            : base("LogitudeStr")
+        public ShipmentsContext() : base("LogitudeStr")
         {
             Database.SetInitializer<ShipmentsContext>(null);
-            Database.CommandTimeout = ApplicationAppInfo.GetDataBaseTimeOut();
-     
+            Database.CommandTimeout = ApplicationAppInfo.GetDataBaseTimeOut();     
         }
 
-        public ShipmentsContext(DbConnection conn)
-            : base(conn,true)
+        public ShipmentsContext(DbConnection conn) : base(conn,true)
         {
-            this.Configuration.LazyLoadingEnabled = false;
-            this.Configuration.AutoDetectChangesEnabled = false;
+            Configuration.LazyLoadingEnabled = false;
+            Configuration.AutoDetectChangesEnabled = false;
             Database.CommandTimeout = ApplicationAppInfo.GetDataBaseTimeOut();
             Database.SetInitializer<ShipmentsContext>(null);
-            
         }
 
         public static IShipmentsContext GetContext(int tenant)
         {
             GlobalDB currentDb;
-            //using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-            //{
-                currentDb = GlobalDbHelper.GetGlobalDB(tenant);
-            //}
+            currentDb = GlobalDbHelper.GetGlobalDB(tenant);
             string dbConnectionInfo = currentDb.DBConnection;
             string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
 
-            DbConnection connection =DatabaseInitializer.GetConnection(dbConnectionInfo,dbSeconderyConnectionInfo);
+            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo, dbSeconderyConnectionInfo);
             ShipmentsContext context = new ShipmentsContext(connection);
             return context;
         }
+
+        public static IShipmentsContext GetSecContext(int tenant)
+        {
+            GlobalDB currentDb;
+            currentDb = GlobalDbHelper.GetGlobalDB(tenant);
+            string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
+            DbConnection connection = DatabaseInitializer.GetConnection(dbSeconderyConnectionInfo, null, null);
+            ShipmentsContext context = new ShipmentsContext(connection);
+            return context;
+        }
+
         public override LogitudeDBSchema LogitudeDBSchema
         {
-            get { return Simplog.Server.Infrastructure.LogitudeDBSchema.LOGITUDE_MAIN; }
+            get { return LogitudeDBSchema.LOGITUDE_MAIN; }
         }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             if (LogitudeSettings.DatabaseManagementSystem == "oracle")
             {
                 var config = Devart.Data.Oracle.Entity.Configuration.OracleEntityProviderConfig.Instance;
                 config.Workarounds.DisableQuoting = true;
-                ////config.QueryOptions.CaseInsensitiveComparison = true;
-                ////config.QueryOptions.CaseInsensitiveLike = true;
-                //modelBuilder.SetDefaultSchema("LOGITUDE_MAIN");
             }
 
             Database.SetInitializer<ShipmentsContext>(null);
-            //string databasename = DatabaseInitializer.GetDatabaseName();
-            //Database.DefaultConnectionFactory.CreateConnection(databasename);
+            //modelBuilder.Configurations.Add(new ShipmentDataViewMap());
+            modelBuilder.Configurations.Add(new DigitalShipmentDataViewMap());
             modelBuilder.Configurations.Add(new SharedUserQueryMap());
             modelBuilder.Configurations.Add(new AccountingSystemMap());
             modelBuilder.Configurations.Add(new AccountingSettingMap());
@@ -123,6 +121,9 @@ namespace Simplog.Data.ShipmentsModel
             modelBuilder.Configurations.Add(new ContactMap());
             modelBuilder.Configurations.Add(new ContactTenantRoleSetMap());
             modelBuilder.Configurations.Add(new ContactTenantMap());
+            modelBuilder.Configurations.Add(new ContainerTrackingProviderMap());
+            modelBuilder.Configurations.Add(new ContainerTrackingResponseMap());
+            modelBuilder.Configurations.Add(new ContainerTrackingRequestMap());
             modelBuilder.Configurations.Add(new CounterDefinitionMap());
             modelBuilder.Configurations.Add(new CounterLastNumberMap());
             modelBuilder.Configurations.Add(new CounterMap());
@@ -223,6 +224,7 @@ namespace Simplog.Data.ShipmentsModel
             modelBuilder.Configurations.Add(new ShipmentCarrierStatusMap());
             modelBuilder.Configurations.Add(new ShipmentCustomerTypeMap());
             modelBuilder.Configurations.Add(new ShipmentLevelMap());
+
             modelBuilder.Configurations.Add(new ShipmentMasterDataMap());
             modelBuilder.Configurations.Add(new ShipmentOrderPackageMap());
             modelBuilder.Configurations.Add(new ShipmentPackageMap());
@@ -304,6 +306,7 @@ namespace Simplog.Data.ShipmentsModel
             modelBuilder.Configurations.Add(new ManifestStatusMap());
             modelBuilder.Configurations.Add(new AWBAdditionalHandlingInfoMap());
             modelBuilder.Configurations.Add(new ShipmentComputedFieldsMap());
+            modelBuilder.Configurations.Add(new ShipmentDigitalFieldMap());
             modelBuilder.Configurations.Add(new ParticipantMap());
             modelBuilder.Configurations.Add(new AirlineStatisticsMap());
             modelBuilder.Configurations.Add(new AWBDescriptionOfGoodsMap());
@@ -340,8 +343,17 @@ namespace Simplog.Data.ShipmentsModel
             modelBuilder.Configurations.Add(new ShipmentProductItemMap());
             modelBuilder.Configurations.Add(new ContainerStatusMap());
             modelBuilder.Configurations.Add(new ContainerStatusSourceMap());
+            modelBuilder.Configurations.Add(new ShipmentUnassignedFieldMap());
+            modelBuilder.Configurations.Add(new ShipmentDocsFieldMap());
+            modelBuilder.Configurations.Add(new ShipmentAnalyticMap());
+			modelBuilder.Configurations.Add(new OceanInsightsStatusLogMap());
 
-            base.OnModelCreating(modelBuilder);
+			base.OnModelCreating(modelBuilder);
+        }
+
+        public IDbSet<DigitalShipmentsDataView> ShipmentDigitalDataViews
+        {
+            get;set;
         }
 
         public IDbSet<Shipment> Shipments { get; set; }
@@ -384,11 +396,13 @@ namespace Simplog.Data.ShipmentsModel
         public IDbSet<ManifestStatus> ManifestStatus { get; set; }
         public IDbSet<AWBAdditionalHandlingInfo> AWBAdditionalHandlingInfos { get; set; }
         public IDbSet<ShipmentComputedFields> ShipmentComputedFields { get; set; }
+        public IDbSet<ShipmentDigitalField> ShipmentDigitalFields { get; set; }
+        public IDbSet<ContainersExternalData> ContainersExternalDatas { get; set; }
         public IDbSet<ShipmentAdditionalCloudData> ShipmentAdditionalCloudDatas { get; set; }
         public IDbSet<OceanInsightsRequestsCount> OceanInsightsRequestsCounts { get; set; }
         public IDbSet<OceanInsightsRequest> OceanInsightsRequests { get; set; }
         public IDbSet<LogitudeOceanInsightsRequest> LogitudeOceanInsightsRequests { get; set; }
-
+        public IDbSet<LogitudeOceanInsightsResponse> LogitudeOceanInsightsResponses { get; set; }
         public IDbSet<OceanInsightsStatuses> OceanInsightsStatuses { get; set; }
         public IDbSet<OtherParticipantId> OtherParticipantIds { get; set; }
         public IDbSet<CustomsTransmissionsStatus> CustomsTransmissionsStatus { get; set; }
@@ -409,13 +423,18 @@ namespace Simplog.Data.ShipmentsModel
         public IDbSet<ShipmentSubType> ShipmentSubTypes { get; set; }
         public IDbSet<ShipmentStoragePricing> ShipmentStoragePricings { get; set; }
         public IDbSet<ShipmentProductItem> ShipmentProductItems { get; set; }
+        public IDbSet<ShipmentUnassignedField> ShipmentUnassignedFields { get; set; }
         public IDbSet<Container> Containers { get; set; }
         public IDbSet<ContainerStatus> ContainerStatuses { get; set; }
         public IDbSet<ContainerStatusSource> ContainerStatusSources { get; set; }
+        public IDbSet<PayableProratedAmount> PayableProratedAmounts { get; set; }
+        public IDbSet<ShipmentAnalytic> ShipmentAnalytics { get; set; }
+        public IDbSet<ContainerAnalytic> ContainerAnalytics { get; set; }
+        public IDbSet<ContainerDiscrepancy> ContainerDiscrepancies { get; set; }
+		public IDbSet<OceanInsightsStatusLog> OceanInsightsStatusLogs { get; set; }
 
 
-
-        [DbFunction("ShipmentsContext", "udf_ShipmentSearch")]
+		[DbFunction("ShipmentsContext", "udf_ShipmentSearch")]
         public IQueryable<ShipmentDataView> ShipmentSearch(string SearchFields)
         {
             var result = Database.SqlQuery<ShipmentDataView>("Select * from [dbo].[udf_ShipmentSearch](" + SearchFields + ")").AsQueryable(); 
@@ -463,6 +482,15 @@ namespace Simplog.Data.ShipmentsModel
             get;
             set;
         }
+        public IDbSet<ARInvoice> ARInvoicesForReports
+        {
+            get; set;
+        }
+
+        public IDbSet<ContainerTrackingProvider> ContainerTrackingProviders { get; set; }
+        public IDbSet<ContainerTrackingResponse> ContainerTrackingResponses { get; set; }
+        public IDbSet<ContainerTrackingRequest> ContainerTrackingRequests { get; set; }
+        public IDbSet<ShipmentDocsField> ShipmentDocsFields { get; set; }
 
         public void SetAsModified(object entity)
         {

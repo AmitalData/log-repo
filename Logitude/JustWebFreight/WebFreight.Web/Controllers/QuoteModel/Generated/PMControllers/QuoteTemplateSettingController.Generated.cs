@@ -40,6 +40,7 @@ using Logitude.BL.QuoteModel.EntityLists;
 using Logitude.BL.QuoteModel.EntityQueries;
 using Logitude.BL.QuoteModel.Tools.EntityService;
 
+
 namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
 { 
 

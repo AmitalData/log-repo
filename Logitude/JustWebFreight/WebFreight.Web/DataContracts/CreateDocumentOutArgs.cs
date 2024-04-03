@@ -13,6 +13,8 @@ namespace WebFreight.Web.DataContracts
         public string ChildReference { get; set; }
         public string ObjectTableId { get; set; }
         public int Tenant { get; set; }
+        public string DocumentTypeTemplateId { get; set; }
 
+        public bool SignHSM { get; set; }
     }
 }

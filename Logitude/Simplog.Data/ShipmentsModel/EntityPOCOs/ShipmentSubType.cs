@@ -22,6 +22,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string UpdatedByUserId { get; set; }
         public bool Inactive { get; set; }
         public string SearchFields { get; set; }
+        public bool IsManuallyAdded { get; set; }
 
         public virtual ShipmentType ShipmentType { get; set; }
         public virtual User CreatedByUser { get; set; }

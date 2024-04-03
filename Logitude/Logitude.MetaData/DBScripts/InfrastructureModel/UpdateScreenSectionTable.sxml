@@ -1,0 +1,40 @@
+﻿<Script DBType="Main" Pre="true" Module="Infrastructure">
+	<Sql Version="1">
+		<![CDATA[
+
+select * from ScreenSections
+declare @Tenant as int
+declare @Number as int
+declare @ScreenCode as varchar(100)
+declare @NewEntityId as varchar(15)
+
+
+
+   DECLARE ScreenSectionsCursor CURSOR READ_ONLY
+    FOR
+    SELECT   Number , ScreenCode , Tenant
+    From ScreenSections
+    where Id is null
+    OPEN ScreenSectionsCursor FETCH NEXT FROM ScreenSectionsCursor INTO @Number ,@ScreenCode , @Tenant
+    WHILE @@FETCH_STATUS = 0
+    BEGIN
+      EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'ScreenSection'
+      update ScreenSections set Id = @NewEntityId where Number = @Number and ScreenCode = @ScreenCode and @Tenant = tenant
+
+
+
+   FETCH NEXT FROM ScreenSectionsCursor INTO @Number ,@ScreenCode , @Tenant
+
+
+
+   End
+    CLOSE ScreenSectionsCursor
+    DEALLOCATE ScreenSectionsCursor
+
+
+
+   ALTER TABLE ScreenSections
+ALTER COLUMN Id varchar(15) NOT NULL;
+    ]]>
+	</Sql>
+</Script>

@@ -27,7 +27,7 @@ namespace WebFreight.Web.Helpers
             EntityChangePM entityChangePM = EntityChangeQuery.GetSinglePM(entitychangeId, tenant);
 
             List<ObjectField> objectFieldLists = ObjectFieldRepository.GetObjectFieldsByObjectTableName(objectTableName, tenant);
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
             EntityChangeAutomationsSummary entityChangeAutomationsSummary = new EntityChangeAutomationsSummary();
             List<ChangeField> changeFieldsList = new List<ChangeField>();
 
@@ -157,6 +157,8 @@ namespace WebFreight.Web.Helpers
                 entityChangeAutomation = entityChangeAutomation.Concat(GetEntityChangeAutomationLists(entityChangePM.SendInterfaceAutomationSsucceedXml, entityChangePM.SendInterfaceAutomationFailedXml)).ToList();
                 entityChangeAutomation = entityChangeAutomation.Concat(GetEntityChangeAutomationLists(entityChangePM.SendDocumentAutomationSsucceedXml, entityChangePM.SendDocumentAutomationFailedXml)).ToList();
                 entityChangeAutomation = entityChangeAutomation.Concat(GetEntityChangeAutomationLists(entityChangePM.CreateTaskAutomationSsucceedXml, entityChangePM.CreateTaskAutomationFailedXml)).ToList();
+                entityChangeAutomation = entityChangeAutomation.Concat(GetEntityChangeAutomationLists(entityChangePM.OnUpdateDocumentAutomationSsucceedXml, entityChangePM.OnUpdateDocumentAutomationFailedXml)).ToList();
+                entityChangeAutomation = entityChangeAutomation.Concat(GetEntityChangeAutomationLists(entityChangePM.EventAutomationSsucceedXml, entityChangePM.EventAutomationFailedXml)).ToList();
 
                 entityChangeAutomation = entityChangeAutomation.OrderByDescending(d => d.CreateDate).ToList();
 

@@ -2,6 +2,7 @@
 using Logitude.Accounting.BL.CoreBL.Reconcile;
 using Logitude.Accounting.BL.EntityQueryServiceExt;
 using Logitude.Accounting.BL.EntityUpdateServiceExt;
+using Logitude.Accounting.BL.Messaging;
 using Logitude.Accounting.Def.BLExt;
 using Logitude.Accounting.Def.EntityQueryServicesExt;
 using Logitude.Accounting.Def.EntityUpdateServicesExt;
@@ -33,8 +34,9 @@ namespace WebFreight.Web.AccountingModel
             ContainerAccessor.Container.RegisterType<IInterestTransactionUpdateServiceExt, InterestTransactionUpdateServiceExt>("InterestTransactionUpdateServiceExt", new InjectionFactory(c => new InterestTransactionUpdateServiceExt()));
             ContainerAccessor.Container.RegisterType<IInterestReportUpdateServiceExt, InterestReportUpdateServiceExt>("InterestReportUpdateServiceExt", new InjectionFactory(c => new InterestReportUpdateServiceExt()));
             ContainerAccessor.Container.RegisterType<IInterestReportsConnectedInvoiceUpdateServiceExt, InterestReportsConnectedInvoiceUpdateServiceExt>("InterestReportsConnectedInvoiceUpdateServiceExt", new InjectionFactory(c => new InterestReportsConnectedInvoiceUpdateServiceExt()));
-
-
+            ContainerAccessor.Container.RegisterType<IAccountingEntityJournalUpdateServiceExt, AccountingEntityJournalUpdateServiceExt>("AccountingEntityJournalUpdateServiceExt", new InjectionFactory(c => new AccountingEntityJournalUpdateServiceExt()));
+            ContainerAccessor.Container.RegisterType<IAPPaymentInvoicesTransactionFetcherExt, APPaymentInvoicesTransactionFetcherExt>("APPaymentInvoicesTransactionFetcherExt", new InjectionFactory(c => new APPaymentInvoicesTransactionFetcherExt()));
+            
             // Query Service
             ContainerAccessor.Container.RegisterType<ICashBookQueryServiceExt, CashBookQueryServiceExt>("CashBookQueryServiceExt", new InjectionFactory(c => new CashBookQueryServiceExt()));
             ContainerAccessor.Container.RegisterType<IBankCodeQueryServiceExt, BankCodeQueryServiceExt>("BankCodeQueryServiceExt", new InjectionFactory(c => new BankCodeQueryServiceExt()));
@@ -49,8 +51,9 @@ namespace WebFreight.Web.AccountingModel
             ContainerAccessor.Container.RegisterType<IGLAccountCardsDataQueryServiceExt, GLAccountCardsDataQueryServiceExt>("GLAccountCardsDataQueryServiceExt", new InjectionFactory(c => new GLAccountCardsDataQueryServiceExt()));
             ContainerAccessor.Container.RegisterType<IGLAccountCardsDataUpdateServiceExt, GLAccountCardsDataUpdateServiceExt>("GLAccountCardsDataUpdateServiceExt", new InjectionFactory(c => new GLAccountCardsDataUpdateServiceExt()));
             ContainerAccessor.Container.RegisterType<IGLAccountCurrencyQueryServiceExt, GLAccountCurrencyQueryServiceExt>("GLAccountCurrencyQueryServiceExt", new InjectionFactory(c => new GLAccountCurrencyQueryServiceExt()));
+            ContainerAccessor.Container.RegisterType<ILedgerTransactionQueryService, LedgerTransactionQueryServiceExt>("LedgerTransactionQueryServiceExt", new InjectionFactory(c => new LedgerTransactionQueryServiceExt()));
+            ContainerAccessor.Container.RegisterType<IHSMSignFileService, HSMSignFileService>("HSMSignFileService", new InjectionFactory(c => new HSMSignFileService()));
 
-            
         }
     }
 }

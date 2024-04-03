@@ -10,6 +10,8 @@ using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.QuoteModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
@@ -40,21 +42,21 @@ using Simplog.Data.InvoiceModel;
         }
 
 		
-		public CreditCardType GetCreditCardTypeById(string Id,int Tenant,string ComputingPartnerName = "")
+		public CreditCardType GetCreditCardTypeById(string Id,int Tenant,  string ComputingPartnerName = "")
         { 
 		    try
             {
-
+				 
 				
-				var temp = query.GetSinglePM(Id,Tenant);				
+				var temp = query.GetSinglePM(Id, Tenant);				
 				 if (temp == null)
                     throw new ApplicationException("CreditCardType with Id " + Id + " doesn't exist");
 
 				return CreditCardTypeDataMapping(temp,Tenant,ComputingPartnerName);
 			}
+
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }
@@ -87,11 +89,13 @@ using Simplog.Data.InvoiceModel;
 					{
 						temp = query.GetSinglePM(MyEntity.Id, Tenant);
 					} 
-										   
-					if(temp == null)
+					
+					
+			  	   if(temp == null)
 					{   
 					    throw new ApplicationException("CreditCardType with Id " + MyEntity.Id + " doesn't exist");
 					} 
+				 
 					
 					if(string.IsNullOrEmpty(temp.Id))
 					{
@@ -110,9 +114,9 @@ using Simplog.Data.InvoiceModel;
 						
 					}
                     
-					if(!IsUpdate)// && MyEntity.Tenant != null)
-					{							//throw new ApplicationException("Tenant Can't be update"); 
-							temp.Tenant = MyEntity.Tenant;
+					if(!IsUpdate)
+					{							
+						temp.Tenant = MyEntity.Tenant;
 
 										}  
 
@@ -122,9 +126,8 @@ using Simplog.Data.InvoiceModel;
 					   
 						 
 						if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.LogitudeCode))
-						{
-								//throw new ApplicationException("LogitudeCode Can't be update"); 
-								temp.Code = MyEntity.LogitudeCode;
+						{								
+							temp.Code = MyEntity.LogitudeCode;
 								
 						
 						}  
@@ -132,9 +135,9 @@ using Simplog.Data.InvoiceModel;
 						
 					}
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Name))
-					{							//throw new ApplicationException("Name Can't be update"); 
-							temp.Name = MyEntity.Name;
+					if(!IsUpdate)
+					{							
+						temp.Name = MyEntity.Name;
 
 										}  
 
@@ -147,6 +150,8 @@ using Simplog.Data.InvoiceModel;
                 throw ex;
             } 
         }
-		 
+
+
+						   
    }
 }

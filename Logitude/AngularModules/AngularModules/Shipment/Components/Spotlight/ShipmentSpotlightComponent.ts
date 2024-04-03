@@ -45,7 +45,7 @@ export class ShipmentSpotlightComponent {
 
         var service = new ShipmentDomainService();
 
-        service.GetSingleShipmentPMWithoutComposition(this.EntityId).subscribe((myResponse: ServiceResponse) => {
+        service.GetSingleShipmentPMWithoutComposition(this.EntityId, true).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 this.EntityPM = myResponse.Result;
 

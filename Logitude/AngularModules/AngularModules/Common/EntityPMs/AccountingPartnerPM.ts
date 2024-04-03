@@ -19,13 +19,15 @@ import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
 import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
+import { ObjectCustomFieldPM } from '../../Infrastructure/EntityPMs/ObjectCustomFieldPM';
 
 
-export class AccountingPartnerPM {
+export class AccountingPartnerPM extends ObjectCustomFieldPM {
 
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
+		  super("AccountingPartner");
           this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
@@ -385,6 +387,26 @@ export class AccountingPartnerPM {
     private collectorId: string;
     public get CollectorId() { return this.collectorId; }
     public set CollectorId(newValue: string) { if (this.collectorId != newValue) { this.collectorId = newValue; this.MarkAsDirty("CollectorId"); } }
+       
+	 
+    private creditLimit: number;
+    public get CreditLimit() { return this.creditLimit; }
+    public set CreditLimit(newValue: number) { if (this.creditLimit != newValue) { this.creditLimit = newValue; this.MarkAsDirty("CreditLimit"); } }
+       
+	 
+    private insuredCreditlimit: number;
+    public get InsuredCreditlimit() { return this.insuredCreditlimit; }
+    public set InsuredCreditlimit(newValue: number) { if (this.insuredCreditlimit != newValue) { this.insuredCreditlimit = newValue; this.MarkAsDirty("InsuredCreditlimit"); } }
+       
+	 
+    private regimenFiscalCode: string;
+    public get RegimenFiscalCode() { return this.regimenFiscalCode; }
+    public set RegimenFiscalCode(newValue: string) { if (this.regimenFiscalCode != newValue) { this.regimenFiscalCode = newValue; this.MarkAsDirty("RegimenFiscalCode"); } }
+       
+	 
+    private sATReceptorName: string;
+    public get SATReceptorName() { return this.sATReceptorName; }
+    public set SATReceptorName(newValue: string) { if (this.sATReceptorName != newValue) { this.sATReceptorName = newValue; this.MarkAsDirty("SATReceptorName"); } }
        
 	 
 

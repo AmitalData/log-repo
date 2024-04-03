@@ -2,6 +2,81 @@
     .red {
         color: #d53737 !important;
     }
+    .x-split-button {
+        position: relative;
+        display: inline-block;
+        text-align: left;
+     }
+
+    .x-button {
+        width: initial !important;
+        position: relative;
+        margin: 0;
+        height: 22px;
+        float: left;
+        outline: none;
+        line-height: 21px;
+        border: 1px solid #6A8299;
+        background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(237, 192, 147, 1) 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%);
+        background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(237, 192, 147, 1) ));
+        background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%);
+    }
+
+    .x-button:disabled {
+        opacity: 0.5;
+        pointer-events: none;
+    }
+
+    .x-button:hover {
+        cursor: pointer;
+        background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(237, 192, 147, 0.85) 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 0.85) 100%);
+        background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(237, 192, 147, 0.85) ));
+        background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 0.85) 100%);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 0.85) 100%);
+    }
+
+    .x-button:active {
+        background: #F2F2F2;
+    }
+
+    .x-button.x-button-drop {
+        border-right: 0;
+        height: 22px;
+    }
+
+    .x-button-drop-menu {
+        position: absolute;
+        top: 23px;
+        z-index: 1000;
+        text-align: right;
+        float: left;
+        min-width: 130px;
+        font-size: 15px;
+        list-style: none;
+        background-color: #F2F2F2;
+        background-clip: padding-box;
+        border: .5px solid #45494A;
+        box-shadow: .5px .5px 2px #6A8299;
+    }
+
+    .x-button-drop-menu li span {
+        display: block;
+        padding: 3px 20px;
+        clear: both;
+        font-family: arial;
+        color: #444;
+        text-decoration: none;
+        height: 22px;
+    }
+
+    .x-button-drop-menu li span:hover {
+        background: #D3D3D3;
+        cursor: pointer;
+    }
+
 </style>
 <table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
@@ -15,14 +90,14 @@
                 <table>
 
 
-                   
+
                     <tr class="FormFieldRow">
                         <td style="width: 150px;" [style.text-align]="isRTL ? 'right' : 'left'">
                             {{'Accounting.General.O.Difference' | TextCodeTranslationPipe}}
                         </td>
 
                         <td style="width: 180px;" text-start>
-                            <div style="font-size: 15px; color:#0f9776;" [class.red]="TotalDifference!=0" text-start>{{TotalDifference | NumbersPipe:'N2'}}</div>                            
+                            <div style="font-size: 15px; color:#0f9776;" [class.red]="TotalCredit>TotalDebit" text-start>{{TotalDifference | NumbersPipe:'N2'}}</div>
                         </td>
                         <td><div></div></td>
                     </tr>
@@ -45,18 +120,22 @@
                                     [DependencyFilter2Value]="'1'"
                                     [QueryFilterItems]="GLAccountsFilterItems"
                                     (SelectedItemChanged)="GLAccount = $event"
-                                    [SelectedValue]="GLAccountId">
+                                    [SelectedValue]="GLAccountId"
+                                    [StartSearchFromChar]="3"
+                                    [StartSearchFromNumber]="6">
                             </LogLov>
                         </td>
                         <td style="width: 180px;" *ngIf="IsCustomerCare">
 
-                            
+
                             <LogLov [ObjectFieldName]="'GLAccountId'"
                                     [ObjectTableName]="ObjectTableName"
                                     [DataContext]="DataContext"
                                     [LookUpTableName]="'GLAccount'"
                                     (SelectedItemChanged)="GLAccount = $event"
-                                    [SelectedValue]="GLAccountId">
+                                    [SelectedValue]="GLAccountId"
+                                    [StartSearchFromChar]="3"
+                                    [StartSearchFromNumber]="6">
                             </LogLov>
                         </td>
                         <td><div></div></td>
@@ -74,6 +153,25 @@
                         <td><div></div></td>
                     </tr>
 
+                    <tr class="FormFieldRow">
+                        <td style="width: 150px;" [style.text-align]="isRTL ? 'right' : 'left'">{{'Accounting.General.O.DueDate' | TextCodeTranslationPipe}}</td>
+
+                        <td style="width: 180px;">
+                            <LogDatePicker [ObjectFieldName]="'DueDate'" [ObjectTableName]="ObjectTableName"
+                                           [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                        </td>
+                        <td><div></div></td>
+                    </tr>
+
+                    <tr class="FormFieldRow">
+                        <td style="width: 150px;" [style.text-align]="isRTL ? 'right' : 'left'">{{'Accounting.General.O.RefDate' | TextCodeTranslationPipe}}</td>
+
+                        <td style="width: 180px;">
+                            <LogDatePicker [ObjectFieldName]="'RefDate'" [ObjectTableName]="ObjectTableName"
+                                           [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                        </td>
+                        <td><div></div></td>
+                    </tr>
 
 
                     <!-- References -->
@@ -119,9 +217,12 @@
                     <tr>
                         <td>
                             <a *ngIf="_NewJournalPM"
-                               href="javascript:;" (click)="OpenJournal()">
+                               href="javascript:;" (click)="OpenJournal(_NewJournalPM['Id'])">
                                 Adjust Journal have created :{{ _NewJournalPM['JournalNumber'] }}
                             </a>
+                            <div *ngIf="_NewJournals && _NewJournals.length > 0">
+                                Adjust in split journals have been created
+                            </div>
                         </td>
                     </tr>
 
@@ -150,8 +251,31 @@
                         <div></div>
                     </td>
 
-                    <td style="width: 57px;">
-                        <button [disabled]="_NewJournalPM != null"  class="RedButton" (click)="OkButtonClicked()">{{'Accounting.General.B.Adjust' | TextCodeTranslationPipe}}</button>
+                    <td style="width: 180px;">
+
+                        <div [attr.id]="'adjustbutton'">
+                            <span style="display:inline" class="x-split-button">
+                                <button [disabled]="_NewJournalPM != null || _NewJournals!= null" (click)="OkButtonClicked(false)"
+                                        class="RedButton"
+                                        style="width:150px;border-radius: 0px 5px 5px 0px;float:right">
+                                        {{'Reconciliation.B.AdjustInOneJournal' | TextCodeTranslationPipe}}
+                                </button>
+                                <button [disabled]="!(this._SelectedLines.Length && this._SelectedLines.Length > 1) || (_NewJournalPM != null || _NewJournals!= null)" [attr.id]="'arrow'" class="x-button x-button-drop"
+                                        style="width: 20px;border-radius: 5px 0px 0px 5px;color:gray;float:right"
+                                        (click)="DropdowndisplayToggle()">
+                                    &#9660;
+                                </button>
+                                <div *ngIf="!(_NewJournalPM != null || _NewJournals!= null)" [attr.id]="'dropdowmenu'"
+                                     [ngStyle]="{'display': dropdownDisplay  }"
+                                     style="position: fixed;z-index: 1;background-color : whitesmoke;width:280px; ">
+                                    <ul class="x-button-drop-menu" [style.left]="isRTL ? 'initial' : '29px'">
+                                        <li>
+                                            <span style="width: -webkit-fill-available" [style.text-align]="isRTL ? 'right' : 'left'"  (click)="OkButtonClicked(true)">{{'Reconciliation.B.AdjustInSplitJournal' | TextCodeTranslationPipe}}</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </span>
+                        </div>
                     </td>
                 </tr>
             </table>

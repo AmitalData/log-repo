@@ -23,7 +23,10 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.Token = entityPM.Token;
             entity.ActivationDate = entityPM.ActivationDate;
             entity.MetodoPagoCode = entityPM.MetodoPagoCode;
-
+            entity.IsARInvoiceTransferEnabled = entityPM.IsARInvoiceTransferEnabled;
+            entity.IsCartaPorteTransferEnabled = entityPM.IsCartaPorteTransferEnabled;
+            entity.SATCompanyName = entityPM.SATCompanyName;
+            entity.TransferExpenseCharges = entityPM.TransferExpenseCharges;
         }
     }
 }

@@ -21,6 +21,7 @@ export class CustomerSalesmanByProductSplitComponent extends BaseComponent {
     public ItemsSource: ObservableCollection;
     public IsUnifreightEditable: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    public IsDisabled: boolean = false;
     constructor() {
         super();
         this.ItemsSource = new ObservableCollection([]);
@@ -29,6 +30,7 @@ export class CustomerSalesmanByProductSplitComponent extends BaseComponent {
     SetWindowArgs(args: any) {
         this.EntityPM = args['EntityPM'];
         this.ProductTypes = args['ProductTypes'];
+        this.IsDisabled = args['IsDisabled'] ?? false;
         this.Clone();
 
         if (args.IsUnifreightEditable) {

@@ -30,6 +30,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 AuthenticationToken authToken = GetAuthenticationToken();
                 int tenant = authToken.Tenant;
                 SecurityUtility.AuthenticateAPICall(authToken.Tenant);
+                SecurityUtility.AuthenticateAccessibleAPI("Cargo Tracking Shipment Details", authToken.Tenant);
+
                 CargoTrackingShipmentDetailsResult cargoTrackingShipmentDetailsResult = CreateCargoTrackingShipmentDetailsResultInstance(number, authToken.Tenant);
 
                 if (cargoTrackingShipmentDetailsResult.HasMoreThanOneShipmentWithSameHouse)

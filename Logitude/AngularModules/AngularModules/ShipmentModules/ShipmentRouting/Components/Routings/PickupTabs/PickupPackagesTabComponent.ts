@@ -18,6 +18,7 @@ import { ShipmentPackagePM } from '../../../../../Shipment/EntityPMs/ShipmentPac
 import { PackagesTabComponent, ShipmentPackageItem } from '../../../../ShipmentPackages/Components/Packages/PackagesTabComponent';
 import { EntityArgs } from '../../../../../Infrastructure/DataContracts/EntityArgs';
 import { EntityResourceService } from '../../../../../Infrastructure/Services/EntityResourceService';
+import { FeatureLocator } from '../../../../../Infrastructure/Utilities/FeatureLocator';
 
 @Component({
     
@@ -69,10 +70,15 @@ export class PickupPackagesTabComponent {
             this.IsEditingEnabled = ShipmentTool.IsEditingEnabled(this.ShipmentPM);
         }
 
+        if (this.IsShipmentStatuesDelivered()) {
+            this.IsEditingEnabled = false;
+        }
+
         this.IsAddContainerVisible = false;
         if (this.IsFCLEntity) {
-            var featureToggle: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "OIC")[0];
-            if (featureToggle) {
+            //var featureToggle: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "OIC")[0];
+            //if (featureToggle) {
+            if (FeatureLocator.HasFeaturePermession("Container", "ContainersActivated")) {          
                 this.IsAddContainerVisible = true;
                 this.IsEditingEnabled = false;
             }
@@ -84,6 +90,22 @@ export class PickupPackagesTabComponent {
                 this.IsAddContainerEnabled = true;
             }
         }
+    }
+
+
+    private IsShipmentStatuesDelivered() {
+        var deliverdStausName = "Delivered";
+        var IsDeliveryOptionsEnabled = SessionLocator.TenantPM != null ? SessionLocator.TenantPM.EnableDeliveryOptions : false;
+
+        if (!IsDeliveryOptionsEnabled) {
+            return false;
+        }
+
+        if (this.ShipmentPM.StatusName == (deliverdStausName)) {
+            return true;
+        }
+
+        return false;
     }
 
     public SelectedItem: PickupPackageItem = null;
@@ -168,6 +190,8 @@ export class PickupPackagesTabComponent {
             confirmWindow.Show(TextCodeTranslator.Translate("ShipmentPickUpDeliveryPackage.M.DeleteThisPickUpPackage"));
             confirmWindow.WindowClosed.subscribe((event: any) => {
                 if (confirmWindow.Yes) {
+                    this.RestConnectedShipmentpackage(itemComponent.EntityPM);
+                    //this.RemoveConnectedShipmentPackage(itemComponent.EntityPM);
                     this.EntityPM.RemovePackage(itemComponent.EntityPM);
                     this.BuildItemsSource();
                     this.SetUIProperties();
@@ -175,6 +199,15 @@ export class PickupPackagesTabComponent {
             });
         }
     }
+
+    //RemoveConnectedShipmentPackage(pickUpDeliveryPackagePM: ShipmentPickUpDeliveryPackagePM) {
+    //    var shipmentPackage = this.ShipmentPM?.ShipmentPackages?.find(p =>
+    //        (p.ContainerNumber == pickUpDeliveryPackagePM.ContainerNumber) && !AppTool.IsNullOrEmpty(pickUpDeliveryPackagePM.ContainerNumber)
+    //        && AppTool.IsNullOrEmpty(pickUpDeliveryPackagePM.ContainerEntityId))
+    //    if (shipmentPackage != null) {
+    //        this.ShipmentPM.RemovePackage(shipmentPackage);
+    //    }
+    //} 
 
     AddContainerClicked() {
         var windowArgs: any = {};
@@ -206,7 +239,7 @@ export class PickupPackagesTabComponent {
 
         var packagesTabComponent: PackagesTabComponent = new PackagesTabComponent(entityArgs, new EntityResourceService());
         packagesTabComponent.ngOnInit();
-        packagesTabComponent.IsEditingEnabled = AppTool.IsNullOrEmpty(this.EntityPM.StandaloneShipmentId) ? true : false;
+        packagesTabComponent.IsEditingEnabled = AppTool.IsNullOrEmpty(this.EntityPM.StandaloneShipmentId) ? this.IsEditingEnabled : false;
         var itemComponent = new ShipmentPackageItem(shipmentPackage, packagesTabComponent, false);
         logWindow.Width = 940;
         logWindow.Height = 610;
@@ -265,6 +298,12 @@ export class PickupPackagesTabComponent {
                 logWindowTitle = TextCodeTranslator.Translate("ShipmentPackage.O.EditFullTruckLoad");
         }
         return logWindowTitle;
+    }
+
+    RestConnectedShipmentpackage(item: ShipmentPickUpDeliveryPackagePM) {
+        if (this.IsAddContainerVisible) {
+            this.ShipmentPM.ShipmentPackages.find(p => p.ContainerNumber == item.ContainerNumber).IsPackageCheckedInLeg = false;
+        }
     }
 
 }

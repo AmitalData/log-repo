@@ -29,10 +29,12 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.ServicesHelpe
                 getIsIncrementalBuildRunningcommand.CommandTimeout = (int)TimeOut;
                 connection.Open();
                 result = ExecuteIsIncrementalRunningCommand(getIsIncrementalBuildRunningcommand);
+                connection.Close();
             }
-            finally
+            catch (Exception ex)
             {
                 connection.Close();
+                throw ex;
             }
             return result;
         }
@@ -70,10 +72,13 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.ServicesHelpe
                 getAutomaticLastUpdateDateCommand.CommandTimeout = (int)TimeOut;
                 connection.Open();
                 result = ExecuteAutomaticLastUpdateDateCommand(getAutomaticLastUpdateDateCommand);
+                connection.Close();
+
             }
-            finally
+            catch (Exception ex)
             {
                 connection.Close();
+                throw ex;
             }
             return result;
         }
@@ -110,6 +115,11 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.ServicesHelpe
                 getLastUpdateDateCommand.CommandTimeout = (int)TimeOut;
                 connection.Open();
                 result = ExecuteTableLastUpdateCommand(getLastUpdateDateCommand);
+            }
+            catch (Exception ex)
+            {
+                connection.Close();
+                throw ex;
             }
             finally
             {
@@ -224,7 +234,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.ServicesHelpe
         }
         public static void UpdateWaterMarksTable(CargoTrackingTable table, string date, string connectionString)
         {
-            var todayDate = TenantServerConfigration.GetCurrentDateTime(0);
+            var todayDate = TenantServerConfigration.GetCurrentDateTime(0).ToString("MM/dd/yyyy hh:mm:ss.fff tt");
             string setLastUpdateDateCommand = "update  CargoTrackingWatermarks set LastUpdateDate = '" + date + "',LastRun = '" + todayDate + "' where tableName = '" + table.Main_CargoTracking_TableName + "'";
             ExecuteSql(setLastUpdateDateCommand, connectionString);
 
@@ -265,11 +275,16 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.ServicesHelpe
 
         public static void UpdateWaterMarkAfterFinishCheck(CargoTrackingTable table, DateTime? automaticLastUpdateDate, CargoTrackingArgs buildCargoArgs)
         {
+            int ShipmentTable_GetShipmentOrders = 3;
             if (table != null && table.Main_CargoTracking_TableName != "CargoTrackingWatermarks")
             {
 
                 if (automaticLastUpdateDate != null) {
                     var lastUpdateDate = automaticLastUpdateDate.Value.ToString("MM/dd/yyyy hh:mm:ss.fff tt");
+                    if (buildCargoArgs.Table.CurrentCondition == ShipmentTable_GetShipmentOrders)
+                    {
+                        lastUpdateDate = automaticLastUpdateDate.Value.ToString("MM/dd/yyyy hh:mm:ss.fff tt");
+                    } 
                     UpdateWaterMarksTable(table, lastUpdateDate, buildCargoArgs.DestinationConnectionString);
                 } 
  
@@ -339,6 +354,41 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.ServicesHelpe
                                       " END ";
 
             return dropTableCommand;
+        }
+
+        public static List<int> GetAllTenants(string connectionString)
+        {
+
+            SqlConnection connection = new SqlConnection(connectionString);
+            SqlCommand getAllTenantsCommand = new SqlCommand(
+               "select id from Tenants", connection);
+            try
+            {
+                getAllTenantsCommand.CommandTimeout = (int)TimeOut;
+                connection.Open();
+                var result = ExecuteGetAllTenantsCommand(getAllTenantsCommand);
+                connection.Close();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                connection.Close();
+                throw ex;
+            }
+        }
+
+        private static List<int> ExecuteGetAllTenantsCommand(SqlCommand getAllTenantsCommand)
+        {
+            var tenantsIds = new List<int>();
+            using (SqlDataReader reader = getAllTenantsCommand.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    tenantsIds.Add(int.Parse(reader["Id"].ToString()));
+                }
+
+            }
+            return tenantsIds;
         }
     }
 

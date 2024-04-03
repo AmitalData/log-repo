@@ -10,6 +10,8 @@ using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.QuoteModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
@@ -40,40 +42,40 @@ using Simplog.Data.CommonDataModel;
         }
 
 		
-		public Port GetPortById(string Id,int Tenant,string ComputingPartnerName = "")
+		public Port GetPortById(string Id,int Tenant,  string ComputingPartnerName = "")
         { 
 		    try
             {
-
+				 
 				
-				var temp = query.GetSinglePM(Id,Tenant);				
+				var temp = query.GetSinglePM(Id, Tenant);				
 				 if (temp == null)
                     throw new ApplicationException("Port with Id " + Id + " doesn't exist");
 
 				return PortDataMapping(temp,Tenant,ComputingPartnerName);
 			}
+
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }
 		
-		public Port GetPortByCombinedCode(string CombinedCode,int Tenant,string ComputingPartnerName = "")
+		public Port GetPortByCombinedCode(string CombinedCode,int Tenant,  string ComputingPartnerName = "")
         { 
 		    try
             {
-
+				 
 				
-				var temp = query.GetSinglePMByCombinedCode(CombinedCode,Tenant);				
+				var temp = query.GetSinglePMByCombinedCode(CombinedCode, Tenant);				
 				 if (temp == null)
                     throw new ApplicationException("Port with CombinedCode " + CombinedCode + " doesn't exist");
 
 				return PortDataMapping(temp,Tenant,ComputingPartnerName);
 			}
+
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }
@@ -129,7 +131,7 @@ using Simplog.Data.CommonDataModel;
 					
 					if (!string.IsNullOrEmpty(MyEntity.Code))
 					{
-						temp = query.GetSinglePMByCombinedCode(MyEntity.Code, Tenant);
+						temp = query.GetSinglePMByCombinedCode(MyEntity.Code, Tenant  );
 					} 
 					if (!string.IsNullOrEmpty(MyEntity.PartnerCode))
 					{
@@ -141,16 +143,17 @@ using Simplog.Data.CommonDataModel;
 						{
 						  throw new ApplicationException("Port with Partner Code " + MyEntity.PartnerCode + " doesn't match any record");
 						}
-						temp = query.GetSinglePMByCombinedCode(MyCode, Tenant);
+						temp = query.GetSinglePMByCombinedCode(MyCode, Tenant );
 						
 						
 					}
 					
-					   					   
-					if(temp == null)
+					
+			  	   if(temp == null)
 					{   
 					    throw new ApplicationException("Port with Code " + MyEntity.Code + " doesn't exist");
 					} 
+				 
 					
 					if(string.IsNullOrEmpty(temp.Id))
 					{
@@ -169,33 +172,33 @@ using Simplog.Data.CommonDataModel;
 						
 					}
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Code))
-					{							//throw new ApplicationException("Code Can't be update"); 
-							temp.CombinedCode = MyEntity.Code;
+					if(!IsUpdate)
+					{							
+						temp.CombinedCode = MyEntity.Code;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.LocalName))
-					{							//throw new ApplicationException("LocalName Can't be update"); 
-							temp.LocalName = MyEntity.LocalName;
+					if(!IsUpdate)
+					{							
+						temp.LocalName = MyEntity.LocalName;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.EnglishName))
-					{							//throw new ApplicationException("EnglishName Can't be update"); 
-							temp.EnglishName = MyEntity.EnglishName;
+					if(!IsUpdate)
+					{							
+						temp.EnglishName = MyEntity.EnglishName;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.PartnerCode))
-					{							//throw new ApplicationException("PartnerCode Can't be update"); 
-							temp.CombinedCode = MyEntity.PartnerCode;
+					if(!IsUpdate)
+					{							
+						temp.CombinedCode = MyEntity.PartnerCode;
 
 										}  
 
@@ -210,7 +213,7 @@ using Simplog.Data.CommonDataModel;
 
 						 
 							if(!IsUpdate)
-							{								//throw new ApplicationException("Country Can't be update"); 
+							{								
 								temp.CountryId = myCountryPM.Id;
 						  
 							}  
@@ -231,7 +234,7 @@ using Simplog.Data.CommonDataModel;
 
 						 
 							if(!IsUpdate)
-							{								//throw new ApplicationException("State Can't be update"); 
+							{								
 								temp.StateId = myStatePM.Id;
 						  
 							}  
@@ -250,6 +253,8 @@ using Simplog.Data.CommonDataModel;
                 throw ex;
             } 
         }
-		 
+
+
+						   
    }
 }

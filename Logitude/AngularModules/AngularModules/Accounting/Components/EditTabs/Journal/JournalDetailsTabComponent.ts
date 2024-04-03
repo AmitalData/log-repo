@@ -22,12 +22,15 @@ import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 import {ObservableCollection} from '../../../../Infrastructure/Utilities/ObservableCollection';
 import {JournalValidator} from '../../../Validators/JournalValidator';
 import {AppTool, DateTool} from '../../../../Infrastructure/Tools';
-import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
+import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
+import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {GLAccountListService} from '../../../Services/StandardLists/GLAccountListService'
 import { APInvoicePMService } from '../../../../Invoice/Services/StandardPMs/APInvoicePMService';
 import { APInvoicePM } from '../../../../Invoice/EntityPMs/APInvoicePM';
-
+import { GLAccountSecurityLevelService } from 'Accounting/Utilities/GLAccountSecurityLevelService';
+import { FullAccountingSettingListService } from 'Accounting/Services/StandardLists/FullAccountingSettingListService';
+declare var window: any;
 
 @Component({
 
@@ -51,18 +54,28 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
     JournalLines: ObservableCollection;//JournalLineModel[];
     creditTotal: number = 0;
     debitTotal: number = 0;
+    difference: number = 0;
+    differenceColor = '#9e4300';
     journalDisabled: boolean = false;
     forceFocus: boolean = false;
     PointerEvents: string = 'auto';
     Opacity: string = "1";
     referencesDivHeight: number;
     Approved: boolean = false;
+    maxSecurityLevel = 10;
     IsJournalEditableAfterApproval: boolean = false;
     APInvoice: APInvoicePM;
     Voided: boolean = false;
+    private CancelledStatusCode: string = "5";
+    private fullAccountingSettingListService: FullAccountingSettingListService;
+    public IsSecurityLevelVisible: boolean = false;
+    IsJournalSecurityManaged: boolean = false;
+    public IsSecurityLevelOK: boolean = true;
+    public UserSecurityLevel: number = SessionLocator.LoggedUserPM.SecurityLevel;
     AccountingPeriods: AccountingPeriodList[] = [];
     _AccountingPeriodListService: AccountingPeriodListService = new AccountingPeriodListService();
     ratesTableExtendedListService: RatesTableExtendedListService = new RatesTableExtendedListService();
+    public EntityWarningsList: string[] = [];
 
     OnRowEnded($event) {
         console.log("this.JournalLines.Length : " + this.JournalLines.Length);
@@ -97,10 +110,10 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
                         this.CurrentSession.CurrentEditComponent.ValidationErrorsList.push(TextCodeTranslator.Translate("Journal.O.ExchangeRateValidation"));
                     }
                 }
-             
+
             }
-         
-         
+
+
         });
     }
     public isRTL: boolean = false;
@@ -113,11 +126,21 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
         private apInvoicePMService :APInvoicePMService
     ) {
         super();
+         this.fullAccountingSettingListService = new FullAccountingSettingListService();
 
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         this.JournalLines = new ObservableCollection([]);
-
+      
         this.EntityPM = entityArgs.EntityPM;
+
+        this.CheckFeatures();
+        this.getAccountingSettingSecurityLevelField();
+        if (this.IsSecurityLevelOK != undefined && !this.IsSecurityLevelOK) {
+            this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
+            this.CurrentSession.CurrentEditComponent.ValidationErrorsList.push(TextCodeTranslator.Translate("Journal.O.ViewingNotAuthorized"));
+
+        }
+
 
         this.SetDatesDefaultValues();
 
@@ -136,7 +159,6 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
 
         });
 
-
         this.Listen();
     }
     private SetDatesDefaultValues() {
@@ -145,6 +167,59 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
 
 
     }
+
+    CheckFeatures() {
+     // if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
+        var table = window.ObjectTables.filter(d => d.Name === 'Journal')[0];
+        var journalSecurityManagedFeature = FeatureLocator.Features.filter(f => (f.Code == "Journal.Feature.ManageSecurity") && f.ObjectTableId == table.Id)[0];
+        if (journalSecurityManagedFeature) {
+            this.IsJournalSecurityManaged = true;
+        }
+
+        this.IsJournalSecurityManaged = true;
+    }
+
+    getAccountingSettingSecurityLevelField() {
+      //  if (this.IsJournalSecurityManaged) {
+            this.fullAccountingSettingListService.getSingle(SessionLocator.Tenant.toString()).subscribe((response: any) => {
+                this.CurrentSession.StopBusyIndicator();
+                var userSecurityLevel: number = 10;
+                if (this.UserSecurityLevel != undefined) {
+                    userSecurityLevel = this.UserSecurityLevel;
+                }
+                var journalSecurityLevel: number = 0;
+                if (this.EntityPM.SecurityLevel != undefined) {
+                    journalSecurityLevel = this.EntityPM.SecurityLevel;
+                }
+                this.IsSecurityLevelOK = true;
+
+                if (response != null) {
+                    var response = response.Result;
+
+                    this.IsSecurityLevelVisible = response.IsSecurityLevelActivated;
+
+                    if (response.IsSecurityLevelActivated && userSecurityLevel >= 1) {
+                        if (journalSecurityLevel > userSecurityLevel) {
+                            this.IsSecurityLevelOK = false;
+                         }
+                    }
+                    else if (response.IsSecurityLevelActivated && userSecurityLevel == 0 && journalSecurityLevel > 0) {
+                        this.IsSecurityLevelOK = false;
+                     }
+                    else {
+                     }
+                }
+
+                if (this.IsSecurityLevelOK)
+                    this.maxSecurityLevel = userSecurityLevel;
+            });
+     
+    }
+
+
+
+
+
     public CurrentEditComponentId: string;
     private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null;
@@ -189,14 +264,25 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
 
     SetUIProperties() {
         //Display only
-        if (this.EntityPM.StatusCode == "3") { // 3-Voided and 2-Approved
+        if (this.IsSecurityLevelOK != undefined && !this.IsSecurityLevelOK) {
+            //disable controls
+            this.journalDisabled = true;
+            this.PointerEvents = 'none';
+            this.Opacity = "1";
+            this.referencesDivHeight = 0;
+            this.UIProperties.SetVisibility("Reference1", "Journal", false);
+            this.UIProperties.SetVisibility("Reference2", "Journal", false);
+            this.UIProperties.SetVisibility("Reference3", "Journal", false);
+            this.UIProperties.SetVisibility("Notes", "Journal", false);
+        }
+        else if (this.EntityPM.StatusCode == "3" || this.EntityPM.StatusCode == this.CancelledStatusCode) { // 3-Voided and 2-Approved
             //disable controls
             this.journalDisabled = true;
             this.PointerEvents = 'none';
             this.Opacity = "1";
             this.Voided = true;
         }
-        else if (this.EntityPM.StatusCode == "2") { // 3-Voided and 2-Approved
+        else if (this.EntityPM.StatusCode == "2" || this.EntityPM.StatusCode == "6") { // 3-Voided and 2-Approved
             //disable controls
             this.journalDisabled = true;
             this.PointerEvents = 'none';
@@ -208,13 +294,17 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
             this.UIProperties.SetVisibility("Reference3", "Journal", false);
             this.UIProperties.SetVisibility("Notes", "Journal", false);
         }
+        else{
+            this.DueDate=new Date();
+            this.DocumentDate=new Date();
+        }
 
         this.CheckIfJournalEditableAfterApproval();
     }
 
 
     private CheckIfJournalEditableAfterApproval() {
-        if (this.Approved) {
+        if (this.Approved && this.EntityPM.IsLedgerCreated) {
 
             this.CheckIfJournalManuallyCreated();
 
@@ -223,8 +313,17 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
     }
 
     private CheckIfJournalManuallyCreated() {
-        const AccountingEntityCode_Journal = "1";
-        var isJournalManuallyCreated = this.EntityPM.ExternalSystem == null && this.EntityPM.ExternalNo == null && this.EntityPM.AccountingEntityCode == AccountingEntityCode_Journal;
+        const allowedAccountingEntityCodes = [
+            '1', //Journal
+            '10', //Adjustment
+            '12' //Bank Adjustment
+        ];
+
+        const isJournalManuallyCreated =
+            this.EntityPM.ExternalSystem == null &&
+            this.EntityPM.ExternalNo == null &&
+            allowedAccountingEntityCodes.includes(this.EntityPM.AccountingEntityCode);
+
         if (isJournalManuallyCreated) {
             this.IsJournalEditableAfterApproval = true;
         }
@@ -258,43 +357,49 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
     }
 
     FillGrid() {
-
-        // if entity in edit mode
-        if (this.EntityPM.Id != undefined || this.EntityPM.JournalLines.length>0) {
-            var tempItemSource: JournalLineModel[] = [];
-            if (this.EntityPM.JournalLines != null) {
-                for (var i = 0; i < this.EntityPM.JournalLines.length; i++) {
-                    var line = new JournalLineModel(this.EntityPM.JournalLines[i], this);
-                    tempItemSource.push(line);
-                    //this.JournalLines.Insert(line);
+        if (this.IsSecurityLevelOK == undefined || this.IsSecurityLevelOK) {
+            // if entity in edit mode
+            if (this.EntityPM.Id != undefined || this.EntityPM.JournalLines.length > 0) {
+                var tempItemSource: JournalLineModel[] = [];
+                if (this.EntityPM.JournalLines != null) {
+                    for (var i = 0; i < this.EntityPM.JournalLines.length; i++) {
+                        var line = new JournalLineModel(this.EntityPM.JournalLines[i], this);
+                        tempItemSource.push(line);
+                        //this.JournalLines.Insert(line);
+                    }
+                    this.JournalLines.InsertCollection(tempItemSource);
+                    //for (let item of this.EntityPM.JournalLines) {
+                    //    var line = new JournalLineModel(item, this);
+                    //    this.JournalLines.Insert(line);
+                    //}
                 }
-                this.JournalLines.InsertCollection(tempItemSource);
-                //for (let item of this.EntityPM.JournalLines) {
-                //    var line = new JournalLineModel(item, this);
-                //    this.JournalLines.Insert(line);
-                //}
+                this.CalculateTotals();
+
             }
-            this.CalculateTotals();
+            else {
+                this.EntityPM.StatusCode = "0"; // Draft
+                this.EntityPM.TypeCode = "0"; // Manual
+                this.EntityPM.AccountingEntityCode = "1"; // Journal
 
+                this.EntityPM.CreatedByUserId = SessionLocator.LoggedUserId;
+                this.EntityPM.Tenant = SessionLocator.Tenant;
+
+                var journalLine: JournalLinePM = new JournalLinePM(this.EntityPM);
+                journalLine.Line = 1;
+                journalLine.Tenant = this.EntityPM.Tenant;
+                journalLine.DocumentDate = this.DocumentDate;
+                journalLine.DueDate = this.DueDate;
+                journalLine.CurrencyId = this.Currency.Id;
+                this.EntityPM.AddJournalLine(journalLine);
+                var line = new JournalLineModel(journalLine, this);
+                line.Currency = this.Currency;
+                this.JournalLines.Insert(line);
+
+            }
         }
+
         else {
-            this.EntityPM.StatusCode = "0"; // Draft
-            this.EntityPM.TypeCode = "0"; // Manual
-            this.EntityPM.AccountingEntityCode = "1"; // Journal
-
-            this.EntityPM.CreatedByUserId = SessionLocator.LoggedUserId;
-            this.EntityPM.Tenant = SessionLocator.Tenant;
-
-            var journalLine: JournalLinePM = new JournalLinePM(this.EntityPM);
-            journalLine.Line = 1;
-            journalLine.Tenant = this.EntityPM.Tenant;
-            journalLine.DocumentDate = this.DocumentDate;
-            journalLine.DueDate = this.DueDate;
-            journalLine.CurrencyId = this.Currency.Id;
-            this.EntityPM.AddJournalLine(journalLine);
-            var line = new JournalLineModel(journalLine, this);
-            line.Currency = this.Currency;
-            this.JournalLines.Insert(line);
+            this.EntityWarningsList.push("אינך מורשה לצפיה בפקודה מספר " + this.EntityPM.JournalNumber);
 
         }
     }
@@ -313,8 +418,6 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
             }
         });
         this.GetDefaultValues();
-
-
         //set focus on accounting date
         var t = setTimeout(() => { this.forceFocus = true; }, 1);
     }
@@ -326,7 +429,7 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
         if (this.reference1 != value) {
             this.reference1 = value;
             this.UpdateFirstLineReferencesNotesAndCurrency();
-          
+
 
         }
     }
@@ -343,7 +446,7 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
     reference3: string;
     get Reference3() { return this.reference3; }
     set Reference3(value: string) {
-        if (this.reference3 != value) {          
+        if (this.reference3 != value) {
             this.reference3 = value;
             this.UpdateFirstLineReferencesNotesAndCurrency();
 
@@ -393,12 +496,22 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
             this.EntityPM.CurrencyId = value;
             this.getHeaderCurrency(value);
           //  this.getHeadercurrencyRate(value);
-            
+
         }
         if (!value) {
             this.HeaderCurrency = null;
         }
     }
+
+
+    public get SecurityLevel() { return this.EntityPM.SecurityLevel; }
+    public set SecurityLevel(value: number) {
+        if (this.EntityPM.SecurityLevel != value) {
+           this.EntityPM.SecurityLevel = value;
+        }
+    }
+
+
     get DocumentDate() { return this.EntityPM.DocumentDate; }
     set DocumentDate(value: Date) {
         if (this.EntityPM.DocumentDate != value) {
@@ -429,7 +542,7 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
                 this.ValidateDates(value,"AccountingDate");
 
             }
-        
+
             this.EntityPM.AccountingDate = value;
             this.UpdateLinesDates();
             this.UpdateLinesAccountingDates();
@@ -439,8 +552,10 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
 
 
     }
-    private ValidateDates(value:Date, fieldName:string) {
+    private async ValidateDates(value:Date, fieldName:string) {
         if (fieldName == "AccountingDate") {
+            this.AccountingPeriods=null;
+            await this.GetAccountingPeriods();
             var accountingPeriod = this.AccountingPeriods.find(d => d.Year == value.getFullYear());
             if (accountingPeriod) {
 
@@ -449,13 +564,12 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
                 // Valid Month => (ClosedMonth < month <= OpenMonth)
                 if (month > accountingPeriod.ClosedMonth && month <= accountingPeriod.OpenMonth) { // valid (open month)
 
-                    this.CurrentSession.CurrentEditComponent.ValidationErrorsList = []; // empty errors list
+                    JournalValidator.SetAccountingDateInValid=false;
 
                 } else { // invalid (closed month)
 
                     // push the error to errors list
-                    var msg = TextCodeTranslator.Translate("AccountingPeriods.O.ClosedMonth");
-                    this.UIProperties.SetValidity(fieldName, this.ObjectTableName, false, msg);
+                    JournalValidator.SetAccountingDateInValid=true;
 
                     this.EntityPM.AccountingDate = value;
 
@@ -608,7 +722,7 @@ getHeaderCurrency(CurrencyId:string){
             }
         });
 
-        this.GetAccountingPeriods();
+        //this.GetAccountingPeriods();
         // Current Accouting Period
         //var periodTypeCode = "1" // 1-Regular
         //this.accountingPeriodListService.getByYear(new Date().getFullYear(), periodTypeCode).subscribe((myResponse: ServiceResponse) => {
@@ -622,7 +736,7 @@ getHeaderCurrency(CurrencyId:string){
     }
 
     CalculateTotals() {
-        this.creditTotal = this.debitTotal = 0;
+        this.creditTotal = this.debitTotal = this.difference = 0;
         for (let line of this.JournalLines.Collection) {
 
             if (!AppTool.IsNullOrEmpty(line.LocalAmount)) {
@@ -642,20 +756,35 @@ getHeaderCurrency(CurrencyId:string){
 
 
         }
+        if(this.debitTotal - this.creditTotal > 0)
+            this.differenceColor ='#9e4300'
+        else if (this.debitTotal - this.creditTotal == 0)
+            this.differenceColor = 'black'
+        else
+            this.differenceColor = '#008c7a'        
+
+        this.difference = Math.abs(this.debitTotal - this.creditTotal);
     }
 
-    GetAccountingPeriods() {
-        var filters = new ApiQueryFilters(true);
-        filters.addAdditionalFilter("PeriodTypeCode", "1", null, null, "Equals", false, false, false, "string"); // 1-Regular
-
-        this._AccountingPeriodListService.getByFilters(filters).subscribe((myResponse: ServiceResponse) => {
-            if (myResponse != null) {
-                if (!myResponse.HasError) {
-                    this.AccountingPeriods = myResponse.Result;
-                    console.log(">>Accounting Periods: ", myResponse.Result);
+    async GetAccountingPeriods() {
+          
+            var filters = new ApiQueryFilters(true);
+            filters.addAdditionalFilter("PeriodTypeCode", "1", null, null, "Equals", false, false, false, "string"); // 1-Regular   
+             
+        const res = await new Promise<boolean>((resolve, reject) => {   
+            
+            this._AccountingPeriodListService.getByFilters(filters).subscribe((myResponse: ServiceResponse) => {
+                if (myResponse != null) {
+                    if (!myResponse.HasError) {
+                        this.AccountingPeriods = myResponse.Result;
+                        console.log(">>Accounting Periods: ", myResponse.Result);
+                        resolve(true);
+                    }
                 }
-            }
-        });
+            });
+        })
+       return res;
+
     }
 
     header_year: number;
@@ -698,9 +827,16 @@ getHeaderCurrency(CurrencyId:string){
         this.lineDate.setFullYear(this.line_year);
         this.lineDate.setMonth(this.line_month - 1);
         this.lineDate.setDate(this.line_day);
-        
+
         if (!line.ActionCode) line.accDay = this.line_day;
-        line.AccountingDate = new Date(this.line_year, this.line_month-1, line.accDay);
+        line.AccountingDate = this.getDate(this.line_year, this.line_month-1, line.accDay);
+    }
+    getDate(year, month, day) {
+        var d = new Date(year, month, day);
+        if (d.getMonth() == month) {
+            return d;
+        }
+        return new Date(year, +month + 1, 0);
     }
     lineDate: Date;
     headerDate: Date;
@@ -723,7 +859,7 @@ getHeaderCurrency(CurrencyId:string){
                     }
                     else {
                         this.SetLineDate(line);
-                      
+
                     }
                 }
             });
@@ -746,7 +882,7 @@ getHeaderCurrency(CurrencyId:string){
                 if (!line.ActionCode) {
                     if (line.AccountingDate != this.AccountingDate ) line.AccountingDate = this.AccountingDate;
                     if (line.DueDate != this.DueDate) line.DueDate = this.DueDate;
-                    if (line.DocumentDate != this.DocumentDate) line.DocumentDate = this.DocumentDate;                 
+                    if (line.DocumentDate != this.DocumentDate) line.DocumentDate = this.DocumentDate;
                 }
             });
 
@@ -814,6 +950,7 @@ class JournalLineModel extends BaseComponent {
     accountingDayMustBeInRange: string = TextCodeTranslator.Translate("Journal.O.TheAccountingDayMustBeInRange");
     public IsCurrencyEnabled :boolean =true;
     public isValid: boolean = true;
+    public SessionIndex: number;
 
     public __UserCanSetRateManually: boolean = false; // user can set rate manually by insert forign amount with local amount empty (see WI 24999)
     private CurrentSession = SessionLocator.SelectedSession;
@@ -857,9 +994,21 @@ class JournalLineModel extends BaseComponent {
         this.DebitAccountFilterItems = new ApiQueryFilters();
         this.DebitAccountFilterItems.addAdditionalFilter("AccountTypeCode", "4,5", null, null, "Exclude", false, false, false, "string", false, true);
         //#endregion
-        this.glaccountListService=new GLAccountListService();
+        this.glaccountListService = new GLAccountListService();
+        this.SetCurrencyFieldEnabilityForCopyJournal();
+        this.SessionIndex  = SessionLocator.Index;
     }
+    SetCurrencyFieldEnabilityForCopyJournal() {
 
+        if (this.JournalLinePM.CurrencyId != "Multi") {
+            this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, false);
+        }
+        
+        // When copy journal- check if AmountsAndCurrencies is false and SetEnabled True on CurrencyId LOV Input 
+        if(this.EntityPM.Copied && !this.EntityPM.AmountsAndCurrencies && AppTool.IsNullOrEmpty(this.JournalLinePM.CurrencyId)){
+            this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, true);
+        }
+    }
 
     get AccountingDate() { return this.JournalLinePM.AccountingDate; }
     set AccountingDate(value: Date) {
@@ -884,7 +1033,6 @@ class JournalLineModel extends BaseComponent {
             this.JournalLinePM.Line = value;
         }
     }
-
 
   OnSelectedItemChanged($event) {
     console.log($event);
@@ -1042,8 +1190,8 @@ class JournalLineModel extends BaseComponent {
                             this.isRateManualy = false;
 
                             var rate = myResponse.Result;
-                           
-                          
+
+
                             if (this.IsAccDayChanged && (this.currencyRate != rate.Rate)) {
                                 this.SetAmountsWhenChangingAccDay();
                                 this.currencyRate = rate.Rate;
@@ -1099,11 +1247,11 @@ class JournalLineModel extends BaseComponent {
             // set value
             this.JournalLinePM.LocalAmount = value;
             this.parent.CalculateTotals();
-           
+
             if(this.CurrencyId ==SessionLocator.TenantPM.CurrencyId)  this.ForeignAmount= this.LocalAmount;
-           
+
             if (!this.ForeignAmount && this.CurrencyId) this.GetExchangeRate(this.CurrencyId);
-           
+
 
         }
     }
@@ -1117,7 +1265,7 @@ class JournalLineModel extends BaseComponent {
             this.JournalLinePM.ForeignAmount = value;
             this.parent.CalculateTotals();
             if (!this.LocalAmount && this.CurrencyId) this.GetExchangeRate(this.CurrencyId);
-         
+
         }
 
     }
@@ -1125,10 +1273,10 @@ class JournalLineModel extends BaseComponent {
 
     AmountChanged(type,localAmount,foreignAmount){
         console.log("[AmountChanged] local: ", localAmount, ", foreign: ", foreignAmount);
-      
+
 
         if (this.CurrencyId) {
-           
+
             if (type == 'local')
                 this.isLocalEntered = !AppTool.IsNullOrEmpty(localAmount);
 
@@ -1177,7 +1325,7 @@ class JournalLineModel extends BaseComponent {
         if (this.CurrencyId == SessionLocator.TenantPM.CurrencyId) return true;
     }
     SetExchangeRateMnualy() {
-        this.currencyRate = this.LocalAmount / this.ForeignAmount;
+        //this.currencyRate = this.LocalAmount / this.ForeignAmount;
         this.isRateManualy = true;
     }
     // [!]
@@ -1226,6 +1374,32 @@ class JournalLineModel extends BaseComponent {
         }
     }
 
+    get DebitAccountNumber() { return this.JournalLinePM.DebitAccountNumber; }
+    set DebitAccountNumber(value: string) {
+        if (this.JournalLinePM.DebitAccountNumber != value) {
+            this.JournalLinePM.DebitAccountNumber = value;
+        }
+    }
+    get DebitAccountEnglishName() { return this.JournalLinePM.DebitAccountEnglishName; }
+    set DebitAccountEnglishName(value: string) {
+        if (this.JournalLinePM.DebitAccountEnglishName != value) {
+            this.JournalLinePM.DebitAccountEnglishName = value;
+        }
+    }
+    get CreditAccountEnglishName() { return this.JournalLinePM.CreditAccountEnglishName; }
+    set CreditAccountEnglishName(value: string) {
+        if (this.JournalLinePM.CreditAccountEnglishName != value) {
+            this.JournalLinePM.CreditAccountEnglishName = value;
+        }
+    }
+    get CreditAccountNumber() { return this.JournalLinePM.CreditAccountNumber; }
+    set CreditAccountNumber(value: string) {
+        if (this.JournalLinePM.CreditAccountNumber != value) {
+            this.JournalLinePM.CreditAccountNumber = value;
+        }
+    }
+
+
     get CurrencyCode() { return this.JournalLinePM.CurrencyCode; }
     set CurrencyCode(value: string) {
         if (this.JournalLinePM.CurrencyCode != value) {
@@ -1233,11 +1407,6 @@ class JournalLineModel extends BaseComponent {
         }
     }
 
-    SetCurrencyForSingleAccount() {
-        if (!this.CreditAccount.IsMultiCurrency) {
-
-        }
-    }
     creditAccount: GLAccountPM;
     get CreditAccount() { return this.creditAccount; }
     set CreditAccount(value: GLAccountPM) {
@@ -1247,22 +1416,8 @@ class JournalLineModel extends BaseComponent {
         }
         if (!AppTool.IsNullOrEmpty(value)) {
             this.CreditAccountName = value.LocalName;
-           
-          
-            if (this.ActionCode == "1" && !this.creditAccount.IsMultiCurrency) {
-                this.CurrencyId = this.creditAccount.CurrencyId;
-                this.CurrencyCode = this.creditAccount.CurrencyCode;
-            }
-            else if (this.ActionCode == "3" && !this.creditAccount.IsMultiCurrency) {
-                this.CurrencyId = this.creditAccount.CurrencyId;
-                this.CurrencyCode = this.creditAccount.CurrencyCode;
-            }
-            else {
-                //this.CurrencyId = null;
-                //this.CurrencyCode = null;
-                //this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
-            }
 
+            this.SetCurrencyForSingleAccount(value, ActionCode.Credit.toString(), ActionCode.DebitAndCredit.toString());
             if (!AppTool.IsNullOrEmpty(this.Currency)) {
                 this.SplittedCheck();
             }
@@ -1272,6 +1427,7 @@ class JournalLineModel extends BaseComponent {
             this.CreditAccountName = null;
             this.CreditAccountId = null;
         }
+        this.SetForeignAmountEnabilityForSingleCurrencyAccount();
     }
 
     debitAccount: GLAccountPM;
@@ -1283,20 +1439,8 @@ class JournalLineModel extends BaseComponent {
         }
         if (!AppTool.IsNullOrEmpty(value)) {
             this.DebitAccountName = value.LocalName;
+            this.SetCurrencyForSingleAccount(value, ActionCode.Debit.toString(), ActionCode.DebitAndCredit.toString());
 
-            if (this.ActionCode == "2" && !this.debitAccount.IsMultiCurrency) {
-                this.CurrencyId = this.debitAccount.CurrencyId;
-                this.CurrencyCode = this.debitAccount.CurrencyCode;
-            }
-            else if (this.ActionCode == "3" && !this.debitAccount.IsMultiCurrency) {
-                this.CurrencyId = this.debitAccount.CurrencyId;
-                this.CurrencyCode = this.debitAccount.CurrencyCode;
-            }
-            else {
-                //this.CurrencyId = null;
-                //this.CurrencyCode = null;
-              //  this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
-            }
             if (!AppTool.IsNullOrEmpty(this.Currency)) {
                 this.SplittedCheck();
             }
@@ -1304,9 +1448,31 @@ class JournalLineModel extends BaseComponent {
             this.DebitAccountName = null;
             this.DebitAccountId = null;
         }
+        this.SetForeignAmountEnabilityForSingleCurrencyAccount();
     }
+    SetCurrencyForSingleAccount(account:GLAccountPM,actionCode1:string ,actionCode2:string) {
+        if (!account.IsMultiCurrency) {
+            if (this.ActionCode == actionCode1 || this.ActionCode == actionCode2) {
+                this.CurrencyId = account.CurrencyId;
+                this.CurrencyCode = account.CurrencyCode;
+            }
+            this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, false);
 
+        } else {
+            this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, true);
 
+        }
+    }
+    SetForeignAmountEnabilityForSingleCurrencyAccount() {
+        if (this.CurrencyId != SessionLocator.TenantPM.CurrencyId) {
+            this.UIProperties.SetEnabled("ForeignAmount", this.ObjectTableName, true);
+            this.enableForeighAmountField = true;
+        }
+        else {
+            this.UIProperties.SetEnabled("ForeignAmount", this.ObjectTableName, false);
+            this.enableForeighAmountField = false;
+        }
+    }
     accDay: number;
     get AccDay() {
         return this.accDay
@@ -1320,7 +1486,7 @@ class JournalLineModel extends BaseComponent {
               //  this.AccountingDate = this.parent.AccountingDate;
             }
 
-        
+
         }
     }
     ValidateAccDay() {
@@ -1356,7 +1522,7 @@ class JournalLineModel extends BaseComponent {
         if (this.CurrencyId)
             this.GetExchangeRate(this.CurrencyId);
         this.SetAccountingDate();
-        
+
     }
     IsAccDayChanged: boolean;
     IsAccDayValid(date: Date, day: number) {
@@ -1365,6 +1531,7 @@ class JournalLineModel extends BaseComponent {
             if (day > lastDayOfMonth) {
                 //error
                 this.UIProperties.SetValidity("AccDay", this.ObjectTableName, false, this.accountingDayMustBeInRange);
+                this.AccountingDate = new Date(date.setDate(lastDayOfMonth));
                 this.isValid = false;
                 return false;
                 //var t = setTimeout(() => {
@@ -1398,19 +1565,18 @@ class JournalLineModel extends BaseComponent {
         this.isMouseIn = true;
         if (this.currencyRate) {
             this.timerToken = setTimeout(() => {
-                var item = document.getElementById("tooltip-" + this.Line);
+                var item = document.getElementById("tooltip-" + this.SessionIndex + this.Line);
                 if (AppTool.IsNullOrEmpty(item))
                     return;
                 var itemRect = item.getBoundingClientRect();
-
                 if (this.isMouseIn) {
-                    document.getElementById("tooltip-body-" + this.Line).style.position = "fixed";
-                    document.getElementById("tooltip-body-" + this.Line).style.top = (itemRect.top - 35) + 'px';
-                    document.getElementById("tooltip-body-" + this.Line).style.left = (itemRect.left + 60) + 'px';
-                    document.getElementById("tooltip-body-" + this.Line).style.visibility = "visible";
+                    document.getElementById("tooltip-body-" + this.SessionIndex + this.Line).style.position = "fixed";
+                    document.getElementById("tooltip-body-" + this.SessionIndex + this.Line).style.top = (itemRect.top - 35) + 'px';
+                    document.getElementById("tooltip-body-" + this.SessionIndex + this.Line).style.left = (itemRect.left + 60) + 'px';
+                    document.getElementById("tooltip-body-" + this.SessionIndex + this.Line).style.visibility = "visible";
 
                     this.timerToken = setTimeout(() => {
-                        document.getElementById("tooltip-body-" + this.Line).style.visibility = "hidden";
+                        document.getElementById("tooltip-body-" + this.SessionIndex + this.Line).style.visibility = "hidden";
 
                     }, 2500);
                 }
@@ -1423,7 +1589,7 @@ class JournalLineModel extends BaseComponent {
         if (this.currencyRate) {
 
             this.timerToken = setTimeout(() => {
-                document.getElementById("tooltip-body-" + this.Line).style.visibility = "hidden";
+                document.getElementById("tooltip-body-" + this.SessionIndex + this.Line).style.visibility = "hidden";
 
             }, 400);
 
@@ -1437,6 +1603,22 @@ class JournalLineModel extends BaseComponent {
             var myResult = (this.LocalAmount / this.ForeignAmount).toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
             return myResult;
+        }
+        else {
+            return null;
+        }
+    }
+    isRateMoreThanFivePerc() {
+        this.parent.EntityWarningsList = [];
+        if (this.LocalAmount && this.ForeignAmount) {
+
+            var userExchageRate = (this.LocalAmount / this.ForeignAmount);
+            this.parent.JournalLines.Collection.map((line)=> {
+                if(!this.parent.Approved && (line.currencyRate - (line.LocalAmount / line.ForeignAmount)) > 0.05) {
+                    this.parent.EntityWarningsList.push(TextCodeTranslator.Translate("Journal.O.DifferenceExchangeRate"));
+                }
+            })
+            return userExchageRate && Math.abs(this.currencyRate - userExchageRate) > 0.05;
         }
         else {
             return null;
@@ -1583,11 +1765,11 @@ class JournalLineModel extends BaseComponent {
     //#region GLAccount HyberLink
 
     GLAccountHyperlinkClicked() {
-        this.EditEntity("GLAccount", this.CreditAccountId, null, "GATR");
+        GLAccountSecurityLevelService.OpenGLAccountEditWindow(this.CreditAccountId);
     }
 
     DebitAccountHyperlinkClicked() {
-        this.EditEntity("GLAccount", this.DebitAccountId, null, "GATR");
+        GLAccountSecurityLevelService.OpenGLAccountEditWindow(this.DebitAccountId);
     }
 
     public EditEntity(objectTableName: string, entityId: string, windowTitle: string, defaultSelectedTabCode: string) {
@@ -1611,4 +1793,9 @@ class JournalLineModel extends BaseComponent {
 
 
     //#endregion
+}
+enum ActionCode {
+    Debit = 2,
+    Credit = 1,
+    DebitAndCredit=3
 }

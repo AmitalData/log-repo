@@ -70,5 +70,11 @@ namespace WebFreight.Web.DataProviders
         public string ShippingLine { get; set; }
         public string Voyage { get; set; }
         public string Vessel { get; set; }
+        public string LastDeliveryToAddress { get; set; }
+        public string FistPickupFromAddress { get; set; }
+
+        public DateTime? MainCarriageATD { get; set; }
+        public string ShipperReference1 { get; set; }
+        public string ShipperReference2 { get; set; }
     }
 }

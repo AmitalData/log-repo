@@ -31,6 +31,10 @@ namespace Simplog.Data.InvoiceModel.Mapping
              .HasMaxLength(3)
              .IsUnicode(false);
 
+            this.Property(t => t.SATCompanyName)
+                .HasMaxLength(200)
+                .IsUnicode(true);
+
             // Table & Column Mappings
             this.ToTable("SATInterfaceSettings");
 
@@ -39,6 +43,10 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.Token).HasColumnName("Token");
             this.Property(t => t.ActivationDate).HasColumnName("ActivationDate");
             this.Property(t => t.MetodoPagoCode).HasColumnName("MetodoPagoCode");
+            this.Property(t => t.IsARInvoiceTransferEnabled).HasColumnName("IsARInvoiceTransferEnabled");
+            this.Property(t => t.IsCartaPorteTransferEnabled).HasColumnName("IsCartaPorteTransferEnabled");
+            this.Property(t => t.SATCompanyName).HasColumnName("SATCompanyName");
+            this.Property(t => t.TransferExpenseCharges).HasColumnName("TransferExpenseCharges");
 
 
 

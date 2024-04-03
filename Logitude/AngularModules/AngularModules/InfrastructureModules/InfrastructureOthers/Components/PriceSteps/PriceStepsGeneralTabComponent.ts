@@ -77,13 +77,15 @@ export class PriceStepsGeneralTabComponent extends BaseComponent implements OnIn
     EditPriceSteps() {
         var logWindow = new LogitudeWindow();
         logWindow.Title = "Price Steps";
-        logWindow.WindowArgs = this.Steps;
+        logWindow.WindowArgs = [this.Steps, this.EntityPM.UnitOfMeasurementCode];
         logWindow.Show("./TariffModule/Components/NewEntity/TariffPriceStepsComponent");
         logWindow.ComponentLoaded.subscribe(s => {
             logWindow.WindowClosed.subscribe(d => {
                 if (d && d != "cancel") {
                     var steps = s.DefaultPriceSteps;
                     this.Steps = steps;
+                    this.UnitOfMeasurementCode = s.UnitOfMeasurementCode;
+                    this.EntityPM.UnitOfMeasurementCode = s.UnitOfMeasurementCode;
                     this.GetPriceSteps(this.Steps);
                 }
             });
@@ -109,6 +111,13 @@ export class PriceStepsGeneralTabComponent extends BaseComponent implements OnIn
     set Name(value: string) {
         if (this.EntityPM.Name != value) {
             this.EntityPM.Name = value;
+        }
+    }
+
+    get UnitOfMeasurementCode() { return this.EntityPM.UnitOfMeasurementCode; }
+    set UnitOfMeasurementCode(value: string) {
+        if (this.EntityPM.UnitOfMeasurementCode != value) {
+            this.EntityPM.UnitOfMeasurementCode = value;
         }
     }
 

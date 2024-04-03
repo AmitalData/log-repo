@@ -1,34 +1,31 @@
 ﻿using Logitude.BL.InfrastructureModel.APIDataContract;
 using Logitude.BL.InfrastructureModel.APIDataContract.Messages;
-using Simplog.Data.CommonDataModel;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Net;
 using System.Xml;
 
 namespace Logitude.Accounting.BL.CoreBL
 {
    public class ExchangeRatesFromExternalLinkUpdateService
     {
-        int tenant;
-        private const string XmlLinkedNode = "https://forex.boi.org.il/currency.xml";
-        List<string> TenantCurrencies;
-        public ExchangeRatesFromExternalLinkUpdateService(int Tenant)
+        private readonly int _tenant;
+        private const string XmlLinkedNode = "https://boi.org.il/PublicApi/GetExchangeRates?asXML=true";
+        
+        public ExchangeRatesFromExternalLinkUpdateService(int tenant)
         {
-            tenant = Tenant;
-
+            _tenant = tenant;
         }
-        public void UpdateRatesByExternalXML()
+        public void UpdateRatesByExternalXml()
         {
-            XmlDocument document = GetExchangRatesXmlFromExternalLink();
-            List<RateUpdate> rates = GetRatesFromXML(document);
+			ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+			XmlDocument document = GetExchangeRatesXmlFromExternalLink();
+            List<RateUpdate> rates = GetRatesFromXml(document);
             RatesUpdate ratesUpdate = GetRatesUpdate(rates);
             UpdateRatesByService(ratesUpdate);
 
         }
-        private XmlDocument GetExchangRatesXmlFromExternalLink()
+        private XmlDocument GetExchangeRatesXmlFromExternalLink()
         {
             XmlDocument document = new XmlDocument();
             document.Load(XmlLinkedNode);
@@ -36,33 +33,31 @@ namespace Logitude.Accounting.BL.CoreBL
         }     
         private void UpdateRatesByService(RatesUpdate ratesUpdate)
         {
-            RatesUpdateService ratesUpdateService = new RatesUpdateService(ratesUpdate, tenant);
+            RatesUpdateService ratesUpdateService = new RatesUpdateService(ratesUpdate, _tenant);
             ratesUpdateService.ValidateRatesDataMapping();
             ratesUpdateService.UpdateRatesData();
         }
-        private List<RateUpdate> GetRatesFromXML(XmlDocument document)
+        private List<RateUpdate> GetRatesFromXml(XmlDocument document)
         {
-            XmlNodeList currencyNodes = document.GetElementsByTagName("CURRENCY");
-            XmlNodeList lastUpdateDateNode = document.GetElementsByTagName("LAST_UPDATE");
+            XmlNode currencyNodes = document.GetElementsByTagName("ExchangeRates")[0];
             List<RateUpdate> rates = new List<RateUpdate>();
-            TenantCurrencies = GetTenantCurrenciesCodes();
-            foreach (XmlNode currencyNode in currencyNodes)
+
+            foreach (XmlNode currencyNode in currencyNodes.ChildNodes)
             {
-                rates = AddCurrencyRateToRatesList(currencyNode, rates, lastUpdateDateNode);
-             
+                rates.Add(AddCurrencyRateToRatesList(currencyNode));
             }
             return rates;
         }
-        private List<RateUpdate> AddCurrencyRateToRatesList(XmlNode currencyNode, List<RateUpdate> rates, XmlNodeList lastUpdateDateNode)
+        private RateUpdate AddCurrencyRateToRatesList(XmlNode currencyNode)
         {
-            var currencyCode = currencyNode.SelectNodes("CURRENCYCODE")[0].InnerText;
-            var rate = currencyNode.SelectNodes("RATE")[0].InnerText;
-            if (TenantCurrencies.Contains(currencyCode))
-            {
-                RateUpdate rateUpdate = CreateRateUpdateInstance(currencyCode, rate, lastUpdateDateNode);
-                rates.Add(rateUpdate);
-            }
-            return rates;
+            string currencyCode = currencyNode["Key"]?.InnerText;
+            string rate = currencyNode["CurrentExchangeRate"]?.InnerText;
+            string unit = currencyNode["Unit"]?.InnerText;
+            string lastUpdateDate = currencyNode["LastUpdate"]?.InnerText;
+
+            RateUpdate rateUpdate = CreateRateUpdateInstance(currencyCode, rate,unit, lastUpdateDate);
+            
+            return rateUpdate;
         }
 
         private RatesUpdate GetRatesUpdate(List<RateUpdate> rates)
@@ -71,14 +66,10 @@ namespace Logitude.Accounting.BL.CoreBL
             ratesUpdate.RateUpdateList = rates;
             return ratesUpdate;
         }
-        private List<string> GetTenantCurrenciesCodes()
+
+        private RateUpdate CreateRateUpdateInstance(string currencyCode, string rate,string unit, string date)
         {
-            ICommonDataContext objectContext = CommonDataContext.GetContext(tenant);
-            return (from a in objectContext.Currencies where a.Tenant ==tenant select a.Code).ToList();
-        }
-        private RateUpdate CreateRateUpdateInstance(string currencyCode, string rate, XmlNodeList dateNode)
-        {
-            Logitude.BL.InfrastructureModel.APIDataContract.Currency currency = new Logitude.BL.InfrastructureModel.APIDataContract.Currency()
+            Currency currency = new Currency()
             {
                 Code = currencyCode,
             };
@@ -87,7 +78,8 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 Currency = currency,
                 Rate = Double.Parse(rate),
-                RateDate = DateTime.Parse(dateNode[0].InnerText),
+                Unit = Int16.Parse(unit),
+                RateDate = DateTime.Parse(date),
             };
         }
        

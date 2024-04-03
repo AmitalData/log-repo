@@ -58,15 +58,21 @@ import { SharedManifestComponent } from 'ShipmentModules/ShipmentSharedManifest/
 import { EditQuoteTemplateComponent } from 'QuoteOPModules/QuoteTemplates/Components/EditQuoteTemplateComponent';
 import { CargoSplitGeneralTabComponent } from 'CustomsModules/CustomsDeclarationCargoSplit/Components/EditTabs/General/CargoSplitGeneralTabComponent';
 import { LogisticActionRequestGeneralTabComponent } from 'CustomsModules/CustomsLogisticActionRequest/Components/EditTabs/General/LogisticActionRequestGeneralTabComponent';
-
+ import { GLAccountSecurityLevelService } from 'Accounting/Utilities/GLAccountSecurityLevelService';
+import { IsMultiUpdateValid } from 'Infrastructure/Helpers/MultiUpdateHelper';
+import { IsMultiPrintValid } from 'Infrastructure/Helpers/MultiPrintHelper';
+import { WorkFlowPMService } from 'Workflow/Services/StandardPMs/WorkFlowPMService';
+import { WorkFlowPM } from 'Workflow/EntityPMs/WorkFlowPM';
+import { TextCodeTranslationPipe } from '../../../Controls/Pipes/TextCodeTranslationPipe';
+import { QueryPM } from '../../EntityPMs/QueryPM';
+import { CustomizationPermissionService } from '../../../InfrastructureModules/InfrastructureCustomization/ExternalService/CustomizationPermissionService';
+ 
 @Component({
 
-
     templateUrl: './ListComponent.html',
-    //directives: [CORE_DIRECTIVES, IconButton, LogGridComponent, NgFormControl, AdvanceSearchComponent, QueryListComponent, LocationDirective, SearchTextBox],
-    //pipes: [TextCodeTranslationPipe],
     providers: [ListComponentArgs, EntityListService, EntityResourceService, PubSubService, PubSubService1, EntityPMService, TotangoService],
     changeDetection: ChangeDetectionStrategy.OnPush
+
 })
 
 export class ListComponent implements OnInit, AfterViewInit {
@@ -78,6 +84,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     @Output() ColumnsReady = new EventEmitter();
     @Output() QueryListSourceChanged = new EventEmitter();
     @Output() FiltersBarLoaded: EventEmitter<any> = new EventEmitter<any>();
+    @Output() RowClicked = new EventEmitter();
     RTL: boolean = ObjectsLocator.GlobalSetting == undefined ? false : (ObjectsLocator.GlobalSetting.LayoutDirection == 'rtl' ? true : false);
     public SeachBoxIsDisabled: boolean = false;
     //@Output() ShowTipEvent = new EventEmitter();
@@ -95,10 +102,11 @@ export class ListComponent implements OnInit, AfterViewInit {
     public IsAdvancedSearchOpened: boolean = false;
     LayoutDirection: string = 'ltr';
     customsSettingListService: CustomsSettingListService = new CustomsSettingListService();
-    public HasCustomsFilterMenu: boolean = false;
+     public HasCustomsFilterMenu: boolean = false;
     public IsPhysicalCheckObjectTable: boolean = false;
     public IsLogisticActionRequestObjectTable: boolean = false;
-
+     WorkFlowPMService: WorkFlowPMService = new WorkFlowPMService();
+ 
 
     @ViewChild(LogGridComponent) MyLogGridComponent: LogGridComponent = null;
     @ViewChild(LogGridComponentV2) MyLogGridComponentV2: LogGridComponentV2 = null;
@@ -108,7 +116,8 @@ export class ListComponent implements OnInit, AfterViewInit {
 
     ConstantPageSize: number = 100;
     DontApplyVirtualization: boolean = false;
-
+    HasMutliUpdateFeature: boolean = false;
+    HasMultiPrintFeature: boolean = false;
     //public Title: string;
     private title: string;//= "";
     customsSettingExtendedListService: CustomsSettingExtendedListService = new CustomsSettingExtendedListService();
@@ -141,7 +150,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         windowArgs.currentObjectTable = this.ObjectTableName;
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Width = 960;
-        logitudeWindow.Height = 520;
+        logitudeWindow.Height = 550;
         logitudeWindow.Title = TextCodeTranslator.Translate("General.O.QueryColumnsEdit");//"Query Columns Edit";
         logitudeWindow.WindowArgs = windowArgs;
         logitudeWindow.Show('./Infrastructure/Components/QueryColumnsComponents/QueryColumnsEditComponent');
@@ -296,6 +305,14 @@ export class ListComponent implements OnInit, AfterViewInit {
                     else if (value1 == "NoDate" || value1 == "No Date") {
                         value1 = "NoDate";
                         filterOperator = "NoDate";
+                    }
+                    else if (value1 == "Less than Today") {
+                        value1 = TodayDate;
+                        filterOperator = "LessThan";
+                    }
+                    else if (value1 == "Less than or equal Today") {
+                        value1 = TommorowDate;
+                        filterOperator = "LessThan";
                     }
                 }
                 var field = window.ObjectFields.filter(a => a.FieldCode == filter.ObjectFieldCode)[0];
@@ -458,6 +475,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     };
 
     public ObjectTableName: string;
+    public ObjectTableDisplayName: string;
     public ObjectTable: ObjectTablePM;
     //public Query: any;
     public Queries: any[];
@@ -527,7 +545,9 @@ export class ListComponent implements OnInit, AfterViewInit {
         });
 
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
+
     }
+
     name: string;
     processAdvanceQueryFilters(filters) {
         if (this.IsAdvancedSearchOpened == false) {
@@ -559,6 +579,8 @@ export class ListComponent implements OnInit, AfterViewInit {
 
         }
         else if (!AppTool.IsNullOrEmpty(filters.MyName)) {
+            var filterOperator = "Between";
+
             var TommorowDate = DateTool.AddDays((new Date()), 1);
             TommorowDate.setUTCHours(0, 0, 0, 0);
             //TommorowDate.setHours(0, 0, 0, 0);
@@ -609,23 +631,43 @@ export class ListComponent implements OnInit, AfterViewInit {
                 filters.TextValue = CurrentYearFromDate;
                 filters.TextValue1 = CurrentYearToDate;
                 filters.MyName = "Current Year";
-
             }
             else if (filters.TextValue == "Last Year") {
                 filters.TextValue = LastYearFromDate;
                 filters.TextValue1 = LastYearToDate;
                 filters.MyName = "Last Year";
-
+            }
+            else if (filters.TextValue == "NoDate" || filters.TextValue == "No Date") {
+                filters.TextValue = "NoDate";
+                filterOperator = "NoDate";
+            }
+            else if (filters.TextValue == "Less than Today") {
+                filters.TextValue = TodayDate;
+                filters.MyName = "Less than Today";
+                filterOperator = "LessThan";
+            }
+            else if (filters.TextValue == "Less than or equal Today") {
+                filters.TextValue = TommorowDate;
+                filters.MyName = "Less than or equal Today";
+                filterOperator = "LessThan";
             }
             if (this.AdvanceFilters.AdditionalFilters.filter(a => a.FieldName == filters.FieldName).length > 0) {
                 this.AdvanceFilters.AdditionalFilters = this.AdvanceFilters.AdditionalFilters.filter(a => a.FieldName != filters.FieldName);
             }
-            this.AdvanceFilters.addAdditionalFilter(filters.FieldName, filters.TextValue, filters.TextValue1, null, "Between", filters.ObjectField.IsCustomFilter, filters.ObjectField.DisplayInList, filters.ObjectField.IsCustom, filters.ObjectField.DataTypeCode);
+            this.AdvanceFilters.addAdditionalFilter(filters.FieldName, filters.TextValue, filters.TextValue1, null, filterOperator, filters.ObjectField.IsCustomFilter, filters.ObjectField.DisplayInList, filters.ObjectField.IsCustom, filters.ObjectField.DataTypeCode);
 
         }
         else if (filters.TextValue1) {
             if (this.AdvanceFilters.AdditionalFilters.filter(a => a.FieldName == filters.FieldName).length > 0) {
                 this.AdvanceFilters.AdditionalFilters = this.AdvanceFilters.AdditionalFilters.filter(a => a.FieldName != filters.FieldName);
+            }
+            if (filters.FieldName == "ForeignAmount") {
+                if (filters.TextValue.startsWith("-")) {
+                    filters.TextValue1 = filters.TextValue.slice(1);
+                }
+                else {
+                    filters.TextValue1 = "-" + filters.TextValue.toString();
+                }
             }
             this.AdvanceFilters.addAdditionalFilter(filters.FieldName, filters.TextValue, filters.TextValue1, null, filters.Operation.Code, filters.ObjectField.IsCustomFilter, filters.ObjectField.DisplayInList, filters.ObjectField.IsCustom, filters.ObjectField.DataTypeCode);
         }
@@ -640,7 +682,23 @@ export class ListComponent implements OnInit, AfterViewInit {
                 if (filters.FieldName == "CompetitorFields")
                     this.AdvanceFilters.addAdditionalFilter(filters.FieldName, filters.TextValue, null, null, "Contains", filters.ObjectField.IsCustomFilter, filters.ObjectField.DisplayInList, filters.ObjectField.IsCustom, filters.ObjectField.DataTypeCode);
                 else {
-                    this.AdvanceFilters.addAdditionalFilter(filters.FieldName, filters.TextValue, null, null, filters.Operation.Code, filters.ObjectField.IsCustomFilter, filters.ObjectField.DisplayInList, filters.ObjectField.IsCustom, filters.ObjectField.DataTypeCode);
+                    if (filters.FieldName == "ForeignAmount") {
+                        if (filters.TextValue.startsWith("-")) {
+                            filters.TextValue1 = filters.TextValue.slice(1);
+                        }
+                        else {
+                            filters.TextValue1 = "-" + filters.TextValue.toString();
+                        }
+                        /*var decimalValue = parseFloat(filters.TextValue);
+                        var absoluteValue = Math.abs(decimalValue);
+                        filters.TextValue1 = absoluteValue;*/
+                        this.AdvanceFilters.addAdditionalFilter(filters.FieldName, filters.TextValue, filters.TextValue1, null, "Contains", filters.ObjectField.IsCustomFilter, filters.ObjectField.DisplayInList, filters.ObjectField.IsCustom, filters.ObjectField.DataTypeCode);
+
+                    }
+                    else {
+
+                        this.AdvanceFilters.addAdditionalFilter(filters.FieldName, filters.TextValue, null, null, filters.Operation.Code, filters.ObjectField.IsCustomFilter, filters.ObjectField.DisplayInList, filters.ObjectField.IsCustom, filters.ObjectField.DataTypeCode);
+                    }
                 }
             }
         }
@@ -660,25 +718,28 @@ export class ListComponent implements OnInit, AfterViewInit {
             this.IsDemoTenant = true;
         }
 
+        if (this.ObjectTableName == "LedgerTransaction") {
+            this.IsAdvancedSearchOpened = true;
+        }
         this.NewButtonId = "NewButton_" + this.ObjectTableName;
 
-        if (!FeatureLocator.HasEntityPermessions(this.ObjectTableName, "NEW", false)) {
+        if (!this.CheckPermissions(this.ObjectTableName, "NEW", false) && !this.ObjectTable?.IsCustom) {
             this.IsNewEntityButtonDisabled = true;
         }
-        if (!FeatureLocator.HasEntityPermessions(this.ObjectTableName, "READ", false)) {
-            this.HasPermition = false;
+
+        if (this.ObjectTableName != "PortTimeZone") {
+            if (!this.CheckPermissions(this.ObjectTableName, "READ", false)) {
+                this.HasPermition = false;
+            }
         }
         this.Filterchangeevent = new LogEvents.EventManager();
         var subscription = this.pubSubAdvanceQueryFiltersService.Stream.subscribe(customer => this.processAdvanceQueryFilters(customer));
-        //SessionLocator.SelectedSession.pubSubAdvanceQueryFiltersService.emit(this.pubSubAdvanceQueryFiltersService)
-        //this.ObjectTableName == "Customs.Declaration" || this.ObjectTableName == "Customs.PhysicalCheck" ||
-        //   if (this.ObjectTableName.startsWith("Customs.")) {
-        //       this.IsNavigateButtonVisible = false;
-        //   }
+ 
         this.Listen();
-        //this.CD.detectChanges();
+         //this.CD.detectChanges();
         if (this.ObjectTable.ClientModuleName == "Customs") {
             this.HasCustomsFilterMenu = true;
+ 
         }
 
         if (this.ObjectTableName == "Customs.PhysicalCheck") {
@@ -706,6 +767,8 @@ export class ListComponent implements OnInit, AfterViewInit {
             this.ReloadAllListEvent = this.CurrentSession.SessionEvent.subscribe(s => {
                 if (s == "ReloadAllList") {
                     this.RefreshBtnClick();
+                }else if(s == "ReloadAllList" + this.ObjectTableName){
+                    this.RefreshBtnClick();
                 }
             });
         }
@@ -732,6 +795,11 @@ export class ListComponent implements OnInit, AfterViewInit {
 
     }
 
+    public CheckPermissions(objectTableName: string, featureCode: string, showWindow: boolean) {
+        if (objectTableName == "DeploymentPackage")
+            return CustomizationPermissionService.HasEntityPermessions(objectTableName, featureCode, showWindow);
+        return FeatureLocator.HasEntityPermessions(objectTableName, featureCode, showWindow);
+    }
 
 
     IsShowAddFromLibraryLink: boolean;
@@ -980,8 +1048,8 @@ export class ListComponent implements OnInit, AfterViewInit {
     ShowViews: boolean = true;
     EnglishView: boolean = false;
     ResourcesLoaded: boolean = false;
-
     MenuTableQuerySection: string;
+
     Run(args: ListComponentArgs) {
         this.CurrentSession.AddMenuReference(this.ComponentRef);
         this.CurrentSession.AddListComponent(this);
@@ -990,16 +1058,21 @@ export class ListComponent implements OnInit, AfterViewInit {
             if (!AppTool.IsNullOrEmpty(this.listArgs.DisplayTitle)) {
                 this.Title = this.listArgs.DisplayTitle;
             }
-            //args.QueryCode=this.ObjectTableName + '.' + args.QueryCode
+ 
+
             this.QueryCode = args.QueryCode;
             this.ObjectTableName = args.ObjectTableName;
+            this.HasMutliUpdateFeature = this.HasMultiUpdateFeature();
+            this.HasMultiPrintFeature = this.IsMultiPrintFeatureOn();
             this.SetAddButtonTitle();
             this.MethodName = args.MethodName;
             this.BackBtnTitle = args.BackButtonTitle;
             this.ShowViews = args.ShowViews;
-            this.MenuTableQuerySection = args.QuerySection ? args.QuerySection : args.ObjectTableName;
+             this.MenuTableQuerySection = args.QuerySection ? args.QuerySection : args.ObjectTableName;
+ 
 
             this.ObjectTable = window.ObjectTables.filter(x => x.Name === this.ObjectTableName)[0];
+            this.ObjectTableDisplayName = new TextCodeTranslationPipe().transform(this.ObjectTable.Name)
             this.SeachBoxIsDisabled = this.ObjectTable.DisableSearchBox;
 
             this.SearchTextValue = new FormControl();
@@ -1016,7 +1089,52 @@ export class ListComponent implements OnInit, AfterViewInit {
 
             this.GetQueries();
             this.RunComponent();
+ 
         }
+    }
+
+    private HasMultiUpdateFeature(): boolean {
+        if (this.ObjectTableName == "Shipment") {
+            return FeatureLocator.HasFeaturePermession("Shipment", "MULTIUPDATE");
+        }
+
+        else if (this.ObjectTableName == "Container") {
+            return FeatureLocator.HasFeaturePermession("Container", "MULTIUPDATE");
+        }
+
+        else return false;
+    }
+    private IsMultiPrintFeatureOn(): boolean {
+         if (this.ObjectTableName == "ARInvoice" ) {
+             return true;
+         }
+         else {
+             return ((this.ObjectTableName == "Shipment") && FeatureLocator.HasFeaturePermession("General", "MultiPrint"));
+         }
+    }
+ 
+ 
+    MutliUpdate() {
+        if (!IsMultiUpdateValid(this.ObjectTable.DBTableName, this.dataSource.rowCount)) {
+            return;
+        }
+         let newWindow = new LogitudeWindow();
+        newWindow.Width = 1050;
+        newWindow.Height = 700;
+        newWindow.Title = "Multi Update " + this.ObjectTable.DBTableName;
+
+        let windowArgs: any = {};
+        windowArgs.QueryCode = this.SelectedQueryCode;
+        windowArgs.Filters = this.CurrentQueryFilters;
+        windowArgs.Columns = this.columns;
+        windowArgs.ObjectTable = this.ObjectTable;
+        windowArgs.Title = this.Title;
+
+        newWindow.WindowArgs = windowArgs;
+        newWindow.Show('./Infrastructure/Components/MultiUpdateComponent/MultiEntityUpdateBaseComponent');
+        newWindow.WindowClosed.subscribe(($event: any) => {
+            this.RefreshBtnClick();
+        });
     }
 
     ViewInitCompleted(event) {
@@ -1040,8 +1158,6 @@ export class ListComponent implements OnInit, AfterViewInit {
         }
     }
 
-
-    //HideLogGrid: boolean = false;
     TipVisibilityChanged(event) {
 
         if (event == "true") this.IsShowTipArea = true;
@@ -1054,48 +1170,53 @@ export class ListComponent implements OnInit, AfterViewInit {
 
     }
 
-    //ShowTipAreaClick() {
-
-    //    this.IsShowTipArea = true;
-    //  //  this.ShowTipEvent.emit("true");
-    //}
-
-    //FilterQuerysByMenuTableQuerySection(allQueries: any) {
-
-    //    if (!AppTool.IsNullOrEmpty(this.MenuTableQuerySection)) {
-    //        return allQueries.filter(d => d.QuerySection == this.MenuTableQuerySection);
-    //    }
-    //    return allQueries; 
-
-    //}
-
 
     FilterQuerysByQuerySection(allQueries: any) {
         let querySection: string = !AppTool.IsNullOrEmpty(this.MenuTableQuerySection) ? this.MenuTableQuerySection : this.ObjectTableName;
         return allQueries.filter(d => d.QuerySection == querySection || d.QuerySection == (querySection + "FollowUp"));
     }
-
-
     public UserId: string = SessionInfo.LoggedUserId;
     public Tenant: number = SessionInfo.LoggedUserTenant;
+
+    ApplyQueriesAdvancedFilter(allQueries:any) {
+        if (this.ObjectTableName != "Shipment")
+            return this.Queries;
+        if (SessionLocator.TenantPM.ApproveUploadedDocuments == false) {
+            return allQueries.filter(x => (x.Code != "Pending Approval Documents" && x.UserId == null && x.SystemLevel == true));
+        }
+        return this.Queries;
+    }
+    CustomerCareDeploymentPackage(objectTableName : string){
+        if(objectTableName!="DeploymentPackage")
+            return false;
+        if(FeatureLocator.IsFeatureGrantedByUniqeCode("General.Customization.DeploymentPackage"))
+            return false;
+        if((SessionLocator.LoggedUserPM.IsCustomerCare || SessionLocator.LoggedUserPM.IsDistributor || ObjectsLocator.GlobalSetting.DeploymentStage == "Dev"))
+            return true;
+        return false;
+    }
     GetQueries() {
 
         var allQueries: any[] = window.Queries.filter(x => x.ObjectTableId === this.ObjectTable.Id).sort((a, b) => { return a.IndexOrder - b.IndexOrder });
         allQueries = this.FilterQuerysByQuerySection(allQueries);
 
         this.Queries = allQueries.filter(x => x.UserId == null && x.SystemLevel == true);
-
-        if (!this.ObjectTable.IsClosed) {
-            this.Queries = allQueries.filter(x => FeatureLocator.IsFeatureGrantedByUniqeCode(x.FeatureUniqeCode));
-
+ 
+        if(this.ObjectTableName=="DeploymentPackage")
+            this.listArgs.DontCheckQueryFeature = true;
+        if (!this.ObjectTable.IsClosed && !this.listArgs.DontCheckQueryFeature) {
+            this.Queries = allQueries.filter(x => (FeatureLocator.IsFeatureGrantedByUniqeCode(x.FeatureUniqeCode))|| this.CustomerCareDeploymentPackage(x.ObjectTableName) );
+ 
         }
+        this.Queries = this.ApplyQueriesAdvancedFilter(allQueries);
+
         this.UserQueries = allQueries.filter(x => x.UserId != null && x.Tenant == SessionInfo.LoggedUserTenant);
 
         if (this.listArgs.Perspective != null && this.listArgs.IgnoreSelectedPerspective == false) {
             //this.SelectedQuery = allQueries.filter(f => ((f.UserId == SessionLocator.LoggedUserId && f.Tenant == SessionLocator.Tenant) || f.Tenant == 0) && f.Perspective == this.listArgs.Perspective)[0];
             this.SelectedQuery = allQueries.filter(f => f.Perspective == this.listArgs.Perspective)[0];
 
-            this.Queries = allQueries.filter(f => (f.UserId == null && FeatureLocator.IsFeatureGrantedByUniqeCode(f.FeatureUniqeCode) && f.SystemLevel == true) && f.Perspective == this.listArgs.Perspective);
+            this.Queries = allQueries.filter(f => (f.UserId == null && (FeatureLocator.IsFeatureGrantedByUniqeCode(f.FeatureUniqeCode) || this.ObjectTable?.IsCustom ||this.CustomerCareDeploymentPackage(f.ObjectTableName)) && f.SystemLevel == true) && f.Perspective == this.listArgs.Perspective);
         }
         else if (this.listArgs.Perspective != null && this.listArgs.IgnoreSelectedPerspective == true) {
             //this.SelectedQuery = allQueries.filter(f => ((f.UserId == SessionLocator.LoggedUserId && f.Tenant == SessionLocator.Tenant) || f.Tenant == 0) && f.Code == this.QueryCode)[0];
@@ -1108,7 +1229,7 @@ export class ListComponent implements OnInit, AfterViewInit {
             else {
                 this.SelectedQuery = allQueries.filter(f => f.UniqueCode == (this.ObjectTableName + (f.UserId != undefined ? "." + f.UserId : "") + '.' + this.QueryCode))[0];
             }
-            this.Queries = allQueries.filter(f => (f.UserId == null && FeatureLocator.IsFeatureGrantedByUniqeCode(f.FeatureUniqeCode) && f.SystemLevel == true) && f.Perspective == this.listArgs.Perspective);
+            this.Queries = allQueries.filter(f => (f.UserId == null && (FeatureLocator.IsFeatureGrantedByUniqeCode(f.FeatureUniqeCode)||this.CustomerCareDeploymentPackage(f.ObjectTableName)) && f.SystemLevel == true) && f.Perspective == this.listArgs.Perspective);
         }
 
         else if (this.QueryCode) {
@@ -1126,6 +1247,10 @@ export class ListComponent implements OnInit, AfterViewInit {
         }
 
         else {
+            this.SelectedQuery = this.Queries[0];
+        }
+
+        if (this.listArgs.DontCheckQueryFeature && this.IFSelectedQueryEmpty()) {
             this.SelectedQuery = this.Queries[0];
         }
 
@@ -1193,6 +1318,10 @@ export class ListComponent implements OnInit, AfterViewInit {
         this.SetAddButton();
     }
 
+    IFSelectedQueryEmpty() {
+        return (!this.SelectedQuery && this.Queries && this.Queries.length > 0) ? true : false;
+    }
+
 
     CheckIfQueriesConatinDefaultPerspectiveQuery() {
         if (this.Queries && !AppTool.IsNullOrEmpty(this.listArgs.Perspective)) {
@@ -1210,7 +1339,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     }
     GetQueryColumns(queryCode, userId) {
         //var queryId = window.Queries.filter(x => x.Code === queryCode)[0].Id;
-        this._http.get(ServiceHelper.GetLogitudeURL() + "api/ngMetaData?tenant=" + this.Tenant + "&queryCode=" + queryCode + "&objecttableid=" + this.ObjectTable.Id + "&userid=" + userId)
+        this._http.get(ServiceHelper.GetLogitudeURL() + "api/ngMetaData?tenant=" + this.Tenant + "&queryCode=" + queryCode + "&objecttableid=" + this.ObjectTable.Id + "&userid=" + userId + "&getfromsystemlevel=false")
             .subscribe((response: any) => {
                 this.QueryColumns = response;
                 this.QueryColumns = this.QueryColumns.sort((a, b) => { return (a.IndexOrder > b.IndexOrder) ? 1 : (a.IndexOrder < b.IndexOrder) ? -1 : 0 });
@@ -1407,6 +1536,14 @@ export class ListComponent implements OnInit, AfterViewInit {
                             value1 = "NoDate";
                             filterOperator = "NoDate";
                         }
+                        else if (value1 == "Less than Today") {
+                            value1 = TodayDate;
+                            filterOperator = "LessThan";
+                        }
+                        else if (value1 == "Less than or equal Today") {
+                            value1 = TommorowDate;
+                            filterOperator = "LessThan";
+                        }
                     }
                     var field = window.ObjectFields.filter(a => a.FieldCode == filter.ObjectFieldCode)[0];
                     if (field) {
@@ -1465,6 +1602,12 @@ export class ListComponent implements OnInit, AfterViewInit {
     }
     EnableSpotLight: boolean = false;
     QueriesChangedEvent(Args) {
+        if (!Args) {
+            this.SelectedQuery = null;
+            this.SelectedQueryCode = null;
+            this.onSelectedQueryChangeEvent.emit(new QueryPM());
+            return;
+        }
         //alert("Hi");
         this.AdvanceFilters = new ApiQueryFilters();
         this.QueryCode = Args.UniqueCode;
@@ -1530,6 +1673,8 @@ export class ListComponent implements OnInit, AfterViewInit {
                     if (value2 != null) {
                         filterOperator = "Between";
                     }
+                    if (value1 == '#logged-user') value1 = SessionLocator.LoggedUserId;
+
                     if (filter.DataTypeCode == "DateTime" || filter.DataTypeCode == "Date") {
 
                         var TodayDate = new Date();
@@ -1641,6 +1786,14 @@ export class ListComponent implements OnInit, AfterViewInit {
                             value1 = "NoDate";
                             filterOperator = "NoDate";
                         }
+                        else if (value1 == "Less than Today") {
+                            value1 = TodayDate;
+                            filterOperator = "LessThan";
+                        }
+                        else if (value1 == "Less than or equal Today") {
+                            value1 = TommorowDate;
+                            filterOperator = "LessThan";
+                        }
                     }
                     var field = window.ObjectFields.filter(a => a.FieldCode == filter.ObjectFieldCode)[0];
                     if (field) {
@@ -1708,10 +1861,20 @@ export class ListComponent implements OnInit, AfterViewInit {
         //if (filters == null) {
         //    filters = new ApiQueryFilters();
         //}
+
+        if (this.listArgs.DefaultFilterItems && this.listArgs.DefaultFilterItems.length > 0) {
+            this.listArgs.DefaultFilterItems.forEach((filter) => {
+                MyFilters.AdditionalFilters.push(filter)
+            });
+        }
+
         filters.AdditionalFilters.forEach((filter, key) => {
             if (filter.FieldName == "CompetitorFields")
                 filter.Operator = "Contains";
-            MyFilters.AdditionalFilters.push(filter);
+            if (!((filter.FieldDataType == "Decimal" || filter.FieldDataType == "DateTime") && filter.FieldValue == "")) {
+                MyFilters.AdditionalFilters.push(filter);
+            }
+
         });
         //console.log(searchfields);
         if (searchfields && !this.IsUseCardSearchMechanism()) {
@@ -1757,6 +1920,19 @@ export class ListComponent implements OnInit, AfterViewInit {
             console.log("SuppressOnRowSelected");
             return;
         }
+        
+        if (this.ObjectTableName == "ARPaymentCheque" ) {
+            this._ListComponentArgs.SuppressOnRowSelectedField = true;
+        }
+
+        if (this.SelectedQuery.Code == "LedgerTransactions") {
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+                .then(cmpRef => {
+                    cmpRef.instance.ComponentRef = cmpRef;
+                    cmpRef.instance.Run({ EntityId: $event.rowData.JournalId, ObjectTableName: 'Journal' });
+                });
+            return;
+        }
 
         var myObjectTableName = this.ObjectTableName;
 
@@ -1764,15 +1940,12 @@ export class ListComponent implements OnInit, AfterViewInit {
             myObjectTableName = "Contact";
         }
        
-
         if (this._ListComponentArgs.SuppressOnRowSelectedField == true) {
             this._ListComponentArgs.SuppressOnRowSelectedField = false;
             console.log("SuppressOnRowSelectedField");
             return;
         }
 
-        //this.CurrentSession.StartBusyIndicator("Loading ...");
-        //var BackGridEvent = $event.BackFromEdit;
         if ($event != null) {
             if (!this.isEditControlOpened) {
                 var entityList = $event.rowData;
@@ -1793,7 +1966,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                     case "Customs.InternalBorderSiteType":
                     case "Customs.CertificateOfOriginMandatoryFields":
                     case "HelpResource":
-                        //case "Customs.InternationalSite":
+                    case "PortTimeZone":
                         selectedEntityId = $event.rowData.Code;
                         break;
                     case "Customs.DeclarationReferantData":
@@ -2044,18 +2217,21 @@ export class ListComponent implements OnInit, AfterViewInit {
 
                                     break;
                                 }
-                                case 'Customer': {
+                                case 'Customer':
+                                case 'Card': {
                                     var windowArgs: any = {};
-
+                                    if (this.listArgs.IsDigitalPortalMenuClicked) {
+                                        windowArgs.IsDigitalPortal = true;
+                                    }
                                     windowArgs.CurrentEntity = entityList;
+                                    windowArgs.IsCargoTrackingMenuClicked = this.listArgs.IsCargoTrackingMenuClicked;
                                     var logWindow = new LogitudeWindow();
-                                    logWindow.Width = 960;
+                                    logWindow.Width = 1100;
                                     logWindow.Height = 570;
-                                    logWindow.Title = "Invite Customers";
+                                    logWindow.Title = this.ObjectTableName == "Card" ? "Invite Partners" : "Invite Contacts";
                                     logWindow.WindowArgs = windowArgs;
                                     logWindow.IsShowCloseButton = true;
                                     logWindow.Show('./SharedLogistics/Components/InviteCustomersComponent');
-
                                     logWindow.WindowClosed.subscribe(($event1: any) => {
                                         this.isEditControlOpened = false;
                                         this.OnBackFromEdit(selectedEntityId, $event)
@@ -2416,6 +2592,30 @@ export class ListComponent implements OnInit, AfterViewInit {
                                 });
                             });
                     }
+
+                    else if (myObjectTableName == "WorkFlow") {
+                        var entitypm: WorkFlowPM = new WorkFlowPM();
+                        entitypm.Id = $event.rowData.Id
+                        entitypm.IsDirty = false;
+                        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+                            .then(cmpRef => {
+                                cmpRef.instance.ComponentRef = cmpRef;
+                                cmpRef.instance.Run({ EntityId: $event.rowData.Id, EntityPM: entitypm, ObjectTableName: 'WorkFlow', BackButtonLabel: "Workflows" });
+
+                                cmpRef.instance.BackCompleted.subscribe(() => {
+                                    this.isEditControlOpened = false;
+                                    this.OnBackFromEdit(selectedEntityId, $event)
+                                    //this.RefreshBtnClick();
+                                });
+                            });
+                    }
+                    else if (myObjectTableName == "WorkFlowVersion" || myObjectTableName == "WorkFlowInstance") {
+                        this.isEditControlOpened = false;
+                        this.RowClicked.emit($event);
+                    }
+                    else if (myObjectTableName == "Task") {
+
+                    }
                     else if (this.ObjectTableName == "Customs.DeclarationReferantData") {
                         var customFile = "";
                         if ($event != null) customFile = $event.rowData.CustomFileNo;
@@ -2555,6 +2755,22 @@ export class ListComponent implements OnInit, AfterViewInit {
                             this.OnBackFromEdit(selectedEntityId, $event);
                         });
                     }
+                    else if (myObjectTableName == "GLAccount") {
+
+                        GLAccountSecurityLevelService.CheckLevel(selectedEntityId)
+                            .then(hasAccess => {
+
+                                if (hasAccess) {
+                                    this.OpenEditComponent(selectedEntityId, myObjectTableName, $event);
+                                }
+                                else {
+                                    this.isEditControlOpened = false;
+                                    GLAccountSecurityLevelService.ShowSecurityBockingMessage();
+                                    return;
+                                }
+                            });
+
+                    }
                     else {
 
                         SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
@@ -2565,7 +2781,8 @@ export class ListComponent implements OnInit, AfterViewInit {
                                     EntityId: selectedEntityId,///$event.rowData.Id
                                     ObjectTableName: myObjectTableName,
                                     BackButtonLabel: label,
-                                    QuerySection: this.MenuTableQuerySection
+                                    QuerySection: this.MenuTableQuerySection,
+                                    SelectedQueryCode: this.SelectedQuery.Code
                                 });
                                 cmpRef.instance.BackCompleted.subscribe(($event1: any) => {
                                     this.isEditControlOpened = false;
@@ -2586,6 +2803,25 @@ export class ListComponent implements OnInit, AfterViewInit {
 
     private getIsEntityChange(logWindow: LogitudeWindow): any {
         return (((logWindow.InstanceComponent.ComponentInstance as AWBWizardLoadComponent).childComponentInstance as AWBWizardComponent) as any)?.isEntityChange;
+    }
+
+    private OpenEditComponent(selectedEntityId: any, myObjectTableName: string, $event: any) {
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+            .then(cmpRef => {
+                var label = TextCodeTranslator.Translate(this.SelectedQuery.NameTextCodeCode);
+                cmpRef.instance.ComponentRef = cmpRef;
+                cmpRef.instance.Run({
+                    EntityId: selectedEntityId,
+                    ObjectTableName: myObjectTableName,
+                    BackButtonLabel: label,
+                    QuerySection: this.MenuTableQuerySection
+                });
+                cmpRef.instance.BackCompleted.subscribe(($event1: any) => {
+                    this.isEditControlOpened = false;
+                    this.OnBackFromEdit(selectedEntityId, $event);
+                });
+                this.DestroyMe = true;
+            });
     }
 
     private ShowINTTRABookingWizard(selectedEntityId: string, $event) {
@@ -2628,8 +2864,9 @@ export class ListComponent implements OnInit, AfterViewInit {
                     if (AppTool.IsNullOrEmpty($event.rowIndex)) {
                         console.warn('$event.rowIndex is null' + aa.Result)
                     } else {
-                        if (this.MyLogGridComponent) { this.MyLogGridComponent.BackFromEditAction(backFromEdid); }
-                        if (this.MyLogGridComponentV2) { this.MyLogGridComponentV2.BackFromEditAction(backFromEdid); }
+
+                        if (this.MyLogGridComponent) { this.MyLogGridComponent.BackFromEditAction({ Data: aa.Result, rowIndex: $event.rowIndex }); }
+                        if (this.MyLogGridComponentV2) { this.MyLogGridComponentV2.BackFromEditAction({ Data: aa.Result, rowIndex: $event.rowIndex }); }
 
                     }
 
@@ -2654,16 +2891,6 @@ export class ListComponent implements OnInit, AfterViewInit {
         //    this.ReattachToDetection = true;
         //}
     }
-
-    //OnBackFromEdit() {
-    //    this.RefreshBtnClick();
-    //    //if (this.ReattachToDetection) {
-    //    //    this.ReattachToDetection = false;
-    //    //}
-    //    //else {
-    //    //    this.ReattachToDetection = true;
-    //    //}
-    //}
 
     BackButtonClicked() {
 
@@ -2711,12 +2938,16 @@ export class ListComponent implements OnInit, AfterViewInit {
             if (SessionLocator.TenantPM.CountryCode == "US") {
                 isVisible = true;
             }
+
+            else if (FeatureLocator.HasFeaturePermession("Warehouse", "AddWarehouses")) {
+                isVisible = true;
+            }
         }
 
         else if (this.ObjectTableName == "ShippingLine" || this.ObjectTableName == "Airline" || this.ObjectTableName == "Port") {
             isVisible = true;
         }
-
+      
         this.IsAddButtonVisible = isVisible;
     }
 
@@ -2748,10 +2979,7 @@ export class ListComponent implements OnInit, AfterViewInit {
             else if (this.ObjectTableName == "Currency") {
                 this.NewEntityButtonLabel = TextCodeTranslator.Translate("General.B.Add");
             }
-    
-            /*else if (this.ObjectTableName == "Customs.ExportStorge") {
-               this.NewEntityButtonLabel = "New Storage"
-            }*/
+ 
             else {
                 //this.NewEntityButtonLabel = "New " + TextCodeTranslator.TranslateTable(this.ObjectTableName);
                 if (AppTool.IsNullOrEmpty(this.listArgs.NewButtonLabel)) {
@@ -2764,6 +2992,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                     var useLocal = !SessionLocator.LoggedUserPM.DontShowLocal;
                     if (useLocal == true) {
                         var GeneralText = TextCodeTranslator.Translate("General.O.NewEntity");
+ 
                         var ChangedText = GeneralText.split('%')[0];
                     if(this.ObjectTableName=="Customs.Vehicle" ){
 
@@ -2822,8 +3051,8 @@ export class ListComponent implements OnInit, AfterViewInit {
         this.IsNewEntityButtonDisabled = !isEnabled;
     }
     private SetNewEntityButtonVisibility() {
-        var isVisible = true;
-
+        
+        var isVisible = true;    
         if (this.TenantPM.IsHybrid && (this.ObjectTableName == "User" || this.ObjectTableName == "Branche" || this.ObjectTableName == "Department" || this.ObjectTableName == "City" || this.ObjectTableName == "Vessel" || this.ObjectTableName == " Specialservice")) {
             isVisible = false;
         }
@@ -2853,6 +3082,10 @@ export class ListComponent implements OnInit, AfterViewInit {
                             break;
                         }
 
+                    case "ARPaymentCheque":{
+                        isVisible = false;
+                        break;
+                    }
                     case "Customs.Declaration":
                         {
                             isVisible = false;
@@ -2900,6 +3133,21 @@ export class ListComponent implements OnInit, AfterViewInit {
                             isVisible = false;
                             break;
                         }
+                    case "Card":
+                        {
+                            isVisible = false;
+                            break;
+                        }
+                    case "WorkFlowVersion":
+                        {
+                            isVisible = false;
+                            break;
+                        }
+                    case "WorkFlowInstance":
+                        {
+                            isVisible = false;
+                            break;
+                        }
                 }
             }
         }
@@ -2911,15 +3159,20 @@ export class ListComponent implements OnInit, AfterViewInit {
         let b1 = FeatureLocator.HasFeaturePermession(this.ObjectTableName, "EXPORTDECLARATIONNEW2");
         let b2 = FeatureLocator.HasFeaturePermession(this.ObjectTableName, "EXPORTDECLARATIONPSCREEN");
         if (this.MenuTableQuerySection == "Customs.ExportDeclaration") {
-            return b1 && b2;
+
+        return b1 && b2;
         }
     }
 
     AddNewEntity() {
-        
+
+        if (this.ObjectTable?.IsCustom && AppTool.IsNullOrEmpty(this.ObjectTable.ParentObjectTableId) && AppTool.IsNullOrEmpty(this.ObjectTable.NewWizardControlName)) {
+            this.ShowAddNewEntityValidationMsg();
+            return;
+        }
         if (this.SelectedQuery != null) {
 
-            if (!FeatureLocator.HasEntityPermessions(this.ObjectTableName, "NEW", true)) {
+            if (!this.CheckPermissions(this.ObjectTableName, "NEW", true) && !this.ObjectTable?.IsCustom) {
                 return;
             }
 
@@ -2975,6 +3228,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                                 if (this.SelectedQuery.ObjectTableNewWizardControlName == "Logitude.Customs.NewContainerizationControlCommand") {
                                     this.RunNewContainerization();
                                 }
+ 
                                 else {
                                     this.RunNewEntityWizard(this.SelectedQuery.ObjectTableNewWizardControlName);
                                 }
@@ -2997,6 +3251,10 @@ export class ListComponent implements OnInit, AfterViewInit {
                         else if (this.ObjectTableName == "Customs.DeclarationReferantData") {
                             this.RunNewCustomsFileWizard();
                         }
+                        else if (this.ObjectTable?.IsCustom) {
+                            this.RunNewCustomObjectWizard();
+                            return;
+                        }
 
                         else {
 
@@ -3008,6 +3266,12 @@ export class ListComponent implements OnInit, AfterViewInit {
                 });
             }
         }
+    }
+    private ShowAddNewEntityValidationMsg() {
+        var messageWindow = new MessageWindow();
+        messageWindow.Width = 450;
+        messageWindow.Height = 190;
+        messageWindow.Show("You can define the \"New " + this.ObjectTableDisplayName + "\" screen by selecting a one from the Views tab of the " + this.ObjectTableDisplayName + " object in the Customization");
     }
     RunNewExportDeclaration() {
         var logWindow = new LogitudeWindow();
@@ -3247,6 +3511,10 @@ export class ListComponent implements OnInit, AfterViewInit {
                 str = TextCodeTranslator.TranslateTable(this.ObjectTableName)+" "+TextCodeTranslator.Translate("General.O.New") ;
             }
 
+            if (this.ObjectTableName == "Vendor") {
+                str = TextCodeTranslator.Translate("Vendor.O.NewVendor");
+            }
+
 
             if (this.ObjectTableName == "Customs.CustomsVendor") {
                 str = TextCodeTranslator.Translate("Customs.Vendor.O.SearchVendors");
@@ -3334,6 +3602,34 @@ export class ListComponent implements OnInit, AfterViewInit {
                         case "Tariff.Ocean FCL Surcharges Cost": {
                             logWindow.Title = "New " + TextCodeTranslator.TranslateTable("Tariff.Q.OceanFCLSurchargesCost");
                             windowArgs.TypeCode = "OFS";
+                            break;
+                        }
+
+                        case "Tariff.Import Customs Charges Cost": {
+                            logWindow.Title = "New " + TextCodeTranslator.Translate("Tariff.Q.ImportCustomsChargesCost");
+                            windowArgs.TypeCode = "ICC";
+                            break;
+                        }
+
+                        case "Tariff.Export Customs Charges Cost": {
+                            logWindow.Title = "New " + TextCodeTranslator.Translate("Tariff.Q.ExportCustomsChargesCost");
+                            windowArgs.TypeCode = "ECC";
+                            break;
+                        }
+
+                        case "Tariff.Inland FTL": {
+                            logWindow.Title = "New " + TextCodeTranslator.Translate("Tariff.Q.InlandFTL");
+                            windowArgs.TypeCode = "IFT";
+                            break;
+                        }
+                        case "Tariff.Import Local Charges Sale": {
+                            logWindow.Title = "New " + TextCodeTranslator.Translate("Tariff.Q.ImportLocalChargesSale");
+                            windowArgs.TypeCode = "ICS";
+                            break;
+                        }
+                        case "Tariff.Export Local Charges Sale": {
+                            logWindow.Title = "New " + TextCodeTranslator.Translate("Tariff.Q.ExportLocalChargesSale");
+                            windowArgs.TypeCode = "ECS";
                             break;
                         }
                     }
@@ -3462,7 +3758,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     }
 
     btnExcelCLicked() {
-        if (!FeatureLocator.HasEntityPermessions(this.ObjectTableName, "READ", true)) {
+        if (!this.CheckPermissions(this.ObjectTableName, "READ", true)) {
             return;
         }
         else {
@@ -3502,7 +3798,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         if (this.CurrentQueryFilters == null) {
             this.CurrentQueryFilters = new ApiQueryFilters();
         }
-        if (!FeatureLocator.HasEntityPermessions(this.ObjectTableName, "READ", true)) {
+        if (!this.CheckPermissions(this.ObjectTableName, "READ", true) && !this.ObjectTable?.IsCustom) {
             return;
         }
         else {
@@ -3572,6 +3868,18 @@ export class ListComponent implements OnInit, AfterViewInit {
                                 value2 = LastYearToDate;
                                 filterOperator = "Between";
                             }
+                            else if (value1 == "NoDate" || value1 == "No Date") {
+                                value1 = "NoDate";
+                                filterOperator = "NoDate";
+                            }
+                            else if (value1 == "Less than Today") {
+                                value1 = TodayDate;
+                                filterOperator = "LessThan";
+                            }
+                            else if (value1 == "Less than or equal Today") {
+                                value1 = TommorowDate;
+                                filterOperator = "LessThan";
+                            }
                         }
                         var field = window.ObjectFields.filter(a => a.FieldCode == filter.ObjectFieldCode)[0];
                         this.CurrentQueryFilters.addAdditionalFilter(filter.ObjectFieldName, value1, value2, null, filterOperator, field.IsCustomFilter, filter.DisplayInList, field.IsCustom, filter.DataTypeCode);
@@ -3639,7 +3947,7 @@ export class ListComponent implements OnInit, AfterViewInit {
 
     SaveColNewChanges(Param: any) {
         var QColumns = null;
-        this._http.get(ServiceHelper.GetLogitudeURL() + "api/ngMetaData?tenant=" + this.Tenant + "&queryCode=" + Param.QueryCode + "&objecttableid=" + this.ObjectTable.Id + "&userid=" + SessionLocator.LoggedUserId)
+        this._http.get(ServiceHelper.GetLogitudeURL() + "api/ngMetaData?tenant=" + this.Tenant + "&queryCode=" + Param.QueryCode + "&objecttableid=" + this.ObjectTable.Id + "&userid=" + SessionLocator.LoggedUserId + "&getfromsystemlevel=false")
             .subscribe((response: any) => {
                 QColumns = response;
                 if (QColumns != null) {
@@ -3750,6 +4058,22 @@ export class ListComponent implements OnInit, AfterViewInit {
         logWindow.Show(componentPath);
     }
 
+    private RunNewCustomObjectWizard() {
+        var componentPath: string = "./Infrastructure/Components/NewEntity/NewCustomObjectComponent";
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = this.NewEntityButtonLabel;
+        logWindow.Width = 950;
+        logWindow.Height = 530;
+
+        logWindow.WindowArgs = {
+            ObjectTablePM: this.ObjectTable,
+            FatherComponent: this,
+        }
+        logWindow.NewWizardArgs = { IsNewEntity: true };
+        logWindow.WindowClosed.subscribe(($event: any) => this.OnNewEntityWindowClosed($event));
+        logWindow.Show(componentPath);
+    }
+
     RunNewAccountingIntegrityCheckWizard() {
         var __entity: AccountingIntegrityCheckPM = new AccountingIntegrityCheckPM();
         __entity.StatusCode = "1";
@@ -3833,6 +4157,12 @@ export class ListComponent implements OnInit, AfterViewInit {
 
         var MyFilters = new ApiQueryFilters();
 
+        if (this.listArgs.DefaultFilterItems && this.listArgs.DefaultFilterItems.length > 0) {
+            this.listArgs.DefaultFilterItems.forEach((filter) => {
+                MyFilters.AdditionalFilters.push(filter)
+            });
+        }
+
         this.currentFilters.AdditionalFilters.forEach((filter, key) => {
             if (filter.FieldName == "CompetitorFields")
                 filter.Operator = "Contains";
@@ -3888,8 +4218,6 @@ export class ListComponent implements OnInit, AfterViewInit {
             });
 
         });
-
-
     }
 
     public SortServerProp: any;
@@ -3900,7 +4228,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         this.sortColid = $event.id;
     }
 
-    HasActionBar() {//ADD TO LXML\METADATA OBJECTTABLE- to be continue 
+    HasActionBar() {//ADD TO LXML\METADATA OBJECTTABLE- to be continue
         switch (this.ObjectTable.Name) {
             case "Customs.DeclarationReferantData":
             case "Customs.PhysicalCheck":
@@ -3933,5 +4261,27 @@ export class ListComponent implements OnInit, AfterViewInit {
 
                 });
         }
+    }
+
+    MultiPrintClicked() {
+        if (!IsMultiPrintValid(this.ObjectTable.DBTableName, this.dataSource.rowCount)) return;
+
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Width = 1050;
+        logitudeWindow.Height = 700;
+        logitudeWindow.Title = "Batch Print " + this.ObjectTable.DBTableName;
+
+        var windowArgs: any = {};
+        windowArgs.QueryCode = this.SelectedQueryCode;
+        windowArgs.Filters = this.CurrentQueryFilters;
+        windowArgs.Columns = this.columns;
+        windowArgs.ObjectTable = this.ObjectTable;
+        windowArgs.Title = this.Title;
+
+        logitudeWindow.WindowArgs = windowArgs;
+        logitudeWindow.Show('./Infrastructure/Components/MultiPrint/MultiPrintMainComponent');
+        logitudeWindow.WindowClosed.subscribe(($event: any) => {
+            this.RefreshBtnClick();
+        });
     }
 }

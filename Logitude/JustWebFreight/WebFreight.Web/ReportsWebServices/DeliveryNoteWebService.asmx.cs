@@ -41,15 +41,17 @@ namespace WebFreight.Web.ReportsWebServices
         private string entityObjectTableId;
         private string childEntityObjectTableId;
         private string childEntityTypeCode;
-        private ShipmentPM shipment;
+        public ShipmentPM shipment;
         private ShipmentPickUpDelivery childEntity;
         private DeliveryNoteDataProvider dataProvider;
         private IShipmentsContext shipmentsContext;
         private ICommonDataContext commonContext;
         private PortRepository portRepository;
-        private AddressRepository addressRepository;       
+        private AddressRepository addressRepository;
         private byte[] output;
         private BranchRepository branchRepository;
+        private ShipmentRepository shipmentRepository;
+        private ShipmentTypeRepository shipmentTypeRepository;
 
         [WebMethod]
         public byte[] GetPickupData(string entityId, string entityObjectTableId, string childEntityId, string childEntityObjectTableId, int tenant)
@@ -100,8 +102,9 @@ namespace WebFreight.Web.ReportsWebServices
             this.portRepository = new PortRepository(commonContext);
             this.addressRepository = new AddressRepository(commonContext);
             this.branchRepository = new BranchRepository(tenant);
-            ShipmentRepository shipmentRepository = new ShipmentRepository(shipmentsContext);
+            this.shipmentRepository = new ShipmentRepository(shipmentsContext);
             ShipmentQuery shipmentQuery = new ShipmentQuery(shipmentRepository);
+            this.shipmentTypeRepository = new ShipmentTypeRepository(shipmentsContext);
 
             shipment = shipmentQuery.GetSinglePM(entityId, tenant);
 
@@ -143,12 +146,15 @@ namespace WebFreight.Web.ReportsWebServices
         private void SerializeDataProvider()
         {
             XmlSerializer serializer = new XmlSerializer(typeof(DeliveryNoteDataProvider));
-            MemoryStream memstream = new MemoryStream();
-            serializer.Serialize(memstream, dataProvider);
-            memstream.Seek(0, SeekOrigin.Begin);
-            var reader = new StreamReader(memstream);
-            string content = reader.ReadToEnd();
-            output = memstream.ToArray();
+            using (MemoryStream memstream = new MemoryStream())
+            {
+                serializer.Serialize(memstream, dataProvider);
+                memstream.Seek(0, SeekOrigin.Begin);
+                var reader = new StreamReader(memstream);
+                string content = reader.ReadToEnd();
+                output = memstream.ToArray();
+            }
+            
         }
 
         private void MapHeaderFields()
@@ -203,8 +209,11 @@ namespace WebFreight.Web.ReportsWebServices
             dataProvider.ValueOfGoods = shipment.ValueOfGoods;
             dataProvider.MainCarriageCarrierNumber = shipment.MainCarriageCarrierNumber;
             dataProvider.CarrierCode = shipment.MainCarriageCarrierCode;
+            dataProvider.GrossWeightUnitCode = shipment.GrossWeightUnitCode;
+            dataProvider.VolumeUnitCode = shipment.VolumeUnitCode;
 
             MapBranchData();
+            MapSealNumbers();
 
             if (shipment.ValueOfGoodsCurrencyId != null)
             {
@@ -233,7 +242,23 @@ namespace WebFreight.Web.ReportsWebServices
             this.MapShipmentMoveType();
             this.MapShipmentInsidePackages();
             this.MapShipmentCustomFields();
+            this.MapShipmentCustomClearancePoint();
+            this.MapShipmentCustomsAgent();
+            this.MapMasterShipmentNumber();
+            this.MapShipmentType();
+            this.MapShipmentTrucker();
         }
+
+        private void MapSealNumbers()
+        {
+            var sealNumbers = shipment.ShipmentPackages.Select(d => d.ShipperSeal).ToList();
+            if(sealNumbers == null)
+            {
+                return;
+            }
+            dataProvider.ContainerSeals  = string.Join(",", sealNumbers.Where(i => !string.IsNullOrEmpty(i)).Select(i => i.ToString()).ToArray());
+        }
+
         private void MapBranchData()
         {
             if (!string.IsNullOrEmpty(shipment.BranchId))
@@ -296,6 +321,7 @@ namespace WebFreight.Web.ReportsWebServices
             dataProvider.MainCarriageETD_DateTime = shipment.MainCarriageETD;
             dataProvider.MainCarriageETA_DateTime = shipment.MainCarriageETA;
             dataProvider.MainCarriageATA_DateTime = shipment.MainCarriageATA;
+            dataProvider.FinalDestinationETA = shipment.MainCarriageFinalDestinationETA;
         }
         private void MapShipmentCutoffDate()
         {
@@ -326,7 +352,23 @@ namespace WebFreight.Web.ReportsWebServices
                     dataProvider.OnCarriageCarrier = shipment.OnCarriageCarrierName;
                 }
             }
+
+            if(shipment.OnCarriageToPortId != null)
+            {
+                this.MapOnCarriageToPort();
+            }
         }
+
+        private void MapOnCarriageToPort()
+        {
+            Port onCarriagePort = this.portRepository.GetSinglePort(shipment.OnCarriageToPortId, shipment.Tenant);
+
+            if (onCarriagePort == null)
+                return;
+
+            dataProvider.OnCarriageToPortName = onCarriagePort.EnglishName;
+        }
+
         private void MapShipmentOnForwarding()
         {
             if (shipment.OnForwardingFromPortId != null && shipment.OnForwardingToPortId != null)
@@ -336,6 +378,75 @@ namespace WebFreight.Web.ReportsWebServices
                     dataProvider.OnForwardingCarrier = shipment.OnForwardingCarrierName;
                 }
             }
+        }
+
+        private void MapShipmentTrucker()
+        {
+            if (string.IsNullOrEmpty(shipment.TruckerId))
+            {
+                return;
+            }
+            this.MapTruckerReferences();
+            this.MapTruckerAddress();
+            this.MapTruckerContact();
+            this.MapTruckerCard();
+
+        }
+        private void MapTruckerReferences()
+        {
+            dataProvider.ShipmentTruckerReference1 = shipment.TruckerReference1;
+            dataProvider.ShipmentTruckerReference2 = shipment.TruckerReference2;
+        }
+        private void MapTruckerAddress()
+        {
+            if (string.IsNullOrEmpty(shipment.TruckerAddressId))
+            {
+                return;
+            }
+            Address address = addressRepository.GetSingleAddress(shipment.TruckerAddressId, tenant);
+            if (address == null)
+            {
+                return;
+            }
+            dataProvider.ShipmentTruckerAddress = DataProviders.General.GetAddress(address);
+            if (!string.IsNullOrEmpty(address.PhoneNumber) || !string.IsNullOrEmpty(address.FaxNumber))
+            {
+                dataProvider.ShipmentTruckerAddress += Environment.NewLine;
+            }
+
+            if (!string.IsNullOrEmpty(address.PhoneNumber))
+            {
+                dataProvider.ShipmentTruckerAddress += "Tel: " + address.PhoneNumber + " ";
+            }
+
+            if (!string.IsNullOrEmpty(address.FaxNumber))
+            {
+                dataProvider.ShipmentTruckerAddress += "Fax: " + address.FaxNumber;
+            }
+        }
+        private void MapTruckerContact()
+        {
+            if (string.IsNullOrEmpty(shipment.TruckerContactId))
+            {
+                return;
+            }
+            Contact contact = ContactRepository.GetSingleContact(shipment.TruckerContactId, tenant, true);
+            if (contact == null)
+            {
+                return;
+            }
+            dataProvider.ShipmentTruckerContactName = contact.EnglishName;
+            dataProvider.ShipmentTruckerContactMobileNumber = contact.Mobile;
+        }
+        private void MapTruckerCard()
+        {
+            Card card = CardRepository.GetSingleCard(shipment.TruckerId, tenant, true);
+            if (card == null)
+            {
+                return;
+            }
+            dataProvider.ShipmentTruckerName = card.EnglishName;
+            dataProvider.ShipmentTruckerVATNumber = card.VatNumber;
         }
         private void MapShipmentShipper()
         {
@@ -538,42 +649,35 @@ namespace WebFreight.Web.ReportsWebServices
         }
         private void MapShipmentMainVessel()
         {
-            if (!string.IsNullOrEmpty(shipment.MainCarriageVesselId))
+            dataProvider.MainCarriageVesselName = shipment.MainCarriageVesselName;
+
+            if (!string.IsNullOrEmpty(shipment.MainCarriageVesselName))
             {
-                Vessel vessel = this.GetVessel(shipment.MainCarriageVesselId);
-                if (vessel != null)
-                {
-                    dataProvider.MainCarriageVesselName = vessel.EnglishName;
-                    dataProvider.MainCarriageVesselNameAndNumber = vessel.EnglishName + " \\ " + shipment.MainCarriageCarrierNumber;
-                }
+                dataProvider.MainCarriageVesselNameAndNumber = shipment.MainCarriageVesselName + " \\ " + shipment.MainCarriageCarrierNumber;
             }
         }
         private void MapShipmentLastVessel()
         {
-            string lastVesselId = shipment.Transshipment3FromPortId;
+            string lastVesselName = shipment.Transshipment3VesselName;
 
-            if (lastVesselId == null)
+            if (lastVesselName == null)
             {
-                lastVesselId = shipment.Transshipment2FromPortId;
+                lastVesselName = shipment.Transshipment2VesselName;
             }
 
-            if (lastVesselId == null)
+            if (lastVesselName == null)
             {
-                lastVesselId = shipment.Transshipment1FromPortId;
+                lastVesselName = shipment.Transshipment1VesselName;
             }
 
-            if (lastVesselId == null)
+            if (lastVesselName == null)
             {
-                lastVesselId = shipment.MainCarriageVesselId;
+                lastVesselName = shipment.MainCarriageVesselName;
             }
 
-            if (lastVesselId != null)
+            if (lastVesselName != null)
             {
-                Vessel vessel = this.GetVessel(lastVesselId);
-                if (vessel != null)
-                {
-                    dataProvider.LastMainCarriageVesselNameAndNumber = vessel.EnglishName + " \\ " + shipment.MainCarriageCarrierNumber;
-                }
+                dataProvider.LastMainCarriageVesselNameAndNumber = lastVesselName + " \\ " + shipment.MainCarriageCarrierNumber;
             }
         }
         private void MapShipmentMoveType()
@@ -599,24 +703,25 @@ namespace WebFreight.Web.ReportsWebServices
                 {
                     dataProvider.InsidePackagesLines.Add(GetInsidePackageLine(insideShipmentPackagePM));
                 }
-            }           
+            }
         }
         private void MapShipmentCustomFields()
         {
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
             customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, shipment, dataProvider);
         }
-              
+
         private void MapChildEntityFields()
         {
             if (this.childEntity != null)
             {
                 dataProvider.DriverName = childEntity.Driver;
                 dataProvider.TruckNumber = childEntity.TruckNumber;
+                dataProvider.TrailerNumber = childEntity.TrailerNumber;
                 dataProvider.TruckerNumber = childEntity.CarrierNumber;
                 dataProvider.SpecialInstructions = childEntity.Notes != null ? childEntity.Notes : "";
                 dataProvider.PickupDeliveryNumber = childEntity.PickUpDeliveryNumber;
-
+                             
                 this.MapChildEntityFrom();
                 this.MapChildEntityTo();
                 this.MapChildEntityDates();
@@ -626,7 +731,17 @@ namespace WebFreight.Web.ReportsWebServices
                 this.MapChildEntityTransportMode();
                 this.MapChildEntityDocumentType();
                 this.MapChildEntityPackages();
+                this.MapChildEntityTruckerAddress();
+                this.MapFromPartnerAddress();
             }
+        }
+        private void MapFromPartnerAddress()
+        {  
+            Address address = addressRepository.GetMainAddressByCardId(childEntity.FromPartnerCardId, tenant);
+            if (address != null)
+            {
+                dataProvider.FromPartnerAddressName = address.Name != null ? address.Name : "";
+            }  
         }
         private void MapChildEntityFrom()
         {
@@ -841,6 +956,7 @@ namespace WebFreight.Web.ReportsWebServices
                         {
                             dataProvider.DeliveryContactPhone = contact.BusinessPhone != null ? contact.BusinessPhone : "";
                             dataProvider.DeliveryContactName = contact.EnglishName != null ? contact.EnglishName : "";
+                            dataProvider.DeliveryContactEmail = contact.Email;
                         }
                     }
 
@@ -871,7 +987,7 @@ namespace WebFreight.Web.ReportsWebServices
             if (childEntity.ETD != null)
             {
                 dataProvider.PickupDate = String.Format("{0:dd/MMM/yyyy}", childEntity.ETD);
-                dataProvider.PickupTime = String.Format("{0:hh:mm}", childEntity.ETD);
+                dataProvider.PickupTime = String.Format("{0:hh:mm tt}", childEntity.ETD);
                 dataProvider.PickupTime_DateTime_New = childEntity.ETD;
             }
 
@@ -880,12 +996,12 @@ namespace WebFreight.Web.ReportsWebServices
                 dataProvider.DeliveryETADate = childEntity.ETA;
                 dataProvider.DeliveryETATime = childEntity.ETA;
                 dataProvider.DeliveryDate = String.Format("{0:dd/MMM/yyyy}", childEntity.ETA);
-                dataProvider.DeliveryTime = String.Format("{0:hh:mm}", childEntity.ETA);
+                dataProvider.DeliveryTime = String.Format("{0:hh:mm tt}", childEntity.ETA);
                 dataProvider.DeliveryTime_DateTime_New = childEntity.ETA;
             }
 
             dataProvider.PickupDeliveryDeparture = this.GetActualOrExpectedDeparture();
-            dataProvider.PickupDeliveryArrival = this.GetActualOrExpectedArrival();           
+            dataProvider.PickupDeliveryArrival = this.GetActualOrExpectedArrival();
         }
         private DateTime? GetActualOrExpectedDeparture()
         {
@@ -896,7 +1012,7 @@ namespace WebFreight.Web.ReportsWebServices
             }
 
             return myDate;
-        } 
+        }
         private DateTime? GetActualOrExpectedArrival()
         {
             DateTime? myDate = childEntity.ATA;
@@ -927,7 +1043,7 @@ namespace WebFreight.Web.ReportsWebServices
                     if (!string.IsNullOrEmpty(card.PrimaryContactId))
                     {
                         Contact primaryContact = ContactRepository.GetSingleContact(card.PrimaryContactId, tenant, true);
-                        if(primaryContact != null)
+                        if (primaryContact != null)
                         {
                             dataProvider.TruckerCompanyContactName = primaryContact.EnglishName;
                         }
@@ -937,7 +1053,7 @@ namespace WebFreight.Web.ReportsWebServices
                     if (cardContact != null)
                     {
                         Contact contact = ContactRepository.GetSingleContact(cardContact.ContactId, tenant, true);
-                        if(contact != null)
+                        if (contact != null)
                         {
                             dataProvider.Salesman = contact.EnglishName != null ? contact.EnglishName : "";
                             dataProvider.SalesmanEmail = contact.Email != null ? contact.Email : "";
@@ -1057,6 +1173,32 @@ namespace WebFreight.Web.ReportsWebServices
                 }
             }
         }
+        private void MapChildEntityTruckerAddress()
+        {
+            if (string.IsNullOrEmpty(childEntity.CarrierId))
+            {
+                return;
+            }
+            Address address = addressRepository.GetMainAddressByCardId(childEntity.CarrierId, tenant);
+            if (address == null)
+            {
+                return;
+            }
+            dataProvider.TruckerAddress = DataProviders.General.GetAddress(address);
+            if (!string.IsNullOrEmpty(address.PhoneNumber) || !string.IsNullOrEmpty(address.FaxNumber))
+            {
+                dataProvider.TruckerAddress += Environment.NewLine;
+            }
+            if (!string.IsNullOrEmpty(address.PhoneNumber))
+            {
+                dataProvider.TruckerAddress += "Tel: " + address.PhoneNumber + " ";
+            }
+            if (!string.IsNullOrEmpty(address.FaxNumber))
+            {
+                dataProvider.TruckerAddress += "Fax: " + address.FaxNumber;
+            }
+        }
+
         private void MapChildEntityPackageType(PackageLine itemLine, ShipmentPickUpDeliveryPackage item)
         {
             if (item.PackageTypeId != null)
@@ -1095,18 +1237,6 @@ namespace WebFreight.Web.ReportsWebServices
             {
                 itemLine.HSCode = item.Harmonize;
             }
-        }
-
-        private Vessel GetVessel(string id)
-        {
-            Vessel output = null;
-
-            if (!string.IsNullOrEmpty(id))
-            {
-                output = (from a in commonContext.Vessels where a.Id == id select a).FirstOrDefault();
-            }
-
-            return output;
         }
         private string GetEmptyContainer(string cardId)
         {
@@ -1198,5 +1328,157 @@ namespace WebFreight.Web.ReportsWebServices
 
             return output;
         }
+        private void MapShipmentCustomClearancePoint()
+        {
+            if (!string.IsNullOrEmpty(shipment.CustomClearancePointId))
+            {
+                this.MapCustomClearancePointAddress();
+                this.MapCustomClearancePointContact();
+            }
+        }
+        private void MapCustomClearancePointAddress()
+        {
+            if (!string.IsNullOrEmpty(shipment.CustomClearancePointAddressId))
+            {
+                Address address = addressRepository.GetSingleAddress(shipment.CustomClearancePointAddressId, tenant);
+                if (address != null)
+                {
+                    dataProvider.CustomsClearancePointFullAddress = DataProviders.General.GetAddress(address);
+
+                    if (!string.IsNullOrEmpty(address.PhoneNumber) || !string.IsNullOrEmpty(address.FaxNumber))
+                    {
+                        dataProvider.CustomsClearancePointFullAddress += Environment.NewLine;
+                    }
+
+                    if (!string.IsNullOrEmpty(address.PhoneNumber))
+                    {
+                        dataProvider.CustomsClearancePointFullAddress += "Tel: " + address.PhoneNumber + " ";
+                    }
+
+                    if (!string.IsNullOrEmpty(address.FaxNumber))
+                    {
+                        dataProvider.CustomsClearancePointFullAddress += "Fax: " + address.FaxNumber;
+                    }
+                }
+            }
+        }
+        private void MapCustomClearancePointContact()
+        {
+            if (!string.IsNullOrEmpty(shipment.CustomClearancePointContactId))
+            {
+                Contact contact = ContactRepository.GetSingleContact(shipment.CustomClearancePointContactId, tenant, true);
+                if (contact != null)
+                {
+                    dataProvider.CustomsClearancePointContactName = contact.EnglishName;
+                    dataProvider.CustomsClearancePointTelephoneNumber = contact.BusinessPhone;
+                    dataProvider.CustomsClearancePointContactEmail = contact.Email;
+                }
+            }
+        }
+
+        private void MapShipmentCustomsAgent()
+        {
+            dataProvider.ImportCustomsAgentFullDetails = GetCustomsAgentFullDetails(shipment.CustomAgentImportId,
+                                                                                    shipment.CustomAgentImportAddressId,
+                                                                                    shipment.CustomAgentImportContactId);
+            dataProvider.ExportCustomsAgentFullDetails = GetCustomsAgentFullDetails(shipment.CustomAgentExportId,
+                                                                                    shipment.CustomAgentExportAddressId,
+                                                                                    shipment.CustomAgentExportContactId);
+        }
+
+        private string GetCustomsAgentFullDetails(string agentId, string agentAdressId, string agentContactId)
+        {
+            string fullDetails = "";
+            if (string.IsNullOrEmpty(agentId))
+            {
+                return fullDetails;
+            }
+            Card agentCard = CardRepository.GetSingleCard(agentId, tenant, false);
+            if (agentCard == null)
+            {
+                return fullDetails;
+            }
+            fullDetails += Environment.NewLine + agentCard.EnglishName;
+            fullDetails += GetCardAddressDetails(agentAdressId) + Environment.NewLine;
+            fullDetails += GetCardContactDetails(agentContactId);
+            return fullDetails;
+        }
+
+        private string GetCardAddressDetails(string id)
+        {
+            string fullAddress = "";
+            if (string.IsNullOrEmpty(id))
+            {
+                return fullAddress;
+            }
+            Address address = addressRepository.GetSingleAddress(id, tenant);
+            if (address == null)
+            {
+                return fullAddress;
+            }
+            fullAddress = DataProviders.General.GetAddress(address);
+            if (!string.IsNullOrEmpty(address.PhoneNumber) || !string.IsNullOrEmpty(address.FaxNumber))
+            {
+                fullAddress += Environment.NewLine;
+            }
+            fullAddress = !string.IsNullOrEmpty(address.PhoneNumber) ? fullAddress + "Tel: " + address.PhoneNumber + " " : fullAddress;
+            fullAddress = !string.IsNullOrEmpty(address.FaxNumber) ? fullAddress + "Fax: " + address.FaxNumber + " " : fullAddress;
+
+            return fullAddress;
+        }
+
+
+        private string GetCardContactDetails(string contactId)
+        {
+            string contactDetails = "";
+            if (string.IsNullOrEmpty(contactId))
+            {
+                return contactDetails;
+            }
+
+            Contact contact = ContactRepository.GetSingleContact(contactId, tenant, false);
+            if (contact == null)
+            {
+                return contactDetails;
+            }
+            return string.Join(",", new string[] { contact.EnglishName, contact.BusinessPhone, contact.Email }
+                         .Where(s => !string.IsNullOrEmpty(s)));
+        }
+
+        private void MapMasterShipmentNumber()
+        {
+            if (shipment.ShipmentLevelCode == "C")
+            {
+                dataProvider.MasterShipmentNumber = shipment.ShipmentNumber;
+            }
+
+            else if (shipment.ShipmentLevelCode == "H" && !string.IsNullOrEmpty(shipment.MasterShipmentDataId))
+            {
+                SetMasterShipmentNumberForConnectedHouse();
+            }
+        }
+
+        private void SetMasterShipmentNumberForConnectedHouse()
+        {
+            Shipment masterData = shipmentRepository.GetSingleShipment(shipment.MasterShipmentDataId, tenant);
+            if (masterData != null)
+            {
+                dataProvider.MasterShipmentNumber = masterData.ShipmentNumber;
+            }
+        }
+
+        private void MapShipmentType()
+        {
+            if (string.IsNullOrEmpty(shipment.ShipmentTypeId))
+                return;
+
+            ShipmentType shipmentType = this.shipmentTypeRepository.GetSingleShipmentType(shipment.ShipmentTypeId);
+
+            if (shipmentType == null)
+                return;
+
+            dataProvider.ShipmentType = shipmentType.Name;
+        }
+
     }
 }

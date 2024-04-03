@@ -1,36 +1,114 @@
-<!--<div style="height:25px;">
-    <div>
-        <a *ngFor="let url of Imageurls" (click)="OnImageClick(url)" style="cursor:pointer;margin:5px;padding:5px;">
-            <img [src]="url" class="rounded mb-3" width="180" height="180">
-        </a>
+<style>
+    .gallery {
+        display: grid;
+        grid-column-gap: 5px;
+        grid-row-gap: 5px;
+        grid-template-columns: auto auto auto;
+        margin: 10px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        height: calc(100% - 6px);
+        padding: 5px;
+    }
 
-    </div>
-</div>-->
+    .gallery img {
+        max-width: 100%;
+        height: 140px;
+        width: 100%;
+        border-radius: 5px;
+        transition: all 1.5s ease;
+        background-color: #EDEDED;
+    }
 
+    .gallery .content {
+        padding: 2px;
+    }
 
-<div class="LocationDirective" LocationDirective Code="SREQ" style="height:calc(100% - 6px);">
-    <div style="overflow-y:auto;overflow-x:hidden;" class="BodyBackground MediaFill">
+    .gallery-item {
+        border-radius: 5px;
+        margin: 5px;
+        max-height: 140px;
+        max-width: 225px;
+    }
 
-        <div *ngFor="let url of Imageurls; let i = index" style="padding:5px;float:left;width:170px;">
-            <a (click)="OnImageClick(url)" style="cursor:pointer;margin:5px;padding:5px;">
-                <img [src]="url" class="rounded mb-3" width="150" height="150">
-            </a>
+    .gallery .gallery-item {
+        transition: grid-row-start 300ms linear;
+        transition: transform 300ms ease;
+        transition: all 0.5s ease;
+        cursor: pointer;
+        background-color: #EDEDED;
+    }
 
-        </div>
+    .gallery .gallery-item:hover {
+        transform: scale(1.025);
+    }
+</style>
 
-    </div>
-</div>
+<table>
+    <tr style="height:100%;vertical-align:top">
+        <td>
+            <table>
+                <tr style="height:20px">
+                    <td>
+                        <table>
+                            <tr>
+                                <td><span>
+                                        <SearchTextBox style="float: right;margin-top:0px;margin-right:0px;width: 100%;margin-bottom: 5px;"
+                                            [ObjectTableName]="'ImageLibrary'" [PlaceHolder]="'Search'"
+                                            (SearchTextChangeEvent)="onSearchTextChangeEvent($event)"
+                                            [SearchText]="SearchText">
+                                        </SearchTextBox>
+                                    </span>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
 
-        <!--<div *ngFor="let url of Imageurls; let i = index">
-            <div *ngIf="i % 3 == 0" class="row">
-                <a (click)="OnImageClick(url)" style="cursor:pointer;margin:5px;padding:5px;">
-                    <img [src]="url" class="rounded mb-3" width="180" height="180">
-                </a>
-            </div>
+                <tr>
+                    <td>
+                        <div class="MediaFill">
+                            <div class="TabControl">
+                                <div class="TabControlHead">
+                                    <ul style="margin-left: 2px;">
+                                        <li [class.Selected]="SelectedTabCode == 'CT'"
+                                            (click)="SelectedTabChange('CT')" style="margin-left:2px;">
+                                            <div [attr.data-cy]="'My Images'"
+                                                style="width:100px;text-align:left;font-size:11px;color:black"
+                                                class="InnerChild">
+                                                <span>My Images</span>
+                                            </div>
+                                        </li>
 
-            <div *ngIf="i % 3 != 0" class="row">
-                <a (click)="OnImageClick(url)" style="cursor:pointer;margin:5px;padding:5px;">
-                    <img [src]="url" class="rounded mb-3" width="180" height="180">
-                </a>
-            </div>
-        </div>-->
+                                        <li [class.Selected]="SelectedTabCode == 'ZT'"
+                                            (click)="SelectedTabChange('ZT')">
+                                            <div [attr.data-cy]="'System Images'"
+                                                style="width:100px;text-align:left;font-size:11px;color:black"
+                                                class="InnerChild"
+                                                *ngIf="IsNotTenantZero()">
+                                                <span>System Images</span>
+                                            </div>
+                                        </li>
+
+                                    </ul>
+                                </div>
+
+                                <div class="TabControlBody">
+                                    <div class="gallery">
+                                        <div *ngFor="let image of FilteredImages;" class="gallery-item"
+                                            (click)="OnImageClick(image)">
+                                            <div class="content"><img [src]="image.URL"></div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>

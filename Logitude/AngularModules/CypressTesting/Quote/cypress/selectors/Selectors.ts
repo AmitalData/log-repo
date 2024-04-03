@@ -9,7 +9,14 @@ export class QuoteSelectors {
      public static readonly QuoteToPort = '#Quote_ToPortId';
      public static readonly QuoteCustomerType = '#Quote_QuoteCustomerTypeCode';
      public static readonly QuoteAddCharges = '#AddCharges';
-     public static readonly LogLovQuoteCustomerType="#LogLov_Quote_QuoteCustomerTypeCode"
+     public static readonly LogLovQuoteCustomerType = "#LogLov_Quote_QuoteCustomerTypeCode"
+     public static readonly RoutingRadioButton = "#RoutingRadio0"
+     public static readonly TransitTime = "[id='Quote_TransitTime']"
+     public static readonly TextBoxTransitTime ='[id="textboxdiv_Quote_TransitTime"]'
+     public static readonly DetailsTab = "#QuoteTHDetails"
+     public static readonly QuotePartnersTab = "#QuoteTHPartners"
+     public static readonly QuoteSaleCurrencyId = "#Quote_SaleCurrencyId"
+
      //#endregion
      //#region Quick Search
      public static readonly QuoteSearch = '#Quote_Search';
@@ -33,6 +40,12 @@ export class QuoteSelectors {
      public static readonly OkAddPackage = '#OkAddPackage';
      public static readonly DeletePackage = "Button[id^='Delete']";
      //#endregion
+
+     //#region 
+     public static readonly ContainerType = '#Quote_PackageType1Id';
+     public static readonly ContainerQuantity = '#Quote_PackageType1Quantity';
+     //#endregion
+
      //#region Quotation
      public static readonly Quotation = '#QuoteBQuotation';
      public static readonly QuoteEventsTab = '#QuoteTHEvents';
@@ -44,6 +57,7 @@ export class QuoteSelectors {
      public static readonly SendToCustomer = '#SendToCustomer';
      public static readonly SendMessageButton = '#SendMessagebtn';
      public static readonly QuoteEventNote = '#Quote_EventNote';
+     public static readonly QuoteClosingReasonNotes='[id="Quote_QuoteClosingReasonNotes"]'
      //#endregion
 
      //#region Copied page
@@ -58,8 +72,27 @@ export class QuoteSelectors {
      public static readonly QuoteChargeCostExchangeRate = "#QuoteCharge_CostExchangeRate";
      public static readonly QuoteCancelAddCharges = "#CancelAddCharges";
      public static readonly ContaintsQuote = "Quotes";
+     public static readonly DeleteAllChargesButton = "#DeleteAll";
+     public static readonly AddChargesButton = "#AddCharges";
+     public static readonly ChargesType = "#QuoteCharge_ChargesTypeId";
+     public static readonly ChargeSaleCurrency = "#QuoteCharge_SaleCurrencyId";
+     public static readonly SameAsCostCurrencyComboBox = "[data-cy='undefinedSame as Cost Currency']"
 
      //#endregion
+
+     //#region Routing 
+     public static readonly QuoteRoutingsTab = "#QuoteTHRoutings"
+     public static readonly IncludePickUpCheckBox = "#Quote_IncludePickUp"
+     public static readonly IncludeDelivery = "#Quote_IncludeDelivery"
+     public static readonly ToAddressCity = "#Quote_ToAddressCity"
+     public static readonly ToAddressCountryId = "#Quote_ToAddressCountryId"
+     //#endregion
+     public static readonly BuildShipmentButton = "#QuoteBBuildShipment"
+     public static readonly ShipmentLevelDirectRadio = "#ShipmentLevelRadio_0D"
+
+     public static readonly CancelQuery = "[data-cy='CancelQuery']"
+     public static readonly AcceptQuery = "[data-cy='AcceptQuery']"
+     public static readonly AllQuoteQuery = "[data-cy='AllQuoteQuery']"
 
      //#region Regex selectors
      public static PackageLineSelector(Selector: string, lineNumber: number): string {

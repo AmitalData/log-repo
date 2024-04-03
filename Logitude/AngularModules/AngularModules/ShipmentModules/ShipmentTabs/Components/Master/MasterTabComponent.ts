@@ -46,6 +46,9 @@ export class MasterTabComponent implements OnInit {
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({ EntityId: this.EntityPM.MasterShipmentDataId, ObjectTableName: 'Shipment', BackButtonLabel: myBackButtonLabel });
+                cmpRef.instance.BackCompleted.subscribe(bk => {
+                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                });
             });
     }
 }

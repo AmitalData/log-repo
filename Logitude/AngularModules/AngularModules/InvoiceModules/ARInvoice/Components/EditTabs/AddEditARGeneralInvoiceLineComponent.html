@@ -25,6 +25,7 @@
                                                 [SelectedValue]="DataContext.ChargesTypeId"
                                                 [ObjectTableName]="ObjectTableName"
                                                 [DataContext]="DataContext"
+                                                [ColumnsWidths]="ColumnsWidths"
                                                 [LookUpTableName]="'ChargesType'" [QueryFilterItems]="ChargeTypesQueryFilters">
                                         </LogLov>
                                     </td>
@@ -225,7 +226,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button  id="{{'cancel-addArInvoiceline' | IdGeneratorPipe}}" class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                        <button  id="{{'cancel-addArInvoiceline' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -234,7 +235,7 @@
 
                     <td style="width: 57px;">
                         <!-- (Ayman: Notes fields is always open for edit) [disabled]="!DataContext.IsEditingEnabled" -->
-                        <button  id="{{'ok-addArInvoiceline' | IdGeneratorPipe}}" class="RedButton" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                        <button  id="{{'ok-addArInvoiceline' | IdGeneratorAsyncPipe | async}}" class="RedButton" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
                     </td>
                 </tr>
             </table>

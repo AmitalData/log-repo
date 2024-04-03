@@ -1,3 +1,4 @@
+
 <table *ngIf="IsResourcesReady">
     <tr style="height: 1px;">
         <td>
@@ -53,20 +54,7 @@
                                         </div>
                                     </div>
 
-                                    <!-- Containers Views -->
-                                    <div *ngIf="IsContainersToggleFeatureUp" class="QueriesSection">
-                                        <div>Containers Views</div>
-                                        <div>
-                                            <p attr.data-cy="{{'ContainersView' | IdGeneratorPipe}}" class="QueryLink" (click)="ViewQuery('All Containers')" *ngIf="IsQueryVisible_AllContainers">{{'Container.Q.AllContainers' | TextCodeTranslationPipe}}</p>
-                                        </div>
-                                    </div>
-
-                                    <div class="QueriesSection" *ngIf="IsQueryVisible_MyViewsGroup">
-                                        <div>My Views</div>
-                                        <div style="height:80px;">
-                                            <UsersQueryList [ReloadUserQueries]="ReloadUserQueries" [ObjectTableName]="'ContainerFollowUp'" [BackButtonTitle]="BackButtonTitle" (BackCompletedEvent)="onUserQueriesBackComplete($event)"></UsersQueryList>
-                                        </div>
-                                    </div>
+                                  
 
                                 </SectionBody>
                             </SectionBox>

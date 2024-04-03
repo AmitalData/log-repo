@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\librdkafka.redist.1.6.1\build\librdkafka.redist.props" Condition="Exists('..\packages\librdkafka.redist.1.6.1\build\librdkafka.redist.props')" />
+  <Import Project="..\packages\librdkafka.redist.1.8.2\build\librdkafka.redist.props" Condition="Exists('..\packages\librdkafka.redist.1.8.2\build\librdkafka.redist.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -68,8 +68,8 @@
       <HintPath>..\packages\BCrypt-Official.0.1.109\lib\BCrypt.Net.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Confluent.Kafka, Version=1.6.3.0, Culture=neutral, PublicKeyToken=12c514ca49093d1e, processorArchitecture=MSIL">
-      <HintPath>..\packages\Confluent.Kafka.1.6.3\lib\net46\Confluent.Kafka.dll</HintPath>
+    <Reference Include="Confluent.Kafka, Version=1.8.2.0, Culture=neutral, PublicKeyToken=12c514ca49093d1e, processorArchitecture=MSIL">
+      <HintPath>..\packages\Confluent.Kafka.1.8.2\lib\net46\Confluent.Kafka.dll</HintPath>
     </Reference>
     <Reference Include="Devart.Data, Version=5.0.2296.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
       <HintPath>..\packages\DevArt.9.9.872\lib\Net40\Devart.Data.dll</HintPath>
@@ -169,8 +169,8 @@
       <HintPath>..\packages\WindowsAzure.Storage.8.0.1\lib\net45\Microsoft.WindowsAzure.Storage.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="nsoftware.IPWorksSSH, Version=16.0.6800.0, Culture=neutral, PublicKeyToken=cdc168f89cffe9cf, processorArchitecture=MSIL">
       <HintPath>..\packages\SFTP3.4.1.0\lib\Net40\nsoftware.IPWorksSSH.dll</HintPath>
@@ -219,6 +219,7 @@
       <HintPath>..\packages\System.Net.Http.4.3.4\lib\net46\System.Net.Http.dll</HintPath>
       <Private>True</Private>
       <Private>True</Private>
+
     </Reference>
     <Reference Include="System.Net.Http.WebRequest" />
     <Reference Include="System.Numerics" />
@@ -236,7 +237,9 @@
     <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.InteropServices.RuntimeInformation.4.3.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
       <Private>True</Private>
-      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security.Cryptography.Algorithms, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -310,6 +313,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AnalyticTableServices\AnalyticTableService.cs" />
     <Compile Include="APIException.cs" />
     <Compile Include="APILogsUtility.cs" />
     <Compile Include="BlobFileInfo.cs" />
@@ -327,6 +331,21 @@
     <Compile Include="FTP\SFTPDeleteTempFilesService.cs" />
     <Compile Include="Helpers\SqlBulkInsert.cs" />
     <Compile Include="Helpers\TableCounter.Customs.cs" />
+    <Compile Include="CustomFields\ChildEntitiesCustomFieldService.cs" />
+    <Compile Include="CToolWorkflows\CloneObjectService.cs" />
+    <Compile Include="CToolWorkflows\Models\CToolWorkflowMessage.cs" />
+    <Compile Include="CToolWorkflows\Models\PropertyChange.cs" />
+    <Compile Include="CToolWorkflows\WorkflowEntityChanges.cs" />
+    <Compile Include="CustomFields\EntityCustomFieldService.cs" />
+    <Compile Include="EntityChanges\AutomationResult\AutomationOnUpdateDocumentService.cs" />
+    <Compile Include="EntityChanges\AutomationResult\AutomationEventCreationService.cs" />
+    <Compile Include="Helpers\CustomFieldsResolver\CustomFieldMultiSetter.cs" />
+    <Compile Include="Helpers\CustomFieldsResolver\CustomFieldGetter.cs" />
+    <Compile Include="Helpers\CustomFieldsResolver\CustomFieldSingleSetter.cs" />
+    <Compile Include="Helpers\ErrorsLogger.cs" />
+    <Compile Include="Helpers\UpdatePortSearchFieldService.cs" />
+    <Compile Include="Interfaces\IAddManualTraceEventsHelper.cs" />
+    <Compile Include="IQueryableExtensions.cs" />
     <Compile Include="KafkaConfigurations\KakaMessageTypes.cs" />
     <Compile Include="ContainerAccessor.cs" />
     <Compile Include="Contracts\GenericResponse.cs">
@@ -356,7 +375,6 @@
     <Compile Include="EntityChanges\GeneralEntityChangeService.cs" />
     <Compile Include="EntityChanges\MainEntityChangeService.cs" />
     <Compile Include="EntityChanges\ResolverAutomationObjectFieldService.cs" />
-    <Compile Include="EntityChanges\AutomationResultExternalServices\SendInterfaceDataContractService.cs" />
     <Compile Include="EntityPM.cs" />
     <Compile Include="EntityPMBase.cs" />
     <Compile Include="EntityQueryService.cs" />
@@ -435,6 +453,8 @@
     <Compile Include="Mocks\MockIdCounterUtil.cs" />
     <Compile Include="Mocks\MockTranslateTextsClassUtil.cs" />
     <Compile Include="Models\AmitalRestrictOwnerModel.cs" />
+    <Compile Include="Models\NewTraceEventResult.cs" />
+    <Compile Include="Models\TraceEventsServiceArgs.cs" />
     <Compile Include="MyRegularExpressionAttribute.Shared.cs" />
     <Compile Include="QueueService\AzureQueueService.cs" />
     <Compile Include="QueueService\ConcurrentQueueService.cs" />
@@ -486,6 +506,22 @@
     <Compile Include="SQL\GetForeignKeyName.cs" />
     <Compile Include="Task.cs" />
     <Compile Include="ApiSearchFilters.cs" />
+    <Compile Include="TreeFilterQuery\Expression\OperatorExpression.cs" />
+    <Compile Include="TreeFilterQuery\Expression\PartnerEntityExpression.cs" />
+    <Compile Include="TreeFilterQuery\Expression\WhereExpression.cs" />
+    <Compile Include="TreeFilterQuery\Interpreter\CustomFieldExpression.cs" />
+    <Compile Include="TreeFilterQuery\Interpreter\IQueryTreeFilterExpression.cs" />
+    <Compile Include="TreeFilterQuery\Interpreter\DateGroupFilterExpression.cs" />
+    <Compile Include="TreeFilterQuery\Services\QueryTreeFilterFieldValueResolver.cs" />
+    <Compile Include="TreeFilterQuery\Interpreter\QueryTreeFilterInterpreter.cs" />
+    <Compile Include="TreeFilterQuery\Interpreter\JavaScriptSerializerExpression.cs" />
+    <Compile Include="TreeFilterQuery\Interpreter\PartnerEntityQueryFilterExpression.cs" />
+    <Compile Include="TreeFilterQuery\Interpreter\PartnerEntityResloveFieldValueExpression.cs" />
+    <Compile Include="TreeFilterQuery\Interpreter\QueryTreeFilterValidateExpresion.cs" />
+    <Compile Include="TreeFilterQuery\Interpreter\QueryTreeFilterResetValueExpresion.cs" />
+    <Compile Include="TreeFilterQuery\Iterator\QueryTreeFilterCollection.cs" />
+    <Compile Include="TreeFilterQuery\Iterator\QueryTreeFilterIterator.cs" />
+    <Compile Include="TreeFilterQuery\TreeFilterQueryService.cs" />
     <Compile Include="Utils\ConcurrentKiller.cs" />
     <Compile Include="Utils\DateTimeUtil.cs" />
     <Compile Include="Utils\IdCounterUtil.cs" />
@@ -498,6 +534,8 @@
     <Compile Include="Utils\ProxyUtil.cs" />
     <Compile Include="Utils\SMTP.cs" />
     <Compile Include="Utils\TranslateTextsClassUtil.cs" />
+    <Compile Include="WebHook\WebHookServiceExceptionThrower.cs" />
+    <Compile Include="WebHook\WebHookService.cs" />
     <Compile Include="Wildcard.cs" />
     <Compile Include="WorkerEntryPoint.cs" />
   </ItemGroup>
@@ -593,13 +631,16 @@
   <ItemGroup>
     <EmbeddedResource Include="Properties\licenses.licx" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DeploymentPackages\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\librdkafka.redist.1.6.1\build\librdkafka.redist.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\librdkafka.redist.1.6.1\build\librdkafka.redist.props'))" />
+    <Error Condition="!Exists('..\packages\librdkafka.redist.1.8.2\build\librdkafka.redist.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\librdkafka.redist.1.8.2\build\librdkafka.redist.props'))" />
   </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

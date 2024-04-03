@@ -35,12 +35,17 @@ export class EntityResourceService {
       //    var m;
       //    let test = m.text;
       //}
-      if (!SessionLocator.UseCachedData) {
-        return Observable.create(observer => {
-          observer.next(1);
+      //if (!SessionLocator.UseCachedData) {
+      //  return Observable.create(observer => {
+      //    observer.next(1);
+      //  });
+      //}
+        let objectTable = window.ObjectTables.filter(d => d.Name == objectTableName)[0];
+        if (objectTable && objectTable.IsCustom) {
+          return Observable.create(observer => {
+          observer.next(objectTableName);
         });
-      }
-
+        }
       if (EntityResourceService.ExisitsInCache(objectTableName)) {
         return Observable.create(observer => {
           observer.next(objectTableName);
@@ -60,7 +65,6 @@ export class EntityResourceService {
         var entityCodes = LocalStorageManager.GetItem(codesKey);
 
         var isMissingClosedTable: boolean = false;
-        var objectTable: any = window.ObjectTables.filter(d => d.Name == objectTableName)[0];
         if (objectTable && objectTable.IsClosed == true) {
           var storagefileName: string = objectTableName + "_ClosedData.zip";
           var fileString = LocalStorageManager.GetItem(storagefileName);

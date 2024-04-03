@@ -1,9 +1,9 @@
 ﻿using Logitude.CRMTests.Models;
 using Logitude.CRMTests.Models.Builders;
-using Logitude.Test.Base.Models.Api;
-using Logitude.Test.Base.Models.Shared;
-using Logitude.Test.Base.Models.UserTenantPreparation;
-using Logitude.Test.Base.Services;
+using Logitude.Base.Models.Api;
+using Logitude.Base.Models.Shared;
+using Logitude.Base.Models.UserTenant;
+using Logitude.Base.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,15 +26,8 @@ namespace Logitude.CRMTests.Services
                 .PriorityCode((string)dataTable.Priority)
                 .ActivityStatusCode("N")
                 .ActivityTypeCode("CL")
-                .CallWithId(GetDefaultContact())
+                .CallWithId(UserTenant.UserId)
                 .Build();
-        }
-
-        public string GetDefaultContact()
-        {
-            ApiQueryFilters apiQueryFilters = new ApiQueryFiltersBuilder().WithDefualtValues().Build();
-            ApiResponse<IEnumerable<ContactPM>> response = APICaller.CallGetByFilters<IEnumerable<ContactPM>>(Urls.ContactViewsGetByFilters, UserTenant.Token, apiQueryFilters);
-            return response.Data?.FirstOrDefault()?.Id;
         }
 
         public ActivityPM UpdateInstance(Table appointmentTable, ActivityPM activity)

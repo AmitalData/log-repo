@@ -122,6 +122,7 @@ var ShipmentListClass = function () {
     this.LastLogDateLong = "";
 
     this.DeliveryDate = "";
+    this.NotesSharedWithCustomer = "";
     this.DeliveryDateVisibility = "collapse";
     this.MyPartnerVisibility = "collapse";
 };
@@ -152,6 +153,7 @@ var QuotesRequest = function () {
     this.CreateDate = "";
     this.QuotationUpdateDate = "";
     this.QuotationPreparedTickVisibility = "";
+    this.QuotationStatusColor = "";
     this.DocumentSecurityId = "";
     this.Feedback = "";
     this.Comments = "";
@@ -532,6 +534,8 @@ function BuildShipmentBackAreaViewModel(shipment, PathPrefix) {
         {
             ShipmentNumber: ko.observable(shipment.ShipmentNumber),
             DirectionSRC: ko.observable(""),
+            noteSRC: ko.observable(""),
+        NotesSharedWithCustomer: ko.observable(shipment.NotesSharedWithCustomer),
             TransportSRC: ko.observable(""),
         };
 
@@ -573,6 +577,10 @@ function BuildShipmentBackAreaViewModel(shipment, PathPrefix) {
             break;
         }
     }
+    if (shipment.NotesSharedWithCustomer && shipment.NotesSharedWithCustomer.length > 0)
+        viewModel.noteSRC = '../HtmlHelpers/Images/Notes/Or.png';
+    else
+        viewModel.noteSRC = '../HtmlHelpers/Images/Notes/Rosie.png';
 
     return viewModel;
 }
@@ -602,6 +610,7 @@ function BuildShipmentHeaderViewModel(shipment, TenantDateTimeFormat, PathPrefix
         ToCountySRC: ko.observable(""),        
 
         DeliveryDate: ko.observable(""),
+        //NotesSharedWithCustomer = ko.observable(""),
     };
 
     if (shipment.DirectionId == "D" && shipment.TransportModeId == "I") {
@@ -805,7 +814,7 @@ function BuildDocumentsTabPageViewModel(documents, PathPrefix, showIsDigitallySi
     $("#DocumentsPageBusyIndicator").hide();
 }
 
-function BuildMasterDocumentsTabPageViewModel(entityId, documents, fileName, PathPrefix) {
+function BuildMasterDocumentsTabPageViewModel(entityId, documents, fileName, PathPrefix, securityKey) {
 
     var GridColumns = [];
     var GridDataSource = [];
@@ -826,7 +835,7 @@ function BuildMasterDocumentsTabPageViewModel(entityId, documents, fileName, Pat
     GridColumns.push({ title: " ", template: linkTemplate, width: 100 });
 
     var downloadAllTemplate = "";
-    downloadAllTemplate += "<a id='#= Id #' target='" + fileName + "' OnClick='OnDownloadAllDocument(target)'>";
+    downloadAllTemplate += "<a id='" + entityId + "' target='" + fileName + "&securitykey=" + securityKey + "' OnClick='OnDownloadAllDocument(target,id)'>";
     downloadAllTemplate += "<div style='cursor:pointer; font-size:13px; color:\\#27AAE1; text-align:right;'>Download All</div>";
     downloadAllTemplate += "</a>";
     GridColumns.push({ title: downloadAllTemplate });
@@ -1760,7 +1769,35 @@ function GetNewInStanceFromQuotesRequest(quotesRequest, tenantDateTimeFormat) {
         newQuotesRequest.QuotationPreparedTickVisibility = "collapse";
     }
 
+    newQuotesRequest.QuotationStatusColor = GetQuotationStatusColor(quotesRequest.Status); 
+
+    
     return newQuotesRequest;
+}
+
+function GetQuotationStatusColor(quotesRequestStatus) {
+    switch (quotesRequestStatus) {
+        case "Request Received":
+            return "black";
+            break;
+        case "Quote Process":
+            return "yellowgreen";
+            break;
+        case "Pending Approval":
+            return "orange";
+            break;
+        case "Pending Decision":
+            return "orange";
+            break;
+        case "Approved":
+            return "green";
+            break;
+        case "Rejected":
+            return "red";
+            break;
+    }
+
+    return "black";
 }
 
 

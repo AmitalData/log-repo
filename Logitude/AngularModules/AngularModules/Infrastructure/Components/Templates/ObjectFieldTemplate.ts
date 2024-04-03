@@ -29,6 +29,7 @@ export class ObjectFieldTemplate implements OnInit, AfterViewInit, OnDestroy {
   public DigitsAfterPoints: string = "n0";
   public IsAutoFormat: boolean = false;
   public IsLookUp: boolean = false;
+  public IsPickList: boolean = false;
   public LookUpFieldValue: string = null;
   public IsHeaderScreenTemplate: boolean = false;
   public IsListColumnCellTemplate: boolean = false;
@@ -38,6 +39,7 @@ export class ObjectFieldTemplate implements OnInit, AfterViewInit, OnDestroy {
     public Direction: string;
   public TextAlign = this.Direction == 'rtl' ? 'right' : 'left';
   public NumberFieldTextAlign: string = "right";
+  public NumberFieldRightPadding: string = "20px";
   public isRTL: boolean = false;
   private CurrentSession = SessionLocator.SelectedSession;
     @ViewChild(ChildDirective) Child: ChildDirective;
@@ -88,16 +90,16 @@ export class ObjectFieldTemplate implements OnInit, AfterViewInit, OnDestroy {
             this.DataTypeCode = this.ObjectField.DataTypeCode;
             this.DigitsAfterPoints = "n" + this.ObjectField.DigitsAfterPoint;
 
-            if (this.ObjectField.DigitsAfterPoint == 0) {
-                switch (this.DataTypeCode) {
-                    case "Double":
-                    case "Decimal":
-                        {
-                            this.DigitsAfterPoints = "n2";
-                            break;
-                        }
-                }
-            }
+            //if (this.ObjectField.DigitsAfterPoint == 0) {
+            //    switch (this.DataTypeCode) {
+            //        case "Double":
+            //        case "Decimal":
+            //            {
+            //                this.DigitsAfterPoints = "n2";
+            //                break;
+            //            }
+            //    }
+            //}
 
             if (this.IsHeaderScreenTemplate) {
                 this.FieldName = this.ObjectField.PMPropertyPath;
@@ -126,9 +128,14 @@ export class ObjectFieldTemplate implements OnInit, AfterViewInit, OnDestroy {
                     break;
                 }
 
-                case "LookUp":
+                case "LookUp": {
+                    this.IsLookUp = true;
+                    break;
+                }
+
                 case "PickList": {
                     this.IsLookUp = true;
+                    this.IsPickList = true;
                     break;
                 }
             }
@@ -149,9 +156,14 @@ export class ObjectFieldTemplate implements OnInit, AfterViewInit, OnDestroy {
                         }
 
                         if (!AppTool.IsNullOrEmpty(this.FieldValue)) {
-                            if (this.ObjectField.LookUpTableId) {
+                            if (this.ObjectField.LookUpTableId || this.IsPickList) {
 
                                 var ObjectTable = window.ObjectTables.filter(x => x.Id === this.ObjectField.LookUpTableId)[0];
+
+                                if (this.IsPickList) {
+                                    ObjectTable = window.ObjectTables.filter(x => x.Name === "CustomPickList")[0];
+                                }
+
                                 if (ObjectTable) {
                                     var moduleName = ObjectTable.ClientModuleName;
                                     var objectTableName = ObjectTable.Name;
@@ -169,7 +181,7 @@ export class ObjectFieldTemplate implements OnInit, AfterViewInit, OnDestroy {
                                                         if (!myResponse.HasError) {
                                                             if (myResponse.Result) {
 
-                                                                var myResultValue = myResponse.Result["Name"];
+                                                                var myResultValue = this.IsPickList ? myResponse.Result["Value"] : myResponse.Result["Name"];
 
                                                                 if (AppTool.IsNullOrEmpty(myResultValue)) {
                                                                     myResultValue = myResponse.Result["EnglishName"];
@@ -184,7 +196,7 @@ export class ObjectFieldTemplate implements OnInit, AfterViewInit, OnDestroy {
                                                         if (!myResponse.HasError) {
                                                             if (myResponse.Result) {
 
-                                                                var myResultValue = myResponse.Result["Name"];
+                                                                var myResultValue = this.IsPickList ? myResponse.Result["Value"] : myResponse.Result["Name"];
 
                                                                 if (AppTool.IsNullOrEmpty(myResultValue)) {
                                                                     myResultValue = myResponse.Result["EnglishName"];

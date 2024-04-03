@@ -2,6 +2,8 @@
 
   <!--General Configurations-->
   <Config Name="DBConfigFileName" Value="Customs.DBConfig.config" />
+  <!--<Config Name="DBConfigFileName" Value="Master.DBConfig.config" />-->
+  <Config Name="DBConfigFileName" Value="Amital.DBConfig.config" />
   <Config Name="AOTScriptsExecutionTimeOut" Value="30" />
   <Config Name="AOTCreateIndexWithOnline" Value="true" />
   

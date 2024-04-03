@@ -98,14 +98,14 @@
   <Column
     Name="EnglishName"
     Type="varchar"
-    Size="40">
+    Size="80">
     <Constraints
       Nullable="false" />
   </Column>
   <Column
     Name="LocalName"
     Type="nvarchar"
-    Size="40">
+    Size="80">
     <Constraints
       Nullable="true" />
   </Column>
@@ -308,6 +308,20 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="RecCreditGLAcountLocalName"
+    Type="nvarchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PayDebitGLAcountLocalName"
+    Type="nvarchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="ApplyRegionalTax"
     Type="bit">
     <Constraints
@@ -370,6 +384,20 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="QuoteChargesGroupCode"
+    Type="varchar"
+    Size="5">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="QuoteChargesGroupId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="ReceivableAccountId"
     ReferencedTable="Accounts1"
@@ -424,6 +452,11 @@
     ForeignKeyColumn="QuoteGroupSectionID"
     ReferencedTable="QuoteGroupSections"
     ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="QuoteChargesGroupId"
+    ReferencedTable="QuoteChargesGroups"
+    ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Index
     Columns="Tenant" />

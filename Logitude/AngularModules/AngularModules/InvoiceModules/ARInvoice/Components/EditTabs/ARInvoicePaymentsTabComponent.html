@@ -32,7 +32,7 @@
                                     </td>
 
                                     <td style="width: 1px;" *ngIf="!IsConstituentInvoice">
-                                        <button class="Button" id="{{'NewPayment' | IdGeneratorPipe}}"  [disabled]="!AddPaymentButtonIsEnabled" (click)="AddPaymentClicked()">{{'ARInvoice.B.Payments.NewPayment' | TextCodeTranslationPipe}}</button>
+                                        <button class="Button" id="{{'NewPayment' | IdGeneratorAsyncPipe | async}}"  [disabled]="!AddPaymentButtonIsEnabled" (click)="AddPaymentClicked()">{{'ARInvoice.B.Payments.NewPayment' | TextCodeTranslationPipe}}</button>
                                     </td>
                                 </tr>
                             </table>

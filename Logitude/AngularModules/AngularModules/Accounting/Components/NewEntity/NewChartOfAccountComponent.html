@@ -140,7 +140,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button id="{{'cancel-AddChartOfAccount' | IdGeneratorPipe}}"  class="Button" (click)="CancelButtonClicked()">{{'Accounting.General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                        <button id="{{'cancel-AddChartOfAccount' | IdGeneratorAsyncPipe | async}}"  class="Button" (click)="CancelButtonClicked()">{{'Accounting.General.B.Cancel' | TextCodeTranslationPipe}}</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -148,7 +148,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button id="{{'ok-AddChartOfAccount' | IdGeneratorPipe}}"  class="RedButton" (click)="OkButtonClicked()">{{'Accounting.General.B.OK' | TextCodeTranslationPipe}}</button>
+                        <button id="{{'ok-AddChartOfAccount' | IdGeneratorAsyncPipe | async}}"  class="RedButton" (click)="OkButtonClicked()">{{'Accounting.General.B.OK' | TextCodeTranslationPipe}}</button>
                     </td>
                 </tr>
             </table>

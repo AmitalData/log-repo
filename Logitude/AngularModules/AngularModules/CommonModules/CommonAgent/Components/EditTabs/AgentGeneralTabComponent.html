@@ -30,7 +30,11 @@
                                     </td>
 
                                     <td>
-                                        <LogTextBox [ObjectFieldName]="'Code'" [Text]="Code" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                        <LogTextBox [ObjectFieldName]="'Code'" [Text]="Code" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                    </td>
+
+                                    <td style="width: 18px;">
+                                        <div></div>
                                     </td>
                                 </tr>
 
@@ -41,7 +45,10 @@
                                     </td>
 
                                     <td>
-                                        <LogTextBox [ObjectFieldName]="'EnglishName'" [Text]="EnglishName" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                        <LogTextBox [ObjectFieldName]="'EnglishName'" [Text]="EnglishName" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                    </td>
+                                    <td>
+                                        <div></div>
                                     </td>
                                 </tr>
 
@@ -52,7 +59,10 @@
                                     </td>
 
                                     <td>
-                                        <LogTextBox [ObjectFieldName]="'LocalName'" [Text]="LocalName" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                        <LogTextBox [ObjectFieldName]="'LocalName'" [Text]="LocalName" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                    </td>
+                                    <td>
+                                        <div></div>
                                     </td>
                                 </tr>
 
@@ -63,7 +73,10 @@
                                     </td>
 
                                     <td>
-                                        <LogTextBox [ObjectFieldName]="'IATACode'" [Text]="IATACode" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                        <LogTextBox [ObjectFieldName]="'IATACode'" [Text]="IATACode" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                    </td>
+                                    <td>
+                                        <div></div>
                                     </td>
                                 </tr>
 
@@ -74,7 +87,23 @@
                                     </td>
 
                                     <td>
-                                        <LogTextBox [ObjectFieldName]="'CASSCode'" [Text]="CASSCode" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                        <LogTextBox [ObjectFieldName]="'CASSCode'" [Text]="CASSCode" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                    </td>
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+
+                                <!-- EORInumber -->
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'EORInumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td>
+                                        <LogTextBox [ObjectFieldName]="'EORInumber'" [Text]="EORInumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                    </td>
+                                    <td style="width: 18px;">
+                                        <HelpIcon [Header]="'Agent.F.EORInumber' | TextCodeTranslationPipe" [Text]="'Agent.EORInumberHelpText' | TextCodeTranslationPipe" [IconSize]="14"></HelpIcon>
                                     </td>
                                 </tr>
 
@@ -85,7 +114,11 @@
                                     </td>
 
                                     <td>
-                                        <LogTextBox [ObjectFieldName]="'RegulatedAgentCode'" [Text]="RegulatedAgentCode" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                        <LogTextBox [ObjectFieldName]="'RegulatedAgentCode'" [Text]="RegulatedAgentCode" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
                                     </td>
                                 </tr>
 
@@ -96,7 +129,11 @@
                                     </td>
 
                                     <td>
-                                        <LogTextBox [ObjectFieldName]="'Website'" [Text]="Website" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                        <LogTextBox [ObjectFieldName]="'Website'" [Text]="Website" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
                                     </td>
                                 </tr>
                                 <tr class="FormFieldRow">
@@ -105,7 +142,11 @@
                                     </td>
 
                                     <td>
-                                        <LogTextBox [ObjectFieldName]="'StorageFreeDays'" [Text]="StorageFreeDays" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                        <LogTextBox [ObjectFieldName]="'StorageFreeDays'" [Text]="StorageFreeDays" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
                                     </td>
                                 </tr>
 
@@ -116,14 +157,18 @@
                                     </td>
 
                                     <td>
-                                        <LogCheckBox [ObjectFieldName]="'InActive'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                        <LogCheckBox [ObjectFieldName]="'InActive'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogCheckBox>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
                                     </td>
                                 </tr>
 
                                 <!--Storage Free Days-->
                                 <!-- Notes -->
                                 <tr class="FormFieldRow">
-                                    <td colspan="2">
+                                    <td colspan="3">
                                         <table>
                                             <tr style="height: 1px;">
                                                 <td>
@@ -134,7 +179,7 @@
                                             <tr style="height: 95px;">
                                                 <td>
                                                     <div class="FillParent">
-                                                        <LogTextBox [ObjectFieldName]="'Notes'" [Text]="Notes" [IsMultiline]="true" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                        <LogTextBox [ObjectFieldName]="'Notes'" [Text]="Notes" [IsMultiline]="true" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                                                     </div>
                                                 </td>
                                             </tr>

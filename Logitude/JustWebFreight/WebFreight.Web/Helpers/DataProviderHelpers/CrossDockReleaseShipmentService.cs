@@ -44,6 +44,7 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
                     SetShipmentCustomFields();
                     SetStorageDaysShipmenField();
                     SetProjectNumberField();
+                    SetMasterShipmentNumberField();
                 }
             }
 
@@ -58,7 +59,6 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
                 crossDockReleaseDataProvider.MasterImportManifest = masterShipmentDataView.ImportManifest;
             }
         }
-
         private void SetShipmentGeneralFields()
         {
             crossDockReleaseDataProvider.MainCarriageCarrierName = shipmentDataView.MainCarriageCarrierName;
@@ -75,9 +75,6 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
             crossDockReleaseDataProvider.StorageFreeDays = shipmentDataView.WarehouseStorageFreeDays;
             crossDockReleaseDataProvider.MainCarriageTruckerNumber = shipmentDataView.MainCarriageCarrierNumber;
         }
-
-
-
         private string GetIncotermNameById(string incotermId, int tenant)
         {
             string incotermName = string.Empty;
@@ -89,12 +86,6 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
             }
             return incotermName;
         }
-
-
-
-
-
-
         private void SetOriginAndDestinationtShipmenFields()
         {
             if (shipmentDataView.DirectionId == "D" && shipmentDataView.TransportModeId == "I")
@@ -128,7 +119,7 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
         }
         private void SetShipmentCustomFields()
         {
-            customFieldResolver = new CustomFieldResolver();
+            customFieldResolver = new CustomFieldResolver(shipmentDataView.Tenant);
             List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Shipment", shipmentDataView.Tenant).ToList();
             crossDockReleaseDataProvider.ShipmentField1 = ResolveCustomFieldValue("Field1", shipmentDataView.Field1, customFields);
             crossDockReleaseDataProvider.ShipmentField2 = ResolveCustomFieldValue("Field2", shipmentDataView.Field2, customFields);
@@ -141,7 +132,6 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
             crossDockReleaseDataProvider.ShipmentField9 = ResolveCustomFieldValue("Field9", shipmentDataView.Field9, customFields);
             crossDockReleaseDataProvider.ShipmentField10 = ResolveCustomFieldValue("Field10", shipmentDataView.Field10, customFields);
         }
-
         private PartnerDetailsData GetPartnerDetailsById(string cardId, int tenant)
         {
             PartnerDetailsData partnerDetailsData = new PartnerDetailsData();
@@ -212,7 +202,6 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
             return result;
 
         }
-
         private void SetStorageDaysShipmenField()
         {
             int storageDays = 0;
@@ -229,7 +218,6 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
             }
             crossDockReleaseDataProvider.StorageDays = storageDays;
         }
-
         private void SetProjectNumberField()
         {
             if (shipmentDataView.ShipmentLevelCode == "D") crossDockReleaseDataProvider.ProjectNumber = shipmentDataView.ProjectNumber;
@@ -237,6 +225,25 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
             {
                 if (!string.IsNullOrEmpty(shipmentDataView.ProjectNumber)) crossDockReleaseDataProvider.ProjectNumber = shipmentDataView.ProjectNumber;
                 else if (masterShipmentDataView != null) crossDockReleaseDataProvider.ProjectNumber = masterShipmentDataView.ProjectNumber;
+            }
+        }
+        private void SetMasterShipmentNumberField()
+        {
+            if (shipmentDataView.ShipmentLevelCode == "C")
+            {
+                crossDockReleaseDataProvider.MasterShipmentNumber = shipmentDataView.ShipmentNumber;
+            }
+
+            else if (shipmentDataView.ShipmentLevelCode == "H" && !string.IsNullOrEmpty(shipmentDataView.MasterShipmentDataId))
+            {
+                SetMasterShipmentNumberForConnectedHouse();
+            }
+        }
+        private void SetMasterShipmentNumberForConnectedHouse()
+        {
+            if(masterShipmentDataView != null)
+            {
+                crossDockReleaseDataProvider.MasterShipmentNumber = masterShipmentDataView.ShipmentNumber;
             }
         }
     }

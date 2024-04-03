@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Logitude.BL.InfrastructureModel.EntityLists;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace Logitude.BL.CommonDataModel.EntityLists
 {
-    public class CardList
+    public class CardList : CustomFieldList
     {
         [Key]
         public string Id { get; set; }
@@ -14,6 +15,8 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string LocalName { get; set; }
         public bool InActive { get; set; }
         public string PaymentTermName { get; set; }
+        public string PaymentTermEnglishName { get; set; }
+        public string PaymentTermLocalName { get; set; }
         public string PartnerTypeName { get; set; }
         public string ReceivablesAccountingCard { get; set; }
         public string PayablesAccountingCard { get; set; }
@@ -40,17 +43,16 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string PrimaryContactId { get; set; }
         public bool IsActiveForMobile { get; set; }
         public string GLAccountDisplayNumber { get; set; }
-
-        // by islam
         public bool InUse { get; set; }
         public string RecentlyAdded { get; set; }
         public DateTime? InvitationDate { get; set; }
+        public DateTime? CargoTrackingInvitationDate { get; set; }
         public int? SharedLogisticsInvitationStatusCode { get; set; }
         public string SharedLogisticsInvitationStatusName { get; set; }
+        public int? CargoTrackingInvitationStatusCode { get; set; }
+        public string CargoTrackingInvitationStatusName { get; set; }
         public DateTime? LastLoginDate { get; set; }
         public string AirlineAccountNumber { get; set; }
-
-
         public string ContactId { get; set; }
         public string MainAddressId { get; set; }        
         public string PickAddressId { get; set; }
@@ -68,6 +70,8 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string SalesmanUserEnglishName { get; set; }
         public string AccountManagerUserName { get; set; }
         public string AccountManagerUserId { get; set; }
+        public string TeamId { get; set; }
+        public string TeamName { get; set; }
         public string CASSCode { get; set; }
         public string IATACode { get; set; }
         public string RegulatedAgentCode { get; set; }
@@ -87,10 +91,10 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string ExternalAccountingBusinessArea { get; set; }
         public string SATPaymentMethodCode { get; set; }
         public string ExternalId2 { get; set; }
-
         public string SATForeignRFC { get; set; }
         public string MetodoPagoCode { get; set; }
         public string UsoCFDICode { get; set; }
+        public string RegimenFiscalCode { get; set; }
         public string FirmCode { get; set; }        
         public string StateName { get; set; }
         public bool IsInternationalPartner { get; set; }
@@ -100,16 +104,11 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string CreatedByPartner { get; set; }
         public decimal OpenShipments { get; set; }
         public string BusinessPhone { get; set; }
-
-
         public string CollectorId { get; set; }
-
-
         public int? StorageFreeDays { get; set; }
         public string RankId { get; set; }
         public string IndustryId { get; set; }
         public bool AccountingVATSplit { get; set; }
-
         public string WarehouseTypeCode { get; set; }
         public bool ChargeStorage { get; set; }
         public string ChargeStorageCurrencyId { get; set; }
@@ -119,12 +118,15 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string AirWeightRoundingCode { get; set; }
         public string OceanWeightRoundingCode { get; set; }
         public string InlandWeightRoundingCode { get; set; }
-
         public int SearchWeight { get; set; }
-
         public DateTime? RecordDate { get; set; }
         public string BillToId { get; set; }
-
-
+        public double? AccountingPartnerCreditLimit { get; set; }
+        public string SATCustomerName { get; set; }
+        public string EORInumber { get; set; }
+        public string SingleInvoiceTemplateId { get; set; }
+        public string CustomsInvoiceTemplateId { get; set; }
+        public string ConsolidationInvoiceTemplateId { get; set; }
+        public string ManifestInvoiceTemplateId { get; set; }
     }
 }

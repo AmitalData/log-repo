@@ -2,22 +2,62 @@
 <table>
     <tr>
         <td>
-            <table>
-                <tr style="height: 1px;">
+            <table *ngIf="IsReady" style="margin-top:-35px">
+                <tr style="height: 5px;">
+                    <td></td>
+                </tr>
+
+                <tr style="height: 90px; ">
                     <td>
                         <table>
-                            <tr>
-                                <td style="width: 200px;">
-                                    <SearchBox [SearchText]="SearchText" (TextChanged)="SearchTextChanged($event)"></SearchBox>
+                            <tr><td></td></tr>
+                            <tr style="height: 70px;">
+                                <td style="width: 60px; height:70px">
+                                    <img src="./Images/Customization/CustomizationIcon.png" class="CenterCenter" style="height: 60px; width: 60px" />
+                                </td>
+                                <td>
+
+
+                                    <table style="width: 130px; height:50px">
+                                        <tr>
+                                            <td><label style="padding-left: 10px; color: rgb(96, 96, 96); font-size: 17px; font-weight: bold; font-family: system-ui ">Customization</label></td>
+
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div>
+                                                    <label style="padding-left: 10px; color: rgb(96, 96, 96); font-size: 22px; font-weight: bold; font-family: system-ui ">Objects Manager</label>
+                                                    <!--<img src="./Images/Customization/4U.png" class="CenterCenter" style="height:30px; left:103px; top:2px" />-->
+                                                </div>
+                                            </td>
+
+                                        </tr>
+
+
+                                    </table>
+                                </td>
+                                <td><div></div></td>
+                                <td style="width:300px; text-align: end;">
+                                    <div style="display:inline-flex">
+                                        <SearchBox style="width:140px; margin-right:5px" [attr.data-cy]="'CustomizationSearch'" [SearchText]="SearchText" (TextChanged)="SearchTextChanged($event)"></SearchBox>
+                                        <button *ngIf="IsEnabledCreatingCustomObjects" class="Button" style="width:140px; margin-left:5px" (click)="NewCustomObjectClicked()">New Custom Object</button>
+
+                                    </div>
+
                                 </td>
 
+                            </tr>
+                            <tr>
+                                <td></td>
                                 <td>
-                                    <div></div>
+                                    <label style="padding-left:10px">{{NumberOfItems}} Items</label>
                                 </td>
                             </tr>
+                            <tr><td></td></tr>
                         </table>
                     </td>
                 </tr>
+
 
                 <tr style="height: 5px;">
                     <td></td>
@@ -35,9 +75,8 @@
                                                 <div></div>
                                             </td>
 
-                                            <td style="width: 245px; min-width: 245px; max-width:245px">Default Name</td>
-                                            <td style="width: 245px; min-width: 245px; max-width:245px">Display Label (Singluar)</td>
-                                            <td style="width: 245px; min-width: 245px; max-width:245px">Display Label (Plural)</td>
+                                            <td style="width: 245px; min-width: 245px; max-width:245px">Name</td>
+                                            <td style="width: 80px; min-width: 80px; max-width: 80px;">Is Custom</td>
                                             <td class="LastChild"><div></div></td>
                                         </tr>
                                     </table>
@@ -80,7 +119,7 @@
                                                 </table>
                                             </td>
                                         </tr>
-                                        <tr class="SimpleGridViewRow CellBorder RowHover RowSelected" (click)="Selecting(item)" *ngFor="let item of ItemsSource1" [class.RowSelected]="item === selectedRow" [hidden]="ItemsSource1Hidden || item == null">
+                                        <tr class="SimpleGridViewRow CellBorder RowHover RowSelected" (click)="OpenCustomizationEditComponent(item)" *ngFor="let item of ItemsSource1" [class.RowSelected]="item === selectedRow" [hidden]="ItemsSource1Hidden || item == null">
                                             <td style="height: 25px;">
                                                 <table style="height: 25px;">
                                                     <tr>
@@ -104,31 +143,19 @@
                                                         </td>
 
                                                         <!-- Default Text -->
-                                                        <td class="GridViewCell" style="width: 245px; min-width: 245px; max-width:245px">
-                                                            <label *ngIf="SearchText"> {{(item.DefaultText).slice(0,((item.DefaultText).toLowerCase().replace(SearchText.toLowerCase(),'~' + SearchText.toLowerCase() + '~').split('~')[0].length))}}<font style="color:red;">{{(item.DefaultText).slice(((item.DefaultText).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[0].length), (((item.DefaultText).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[0].length) + (((item.DefaultText).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[1]) ? ((item.DefaultText).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[1].length) : 0)))}}</font>{{(item.DefaultText).slice((((item.DefaultText).toLowerCase().replace(SearchText.toLowerCase(),'~' + SearchText.toLowerCase() + '~').split('~')[0].length) + (((item.DefaultText).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[1]) ? ((item.DefaultText).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[1].length) : 0)))}}
+                                                        <td [attr.data-cy]="item.DefaultText" class="GridViewCell" style="width: 245px; min-width: 245px; max-width:245px">
+                                                            <label *ngIf="SearchText">
+                                                                {{(item.DefaultText).slice(0,((item.DefaultText).toLowerCase().replace(SearchText.toLowerCase(),'~' + SearchText.toLowerCase() + '~').split('~')[0].length))}}<font style="color:red;">{{(item.DefaultText).slice(((item.DefaultText).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[0].length), (((item.DefaultText).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[0].length) + (((item.DefaultText).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[1]) ? ((item.DefaultText).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[1].length) : 0)))}}</font>{{(item.DefaultText).slice((((item.DefaultText).toLowerCase().replace(SearchText.toLowerCase(),'~' + SearchText.toLowerCase() + '~').split('~')[0].length) + (((item.DefaultText).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[1]) ? ((item.DefaultText).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[1].length) : 0)))}}
                                                             </label>
-                                                            
+
                                                             <label *ngIf="!SearchText">{{item.DefaultText}}</label>
                                                         </td>
 
-                                                        <!-- Singluar -->
-                                                        <td class="GridViewCell" style="width: 245px; min-width: 245px; max-width:245px">
-                                                            <label *ngIf="SearchText">
-                                                                {{(item.TranslatedText).slice(0,((item.TranslatedText).toLowerCase().replace(SearchText.toLowerCase(),'~' + SearchText.toLowerCase() + '~').split('~')[0].length))}}<font style="color:red;">{{(item.TranslatedText).slice(((item.TranslatedText).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[0].length), (((item.TranslatedText).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[0].length) + (((item.TranslatedText).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[1]) ? ((item.TranslatedText).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[1].length) : 0)))}}</font>{{(item.TranslatedText).slice((((item.TranslatedText).toLowerCase().replace(SearchText.toLowerCase(),'~' + SearchText.toLowerCase() + '~').split('~')[0].length) + (((item.TranslatedText).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[1]) ? ((item.TranslatedText).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[1].length) : 0)))}}
-                                                            </label>
-
-                                                            <label *ngIf="!SearchText">{{item.TranslatedText}}</label>
+                                                        <!-- IsCustom -->
+                                                        <td class="GridViewCell" style="width: 80px; min-width: 80px; max-width:80px; padding-left:10px">
+                                                            <img *ngIf="IsCustomObjectTableById(item.ObjectTableID)" src="./Images/CheckBoxIcon.png" style="width:15px; height:12px" />
                                                         </td>
-
-                                                        <!-- Plural -->
-                                                        <td class="GridViewCell" style="width: 245px; min-width: 245px; max-width:245px">
-                                                            <label *ngIf="SearchText && item.TranslatedTextPlural">
-                                                                {{(item.TranslatedTextPlural).slice(0,((item.TranslatedTextPlural).toLowerCase().replace(SearchText.toLowerCase(),'~' + SearchText.toLowerCase() + '~').split('~')[0].length))}}<font style="color:red;">{{(item.TranslatedTextPlural).slice(((item.TranslatedTextPlural).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[0].length), (((item.TranslatedTextPlural).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[0].length) + (((item.TranslatedTextPlural).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[1]) ? ((item.TranslatedTextPlural).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[1].length) : 0)))}}</font>{{(item.TranslatedTextPlural).slice((((item.TranslatedTextPlural).toLowerCase().replace(SearchText.toLowerCase(),'~' + SearchText.toLowerCase() + '~').split('~')[0].length) + (((item.TranslatedTextPlural).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[1]) ? ((item.TranslatedTextPlural).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[1].length) : 0)))}}
-                                                            </label>
-
-                                                            <label *ngIf="!SearchText">{{item.TranslatedTextPlural}}</label>
-                                                        </td>
-
+                                                        
                                                         <td class="LastChild">
                                                             <div></div>
                                                         </td>
@@ -170,7 +197,7 @@
                                                 </table>
                                             </td>
                                         </tr>
-                                        <tr class="SimpleGridViewRow CellBorder RowHover RowSelected" (click)="Selecting(item)" *ngFor="let item of ItemsSource2" [class.RowSelected]="item === selectedRow" [hidden]="ItemsSource2Hidden || item == null">
+                                        <tr class="SimpleGridViewRow CellBorder RowHover RowSelected" (click)="OpenCustomizationEditComponent(item)" *ngFor="let item of ItemsSource2" [class.RowSelected]="item === selectedRow" [hidden]="ItemsSource2Hidden || item == null">
                                             <td style="height: 25px;">
                                                 <table style="height: 25px;">
                                                     <tr>
@@ -202,22 +229,9 @@
                                                             <label *ngIf="!SearchText">{{item.DefaultText}}</label>
                                                         </td>
 
-                                                        <!-- Singluar -->
-                                                        <td class="GridViewCell" style="width: 245px; min-width: 245px; max-width:245px">
-                                                            <label *ngIf="SearchText">
-                                                                {{(item.TranslatedText).slice(0,((item.TranslatedText).toLowerCase().replace(SearchText.toLowerCase(),'~' + SearchText.toLowerCase() + '~').split('~')[0].length))}}<font style="color:red;">{{(item.TranslatedText).slice(((item.TranslatedText).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[0].length), (((item.TranslatedText).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[0].length) + (((item.TranslatedText).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[1]) ? ((item.TranslatedText).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[1].length) : 0)))}}</font>{{(item.TranslatedText).slice((((item.TranslatedText).toLowerCase().replace(SearchText.toLowerCase(),'~' + SearchText.toLowerCase() + '~').split('~')[0].length) + (((item.TranslatedText).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[1]) ? ((item.TranslatedText).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[1].length) : 0)))}}
-                                                            </label>
-
-                                                            <label *ngIf="!SearchText">{{item.TranslatedText}}</label>
-                                                        </td>
-
-                                                        <!-- Plural -->
-                                                        <td class="GridViewCell" style="width: 245px; min-width: 245px; max-width:245px">
-                                                            <label *ngIf="SearchText && item.TranslatedTextPlural">
-                                                                {{(item.TranslatedTextPlural).slice(0,((item.TranslatedTextPlural).toLowerCase().replace(SearchText.toLowerCase(),'~' + SearchText.toLowerCase() + '~').split('~')[0].length))}}<font style="color:red;">{{(item.TranslatedTextPlural).slice(((item.TranslatedTextPlural).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[0].length), (((item.TranslatedTextPlural).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[0].length) + (((item.TranslatedTextPlural).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[1]) ? ((item.TranslatedTextPlural).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[1].length) : 0)))}}</font>{{(item.TranslatedTextPlural).slice((((item.TranslatedTextPlural).toLowerCase().replace(SearchText.toLowerCase(),'~' + SearchText.toLowerCase() + '~').split('~')[0].length) + (((item.TranslatedTextPlural).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[1]) ? ((item.TranslatedTextPlural).toLowerCase().replace(SearchText.toLowerCase(), '~' + SearchText.toLowerCase() + '~').split('~')[1].length) : 0)))}}
-                                                            </label>
-
-                                                            <label *ngIf="!SearchText">{{item.TranslatedTextPlural}}</label>
+                                                        <!-- IsCustom -->
+                                                        <td class="GridViewCell" style="width: 245px; min-width: 245px; max-width:245px; padding-left:10px">
+                                                            <img *ngIf="IsCustomObjectTableById(item.ObjectTableID)" src="./Images/CheckBoxIcon.png" style="width:15px; height:12px" />
                                                         </td>
 
                                                         <td class="LastChild">
@@ -253,36 +267,7 @@
         <td style="vertical-align: bottom">
             <table style="height: 22px;">
                 <tr>
-                    <td style="width: 57px;">
-                        <button class="Button" [disabled]="!IsButtonEnabled" (click)="StandardFieldsClicked()">Standard Fields</button>
-                    </td>
-
-                    <td style="width: 5px;"><div></div></td>
-
-                    <td style="width: 57px;">
-                        <button class="Button" [disabled]="!IsButtonEnabled" (click)="LabelsClicked()">Labels</button>
-                    </td>
-
-                    <td style="width: 5px;"><div></div></td>
-
-                    <td style="width: 57px;">
-                        <button class="Button" [disabled]="!IsButtonEnabled" (click)="ScreensLayoutClicked()">Screens Layout</button>
-                    </td>
-
-                    <td style="width: 5px;"><div></div></td>
-
-                    <td style="width: 57px;">
-                        <button class="Button" [disabled]="!IsButtonEnabled" (click)="CustomFieldsClicked()">Custom Fields</button>
-                    </td>
-
-                    <td style="width: 5px;"><div></div></td>
-
-                    <td style="width: 57px;">
-                        <button class="Button" [disabled]="!IsButtonEnabled" (click)="RulesClicked()">Rules</button>
-                    </td>
-
                     <td><div></div></td>
-
                     <td style="width: 57px;">
                         <button class="RedButton" (click)="CloseClicked()">Close</button>
                     </td>

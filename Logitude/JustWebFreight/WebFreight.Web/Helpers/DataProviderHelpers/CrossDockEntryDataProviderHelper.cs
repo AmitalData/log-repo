@@ -1,6 +1,7 @@
 ﻿using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.ShipmentsModel.Tools.DataMapping;
 using Logitude.WarehouseLib.BL.EntityPMs;
 using Logitude.WarehouseLib.BL.EntityQueryServices;
 using Simplog.Data.CommonDataModel;
@@ -22,18 +23,20 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
     public class CrossDockEntryDataProviderHelper
     {
         CrossDockEntryDataProvider crossDockEntryDataProvider;
-        WarehouseEntryPM warehouseEntryPM;
+        public WarehouseEntryPM warehouseEntryPM;
         public byte[] LoadDataToCrossDockEntryDataProvider(string entityId, int tenant, string userId)
         {
             CrossDockEntryDataProvider dataprovider = LoadCrossDockEntryDataProvider(entityId, tenant, userId);
             XmlSerializer serializer = new XmlSerializer(typeof(CrossDockEntryDataProvider));
-            MemoryStream memstream = new MemoryStream();
-            serializer.Serialize(memstream, dataprovider);
-            memstream.Seek(0, SeekOrigin.Begin);
-            var reader = new StreamReader(memstream);
-            string content = reader.ReadToEnd();
-            byte[] bytearray = memstream.ToArray();
-            return bytearray;
+            using (MemoryStream memstream = new MemoryStream())
+            {
+                serializer.Serialize(memstream, dataprovider);
+                memstream.Seek(0, SeekOrigin.Begin);
+                var reader = new StreamReader(memstream);
+                string content = reader.ReadToEnd();
+                byte[] bytearray = memstream.ToArray();
+                return bytearray;
+            }
 
         }
 
@@ -54,7 +57,8 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
                 SetCrossDockShipperDetails(cardLists, tenant);
                 SetCrossDockConsigneeDetails(cardLists, tenant);
                 SetCrossDockLoggedUserDetails(userId, tenant);
-
+                SetCrossDockWeightDetails();
+                SetCrossDockVolumeDetails();
                 if (warehouseEntryPM.WarehouseEntryPackages != null && warehouseEntryPM.WarehouseEntryPackages.Count > 0)
                 {
                     crossDockEntryDataProvider.EntryPackages = FullPackage(warehouseEntryPM);
@@ -64,6 +68,46 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
             return crossDockEntryDataProvider;
         }
 
+        private void SetCrossDockWeightDetails()
+        {
+
+            double? grossWeightInKG = General.ComputeWeightInSelectedUnit((double?)warehouseEntryPM.TotalGrossWeight, warehouseEntryPM.GrossWeightUnitCode, "KG");
+            double? grossWeightInLB = General.ComputeWeightInSelectedUnit((double?)warehouseEntryPM.TotalGrossWeight, warehouseEntryPM.GrossWeightUnitCode, "LB");
+            if (grossWeightInKG != null)
+            {
+                crossDockEntryDataProvider.GrossWeightInKG = String.Format("{0:#,0.00}", grossWeightInKG.Value);
+            }
+            if (grossWeightInLB != null)
+            {
+                crossDockEntryDataProvider.GrossWeightInLB = String.Format("{0:#,0.00}", grossWeightInLB.Value);
+            }
+
+        }
+
+        private void SetCrossDockVolumeDetails()
+        {
+            crossDockEntryDataProvider.VolumeInCBM = General.ComputeVolumeInSelectedUnit((double?)warehouseEntryPM.TotalVolume, warehouseEntryPM.VolumeUnitCode,"CBM");
+            crossDockEntryDataProvider.VolumeInCBF = General.ComputeVolumeInSelectedUnit((double?)warehouseEntryPM.TotalVolume, warehouseEntryPM.VolumeUnitCode, "CBF");
+        }
+        private void SetWarehouseEntryPackageWeightDetails(EntryPackage entryPackage, double? packageWeight)
+        {
+            double? warehouseEntryPackageWeightInKG = General.ComputeWeightInSelectedUnit(packageWeight, entryPackage.WeightUnit, "KG");
+            double? warehouseEntryPackageWeightInLB = General.ComputeWeightInSelectedUnit(packageWeight, entryPackage.WeightUnit, "LB");
+            if (warehouseEntryPackageWeightInKG != null)
+            {
+                entryPackage.GrossWeightInKG = String.Format("{0:#,0.00}", warehouseEntryPackageWeightInKG.Value);
+            }
+            if (warehouseEntryPackageWeightInLB != null)
+            {
+                entryPackage.GrossWeightInLB = String.Format("{0:#,0.00}", warehouseEntryPackageWeightInLB.Value);
+            }
+
+        }
+        private void SetWarehouseEntryPackageVolumeDetails(EntryPackage entryPackage, double? packageVolume)
+        {
+            entryPackage.VolumeInCBM = General.ComputeVolumeInSelectedUnit(packageVolume, entryPackage.VolumeUnit, "CBM");
+            entryPackage.VolumeInCBF = General.ComputeVolumeInSelectedUnit(packageVolume, entryPackage.VolumeUnit, "CBF");
+        }
         private int GetNumberOfWarehouseEntryPackages(WarehouseEntryPM warehouseEntryPM)
         {
             int result = 0;
@@ -94,6 +138,9 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
                 item.VolumetricWeight = package.VolumetricWeight;
                 item.VolumetricWeightUnit = warehouseEntryPM.ChargeableWeightUnitCode;
                 item.InStock = package.Instock;
+                item.Location = package.Location;
+                SetWarehouseEntryPackageVolumeDetails(item, (double?)package.Volume);
+                SetWarehouseEntryPackageWeightDetails(item, (double?)package.Weight);
 
                 #region Car Details
                 item.Make = package.Make;
@@ -208,6 +255,7 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
                     crossDockEntryDataProvider.EntryTruckerName = truckerCard.EnglishName;
                 }
             }
+            crossDockEntryDataProvider.TruckerReference = warehouseEntryPM.TruckerReference;
         }
 
         private void SetCrossDockCountryName(int tenant)
@@ -219,6 +267,8 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
                 if (destinationPort != null)
                 {
                     crossDockEntryDataProvider.DestinationCountryName = destinationPort.Country == null ? "" : destinationPort.Country.EnglishName;
+                    crossDockEntryDataProvider.DestinationCountryCode = destinationPort.Country == null ? "" : destinationPort.Country.Code;
+                    crossDockEntryDataProvider.DestinationPortCode = destinationPort.Code;
                 }
             }
         }
@@ -320,6 +370,9 @@ namespace WebFreight.Web.Helpers.DataProviderHelpers
                     crossDockEntryDataProvider.ConsigneeAddress = DataProviders.General.GetAddress(address);
                 }
             }
+
+            crossDockEntryDataProvider.ConsigneeReference1 = warehouseEntryPM.ConsigneeReference1;
+            crossDockEntryDataProvider.ConsigneeReference2 = warehouseEntryPM.ConsigneeReference2; 
         }
 
         private Address GetMainAddressByCardId(int tenant , string cardId)

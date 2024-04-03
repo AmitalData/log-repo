@@ -239,7 +239,15 @@ export class SelectStandalonePackagesComponent {
         } else if (this.IsFromShipmentPackageTab && !this.IsNewShipmentPackage()) {
             this.AddStandAloneShipmentPackagePM();
         }
+        this.RemoveNotSelectedNewShipmentPackages();
         this.CurrentSession.CloseCurrentWindowEmit("OK");
+    }
+    private RemoveNotSelectedNewShipmentPackages() {
+        if (this.ShipmentPM.ShipmentPackages != null) {
+            this.ShipmentPM.ShipmentPackages.filter(item => AppTool.IsNullOrEmpty(item.Id) && item.IsPackageCheckedInLeg == false).forEach(item => {
+                this.ShipmentPM.RemovePackage(item);
+            });
+        }
     }
 
     AddShipmentPickUpDeliveryPackagePM() {
@@ -255,12 +263,14 @@ export class SelectStandalonePackagesComponent {
             newPackage.Weight = item.Weight;
             newPackage.ShipmentPickUpDeliveryId = this.EntityPM.Id;
             newPackage.ContainerEntityId = item.ContainerEntityId;
+            newPackage.ShipperSeal = item.EntityPM.ShipperSeal;
             this.EntityPM.AddPackage(newPackage);
             item.EntityPM.IsPackageCheckedInLeg = true;
         });
     }
 
     AddStandAloneShipmentPackagePM() {
+
         this.ItemsSource.filter(f => f.IsChecked).forEach(item => {
             var newPackage = new ShipmentPackagePM(this.ShipmentPM);
             newPackage.Tenant = this.ShipmentPM.Tenant;
@@ -352,6 +362,7 @@ export class SelectStandalonePackagesComponent {
                 this.ShipmentPM.RemovePackage(item);
             });
         }
+        this.ItemsSource.filter(f => f.IsChecked).forEach(item => item.IsChecked = false);
     }
 
     private IsNewShipmentPackage() {
@@ -383,6 +394,7 @@ export class PackagesSelectItem {
     set IsChecked(value: boolean) {
         if (this.isChecked != value) {
             this.isChecked = value;
+            this.EntityPM.IsPackageCheckedInLeg = this.isChecked;
             this.fatherComponent.OnItemsChecked();
         }
     }

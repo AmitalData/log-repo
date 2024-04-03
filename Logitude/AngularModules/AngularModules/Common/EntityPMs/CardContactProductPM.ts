@@ -21,10 +21,10 @@ export class CardContactProductPM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	        constructor(_entityParentPM: any) {
-          this.EntityParentPM = _entityParentPM;
+	  		            this.EntityParentPM = _entityParentPM;
           this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
-      }
+       }
 
 	 
     
@@ -51,6 +51,16 @@ export class CardContactProductPM {
     private productTypeName: string;
     public get ProductTypeName() { return this.productTypeName; }
     public set ProductTypeName(newValue: string) { if (this.productTypeName != newValue) { this.productTypeName = newValue; this.MarkAsDirty("ProductTypeName"); } }
+       
+	 
+    private cardId: string;
+    public get CardId() { return this.cardId; }
+    public set CardId(newValue: string) { if (this.cardId != newValue) { this.cardId = newValue; this.MarkAsDirty("CardId"); } }
+       
+	 
+    private contactId: string;
+    public get ContactId() { return this.contactId; }
+    public set ContactId(newValue: string) { if (this.contactId != newValue) { this.contactId = newValue; this.MarkAsDirty("ContactId"); } }
        
 	 
     private changeSetOp: string;

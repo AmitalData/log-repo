@@ -232,18 +232,18 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             if (pagePOCO.StatusCode != null && (pagePM.StatusCode == "3" && pagePOCO.StatusCode != "3"))
             {
                 OnPageCanceled(pagePM, pagePOCO);
-            }
-
-            if (pagePOCO.StatusCode != null && (pagePM.StatusCode == "1" && pagePOCO.StatusCode == "3"))
+            } 
+            else if (pagePOCO.StatusCode != null && (pagePM.StatusCode == "1" && pagePOCO.StatusCode == "3"))
             {
                 OnPageRestored(pagePM);
             }
+            else
+            {
+                UpdatePaymentCheques(pagePM);
 
-            UpdatePaymentCheques(pagePM);
-
-            ExternalPageAdditionalDataPM additionalData = GetOrCreateEntityAdditionalData(pagePM);
-            UpdateAdditionalDataLastPage(pagePM, additionalData);
-
+                ExternalPageAdditionalDataPM additionalData = GetOrCreateEntityAdditionalData(pagePM);
+                UpdateAdditionalDataLastPage(pagePM, additionalData);
+            }
         }
 
         private void OnPageRestored(ReconcileExternalPagePM pagePM)
@@ -254,8 +254,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         private void OnPageCanceled(ReconcileExternalPagePM pagePM, ReconcileExternalPage pagePOCO)
         {
-            pagePM.ReconcileExternalPageLines.ForEach(a => { a.ChangeSetOp = ChangeSetOperation.None; });
             ObjectTable objectTable = GetObjectTable(pagePM.ObjectTableId, pagePM.Tenant);
+            CheckIfLastApprovedPage(pagePM, objectTable);
+
+            pagePM.ReconcileExternalPageLines.ForEach(a => { a.ChangeSetOp = ChangeSetOperation.None; });
 
             ReconcileExternalPagePM prevPage = GetPreviousPage(pagePM, pagePOCO, objectTable);
 
@@ -263,6 +265,15 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             UpdateAdditionalDataLastPage(prevPage, additionalData);
 
             CreatePageCanceledEvent(pagePM, pagePOCO);
+        }
+
+        private static void CheckIfLastApprovedPage(ReconcileExternalPagePM pagePM, ObjectTable objectTable)
+        {
+            ReconcileExternalPageQueryService reconcileExternalPageQueryService = new ReconcileExternalPageQueryService(pagePM.Tenant);
+            ReconcileExternalPagePM reconcileExternalPage = reconcileExternalPageQueryService.GetSingle(pagePM.Id, false, false);
+            bool islastAppprovedPage = reconcileExternalPageQueryService.CheckLastApprovedPage(reconcileExternalPage, objectTable.Name, pagePM.Tenant);
+            if (!islastAppprovedPage)
+                throw new ApplicationException(TextCodesTranslator.TranslateText("BankAccounts.O.CantCancelItsNotLastApproved", pagePM.Tenant, LoggedContactResolver.GetLoggedContactShowLocal(pagePM.Tenant)));
         }
 
         private ReconcileExternalPagePM GetPreviousPage(ReconcileExternalPagePM pagePM, ReconcileExternalPage pagePOCO, ObjectTable objectTable)

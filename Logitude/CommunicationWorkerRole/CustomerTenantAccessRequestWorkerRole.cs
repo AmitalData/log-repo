@@ -1,4 +1,5 @@
-﻿using Devart.Common;
+﻿using CommunicationWorkerRole.Services.Logbox;
+using Devart.Common;
 using Logitude.BL.CommonDataModel.EntityAMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
@@ -121,7 +122,10 @@ namespace CommunicationWorkerRole
                         if (response != null && response.MessageId != null)
                         {
                             
-                            string RequestId = response.MessageValues["RequestId"].ToString();
+                            string RequestId = response.MessageValues != null && response.MessageValues.Keys.Contains("RequestId") ? response.MessageValues["RequestId"].ToString() : null;
+                            string newIsPrivateLabelCustomerFieldValue = response.MessageValues != null && response.MessageValues.Keys.Contains("IsPrivateLabel") ? response.MessageValues["IsPrivateLabel"].ToString() : null;
+                            string newIsActiveTenantFieldValue = response.MessageValues != null && response.MessageValues.Keys.Contains("IsActiveTenant") ? response.MessageValues["IsActiveTenant"].ToString() : null;
+                            string isPassedTrialEndDateFieldValue = response.MessageValues != null && response.MessageValues.Keys.Contains("IsPassedTrialEndDate") ? response.MessageValues["IsPassedTrialEndDate"].ToString() : null;
                             int.TryParse(response.MessageValues["Tenant"], out tenant);
                             string CorrelationId = response.MessageId;
                             IWebFreightContext webFreightContext = WebFreightContext.GetContext(tenant);
@@ -149,6 +153,7 @@ namespace CommunicationWorkerRole
                                     ExpirationDate = DateTime.Now.AddDays(90),
                                     Status = "I",
                                     Tenant = tenant
+                                    //
                                 };
                             }
                             else
@@ -176,73 +181,39 @@ namespace CommunicationWorkerRole
                             {
                                 using (var client = new HttpClient())
                                 {
-                                    
+
                                     client.DefaultRequestHeaders.Add("Token", Token);
                                     client.DefaultRequestHeaders.Add("CorrelationId", CorrelationId);
-                                    ICommonDataContext commoncontext = CommonDataContext.GetContext(tenant);
-                                    CustomerTenantAccessRequestQuery customerTenantAccessRequestQuery = new CustomerTenantAccessRequestQuery(tenant);
-                                    var customerTenantAccessRequest = customerTenantAccessRequestQuery.GetSinglePM(RequestId, tenant);
-                                    TenantQuery tenantQuery = new TenantQuery(tenant);
-                                    var Tenant = tenantQuery.GetSinglePMByCustomerId(tenant);
-                                    HybridPartnerRepository hybridPartnerRepository = new HybridPartnerRepository(commoncontext);
-                                    HybridPartner Partner = hybridPartnerRepository.GetSingleHybridPartner(customerTenantAccessRequest.ForwarderId);
-                                    CustomerQuery customerQuery = new CustomerQuery(tenant);
-                                    var customer = customerQuery.GetSinglePMForLogBox(Tenant.CustomerId, tenant);
-                                    
-                                    CustomerTenantAccessAM customerTenantAccessAM = new CustomerTenantAccessAM()
+
+                                    if (string.IsNullOrEmpty(RequestId) && MustBeUpdated(newIsPrivateLabelCustomerFieldValue, newIsActiveTenantFieldValue, isPassedTrialEndDateFieldValue))
                                     {
-                                        Tenant = Partner.PartnerTenant,
-                                        CustomerTenant = customerTenantAccessRequest.Tenant,
-                                        CompanyName = Tenant.Company,
-                                        CompanyEmail = Tenant.Email,
-                                        CompanyVat = !string.IsNullOrEmpty(Tenant.VatNumber) ? Tenant.VatNumber.Trim() : Tenant.VatNumber,
-                                        ContactName = Tenant.CustomerName,
-                                        ContactMobile = Tenant.CustomerMobile,
-                                        ContactPhone = Tenant.CustomerPhone,
-                                        IsPrivateLabelCustomer = false,
-                                        StockTypeCode = Tenant.StockTypeCode,
-                                    };
-                                    GlobalTenant Globaltenant = null;
-                                    using (TransactionScope scope = TransactionFactory.GetNewTransaction())//TransactionFactory.GetNewTransaction())
-                                    {
-                                        GlobalTenantRepository globaltenantRep = new GlobalTenantRepository();
-                                        Globaltenant = globaltenantRep.GetGlobalTenantsByTenant(customerTenantAccessAM.CustomerTenant);
-                                        if (Globaltenant != null && !string.IsNullOrEmpty(Globaltenant.PrivateLabelId))
-                                        {
-                                            customerTenantAccessAM.IsPrivateLabelCustomer = true;
-                                        }
-                                        scope.Complete();
+                                        CustomerTenantAccessRequestUpdaterService.Update(new CustomerTenantAccessRequestUpdaterArgs { 
+                                            Response = response, 
+                                            Tenant = tenant,
+                                            NewIsPrivateLabelCustomerFieldValue = newIsPrivateLabelCustomerFieldValue,
+                                            NewIsActiveTenantFieldValue = newIsActiveTenantFieldValue,
+                                            IsPassedTrialEndDateFieldValue = isPassedTrialEndDateFieldValue,
+                                            ApiLogsService = apiLogsService,
+                                            IsNewLog = IsNewLog,
+                                            LogPM = LogPM,
+                                            Client = client,
+                                            Queue = queue, 
+                                            URI = URI 
+                                        });
                                     }
-                                    var serializedObject = JsonConvert.SerializeObject(customerTenantAccessAM);
-                                    LogPM.Subject = "Start To Send Request To Forwarder By CustomerTenantAccess Controller";
-                                    
-                                    if (IsNewLog)
+                                    else
                                     {
-                                        apiLogsService.Create(LogPM);
-                                    }
-                                   
-                                    var msg = "Start Sending Request To Forwarder Tenant " + DateTime.Now;
-                                    APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, LogPM.Status, response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, msg, LogitudeXmlSerializer.SerializeObjectToXmlString(customerTenantAccessAM), null, null, "");
-                                    var content = new StringContent(serializedObject, Encoding.UTF8, "application/json");
-                                    var result = client.PostAsync(URI + "CustomerTenantAccess", content);
-                                    result.Wait();
-                                    if (result.Result.StatusCode == System.Net.HttpStatusCode.OK)
-                                    {
-                                        queue.Complete();
-                                        LogPM.Status = "D";
-                                        var ResponseData = result.Result.Content.ReadAsStringAsync().Result;
-                                        var Donemsg = "Request Sent To Forwarder Successfully " + DateTime.Now;
-                                        APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "D", response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, Donemsg, null, ResponseData, null, "");
-                                    }
-                                    else //if (result.StatusCode == System.Net.HttpStatusCode.BadRequest)
-                                    {
-                                        APIException EXC = JsonConvert.DeserializeObject<APIException>(result.Result.Content.ReadAsStringAsync().Result);
-                                        if (EXC != null)
-                                        {
-                                            var Failmsg = EXC.ErrorType + " Fail To Send Request To Forwarder Tenant " + DateTime.Now;
-                                            APILogsUtility.UpdateAPILogStatus(LogPM.Id, tenant, "F", response.RetryNumber + 1, DateTime.Now, DateTime.UtcNow, Failmsg, null, LogitudeXmlSerializer.SerializeObjectToXmlString(EXC), null, "");
-                                            throw new Exception(EXC.ErrorType, new Exception(EXC.ErrorMessage));
-                                        }
+                                        CustomerTenantAccessCreatorService.Create(new CustomerTenantAccessCreatorArgs {
+                                            Response = response,
+                                            Tenant = tenant,
+                                            RequestId = RequestId,
+                                            ApiLogsService = apiLogsService,
+                                            IsNewLog = IsNewLog,
+                                            LogPM = LogPM,
+                                            Client = client,
+                                            Queue = queue,
+                                            URI = URI
+                                        });
                                     }
                                 }
                                 LogDoneItemInMemory();
@@ -323,6 +294,11 @@ namespace CommunicationWorkerRole
                 ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "importer shipments worker role start", null, null);
                 Thread.Sleep(10000);
             } 
+        }
+
+        private static bool MustBeUpdated(string newIsPrivateLabelCustomerFieldValue, string newIsActiveTenantFieldValue, string isPassedTrialEndDateFieldValue)
+        {
+            return (!string.IsNullOrEmpty(newIsPrivateLabelCustomerFieldValue) || !string.IsNullOrEmpty(newIsActiveTenantFieldValue) || !string.IsNullOrEmpty(isPassedTrialEndDateFieldValue));
         }
 
         private void ConnectClient()

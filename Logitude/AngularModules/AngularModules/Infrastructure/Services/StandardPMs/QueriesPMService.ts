@@ -53,6 +53,29 @@ export class QueriesPMService {
         });
     }
 
+    getAllSystemViewsByObjectTable(objectTableName: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+        var callTime = new Date();
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetAllSystemViewsByObjectTable?' + 'objectTableName=' + objectTableName, ServiceHelper.GetHttpFullHeaders())
+                .pipe(
+                    map((response: HttpResponse<any>) => {
+                        var pms = response.body;
+                        var queries: QueryPM[] = [];
+                        pms?.forEach(queryPM => {
+                            queries.push(this.MapJsonToEntityPM(queryPM));
+                        });
+
+                        var serviceResponse: ServiceResponse = new ServiceResponse();
+                        serviceResponse.Result = queries;
+
+                        return serviceResponse;
+
+                    }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
     insert(entityPM: QueryPM) {
 
         return defer(() => {

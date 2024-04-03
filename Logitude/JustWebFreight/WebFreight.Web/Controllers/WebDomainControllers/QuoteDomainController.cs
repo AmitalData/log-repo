@@ -234,21 +234,24 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         {
             try
             {
+                using (TransactionScope scope = TransactionFactory.GetTransaction())
+                {
 
-                if (opportunityId == "null")
-                    opportunityId = null;
+                    if (opportunityId == "null")
+                        opportunityId = null;
 
+                    string token = HttpContext.Current.Request.Headers["Token"];
+                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                    SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                    SecurityUtility.CheckContactFeature("QuoteStage", "READ", authToken.Tenant);
 
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("QuoteStage", "READ", authToken.Tenant);
+                    QuotesDomainService domainService = new QuotesDomainService();
+                    string[] Ids = quotesIds.Split(':');
+                    domainService.ConnectQuotesToOpportunity(opportunityId, Ids.ToList(), authToken.Tenant);
 
-                QuotesDomainService domainService = new QuotesDomainService();
-                string[] Ids = quotesIds.Split(':');
-                domainService.ConnectQuotesToOpportunity(opportunityId, Ids.ToList(), authToken.Tenant);
-
-                return Request.CreateResponse(HttpStatusCode.OK, true);
+                    scope.Complete();
+                    return Request.CreateResponse(HttpStatusCode.OK, true);
+                }
             }
             catch (Exception ex)
             {
@@ -308,6 +311,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 int tenant = authToken.Tenant;
 
                 SecurityUtility.AuthenticationOnTenant(tenant);
+                SecurityUtility.AuthenticationOnTenant(entityPM.Tenant);
+                SecurityUtility.AuthenticationOnEntityTenant("Quote", entityPM.Tenant, tenant);
                 SecurityUtility.CheckContactFeature("Quote", "READ", tenant);
 
                 QuoteSubjectService iSubjectService = new QuoteSubjectService(entityPM);
@@ -427,6 +432,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     int tenant = authToken.Tenant;
 
                     SecurityUtility.AuthenticationOnTenant(tenant);
+                    SecurityUtility.AuthenticationOnTenant(entityPM.Tenant);
+                    SecurityUtility.AuthenticationOnEntityTenant("Quote", entityPM.Tenant, tenant);
 
                     if (entityPM != null)
                     {
@@ -539,7 +546,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 ICRMContext crmContext = CRMContext.GetContext(tenant);
                 TicketListQueryService listService = new TicketListQueryService(crmContext);
                 List<TicketList> myTickets = listService.GetTicketListByQuoteIdList(quoteId, tenant);
-                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
                 customFieldResolver.SetCustomFieldsValues("Ticket", tenant, myTickets.Cast<object>().ToList());
 
                 foreach (TicketList item in myTickets)
@@ -580,7 +587,28 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
-        
+
+        public HttpResponseMessage GetDisconnectQuoteFromOpportunity(string quoteId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                IQuotesContext quotesContext = QuotesContext.GetContext(tenant);
+                QuoteService quoteService = new QuoteService(quotesContext, tenant);
+                QuotePM quotePM = quoteService.DisconnectQuoteFromOpportunity(quoteId);
+       
+                return Request.CreateResponse(HttpStatusCode.OK, quotePM);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
     }
 }
 

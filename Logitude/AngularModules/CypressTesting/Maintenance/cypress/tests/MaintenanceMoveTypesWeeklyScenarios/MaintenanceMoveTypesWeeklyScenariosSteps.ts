@@ -26,21 +26,22 @@ Then("a validation message with {string} error should appear", (ValidationMessag
     MaintenanceActions.ValidateErrorPopUpMessage(ValidationMessage)
 });
 //#endregion
+
 //#region  Create a new move type
 Given("a move type with the following details", (dataTable) => {
     moveTypeDetails = Assists.CreateInstance<MoveTypeDetails>(dataTable, true);
-    MaintenanceActions.FillMoveTypeDetails(moveTypeDetails) 
+    MaintenanceActions.FillMoveTypeDetails(moveTypeDetails)
 });
- 
+
 When("create move type", () => {
     MaintenanceActions.CreateMoveType();
 });
- 
+
 Then("the move type should create successfully", () => {
     MaintenanceActions.AssertCreateMoveType();
 });
- 
 //#endregion
+
 //#region Search for the move type
 When("search for move type", () => {
     MaintenanceActions.SearchMoveType()
@@ -49,8 +50,8 @@ When("search for move type", () => {
 Then("the move type should appear successfully", () => {
     MaintenanceActions.AssertSearchMoveType()
 });
-
 //#endregion
+
 //#region Open the move type
 When("open move type", () => {
     MaintenanceActions.OpenMoveType()
@@ -60,15 +61,20 @@ Then("the move type should open successfully", () => {
     MaintenanceActions.AssertOpenMoveType()
 });
 //#endregion
+
 //#region  Edit the move type
-Given("{string} as move type local name", (localName) => {
-    MaintenanceActions.FillMoveTypeLocalName(localName)
+Given("fill move type local name", () => {
+    MaintenanceActions.FillMoveTypeLocalName()
 });
- 
+
+Given("make move type inactivate", () => {
+    cy.ClickCheckBox(MaintenanceSelectors.MoveTypeInActive)
+});
+
 When("update move type", () => {
     MaintenanceActions.UpdateMoveType()
 });
- 
+
 Then("the move type should update successfully", () => {
     MaintenanceActions.AssertUpdateMoveType()
 });

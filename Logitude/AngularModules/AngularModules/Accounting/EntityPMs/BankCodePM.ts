@@ -15,11 +15,11 @@ import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/Propert
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
 export class BankCodePM {
-
+      
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-          this.UIProperties = new UIProperties(this); 
+                    this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -62,6 +62,11 @@ export class BankCodePM {
     private logoId: string;
     public get LogoId() { return this.logoId; }
     public set LogoId(newValue: string) { if (this.logoId != newValue) { this.logoId = newValue; this.MarkAsDirty("LogoId"); } }
+       
+	 
+    private dateFormat: string;
+    public get DateFormat() { return this.dateFormat; }
+    public set DateFormat(newValue: string) { if (this.dateFormat != newValue) { this.dateFormat = newValue; this.MarkAsDirty("DateFormat"); } }
        
 	 
 

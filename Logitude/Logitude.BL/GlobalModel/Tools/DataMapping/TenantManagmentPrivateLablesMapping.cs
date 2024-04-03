@@ -37,7 +37,13 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
             entityPOCO.ForgetPasswordImageId = entityPM.ForgetPasswordImageId; 
             entityPOCO.SecondaryColor = entityPM.SecondaryColor;
             entityPOCO.HasLogboxAccess = entityPM.HasLogboxAccess;
-
+            entityPOCO.MainTabHighlightColor = entityPM.MainTabHighlightColor;
+            entityPOCO.DocumentTypeHighlightColor = entityPM.DocumentTypeHighlightColor;
+            entityPOCO.IsCustomsActivated = entityPM.IsCustomsActivated;
+            entityPOCO.IsExportActivated = entityPM.IsExportActivated;
+            entityPOCO.CreateShipmentsWithoutDocs = entityPM.CreateShipmentsWithoutDocs;
+            entityPOCO.CreateOShipmentsWithoutDocs = entityPM.CreateOShipmentsWithoutDocs;
+            entityPOCO.DistributorCode = entityPM.DistributorCode;
         }
     }
 }

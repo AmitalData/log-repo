@@ -21,7 +21,7 @@ import { BranchListService } from '../../../../Common/Services/StandardLists/Bra
 import { DepartmentListService } from '../../../../Common/Services/StandardLists/DepartmentListService';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { Guid } from '../../../../Infrastructure/Utilities/Guid';
-import { ShipmentPMService } from '../../../../Shipment/Services/StandardPMs/ShipmentPMService';
+import { ShipmentPMService, UrlAndLogo } from '../../../../Shipment/Services/StandardPMs/ShipmentPMService';
 import { ShipmentAdditionalCloudDataService } from '../../../../Shipment/Services/Others/ShipmentAdditionalCloudDataService';
 import { DocumentsFilingExtendedPMService } from '../../../../Common/Services/ExtendedPMs/DocumentsFilingExtendedPMService';
 import { GroupByPipe } from '../../../../Infrastructure/Pipes/GroupByPipe';
@@ -34,16 +34,19 @@ import { CommonDomainService } from '../../../../Common/Services/CommonDomainSer
 import { TenantPMService } from '../../../../Common/Services/StandardPMs/TenantPMService';
 import { DownloadManager } from '../../../../Infrastructure/Utilities/DownloadManager';
 import { DatePipe } from '@angular/common';
+import { TenantManagementPM } from 'Infrastructure/EntityPMs/TenantManagementPM';
 
 
-@Component({
-    
-    templateUrl: './ECommercePaymentRequestMobileComponent.html'
+@Component({    
+    templateUrl: './ECommercePaymentRequestMobileComponent.html',
+    styleUrls: ['./mobilePayments.scss', './detailsMobile.scss']
 })
 
 export class ECommercePaymentRequestMobileComponent extends BaseComponent implements OnInit, AfterViewInit {
-  public DimDenyButton: boolean = false;
-  public DimApproveButton: boolean = false;
+    public DimDenyButton: boolean = false;
+    public DimApproveButton: boolean = false;
+    public orianStyle: boolean = false;
+    public dsvStyle: boolean = false;
 
     DataContext: ECommercePaymentRequestMobileComponent = this;
     //private messageWindow: MessageWindow = new MessageWindow();
@@ -61,6 +64,11 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     RefreshTimer: any;
     private datePipe: DatePipe;
     _ImageLibraryService: ImageLibraryService;
+    tenantManagement: TenantManagementPM;
+    logoImg: string = '';
+    logoUrl: string = '';
+    serviceAgreementURL: string = '';
+
     constructor(private cd: ChangeDetectorRef) {
         super();
         this._documentsFilingExtendedPMService = new DocumentsFilingExtendedPMService();
@@ -98,6 +106,9 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     ShowErrorMessage: boolean = false;
     SecurityKey: string = "";
     Tenant: number = null;
+    WhatsAppMessagingNumber: string = "00";
+    ShowWhatsAppIcon: boolean = false;
+
     RunComponent() {
 
         if (SessionLocator.IsExternalParams) {
@@ -111,6 +122,10 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                     if (me.Tenant) {
                         this.Tenant = me.Tenant;
                     }
+
+                    this.orianStyle = +this.Tenant === 126 || +this.Tenant === 1153;
+                    this.dsvStyle = +this.Tenant === 49 || +this.Tenant === 1062;
+
                     //SessionLocator.ExternalParams.Args.forEach(arg => {
                     //    if (arg.FieldName == 'ShipmentId') {
                     //        ShipmentId = arg.FieldValue; 
@@ -123,6 +138,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
         }
         this.StartBusyIndicator("Loading ...");
         this._ShipmentPMService.getSingleBySecurityKeyTenantWithoutToken(this.SecurityKey, this.Tenant).subscribe((MyResult:any) => {
+            this.MapFieldsFromResponseData(MyResult);
             if (MyResult.Result) {
                 //this.EntityPm = MyResult.Result;
                 //this._ShipmentAdditionalCloudDataService.getSingleWithoutToken(this.EntityPm.Id,Tenant).subscribe((AdditionalResult:any) => {
@@ -147,14 +163,14 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
 
                 //});
                 var service = new CommonDomainService();
-                service.GetTenantLogoUri(this.Tenant).subscribe((myLogoResult: any) => {
+                service.GetTenantLogoUriByShipmentSecurityKey(this.Tenant, this.SecurityKey).subscribe((myLogoResult: any) => {
 
                     this.CompanyLogo = myLogoResult.Result;
                     this.StopBusyIndicator();
 
                 });
                 //GetTenantEcommerceSupportEmail
-                service.GetTenantEcommerceSupportEmail(this.Tenant).subscribe((myTenant: any) => {
+                service.GetTenantEcommerceSupportEmailByShipmentSecurityKey(this.Tenant, this.SecurityKey).subscribe((myTenant: any) => {
                     if (myTenant.Result) {
                         this.EcommerceSupportEmail = myTenant.Result;
                     }
@@ -173,12 +189,27 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
             }
         });
 
+        if(this.dsvStyle)
+            this.initTenantManagements(this.SecurityKey)
+    }
+
+    MapFieldsFromResponseData(responseResult) {
+        if (responseResult.Data) {
+            this.WhatsAppMessagingNumber = responseResult.Data;
+            this.SetShowWatsAppIcon();
+        }
+    }
+
+    private SetShowWatsAppIcon() {
+        if (this.WhatsAppMessagingNumber != null) {
+            this.ShowWhatsAppIcon = true;
+        }
     }
 
     private SetTotalAmountInNIS() {
         let ammount = 0;
         let maxDigitsAfterPoint = 0;
-        this.AdditionalData.RequestPaymentData.ServiceTypes.forEach((item, key) => {
+        this.AdditionalData.RequestPaymentData?.ServiceTypes.forEach((item, key) => {
             let splitItemAmount = item.AmountInNIS?.toString()?.split('.');
             if (splitItemAmount != null && splitItemAmount.length > 1 && splitItemAmount[1].length > maxDigitsAfterPoint) {
                 maxDigitsAfterPoint = splitItemAmount[1].length;
@@ -196,6 +227,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                 clearTimeout(this.RefreshTimer);
             }
             this._ShipmentPMService.getSingleBySecurityKeyTenantWithoutToken(this.SecurityKey, this.Tenant).subscribe((MyResult:any) => {
+                this.MapFieldsFromResponseData(MyResult);
                 if (MyResult.Result) {
                     //this.EntityPm = MyResult.Result;
                     //this._ShipmentAdditionalCloudDataService.getSingleWithoutToken(this.EntityPm.Id,Tenant).subscribe((AdditionalResult:any) => {
@@ -208,7 +240,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                         }
                     }
                     else {
-                        var myMessage = "משלוח זה כבר שולם בתאריך";
+                        var myMessage = "משלוח זה כבר שולם בתםריך";
                         if (this.AdditionalData.PaymentDateTime != null) {
                             var formatedPaymentDateTime = this.datePipe.transform(this.AdditionalData.PaymentDateTime, 'dd/MM/yyyy');
                             myMessage = myMessage + " " + formatedPaymentDateTime;
@@ -240,76 +272,84 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     public get EcommerceSupportEmail() { return this.ecommerceSupportEmail }
     public set EcommerceSupportEmail(newValue: string) { this.ecommerceSupportEmail = newValue; }
 
-    public get CustomerName() { return this.AdditionalData.RequestPaymentData.CustomerName }
+    public get CustomerName() { return this.AdditionalData.RequestPaymentData?.CustomerName }
     public set CustomerName(newValue: string) { this.AdditionalData.RequestPaymentData.CustomerName = newValue; }
 
-    public get CustomerAddress() { return this.AdditionalData.RequestPaymentData.CustomerAddress }
+    public get CustomerAddress() { return this.AdditionalData.RequestPaymentData?.CustomerAddress }
     public set CustomerAddress(newValue: string) { this.AdditionalData.RequestPaymentData.CustomerAddress = newValue; }
 
-    public get Master() { return this.AdditionalData.RequestPaymentData.Master }
+    public get Master() { return this.AdditionalData.RequestPaymentData?.Master }
     public set Master(newValue: string) { this.AdditionalData.RequestPaymentData.Master = newValue; }
 
-    public get Hawb() { return this.AdditionalData.RequestPaymentData.Hawb }
+    public get Hawb() { return this.AdditionalData.RequestPaymentData?.Hawb }
     public set Hawb(newValue: string) { this.AdditionalData.RequestPaymentData.Hawb = newValue; }
 
-    public get DeclarationNumber() { return new CustomNumbersPipe().transform(this.AdditionalData.RequestPaymentData.DeclarationNumber, 0) }
+    public get DeclarationNumber() { return new CustomNumbersPipe().transform(this.AdditionalData.RequestPaymentData?.DeclarationNumber, 0) }
     public set DeclarationNumber(newValue: string) { this.AdditionalData.RequestPaymentData.DeclarationNumber = newValue; }
 
-    public get ShipmentValueInNIS() { return new CustomNumbersPipe().transform(this.AdditionalData.RequestPaymentData.ShipmentValueInNIS, 0) }
+    public get ShipmentValueInNIS() { return new CustomNumbersPipe().transform(this.AdditionalData.RequestPaymentData?.ShipmentValueInNIS, 0) }
     public set ShipmentValueInNIS(newValue: string) { this.AdditionalData.RequestPaymentData.ShipmentValueInNIS = newValue; }
 
-    public get ForeignCurrencyValue() { return new CustomNumbersPipe().transform(this.AdditionalData.RequestPaymentData.ForeignCurrencyValue, 0) }
+    public get ForeignCurrencyValue() { return this.orianStyle ? this.AdditionalData.RequestPaymentData?.ForeignCurrencyValue : new CustomNumbersPipe().transform(this.AdditionalData.RequestPaymentData.ForeignCurrencyValue, 0) }
     public set ForeignCurrencyValue(newValue: string) { this.AdditionalData.RequestPaymentData.ForeignCurrencyValue = newValue; }
 
-    public get ForeignCurrency() { return this.AdditionalData.RequestPaymentData.ForeignCurrency }
+    public get ForeignCurrency() { return this.AdditionalData.RequestPaymentData?.ForeignCurrency }
     public set ForeignCurrency(newValue: string) { this.AdditionalData.RequestPaymentData.ForeignCurrency = newValue; }
 
-    public get SenderDetails() { return this.AdditionalData.RequestPaymentData.SenderDetails }
+    public get SenderDetails() { return this.AdditionalData.RequestPaymentData?.SenderDetails }
     public set SenderDetails(newValue: string) { this.AdditionalData.RequestPaymentData.SenderDetails = newValue; }
 
-    public get GoodsDescritpion() { return this.AdditionalData.RequestPaymentData.GoodsDescritpion }
+    public get GoodsDescritpion() { return this.AdditionalData.RequestPaymentData?.GoodsDescritpion }
     public set GoodsDescritpion(newValue: string) { this.AdditionalData.RequestPaymentData.GoodsDescritpion = newValue; }
 
-    public get IsImporterApprovalRequried() { return this.AdditionalData.RequestPaymentData.IsImporterApprovalRequried }
+    public get IsImporterApprovalRequried() { return this.AdditionalData.RequestPaymentData?.IsImporterApprovalRequried }
     public set IsImporterApprovalRequried(newValue: boolean) { this.AdditionalData.RequestPaymentData.IsImporterApprovalRequried = newValue; }
 
-    public get Quantity() { return this.AdditionalData.RequestPaymentData.Quantity }
+    public get Quantity() { return this.AdditionalData.RequestPaymentData?.Quantity }
     public set Quantity(newValue: string) { this.AdditionalData.RequestPaymentData.Quantity = newValue; }
 
-    public get Weight() { return this.AdditionalData.RequestPaymentData.Weight }
+    public get Weight() { return this.AdditionalData.RequestPaymentData?.Weight }
     public set Weight(newValue: string) { this.AdditionalData.RequestPaymentData.Weight = newValue; }
 
-    public get TotalChargesInNIS() { return this.AdditionalData.RequestPaymentData.TotalChargesInNIS }
+    public get TotalChargesInNIS() { return this.AdditionalData.RequestPaymentData?.TotalChargesInNIS }
     public set TotalChargesInNIS(newValue: string) { this.AdditionalData.RequestPaymentData.TotalChargesInNIS = newValue; }
 
-    public get sum() { return this.AdditionalData.PaymentData.sum }
+    public get sum() { return this.AdditionalData.PaymentData?.sum }
     public set sum(newValue: string) { this.AdditionalData.PaymentData.sum = newValue; }
 
-    public get currency() { return this.AdditionalData.PaymentData.currency }
+    public get currency() { return this.AdditionalData.PaymentData?.currency }
     public set currency(newValue: string) { this.AdditionalData.PaymentData.currency = newValue; }
 
-    public get op() { return this.AdditionalData.PaymentData.op }
+    public get op() { return this.AdditionalData.PaymentData?.op }
     public set op(newValue: string) { this.AdditionalData.PaymentData.op = newValue; }
 
-    public get DCdisable() { return this.AdditionalData.PaymentData.DCdisable }
+    public get DCdisable() { return this.AdditionalData.PaymentData?.DCdisable }
     public set DCdisable(newValue: string) { this.AdditionalData.PaymentData.DCdisable = newValue; }
 
-    public get DclickTK() { return this.AdditionalData.PaymentData.DclickTK }
+    public get DclickTK() { return this.AdditionalData.PaymentData?.DclickTK }
     public set DclickTK(newValue: string) { this.AdditionalData.PaymentData.DclickTK = newValue; }
 
-    public get thtk() { return this.AdditionalData.PaymentData.thtk }
+    public get thtk() { return this.AdditionalData.PaymentData?.thtk }
     public set thtk(newValue: string) { this.AdditionalData.PaymentData.thtk = newValue; }
 
     public get TargetEnv() {
-        var Env = "https://direct.tranzila.com/" + this.AdditionalData.PaymentData.TargetEnv + "/";//amitaltest
+        let directTranzilaLink = this.GetDirectTranzilaLink();
+        var Env = directTranzilaLink + this.AdditionalData.PaymentData?.TargetEnv + "/";//amitaltest
         return Env;
     }
+    private GetDirectTranzilaLink() {
+        if (false) {
+            return "https://direct2.tranzila.com/";
+        }
+        return "https://direct.tranzila.com/";
+    }
+
     public set TargetEnv(newValue: string) { this.AdditionalData.PaymentData.TargetEnv = newValue; }
 
-    public get TermsOfUseDocumentId() { return this.AdditionalData.RequestPaymentData.TermsOfUseDocumentId }
+    public get TermsOfUseDocumentId() { return this.AdditionalData.RequestPaymentData?.TermsOfUseDocumentId }
     public set TermsOfUseDocumentId(newValue: string) { this.AdditionalData.RequestPaymentData.TermsOfUseDocumentId = newValue; }
 
-    public get u71() { return this.AdditionalData.PaymentData.u71 }
+    public get u71() { return this.AdditionalData.PaymentData?.u71 }
     public set u71(newValue: string) { this.AdditionalData.PaymentData.u71 = newValue; }
 
     public BusyIndicatorText: string = null;
@@ -354,11 +394,25 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
 
         //if (myResult.Result) { 
         //var securityId = myResult.Result.SecurityId;
-        DownloadManager.DownloadExternalPage(null, this.Tenant, this.TermsOfUseDocumentId);
+
+        if(this.serviceAgreementURL)
+            open(this.serviceAgreementURL)
+        else
+            DownloadManager.DownloadExternalPage(null, this.Tenant, this.TermsOfUseDocumentId);
         //  }
         //});
 
     }
+    
+    async initTenantManagements(securityKey: string) {
+        const data: UrlAndLogo = await this._ShipmentPMService.getLogoAndUrlWithoutToken(securityKey)
+        this.logoImg = data.logo;
+        this.logoUrl = data.url;
+        this.serviceAgreementURL = data.serviceAgreementURL;
+    }
 
-
+    openLogoUrl() {
+        if(this.logoUrl)
+            window.open(this.logoUrl)
+    }
 }

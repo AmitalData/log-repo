@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {ARInvoiceLinePM} from '../../../../Invoice/EntityPMs/ARInvoiceLinePM';
 import {ARInvoiceLineItem} from './ARInvoiceDetailsTabGeneral';
@@ -8,19 +8,49 @@ import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeT
 import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
 import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {VatTypesValidator} from '../../../../Infrastructure/Validators/VatTypesValidator';
+import { ColumnsWidths } from 'Infrastructure/Components/LogitudeComponents/LogLovV2Component';
 
 @Component({
-    
+
     templateUrl: './AddEditARGeneralInvoiceLineComponent.html',
 })
 
-export class AddEditARGeneralInvoiceLineComponent {
+export class AddEditARGeneralInvoiceLineComponent implements OnInit{
     public EntityPM: ARInvoiceLinePM = null;
     public ObjectTableName = "ARInvoiceLine";
     public DataContext: ARInvoiceLineItem;
     public ValidationErrorsList: string[] = [];
     private CurrentSession = SessionLocator.SelectedSession;
+    ColumnsWidths: ColumnsWidths[] = [];
+    IsAccountingActivated: boolean = false;
+
     constructor() {
+        if (SessionLocator.TenantPM.AccountingActivated) {
+            this.FillChargesTypesCustomLOVColumnsWidths();
+        }
+        this.IsAccountingActivated = SessionLocator.TenantPM.AccountingActivated;
+    }
+    ngOnInit(): void {
+        this.SetDefaultValues(); 
+    }
+
+    SetDefaultValues() {
+        this.Quantity = this.EntityPM.Quantity != null ? this.EntityPM.Quantity : 1;
+            this.ForiegnCurrencyId = this.EntityPM.ForiegnCurrencyId?.length != 0 ? this.EntityPM.ForiegnCurrencyId : 
+            ( this.IsAccountingActivated ? this.EntityPM.InvoiceCurrencyId : SessionLocator.TenantPM.CurrencyId );
+
+    }
+
+    FillChargesTypesCustomLOVColumnsWidths()
+    {
+        this.ColumnsWidths = [
+            { ColumnName: 'Code', Width: 80 },
+            { ColumnName: 'EnglishName', Width: 200 },
+            { ColumnName: 'LocalName', Width: 200 },
+            { ColumnName: 'MeasurementShortName', Width: 80 },
+            { ColumnName: 'ChargesGroupName', Width: 80 },
+            { ColumnName: 'VatTypeName', Width: 80 }
+        ];
     }
 
     SetDataContext(dataContext: ARInvoiceLineItem) {
@@ -52,7 +82,12 @@ export class AddEditARGeneralInvoiceLineComponent {
         this.CurrentSession.CloseCurrentWindow();
     }
 
-   
+    get Quantity() { return this.EntityPM.Quantity; }
+    set Quantity(newValue: number) {
+        if (this.EntityPM.Quantity != newValue) {
+            this.EntityPM.Quantity = newValue;
+        }
+    }
     get ForiegnCurrencyId() { return this.EntityPM.ForiegnCurrencyId; }
     set ForiegnCurrencyId(newValue: string) {
         if (this.EntityPM.ForiegnCurrencyId != newValue) {
@@ -89,8 +124,9 @@ export class AddEditARGeneralInvoiceLineComponent {
         if (this.DataContext.chargesTypeList != null && AppTool.IsNullOrEmpty(this.DataContext.chargesTypeList.ReceivableCreditGLAccountId)) {
             errors.push(TextCodeTranslator.Translate("ARInvoice.M.NoGLAccount"));
         }
+        debugger;
 
-        if (this.DataContext.fatherComponent.glaccount != null && this.DataContext.fatherComponent.glaccount.IsVATExempt == false && this.DataContext.VatPercentage > 0) {
+        if (this.DataContext.fatherComponent.glaccount != null && this.DataContext.fatherComponent.glaccount.IsVATExempt == true && this.DataContext.VatPercentage > 0) {
             errors.push("The partner is VAT exempt");
         }
 
@@ -109,7 +145,7 @@ export class AddEditARGeneralInvoiceLineComponent {
         else {
             var errors_new = [];
             errors.forEach(item => {
-                
+
                 if (item.indexOf("%ForiegnCurrencyCode") > -1) {
                     errors_new.push(item.replace("%ForiegnCurrencyCode", this.DataContext.ForiegnCurrencyCode));
                 }

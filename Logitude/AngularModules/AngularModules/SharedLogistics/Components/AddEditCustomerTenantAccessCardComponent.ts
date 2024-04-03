@@ -26,6 +26,7 @@ import {ConfirmWindow} from '../../Controls/Windows/ConfirmWindow';
 import {Validator} from '../../Infrastructure/Validators/Validator';
 import {CustomerTenantAccessPMService} from '../../Common/Services/StandardPMs/CustomerTenantAccessPMService';
 import {CustomerPMService} from '../../Common/Services/StandardPMs/CustomerPMService';
+import { AdvancedDatePickerResolverComponent } from '../../Infrastructure/Components/LogitudeComponents/AdvancedDatePickerResolverComponent';
 
 @Component({
     
@@ -39,12 +40,20 @@ export class AddEditCustomerTenantAccessCardComponent extends BaseComponent {
     public ValidationErrorsList: Array<string> = [];
     public DataLoaded: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    public IsCustomsActivated: boolean = false;
+    public IsExportActivated: boolean = false;
+    public CanSelectOpption: boolean = false;
+
     constructor() {
         super();
     }
 
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
+    }
+
+    CheckIsImportActivated(item: CustomerTenantAccessCardPM) {
+
     }
     OkButtonClicked() {
         this.ValidationErrorsList = [];
@@ -54,10 +63,18 @@ export class AddEditCustomerTenantAccessCardComponent extends BaseComponent {
         if (checkIfCustomerSelected == null) {
             this.ValidationErrorsList.push("Please Select Customer");
         }
-        else {
-            this.viewModel.EntityPM.CustomerId = checkIfCustomerSelected.Id;
-            this.viewModel.EntityPM.CustomerCode = checkIfCustomerSelected.Code;
-            this.viewModel.EntityPM.CustomerName = checkIfCustomerSelected.EnglishName;
+
+        let inValidSelectedStartDate = this.ValidateSelectedStartDate();
+        if (inValidSelectedStartDate) {
+            this.ValidationErrorsList.push('You can\'t set start date more than three months ago');
+        }
+
+        if (this.ValidateCustomerTenantOptions(checkIfCustomerSelected)) {
+            this.ValidationErrorsList.push("You can't add a new card. You have to choose either Export or Customs option.");
+        }
+
+        else if (checkIfCustomerSelected != null){
+            this.InitializeCustomerTenantAccessCardd(checkIfCustomerSelected);
 
             Validator.TryValidateObject(this.viewModel.EntityPM, "CustomerTenantAccessCard", this.ValidationErrorsList);
 
@@ -85,6 +102,25 @@ export class AddEditCustomerTenantAccessCardComponent extends BaseComponent {
                 });
             }
         }
+    }
+
+    private ValidateSelectedStartDate() {
+        let todayDate = new Date();
+        let threeMonthsAgoDate = todayDate.setMonth(todayDate.getMonth() - 3);
+        let advancedDatePickerResolverComponent: AdvancedDatePickerResolverComponent = new AdvancedDatePickerResolverComponent();
+        return advancedDatePickerResolverComponent.SetValidityBetweenTwoDateOptions(this.viewModel.HybridStartDate, threeMonthsAgoDate);
+    }
+
+    private InitializeCustomerTenantAccessCardd(checkIfCustomerSelected: CardListDataViewModel) {
+        this.viewModel.EntityPM.CustomerId = checkIfCustomerSelected.Id;
+        this.viewModel.EntityPM.CustomerCode = checkIfCustomerSelected.Code;
+        this.viewModel.EntityPM.CustomerName = checkIfCustomerSelected.EnglishName;
+        this.viewModel.EntityPM.IsCustomsActivated = checkIfCustomerSelected.IsCustomsActivated;
+        this.viewModel.EntityPM.IsExportActivated = checkIfCustomerSelected.IsExportActivated;
+    }
+
+    private ValidateCustomerTenantOptions(checkIfCustomerSelected: CardListDataViewModel) { 
+        return checkIfCustomerSelected?.IsCustomsActivated == false && checkIfCustomerSelected.IsExportActivated == false;
     }
 
     CompleteConfirmation(checkIfCustomerSelected: CardListDataViewModel) {
@@ -138,8 +174,13 @@ export class AddEditCustomerTenantAccessCardComponent extends BaseComponent {
                         }
 
                         var service: CustomerTenantAccessPMService = new CustomerTenantAccessPMService();
-                        service.update(this.viewModel.Parent.EntityPM).subscribe(p => {
+                        service.update(this.viewModel.Parent.EntityPM).subscribe(ServiceResponse => {
                             this.CurrentSession.StopBusyIndicator();
+                            if (ServiceResponse.HasError) {
+                                this.viewModel.isNew = true;
+                                this.ValidationErrorsList.push(ServiceResponse.ErrorsArray.toString());
+                                return
+                            }
                             this.viewModel.Parent.IsShowTipArea = false;
                             if (this.viewModel.Parent.SelectedItem == null && this.viewModel.Parent.ObsList.length > 0) {
                                 this.viewModel.Parent.SelectedItem = this.viewModel.Parent.ObsList[0];
@@ -161,17 +202,37 @@ export class AddEditCustomerTenantAccessCardComponent extends BaseComponent {
 
     SetWindowArgs(args: AddEditCustomerTenantAccessCardViewModel) {
         if (args != null) {
-            this.viewModel = args;      
+            this.viewModel = args;
+            this.SetDirectionsoptions(args);
+             
+            this.SetCustomerTenantAccessCardOptions();
             this.DataLoaded = true;   
         }
     }
+    private SetDirectionsoptions(args: AddEditCustomerTenantAccessCardViewModel) {
+        this.IsCustomsActivated = args.Parent.IsCustomsActivated;
+        this.IsExportActivated = args.Parent.IsExportActivated;
 
-    
+        if (this.IsCustomsActivated && this.IsExportActivated) {
+            this.SetDefaultOptions();
+        }
+    }
 
+    private SetDefaultOptions() {
+        this.CanSelectOpption = true;
+        this.IsExportActivated = false;
+        this.IsCustomsActivated = false;
+    }
 
-  
-  
-
-
- 
+    SetCustomerTenantAccessCardOptions() {
+        if (this.viewModel.CardObsList != null) {
+          
+            this.viewModel.CardObsList.forEach( card => this.SetDirectionsFields(card));
+        }
+    }
+     
+    private SetDirectionsFields(card: CardListDataViewModel) {
+        card.IsCustomsActivated = this.IsCustomsActivated;
+        card.IsExportActivated = this.IsExportActivated;
+    }
 }

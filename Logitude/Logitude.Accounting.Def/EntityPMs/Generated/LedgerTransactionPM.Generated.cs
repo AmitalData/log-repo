@@ -1584,7 +1584,168 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-   }
+	  private string accountLocalName ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string AccountLocalName  
+	   {
+	    
+	     get
+		{
+		   return accountLocalName;
+		 }
+		 set
+		 {
+		   if(accountLocalName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AccountLocalName",OldValue=accountLocalName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   accountLocalName=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime? updateDateTime ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? UpdateDateTime  
+	   {
+	    
+	     get
+		{
+		   return updateDateTime;
+		 }
+		 set
+		 {
+		   if(updateDateTime != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UpdateDateTime",OldValue=updateDateTime,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   updateDateTime=value;
+		   }
+			
+		 }
+	   }
+	  private string updatedByUserName ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string UpdatedByUserName  
+	   {
+	    
+	     get
+		{
+		   return updatedByUserName;
+		 }
+		 set
+		 {
+		   if(updatedByUserName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UpdatedByUserName",OldValue=updatedByUserName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   updatedByUserName=value;
+		   }
+			
+		 }
+	   }
+	  private string internalNote ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string InternalNote  
+	   {
+	    
+	     get
+		{
+		   return internalNote;
+		 }
+		 set
+		 {
+		   if(internalNote != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InternalNote",OldValue=internalNote,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   internalNote=value;
+		   }
+			
+		 }
+	   }
+	  private string taxReportId ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TaxReportId  
+	   {
+	    
+	     get
+		{
+		   return taxReportId;
+		 }
+		 set
+		 {
+		   if(taxReportId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TaxReportId",OldValue=taxReportId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   taxReportId=value;
+		   }
+			
+		 }
+	   }
+	  private string taxReportNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TaxReportNumber  
+	   {
+	    
+	     get
+		{
+		   return taxReportNumber;
+		 }
+		 set
+		 {
+		   if(taxReportNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TaxReportNumber",OldValue=taxReportNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   taxReportNumber=value;
+		   }
+			
+		 }
+	   }
+	  private decimal amountInNIS ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal AmountInNIS  
+	   {
+	    
+	     get
+		{
+		   return amountInNIS;
+		 }
+		 set
+		 {
+		   if(amountInNIS != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AmountInNIS",OldValue=amountInNIS,NewValue=value,PropertyType="decimal"};
+		    NotifyPropertyChanged(values);
+		   amountInNIS=value;
+		   }
+			
+		 }
+	   }
+	    }
    
 }
 	 

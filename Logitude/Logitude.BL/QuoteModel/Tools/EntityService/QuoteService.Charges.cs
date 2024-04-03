@@ -218,6 +218,8 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                     quoteChargePM.SaleExchangeRate = entityPM.ExchangeRate;
                                 }
 
+                                quoteChargePM.MarkUpCurrencyId = quoteChargePM.SaleCurrencyId;
+                                
                                 if (entityPM.QuoteTypeCode == "A")
                                 {
                                     switch (quoteChargePM.CostMeasurementCode)
@@ -228,7 +230,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                         case "FIXD": { quoteChargePM.CostQuantity = 1; break; }
                                         case "BCNT": { quoteChargePM.CostQuantity = null; break; }
                                         case "BTEU": { quoteChargePM.CostQuantity = entityPM.TEU; break; }
-                                        case "PRVL": { quoteChargePM.CostQuantity = entityPM.ValueOfGoods; break; }
+                                        case "PRVL": { quoteChargePM.CostQuantity = quoteChargePM.CostQuantity == null ? entityPM.ValueOfGoods : quoteChargePM.CostQuantity; break; }
                                         case "QTY": { quoteChargePM.CostQuantity = entityPM.NumberOfPackages; break; }
                                         case "CWKG": { quoteChargePM.CostQuantity = entityPM.ChargeableWeightInKG; break; }
                                         case "GWKG": { quoteChargePM.CostQuantity = entityPM.GrossWeightInKG; break; }
@@ -244,7 +246,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                         case "FIXD": { quoteChargePM.SaleQuantity = 1; break; }
                                         case "BCNT": { quoteChargePM.SaleQuantity = null; break; }
                                         case "BTEU": { quoteChargePM.SaleQuantity = entityPM.TEU; break; }
-                                        case "PRVL": { quoteChargePM.SaleQuantity = entityPM.ValueOfGoods; break; }
+                                        case "PRVL": { quoteChargePM.SaleQuantity = quoteChargePM.SaleQuantity == null ? entityPM.ValueOfGoods : quoteChargePM.SaleQuantity; break; }
                                         case "QTY": { quoteChargePM.SaleQuantity = entityPM.NumberOfPackages; break; }
                                         case "CWKG": { quoteChargePM.SaleQuantity = entityPM.ChargeableWeightInKG; break; }
                                         case "GWKG": { quoteChargePM.SaleQuantity = entityPM.GrossWeightInKG; break; }
@@ -424,6 +426,8 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                     itemPM.SaleExchangeRate = entityPM.ExchangeRate;
                                 }
 
+                                itemPM.MarkUpCurrencyId = itemPM.SaleCurrencyId;
+
                                 if (entityPM.QuoteTypeCode == "A")
                                 {
                                     switch (itemPM.CostMeasurementCode)
@@ -434,7 +438,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                         case "FIXD": { itemPM.CostQuantity = 1; break; }
                                         case "BCNT": { itemPM.CostQuantity = null; break; }
                                         case "BTEU": { itemPM.CostQuantity = entityPM.TEU; break; }
-                                        case "PRVL": { itemPM.CostQuantity = entityPM.ValueOfGoods; break; }
+                                        case "PRVL": { itemPM.CostQuantity = itemPM.CostQuantity == null ? entityPM.ValueOfGoods : itemPM.CostQuantity; break; }
                                         case "QTY": { itemPM.CostQuantity = entityPM.NumberOfContainers; break; }
                                         case "CWKG": { itemPM.CostQuantity = entityPM.ChargeableWeightInKG; break; }
                                         case "GWKG": { itemPM.CostQuantity = entityPM.GrossWeightInKG; break; }
@@ -450,7 +454,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                                         case "FIXD": { itemPM.SaleQuantity = 1; break; }
                                         case "BCNT": { itemPM.SaleQuantity = null; break; }
                                         case "BTEU": { itemPM.SaleQuantity = entityPM.TEU; break; }
-                                        case "PRVL": { itemPM.SaleQuantity = entityPM.ValueOfGoods; break; }
+                                        case "PRVL": { itemPM.SaleQuantity = itemPM.SaleQuantity == null ? entityPM.ValueOfGoods : itemPM.SaleQuantity; break; }
                                         case "QTY": { itemPM.SaleQuantity = entityPM.NumberOfContainers; break; }
                                         case "CWKG": { itemPM.SaleQuantity = entityPM.ChargeableWeightInKG; break; }
                                         case "GWKG": { itemPM.SaleQuantity = entityPM.GrossWeightInKG; break; }
@@ -492,6 +496,9 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                             }
                             #endregion
                         }
+                  
+                    
+                    
                     }
                 }
             }
@@ -617,7 +624,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                     case "VOLU": { myResult = entityPM.Volume; break; }
                     case "BTEU": { myResult = entityPM.TEU; break; }
                     case "FIXD": { myResult = 1; break; }
-                    case "PRVL": { myResult = entityPM.ValueOfGoods; break; }
+                    case "PRVL": { myResult = item.CostQuantity == null ? entityPM.ValueOfGoods : item.CostQuantity; break; }
                     case "PRFR": { myResult = entityPM.QuoteCharges.Where(d => d.ChargesGroupCode == "FRT").Sum(s => s.CostTotalAmount); break; }
                     case "QTY": { myResult = this.isFCLQuote ? entityPM.NumberOfContainers : entityPM.NumberOfPackages; break; }
                     case "CWKG": { myResult = entityPM.ChargeableWeightInKG; break; }
@@ -651,7 +658,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                 }
             }
 
-            item.CostQuantity = MethodHelper.Round(myResult, 2);
+            item.CostQuantity = MethodHelper.Round(myResult, 3);
         }
         private void ComputeLineSaleQuantity(QuoteChargePM item)
         {
@@ -666,7 +673,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                     case "VOLU": { myResult = entityPM.Volume; break; }
                     case "BTEU": { myResult = entityPM.TEU; break; }
                     case "FIXD": { myResult = 1; break; }
-                    case "PRVL": { myResult = entityPM.ValueOfGoods; break; }
+                    case "PRVL": { myResult = item.SaleQuantity == null ? entityPM.ValueOfGoods: item.SaleQuantity; break; }
                     case "PRFR": { myResult = entityPM.QuoteCharges.Where(d => d.ChargesGroupCode == "FRT").Sum(s => s.SaleTotalAmount); break; }
                     case "QTY": { myResult = this.isFCLQuote ? entityPM.NumberOfContainers : entityPM.NumberOfPackages; break; }
                     case "CWKG": { myResult = entityPM.ChargeableWeightInKG; break; }
@@ -700,7 +707,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                 }
             }
 
-            item.SaleQuantity = MethodHelper.Round(myResult, 2);
+            item.SaleQuantity = MethodHelper.Round(myResult, 3);
         }
 
         private void ComputeLineCostUnitPrice(QuoteChargePM item)
@@ -741,43 +748,43 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
         {
             if (item.CostUnitPriceInSaleCurrency != null)
             {
-                item.SaleUnitPrice = this.ComputeLineSaleUnitPrice(item.CostUnitPriceInSaleCurrency, item.MarkUpValue, item.MarkUpTypeCode);
+                item.SaleUnitPrice = this.ComputeLineSaleUnitPrice(item.CostUnitPriceInSaleCurrency, item.MarkUpValue, item.MarkUpTypeCode, item);
             }
 
             if (item.CostUnitPrice1InSaleCurrency != null)
             {
-                item.SaleContainerType1UnitPrice = this.ComputeLineSaleUnitPrice(item.CostUnitPrice1InSaleCurrency, item.ContainerType1MarkUpValue, item.ContainerType1MarkUpTypeCode);
+                item.SaleContainerType1UnitPrice = this.ComputeLineSaleUnitPrice(item.CostUnitPrice1InSaleCurrency, item.ContainerType1MarkUpValue, item.ContainerType1MarkUpTypeCode, item);
             }
 
             if (item.CostUnitPrice2InSaleCurrency != null)
             {
-                item.SaleContainerType2UnitPrice = this.ComputeLineSaleUnitPrice(item.CostUnitPrice2InSaleCurrency, item.ContainerType2MarkUpValue, item.ContainerType2MarkUpTypeCode);
+                item.SaleContainerType2UnitPrice = this.ComputeLineSaleUnitPrice(item.CostUnitPrice2InSaleCurrency, item.ContainerType2MarkUpValue, item.ContainerType2MarkUpTypeCode, item);
             }
 
             if (item.CostUnitPrice3InSaleCurrency != null)
             {
-                item.SaleContainerType3UnitPrice = this.ComputeLineSaleUnitPrice(item.CostUnitPrice3InSaleCurrency, item.ContainerType3MarkUpValue, item.ContainerType3MarkUpTypeCode);
+                item.SaleContainerType3UnitPrice = this.ComputeLineSaleUnitPrice(item.CostUnitPrice3InSaleCurrency, item.ContainerType3MarkUpValue, item.ContainerType3MarkUpTypeCode, item);
             }
 
             if (item.CostUnitPrice4InSaleCurrency != null)
             {
-                item.SaleContainerType4UnitPrice = this.ComputeLineSaleUnitPrice(item.CostUnitPrice4InSaleCurrency, item.ContainerType4MarkUpValue, item.ContainerType4MarkUpTypeCode);
+                item.SaleContainerType4UnitPrice = this.ComputeLineSaleUnitPrice(item.CostUnitPrice4InSaleCurrency, item.ContainerType4MarkUpValue, item.ContainerType4MarkUpTypeCode, item);
             }
 
             if (item.CostUnitPrice5InSaleCurrency != null)
             {
-                item.SaleContainerType5UnitPrice = this.ComputeLineSaleUnitPrice(item.CostUnitPrice5InSaleCurrency, item.ContainerType5MarkUpValue, item.ContainerType5MarkUpTypeCode);
+                item.SaleContainerType5UnitPrice = this.ComputeLineSaleUnitPrice(item.CostUnitPrice5InSaleCurrency, item.ContainerType5MarkUpValue, item.ContainerType5MarkUpTypeCode, item);
             }
         }
 
-        private double? ComputeLineSaleUnitPrice(double? costUnitPriceInSaleCurrency, double? markUpValue, string markUpTypeCode)
+        private double? ComputeLineSaleUnitPrice(double? costUnitPriceInSaleCurrency, double? markUpValue, string markUpTypeCode, QuoteChargePM quoteCharge = null)
         {
             double? myResult = costUnitPriceInSaleCurrency;
 
 
             if (costUnitPriceInSaleCurrency != null)
             {
-                double markup = markUpValue == null ? 0 : markUpValue.Value;
+                double markup = this.GetMarkUpValueByCurrency(markUpValue, quoteCharge); 
 
                 if (markUpTypeCode == "P")
                 {
@@ -796,6 +803,27 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
             }
 
             return myResult;
+        }
+
+        private double GetMarkUpValueByCurrency(double? markUp, QuoteChargePM quoteCharge = null)
+        {
+            if (!FeatureToggleHelper.HasFeatureToggle("QMU", tenant))
+            {
+                return (markUp == null ? 0 : markUp.Value);
+            }
+            else
+            {
+                double? markUpValue = (markUp == null ? 0 : markUp.Value);
+                if (quoteCharge.SaleCurrencyId == quoteCharge.MarkUpCurrencyId)
+                {
+                    return (markUpValue == null ? 0 : markUpValue.Value);
+                }
+
+                var markUpLocalValue = markUpValue * quoteCharge.CostExchangeRate;
+                markUpValue = markUpLocalValue / quoteCharge.SaleExchangeRate;
+
+                return (markUpValue == null ? 0 : markUpValue.Value);
+            }
         }
 
         private void ComputeLineCostTotalAmounts(QuoteChargePM item)

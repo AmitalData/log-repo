@@ -1,4 +1,5 @@
 ﻿using Logitude.Accounting.BL.InterestEntityQueryServices.InterestQueryServises;
+using Logitude.Accounting.Data.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,24 +19,29 @@ namespace Logitude.Accounting.BL.InterestEntityQueryServices.InterestFactory
             IInterestEntityQueryService entifty=null; 
             switch (code)
             {
-                case InterestEntityTypeCode_ARInvoice:
+                case InterestEntityTypes.ARInvoice:
                     {
                         entifty = new InterestARInvoiceQueryService();
                         break;
                     }
-                 case InterestEntityTypeCode_ARPayment:
+                 case InterestEntityTypes.ARPayment:
                     {
                         entifty = new InterestARPaymentQueryService();
                         break;
                     }
-                case InterestEntityTypeCode_Journal:
+                case InterestEntityTypes.Journal:
                     {
                         entifty = new InterestJournalQueryService();
                         break;
                     }
-                case InterestEntityTypeCode_InterestReport:
+                case InterestEntityTypes.OpenBalance:
                     {
                         entifty = new InterestInterestReportQueryService();
+                        break;
+                    }
+                case InterestEntityTypes.Adjustments:
+                    {
+                        entifty = new InterestAdjustmentQueryService();
                         break;
                     }
             }

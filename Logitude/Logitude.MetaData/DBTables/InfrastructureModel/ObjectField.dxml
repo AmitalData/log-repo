@@ -609,6 +609,59 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="LeftKey"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="RightKey"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IsForeignKey"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ForeignEntity"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="NavigationPropertyName"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DefaultAdditionalFilters"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ForMetaDataOnly"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsListFilter"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="FullNameTextCodeId"
     ReferencedTable="TextCodes"
@@ -669,6 +722,8 @@
     Columns="Tenant,ObjectTableId" />
   <Index
     Columns="FieldCode" />
+  <Index
+	Columns="Tenant,ObjectTableId,IsCustom,InActive" />
   <UniqueConstraint
     Columns="FieldName,ObjectTableId,Tenant" />
   <UniqueConstraint

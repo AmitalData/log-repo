@@ -11,7 +11,11 @@ import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeCompo
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {EntityListService} from '../../../../Infrastructure/Services/EntityListService';
-import {ObjectFieldPMService} from '../../../../Infrastructure/Services/StandardPMs/ObjectFieldPMService';
+import { ObjectFieldPMService } from '../../../../Infrastructure/Services/StandardPMs/ObjectFieldPMService';
+import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
+import { CustomizationEditComponent } from './CustomizationEditComponent';
+
+
 declare var window: any;
 
 @Component({
@@ -21,14 +25,17 @@ declare var window: any;
 
 export class StandardFieldsComponent {
     private myService: GeneralDomainService;
-    private ObjecttableId: string;
+    private  ObjecttableId: string;
     private CurrentSession = SessionLocator.SelectedSession;
+
+    public customizationEditComponent: CustomizationEditComponent;
+
     constructor(private _entityListService: EntityListService) {
         this.myService = new GeneralDomainService();
     }
 
-    SetWindowArgs(windowArgs: any) {
-        this.ObjecttableId = windowArgs['ObjectTableId'];
+    SetWindowArgs(args: any) {
+        this.ObjecttableId = args['ObjectTableId'];
         this.BuildTabsItemsSource();
     }
 
@@ -46,7 +53,7 @@ export class StandardFieldsComponent {
     }
 
     public Tabs: Array<TabItem>;
-    private BuildTabsItemsSource() {
+    public BuildTabsItemsSource() {
         var objectTablePM: ObjectTablePM;
         var tableName: string;
         this.Tabs = [];
@@ -55,22 +62,6 @@ export class StandardFieldsComponent {
         if (objectTablePM != null) {
             this.Tabs.push(new TabItem(objectTablePM, this));
         }
-
-        var tableIds: string[] = [];
-        var mulityList: ObjectFieldPM[] = window.ObjectFields.filter(d => d.ObjectTableId == this.ObjecttableId && d.IsMulti);
-
-        mulityList.forEach((item) => {
-            var index = tableIds.indexOf(item.MultiTableId);
-
-            if (index == -1) {
-                tableIds.push(item.MultiTableId);
-
-                objectTablePM = window.ObjectTables.filter(d => d.Id == item.MultiTableId)[0];
-                if (objectTablePM != null) {
-                    this.Tabs.push(new TabItem(objectTablePM, this));
-                }
-            }
-        });
 
         this.SelectedTabItem = this.Tabs[0];
     }
@@ -95,13 +86,22 @@ export class StandardFieldsComponent {
     CloseClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }
+   Save() {
+        if (!this.customizationEditComponent.IsDirty && this.customizationEditComponent.IsSaveAndClose) {
+            this.customizationEditComponent.CurrentSession.CloseCurrentWindow();
+            this.customizationEditComponent.IsSaveAndClose = false;
+        }
+    }
+    Cancel() {
+
+    }
 }
 
 export class TabItem {
     public ObjectTablePM: ObjectTablePM;
     public ObjectTableId: string;
     public Header: string;
-    public FieldsItemsSource: StandardFieldItem[];
+    public FieldsItemsSource: ObservableCollection;
     private myService: GeneralDomainService;
     public EntityTranslations: FieldsTranslations[];
     private CurrentSession = SessionLocator.SelectedSession;
@@ -109,7 +109,7 @@ export class TabItem {
         this.ObjectTablePM = objectTablePM;
         this.ObjectTableId = objectTablePM.Id;
         this.myService = new GeneralDomainService();
-
+        this.FieldsItemsSource = new ObservableCollection([]);
         this.SetTabHeader();
     }
 
@@ -125,6 +125,7 @@ export class TabItem {
             if (!myResponse.HasError) {
 
                 this.loadedFields = myResponse.Result;
+                //this.BuildItemsSource();
                 if (this.loadedFields != null) {
                     this.LoadTranslationsForMultiEntity();
                 }
@@ -143,22 +144,24 @@ export class TabItem {
     }
 
     public BuildItemsSource(searchText: string = null) {
-        this.FieldsItemsSource = [];
-
+        this.FieldsItemsSource = new ObservableCollection([]);
+        var temp: StandardFieldItem[] = [];
         if (AppTool.IsNullOrEmpty(searchText)) {
             this.loadedFields.forEach((item) => {
-                this.FieldsItemsSource.push(new StandardFieldItem(item, this.loadedFields, this.EntityTranslations));
+
+                temp.push(new StandardFieldItem(item, this.loadedFields, this.EntityTranslations));
             });
         }
 
         else {
             this.loadedFields.forEach((item) => {
                 if (!AppTool.IsNullOrEmpty(item.FullNameTextCodeDefaultText) && item.FullNameTextCodeDefaultText.toUpperCase().indexOf(searchText.toUpperCase()) > -1) {
-                    this.FieldsItemsSource.push(new StandardFieldItem(item, this.loadedFields, this.EntityTranslations));
+                    temp.push(new StandardFieldItem(item, this.loadedFields, this.EntityTranslations));
                 }
             });
         }
 
+        this.FieldsItemsSource.InsertCollection(temp);
         this.CurrentSession.StopBusyIndicator();
     }
 
@@ -221,6 +224,7 @@ export class StandardFieldItem {
 
         return result;
     }
+
 
     //private LoadObjects() {
     //    var generalService: GeneralDomainService = new GeneralDomainService();

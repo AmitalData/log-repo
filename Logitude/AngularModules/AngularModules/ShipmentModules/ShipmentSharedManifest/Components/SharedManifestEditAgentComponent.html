@@ -396,7 +396,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="Button" id="{{'PartnerCancelbtn' | IdGeneratorPipe}}" (mousedown)="CancelButtonClicked()">Cancel</button>
+                        <button class="Button" id="{{'PartnerCancelbtn' | IdGeneratorAsyncPipe | async}}" (mousedown)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -404,7 +404,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="RedButton" id="{{'PartnerOKbtn' | IdGeneratorPipe}}" (click)="OkButtonClicked()" [disabled]="DataContext && DataContext.IsDisableNextButton">Next</button>
+                        <button class="RedButton" id="{{'PartnerOKbtn' | IdGeneratorAsyncPipe | async}}" (click)="OkButtonClicked()" [disabled]="DataContext && DataContext.IsDisableNextButton">Next</button>
                     </td>
                 </tr>
             </table>

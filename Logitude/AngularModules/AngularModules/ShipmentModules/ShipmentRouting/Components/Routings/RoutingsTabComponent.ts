@@ -23,6 +23,12 @@ import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLoca
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { FeatureToggleList } from '../../../../Infrastructure/EntityLists/FeatureToggleList';
 import { NewShipmentComponentArgs } from '../../../../Shipment/Args';
+import { Validator } from '../../../../Infrastructure/Validators/Validator';
+import { CommonDomainService } from '../../../../Common/Services/CommonDomainService';
+import { HTSCodePM } from '../../../../Common/EntityPMs/HTSCodePM';
+import { PortList } from '../../../../Common/EntityLists/PortList';
+import { PortListService } from '../../../../Common/Services/StandardLists/PortListService';
+import { CitySelectionArgs } from '../../../../Common/Args';
 
 @Component({    
     templateUrl: './RoutingsTabComponent.html',
@@ -44,12 +50,17 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
     public IsAddingPreOnCarriageVisible: boolean = false
     public CardLOVDependencyProperty1IsList: boolean = true;
     public IsAddingStandaloneShipmentVisible: boolean = false;
+    private oldCountryId: string = null;
+    public IsDestinationWarehouseLegVisible: boolean = false;
+
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
         this.ObjectTableName = entityArgs.ObjectTableName;
         this.ShipmentLevelCode = this.EntityPM.ShipmentLevelCode;
         this.TransportModeId = this.EntityPM.TransportModeId;
+        this.oldCountryId = this.EntityPM.ToCountryId;
+
         this.SetUIProperties();
         this.Listen();
 
@@ -61,13 +72,25 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
             this.IsAddingStandaloneShipmentVisible = true;
         }
 
-        this.CheckPreOnCarriageVisibility();       
+        this.CheckPreOnCarriageVisibility();
+        this.CheckDestinationWarehouseLegVisibility();
+    }
+
+
+    private CheckDestinationWarehouseLegVisibility() {
+        this.IsDestinationWarehouseLegVisible = false;
+        var destinationWarehouseLegFeatureToggle: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "MDW")[0];
+        if (destinationWarehouseLegFeatureToggle) {
+            this.IsDestinationWarehouseLegVisible = true;
+        }
     }
 
     private SessionEvent: any = null;
     private TabSelectedEvent: any = null;
     private SaveCompletedEvent: any = null;
-    private LoadCompletedEvent: any = null; 
+    private LoadCompletedEvent: any = null;
+    private BackCompletedEvent: any = null; 
+
     private Listen() {
         if (this.entityArgs.EditComponent) {
 
@@ -76,13 +99,14 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                     this.UpdateScreen();
                 }
 
-                if (s == "RefreshWareHouseLeg") {
+                else if (s == "RefreshWareHouseLeg") {
                     this.GetWarehouseAddress();
                 }
 
-                if (s == "FollowupsChangedMainMenu") {
+                else if (s == "ReloadForwarderShipmentFromStandAlone") {
                     this.entityArgs.EditComponent.ReloadEntityPM();
                 }
+
             });
 
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
@@ -90,6 +114,22 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
                     this.CheckPreOnCarriageVisibility();
                     this.UpdateScreen();
+                    if (this.IsShowStanadAloneActionsWindow) {
+                        this.IsShowStanadAloneActionsWindow = false;
+                        this.ShowAddLegWindow();
+                    }
+                    if (this.IsShowEditLegWindow) {
+                        this.IsShowEditLegWindow = false;
+                        this.ShowEditLegWindow();
+                    }
+                    if (this.IsShowAddChildLeg) {
+                        this.IsShowAddChildLeg = false;
+                        this.ViewAddChildLedWindow();
+                    }
+                } else {
+                    this.IsShowStanadAloneActionsWindow = false;
+                    this.IsShowEditLegWindow = false;
+                    this.IsShowAddChildLeg = false;
                 }
             });
 
@@ -106,6 +146,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                     this.UpdateScreen();
                 }
             });
+
         }
     }
     ngOnDestroy() {
@@ -113,6 +154,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
         AppTool.KillEventEmitter(this.LoadCompletedEvent);
         AppTool.KillEventEmitter(this.TabSelectedEvent);
+        AppTool.KillEventEmitter(this.BackCompletedEvent);
     }
     ngOnInit() {
         if (this.EntityPM != null) {
@@ -126,7 +168,8 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
             }
 
             this.UpdateScreen(); 
-            this.GetWarehouseAddress();           
+            this.GetWarehouseAddress();
+            this.GetWarehouse2Address();
         }
     }
 
@@ -134,7 +177,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
         this.SetUIProperties();
 
         if (this.IsInlandDomestic) {
-
+            this.InitializePartners();
         }
 
         else {
@@ -219,7 +262,15 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
         }
 
         else {
-            var myShipmentPickUps: ShipmentPickUpPM[] = this.EntityPM.ShipmentPickUps.sort(function (a, b) { return a.PickUpDeliveryNumber.toLowerCase() == b.PickUpDeliveryNumber.toLowerCase() ? 0 : a.PickUpDeliveryNumber.toLowerCase() < b.PickUpDeliveryNumber.toLowerCase() ? -1 : 1; });
+            var myShipmentPickUps: ShipmentPickUpPM[] = this.EntityPM.ShipmentPickUps.sort(
+                function (a, b) {
+                    if (a.PickUpDeliveryIndex === b.PickUpDeliveryIndex) {
+                        return a.ChildIndex - b.ChildIndex;
+                    }
+                    return a.PickUpDeliveryIndex > b.PickUpDeliveryIndex ? 1 : -1;
+                });
+                
+
             myShipmentPickUps.forEach((item) => {
                 this.ItemsSource.push(new RoutingItem(item, "Pick Up", this));
             });
@@ -275,7 +326,21 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
             }
         }
 
-        var allDeliveries = this.EntityPM.ShipmentDeliveries.filter(f => f.PickUpDeliveryTypeCode == "DELV").sort(function (a, b) { return a.PickUpDeliveryNumber.toLowerCase() == b.PickUpDeliveryNumber.toLowerCase() ? 0 : a.PickUpDeliveryNumber.toLowerCase() < b.PickUpDeliveryNumber.toLowerCase() ? -1 : 1; });
+        // Destination WarehouseLeg
+        if (this.IsDestinationWarehouseLegVisible && this.EntityPM.DirectionId == "R") {
+            if (this.EntityPM.ShipmentLevelCode == "D" || this.EntityPM.ShipmentLevelCode == "H") {
+                this.ItemsSource.push(new RoutingItem(this.EntityPM, "WarehouseLeg2", this));
+            }
+        }
+
+        var allDeliveries = this.EntityPM.ShipmentDeliveries.filter(f => f.PickUpDeliveryTypeCode == "DELV").sort(
+                function (a, b) {
+                if (a.PickUpDeliveryIndex === b.PickUpDeliveryIndex) {
+                    return a.ChildIndex - b.ChildIndex;
+                }
+                return a.PickUpDeliveryIndex > b.PickUpDeliveryIndex ? 1 : -1;
+            });
+
         var allEmptyContainerReturns = this.EntityPM.ShipmentDeliveries.filter(f => f.PickUpDeliveryTypeCode == "EMPT").sort(function (a, b) { return a.PickUpDeliveryNumber.toLowerCase() == b.PickUpDeliveryNumber.toLowerCase() ? 0 : a.PickUpDeliveryNumber.toLowerCase() < b.PickUpDeliveryNumber.toLowerCase() ? -1 : 1; });
 
         if (allDeliveries.length == 0) {
@@ -298,14 +363,17 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
 
         this.SetAddButtonsIsDisabled();
     }
-    AddLeg(myLegType: string) {
-        var isNewEntity = true;
-        var windowTitle = "Add " + myLegType;
 
-        switch (myLegType) {
+    IsShowStanadAloneActionsWindow: boolean = false;
+    private myLegType: string = null;
+    ShowAddLegWindow() {
+        var isNewEntity = true;
+        var windowTitle = "Add " + this.myLegType;
+
+        switch (this.myLegType) {
             case "Pick Up": {
                 if (!this.IsAddingStandaloneShipmentVisible) {
-                    this.ViewAddPickupWindow();                
+                    this.ViewAddPickupWindow();
                 } else {
                     this.ShowStanadAloneActionsWindow("Pickup");
                 }
@@ -325,7 +393,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                 {
                     var logitudeWindow = new LogitudeWindow();
                     logitudeWindow.Title = TextCodeTranslator.Translate("Shipment.O.Routings.AddPreCarriage");
-                    logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, FatherComponent: this, LegType: myLegType }
+                    logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, FatherComponent: this, LegType: this.myLegType }
                     logitudeWindow.Show('./ShipmentModules/ShipmentRouting/Components/Routings/AddEditPreCarriageComponent');
                     break;
                 }
@@ -334,7 +402,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                 {
                     var logitudeWindow = new LogitudeWindow();
                     logitudeWindow.Title = TextCodeTranslator.Translate("Shipment.O.Routings.AddOnCarriage");
-                    logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, FatherComponent: this, LegType: myLegType }
+                    logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, FatherComponent: this, LegType: this.myLegType }
                     logitudeWindow.Height = 580;
                     logitudeWindow.Show('./ShipmentModules/ShipmentRouting/Components/Routings/AddEditOnCarriageComponent');
                     break;
@@ -344,7 +412,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                 {
                     var logitudeWindow = new LogitudeWindow();
                     logitudeWindow.Title = TextCodeTranslator.Translate("Shipment.O.Routings.AddPreForwarding");
-                    logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, FatherComponent: this, LegType: myLegType }
+                    logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, FatherComponent: this, LegType: this.myLegType }
                     logitudeWindow.Show('./ShipmentModules/ShipmentRouting/Components/Routings/AddEditPreCarriageComponent');
                     break;
                 }
@@ -353,7 +421,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                 {
                     var logitudeWindow = new LogitudeWindow();
                     logitudeWindow.Title = TextCodeTranslator.Translate("Shipment.O.Routings.AddOnForwarding");
-                    logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, FatherComponent: this, LegType: myLegType }
+                    logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, FatherComponent: this, LegType: this.myLegType }
                     logitudeWindow.Height = 580;
                     logitudeWindow.Show('./ShipmentModules/ShipmentRouting/Components/Routings/AddEditOnCarriageComponent');
                     break;
@@ -365,12 +433,25 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                     var logitudeWindow = new LogitudeWindow();
                     logitudeWindow.Width = 900;
                     logitudeWindow.Height = 500;
-                    logitudeWindow.Title = TextCodeTranslator.Translate("Shipment.O.Routings.AddWarehouseLeg");
-                    logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, FatherComponent: this, LegType: myLegType, IsNewLeg: true }
+                    var title = TextCodeTranslator.Translate("Shipment.O.Routings.AddWarehouseLeg");
+                    var originTitle = TextCodeTranslator.Translate("Shipment.O.Routings.AddOriginWarehouseLeg");
+                    logitudeWindow.Title = this.GetWarehouseLegTitle(title, originTitle); //TextCodeTranslator.Translate("Shipment.O.Routings.AddWarehouseLeg");
+                    logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, FatherComponent: this, LegType: this.myLegType, IsNewLeg: true }
                     logitudeWindow.Show('./ShipmentModules/ShipmentRouting/Components/Routings/AddEditWarehouseLegComponent');
                     break;
                 }
-
+            case "WarehouseLeg2":
+                {
+                    var logitudeWindow = new LogitudeWindow();
+                    logitudeWindow.Width = 900;
+                    logitudeWindow.Height = 500;
+                    var title = TextCodeTranslator.Translate("Shipment.O.Routings.AddWarehouseLeg");
+                    var originTitle = TextCodeTranslator.Translate("Shipment.O.Routings.AddDestinationWarehouseLeg");
+                    logitudeWindow.Title = this.GetWarehouseLegTitle(title, originTitle);
+                    logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, FatherComponent: this, LegType: this.myLegType, IsNewLeg: true }
+                    logitudeWindow.Show('./ShipmentModules/ShipmentRouting/Components/Routings/AddEditWarehouseLegComponent');
+                    break;
+                }
             default: {
                 if (this.EntityPM.ShipmentLevelCode == "H" && AppTool.IsNullOrEmpty(this.EntityPM.MasterShipmentDataId)) {
                     var logitudeWindow = new LogitudeWindow();
@@ -391,6 +472,42 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
             }
         }
     }
+
+    GetWarehouseLegTitle(title: string, originTitle: string): string {
+        var newTitle = title;
+        if (this.IsDestinationWarehouseLegVisible && this.EntityPM.DirectionId == "R") {
+            newTitle = originTitle;
+        }
+        return newTitle;
+    }
+
+    GetAddEditWarehouseLegTitle(title: string, legType: string): string {
+        var title = title;
+        if (legType == "WarehouseLeg_Pickups") {
+            title = "Add Origin Warehouse / Terminal";
+        }
+        else if (legType == "WarehouseLeg_Pickups") {
+            title = "Add Destination Warehouse / Terminal";
+        }
+        return title;
+    }
+    AddLeg(myLegType: string) {
+        this.myLegType = myLegType;
+        if (this.IsAddingStandaloneShipmentVisible) {
+            var errors: string[] = [];
+            Validator.TryValidateObject(this.EntityPM, "Shipment", errors);
+
+            if (errors.length == 0) {
+                this.IsShowStanadAloneActionsWindow = true;
+                this.entityArgs.EditComponent.SaveChanges();
+            } else {
+                this.entityArgs.EditComponent.ValidationErrorsList = errors;
+            }
+        } else {
+            this.ShowAddLegWindow();
+        } 
+    }
+
     ViewAddPickupWindow() {
         var myPickUpIndex = 1;
         if (this.EntityPM.ShipmentPickUpIndex) {
@@ -477,6 +594,12 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
         args.IsNewStandAlonePickupDelivery = true;
         args.ForwarderStandaloneShipmentId = this.EntityPM.Id;
         args.ForwarderShipmentPickUpDeliveryTypeCode = typeCode;
+        args.ParentShipmentCustomerId = typeCode == "Pickup" ? this.EntityPM.ShipperId : this.EntityPM.ConsigneeId;
+        args.ParentShipmentCustomerAddressId = typeCode == "Pickup" ? this.EntityPM.ShipperAddressId : this.EntityPM.ConsigneeAddressId;
+        args.ParentShipmentCustomerType = typeCode == "Pickup" ? "SHI" : "CON";
+        args.ParentShipmentDirectionId = this.EntityPM.DirectionId;
+        args.ParentShipmentNumber = this.EntityPM.ShipmentNumber;
+        args.ParentShipmentType = this.EntityPM.ShipmentType;
 
         var str: string = TextCodeTranslator.Translate("General.O.NewEntity");
         str = str.replace("%Entity", TextCodeTranslator.TranslateTable("Shipment"));
@@ -492,7 +615,28 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
         }); 
     }
 
+    IsShowEditLegWindow: boolean = false;
+    private myRoutingItem: RoutingItem = null;
+
     EditLeg(myRoutingItem: RoutingItem) {
+        this.myRoutingItem = myRoutingItem;
+        if (this.IsAddingStandaloneShipmentVisible && ["Pick Up", "Delivery"].includes(myRoutingItem.LegType)) {
+            var errors: string[] = [];
+            Validator.TryValidateObject(this.EntityPM, "Shipment", errors);
+
+            if (errors.length == 0) {
+                this.IsShowEditLegWindow = true;
+                this.entityArgs.EditComponent.SaveChanges();
+            } else {
+                this.entityArgs.EditComponent.ValidationErrorsList = errors;
+            }
+        } else {
+            this.ShowEditLegWindow();
+        } 
+    }
+
+    ShowEditLegWindow() {
+        var myRoutingItem = this.myRoutingItem;
         var myLegType: string = myRoutingItem.LegType;
 
         switch (myLegType) {
@@ -615,8 +759,22 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                     var logitudeWindow = new LogitudeWindow();
                     logitudeWindow.Width = 900;
                     logitudeWindow.Height = 500;
-                    logitudeWindow.Title = TextCodeTranslator.Translate("Shipment.O.Routings.EditWarehouseLeg");
-                    logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, FatherComponent: this, LegType: myLegType}
+                    var title = TextCodeTranslator.Translate("Shipment.O.Routings.EditWarehouseLeg");
+                    var originTitle = TextCodeTranslator.Translate("Shipment.O.Routings.EditOriginWarehouseLeg");
+                    logitudeWindow.Title = this.GetWarehouseLegTitle(title, originTitle); 
+                    logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, FatherComponent: this, LegType: myLegType }
+                    logitudeWindow.Show('./ShipmentModules/ShipmentRouting/Components/Routings/AddEditWarehouseLegComponent');
+                    break;
+                }
+            case "WarehouseLeg2":
+                {
+                    var logitudeWindow = new LogitudeWindow();
+                    logitudeWindow.Width = 900;
+                    logitudeWindow.Height = 500;
+                    var title = TextCodeTranslator.Translate("Shipment.O.Routings.EditWarehouseLeg");
+                    var originTitle = TextCodeTranslator.Translate("Shipment.O.Routings.EditDestinationWarehouseLeg");
+                    logitudeWindow.Title = this.GetWarehouseLegTitle(title, originTitle);
+                    logitudeWindow.WindowArgs = { EntityPM: this.EntityPM, ObjectTableName: this.ObjectTableName, FatherComponent: this, LegType: myLegType }
                     logitudeWindow.Show('./ShipmentModules/ShipmentRouting/Components/Routings/AddEditWarehouseLegComponent');
                     break;
                 }
@@ -640,12 +798,13 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
             }
         }
     }
+
     DeleteLeg(myRoutingItem: RoutingItem) {
         if (myRoutingItem) {
             var myLegType: string = myRoutingItem.LegType;
 
             if (myLegType == "Pick Up") {
-                if (this.EntityPM.ShipmentPickUps.filter(d => d.Id != myRoutingItem.Pickup.Id && d.PickUpDeliveryNumber.indexOf(myRoutingItem.Pickup.PickUpDeliveryNumber) > -1).length > 0) {
+                if (this.EntityPM.ShipmentPickUps.filter(d => !AppTool.IsNullOrEmpty(d.ParentPickUpDeliveryId) && d.Id != myRoutingItem.Pickup.Id && d.PickUpDeliveryNumber.indexOf(myRoutingItem.Pickup.PickUpDeliveryNumber) > -1).length > 0) {
                     var messageSindow: MessageWindow = new MessageWindow();
                     messageSindow.Show("Please delete the consequent pickups before deleting this pickup");
                 }
@@ -656,7 +815,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
             }
 
             else if (myLegType == "Delivery") {
-                if (this.EntityPM.ShipmentDeliveries.filter(d => d.Id != myRoutingItem.Delivery.Id && d.PickUpDeliveryNumber.indexOf(myRoutingItem.Delivery.PickUpDeliveryNumber) > -1).length > 0) {
+                if (this.EntityPM.ShipmentDeliveries.filter(d => !AppTool.IsNullOrEmpty(d.ParentPickUpDeliveryId) && d.Id != myRoutingItem.Delivery.Id && d.PickUpDeliveryNumber.indexOf(myRoutingItem.Delivery.PickUpDeliveryNumber) > -1).length > 0) {
                     var messageSindow: MessageWindow = new MessageWindow();
                     messageSindow.Show("Please delete the consequent deliveries before deleting this delivery");
                 }
@@ -708,6 +867,11 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
             case "WarehouseLeg":
             case "WarehouseLeg_Pickups": {
                 message = "Delete Warehouse \ Terminal?";
+                break;
+            }
+
+            case "WarehouseLeg2": {
+                message = "Delete Origin Warehouse \ Terminal?";
                 break;
             }
         }
@@ -778,6 +942,9 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                     case "WarehouseLeg_Pickups": {
                         this.EntityPM.WarehouseLegWarehouseId = null;
                         this.EntityPM.WarehouseLegAddressId = null;
+                        this.WarehouseAddressList = null;
+                        this.EntityPM.WarehouseLegAddressCountryName = null;
+                        this.EntityPM.WarehouseLegAddressCountryCode = null;
                         this.EntityPM.WarehouseLegReference = null;
                         this.EntityPM.WarehouseLegTerminalCode = null;
                         this.EntityPM.WarehouseLegLastFreeDate = null;
@@ -819,13 +986,72 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
 
                         break;
                     }
+
+                    case "WarehouseLeg2":
+                        {
+                            this.EntityPM.WarehouseLeg2WarehouseId = null;
+                            this.EntityPM.WarehouseLeg2AddressId = null;
+                            this.Warehouse2AddressList = null;
+                            this.EntityPM.WarehouseLeg2AddressCountryName = null;
+                            this.EntityPM.WarehouseLeg2AddressCountryCode = null;
+                            this.EntityPM.WarehouseLeg2Reference = null;
+                            this.EntityPM.WarehouseLeg2TerminalCode = null;
+                            this.EntityPM.TerminalAvailable = null;
+                            this.EntityPM.WarehouseLeg2CutOffDate = null;
+                            this.EntityPM.WarehouseLeg2Remarks = null;
+                            this.EntityPM.WarehouseLeg2ExpectedEntryDate = null;
+                            this.EntityPM.WarehouseLeg2ExpectedReleaseDate = null;
+                            this.EntityPM.WarehouseLeg2ActualEntryDate = null;
+                            this.EntityPM.WarehouseLeg2ActualReleaseDate = null;
+                            this.EntityPM.WarehouseLeg2VGMCutOffDate = null;
+                            this.EntityPM.WarehouseStorageFreeDays = null;
+                            this.EntityPM.GrossWeightPerStorageDays = null;
+                            this.EntityPM.IsCFSWarehouse = false;
+                            this.EntityPM.IsCFSWarehouseChanged = false
+
+                            var followups = this.EntityPM.FollowUps.filter(f => f.LegType != null);
+                            followups = followups.filter(f => f.LegType.indexOf("WarehouseLeg2") > -1);
+                            if (followups.length > 0) {
+                                followups.forEach(item => {
+                                    this.EntityPM.RemoveShipmentFollowUp(item);
+                                });
+
+                                this.CurrentSession.FireEvent("FollowupsChanged");
+                            }
+                            break;
+                        }
                 }
 
                 this.BuildItemsCollection();
             }
         });
     }
+
+    private childLegType: string = null;
+    private chiledRoutingItem: RoutingItem = null;
+    private IsShowAddChildLeg: boolean = false;
+
     AddChildLeg(myLegType: string, myRoutingItem: RoutingItem) {
+        this.childLegType = myLegType;
+        this.chiledRoutingItem = myRoutingItem;
+        if (this.IsAddingStandaloneShipmentVisible) {
+            var errors: string[] = [];
+            Validator.TryValidateObject(this.EntityPM, "Shipment", errors);
+
+            if (errors.length == 0) {
+                this.IsShowAddChildLeg = true;
+                this.entityArgs.EditComponent.SaveChanges();
+            } else {
+                this.entityArgs.EditComponent.ValidationErrorsList = errors;
+            }
+        } else {
+            this.ViewAddChildLedWindow();
+        } 
+    }
+
+    ViewAddChildLedWindow() {
+        var myLegType = this.childLegType;
+        var myRoutingItem = this.chiledRoutingItem;
         switch (myLegType) {
             case "Pick Up": {
                 this.AddChildPickUp(myRoutingItem);
@@ -838,10 +1064,12 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
             }
         }
     }
+
     AddChildPickUp(myRoutingItem: RoutingItem) {
         var newPickupPM: ShipmentPickUpPM = this.CreateChildPickUp(myRoutingItem);
         this.OpenChildPickUpDeliveryWindow(newPickupPM, null);        
-    }    
+    }
+    
     AddChildDelivery(myRoutingItem: RoutingItem) {
         var newDeliveryPM: ShipmentDeliveryPM = this.CreateChildDelivery(myRoutingItem);
         this.OpenChildPickUpDeliveryWindow(null, newDeliveryPM);        
@@ -918,19 +1146,19 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
     // Inland Domestic
     private myCardListService: CardListService;
     private myAddressListService: AddressListService;
+    private myPortListService: PortListService;
     InitializePartners() {
         this.myCardListService = new CardListService();
         this.myAddressListService = new AddressListService();
+        this.myPortListService = new PortListService();
         this.LoadFromAddress();
         this.LoadToAddress();
     }
 
     SetUIProperties_InlandDomestic() {
         if (this.IsInlandDomestic) {
-            this.UIProperties.SetEnabled("MainCarriageFromPartnerId", this.ObjectTableName, this.IsEditingEnabled);
-            this.UIProperties.SetEnabled("MainCarriageFromAddressId", this.ObjectTableName, this.IsEditingEnabled);
-            this.UIProperties.SetEnabled("MainCarriageToPartnerId", this.ObjectTableName, this.IsEditingEnabled);
-            this.UIProperties.SetEnabled("MainCarriageToAddressId", this.ObjectTableName, this.IsEditingEnabled);
+            this.SetUIProperties_From();
+            this.SetUIProperties_To();
             this.UIProperties.SetEnabled("MainCarriageCarrierId", this.ObjectTableName, this.IsEditingEnabled);
             this.UIProperties.SetEnabled("Driver", this.ObjectTableName, this.IsEditingEnabled);
             this.UIProperties.SetEnabled("TruckNumber", this.ObjectTableName, this.IsEditingEnabled);
@@ -956,6 +1184,83 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
         if (!DateTool.IsActualDateValid(this.MainCarriageATA)) {
             var errorMessage = DateTool.ActualDateMessage.replace("Field", TextCodeTranslator.Translate("Shipment.O.Routings.ATA"));
             this.UIProperties.SetValidity("MainCarriageATA", this.ObjectTableName, false, errorMessage);
+        }
+    }
+    SetUIProperties_From() {
+        switch (this.InlandDomesticFromTypeCode) {
+            case "PART": {
+                this.UIProperties.SetRequired("MainCarriageFromPartnerId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.MainCarriageFromPartnerId) ? true : false);
+                this.UIProperties.SetEnabled("MainCarriageFromPartnerId", this.ObjectTableName, this.IsEditingEnabled);
+
+                var isAddressIdEnabled = false;
+                if (this.IsEditingEnabled) {
+                    if (!AppTool.IsNullOrEmpty(this.MainCarriageFromPartnerId)) {
+                        isAddressIdEnabled = true;
+                    }
+                }
+
+                this.UIProperties.SetEnabled("MainCarriageFromAddressId", this.ObjectTableName, isAddressIdEnabled);
+                break;
+            }
+
+            case "PORT": {
+                this.UIProperties.SetRequired("MainCarriageFromPortId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.MainCarriageFromPortId) ? true : false);
+                this.UIProperties.SetEnabled("MainCarriageFromPortAddress", this.ObjectTableName, false);
+                break;
+            }
+
+            case "CASL": {
+                this.UIProperties.SetRequired("InlandDomesticFromCity", this.ObjectTableName, AppTool.IsNullOrEmpty(this.InlandDomesticFromCity) && AppTool.IsNullOrEmpty(this.InlandDomesticFromZipCode) ? true : false);
+                this.UIProperties.SetRequired("InlandDomesticFromCountryId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.InlandDomesticFromCountryId) ? true : false);
+                break;
+            }
+        }
+    }
+    SetUIProperties_To() {
+        switch (this.InlandDomesticToTypeCode) {
+            case "PART": {
+                this.UIProperties.SetRequired("MainCarriageToPartnerId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.MainCarriageToPartnerId) ? true : false);
+                this.UIProperties.SetEnabled("MainCarriageToPartnerId", this.ObjectTableName, this.IsEditingEnabled);
+
+                var isAddressIdEnabled = false;
+                if (this.IsEditingEnabled) {
+                    if (!AppTool.IsNullOrEmpty(this.MainCarriageToPartnerId)) {
+                        isAddressIdEnabled = true;
+                    }
+                }
+
+                this.UIProperties.SetEnabled("MainCarriageToAddressId", this.ObjectTableName, isAddressIdEnabled);
+                break;
+            }
+
+            case "PORT": {
+                this.UIProperties.SetRequired("MainCarriageToPortId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.MainCarriageToPortId) ? true : false);
+                this.UIProperties.SetEnabled("MainCarriageToPortAddress", this.ObjectTableName, false);
+                break;
+            }
+
+            case "CASL": {
+                this.UIProperties.SetRequired("InlandDomesticToCity", this.ObjectTableName, AppTool.IsNullOrEmpty(this.InlandDomesticToCity) && AppTool.IsNullOrEmpty(this.InlandDomesticToZipCode) ? true : false);
+                this.UIProperties.SetRequired("InlandDomesticToCountryId", this.ObjectTableName, AppTool.IsNullOrEmpty(this.InlandDomesticToCountryId) ? true : false);
+                break;
+            }
+        }
+    }
+
+    get InlandDomesticFromTypeCode() { return this.EntityPM.InlandDomesticFromTypeCode; }
+    set InlandDomesticFromTypeCode(value: string) {
+        if (this.EntityPM.InlandDomesticFromTypeCode != value) {
+            this.EntityPM.InlandDomesticFromTypeCode = value;
+
+            this.MainCarriageFromPartnerId = null;
+            this.MainCarriageFromAddressId = null;
+            this.MainCarriageFromPortId = null;
+            this.InlandDomesticFromCity = null;
+            this.InlandDomesticFromZipCode = null;
+            this.InlandDomesticFromCountryId = null;
+            this.MainCarriageFromPortAddress = null;
+            this.mainCarriageFromAddressList = null;
+            this.SetUIProperties_From();
         }
     }
 
@@ -989,6 +1294,88 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
         }
     }
 
+    private mainCarriageFromAddressList: AddressList;
+    get MainCarriageFromAddressList() { return this.mainCarriageFromAddressList; }
+    set MainCarriageFromAddressList(newValue: AddressList) {
+        this.mainCarriageFromAddressList = newValue;
+    }
+
+    get MainCarriageFromPortId() { return this.EntityPM.MainCarriageFromPortId; }
+    set MainCarriageFromPortId(value: string) {
+        if (this.EntityPM.MainCarriageFromPortId != value) {
+            this.EntityPM.MainCarriageFromPortId = value;
+            this.EntityPM.FromPortId = value;
+
+            if (this.IsInlandDomestic) {
+                this.SetUIProperties_From();
+
+                if (AppTool.IsNullOrEmpty(value)) {
+                    this.MainCarriageFromPortAddress = null;
+                }
+
+                else {
+                    this.myPortListService.getSingleFromCache(value).subscribe((myResponse: ServiceResponse) => {
+                        if (!myResponse.HasError) {
+                            var list: PortList = myResponse.Result;
+                            if (list) {
+                                this.MainCarriageFromPortAddress = "Port Of: " + list.EnglishName;
+                            }
+                        }
+                    });
+                }
+            }
+        }
+    }
+
+    get MainCarriageFromPortAddress() { return this.EntityPM.MainCarriageFromPortAddress; }
+    set MainCarriageFromPortAddress(value: string) {
+        if (this.EntityPM.MainCarriageFromPortAddress != value) {
+            this.EntityPM.MainCarriageFromPortAddress = value;
+        }
+    }
+
+    get InlandDomesticFromCity() { return this.EntityPM.InlandDomesticFromCity; }
+    set InlandDomesticFromCity(value: string) {
+        if (this.EntityPM.InlandDomesticFromCity != value) {
+            this.EntityPM.InlandDomesticFromCity = value;
+            this.SetUIProperties_From();
+        }
+    }
+
+    get InlandDomesticFromZipCode() { return this.EntityPM.InlandDomesticFromZipCode; }
+    set InlandDomesticFromZipCode(value: string) {
+        if (this.EntityPM.InlandDomesticFromZipCode != value) {
+            this.EntityPM.InlandDomesticFromZipCode = value;
+            this.SetUIProperties_From();
+        }
+    }
+
+    get InlandDomesticFromCountryId() { return this.EntityPM.InlandDomesticFromCountryId; }
+    set InlandDomesticFromCountryId(value: string) {
+        if (this.EntityPM.InlandDomesticFromCountryId != value) {
+            this.EntityPM.InlandDomesticFromCountryId = value;
+            this.SetUIProperties_From();
+        }
+    }
+
+    get InlandDomesticToTypeCode() { return this.EntityPM.InlandDomesticToTypeCode; }
+    set InlandDomesticToTypeCode(value: string) {
+        if (this.EntityPM.InlandDomesticToTypeCode != value) {
+            this.EntityPM.InlandDomesticToTypeCode = value;
+
+            this.EntityPM.MainCarriageToPartnerId = null;
+            this.EntityPM.MainCarriageToAddressId = null;
+            this.EntityPM.MainCarriageToPortId = null;
+            this.EntityPM.InlandDomesticToCity = null;
+            this.EntityPM.InlandDomesticToZipCode = null;
+            this.EntityPM.InlandDomesticToCountryId = null;
+            this.MainCarriageToPortAddress = null;
+            this.mainCarriageToAddressList = null;
+            this.SetUIProperties_To();
+        }
+    }
+
+    private toPartnerAddressChanged: boolean = false;
     get MainCarriageToPartnerId() { return this.EntityPM.MainCarriageToPartnerId; }
     set MainCarriageToPartnerId(value: string) {
         if (this.EntityPM.MainCarriageToPartnerId != value) {
@@ -1015,15 +1402,81 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
     set MainCarriageToAddressId(value: string) {
         if (this.EntityPM.MainCarriageToAddressId != value) {
             this.EntityPM.MainCarriageToAddressId = value;
+
+            this.toPartnerAddressChanged = true;
             this.LoadToAddress();
         }
     }
 
-    public ToAddressList: AddressList;
-    public FromAddressList: AddressList;
+    private mainCarriageToAddressList: AddressList;
+    get MainCarriageToAddressList() { return this.mainCarriageToAddressList; }
+    set MainCarriageToAddressList(newValue: AddressList) {
+        this.mainCarriageToAddressList = newValue;
+    }
+
+    get MainCarriageToPortId() { return this.EntityPM.MainCarriageToPortId; }
+    set MainCarriageToPortId(value: string) {
+        if (this.EntityPM.MainCarriageToPortId != value) {
+            this.EntityPM.MainCarriageToPortId = value;
+            this.EntityPM.ToPortId = value;
+
+            if (this.IsInlandDomestic) {
+                this.SetUIProperties_To();
+
+                if (AppTool.IsNullOrEmpty(value)) {
+                    this.MainCarriageToPortAddress = null;
+                }
+
+                else {
+                    this.myPortListService.getSingleFromCache(value).subscribe((myResponse: ServiceResponse) => {
+                        if (!myResponse.HasError) {
+                            var list: PortList = myResponse.Result;
+                            if (list) {
+                                this.MainCarriageToPortAddress = "Port Of: " + list.EnglishName;
+                            }
+                        }
+                    });
+                }
+            }
+        }
+    }
+
+    get MainCarriageToPortAddress() { return this.EntityPM.MainCarriageToPortAddress; }
+    set MainCarriageToPortAddress(value: string) {
+        if (this.EntityPM.MainCarriageToPortAddress != value) {
+            this.EntityPM.MainCarriageToPortAddress = value;
+        }
+    }
+
+    get InlandDomesticToCity() { return this.EntityPM.InlandDomesticToCity; }
+    set InlandDomesticToCity(value: string) {
+        if (this.EntityPM.InlandDomesticToCity != value) {
+            this.EntityPM.InlandDomesticToCity = value;
+            this.SetUIProperties_To();
+        }
+    }
+
+    get InlandDomesticToZipCode() { return this.EntityPM.InlandDomesticToZipCode; }
+    set InlandDomesticToZipCode(value: string) {
+        if (this.EntityPM.InlandDomesticToZipCode != value) {
+            this.EntityPM.InlandDomesticToZipCode = value;
+            this.SetUIProperties_To();
+        }
+    }
+
+    get InlandDomesticToCountryId() { return this.EntityPM.InlandDomesticToCountryId; }
+    set InlandDomesticToCountryId(value: string) {
+        if (this.EntityPM.InlandDomesticToCountryId != value) {
+            this.EntityPM.InlandDomesticToCountryId = value;
+            this.SetUIProperties_To();
+        }
+    }
+
     private LoadToAddress() {
+        this.oldCountryId = this.EntityPM.ToCountryId;
+
         if (AppTool.IsNullOrEmpty(this.MainCarriageToAddressId)) {
-            this.ToAddressList = null;
+            this.MainCarriageToAddressList = null;
 
             if (this.EntityPM.ToCountryId != null) {
                 this.EntityPM.ToCountryId = null;
@@ -1039,7 +1492,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                 if (!myResponse.HasError) {
                     var list: AddressList = myResponse.Result;
                     if (list) {
-                        this.ToAddressList = list;
+                        this.MainCarriageToAddressList = list;
 
                         if (this.EntityPM.ToCountryId != list.CountryId) {
                             this.EntityPM.ToCountryId = list.CountryId;
@@ -1048,14 +1501,82 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                         if (this.EntityPM.ToCountryIsEC != list.CountryEC) {
                             this.EntityPM.ToCountryIsEC = list.CountryEC;
                         }
+
+                        if (this.toPartnerAddressChanged) {
+                            this.CheckToUpdateProductItems();                            
+                        }
                     }
                 }
             });
         }
     }
+
+    CheckToUpdateProductItems() {
+        var updateProductItems: boolean = false;
+        if (this.oldCountryId != this.EntityPM.ToCountryId) {
+            if (this.EntityPM.ShipmentProductItems.length > 0) {
+                if (!ShipmentTool.IsShipmentProductItemsEmpty(this.EntityPM.ShipmentProductItems)) {
+                    updateProductItems = true;
+                }
+            }
+        }
+
+        if (updateProductItems) {
+            var confirmWindow = new ConfirmWindow();
+            confirmWindow.Title = "Country Changed";
+            confirmWindow.Show("All product items in this shipment will be updated");
+            confirmWindow.WindowClosed.subscribe((event: any) => {
+                if (confirmWindow.Yes) {
+                    this.GetHTSCodes();                    
+                }
+            });
+        }
+    }
+
+    private GetHTSCodes() {
+        var productItemIds: string = "";
+        this.EntityPM.ShipmentProductItems.forEach(item => {
+            productItemIds += item.ProductItemId + ",";
+        });
+
+        var commonService: CommonDomainService = new CommonDomainService();
+        commonService.GetHTSCodesForProductItemsIds(productItemIds, this.EntityPM.ToCountryId).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                var htsCodes: HTSCodePM[] = myResponse.Result;
+                this.UpdateShipmentProductItems(htsCodes);
+            }
+        });
+    }
+    UpdateShipmentProductItems(htsCodes: HTSCodePM[]) {
+        this.EntityPM.ShipmentProductItems.forEach(item => {
+            var hTSCodePM: HTSCodePM = htsCodes.filter(d => d.ItemId == item.ProductItemId)[0];
+
+            if (hTSCodePM) {
+                item.HTSCode = hTSCodePM.Code;
+                item.ApprovedByCustomer = hTSCodePM.ApprovedByCustomer;
+                item.VATPercentage = hTSCodePM.VATPercentage;
+                item.DutiesPercentage = hTSCodePM.DutiesPercentage;
+                item.OtherDuties = hTSCodePM.OtherDuties;
+                item.Remarks = hTSCodePM.Remarks;
+            }
+
+            else {
+                item.HTSCode = null;
+                item.ApprovedByCustomer = false;
+                item.VATPercentage = null;
+                item.DutiesPercentage = null;
+                item.OtherDuties = null;
+                item.Remarks = null;
+            }
+        });
+
+        this.toPartnerAddressChanged = false;
+        this.CurrentSession.FireEvent("ShipmentProductItemsUpdated");
+    }
+
     private LoadFromAddress() {
         if (AppTool.IsNullOrEmpty(this.MainCarriageFromAddressId)) {
-            this.FromAddressList = null;
+            this.MainCarriageFromAddressList = null;
 
             if (this.EntityPM.FromCountryId != null) {
                 this.EntityPM.FromCountryId = null;
@@ -1071,7 +1592,7 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                 if (!myResponse.HasError) {
                     var list: AddressList = myResponse.Result;
                     if (list) {
-                        this.FromAddressList = list;
+                        this.MainCarriageFromAddressList = list;
 
                         if (this.EntityPM.FromCountryId != list.CountryId) {
                             this.EntityPM.FromCountryId = list.CountryId;
@@ -1084,6 +1605,31 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
                 }
             });
         }
+    }
+
+    SelectCityCommand(myAddressCode: string) {
+        var mySourceCountryId: string = myAddressCode == "F" ? this.InlandDomesticFromCountryId : this.InlandDomesticToCountryId;
+
+        var args = new CitySelectionArgs(mySourceCountryId);
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = "Select City";
+        logWindow.WindowArgs = args;
+        logWindow.Show("./CommonModules/CommonOthers/Components/CitySelection/CitySelectionComponent");
+        logWindow.WindowClosed.subscribe(($event: any) => {
+            if (args.IsCitySelected) {
+                if (myAddressCode == "F") {
+                    this.InlandDomesticFromCity = args.CityName;
+                    this.InlandDomesticFromCountryId = args.CountryId;
+                    this.EntityPM.InlandDomesticFromStateId = args.StateId;
+                }
+
+                else if (myAddressCode == "T") {
+                    this.InlandDomesticToCity = args.CityName;
+                    this.InlandDomesticToCountryId = args.CountryId;
+                    this.EntityPM.InlandDomesticToStateId = args.StateId;
+                }
+            }
+        });
     }
 
     get MainCarriageCarrierId() { return this.EntityPM.MainCarriageCarrierId; }
@@ -1111,6 +1657,27 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
     set TrailerNumber(value: string) {
         if (this.EntityPM.TrailerNumber != value) {
             this.EntityPM.TrailerNumber = value;
+        }
+    }
+
+    get Transshipment1TrailerNumber() { return this.EntityPM.Transshipment1TrailerNumber; }
+    set Transshipment1TrailerNumber(value: string) {
+        if (this.EntityPM.Transshipment1TrailerNumber != value) {
+            this.EntityPM.Transshipment1TrailerNumber = value;
+        }
+    }
+
+    get Transshipment2TrailerNumber() { return this.EntityPM.Transshipment2TrailerNumber; }
+    set Transshipment2TrailerNumber(value: string) {
+        if (this.EntityPM.Transshipment2TrailerNumber != value) {
+            this.EntityPM.Transshipment2TrailerNumber = value;
+        }
+    }
+
+    get Transshipment3TrailerNumber() { return this.EntityPM.Transshipment3TrailerNumber; }
+    set Transshipment3TrailerNumber(value: string) {
+        if (this.EntityPM.Transshipment3TrailerNumber != value) {
+            this.EntityPM.Transshipment3TrailerNumber = value;
         }
     }
 
@@ -1166,7 +1733,15 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
             logeWindow.Width = 630;
             logeWindow.Height = 430;
             logeWindow.Title = "Edit Address";
-            logeWindow.WindowArgs = { EntityId: myAddressId };
+
+            if (myCode == "F") {
+                logeWindow.WindowArgs = { EntityId: myAddressId };
+            }
+
+            else {
+                logeWindow.WindowArgs = { EntityId: myAddressId, ShipmentPM: this.EntityPM };
+            }
+
             logeWindow.Show("./CommonPartners/Components/AddEdit/AddEditPartnerAddressComponent");
             logeWindow.WindowClosed.subscribe(s => {
                 if (s) {
@@ -1228,6 +1803,43 @@ export class RoutingsTabComponent extends BaseComponent implements OnInit, OnDes
             });
         }
     }
+
+    public WarehouseLeg2TerminalName: string = "";
+    private myWarehouse2AddressList: AddressList;
+    get Warehouse2AddressList() { return this.myWarehouse2AddressList; }
+    set Warehouse2AddressList(newValue: AddressList) {
+        this.myWarehouse2AddressList = newValue;
+    }
+    GetWarehouse2Address() {
+        if (!AppTool.IsNullOrEmpty(this.EntityPM.WarehouseLeg2AddressId)) {
+            this.WarehouseLeg2TerminalName = this.EntityPM.WarehouseLeg2TerminalName;
+            var myService = new AddressListService();
+            myService.getSingle(this.EntityPM.WarehouseLeg2AddressId).subscribe((myResponse: ServiceResponse) => {
+                if (myResponse != null) {
+                    if (!myResponse.HasError) {
+                        this.Warehouse2AddressList = myResponse.Result;
+                    }
+                }
+            });
+        }
+    }
+
+    public InlandDomesticAddressMoreDetailsClick(addressType: string) {
+        var windowArgs: any = {};
+        windowArgs.shipmentPM = this.EntityPM;
+        windowArgs.tenant = SessionLocator.Tenant;
+        windowArgs.addressType = addressType;
+        windowArgs.objectTableName = this.ObjectTableName;
+
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 500;
+        logWindow.Height = 250;
+        logWindow.Title = addressType + ' Routings Address Detail';
+        logWindow.WindowArgs = windowArgs;
+        logWindow.Show("./ShipmentModules/ShipmentRouting/Components/Routings/InlandDomesticAddressComponent");
+
+    }
+    
 }
 export class RoutingItem extends BaseComponent {
     public EntityPM: ShipmentPM;
@@ -1239,7 +1851,11 @@ export class RoutingItem extends BaseComponent {
     public FollowupLegTypeDeparture: string;
     public FollowupLegTypeArrival: string;
     public IsWarehouseLeg: boolean = false;
+    public IsWarehouseLeg2: boolean = false;
     public IsDeleteButtonEnabled: boolean = true;
+    public CarrierLabel: string;
+    private carrierLabelTextCode: string;
+
     constructor(entity: any, type: string, private fatherComponent: RoutingsTabComponent) {
         super();
 
@@ -1251,6 +1867,7 @@ export class RoutingItem extends BaseComponent {
             this.FollowupLegTypeDeparture = type + 'Departure' + this.PickUpDeliveryNumber;
             this.FollowupLegTypeArrival = type + 'Arrival' + this.PickUpDeliveryNumber;
             this.IsDeleteButtonEnabled = this.fatherComponent.IsEditingEnabled;
+            this.carrierLabelTextCode = "Shipment.O.Routings.Trucker";
         }
 
         else if (entity instanceof ShipmentDeliveryPM) {
@@ -1261,6 +1878,7 @@ export class RoutingItem extends BaseComponent {
             this.FollowupLegTypeDeparture = type + 'Departure' + this.PickUpDeliveryNumber;
             this.FollowupLegTypeArrival = type + 'Arrival' + this.PickUpDeliveryNumber;
             this.IsDeleteButtonEnabled = this.fatherComponent.IsEditingEnabled;
+            this.carrierLabelTextCode = "Shipment.O.Routings.Trucker";
         }
 
         else {
@@ -1284,12 +1902,20 @@ export class RoutingItem extends BaseComponent {
                 this.FollowupLegTypeArrival = 'WarehouseLegRelease'
             }
 
+            if (type == "WarehouseLeg2") {
+                this.IsWarehouseLeg2 = true;
+                this.FollowupLegTypeDeparture = 'WarehouseLeg2Entry'
+                this.FollowupLegTypeArrival = 'WarehouseLeg2Release'
+            }
+
             else {
                 this.FollowupLegTypeDeparture = type + 'Departure'
                 this.FollowupLegTypeArrival = type + 'Arrival'
             }
+            this.carrierLabelTextCode = "Shipment.O.Routings.Carrier";
         }
-        
+
+        this.CarrierLabel = TextCodeTranslator.Translate(this.carrierLabelTextCode);
         this.LegType = type;
         this.SetLegAppearance();
         this.GetLegName();
@@ -1362,7 +1988,20 @@ export class RoutingItem extends BaseComponent {
 
                 break;
             }
+            case "WarehouseLeg2": {
+                if (AppTool.IsNullOrEmpty(this.EntityPM.WarehouseLeg2WarehouseId)) {
+                    this.LegHeight = 50;
+                    this.IsLegExists = false;
+                    this.IsAddButtonVisible = true;
+                    this.NoLegTextCode = "Shipment.O.Routings.NoWarehouseTerminal";
+                }
 
+                else {
+                    this.LegHeight = 130;
+                }
+
+                break;
+            }
             case "Delivery": {
                 if (this.Delivery == null || this.EntityPM.ShipmentDeliveries.indexOf(this.Delivery) == -1) {
                     this.LegHeight = 50;
@@ -1423,6 +2062,7 @@ export class RoutingItem extends BaseComponent {
                 case "On Forwarding":
                 case "Pre Forwarding":
                 case "WarehouseLeg":
+                case "WarehouseLeg2":
                 case "WarehouseLeg_Pickups":
                     {
                         this.IsDeleteButtonVisible = true;
@@ -1450,11 +2090,6 @@ export class RoutingItem extends BaseComponent {
                     myExtention = ":" + this.Pickup.PickUpDeliveryNumber;
                 }
 
-                break;
-            }
-
-            case "WarehouseLeg_Pickups": {
-                myTextCode = "Shipment.O.Routings.WarehouseLeg";
                 break;
             }
 
@@ -1505,11 +2140,25 @@ export class RoutingItem extends BaseComponent {
                 myLegTransportModeId = this.EntityPM.OnForwardingTransportModeId;
                 break;
             }
-
-            case "WarehouseLeg": {
-                myTextCode = "Shipment.O.Routings.WarehouseLeg";
-                break;
-            }
+            case "WarehouseLeg_Pickups":
+                {
+                    var title = "Shipment.O.Routings.WarehouseLeg";
+                    var originTitle = "Shipment.O.Routings.OriginWarehouseLeg";
+                    myTextCode = this.fatherComponent.GetWarehouseLegTitle(title, originTitle);
+                    break;
+                }
+            case "WarehouseLeg":
+                {
+                    myTextCode = "Shipment.O.Routings.WarehouseLeg";
+                    break;
+                }
+            case "WarehouseLeg2":
+                {
+                    var title = "Shipment.O.Routings.WarehouseLeg";
+                    var destinationTitle = "Shipment.O.Routings.DestinationWarehouseLeg";
+                    myTextCode = this.fatherComponent.GetWarehouseLegTitle(title, destinationTitle);
+                    break;
+                }
 
             case "Delivery": {
                 myTextCode = "Shipment.O.Routings.Delivery";
@@ -1537,7 +2186,7 @@ export class RoutingItem extends BaseComponent {
         this.LegName = TextCodeTranslator.Translate(myTextCode) + myExtention;
         this.LegTransportModeId = myLegTransportModeId;
     }
-
+    
     public ImageSource: string;
     GetImageSource() {
 
@@ -2268,7 +2917,14 @@ export class RoutingItem extends BaseComponent {
                 myATA = this.EntityPM.WarehouseLegActualReleaseDate;
                 break;
             }
-
+            case "WarehouseLeg2":
+                {
+                myETD = this.EntityPM.WarehouseLeg2ExpectedEntryDate;
+                myATD = this.EntityPM.WarehouseLeg2ActualEntryDate;
+                myETA = this.EntityPM.WarehouseLeg2ExpectedReleaseDate;
+                myATA = this.EntityPM.WarehouseLeg2ActualReleaseDate;
+                break;
+            }
             case "Delivery":
             case "EmptyCR": {
                 if (this.Delivery != null) {
@@ -2409,6 +3065,12 @@ export class RoutingItem extends BaseComponent {
                     break;
                 }
 
+            case "WarehouseLeg2":
+                {
+                    this.EntityPM.WarehouseLeg2ActualEntryDate = this.EntityPM.WarehouseLeg2ExpectedEntryDate;
+                    break;
+                }
+
             case "EmptyCR":
             case "Delivery": {
                 this.Delivery.ATD = this.Delivery.ETD;
@@ -2472,6 +3134,12 @@ export class RoutingItem extends BaseComponent {
                     break;
                 }
 
+            case "WarehouseLeg2":
+                {
+                    this.EntityPM.WarehouseLeg2ActualReleaseDate = this.EntityPM.WarehouseLeg2ExpectedReleaseDate;
+                    break;
+                }
+
             case "EmptyCR":
             case "Delivery": {
                 this.Delivery.ATA = this.Delivery.ETA;
@@ -2518,6 +3186,14 @@ export class RoutingItem extends BaseComponent {
         }
     }
 
+
+    get Terminal2Available() { return this.EntityPM.Terminal2Available; }
+    set Terminal2Available(value: Date) {
+        if (this.EntityPM.Terminal2Available != value) {
+            this.EntityPM.Terminal2Available = value;
+        }
+    }
+
     get WarehouseLegCutOffDate() { return this.EntityPM.WarehouseLegCutOffDate; }
     set WarehouseLegCutOffDate(value: Date) {
         if (this.EntityPM.WarehouseLegCutOffDate != value) {
@@ -2529,6 +3205,40 @@ export class RoutingItem extends BaseComponent {
     set WarehouseLegVGMCutOffDate(value: Date) {
         if (this.EntityPM.WarehouseLegVGMCutOffDate != value) {
             this.EntityPM.WarehouseLegVGMCutOffDate = value;
+        }
+    }
+    get WarehouseLeg2WarehouseId() { return this.EntityPM.WarehouseLeg2WarehouseId; }
+    set WarehouseLeg2WarehouseId(value: string) {
+        if (this.EntityPM.WarehouseLeg2WarehouseId != value) {
+            this.EntityPM.WarehouseLeg2WarehouseId = value;
+        }
+    }
+
+    get WarehouseLeg2Reference() { return this.EntityPM.WarehouseLeg2Reference; }
+    set WarehouseLeg2Reference(value: string) {
+        if (this.EntityPM.WarehouseLeg2Reference != value) {
+            this.EntityPM.WarehouseLeg2Reference = value;
+        }
+    }
+
+    get WarehouseLeg2TerminalCode() { return this.EntityPM.WarehouseLeg2TerminalCode; }
+    set WarehouseLeg2TerminalCode(value: string) {
+        if (this.EntityPM.WarehouseLeg2TerminalCode != value) {
+            this.EntityPM.WarehouseLeg2TerminalCode = value;
+        }
+    }
+
+    get WarehouseLeg2CutOffDate() { return this.EntityPM.WarehouseLeg2CutOffDate; }
+    set WarehouseLeg2CutOffDate(value: Date) {
+        if (this.EntityPM.WarehouseLeg2CutOffDate != value) {
+            this.EntityPM.WarehouseLeg2CutOffDate = value;
+        }
+    }
+
+    get WarehouseLeg2VGMCutOffDate() { return this.EntityPM.WarehouseLeg2VGMCutOffDate; }
+    set WarehouseLeg2VGMCutOffDate(value: Date) {
+        if (this.EntityPM.WarehouseLeg2VGMCutOffDate != value) {
+            this.EntityPM.WarehouseLeg2VGMCutOffDate = value;
         }
     }
 

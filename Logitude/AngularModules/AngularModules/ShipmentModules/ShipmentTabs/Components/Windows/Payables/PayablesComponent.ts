@@ -32,11 +32,20 @@ export class PayablesComponent extends BaseComponent {
     public LocalCurrencyCode: string;
     public IsResourcesReady: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    public IsUsingVirtuallization: boolean = false;
     constructor(private entityResourceService: EntityResourceService) {
         super();
+        this.SetIsUsingVirtuallization();
         this.LocalCurrencyCode = SessionLocator.LocalCurrencyCode;
         this.ItemsSource = new ObservableCollection([]);
         this.InitializeServices();
+    }
+
+    SetIsUsingVirtuallization() {
+        var hasGridVirtuallizationToggleFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "EVG")[0]
+        if (hasGridVirtuallizationToggleFeature) {
+            this.IsUsingVirtuallization = true;
+        }
     }
 
     public AllChargesTypes: ChargesTypeList[] = [];

@@ -419,14 +419,29 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
             this.IsBlockMessageVisible = true;
         }
 
+        //General
         this.UIProperties.SetEnabled("EnglishName", "Customer", enabled);
         this.UIProperties.SetEnabled("LocalName", "Customer", enabled);
         this.UIProperties.SetEnabled("VatNumber", "Customer", enabled);
         this.UIProperties.SetEnabled("EORInumber", "Customer", enabled);
         this.UIProperties.SetEnabled("PaymentTermId", "Customer", enabled);
+        this.UIProperties.SetEnabled("Website", "Customer", enabled);
+        this.UIProperties.SetEnabled("StorageFreeDays", "Customer", enabled);
+
+        //Details
+        this.UIProperties.SetEnabled("IndustryId", "Customer", enabled);
+        this.UIProperties.SetEnabled("LeadSourceId", "Customer", enabled);
+        this.UIProperties.SetEnabled("LeadDescription", "Customer", enabled);
+        this.UIProperties.SetEnabled("CustomerSizeId", "Customer", enabled);
+        this.UIProperties.SetEnabled("RegionId", "Customer", enabled);
+
+        //Responsibilities
         this.UIProperties.SetEnabled("AccountManagerUserId", "Customer", enabled);
+        this.UIProperties.SetEnabled("SalesmanUserId", "Customer", enabled);
         this.UIProperties.SetEnabled("ClassifierId", "Customer", enabled);
         this.UIProperties.SetEnabled("CollectorId", "Customer", enabled);
+        this.UIProperties.SetEnabled("TeamId", "Customer", enabled);
+        //Partners
         this.UIProperties.SetEnabled("ForwarderId", "Customer", enabled);
         this.UIProperties.SetEnabled("CustomsAgentId", "Customer", enabled);
         this.UIProperties.SetEnabled("MediatorId", "Customer", enabled);
@@ -1096,6 +1111,13 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
         }
     }
 
+    public get TeamId() { return this.EntityPM.TeamId; }
+    public set TeamId(value: string) {
+        if (this.EntityPM.TeamId != value) {
+            this.EntityPM.TeamId = value;
+        }
+    }
+
     public get SalesmanUserId() { return this.EntityPM.SalesmanUserId; }
     public set SalesmanUserId(value: string) {
         if (this.EntityPM.SalesmanUserId != value) {
@@ -1163,7 +1185,13 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
     public IsMoreButtonVisible_Forwarder: boolean = false;
     public IsMoreButtonVisible_CustomsAgent: boolean = false;
     public IsMoreButtonVisible_Mediator: boolean = false;
+    public ShowCustomerTeamField: boolean = false;
     SetMoreButtonsVisibility() {
+
+        var customerTeamFieldFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "CTF")[0];
+        if (customerTeamFieldFeatureToggle) {
+            this.ShowCustomerTeamField = true;
+        }
 
         if (FeatureLocator.HasFeaturePermession("Customer", "CUSTOMERACCOUNTMANAGERBYPRODUCT")) {
             this.IsMoreButtonVisible_AccountManager = true;
@@ -1233,7 +1261,7 @@ export class CustomerGeneralTabComponent extends BaseComponent   {
         if (windowComponent != null) {
             var window = new LogitudeWindow();
             window.Title = windowTitle;
-            window.WindowArgs = { EntityPM: this.EntityPM, ProductTypes: this.AllProductTypes, IsUnifreightEditable :this.IsUnifreightEditable }
+            window.WindowArgs = { EntityPM: this.EntityPM, ProductTypes: this.AllProductTypes, IsUnifreightEditable :this.IsUnifreightEditable, IsDisabled : this.IsBlockMessageVisible }
             window.Show(windowComponent);
             window.WindowClosed.subscribe(s => {
                 if (s == "OK") {         
@@ -1356,10 +1384,8 @@ export class ProductTypeItemClass {
                 }
                 if (flag) {
                     this.entityPM.AddCustomerProductPM(newItem);
+                    if (!this.entityPM.ActivityWatch) this.entityPM.ActivityWatch = true;
                 }
-
-                if (!this.entityPM.ActivityWatch)
-                    this.entityPM.ActivityWatch = true;
             }
             else {
                 var item: CustomerProductPM = this.entityPM.CustomerProducts.filter(d => d.ProductTypeCode == this.Code)[0];

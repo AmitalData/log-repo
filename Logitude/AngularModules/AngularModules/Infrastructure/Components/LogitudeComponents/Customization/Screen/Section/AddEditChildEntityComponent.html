@@ -1,0 +1,128 @@
+<style type="text/css">
+</style>
+<table>
+	<tr style="height:1px;" *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0">
+		<td>
+			<ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+		</td>
+	</tr>
+	<tr [style.height]="IsSummarySectionAvailable? '68%': '96%'">
+		<td>
+			<ScrollViewer>
+				<table>
+					<tr>
+						<td>
+							<div style="height:100%; padding-top: 15px">
+								<table>
+									<tr>
+										<td>
+											<div class="MediaFill">
+												<div class="LocationDirective"  #GeneratedArea></div>
+											</div>
+										</td>
+									</tr>
+									<!--<tr>
+										<td colspan="1">
+											<div></div>
+										</td>
+									</tr>-->
+								</table>
+							</div>
+						</td>
+					</tr>
+				</table>
+			</ScrollViewer>
+		</td>
+	</tr>
+	<tr>
+		<td style="height: 5px">
+			<div></div>
+		</td>
+	</tr>
+	<tr style="height:26%" *ngIf="IsSummarySectionAvailable">
+		<td>
+			<div class="MediaFill">
+				<div class="MediaFillRelative WindowSummary">
+					<div class="MediaFixedPadding5">
+
+						<table>
+							<tr>
+								<!-- Summary -->
+								<td>
+									<table>
+										<tr style="height: 1px;">
+											<td colspan="2" class="TabSummaryTitle">{{SummarySectionName}}</td>
+										</tr>
+										<tr>
+											<td style="width: 10px;">
+												<div></div>
+											</td>
+											<td>
+												<ScrollViewer>
+													<div class="MediaFill">
+														<div class="LocationDirective" #SummaryGeneratedArea></div>
+													</div>
+												</ScrollViewer>
+											</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+		</td>
+	</tr>
+	<tr style="height: 32px;">
+		<td style="vertical-align: bottom">
+			<table style="height: 22px;">
+				<tr>
+					<td>
+						<div></div>
+					</td>
+					<!-- Close -->
+					<td style="width: 57px;">
+						<button class="Button" (click)="CloseButtonClicked()">{{'General.B.Close' | TextCodeTranslationPipe}}</button>
+					</td>
+
+					<td style="width: 5px;">
+						<div></div>
+					</td>
+					<!-- Save -->
+					<td style="width: 57px;">
+						<button id="{{ 'SaveBtn' | IdGeneratorAsyncPipe | async}}" *ngIf="!EntityPM.IsDirty" class="Button" (click)="OkButtonClicked()">
+							<img class="LeftCenter" style="margin-left: 2px;" src="./Images/Buttons/Save.png" />
+							<span style="line-height: 19px; margin-left: 17px;">Save</span>
+						</button>
+						<button id="{{ 'SaveBtn' | IdGeneratorAsyncPipe | async}}" class="EntityChangesButton" *ngIf="EntityPM.IsDirty" (click)="OkButtonClicked()">
+							<img class="LeftCenter" style="margin-left: 2px;" src="./Images/Buttons/Save.Red.png" />
+							<span style="line-height: 19px; margin-left: 17px;">Save</span>
+						</button>
+					</td>
+					<td style="width: 5px;">
+						<div></div>
+					</td>
+					<!-- Save & Open -->
+					<td style="width: 95px;">
+						<button id="{{ 'SaveOpen' | IdGeneratorAsyncPipe | async}}" *ngIf="!EntityPM.IsDirty" class="Button" (click)="SaveChangesAndOpen()">
+							<img class="LeftCenter" src="./Images/Buttons/SaveAndNew.png" style="margin-left: 2px; width: 16px; height: 16px;" />
+							<span style="line-height: 19px; margin-left: 17px;">Save & New</span>
+						</button>
+
+						<button id="{{ 'SaveOpen' | IdGeneratorAsyncPipe | async}}" *ngIf="EntityPM.IsDirty" class="EntityChangesButton" (click)="SaveChangesAndOpen()">
+							<img class="LeftCenter" src="./Images/Buttons/SaveAndNew.Orange.png" style="margin-left: 2px; width: 16px; height: 16px;" />
+							<span style="line-height: 19px; margin-left: 17px;">Save & New</span>
+						</button>
+					</td>
+					<td style="width: 12px;">
+						<div></div>
+					</td>
+					<td style="width: 5px;">
+						<div></div>
+					</td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>

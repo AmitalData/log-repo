@@ -1,0 +1,92 @@
+﻿<Script DBType="Main" Module="Dashboard" Env="Logitude,local,test">
+  <Sql Version="4">
+    <![CDATA[
+      BEGIN
+          IF EXISTS (SELECT *  FROM sys.indexes  WHERE NAME='IX_QuoteAnalytics_ColumnStore' AND object_id = OBJECT_ID('[QuoteAnalytics]'))
+          BEGIN
+				DROP INDEX IX_QuoteAnalytics_ColumnStore ON QuoteAnalytics;
+          END
+		  CREATE COLUMNSTORE INDEX IX_QuoteAnalytics_ColumnStore ON QuoteAnalytics (
+      
+Id
+,Tenant
+,LastStageDate
+,IsSaleCurrencySameAsCost
+,IsFixedPrice
+,SaleCurrencyId
+,IsCancelled
+,QuoteNumber
+,MainCarriageCarrierId
+,DirectionId
+,TransportModeId
+,DepartmentId
+,BranchId
+,ShipmentTypeId
+,CustomerId
+,ShipperId
+,ConsigneeId
+,FromPortId
+,ToPortId
+,IncotermId
+,SalesmanUserId
+,CreatedByUserId
+,OpenDate
+,IsClosed
+,NumberOfPackages
+,NumberOfContainers
+,IsDangerous
+,ExpirationDays
+,ExpirationDate
+,QuoteTypeCode
+,IncludePickUp
+,IncludeDelivery
+,SentDate
+,AcceptedDate
+,DeclinedDate
+,UsageCount
+,LastUsageDate
+,BusinessUnitId
+,Subject
+,StageId
+,StageDueDate
+,RatingCode
+,IsAutomaticallyClosed
+,AutomaticallyCloseDate
+,UpdatedByUserId
+,UpdateDate
+,AutomaticallyCloseDays
+,TransitTime
+,ETD
+,ETA
+,AgentId
+,MoveTypeId
+,TEU
+,IsChargesByVAT
+,GrossWeightInKG
+,GrossWeightPerTon
+,NotifyId
+,ConsigneeNotImporterId
+,ChargeableWeightInKG
+,VolumeInCBM
+,StartDate
+,EstimatedProfitInLocal
+,EstimatedProfitInProfit
+,ProfitCurrencyId
+,QuoteClosingReasonId
+,ShipmentSubTypeId
+,RegionalTaxId
+,RegionalTaxPercentage
+,IsMultiCurrency
+,SpecialServicesTypeId
+,ValidByTypeCode
+,ConnectedToOpportunity
+,ShipperNotExporterId
+,ProductCode
+
+                
+                );
+      END
+
+    ]]>       
+  </Sql>
+</Script>

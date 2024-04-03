@@ -49,7 +49,7 @@ namespace Logitude.Accounting.Data.Repositories
                     where a.CashBookId == keys.CashBookId && a.ARPChequeId == keys.ARPChequeId
                     select a).FirstOrDefault();
         }
-		         
+		 		                 
         partial void onAdd();//Partial Methods Definition in Generated
         public void Add(CashBookLine entity)
         {

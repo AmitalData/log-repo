@@ -71,9 +71,11 @@ namespace WebFreight.Web.DataContracts
         public string CaptchaKey {  get; set;  }
         public bool InValidCaptcha { get; set; }
         public DateTime? LastLoginDateTime { get; set; }
+        public DateTime?  DigitalLastLoginDateTime { get; set; }
         public string InvalidDocumentToken { get; set; }
 
-  
+        public bool IsAdmin { get; set; }
+
 
         //public string LoginPolicyCode { get; set; }
         //[Key]
@@ -124,6 +126,7 @@ namespace WebFreight.Web.DataContracts
         public bool IpRestricted { get; set; }
         public bool HasError { get; set; }
         public string Token { get; set; }
-        
+        public string DocumentDownloadToken { get; set; }
+        public int? TokenExpirationTime { get; set; }
     }
 }

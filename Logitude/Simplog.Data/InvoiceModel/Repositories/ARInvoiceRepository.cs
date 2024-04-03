@@ -168,9 +168,26 @@ namespace Simplog.Data.InvoiceModel.Repositories
 
         public ARInvoice GetSingleARInvoice(string id, int tenant)
         {
-            return (from a in context.ARInvoices.Include("BillTo").Include("BillTo.PartnerType").Include("CreatedByUser.Contact").Include("InvoiceCurrency").Include("Status").Include("ARInvoiceType").Include("IssuedByUser.Contact").Include("PrintByUser.Contact").Include("PaymentTerm").Include("ProfitCurrency").Include("LocalCurrency").Include("TransferStatus").Include("ApprovedByUser.Contact").Include("SalesmanUser.Contact").Include("SATInvoiceStatus").Include("SATTransferStatus").Include("Branch")
-                    where a.Id == id && a.Tenant == tenant
-                    select a).FirstOrDefault();
+            return context.ARInvoices
+                          .Include("BillTo")
+                          .Include("BillTo.PartnerType")
+                          .Include("CreatedByUser.Contact")
+                          .Include("InvoiceCurrency")
+                          .Include("Status")
+                          .Include("ARInvoiceType")
+                          .Include("IssuedByUser.Contact")
+                          .Include("PrintByUser.Contact")
+                          .Include("PaymentTerm")
+                          .Include("ProfitCurrency")
+                          .Include("LocalCurrency")
+                          .Include("TransferStatus")
+                          .Include("ApprovedByUser.Contact")
+                          .Include("SalesmanUser.Contact")
+                          .Include("SATInvoiceStatus")
+                          .Include("SATTransferStatus")
+                          .Include("Branch")
+                          .FirstOrDefault(a => a.Id == id 
+                                               && a.Tenant == tenant);
         }
 
         public IQueryable<ARInvoice> GetARInvoices(int tenant)
@@ -203,7 +220,16 @@ namespace Simplog.Data.InvoiceModel.Repositories
                                     where a.Tenant == tenant
                                     && a.EntityId == shipmentId
                                     && (a.ObjectTable.Name == "Shipment" || a.ObjectTable.Name == "Master")
-                                    select a.ARInvoice).ToList();
+                                    select a.ARInvoice).OrderBy(a => a.Id).ToList();
+            return list;
+        }
+
+        public List<ARInvoice> GetInvoicesByMainEntityId(string shipmentId, int tenant)
+        {
+            List<ARInvoice> list = (from a in context.ARInvoices
+                                    where a.Tenant == tenant
+                                    && a.MainEntityId == shipmentId
+                                    select a).ToList();
             return list;
         }
 
@@ -220,15 +246,64 @@ namespace Simplog.Data.InvoiceModel.Repositories
             return list;
         }
 
-        public List<ARInvoice> GetInvoicesByMainEntityId(string shipmentId, int tenant)
+        #region Digital Portal Methods
+
+        public List<ARInvoice> GetDigitalInvoicesByShipmentIdAndBillToId(string shipmentId, string cardId, int tenant)
         {
-            List<ARInvoice> list = (from a in context.ARInvoices
-                                    where a.Tenant == tenant
-                                    && a.MainEntityId == shipmentId
-                                    select a).ToList();
+            List<string> cards = new List<string>();
+            if (!string.IsNullOrWhiteSpace(cardId))
+            {
+                cards = cardId?.Split(',').ToList();
+            }
+
+            IQueryable<ARInvoice> iQuery = (from a in context.ARInvoiceEntities
+                                            where a.Tenant == tenant
+                                            && a.EntityId == shipmentId
+                                            && (a.ObjectTable.Name == "Shipment" || a.ObjectTable.Name == "Master")
+                                            select a.ARInvoice);
+           
+            iQuery = FilterInvoicesStatuses(iQuery);
+            var cardBillToId = GetCardBillToId(cardId, tenant);
+            List<ARInvoice> list = iQuery.Where(d => cardId == null 
+                                                     || !cards.Any()
+                                                     || cards.Contains(d.BillToId)
+                                                     || cardBillToId.Contains(d.BillToId)).ToList();
+
             return list;
         }
-      
+
+
+        public IQueryable<ARInvoice> GetDigitalInvoicesByShipmentId(string shipmentId, string cardId, int tenant)
+        {
+           var iQuery = (from a in context.ARInvoiceEntities
+                                    where a.Tenant == tenant
+                                    && a.EntityId == shipmentId
+                                    && (a.ObjectTable.Name == "Shipment" || a.ObjectTable.Name == "Master")
+                                    select a.ARInvoice);
+             
+            iQuery = FilterInvoicesStatuses(iQuery);
+            var cardBillToId = GetCardBillToId(cardId, tenant);
+            var list = iQuery.Where(a => cardId.Contains(a.BillToId)
+                                         || cardBillToId.Contains(a.BillToId));
+
+            return list;
+        }
+
+        private List<string> GetCardBillToId(string cardId, int tenant)
+        {
+            CardRepository cardRepository = new CardRepository(tenant);
+            var cardBillToId =  cardRepository.GetBillToCardById(cardId, tenant);
+
+            if (cardBillToId == null)
+            {
+                return new List<string>();
+            }
+
+            return cardBillToId;
+        }
+
+        #endregion Digital Portal Methods
+
         public IQueryable<ARInvoice> GetUnpaidWithVoidandDraftARInvoices(int tenant)
         {
             return context.ARInvoices.Where(d => d.Tenant == tenant && !d.IsAutoCredit && !d.IsCancelled && d.IsClosed == false);
@@ -520,7 +595,53 @@ namespace Simplog.Data.InvoiceModel.Repositories
         }
         public IQueryable<ARInvoice> GetUnpaidAndDraftARInvoices(int tenant)
         {
-            return context.ARInvoices.Include("Status").Where(d => d.Tenant == tenant && d.StatusCode != "VD" && d.StatusCode != "LL" && !d.IsAutoCredit && !d.IsCancelled && d.IsClosed == false);
+            return context.ARInvoices.Include("Status").Include("PaymentTerm").Where(d => d.Tenant == tenant && d.StatusCode != "VD" && d.StatusCode != "LL" && !d.IsAutoCredit && !d.IsCancelled && d.IsClosed == false);
+        }
+
+        public IQueryable<ARInvoice> FilterInvoicesStatuses(IQueryable<ARInvoice> invoices)
+        {
+            var blockedStatusCode = new List<string> 
+            {
+                "VD",
+                "DR",
+                "LL",
+                "AR",
+                "NT"
+            };
+
+            var filteredInvoices = invoices.Where(d => !blockedStatusCode.Contains(d.StatusCode));
+
+            return filteredInvoices;
+        }
+
+
+        public IQueryable<ARInvoice> FilterInvoicesStatusesForList(IQueryable<ARInvoice> invoices)
+        {
+            var blockedStatusCode = new List<string>
+            {
+                "VD",
+                "DR",
+                "LL",
+                "AR",
+                "NT",
+                "CN"
+            };
+
+            return invoices.Where(d => !blockedStatusCode.Contains(d.StatusCode));
+        }
+
+        public IQueryable<DigitalInvoicesCounterDataView> GetDigitalInvoicesCounterDataView(int tenant)
+        {
+            return context.DigitalInvoicesCounterDataView
+                   .Where(a => a.Tenant == tenant)
+                   .Select(a => a);
+        }
+
+        public IQueryable<ControlForInvoiceLinesDataView> GetControlForInvoiceLinesDataView(int tenant)
+        {
+            return context.ControlForInvoiceLinesDataView
+                   .Where(a => a.Tenant == tenant)
+                   .Select(a => a);
         }
 
     }

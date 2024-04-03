@@ -53,7 +53,10 @@ export class AdvanceDocumentTypeTemplateComponent extends BaseComponent implemen
 
     SetDataContext(entityPM: DocumentTypeTemplatePM) {
         this.EntityPM = entityPM;
- 
+
+        if (this.EntityPM) {
+            this.SetUIProperties();
+        }
         var myService: CountryListService = new CountryListService();
         myService.getAllFromCache().subscribe((myResponse: ServiceResponse) => {
                 if (!myResponse.HasError && myResponse.Result) {
@@ -73,6 +76,10 @@ export class AdvanceDocumentTypeTemplateComponent extends BaseComponent implemen
 
     }
 
+
+    private SetUIProperties() {
+        this.EntityPM.UIProperties.SetEnabled("IsSystem", "DocumentTypeTemplate", SessionLocator.Tenant == 0);
+    }
 
     CountrySelectedChange(value: any) {
         if (value) {

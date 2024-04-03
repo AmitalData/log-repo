@@ -25,6 +25,8 @@ namespace WarehouseDataViews.Service
             if (!privateViewArgs.IsParentTenant)
             {
                 List<WarehouseView> customFieldViewLists = GetCustomFieldViewsLists(privateViewArgs.Tenant, dataWarehouseViews);
+                customFieldViewLists = customFieldViewLists.GroupBy(d => d.ViewName).Select(d => d.First()).ToList();
+
                 dataWarehouseViews = dataWarehouseViews.Concat(customFieldViewLists).ToList();
             }
 
@@ -89,16 +91,18 @@ namespace WarehouseDataViews.Service
         }
         private void GrantView(string viewName, PrivateViewArgs privateViewArgs)
         {
-            //string sqlstring = "GRANT SELECT  ON [UnicargoDW].[dbo].[" + viewName + "] TO [UnicargoDBUser]"; // Pre
-            // string sqlstring = "GRANT SELECT  ON [T570Unicargo].[dbo].[" + viewName + "] TO [U570gmxaU]";   //Online 
-            string sqlstring = "GRANT SELECT  ON [" + privateViewArgs.Catalog + "].[dbo].[" + viewName + "] TO [" + privateViewArgs.UserName + "]"; // Pre
-            RunSql(privateViewArgs.ConnectionString, sqlstring);
+            if (string.IsNullOrEmpty(privateViewArgs.UserName)) return;
+            List<string> privateUserNames = privateViewArgs.UserName.Split(',').Where(d=>!string.IsNullOrEmpty(d)).ToList();
+            foreach (string userName in privateUserNames)
+            {
+                RunSql(privateViewArgs.ConnectionString, ("GRANT SELECT  ON [" + privateViewArgs.Catalog + "].[dbo].[" + viewName + "] TO [" + userName + "]"));
+            }
         }
 
 
         private void DeleteDataWarehouseViews(PrivateViewArgs privateViewArgs)
         {
-            string deleteViewsSql = "DECLARE @sql VARCHAR(MAX) = '', @crlf VARCHAR(2) = CHAR(13) + CHAR(10); SELECT @sql = @sql + 'DROP VIEW ' + QUOTENAME(SCHEMA_NAME(schema_id)) + '.' + QUOTENAME(v.name) + ';' + @crlf FROM sys.views v where  v.name !='database_firewall_rules'  PRINT @sql;EXEC(@sql);";
+            string deleteViewsSql = "DECLARE @sql VARCHAR(MAX) = '', @crlf VARCHAR(2) = CHAR(13) + CHAR(10); SELECT @sql = @sql + 'DROP VIEW ' + QUOTENAME(SCHEMA_NAME(schema_id)) + '.' + QUOTENAME(v.name) + ';' + @crlf FROM sys.views v where  v.name !='database_firewall_rules' and v.name !='ipv6_database_firewall_rules' PRINT @sql;EXEC(@sql);";
             RunSql(privateViewArgs.ConnectionString, deleteViewsSql);
         }
     }

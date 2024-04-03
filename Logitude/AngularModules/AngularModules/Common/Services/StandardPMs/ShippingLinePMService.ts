@@ -22,6 +22,7 @@ import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLo
 import {ShippingLinePM} from '../../EntityPMs/ShippingLinePM';
 
 import {CardExternalCodeByCurrencyPM} from '../../EntityPMs/CardExternalCodeByCurrencyPM';
+import {ShippingLinePMInitService} from '../../EntityPMInitServices/ShippingLinePMInitService';
 
 @Injectable()
 
@@ -46,6 +47,8 @@ export class ShippingLinePMService {
 						var entity: ShippingLinePM;
 						if (pm) {
 							entity = this.MapJsonToEntityPM(pm);
+                      ShippingLinePMInitService.InitValues(entity, false);
+                      ShippingLinePMInitService.ApplyUIPoperties(entity, false);
 						}
 
 						var serviceResponse: ServiceResponse = new ServiceResponse();
@@ -158,7 +161,7 @@ export class ShippingLinePMService {
         }
 
 		var customFields: Array<string> = [];
-        for (var i = 1; i < 11; i++) {
+        for (var i = 1; i < 51; i++) {
             customFields.push("Field" + i);
         }
             var jsonPMKeys = Object.keys(jsonPM);
@@ -239,7 +242,7 @@ export class ShippingLinePMService {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
-                var pmProperty = pmKeysArray[pmKey];
+				                  var pmProperty = pmKeysArray[pmKey];
                 newCardExternalCodeByCurrencyPM[pmProperty] = jItem[pmProperty];
             }
            
@@ -325,6 +328,10 @@ export class ShippingLinePMService {
 		    var entityPM: ShippingLinePM;
 			entityPM = new ShippingLinePM();
 			entityPM.Tenant = InfraSettings.TenantPM.Id;
+
+			ShippingLinePMInitService.InitValues(entityPM, true);
+			ShippingLinePMInitService.ApplyUIPoperties(entityPM, true);
+
 			return entityPM;
     }
 		 

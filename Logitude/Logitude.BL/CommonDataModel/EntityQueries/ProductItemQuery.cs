@@ -52,6 +52,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     UPC = entityPoco.UPC,
                     OriginCountryId = entityPoco.OriginCountryId,
                     OriginCountryName = entityPoco.OriginCountry == null ? null : entityPoco.OriginCountry.EnglishName,
+                    ShipperId = entityPoco.ShipperId,
+                    ShipperName = entityPoco.Shipper == null ? null : entityPoco.Shipper.EnglishName,
+                    ProductValue = entityPoco.ProductValue,
+                    ProductValueCurrencyId = entityPoco.ProductValueCurrencyId,
+                    Quantity = entityPoco.Quantity,
+                    ProductValueCurrencyCode = entityPoco.ProductValueCurrency == null ? null : entityPoco.ProductValueCurrency.Code,
                 };
 
                 HTSCodeQuery hTSCodeQuery = new HTSCodeQuery(tenant);
@@ -79,13 +85,19 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                    UPC = entity.UPC,
                                                    OriginCountryId = entity.OriginCountryId,
                                                    OriginCountryName = entity.OriginCountry == null ? null : entity.OriginCountry.EnglishName,
+                                                   ShipperId = entity.ShipperId,
+                                                   ShipperName = entity.Shipper == null ? null : entity.Shipper.EnglishName,
+                                                   ProductValue = entity.ProductValue,
+                                                   ProductValueCurrencyId = entity.ProductValueCurrencyId,
+                                                   Quantity = entity.Quantity,
+                                                   ProductValueCurrencyCode = entity.ProductValueCurrency == null ? null : entity.ProductValueCurrency.Code,
                                                };
             return result;
         }
 
         public List<ProductItemPM> GetProductItemPMsByCustomerId(string customerId,int tenant)
         {
-            List<ProductItemPM> productItems = (from a in repository.context.ProductItems.Include("OriginCountry")
+            List<ProductItemPM> productItems = (from a in repository.context.ProductItems.Include("OriginCountry").Include("Shipper")
                                                 where a.Tenant == tenant && a.CustomerId == customerId
                                                 select new ProductItemPM()
                                                 {
@@ -102,6 +114,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                     UPC = a.UPC,
                                                     OriginCountryId = a.OriginCountryId,
                                                     OriginCountryName = a.OriginCountry == null ? null : a.OriginCountry.EnglishName,
+                                                    ShipperId = a.ShipperId,
+                                                    ShipperName = a.Shipper == null ? null : a.Shipper.EnglishName,
+                                                    ProductValue = a.ProductValue,
+                                                    ProductValueCurrencyId = a.ProductValueCurrencyId,
+                                                    Quantity = a.Quantity,
+                                                    ProductValueCurrencyCode = a.ProductValueCurrency == null ? null : a.ProductValueCurrency.Code,
                                                 }).ToList();
             if (productItems != null)
             { 
@@ -121,6 +139,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                     CountryEnglishName = country!=null ? country.EnglishName :"",
                                                     InActive = a.InActive,
                                                     LineNumber = a.LineNumber,
+                                                    VATPercentage = a.VATPercentage,
+                                                    DutiesPercentage = a.DutiesPercentage,
+                                                    OtherDuties = a.OtherDuties,
+                                                    Remarks = a.Remarks,
                                                 }).ToList();
 
             

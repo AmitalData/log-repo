@@ -6,15 +6,14 @@ import * as Assists from "../../../../Base/cypress/assists/Assists";
 import * as BaseAssertion from '../../../../Base/cypress/actions/Assertion';
 import { MaintenanceSelectors } from "../../../../Maintenance/cypress/selectors/Selectors";
 import { ShipmentSelectors } from "../../../../Shipment/cypress/selectors/Selectors";
-import { EventTypeDetails } from "../../../../Base/cypress/models/EventTypeDetails";
 import { LocalSettingsDetails } from "../../models/LocalSettingsDetails";
 import { RequestAliases } from "../../../../Base/cypress/constants/RequestAliases";
 import { ShipmentDetails } from "../../../../Shipment/cypress/models/ShipmentDetails";
-import {BDDSpecialCasesSelectors} from "../../selectors/Selectors"
+import { BDDSpecialCasesSelectors } from "../../selectors/Selectors"
 
 let shipmentDetails: ShipmentDetails
-let localSettingsDetails : LocalSettingsDetails
-let testDate:string
+let localSettingsDetails: LocalSettingsDetails
+let testDate: string
 //#region Change time zone and date time format
 Given("the user logged in and open {string} in maintenance menu", (maintenanceItemName) => {
     cy.Login()
@@ -28,7 +27,6 @@ Given("the user open {string} in maintenance menu", (maintenanceItemName) => {
 
 Given("local settings with the following details", (dataTable) => {
     localSettingsDetails = Assists.CreateInstance<LocalSettingsDetails>(dataTable, true);
-    localSettingsDetails = MapTimeZoneToCountry(localSettingsDetails);
     Actions.FillLocalSettingsDetails(localSettingsDetails);
 });
 
@@ -70,38 +68,46 @@ Given("open the direct shipment and navigate to general tab", () => {
 });
 
 When("fill {string} as HAWB date", (date) => {
-    cy.FillDate(BDDSpecialCasesSelectors.HAWBDate,date);
-    testDate=date
+    cy.FillDate(BDDSpecialCasesSelectors.HAWBDate, date);
+    testDate = date
 });
 
 Then("the date format should be {string}", (dateFormat) => {
-    Actions.ValidateDateFormat(dateFormat , testDate);
+    Actions.ValidateDateFormat(dateFormat, testDate);
 });
 //#endregion
 
 //#region Event time zone
-Given("the user update the shipment", () => {
+Given("the user update the shipment for UTC-6", () => {
     ShipmentActions.UpdateShipment(ShipmentSelectors.ShipmentSaveButton)
     BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
-    LocalSettingsDetails.UpdateTime = new Date().toLocaleTimeString("en-US", { timeZone: localSettingsDetails.TimeZoneRegion })
+    LocalSettingsDetails.UpdateTime = new Date().toLocaleTimeString("en-US", { timeZone: "America/Costa_Rica" })
+    LocalSettingsDetails.UpdateTime = new Date().toLocaleTimeString("en-US", { timeZone: "America/Costa_Rica" })
+});
+
+Given("the user update the shipment for UTC+3", () => {
+    ShipmentActions.UpdateShipment(ShipmentSelectors.ShipmentSaveButton)
+    BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
+    LocalSettingsDetails.UpdateTime = new Date().toLocaleTimeString("en-US", { timeZone: "Asia/Baghdad" })
+    LocalSettingsDetails.UpdateTime = new Date().toLocaleTimeString("en-US", { timeZone: "Asia/Baghdad" })
 });
 
 When("navigate to event tab", () => {
     cy.Navigate(ShipmentSelectors.EventsTab)
 });
 
-Then("the {string} event should include the time of {string} timezone", (eventName , timezone) => {
-    Actions.ValidateTimeInEventsTab(eventName,ShipmentSelectors.EventsTab)
+Then("the {string} event should include the time of {string} timezone", (eventName, timezone) => {
+    Actions.ValidateTimeInEventsTab(eventName, ShipmentSelectors.EventsTab)
 });
 
 //#endregion
 
-function MapTimeZoneToCountry(localSettingsDetails:LocalSettingsDetails){
-    if(localSettingsDetails.TimeZone == "(UTC+03:00)"){
+function MapTimeZoneToCountry(localSettingsDetails: LocalSettingsDetails) {
+    if (localSettingsDetails.TimeZone == "(UTC+03:00)") {
         localSettingsDetails.TimeZoneRegion = "Asia/Jerusalem"
     }
-    if(localSettingsDetails.TimeZone == "(UTC-06:00)"){
+    if (localSettingsDetails.TimeZone == "(UTC-06:00)") {
         localSettingsDetails.TimeZoneRegion = "America/Costa_Rica"
     }
-    return localSettingsDetails ;
+    return localSettingsDetails;
 }

@@ -1,14 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
-
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
-using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Server.Infrastructure;
 using System;
 using Simplog.Data.Helpers;
-using System.Data.SqlClient;
 using System.Text;
 
 namespace Simplog.Data.ShipmentsModel.Repositories
@@ -16,7 +12,7 @@ namespace Simplog.Data.ShipmentsModel.Repositories
     public class ShipmentRepository : IRepository<Shipment>
     {
         IShipmentsContext shipmentsContext;
-
+        bool useSecondaryDB = false;
         public ShipmentRepository(IShipmentsContext context)
         {
             shipmentsContext = context;
@@ -25,6 +21,12 @@ namespace Simplog.Data.ShipmentsModel.Repositories
         public ShipmentRepository(int tenant)
         {
             shipmentsContext = ShipmentsContext.GetContext(tenant);
+        }
+
+        public void SetSecondDBforContext(int tenant)
+        {
+            shipmentsContext = ShipmentsContext.GetSecContext(tenant);
+            useSecondaryDB = true;
         }
 
         public ShipmentRepository()
@@ -84,6 +86,12 @@ namespace Simplog.Data.ShipmentsModel.Repositories
             }
 
             return myResult;
+        }
+
+        public void UpdateLastUpdateDate(string shipmentIds)
+        {
+            var query = $"update Shipments set AutomaticLastUpdateDate = GETDATE() where id in ({shipmentIds}) ";
+            context.GetActiveDbContext().Database.ExecuteSqlCommand(query);
         }
         public string GetMasterCargonautFHLStatus(string masterShipmentId)
         {
@@ -151,20 +159,9 @@ namespace Simplog.Data.ShipmentsModel.Repositories
                     select d).Count();
         }
 
-        public string GetShipmentStatusName(string id, int tenant)
+        public Shipment GetSingleForARInvoiceByIdAndTenant(string id, int tenant)
         {
-            string result = "";
-            string statusId = (from s in context.Shipments where s.Tenant == tenant && s.Id != id select s.StatusId).FirstOrDefault();
-
-            if (!string.IsNullOrEmpty(statusId))
-            {
-                EntityStatus status = EntityStatusRepository.GetSingleEntityStatus(statusId, tenant, true);
-                if (status != null)
-                {
-                    result = status.Name;
-                }
-            }
-            return result;
+            return (from record in context.Shipments where record.Tenant == tenant && record.Id == id select record).Include("EntityStatus").FirstOrDefault();
         }
 
 
@@ -196,9 +193,18 @@ namespace Simplog.Data.ShipmentsModel.Repositories
         {
             List<Shipment> consoles = (from s in context.Shipments.Include("FromPort").Include("ToPort").Include("ProfitCurrency").Include("CustomerCard").Include("EntityStatus").Include("ShipmentType").Include("Incoterm").Include("ShipmentReceivableStatus").Include("ShipmentLevel").Include("NextLeg").Include("ShipmentType").Include("FHLStatus").Include("CargonautFHLStatus")
                                        where s.Tenant == tenant
-                                       && s.Id != masterId 
+                                       && s.Id != masterId
                                        && s.MasterShipmentDataId == masterId
                                        select s).ToList();
+            return consoles;
+        }
+
+        public IQueryable<Shipment> GetDigitalPortalHouseShipmentsForMaster(string masterId, int tenant)
+        {
+            var consoles = context.Shipments.Include("ShipmentType").Include("ShipmentSubType")
+                                  .Where(s => s.Tenant == tenant
+                                               && s.Id != masterId
+                                               && s.MasterShipmentDataId == masterId).OrderByDescending(d => d.CreateDateTime);
             return consoles;
         }
 
@@ -207,9 +213,9 @@ namespace Simplog.Data.ShipmentsModel.Repositories
             return (from record in context.Shipments.Include("FromPort").Include("ToPort").Include("ProfitCurrency").Include("CustomerCard").Include("EntityStatus").Include("ShipmentType").Include("Incoterm").Include("ShipmentReceivableStatus").Include("ShipmentLevel").Include("NextLeg").Include("ShipmentType") where record.Tenant == tenant select record);
         }
         public IQueryable<ShipmentDataView> GetFilterdShipments(int tenant, string SearchFields)
-        { 
+        {
             return (from record in context.ShipmentSearch(SearchFields)//FunctionTableValue<Shipment>("udf_ShipmentSearch", parameters) 
-                    where record.Tenant == tenant 
+                    where record.Tenant == tenant
                     select record);
         }
         public IQueryable<Shipment> GetShipmentsWithMasterData(int tenant)
@@ -238,14 +244,14 @@ namespace Simplog.Data.ShipmentsModel.Repositories
                     where record.CustomFileId == shipmentId && record.Tenant == tenant
                     select record.Id);
         }
-        
+
         public IQueryable<Shipment> GetConnectedCustomShipments(int tenant, string shipmentId)
         {
             return (from record in context.Shipments
                     where record.CustomFileId == shipmentId && record.Tenant == tenant
                     select record);
         }
-        
+
         public bool HasConnectedCustomShipments(int tenant, string id)
         {
             return (from record in context.Shipments
@@ -262,17 +268,17 @@ namespace Simplog.Data.ShipmentsModel.Repositories
         {
             return (from record in context.Shipments.Include("FromPort").Include("ToPort").Include("ProfitCurrency").Include("CustomerCard").Include("EntityStatus").Include("ShipmentType").Include("Incoterm").Include("ShipmentReceivableStatus").Include("ShipmentLevel").Include("NextLeg").Include("ShipmentType") where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
         }
-        
+
         public Shipment getSingleShipmentBySecurityId(string SecurityKey, int tenant)
         {
             return (from record in context.Shipments.Include("FromPort").Include("ToPort").Include("ProfitCurrency").Include("CustomerCard").Include("EntityStatus").Include("ShipmentType").Include("Incoterm").Include("ShipmentReceivableStatus").Include("ShipmentLevel").Include("NextLeg").Include("ShipmentType") where record.SecurityKey == SecurityKey && record.Tenant == tenant select record).FirstOrDefault();
         }
 
-        public Shipment getSingleShipmentBySecurityIdAndId(string id,string SecurityKey, int tenant)
+        public Shipment getSingleShipmentBySecurityIdAndId(string id, string SecurityKey, int tenant)
         {
-            return (from record in context.Shipments.Include("FromPort").Include("ToPort").Include("ProfitCurrency").Include("CustomerCard").Include("EntityStatus").Include("ShipmentType").Include("Incoterm").Include("ShipmentReceivableStatus").Include("ShipmentLevel").Include("NextLeg").Include("ShipmentType") where record.SecurityKey == SecurityKey && record.Id==id && record.Tenant == tenant select record).FirstOrDefault();
+            return (from record in context.Shipments.Include("FromPort").Include("ToPort").Include("ProfitCurrency").Include("CustomerCard").Include("EntityStatus").Include("ShipmentType").Include("Incoterm").Include("ShipmentReceivableStatus").Include("ShipmentLevel").Include("NextLeg").Include("ShipmentType") where record.SecurityKey == SecurityKey && record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
         }
-        
+
         public Shipment GetSingleShipmentwithOutIncludes(string id, int tenant)
         {
             return (from record in context.Shipments where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
@@ -299,7 +305,7 @@ namespace Simplog.Data.ShipmentsModel.Repositories
         {
             return (from record in context.Shipments where record.ShipmentNumber == shipmentNumber && record.Tenant == tenant select record).FirstOrDefault();
         }
-        
+
         public bool IsShipmentArchived(string id, int tenant)
         {
             return (from record in context.Shipments where record.Id == id && record.Tenant == tenant select record.IsOperationalClosed).FirstOrDefault();
@@ -308,6 +314,13 @@ namespace Simplog.Data.ShipmentsModel.Repositories
         public string getShipmentDirection(string id, int tenant)
         {
             return (from record in context.Shipments where record.Id == id && record.Tenant == tenant select record.TransportModeId).FirstOrDefault();
+        }
+        public Shipment GetShipmentWithRelatedUsers(string id, int tenant)
+        {
+            return context.Shipments
+                .Include("AccountManagerUser.Contact")
+                .Include("SalesmanUser.Contact")
+                .Where(e=>e.Id ==id && e.Tenant == tenant).FirstOrDefault();
         }
 
         public Shipment GetSingleShipmentOnlyByNumber(string number, int tenant)
@@ -337,9 +350,25 @@ namespace Simplog.Data.ShipmentsModel.Repositories
         {
             IShipmentDataViewContext dataViewEntities = ShipmentDataViewContext.GetContext(tenant);
 
-            IQueryable<ShipmentDataView> result = (from f in dataViewEntities.ShipmentDataViews where f.Tenant == tenant select f);
+            if (useSecondaryDB)
+            {
+                dataViewEntities = ShipmentDataViewContext.GetSecContext(tenant);
+            }
+            // For Testing the ElasticSearch Indexer
+            // Temporary Code, need to be removed
+            if (tenant == 0)
+            {
+                return (from f in dataViewEntities.ShipmentDataViews select f);
+            }
 
+            // end of Temporary Code
+            IQueryable<ShipmentDataView> result = (from f in dataViewEntities.ShipmentDataViews where f.Tenant == tenant select f);
             return result;
+        }
+
+        public IQueryable<DigitalShipmentsDataView> GetDigitalShipmentViewsByTenant(int tenant)
+        {
+            return context.ShipmentDigitalDataViews.Where(f => f.Tenant == tenant);
         }
 
         public IQueryable<ShipmentCountryDashboardView> GetShipmentDataViewsForCountriesDashboard(int tenant, string customerid, string directionId, string transportmodeId)
@@ -353,7 +382,7 @@ namespace Simplog.Data.ShipmentsModel.Repositories
             }
             else
             {
-                result = (from f in result where f.CustomerId !=null select f);
+                result = (from f in result where f.CustomerId != null select f);
             }
             if (!string.IsNullOrEmpty(directionId))
             {
@@ -366,16 +395,16 @@ namespace Simplog.Data.ShipmentsModel.Repositories
 
             return result;
         }
-        
+
         public IQueryable<ShipmentsCustomersDashboardView> GetShipmentDataViewsForCustomersDashboard(int tenant, string directionId, string transportmodeId)
         {
             IShipmentDataViewContext dataViewEntities = ShipmentDataViewContext.GetContext(tenant);
 
             IQueryable<ShipmentsCustomersDashboardView> result = (from f in dataViewEntities.ShipmentsCustomersDashboardViews where f.Tenant == tenant && !f.IsCancelled select f);
-            
-                result = (from f in result where f.CustomerId != null select f);
-            
-            if (!string.IsNullOrEmpty(directionId) && directionId!="All")
+
+            result = (from f in result where f.CustomerId != null select f);
+
+            if (!string.IsNullOrEmpty(directionId) && directionId != "All")
             {
                 result = (from f in result where f.DirectionId == directionId select f);
             }
@@ -386,7 +415,7 @@ namespace Simplog.Data.ShipmentsModel.Repositories
 
             return result;
         }
-        
+
         public IQueryable<ShipmentDirectionTransmodeView> GetShipmentDataViewsForDirectionAndTransmodeDashboard(int tenant, string customerid)
         {
             IShipmentDataViewContext dataViewEntities = ShipmentDataViewContext.GetContext(tenant);
@@ -398,7 +427,7 @@ namespace Simplog.Data.ShipmentsModel.Repositories
             }
             else
             {
-                result = (from f in result where f.CustomerId !=null select f);
+                result = (from f in result where f.CustomerId != null select f);
             }
 
             return result;
@@ -461,7 +490,13 @@ namespace Simplog.Data.ShipmentsModel.Repositories
                                         select a).OrderBy(d => d.Id).Skip(skip).Take(take).ToList();
             return shipments;
         }
-
+        public List<string> GetShipmentIdsByTenant(int tenant, int skip, int take, DateTime minStartDate)
+        {
+            List<string> shipments = (from a in context.Shipments
+                                      where a.Tenant == tenant && a.AutomaticLastUpdateDate >= minStartDate
+                                      select a.Id).OrderBy(d => d).Skip(skip).Take(take).ToList();
+            return shipments;
+        }
         public int GetShipmentsCount(int tenant)
         {
             return (from a in context.Shipments
@@ -544,7 +579,7 @@ namespace Simplog.Data.ShipmentsModel.Repositories
         public int GetCancelledShipmentsCountForCustomer(int tenant, string customerid)
         {
             int count = (from a in context.Shipments
-                         where a.ShipmentLevelCode != "C" && a.Tenant == tenant  && a.CustomerId == customerid && a.IsCancelled == true
+                         where a.ShipmentLevelCode != "C" && a.Tenant == tenant && a.CustomerId == customerid && a.IsCancelled == true
                          select a).Count();
             return count;
         }
@@ -608,13 +643,13 @@ namespace Simplog.Data.ShipmentsModel.Repositories
             if (parentShipment != null)
             {
                 output = (from a in context.Shipments
-                            where
-                            a.Tenant == tenant
-                            && a.IsCancelled == false
-                            && a.ShipmentLevelCode == "H"
-                            && a.House == house
-                            && a.MasterShipmentDataId == parentShipment.Id
-                            select a).FirstOrDefault();
+                          where
+                          a.Tenant == tenant
+                          && a.IsCancelled == false
+                          && a.ShipmentLevelCode == "H"
+                          && a.House == house
+                          && a.MasterShipmentDataId == parentShipment.Id
+                          select a).FirstOrDefault();
             }
 
             return output;
@@ -676,7 +711,7 @@ namespace Simplog.Data.ShipmentsModel.Repositories
 
             return shipments;
         }
-        
+
         public List<ShipmentDataView> GetShipmentsFromIdList(List<string> ids, int tenant)
         {
             IShipmentDataViewContext shipmentdataviewcontext = ShipmentDataViewContext.GetContext(tenant);
@@ -709,9 +744,18 @@ namespace Simplog.Data.ShipmentsModel.Repositories
                                              select a;
             return shipments;
         }
+        public IQueryable<Shipment> GetShipmentsForUnpaidInvoicesReportWithInnerSelect(int tenant)
+        { 
+            IQueryable<Shipment> shipments = from a in context.Shipments.Include("ShipperCard").Include("ShipmentMasterData").Include("ToPort")
+                                             where (from entity in context.ARInvoicesForReports
+                                                    where entity.Tenant == tenant && entity.StatusCode != "LL" && !entity.IsConstituentInvoice
+                                                    select entity.MainEntityId).Contains(a.Id)
+                                             select a;
+            return shipments;
+        }
 
 
-        public IQueryable<Shipment> GetShipmentsForCrossDock(List<string> shipmentIds , int tenant)
+        public IQueryable<Shipment> GetShipmentsForCrossDock(List<string> shipmentIds, int tenant)
         {
             IQueryable<Shipment> shipments = from a in context.Shipments.Include("Direction").Include("TransportMode")
                                              where shipmentIds.Contains(a.Id) && a.Tenant == tenant
@@ -747,6 +791,11 @@ namespace Simplog.Data.ShipmentsModel.Repositories
             return context.Shipments.ToList();
         }
 
+        public IQueryable<Shipment> AllQ()
+        {
+            return context.Shipments.AsQueryable();
+        }
+
         public IShipmentsContext context
         {
             get { return shipmentsContext; }
@@ -757,12 +806,12 @@ namespace Simplog.Data.ShipmentsModel.Repositories
             context.SaveChanges();
         }
 
-        public List<Shipment> GetMulti(Simplog.Server.Infrastructure.EntityKeyFields entityKeys)
+        public List<Shipment> GetMulti(EntityKeyFields entityKeys)
         {
             throw new System.NotImplementedException();
         }
 
-        public Shipment GetSingle(Simplog.Server.Infrastructure.EntityKeyFields entityKeys)
+        public Shipment GetSingle(EntityKeyFields entityKeys)
         {
             throw new System.NotImplementedException();
         }
@@ -779,11 +828,13 @@ namespace Simplog.Data.ShipmentsModel.Repositories
 
         public bool IsCustomerConnectedToShipments(string customerId, int tenant)
         {
-            return (from f in context.Shipments where (f.CustomerId == customerId || f.AgentId == customerId || f.ConsigneeId == customerId 
-                    || f.ShipperId == customerId || f.IssuingCarrierAgentId == customerId || f.CustomAgentExportId == customerId || f.CustomAgentImportId == customerId
-                    || f.Notify1Id == customerId || f.Notify2Id == customerId || f.ShipperNotExporterId == customerId || f.ConsigneeNotImporterId == customerId
-                    || f.FreightForwarderId == customerId || f.ColoaderId == customerId || f.CustomClearancePointId == customerId || f.ConsolidatorId == customerId
-                    || f.ReleasingAgentId == customerId) && f.Tenant == tenant select f).Any();
+            return (from f in context.Shipments
+                    where (f.CustomerId == customerId || f.AgentId == customerId || f.ConsigneeId == customerId
+                            || f.ShipperId == customerId || f.IssuingCarrierAgentId == customerId || f.CustomAgentExportId == customerId || f.CustomAgentImportId == customerId
+                            || f.Notify1Id == customerId || f.Notify2Id == customerId || f.ShipperNotExporterId == customerId || f.ConsigneeNotImporterId == customerId
+                            || f.FreightForwarderId == customerId || f.ColoaderId == customerId || f.CustomClearancePointId == customerId || f.ConsolidatorId == customerId
+                            || f.ReleasingAgentId == customerId) && f.Tenant == tenant
+                    select f).Any();
         }
 
         public ShipmentDataView GetSingleShipmentDataView(string shipmentId, int tenant)
@@ -823,7 +874,7 @@ namespace Simplog.Data.ShipmentsModel.Repositories
                     where record.Tenant == tenant && record.QuoteId == quoteId
                     select record);
         }
-        
+
         public string GetShipmentIdByShipmentNumber(string shipmentNumber, int tenant)
         {
             return (from f in context.Shipments where f.ShipmentNumber == shipmentNumber && f.Tenant == tenant select f.Id).FirstOrDefault();
@@ -843,14 +894,14 @@ namespace Simplog.Data.ShipmentsModel.Repositories
         {
             return (from a in context.Shipments where a.Id == id && a.Tenant == tenant select a.ForwarderShipmentNumber).FirstOrDefault();
         }
-        
+
         public string GetAgentContactByShipemntId(string shipmentId, int tenant)
         {
             return (from a in context.Shipments where a.Id == shipmentId && a.Tenant == tenant select a.AgentContactId).FirstOrDefault();
 
 
         }
-        
+
         public IQueryable<ShipmentDataView> GetSentAWBShipmentsForAWBReport(int tenant)
         {
             IShipmentDataViewContext dataViewContext = ShipmentDataViewContext.GetContext(tenant);
@@ -859,13 +910,9 @@ namespace Simplog.Data.ShipmentsModel.Repositories
 
         public Shipment GetShipmentByAgentSharedManifestRef(string agentSharedManifestRef, int tenant)
         {
-
             return (from a in context.Shipments
                     where a.Tenant == tenant && a.AgentSharedManifestRef == agentSharedManifestRef
                     select a).FirstOrDefault();
-
-
-
         }
 
         public IQueryable<Shipment> GetConnectedHouses(string masterId, int tenant)
@@ -876,12 +923,12 @@ namespace Simplog.Data.ShipmentsModel.Repositories
                     && a.ShipmentLevelCode == "H"
                     select a);
         }
-        
+
         public IQueryable<Shipment> GetSharingShipments(int tenant)
         {
-           return (from a in context.Shipments where a.Tenant == tenant && a.ManifestLastSharingDate!=null &&  a.IsManifestSentToAgent select a);
+            return (from a in context.Shipments where a.Tenant == tenant && a.ManifestLastSharingDate != null && a.IsManifestSentToAgent select a);
         }
-        
+
         public bool IsQuoteConnectedToShipment(string quoteId, int tenant)
         {
             return (from a in context.Shipments where a.QuoteId == quoteId && a.Tenant == tenant select a).Any();
@@ -916,10 +963,10 @@ namespace Simplog.Data.ShipmentsModel.Repositories
         public int GetHouseShipmentsCountForMaster(string masterId, int tenant)
         {
             int count = (from s in context.Shipments
-                                       where s.Tenant == tenant
-                                       && s.Id != masterId
-                                       && s.MasterShipmentDataId == masterId
-                                       select s).Count();
+                         where s.Tenant == tenant
+                         && s.Id != masterId
+                         && s.MasterShipmentDataId == masterId
+                         select s).Count();
             return count;
         }
 
@@ -938,6 +985,74 @@ namespace Simplog.Data.ShipmentsModel.Repositories
             return (from a in context.Shipments
                     where a.Tenant == tenant && a.House == house
                     select a).ToList();
+        }
+
+        public List<Shipment> GetStandaloneShipments(string shipmentParentId, int tenant)
+        {
+            List<Shipment> standaloneShipments = (from s in context.Shipments
+                                                  where s.Tenant == tenant
+                                                  && s.ForwarderStandaloneShipmentId == shipmentParentId
+                                                  select s).ToList();
+            return standaloneShipments;
+        }
+
+        public List<Shipment> GetShipmentsFromIds(List<string> shipmentIds, int tenant)
+        {
+            List<Shipment> shipments = new List<Shipment>();
+            if (shipmentIds.Count() == 0) return shipments;
+
+            IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(tenant);
+            StringBuilder values = new StringBuilder();
+            values.AppendFormat("{0}", "'" + shipmentIds[0] + "'");
+            for (int i = 1; i < shipmentIds.Count; i++)
+                values.AppendFormat(", {0}", "'" + shipmentIds[i] + "'");
+
+            string sql = string.Format("SELECT * FROM Shipments WHERE ID IN ({0})", values);
+            shipments = shipmentsContext.GetActiveDbContext().Database.SqlQuery<Shipment>(sql).ToList();
+
+            return shipments;
+        }
+
+        public List<ShipmentMasterData> GetShipmentMasterDatasFromIds(List<string> shipmentMasterDataIds, int tenant)
+        {
+            List<ShipmentMasterData> ShipmentMasterDatas = new List<ShipmentMasterData>();
+            if (shipmentMasterDataIds.Count() == 0) return ShipmentMasterDatas;
+
+            IShipmentsContext shipmentMasterDatasContext = ShipmentsContext.GetContext(tenant);
+            StringBuilder values = new StringBuilder();
+            values.AppendFormat("{0}", "'" + shipmentMasterDataIds[0] + "'");
+            for (int i = 1; i < shipmentMasterDataIds.Count; i++)
+                values.AppendFormat(", {0}", "'" + shipmentMasterDataIds[i] + "'");
+
+            string sql = string.Format("SELECT * FROM ShipmentMasterDatas WHERE ID IN ({0})", values);
+            ShipmentMasterDatas = shipmentMasterDatasContext.GetActiveDbContext().Database.SqlQuery<ShipmentMasterData>(sql).ToList();
+
+            return ShipmentMasterDatas;
+        }
+
+        public string GetShipmentProjectNumber(string id, int tenant)
+        {
+            return (from record in context.Shipments where record.Id == id && record.Tenant == tenant select record.ProjectNumber).FirstOrDefault();
+        }
+
+        public IQueryable<ShipmentMasterData> GetMasterByServiceLineId(string serviceLineId, int tenant)
+        {
+            return (from a in context.ShipmentMasterDatas
+                    where a.Tenant == tenant && a.CarrierServiceLineId == serviceLineId
+                    select a);
+        }
+
+        public IQueryable<Shipment> GetShipmentsWithoutIncludes(int tenant)
+        {
+            return (from record in context.Shipments where record.Tenant == tenant select record);
+        }
+
+        public List<string> GetShipmentsIdsFromShipmentsNumbersList(List<string> shipmentsNumbers)
+        {
+            IQueryable<Shipment> shipments = from a in context.Shipments
+                                             where shipmentsNumbers.Contains(a.ShipmentNumber)
+                                             select a;
+            return shipments.Select(s => s.Id).ToList();
         }
     }
 }

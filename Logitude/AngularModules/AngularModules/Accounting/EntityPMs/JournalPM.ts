@@ -18,11 +18,11 @@ import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/Propert
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
 export class JournalPM {
-
+      
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-          this.UIProperties = new UIProperties(this); 
+                    this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -302,6 +302,11 @@ export class JournalPM {
     private copiedFrom: string;
     public get CopiedFrom() { return this.copiedFrom; }
     public set CopiedFrom(newValue: string) { if (this.copiedFrom != newValue) { this.copiedFrom = newValue; this.MarkAsDirty("CopiedFrom"); } }
+       
+	 
+    private securityLevel: number;
+    public get SecurityLevel() { return this.securityLevel; }
+    public set SecurityLevel(newValue: number) { if (this.securityLevel != newValue) { this.securityLevel = newValue; this.MarkAsDirty("SecurityLevel"); } }
        
 	 
 

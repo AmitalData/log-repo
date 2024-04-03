@@ -23,10 +23,10 @@ export class InsideShipmentPackagePM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	        constructor(_entityParentPM: any) {
-          this.EntityParentPM = _entityParentPM;
+	            this.EntityParentPM = _entityParentPM;
           this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
-      }
+       }
 
 	 
     
@@ -303,7 +303,27 @@ export class InsideShipmentPackagePM {
 	    //public InsidePackageHarmonizes: Array<ShipmentPackageHarmonizePMPM>= [];
  
     public InsidePackageHarmonizesChangeSet: Array<ShipmentPackageHarmonizePM>= [];
-		 
+		     private volumeInCBM: number;
+    public get VolumeInCBM() { return this.volumeInCBM; }
+    public set VolumeInCBM(newValue: number) { if (this.volumeInCBM != newValue) { this.volumeInCBM = newValue; this.MarkAsDirty("VolumeInCBM"); } }
+       
+	 
+    private grossWeightInKG: number;
+    public get GrossWeightInKG() { return this.grossWeightInKG; }
+    public set GrossWeightInKG(newValue: number) { if (this.grossWeightInKG != newValue) { this.grossWeightInKG = newValue; this.MarkAsDirty("GrossWeightInKG"); } }
+       
+	 
+    private grossWeightInLB: number;
+    public get GrossWeightInLB() { return this.grossWeightInLB; }
+    public set GrossWeightInLB(newValue: number) { if (this.grossWeightInLB != newValue) { this.grossWeightInLB = newValue; this.MarkAsDirty("GrossWeightInLB"); } }
+       
+	 
+    private volumeInCBF: number;
+    public get VolumeInCBF() { return this.volumeInCBF; }
+    public set VolumeInCBF(newValue: number) { if (this.volumeInCBF != newValue) { this.volumeInCBF = newValue; this.MarkAsDirty("VolumeInCBF"); } }
+       
+	 
+
     public OldEntityPM: InsideShipmentPackagePM;
 	    
 	private entityParentPM: any;

@@ -100,5 +100,16 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public bool AllowedInTicket { get; set; }
         public bool IsTabsHidden { get; set; }
         public string HashString { get; set; }
+        public string ParentObjectTableName { get; set; }
+        public bool AvailableInCustomization { get; set; }
+        public string ParentObjectTableId { get; set; }
+        public bool IsCustom { get; set; }
+        public bool SupportSubEntity { get; set; }
+        public bool ApplyGenericCustomFields { get; set; }
+        public string FullNameTextCodeId { get; set; }
+        public string FullNameTextCodeCode { get; set; }
+        [ForeignKey("FullNameTextCodeId")]
+        public virtual TextCode FullNameTextCode { get; set; }
+        public bool AvailableInDocumentTypes { get; set; }
     }
 }

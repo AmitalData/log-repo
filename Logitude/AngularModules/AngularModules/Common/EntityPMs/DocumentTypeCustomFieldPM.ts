@@ -20,7 +20,7 @@ export class DocumentTypeCustomFieldPM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-          this.UIProperties = new UIProperties(this); 
+		            this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -83,6 +83,11 @@ export class DocumentTypeCustomFieldPM {
     private fieldValue: string;
     public get FieldValue() { return this.fieldValue; }
     public set FieldValue(newValue: string) { if (this.fieldValue != newValue) { this.fieldValue = newValue; this.MarkAsDirty("FieldValue"); } }
+       
+	 
+    private fieldDataTypeName: string;
+    public get FieldDataTypeName() { return this.fieldDataTypeName; }
+    public set FieldDataTypeName(newValue: string) { if (this.fieldDataTypeName != newValue) { this.fieldDataTypeName = newValue; this.MarkAsDirty("FieldDataTypeName"); } }
        
 	 
 

@@ -115,7 +115,7 @@ void SaveEntityQueryServiceOutput(string outputFileName)
 	
 	         string[] namespacearr = pmnamespacestring.ToString().Split('.');
 		     string projectname = namespacearr[1].Replace("Lib","");
-        if (projectname != "Accounting" && projectname != "Booking"  && projectname != "Warehouse" && projectname != "TimeManagement" && projectname != "TariffModule" && projectname != "CargoTracking")
+        if (projectname != "Accounting" && projectname != "Booking"  && projectname != "Warehouse" && projectname != "TimeManagement" && projectname != "TariffModule" && projectname != "CargoTracking" && projectname != "ShipmentOrderModule" && projectname != "Workflow" && projectname != "DashboardModule")
         {
 		 iswrongname = true;
         }
@@ -152,11 +152,13 @@ void SaveEntityQueryServiceOutput(string outputFileName)
 	{
 	   entityPMsPath="Logitude.CargoTracking.Def.EntityPMs;";
 	}
-	if(pocosspacestring.Contains("QuoteOPM"))
+ 
+	
+	if(pocosspacestring.Contains("ShipmentOrderModule"))
 	{
-	   entityPMsPath="Amital.QuoteOPM.Def.EntityPMs;";
+	   entityPMsPath="Logitude.ShipmentOrderModule.Def.EntityPMs;";
 	}
-	string pmsspacestring =   entityPMsPath;	string mappingspacestring =   queryservicenamespacestring.ToString().Substring(0,queryservicenamespacestring.ToString().LastIndexOf('.')) + ".EntityDataMappings;";
+ 	string pmsspacestring =   entityPMsPath;	string mappingspacestring =   queryservicenamespacestring.ToString().Substring(0,queryservicenamespacestring.ToString().LastIndexOf('.')) + ".EntityDataMappings;";
 	string repspacestring =   queryservicenamespacestring.ToString().Substring(0,queryservicenamespacestring.ToString().LastIndexOf('.')) + (iswrongname? ".Repsitories;" : ".Repositories;");
 	string keysspacestring =   queryservicenamespacestring.ToString().Substring(0,queryservicenamespacestring.ToString().LastIndexOf('.')) + ".EntityKeys;";
 	//string contextspacestring =   queryservicenamespacestring.ToString().Substring(0,queryservicenamespacestring.ToString().LastIndexOf('.')) + ".Context;";
@@ -213,7 +215,14 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
+<#+ 
+if(tableName != "Task" && tableName != "TaskStatus")
+{
+#>
 using System.Threading.Tasks;
+<#+
+}
+#>
 using System.ComponentModel.DataAnnotations;
 using Simplog.Server.Infrastructure;
 using Logitude.Server.Tools;

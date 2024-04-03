@@ -193,7 +193,7 @@ namespace Logitude.Customs.Def.EntityPMs
               }
              set {  deletedDBMigrationLines = value; }
 	    }
-	     }
+	  	    }
    
 }
 	 

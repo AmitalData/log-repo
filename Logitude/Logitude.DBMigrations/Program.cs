@@ -1,5 +1,4 @@
 ﻿using Logitude.DBMigrations.Models;
-using System;
 
 namespace Logitude.DBMigrations
 {
@@ -11,6 +10,7 @@ namespace Logitude.DBMigrations
             {
                 DebugMode = false,
                 ExecuteScripts = false,
+                DevMode = false,
                 IgnoreHash = false,
                 ValidateFiles = true,
                 Root = null,

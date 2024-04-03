@@ -10,8 +10,10 @@ export class CustomerList {
    		Id: string;
 		Tenant: number;
 		RankId: string;
+		TeamId: string;
 		RankCode: string;
 		RankName: string;
+		TeamName: string;
 		IndustryId: string;
 		LeadSourceId: string;
 		SalesmanUserId: string;
@@ -55,16 +57,6 @@ export class CustomerList {
 		CountryCode: string;
 		CountryName: string;
 		VatTypeId: string;
-		Field1: string;
-		Field2: string;
-		Field3: string;
-		Field4: string;
-		Field5: string;
-		Field6: string;
-		Field7: string;
-		Field8: string;
-		Field9: string;
-		Field10: string;
 		IndustryName: string;
 		FreelancerId: string;
 		ForwarderId: string;
@@ -76,8 +68,11 @@ export class CustomerList {
 		MediatorName: string;
 		SharedLogisticsInvitationStatusName: string;
 		SharedLogisticsInvitationStatusCode: number;
+		CargoTrackingInvitationStatusName: string;
+		CargoTrackingInvitationStatusCode: number;
 		LastLoginDate: Date;
 		InvitationDate: Date;
+		CargoTrackingInvitationDate: Date;
 		LeadDescription: string;
 		LastActivityDate: Date;
 		LastActivityTypeName: string;
@@ -137,6 +132,7 @@ export class CustomerList {
 		SATForeignRFC: string;
 		MetodoPagoCode: string;
 		UsoCFDICode: string;
+		RegimenFiscalCode: string;
 		ZipCode: string;
 		Address1: string;
 		Address2: string;
@@ -149,5 +145,13 @@ export class CustomerList {
 		GLAccountNumber: string;
 		SearchWeight: number;
 		IsAutonomy: boolean;
+		BillToId: string;
+		BillToName: string;
+		SATCustomerName: string;
+		AccountManagerUserId: string;
+		ATTN: string;
+		LastLoginDateViaPC: Date;
+		LastLoginDateViaMobile: Date;
+		EmailForSendingSingArinvoice: string;
 	
 }

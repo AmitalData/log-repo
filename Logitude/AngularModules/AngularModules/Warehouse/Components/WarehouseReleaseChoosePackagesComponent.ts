@@ -45,7 +45,7 @@ export class WarehouseReleaseChoosePackagesComponent extends BaseComponent imple
     IsFromFullWarehouseReleaseComponent: boolean = false;
     IsCFSWarehouse : boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
-    OldCustomerId: string;
+    OldCustomerId: string; 
     constructor(private warehouseEntryPackagePMExtendedService: WarehouseEntryPackagePMExtendedService) {
         super();
     }
@@ -325,15 +325,13 @@ export class WarehouseReleaseChoosePackagesComponent extends BaseComponent imple
 
     }
     set CustomerId(newValue: string) {
-        if (this.customerId != newValue) {
-            this.customerId = newValue;
+        if (this.customerId == newValue) return;
+        this.customerId = newValue;
+        this.LoadWarehouseEntryPackageListsByCustomerId();
 
-            if (this.warehouseReleasePM.CustomerId != newValue) {
-                this.ViewModelTrigger.CustomerId = newValue;
-                this.warehouseReleasePM.CustomerId = newValue;
-                this.LoadWarehouseEntryPackageListsByCustomerId();
-            }
-        }
+        if (this.warehouseReleasePM.CustomerId == newValue) return;
+        this.ViewModelTrigger.CustomerId = newValue;
+        this.warehouseReleasePM.CustomerId = newValue;
     }
 
     private fromPortId: string;
@@ -376,7 +374,7 @@ export class WarehouseReleaseChoosePackagesComponent extends BaseComponent imple
 
     LoadWarehouseEntryPackageListsByCustomerId() {
         var shipmentId = this.warehouseReleasePM.ShipmentId ? this.warehouseReleasePM.ShipmentId : "";
-        this.warehouseEntryPackagePMExtendedService.GetWarehouseEntryPackagePMListsByShipmentIdAndWarehouseIdAndCustomerId(shipmentId, this.CustomerId, this.warehouseReleasePM.WarehouseId, this.warehouseReleasePM.Tenant).subscribe((res: any) => {
+        this.warehouseEntryPackagePMExtendedService.GetWarehouseEntryPackagePMListsByShipmentIdAndWarehouseIdAndCustomerId(this.ViewModelTrigger.IsFilterByShipmentId ? shipmentId : null, this.CustomerId, this.warehouseReleasePM.WarehouseId, this.warehouseReleasePM.Tenant).subscribe((res: any) => {
             var pmResponse: any = res;
             if (!pmResponse.HasError) {
                 this.AllWarehouseEntryPackagesLists = pmResponse.Result;

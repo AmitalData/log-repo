@@ -123,8 +123,26 @@
                    
                     </ul>
                   </td>
-        
-                  <td></td>
+                  <td>
+                    <div style="padding: 0 10px;display: flex;" *ngIf="FilterSelectedValue === 'GLAccount'">
+
+                        <div style="padding: 4px 15px;">{{'GLAccount.F.ChartOfAccountsTypeCode' | TextCodeTranslationPipe}}</div>
+                        <div style="width: 150px;" >
+                            <ComboBoxWithInCheckBox [AutoHeight]="true" [MinHeight]="150" [ItemsSource]="chartOfAccountsTypes" 
+                                [SelectedItem]="ChartOfAccountsTypeComboboxValue" (EditedItemSource)="OnChartOfAccountsTypeItemClicked($event)"
+                                [SelectionType]="showLocal?'קבוצה':'Product'"
+                                (SelectedItemChanged)="ChartOfAccountsTypeComboboxValue = $event" [Binding]="'LocalName'" [AlternativeBinding]="'EnglishName'"></ComboBoxWithInCheckBox>
+                        </div>
+                        <div style="width: 50px;"></div>
+                        <div style="padding: 4px 15px;">{{'GLAccount.F.ChartOfAccountsId' | TextCodeTranslationPipe}}</div>
+                        <div style="width: 150px;">
+                            <ComboBoxWithInCheckBox [AutoHeight]="true" [MinHeight]="150" [ItemsSource]="chartOfAccounts" 
+                                [SelectedItem]="ChartOfAccountsComboBoxValue" (EditedItemSource)="OnChartOfAccountsItemClicked($event)"
+                                [SelectionType]="showLocal?'קבוצה':'Product'"
+                                (SelectedItemChanged)="ChartOfAccountsComboBoxValue = $event" [Binding]="'LocalName'" [AlternativeBinding]="'EnglishName'" #comboBoxWithCheckBoxChartOfAccountsComboBoxValue></ComboBoxWithInCheckBox>
+                        </div>
+                    </div>
+                  </td>
                 </tr>
               </table>
             </td>
@@ -144,7 +162,7 @@
                   <td style="width:250px">{{'Accounting.General.O.WithZeroBalance' | TextCodeTranslationPipe}}</td>
 
                   <td style="width:200px; min-width: 200px;">
-                    <ComboBox [ItemsSource]="BalanceOptionsFilterList" [Binding]="showlocal ? 'LocalName' : 'Name'" [SelectedItem]="SelectedBalanceOptionFilter" (SelectedItemChanged)="SelectedBalanceOptionFilter = $event"></ComboBox>
+                    <ComboBox [ItemsSource]="BalanceOptionsFilterList" [Binding]="showLocal ? 'LocalName' : 'Name'" [SelectedItem]="SelectedBalanceOptionFilter" (SelectedItemChanged)="SelectedBalanceOptionFilter = $event"></ComboBox>
                   </td>
 
                   <td style="width:70px"></td>

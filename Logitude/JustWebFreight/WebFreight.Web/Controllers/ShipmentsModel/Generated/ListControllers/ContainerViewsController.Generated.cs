@@ -33,14 +33,21 @@ using System.Web.Http;
 using Logitude.BL.Helpers;
 using System.Web.Script.Serialization;
 using WebFreight.Web.DataContracts;
+using Logitude.Server.Tools.TreeFilterQuery.Interpreter;
+using Logitude.Server.Tools.TreeFilterQuery;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Simplog.Data.ShipmentsModel;
 using Logitude.BL.ShipmentsModel;
+using Logitude.BL.Helpers;
 using Logitude.BL.ShipmentsModel.EntityLists;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Simplog.Data.ShipmentsModel.Repositories;
+using Logitude.BL.ShipmentsModel.CustomFilters;
+		  
+using WebFreight.Web.Controllers.ShipmentsModel.ApiHelpers;
+		  
 namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
 { 
 
@@ -63,8 +70,8 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
 				ContainerRepository  containerRepository = new ContainerRepository(MyContext);
 				ContainerList entityList = null;
 				Container entityPoco = containerRepository.GetSingleContainer(id , authToken.Tenant);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<Container> singleEntityList = new List<Container>();
 					singleEntityList.Add(entityPoco);
@@ -75,6 +82,13 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
 				    entityList = iQueryableEntityList.FirstOrDefault();
 
 			    }
+				if (entityList != null)
+				{
+                	CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
+                	customFieldResolver.SetCustomFieldsValues("Container",  authToken.Tenant, new List<ContainerList> { entityList }.Cast<object>().ToList());
+ 	
+					entityList = ContainerAPiHelper.ApplyFilters(entityList, authToken.Tenant);
+				}
 
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
 				               
@@ -107,6 +121,8 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
 				entityLists = entityLists.OrderBy(d => d.Id);
 				List<ContainerList> listResult = entityLists.ToList();
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
+                customFieldResolver.SetCustomFieldsValues("Container", authToken.Tenant, listResult.Cast<object>().ToList());
 										
 				return Request.CreateResponse(HttpStatusCode.OK, listResult);
             }
@@ -173,7 +189,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
                             object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
 
                             //queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList);
-							queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList,field.IsCustom,field.DataTypeCode);
+							queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList,field.IsCustom,field.DataTypeCode, field.IsListFilter);
                         }
                         else
                             queryOperations.SetFilter(filterName, filterValue1, false, filterOperator, filterValue2, true);
@@ -202,7 +218,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
                             object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
 
                             //queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList);
-							queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList,field.IsCustom,field.DataTypeCode);
+							queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList,field.IsCustom,field.DataTypeCode, field.IsListFilter);
                         }
                         else
                         {
@@ -212,8 +228,19 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
                 }
 
 
+                ContainerAPiHelper.AddFilters(queryOperations, tenant);
                 GenericFilter genericFilter = new GenericFilter();
                 GenericSort sortClass = new GenericSort();
+                
+                TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
+                 { 
+                     AdditionalTreeFilter = filters.TreeFilters,
+                     ObjectTableName = "Container",
+                     ParentEntityId = filters.ParentEntityId,
+                     ParentObjectTableName = filters.ParentObjectTableName, 
+                     Tenant = tenant ,
+                     ParentEntity = filters.ParentEntity
+                 };
 
 								
                 IShipmentsContext MyContext = ShipmentsContext.GetContext(tenant);
@@ -223,15 +250,20 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
                 ContainerQuery containerQuery = new ContainerQuery(containerRepository);
                 
 				QueryOperations nonListQueryOperation = new QueryOperations();
-                nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+                nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false && !d.IsListFilter).ToList();
                 QueryOperations listQueryOperation = new QueryOperations();
-                listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
-				
+                listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true || d.IsListFilter).ToList();
+				                
+				ContainerCustomFilter customfilters = new ContainerCustomFilter(tenant);
+                entityPocos = customfilters.GetFilteredQuery(queryOperations, entityPocos);
+	            entityPocos = ContainerAPiHelper.ApplyFilters(entityPocos, tenant);
+
                 entityPocos = genericFilter.GetFilteredQuery<Container>(nonListQueryOperation, entityPocos);
                 int skippedEntities = queryOperations.PageIndex;
                 IQueryable<ContainerList> entityLists = containerQuery.GetIQueryableEntityList(entityPocos);
 
                 entityLists = genericFilter.GetFilteredQuery<ContainerList>(listQueryOperation, entityLists);
+                entityLists = new TreeFilterQueryService().Apply<ContainerList>(entityLists , treeFilterQueryArgs);
 
 		      
 			  								
@@ -318,6 +350,8 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
 
 				}
 			   List<ContainerList> listResult = entityLists.ToList();
+               CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
+               customFieldResolver.SetCustomFieldsValues("Container", authToken.Tenant, listResult.Cast<object>().ToList());
 
                response.Result = listResult;
 			   HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);

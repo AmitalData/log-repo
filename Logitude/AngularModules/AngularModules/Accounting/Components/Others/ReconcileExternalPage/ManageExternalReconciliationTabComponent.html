@@ -1,4 +1,4 @@
-﻿<table>
+<table>
     <tr>
         <td>
             <div class="TableHolder">
@@ -33,9 +33,66 @@
                                                     <LogDatePicker [ObjectFieldName]="'ToDate'" [ObjectTableName]="ObjectTableName" [NoObjectField]="true"
                                                                    [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
                                                 </td>
+                                                <td *ngIf="selectedAmountOperator?.Code == 'Between'"></td>
+                                                <td *ngIf="selectedAmountOperator?.Code == 'Between'"></td>
+                                                <td *ngIf="selectedAmountOperator?.Code == 'Between'"></td>
                                                 <td><div></div></td>
                                             </tr>
+                                            <tr class="FormFieldRow">
+                                                <td style="width: 100px;padding-right: 10px;" [style.text-align]="isRTL ? 'right' : 'left'">{{'Accounting.General.O.Amount' | TextCodeTranslationPipe}}</td>
 
+                                                <td style="width: 140px;">
+                                   
+                                                        <ComboBox [ItemsSource]="operatorsList" [Binding]="'LocalName'"
+                                                                  [SelectedItem]="selectedAmountOperator"
+                                                                  (SelectedItemChanged)="AmountOperatorChanged($event)"></ComboBox>
+                                                    
+                                                        
+                                                </td>
+                                                <td style="width: 30px;"><div></div></td>
+                                                <td style="width: 30px;"><div></div></td>
+
+                                                <td *ngIf="selectedAmountOperator?.Code != 'Between'" style="width: 30px;" [style.text-align]="isRTL ? 'right' : 'left'">
+                                                    <LogTextBox [InputType]="'decimal'" [NoObjectField]="true"
+                                                    [ObjectFieldName]="'Amount'" [Text]="Amount" [HideColumns]="true"
+                                                    (ValueChanged)="AmountTextChanged($event)" [DebounceTime]="400"
+                                                    [ObjectTableName]="'Reconciliation'" [DataContext]="this"></LogTextBox>
+                                                </td>
+
+                                                <td
+                                                    *ngIf="selectedAmountOperator?.Code == 'Between'"
+                                                    style="width: 140px"
+                                                    [style.text-align]="isRTL ? 'right' : 'left'"
+                                                >
+                                                <LogTextBox
+                                                    [NoObjectField]="true"
+                                                    [HideColumns]="true"
+                                                    [InputType]="'decimal'"
+                                                    [DataContext]="DataContext"
+                                                    [DebounceTime]="400"
+                                                    [ObjectFieldName]="'From'"
+                                                    (ValueChanged)="AmountTextFromChanged($event)"
+                                                ></LogTextBox>
+                                                </td>
+                                                <td style="width: 30px"><div></div></td>
+                                                <td
+                                                *ngIf="selectedAmountOperator?.Code == 'Between'"
+                                                style="width: 140px"
+                                                [style.text-align]="isRTL ? 'right' : 'left'"
+                                                >
+                                                <LogTextBox
+                                                    [NoObjectField]="true"
+                                                    [HideColumns]="true"
+                                                    [InputType]="'decimal'"
+                                                    [DataContext]="DataContext"
+                                                    [DebounceTime]="400"
+                                                    [ObjectFieldName]="'To'"
+                                                    (ValueChanged)="AmountTextToChanged($event)"
+                                                ></LogTextBox>
+                                                </td>
+
+                                                <td><div></div></td>
+                                            </tr>
                                         </table>
                                 </tr>
                                 <tr><td><div></div></td></tr>
@@ -50,6 +107,11 @@
 
                             <div style="width: 220px;" [style.float]="isRTL ? 'left' : 'right'">
                                 <SearchTextBox [ObjectTableName]="'ExternalReconciliation'" (SearchTextChangeEvent)="TextChanged($event)" [PlaceHolder]="'Reconciliation.F.Number' | TextCodeTranslationPipe"></SearchTextBox>
+                            </div>
+                            <div float-end style="width: fit-content; padding: 2px 15px 0px;">
+                                <CheckBox (Checked)="ShowCrossYearReconciliations = $event"
+                                        [Text]="'ExternalReconciliation.O.ShowCrossYearLabel' | TextCodeTranslationPipe"
+                                        [IsChecked]="ShowCrossYearReconciliations"></CheckBox>
                             </div>
                             <div style="width: 40px;padding: 0px 10px;" [style.float]="isRTL ? 'left' : 'right'">
                                 <!--<IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"></IconButton>-->
@@ -67,7 +129,7 @@
                         <td colspan="5" style="height: 100%;">
 
                             <div class="GeneratedGridContainer">
-                                <logitude-grid GridWidth="100%"
+                                <logitude-grid #DataGrid GridWidth="100%"
                                                GridHeight="100%"
                                                [ObjectTable]="'ExternalReconciliation'"
                                                [dataSource]="DataSource"

@@ -14,29 +14,52 @@ export class DocumentDownloadService {
     private  token: string;
 
     constructor(@Inject('BASE_URL') private baseUrl: string, private  _http: HttpClient) {
-        
+
     }
 
-    public  DownloadPage(id: string) {
+    public ExternalDownloadAllDocuments(securityId: string, forwardingShipmentId: string, tenant: number)
+    {
+        var link = ServiceHelper.GetAppURL(this.baseUrl)
+            + `WebPages/CorrespondenceDownloadpage.aspx?DA=1&securitykey=${securityId}::CS:${tenant}:${forwardingShipmentId ? forwardingShipmentId : ""}:cargo`;
+        var win = window.open(link, '_blank');
+
+        if (win) {
+            win.focus();
+        }
+
+    }
+    public ExternalDownloadPage(securityId: string, tenant: number, fileName: string)
+    {
+        var link = ServiceHelper.GetAppURL(this.baseUrl)
+            + `WebPages/CorrespondenceDownloadpage.aspx?Id=${securityId}~${tenant}~${null}~${fileName}`;
+        var win = window.open(link, '_blank');
+
+        if (win) {
+            win.focus();
+        }
+
+    }
+
+    public  DownloadPage(id: string, documentName: string) {
         var url: string = "id=" + id;
+        url += documentName != null ? "*" + documentName : "";
         this.GetCurrenctUserValidity().subscribe((response:any) => {
             this.token = response.Result.DocumentDownloadToken;
-            var link = ServiceHelper.GetAppURL(this.baseUrl) + "WebPages/DownloadPage.aspx?" + url + "&tempId=" + this.token;
+            var link = ServiceHelper.GetAppURL(this.baseUrl) + "WebPages/DownloadPage.aspx?" + url + "&tempId=" + this.token + "&requestArea=CargoTracking";
             var win = window.open(link, '_blank');
 
             if (win) {
                 win.focus();
             }
         });
-     
+
     }
 
-    DownloadAllPages(entityId: string) {
+    DownloadAllPages(entityId: string, securityKey: string) {
         this.GetCurrenctUserValidity().subscribe((response: any) => {
             this.token = response.Result.DocumentDownloadToken;
-            var link = ServiceHelper.GetAppURL(this.baseUrl) + "WebPages/SharedDownloadPage.aspx?id=" + SessionInfo.LoggedUserTenant + ":" + null + ":ship:" + entityId + ":CS:" + this.token;
+            var link = ServiceHelper.GetAppURL(this.baseUrl) + "WebPages/SharedDownloadPage.aspx?id=" + SessionInfo.LoggedUserTenant + ":" + null + ":ship:" + entityId + ":CS:" + null + ":" + securityKey + ":securitykey:CargoTracking";
             var win = window.open(link, '_blank');
-
             if (win) {
                 win.focus();
             }

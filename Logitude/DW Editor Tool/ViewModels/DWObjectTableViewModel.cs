@@ -62,6 +62,8 @@ namespace DW_Editor_Tool.ViewModels
         public string AdditionalFactRelationType { get { return additionalFactRelationType; } set { additionalFactRelationType = value; FirePropertyChanged("AdditionalFactRelationType"); } }
 
 
+        private string description;
+        public string Description { get { return description; } set { description = value; FirePropertyChanged("Description"); } }
 
 
         bool isClosed;
@@ -83,6 +85,13 @@ namespace DW_Editor_Tool.ViewModels
 
         private string dataViewName;
         public string DataViewName { get { return dataViewName; } set { dataViewName = value; FirePropertyChanged("DataViewName"); } }
+
+
+
+        private string additionalConditions;
+        public string AdditionalConditions { get { return additionalConditions; } set { additionalConditions = value; FirePropertyChanged("AdditionalConditions"); } }
+
+
 
         public List<DWTableType> DWTableTypes { get { return new List<DWTableType> { new DWTableType("Fact", "Fact"), new DWTableType("Dimension", "Dimension") }; } }
 

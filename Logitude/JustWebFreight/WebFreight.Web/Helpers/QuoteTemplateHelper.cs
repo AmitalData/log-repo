@@ -367,7 +367,8 @@ namespace WebFreight.Web.Helpers
 
             };
 
-
+            QuoteTemplateSettingDataBuilder quoteTemplateSettingDataBuilder = new QuoteTemplateSettingDataBuilder(quoteTemplateSetting);
+            quoteTemplateSetting.XMLData = quoteTemplateSettingDataBuilder.SerializeNewQuoteTemplateSettingDataToXmlString();
             quoteTemplateSettingRepository.Add(quoteTemplateSetting);
             quoteTemplateSettingRepository.SubmitChanges();
 
@@ -428,6 +429,8 @@ namespace WebFreight.Web.Helpers
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("CHARGEDESCRIPTIONCONTAINERS", "Charge Description", "Charge Description", "Containers"));
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("CHARGEPACKAGES", "Charge", "Charge", "Packages"));
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("CHARGECONTAINERS", "Charge", "Charge", "Containers"));
+            quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("UNITSCONTAINERS", "Units", "Units", "Containers"));
+
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("UNITSPACKAGES", "Units", "Units", "Packages"));
             string unitPriceLable = quoteTemplatePM.TemplateTypeCode == "P" ? "Step: Unit Price" : "Unit Price";
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("UNITPRICEPACKAGES", unitPriceLable, unitPriceLable, "Packages"));
@@ -458,14 +461,19 @@ namespace WebFreight.Web.Helpers
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("VATPERCENTAGECONTAINERS", "VAT Percentage", "VAT Percentage", "Containers"));
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("VATTYPEPACKAGES", "VAT Type", "VAT Type", "Packages"));
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("VATTYPECONTAINERS", "VAT Type", "VAT Type", "Containers"));
-
+            quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("SALELOCALAMOUNTInCLUDINGVATPACKAGES", "Local Sale Amount Including VAT", "Show Local Sale Amount Including VAT", "Packages"));
+            quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("SALEAMOUNTInCLUDINGVATPACKAGES", "Sale Amount Including VAT", "Show Sale Amount Including VAT", "Packages"));
+            quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("SALELOCALAMOUNTInCLUDINGVATCONTAINERS", "Local Sale Amount Including VAT", "Show Local Sale Amount Including VAT", "Containers"));
+            quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("SALEAMOUNTInCLUDINGVATCONTAINERS", "Sale Amount Including VAT", "Show Sale Amount Including VAT", "Containers"));
 
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("QUOTEDATE", "Quote Date", "Quote Date", "QuoteHeader"));
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("EXPIRATIONDATE", "Expiration Date", "Expiration Date", "QuoteHeader"));
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("QUOTENUMBER", "Quote Number", "Quote Number", "QuoteHeader"));
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("CUSTOMER", "Customer", "Customer", "QuoteHeader"));
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("ATTN", "ATTN", "ATTN", "QuoteHeader"));
-
+            quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("TRANSPORTMODE", "Transport Mode", "Transport Mode", "QuoteHeader"));
+            quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("DIRECTION", "Direction", "Direction", "QuoteHeader"));
+            quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("STARTDATE", "Start Date", "Start Date", "QuoteHeader"));
 
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("EXPIRATIONDATE", "Expiration Date", "Expiration Date", "QuoteDetails"));
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("EXPIRATIONDAYS", "Expiration Days", "Expiration Days", "QuoteDetails"));
@@ -497,6 +505,8 @@ namespace WebFreight.Web.Helpers
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("AIRLINE", "Airline", "Airline", "QuoteDetails"));
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("FROMLOCATION", "From Location", "From Location", "QuoteDetails"));
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("TOLOCATION", "To Location", "To Location", "QuoteDetails"));
+            quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("FROMLOCATIONINCLUDECOUNTRY", "From Location Include Country", "From Location Include Country", "QuoteDetails"));
+            quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("TOLOCATIONINCLUDECOUNTRY", "To Location Include Country", "To Location Include Country", "QuoteDetails"));
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("PRICINGPACKAGES", "Pricing Packages", "Pricing Packages", "Packages"));
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("PRICINGCONTAINERS", "Pricing Containers", "Pricing Containers", "Containers"));
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("CHARGEABLEWEIGHT", "Chargeable Weight", "Chargeable Weight", "QuoteDetails"));
@@ -513,10 +523,31 @@ namespace WebFreight.Web.Helpers
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("NOTIFYADDRESS", "Notify Address", "Notify Address", "QuoteDetails"));
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("NOTIFYCONTACT", "Notify Contact", "Notify Contact", "QuoteDetails"));
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("DEPARTUREFREQUENCY", "Departure Frequency", "Departure Frequency", "QuoteDetails"));
+            quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("TRANSPORTMODE", "Transport Mode", "Transport Mode", "QuoteDetails"));
+            quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("DIRECTION", "Direction", "Direction", "QuoteDetails"));
+            quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("STARTDATE", "Start Date", "Start Date", "QuoteDetails"));
+
+
 
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("INCLUDED", "Included", "Included", "Packages"));
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("INCLUDED", "Included", "Included", "Containers"));
             quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("INCLUDED", "Included", "Included", "TotalPerContainers"));
+
+
+            quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("VATPACKAGES", "VAT (Sale)", "VAT (Sale)", "Packages"));
+            quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("VATCONTAINERS", "VAT (Sale)", "VAT (Sale)", "Containers"));
+
+            quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("LOCALVATPACKAGES", "VAT(Local)", "VAT(Local)", "Packages"));
+            quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("LOCALVATCONTAINERS", "VAT(Local)", "VAT(Local)", "Containers"));
+
+            quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("TOTALINCLUDINGVATPACKAGES", "Total Including VAT(Sale)", "Total Including VAT(Sale)", "Packages"));
+            quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("TOTALINCLUDINGVATCONTAINERS", "Total Including VAT(Sale)", "Total Including VAT(Sale)", "Containers"));
+
+            quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("TOTALINCLUDINGVATLOCALPACKAGES", "Total Including VAT(Local)", "Total Including VAT(Local)", "Packages"));
+            quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("TOTALINCLUDINGVATLOCALCONTAINERS", "Total Including VAT(Local)", "Total Including VAT(Local)", "Containers"));
+
+            quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("ISREGIONALTAXPACKAGES", "Is Regional Tax", "Is Regional Tax", "Packages"));
+            quoteTemplateTextCodeRepository.Add(GetNewQuoteTemplateTextCode("ISREGIONALTAXCONTAINERS", "Is Regional Tax", "Is Regional Tax", "Containers"));
 
 
             quoteTemplateTextCodeRepository.SubmitChanges();
@@ -834,6 +865,7 @@ namespace WebFreight.Web.Helpers
                     HidePageNumber = setting.HidePageNumber,
                     ShowRegionalTAXPackages = setting.ShowRegionalTAXPackages,
                     ShowRegionalTAXContainers = setting.ShowRegionalTAXContainers,
+                    XMLData = setting.XMLData,
                 };
 
                 if (string.IsNullOrEmpty(copySetting.TotalPerContainersTableDesignId))

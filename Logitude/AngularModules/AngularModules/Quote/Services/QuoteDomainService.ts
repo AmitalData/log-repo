@@ -311,6 +311,18 @@ export class QuoteDomainService {
 
         return entityList;
     }
+
+    DisconnectQouteFromOpportunity(quoteId: string) {
+        var url = this._apiUrl + '/GetDisconnectQuoteFromOpportunity?quoteId=' + quoteId;
+        return defer(() => {
+            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = myResult;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
 }
 
 export class CRMSummary {

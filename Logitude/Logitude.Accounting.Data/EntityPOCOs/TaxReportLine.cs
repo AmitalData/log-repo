@@ -84,8 +84,18 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public decimal? TotalInvoiceAmount { get; set; }
         [Column("OriginalReference")]
 	    public string OriginalReference { get; set; }
+        [Column("JournalLineNumber")]
+	    public int JournalLineNumber { get; set; }
         [Column("PreviousReference")]
 	    public string PreviousReference { get; set; }
+        [Column("VatAmountRound")]
+	    public decimal? VatAmountRound { get; set; }
+        [Column("LedgerTransactionId")]
+	    public string LedgerTransactionId { get; set; }
+        [Column("SubTotalInLocalCurrency")]
+	    public double? SubTotalInLocalCurrency { get; set; }
+        [Column("ConfirmationNumber")]
+	    public string ConfirmationNumber { get; set; }
     }
 }
 	 

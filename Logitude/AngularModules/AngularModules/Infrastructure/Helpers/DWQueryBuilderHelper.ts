@@ -22,10 +22,11 @@ export class DWQueryBuilderHelper   {
         //this.Type = type;
     }
 
-    public RestoreFilters(Filters: any) {
+    public RestoreFilters(Filters: any) { //, SavedFilterItems: any = null
         var DWObjectField = new DWObjectFieldsDetails();
         DWObjectField.IsGroup = true;
-        var MyFilter = this.GetRestoreFilters(Filters,DWObjectField);
+        //SavedFilterItems = SavedFilterItems ? SavedFilterItems : [];
+        var MyFilter = this.GetRestoreFilters(Filters, DWObjectField); //var MyFilter = this.GetRestoreFilters(Filters, DWObjectField, SavedFilterItems);
         return MyFilter;
     }
 
@@ -51,6 +52,8 @@ export class DWQueryBuilderHelper   {
 
         BaseFilter.FilterItems.forEach((field) => {
             var view = new DWObjectFieldsDetails(field);
+            //let savedFilterItem: DWObjectFieldsDetails = SavedFilterItems.filter(filterItem => filterItem.Code == field.Code && filterItem.DWObjectTableCode == field.DWObjectTableCode)[0];
+            //field = savedFilterItem ? savedFilterItem : field;
             view.FilterChanged = this.FilterValueChanged;
             if (AppTool.IsNullOrEmpty(view.DimensionTableDisplayName)) {
                 view.DimensionTableDisplayName = field.ParentCode;
@@ -86,7 +89,7 @@ export class DWQueryBuilderHelper   {
                 DWObjectField.IsGroup = true;
                 DWObjectField.IndexOrder = MyFilter.FilterItems.length;
                 DWObjectField.AndOr = field.AndOr;
-                this.GetRestoreFilters(field, DWObjectField);
+                this.GetRestoreFilters(field, DWObjectField); //this.GetRestoreFilters(field, DWObjectField, SavedFilterItems);
                 MyFilter.FilterItems.push(DWObjectField); 
             } 
 

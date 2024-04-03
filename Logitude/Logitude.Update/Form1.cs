@@ -1,81 +1,95 @@
-﻿using Logitude.Customs.Def.EntityPMs;
+﻿using Logitude.Accounting.BL.CoreBL;
+using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.Accounting.BL.EntityUpdateServices;
+using Logitude.Accounting.BL.Utils;
+using Logitude.Accounting.Data;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Def.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.BL.DataContracts;
+using Logitude.BL.Helpers;
+using Logitude.BL.InvoiceModel.EntityPMs;
+using Logitude.BL.InvoiceModel.EntityQueries;
+using Logitude.BL.Resolvers;
+using Logitude.BL.ShipmentsModel.EntityQueries;
+using Logitude.BL.ShipmentsModel.Tools.EntityService;
+using Logitude.CargoTracking.Data;
+using Logitude.CRM.Data.EntityPOCOs;
+using Logitude.CRM.Data.Repsitories;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.EntityUpdateServices;
+using Logitude.Customs.BL.Messaging.U2L.ImportDeclaration;
+using Logitude.Customs.BL.StimulReport;
 using Logitude.Customs.Data;
+using Logitude.Customs.Data.EntityKeys;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data.Repsitories;
+using Logitude.Customs.Def.EntityPMs;
 using Logitude.CustomsMessaging.Helpers;
+using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.QueueService;
+using Logitude.Server.Tools.StorageService;
+using Logitude.Update.Helper;
+using Logitude.Update.PatchDistribution;
+using Logitude.Update.SandBox;
+using Microsoft.Practices.Unity;
+using Microsoft.ServiceBus.Messaging;
+using Microsoft.VisualBasic.FileIO;
+using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.Helpers;
+using Simplog.Data.InfrastructureModel;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Data.InvoiceModel;
 using Simplog.Data.ShipmentsModel;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel.Repositories;
+using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.Azure;
+using Simplog.Server.Infrastructure.Helpers;
+using Syncfusion.XlsIO;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Configuration;
+using System.Data;
+using System.Data.Common;
+using System.Data.Entity.Validation;
+using System.Data.SqlClient;
+using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Runtime.Serialization;
+using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Transactions;
 using System.Windows.Forms;
 using System.Xml;
-using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.CommonDataModel.EntityQueries;
-using WebFreight.Web.MetaDataUpdate;
-using Simplog.Server.Infrastructure.Helpers;
-using Simplog.Data.CommonDataModel;
-using Logitude.BL.CommonDataModel.Tools.EntityService;
-using Simplog.Server.Infrastructure.Azure;
-using Microsoft.ServiceBus.Messaging;
-using Logitude.BL.CommonDataModel.EntityLists;
-using System.Data.Entity.Validation;
-using Logitude.Server.Tools.Helpers;
-using Logitude.Customs.BL.StimulReport;
-using Logitude.Server.Tools;
-using WebFreight.Web.MetaDataUpdate.SendBox;
-using System.Runtime.Serialization;
 using System.Xml.Schema;
+using System.Xml.Serialization;
 using WebFreight.Web.CommonDataModel.DomainServices;
-using Microsoft.Practices.Unity;
-using Logitude.BL.Helpers;
-using Logitude.Customs.BL.Messaging.U2L.ImportDeclaration;
-using WebFreight.Web.Helpers;
-using System.Diagnostics;
-using System.Threading;
-using System.Reflection;
-using System.Threading.Tasks;
-using WebFreight.Web.InfrastructureModel;
-using System.Drawing;
-using Simplog.Data.InfrastructureModel.Repositories;
-using System.Text;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
-using Logitude.Customs.Data.Repsitories;
-using Logitude.Customs.Data.EntityPOCOs;
-using Logitude.Customs.Data.EntityKeys;
-using Microsoft.VisualBasic.FileIO;
-using System.Configuration;
-using System.Data.SqlClient;
-using Logitude.Accounting.BL.CoreBL;
-using Logitude.Accounting.BL.EntityQueryServices;
-using Logitude.Accounting.Def.EntityPMs;
-using Logitude.Accounting.Data;
-using Logitude.Accounting.Data.EntityPOCOs;
-using Logitude.Accounting.BL.EntityUpdateServices;
-using Logitude.Accounting.BL.Utils;
-using System.Data.Common;
-using Simplog.Data.ShipmentsModel.Repositories;
-using Simplog.Data.InfrastructureModel;
-using System.Text.RegularExpressions;
-using Logitude.Server.Tools.QueueService;
-using Simplog.Global.Data.GlobalModel;
-using Simplog.Data.InvoiceModel.EntityPOCOs;
-using Simplog.Data.InvoiceModel.Repositories;
-using Logitude.BL.InvoiceModel.Tools.EntityService;
-using Simplog.Data.InvoiceModel;
-using Logitude.BL.InvoiceModel.EntityPMs;
-using Logitude.BL.InvoiceModel.EntityQueries;
-using Logitude.Customs.BL.PatchDistribution;
-using Logitude.Update.PatchDistribution;
-using System.Collections;
+using WebFreight.Web.Helpers.Analyzers;
+using Syncfusion.XlsIO;
+using System.Data;
+using System.ComponentModel;
+using Logitude.BL.ShipmentsModel.EntityQueries;
+using Logitude.BL.ShipmentsModel.Tools.EntityService;
+using Logitude.BL.ShipmentsModel.Tools.Initializers;
+using Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours;
+using WebFreight.Web.MetaDataUpdate;
+using WebFreight.Web.MetaDataUpdate.SendBox;
 using WebFreight.Web.WebServices;
 using Logitude.Server.Tools.StorageService;
 using System.Web;
@@ -96,6 +110,11 @@ using Logitude.Update.SandBox;
 using Logitude.BL.InfrastructureModel.APIDataContract.Messages;
 using WebFreight.Web.Security;
 using System.Runtime.Remoting.Contexts;
+using Logitude.Server.Tools.TreeFilterQuery;
+using Newtonsoft.Json;
+using Simplog.Data.InvoiceModel.Repositories;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+
 
 namespace Logitude.Update
 {
@@ -117,6 +136,14 @@ namespace Logitude.Update
                 MessageBox.Show("Exception eee =" + eee.ToString());
                 throw;
             }
+
+            label24.Text = "for Output box, please fill with the path you want to \n save the file to."
+                + "\n"
+            + "ex.: C:\\Users\\Dell\\Desktop\\OIStatistics";
+
+            Label.CheckForIllegalCrossThreadCalls = false;
+            Panel.CheckForIllegalCrossThreadCalls = false;
+            Button.CheckForIllegalCrossThreadCalls = false;
         }
 
         public static void LoadLogitudeSettings()
@@ -147,18 +174,18 @@ namespace Logitude.Update
             LogitudeSettings.WorkEnvironment = setting.WorkEnvironment; // maybe we need to init more fields ?
             LogitudeSettings.StorageServiceMode = setting.StorageServiceMode;
 
-                //if (LogitudeSettings.IsCostomsDeploy) 
-                LogitudeSettings.ABMProductId = setting.ABMProductId;
-                LogitudeSettings.AzureFolderName = setting.AzureFolderName;
-                //if (LogitudeSettings.IsCostomsDeploy)
-                {
-                    //LogitudeSettings.GetUnfDBConnectionInfoFromTenantInject = CustomsSettingQueryService.GetUnfDBConnectionInfo;
-                    LogitudeSettings.GetLogitudeCustomsSettingsMInject = CustomsSettingQueryService.GetLogitudeCustomsSettingsM;
-                }
-                string storageServiceMode = "fs";
-                string queueServiceMode = "azure";
-                Logitude.Server.Tools.ContainerAccessor.InitContainer();
-                InjectionUtil.Init(null, null, null, () => (new ByteCompressorUtil()) as IByteCompressorUtil, null, null,null);
+            //if (LogitudeSettings.IsCostomsDeploy) 
+            LogitudeSettings.ABMProductId = setting.ABMProductId;
+            LogitudeSettings.AzureFolderName = setting.AzureFolderName;
+            //if (LogitudeSettings.IsCostomsDeploy)
+            {
+                //LogitudeSettings.GetUnfDBConnectionInfoFromTenantInject = CustomsSettingQueryService.GetUnfDBConnectionInfo;
+                LogitudeSettings.GetLogitudeCustomsSettingsMInject = CustomsSettingQueryService.GetLogitudeCustomsSettingsM;
+            }
+            string storageServiceMode = "fs";
+            string queueServiceMode = "azure";
+            Logitude.Server.Tools.ContainerAccessor.InitContainer();
+            InjectionUtil.Init(null, null, null, () => (new ByteCompressorUtil()) as IByteCompressorUtil, null, null, null, null, () => (new TreeFilterQueryService()) as ITreeFilterQueryService);
             InfraRegistrationHelper.Register();
             CacheManager.CacheWrapper = new CacheWrapper(WorkerEntryPoint.Cache);
         }
@@ -180,7 +207,7 @@ namespace Logitude.Update
 
         Stopwatch globalStopwatch;
         Label generalLabel;
-        private void UpdateModule(int tenant, string name, Label lable)
+        public void UpdateModule(int tenant, string name, Label lable)
         {
             SetControlPropertyValue(lable, "Text", "Updating...");
             SetControlPropertyValue(lable, "ForeColor", Color.Black); // timer
@@ -464,13 +491,13 @@ User/Pass",
 
 
             //LoggedContactResolver.RegisterLoggedContactUtil();
-           
+
             //RatesUpdateService ratesUpdateService = new RatesUpdateService(null, 1);
             //    ratesUpdateService.ReadXML();
             //    ratesUpdateService.ValidateRatesDataMapping();
-           
+
             //ratesUpdateService.UpdateRatesData();
-            
+
         }
 
         private void button7_Click(object sender, EventArgs e)
@@ -854,7 +881,8 @@ User/Pass",
             }
             conStrLabel.Text = "DB: " + ConfigurationManager.ConnectionStrings["Globalstr"].ConnectionString;
 
-            
+            LoggedContactResolver.RegisterLoggedContactUtil();
+
 
         }
 
@@ -2418,8 +2446,9 @@ User/Pass",
                             myPort.IsOcean = item.IsOcean;
                             myPort.IsInland = item.IsInland;
                             myPort.CountryId = myCountry.Id;
-                            myPort.SearchFields = BuildPortSearchFields(myPort, myCountry);
                             myPort.Tenant = 0;
+                            UpdatePortSearchFieldService.Update(myPort);
+
                             portRepository.Update(myPort);
                         }
 
@@ -2439,7 +2468,7 @@ User/Pass",
                                 Tenant = 0,
                             };
 
-                            myPort.SearchFields = BuildPortSearchFields(myPort, myCountry);
+                            UpdatePortSearchFieldService.Update(myPort);
                             portRepository.Add(myPort);
                         }
                     }
@@ -2989,7 +3018,7 @@ User/Pass",
                             if (myCount == 1000)
                             {
                                 myCommonContext.SaveChanges();
-                                SaveCardSearches(cardIds , entityCard.Tenant);
+                                SaveCardSearches(cardIds, entityCard.Tenant);
                                 cardIds = new List<string>();
                                 myCount = 0;
                             }
@@ -3006,7 +3035,7 @@ User/Pass",
             }
         }
 
-        private void SaveCardSearches(List<string> cardIds , int tenant)
+        private void SaveCardSearches(List<string> cardIds, int tenant)
         {
             foreach (string cardId in cardIds)
             {
@@ -3345,7 +3374,7 @@ User/Pass",
                 }
 
                 CashbookService cashbookService = new CashbookService();
-                string res = cashbookService.RecalculateCashbookTotals(Convert.ToInt16(textBox1.Text));
+                string res = cashbookService.RecalculateCashbooksTotals(Convert.ToInt16(textBox1.Text));
 
                 SetControlPropertyValue(RecalculateCashbookLbl, "Text", "Done, updated: " + res);
 
@@ -3772,7 +3801,7 @@ User/Pass",
                             select a).FirstOrDefault();
                 IQueueService queueservice = new DbQueueService();
                 queueservice.InitializeQueue("ImportersShipmentDocumentsQueue", 0);
-                queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", item.EntityId }, { "DocumentFilingId", item.Id }, { "Tenant", item.Tenant.ToString() },  }, item.Tenant);
+                queueservice.Send(new Dictionary<string, string>() { { "ShipmentId", item.EntityId }, { "DocumentFilingId", item.Id }, { "Tenant", item.Tenant.ToString() }, }, item.Tenant);
             }
         }
 
@@ -4298,7 +4327,7 @@ User/Pass",
             }
         }
 
-        private void UploadCitiesMethod(StreamReader streamReader,int tenant)
+        private void UploadCitiesMethod(StreamReader streamReader, int tenant)
         {
             List<CityDataItem> AllDataLines = new List<CityDataItem>();
 
@@ -4314,7 +4343,7 @@ User/Pass",
                     string cityName = this.GetText(lineParts, 1);
                     string countryCode = this.GetText(lineParts, 2);
                     string stateCode = this.GetText(lineParts, 3);
-                   
+
                     if (cityCode != null)
                     {
                         cityCode = cityCode?.ToUpper();
@@ -4344,7 +4373,7 @@ User/Pass",
 
         string missedCountriesState = "";
         int countryCityCount = 0;
-        private void RunUploadCities(List<CityDataItem> allDataLines , int tenant)
+        private void RunUploadCities(List<CityDataItem> allDataLines, int tenant)
         {
             if (allDataLines.Count > 0)
             {
@@ -4354,9 +4383,9 @@ User/Pass",
                 stopWatch.Start();
 
                 //TenantRepository tenantRep = new TenantRepository(0);
-               // Tenant tenant = tenantRep.GetSingleByTenant(tenantNumber);
+                // Tenant tenant = tenantRep.GetSingleByTenant(tenantNumber);
                 this.AddCitiesByTenant(allDataLines, tenant);
-              
+
 
                 stopWatch.Stop();
                 if (!string.IsNullOrEmpty(missedCountriesState))
@@ -4412,8 +4441,8 @@ User/Pass",
             }
             myCommonContext.SaveChanges();
         }
-        
-        private void AddEditCounrtyCity(ICommonDataContext myCommonContext ,CityDataItem item, int tenant , string countryId , string stateId)
+
+        private void AddEditCounrtyCity(ICommonDataContext myCommonContext, CityDataItem item, int tenant, string countryId, string stateId)
         {
             CountryCity newCity = myCommonContext.CountryCities.Where(p => p.Code == item.CityCode && p.Tenant == tenant && p.CountryId == countryId && p.StateId == stateId).FirstOrDefault();
             if (newCity == null)
@@ -4459,7 +4488,7 @@ User/Pass",
                 myCommonContext.States.Add(state);
             }
 
-            state  = myCommonContext.States.Where(p => p.Code == "09" && p.Tenant == tenant && p.CountryId == countryId).FirstOrDefault();
+            state = myCommonContext.States.Where(p => p.Code == "09" && p.Tenant == tenant && p.CountryId == countryId).FirstOrDefault();
             if (state == null)
             {
                 state = new State()
@@ -4491,7 +4520,7 @@ User/Pass",
                 myCommonContext.States.Add(state);
             }
 
-            state  = myCommonContext.States.Where(p => p.Code == "30" && p.Tenant == tenant && p.CountryId == countryId).FirstOrDefault();
+            state = myCommonContext.States.Where(p => p.Code == "30" && p.Tenant == tenant && p.CountryId == countryId).FirstOrDefault();
             if (state == null)
             {
                 state = new State()
@@ -4535,14 +4564,14 @@ User/Pass",
         private void CargoTrackingTestBtn_Click(object sender, EventArgs e)
         {
             ICargoTrackingContext cargoTrackingContext = CargoTrackingContext.GetContext(1);
-         }
+        }
 
         private void citiesTextBox_TextChanged(object sender, EventArgs e)
         {
-         
+
         }
 
-       
+
 
         private void button51_Click_1(object sender, EventArgs e)
         {
@@ -4631,7 +4660,7 @@ User/Pass",
                     {
                         packageName = packageName.Substring(0, 40);
                     }
-                    allPackagesTypes.Add(new { Code = packageCode, Name = packageName});
+                    allPackagesTypes.Add(new { Code = packageCode, Name = packageName });
                 }
             }
             allPackagesTypes.Remove(allPackagesTypes[0]);
@@ -4713,16 +4742,16 @@ User/Pass",
         }
 
         private void button6_Click_1(object sender, EventArgs e)
-        {            
+        {
             LoggedContactResolver.RegisterLoggedContactUtil();
-            ExchangeRatesFromExternalLinkUpdateService ratesUpdateService = new ExchangeRatesFromExternalLinkUpdateService(Convert.ToInt16( textBox2.Text));
-            ratesUpdateService.UpdateRatesByExternalXML();
+            ExchangeRatesFromExternalLinkUpdateService ratesUpdateService = new ExchangeRatesFromExternalLinkUpdateService(Convert.ToInt16(textBox2.Text));
+            ratesUpdateService.UpdateRatesByExternalXml();
 
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-
+ 
         }
 
         private void UpdateQuoteOPM_Click(object sender, EventArgs e)
@@ -4810,14 +4839,2128 @@ User/Pass",
                 MessageBox.Show(log);
             }
         }
+ 
+         
+        private void CreateBackup()
+        {
+            IAccountingContext Context = AccountingContext.GetContext(0);
+            string connectionString = Context.GetConnection().ConnectionString;
+            SqlConnection sqlConnection1 = new SqlConnection(connectionString);
+
+            int tenant = Convert.ToInt32(textBox3.Text);
+            SqlCommand cmd = new SqlCommand
+            {
+                CommandText = String.Format("IF object_id('[dbo].[TempJournalAdditional]') IS  NULL Begin SELECT * INTO TempJournalAdditional FROM JournalAdditionalDatas End", tenant),
+                Connection = sqlConnection1
+            };
+
+
+            sqlConnection1.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+            sqlConnection1.Close();
+
+        }
+        private void button53_Click(object sender, EventArgs e)
+        {
+            CreateBackup();
+            int tenant = Convert.ToInt32(textBox3.Text);
+            LoggedContactResolver.RegisterLoggedContactUtil();
+            timer2.Enabled = true;
+            timer2.Start();
+
+            JournalAdditionalDataCreationService journalAdditionalDataCreationService = new JournalAdditionalDataCreationService(tenant, dateTimePicker1.Value);
+            journalAdditionalDataCreationService.CreateJournalAdditionalDataforTenantAndDate("input");
+            label13.Visible = true;
+            timer2.Stop();
+        }
+
+        private void button54_Click(object sender, EventArgs e)
+        {
+            CreateBackup();
+            LoggedContactResolver.RegisterLoggedContactUtil();
+            int tenant = Convert.ToInt32(textBox3.Text);
+            JournalAdditionalDataCreationService journalAdditionalDataCreationService = new JournalAdditionalDataCreationService(tenant, dateTimePicker1.Value);
+            journalAdditionalDataCreationService.CreateJournalAdditionalDataforTenantAndDate("output");
+            label14.Visible = true;
+
+        }
+
+        private List<ExcelOI> oceanInsightStatisticsSheet2;
+        private int count = 0;
+        private IBlobService storageservice;
+        private Stopwatch OIStopWatch;
+        private void OIStatisticsButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Thread thread = new Thread(() => this.RunOIStatistics());
+                thread.IsBackground = true;
+                thread.Start();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Exception eee =" + ex.ToString() + " count" + this.count.ToString());
+            }
+        }
+
+        private void RunOIStatistics()
+        {
+            OITimer.Start();
+            OIStopWatch = new Stopwatch();
+            OIStopWatch.Start();
+
+            SetControlPropertyValue(OIStatisticslabel, "Text", "Generating...");
+
+            storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+
+            DateTime date_2021 = new DateTime(2021, 1, 1);
+            int tenant = 0;
+            int.TryParse(OI_textBox.Text, out tenant);
+            ExcelEngine excelEngine = new ExcelEngine();
+            IApplication application = excelEngine.Excel;
+            IWorkbook workbook = excelEngine.Excel.Workbooks.Create(1);
+
+            oceanInsightStatisticsSheet2 = new List<ExcelOI>();
+            ICommonDataContext context = CommonDataContext.GetContext(0);
+
+            List<CommunicationLog> communications = context.CommunicationLogs.Where(a => a.Subject == "Ocean Insights Status"
+                                                            && !string.IsNullOrEmpty(a.AWBNumber)
+                                                            && a.CreateDate >= date_2021 && a.CreateDate <= DateTime.Now)
+                                                            .GroupBy(x => new { x.Tenant, x.AWBNumber })
+                                                            .Select(x => x.OrderByDescending(y => y.CreateDate)
+                                                            .FirstOrDefault())
+                                                            .OrderByDescending(x => x.CreateDate).ToList();
+
+            if (tenant > 0)
+            {
+                communications = communications.Where(d => d.Tenant == tenant).ToList();
+            }
+
+            DocumentRepository documentRepository = new DocumentRepository(0);
+            foreach (var communicationLog in communications)
+            {
+                DeserializeDocumentBody(communicationLog.DocumentId, communicationLog.Tenant, documentRepository);
+            }
+
+            IWorksheet sheet1 = workbook.Worksheets[0];
+            var range = "A1:ED1";
+            sheet1.Name = "Ocean Insight Statistics";
+            sheet1.Range[range].CellStyle.Font.Color = ExcelKnownColors.White;
+            sheet1.Range[range].CellStyle.Color = System.Drawing.Color.Gray;
+            sheet1.Range[range].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignCenter;
+            sheet1.Range[range].ColumnWidth = 25;
+            count = 0;
+            DataTable dataTable = new DataTable();
+            dataTable = this.ConvertToDataTable(oceanInsightStatisticsSheet2.ToList());
+
+            sheet1.ImportDataTable(dataTable, true, 1, 1);
+            workbook.SaveAs(textBox4.Text + @"\OIStatistics.xls");
+
+            OITimer.Stop();
+            OIStopWatch.Stop();
+            TimeSpan ts = OIStopWatch.Elapsed;
+            SetControlPropertyValue(OIStatisticslabel, "Font", new Font("Microsoft Sans Serif", 8.25f, FontStyle.Bold));
+            SetControlPropertyValue(OIStatisticslabel, "ForeColor", Color.Green); // timer
+            SetControlPropertyValue(OIStatisticslabel, "Text", "Done in " + ts.ToString(@"hh\:mm\:ss"));
+        }
+        public void DeserializeDocumentBody(string documentId, int tenant, DocumentRepository documentRepository)
+        {
+            Document document = documentRepository.GetSingleDocument(tenant, documentId);
+            if (document != null)
+            {
+                BlobFileInfo fileInfo = new BlobFileInfo()
+                {
+                    FileName = document.Id,
+                    FolderName = document.Folder,
+                    Extension = document.Extension,
+                    Tenant = tenant,
+                    FileSize = document.FileSize,
+                };
+                byte[] fileData = storageservice.Read(fileInfo);
+                if (fileData != null)
+                {
+                    MemoryStream memorystream = new MemoryStream(fileData);
+                    XmlSerializer serializer = new XmlSerializer(typeof(ArrayOfQueueTask));
+                    var externalTasksQueues = (ArrayOfQueueTask)serializer.Deserialize(memorystream);
+                    AnalyzeOceanInsightsParametersXML(externalTasksQueues, tenant);
+                }
+            }
+        }
+        private void AnalyzeOceanInsightsParametersXML(ArrayOfQueueTask externalTasksQueues, int tenant)
+        {
+            var oceanInsightsQueueTask = externalTasksQueues.QueueTask.Where(a => a.Action == "OceanInsights.PushUpdate").FirstOrDefault();
+            if (oceanInsightsQueueTask != null)
+            {
+                var oceanInsightsParameters = oceanInsightsQueueTask.Parameters.FirstOrDefault();
+                if (oceanInsightsParameters != null)
+                {
+                    var value = oceanInsightsParameters.Value;
+                    this.ReadOceanInsightsParametersXMLFields2(value, tenant);
+                }
+            }
+        }
+        private void ReadOceanInsightsParametersXMLFields2(string value, int tenant)
+        {
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.LoadXml(value);
+            XmlNodeList xnList = xmlDoc.SelectNodes("//container");
+
+            foreach (XmlNode xn in xnList)
+            {
+                string createdDate = null;
+                string container_number = null;
+                string carrier_scac = null;
+                string code = null;
+                string message = null;
+                string status = null;
+                string status_verbose = null;
+                string shipment_id = null;
+                string bl_number = null;
+                string empty_pickup_loc_locode = null;
+                string empty_pickup_planned_initial = null;
+                string empty_pickup_planned_last = null;
+                string empty_pickup_actual = null;
+                string origin_loc_name = null;
+                string origin_pickup_planned_initial = null;
+                string origin_pickup_planned_last = null;
+                string origin_pickup_actual = null;
+                string pol_loc_locode = null;
+                string pol_arrival_planned_initial = null;
+                string pol_arrival_planned_last = null;
+                string pol_arrival_actual = null;
+                string pol_loaded_planned_initial = null;
+                string pol_loaded_planned_last = null;
+                string pol_loaded_actual = null;
+                string pol_vsldeparture_planned_initial = null;
+                string pol_vsldeparture_planned_last = null;
+                string pol_vsldeparture_actual = null;
+                string pol_vsldeparture_detected = null;
+                string ts_count = null;
+                string tsp1_loc_locode = null;
+                string tsp1_vslarrival_planned_initial = null;
+                string tsp1_vslarrival_planned_last = null;
+                string tsp1_vslarrival_actual = null;
+                string tsp1_vslarrival_detected = null;
+                string tsp1_discharge_planned_initial = null;
+                string tsp1_discharge_planned_last = null;
+                string tsp1_discharge_actual = null;
+                string tsp1_loaded_planned_initial = null;
+                string tsp1_loaded_planned_last = null;
+                string tsp1_loaded_actual = null;
+                string tsp1_vsldeparture_planned_initial = null;
+                string tsp1_vsldeparture_planned_last = null;
+                string tsp1_vsldeparture_actual = null;
+                string tsp1_vsldeparture_detected = null;
+
+                string tsp2_loc_locode = null;
+                string tsp2_vslarrival_planned_initial = null;
+                string tsp2_vslarrival_planned_last = null;
+                string tsp2_vslarrival_actual = null;
+                string tsp2_vslarrival_detected = null;
+                string tsp2_discharge_planned_initial = null;
+                string tsp2_discharge_planned_last = null;
+                string tsp2_discharge_actual = null;
+                string tsp2_loaded_planned_initial = null;
+                string tsp2_loaded_planned_last = null;
+                string tsp2_loaded_actual = null;
+                string tsp2_vsldeparture_planned_initial = null;
+                string tsp2_vsldeparture_planned_last = null;
+                string tsp2_vsldeparture_actual = null;
+                string tsp2_vsldeparture_detected = null;
+
+                string tsp3_loc_locode = null;
+                string tsp3_vslarrival_planned_initial = null;
+                string tsp3_vslarrival_planned_last = null;
+                string tsp3_vslarrival_actual = null;
+                string tsp3_vslarrival_detected = null;
+                string tsp3_discharge_planned_initial = null;
+                string tsp3_discharge_planned_last = null;
+                string tsp3_discharge_actual = null;
+                string tsp3_loaded_planned_initial = null;
+                string tsp3_loaded_planned_last = null;
+                string tsp3_loaded_actual = null;
+                string tsp3_vsldeparture_planned_initial = null;
+                string tsp3_vsldeparture_planned_last = null;
+                string tsp3_vsldeparture_actual = null;
+                string tsp3_vsldeparture_detected = null;
+
+                string tsp4_loc_locode = null;
+                string tsp4_vslarrival_planned_initial = null;
+                string tsp4_vslarrival_planned_last = null;
+                string tsp4_vslarrival_actual = null;
+                string tsp4_vslarrival_detected = null;
+                string tsp4_discharge_planned_initial = null;
+                string tsp4_discharge_planned_last = null;
+                string tsp4_discharge_actual = null;
+                string tsp4_loaded_planned_initial = null;
+                string tsp4_loaded_planned_last = null;
+                string tsp4_loaded_actual = null;
+                string tsp4_vsldeparture_planned_initial = null;
+                string tsp4_vsldeparture_planned_last = null;
+                string tsp4_vsldeparture_actual = null;
+                string tsp4_vsldeparture_detected = null;
+                string leg1_vessel_name = null;
+                string leg1_voyage = null;
+                string leg2_vessel_name = null;
+                string leg2_voyage = null;
+                string leg3_vessel_name = null;
+                string leg3_voyage = null;
+                string leg4_vessel_name = null;
+                string leg4_voyage = null;
+                string leg5_vessel_name = null;
+                string leg5_voyage = null;
+                string pod_loc_locode = null;
+                string pod_vslarrival_planned_initial = null;
+                string pod_vslarrival_planned_last = null;
+                string pod_vslarrival_actual = null;
+                string pod_vslarrival_detected = null;
+                string pod_discharge_planned_initial = null;
+                string pod_discharge_planned_last = null;
+                string pod_discharge_actual = null;
+                string pod_departure_planned_initial = null;
+                string pod_departure_planned_last = null;
+                string pod_departure_actual = null;
+
+                string dlv_loc_locode = null;
+                string dlv_delivery_planned_initial = null;
+                string dlv_delivery_planned_last = null;
+                string dlv_delivery_actual = null;
+
+                string lif_loc_locode = null;
+                string lif_arrival_planned_initial = null;
+                string lif_arrival_planned_last = null;
+                string lif_arrival_actual = null;
+                string lif_departure_planned_initial = null;
+                string lif_departure_planned_last = null;
+                string lif_departure_actual = null;
+
+                string empty_return_loc_locode = null;
+                string empty_return_planned_initial = null;
+                string empty_return_planned_last = null;
+                string empty_return_actual = null;
+                string empty_return_customer = null;
+                string customs_release_date = null;
+                string carrier_release_date = null;
+                string customs_release_state = null;
+                string carrier_release_state = null;
+                string availability_date = null;
+                string availability_locode = null;
+                string availability_timezone = null;
+
+                foreach (XmlNode node in xn.ChildNodes)
+                {
+                    if (node.ChildNodes != null && node.Name == "event")
+                    {
+                        createdDate = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "created").FirstOrDefault()?.InnerText;
+                        code = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "code").FirstOrDefault()?.InnerText;
+                        shipment_id = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "shipment_id").FirstOrDefault()?.InnerText;
+                        XmlElement detailsElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "details").FirstOrDefault();
+                        if (detailsElement != null)
+                        {
+                            message = detailsElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "message").FirstOrDefault()?.InnerText;
+                        }
+                    }
+
+                    if (node.ChildNodes != null && node.Name == "shipment")
+                    {
+                        container_number = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "container_number").FirstOrDefault()?.InnerText;
+                        carrier_scac = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "carrier_scac").FirstOrDefault()?.InnerText;
+                        status = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "status").FirstOrDefault()?.InnerText;
+                        status_verbose = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "status_verbose").FirstOrDefault()?.InnerText;
+                        bl_number = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "bl_number").FirstOrDefault()?.InnerText;
+                        empty_pickup_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "empty_pickup_planned_initial").FirstOrDefault()?.InnerText;
+                        empty_pickup_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "empty_pickup_planned_last").FirstOrDefault()?.InnerText;
+                        empty_pickup_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "empty_pickup_actual").FirstOrDefault()?.InnerText;
+                        origin_pickup_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "origin_pickup_planned_initial").FirstOrDefault()?.InnerText;
+                        origin_pickup_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "origin_pickup_planned_last").FirstOrDefault()?.InnerText;
+                        origin_pickup_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "origin_pickup_actual").FirstOrDefault()?.InnerText;
+                        pol_arrival_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_arrival_planned_initial").FirstOrDefault()?.InnerText;
+                        pol_arrival_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_arrival_actual").FirstOrDefault()?.InnerText;
+                        pol_arrival_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_arrival_planned_last").FirstOrDefault()?.InnerText;
+                        pol_loaded_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_loaded_planned_initial").FirstOrDefault()?.InnerText;
+                        pol_loaded_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_loaded_planned_last").FirstOrDefault()?.InnerText;
+                        pol_loaded_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_loaded_actual").FirstOrDefault()?.InnerText;
+                        pol_vsldeparture_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_vsldeparture_planned_initial").FirstOrDefault()?.InnerText;
+                        pol_vsldeparture_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_vsldeparture_planned_last").FirstOrDefault()?.InnerText;
+                        pol_vsldeparture_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_vsldeparture_actual").FirstOrDefault()?.InnerText;
+                        pol_vsldeparture_detected = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_vsldeparture_detected").FirstOrDefault()?.InnerText;
+                        ts_count = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "ts_count").FirstOrDefault()?.InnerText;
+
+                        XmlElement leg1_vessel_Element = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "leg1_vessel").FirstOrDefault();
+                        if (leg1_vessel_Element != null)
+                        {
+                            leg1_vessel_name = leg1_vessel_Element.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "name").FirstOrDefault()?.InnerText;
+                        }
+                        leg1_voyage = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "leg1_voyage").FirstOrDefault()?.InnerText;
+
+                        XmlElement leg2_vessel_Element = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "leg2_vessel").FirstOrDefault();
+                        if (leg2_vessel_Element != null)
+                        {
+                            leg2_vessel_name = leg2_vessel_Element.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "name").FirstOrDefault()?.InnerText;
+                        }
+                        leg2_voyage = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "leg2_voyage").FirstOrDefault()?.InnerText;
+
+                        XmlElement leg3_vessel_Element = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "leg3_vessel").FirstOrDefault();
+                        if (leg3_vessel_Element != null)
+                        {
+                            leg3_vessel_name = leg3_vessel_Element.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "name").FirstOrDefault()?.InnerText;
+                        }
+                        leg3_voyage = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "leg3_voyage").FirstOrDefault()?.InnerText;
+
+                        XmlElement leg4_vessel_Element = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "leg4_vessel").FirstOrDefault();
+                        if (leg4_vessel_Element != null)
+                        {
+                            leg4_vessel_name = leg4_vessel_Element.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "name").FirstOrDefault()?.InnerText;
+                        }
+                        leg4_voyage = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "leg4_voyage").FirstOrDefault()?.InnerText;
+
+                        XmlElement leg5_vessel_Element = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "leg5_vessel").FirstOrDefault();
+                        if (leg5_vessel_Element != null)
+                        {
+                            leg5_vessel_name = leg5_vessel_Element.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "name").FirstOrDefault()?.InnerText;
+                        }
+                        leg5_voyage = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "leg5_voyage").FirstOrDefault()?.InnerText;
+
+                        XmlElement tsp1_locElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp1_loc").FirstOrDefault();
+                        if (tsp1_locElement != null)
+                        {
+                            tsp1_loc_locode = tsp1_locElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "locode").FirstOrDefault()?.InnerText;
+                        }
+                        tsp1_vslarrival_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp1_vslarrival_planned_initial").FirstOrDefault()?.InnerText;
+                        tsp1_vslarrival_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp1_vslarrival_planned_last").FirstOrDefault()?.InnerText;
+                        tsp1_vslarrival_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp1_vslarrival_actual").FirstOrDefault()?.InnerText;
+                        tsp1_vslarrival_detected = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp1_vslarrival_detected").FirstOrDefault()?.InnerText; pol_vsldeparture_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_vsldeparture_planned_initial").FirstOrDefault()?.InnerText;
+                        tsp1_discharge_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp1_discharge_planned_initial").FirstOrDefault()?.InnerText; pol_vsldeparture_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_vsldeparture_planned_initial").FirstOrDefault()?.InnerText;
+                        tsp1_discharge_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp1_discharge_planned_last").FirstOrDefault()?.InnerText; pol_vsldeparture_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_vsldeparture_planned_initial").FirstOrDefault()?.InnerText;
+                        tsp1_discharge_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp1_discharge_actual").FirstOrDefault()?.InnerText;
+                        tsp1_loaded_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp1_loaded_planned_initial").FirstOrDefault()?.InnerText;
+                        tsp1_loaded_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp1_loaded_planned_last").FirstOrDefault()?.InnerText;
+                        tsp1_loaded_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp1_loaded_actual").FirstOrDefault()?.InnerText;
+                        tsp1_vsldeparture_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp1_vsldeparture_planned_initial").FirstOrDefault()?.InnerText;
+                        tsp1_vsldeparture_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp1_vsldeparture_planned_last").FirstOrDefault()?.InnerText;
+                        tsp1_vsldeparture_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp1_vsldeparture_actual").FirstOrDefault()?.InnerText;
+                        tsp1_vsldeparture_detected = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp1_vsldeparture_detected").FirstOrDefault()?.InnerText;
+
+                        XmlElement tsp2_locElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_loc").FirstOrDefault();
+                        if (tsp2_locElement != null)
+                        {
+                            tsp2_loc_locode = tsp2_locElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "locode").FirstOrDefault()?.InnerText;
+                        }
+
+                        tsp2_vslarrival_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_vslarrival_planned_initial").FirstOrDefault()?.InnerText;
+                        tsp2_vslarrival_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_vslarrival_planned_last").FirstOrDefault()?.InnerText;
+                        tsp2_vslarrival_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_vslarrival_actual").FirstOrDefault()?.InnerText;
+                        tsp2_vslarrival_detected = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_vslarrival_detected").FirstOrDefault()?.InnerText; pol_vsldeparture_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_vsldeparture_planned_initial").FirstOrDefault()?.InnerText;
+                        tsp2_discharge_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_discharge_planned_initial").FirstOrDefault()?.InnerText; pol_vsldeparture_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_vsldeparture_planned_initial").FirstOrDefault()?.InnerText;
+                        tsp2_discharge_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_discharge_planned_last").FirstOrDefault()?.InnerText; pol_vsldeparture_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_vsldeparture_planned_initial").FirstOrDefault()?.InnerText;
+                        tsp2_discharge_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_discharge_actual").FirstOrDefault()?.InnerText;
+                        tsp2_loaded_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_loaded_planned_initial").FirstOrDefault()?.InnerText;
+                        tsp2_loaded_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_loaded_planned_last").FirstOrDefault()?.InnerText;
+                        tsp2_loaded_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_loaded_actual").FirstOrDefault()?.InnerText;
+                        tsp2_vsldeparture_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_vsldeparture_planned_initial").FirstOrDefault()?.InnerText;
+                        tsp2_vsldeparture_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_vsldeparture_planned_last").FirstOrDefault()?.InnerText;
+                        tsp2_vsldeparture_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_vsldeparture_actual").FirstOrDefault()?.InnerText;
+                        tsp2_vsldeparture_detected = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_vsldeparture_detected").FirstOrDefault()?.InnerText;
+
+                        XmlElement tsp3_locElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp3_loc").FirstOrDefault();
+                        if (tsp3_locElement != null)
+                        {
+                            tsp3_loc_locode = tsp3_locElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "locode").FirstOrDefault()?.InnerText;
+                        }
+                        tsp3_vslarrival_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp3_vslarrival_planned_initial").FirstOrDefault()?.InnerText;
+                        tsp3_vslarrival_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp3_vslarrival_planned_last").FirstOrDefault()?.InnerText;
+                        tsp3_vslarrival_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp3_vslarrival_actual").FirstOrDefault()?.InnerText;
+                        tsp3_vslarrival_detected = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp3_vslarrival_detected").FirstOrDefault()?.InnerText; pol_vsldeparture_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_vsldeparture_planned_initial").FirstOrDefault()?.InnerText;
+                        tsp3_discharge_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp3_discharge_planned_initial").FirstOrDefault()?.InnerText; pol_vsldeparture_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_vsldeparture_planned_initial").FirstOrDefault()?.InnerText;
+                        tsp3_discharge_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp3_discharge_planned_last").FirstOrDefault()?.InnerText; pol_vsldeparture_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_vsldeparture_planned_initial").FirstOrDefault()?.InnerText;
+                        tsp3_discharge_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp3_discharge_actual").FirstOrDefault()?.InnerText;
+                        tsp3_loaded_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp3_loaded_planned_initial").FirstOrDefault()?.InnerText;
+                        tsp3_loaded_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp3_loaded_planned_last").FirstOrDefault()?.InnerText;
+                        tsp3_loaded_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp3_loaded_actual").FirstOrDefault()?.InnerText;
+                        tsp3_vsldeparture_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp3_vsldeparture_planned_initial").FirstOrDefault()?.InnerText;
+                        tsp3_vsldeparture_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp3_vsldeparture_planned_last").FirstOrDefault()?.InnerText;
+                        tsp3_vsldeparture_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp3_vsldeparture_actual").FirstOrDefault()?.InnerText;
+                        tsp3_vsldeparture_detected = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp3_vsldeparture_detected").FirstOrDefault()?.InnerText;
+
+                        XmlElement tsp4_locElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_loc").FirstOrDefault();
+                        if (tsp4_locElement != null)
+                        {
+                            tsp4_loc_locode = tsp4_locElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "locode").FirstOrDefault()?.InnerText;
+                        }
+                        tsp4_vslarrival_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_vslarrival_planned_initial").FirstOrDefault()?.InnerText;
+                        tsp4_vslarrival_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_vslarrival_planned_last").FirstOrDefault()?.InnerText;
+                        tsp4_vslarrival_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_vslarrival_actual").FirstOrDefault()?.InnerText;
+                        tsp4_vslarrival_detected = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_vslarrival_detected").FirstOrDefault()?.InnerText; pol_vsldeparture_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_vsldeparture_planned_initial").FirstOrDefault()?.InnerText;
+                        tsp4_discharge_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_discharge_planned_initial").FirstOrDefault()?.InnerText; pol_vsldeparture_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_vsldeparture_planned_initial").FirstOrDefault()?.InnerText;
+                        tsp4_discharge_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_discharge_planned_last").FirstOrDefault()?.InnerText; pol_vsldeparture_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_vsldeparture_planned_initial").FirstOrDefault()?.InnerText;
+                        tsp4_discharge_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_discharge_actual").FirstOrDefault()?.InnerText;
+                        tsp4_loaded_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_loaded_planned_initial").FirstOrDefault()?.InnerText;
+                        tsp4_loaded_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_loaded_planned_last").FirstOrDefault()?.InnerText;
+                        tsp4_loaded_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_loaded_actual").FirstOrDefault()?.InnerText;
+                        tsp4_vsldeparture_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_vsldeparture_planned_initial").FirstOrDefault()?.InnerText;
+                        tsp4_vsldeparture_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_vsldeparture_planned_last").FirstOrDefault()?.InnerText;
+                        tsp4_vsldeparture_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_vsldeparture_actual").FirstOrDefault()?.InnerText;
+                        tsp4_vsldeparture_detected = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_vsldeparture_detected").FirstOrDefault()?.InnerText;
+
+                        XmlElement emptyPickupLocationElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "empty_pickup_loc").FirstOrDefault();
+                        if (emptyPickupLocationElement != null)
+                        {
+                            empty_pickup_loc_locode = emptyPickupLocationElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "locode").FirstOrDefault()?.InnerText;
+                        }
+
+                        XmlElement origin_locElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "origin_loc").FirstOrDefault();
+                        if (origin_locElement != null)
+                        {
+                            origin_loc_name = origin_locElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "name").FirstOrDefault()?.InnerText;
+                        }
+
+                        XmlElement departureLocationElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_loc").FirstOrDefault();
+                        if (departureLocationElement != null)
+                        {
+                            pol_loc_locode = departureLocationElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "locode").FirstOrDefault()?.InnerText;
+                        }
+
+                        XmlElement destinationLocationElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pod_loc").FirstOrDefault();
+                        if (destinationLocationElement != null)
+                        {
+                            pod_loc_locode = destinationLocationElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "locode").FirstOrDefault()?.InnerText;
+                        }
+                        pod_vslarrival_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pod_vslarrival_planned_initial").FirstOrDefault()?.InnerText;
+                        pod_vslarrival_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pod_vslarrival_planned_last").FirstOrDefault()?.InnerText;
+                        pod_vslarrival_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pod_vslarrival_actual").FirstOrDefault()?.InnerText;
+                        pod_vslarrival_detected = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pod_vslarrival_detected").FirstOrDefault()?.InnerText;
+                        pod_discharge_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pod_discharge_planned_last").FirstOrDefault()?.InnerText;
+                        pod_discharge_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pod_discharge_actual").FirstOrDefault()?.InnerText;
+                        pod_departure_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pod_departure_planned_initial").FirstOrDefault()?.InnerText;
+                        pod_departure_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pod_departure_planned_last").FirstOrDefault()?.InnerText;
+                        pod_departure_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pod_departure_actual").FirstOrDefault()?.InnerText;
+                        pod_discharge_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pod_discharge_planned_initial").FirstOrDefault()?.InnerText;
+
+                        XmlElement dlv_locElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "dlv_loc").FirstOrDefault();
+                        if (dlv_locElement != null)
+                        {
+                            dlv_loc_locode = dlv_locElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "locode").FirstOrDefault()?.InnerText;
+                        }
+                        dlv_delivery_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "dlv_delivery_planned_initial").FirstOrDefault()?.InnerText;
+                        dlv_delivery_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "dlv_delivery_planned_last").FirstOrDefault()?.InnerText;
+                        dlv_delivery_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "dlv_delivery_actual").FirstOrDefault()?.InnerText;
+
+                        XmlElement lif_locElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "lif_loc").FirstOrDefault();
+                        if (lif_locElement != null)
+                        {
+                            lif_loc_locode = lif_locElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "locode").FirstOrDefault()?.InnerText;
+                        }
+                        lif_arrival_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "lif_arrival_planned_last").FirstOrDefault()?.InnerText;
+                        lif_arrival_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "lif_arrival_planned_initial").FirstOrDefault()?.InnerText;
+                        lif_arrival_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "lif_arrival_actual").FirstOrDefault()?.InnerText;
+                        lif_departure_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "lif_departure_planned_initial").FirstOrDefault()?.InnerText;
+                        lif_departure_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "lif_departure_planned_last").FirstOrDefault()?.InnerText;
+                        lif_departure_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "lif_departure_actual").FirstOrDefault()?.InnerText;
+
+                        XmlElement empty_return_locElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "empty_return_loc").FirstOrDefault();
+                        if (empty_return_locElement != null)
+                        {
+                            empty_return_loc_locode = empty_return_locElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "locode").FirstOrDefault()?.InnerText;
+                        }
+                        empty_return_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "empty_return_planned_initial").FirstOrDefault()?.InnerText;
+                        empty_return_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "empty_return_planned_last").FirstOrDefault()?.InnerText;
+                        empty_return_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "empty_return_actual").FirstOrDefault()?.InnerText;
+                        empty_return_customer = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "empty_return_customer").FirstOrDefault()?.InnerText;
+                        customs_release_date = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "customs_release_date").FirstOrDefault()?.InnerText;
+                        carrier_release_date = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "carrier_release_date").FirstOrDefault()?.InnerText;
+                        customs_release_state = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "customs_release_state").FirstOrDefault()?.InnerText;
+                        carrier_release_state = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "carrier_release_state").FirstOrDefault()?.InnerText;
+                        availability_date = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "availability_date").FirstOrDefault()?.InnerText;
+
+                        XmlElement availabilityemptyPickupLocationElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "availability_loc").FirstOrDefault();
+                        if (availabilityemptyPickupLocationElement != null)
+                        {
+                            availability_locode = availabilityemptyPickupLocationElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "locode").FirstOrDefault()?.InnerText;
+                            availability_timezone = availabilityemptyPickupLocationElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "timezone").FirstOrDefault()?.InnerText;
+                        }
+                    }
+                }
+
+                oceanInsightStatisticsSheet2.Add(new ExcelOI()
+                {
+                    tenant = tenant,
+                    container_number = container_number,
+                    createdDate = ConvertStringToDateTime(createdDate),
+                    carrier_scac = carrier_scac,
+                    code = code,
+                    message = message,
+                    status = status,
+                    status_verbose = status_verbose,
+                    shipment_id = shipment_id,
+                    bl_number = bl_number,
+                    empty_pickup_loc_locode = empty_pickup_loc_locode,
+                    empty_pickup_planned_initial = empty_pickup_planned_initial,
+                    empty_pickup_planned_last = empty_pickup_planned_last,
+                    empty_pickup_actual = empty_pickup_actual,
+                    origin_loc_name = origin_loc_name,
+                    origin_pickup_planned_initial = origin_pickup_planned_initial,
+                    origin_pickup_planned_last = origin_pickup_planned_last,
+                    origin_pickup_actual = origin_pickup_actual,
+                    pol_loc_locode = pol_loc_locode,
+                    pol_arrival_planned_initial = pol_arrival_planned_initial,
+                    pol_arrival_planned_last = pol_arrival_planned_last,
+                    pol_arrival_actual = pol_arrival_actual,
+                    pol_loaded_planned_initial = pol_loaded_planned_initial,
+                    pol_loaded_planned_last = pol_loaded_planned_last,
+                    pol_loaded_actual = pol_loaded_actual,
+                    pol_vsldeparture_planned_initial = pol_vsldeparture_planned_initial,
+                    pol_vsldeparture_planned_last = pol_vsldeparture_planned_last,
+                    pol_vsldeparture_actual = pol_vsldeparture_actual,
+                    pol_vsldeparture_detected = pol_vsldeparture_detected,
+                    ts_count = ts_count,
+                    tsp1_loc_locode = tsp1_loc_locode,
+                    tsp1_vslarrival_planned_initial = tsp1_vslarrival_planned_initial,
+                    tsp1_vslarrival_planned_last = tsp1_vslarrival_planned_last,
+                    tsp1_vslarrival_actual = tsp1_vslarrival_actual,
+                    tsp1_vslarrival_detected = tsp1_vslarrival_detected,
+                    tsp1_discharge_planned_initial = tsp1_discharge_planned_initial,
+                    tsp1_discharge_planned_last = tsp1_discharge_planned_last,
+                    tsp1_discharge_actual = tsp1_discharge_actual,
+                    tsp1_loaded_planned_initial = tsp1_loaded_planned_initial,
+                    tsp1_loaded_planned_last = tsp1_loaded_planned_last,
+                    tsp1_loaded_actual = tsp1_loaded_actual,
+                    tsp1_vsldeparture_planned_initial = tsp1_vsldeparture_planned_initial,
+                    tsp1_vsldeparture_planned_last = tsp1_vsldeparture_planned_last,
+                    tsp1_vsldeparture_actual = tsp1_vsldeparture_actual,
+                    tsp1_vsldeparture_detected = tsp1_vsldeparture_detected,
+                    tsp2_loc_locode = tsp2_loc_locode,
+                    tsp2_vslarrival_planned_initial = tsp2_vslarrival_planned_initial,
+                    tsp2_vslarrival_planned_last = tsp2_vslarrival_planned_last,
+                    tsp2_vslarrival_actual = tsp2_vslarrival_actual,
+                    tsp2_vslarrival_detected = tsp2_vslarrival_detected,
+                    tsp2_discharge_planned_initial = tsp2_discharge_planned_initial,
+                    tsp2_discharge_planned_last = tsp2_discharge_planned_last,
+                    tsp2_discharge_actual = tsp2_discharge_actual,
+                    tsp2_loaded_planned_initial = tsp2_loaded_planned_initial,
+                    tsp2_loaded_planned_last = tsp2_loaded_planned_last,
+                    tsp2_loaded_actual = tsp2_loaded_actual,
+                    tsp2_vsldeparture_planned_initial = tsp2_vsldeparture_planned_initial,
+                    tsp2_vsldeparture_planned_last = tsp2_vsldeparture_planned_last,
+                    tsp2_vsldeparture_actual = tsp2_vsldeparture_actual,
+                    tsp2_vsldeparture_detected = tsp2_vsldeparture_detected,
+                    tsp3_loc_locode = tsp3_loc_locode,
+                    tsp3_vslarrival_planned_initial = tsp3_vslarrival_planned_initial,
+                    tsp3_vslarrival_planned_last = tsp3_vslarrival_planned_last,
+                    tsp3_vslarrival_actual = tsp3_vslarrival_actual,
+                    tsp3_vslarrival_detected = tsp3_vslarrival_detected,
+                    tsp3_discharge_planned_initial = tsp3_discharge_planned_initial,
+                    tsp3_discharge_planned_last = tsp3_discharge_planned_last,
+                    tsp3_discharge_actual = tsp3_discharge_actual,
+                    tsp3_loaded_planned_initial = tsp3_loaded_planned_initial,
+                    tsp3_loaded_planned_last = tsp3_loaded_planned_last,
+                    tsp3_loaded_actual = tsp3_loaded_actual,
+                    tsp3_vsldeparture_planned_initial = tsp3_vsldeparture_planned_initial,
+                    tsp3_vsldeparture_planned_last = tsp3_vsldeparture_planned_last,
+                    tsp3_vsldeparture_actual = tsp3_vsldeparture_actual,
+                    tsp3_vsldeparture_detected = tsp3_vsldeparture_detected,
+                    tsp4_loc_locode = tsp4_loc_locode,
+                    tsp4_vslarrival_planned_initial = tsp4_vslarrival_planned_initial,
+                    tsp4_vslarrival_planned_last = tsp4_vslarrival_planned_last,
+                    tsp4_vslarrival_actual = tsp4_vslarrival_actual,
+                    tsp4_vslarrival_detected = tsp4_vslarrival_detected,
+                    tsp4_discharge_planned_initial = tsp4_discharge_planned_initial,
+                    tsp4_discharge_planned_last = tsp4_discharge_planned_last,
+                    tsp4_discharge_actual = tsp4_discharge_actual,
+                    tsp4_loaded_planned_initial = tsp4_loaded_planned_initial,
+                    tsp4_loaded_planned_last = tsp4_loaded_planned_last,
+                    tsp4_loaded_actual = tsp4_loaded_actual,
+                    tsp4_vsldeparture_planned_initial = tsp4_vsldeparture_planned_initial,
+                    tsp4_vsldeparture_planned_last = tsp4_vsldeparture_planned_last,
+                    tsp4_vsldeparture_actual = tsp4_vsldeparture_actual,
+                    tsp4_vsldeparture_detected = tsp4_vsldeparture_detected,
+                    leg1_vessel_name = leg1_vessel_name,
+                    leg1_voyage = leg1_voyage,
+                    leg2_vessel_name = leg2_vessel_name,
+                    leg2_voyage = leg2_voyage,
+                    leg3_vessel_name = leg3_vessel_name,
+                    leg3_voyage = leg3_voyage,
+                    leg4_vessel_name = leg4_vessel_name,
+                    leg4_voyage = leg4_voyage,
+                    leg5_vessel_name = leg5_vessel_name,
+                    leg5_voyage = leg5_voyage,
+                    pod_loc_locode = pod_loc_locode,
+                    pod_vslarrival_planned_initial = pod_vslarrival_planned_initial,
+                    pod_vslarrival_planned_last = pod_vslarrival_planned_last,
+                    pod_vslarrival_actual = pod_vslarrival_actual,
+                    pod_vslarrival_detected = pod_vslarrival_detected,
+                    pod_discharge_planned_initial = pod_discharge_planned_initial,
+                    pod_discharge_planned_last = pod_discharge_planned_last,
+                    pod_discharge_actual = pod_discharge_actual,
+                    pod_departure_planned_initial = pod_departure_planned_initial,
+                    pod_departure_planned_last = pod_departure_planned_last,
+                    pod_departure_actual = pod_departure_actual,
+                    dlv_loc_locode = dlv_loc_locode,
+                    dlv_delivery_planned_initial = dlv_delivery_planned_initial,
+                    dlv_delivery_planned_last = dlv_delivery_planned_last,
+                    dlv_delivery_actual = dlv_delivery_actual,
+                    lif_loc_locode = lif_loc_locode,
+                    lif_arrival_planned_initial = lif_arrival_planned_initial,
+                    lif_arrival_planned_last = lif_arrival_planned_last,
+                    lif_arrival_actual = lif_arrival_actual,
+                    lif_departure_planned_initial = lif_departure_planned_initial,
+                    lif_departure_planned_last = lif_departure_planned_last,
+                    lif_departure_actual = lif_departure_actual,
+                    empty_return_loc_locode = empty_return_loc_locode,
+                    empty_return_planned_initial = empty_return_planned_initial,
+                    empty_return_planned_last = empty_return_planned_last,
+                    empty_return_actual = empty_return_actual,
+                    empty_return_customer = empty_return_customer,
+                    customs_release_date = ConvertStringToDateTime(customs_release_date),
+                    carrier_release_date = ConvertStringToDateTime(carrier_release_date),
+                    customs_release_state = customs_release_state,
+                    carrier_release_state = carrier_release_state,
+                    availability_date = ConvertStringToDateTime(availability_date),
+                    availability_locode = availability_locode,
+                    availability_timezone = availability_timezone,
+                });
+            }
+        }
+        private DataTable ConvertToDataTable<T>(IList<T> data)
+        {
+            PropertyDescriptorCollection properties = TypeDescriptor.GetProperties(typeof(T));
+            DataTable table = new DataTable();
+
+            foreach (PropertyDescriptor prop in properties)
+            {
+                table.Columns.Add(prop.Name, Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType);
+            }
+
+            foreach (T item in data)
+            {
+                DataRow row = table.NewRow();
+                foreach (PropertyDescriptor prop in properties)
+                {
+                    if (table.Columns.Contains(prop.Name))
+                    {
+                        row[prop.Name] = prop.GetValue(item) ?? DBNull.Value;
+                    }
+                }
+
+                table.Rows.Add(row);
+            }
+
+            return table;
+        }
+        public DateTime? ConvertStringToDateTime(string XMLValue)
+        {
+            string dateTimeString = this.GetCorrectDateTimeString(XMLValue);
+
+            if (!string.IsNullOrEmpty(dateTimeString))
+            {
+                return Convert.ToDateTime(dateTimeString);
+            }
+
+            else
+            {
+                return null;
+            }
+        }
+        private string GetCorrectDateTimeString(string XMLValue)
+        {
+            string dateTimeString = "";
+
+            if (!string.IsNullOrEmpty(XMLValue))
+            {
+                if (XMLValue.Length > 16)
+                {
+                    dateTimeString = XMLValue.Substring(0, 16);
+                }
+
+                else
+                {
+                    dateTimeString = XMLValue;
+                }
+            }
+
+            return dateTimeString;
+        }
+        private void OITimer_Tick(object sender, EventArgs e)
+        {
+            if (OIStopWatch != null)
+            {
+                TimeSpan ts = OIStopWatch.Elapsed;
+                SetControlPropertyValue(OIStatisticslabel, "Text", "Generating... " + ts.ToString(@"hh\:mm\:ss"));
+            }
+        }
+
+        private void UpdateShipmentOrderButton_Click(object sender, EventArgs e)
+        {
+            Thread thread = new Thread(() => UpdateModule(0, "shipmentOrder", UpdateSHOLabel));
+            thread.IsBackground = true;
+            thread.Start();
+        }
+
+        private void UpdateQuoteTemplateSettingsButton_Click(object sender, EventArgs e)
+        {
+            Thread thread = new Thread(() => UpdateModule(0, "QuoteTemplateSettings", lblUQuote));
+            thread.IsBackground = true;
+            thread.Start();
+        }
+
+
+        private void UploadTimeZones_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Multiselect = false;
+            openFileDialog.Filter = ".csv|*.csv";
+            if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                this.ReadTimeZonesExcelFile(openFileDialog);
+            }
+        }
+        private void ReadTimeZonesExcelFile(OpenFileDialog openFileDialog)
+        {
+            Stream stream = openFileDialog.OpenFile();
+            StreamReader streamReader = new StreamReader(stream);
+            this.CreateListOfExcelData(streamReader);
+        }
+        private void CreateListOfExcelData(StreamReader streamReader)
+        {
+            List<TimeZoneExcelItem> excelTimeZones = new List<TimeZoneExcelItem>();
+
+            string line = "";
+            string[] lineParts = null;
+            while ((line = streamReader.ReadLine()) != null)
+            {
+                lineParts = line.Split(',');
+
+                if (lineParts.Count() == 3)
+                {
+                    string name = this.GetText(lineParts, 0);
+                    string utcOffset = this.GetText(lineParts, 1);
+                    string utcDstOffset = this.GetText(lineParts, 2);
+
+                    if (name != null && utcOffset != null && name != "TZ database name")
+                    {
+                        string newUtcOffset = this.FixMinusSign(utcOffset);
+                        string newUtcDstOffset = this.FixMinusSign(utcDstOffset);
+
+                        TimeZoneExcelItem myDataItem = new TimeZoneExcelItem();
+                        myDataItem.Name = name;
+                        myDataItem.UTCOffset = newUtcOffset;
+                        myDataItem.UTCDSTOffset = newUtcDstOffset;
+                        excelTimeZones.Add(myDataItem);
+                    }
+                }
+            }
+
+            List<TimeZoneExcelItem> distinctItems = excelTimeZones.GroupBy(p => new { p.Name, p.UTCOffset }).Select(g => g.Last()).ToList();
+            Thread thread = new Thread(() => this.CreatePortTimeZones(distinctItems));
+            thread.IsBackground = true;
+            thread.Start();
+        }
+        private string FixMinusSign(string input)
+        {
+            string newInput = input;
+            if (input.Contains("?"))
+            {
+                newInput = input.Replace('?', '-');
+            }
+
+            return newInput;
+        }
+        private void CreatePortTimeZones(List<TimeZoneExcelItem> excelTimeZones)
+        {
+            if (excelTimeZones.Count > 0)
+            {
+                SetControlPropertyValue(UploadTimeZonesLabel, "Text", "Uploading...");
+                Stopwatch stopWatch = new Stopwatch();
+                stopWatch.Start();
+
+                ICommonDataContext commonContext = CommonDataContext.GetContext(0);
+                PortTimeZoneRepository portTimeZoneRepository = new PortTimeZoneRepository(commonContext);
+
+                foreach (TimeZoneExcelItem item in excelTimeZones)
+                {
+                    PortTimeZone portTimeZone = new PortTimeZone();
+                    portTimeZone.Code = item.Name;
+                    portTimeZone.Name = item.Name;
+                    portTimeZone.SearchFields = item.Name + "," + item.UTCOffset;
+                    portTimeZone.UTCOffset = item.UTCOffset;
+                    portTimeZone.UTCDSTOffset = item.UTCDSTOffset;
+                    portTimeZoneRepository.Add(portTimeZone);
+                }
+
+                portTimeZoneRepository.SubmitChanges();
+                stopWatch.Stop();
+                TimeSpan ts = stopWatch.Elapsed;
+                SetControlPropertyValue(UploadTimeZonesLabel, "ForeColor", Color.Green);
+                SetControlPropertyValue(UploadTimeZonesLabel, "Text", "Done in " + ts.ToString(@"hh\:mm\:ss"));
+            }
+        }
+        private void button56_Click(object sender, EventArgs e)
+        {
+            FutureOpenChequesBatch FutureOpenChequesBatch = new FutureOpenChequesBatch();
+            FutureOpenChequesBatch.SetTotalFutureOpenChequesInLocalCurrency();
+        }
+
+        private void FixModifiedSystemReportsTemplates_Click(object sender, EventArgs e)
+        {
+            Thread thread = new Thread(() => UpdateModule(0, "FixModifiedSystemReportsTemplates", lblFixModSysReports));
+            thread.IsBackground = true;
+            thread.Start();
+        }
+
+        private void StartPostdatedBtn_Click(object sender, EventArgs e)
+        {
+            try
+            {
+
+
+                var tenantsAccountingActivated = new List<int>();
+
+                var tenantRepo = new TenantRepository(0);
+                tenantsAccountingActivated = tenantRepo.All().Where(r => r.AccountingActivated).Select(r => r.Id).ToList();
+
+                foreach (var tenant in tenantsAccountingActivated)
+                {
+                    try
+                    {
+                        var myPostDatedChequesRedemptionBatch = new PostDatedChequesRedemptionBatch();
+                        myPostDatedChequesRedemptionBatch.RunAllPayablePostDatedARPaymentCheques(tenant);
+                        string responseText = myPostDatedChequesRedemptionBatch.ResponseText();
+                    }
+                    catch (Exception ex)
+                    {
+                    }
+
+                }
+
+            }
+            finally
+            {
+            }
+        }
+
+        private void UpdateEntity_Click(object sender, EventArgs e)
+        {
+            var updateEntityForm = new Logitude.Update.Update_Entity.Update_Entity();
+            updateEntityForm.Show();
+        }
+
+        private void groupBox4_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label15_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panel2_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+        List<string> logs = new List<string>();
+        private void RunCreateContainerBotton_Click(object sender, EventArgs e)
+        {
+
+            int tenant = -1;
+            if (!int.TryParse(ShipmentTenantNumber.Text, out tenant))
+                return;
+            var fromDate = ShipmentFromDate.Value;
+            var ToDate = ShipmentToDate.Value;
+            if (fromDate == null || ToDate == null)
+                return;
+            this.RunCreateContainerBotton.Visible = false;
+            this.StopCreateContainer.Visible = true;
+            this.PanelShipmentResults.Visible = true;
+            logs = new List<string>();
+            logs.Add("Shipemtn Number,Number Of container Created,Has Error,Error Message,Error Details");
+            var thread = new Thread(a => RunCreateContainer(tenant, fromDate, ToDate));
+            thread.Start();
+
+        }
+
+        private void RunCreateContainer(int tenant, DateTime fromDate, DateTime ToDate)
+        {
+            OpenContainerLogFile.Visible = false;
+            QueueLogs = new Queue<string>();
+            this.ShipmentContainerLog.Text = SetLogs("Start...");
+            var shipmentsContext = ShipmentsContext.GetContext(tenant);
+            var repository = new ShipmentRepository(shipmentsContext);
+            var shipmentQuery = new ShipmentQuery(repository);
+            ToDate = ToDate.AddDays(1);
+
+            var ContainerCount = shipmentsContext.ShipmentPackages
+                .Where(a =>
+                (a.Shipment.ShipmentLevelCode == "C" && a.Shipment.ShipmentTypeId == "MyGO") || (a.Shipment.ShipmentLevelCode != "C" && a.Shipment.ShipmentTypeId == "FCLD")
+                && a.Shipment.IsOperationalClosed == false
+                && a.Shipment.NumberOfContainers > 0
+                && a.Shipment.CreateDateTime >= fromDate.Date
+                && a.Shipment.CreateDateTime <= ToDate.Date && a.Shipment.Tenant == tenant
+                && a.ContainerEntityId == null && a.ContainerNumber != null).Count();
+
+            var shipmentsIds = shipmentsContext.ShipmentPackages
+                .Where(a => a.Shipment.ShipmentLevelCode != "C" && (a.Shipment.ShipmentTypeId == "FCLD" || a.Shipment.ShipmentTypeId == "MyGO") && a.Shipment.IsOperationalClosed == false && a.Shipment.NumberOfContainers > 0
+                && a.Shipment.CreateDateTime >= fromDate.Date && a.Shipment.CreateDateTime <= ToDate.Date && a.Shipment.Tenant == tenant
+                && a.ContainerEntityId == null && a.ContainerNumber != null).GroupBy(a => a.Shipment.Id).Select(e => e.Key).ToList();
+
+
+            CraeteContainerProgressBar.Maximum = ContainerCount > 0 ? ContainerCount : 1;
+            CraeteContainerProgressBar.Minimum = 0;
+            CraeteContainerProgressBar.Value = 0;
+            CraeteContainerProgressBar.Step = 1;
+            CraeteContainerProgressBar.Style = ProgressBarStyle.Blocks;
+
+            NumberOfShipments.Text = shipmentsIds.Count + "";
+            NumberOfDoneShipments.Text = "0";
+            var numberOfShipmentsRemaining = shipmentsIds.Count;
+            var numberOfShipmentsFail = 0;
+            var numberOfShipmentsDone = 0;
+            var numberOfContainerCreated = 0;
+            foreach (var shipmentId in shipmentsIds)
+            {
+                if (StopCreateContainerBool)
+                {
+                    this.ShipmentContainerLog.Text = SetLogs("stop...");
+                    break;
+                }
+
+                var watch = new System.Diagnostics.Stopwatch();
+
+                watch.Start();
+                var shipmentPM = shipmentQuery.GetSinglePMWithoutComposition(shipmentId, tenant, true);
+                ShipmentService shipmentService = new ShipmentService(shipmentsContext, shipmentPM, $"system@tenant{tenant}.com");
+                var numberOfContainer = shipmentPM.ShipmentPackages.Where(a => a.ContainerEntityId == null && a.ContainerNumber != null).Count();
+                try
+                {
+                    AddContainers(shipmentsContext, shipmentPM);
+                    numberOfShipmentsDone++;
+                    numberOfContainerCreated += numberOfContainer;
+                    logs.Add($"{shipmentPM.ShipmentNumber},{numberOfContainer},False,,");
+                    this.ShipmentContainerLog.Text = SetLogs($"Shipment: {shipmentPM.ShipmentNumber} , Container Created : {numberOfContainer}");
+                }
+                catch (Exception e)
+                {
+                    numberOfShipmentsFail++;
+                    logs.Add($"{shipmentPM.ShipmentNumber},{numberOfContainer},True,{e.Message},{e}");
+                    this.ShipmentContainerLog.Text = SetLogs($"Shipment: {shipmentPM.ShipmentNumber} , Container Created : {numberOfContainer} , Error: {e.Message}");
+                    numberOfContainerCreated += shipmentPM.ShipmentPackages.Count;
+                }
+                CraeteContainerProgressBar.Increment(numberOfContainer);
+                watch.Stop();
+                numberOfShipmentsRemaining--;
+                NumberOfDoneShipments.Text = numberOfShipmentsDone + "";
+                NumberOfShipmentsFail.Text = numberOfShipmentsFail + "";
+                if (numberOfContainer == 0)
+                    numberOfContainer = 1;
+                var totalMinuts = watch.ElapsedMilliseconds / numberOfContainer / 1000.0 / 60.0 * (ContainerCount - numberOfContainerCreated);
+                var minuts = Math.Floor(totalMinuts);
+                var sec = Convert.ToInt32(totalMinuts % 1 * 60);
+                this.EstimatedDoneTime.Text = $"{Convert.ToInt32(minuts)} M and {sec} S";
+
+
+            }
+            StopCreateContainerBool = false;
+
+            this.StopCreateContainer.Visible = false;
+            this.RunCreateContainerBotton.Visible = true;
+            this.StopCreateContainer.Text = "stop";
+            this.EstimatedDoneTime.Text = "";
+            CraeteContainerProgressBar.Value = CraeteContainerProgressBar.Maximum;
+            this.ShipmentContainerLog.Text = SetLogs("Done");
+            if (shipmentsIds.Count > 0)
+            {
+                CreateContainerLogFile();
+            }
+        }
+
+        private void CreateContainerLogFile()
+        {
+            WriteShipmentContainerLogErrorToFile();
+            OpenContainerLogFile.Visible = true;
+        }
+
+        Queue<string> QueueLogs = new Queue<string>();
+        private string SetLogs(string message)
+        {
+
+            QueueLogs.Enqueue(message);
+            if (QueueLogs.Count > 100)
+                QueueLogs.Dequeue();
+            return string.Join("\n", QueueLogs.ToList());
+
+
+        }
+
+
+        private int AddContainers(IShipmentsContext shipmentsContext, BL.ShipmentsModel.EntityPMs.ShipmentPM shipmentPM)
+        {
+            ShipmentServiceInitializer shipmentServiceInitializer = new ShipmentServiceInitializer(shipmentsContext, shipmentPM, $"system@tenant{shipmentPM.Tenant}.com");
+            shipmentServiceInitializer.ShipmentPackagesChangeSet = shipmentPM.ShipmentPackages;
+
+            ShipmentContainersEntityBehaviour shipmentContainersEntityBehaviour = new ShipmentContainersEntityBehaviour();
+            return shipmentContainersEntityBehaviour.CreatesShipmentContainers(shipmentServiceInitializer);
+
+        }
+
+        bool StopCreateContainerBool = false;
+        private void StopCreateContainer_Click(object sender, EventArgs e)
+        {
+            this.StopCreateContainer.Text = "Stopping...";
+            StopCreateContainerBool = true;
+        }
+        private void WriteShipmentContainerLogErrorToFile()
+        {
+
+            string path = @"ShipmentContainerLog.csv";
+            if (!File.Exists(path))
+            {
+                // Create a file to write to.
+                using (StreamWriter sw = File.CreateText(path))
+                {
+                    sw.Close();
+                }
+            }
+            File.WriteAllLines(path, logs);
+
+
+        }
+
+        private void label20_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void richTextBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void OpenContainerLogFile_Click(object sender, EventArgs e)
+        {
+            Process.Start("ShipmentContainerLog.csv");
+        }
+
+        private void updateWorkflowButton_Click(object sender, EventArgs e)
+        {
+            Thread thread = new Thread(() => UpdateModule(0, "Workflow", updateWorkflowLabel));
+            thread.IsBackground = true;
+            thread.Start();
+        }
+
+        private void updateDashboardButton_Click(object sender, EventArgs e)
+        {
+            Thread thread = new Thread(() => UpdateModule(0, "Dashboard", updateDashboardLabel));
+            thread.IsBackground = true;
+            thread.Start();
+        }
+
+        private bool isUploadContactsClicked = false;
+        private bool isDeleteContactsClicked = false;
+        private void uploadContactsButton_Click(object sender, EventArgs e)
+        {
+            this.isUploadContactsClicked = true;
+            ReadContactsExcelFile();
+        }
+        private void deleteContactsButton_Click(object sender, EventArgs e)
+        {
+            this.isDeleteContactsClicked = true;
+            ReadContactsExcelFile();
+        }
+        private void ReadContactsExcelFile()
+        {
+            if (string.IsNullOrEmpty(uploadContactstextBox.Text))
+                MessageBox.Show("Please insert tenant");
+
+            else
+            {
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.Multiselect = false;
+                openFileDialog.Filter = "csv|*.csv";
+                if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    Stream stream = openFileDialog.OpenFile();
+                    StreamReader streamReader = new StreamReader(stream);
+                    this.ReadExcelLinesOfContacts(streamReader);
+                }
+            }
+        }
+        private void ReadExcelLinesOfContacts(StreamReader streamReader)
+        {
+            List<ExcelContactItem> allContacts = new List<ExcelContactItem>();
+
+            string line = "";
+            string[] lineParts = null;
+            while ((line = streamReader.ReadLine()) != null)
+            {
+                lineParts = line.Split(',');
+
+                if (lineParts.Count() == 9)
+                {
+                    string partnerName = this.GetText(lineParts, 1);
+                    string firstName = this.GetText(lineParts, 2);
+                    string lastName = this.GetText(lineParts, 3);
+                    string companyPos = this.GetText(lineParts, 4);
+                    string partnerType = this.GetText(lineParts, 5);
+                    string email = this.GetText(lineParts, 6);
+                    string phone = this.GetText(lineParts, 7);
+                    string mobile = this.GetText(lineParts, 8);
+
+                    allContacts.Add(new ExcelContactItem
+                    {
+                        PartnerName = partnerName,
+                        FirstName = firstName,
+                        LastName = lastName,
+                        CompanyPos = companyPos,
+                        PartnerType = partnerType,
+                        Email = email,
+                        Phone = phone,
+                        Mobile = mobile,
+                    });
+                }
+            }
+
+            allContacts.Remove(allContacts[0]);
+
+            Thread thread = new Thread(() =>
+            {
+                if (isUploadContactsClicked)
+                    this.UploadContacts(allContacts);
+                else if (isDeleteContactsClicked)
+                    this.DeleteContacts(allContacts);
+            });
+
+            thread.IsBackground = true;
+            thread.Start();
+        }
+
+        private List<UploadContactFailItem> uploadContactFailItems;
+        private int contactsCount = 0;
+        private void UploadContacts(List<ExcelContactItem> allContacts)
+        {
+            Stopwatch stopWatch = this.InitializeProcesstingContacts();
+
+            int tenant = Convert.ToInt32(uploadContactstextBox.Text);
+            ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
+            foreach (ExcelContactItem item in allContacts)
+            {
+                InsertNewContact(item, tenant, commonContext);
+            }
+            commonContext.SaveChanges();
+
+            stopWatch.Stop();
+            TimeSpan ts = stopWatch.Elapsed;
+            SetControlPropertyValue(uploadContactsLabel, "Text", "Done in " + ts.ToString());
+
+            if (uploadContactFailItems.Count > 0)
+            {
+                string[] arr = new string[3];
+                foreach (UploadContactFailItem item in uploadContactFailItems)
+                {
+                    arr[0] = item.PartnerName;
+                    arr[1] = item.Email;
+                    arr[2] = item.ErrorMessage;
+
+                    UploadContactsList.Items.Add(new ListViewItem(arr));
+                }
+            }
+            isUploadContactsClicked = false;
+        }
+        private void DeleteContacts(List<ExcelContactItem> allContacts)
+        {
+            Stopwatch stopWatch = this.InitializeProcesstingContacts();
+
+            int tenant = Convert.ToInt32(uploadContactstextBox.Text);
+            ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
+            foreach (ExcelContactItem item in allContacts)
+            {
+                DeleteExistingContact(item, tenant, commonContext);
+            }
+            commonContext.SaveChanges();
+
+            stopWatch.Stop();
+            TimeSpan ts = stopWatch.Elapsed;
+            SetControlPropertyValue(uploadContactsLabel, "Text", "Done in " + ts.ToString());
+
+            if (uploadContactFailItems.Count > 0)
+            {
+                string[] arr = new string[3];
+                foreach (UploadContactFailItem item in uploadContactFailItems)
+                {
+                    arr[0] = item.PartnerName;
+                    arr[1] = item.Email;
+                    arr[2] = item.ErrorMessage;
+
+                    UploadContactsList.Items.Add(new ListViewItem(arr));
+                }
+            }
+            isDeleteContactsClicked = false;
+        }
+        private Stopwatch InitializeProcesstingContacts()
+        {
+            contactsCount = 0;
+            uploadContactFailItems = new List<UploadContactFailItem>();
+            UploadContactsList.Items.Clear();
+
+            UploadContactsList.View = View.Details;
+            UploadContactsList.GridLines = true;
+            UploadContactsList.FullRowSelect = true;
+
+            //Add column header
+            UploadContactsList.Columns.Add("Partner Name", 200);
+            UploadContactsList.Columns.Add("Email", 200);
+            UploadContactsList.Columns.Add("Error Message", 400);
+
+            SetControlPropertyValue(uploadContactsLabel, "Text", isUploadContactsClicked ? "Uploading..." : "Deleting...");
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+
+            return stopWatch;
+        }
+
+        private void InsertNewContact(ExcelContactItem item, int tenant, ICommonDataContext commonContext)
+        {
+            Card card = commonContext.Cards.Where(d => d.Tenant == tenant && d.PartnerTypeId == item.PartnerType && d.EnglishName == item.PartnerName).FirstOrDefault();
+
+            if (card == null)
+            {
+                uploadContactFailItems.Add(new UploadContactFailItem()
+                {
+                    PartnerName = item.PartnerName,
+                    ErrorMessage = "Partner Not Exists"
+                });
+
+                return;
+            }
+
+            if (string.IsNullOrEmpty(item.FirstName) || string.IsNullOrEmpty(item.Email))
+            {
+                uploadContactFailItems.Add(new UploadContactFailItem()
+                {
+                    PartnerName = item.PartnerName,
+                    ErrorMessage = "Missing Email/ First Name"
+                });
+
+                return;
+            }
+
+            Contact newContact = commonContext.Contacts.Where(p => p.Email == item.Email && p.Tenant == tenant).FirstOrDefault();
+            if (newContact != null)
+            {
+                uploadContactFailItems.Add(new UploadContactFailItem()
+                {
+                    PartnerName = item.PartnerName,
+                    Email = item.Email,
+                    ErrorMessage = "Contact already exists"
+                });
+
+                return;
+            }
+
+            newContact = this.CreateNewContactInstance(item, tenant);
+            commonContext.Contacts.Add(newContact);
+
+            CardContact cardContact = new CardContact()
+            {
+                Id = IdCounter.GetNumber("CardContact", tenant).ToString(),
+                Tenant = tenant,
+                CardId = card.Id,
+                ContactId = newContact.Id,
+            };
+
+            commonContext.CardContacts.Add(cardContact);
+
+            SetControlPropertyValue(uploadContactsLabel, "Text", "Uploading  " + contactsCount++.ToString());
+
+            if (contactsCount == 1000)
+            {
+                commonContext.SaveChanges();
+                contactsCount = 0;
+            }
+        }
+        private Contact CreateNewContactInstance(ExcelContactItem item, int tenant)
+        {
+            Contact newContact = new Contact();
+            newContact.Id = IdCounter.GetNumber("Contact", tenant).ToString();
+            newContact.Tenant = tenant;
+            newContact.UserType = "R";
+            newContact.Email = TrimLength(item.Email, 70);
+            newContact.EnglishName = TrimLength(item.FirstName + " " + item.LastName, 60);
+            newContact.Position = TrimLength(item.CompanyPos, 40);
+            newContact.BusinessPhone = TrimLength(item.Phone, 25);
+            newContact.Mobile = TrimLength(item.Mobile, 25);
+            newContact.CompanyName = TrimLength(item.PartnerName, 1000);
+            BuildSearchFields(newContact);
+            return newContact;
+        }
+        private string TrimLength(string field, int length)
+        {
+            if (!string.IsNullOrEmpty(field))
+            {
+                if (field.Length > length)
+                {
+                    field = field.Substring(0, length);
+                }
+            }
+
+            return field;
+        }
+        private void BuildSearchFields(Contact newContact)
+        {
+            string mySearchFields = "";
+
+            MethodHelper.AddToSearchFields(ref mySearchFields, newContact.EnglishName);
+            MethodHelper.AddToSearchFields(ref mySearchFields, newContact.Email);
+            MethodHelper.AddToSearchFields(ref mySearchFields, newContact.BusinessPhone);
+            MethodHelper.AddToSearchFields(ref mySearchFields, newContact.Mobile);
+            MethodHelper.AddToSearchFields(ref mySearchFields, newContact.CompanyName);
+            TrimLength(mySearchFields, 1000);
+            newContact.SearchFields = mySearchFields;
+        }
+
+        private void DeleteExistingContact(ExcelContactItem item, int tenant, ICommonDataContext commonContext)
+        {
+            Contact contact = commonContext.Contacts.Where(d => d.Tenant == tenant && d.Email == item.Email).FirstOrDefault();
+
+            if (contact == null)
+            {
+                uploadContactFailItems.Add(new UploadContactFailItem()
+                {
+                    PartnerName = item.Email,
+                    ErrorMessage = "Contact not found"
+                });
+
+                return;
+            }
+
+            try
+            {
+                IQueryable<CardContact> cardContacts = commonContext.CardContacts.Where(d => d.Tenant == tenant && d.ContactId == contact.Id);
+                foreach (CardContact cardContact in cardContacts)
+                {
+                    commonContext.CardContacts.Remove(cardContact);
+                }
+
+                commonContext.Contacts.Remove(contact);
+
+                SetControlPropertyValue(uploadContactsLabel, "Text", isUploadContactsClicked ? "Uploading  " : "Deleting  " + contactsCount++.ToString());
+
+                if (contactsCount == 1000)
+                {
+                    commonContext.SaveChanges();
+                    contactsCount = 0;
+                }
+            }
+
+            catch (Exception ex)
+            {
+                uploadContactFailItems.Add(new UploadContactFailItem()
+                {
+                    PartnerName = item.Email,
+                    ErrorMessage = ex.Message
+                });
+            }
+        }
+        /// <summary>
+        /// end of contacts
+        /// </summary>
+
+        private ContainerRepository containerRepository;
+        private PortRepository portRepository;
+        private Dictionary<Simplog.Data.ShipmentsModel.EntityPOCOs.Container, VisionContainerStatus> containers;
+        private void getContainersButton_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(vizionTenantTextBox.Text))
+                MessageBox.Show("Please insert tenant");
+
+            else
+            {
+                Thread thread = new Thread(() => this.GetVizionContainers());
+                thread.IsBackground = true;
+                thread.IsBackground = true;
+                thread.Start();
+            }
+        }
+
+        private void GetVizionContainers()
+        {
+            getContainersListView.Items.Clear();
+            getContainersListView.Columns.Clear();
+            getContainersListView.View = View.Details;
+            getContainersListView.GridLines = true;
+            getContainersListView.FullRowSelect = true;
+            getContainersListView.Columns.Add("Container #", 150);
+            getContainersListView.Columns.Add("PreCarriage-container", 100);
+            getContainersListView.Columns.Add("PreCarriage-Json", 100);
+            getContainersListView.Columns.Add("OnCarriage-container", 100);
+            getContainersListView.Columns.Add("OnCarriage-Json", 100);
+            getContainersListView.Columns.Add("POL-container", 100);
+            getContainersListView.Columns.Add("POL-Json", 100);
+            getContainersListView.Columns.Add("POD-container", 100);
+            getContainersListView.Columns.Add("POD-Json", 100);
+            getContainersListView.Columns.Add("ac empty return-container", 100);
+            getContainersListView.Columns.Add("ac empty return-Json", 100);
+            getContainersListView.Columns.Add("es empty return-container", 100);
+            getContainersListView.Columns.Add("es empty return-Json", 100);
+
+            int tenant = Convert.ToInt32(vizionTenantTextBox.Text);
+            DateTime date_2022_7 = new DateTime(2022, 7, 1);
+
+            containers = new Dictionary<Simplog.Data.ShipmentsModel.EntityPOCOs.Container, VisionContainerStatus>();
+            storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+            ICommonDataContext context = CommonDataContext.GetContext(tenant);
+            portRepository = new PortRepository(context);
+            IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(tenant);
+            containerRepository = new ContainerRepository(shipmentsContext);
+            DocumentRepository documentRepository = new DocumentRepository(tenant);
+            ObjectTableRepository objecttableRep = new ObjectTableRepository(tenant);
+            ObjectTable objectTable = objecttableRep.GetObjectTableByName("Container", 0, true);
+
+            List<CommunicationLog> communications = context.CommunicationLogs.Where(a => a.Subject == "General Update Container Status"
+                                                        && a.Tenant == tenant
+                                                        && a.InOut == "I"
+                                                        && a.WasAnalyzed == true
+                                                        && a.CommunicationStatusTypeCode == "D"
+                                                        && a.ObjectTableId == objectTable.Id
+                                                        && a.CreateDate >= date_2022_7 && a.CreateDate <= DateTime.Now)
+                                                        .GroupBy(x => new { x.Tenant, x.EntityId })
+                                                        .Select(x => x.OrderByDescending(y => y.CreateDate)
+                                                        .FirstOrDefault())
+                                                        .OrderByDescending(x => x.CreateDate).ToList();
+
+            string[] arr = new string[13];
+            foreach (CommunicationLog communicationLog in communications)
+            {
+                Simplog.Data.ShipmentsModel.EntityPOCOs.Container container = shipmentsContext.Containers
+                       .Where(d => d.Id == communicationLog.EntityId && d.Tenant == tenant).FirstOrDefault();
+
+                VisionContainerStatus visionContainerStatus = DeserializeVizionDocumentBody(communicationLog.DocumentId, tenant, documentRepository);
+                if (visionContainerStatus != null && container != null)
+                {
+                    if ((container.PreCarriageLocation != null && container.POLLocation != null && container.PreCarriageLocation == container.POLLocation)
+                        || (container.OnCarriageLocation != null && container.PODLocation != null && container.OnCarriageLocation == container.PODLocation)
+                        || EmptyMap.Checked
+                        )
+                    {
+                        arr[0] = container.ContainerNumber;
+                        arr[1] = container.PreCarriageLocation;
+                        arr[2] = this.GetPortForVizion(visionContainerStatus.payload?.inland_origin, tenant)?.CombinedCode;
+                        arr[3] = container.OnCarriageLocation;
+                        arr[4] = this.GetPortForVizion(visionContainerStatus.payload?.inland_destination, tenant)?.CombinedCode;
+                        arr[5] = container.POLLocation;
+                        arr[6] = visionContainerStatus.payload?.origin_port?.unlocode;
+                        arr[7] = container.PODLocation;
+                        arr[8] = visionContainerStatus.payload?.destination_port?.unlocode;
+                        arr[9] = container.ActualEmptyReturn?.ToString();
+                        arr[10] = visionContainerStatus.payload?.milestones.Find(e => e.description == "Gate in empty return" && e.planned)?.timestamp.ToString();
+                        arr[11] = container.EstimatedEmptyReturn?.ToString();
+                        arr[12] = visionContainerStatus.payload?.milestones.Find(e => e.description == "Gate in empty return" && !e.planned)?.timestamp.ToString();
+
+                        getContainersListView.Items.Add(new ListViewItem(arr));
+                        containers.Add(container, visionContainerStatus);
+                    }
+                }
+            }
+
+            if (communications.Count > 0)
+            {
+                updateContainersButton.Enabled = true;
+            }
+        }
+        public VisionContainerStatus DeserializeVizionDocumentBody(string documentId, int tenant, DocumentRepository documentRepository)
+        {
+            Document document = documentRepository.GetSingleDocument(tenant, documentId);
+            if (document != null)
+            {
+                BlobFileInfo fileInfo = new BlobFileInfo()
+                {
+                    FileName = document.Id,
+                    FolderName = document.Folder,
+                    Extension = document.Extension,
+                    Tenant = tenant,
+                    FileSize = document.FileSize,
+                };
+                byte[] fileData = storageservice.Read(fileInfo);
+                if (fileData != null)
+                {
+                    var datatext = Encoding.UTF8.GetString(fileData);
+                    return JsonConvert.DeserializeObject<VisionContainerStatus>(datatext);
+                }
+            }
+
+            return null;
+        }
+        private Port GetPortForVizion(Location portLocation, int tenant)
+        {
+            Port port = null;
+            if (!string.IsNullOrEmpty(portLocation.unlocode)) port = portRepository.GetOceanPortByCombinedCode(portLocation.unlocode, tenant);
+            if (port != null) return port;
+
+            var name1 = portLocation.name;
+            if (!string.IsNullOrEmpty(name1) && portLocation.name.Contains(','))
+                name1 = portLocation.name.Split(',').First();
+            var name2 = portLocation.city;
+            port = this.GetPortByNames(name1, name2, tenant);
+            return port;
+        }
+        private Port GetPortByNames(string name1, string name2, int tenant)
+        {
+            var port = portRepository.GetOceanPortByNames(name1, name2, tenant);
+            if (port != null)
+                return port;
+
+            return null;
+        }
+        private string GetPortId(string portCode, int tenant)
+        {
+            Port port = portRepository.GetOceanPortByCombinedCode(portCode, tenant);
+            string portId = null;
+            if (port != null)
+            {
+                portId = port.Id;
+            }
+
+            return portId;
+        }
+
+        private void updateContainersButton_Click(object sender, EventArgs e)
+        {
+            if (containers.Count > 0)
+            {
+                Thread thread = new Thread(() => this.UpdateVizionContainers());
+                thread.IsBackground = true;
+                thread.Start();
+            }
+        }
+        private void UpdateVizionContainers()
+        {
+            foreach (var item in containers)
+            {
+                if (EmptyMap.Checked)
+                {
+                    MapEmptyReturn(item);
+                }
+                else
+                {
+                    MapPOL(item);
+                    MapPOD(item);
+                    MapPreCarriage(item);
+                    MapOnCarriage(item);
+                }
+
+
+                containerRepository.Update(item.Key);
+            }
+
+            containerRepository.SubmitChanges();
+        }
+
+        private void MapEmptyReturn(KeyValuePair<Simplog.Data.ShipmentsModel.EntityPOCOs.Container, VisionContainerStatus> item)
+        {
+            var EstimatedEmptyReturn = item.Value.payload?.milestones.Find(e => e.description == "Gate in empty return" && e.planned)?.timestamp;
+            item.Key.EstimatedEmptyReturn = EstimatedEmptyReturn ?? item.Key.EstimatedEmptyReturn;
+            var ActualEmptyReturn = item.Value.payload?.milestones.Find(e => e.description == "Gate in empty return" && !e.planned)?.timestamp;
+            item.Key.ActualEmptyReturn = ActualEmptyReturn ?? item.Key.ActualEmptyReturn;
+        }
+
+        private void MapPOL(KeyValuePair<Simplog.Data.ShipmentsModel.EntityPOCOs.Container, VisionContainerStatus> item)
+        {
+            item.Key.POLLocation = item.Value.payload?.origin_port?.unlocode;
+            item.Key.POLLocationPortId = this.GetPortId(item.Value.payload?.origin_port?.unlocode, item.Key.Tenant);
+        }
+        private void MapPOD(KeyValuePair<Simplog.Data.ShipmentsModel.EntityPOCOs.Container, VisionContainerStatus> item)
+        {
+            item.Key.PODLocation = item.Value.payload?.destination_port?.unlocode;
+            item.Key.PODLocationPortId = this.GetPortId(item.Value.payload?.destination_port?.unlocode, item.Key.Tenant);
+        }
+        private void MapPreCarriage(KeyValuePair<Simplog.Data.ShipmentsModel.EntityPOCOs.Container, VisionContainerStatus> item)
+        {
+            if (!IsDifferentPort(item.Value.payload?.inland_origin, item.Value.payload?.origin_port))
+            {
+                item.Key.PreCarriageLocationPortId = null;
+                item.Key.PreCarriageLocation = null;
+                return;
+            }
+
+            var port = GetPortForVizion(item.Value.payload?.inland_origin, item.Key.Tenant);
+            if (port == null)
+            {
+                item.Key.PreCarriageLocationPortId = null;
+                item.Key.PreCarriageLocation = null;
+            }
+
+            else
+            {
+                item.Key.PreCarriageLocationPortId = port.Id;
+                item.Key.PreCarriageLocation = port.CombinedCode;
+            }
+        }
+        private void MapOnCarriage(KeyValuePair<Simplog.Data.ShipmentsModel.EntityPOCOs.Container, VisionContainerStatus> item)
+        {
+            if (!IsDifferentPort(item.Value.payload?.inland_destination, item.Value.payload?.destination_port))
+            {
+                item.Key.OnCarriageLocationPortId = null;
+                item.Key.OnCarriageLocation = null;
+                return;
+            }
+
+            var port = GetPortForVizion(item.Value.payload?.inland_destination, item.Key.Tenant);
+            if (port == null)
+            {
+                item.Key.OnCarriageLocationPortId = null;
+                item.Key.OnCarriageLocation = null;
+            }
+
+            else
+            {
+                item.Key.OnCarriageLocationPortId = port.Id;
+                item.Key.OnCarriageLocation = port.CombinedCode;
+            }
+        }
+        private bool IsDifferentPort(Location location, Location mainLocation)
+        {
+            if (mainLocation == null)
+                return false;
+            if (location == null)
+                return false;
+
+            if (!string.IsNullOrEmpty(location?.unlocode) &&
+                !string.IsNullOrEmpty(mainLocation?.unlocode) &&
+                location?.unlocode == mainLocation?.unlocode)
+                return false;
+
+            if (location.name == mainLocation.name &&
+            location.country == mainLocation.country &&
+            location.city == mainLocation.city &&
+            location.state == mainLocation.state)
+                return false;
+
+            return true;
+        }
+
+        private void updateAllUSTenantsCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            portsStatesTenantTextBox.Enabled = !updateAllUSTenantsCheckBox.Checked;
+        }
+
+        private void updatePortsStatesButton_Click(object sender, EventArgs e)
+        {
+            if (!updateAllUSTenantsCheckBox.Checked && string.IsNullOrEmpty(portsStatesTenantTextBox.Text))
+            {
+                MessageBox.Show("Please insert tenant");
+                return;
+            }
+
+            this.UploadPortsStatesExcelFile();
+        }
+        private void UploadPortsStatesExcelFile()
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Multiselect = false;
+            openFileDialog.Filter = "csv|*.csv";
+            if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                Stream stream = openFileDialog.OpenFile();
+                StreamReader streamReader = new StreamReader(stream);
+                this.UpdatePortsStatesMethod(streamReader);
+            }
+        }
+        private void UpdatePortsStatesMethod(StreamReader streamReader)
+        {
+            List<DataItem> AllDataLines = new List<DataItem>();
+
+            string line = "";
+            string[] lineParts = null;
+            while ((line = streamReader.ReadLine()) != null)
+            {
+                lineParts = line.Split(',');
+
+                if (lineParts.Count() >= 2)
+                {
+                    string portCombinedCode = this.GetText(lineParts, 0);
+                    string stateCode = this.GetText(lineParts, 1);
+
+                    if (!string.IsNullOrEmpty(portCombinedCode) && !string.IsNullOrEmpty(stateCode) && portCombinedCode != "LOCODE")
+                    {
+                        portCombinedCode = RemoveSpecialCharacters(portCombinedCode.ToUpper());
+                        stateCode = RemoveSpecialCharacters(stateCode.ToUpper());
+
+                        DataItem myDataItem = new DataItem();
+                        myDataItem.PortCombinedCode = portCombinedCode;
+                        myDataItem.StateCode = stateCode;
+                        AllDataLines.Add(myDataItem);
+                    }
+                }
+            }
+
+            List<DataItem> distinctItems = AllDataLines.GroupBy(p => new { p.PortCombinedCode, p.StateCode }).Select(g => g.Last()).ToList();
+            Thread thread = new Thread(() => this.RunUpdatePortsStates(distinctItems));
+            thread.IsBackground = true;
+            thread.Start();
+        }
+        private string RemoveSpecialCharacters(string myString)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (char c in myString)
+            {
+                if ((c >= '0' && c <= '9') || (c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'))
+                {
+                    sb.Append(c);
+                }
+            }
+            return sb.ToString();
+        }
+        private void RunUpdatePortsStates(List<DataItem> allDataLines)
+        {
+            if (allDataLines.Count == 0)
+                return;
+
+            ICommonDataContext myCommonContext = CommonDataContext.GetContext(0);
+            logsLabel.Text = "Missed States";
+            excelListView.Items.Clear();
+            excelListView.Columns.Clear();
+            excelListView.View = View.Details;
+            excelListView.GridLines = true;
+            excelListView.FullRowSelect = true;
+            excelListView.Columns.Add("Port Code", 100);
+            excelListView.Columns.Add("State Code", 100);
+
+            if (updateAllUSTenantsCheckBox.Checked)
+            {
+                List<int> USTenantsIds = (from myTenant in myCommonContext.Tenants
+                                          join address in myCommonContext.Addresses
+                                          on myTenant.AddressId equals address.Id
+                                          join country in myCommonContext.Countries
+                                          on address.CountryId equals country.Id
+                                          where country.Code == "US"
+                                          select myTenant.Id).ToList();
+
+                foreach (int tenantId in USTenantsIds)
+                {
+                    StartUpdatingPortsStates(allDataLines, myCommonContext, tenantId);
+                }
+            }
+
+            else
+            {
+                StartUpdatingPortsStates(allDataLines, myCommonContext, Convert.ToInt32(portsStatesTenantTextBox.Text));
+            }
+        }
+        private void StartUpdatingPortsStates(List<DataItem> allDataLines, ICommonDataContext myCommonContext, int tenant)
+        {
+            List<DataItem> portsList = allDataLines.GroupBy(p => p.PortCombinedCode).Select(g => g.First()).ToList();
+            List<string> allPortsCodes = portsList.Select(a => a.PortCombinedCode).ToList();
+
+            List<DataItem> statesList = allDataLines.GroupBy(p => p.StateCode).Select(g => g.First()).ToList();
+            List<string> allStatesCodes = statesList.Select(a => a.StateCode).ToList();
+
+            SetControlPropertyValue(portsStatesLabel, "Text", "Updating...");
+
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+
+
+            PortRepository portRepository = new PortRepository(myCommonContext);
+            StateRepository stateRepository = new StateRepository(myCommonContext);
+
+            List<Port> allPorts = (from d in myCommonContext.Ports
+                                   where d.Tenant == tenant
+                                   && allPortsCodes.Contains(d.CombinedCode)
+                                   select d).ToList();
+
+            List<State> allStates = (from d in myCommonContext.States
+                                     where d.Tenant == tenant
+                                     && allStatesCodes.Contains(d.Code)
+                                     select d).ToList();
+
+            var myCount = 0;
+            var count = 0;
+            var isUpdated = false;
+            string[] missedStatesArray = new string[2];
+            foreach (DataItem item in allDataLines)
+            {
+                count++;
+
+                State myState = allStates.Where(d => d.Code == item.StateCode).FirstOrDefault();
+                if (myState == null)
+                {
+                    missedStatesArray[0] = item.PortCombinedCode;
+                    missedStatesArray[1] = item.StateCode;
+                    excelListView.Items.Add(new ListViewItem(missedStatesArray));
+                }
+                else
+                {
+                    Port myPort = allPorts.Where(d => d.CombinedCode == item.PortCombinedCode && d.Tenant == tenant).FirstOrDefault();
+                    if (myPort != null && myPort.StateId == null)
+                    {
+                        isUpdated = true;
+                        myPort.StateCode = myState.Code;
+                        myPort.StateName = myState.EnglishName;
+                        myPort.StateId = myState.Id;
+                        portRepository.Update(myPort);
+                    }
+                }
+
+                if (myCount == 1000)
+                {
+                    if (isUpdated)
+                    {
+                        portRepository.SubmitChanges();
+                    }
+                    myCount = 0;
+                    isUpdated = false;
+                }
+
+                myCount++;
+            }
+
+            portRepository.SubmitChanges();
+            stopWatch.Stop();
+            TimeSpan ts = stopWatch.Elapsed;
+            SetControlPropertyValue(portsStatesLabel, "Text", "Done in " + ts.ToString());
+        }
+
+        private void ComputeDueDateButton_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(paymentTermTenantTextBox.Text))
+            {
+                MessageBox.Show("Please insert tenant");
+                return;
+            }
+
+            this.UploadInvoiceExcelFile();
+        }
+        private void UploadInvoiceExcelFile()
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Multiselect = false;
+            openFileDialog.Filter = "csv|*.csv";
+            if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                Stream stream = openFileDialog.OpenFile();
+                StreamReader streamReader = new StreamReader(stream);
+                this.ReadInvoicesMethod(streamReader);
+             }
+        }
+        private List<ExcelInvoice> invoiceItems;
+        private IInvoiceContext invoiceContext;
+        private ARInvoiceRepository invoiceRepository;
+        private void ReadInvoicesMethod(StreamReader streamReader)
+        {
+            List<ExcelInvoice> allDataLines = new List<ExcelInvoice>();
+
+            string line = "";
+            string[] lineParts = null;
+            while ((line = streamReader.ReadLine()) != null)
+            {
+                lineParts = line.Split(',');
+
+                string invoiceNumber = this.GetText(lineParts, 0);
+                string status = this.GetText(lineParts, 1);
+                string paymentTerm = this.GetText(lineParts, 2);
+                string invoiceDate = this.GetText(lineParts, 3);
+                string dueDate = this.GetText(lineParts, 4);
+
+                if (!string.IsNullOrEmpty(invoiceNumber) && !string.IsNullOrEmpty(paymentTerm) && !string.IsNullOrEmpty(invoiceDate))
+                {
+                    ExcelInvoice myDataItem = new ExcelInvoice();
+                    myDataItem.Number = invoiceNumber;
+                    myDataItem.Status = status;
+                    myDataItem.PaymentTerm = paymentTerm;
+                    myDataItem.InvoiceDate = invoiceDate;
+                    myDataItem.WrongDueDate = dueDate;
+                    allDataLines.Add(myDataItem);
+                }
+            }
+
+            invoiceItems = allDataLines.GroupBy(p => new { p.Number }).Select(g => g.Last()).ToList();
+            Thread thread = new Thread(() => this.ComputeInvoiceDueDate());
+            thread.IsBackground = true;
+            thread.Start();
+        }
+        private void ComputeInvoiceDueDate()
+        {
+            if (invoiceItems.Count == 0)
+                return;
+
+            excelListView.Items.Clear();
+            excelListView.Columns.Clear();
+            excelListView.View = View.Details;
+            excelListView.GridLines = true;
+            excelListView.FullRowSelect = true;
+            excelListView.Columns.Add("Invoice Number", 100);
+            excelListView.Columns.Add("Status", 100);
+            excelListView.Columns.Add("Payment Term", 100);
+            excelListView.Columns.Add("End of Month", 100);
+            excelListView.Columns.Add("Invoice Date", 100);
+            excelListView.Columns.Add("Wrong Due Date", 100);
+            excelListView.Columns.Add("Correct Due Date", 100);
+            excelListView.Columns.Add("Update", 100);
+
+            SetControlPropertyValue(invoiceDueDateLabel, "Text", "Computing...");
+
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+
+            int tenant = Convert.ToInt32(paymentTermTenantTextBox.Text);
+            invoiceContext = InvoiceContext.GetContext(tenant);
+            invoiceRepository = new ARInvoiceRepository(invoiceContext);
+            PaymentTermRepository paymentTermRepository = new PaymentTermRepository(tenant);
+
+            string[] invoicesArray = new string[8];
+            foreach (ExcelInvoice item in invoiceItems)
+            {
+                ARInvoice invoice = invoiceRepository.GetARInvoiceByInvoiceNumber(tenant, item.Number);
+                if (invoice != null)
+                {
+                    item.MyInvoice = invoice;
+
+                    invoicesArray[0] = item.Number;
+                    invoicesArray[1] = item.Status;
+                    invoicesArray[2] = item.PaymentTerm;
+
+                    if (!string.IsNullOrEmpty(invoice.PaymentTermId))
+                    {
+                        PaymentTerm paymentTerm = paymentTermRepository.GetSinglePaymentTerm(invoice.PaymentTermId, tenant);
+                        if (paymentTerm != null && paymentTerm.EndOfMonth)
+                            invoicesArray[3] = "true";
+                    }
+
+                    invoicesArray[4] = item.InvoiceDate;
+                    invoicesArray[5] = item.WrongDueDate;
+
+                    item.CorrectDueDate = this.ComputeInvoiceDueDate(invoice);
+                    invoicesArray[6] = item.CorrectDueDate?.ToString();
+
+                    if (item.MyInvoice.DueDate != item.CorrectDueDate)
+                        invoicesArray[7] = "true";
+
+                    excelListView.Items.Add(new ListViewItem(invoicesArray));
+                }
+            }          
+
+            stopWatch.Stop();
+            TimeSpan ts = stopWatch.Elapsed;
+            SetControlPropertyValue(invoiceDueDateLabel, "Text", "Done in " + ts.ToString());
+        }
+        private DateTime? ComputeInvoiceDueDate(ARInvoice invoice)
+        {
+            DateTime? dueDate = null;
+
+            if (string.IsNullOrEmpty(invoice.PaymentTermId))
+                dueDate = invoice.InvoiceDate;
+
+            else
+            {
+                PaymentTermRepository paymentTermRepository = new PaymentTermRepository(invoice.Tenant);
+                PaymentTerm myPaymentTerm = paymentTermRepository.GetSinglePaymentTerm(invoice.PaymentTermId, invoice.Tenant);
+
+                if (myPaymentTerm != null)
+                {
+                    if (myPaymentTerm.IsManuallySet)
+                    {
+                        dueDate = null;
+                    }
+
+                    else
+                    {
+                        DateTime? myComparativeDate = null;
+
+                        if (invoice.IsConsolidationInvoice)
+                        {
+                            myComparativeDate = invoice.InvoiceDate;
+                        }
+
+                        else
+                        {
+                            if (myPaymentTerm.FromDateTypeCode == "SHI")
+                            {
+                                myComparativeDate = invoice.OperationalDate;
+
+                                if (myComparativeDate == null)
+                                {
+                                    myComparativeDate = invoice.InvoiceDate;
+                                }
+                            }
+
+                            else
+                            {
+                                myComparativeDate = invoice.InvoiceDate;
+                            }
+                        }
+
+                        if (myComparativeDate != null)
+                        {
+                            if (myPaymentTerm.EndOfMonth)
+                            {
+                                int year = myComparativeDate.Value.Year;
+                                int month = myComparativeDate.Value.Month;
+                                month += myPaymentTerm.NumberOfMonths;
+                                int daysInMonth = DateTime.DaysInMonth(year, month);
+
+                                myComparativeDate = new DateTime(year, month, daysInMonth, 0, 0, 0);
+                            }
+
+                            myComparativeDate = myComparativeDate.Value.AddDays(Convert.ToDouble(myPaymentTerm.Days));
+                            dueDate = myComparativeDate.Value.Date;
+                        }
+                    }
+                }
+            }
+
+            return dueDate;
+        }
+
+        private void UpdateDueDateButton_Click(object sender, EventArgs e)
+        {
+            if (invoiceItems.Count == 0)
+                return;
+
+            SetControlPropertyValue(invoiceDueDateLabel, "Text", "Updating...");
+
+            Stopwatch stopWatch = new Stopwatch();
+            stopWatch.Start();
+
+            int myCount = 0;
+            bool isUpdated = false;
+            foreach (ExcelInvoice item in invoiceItems.Where(d => d.MyInvoice != null))
+            {
+                if (item.MyInvoice.DueDate != item.CorrectDueDate)
+                {
+                    isUpdated = true;
+                    item.MyInvoice.DueDate = item.CorrectDueDate;
+                    invoiceRepository.Update(item.MyInvoice);
+
+                    if (myCount == 100)
+                    {
+                        if (isUpdated)
+                        {
+                            invoiceRepository.SubmitChanges();
+                        }
+                        myCount = 0;
+                        isUpdated = false;
+                    }
+
+                    myCount++;
+                }
+            }
+
+            invoiceRepository.SubmitChanges();
+            stopWatch.Stop();
+            TimeSpan ts = stopWatch.Elapsed;
+            SetControlPropertyValue(invoiceDueDateLabel, "Text", "Done in " + ts.ToString());
+        }
     }
 
+    public class TimeZoneExcelItem
+    {
+        public string Name { get; set; }
+        public string UTCOffset { get; set; }
+        public string UTCDSTOffset { get; set; }
+    }
     public class TenantMailBox
     {
         public int Tenant { get; set; }
         public string Mail { get; set; }
     }
-
     public class MyFeature
     {
 
@@ -4833,8 +6976,6 @@ User/Pass",
         public bool IsCoreFeature { get; set; }
 
     }
-
-
     public class HtmlStringParsingParams
     {
         public string Company { get; set; }
@@ -4845,7 +6986,6 @@ User/Pass",
         public string NumberOfBranches { get; set; }
         public string NumberOfUsers { get; set; }
     }
-
     public class DataItem
     {
         public string Id { get; set; }
@@ -4856,8 +6996,9 @@ User/Pass",
         public bool IsAir { get; set; }
         public bool IsOcean { get; set; }
         public bool IsInland { get; set; }
+        public string PortCombinedCode { get; set; }
+        public string StateCode { get; set; }
     }
-
     public class WarehouseItem
     {
         public string Id { get; set; }
@@ -4868,19 +7009,188 @@ User/Pass",
         public string State { get; set; }
         public string ZipCode { get; set; }
     }
-
     public class ComputingPartnerTranslationListData
     {
         public string OurCode { get; set; }
         public string PartnerCode { get; set; }
     }
-
     public class CityDataItem
     {
         public string CityCode { get; set; }
         public string CityName { get; set; }
         public string CountryCode { get; set; }
         public string StateCode { get; set; }
-        
+    }
+    public class ExcelContactItem
+    {
+        public string PartnerName { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string CompanyPos { get; set; }
+        public string PartnerType { get; set; }
+        public string Email { get; set; }
+        public string Phone { get; set; }
+        public string Mobile { get; set; }
+    }
+    public class UploadContactFailItem
+    {
+        public string PartnerName { get; set; }
+        public string Email { get; set; }
+        public string ErrorMessage { get; set; }
+    }
+    public class ExcelOI
+    {
+        public int? tenant { get; set; }
+        public string container_number { get; set; }
+        public DateTime? createdDate { get; set; }
+        public string carrier_scac { get; set; }
+        public string code { get; set; }
+        public string message { get; set; }
+        public string status { get; set; }
+        public string status_verbose { get; set; }
+        public string shipment_id { get; set; }
+        public string bl_number { get; set; }
+        public string empty_pickup_loc_locode { get; set; }
+        public string empty_pickup_planned_initial { get; set; }
+        public string empty_pickup_planned_last { get; set; }
+        public string empty_pickup_actual { get; set; }
+        public string origin_loc_name { get; set; }
+        public string origin_pickup_planned_initial { get; set; }
+        public string origin_pickup_planned_last { get; set; }
+        public string origin_pickup_actual { get; set; }
+        public string pol_loc_locode { get; set; }
+        public string pol_arrival_planned_initial { get; set; }
+        public string pol_arrival_planned_last { get; set; }
+        public string pol_arrival_actual { get; set; }
+        public string pol_loaded_planned_initial { get; set; }
+        public string pol_loaded_planned_last { get; set; }
+        public string pol_loaded_actual { get; set; }
+        public string pol_vsldeparture_planned_initial { get; set; }
+        public string pol_vsldeparture_planned_last { get; set; }
+        public string pol_vsldeparture_actual { get; set; }
+        public string pol_vsldeparture_detected { get; set; }
+        public string ts_count { get; set; }
+        public string tsp1_loc_locode { get; set; }
+        public string tsp1_vslarrival_planned_initial { get; set; }
+        public string tsp1_vslarrival_planned_last { get; set; }
+        public string tsp1_vslarrival_actual { get; set; }
+        public string tsp1_vslarrival_detected { get; set; }
+        public string tsp1_discharge_planned_initial { get; set; }
+        public string tsp1_discharge_planned_last { get; set; }
+        public string tsp1_discharge_actual { get; set; }
+        public string tsp1_loaded_planned_initial { get; set; }
+        public string tsp1_loaded_planned_last { get; set; }
+        public string tsp1_loaded_actual { get; set; }
+        public string tsp1_vsldeparture_planned_initial { get; set; }
+        public string tsp1_vsldeparture_planned_last { get; set; }
+        public string tsp1_vsldeparture_actual { get; set; }
+        public string tsp1_vsldeparture_detected { get; set; }
+
+        public string tsp2_loc_locode { get; set; }
+        public string tsp2_vslarrival_planned_initial { get; set; }
+        public string tsp2_vslarrival_planned_last { get; set; }
+        public string tsp2_vslarrival_actual { get; set; }
+        public string tsp2_vslarrival_detected { get; set; }
+        public string tsp2_discharge_planned_initial { get; set; }
+        public string tsp2_discharge_planned_last { get; set; }
+        public string tsp2_discharge_actual { get; set; }
+        public string tsp2_loaded_planned_initial { get; set; }
+        public string tsp2_loaded_planned_last { get; set; }
+        public string tsp2_loaded_actual { get; set; }
+        public string tsp2_vsldeparture_planned_initial { get; set; }
+        public string tsp2_vsldeparture_planned_last { get; set; }
+        public string tsp2_vsldeparture_actual { get; set; }
+        public string tsp2_vsldeparture_detected { get; set; }
+
+        public string tsp3_loc_locode { get; set; }
+        public string tsp3_vslarrival_planned_initial { get; set; }
+        public string tsp3_vslarrival_planned_last { get; set; }
+        public string tsp3_vslarrival_actual { get; set; }
+        public string tsp3_vslarrival_detected { get; set; }
+        public string tsp3_discharge_planned_initial { get; set; }
+        public string tsp3_discharge_planned_last { get; set; }
+        public string tsp3_discharge_actual { get; set; }
+        public string tsp3_loaded_planned_initial { get; set; }
+        public string tsp3_loaded_planned_last { get; set; }
+        public string tsp3_loaded_actual { get; set; }
+        public string tsp3_vsldeparture_planned_initial { get; set; }
+        public string tsp3_vsldeparture_planned_last { get; set; }
+        public string tsp3_vsldeparture_actual { get; set; }
+        public string tsp3_vsldeparture_detected { get; set; }
+
+        public string tsp4_loc_locode { get; set; }
+        public string tsp4_vslarrival_planned_initial { get; set; }
+        public string tsp4_vslarrival_planned_last { get; set; }
+        public string tsp4_vslarrival_actual { get; set; }
+        public string tsp4_vslarrival_detected { get; set; }
+        public string tsp4_discharge_planned_initial { get; set; }
+        public string tsp4_discharge_planned_last { get; set; }
+        public string tsp4_discharge_actual { get; set; }
+        public string tsp4_loaded_planned_initial { get; set; }
+        public string tsp4_loaded_planned_last { get; set; }
+        public string tsp4_loaded_actual { get; set; }
+        public string tsp4_vsldeparture_planned_initial { get; set; }
+        public string tsp4_vsldeparture_planned_last { get; set; }
+        public string tsp4_vsldeparture_actual { get; set; }
+        public string tsp4_vsldeparture_detected { get; set; }
+        public string leg1_vessel_name { get; set; }
+        public string leg1_voyage { get; set; }
+        public string leg2_vessel_name { get; set; }
+        public string leg2_voyage { get; set; }
+        public string leg3_vessel_name { get; set; }
+        public string leg3_voyage { get; set; }
+        public string leg4_vessel_name { get; set; }
+        public string leg4_voyage { get; set; }
+        public string leg5_vessel_name { get; set; }
+        public string leg5_voyage { get; set; }
+        public string pod_loc_locode { get; set; }
+        public string pod_vslarrival_planned_initial { get; set; }
+        public string pod_vslarrival_planned_last { get; set; }
+        public string pod_vslarrival_actual { get; set; }
+        public string pod_vslarrival_detected { get; set; }
+        public string pod_discharge_planned_initial { get; set; }
+        public string pod_discharge_planned_last { get; set; }
+        public string pod_discharge_actual { get; set; }
+        public string pod_departure_planned_initial { get; set; }
+        public string pod_departure_planned_last { get; set; }
+        public string pod_departure_actual { get; set; }
+
+        public string dlv_loc_locode { get; set; }
+        public string dlv_delivery_planned_initial { get; set; }
+        public string dlv_delivery_planned_last { get; set; }
+        public string dlv_delivery_actual { get; set; }
+
+        public string lif_loc_locode { get; set; }
+        public string lif_arrival_planned_initial { get; set; }
+        public string lif_arrival_planned_last { get; set; }
+        public string lif_arrival_actual { get; set; }
+        public string lif_departure_planned_initial { get; set; }
+        public string lif_departure_planned_last { get; set; }
+        public string lif_departure_actual { get; set; }
+
+        public string empty_return_loc_locode { get; set; }
+        public string empty_return_planned_initial { get; set; }
+        public string empty_return_planned_last { get; set; }
+        public string empty_return_actual { get; set; }
+        public string empty_return_customer { get; set; }
+
+        public DateTime? customs_release_date { get; set; }
+        public DateTime? carrier_release_date { get; set; }
+        public string customs_release_state { get; set; }
+        public string carrier_release_state { get; set; }
+        public DateTime? availability_date { get; set; }
+        public string availability_locode { get; set; }
+        public string availability_timezone { get; set; }
+    }
+
+    public class ExcelInvoice
+    {
+        public string Number { get; set; }
+        public string Status { get; set; }
+        public string PaymentTerm { get; set; }
+        public string InvoiceDate { get; set; }
+        public string WrongDueDate { get; set; }
+        public DateTime? CorrectDueDate { get; set; }
+        public ARInvoice MyInvoice { get; set; }
     }
 }

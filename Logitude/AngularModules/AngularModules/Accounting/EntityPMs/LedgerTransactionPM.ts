@@ -15,11 +15,11 @@ import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/Propert
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
 export class LedgerTransactionPM {
-
+      
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-          this.UIProperties = new UIProperties(this); 
+                    this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -362,6 +362,41 @@ export class LedgerTransactionPM {
     private paymentChequeStatus: string;
     public get PaymentChequeStatus() { return this.paymentChequeStatus; }
     public set PaymentChequeStatus(newValue: string) { if (this.paymentChequeStatus != newValue) { this.paymentChequeStatus = newValue; this.MarkAsDirty("PaymentChequeStatus"); } }
+       
+	 
+    private accountLocalName: string;
+    public get AccountLocalName() { return this.accountLocalName; }
+    public set AccountLocalName(newValue: string) { if (this.accountLocalName != newValue) { this.accountLocalName = newValue; this.MarkAsDirty("AccountLocalName"); } }
+       
+	 
+    private updateDateTime: Date;
+    public get UpdateDateTime() { return this.updateDateTime; }
+    public set UpdateDateTime(newValue: Date) { if (this.updateDateTime != newValue) { this.updateDateTime = newValue; this.MarkAsDirty("UpdateDateTime"); } }
+       
+	 
+    private updatedByUserName: string;
+    public get UpdatedByUserName() { return this.updatedByUserName; }
+    public set UpdatedByUserName(newValue: string) { if (this.updatedByUserName != newValue) { this.updatedByUserName = newValue; this.MarkAsDirty("UpdatedByUserName"); } }
+       
+	 
+    private internalNote: string;
+    public get InternalNote() { return this.internalNote; }
+    public set InternalNote(newValue: string) { if (this.internalNote != newValue) { this.internalNote = newValue; this.MarkAsDirty("InternalNote"); } }
+       
+	 
+    private taxReportId: string;
+    public get TaxReportId() { return this.taxReportId; }
+    public set TaxReportId(newValue: string) { if (this.taxReportId != newValue) { this.taxReportId = newValue; this.MarkAsDirty("TaxReportId"); } }
+       
+	 
+    private taxReportNumber: string;
+    public get TaxReportNumber() { return this.taxReportNumber; }
+    public set TaxReportNumber(newValue: string) { if (this.taxReportNumber != newValue) { this.taxReportNumber = newValue; this.MarkAsDirty("TaxReportNumber"); } }
+       
+	 
+    private amountInNIS: number;
+    public get AmountInNIS() { return this.amountInNIS; }
+    public set AmountInNIS(newValue: number) { if (this.amountInNIS != newValue) { this.amountInNIS = newValue; this.MarkAsDirty("AmountInNIS"); } }
        
 	 
 

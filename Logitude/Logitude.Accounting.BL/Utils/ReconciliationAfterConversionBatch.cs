@@ -16,6 +16,8 @@ using System.Text.RegularExpressions;
 using Logitude.Infrastructure.BL.EntityPMs;
 using Logitude.Infrastructure.BL.EntityUpdateServices;
 using Logitude.Infrastructure.Data;
+using System.Diagnostics;
+using Microsoft.ServiceBus;
 
 namespace Logitude.Accounting.BL.Utils
 {
@@ -28,6 +30,8 @@ namespace Logitude.Accounting.BL.Utils
       //  private List<string> _WrongSum;
         private List<string> _WrongSumToMatch;
         private string _current = "";
+        private string _currentLower = "";
+        private string _currentUpper = "";
 
         public ReconciliationAfterConversionBatch()
         {
@@ -45,8 +49,9 @@ namespace Logitude.Accounting.BL.Utils
             return _StatusCode;
         }
 
-        public void RunReconciliationAfterConversion(ReconciliationAfterConversionArg reconciliationAfterConversionArg)
+        public void RunReconciliationAfterConversion(ReconciliationAfterConversionArg reconciliationAfterConversionArg, int timeoutinmin, ref bool retry)
         {
+            var sw = Stopwatch.StartNew();
             int SUB_BATCH_SIZE = 50; // 100;
             string returnedMessage = "";
             int tenant = reconciliationAfterConversionArg.Tenant;
@@ -95,7 +100,7 @@ namespace Logitude.Accounting.BL.Utils
                 upper_str = Regex.Replace(upper.ToString(), @"\d+", n => n.Value.PadLeft(15, '0'));
                 try
                 {
-                    RunReconciliationAfterConversionInner(tenant, lower_str, upper_str);
+                    RunReconciliationAfterConversionInner(tenant, lower_str, upper_str, batchTaskExecutionPM);
                 }
                 catch (Exception e)
                 {
@@ -131,6 +136,12 @@ namespace Logitude.Accounting.BL.Utils
                         lower = toExt_long;
                     }
                 }
+
+                if (sw.Elapsed.TotalMinutes >= timeoutinmin)
+                {
+                    retry = true;
+                    break;
+                }
             }
             if (batchTaskExecutionPM != null)
             {
@@ -157,7 +168,7 @@ namespace Logitude.Accounting.BL.Utils
             return batchTaskExecutionUpdateService;
         }
 
-        public void RunReconciliationAfterConversionInner(int tenant, string fromExtNum, string toExtNum)
+        public void RunReconciliationAfterConversionInner(int tenant, string fromExtNum, string toExtNum, BatchTaskExecutionPM batchTaskExecutionPM)
         {
             try
             {
@@ -167,7 +178,8 @@ namespace Logitude.Accounting.BL.Utils
                 IEnumerable<JournalLineLedgerTransactionDTO> journalLine_LT_DTOs = journalLineQueryService.GetQGJournalLinesByExternalRecoFromTo(tenant, fromExtNum, toExtNum);
                 List<JournalLineLedgerTransactionDTO> journalLine_LT_DTOsList = journalLine_LT_DTOs.ToList().OrderBy(rec => rec.JournalLine.ExternalReconcileNumber).ToList();
                 var journalLineGroups = journalLine_LT_DTOsList.GroupBy(rec => rec.JournalLine.ExternalReconcileNumber);
-
+                _currentLower = fromExtNum;
+                _currentUpper = toExtNum;
                 //IQueryable<IGrouping<String, JournalLineLedgerTransactionDTO>> journalLineGroups = journalLineQueryService.GetQGJournalLinesByExternalRecoFromTo(tenant, fromExtNum, toExtNum);
                 LedgerTransactionQueryService ledgerTransactionQueryService = new LedgerTransactionQueryService(context);
                 List<ReconciableGroup> reconciableGroupList = new List<ReconciableGroup>();
@@ -205,18 +217,36 @@ namespace Logitude.Accounting.BL.Utils
                     string gLAccountId = GetGroupGLAccountId(recoGroup._LineGroup);
                     if (!String.IsNullOrWhiteSpace(gLAccountId))
                     {
-                        using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(5)))
+                        try
                         {
-                            _current = recoGroup._Ref.ToString();
-                            ReconcileOneRef(recoGroup._LineGroup, gLAccountId, ledgerTransactionQueryService);
-                            _counter++;
+                            using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(5)))
+                            {
+                                _current = recoGroup._Ref.ToString();
+                                ReconcileOneRef(recoGroup._LineGroup, gLAccountId, ledgerTransactionQueryService);
+                                _counter++;
                                 //      if (_counter%100 == 0)
                                 //      {
                                 scope.Complete();
                                 //      }
                             }
 
-                        madeList.Add(recoGroup._Ref);
+                            madeList.Add(recoGroup._Ref);
+                        }
+                        catch (Exception ex) 
+                        {
+                            if (ex.Message == "The underlying provider failed on Open." || ex.InnerException.Message == "Exception has been thrown by the target of an invocation.")
+                            {
+                                badList.Add(_current);
+                                if (batchTaskExecutionPM != null)
+                                {
+                                    // there to put message into the batch task log
+                                    string logtext = $"ReconciliationAfterConversionBatch failure on Ref. {_current} ({_currentLower},{_currentUpper}) {ex.Message} Inner Exception: {ex.InnerException.Message}";
+                                    batchTaskExecutionPM.ErrorLog = batchTaskExecutionPM.ErrorLog + " " + logtext;
+                                }
+                            }
+                            else
+                                throw;
+                        }
                     }
                 });
                 //     scope.Complete();
@@ -225,7 +255,7 @@ namespace Logitude.Accounting.BL.Utils
             }
             catch (Exception e)
             {
-                throw new Exception($"ReconciliationAfterConversionBatch failure on Ref. {_current} {e.Message} Inner Exception: {e.InnerException.Message}", e);
+                throw new Exception($"ReconciliationAfterConversionBatch failure on Ref. {_current} ({_currentLower},{_currentUpper}) {e.Message} Inner Exception: {e.InnerException.Message}", e);
             }
         }
 

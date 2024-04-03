@@ -16,8 +16,8 @@
                                 <td>
                                     <div></div>
                                 </td>
-                                <td style="width: 20px; padding-right: 2px;float:right;vertical-align:central;">
-                                    <IconButton [Name]="'Add'" [IsSmall]="true" [IsEnabled]="IsAddButtonEnabled" (click)="AddCustomField()"></IconButton> <!--(click)="DataContext.AddPackageItemMethod()" [disabled]="!DataContext.IsEditingEnabled"-->
+                                <td *ngIf="!this.IsCustomFieldsMenue" style="width: 20px; padding-right: 2px;float:right;vertical-align:central;">
+                                    <IconButton *ngIf="!IsPartner" [Name]="'Add'" [IsSmall]="true" [IsEnabled]="IsAddButtonEnabled && AllowCustomFields" (click)="AddCustomField()"></IconButton> <!--(click)="DataContext.AddPackageItemMethod()" [disabled]="!DataContext.IsEditingEnabled"-->
                                 </td>
                             </tr>
                         </table>
@@ -28,7 +28,7 @@
                 </tr>
 
                 <tr>
-                    <td style="height: 100%;">
+                    <td [style.height]="AllowCustomFields? '100%': '80px'">
                         <div class="MediaFill" style="overflow-x: hidden;">
                             <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="CustomFieldsCollection">
 
@@ -59,7 +59,7 @@
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate [IgnoreMods]="true">
                                             <div class="TextTrimming">
-                                                <span>{{item.DataTypeCode}}</span>
+                                                <span>{{item.DataTypeName}}</span>
                                             </div>
                                         </log-cell-template>
                                     </ng-template>
@@ -69,7 +69,7 @@
                                 <log-column [width]="'30'" [Alignment]="'left'">
                                     <ng-template let-item>
                                         <log-cell-template [IgnoreMods]="true">
-                                            <IconButton [Name]="'edit'" [IsSmall]="true"
+                                            <IconButton [DataCy]="item.FullNameTextCodeCode" [Name]="'edit'" [IsSmall]="true"
                                                         style="display: block; float: left; margin-left:3px; margin-top:4px;" (click)="EditLine(item)"></IconButton>
                                         </log-cell-template>
                                     </ng-template>
@@ -79,20 +79,13 @@
                         </div>
                     </td>
                 </tr>
-            </table>
-        </td>
-    </tr>
-
-    <tr style="height: 32px;">
-        <td style="vertical-align: bottom">
-            <table style="height: 22px;">
-                <tr>
-                    <td>
-                        <div></div>
-                    </td>
-
-                    <td style="width: 57px;">
-                        <button class="Button" (click)="CancelClicked()">Close</button>
+                <tr *ngIf="!AllowCustomFields">
+                    <td style="vertical-align: top">
+                        <div style="display: table; margin: 0 auto">
+                            <label>
+                                Custom Fields are not supported on this object
+                            </label>
+                        </div>
                     </td>
                 </tr>
             </table>

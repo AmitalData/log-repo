@@ -1,5 +1,6 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.Server.Tools.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,11 +13,12 @@ namespace WebFreight.Web.Helpers
         private ExternalAPIResponseParameters responseParameters;
         private TenantPM tenantPM;
         private TenantQuery tenantQuery;
-        private string[] generalTenantsAPISNames= new[] { "House", "Direct", "Master", "Rates Update" };
-        private string[] hypridTenantsAPISNames = new[] { "Customs", "Quote", "Customer", "Vendor" };
+        private string[] generalTenantsAPISNames = new[] { "House", "Direct", "Master", "Rates Update", "Get Shipments by References" };
+        private string[] hypridTenantsAPISNames = new[] { "Customs", "Quote", "Customer", "Vendor", "Cargo Tracking Shipment Details" };
+        private string[] oceanInsightAPISNames = new[] { "Container" };
         private string[] fullAccountingTenantsAPISNames = new[] { "Customer", "Vendor", "ARPayment", "Cancel ARPayment", "APInvoice Cancellation",
-                                                                  "ARInvoice", "APInvoice", "ARInvoice Additional Data", "Journal", "GLAccount" , 
-                                                                  "Customer Open Files Amount", "GL Account More Data","Cargo Tracking Shipment Details" };
+                                                                  "ARInvoice", "APInvoice", "ARInvoice Additional Data", "Journal", "GLAccount" , "ClosedMonthCheck" ,
+                                                                  "Customer Open Files Amount", "GL Account More Data" };
         private Dictionary<string,string> XMLRequestTexts;
 
         public ExternalAPITemplatesBuilder(int tenant)
@@ -68,22 +70,37 @@ namespace WebFreight.Web.Helpers
                 if (this.responseParameters.ApiTanentType == "General")
                 {
                     AddTenantAPIsNames(generalTenantsAPISNames);
+
+                    if(FeatureToggleHelper.HasFeatureToggle("OIC", this.responseParameters.Tenant))                    
+                        AddTenantAPIsNames(oceanInsightAPISNames);                    
+
+                    if (FeatureToggleHelper.HasFeatureToggle("CTI", this.responseParameters.Tenant))                    
+                        AddTenantAPIsNames(new[] { "Customer" });                    
                 }
+
                 else if (this.responseParameters.ApiTanentType == "FullAccounting")
                 {
                     AddTenantAPIsNames(generalTenantsAPISNames);
                     AddTenantAPIsNames(fullAccountingTenantsAPISNames);
                 }
+
                 else if(this.responseParameters.ApiTanentType == "Hybrid")
                 {
                     AddTenantAPIsNames(generalTenantsAPISNames);
                     AddTenantAPIsNames(hypridTenantsAPISNames);
                 }
+
                 else if (this.responseParameters.ApiTanentType == "All")
                 {
                     AddTenantAPIsNames(generalTenantsAPISNames);
                     AddTenantAPIsNames(hypridTenantsAPISNames);
                     AddTenantAPIsNames(fullAccountingTenantsAPISNames);
+
+                    if (FeatureToggleHelper.HasFeatureToggle("OIC", this.responseParameters.Tenant))                    
+                        AddTenantAPIsNames(oceanInsightAPISNames);
+
+                    if (FeatureToggleHelper.HasFeatureToggle("CTI", this.responseParameters.Tenant))
+                        AddTenantAPIsNames(new[] { "Customer" });
                 }
             }
         }
@@ -127,10 +144,12 @@ namespace WebFreight.Web.Helpers
 
         private void AddGeneralTenantsAPISRequestText()
         {
+            AddCustomerAPIsRequestText();
             AddHouseAPIsRequestText();
             AddDirectAPIsRequestText();
             AddMasterAPIsRequestText();
             AddRatesAPIsRequestText();
+            AddGetShipmentsAPIsRequestText();
         }
 
         private void AddFullAccountingTenantsAPIsRequestText()
@@ -304,6 +323,173 @@ namespace WebFreight.Web.Helpers
               </Direct>
                ");
             }
+            if (!this.XMLRequestTexts.ContainsKey("PatchDirect"))
+            {
+                this.XMLRequestTexts.Add("PatchDirect", "[	\r\n" +
+                    "  {\"op\": \"replace\",	\r\n" +
+                    "	\"path\": \"/Customer\",	\r\n" +
+                    "	\"value\": {\"Code\": 89086	}\r\n	},\r\n" +
+                    "	{\"op\": \"replace\",\r\n" +
+                    "	\"path\": \"/Shipper\",		\r\n" +
+                    "   \"value\": {\"Code\": 89086	}\r\n	},\r\n" +
+                    "	{\"op\": \"replace\",\r\n" +
+                    "   \"path\": \"/Consignee\",	\r\n" +
+                    "	\"value\": {\"Code\": 89088}	},\r\n" +
+                    "	{\"op\": \"replace\",	\r\n" +
+                    "	\"path\": \"/MainCarriageFromPort\",	\r\n" +
+                    "	\"value\": {\"Code\": \"GBLHR\"	}\r\n	},	\r\n" +
+                    "   {\"op\": \"replace\",\r\n" +
+                    " 	\"path\": \"/MainCarriageToPort\",\r\n" +
+                    "	\"value\": {\"Code\": \"GBLHR\"}\r\n	},\r\n" +
+                    "	{\"op\": \"replace\",\r\n" +
+                    "   \"path\": \"/CutoffDate\",	\r\n" +
+                    "	\"value\": \"2021-12-21T00:00:00\"	},	\r\n" +
+                    "   {\"op\": \"replace\",	\r\n" +
+                    "	\"path\": \"/PickUps\",	\r\n" +
+                    "	\"value\": [	\r\n" +
+                    "		{ \r\n" +
+                    "               \"Id\": \"1-1351597\",\r\n " +
+                    "				\"Seal\": null,\r\n " +
+                    "				\"Notes\": null,\r\n " +
+                    "				\"Seal2\": null,\r\n " +
+                    "				\"Width\": 2,\r\n " +
+                    "				\"Height\": 3,\r\n " +
+                    "				\"Length\": 1,\r\n " +
+                    "				\"Pieces\": 11,\r\n " +
+                    "				\"Volume\": 0,\r\n " +
+                    "				\"IMDGCode\": null,\r\n " +
+                    "				\"UnNumber\": null,\r\n " +
+                    "				\"Harmonize\": null,\r\n " +
+                    "				\"FlashPoint\": null,\r\n " +
+                    "				\"Reference1\": null,\r\n " +
+                    "				\"Reference2\": null,\r\n " +
+                    "				\"Reference3\": null,\r\n " +
+                    "				\"Reference4\": null,\r\n " +
+                    "				\"ClassNumber\": null,\r\n " +
+                    "				\"GrossWeight\": 44,\r\n " +
+                    "				\"IsDangerous\": false,\r\n " +
+                    "				\"PackageType\": \r\n " +
+                    "                  {\"Code\": null,\r\n " +
+                    "					\"LocalName\": null,\r\n " +
+                    "					\"EnglishName\": null,\r\n " +
+                    "					\"PartnerCode\": null,\r\n " +
+                    "					\"ComputingPartnerCode\": null\r\n " +
+                    "     				},\r\n " +
+                    " 				\"Temperature\": null,\r\n " +
+                    "				\"Ventilation\": null,\r\n " +
+                    "				\"changeSetOp\": \"Update\",\r\n " +
+                    "				\"InsidePackages\": null,\r\n " +
+                    "				\"PackagingGroup\": null,\r\n " +
+                    "				\"CommodityNumber\": null,\r\n " +
+                    "				\"ContainerNumber\": null,\r\n " +
+                    "				\"MaterialDescription\": null,\r\n " +
+                    "				\"ComputingPartnerCode\": null}, \r\n " +
+                    "               {\"Id\": \"1-1351598\",\r\n " +
+                    "				\"Seal\": null,	\r\n " +
+                    "   			\"Notes\": null,\r\n " +
+                    "				\"Seal2\": null,\r\n " +
+                    "				\"Width\": 8,\r\n " +
+                    "				\"Height\": 9,\r\n " +
+                    "				\"Length\": 7,\r\n " +
+                    "				\"Pieces\": 14,	\r\n " +
+                    "		    	\"Volume\": 0.007,\r\n " +
+                    "				\"IMDGCode\": null,\r\n " +
+                    "				\"UnNumber\": null,\r\n " +
+                    "				\"Harmonize\": null,\r\n " +
+                    "				\"FlashPoint\": null,\r\n " +
+                    "				\"Reference1\": null,\r\n " +
+                    "				\"Reference2\": null,\r\n " +
+                    "				\"Reference3\": null,\r\n " +
+                    "				\"Reference4\": null,\r\n " +
+                    "				\"ClassNumber\": null,\r\n " +
+                    "				\"GrossWeight\": 10,\r\n " +
+                    "				\"IsDangerous\": false,\r\n " +
+                    "				\"PackageType\": {	\r\n " +
+                    "				    \"Code\": null,	\r\n " +
+                    "				    \"LocalName\": null,\r\n " +
+                    "				    \"EnglishName\": null,\r\n " +
+                    "					\"PartnerCode\": null,\r\n " +
+                    "					\"ComputingPartnerCode\": null},\r\n " +
+                    "				\"Temperature\": null,\r\n " +
+                    "				\"Ventilation\": null,\r\n " +
+                    "				\"changeSetOp\": \"Update\",\r\n " +
+                    "				\"InsidePackages\": null,\r\n " +
+                    "				\"PackagingGroup\": null,\r\n " +
+                    "				\"CommodityNumber\": null,\r\n " +
+                    "				\"ContainerNumber\": null,\r\n " +
+                    "				\"MaterialDescription\": null,\r\n " +
+                    "				\"ComputingPartnerCode\": null},\r\n " +
+                    "   			{\"Id\": \"null\",\r\n " +
+                    "				\"Seal\": null,	\r\n " +
+                    "   			\"Notes\": null,\r\n " +
+                    "				\"Seal2\": null,\r\n " +
+                    "				\"Width\": 13,\r\n " +
+                    "				\"Height\": 14,\r\n " +
+                    "				\"Length\": 12,\r\n " +
+                    "				\"Pieces\": 15,\r\n " +
+                    "				\"Volume\": 0.007,\r\n " +
+                    "				\"IMDGCode\": null,\r\n " +
+                    "				\"UnNumber\": null,\r\n " +
+                    "				\"Harmonize\": null,\r\n " +
+                    "				\"FlashPoint\": null,\r\n " +
+                    "				\"Reference1\": null,\r\n " +
+                    "				\"Reference2\": null,\r\n " +
+                    "				\"Reference3\": null,\r\n " +
+                    "				\"Reference4\": null,\r\n " +
+                    "				\"ClassNumber\": null,\r\n " +
+                    "				\"GrossWeight\": 100,\r\n " +
+                    "				\"IsDangerous\": false,\r\n " +
+                    "				\"PackageType\": \r\n " +
+                    "                   {\"Code\": null,\r\n " +
+                    "					\"LocalName\": null,\r\n " +
+                    "					\"EnglishName\": null,\r\n " +
+                    "					\"PartnerCode\": null,\r\n " +
+                    "					\"ComputingPartnerCode\": null},\r\n " +
+                    "				\"Temperature\": null,\r\n " +
+                    "				\"Ventilation\": null,\r\n " +
+                    "				\"changeSetOp\": \"Insert\",\r\n " +
+                    "				\"InsidePackages\": null,\r\n " +
+                    "				\"PackagingGroup\": null,\r\n " +
+                    "				\"CommodityNumber\": null,\r\n " +
+                    "				\"ContainerNumber\": null,\r\n " +
+                    "				\"MaterialDescription\": null,\r\n " +
+                    "				\"ComputingPartnerCode\": null},\r\n " +
+                    "			    {\"Id\": \"1-1351651\",\r\n " +
+                    "               \"Seal\": null,\r\n " +
+                    "				\"Notes\": null,\r\n " +
+                    "				\"Seal2\": null,\r\n " +
+                    "				\"Width\": null,\r\n " +
+                    "				\"Height\": null,\r\n " +
+                    "				\"Length\": null,\r\n " +
+                    "				\"Pieces\": null,\r\n " +
+                    "				\"Volume\": null,\r\n " +
+                    "				\"IMDGCode\": null,\r\n " +
+                    "				\"UnNumber\": null,	\r\n " +
+                    "   			\"Harmonize\": null,\r\n " +
+                    "				\"FlashPoint\": null,\r\n " +
+                    "				\"Reference1\": null,\r\n " +
+                    "				\"Reference2\": null,\r\n " +
+                    "				\"Reference3\": null,\r\n " +
+                    "				\"Reference4\": null,\r\n " +
+                    "				\"ClassNumber\": null,\r\n " +
+                    "				\"GrossWeight\": null,\r\n " +
+                    "				\"PackageType\": {\r\n " +
+                    "					\"Code\": null,\r\n " +
+                    "					\"LocalName\": null,\r\n " +
+                    "					\"EnglishName\": null,\r\n " +
+                    "					\"PartnerCode\": null,\r\n " +
+                    "					\"ComputingPartnerCode\": null},\r\n " +
+                    "				\"Temperature\": null,\r\n " +
+                    "				\"Ventilation\": null,\r\n " +
+                    "				\"changeSetOp\": \"Delete\",\r\n " +
+                    "				\"InsidePackages\": null,\r\n " +
+                    "				\"PackagingGroup\": null,\r\n " +
+                    "				\"CommodityNumber\": null,\r\n " +
+                    "				\"ContainerNumber\": null,\r\n " +
+                    "				\"MaterialDescription\": null,\r\n " +
+                    "				\"ComputingPartnerCode\": null}]\r\n " +
+                    "	}]");
+            }
         }
 
         private void AddMasterAPIsRequestText()
@@ -369,6 +555,25 @@ namespace WebFreight.Web.Helpers
                                                 <Rate>5</Rate>
                                             </RateUpdate>
                                             </RatesUpdate>
+              ");
+            }
+        }
+
+        private void AddGetShipmentsAPIsRequestText()
+        {
+            if (!this.XMLRequestTexts.ContainsKey("GetShipmentsByReferences"))
+            {
+                this.XMLRequestTexts.Add("GetShipmentsByReferences", @"<Query xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema'>
+                                            <ComputingPartnerCode>AMS</ComputingPartnerCode>
+                                            <Agent Code='0000' PartnerCode='jjj' Reference1='' Reference2=''></Agent>
+                                            <Shipper></Shipper>
+                                            <Consignee></Consignee>
+                                            <ShipperNotExporter></ShipperNotExporter>
+                                            <ConsigneeNotImporter></ConsigneeNotImporter>
+                                            <Forwarder></Forwarder>
+                                            <House>123</House>
+                                            <Master></Master>
+                                        </Query>
               ");
             }
         }

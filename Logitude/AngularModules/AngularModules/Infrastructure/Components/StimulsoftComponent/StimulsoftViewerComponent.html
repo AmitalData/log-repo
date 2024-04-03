@@ -96,7 +96,7 @@
 
 
                 <td *ngIf="IsShowExportMicrosoftExcel" style="width:80px;vertical-align:middle;">
-                    <div id="{{'SaveExcelToggleButton' | IdGeneratorPipe}}" style="width:80px;vertical-align:central;background-color:#D1D6D8" tabindex="0" class="ToggleButton">
+                    <div id="{{'SaveExcelToggleButton' | IdGeneratorAsyncPipe | async}}" style="width:80px;vertical-align:central;background-color:#D1D6D8" tabindex="0" class="ToggleButton">
                         <div sstyle="background-color:#D1D6D8">
 
                             <table class="LeftCenter">
@@ -124,12 +124,12 @@
                                         <img style="margin-left:10px" src="./Images/ToggleIcon.png" />
                                         <div style="float:right;left:-65px;width:140px" class="ToggleButtonMenu">
 
-                                            <button id="{{'SaveExcelFileButton' | IdGeneratorPipe}}" [disabled]="!IsEditingEnabled" (click)="SaveToExcelFile()">
+                                            <button id="{{'SaveExcelFileButton' | IdGeneratorAsyncPipe | async}}" [disabled]="!IsEditingEnabled" (click)="SaveToExcelFile()">
                                                 <div>Excel File</div>
                                             </button>
 
 
-                                            <button id="{{'SaveAdvancedExcelFileButton' | IdGeneratorPipe}}" [disabled]="!IsEditingEnabled" (click)="SaveToExcelFileAdvancedButtonClick()">
+                                            <button id="{{'SaveAdvancedExcelFileButton' | IdGeneratorAsyncPipe | async}}" [disabled]="!IsEditingEnabled" (click)="SaveToExcelFileAdvancedButtonClick()">
                                                 <div>Excel File (Advanced)</div>
                                             </button>
 
@@ -227,11 +227,71 @@
                 </td>
 
                 <td *ngIf="ShowReportsTemlatesLists && IsShowReportManageTemplateLink && !IsSchedulerReport" style="width:40px"><div style="width:40px"></div></td>
-                <td *ngIf="ShowReportsTemlatesLists && IsShowReportManageTemplateLink" style="width:60px"><div style="width:60px">Template:</div></td>
+                <td *ngIf="ShowReportsTemlatesLists && IsShowReportManageTemplateLink && !IsEnableReportTemplateExcel" style="width:60px"><div style="width:60px">Template:</div></td>
+
+                <td *ngIf="IsEnableReportTemplateExcel" style="width:150px;vertical-align:middle;">
+                    <div style="width:150px;vertical-align:central;background-color:#D1D6D8" tabindex="0" class="ToggleButton">
+                        <div sstyle="background-color:#D1D6D8">
+
+                            <table class="LeftCenter">
+                                <tr>
+                                    <td style="width:5px">
+                                        <div style="width:5px"></div>
+                                    </td>
+
+                                    <td style="width:30px">
+                                        <span>{{TemplateTypeName}}</span>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+
+                                    <td style="width:10px">
+
+
+                                        <img style="margin-left:10px" src="./Images/ToggleIcon.png" />
+                                        <div style="float:right;width:140px" class="ToggleButtonMenu">
+
+                                            <button (click)="ReportTypeClick('R','Stimulsoft Template')">
+                                                <div>PDF Template</div>
+                                            </button>
+
+
+                                            <button (click)="ReportTypeClick('E','Excel Template')">
+                                                <div>Excel Template</div>
+                                            </button>
+
+
+                                        </div>
+
+                                    </td>
+                                    <td style="width:5px">
+                                        <div style="width:5px"></div>
+                                    </td>
+                                </tr>
+                            </table>
+
+
+
+
+
+                        </div>
+
+
+
+
+
+
+                    </div>
+                </td>
+
+
+
                 <td *ngIf="ShowReportsTemlatesLists && IsShowReportManageTemplateLink" style="width:7px"><div style="width:7px"></div></td>
 
-                <td *ngIf="ShowReportsTemlatesLists && IsShowReportManageTemplateLink && !IsRefreshReportsTemplateList" style="width:190px"><ComboBox id="{{'ReportsTemplatesComboBox' | IdGeneratorPipe}}" style="width:190px;height:22px;display:inline" (SelectedItemChanged)="ReportTemplatesChange($event)" [ItemsSource]="ReportsTemplatesLists" [SelectedItem]="SelectedReportsTemplateList" [Binding]="'Description'"></ComboBox></td>
-                <td *ngIf="ShowReportsTemlatesLists && IsShowReportManageTemplateLink && IsRefreshReportsTemplateList" style="width:190px"><ComboBox id="{{'ReportsTemplatesComboBox' | IdGeneratorPipe}}" style="width:190px;height:22px;display:inline" (SelectedItemChanged)="ReportTemplatesChange($event)" [ItemsSource]="ReportsTemplatesLists" [SelectedItem]="SelectedReportsTemplateList" [Binding]="'Description'"></ComboBox></td>
+                <td *ngIf="ShowReportsTemlatesLists && IsShowReportManageTemplateLink && !IsRefreshReportsTemplateList" style="width:190px"><ComboBox id="{{'ReportsTemplatesComboBox' | IdGeneratorAsyncPipe | async}}" style="width:190px;height:22px;display:inline" (SelectedItemChanged)="ReportTemplatesChange($event,true)" [ItemsSource]="ReportsTemplatesLists" [SelectedItem]="SelectedReportsTemplateList" [Binding]="'Description'"></ComboBox></td>
+                <td *ngIf="ShowReportsTemlatesLists && IsShowReportManageTemplateLink && IsRefreshReportsTemplateList" style="width:190px"><ComboBox id="{{'ReportsTemplatesComboBox' | IdGeneratorAsyncPipe | async}}" style="width:190px;height:22px;display:inline" (SelectedItemChanged)="ReportTemplatesChange($event,true)" [ItemsSource]="ReportsTemplatesLists" [SelectedItem]="SelectedReportsTemplateList" [Binding]="'Description'"></ComboBox></td>
 
                 <td *ngIf="ShowReportsTemlatesLists && IsShowReportManageTemplateLink" style="width:7px"><div style="width:7px"></div></td>
 
@@ -239,6 +299,28 @@
                 <td *ngIf="ShowReportsTemlatesLists && IsShowReportManageTemplateLink" style="width:100px"><div style="width:100px"><span style="font-size:11px" class="hyperlink" (click)="ManagementReport()">Manage Templates</span></div></td>
                 <td *ngIf="ShowReportsTemlatesLists && IsShowReportManageTemplateLink" style="width:7px"><div style="width:7px"></div></td>
 
+                <td *ngIf="ShowReportsTemlatesLists && IsShowReportManageTemplateLink && ShowMessageTemlatesLists" style="width:40px"><div style="width:40px"></div></td>
+                <td *ngIf="ShowReportsTemlatesLists && IsShowReportManageTemplateLink && ShowMessageTemlatesLists" style="width:120px"><div style="width:60px">Message Template:</div></td>
+
+                <td *ngIf="ShowReportsTemlatesLists && IsShowReportManageTemplateLink && ShowMessageTemlatesLists" style="width:7px"><div style="width:7px"></div></td>
+
+                <td *ngIf="ShowReportsTemlatesLists && IsShowReportManageTemplateLink && ShowMessageTemlatesLists" style="width:190px"><ComboBox id="{{'MessageTemplatesComboBox' | IdGeneratorAsyncPipe | async}}" style="width:190px;height:22px;display:inline" (SelectedItemChanged)="MessageTemplatesChange($event)" [ItemsSource]="MessageTemplatesLists" [SelectedItem]="SelectedMessageTemplateList" [Binding]="'Description'"></ComboBox></td>
+
+                <td *ngIf="ShowReportsTemlatesLists && IsShowReportManageTemplateLink && ShowMessageTemlatesLists" class="CellStretched" style="width:30px; min-width:30px; max-width:30px; position: relative;vertical-align:central">
+
+                    <div class="EditButton" (click)="EditMessageTemplate(SelectedMessageTemplateList)" style="display:inline;width:18px;">
+
+                        <IconButton [disabled]="MessageTemplatesLists && MessageTemplatesLists.length == 0" [Name]="'Edit'" [IsSmall]="true" style="display: block;margin-left:7px"></IconButton>
+
+                    </div>
+
+                </td>
+
+                <td *ngIf="ShowReportsTemlatesLists && IsShowReportManageTemplateLink && ShowMessageTemlatesLists" class="CellStretched" style="width:25px; min-width:25px; max-width:25px; position: relative;vertical-align:central">
+
+                    <IconButton [disabled]="false" [Name]="'Add'" [IsSmall]="true" (click)="AddMessageTemplate()"></IconButton>
+
+                </td>
                 <td *ngIf="IsShowShiftToolbar">
                     <div>
                         <table>
@@ -258,10 +340,14 @@
 
 
                 <td *ngIf="IsShowShiftToolbar">
-                    <div style="width:440px;float: right;vertical-align:middle">
+                    <div style="width:570px;float: right;vertical-align:middle">
 
                         <table style="float: right;">
                             <tr>
+
+                                <td style="width:60px;"><span>Font Size:</span></td>
+                                <td style="width:60px;"><ComboBox style="width:60px;height:22px;display:inline" (SelectedItemChanged)="FontSizeSelectedItemChanged($event)" [ItemsSource]="FontSizeLists" [SelectedItem]="SelectedFontSize"></ComboBox></td>
+                                <td style="width:10px;"><span></span></td>
                                 <td style="width:25px">  <img style="margin-top:0px;width:25px;height:20px;vertical-align:middle;" src="./Images/Two_headed_arrow_Ver.png" /></td>
 
                                 <td style="width:70px;"><span>Vertical Shift</span></td>

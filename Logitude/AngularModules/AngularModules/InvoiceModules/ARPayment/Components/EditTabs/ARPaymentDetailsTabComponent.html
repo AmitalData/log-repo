@@ -26,7 +26,7 @@
                                     <td>
                                         <div class="MediaFill">
                                             <!--<div class="OrangeInfo">{{EntityWarning}}</div>-->
-                                            <WarningSummary *ngIf="EntityWarningsList != null && EntityWarningsList.length > 0" [ItemsSource]="EntityWarningsList"></WarningSummary>
+                                            <WarningSummary *ngIf="EntityWarningsList != null && EntityWarningsList.length > 0 && EntityPM.SATTransferStatusCode != 'SM'" [ItemsSource]="EntityWarningsList"></WarningSummary>
                                         </div>
 
                                     </td>
@@ -54,7 +54,9 @@
                                                             [DataContext]="DataContext"
                                                             [LookUpTableName]="'Card'"
                                                             [DependencyFilter1Value]="'CS,AG,AL,CG,SG,SL,TR,VD,WH'"
-                                                            [DependencyFilter1IsList]="true">
+                                                            [DependencyFilter1IsList]="true"
+                                                            [StartSearchFromChar]="3"
+                                            [StartSearchFromNumber]="6">
                                                     </LogLov>
                                                 </td>
                                                 <td>
@@ -73,7 +75,9 @@
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
                                                             [SelectedValue]="BillToId"
-                                                            [LookUpTableName]="'Card'">
+                                                            [LookUpTableName]="'Card'"
+                                                            [StartSearchFromChar]="3"
+                                            [StartSearchFromNumber]="6">
                                                     </LogLov>
                                                 </td>
 
@@ -511,7 +515,7 @@
                     <tr>
                         <td>
                             <div class="MediaFill">
-                                <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="ItemsSource">
+                                <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="ItemsSource" [UseVirtuallization]="IsUsingVirtuallization">
 
                                     <!-- IsConnected -->
                                     <log-column [width]="'25'">

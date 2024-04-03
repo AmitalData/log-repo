@@ -64,6 +64,7 @@ export class CutsomerTenantAccessManagementComponent implements OnInit {
     AcceptedCountEnabled: boolean;
     InProgressCountEnabled: boolean;
     InactiveCountEnabled: boolean;
+    IsCreateLogboxTenantVisibile: boolean;
     public ItemsSource: ObservableCollection;
    
 
@@ -90,6 +91,7 @@ export class CutsomerTenantAccessManagementComponent implements OnInit {
     LoadData() {
         this.LoadCurrentTenant();
         this.LoadLastCustomerRequest();
+        this.IsCreateLogboxTenantVisibile = FeatureLocator.HasFeaturePermession("CustomerTenantAccess", "CreateNewTenant");
     }
 
 
@@ -137,7 +139,7 @@ export class CutsomerTenantAccessManagementComponent implements OnInit {
 
     RefreshTenantScreenData() {
 
-        if (this.myTenantPM != null && !this.myTenantPM.IsCustomerTenantShare) {
+        if (this.myTenantPM != null && !this.myTenantPM.CustomerTenantShareCustomsFile) {
             this.EnableAccess = false;
         }
 
@@ -194,6 +196,17 @@ export class CutsomerTenantAccessManagementComponent implements OnInit {
 
     }
 
+    CreateLogboxTenantLinkClick() {
+        let windowArgs: any = {};
+        windowArgs.IsCreateLogboxTenantFromCloud = true;
+        windowArgs.LogBoxAdminUserId = this.myTenantPM.LogBoxAdminUserId;
+        var logWindow = new LogitudeWindow();
+        logWindow.WindowArgs = windowArgs;
+        logWindow.Width = 750;
+        logWindow.Height = 500;
+        logWindow.Title = "Create Tenant";
+        logWindow.Show("./InfrastructureModules/InfrastructureOthers/Components/CreateTenant/CreateTenantComponent");
+    }
 
 
 
@@ -470,5 +483,12 @@ export class CutsomerTenantAccessManagementComponent implements OnInit {
         logitudeWindow.Height = 500;
         logitudeWindow.Width = 800;
         logitudeWindow.Show("./SharedLogistics/Components/ViewBlocedCustomerComponent");
+    }
+
+
+    RefreshButtonClicked() {
+        this._entityResourceService.getEntityResourceByTableName("CustomerTenantAccess", 0).subscribe((response: any) => {
+            this.LoadData();
+        });
     }
 }

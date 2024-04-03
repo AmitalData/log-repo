@@ -1,0 +1,139 @@
+<style>
+    .CountBox {
+        display: inline-block;
+        border: 1px solid #ffd800;
+        border-radius: 5px;
+        background: #faf5c0;
+        padding: 2px 10px;
+        margin: 5px;
+        color: gray;
+        font-family: sans-serif;
+    }
+</style>
+
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="false"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr style="height:5px;">
+        <td></td>
+    </tr>
+
+    <tr>
+        <td>
+            <table>
+                <tr style="height:22px;">
+                    <td style="width:180px;">Document Type</td>
+                    <td style="width:10px;"><div></div></td>
+                    <td style="width:180px;">Template</td>
+                    <td style="width:10px;"><div></div></td>
+                    <td style="width:180px;">Copy</td>
+                    <td><div></div></td>
+                </tr>
+
+                <tr class="FormFieldRow">
+                    <td>
+                        <LogLov [NoObjectField]="'true'"
+                                [ObjectFieldName]="'DocumentTypeId'"
+                                [SelectedValue]="DocumentTypeId"
+                                [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"
+                                [LookUpTableName]="'DocumentType'"
+                                [DependencyFilter1Value]="ObjectTableId"
+                                [QueryFilterItems]="DocumentTypeQueryFilters"
+                                [HideColumns]="true">
+                        </LogLov>
+                    </td>
+                    <td style="width:10px;"><div></div></td>
+                    <td>
+                        <ComboBox (SelectedItemChanged)="SelectedDocumentTypeTemplate = $event"
+                                  [ItemsSource]="DocumentTypeTemplateList"
+                                  [SelectedItem]="SelectedDocumentTypeTemplate"
+                                  [Binding]="'Name'"></ComboBox>
+                    </td>
+                    <td style="width:10px;"><div></div></td>
+                    <td>
+                        <ComboBox (SelectedItemChanged)="SelectedDocumentTypeCopy = $event"
+                                  [ItemsSource]="DocumentTypeCopiesList"
+                                  [SelectedItem]="SelectedDocumentTypeCopy"
+                                  [Binding]="'Name'"></ComboBox>
+                    </td>
+                    <td><div></div></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height:10px;">
+        <td></td>
+    </tr>
+
+    <tr style="height: 22px;" *ngIf="SelectedItemsCountText">
+        <td>
+            <table>
+                <tr>
+                    <td style="width:100px">
+                        <div style="text-align:center;" class="CountBox">
+                            <div style="margin-right:5px;margin-left:-2px;float:left;width:16px;">
+                                <CheckBox [IsChecked]="IsAllRecordSelected" (Checked)="IsAllRecordSelectedChange($event,true)"></CheckBox>
+                            </div>
+                            <div style="width:70px;margin-top:1px;">
+                                {{SelectedItemsCountText}}
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr>
+        <td style="height: 100%">
+            <div style="width:100%;height:100%;background-color: #EAEAEB;border: 1px solid #cccccc;">
+                <table>
+                    <tr>
+                        <td>
+                            <div style="height: Calc(100% - 1px);background-color:white;">
+                                <logitude-grid GridWidth="100%" GridHeight="100%" [ObjectTable]="ObjectTable"
+                                                  [dataSource]="dataSource" [MenuHeaderchangeevent]="MenuHeaderchangeevent"
+                                                  (rowSelectedEvent)="onRowSelected($event)" [SelectedRow]="SelectedRow"
+                                                  [columns]="columns" [autoLoad]="true" [rows]="items"
+                                                  (AfterViewInitCompleted)="GridAfterViewInitCompleted($event)"
+                                                  (CountReady)="onCountReady($event)" [EnableRowHoverVisibility]="true"
+                                                  (AllRecordsReady)="AllRecordsReady($event)"
+                                                  [CheckboxProp]="'Id'" [SearchFieldchangeevent]="SearchFieldchangeevent">
+                                </logitude-grid>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </td>
+    </tr>
+
+    <tr style="height:1px;">
+        <td>
+            <div style="height:30px;float:right;">
+
+                <button *ngIf="!IsMultiEntityPrintedSuccessfully" class="RedButton" (click)="PrintClick()"
+                        style="width:80px;float: right;margin: 4px;">
+                    Print
+                </button>
+                <button *ngIf="IsMultiEntityPrintedSuccessfully" class="RedButton" (click)="NextClicked()"
+                        style="width:80px;float: right;margin: 4px;">
+                    Next
+                </button>
+                <button class="Button" (click)="CloseButtonClicked()"
+                        style="width:80px;float: right;margin:4px;">
+                    Close
+                </button>
+            </div>
+        </td>
+    </tr>
+</table>

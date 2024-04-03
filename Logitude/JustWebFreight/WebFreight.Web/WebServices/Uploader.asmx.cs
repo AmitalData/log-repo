@@ -44,6 +44,8 @@ using Logitude.BL.Helpers;
 using Simplog.Data.ShipmentsModel;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Logitude.Server.Tools.QueueService;
+using WebFreight.Web.Helpers.Documents;
 
 namespace WebFreight.Web.WebServices
 {
@@ -61,7 +63,6 @@ namespace WebFreight.Web.WebServices
         {
 
         }
-        private static string fileName;
         CloudBlobContainer blobContainer;
         CloudBlockBlob tempcloudBlockBlob;
         CloudBlockBlob finalcloudBlockBlob;
@@ -79,14 +80,14 @@ namespace WebFreight.Web.WebServices
 
         [WebMethod]
 
-        public string UploadFile(string generatedfilename, byte[] buffer, long fileSize, long sentBytes, string[] blockIdsList, int bufferNumber, string externalDocumentId, int tenant, string fileLocation, string filename)
+        public string UploadFile(string generatedfilename, byte[] buffer, long fileSize, long sentBytes, string[] blockIdsList, int bufferNumber, string externalDocumentId, int tenant, string fileLocation, string filename, bool forceCreateDocument, string documentId)
         {
 
             try
             {
                 string signerslist = "";
                 bool isSigned = false;
-                documentIdAndExtension = UploadFileData(generatedfilename, buffer, fileSize, sentBytes, blockIdsList, bufferNumber, externalDocumentId, tenant, fileLocation, filename, ref isSigned, ref signerslist);
+                documentIdAndExtension = UploadFileData(generatedfilename, buffer, fileSize, sentBytes, blockIdsList, bufferNumber, externalDocumentId, tenant, fileLocation, filename, ref isSigned, ref signerslist, forceCreateDocument, documentId);
             }
             catch (Exception e)
             {
@@ -133,7 +134,7 @@ namespace WebFreight.Web.WebServices
                 return str;
         }
 
-        private string BuidDocument(int tenant, string externalDocumentId, long fileSize)
+        private string BuidDocument(int tenant, string externalDocumentId, long fileSize , string fileName)
         {
             try
             {
@@ -141,57 +142,58 @@ namespace WebFreight.Web.WebServices
                 DocumentRepository docRepository = new DocumentRepository(tenant);
                 DocumentsFiling externalDocument = externalDocumentRepository.GetSingleDocumentsFiling(externalDocumentId, tenant);
                 Document document = null;
+               
 
-
-                 if (externalDocument != null)
-                 {
-                     if (externalDocument.DocumentId != null) document = docRepository.GetSingleDocument(tenant, externalDocument.DocumentId);
+                if (externalDocument != null)
+                {
+                    if (externalDocument.DocumentId != null) document = docRepository.GetSingleDocument(tenant, externalDocument.DocumentId);
                     string[] fileParams = fileName.Split('.');
                     string fileextension = fileParams[fileParams.Length - 1];
-                     string finalFileName = externalDocumentId + "." + fileextension;
+                    string finalFileName = externalDocumentId + "." + fileextension;
 
-                     string realFileName = null;
-                     if (!string.IsNullOrEmpty(fileName))
-                     {
-                         realFileName = fileName.Substring(0, fileName.LastIndexOf('.'));
-                     }
+                    string realFileName = null;
+                    if (!string.IsNullOrEmpty(fileName))
+                    {
+                        realFileName = fileName.Substring(0, fileName.LastIndexOf('.'));
+                    }
 
-                     if (document == null)
-                     {
-                         document = new Document()
-                         {
-                             CreateDate = DateTime.Now,
-                             Extension = fileextension,
-                             FileSize = Convert.ToInt32(fileSize),
-                             Tenant = Convert.ToInt32(externalDocument.Tenant),
-                             Id = IdCounter.GetNumber("Document", tenant).ToString(),//externalDocumentId,
-                             HasFile = true,
-                             Folder = "docsin",
-                             FileName = TruncateLongString(realFileName, 120),
-                             CalculatedFileName = TruncateLongString(realFileName, 120),
+                    if (document == null)
+                    {
+                        document = new Document()
+                        {
+                            CreateDate = DateTime.Now,
+                            Extension = fileextension,
+                            FileSize = Convert.ToInt32(fileSize),
+                            Tenant = Convert.ToInt32(externalDocument.Tenant),
+                            Id = IdCounter.GetNumber("Document", tenant).ToString(),//externalDocumentId,
+                            HasFile = true,
+                            Folder = "docsin",
+                            FileName = TruncateLongString(realFileName, 120),
+                            CalculatedFileName = new DocumentTypeCalculateFileNameService(externalDocument, TruncateLongString(realFileName, 120)).Calculate(),
 
-                         };
-                         docRepository.Add(document);
-                     }
-                     else
-                     {
-                         document.CreateDate = DateTime.Now;
-                         document.Extension = fileextension;
-                         document.FileSize = Convert.ToInt32(fileSize);
-                         document.Tenant = Convert.ToInt32(externalDocument.Tenant);
-                         document.HasFile = true;
-                         document.Folder = "docsin";
-                         document.IsEncrypted = true;
-                         document.FileName = document.CalculatedFileName = TruncateLongString(realFileName, 120);
-                         docRepository.Update(document);
-                     }
+                    };
+                        docRepository.Add(document);
+                    }
+                    else
+                    {
+                        document.CreateDate = DateTime.Now;
+                        document.Extension = fileextension;
+                        document.FileSize = Convert.ToInt32(fileSize);
+                        document.Tenant = Convert.ToInt32(externalDocument.Tenant);
+                        document.HasFile = true;
+                        document.Folder = "docsin";
+                        document.IsEncrypted = true;
+                        document.FileName = TruncateLongString(realFileName, 120);
+                        document.CalculatedFileName = new DocumentTypeCalculateFileNameService(externalDocument, document.FileName).Calculate();
+                        docRepository.Update(document);
+                    }
 
-                     docRepository.SubmitChanges();
-                     fileNameAndExtension = document.Id + "." + document.Extension;
-                     externalDocument.DocumentId = document.Id;
-                     externalDocumentRepository.Update(externalDocument);
-                     externalDocumentRepository.SubmitChanges();
-                 }
+                    docRepository.SubmitChanges();
+                    fileNameAndExtension = document.Id + "." + document.Extension;
+                    externalDocument.DocumentId = document.Id;
+                    externalDocumentRepository.Update(externalDocument);
+                    externalDocumentRepository.SubmitChanges();
+                }
                 return fileNameAndExtension;
 
             }
@@ -219,7 +221,7 @@ namespace WebFreight.Web.WebServices
         {
             try
             {
-                documentIdAndExtension = UploadFileData(generatedfilename, buffer, fileSize, sentBytes, blockIdsList, bufferNumber, externalDocumentId, tenant, fileLocation, filename, ref isDigitallySigned, ref signersList);
+                documentIdAndExtension = UploadFileData(generatedfilename, buffer, fileSize, sentBytes, blockIdsList, bufferNumber, externalDocumentId, tenant, fileLocation, filename, ref isDigitallySigned, ref signersList, false, null);
 
                 if (!string.IsNullOrEmpty(documentIdAndExtension))
                 {
@@ -283,7 +285,7 @@ namespace WebFreight.Web.WebServices
 
             }
 
-            
+
             catch (Exception e)
             {
                 string ip = "";
@@ -307,7 +309,7 @@ namespace WebFreight.Web.WebServices
         public string UploadImage(string filename, byte[] buffer, long fileSize, long sentBytes, string[] blockIdsList, int bufferNumber, int tenant, string extension, string cardId, string contactId, string imageDetalId)
         {
             string filelocation = GetFileLocation("images");
-            fileName = filename.ToLower();
+           string  fileName = filename.ToLower();
             string filePath = "tenant" + tenant.ToString() + "/";
             string imagedetailid = null;
             try
@@ -332,8 +334,10 @@ namespace WebFreight.Web.WebServices
                     }
                     else
                     {
-                        imagedetailid = card.ImageDetailId;
+                        UpdateImageDetails(new ImageDetailPM() { Id = card.ImageDetailId, Tenant = card.Tenant, Extension = extension, Size = fileSize }, imageDetailRep);
                     }
+
+                    imagedetailid = card.ImageDetailId;
 
                 }
 
@@ -355,8 +359,11 @@ namespace WebFreight.Web.WebServices
                     }
                     else
                     {
-                        imagedetailid = contact.ImageDetailId;
+                        UpdateImageDetails(new ImageDetailPM() { Id = contact.ImageDetailId, Tenant = contact.Tenant, Extension = extension, Size = fileSize }, imageDetailRep);
                     }
+
+                    imagedetailid = contact.ImageDetailId;
+
                 }
                 else
                 {
@@ -387,10 +394,10 @@ namespace WebFreight.Web.WebServices
 
 
                 ReceivedBytes += buffer.Length;
-                 fileNameAndExtension = fileName + "." + extension;
+                fileNameAndExtension = fileName + "." + extension;
                 //if (sentBytes < fileSize)
                 //{
-                MemoryStream memorystream = new MemoryStream(buffer);
+                //MemoryStream memorystream = new MemoryStream(buffer);
                 //tempcloudBlockBlob.PutBlock(blockIdsList[bufferNumber], memorystream, null);
                 BlobFileInfo fileInfo = new BlobFileInfo()
                 {
@@ -403,7 +410,7 @@ namespace WebFreight.Web.WebServices
                 };
                 //filePath = "tenant" + tenant.ToString() + "/" + StorageAcountDetails.GetBlobNameByLocation(fileNameAndExtension, filelocation);
                 storageservice.WriteBlock(buffer, sentBytes, blockIdsList, bufferNumber, fileInfo);
-                
+
                 // }
 
                 //else
@@ -456,6 +463,23 @@ namespace WebFreight.Web.WebServices
             return imagedetailid;
         }
 
+
+
+
+        private void UpdateImageDetails(ImageDetailPM imageDetailPM , ImageDetailRepository imageDetailRepository )
+        {
+            var imagedetail = imageDetailRepository.GetSingleImageDetail(imageDetailPM.Id , imageDetailPM.Tenant);
+            if (imagedetail == null) return;
+            imagedetail.Extension = imageDetailPM.Extension;
+            imagedetail.Size = imageDetailPM.Size;
+            imageDetailRepository.Update(imagedetail);
+            imageDetailRepository.SubmitChanges();
+        }
+
+
+
+
+
         byte[] datainByte;
 
         [WebMethod]
@@ -475,7 +499,7 @@ namespace WebFreight.Web.WebServices
                     DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(tenant);
                     DocumentsFilingPM extDocPM = documentsFilingQuery.GetDocumentsFilingByDocumentId(documentId, tenant);
 
-                   
+
                     // 
                     if (extDocPM != null)
                     {
@@ -508,14 +532,14 @@ namespace WebFreight.Web.WebServices
                         Extension = document.Extension,
                         Tenant = document.Tenant,
                         FileSize = document.FileSize,
-                       
+
                     };
                     Logitude.Server.Tools.StorageService.IBlobService storageservice = Logitude.Server.Tools.ContainerAccessor.Container.Resolve(typeof(Logitude.Server.Tools.StorageService.IBlobService), "StorageService", new ParameterOverride("", 1)) as Logitude.Server.Tools.StorageService.IBlobService;
                     storageservice.Delete(fileInfo);
 
 
                     UpdateDocument(commonContext, document);
-                    
+                    OpenKPIDocumentUploderQueue(extDocPM, commonContext);
                     //else // In Azure
                     //{
                     //string filename = document.Id + "." + document.Extension;
@@ -547,7 +571,7 @@ namespace WebFreight.Web.WebServices
 
         }
 
-        private  void UpdateDocument(ICommonDataContext commonContext, Document document)
+        private void UpdateDocument(ICommonDataContext commonContext, Document document)
         {
             if (document != null)
             {
@@ -559,8 +583,69 @@ namespace WebFreight.Web.WebServices
             }
         }
 
+        private void OpenKPIDocumentUploderQueue(DocumentsFilingPM documentsFiling, ICommonDataContext commonContext)
+        {
+            //if (documentsFiling.DocumentTypeCode == "POD")
+            //{
+            //    IQueueService queueservice = new DbQueueService();
+            //    queueservice.InitializeQueue("PODDocumnetUploaderQueue", documentsFiling.Tenant);
+            //    queueservice.Send(new Dictionary<string, string>() { { "EntityId", documentsFiling.Id }, { "Tenant", documentsFiling.Tenant.ToString() },
+            //                                                         { "IsPODDocumentUploaded", false.ToString() }, { "IsPODDocumentDeleted", true.ToString() }, { "PODRecived", documentsFiling.ReceivedDate.ToString() } },
+            //                                                          documentsFiling.Tenant, null, null, null, null);
+            //}
+
+            if (IsStartingUploadShipmentDocs(documentsFiling.DocumentTypeCode))
+            {
+                IQueueService queueservice = new DbQueueService();
+                queueservice.InitializeQueue("ShipmentDocsInUploaderQueue", documentsFiling.Tenant);
+                queueservice.Send(new Dictionary<string, string>() { 
+                    { "EntityId", documentsFiling.Id }, 
+                    { "Tenant", documentsFiling.Tenant.ToString() },
+                    { "DocumentCode",  documentsFiling.DocumentTypeCode },
+                    { "IsDocumentUploaded", false.ToString() }, 
+                    { "IsDocumentDeleted", true.ToString() }, 
+                    { "RecivedDate", documentsFiling.ReceivedDate.ToString() } },
+                    documentsFiling.Tenant, null, null, null, null);
+            }
+        }
+
+        private bool IsStartingUploadShipmentDocs(string documentTypeCode)
+        {
+            if (documentTypeCode == "POD")
+            {
+                return true;
+            }
+
+            else if (documentTypeCode == "380")
+            {
+                return true;
+            }
+
+            else if (documentTypeCode == "721")
+            {
+                return true;
+            }
+
+            else if (documentTypeCode == "706")
+            {
+                return true;
+            }
+
+            else if (documentTypeCode == "704")
+            {
+                return true;
+            }
+
+            else if (documentTypeCode == "ARNT")
+            {
+                return true;
+            }
+
+            return false;
+        }
+
         public byte[] GetPageTiffAsB64FromTarByTenantComIdPage(
-           string documentId, int tenant, int currPage,out string TiffPageLines,
+           string documentId, int tenant, int currPage, out string TiffPageLines,
             out string ErrorMessage
             )
         {
@@ -587,10 +672,10 @@ namespace WebFreight.Web.WebServices
                 var UDocumentsFilingId = poco.Id;
                 var unifreightFillingService = new UnifreightFillingService();
                 int iPage = currPage;
-                var tiffByte = unifreightFillingService.DownloadTiff(tenant, UDocumentsFilingId, iPage, out TiffPageLines,out  ErrorMessage);
+                var tiffByte = unifreightFillingService.DownloadTiff(tenant, UDocumentsFilingId, iPage, out TiffPageLines, out ErrorMessage);
                 return tiffByte;
             }
-            catch (Exception  eee)
+            catch (Exception eee)
             {
                 ErrorMessage = eee.Message;
                 return null;
@@ -599,7 +684,7 @@ namespace WebFreight.Web.WebServices
 
 
         // this method called from server : can't be called from client
-        public string GetFileExtension(string documentId, int tenant, bool withOutTenant=  false)
+        public string GetFileExtension(string documentId, int tenant, bool withOutTenant = false)
         {
             string extension = "";
             ICommonDataContext context = CommonDataContext.GetContext(tenant);
@@ -654,19 +739,22 @@ namespace WebFreight.Web.WebServices
 
         }
 
-        public List<DocumentsFilingPM> GetMasterDocumentsAndItsConnectedHousesDocuments(string entityId, int tenant)
+        public List<DocumentsFilingPM> GetMasterDocumentsAndItsConnectedHousesDocuments(string entityId, int tenant, string partnerType)
         {
             ICommonDataContext myContext = CommonDataContext.GetContext(tenant);
             DocumentsFilingRepository myDocumentsFilingRepository = new DocumentsFilingRepository(myContext);
             DocumentsFilingQuery myDocumentsFilingQuery = new DocumentsFilingQuery(myDocumentsFilingRepository);
+
             List<DocumentsFilingPM> myDocumentFilings = myDocumentsFilingQuery.GetDocumentsFilingPMsByEntityId(entityId, tenant);
-            List<DocumentsFilingPM> housesDocumentFilings = GetConnectedHousesDocumentsFilingPMs(entityId, tenant, myDocumentsFilingQuery);
+            if(partnerType == "AG") myDocumentFilings = GetAgentDocuments(myDocumentFilings, "C", tenant);
+
+            List<DocumentsFilingPM> housesDocumentFilings = GetConnectedHousesDocumentsFilingPMs(entityId, tenant, myDocumentsFilingQuery, partnerType);
             myDocumentFilings = myDocumentFilings.Concat(housesDocumentFilings).ToList();
 
             return myDocumentFilings;
         }
 
-        private static List<DocumentsFilingPM> GetConnectedHousesDocumentsFilingPMs(string entityId, int tenant, DocumentsFilingQuery myDocumentsFilingQuery)
+        private List<DocumentsFilingPM> GetConnectedHousesDocumentsFilingPMs(string entityId, int tenant, DocumentsFilingQuery myDocumentsFilingQuery, string partnerType)
         {
             List<string> housesShipmentsIds = GetAllConnectedHousesShipmentByShipmentMasterId(entityId, tenant);
             List<DocumentsFilingPM> myDocumentFilings = new List<DocumentsFilingPM>();
@@ -675,8 +763,29 @@ namespace WebFreight.Web.WebServices
                 List<DocumentsFilingPM> houseDocumentFilings = myDocumentsFilingQuery.GetDocumentsFilingPMsByEntityId(housesShipmentsIds[i], tenant);
                 myDocumentFilings = myDocumentFilings.Concat(houseDocumentFilings).ToList();
             }
+            return partnerType == "AG" ? GetAgentDocuments(myDocumentFilings, "H", tenant) : myDocumentFilings;
+        }
 
-            return myDocumentFilings;
+        public List<DocumentsFilingPM> GetAgentDocuments(List<DocumentsFilingPM> documentsFilings, string shipmentLevelCode, int tenant)
+        {
+            if (IsCloudEnvironment() || !FeatureToggleHelper.HasFeatureToggle("DFP", tenant))
+                return documentsFilings.Where(d => d.IsAgentView).ToList();
+
+            if (shipmentLevelCode == "C")
+                return documentsFilings.Where(d => d.IsAgentSharedInMaster).ToList();
+
+            if (shipmentLevelCode == "D")
+                return documentsFilings.Where(d => d.IsAgentSharedInDirect).ToList();
+
+            if (shipmentLevelCode == "H")
+                return documentsFilings.Where(d => d.IsAgentSharedInHouse).ToList();
+
+            return documentsFilings.Where(d => d.IsAgentView).ToList();
+        }
+
+        private bool IsCloudEnvironment()
+        {
+            return Simplog.Server.Infrastructure.LogitudeSettings.WorkEnvironment == "cloud";
         }
 
         private static List<string> GetAllConnectedHousesShipmentByShipmentMasterId(string entityId, int tenant)
@@ -697,7 +806,7 @@ namespace WebFreight.Web.WebServices
                 {
 
 
-                    fileName = documentId + "." + documentExtension;
+                  string  fileName = documentId + "." + documentExtension;
                     string filePath = "tenant" + tenant.ToString() + "/" + StorageAcountDetails.GetBlobNameByLocation(fileName.ToLower(), fileLocation);
                     IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
                     BlobFileInfo fileInfo = new BlobFileInfo()
@@ -754,7 +863,7 @@ namespace WebFreight.Web.WebServices
                     //string filelocation = GetFileLocation(FileLocation);
                     try
                     {
-                        fileName = document.Id + "." + document.Extension;
+                        string   fileName = document.Id + "." + document.Extension;
 
                         BlobFileInfo fileInfo = new BlobFileInfo()
                         {
@@ -823,8 +932,8 @@ namespace WebFreight.Web.WebServices
                 DocumentRepository documentRepository = new DocumentRepository(tenant);
                 Document document = documentRepository.GetSingleDocument(tenant, documentsFiling.DocumentId);
 
-            if (document != null)
-            {
+                if (document != null)
+                {
                     Logitude.Server.Tools.BlobFileInfo fileInfo = new Logitude.Server.Tools.BlobFileInfo()
                     {
                         FileName = document.Id,
@@ -841,17 +950,17 @@ namespace WebFreight.Web.WebServices
                     documentRepository.Update(document);
                     documentRepository.SubmitChanges();
 
-                    
-                     try
-                     {
-                         Logitude.Server.Tools.StorageService.IBlobService storageservice = Logitude.Server.Tools.ContainerAccessor.Container.Resolve(typeof(Logitude.Server.Tools.StorageService.IBlobService), "StorageService", new ParameterOverride("", 1)) as Logitude.Server.Tools.StorageService.IBlobService;
-                         storageservice.Delete(fileInfo);
-                }
-                catch (Exception e)
-                {
-                    string ip = "";
-                    if (HttpContext.Current != null && HttpContext.Current.Request != null)
+
+                    try
                     {
+                        Logitude.Server.Tools.StorageService.IBlobService storageservice = Logitude.Server.Tools.ContainerAccessor.Container.Resolve(typeof(Logitude.Server.Tools.StorageService.IBlobService), "StorageService", new ParameterOverride("", 1)) as Logitude.Server.Tools.StorageService.IBlobService;
+                        storageservice.Delete(fileInfo);
+                    }
+                    catch (Exception e)
+                    {
+                        string ip = "";
+                        if (HttpContext.Current != null && HttpContext.Current.Request != null)
+                        {
                             string currentIP = HttpContext.Current.Request.Headers["X-Real-IP"];
                             if (string.IsNullOrEmpty(currentIP))
                             {
@@ -859,18 +968,18 @@ namespace WebFreight.Web.WebServices
                             }
                             ip = currentIP;
                         }
-                    ExceptionHandler.HandleException(e, DateTime.Now, document.Tenant, User != null ? User.Identity.Name : "", User != null ? User.Identity.Name : "", "Uploader : CancelUpload Method", ip);
+                        ExceptionHandler.HandleException(e, DateTime.Now, document.Tenant, User != null ? User.Identity.Name : "", User != null ? User.Identity.Name : "", "Uploader : CancelUpload Method", ip);
+                    }
+
+
                 }
-
-
-            }
 
                 documentsFiling.ReceivedDate = null;
                 documentsFiling.ReceivedByUserId = null;
 
                 documentsFilingRepository.Update(documentsFiling);
                 documentsFilingRepository.SubmitChanges();
-        }
+            }
 
             //ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
 
@@ -907,7 +1016,7 @@ namespace WebFreight.Web.WebServices
 
         private string GetFileLocation(string fileLocation)
         {
-        
+
             if (String.IsNullOrEmpty(fileLocation))
             {
                 fileLocation = "UserUploads";
@@ -949,7 +1058,7 @@ namespace WebFreight.Web.WebServices
         //}
 
 
-        public byte[] DownloadStaticFile(string filename, string containername)
+        public byte[] DownloadStaticFile(string filename, string containername,int tenant = 0)
         {
             byte[] theDatainByte = null;
 
@@ -958,7 +1067,7 @@ namespace WebFreight.Web.WebServices
                 string[] fileparams = filename.Split('.');
                 string name = fileparams[0];
                 string folder = "others";
-                
+
                 if (fileparams[0].Contains("/"))
                 {
                     string[] myparams = fileparams[0].Split('/');
@@ -967,14 +1076,14 @@ namespace WebFreight.Web.WebServices
 
                 }
 
-               // string filePath = containername + "/" + filename;//"tenant" + requestParams.Tenant + "/" + StorageAcountDetails.GetBlobNameByLocation(filename, document.Folder);
+                // string filePath = containername + "/" + filename;//"tenant" + requestParams.Tenant + "/" + StorageAcountDetails.GetBlobNameByLocation(filename, document.Folder);
                 BlobFileInfo fileInfo = new BlobFileInfo()
                 {
                     FileName = fileparams[0],
                     Extension = fileparams[1],
                     ExternalContainerName = containername,
                     HasExternalContainer = true,
-
+                    Tenant = tenant
                 };
 
                 IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
@@ -990,8 +1099,8 @@ namespace WebFreight.Web.WebServices
                 //    IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
                 //    theDatainByte = storageservice.Read(fileInfo);
                 //}
-                
-                 
+
+
 
                 return theDatainByte;
                 //blobContainer = StorageAcountDetails.BlobClient.GetContainerReference(containername);
@@ -1041,7 +1150,7 @@ namespace WebFreight.Web.WebServices
                     string[] myparams = fileparams[0].Split('/');
                     folder = myparams[0];
                     name = myparams[1];
-                    
+
                 }
                 Logitude.Server.Tools.BlobFileInfo fileInfo = new Logitude.Server.Tools.BlobFileInfo()
                 {
@@ -1054,7 +1163,7 @@ namespace WebFreight.Web.WebServices
                 Logitude.Server.Tools.StorageService.IBlobService storageservice = Logitude.Server.Tools.ContainerAccessor.Container.Resolve(typeof(Logitude.Server.Tools.StorageService.IBlobService), "StorageService", new ParameterOverride("", 1)) as Logitude.Server.Tools.StorageService.IBlobService;
                 storageservice.Write(fileData, fileInfo);
 
- 
+
 
                 //string containername = StorageAcountDetails.GetCurrentContainer(tenant).Name;
                 //blobContainer = StorageAcountDetails.BlobClient.GetContainerReference(containername);
@@ -1090,9 +1199,9 @@ namespace WebFreight.Web.WebServices
 
 
 
-        private string UploadFileData(string generatedfilename, byte[] buffer, long fileSize, long sentBytes, 
-            string[] blockIdsList, int bufferNumber, string externalDocumentId, int tenant, 
-            string fileLocation, string filename, ref bool isDigitallySigned, ref string signersList)
+        private string UploadFileData(string generatedfilename, byte[] buffer, long fileSize, long sentBytes,
+            string[] blockIdsList, int bufferNumber, string externalDocumentId, int tenant,
+            string fileLocation, string filename, ref bool isDigitallySigned, ref string signersList, bool forceCreateDocument, string documentId)
         {
             if (string.IsNullOrEmpty(fileLocation))
             {
@@ -1100,7 +1209,7 @@ namespace WebFreight.Web.WebServices
             }
             string filelocation = GetFileLocation(fileLocation);
 
-            fileName = !string.IsNullOrEmpty(filename) ? filename.ToLower() : generatedfilename;
+           string fileName = !string.IsNullOrEmpty(filename) ? filename.ToLower() : generatedfilename;
             string filePath = "tenant" + tenant.ToString() + "/";
 
             string storageServiceMode = System.Configuration.ConfigurationManager.AppSettings.Get("StorageServiceMode");
@@ -1123,13 +1232,28 @@ namespace WebFreight.Web.WebServices
             }
             else
             {
-                fileNameAndExtension = BuidDocument(tenant, externalDocumentId, fileSize);
+                fileNameAndExtension = BuidDocument(tenant, externalDocumentId, fileSize , fileName);
                 fileName = fileNameAndExtension;
             }
-
+                        
             //filePath = "tenant" + tenant.ToString() + "/" + StorageAcountDetails.GetBlobNameByLocation(fileNameAndExtension.ToLower(), filelocation);
             string[] fileparams = fileNameAndExtension.Split('.');
             string finalFileName = fileNameAndExtension.Substring(0, fileNameAndExtension.LastIndexOf('.'));
+            if (forceCreateDocument)
+            {
+                finalFileName = DocumentsCreator.Create(new DocumentsCreatorArgs
+                {
+                    Tenant = tenant,
+                    FileName = fileName.Substring(0, fileName.LastIndexOf('.')),
+                    FileExtension = fileparams[fileparams.Length - 1],
+                    FileData = buffer,
+                    FileFolder = filelocation,
+                    DocumentId = documentId
+                });
+
+                fileNameAndExtension = finalFileName + "."+ fileparams[fileparams.Length - 1];
+                documentIdAndExtension = fileNameAndExtension;
+            }
             BlobFileInfo fileInfo = new BlobFileInfo()
             {
                 FileName = finalFileName,
@@ -1183,9 +1307,9 @@ namespace WebFreight.Web.WebServices
                                         }
                                         catch (Exception exc)
                                         {
-                                             
+
                                         }
-                                        
+
                                     }
 
                                     signersList = Signerslist.TrimEnd(',');
@@ -1313,7 +1437,7 @@ namespace WebFreight.Web.WebServices
             {
                 PdfReader.debugmode = true;
                 using (PdfReader reader = new PdfReader(filedata))
-                { 
+                {
                     AcroFields af = reader.AcroFields;
                     var names = af.GetSignatureNames();
                     for (int i = 0; i < names.Count; ++i)
@@ -1359,12 +1483,12 @@ namespace WebFreight.Web.WebServices
 
             ICommonDataContext context = CommonDataContext.GetContext(tenant);
             DocumentsFilingRepository documentRepository = new DocumentsFilingRepository(tenant);
-            DocumentsFiling documentFiling = documentRepository.GetSingleDocumentFilingBySecurityId(securityId,tenant);
-          
+            DocumentsFiling documentFiling = documentRepository.GetSingleDocumentFilingBySecurityId(securityId, tenant);
+
             Document document = context.Documents.Where(doc => doc.Id == documentFiling.DocumentId).FirstOrDefault();
             if (document != null)
             {
-               return document;
+                return document;
             }
             return null;
         }
@@ -1374,7 +1498,7 @@ namespace WebFreight.Web.WebServices
         {
 
 
-            if (!string.IsNullOrEmpty(securityId))
+            if (!string.IsNullOrEmpty(securityId) && !securityId.Contains("+"))
             {
                 securityId = System.Net.WebUtility.UrlEncode(securityId);
             }
@@ -1382,10 +1506,10 @@ namespace WebFreight.Web.WebServices
             ICommonDataContext context = CommonDataContext.GetContext(tenant);
             DocumentsFilingRepository documentRepository = new DocumentsFilingRepository(tenant);
             DocumentsFiling documentFiling = documentRepository.GetSingleDocumentFilingBySecurityId(securityId, tenant);
-             Document document = null;
+            Document document = null;
             if (documentFiling != null)
             {
-               
+
 
                 if (!string.IsNullOrEmpty(copyid))
                 {
@@ -1400,20 +1524,24 @@ namespace WebFreight.Web.WebServices
 
                 if (document != null)
                 {
-                    if(string.IsNullOrEmpty(document.CalculatedFileName) || documentFiling.DirectionCode == "I")
+                    document.CalculatedFileName =!string.IsNullOrEmpty(document.CalculatedFileName) ? document.CalculatedFileName : document.FileName;
+
+                    //document.DocumentType = documentFiling.DocumentType != null ? documentFiling.DocumentType.Name : "";
+
+                    if (documentFiling.DirectionCode == "I" && !FeatureToggleHelper.HasFeatureToggle("SFC", documentFiling.Tenant))
                     {
                         document.CalculatedFileName = document.FileName;
                     }
 
-                   return document;
-            }
+                    return document;
+                }
                 else return null;
             }
             return null;
         }
 
-        
-        public static  HttpResponseMessage GetFileStream(string id)//THIS CODE USED  FROM  AmitalChromWinForm!!
+
+        public static HttpResponseMessage GetFileStream(string id)//THIS CODE USED  FROM  AmitalChromWinForm!!
         {
             //Uploader.GetFileStream(id);
             string result = "";
@@ -1473,11 +1601,14 @@ new XElement("Error", ee.ToString()
 
             HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
 
-            response.Content = new StreamContent(new MemoryStream(data));
-            response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
-            response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
-            response.Content.Headers.ContentDisposition.FileName = fileName;
-            return response;
+            using (MemoryStream dataMemoryStream = new MemoryStream(data))
+            {
+                response.Content = new StreamContent(dataMemoryStream);
+                response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+                response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
+                response.Content.Headers.ContentDisposition.FileName = fileName;
+                return response;
+            }
 
 
         }

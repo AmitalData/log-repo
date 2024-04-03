@@ -40,7 +40,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string AgentId { get; set; }
         public string AgentName { get; set; }
         public string ShipmentLevelCode { get; set; }
-        public string VesselId { get; set; }
+        public string VesselName { get; set; }
         public string CustomerReference1 { get; set; }
         public string CustomerReference2 { get; set; }
         public bool IsCancelled { get; set; }
@@ -87,6 +87,36 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string Field38 { get; set; }
         public string Field39 { get; set; }
         public string Field40 { get; set; }
+        public string Field41 { get; set; }
+        public string Field42 { get; set; }
+        public string Field43 { get; set; }
+        public string Field44 { get; set; }
+        public string Field45 { get; set; }
+        public string Field46 { get; set; }
+        public string Field47 { get; set; }
+        public string Field48 { get; set; }
+        public string Field49 { get; set; }
+        public string Field50 { get; set; }
+        public string Field51 { get; set; }
+        public string Field52 { get; set; }
+        public string Field53 { get; set; }
+        public string Field54 { get; set; }
+        public string Field55 { get; set; }
+        public string Field56 { get; set; }
+        public string Field57 { get; set; }
+        public string Field58 { get; set; }
+        public string Field59 { get; set; }
+        public string Field60 { get; set; }
+        public string Field61 { get; set; }
+        public string Field62 { get; set; }
+        public string Field63 { get; set; }
+        public string Field64 { get; set; }
+        public string Field65 { get; set; }
+        public string Field66 { get; set; }
+        public string Field67 { get; set; }
+        public string Field68 { get; set; }
+        public string Field69 { get; set; }
+        public string Field70 { get; set; }
 
         public string House { get; set; }
         public string ConsigneeName { get; set; }
@@ -125,10 +155,12 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string PackageDliveryId { get; set; }
 
         public string Transshipment3FromPortId { get; set; }
+        public string Transshipment3FromPortName { get; set; }
         public string Transshipment2FromPortId { get; set; }
+        public string Transshipment2FromPortName { get; set; }
         public string Transshipment1FromPortId { get; set; }
+        public string Transshipment1FromPortName { get; set; }
         public string MainCarriageFromPortId { get; set; }
-   
 
         public DateTime? Transshipment3ETA { get; set; }
         public DateTime? Transshipment2ETA { get; set; }
@@ -140,10 +172,18 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public DateTime? Transshipment1ATA { get; set; }
         public DateTime? MainCarriageATA { get; set; }
 
-        public string Transshipment3VesselId { get; set; }
-        public string Transshipment2VesselId { get; set; }
-        public string Transshipment1VesselId { get; set; }
-        public string MainCarriageVesselId { get; set; }
+        public DateTime? Transshipment3ETD { get; set; }
+        public DateTime? Transshipment2ETD { get; set; }
+        public DateTime? Transshipment1ETD { get; set; }
+
+        public DateTime? Transshipment3ATD { get; set; }
+        public DateTime? Transshipment2ATD { get; set; }
+        public DateTime? Transshipment1ATD { get; set; }
+
+        public string Transshipment3VesselName { get; set; }
+        public string Transshipment2VesselName { get; set; }
+        public string Transshipment1VesselName { get; set; }
+        public string MainCarriageVesselName { get; set; }
         public string BookingConfirmationNumber { get; set; }
         public string IncotermId { get; set; }
         public string ShipperAddressId { get; set; }
@@ -177,5 +217,6 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public DateTime? OnForwardingETA { get; set; }
         public string OnForwardingToPortCode { get; set; }
         public string OnForwardingToPortId { get; set; }
+        public DateTime? CutOffDate { get; set; }
     }
 }

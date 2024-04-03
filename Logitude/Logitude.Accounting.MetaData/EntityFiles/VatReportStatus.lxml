@@ -4,7 +4,7 @@
   ObjectTableName="&quot;VatReportStatus&quot;"
   IsNew="true"
   DBTableName="&quot;VatReportStatuses&quot;"
-  OldDBTableName="&quot;TaxReportStatueses&quot;"
+  DBTableOldNames="VatReportStatuses"
   ObjectTableSingular="&quot;Vat Report Status&quot;"
   ObjectTablePlural="&quot;Vat Report Statuses&quot;"
   HasCustomFilter="false"
@@ -37,7 +37,7 @@
   ObjectTableTypeCode="&quot;BR&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Vat Report Status&quot;"
-  Code="&quot;aa70&quot;"
+  Code="&quot;c967&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;EnglishName&quot;"
@@ -54,6 +54,7 @@
   ApplyOnPropertyChangedCode="false"
   HasApiHelper="false"
   AllowedForComputingPartners="false"
+  IsBusinessUnitEnabled="false"
   Code1="&quot;f4c0&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -66,7 +67,7 @@
   <field
     Id="&quot;dde12b98-de6f-4faf-885d-2f98dd2d6945&quot;"
     FieldName="&quot;Code&quot;"
-    OldFieldName="&quot;Code&quot;"
+    OldNames="Code"
     IsNew="false"
     IsChecked="true"
     IsDeleted="false"
@@ -114,6 +115,7 @@
     ListLableDefaultText="&quot;Code&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="true"
     HasDataBaseField="true"
     HasPMField="true"
@@ -127,6 +129,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -137,7 +140,7 @@
   <field
     Id="&quot;277fe40c-79fb-4aec-ae6b-7518a2150333&quot;"
     FieldName="&quot;EnglishName&quot;"
-    OldFieldName="&quot;EnglishName&quot;"
+    OldNames="EnglishName"
     IsNew="false"
     IsChecked="true"
     IsDeleted="false"
@@ -184,6 +187,7 @@
     ListLableDefaultText="&quot;English Name&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -197,6 +201,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -207,7 +212,7 @@
   <field
     Id="&quot;a336f3aa-a991-4a48-aa8c-6c50d984e212&quot;"
     FieldName="&quot;SearchFields&quot;"
-    OldFieldName="&quot;SearchFields&quot;"
+    OldNames="SearchFields"
     IsNew="false"
     IsChecked="true"
     IsDeleted="false"
@@ -254,6 +259,7 @@
     ListLableDefaultText="&quot;Search ...&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -267,6 +273,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -277,7 +284,7 @@
   <field
     Id="&quot;1b5ccd10-59e0-47ba-8a5e-9cee36175933&quot;"
     FieldName="&quot;LocalName&quot;"
-    OldFieldName="&quot;LocalName&quot;"
+    OldNames="LocalName"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -322,6 +329,7 @@
     FullLocalDefaultText="&quot;שם מקומי&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -335,6 +343,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -345,7 +354,7 @@
   <field
     Id="&quot;6e4a0f68-a936-4567-8f96-1fec7ab8be8f&quot;"
     FieldName="&quot;Inactive&quot;"
-    OldFieldName="&quot;Inactive&quot;"
+    OldNames="Inactive"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -390,6 +399,7 @@
     FullLocalDefaultText="&quot;פעיל&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -403,6 +413,7 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -410,6 +421,15 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <Screen
+    Name="&quot;VatReportStatusHeaderScreen&quot;"
+    ObjectTableName="&quot;VatReportStatus&quot;"
+    IsReadOnly="true"
+    IsHeaderScreen="true"
+    NumberOfColumns="2"
+    NumberOfRows="1">
+    <ScreenFields />
+  </Screen>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
@@ -469,6 +489,24 @@
       EnglishName="&quot;In Progress&quot;"
       LocalName="&quot;בתהליך בניה&quot;"
       SearchFields="&quot;P,In Progress,בתהליך בניה&quot;" />
+    <Record
+      Code="&quot;CP&quot;"
+      EnglishName="&quot;Cancelation in Progress&quot;"
+      SearchFields="&quot;CP,Cancelation in Progress,הביטול נמצא בתהליך&quot;"
+      LocalName="&quot;הביטול נמצא בתהליך&quot;"
+      Inactive="false" />
+    <Record
+      EnglishName="&quot;Cancelation failed&quot;"
+      Code="&quot;CF&quot;"
+      SearchFields="&quot;CF,Cancelation failed,הביטול נכשל&quot;"
+      LocalName="&quot;הביטול נכשל&quot;"
+      Inactive="false" />
+    <Record
+      Code="&quot;J&quot;"
+      EnglishName="&quot;Transmitted and a closing journal was created&quot;"
+      LocalName="&quot;שודר ונוצרה פקודת סגירה&quot;"
+      SearchFields="&quot;, Transmitted and a closing journal was created, Jשודר ונוצרה פקודת סגירה&quot;"
+      Inactive="false" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

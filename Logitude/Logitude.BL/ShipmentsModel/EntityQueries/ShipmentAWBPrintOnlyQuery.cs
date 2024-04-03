@@ -108,7 +108,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                        CurrencyCode = a.Currency.Code,
                                                        IATACodeName = a.IATACode.Name,
                                                        MeasurementCode = a.Measurement == null ? null : a.Measurement.Code,
-                                                   }).ToList();
+                                                   }).OrderBy(a => a.Id).ToList();
 
 
             return result;

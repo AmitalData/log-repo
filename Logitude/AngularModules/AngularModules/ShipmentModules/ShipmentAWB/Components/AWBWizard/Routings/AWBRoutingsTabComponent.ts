@@ -567,6 +567,7 @@ export class AWBRoutingsTabComponent extends BaseComponent {
 
                         if (list) {
                             RoutingHelper.Transshipment1FromPortChanged(this.EntityPM, list);
+                            this.FireWizardEvent();
                         }
 
                         else {
@@ -574,6 +575,7 @@ export class AWBRoutingsTabComponent extends BaseComponent {
                                 if (!myResponse2.HasError) {
                                     var list: PortList = myResponse2.Result;
                                     RoutingHelper.Transshipment1FromPortChanged(this.EntityPM, list);
+                                    this.FireWizardEvent();
                                 }
                             });
                         }
@@ -603,6 +605,7 @@ export class AWBRoutingsTabComponent extends BaseComponent {
 
                         if (list) {
                             RoutingHelper.Transshipment2FromPortChanged(this.EntityPM, list);
+                            this.FireWizardEvent();
                         }
 
                         else {
@@ -610,6 +613,7 @@ export class AWBRoutingsTabComponent extends BaseComponent {
                                 if (!myResponse2.HasError) {
                                     var list: PortList = myResponse2.Result;
                                     RoutingHelper.Transshipment2FromPortChanged(this.EntityPM, list);
+                                    this.FireWizardEvent();
                                 }
                             });
                         }
@@ -639,6 +643,7 @@ export class AWBRoutingsTabComponent extends BaseComponent {
 
                         if (list) {
                             RoutingHelper.Transshipment3FromPortChanged(this.EntityPM, list);
+                            this.FireWizardEvent();
                         }
 
                         else {
@@ -646,6 +651,7 @@ export class AWBRoutingsTabComponent extends BaseComponent {
                                 if (!myResponse2.HasError) {
                                     var list: PortList = myResponse2.Result;
                                     RoutingHelper.Transshipment3FromPortChanged(this.EntityPM, list);
+                                    this.FireWizardEvent();
                                 }
                             });
                         }

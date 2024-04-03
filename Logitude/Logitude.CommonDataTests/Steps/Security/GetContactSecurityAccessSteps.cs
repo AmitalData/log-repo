@@ -1,13 +1,13 @@
 ﻿using FluentAssertions;
 using Logitude.CommonTests.Models;
-using Logitude.Test.Base.Services;
-using Logitude.Test.Base.Context;
+using Logitude.Base.Services;
+using Logitude.Base.Context;
 using System.Collections.Generic;
 using System.Linq;
 using TechTalk.SpecFlow;
-using Logitude.Test.Base.Models.Shared;
-using Logitude.Test.Base.Models.Api;
-using Logitude.Test.Base.Models.UserTenantPreparation;
+using Logitude.Base.Models.Shared;
+using Logitude.Base.Models.Api;
+using Logitude.Base.Models.UserTenant;
 
 namespace Logitude.CommonTests.Steps.Security
 {

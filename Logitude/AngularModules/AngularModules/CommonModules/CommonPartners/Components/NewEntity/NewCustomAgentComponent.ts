@@ -110,6 +110,7 @@ export class NewCustomAgentComponent {
             args.CustomAgent = this.EntityPM;
             args.Address = this.PartnerTamplate.Address;
             if (this.PartnerTamplate.IsAddContactChecked) {
+                this.PartnerTamplate.Contact.SetAsPrimaryForCard = true;
                 args.Contact = this.PartnerTamplate.Contact;
             }
 

@@ -26,13 +26,14 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
         //private IQueryable<string> _ListIdAccounts;
         private string _SearchByFilter;
         private Stopwatch _sw;
+        private bool? IsReconciled;
 
         //private string _ForeignCurrencyId = null;
-        public LedgerTransactionBalanceService(IAccountingContext accountingContext ,LedgerTransactionBalanceFilter param)
+        public LedgerTransactionBalanceService(IAccountingContext accountingContext, LedgerTransactionBalanceFilter param, bool? isReconciled = null)
         {
             _AccountingContext = accountingContext;
             _Param = param;
-
+            IsReconciled = isReconciled;
             ///Look at  GLAccountReconcileSearchViewModel
             //var view = new VirtualQueryableCollectionView<Customer>() { LoadSize = pageSize, VirtualItemCount = customerProvider.FetchCount() };
             //view.ItemsLoading += (s, args) =>
@@ -46,13 +47,14 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             //DataContext = view;
         }
 
-
+        private const string TaxReportFilterDateTypeCode = "4";
         public void Run(bool isFromExcelGenerater=false)
         {
             var sw = Stopwatch.StartNew();
             _sw = Stopwatch.StartNew();
             DateTime? maxCreateDate = null;
-            
+            List<LedgerTransactionList> list = new List<LedgerTransactionList>();
+
             this.Response = new LedgerTransactionBalanceResponse();
             CheckParam();
 
@@ -92,39 +94,50 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                     _allIdAccounts = hashsetallIdAccounts;//new List<string>(hashsetallIdAccounts);
                     _allIdAccounts = _allIdAccounts.ToList().AsQueryable();
                 }
-                IQueryable<Data.EntityPOCOs.LedgerTransaction> qOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId = GetQOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId(maxCreateDate, ledgerTransactionRepository);
+                IQueryable<Data.EntityPOCOs.LedgerTransaction> filteredTransactionsQuery = GetFilteredTransactionsQuery(maxCreateDate, ledgerTransactionRepository);
 
                 if (_Param.CallBack == null)
                 {
-                    bool includeAccoutingDateLTransaction = false;
-                    var startAccountBalanceService = GetStartAccountBalance(//includeChildAccounts, 
-    includeAccoutingDateLTransaction);
-                    LogIt("GetStartAccountBalance");
-                    includeAccoutingDateLTransaction = true;
-                    var endAccountBalanceService = GetEndAccountBalance(//includeChildAccounts, 
-                        includeAccoutingDateLTransaction
-                        );
-                    LogIt("GetEndAccountBalance");
-                    this.Response.YearTransferLedgerTransactionIds = startAccountBalanceService.YearTransferLedgerTransactionIds;
+                    if (_Param.DateTypeCode == TaxReportFilterDateTypeCode)
+                    {
+                        list = GetLedgerTransactinByTaxReportFilter();
+                        Response.TotalRowCount = _Param.TaxReportTotalCount;
+                    }
+                    else
+                    {
+                        bool includeAccoutingDateLTransaction = false;
+                        var startAccountBalanceService = GetStartAccountBalance(//includeChildAccounts, 
+        includeAccoutingDateLTransaction);
+                        LogIt("GetStartAccountBalance");
+                        includeAccoutingDateLTransaction = true;
+                        var endAccountBalanceService = GetEndAccountBalance(//includeChildAccounts, 
+                            includeAccoutingDateLTransaction
+                            );
+                        LogIt("GetEndAccountBalance");
+                        this.Response.YearTransferLedgerTransactionIds = startAccountBalanceService.YearTransferLedgerTransactionIds;
 
-                    qOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId = RemoveYearTransferLedgerTrans(qOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId);
+                        filteredTransactionsQuery = RemoveYearTransferLedgerTrans(filteredTransactionsQuery);
 
-                    BuildCallBack(qOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId,
-                        startAccountBalanceService, endAccountBalanceService);
-                    LogIt("BuildCallBack");
-
+                        BuildCallBack(filteredTransactionsQuery,
+                            startAccountBalanceService, endAccountBalanceService,_Param);
+                        LogIt("BuildCallBack");
+                    }
                 }
                 else // if callback
                 {
                     ReCopyCallBack();
-                    qOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId = RemoveYearTransferLedgerTrans(qOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId);
+                    filteredTransactionsQuery = RemoveYearTransferLedgerTrans(filteredTransactionsQuery);
 
                 }
 
                 //int pageSize = 100; int curPageZeroBase = 0;
-                var list = Translate2ListMode(qOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId, isFromExcelGenerater);
+                if (_Param.DateTypeCode != TaxReportFilterDateTypeCode)
+                {
+                     list = Translate2ListMode(filteredTransactionsQuery, isFromExcelGenerater);                             
+               }
+                
                 LogIt("Translate2ListMode");
-                if (!this.Response.OmitAllBalance)
+                if (!this.Response.OmitAllBalance && _Param.DateTypeCode != TaxReportFilterDateTypeCode)
                 {
 
 
@@ -148,7 +161,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                         ;
                     //if (!this.Response.SuppressCumulativeDueMultiCurrencyInPeriod)
                     //{
-                    MyBlance myBlance = GetStartBalanceOfCurrPage(qOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId);
+                    MyBlance myBlance = GetStartBalanceOfCurrPage(filteredTransactionsQuery);
                     CumulativeLocalAmount += myBlance.SumLocalAmount;
                     CumulativeForeignAmount += myBlance.SumForeignAmount;
                     LedgerTransactionHelper ledgerTransactionHelper = new LedgerTransactionHelper();
@@ -176,39 +189,65 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                     LogIt("after list");
                     //}
                 }
-                LedgerTransactionHelper ledgerTransactionHelper2 = new LedgerTransactionHelper();
-
-                list.ForEach(rec =>
+                else
                 {
-                    MapLedgerTransactionLine(rec, ledgerTransactionHelper2, isFromExcelGenerater);
-                });
+                    LedgerTransactionHelper ledgerTransactionHelper2 = new LedgerTransactionHelper();
+
+                    list.ForEach(rec =>
+                    {
+                        MapLedgerTransactionLine(rec, ledgerTransactionHelper2, isFromExcelGenerater);
+                    });
+                }
+              
                 Response.MyLedgerTransactionList = list;
             }
             this.Response.TookMS = sw.ElapsedMilliseconds;
+          
             Debug.WriteLine("Response.TookMS:" + Response.TookMS.ToString());
         }
-
-        private void MapLedgerTransactionLine(LedgerTransactionList rec , LedgerTransactionHelper ledgerTransactionHelper, bool isFromExcelGenerater)
+       
+        private List<LedgerTransactionList> GetLedgerTransactinByTaxReportFilter()
+        {
+            IAccountingContext accountingContext = AccountingContext.GetContext(_Param.Tenant);
+            LedgerTransactionListQueryService ledgerTransactionListQueryService = new LedgerTransactionListQueryService(accountingContext);
+            return ledgerTransactionListQueryService.GetReportLinesLedgerTransactions(_Param);
+        }
+        
+        public void MapLedgerTransactionLine(LedgerTransactionList rec , LedgerTransactionHelper ledgerTransactionHelper, bool isFromExcelGenerator)
         {
 
             rec.OriginalAmount = ledgerTransactionHelper.CalculateOriginalAmount(rec);
+            rec.AmountInNIS = ledgerTransactionHelper.CalculateAmountInNIS(rec);
             rec.IconCode = ledgerTransactionHelper.getEntityIcon(rec.SourceTypeCode);
             rec.Source = rec.IconCode + " " + rec.SourceNumber;
             rec.IsLocalAmountCreditPos = rec.LocalAmountCredit != 0;
-            rec.CalculatedLocalAmount = rec.LocalAmountCredit != 0 ? rec.LocalAmountCredit : rec.LocalAmountDebit;
             //rec.LocalAmountCredit = rec.LocalAmountCredit != 0 ? rec.LocalAmountCredit : rec.LocalAmountDebit;
-            rec.IsCumulativeLocalAmountPos = rec.CumulativeLocalAmount < 0;
+            if (isFromExcelGenerator)
+            {
+                rec.CalculatedLocalAmount = rec.LocalAmountCredit != 0 ? rec.LocalAmountCredit*-1 : rec.LocalAmountDebit;
+                rec.IsCumulativeLocalAmountPos = rec.CumulativeLocalAmount != 0;
+                rec.IsCumulativeForeignAmountPos = rec.CumulativeForeignAmount != 0;
+            }
+            else
+            {
+                rec.CalculatedLocalAmount = rec.LocalAmountCredit != 0 ? rec.LocalAmountCredit : rec.LocalAmountDebit;
+                rec.IsCumulativeLocalAmountPos = rec.CumulativeLocalAmount < 0;
+                rec.IsCumulativeForeignAmountPos = rec.CumulativeForeignAmount < 0;
+            }
             rec.IsForeignAmountCreditPos = rec.ForeignAmountCredit != 0;
             rec.CalculatedForeignAmount = rec.ForeignAmountCredit != 0 ? rec.ForeignAmountCredit : rec.ForeignAmountDebit;
             //rec.ForeignAmountCredit = rec.ForeignAmountCredit != 0 ? rec.ForeignAmountCredit : rec.ForeignAmountDebit;
-            rec.IsCumulativeForeignAmountPos = rec.CumulativeForeignAmount < 0;
             rec.IsOriginalAmountPos = rec.OpenAmount < 0;
             rec.IsForeignAmountPos = rec.ForeignAmountCredit != 0;
             rec.ForeignAmountCreditWithSign = rec.CalculatedForeignAmount + " " + rec.CurrencySign;
             rec.CumulativeForeignAmountSign = rec.CumulativeForeignAmount + " " + rec.CurrencySign;
-            if (isFromExcelGenerater)
+            if (isFromExcelGenerator)
             {
+                rec.CalculatedForeignAmount = rec.ForeignAmountCredit != 0 ? rec.ForeignAmountCredit * -1 : rec.ForeignAmountDebit;
+
+                rec.ForeignAmountCreditWithSign = rec.CalculatedForeignAmount + " " + rec.CurrencySign;
                 ledgerTransactionHelper.MapAmountWithNegativeValue(rec);
+                rec.ForeignAmountCreditWithSign = rec.CalculatedForeignAmount + " " + rec.CurrencySign;
             }
         }
  
@@ -300,7 +339,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             return myBlance;
         }
 
-        private IQueryable<Data.EntityPOCOs.LedgerTransaction> GetQOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId(DateTime? maxCreateDate, LedgerTransactionRepository ledgerTransactionRepository)
+        private IQueryable<Data.EntityPOCOs.LedgerTransaction> GetFilteredTransactionsQuery(DateTime? maxCreateDate, LedgerTransactionRepository ledgerTransactionRepository)
         {
             
             
@@ -310,9 +349,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 case GLAccountTotalDateTypeValues.DocumentDate:
                 case GLAccountTotalDateTypeValues.Accountingdate:
                     {
-                        return ledgerTransactionRepository.GetQueryByDateType(_Param.Tenant, _allIdAccounts,
-                            _Param.DateTypeCode, _Param.From, _Param.To,
-                        _Param.CurrencyId, _SearchByFilter, maxCreateDate);
+                        _Param.SearchFields = _SearchByFilter;
+                        return ledgerTransactionRepository.GetFilteredTransactions(_allIdAccounts, _Param, maxCreateDate);
                     }
             
                     break;
@@ -330,8 +368,9 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
         }
 
         private void BuildCallBack(IQueryable<Data.EntityPOCOs.LedgerTransaction> QOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId
-, AccountBalanceM startAccountBalanceService,
-AccountBalanceM endAccountBalanceService)
+                                , AccountBalanceM startAccountBalanceService,
+                                AccountBalanceM endAccountBalanceService,
+                                LedgerTransactionBalanceFilter _Param)
         {
             var sw = Stopwatch.StartNew();
             bool includeChildAccounts = false;
@@ -391,7 +430,9 @@ AccountBalanceM endAccountBalanceService)
 
             Response.HaveAccountingQueued=(startAccountBalanceService.HaveAccountingQueued || endAccountBalanceService.HaveAccountingQueued);
 
-            CheckSumLocalEqualDiffEndStart(startAccountBalanceService, endAccountBalanceService, periodSumLocalAmount, periodSumForeignAmount);
+            bool isAdditionalDateFilterSelected = _Param.Date2TypeCode != null && _Param.FromDate2 != null && _Param.ToDate2 != null;
+            if (!isAdditionalDateFilterSelected)
+                CheckSumLocalEqualDiffEndStart(startAccountBalanceService, endAccountBalanceService, periodSumLocalAmount, periodSumForeignAmount);
 
 
 
@@ -439,7 +480,7 @@ AccountBalanceM endAccountBalanceService)
 
             }
 
-            if (!String.IsNullOrWhiteSpace(_Param.CurrencyId))
+             if (!String.IsNullOrWhiteSpace(_Param.CurrencyId))
             {
 
                 this.Response.StartBalanceLocal = startAccountBalanceService.GetBalanceOfLocalAmount(_Param.CurrencyId).GetValueOrDefault();
@@ -448,12 +489,15 @@ AccountBalanceM endAccountBalanceService)
 
                 this.Response.StartBalanceForeignList = startAccountBalanceService.GetCallBackBalanceOfCurrency(_Param.CurrencyId);
                 this.Response.EndBalanceForeignList = endAccountBalanceService.GetCallBackBalanceOfCurrency(_Param.CurrencyId);
+                this.Response.EndBalanceForeign = endAccountBalanceService.GetBalanceOfForeignAmount(_Param.CurrencyId).GetValueOrDefault();
 
             }
             else
             {
                 this.Response.StartBalanceForeignList = startAccountBalanceService.GetCallBackBalance();
                 this.Response.EndBalanceForeignList = endAccountBalanceService.GetCallBackBalance();
+                this.Response.EndBalanceForeign = endAccountBalanceService.GetBalanceOfForiegnAmount().GetValueOrDefault();
+
 
 
                 this.Response.StartBalanceLocal = startAccountBalanceService.GetBalanceOfLocalAmount().GetValueOrDefault();
@@ -476,29 +520,32 @@ AccountBalanceM endAccountBalanceService)
         private void CheckSumLocalEqualDiffEndStart(AccountBalanceM startAccountBalanceService, AccountBalanceM endAccountBalanceService, decimal periodSumLocalAmount, decimal periodSumForeignAmount)
         {
             var periodSumLocal = this.Response.EndBalanceLocal - this.Response.StartBalanceLocal;
+            if (_Param.DateTypeCode != TaxReportFilterDateTypeCode) { 
+         
             if (periodSumLocal != periodSumLocalAmount)
             {
+                    if(false)
                 throw new Exception("periodSum!=periodSumLocalAmount   בעיית מצטברים;;");
             }
 
-            if (!this.Response.SuppressCumulativeDueMultiCurrencyInPeriod.GetValueOrDefault())
-            {
-
-                var currentCurrencyId = GetCurrCurrencyId();
-
-                var //this.Response.
-                    StartBalanceForeign = startAccountBalanceService.GetBalanceOfCurrency(currentCurrencyId);
-                var //this.Response.
-                    EndBalanceForeign = endAccountBalanceService.GetBalanceOfCurrency(currentCurrencyId);
-
-                var periodSumForeign = //this.Response.
-                    EndBalanceForeign - //this.Response.
-                    StartBalanceForeign.GetValueOrDefault();
-                if (periodSumForeign != periodSumForeignAmount)
+                if (!this.Response.SuppressCumulativeDueMultiCurrencyInPeriod.GetValueOrDefault())
                 {
-                    throw new Exception("בעיית מצטברים;; periodSum(this.Response.EndBalanceForeign - this.Response.StartBalanceForeign.GetValueOrDefault())!=periodSumLocalAmount");
-                }
 
+                    var currentCurrencyId = GetCurrCurrencyId();
+
+                    var //this.Response.
+                        StartBalanceForeign = startAccountBalanceService.GetBalanceOfCurrency(currentCurrencyId);
+                    var //this.Response.
+                        EndBalanceForeign = endAccountBalanceService.GetBalanceOfCurrency(currentCurrencyId);
+
+                    var periodSumForeign = //this.Response.
+                        EndBalanceForeign - //this.Response.
+                        StartBalanceForeign.GetValueOrDefault();
+                    if (periodSumForeign != periodSumForeignAmount)
+                    {
+                        throw new Exception("בעיית מצטברים;; periodSum(this.Response.EndBalanceForeign - this.Response.StartBalanceForeign.GetValueOrDefault())!=periodSumLocalAmount");
+                    }
+                }
             }
         }
 
@@ -564,7 +611,7 @@ AccountBalanceM endAccountBalanceService)
         {
             var ledgerTransactionListQueryService = new LedgerTransactionListQueryService(_AccountingContext);
             var list = ledgerTransactionListQueryService.GetLedgerTransactionListForceOrderByDateTypeCodeAndId(qOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId,
-                _Param, isFromExcelGenerater);
+                _Param, isFromExcelGenerater, IsReconciled);
             return list;
         }
 
@@ -587,7 +634,7 @@ AccountBalanceM endAccountBalanceService)
                 _Param.DateTypeCode,To,
                 _Param.CheckHaveAccountingQueued,
                 includeAccoutingDateLTransaction, false,
-                false);
+                false, false);
             var endAccountBalance = endAccountBalanceService.AccountBalance;
             return endAccountBalance;
         }
@@ -607,7 +654,7 @@ AccountBalanceM endAccountBalanceService)
                 _Param.DateTypeCode /*GLAccountTotalDateTypeValues.Accountingdate*/,_Param.From,
                 _Param.CheckHaveAccountingQueued,
                 includeAccoutingDateLTransaction, false,
-                _Param.ClacOpenReconciledAmount_OnlyWithout_IncludeRelatedCurrenciesAccount_IncludeChildAccounts);
+                _Param.ClacOpenReconciledAmount_OnlyWithout_IncludeRelatedCurrenciesAccount_IncludeChildAccounts, false);
             var startAccountBalance = startAccountBalanceService.AccountBalance;
             return startAccountBalance;
         }

@@ -14,9 +14,11 @@ import {ShipmentDomainService} from '../../../Shipment/Services/ShipmentDomainSe
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 import { ShipmentContainersWebService } from '../../../Shipment/Services/ShipmentContainersWebService';
+import { FeatureToggleList } from '../../../Infrastructure/EntityLists/FeatureToggleList'; 
+import { DocumentTypePMExtendedService } from 'Common/Services/ExtendedPMs/DocumentTypePMExtendedService';
+import { GeneralContainerTrackingArgs } from 'Shipment/DataContract/GeneralContainerTrackingArgs';
 
-@Component({
-    
+@Component({    
     templateUrl: './ShipmentHelperComponent.html',
 })
 
@@ -28,15 +30,25 @@ export class ShipmentHelperComponent implements OnDestroy {
     public IsAnalyzeChampXMLButtonVisible: boolean = false;
     _entityResourceService: EntityResourceService = new EntityResourceService();
     private CurrentSession = SessionLocator.SelectedSession;
+    public IsSimulatorVisible: boolean = false; 
+    public IsTrackContainerVisible: boolean = false;
+    public NotesSharedWithCustomerActivated: boolean = false;
+    ShareDocumentsViaEmailDocumentTypeCode = "SDVE"; 
+    public documentTypePMExtendedService: DocumentTypePMExtendedService = new DocumentTypePMExtendedService();
+    public IsGeneralSimulatorVisible: boolean = false;
+    ValidationErrorsList: any[];
 
     constructor(public entityArgs: EntityArgs, private cd: ChangeDetectorRef) {        
         this.IsFollowupsVisible = FeatureLocator.HasFeaturePermession("Shipment", "Shipment.Followups");
-      
+        this.IsSimulatorVisible = FeatureLocator.HasFeaturePermession("Shipment", "ContainerStatusSimulator");        
+        this.NotesSharedWithCustomerActivated = SessionLocator.TenantPM.IsSharedLogisticsActivated && FeatureLocator.HasFeaturePermession("Shipment", "NOTESSHAREDWITHCUSTOMER");
+        
         this.EntityPM = this.entityArgs.EntityPM;
 
         if (this.EntityPM) {
             this.ShowHideShippingInstructionsButton();
             this.ShowHideShipmentContainersSimulatorButton();
+            this.SetIsShipmentContainersVisible();
             this.ShowHideSendBookingButton();
             if (this.EntityPM.DirectionId == "E" && this.EntityPM.TransportModeId == "A") {
                 if (FeatureLocator.IsPackage_DVMT()) {
@@ -45,7 +57,31 @@ export class ShipmentHelperComponent implements OnDestroy {
             }
             this.Listen();
             this.BuildComponent();
+            this.IsGeneralSimulatorVisible = FeatureLocator.HasFeaturePermession("Shipment", "VisionContainerStatusSimulator") && this.EntityPM.ShipmentTypeId == "FCLD";
+            this.IsTrackContainerVisible = this.IsTrackContainerAllowed();
         }
+    }
+
+    private IsTrackContainerAllowed(): boolean {
+        if (SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "VIP")[0] != null)
+            return false;
+
+        if (!FeatureLocator.HasFeaturePermession("Shipment", "VizionRequestStatus"))
+            return false;
+
+        if (!SessionLocator.TenantManagementJS.IsContainerTrackingPrepaid)
+            return false;
+
+        if (this.EntityPM.TransportModeId != "O")
+            return false;
+
+        if (this.EntityPM.ShipmentLevelCode == "C" && this.EntityPM.ShipmentTypeId.toLocaleLowerCase() != "mygo")
+            return false;
+
+        if (this.EntityPM.ShipmentLevelCode != "C" && this.EntityPM.ShipmentTypeId.toLocaleLowerCase() != "fcld")
+            return false;
+
+        return true;
     }
 
     private SaveCompletedEvent: any = null;
@@ -88,8 +124,13 @@ export class ShipmentHelperComponent implements OnDestroy {
                         else if (this.isSharingDocumentRequested) {
                             this.StartSharingDocument();
                         }
+                        else if (this.ShareDocumentsViaEmailInSendControl) {
+                            this.ShowSharedDocument();
+                        }
+                         
                     }
-                    
+
+                    this.ShareDocumentsViaEmailInSendControl = false;
                     this.isShareManifestRequested = false;
                     this.isUpdateSharedAgentRequested = false;
                     this.isSharingDocumentRequested = false;
@@ -119,7 +160,48 @@ export class ShipmentHelperComponent implements OnDestroy {
             }
         }
     }
+    GeneralShipmentContainersSimulatorClicked() {
+        var logWindow = new LogitudeWindow();
+        var args: GeneralContainerTrackingArgs = <GeneralContainerTrackingArgs>{
+            ContainerStatusSourceCode: null,
+            IsFromContainer: false,
+            ShipmentId: this.EntityPM.Id,
+            Tenant: this.EntityPM.Tenant,
+            IsSimulator: true,
+            Data: null,
+            ContainerId: null,
+            ContainerNumber: null
+        }
+        logWindow.WindowArgs = args;
+        logWindow.Title = "Shipment Containers Statuses Simulator";
+        logWindow.Show('./ShipmentModules/ShipmentOthers/Components/GeneralContainersStatusesSimulator/GeneralContainersStatusesSimulatorComponent');
+    }
+    TrackContainerClicked() {
+        this.CurrentSession.StartBusyIndicator("Sending...");
+        var args: GeneralContainerTrackingArgs = <GeneralContainerTrackingArgs> {
+            ContainerId: null,
+            ContainerNumber: null,
+            IsFromContainer: false,
+            ShipmentId: this.EntityPM.Id,
+            Tenant: this.EntityPM.Tenant,
+            IsSimulator: false,
+            Data: null, 
+            ContainerStatusSourceCode: 'VZN'
+        }
+        var myService = new ShipmentContainersWebService();
+        myService.TrackContainer(args).subscribe((myResponse: ServiceResponse) => {
 
+            this.CurrentSession.StopBusyIndicator();
+            var messageWindow = new MessageWindow();
+            if (myResponse.Result.Success) {
+                this.entityArgs.EditComponent.ValidationErrorsList = [];
+                messageWindow.Show("Request Sent Successfully");
+            }else{
+                this.entityArgs.EditComponent.ValidationErrorsList = myResponse.Result.Errors;
+            } 
+
+        });
+    }
     private ShowHideShippingInstructionsButton() {
         this.IsShippingInstructionsVisible = false;
 
@@ -172,6 +254,9 @@ export class ShipmentHelperComponent implements OnDestroy {
     public IsUpdateSharedAgentButtonVisible: boolean = false;
     public IsShareDocumentsButtonVisible: boolean = false;
     public IsShareManifestButtonVisible: boolean = false;
+    public IsShareDocumentsViaEmailVisible: boolean = false; 
+    private ShareDocumentsViaEmailInSendControl: boolean = false;
+
     BuildComponent() {
         this.EntityTitle = this.EntityPM.ShipmentLevelCode == "C" ? "Master" : "Shipment";
         this.SetAWBWizardButton();
@@ -179,7 +264,9 @@ export class ShipmentHelperComponent implements OnDestroy {
 
         var isUpdateSharedAgentButtonVisible: boolean = false;
         var isShareDocumentsButtonVisible: boolean = false;
-        var isShareManifestButtonVisible: boolean = false;
+        var isShareManifestButtonVisible: boolean = false; 
+      
+        this.SetShareDocumentsViaEmailVisibility(); 
 
         if (FeatureLocator.HasFeaturePermession("Shipment", "AgentSharedManifest")) {
             if (this.EntityPM.DirectionId == "E" && (this.EntityPM.ShipmentLevelCode == "C" || this.EntityPM.ShipmentLevelCode == "D")) {
@@ -198,7 +285,7 @@ export class ShipmentHelperComponent implements OnDestroy {
                 isShareDocumentsButtonVisible = true;
             }
         }
-
+         
         this.IsUpdateSharedAgentButtonVisible = isUpdateSharedAgentButtonVisible;
         this.IsShareDocumentsButtonVisible = isShareDocumentsButtonVisible;
         this.IsShareManifestButtonVisible = isShareManifestButtonVisible;
@@ -209,8 +296,10 @@ export class ShipmentHelperComponent implements OnDestroy {
             this.CheckABMVisibility();
             this.CheckAESVisibility();
 
-            if (this.IsABMVisible || this.IsAESVisible || this.IsATMSVisible_BOL || this.IsATMSVisible_VOG) {
-                this.IsSendToCustomVisible = true;
+            if (ObjectsLocator.CustomsInterfaceSettingPM.ActivateCustomsManagementInShipments) {
+                if (this.IsABMVisible || this.IsAESVisible || this.IsATMSVisible_BOL || this.IsATMSVisible_VOG) {
+                    this.IsSendToCustomVisible = true;
+                }
             }
         }
     }
@@ -231,6 +320,17 @@ export class ShipmentHelperComponent implements OnDestroy {
     public IsSendBookingVisible: boolean = false;
 
     public IsShipmentContainersSimulatorVisible: boolean = false;
+
+    private SetShareDocumentsViaEmailVisibility() {
+        if (FeatureLocator.HasFeaturePermession("Shipment", "ShareDocumentsViaEmail") && this.IsShareShipment()) { 
+                this.IsShareDocumentsViaEmailVisible = true; 
+        }
+    }
+
+    private IsShareShipment() {
+        return ((this.EntityPM.DirectionId == "E" || this.EntityPM.DirectionId == "R" ) && this.EntityPM.ShipmentLevelCode == "C");
+    }
+
     private ShowHideShipmentContainersSimulatorButton() {
         this.IsShipmentContainersSimulatorVisible = false;
         if (FeatureLocator.HasFeaturePermession("Shipment", "INTTRASimulator")) {
@@ -238,6 +338,16 @@ export class ShipmentHelperComponent implements OnDestroy {
             if (this.EntityPM.TransportModeId == "O" && isFCLEntity) {
                 this.IsShipmentContainersSimulatorVisible = true;
             }
+        }
+    }
+
+    public IsShipmentContainersVisible: boolean = false;
+    private SetIsShipmentContainersVisible() {
+        this.IsShipmentContainersVisible = false;
+        var featureToggle: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "OIC")[0];
+        var isFCLEntity = AppTool.IsFCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
+        if (featureToggle && isFCLEntity && this.EntityPM.TransportModeId == "O") {
+            this.IsShipmentContainersVisible = true;
         }
     }
 
@@ -344,7 +454,7 @@ export class ShipmentHelperComponent implements OnDestroy {
             }
         }
     }
-
+    
     ImportWizard() {
         var isFullWizard: boolean = this.IsFullWizard();
         if (isFullWizard) {
@@ -473,7 +583,42 @@ export class ShipmentHelperComponent implements OnDestroy {
             ServiceLocator.SendTotangoUserActivity("Shipment", "Notes update");
         }
     }
-    
+    get NotesSharedWithCustomer() { return this.EntityPM.NotesSharedWithCustomer; }
+    set NotesSharedWithCustomer(value: string) {
+        if (this.EntityPM.NotesSharedWithCustomer != value) {
+            this.EntityPM.NotesSharedWithCustomer = value;
+        }
+    }
+
+    ShareDocumentsViaEmailClicked() {
+        this.ShareDocumentsViaEmailInSendControl = true;
+        if (this.EntityPM.IsDirty) { 
+           this.CurrentSession.CurrentEditComponent.SaveChanges();
+        } 
+        else
+        {
+            this.CheckShareDocumentsViaEmailDocumentTypeCodeExisting();
+        }  
+    }
+
+    private CheckShareDocumentsViaEmailDocumentTypeCodeExisting() {
+        this.documentTypePMExtendedService.GetDoesDocumentTypeCodeExist(this.ShareDocumentsViaEmailDocumentTypeCode, SessionLocator.Tenant).subscribe((res: any) => {
+            var serviceResponse: ServiceResponse = res;
+            if (!serviceResponse.HasError && serviceResponse.Result == false) {
+                this.ShowValidationMessage("Contact your administrator");
+            }
+            if (!serviceResponse.HasError && serviceResponse.Result == true) {
+                this.ShowSharedDocument()
+            }
+            this.ShareDocumentsViaEmailInSendControl = false;
+        });
+    }
+
+    private ShowValidationMessage(messsage: string) {
+        var messageWindow: MessageWindow = new MessageWindow();
+        messageWindow.Show(messsage);
+    }
+
     //ShareDocument
     isSharingDocumentRequested: boolean = false;
     ShareDocumentsClicked() {
@@ -482,7 +627,7 @@ export class ShipmentHelperComponent implements OnDestroy {
             this.isSharingDocumentRequested = true;
             this.CurrentSession.CurrentEditComponent.SaveChanges();
         }
-        else {
+        else { 
             this.StartSharingDocument();
         }
 
@@ -491,14 +636,7 @@ export class ShipmentHelperComponent implements OnDestroy {
 
         if (this.EntityPM.IsManifestSentToAgent) {
 
-            var windowArgs: any = {};
-            windowArgs.EntityPM = this.EntityPM;
-            var logWindow = new LogitudeWindow();
-            logWindow.Width = 1000;
-            logWindow.Height = 600;
-            logWindow.Title = "Share Documents";
-            logWindow.WindowArgs = windowArgs;
-            logWindow.Show("./InfrastructureModules/InfrastructureDocuments/Components/SharedDocument/SharedDocumentComponent");
+            this.ShowSharedDocument();
 
         }
         else {
@@ -511,6 +649,19 @@ export class ShipmentHelperComponent implements OnDestroy {
 
       //ShareManifest
     isShareManifestRequested: boolean = false;
+
+    private ShowSharedDocument() {
+        var windowArgs: any = {};
+        windowArgs.EntityPM = this.EntityPM;
+        windowArgs.ShareDocumentsViaEmail = this.ShareDocumentsViaEmailInSendControl;
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 1000;
+        logWindow.Height = 600;
+        logWindow.Title = "Share Documents";
+        logWindow.WindowArgs = windowArgs;
+        logWindow.Show("./InfrastructureModules/InfrastructureDocuments/Components/SharedDocument/SharedDocumentComponent");
+    }
+
     ShareManifestClicked() {
         if (this.EntityPM.IsDirty) {
             this.isShareManifestRequested = true;

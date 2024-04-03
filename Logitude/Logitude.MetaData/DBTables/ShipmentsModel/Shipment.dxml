@@ -2271,6 +2271,12 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="Terminal2Available"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="ISFDate"
     Type="datetime">
     <Constraints
@@ -2988,13 +2994,6 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="AssginedtoCustomsAgentId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="PreForwardingTransportModeId"
     Type="char"
     Size="1">
@@ -3057,6 +3056,13 @@
     Name="PreForwardingVesselId"
     Type="varchar"
     Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PreForwardingVesselName"
+    Type="varchar"
+    Size="40">
     <Constraints
       Nullable="true" />
   </Column>
@@ -3127,6 +3133,13 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="OnForwardingVesselName"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="OnForwardingAdditionalTransportModeCode"
     ShortName="OnForwardingAddTransportModeCode"
     Type="varchar"
@@ -3160,9 +3173,16 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="ForwarderPickUpDeliveryType"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="PrivateLabelInvoiceNumber"
     Type="varchar"
-    Size="40">
+    Size="30">
     <Constraints
       Nullable="true" />
   </Column>
@@ -3205,16 +3225,524 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="ForwarderPickUpDeliveryType"
+    Name="StandalonePickupDeliveryId"
     Type="varchar"
     Size="15">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="StandalonePickupDeliveryId"
+    Name="Notify1Reference2"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ParentShipmentNumber"
+    Type="varchar"
+    Size="20">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ParentShipmentType"
+    OldNames="ParentShipmentTypeId"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ParentShipmentDirectionId"
+    Type="char"
+    Size="1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="OperationalStatusId"
     Type="varchar"
     Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="BillingStatusId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ShipperNotExporterReference2"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ShipperNotExporterReference1"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IsPODReceived"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="PODReceivedDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CustomerReference3"
+    Type="nvarchar"
+    Size="300">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ShipperReference3"
+    Type="varchar"
+    Size="300">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ConsigneeReference3"
+    Type="nvarchar"
+    Size="300">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="HasUnassignedData"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="DestinationWarehouseId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ShippingAgent"
+    Type="varchar"
+    Size="70">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PrivateLabelAgentName"
+    Type="varchar"
+    Size="70">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PartialStatusAmount"
+    Type="nvarchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="WarehouseLeg2ExpectedEntryDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="WarehouseLeg2ActualEntryDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="WarehouseLeg2ExpectedReleaseDate"
+    ShortName="WarehouseExpectedReleaseDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="WarehouseLeg2ActualReleaseDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="WarehouseLeg2AddressId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="WarehouseLeg2Remarks"
+    Type="nvarchar"
+    Size="500">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="WarehouseLeg2Reference"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="WarehouseLeg2TerminalCode"
+    Type="varchar"
+    Size="25">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="WarehouseLeg2WarehouseId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="WarehouseLeg2CutOffDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="WarehouseLeg2VGMCutOffDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IsShipmentOrder"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="FirstPickupFullAddress"
+    Type="varchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="LastDeliveryFullAddress"
+    Type="varchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="TruckerAddressId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="TruckerContactId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="TruckerReference1"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="TruckerReference2"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="OIConcurrencyGUID"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="QuoteFreightExpirationDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Field41"
+    Type="nvarchar"
+    Size="2000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Field42"
+    Type="nvarchar"
+    Size="2000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Field43"
+    Type="nvarchar"
+    Size="2000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Field44"
+    Type="nvarchar"
+    Size="2000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Field45"
+    Type="nvarchar"
+    Size="2000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Field46"
+    Type="nvarchar"
+    Size="2000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Field47"
+    Type="nvarchar"
+    Size="2000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Field48"
+    Type="nvarchar"
+    Size="2000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Field49"
+    Type="nvarchar"
+    Size="2000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Field50"
+    Type="nvarchar"
+    Size="2000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Field51"
+    Type="nvarchar"
+    Size="2000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Field52"
+    Type="nvarchar"
+    Size="2000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Field53"
+    Type="nvarchar"
+    Size="2000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Field54"
+    Type="nvarchar"
+    Size="2000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Field55"
+    Type="nvarchar"
+    Size="2000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Field56"
+    Type="nvarchar"
+    Size="2000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Field57"
+    Type="nvarchar"
+    Size="2000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Field58"
+    Type="nvarchar"
+    Size="2000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Field59"
+    Type="nvarchar"
+    Size="2000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Field60"
+    Type="nvarchar"
+    Size="2000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Field61"
+    Type="nvarchar"
+    Size="2000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Field62"
+    Type="nvarchar"
+    Size="2000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Field63"
+    Type="nvarchar"
+    Size="2000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Field64"
+    Type="nvarchar"
+    Size="2000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Field65"
+    Type="nvarchar"
+    Size="2000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Field66"
+    Type="nvarchar"
+    Size="2000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Field67"
+    Type="nvarchar"
+    Size="2000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Field68"
+    Type="nvarchar"
+    Size="2000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Field69"
+    Type="nvarchar"
+    Size="2000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Field70"
+    Type="nvarchar"
+    Size="2000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="NotesSharedWithCustomer"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IsINTTRAFROB"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShippingLine"
+    Type="varchar"
+    Size="30">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PlaceOfDelivery"
+    Type="varchar"
+    Size="30">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PickupPlace"
+    Type="varchar"
+    Size="30">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="HSCode"
+    Type="varchar"
+    Size="30">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SealNo"
+    Type="varchar"
+    Size="30">
     <Constraints
       Nullable="true" />
   </Column>
@@ -3869,11 +4397,6 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
-    ForeignKeyColumn="AssginedtoCustomsAgentId"
-    ReferencedTable="Cards"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
     ForeignKeyColumn="PreForwardingTransportModeId"
     ReferencedTable="TransportModes"
     ReferencedColumn="Id"
@@ -3933,6 +4456,46 @@
     ReferencedTable="Users"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ParentShipmentDirectionId"
+    ReferencedTable="Directions"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="OperationalStatusId"
+    ReferencedTable="EntityStatus"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="BillingStatusId"
+    ReferencedTable="EntityStatus"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="DestinationWarehouseId"
+    ReferencedTable="Cards"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="WarehouseLeg2AddressId"
+    ReferencedTable="Addresses"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="WarehouseLeg2WarehouseId"
+    ReferencedTable="Cards"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="TruckerAddressId"
+    ReferencedTable="Addresses"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="TruckerContactId"
+    ReferencedTable="Contacts"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
   <Index
     Columns="Tenant,CustomFileNumber" />
   <Index
@@ -3970,6 +4533,10 @@
     Columns="Tenant,ComputedStatusDate" />
   <Index
     Columns="Tenant,House" />
+  <Index
+    Columns="Tenant,ShipmentReceivableStatusCode,ShipmentLevelCode" />
+  <Index
+    Columns="Tenant,ShipmentPayableStatusCode,IsAccountingClosed,IsCancelled,ShipmentLevelCode" />
   <UniqueConstraint
     Columns="Tenant,ShipmentNumber" />
   <UniqueConstraint

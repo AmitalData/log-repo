@@ -8,6 +8,7 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Simplog.Data.CommonDataModel;
+using Logitude.BL.CommonDataModel.EntityQueries;
 
 namespace Logitude.BL.CommonDataModel.Tools.Validating
 {
@@ -47,7 +48,71 @@ namespace Logitude.BL.CommonDataModel.Tools.Validating
                         }
                     }
                 }
+
+                ValidatePostalCode(entityPM, myCountry);
+                
             }
+        }
+
+        public static string ValidateVendorOrCustomerAddress(AddressPM entityPM)
+        {
+            ValidateAddressType(entityPM);
+
+            CountryRepository countryRepository = new CountryRepository(entityPM.Tenant);
+            Country myCountry = countryRepository.GetSingleCountry(entityPM.CountryId, entityPM.Tenant);
+
+            if (myCountry != null)
+            {
+                if (myCountry.IsStateRequired)
+                {
+                    if (string.IsNullOrEmpty(entityPM.StateId))
+                    {
+                        throw new ApplicationException("State is Required");
+                    }
+                }
+
+                if (myCountry.HasCitiesList && !entityPM.IsHybrid)
+                {
+                    if (!string.IsNullOrEmpty(entityPM.City))
+                    {
+                        entityPM.City = entityPM.City.Trim();
+
+                        CountryCityRepository citiesRepository = new CountryCityRepository(entityPM.Tenant);
+                        IQueryable<CountryCity> allCities = citiesRepository.GetCountryCitiesByCountry(myCountry.Id, myCountry.Tenant);
+
+                        bool isCityExists = CheckIsCityExists(entityPM.City, allCities);
+
+                        if (!isCityExists)
+                        {
+                            return "This city doesn't exist in cities table";
+                        }
+                    }
+                }
+
+                ValidatePostalCode(entityPM, myCountry);
+
+            }
+            return null;
+        }
+
+        private static void ValidatePostalCode(AddressPM addressPM, Country country)
+        {
+            if (country.Code != "MX" || string.IsNullOrEmpty(addressPM.ZipCode))
+            {
+                return;
+            }
+            PostalCodePM postalCodePM = GetPostalCodePM(addressPM);
+            if (postalCodePM == null)
+            {
+                throw new ApplicationException("This ZipCode doesn't exist in " + country.EnglishName + " country");
+            }
+        }
+
+        private static PostalCodePM GetPostalCodePM(AddressPM addressPM)
+        {
+            PostalCodeQuery postalCodeQuery = new PostalCodeQuery(addressPM.Tenant);
+            PostalCodePM postalCodePM = postalCodeQuery.GetSinglePMByCountryCode(addressPM.ZipCode, addressPM.CountryCode);
+            return postalCodePM;
         }
 
         

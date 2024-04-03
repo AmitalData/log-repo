@@ -73,6 +73,9 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string Driver { get; set; }
         public string TruckNumber { get; set; }
         public string TrailerNumber { get; set; }
+        public string Transshipment1TrailerNumber { get; set; }
+        public string Transshipment2TrailerNumber { get; set; }
+        public string Transshipment3TrailerNumber { get; set; }
         public DateTime? MainCarriageSTD { get; set; }
         public DateTime? MainCarriageSTA { get; set; }
         public DateTime? Transshipment1STD { get; set; }
@@ -87,7 +90,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string StatusId { get; set; }
         public DateTime? StatusDate { get; set; }
         public string StatusLocation { get; set; }
-
+        public string PartialStatusAmount { get; set; }
         public string CargonautFWBStatusCode { get; set; }
         public DateTime? CargonautFWBStatusDate { get; set; }
         public string MainCarriageCarrierPrefix { get; set; }
@@ -224,5 +227,63 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public virtual Port OnCarriageToPort { get; set; }
         public virtual Card OnCarriageCarrierCard { get; set; }
         public virtual PickUpDeliveryTransportMode OnCarriageAdditionalTransportMode { get; set; }
+
+        public string InlandDomesticFromZipCode { get; set; }
+        public string InlandDomesticToZipCode { get; set; }
+        public string InlandDomesticFromCity { get; set; }
+        public string InlandDomesticToCity { get; set; }
+        public string InlandDomesticFromCountryId { get; set; }
+        public string InlandDomesticToCountryId { get; set; }
+        public string InlandDomesticFromTypeCode { get; set; }
+        public string InlandDomesticToTypeCode { get; set; }
+        public string MainCarriageFromPortAddress { get; set; }
+        public string MainCarriageToPortAddress { get; set; }
+
+        [ForeignKey("InlandDomesticFromTypeCode")]
+        public PickUpDeliveryFromToType InlandDomesticFromType { get; set; }
+
+        [ForeignKey("InlandDomesticToTypeCode")]
+        public PickUpDeliveryFromToType InlandDomesticToType { get; set; }
+
+        [ForeignKey("InlandDomesticFromCountryId")]
+        public virtual Country InlandDomesticFromCountry { get; set; }
+
+        [ForeignKey("InlandDomesticToCountryId")]
+        public virtual Country InlandDomesticToCountry { get; set; }
+
+        public string OperationalStatusId { get; set; }
+        public string BillingStatusId { get; set; }
+
+        public virtual EntityStatus OperationalStatus { get; set; }
+        public virtual EntityStatus BillingStatus { get; set; }
+
+        public string MainCarriageVesselName { get; set; }
+        public string Transshipment1VesselName { get; set; }
+        public string Transshipment2VesselName { get; set; }
+        public string Transshipment3VesselName { get; set; }
+        public string PreCarriageVesselName { get; set; }
+        public string OnCarriageVesselName { get; set; }
+        public string CarrierServiceLineId { get; set; }
+        public virtual CarrierServiceLine CarrierServiceLine { get; set; }
+
+        public string InlandDomesticToAddress1 { get; set; }
+        public string InlandDomesticToAddress2 { get; set; }
+        public string InlandDomesticToPhone { get; set; }
+        public string InlandDomesticToFax { get; set; }
+        public string InlandDomesticToStateId { get; set; }
+
+        [ForeignKey("InlandDomesticToStateId")]
+        public virtual State InlandDomesticToState { get; set; }
+
+
+        public string InlandDomesticFromAddress1 { get; set; }
+        public string InlandDomesticFromAddress2 { get; set; }
+        public string InlandDomesticFromPhone { get; set; }
+        public string InlandDomesticFromFax { get; set; }
+        public string InlandDomesticFromStateId { get; set; }
+
+        [ForeignKey("InlandDomesticFromStateId")]
+        public virtual State InlandDomesticFromState { get; set; }
+        public int? NumberOfTransshipments { get; set; }
     }
 }

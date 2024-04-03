@@ -96,6 +96,9 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                 }
             }
 
+            this.UpdateContinerExceptionFields(theEntityPm);
+
+
             EventTypeRepository eventTypeRepository = new EventTypeRepository(objectContext);
             EventType myEventType = eventTypeRepository.GetSingleEventType(theEntityPm.EventTypeId, tenant);
             if (myEventType != null)
@@ -123,6 +126,41 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             }
 
 
+        }
+
+        private void UpdateContinerExceptionFields(TraceEventPM entityPm)
+        {
+            if (entityPm.EventTypeCode != "CEXC")
+                return;
+
+            ContainerPM containerPM = GetContainerPM(entityPm);
+            if (containerPM == null)
+                return;
+
+            this.UpdateContainer(containerPM);
+        }
+
+        private ContainerPM GetContainerPM(TraceEventPM entityPm)
+        {
+            if (entityPm == null)
+                return null;
+
+            if (string.IsNullOrEmpty(entityPm.EntityId))
+                return null;
+
+            ContainerQuery containerQuery = new ContainerQuery(tenant);
+
+            return containerQuery.GetSinglePM(entityPm.EntityId, tenant);
+        }
+
+        private void UpdateContainer(ContainerPM containerPM)
+        {
+            ContainerService containerService = new ContainerService(ShipmentsContext.GetContext(tenant), tenant);
+            containerPM.LastExceptionDescription = Poco.Notes;
+            containerPM.ExceptionDescription = Poco.Notes;
+            containerPM.IsUpdateEntityException = true;
+
+            containerService.Update(containerPM);
         }
 
         private void UpdateEventCustomFieldValue(TraceEventPM theEntityPm, ShipmentPM shipmentPM)

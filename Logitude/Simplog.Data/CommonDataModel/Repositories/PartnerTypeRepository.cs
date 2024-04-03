@@ -44,6 +44,13 @@ namespace Simplog.Data.CommonDataModel.Repositories
                     select a).FirstOrDefault();
         }
 
+        public PartnerType GetSinglePartnerTypeByName(string name)
+        {
+            return (from a in context.PartnerTypes
+                    where a.Name == name
+                    select a).FirstOrDefault();
+        }
+
         public void Add(PartnerType entity)
         {
             context.PartnerTypes.Add(entity);

@@ -13,6 +13,7 @@ using System.Xml.Serialization;
 
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.EntityLists;
+using Logitude.Accounting.Data.Repositories;
 
 namespace Logitude.Accounting.Data.EntityListQueryServices
 { 
@@ -70,8 +71,11 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                        JournalId = a.JournalId,
 
                                                        IsManuallyChanged = a.IsManuallyChanged,
+                                                       VatAmountRound = a.VatAmountRound,
 
                                                        IsEquipment = a.IsEquipment,
+                                                       SubTotalInLocalCurrency=a.SubTotalInLocalCurrency,
+                                                       ConfirmationNumber=a.ConfirmationNumber,
 
                                                    });
             return query;
@@ -87,6 +91,9 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             return TaxReportLineListQuery;
 
         }
+
+       
+        
 
         private IQueryable<TaxReportLine> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<TaxReportLine> iQueryable, int tenant)
         {

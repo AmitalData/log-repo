@@ -10,6 +10,8 @@ using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.QuoteModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
@@ -40,21 +42,40 @@ using Simplog.Data.CommonDataModel;
         }
 
 		
-		public Contact GetContactById(string Id,int Tenant,string ComputingPartnerName = "")
+		public Contact GetContactById(string Id,int Tenant,  string ComputingPartnerName = "")
         { 
 		    try
             {
-
+				 
 				
-				var temp = query.GetSinglePM(Id,Tenant);				
+				var temp = query.GetSinglePM(Id, Tenant);				
 				 if (temp == null)
                     throw new ApplicationException("Contact with Id " + Id + " doesn't exist");
 
 				return ContactDataMapping(temp,Tenant,ComputingPartnerName);
 			}
+
             catch (Exception ex)
             {
+                throw ex;
+            }
+        }
+		
+		public Contact GetContactByEmail(string Email,int Tenant,  string ComputingPartnerName = "")
+        { 
+		    try
+            {
+				 
+				
+				var temp = query.GetSinglePMByEmail(Email, Tenant);				
+				 if (temp == null)
+                    throw new ApplicationException("Contact with Email " + Email + " doesn't exist");
 
+				return ContactDataMapping(temp,Tenant,ComputingPartnerName);
+			}
+
+            catch (Exception ex)
+            {
                 throw ex;
             }
         }
@@ -69,7 +90,13 @@ using Simplog.Data.CommonDataModel;
 				   temp.EnglishName = MyEntityPM.EnglishName;
 				   temp.LocalName = MyEntityPM.LocalName;
 				   temp.Code = MyEntityPM.ExternalId;
-				   temp.Email = MyEntityPM.Email;					
+				   temp.Email = MyEntityPM.Email;
+				   temp.Position = MyEntityPM.Position;
+				   temp.BusinessPhone = MyEntityPM.BusinessPhone;
+				   temp.Mobile = MyEntityPM.Mobile;
+				   temp.IsPrimaryContact = MyEntityPM.SetAsPrimaryForCard;
+				   temp.InActive = MyEntityPM.InActive;
+				   temp.Notes = MyEntityPM.Notes;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -88,11 +115,17 @@ using Simplog.Data.CommonDataModel;
 					{
 						temp = query.GetSinglePM(MyEntity.Id, Tenant);
 					} 
-										   
-					if(temp == null)
-					{   
-					    throw new ApplicationException("Contact with Id " + MyEntity.Id + " doesn't exist");
+					
+					if (!string.IsNullOrEmpty(MyEntity.Email))
+					{
+						temp = query.GetSinglePMByEmail(MyEntity.Email, Tenant  );
 					} 
+					
+			  	   if(temp == null)
+					{   
+					    throw new ApplicationException("Contact with Email " + MyEntity.Email + " doesn't exist");
+					} 
+				 
 					
 					if(string.IsNullOrEmpty(temp.Id))
 					{
@@ -111,33 +144,81 @@ using Simplog.Data.CommonDataModel;
 						
 					}
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.EnglishName))
-					{							//throw new ApplicationException("EnglishName Can't be update"); 
-							temp.EnglishName = MyEntity.EnglishName;
+					if(!IsUpdate)
+					{							
+						temp.EnglishName = MyEntity.EnglishName;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.LocalName))
-					{							//throw new ApplicationException("LocalName Can't be update"); 
-							temp.LocalName = MyEntity.LocalName;
+					if(!IsUpdate)
+					{							
+						temp.LocalName = MyEntity.LocalName;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Code))
-					{							//throw new ApplicationException("Code Can't be update"); 
-							temp.ExternalId = MyEntity.Code;
+					if(!IsUpdate)
+					{							
+						temp.ExternalId = MyEntity.Code;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Email))
-					{							//throw new ApplicationException("Email Can't be update"); 
-							temp.Email = MyEntity.Email;
+					if(!IsUpdate)
+					{							
+						temp.Email = MyEntity.Email;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)
+					{							
+						temp.Position = MyEntity.Position;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)
+					{							
+						temp.BusinessPhone = MyEntity.BusinessPhone;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)
+					{							
+						temp.Mobile = MyEntity.Mobile;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)
+					{							
+						temp.SetAsPrimaryForCard = MyEntity.IsPrimaryContact;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)
+					{							
+						temp.InActive = MyEntity.InActive;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)
+					{							
+						temp.Notes = MyEntity.Notes;
 
 										}  
 
@@ -150,6 +231,8 @@ using Simplog.Data.CommonDataModel;
                 throw ex;
             } 
         }
-		 
+
+
+						   
    }
 }

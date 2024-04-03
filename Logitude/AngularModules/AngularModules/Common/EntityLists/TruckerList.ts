@@ -42,5 +42,7 @@ export class TruckerList {
 		StateName: string;
 		GLAccountNumber: string;
 		TransmitToPort: boolean;
+		RegimenFiscalCode: string;
+		SATReceptorName: string;
 	
-}
+}

@@ -11,6 +11,8 @@ import { EntityResourceService } from '../../../../Infrastructure/Services/Entit
 import { HTSCodePM } from '../../../../Common/EntityPMs/HTSCodePM';
 import { Validator } from '../../../../Infrastructure/Validators/Validator';
 import { CountryList } from '../../../../Common/EntityLists/CountryList';
+import { CardList } from '../../../../Common/EntityLists/CardList';
+import { CurrencyPM } from 'Common/EntityPMs/CurrencyPM';
 
 @Component({
     templateUrl: './CustomerProductItemsTabComponent.html',
@@ -104,8 +106,8 @@ export class CustomerProductItemsTabComponent extends BaseComponent implements O
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Title = myWindowTitle;
         logitudeWindow.DataContext = itemPM;
-        logitudeWindow.Height = 550;
-        logitudeWindow.Width = 800; 
+        logitudeWindow.Height = 650;
+        logitudeWindow.Width = 1000; 
         logitudeWindow.Show('./CommonModules/CommonCustomer/Components/AddEdit/AddEditCustomerProductItemComponent');
     }
 }
@@ -285,6 +287,74 @@ export class CustomerProductItem extends BaseComponent {
             this.OriginCountryName = null;
         }
     }
+
+    get ShipperId() { return this.EntityPM.ShipperId; }
+    set ShipperId(newValue: string) {
+        if (this.EntityPM.ShipperId != newValue) {
+            this.EntityPM.ShipperId = newValue;
+        }
+    }
+
+    get ShipperName() { return this.EntityPM.ShipperName; }
+    set ShipperName(newValue: string) {
+        if (this.EntityPM.ShipperName != newValue) {
+            this.EntityPM.ShipperName = newValue;
+        }
+    }
+
+    shipper: CardList;
+    get Shipper() { return this.shipper; }
+    set Shipper(value: CardList) {
+        if (this.shipper != value) {
+            this.shipper = value;
+        }
+
+        if (value) {
+            this.ShipperName = value.EnglishName;
+        }
+        else {
+            this.ShipperName = null;
+        }
+    }
+
+    get ProductValue() { return this.EntityPM.ProductValue; }
+    set ProductValue(newValue: number) {
+        if (this.EntityPM.ProductValue != newValue) {
+            this.EntityPM.ProductValue = newValue;
+        }
+    }
+
+    get Quantity() { return this.EntityPM.Quantity; }
+    set Quantity(newValue: number) {
+        if (this.EntityPM.Quantity != newValue) {
+            this.EntityPM.Quantity = newValue;
+        }
+    }
+
+    get ProductValueCurrencyId() { return this.EntityPM.ProductValueCurrencyId; }
+    set ProductValueCurrencyId(newValue: string) {
+        if (this.EntityPM.ProductValueCurrencyId != newValue) {
+            this.EntityPM.ProductValueCurrencyId = newValue;
+        }
+    }
+
+    get ProductValueCurrencyCode() { return this.EntityPM.ProductValueCurrencyCode; }
+    set ProductValueCurrencyCode(newValue: string) {
+        if (this.EntityPM.ProductValueCurrencyCode != newValue) {
+            this.EntityPM.ProductValueCurrencyCode = newValue;
+        }
+    }
+
+    productValueCurrency: CurrencyPM;
+    get ProductValueCurrency() { return this.productValueCurrency; }
+    set ProductValueCurrency(value: CurrencyPM) {
+        if (this.productValueCurrency != value) {
+            this.productValueCurrency = value;
+        }
+        if (value) this.ProductValueCurrencyCode = value.Code;    
+        else this.ProductValueCurrencyCode = null;    
+    }
+
 }
 
 export class CustomerHTSCode extends BaseComponent {
@@ -435,5 +505,33 @@ export class CustomerHTSCode extends BaseComponent {
         }
 
         return isEnabled;
+    }
+
+    get VATPercentage() { return this.EntityPM.VATPercentage; }
+    set VATPercentage(newValue: number) {
+        if (this.EntityPM.VATPercentage != newValue) {
+            this.EntityPM.VATPercentage = AppTool.Round(newValue, 1);
+        }
+    }
+
+    get DutiesPercentage() { return this.EntityPM.DutiesPercentage; }
+    set DutiesPercentage(newValue: number) {
+        if (this.EntityPM.DutiesPercentage != newValue) {
+            this.EntityPM.DutiesPercentage = AppTool.Round(newValue, 1);
+        }
+    }
+
+    get OtherDuties() { return this.EntityPM.OtherDuties; }
+    set OtherDuties(newValue: string) {
+        if (this.EntityPM.OtherDuties != newValue) {
+            this.EntityPM.OtherDuties = newValue;
+        }
+    }
+
+    get Remarks() { return this.EntityPM.Remarks; }
+    set Remarks(newValue: string) {
+        if (this.EntityPM.Remarks != newValue) {
+            this.EntityPM.Remarks = newValue;
+        }
     }
 }

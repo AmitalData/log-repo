@@ -661,7 +661,6 @@ export class LogTextBoxV2Component implements BeforeOnDestroy,OnInit, AfterViewI
 
             switch (this.InputType.toLowerCase()) {
                 case 'double':
-                case 'unsDecimal':
                     {
                         if ((key >= 48 && key <= 57) || (key >= 96 && key <= 105) || key == BACKSPACE || key == PERIOD || key == DECIMALPT || key == TAB || key == DELETE
                             || key == END || key == HOME || key == SHIFT || key == PAGEUP || key == PAGEDOWN || key == LEFT || key == UP || key == RIGHT || key == DOWN || key == ADD || key == EQUAL) {
@@ -690,6 +689,49 @@ export class LogTextBoxV2Component implements BeforeOnDestroy,OnInit, AfterViewI
                                     return null;
                                 }
                             }
+                            if (key == EQUAL) {
+                                if (this.IsAccumulative && keyChar == "+") {
+                                    return key;
+                                }
+                                else {
+                                    return null;
+                                }
+                            }
+
+                            return key;
+                        }
+                        return null;
+                    }
+                case 'unsdecimal':
+                    {
+                        if ((key >= 48 && key <= 57) || (key >= 96 && key <= 105) || key == BACKSPACE || key == PERIOD || key == DECIMALPT || key == TAB || key == DELETE
+                            || key == END || key == HOME || key == SHIFT || key == PAGEUP || key == PAGEDOWN || key == LEFT || key == UP || key == RIGHT || key == DOWN || key == ADD || key == EQUAL) {
+
+                            if (key == 53) {
+                                if (keyChar == "%") {
+                                    if (this.AllowPercentage && !AppTool.IsNullOrEmpty(this.TextValue)) {
+                                        return key;
+                                    }
+                                    else {
+                                        return null;
+                                    }
+                                }
+                            }
+
+                            if (key >= 48 && key <= 57) {
+                                if (numChars.indexOf(keyChar) == -1) {
+                                    return null;
+                                }
+                            }
+                            if (key == ADD) {
+                                if (this.IsAccumulative) {
+                                    return key;
+                                }
+                                else {
+                                    return null;
+                                }
+                            }
+                            
                             if (key == EQUAL) {
                                 if (this.IsAccumulative && keyChar == "+") {
                                     return key;

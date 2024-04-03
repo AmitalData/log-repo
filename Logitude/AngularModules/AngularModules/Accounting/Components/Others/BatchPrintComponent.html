@@ -156,6 +156,13 @@
                 {{'InterestReport.O.ShowReportsWithPrintedInvoices' | TextCodeTranslationPipe}}
             </div>
         </td>
+        <td style="width: 300px; padding: 4px;">
+            <div>
+                <div style="padding: 0 5px; width: 250px;" [style.float]="isRTL ? 'left' : 'right'">
+                    <SearchTextBox [ObjectTableName]="ObjectTableName" [PlaceHolder]="" (SearchTextChangeEvent)="TextChanged($event)"></SearchTextBox>
+                </div>
+            </div>
+        </td>
         <td></td>
 
 

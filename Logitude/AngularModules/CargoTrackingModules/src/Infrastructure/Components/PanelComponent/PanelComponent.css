@@ -1,11 +1,13 @@
 .panel{
-    width: calc(100% - 150px);
+    /* width: calc(100% - 150px); */
     margin: 0 auto;
-    margin-bottom: 30px;
+    margin-bottom: 25px;
     min-height: 100px;
     background: white;
     box-shadow: 0px 0px 8px 0px #00000025;
     border-radius: 8px;
+    padding-top: 7px;
+    box-sizing: border-box;
   }
       .panel:hover{
           box-shadow: 0px 0px 8px 0px #00000040;
@@ -16,11 +18,14 @@
     box-shadow: none;
 
 }
-  .panel .header{
-      padding: 30px 30px 30px 30px;
-  }
+    .panel .header {
+        padding: 15px 30px 10px 30px;
+        display: flex;
+        justify-content: space-between;
+
+    }
   .panel.transparent .header{
-    padding: 30px 0;
+    padding: 0px 0px 20px 0px;
   }
 
       .panel .header .title, .panel .details > .title{
@@ -63,7 +68,7 @@
               }
 
       .panel .body{
-          padding: 0px 30px 15px 30px;
+          padding: 0px 30px 0px 30px;
       }
       .panel.transparent .body{
           padding: 0;
@@ -73,7 +78,9 @@
           background: #F2F4F7;
       }
 
-@media screen and (max-width: 479px) {
+
+@media screen and (max-width: 479px) and (orientation: portrait),
+(max-height: 479px) and (orientation: landscape) {
     .panel{
         width: 100% !important;
         background: none;
@@ -84,13 +91,13 @@
         box-shadow: none;
     }
         .panel .header {
-            padding: 30px 5px 30px 5px;
+            padding: 5px 5px 5px 5px;
         }
         .panel .body{
             padding: 0 5px;
         }
         .panel .details {
-            padding: 30px 13px;
+            padding: 15px 13px;
             background: none;
         }
         .panel .body.mobile-white-panel, .panel .details.mobile-white-panel{

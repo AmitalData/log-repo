@@ -39,7 +39,8 @@
 	CLOSE BranchesCursor
 	DEALLOCATE BranchesCursor
 	
+
+		update dw_WaterMarks set LastUpdateDate = @MaxAutomaticLastUpdateDate where TableName = 'Branch'
 	End
 
 
-	update dw_WaterMarks set LastUpdateDate = @MaxAutomaticLastUpdateDate where TableName = 'Branch'

@@ -20,6 +20,15 @@ namespace Logitude.Customs.BL.CloseTables
                      Param1= @"{ ""withSignature"":""false"" , ""amount"":""99""}",
 
                 },
+
+                  new SincroTestCaseDetail()
+                {
+                    Code = "1234",
+                    Name = "תשובה להמכלה",
+                    Entity="CONT",
+                     Param1= @"{ ""IsValid"":""true""}",
+
+                },
                  new SincroTestCaseDetail()
                 {
                     Code = "8373",

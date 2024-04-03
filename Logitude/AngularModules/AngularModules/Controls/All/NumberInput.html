@@ -24,8 +24,13 @@
         background: #e0e0e0;
 
     }
+    .disabledNoOfCasesDiv {
+        pointer-events: none;
+        opacity: 2.0;
+    }
+
 </style>
-<div [class.rtl]="isRTL">
+<div [class.rtl]="isRTL"  [ngClass]="{disabledNoOfCasesDiv: isDisabled}">
     <input type="number"
     [value]="value"
     [(ngModel)]="value" [ngModelOptions]="{standalone: true}" >

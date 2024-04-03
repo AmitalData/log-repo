@@ -1715,6 +1715,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                     OriginalTemplateId = documentTypeTemplate.Id,
                     IsCopiedAtSignup = true,
                     IsEnabledForCustomers = true,
+                    IsSystem = documentTypeTemplate.IsSystem,
                     
                 };
                 documentTypeTemplateRepository.Add(itemDocumentTypeTemplate);

@@ -4,6 +4,7 @@ export class CargoTrackingShipmentCustomsData
     DeclarationNumber: string;
     DeclarationStatus: string;
     CurrencySign: string;
+    ImporterId: string;
     CurrencyCode: string;
     CurrencyName: string;
     GoodsDescription: string;
@@ -11,6 +12,8 @@ export class CargoTrackingShipmentCustomsData
     TotalValueInNIS: number;
     TotalValueInForeignCurrency: number;
     TotalTax: number;
-
+    CargoIdentifier1: string;
+    CargoIdentifier2: string;
+    CargoIdentifier3: string;
     TaxDetails:  CargoTrackingShipmentCustomTaxDetails[] = [];
 }

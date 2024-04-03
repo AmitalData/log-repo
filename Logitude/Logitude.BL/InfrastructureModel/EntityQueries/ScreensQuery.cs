@@ -10,6 +10,7 @@ using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 
 using Logitude.BL.InfrastructureModel.EntityPMs;
+using Logitude.BL.InfrastructureModel.EntityLists;
 
 namespace Logitude.BL.InfrastructureModel.EntityQueries
 {
@@ -48,6 +49,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                    Code = a.Code,
                                    Id = a.Id,
                                    IsReadOnly = a.IsReadOnly,
+                                   Inactive = a.Inactive,
                                    NumberOfColumns = a.NumberOfColumns,
                                    NumberOfRows = a.NumberOfRows,
                                    ObjectTableId = a.ObjectTableId,
@@ -55,6 +57,12 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                    ObjectTableName = a.ObjectTable.Name,
                                    Tenant = a.Tenant,
                                    UserTenant = tenant,
+                                   Type = a.Type,
+                                   SortedByFieldCode = a.SortedByFieldCode,
+                                   SortedType = a.SortedType,
+                                   SearchFields = a.SearchFields,
+                                   RelatedScreenCode = a.RelatedScreenCode,
+                                   IsHeaderScreen = a.IsHeaderScreen
                                }).ToList();
 
 
@@ -94,6 +102,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                       Code = a.Code,
                                       Id = a.Id,
                                       IsReadOnly = a.IsReadOnly,
+                                      Inactive = a.Inactive,
                                       NumberOfColumns = a.NumberOfColumns,
                                       NumberOfRows = a.NumberOfRows,
                                       ObjectTableId = a.ObjectTableId,
@@ -101,32 +110,97 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                       ObjectTableName = a.ObjectTable.Name,
                                       Tenant = a.Tenant,
                                       UserTenant = tenant,
-
+                                      Type = a.Type,
+                                      SortedByFieldCode = a.SortedByFieldCode,
+                                      SortedType = a.SortedType,
+                                      SearchFields = a.SearchFields,
+                                      RelatedScreenCode = a.RelatedScreenCode,
+                                      IsHeaderScreen = a.IsHeaderScreen
                                   }).ToList();
 
-
-
-
-                foreach (ScreenPM screen in currentscreens)
-                {
-                    ScreenModification mod = (from a in repository.context.ScreenModifications
-                                              where a.ScreenId == screen.Id && a.Tenant == tenant
-                                              select a).FirstOrDefault();
-                    if (mod != null)
-                    {
-                        screen.NumberOfRows = mod.NumberOfRows;
-                        screen.NumberOfColumns = mod.NumberOfColumns;
-
-                    }
-
-
-                }
             }
             screens = zeroscreens.Concat(currentscreens).ToList();
 
             return screens;
         }
 
+        public ScreenPM GetSinglePM( string id,int tenant)
+        {
+            WebFreightContext webFreightContext = (WebFreightContext)WebFreightContext.GetContext(0);
+            ScreenFieldsRepository screenfieldsRep = new ScreenFieldsRepository(tenant);
+            return (from a in repository.context.Screens.Include("ObjectTable")
+                    where a.Tenant == tenant && a.Id == id
+                    select new ScreenPM()
+                    {
+                        Code = a.Code,
+                        Id = a.Id,
+                        IsReadOnly = a.IsReadOnly,
+                        Inactive = a.Inactive,
+                        NumberOfColumns = a.NumberOfColumns,
+                        NumberOfRows = a.NumberOfRows,
+                        ObjectTableId = a.ObjectTableId,
+                        Name = a.Name,
+                        ObjectTableName = a.ObjectTable.Name,
+                        Tenant = a.Tenant,
+                        UserTenant = tenant,
+                        Type = a.Type,
+                        SortedByFieldCode = a.SortedByFieldCode,
+                        SortedType = a.SortedType,
+                        SearchFields = a.SearchFields,
+                        RelatedScreenCode = a.RelatedScreenCode,
+                        IsHeaderScreen = a.IsHeaderScreen
+                    }).FirstOrDefault();
 
+        }
+
+        public List<ScreenPM> GetByEntity(string entityId, int tenant)
+        {
+            WebFreightContext webFreightContext = (WebFreightContext)WebFreightContext.GetContext(0);
+            ScreenFieldsRepository screenfieldsRep = new ScreenFieldsRepository(tenant);
+            return (from a in repository.context.Screens.Include("ObjectTable")
+                    where a.Tenant == tenant && a.ObjectTableId == entityId
+                    select new ScreenPM()
+                    {
+                        Code = a.Code,
+                        Id = a.Id,
+                        IsReadOnly = a.IsReadOnly,
+                        Inactive = a.Inactive,
+                        NumberOfColumns = a.NumberOfColumns,
+                        NumberOfRows = a.NumberOfRows,
+                        ObjectTableId = a.ObjectTableId,
+                        Name = a.Name,
+                        ObjectTableName = a.ObjectTable.Name,
+                        Tenant = a.Tenant,
+                        UserTenant = tenant,
+                        Type = a.Type,
+                        SortedByFieldCode = a.SortedByFieldCode,
+                        SortedType = a.SortedType,
+                        SearchFields = a.SearchFields,
+                        RelatedScreenCode = a.RelatedScreenCode,
+                        IsHeaderScreen = a.IsHeaderScreen
+                    }).ToList();
+        }
+
+        public IQueryable<ScreenList> GetIQueryableEntityList(IQueryable<Screen> iQueryable)
+        {
+            IQueryable<ScreenList> result = from a in iQueryable
+                                                 select new ScreenList()
+                                                 {
+                                                     Code = a.Code,
+                                                     Id = a.Id,
+                                                     IsReadOnly = a.IsReadOnly,
+                                                     NumberOfColumns = a.NumberOfColumns,
+                                                     NumberOfRows = a.NumberOfRows,
+                                                     ObjectTableId = a.ObjectTableId,
+                                                     Name = a.Name,
+                                                     ObjectTableName = a.ObjectTable.Name,
+                                                     Tenant = a.Tenant,
+                                                     Type = a.Type,
+                                                     SearchFields = a.SearchFields,
+                                                     RelatedScreenCode = a.RelatedScreenCode,
+                                                     IsHeaderScreen = a.IsHeaderScreen
+                                                 };
+            return result;
+        }
     }
 }

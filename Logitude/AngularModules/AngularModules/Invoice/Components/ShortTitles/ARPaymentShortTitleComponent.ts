@@ -24,7 +24,7 @@ export class ARPaymentShortTitleComponent implements OnDestroy {
             this.BuildComponent();
         }
 
-        if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33") {
+        if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF40") {
             this.DisplaySATSettings = true;
         }
 

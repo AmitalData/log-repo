@@ -41,6 +41,7 @@ using Logitude.Server.Tools.QueueService;
 using Simplog.Global.Data.GlobalModel;
 using Intuit.Ipp.OAuth2PlatformClient;
 using System.Net;
+using Logitude.Server.Tools.Helpers;
 
 namespace Logitude.BL.InvoiceModel.Tools
 {
@@ -649,7 +650,11 @@ namespace Logitude.BL.InvoiceModel.Tools
 
                     if (PaymentTermExternalCode != null)
                         QBOInvoice.SalesTermRef = new ReferenceType { Value = PaymentTermExternalCode };
-
+                    if (!string.IsNullOrEmpty(invoice.GlobalTaxCalculation))
+                    {
+                        QBOInvoice.GlobalTaxCalculationSpecified = true;
+                        QBOInvoice.GlobalTaxCalculation = GetGlobalTaxCalculation(invoice.GlobalTaxCalculation);
+                    }
                     System.Collections.Generic.List<Line> lineList = new List<Line>();
                     string ExternalVatTypeCodeWhereIsNotZeroPercentage = "";
                     if (this.isIndiaCountry)
@@ -744,7 +749,11 @@ namespace Logitude.BL.InvoiceModel.Tools
                     QBOInvoice.TransactionLocationType = IndiaExternalQBOStates;
                     if (PaymentTermExternalCode != null)
                         QBOInvoice.SalesTermRef = new ReferenceType { Value = PaymentTermExternalCode };
-
+                    if (!string.IsNullOrEmpty(invoice.GlobalTaxCalculation))
+                    {
+                        QBOInvoice.GlobalTaxCalculationSpecified = true;
+                        QBOInvoice.GlobalTaxCalculation = GetGlobalTaxCalculation(invoice.GlobalTaxCalculation);
+                    }
                     System.Collections.Generic.List<Line> lineList = new List<Line>();
                     string ExternalVatTypeCodeWhereIsNotZeroPercentage = "";
                     for (int i = 0; i < lines.Count; i++)
@@ -768,12 +777,13 @@ namespace Logitude.BL.InvoiceModel.Tools
                             {
                                 Value = ExternalChargesTypesCode[i]
                             };
+
                             if (lines[i].VatPercentage != 0)
                             {
-                                ExternalVatTypeCodeWhereIsNotZeroPercentage = ExternalVatTypesCode[i];                                                                                               
-                                    lineSalesItemLineDetail.TaxCodeRef = new ReferenceType() { Value = "TAX" };                                
-
+                                ExternalVatTypeCodeWhereIsNotZeroPercentage = ExternalVatTypesCode[i];
+                                lineSalesItemLineDetail.TaxCodeRef = new ReferenceType() { Value = "TAX" };
                             }
+      
                         }
 
                         else if (AccountingSystemCode == "QBOG")
@@ -783,7 +793,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                             {
                                 Value = ExternalChargesTypesCode[i]
                             };
-                                 lineSalesItemLineDetail.TaxCodeRef = new ReferenceType() { Value = ExternalVatTypesCode[i] };
+                            lineSalesItemLineDetail.TaxCodeRef = new ReferenceType() { Value = ExternalVatTypesCode[i] };
                             
                         }
 
@@ -884,9 +894,10 @@ namespace Logitude.BL.InvoiceModel.Tools
 
                 DbQueueService queueservice;
                 queueservice = new DbQueueService();
+                TimeSpan? delayTime = GetQuickbooksQueueMessageDelayTime();
                 queueservice.InitializeQueue("QBO", 0);
                 Dictionary<string, string> param = new Dictionary<string, string>() { { "QuickbooksOnline", myCommunicationLogId }, { "Tenant", tenant.ToString() }, { "type", "Invoice" },{ "OldTransferStatusCode", OldTransferStatusCode } };
-                queueservice.Send(param, tenant);
+                queueservice.Send(param, tenant, delayTime);
                 queueservice.Complete();          
                   }
 
@@ -961,11 +972,12 @@ namespace Logitude.BL.InvoiceModel.Tools
             {
                 DbQueueService queueservice;
                 queueservice = new DbQueueService();
+                TimeSpan? delayTime = GetQuickbooksQueueMessageDelayTime();
 
                 queueservice.InitializeQueue("QBO", 0);
-                queueservice.Send(new Dictionary<string, string>() { { "QuickbooksOnline", myCommunicationLogId }, { "Tenant", tenant.ToString() }, { "type", "MEMO" } }, tenant);
+                queueservice.Send(new Dictionary<string, string>() { { "QuickbooksOnline", myCommunicationLogId }, { "Tenant", tenant.ToString() }, { "type", "MEMO" } }, tenant, delayTime);
                 queueservice.Complete();
-                  }
+            }
 
             catch (Exception ex)
             {
@@ -987,6 +999,17 @@ namespace Logitude.BL.InvoiceModel.Tools
 
 
 
+        }
+
+        private TimeSpan? GetQuickbooksQueueMessageDelayTime()
+        {
+            TimeSpan? delayTime = null;
+            if (FeatureToggleHelper.HasFeatureToggle("INU", tenant))
+            {
+                delayTime = new TimeSpan(0, 0, 5);
+            }
+
+            return delayTime;
         }
 
         private void SendXMLFileInvoiceVoid(string ARInvoiceExternalId, string queueName)
@@ -1037,9 +1060,10 @@ namespace Logitude.BL.InvoiceModel.Tools
             {
                 DbQueueService queueservice;
                 queueservice = new DbQueueService();
+                TimeSpan? delayTime = GetQuickbooksQueueMessageDelayTime();
 
                 queueservice.InitializeQueue("QBO", 0);
-                queueservice.Send(new Dictionary<string, string>() { { "QuickbooksOnline", myCommunicationLogId }, { "Tenant", tenant.ToString() }, { "type", "ARInvoiceVoid" } }, tenant);
+                queueservice.Send(new Dictionary<string, string>() { { "QuickbooksOnline", myCommunicationLogId }, { "Tenant", tenant.ToString() }, { "type", "ARInvoiceVoid" } }, tenant, delayTime);
                 queueservice.Complete();
             }
 
@@ -1132,10 +1156,20 @@ namespace Logitude.BL.InvoiceModel.Tools
 
             return myResult;
         }
-
-
-
-
-
+        private GlobalTaxCalculationEnum GetGlobalTaxCalculation(string globalTaxCalculation)
+        {
+            if (globalTaxCalculation == "TE")
+            {
+                return GlobalTaxCalculationEnum.TaxExcluded;
+            }
+            else if (globalTaxCalculation == "TI")
+            {
+                return GlobalTaxCalculationEnum.TaxInclusive;
+            }
+            else
+            {
+                return GlobalTaxCalculationEnum.NotApplicable;
+            }
+        }
     }
 }

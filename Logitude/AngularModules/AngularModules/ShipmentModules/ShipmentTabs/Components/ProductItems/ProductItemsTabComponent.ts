@@ -16,6 +16,7 @@ import { ProductItemList } from '../../../../Common/EntityLists/ProductItemList'
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 import { HTSCodePM } from '../../../../Common/EntityPMs/HTSCodePM';
+import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 
 @Component({
     templateUrl: './ProductItemsTabComponent.html',
@@ -34,29 +35,44 @@ export class ProductItemsTabComponent extends BaseComponent implements OnInit, O
     public CustomerId: string;
     public ToCountryId: string;
     public IsResourcesReady: boolean = false;
+    public ProductItemQueryFilters: ApiQueryFilters;
+    public IsUsingVirtuallization: boolean = false;
     constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         super();
         this.EntityPM = this.entityArgs.EntityPM;
         this.ObjectTableName = this.entityArgs.ObjectTableName;
         this.PartnersDomainService = new PartnersDomainService();
+        this.SetIsUsingVirtuallization();
         this.ProductItems = new ObservableCollection([]);
-
+        this.ProductItemQueryFilters = new ApiQueryFilters();
         this.Listen();
     }
 
     ngOnInit() {
         if (this.EntityPM != null) {
-            this.entityResourceService.getEntityResourceByTableName("ShipmentProductItem").subscribe((res1: any) => {
-                this.IsLCLEntity = AppTool.IsLCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
-                this.IsFCLEntity = AppTool.IsFCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
-                this.TransportModeId = this.EntityPM.TransportModeId;
-                this.CustomerId = this.EntityPM.CustomerId;
-                this.ToCountryId = this.EntityPM.ToCountryId;
+            this.entityResourceService.getEntityResourceByTableName("ProductItem").subscribe((res1: any) => {
+                this.entityResourceService.getEntityResourceByTableName("HTSCode").subscribe((res2: any) => {
+                    this.entityResourceService.getEntityResourceByTableName("ShipmentProductItem").subscribe((res3: any) => {
+                        this.IsLCLEntity = AppTool.IsLCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
+                        this.IsFCLEntity = AppTool.IsFCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
+                        this.TransportModeId = this.EntityPM.TransportModeId;
+                        this.CustomerId = this.EntityPM.CustomerId;
+                        this.ToCountryId = this.EntityPM.ToCountryId;
 
-                this.IsResourcesReady = true;
-                this.SetUIProperties();
-                this.BuildProductItems();
+                        this.IsResourcesReady = true;
+                        this.SetUIProperties();
+                        this.BuildProductItems();
+                        this.BuildQueryFilters();                        
+                    });
+                });
             });
+        }
+    }
+
+    SetIsUsingVirtuallization() {
+        var hasGridVirtuallizationToggleFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "EVG")[0]
+        if (hasGridVirtuallizationToggleFeature) {
+            this.IsUsingVirtuallization = true;
         }
     }
 
@@ -120,11 +136,42 @@ export class ProductItemsTabComponent extends BaseComponent implements OnInit, O
 
         var itemsCollection: ProductItem[] = [];
 
-        this.EntityPM.ShipmentProductItems.forEach(item => {
+        this.EntityPM.ShipmentProductItems.forEach(item => {            
             itemsCollection.push(new ProductItem(item, this, false));
         });
 
         this.ProductItems.InsertCollection(itemsCollection);
+        this.AddEmptyProductItemLine();
+    }
+
+    private AddEmptyProductItemLine() {
+        if (this.ProductItems.Length == 0) {
+            var item: ShipmentProductItemPM = new ShipmentProductItemPM(null);
+            item.Tenant = SessionLocator.Tenant;
+            item.ShipmentId = this.EntityPM.Id;
+            item.IsEmptyLine = true;
+
+            this.ProductItems.Insert(new ProductItem(item, this, true));
+        }
+    }
+
+    public BuildQueryFilters() {
+        this.ProductItemQueryFilters = new ApiQueryFilters();
+        var addedProductItemsIds: string = null;
+
+        this.ProductItems.Collection.forEach(item => {
+            if (AppTool.IsNullOrEmpty(addedProductItemsIds)) {
+                addedProductItemsIds = item.ProductItemId;
+            }
+
+            else {
+                addedProductItemsIds = addedProductItemsIds + "," + item.ProductItemId;
+            }
+        });
+
+        if (!AppTool.IsNullOrEmpty(addedProductItemsIds)) {
+            this.ProductItemQueryFilters.addAdditionalFilter("Id", addedProductItemsIds, null, null, "Exclude", false, false, false, "string", false, true, true);
+        }
     }
 
     AddProductItem() {
@@ -135,10 +182,10 @@ export class ProductItemsTabComponent extends BaseComponent implements OnInit, O
             var item: ShipmentProductItemPM = new ShipmentProductItemPM(null);
             item.Tenant = SessionLocator.Tenant;
             item.ShipmentId = this.EntityPM.Id;
+            item.IsEmptyLine = true;
 
-            this.ProductItems.Insert(new ProductItem(item, this, true));
-            this.EntityPM.AddProductItem(item);
-        }
+            this.ProductItems.Insert(new ProductItem(item, this, true));        
+        }        
     }
     EditCustomerProductItem(item: ProductItem) {
         this.entityResourceService.getEntityResourceByTableName("ProductItem").subscribe((res1: any) => {
@@ -150,8 +197,8 @@ export class ProductItemsTabComponent extends BaseComponent implements OnInit, O
                             if (customerProductItem) {
                                 var logitudeWindow = new LogitudeWindow();
                                 logitudeWindow.Title = "Edit Customer Product Item";
-                                logitudeWindow.Height = 550;
-                                logitudeWindow.Width = 800; 
+                                logitudeWindow.Height = 650;
+                                logitudeWindow.Width = 1000; 
                                 logitudeWindow.WindowArgs = { EntityPM: customerProductItem, ShipmentPM: this.EntityPM };
                                 logitudeWindow.Show('./ShipmentModules/ShipmentTabs/Components/ProductItems/EditCustomerProductItemComponent');
                                 logitudeWindow.ComponentLoaded.subscribe(comp => {
@@ -171,11 +218,20 @@ export class ProductItemsTabComponent extends BaseComponent implements OnInit, O
     private UpdateShipmentProductItem(shipmentItem: ProductItem, customerItem: ProductItemPM) {
         var shipmentProductItem: ShipmentProductItemPM = this.EntityPM.ShipmentProductItems.filter(d => d.Id == shipmentItem.EntityPM.Id)[0];
         if (shipmentProductItem) {
-            this.MapProductItems(shipmentProductItem, customerItem);
+            this.MapProductItem(shipmentProductItem, customerItem);
+            this.UpdateSimilarProductItems(shipmentProductItem, customerItem);
             this.BuildProductItems();
         }
     }
-    MapProductItems(shipmentProductItem: ShipmentProductItemPM, customerItem: ProductItemPM) {
+    private UpdateSimilarProductItems(shipmentItem: ShipmentProductItemPM, customerItem: ProductItemPM) {
+        var sameProductItems: ShipmentProductItemPM[] = this.EntityPM.ShipmentProductItems.filter(d => d.ProductItemId == shipmentItem.ProductItemId);
+        if (sameProductItems != null && sameProductItems.length > 0) {
+            sameProductItems.forEach(item => {
+                this.MapProductItem(item, customerItem);
+            });
+        }
+    }
+    MapProductItem(shipmentProductItem: ShipmentProductItemPM, customerItem: ProductItemPM) {
         shipmentProductItem.Description = customerItem.Description;
         shipmentProductItem.SKU = customerItem.SKU;
         shipmentProductItem.Name = customerItem.Name;
@@ -184,11 +240,17 @@ export class ProductItemsTabComponent extends BaseComponent implements OnInit, O
         shipmentProductItem.UPC = customerItem.UPC;
         shipmentProductItem.OriginCountryId = customerItem.OriginCountryId;
         shipmentProductItem.OriginCountryName = customerItem.OriginCountryName;
+        shipmentProductItem.ShipperId = customerItem.ShipperId;
+        shipmentProductItem.ShipperName = customerItem.ShipperName;
 
         var htsCode: HTSCodePM = customerItem.HTSCodes.filter(d => d.DestinationCountryId == this.EntityPM.ToCountryId && !d.InActive)[0];
         if (htsCode) {
             shipmentProductItem.HTSCode = htsCode.Code;
             shipmentProductItem.ApprovedByCustomer = htsCode.ApprovedByCustomer;
+            shipmentProductItem.VATPercentage = htsCode.VATPercentage;
+            shipmentProductItem.DutiesPercentage = htsCode.DutiesPercentage;
+            shipmentProductItem.OtherDuties = htsCode.OtherDuties;
+            shipmentProductItem.Remarks = htsCode.Remarks;
         }
     }
 
@@ -224,7 +286,19 @@ export class ProductItem extends BaseComponent {
         if (this.EntityPM.ProductItemId != newValue) {
             this.EntityPM.ProductItemId = newValue;
 
-            this.GetCustomerProductItemHTSCode();          
+            if (!AppTool.IsNullOrEmpty(newValue)) {
+                this.EntityPM.IsEmptyLine = false;
+                this.fatherComponent.EntityPM.AddProductItem(this.EntityPM);
+            }
+
+            else {
+                this.EntityPM.IsEmptyLine = true;
+                if (this.fatherComponent.EntityPM.ShipmentProductItems.indexOf(this.EntityPM) != -1) {
+                    this.fatherComponent.EntityPM.RemoveProductItem(this.EntityPM);
+                }
+            }
+
+            this.GetCustomerProductItemHTSCode();
         }
     }
 
@@ -232,6 +306,10 @@ export class ProductItem extends BaseComponent {
         if (AppTool.IsNullOrEmpty(this.ProductItemId)) {
             this.HTSCode = null;
             this.ApprovedByCustomer = false;
+            this.VATPercentage = null;
+            this.DutiesPercentage = null;
+            this.OtherDuties = null;
+            this.Remarks = null;
         }
 
         else {
@@ -241,13 +319,26 @@ export class ProductItem extends BaseComponent {
                     if (htsCode) {
                         this.HTSCode = htsCode.Code;
                         this.ApprovedByCustomer = htsCode.ApprovedByCustomer;
+                        this.VATPercentage = htsCode.VATPercentage;
+                        this.DutiesPercentage = htsCode.DutiesPercentage;
+                        this.OtherDuties = htsCode.OtherDuties;
+                        this.Remarks = htsCode.Remarks;
+                    }
+
+                    else {
+                        this.HTSCode = null;
+                        this.ApprovedByCustomer = false;
+                        this.VATPercentage = null;
+                        this.DutiesPercentage = null;
+                        this.OtherDuties = null;
+                        this.Remarks = null;
                     }
                 }
             });
         }
     }
 
-    productItem: ProductItemList;
+    private productItem: ProductItemList;
     get ProductItem() { return this.productItem; }
     set ProductItem(value: ProductItemList) {
         if (this.productItem != value) {
@@ -263,6 +354,9 @@ export class ProductItem extends BaseComponent {
             this.UPC = value.UPC;
             this.OriginCountryId = value.OriginCountryId;
             this.OriginCountryName = value.OriginCountryName;
+            this.ShipperId = value.ShipperId;
+            this.ShipperName = value.ShipperName;
+
         }
 
         else {
@@ -274,7 +368,11 @@ export class ProductItem extends BaseComponent {
             this.UPC = null;
             this.OriginCountryId = null;
             this.OriginCountryName = null;
+            this.ShipperId = null;
+            this.ShipperName = null;
         }
+
+        this.fatherComponent.BuildQueryFilters();
     }
 
     get HTSCode() {return this.EntityPM.HTSCode;}
@@ -347,6 +445,48 @@ export class ProductItem extends BaseComponent {
         }
     }
 
+    get ShipperId() { return this.EntityPM.ShipperId; }
+    set ShipperId(newValue: string) {
+        if (this.EntityPM.ShipperId != newValue) {
+            this.EntityPM.ShipperId = newValue;
+        }
+    }
+
+    get ShipperName() { return this.EntityPM.ShipperName; }
+    set ShipperName(newValue: string) {
+        if (this.EntityPM.ShipperName != newValue) {
+            this.EntityPM.ShipperName = newValue;
+        }
+    }
+
+    get VATPercentage() { return this.EntityPM.VATPercentage; }
+    set VATPercentage(newValue: number) {
+        if (this.EntityPM.VATPercentage != newValue) {
+            this.EntityPM.VATPercentage = AppTool.Round(newValue, 1);
+        }
+    }
+
+    get DutiesPercentage() { return this.EntityPM.DutiesPercentage; }
+    set DutiesPercentage(newValue: number) {
+        if (this.EntityPM.DutiesPercentage != newValue) {
+            this.EntityPM.DutiesPercentage = AppTool.Round(newValue, 1);
+        }
+    }
+
+    get OtherDuties() { return this.EntityPM.OtherDuties; }
+    set OtherDuties(newValue: string) {
+        if (this.EntityPM.OtherDuties != newValue) {
+            this.EntityPM.OtherDuties = newValue;
+        }
+    }
+
+    get Remarks() { return this.EntityPM.Remarks; }
+    set Remarks(newValue: string) {
+        if (this.EntityPM.Remarks != newValue) {
+            this.EntityPM.Remarks = newValue;
+        }
+    }
+
     RemoveLine() {
         var confirmWindow = new ConfirmWindow();
         confirmWindow.Show("Delete this item ?");
@@ -358,6 +498,7 @@ export class ProductItem extends BaseComponent {
 
                 if (this.fatherComponent.ProductItems.Collection.indexOf(this) != -1) {
                     this.fatherComponent.ProductItems.Remove(this);
+                    this.fatherComponent.BuildQueryFilters();
                 }
             }
         });

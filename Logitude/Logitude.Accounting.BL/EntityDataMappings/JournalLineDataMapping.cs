@@ -61,8 +61,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
                 JournalActionTypeQueryService journalActionTypeQueryService = new JournalActionTypeQueryService(accContext/*entityPOCO.Tenant*/);
                 JournalActionTypePM action = journalActionTypeQueryService.GetSingle(entityPOCO.ActionCode, false, true/*false*/);
-                entityPM.ActionName = action.LocalName;
-                entityPM.ActionTypeCode = action.Code;
+                if (action != null)
+                {
+                    entityPM.ActionName = action.LocalName;
+                    entityPM.ActionTypeCode = action.Code;
+                }
             }
 
 
@@ -81,7 +84,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(/*entityPOCO.Tenant*/accContext);
                 GLAccountPM parent = gLAccountQueryService.GetSingle(entityPOCO.CreditAccountId, false, true/*false*/);
                 entityPM.CreditAccountName = parent.LocalName;
-                entityPM.CreditAccountNumber = parent.InternalNumber;
+                entityPM.CreditAccountEnglishName = parent.EnglishName;
+                entityPM.CreditAccountNumber = parent.DisplayNumber;
+                entityPM.CreditAccountCOACode = parent.ChartOfAccountsTypeCode;
             }
 
             if (entityPOCO.CreditControlAccountId != null)
@@ -96,7 +101,10 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(/*entityPOCO.Tenant*/accContext);
                 GLAccountPM parent = gLAccountQueryService.GetSingle(entityPOCO.DebitAccountId, false, true/*false*/);
                 entityPM.DebitAccountName = parent.LocalName;
-                entityPM.DebitAccountNumber = parent.InternalNumber;
+                entityPM.DebitAccountEnglishName = parent.EnglishName;
+                entityPM.DebitAccountNumber = parent.DisplayNumber;
+                entityPM.DebitAccountCOACode = parent.ChartOfAccountsTypeCode;
+
 
             }
             if (entityPOCO.DebitControlAccountId != null)

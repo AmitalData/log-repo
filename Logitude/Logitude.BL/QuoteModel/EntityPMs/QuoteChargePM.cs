@@ -25,12 +25,8 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public bool IsChargeBySteps { get; set; }
         public bool IsAllIN { get; set; }
         public int ViewOrder { get; set; }
-
         public double? SaleRatio { get; set; }
         public double? CostRatio { get; set; }
-
-
-
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string QuoteTypeCode { get; set; }
@@ -92,6 +88,9 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public double? SaleUnitPrice { get; set; }
         public double? SaleTotalAmount { get; set; }
         public double? SaleTotalAmountLocal { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string MarkUpCurrencyId { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string MarkUpTypeCode { get; set; }
@@ -225,10 +224,25 @@ namespace Logitude.BL.QuoteModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public int TariffVersion { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string SaleTariffId { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string SaleTariffNumber { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string SaleTariffLineId { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public int SaleTariffVersion { get; set; }
 
         public bool HasPickup { get; set; }
         public bool HasDelivery { get; set; }
 
         public bool IsRegionalTax { get; set; }
+        public string QuoteChargesGroupCode { get; set; }
+        public double? VATAmountInLocalCurrency { get; set; }
+        public double? VATAmountInQuoteSaleCurrency { get; set; }
+        public double? VATAmountInLineSaleCurrency { get; set; }
+        public double? SaleTotalAmountLocalIncludingVAT { get; set; }
+        public double? SaleAmountInSaleCurrencyIncludingVAT { get; set; }
+        public double? SaleTotalAmountIncludingVAT { get; set; }
     }
 }

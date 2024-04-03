@@ -75,7 +75,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public IQueryable<DocumentTypeCustomFieldPM> GetDocumentTypeCusotmFieldPMsByDocumentTypeId(string documentTypeId, int tenant)
         {
-            var documentTypeCustom = from a in repository.context.DocumentTypeCustomFields
+            var documentTypeCustom = from a in repository.context.DocumentTypeCustomFields.Include("FieldDataType")
                                      where a.Tenant == tenant && a.DocumentTypeId == documentTypeId && a.InActive == false
                                      select new DocumentTypeCustomFieldPM()
                                      {
@@ -83,6 +83,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                          DocumentTypeId = a.DocumentTypeId,
                                          FieldCode = a.FieldCode,
                                          FieldDataTypeCode = a.FieldDataTypeCode,
+                                         FieldDataTypeName = a.FieldDataType.Name,
                                          Id = a.Id,
                                          InActive = a.InActive,
                                          IsRequired = a.IsRequired,

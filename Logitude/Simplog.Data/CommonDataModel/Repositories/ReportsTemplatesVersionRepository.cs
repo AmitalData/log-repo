@@ -132,6 +132,12 @@ namespace Simplog.Data.CommonDataModel.Repositories
                  select grp.OrderByDescending(d => d.Version).FirstOrDefault()).ToList();
         }
 
-
+        public List<ReportsTemplatesVersion> GetModifiedSystemStimuleReportsTemplatesVersions()
+        {
+            return (from record in context.ReportsTemplatesVersions.Include("ReportsTemplate").Include("CreatedByUser")
+                    where record.Tenant != 0 && record.ReportsTemplate.IsSystem == true && !record.ReportsTemplate.IsSystemReportFixed && record.ReportsTemplate.TemplateType == "R" && record.CreatedByUser.Contact.EnglishName != "System"
+                    group record by record.TemplateId into grp
+                    select grp.OrderByDescending(d => d.Version).FirstOrDefault()).ToList();
+        }
     }
 }

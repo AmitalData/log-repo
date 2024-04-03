@@ -176,6 +176,13 @@ namespace Simplog.Data.CommonDataModel.Repositories
                     select a).OrderByDescending(d => d.CreateDate).FirstOrDefault();
 
         }
+        public CommunicationLog GetCommunicationLogByEntityIdAndSubject(string entityId, string subject, int tenant)
+        {
+            return (from a in context.CommunicationLogs
+                    where a.EntityId == entityId  && a.Tenant == tenant && a.Subject == subject
+                    select a).OrderByDescending(d => d.CreateDate).FirstOrDefault();
+
+        }
 
         public List<CommunicationLog> GetShareManifestCommunicationLogByEntityIdAndQueueNameAndSubject(string entityId, string queueName, string subject , string subject2)
         {
@@ -240,6 +247,15 @@ namespace Simplog.Data.CommonDataModel.Repositories
         public CommunicationLog GetSingle(Simplog.Server.Infrastructure.EntityKeyFields entityKeys)
         {
             throw new NotImplementedException();
+        }
+
+        public bool IsCommunicationLogExsit(string xmlId, int tenant)
+        {
+            var communicationLog = (from a in context.CommunicationLogs
+                     where a.UniqueNumber == xmlId
+                     && a.Tenant == tenant select a);
+           
+            return communicationLog.Any();
         }
     }
 }

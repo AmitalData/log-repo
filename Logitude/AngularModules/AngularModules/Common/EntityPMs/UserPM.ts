@@ -28,7 +28,7 @@ export class UserPM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-          this.UIProperties = new UIProperties(this); 
+		            this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -481,6 +481,11 @@ export class UserPM {
     public set AdditionalPackagesOnly(newValue: boolean) { if (this.additionalPackagesOnly != newValue) { this.additionalPackagesOnly = newValue; this.MarkAsDirty("AdditionalPackagesOnly"); } }
        
 	 
+    private securityLevel: number;
+    public get SecurityLevel() { return this.securityLevel; }
+    public set SecurityLevel(newValue: number) { if (this.securityLevel != newValue) { this.securityLevel = newValue; this.MarkAsDirty("SecurityLevel"); } }
+       
+	 
     private layoutDirection: string;
     public get LayoutDirection() { return this.layoutDirection; }
     public set LayoutDirection(newValue: string) { if (this.layoutDirection != newValue) { this.layoutDirection = newValue; this.MarkAsDirty("LayoutDirection"); } }
@@ -489,6 +494,16 @@ export class UserPM {
     private signatureImageId: string;
     public get SignatureImageId() { return this.signatureImageId; }
     public set SignatureImageId(newValue: string) { if (this.signatureImageId != newValue) { this.signatureImageId = newValue; this.MarkAsDirty("SignatureImageId"); } }
+       
+	 
+    private isHRUser: boolean;
+    public get IsHRUser() { return this.isHRUser; }
+    public set IsHRUser(newValue: boolean) { if (this.isHRUser != newValue) { this.isHRUser = newValue; this.MarkAsDirty("IsHRUser"); } }
+       
+	 
+    private disableCachedData: boolean;
+    public get DisableCachedData() { return this.disableCachedData; }
+    public set DisableCachedData(newValue: boolean) { if (this.disableCachedData != newValue) { this.disableCachedData = newValue; this.MarkAsDirty("DisableCachedData"); } }
        
 	 
 

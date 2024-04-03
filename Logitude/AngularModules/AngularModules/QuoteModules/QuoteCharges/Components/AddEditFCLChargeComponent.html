@@ -64,7 +64,7 @@
                                                         [DataContext]="DataContext"
                                                         [LookUpTableName]="'Card'"
                                                         [DependencyFilter1IsList]="true"
-                                                        [DependencyFilter1Value]="'VD,AG,AL,CG,SG,SL,TR'">
+                                                        [DependencyFilter1Value]="'VD,AG,AL,CG,SG,SL,TR,WH'">
                                                 </LogLov>
                                             </td>
 
@@ -287,7 +287,8 @@
                 <tr>
                     <td>
                         <div class="MediaFill" *ngIf="DataContext.ChargesTypeId">
-                            <logitude-edit-grid [HeaderHeight]="50" GridWidth="100%" GridHeight="100%" [ItemSource]="ItemsSource" (SelectedItemChanged)="OnRowSelected($event)" [SelectedRow]="SelectedRow">
+                            <logitude-edit-grid [HeaderHeight]="50" GridWidth="100%" GridHeight="100%" [ItemSource]="ItemsSource" (SelectedItemChanged)="OnRowSelected($event)" [SelectedRow]="SelectedRow"
+                                                [UseVirtuallization]="IsUsingVirtuallization">
 
                                 <!-- Cost Quantity -->
                                 <log-column [width]="'90'" *ngIf="DataContext.IsCostQuantityColumnVisible">
@@ -337,7 +338,7 @@
                                     </ng-template>
 
                                     <ng-template let-item>
-                                        <log-cell-template id="{{ 'CostPrice' | IdGeneratorPipe}}" #logcelltemplate [IsEnabled]="item.IsEnabled_CostUnitPrice">
+                                        <log-cell-template id="{{ 'CostPrice' | IdGeneratorAsyncPipe | async}}" #logcelltemplate [IsEnabled]="item.IsEnabled_CostUnitPrice">
                                             <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: left;" [attr.title]="item.CostUnitPrice | NumbersPipe:'N3'">
                                                 <table>
                                                     <tr>
@@ -580,11 +581,26 @@
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate [IsEnabled]="item.IsEnabled_SaleQuantity">
                                             <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: right;" class="TextTrimming" [attr.title]="item.SaleQuantity | NumbersPipe:'N2'">
-                                                {{item.SaleQuantity | NumbersPipe:'N2'}}
+                                                {{item.SaleQuantity | NumbersPipe:'N3'}}
                                             </div>
 
                                             <div *ngIf="logcelltemplate.IsEditMode">
                                                 <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'SaleQuantity'" [Text]="item.SaleQuantity" [DataContext]="item" [ObjectTableName]="item.ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                            </div>
+                                        </log-cell-template>
+                                    </ng-template>
+                                </log-column>
+
+                                <!-- Markup currency -->
+                                <log-column *ngIf ="Father.IsMarkUpCurrencyHasFeatureToggle" [SortFieldName]="'MarkUpCurrencyId'" [width]="'100'" [header]="'Markup Currency'">
+                                    <ng-template let-item>
+                                        <log-cell-template #logcelltemplate [IsEnabled]="item.IsMarkupCurrencyValid">
+                                            <div *ngIf="logcelltemplate.IsDisplayMode" class="MediaFillAbsolute">
+                                                {{item.MarkUpCurrencyCode}}
+                                            </div>
+
+                                            <div *ngIf="logcelltemplate.IsEditMode && item.IsMarkupCurrencyValid">
+                                                <ComboBox [FocusOnMe]="'true'" (SelectedItemChanged)="item.MarkUpCurrencySelectedItem = $event" [ItemsSource]="item.MarkupCurrencyList" [SelectedItem]="item.MarkUpCurrencySelectedItem" [Binding]="'CurrencyCode'"></ComboBox>
                                             </div>
                                         </log-cell-template>
                                     </ng-template>
@@ -1249,7 +1265,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button id="{{ 'CancelAddCharges' | IdGeneratorPipe}}" class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                        <button id="{{ 'CancelAddCharges' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -1257,7 +1273,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button id="{{ 'OKAddCharges' | IdGeneratorPipe}}" class="RedButton" (click)="OkButtonClicked()" [disabled]="!IsEditingEnabled">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                        <button id="{{ 'OKAddCharges' | IdGeneratorAsyncPipe | async}}" class="RedButton" (click)="OkButtonClicked()" [disabled]="!IsEditingEnabled">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
                     </td>
                 </tr>
             </table>

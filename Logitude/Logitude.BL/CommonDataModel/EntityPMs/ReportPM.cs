@@ -32,5 +32,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string FeatureUniqeCode { get; set; }
         public bool AvailableForScheduling { get; set; }
         public bool DisablePreview { get; set; }
+        public string DefaultExcelTemplateId { get; set; }
+        public bool IsExcelReportAllowed { get; set; }
     }
 }

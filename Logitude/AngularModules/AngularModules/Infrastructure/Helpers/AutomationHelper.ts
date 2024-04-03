@@ -1,4 +1,4 @@
-﻿import {Component, OnInit}  from '@angular/core';
+import {Component, OnInit}  from '@angular/core';
 
 import {AppTool, DateTool} from '../Tools';
 import {SessionLocator} from '../Utilities/SessionLocator';
@@ -9,6 +9,10 @@ export class AutomationHelper   {
     AddEditAutomationsViewModel: any;
     Type: string;
     ViewModel: any;
+    ConditionMaxLength: any;
+    ConditionMinLength: any;
+    ConditionNumberLength: any;
+    ConditionDecimalDigits: any;
     constructor(currentEntityPM: any, addEditAutomationsViewModel:any ,viewModel:any, type:string) {
 
         this.CurrentEntityPM = currentEntityPM;
@@ -25,6 +29,10 @@ export class AutomationHelper   {
 
     ObjectFieldCondationValueChange(value) {
         var newValue: string = value ? !AppTool.IsNullOrEmpty(value.FieldCode) ? value.FieldCode : "" : "";
+        this.ConditionMaxLength = value.MaxLength;
+        this.ConditionMinLength = value.MinLength;
+        this.ConditionNumberLength = value.NumberOfDigits;
+        this.ConditionDecimalDigits = value.DigitsAfterPoint;
         this.ConditionValueChange(newValue);
     }
 

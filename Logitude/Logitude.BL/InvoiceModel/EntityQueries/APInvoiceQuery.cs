@@ -22,6 +22,12 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.Accounting.Data.Repositories;
 using Simplog.Data.ShipmentsModel;
+using Logitude.Accounting.Data.EntityListQueryServices;
+using Logitude.Accounting.Data.EntityPOCOs;
+using System.Windows;
+using Logitude.Accounting.Data;
+using Logitude.Server.Tools;
+using System.Linq.Dynamic.Core;
 
 namespace Logitude.BL.InvoiceModel.EntityQueries
 {
@@ -79,6 +85,58 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
             return mappedInvoicePM;
         }
+
+        public string GetSingleIdByNumberAndExternalId(string number, string externalId, int tenant)
+        {
+            APInvoice poco = null;
+            poco = repository.GetSingleAPInvoiceByNumberAndExternalId(number, externalId, tenant);
+
+            if (poco == null)
+            {
+                return null;
+            }
+            else
+            {
+                return poco.Id;
+            }
+        }
+
+
+
+        public string GetSingleIdByNumber(string number, int tenant)
+        {
+            APInvoice poco = null;
+            poco = repository.GetSingleAPInvoiceByNumber(number, tenant);
+
+            if (poco == null)
+            {
+                return null;
+            }
+            else
+            {
+                return poco.Id;
+            }
+        }
+
+
+
+        public string GetSingleIdByExternalId(string externalId, int tenant)
+        {
+            APInvoice poco = null;
+            poco = repository.GetSingleAPInvoiceByExternalId(externalId, tenant);
+
+            if (poco == null)
+            {
+                return null;
+            }
+            else
+            {
+                return poco.Id;
+            }
+        }
+
+
+
         public APInvoicePM GetSinglePMByInternalNumber(string number, int tenant)
         {
             IQueryable<APInvoicePM> invoices = GetAPInvoiceIQueryable();
@@ -139,14 +197,12 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              MasterNumber = a.MasterNumber,
                              HouseNumber = a.HouseNumber,
                              Description = a.Description,
-
                              VendorName = a.VendorCard == null ? "" : a.VendorCard.EnglishName,
                              VendorContactId = a.VendorCard == null ? "" : a.VendorCard.PrimaryContactId,
                              VendorVatNumber = a.VendorCard == null ? "" : a.VendorCard.VatNumber,
                              VendorCity = a.VendorCard == null ? "" : a.VendorCard.CityName,
                              VendorCountry = a.VendorCard == null ? "" : a.VendorCard.CountryName,
                              VendorLocalName = a.VendorCard == null ? "" : a.VendorCard.LocalName,
-
                              VendorCode = a.VendorCard == null ? "" : a.VendorCard.Code,
                              VendorPartnerTypeId = a.VendorCard == null ? "" : a.VendorCard.PartnerTypeId,
                              PaymentTermName = a.PaymentTerm == null ? "" : a.PaymentTerm.EnglishName,
@@ -174,7 +230,15 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              CreatedByPartner = a.CreatedByPartner,
                              TotalVATOnly = a.TotalVATOnly,
                              PaidDate = a.PaidDate,
-                             ShipmentsNumbers = a.ShipmentsNumbers
+                             ShipmentsNumbers = a.ShipmentsNumbers,
+                             MasterNumbers = a.MasterNumbers,
+                             MasterShipmentNumbers = a.MasterShipmentNumbers,
+                             HouseNumbers = a.HouseNumbers,
+                             GlobalTaxCalculation = a.GlobalTaxCalculation,
+                             ConcurrencyGUID = a.ConcurrencyGUID,
+                             IsEquipment = a.IsEquipment,
+                             ConnectedPaymentsNumbers = a.ConnectedPaymentsNumbers,
+                             TotalEquation = a.TotalEquation,
                          });          
 
             return query;
@@ -279,8 +343,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                 ChargeableWeight = item.ChargeableWeight,
                                 TotalReceivables = item.AccountedReceivablesInProfitCurrency,
                                 Profit = item.ProfitInProfitCurrency,
-
-
+                                GrossWeightInKG = item.GrossWeightInKG,
+                                VolumeinCBM = item.VolumeInCBM,                       
                             };
 
                             APInvoiceEntityPM myEntity = entityPM.InvoiceEntities.Where(d => d.EntityId == item.Id).FirstOrDefault();
@@ -311,6 +375,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                 entityShipment.SubTotalInInvoiceCurrency = 0;
                                 entityShipment.TotalAmount = 0;
                                 entityShipment.TotalVATAmount = 0;
+                                entityShipment.TotalAmountinLocalCurrency = 0;
                             }
 
                             else
@@ -441,6 +506,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     }
                 }
 
+                entityPM.NewConcurrencyGUID = Guid.NewGuid().ToString();
                 entityPM.TransferLines = this.GetAPInvoiceTransferLines(entityPM, allInvoiceLines, allInvoiceLinesPM);
 
                 //Full Accounting 
@@ -576,10 +642,14 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                         CreatedByPartner = a.CreatedByPartner,
                                         TotalVATOnly = a.TotalVATOnly,
                                         PaidDate = a.PaidDate,
-                                        ShipmentsNumbers = a.ShipmentsNumbers
+                                        ShipmentsNumbers = a.ShipmentsNumbers, 
+                                        MasterNumbers = a.MasterNumbers,
+                                        MasterShipmentNumbers = a.MasterShipmentNumbers, 
+                                        HouseNumbers = a.HouseNumbers,
+                                        GlobalTaxCalculation = a.GlobalTaxCalculation,
+                                        ConnectedPaymentsNumbers = a.ConnectedPaymentsNumbers,
+                                        TotalEquation = a.TotalEquation,
                                     }).FirstOrDefault();
-
-
             return entityPM;
         }
 
@@ -666,7 +736,13 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                         CreatedByPartner = a.CreatedByPartner,
                                         TotalVATOnly = a.TotalVATOnly,
                                         PaidDate = a.PaidDate,
-                                        ShipmentsNumbers = a.ShipmentsNumbers
+                                        ShipmentsNumbers = a.ShipmentsNumbers,
+                                        MasterNumbers = a.MasterNumbers,
+                                        MasterShipmentNumbers = a.MasterShipmentNumbers,
+                                        HouseNumbers = a.HouseNumbers,
+                                        GlobalTaxCalculation = a.GlobalTaxCalculation,
+                                        ConnectedPaymentsNumbers = a.ConnectedPaymentsNumbers,
+                                        TotalEquation = a.TotalEquation,
                                     }).FirstOrDefault();
 
             if(entityPM != null)
@@ -928,7 +1004,43 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             return entityPM;
         }
 
-        public List<CreditorsClass> GetDebtorsExposureForGridControl(int tenant, int index)
+        public List<CreditorsClass> GetDebtorsExposureForGridControl(int tenant, int currencyIndex, bool isBranchRestricted)
+        {
+            if (FeatureToggleHelper.HasFeatureToggle("QPI", tenant))
+                return GetDebtorsExposureForGridControl_NewStyle(tenant, currencyIndex, isBranchRestricted);
+            else
+                return GetDebtorsExposureForGridControl_OldStyle(tenant, currencyIndex);            
+        }
+        private List<CreditorsClass> GetDebtorsExposureForGridControl_NewStyle(int tenant, int currencyIndex, bool isBranchRestricted)
+        {
+            var currentDate = DateTime.Now.AddMonths(-3);
+            if (!repository.context.APPayments.Any(x => x.CreateDate >= currentDate)) return new List<CreditorsClass>();
+
+            List<string> allowedBranchesIds = new List<string>();
+            if (isBranchRestricted) allowedBranchesIds = BranchPermitionsFilter.GetAllowedLoggedUserBranches(tenant);
+
+            return (from invoice in repository.context.APInvoices.Include("VendorCard")
+                    where invoice.Tenant == tenant
+                    && invoice.StatusCode != "VD" && invoice.StatusCode != "PD" && invoice.StatusCode != "WA"
+                    && !invoice.IsClosed
+                    && (!isBranchRestricted || allowedBranchesIds.Contains(invoice.BranchId))
+                    group invoice by new
+                    {
+                        VendorEnglishName = invoice.VendorCard.EnglishName,
+                        invoice.VendorId,
+                        VendorPartnerTypeId = invoice.VendorCard.PartnerTypeId,
+                    } into gr
+                    orderby gr.Key.VendorEnglishName
+                    select new CreditorsClass()
+                    {
+                        Outstanding = currencyIndex == 1 ? gr.Sum(d => (d.AmountDueInLocalCurrency)) : gr.Sum(d => (d.AmountDueInProfitCurrency)),
+                        CreditorName = gr.Key.VendorEnglishName,
+                        Overdue = (from s in gr where s.DueDate <= DateTime.Today.Date select new { overDue1 = currencyIndex == 1 ? s.AmountDueInLocalCurrency : s.AmountDueInProfitCurrency }).Sum(ss => ss.overDue1),
+                        CreditorId = gr.Key.VendorId,
+                        CreditorType = gr.Key.VendorPartnerTypeId,
+                    }).OrderByDescending(d => d.Outstanding).Take(10).ToList();
+        }
+        private List<CreditorsClass> GetDebtorsExposureForGridControl_OldStyle(int tenant, int currencyIndex)
         {
             List<APInvoicePM> invoiceList = (from a in repository.context.APInvoices
                                              where a.Tenant == tenant && (a.StatusCode != "VD" && a.StatusCode != "PD" && a.StatusCode != "WA" && a.IsClosed == false)
@@ -966,9 +1078,9 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                              orderby gr.Key.VendorName
                                              select new CreditorsClass()
                                              {
-                                                 Outstanding = index == 1 ? gr.Sum(d => (d.AmountDueInLocalCurrency)) : gr.Sum(d => (d.AmountDueInProfitCurrency)),
+                                                 Outstanding = currencyIndex == 1 ? gr.Sum(d => (d.AmountDueInLocalCurrency)) : gr.Sum(d => (d.AmountDueInProfitCurrency)),
                                                  CreditorName = gr.Key.VendorName,
-                                                 Overdue = index == 1 ? gr.Where(d => d.DueDate <= DateTime.Today.Date).Sum(s => (s.AmountDueInLocalCurrency)) : gr.Where(d => d.DueDate <= DateTime.Today.Date).Sum(s => (s.AmountDueInProfitCurrency)),
+                                                 Overdue = currencyIndex == 1 ? gr.Where(d => d.DueDate <= DateTime.Today.Date).Sum(s => (s.AmountDueInLocalCurrency)) : gr.Where(d => d.DueDate <= DateTime.Today.Date).Sum(s => (s.AmountDueInProfitCurrency)),
                                                  CreditorId = gr.Key.VendorId,
                                                  CreditorType = gr.Key.VendorType,
                                              }).ToList();
@@ -977,6 +1089,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
             return datalist;
         }
+
 
         public IQueryable<APInvoiceList> GetIQueryableEntityList(IQueryable<APInvoice> iQueryable)
         {
@@ -1076,7 +1189,13 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              Field10 = a.Field10,
                              TotalVATOnly = a.TotalVATOnly,
                              PaidDate = a.PaidDate,
-                             ShipmentsNumbers = a.ShipmentsNumbers
+                             ShipmentsNumbers = a.ShipmentsNumbers,
+                             MasterNumbers = a.MasterNumbers,
+                             MasterShipmentNumbers = a.MasterShipmentNumbers,
+                             HouseNumbers = a.HouseNumbers,
+                             GlobalTaxCalculation = a.GlobalTaxCalculation,
+                             IsEquipment = a.IsEquipment,
+                             ConnectedPaymentsNumbers = a.ConnectedPaymentsNumbers,
                          };
 
             return result;
@@ -1090,6 +1209,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                         where a.Tenant == tenant && a.StatusCode != "WA" && a.StatusCode != "VD" && a.StatusCode != "LL" && !a.IsClosed
                         select new APInvoiceList()
                         {
+                            MainEntityId = a.MainEntityId,
                             ProfitCurrencyExchangeRate = a.ProfitCurrencyExchangeRate,
                             ProfitCurrencyId = a.ProfitCurrencyId,
                             SubTotalInInvoiceCurrency = a.SubTotalInInvoiceCurrency,
@@ -1153,6 +1273,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             CreatedByPartner = a.CreatedByPartner,
                             TotalVATOnly = a.TotalVATOnly,
                             PaidDate = a.PaidDate,
+                            ConnectedPaymentsNumbers = a.ConnectedPaymentsNumbers,
                         };
 
             return query;
@@ -1278,9 +1399,24 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              Field10 = a.Field10,
                              TotalVATOnly = a.TotalVATOnly,
                              PaidDate = a.PaidDate,
+                             ConnectedPaymentsNumbers = a.ConnectedPaymentsNumbers,
                          };
 
             return result;
+        }
+        public List<APInvoicePM> GetAllAPInvoicesByIds(List<string> Ids, int tenant)
+        {
+            List<APInvoicePM> invoicePMs = (from a in repository.context.APInvoices
+                                            where Ids.Contains(a.Id) && a.Tenant == tenant
+                                            select new APInvoicePM()
+                                            {
+                                                Id = a.Id,
+                                                IsEquipment = a.IsEquipment,
+                                                InvoiceNumber = a.InvoiceNumber,
+                                                ConfirmationNumber = a.ConfirmationNumber,
+                                            }).ToList();
+
+            return invoicePMs;
         }
 
         public List<APInvoicePM> GetVoidedAPInvoicesByIds(List<string> Ids, int tenant, DateTime taxReportDate)
@@ -1370,10 +1506,231 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                 CreatedByPartner = a.CreatedByPartner,
                                                 TotalVATOnly = a.TotalVATOnly,
                                                 PaidDate = a.PaidDate,
+                                                ConnectedPaymentsNumbers = a.ConnectedPaymentsNumbers,
+                                                TotalEquation = a.TotalEquation,
+                                                ConfirmationNumber=a.ConfirmationNumber,
                                             }).ToList();
-
-
             return invoicePMs;
         }
+
+        public List<APInvoice_LT_DTO> GetAPInvoicesForStatusUpdate(IAccountingContext accContext, ref GetNextAPInvoicesArgs args)
+        {
+            int tenant = args.Tenant;
+            string invoiceNumber = args.InvoiceNumber;
+            string lastCheckedId = args.LastCheckedId;
+            DateTime fromInvoiceDate = args.FromInvoiceDate;
+            DateTime toInvoiceDate = args.ToInvoiceDate;
+
+            IEnumerable<APInvoice_LT_DTO> query = null;
+
+            IQueryable<APInvoice> dbQuery = null;
+
+            // Invoices 
+
+            if (!string.IsNullOrWhiteSpace(invoiceNumber))
+            {
+                dbQuery = repository.GetAPInvoices(args.Tenant).Where(rec => rec.InvoiceNumber == invoiceNumber
+                     && (rec.StatusCode == "AD" || rec.StatusCode == "PD" || rec.StatusCode == "PP")); 
+            }
+
+            else if (!string.IsNullOrWhiteSpace(lastCheckedId))
+            {
+                dbQuery = repository.GetAPInvoices(args.Tenant).Where(rec => rec.InvoiceDate >= fromInvoiceDate && rec.InvoiceDate <= toInvoiceDate
+                     && String.Compare(rec.Id, lastCheckedId) > 0
+                     && (rec.StatusCode == "AD" || rec.StatusCode == "PD" || rec.StatusCode == "PP")).OrderBy(r => r.Id);
+            }
+
+            else 
+            {
+                dbQuery = repository.GetAPInvoices(args.Tenant).Where(rec => rec.InvoiceDate >= fromInvoiceDate && rec.InvoiceDate <= toInvoiceDate
+                     && (rec.StatusCode == "AD" || rec.StatusCode == "PD" || rec.StatusCode == "PP")).OrderBy(r => r.Id);
+            }
+
+            var invQuery = dbQuery.Select(dbInv =>
+                new APInvoice_DTO
+                {
+                    Id = dbInv.Id,
+                    Tenant = dbInv.Tenant,
+                    InvoiceNumber = dbInv.InvoiceNumber,
+                    StatusCode = dbInv.StatusCode,
+                    IsClosed = dbInv.IsClosed,
+                }).ToArray();
+
+                    
+            string long_text = "";
+            bool isInDebuggingMode = false;
+            bool isOk = true;
+
+            if (!string.IsNullOrWhiteSpace(invoiceNumber))
+            {
+                var oneInvList = dbQuery.ToList();
+                if (oneInvList != null && oneInvList.Count == 1)
+                {
+                    fromInvoiceDate = oneInvList.FirstOrDefault().InvoiceDate.Value;
+                    toInvoiceDate = fromInvoiceDate;
+                }
+                else
+                {
+                    isOk = false;
+                }
+            }
+
+
+            if (invQuery != null && invQuery.Length > 0 && isOk)
+            {
+                JournalRepository journalRepository = new JournalRepository(accContext);
+                JournalLineRepository journalLineRepository = new JournalLineRepository(accContext);
+                LedgerTransactionRepository ledgerTransactionRepository = new LedgerTransactionRepository(accContext);
+
+                // Journals and Journal Lines
+                var j_l_prequery = from jl in journalLineRepository.GetAll(tenant).Where(rec => rec.ActionCode == "1").Where(rec => rec.AccountingDate >= fromInvoiceDate && rec.AccountingDate <= toInvoiceDate)
+                                    join
+                                    j in journalRepository.GetAll(tenant).Where(rec => rec.AccountingEntityCode == CloseTables.AccountingEntityValues.APInvoice && rec.StatusCode == "2" 
+                                                                                    && rec.AccountingDate >= fromInvoiceDate && rec.AccountingDate <= toInvoiceDate)
+                                    on jl.JournalId equals j.Id
+                                    select new J_L_DTO()
+                                    {
+                                        JournalId = j.Id,
+                                        JournalLineNumber = jl.Line,
+                                        AccountingEntityId = j.AccountingEntityId,
+                                    };
+
+                // Journals and Journal Lines and Transactions 
+                var j_lt_query = from jl in j_l_prequery
+                                 join lt in ledgerTransactionRepository.GetAll(tenant)
+                                 on jl.JournalId equals lt.JournalId
+                                 where lt.JournalLineNumber == jl.JournalLineNumber
+                                 select new J_LT_DTO()
+                                 {
+                                     AccountingEntityId = jl.AccountingEntityId,
+                                     JournalId = jl.JournalId,
+                                     JournalLineNumber = jl.JournalLineNumber,
+                                     LT_Id = lt.Id,
+                                     LT_LocalAmountCredit = lt.LocalAmountCredit,
+                                     LT_LocalAmountDebit = lt.LocalAmountDebit,
+                                     LT_OpenAmount = lt.OpenAmount,
+                                 };
+
+
+                J_LT_DTO[] j_l_query_arry = j_lt_query.ToArray();
+
+                // All together, without additional conditions 
+                var j_inv_l_query = j_l_query_arry 
+                               .Join(invQuery, jrn => jrn.AccountingEntityId, inv => inv.Id, (jrn, inv) =>
+                               new APInvoice_LT_DTO()
+                               {
+                                   APInvoiceId = inv.Id,
+                                   APInvoiceStatusCode = inv.StatusCode,
+                                   APInvoiceIsClosed = inv.IsClosed,
+                                   JournalId = jrn.JournalId,
+                                   JournalLineNumber = jrn.JournalLineNumber,
+                                   LT_LocalAmountCredit = jrn.LT_LocalAmountCredit,
+                                   LT_LocalAmountDebit = jrn.LT_LocalAmountDebit,
+                                   LT_OpenAmount = jrn.LT_OpenAmount,
+                                   LT_Id = jrn.LT_Id,
+                               });
+
+
+
+                // All together, with additional conditions 
+                query = j_inv_l_query.Where(rec => (rec.APInvoiceStatusCode != "AD" && ((rec.LT_LocalAmountDebit != 0m && rec.LT_OpenAmount == rec.LT_LocalAmountDebit)
+                            || (rec.LT_LocalAmountDebit == 0m && rec.LT_OpenAmount == rec.LT_LocalAmountCredit * -1)))
+                            || (rec.APInvoiceStatusCode != "PP" && rec.LT_OpenAmount != 0m)
+                            || (rec.APInvoiceStatusCode != "PD" && rec.LT_OpenAmount == 0m)).ToList();
+
+
+            }
+            else
+            {
+                args.Stop = true;
+            }
+
+            List<APInvoice_LT_DTO> ret_list = null;
+            if (query != null)
+                ret_list = query.ToList();
+            else
+                ret_list = new List<APInvoice_LT_DTO>();
+            long_text = "";
+            isInDebuggingMode = false;
+            if (isInDebuggingMode)
+            {
+                int ctr = 1;
+                ret_list.ForEach(item => long_text += "#" + ctr++ + "," + item.APInvoiceId + "," + item.APInvoiceIsClosed + "," + item.JournalId + "," + item.JournalLineNumber + "," + item.LT_Id + "," + item.LT_LocalAmountCredit + "," + item.LT_LocalAmountDebit + "," + item.LT_OpenAmount + "\n");
+            }
+
+            return ret_list;
+        }
+
+
+
+
+
+
+
+
+        private class APInvoice_DTO
+        {
+            public string Id { get; set; }
+            public int Tenant { get; set; }
+            public string InvoiceNumber { get; set; }
+            public string StatusCode { get; set; }
+            public bool IsClosed { get; set; }
+        }
+
+        private class J_L_DTO
+        {
+            public J_L_DTO()
+            {
+            }
+
+            public string JournalId { get; set; }
+            public int JournalLineNumber { get; set; }
+            public string AccountingEntityId { get; set; }
+        }
+
+
+        private class J_LT_DTO
+        {
+            public J_LT_DTO()
+            {
+            }
+
+            public string AccountingEntityId { get; set; }
+            public string JournalId { get; set; }
+            public int JournalLineNumber { get; set; }
+            public string LT_Id { get; set; }
+            public decimal LT_LocalAmountCredit { get; set; }
+            public decimal LT_LocalAmountDebit { get; set; }
+            public decimal LT_OpenAmount { get; set; }
+        }
     }
+
+    public class GetNextAPInvoicesArgs
+    {
+        public int Tenant { get; set; }
+        public string InvoiceNumber { get; set; }
+        public string LastCheckedId { get; set; }
+        public DateTime FromInvoiceDate { get; set; }
+        public DateTime ToInvoiceDate { get; set; }
+        public int ThisTimeMadeCount { get; set; }
+        public bool Stop { get; set; }
+
+
+    }
+
+    public class APInvoice_LT_DTO
+    {
+        public string APInvoiceId { get; set; }
+        public string APInvoiceStatusCode { get; set; }
+        public bool APInvoiceIsClosed { get; set; }
+        public string JournalId { get; set; }
+        public int JournalLineNumber { get; set; }
+        public string LT_Id { get; set; }
+        public decimal LT_LocalAmountDebit { get; set; }
+        public decimal LT_LocalAmountCredit { get; set; }
+        public decimal LT_OpenAmount { get; set; }
+    }
+
+
+
 }

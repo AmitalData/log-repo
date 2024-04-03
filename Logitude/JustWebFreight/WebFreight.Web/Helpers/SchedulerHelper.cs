@@ -14,185 +14,239 @@ namespace WebFreight.Web.Helpers
     {
         public void AddSchedulerQueue(TasksSchedulerPM task)
         {
-            var queueservice = new DbQueueService();
-            var TodayDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, task.NextRunTime.Value.Hour, task.NextRunTime.Value.Minute, task.NextRunTime.Value.Second);
-            var TodayUTCDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, task.NextRunTimeUTC.Value.Hour, task.NextRunTimeUTC.Value.Minute, task.NextRunTimeUTC.Value.Second);
+            CalculateNewNextRunTime(task);
+            
+            if (task.TriggerType.ToUpper() != "O")
+            {
+                SendNewSchedularQueue(task);
+            }
 
+            UpdateTaskService(task);
+        }
+
+        private void CalculateNewNextRunTime(TasksSchedulerPM task)
+        {
             if (task.NextRunTimeUTC < DateTime.UtcNow)
             {
-                var NewNextRunTime = new DateTime(task.NextRunTime.Value.Year, task.NextRunTime.Value.Month, DateTime.Now.Day, task.NextRunTime.Value.Hour, task.NextRunTime.Value.Minute, task.NextRunTime.Value.Second);
-                var NewNextRunTimeUTC = new DateTime(task.NextRunTimeUTC.Value.Year, task.NextRunTimeUTC.Value.Month, DateTime.Now.Day, task.NextRunTimeUTC.Value.Hour, task.NextRunTimeUTC.Value.Minute, task.NextRunTimeUTC.Value.Second);
-                task.NextRunTime = NewNextRunTime;
-                task.NextRunTimeUTC = NewNextRunTimeUTC; 
+                task.NextRunTime = GetPastNextRunTime(task.NextRunTime, task.TriggerType, task.RepeatInMinutes);
+                task.NextRunTimeUTC = GetPastNextRunTime(task.NextRunTimeUTC, task.TriggerType, task.RepeatInMinutes);
+                return;
             }
+
             switch (task.TriggerType)
             {
                 case "D":
                     {
-
-                        //if (task.RepeatInMinutes != null && task.RepeatInMinutes > 0)
-                        //{
-                        //    task.NextRunTime = task.NextRunTime.Value.AddMinutes(((int)task.RepeatInMinutes) + 0.0);
-                        //    task.NextRunTimeUTC = task.NextRunTimeUTC.Value.AddMinutes(((int)task.RepeatInMinutes) + 0.0);
-                        //}
-                        //else
-                        //{
-                        //    task.NextRunTime = task.NextRunTime.Value.AddDays(1);
-                        //    task.NextRunTimeUTC = task.NextRunTimeUTC.Value.AddDays(1);
-                        //}
-                        var tenantDateNow = TenantServerConfigration.GetCurrentDateTime(task.Tenant);
-                        var nowDateUTC = DateTime.UtcNow;
-
-                        //TodayDate = new DateTime(tenantDateNow.Year, tenantDateNow.Month, tenantDateNow.Day, task.NextRunTime.Value.Hour, task.NextRunTime.Value.Minute, task.NextRunTime.Value.Second);
-                        //var TodayUtcDate = new DateTime(nowDateUTC.Year, nowDateUTC.Month, nowDateUTC.Day, task.NextRunTimeUTC.Value.Hour, task.NextRunTimeUTC.Value.Minute, task.NextRunTimeUTC.Value.Second);
-
-                        //potential fix
-                        TodayDate = new DateTime(tenantDateNow.Year, tenantDateNow.Month, tenantDateNow.Day, tenantDateNow.Hour, tenantDateNow.Minute, tenantDateNow.Second);
-                        var TodayUtcDate = new DateTime(nowDateUTC.Year, nowDateUTC.Month, nowDateUTC.Day, nowDateUTC.Hour, nowDateUTC.Minute, nowDateUTC.Second);
-
-
-                        DateTime NewNextRunTime = TodayDate;
-                        DateTime NewNextRunTimeUTC = TodayUtcDate;
-                        if (task.RepeatInMinutes != null && task.RepeatInMinutes > 0)
-                        {
-                            double repeatMinutes = ((int)task.RepeatInMinutes) + 0.0;
-                            NewNextRunTime = NewNextRunTime.AddMinutes(repeatMinutes);
-                            NewNextRunTimeUTC = NewNextRunTimeUTC.AddMinutes(repeatMinutes);
-                            if(NewNextRunTime < tenantDateNow) // if it is a past time
-                            {
-                                var diff = (tenantDateNow - NewNextRunTime).TotalMinutes;
-                                NewNextRunTime = NewNextRunTime.AddMinutes(diff).AddMinutes(repeatMinutes);
-                                NewNextRunTimeUTC = NewNextRunTimeUTC.AddMinutes(diff).AddMinutes(repeatMinutes);
-                            }
-                        }
-                        else
-                        {
-                            NewNextRunTime = NewNextRunTime.AddDays(1);
-                            NewNextRunTimeUTC = NewNextRunTimeUTC.AddDays(1);
-                        }
-
-                        task.NextRunTime = NewNextRunTime;
-                        task.NextRunTimeUTC = NewNextRunTimeUTC;
+                        GetDailyNextRunTime(task);
                         break;
                     }
                 case "W":
                     {
-
-                         
-                        var ToDay = DateTime.Now.DayOfWeek;
-                        var ToDayString = DateTime.Now.DayOfWeek.ToString();
-
-                        var NextRunTime = Next(TodayDate, ToDay);
-                        var NextRunTimeUTC = Next(TodayUTCDate, ToDay); 
-
-                        task.NextRunTime = NextRunTime;
-                        task.NextRunTimeUTC = NextRunTimeUTC;
-
-                        if (task.Sunday)
-                        {
-                            NextRunTime = Next(TodayDate, DayOfWeek.Sunday);
-                            NextRunTimeUTC = Next(TodayUTCDate, DayOfWeek.Sunday);
-                            if (NextRunTime < task.NextRunTime)
-                            {
-                                task.NextRunTime = NextRunTime;
-                                task.NextRunTimeUTC = NextRunTimeUTC;
-                            }
-                        }
-                        if (task.Monday)
-                        {
-                            NextRunTime = Next(TodayDate, DayOfWeek.Monday);
-                            NextRunTimeUTC = Next(TodayUTCDate, DayOfWeek.Monday);
-                            if (NextRunTime < task.NextRunTime)
-                            {
-                                task.NextRunTime = NextRunTime;
-                                task.NextRunTimeUTC = NextRunTimeUTC;
-                            }
-                        }
-                        if (task.Tuesday)
-                        {
-                            NextRunTime = Next(TodayDate, DayOfWeek.Tuesday);
-                            NextRunTimeUTC = Next(TodayUTCDate, DayOfWeek.Tuesday);
-                            if (NextRunTime < task.NextRunTime)
-                            {
-                                task.NextRunTime = NextRunTime;
-                                task.NextRunTimeUTC = NextRunTimeUTC;
-                            }
-                        }
-                        if (task.Wednesday)
-                        {
-                            NextRunTime = Next(TodayDate, DayOfWeek.Wednesday);
-                            NextRunTimeUTC = Next(TodayUTCDate, DayOfWeek.Wednesday);
-                            if (NextRunTime < task.NextRunTime)
-                            {
-                                task.NextRunTime = NextRunTime;
-                                task.NextRunTimeUTC = NextRunTimeUTC;
-                            }
-                        }
-                        if (task.Thursday)
-                        {
-                            NextRunTime = Next(TodayDate, DayOfWeek.Thursday);
-                            NextRunTimeUTC = Next(TodayUTCDate, DayOfWeek.Thursday);
-                            if (NextRunTime < task.NextRunTime)
-                            {
-                                task.NextRunTime = NextRunTime;
-                                task.NextRunTimeUTC = NextRunTimeUTC;
-                            }
-                        }
-                        if (task.Friday)
-                        {
-                            NextRunTime = Next(TodayDate, DayOfWeek.Friday);
-                            NextRunTimeUTC = Next(TodayUTCDate, DayOfWeek.Friday);
-                            if (NextRunTime < task.NextRunTime)
-                            {
-                                task.NextRunTime = NextRunTime;
-                                task.NextRunTimeUTC = NextRunTimeUTC;
-                            }
-                        }
-                        if (task.Satarday)
-                        {
-                            NextRunTime = Next(TodayDate, DayOfWeek.Saturday);
-                            NextRunTimeUTC = Next(TodayUTCDate, DayOfWeek.Saturday);
-                            if (NextRunTime < task.NextRunTime)
-                            {
-                                task.NextRunTime = NextRunTime;
-                                task.NextRunTimeUTC = NextRunTimeUTC;
-                            }
-                        }
-                       break;
+                        GetWeeklyNextRunTime(task);
+                        break;
                     }
                 case "M":
                     {
-                        //DateTime NextRunTime;
-                        task.NextRunTime = task.NextRunTime.Value.AddMonths(1);
-                        task.NextRunTimeUTC = task.NextRunTimeUTC.Value.AddMonths(1);
+                        GetMonthlyNextRunTime(task);
                         break;
                     }
                 default: // Once
                     {
                         break;
                     }
-
             }
-            if (task.TriggerType.ToUpper() != "O")
-            {
-                queueservice.InitializeQueue("SchedularQueue", 0);
-                queueservice.Send(new Dictionary<string, string>() { { "TaskId", task.Id }, { "Tenant", task.Tenant.ToString() }, { "Version", task.Version.ToString() } }, task.Tenant, null, null, null, task.NextRunTimeUTC);
-
-            }
-
-            var objectContext = WebFreightContext.GetContext(task.Tenant);
-            TasksSchedulerService service = new TasksSchedulerService(objectContext, task.Tenant);
-            service.Update(task);
-             
         }
- 
-        private DateTime Next(DateTime from, DayOfWeek dayOfWeek)
+
+        private static void GetDailyNextRunTime(TasksSchedulerPM task)
+        {
+            if (task.RepeatInMinutes != null && task.RepeatInMinutes > 0)
+            {
+                task.NextRunTime = task.NextRunTime.Value.AddMinutes(((int)task.RepeatInMinutes) + 0.0);
+                task.NextRunTimeUTC = task.NextRunTimeUTC.Value.AddMinutes(((int)task.RepeatInMinutes) + 0.0);
+                return;
+            }
+
+            task.NextRunTime = task.NextRunTime.Value.AddDays(1);
+            task.NextRunTimeUTC = task.NextRunTimeUTC.Value.AddDays(1);
+        }
+
+        private void GetWeeklyNextRunTime(TasksSchedulerPM task)
+        {
+            DateTime NewNextRunTime = task.NextRunTime.Value;
+            DateTime NewNextRunTimeUTC = task.NextRunTimeUTC.Value;
+            DayOfWeek ToDay = DateTime.Now.DayOfWeek;
+            DateTime NextRunTime = NextDayOfWeek(NewNextRunTime, ToDay);
+            DateTime NextRunTimeUTC = NextDayOfWeek(NewNextRunTimeUTC, ToDay);
+
+            task.NextRunTime = NextRunTime;
+            task.NextRunTimeUTC = NextRunTimeUTC;
+
+            if (task.Sunday)
+            {
+                NextRunTime = NextDayOfWeek(NewNextRunTime, DayOfWeek.Sunday);
+                NextRunTimeUTC = NextDayOfWeek(NewNextRunTimeUTC, DayOfWeek.Sunday);
+                if (NextRunTime < task.NextRunTime)
+                {
+                    task.NextRunTime = NextRunTime;
+                    task.NextRunTimeUTC = NextRunTimeUTC;
+                }
+            }
+
+            if (task.Monday)
+            {
+                NextRunTime = NextDayOfWeek(NewNextRunTime, DayOfWeek.Monday);
+                NextRunTimeUTC = NextDayOfWeek(NewNextRunTimeUTC, DayOfWeek.Monday);
+                if (NextRunTime < task.NextRunTime)
+                {
+                    task.NextRunTime = NextRunTime;
+                    task.NextRunTimeUTC = NextRunTimeUTC;
+                }
+            }
+
+            if (task.Tuesday)
+            {
+                NextRunTime = NextDayOfWeek(NewNextRunTime, DayOfWeek.Tuesday);
+                NextRunTimeUTC = NextDayOfWeek(NewNextRunTimeUTC, DayOfWeek.Tuesday);
+                if (NextRunTime < task.NextRunTime)
+                {
+                    task.NextRunTime = NextRunTime;
+                    task.NextRunTimeUTC = NextRunTimeUTC;
+                }
+            }
+
+            if (task.Wednesday)
+            {
+                NextRunTime = NextDayOfWeek(NewNextRunTime, DayOfWeek.Wednesday);
+                NextRunTimeUTC = NextDayOfWeek(NewNextRunTimeUTC, DayOfWeek.Wednesday);
+                if (NextRunTime < task.NextRunTime)
+                {
+                    task.NextRunTime = NextRunTime;
+                    task.NextRunTimeUTC = NextRunTimeUTC;
+                }
+            }
+
+            if (task.Thursday)
+            {
+                NextRunTime = NextDayOfWeek(NewNextRunTime, DayOfWeek.Thursday);
+                NextRunTimeUTC = NextDayOfWeek(NewNextRunTimeUTC, DayOfWeek.Thursday);
+                if (NextRunTime < task.NextRunTime)
+                {
+                    task.NextRunTime = NextRunTime;
+                    task.NextRunTimeUTC = NextRunTimeUTC;
+                }
+            }
+
+            if (task.Friday)
+            {
+                NextRunTime = NextDayOfWeek(NewNextRunTime, DayOfWeek.Friday);
+                NextRunTimeUTC = NextDayOfWeek(NewNextRunTimeUTC, DayOfWeek.Friday);
+                if (NextRunTime < task.NextRunTime)
+                {
+                    task.NextRunTime = NextRunTime;
+                    task.NextRunTimeUTC = NextRunTimeUTC;
+                }
+            }
+
+            if (task.Satarday)
+            {
+                NextRunTime = NextDayOfWeek(NewNextRunTime, DayOfWeek.Saturday);
+                NextRunTimeUTC = NextDayOfWeek(NewNextRunTimeUTC, DayOfWeek.Saturday);
+                if (NextRunTime < task.NextRunTime)
+                {
+                    task.NextRunTime = NextRunTime;
+                    task.NextRunTimeUTC = NextRunTimeUTC;
+                }
+            }
+        }
+
+        private static void GetMonthlyNextRunTime(TasksSchedulerPM task)
+        {
+            task.NextRunTime = task.NextRunTime.Value.AddMonths(1);
+            task.NextRunTimeUTC = task.NextRunTimeUTC.Value.AddMonths(1);
+        }
+
+        private DateTime GetPastNextRunTime(DateTime? taskNextRunTime, string taskTriggerType, int? taskRepeatInMinutes)
+        {
+            DateTime nextRunTime = taskNextRunTime.Value;
+            switch (taskTriggerType)
+            {
+                case "D":
+                    {
+                        nextRunTime = GetDailyPastNextRunTime(taskRepeatInMinutes, nextRunTime);
+                        break;
+                    }
+                case "W":
+                    {
+                        nextRunTime = GetWeeklyPastNextRunTime(nextRunTime);
+                        break;
+                    }
+                case "M":
+                    {
+                        nextRunTime = GetMontlyPastNextRunTime(nextRunTime);
+                        break;
+                    }
+            }
+
+            return nextRunTime;
+        }
+
+        private DateTime GetDailyPastNextRunTime(int? taskRepeatInMinutes, DateTime nextRunTime)
+        {
+            if (taskRepeatInMinutes != null && taskRepeatInMinutes > 0)
+            {
+                while (nextRunTime < DateTime.UtcNow) nextRunTime = nextRunTime.AddMinutes(((int)taskRepeatInMinutes) + 0.0);
+                return nextRunTime;
+            }
+
+            while (nextRunTime < DateTime.UtcNow)
+            {
+                nextRunTime = nextRunTime.AddDays(1);
+            }
+
+            return nextRunTime;
+        }
+
+        private DateTime GetWeeklyPastNextRunTime(DateTime nextRunTime)
+        {
+            while (nextRunTime < DateTime.UtcNow)
+            {
+                nextRunTime = nextRunTime.AddDays(7);
+            }
+
+            return nextRunTime;
+        }
+
+        private DateTime GetMontlyPastNextRunTime(DateTime nextRunTime)
+        {
+            while (nextRunTime < DateTime.UtcNow)
+            {
+                nextRunTime = nextRunTime.AddMonths(1);
+            }
+
+            return nextRunTime;
+        }
+
+        private DateTime NextDayOfWeek(DateTime from, DayOfWeek dayOfWeek)
         {
             int start = (int)from.DayOfWeek;
             int target = (int)dayOfWeek;
             if (target <= start)
                 target += 7;
             return from.AddDays(target - start);
+        }
+
+        private void SendNewSchedularQueue(TasksSchedulerPM task)
+        {
+            var queueservice = new DbQueueService();
+            queueservice.InitializeQueue("SchedularQueue", 0);
+            queueservice.Send(new Dictionary<string, string>() { { "TaskId", task.Id }, { "Tenant", task.Tenant.ToString() }, { "Version", task.Version.ToString() } }, task.Tenant, null, null, null, task.NextRunTimeUTC);
+        }
+
+        private static void UpdateTaskService(TasksSchedulerPM task)
+        {
+            var objectContext = WebFreightContext.GetContext(task.Tenant);
+            TasksSchedulerService service = new TasksSchedulerService(objectContext, task.Tenant);
+            service.Update(task);
         }
     }
 }

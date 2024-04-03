@@ -74,6 +74,12 @@ using Logitude.TariffModule.BL.CLoseTable;
 using Logitude.CargoTracking.Data.Repositories;
 using Logitude.CargoTracking.BL;
 using Logitude.CargoTracking.Data.EntityPOCOs;
+using Logitude.Workflow.Data.Repositories;
+using Logitude.Workflow.Data.EntityPOCOs;
+using Logitude.Workflow.BL.CLoseTable;
+using Logitude.DashboardModule.Data.Repositories;
+using Logitude.DashboardModule.Data.EntityPOCOs;
+using Logitude.DashboardModule.BL;
 
 //using Amital.QuoteOPM.BL.CLoseTable;
 using Amital.QuoteOPM.Data.Repsitories;
@@ -141,6 +147,50 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
+					 						FieldName =  "Tenant",
+					  						ObjectTableName =  "CustomerProduct",
+					  						FieldsDataType =  "Integer",
+					  						PMPropertyPath =  "Tenant",
+					  						ListPropertyPath =  "Tenant",
+					  						FullFieldLable =  "Tenant",
+					  						DefaultText =  "Tenant",
+					  						FullLocalDefaultText =  "Tenant",
+					  						ListFieldLable =  "TenantListLable",
+					  						ListLableDefaultText =  "Tenant",
+					  						ListLocalDefaultText =  "Tenant",
+					  						ValidForQuerySection1 =  "CustomerProduct",
+					  						IsRequired =  false,
+					  						DisplayInList =  true,
+					  						NoMetaDataField =  true,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "NotesRightToLeft",
+					  						ObjectTableName =  "CustomerProduct",
+					  						FieldsDataType =  "Boolean",
+					  						PMPropertyPath =  "NotesRightToLeft",
+					  						ListPropertyPath =  "NotesRightToLeft",
+					  						FullFieldLable =  "NotesRightToLeft",
+					  						DefaultText =  "NotesRightToLeft",
+					  						FullLocalDefaultText =  "NotesRightToLeft",
+					  						ListFieldLable =  "NotesRightToLeftListLable",
+					  						ListLableDefaultText =  "NotesRightToLeft",
+					  						ListLocalDefaultText =  "NotesRightToLeft",
+					  						ValidForQuerySection1 =  "CustomerProduct",
+					  						IsRequired =  false,
+					  						DisplayInList =  true,
+					  						NoMetaDataField =  true,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
 					 						FieldName =  "CustomerId",
 					  						ObjectTableName =  "CustomerProduct",
 					  						FieldsDataType =  "LookUp",
@@ -188,11 +238,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						FullFieldLable =  "CustomerId",
 					  						DefaultText =  "Customer",
 					  						HelpTextCode =  "CustomerId",
+					  						IsForeignKey =  true,
+					  						NavigationPropertyName =  "Customer",
+					  						ForeignEntity =  "Customer",
 					  						Code =  "CustomerId",
 					  						DependencyFilter3IsList =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						IsRequired =  true,
+					  						NoMetaDataField =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
@@ -247,11 +301,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						FullFieldLable =  "ProductTypeCode",
 					  						DefaultText =  "Product Type",
 					  						HelpTextCode =  "ProductTypeCode",
+					  						IsForeignKey =  true,
+					  						NavigationPropertyName =  "ProductType",
+					  						ForeignEntity =  "ProductType",
 					  						Code =  "ProductTypeCode",
 					  						DependencyFilter3IsList =  false,
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						IsRequired =  true,
+					  						NoMetaDataField =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
@@ -312,6 +370,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						IsRequired =  false,
+					  						NoMetaDataField =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
@@ -371,6 +430,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						IsRequired =  false,
+					  						NoMetaDataField =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
@@ -430,6 +490,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						IsRequired =  false,
+					  						NoMetaDataField =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
@@ -489,6 +550,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						IsRequired =  false,
+					  						NoMetaDataField =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
@@ -548,6 +610,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						IsRequired =  false,
+					  						NoMetaDataField =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
@@ -607,6 +670,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						IsRequired =  false,
+					  						NoMetaDataField =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
@@ -666,6 +730,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						IsRequired =  false,
+					  						NoMetaDataField =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
@@ -723,6 +788,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						IsRequired =  false,
+					  						NoMetaDataField =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
@@ -780,6 +846,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						IsRequired =  false,
+					  						NoMetaDataField =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
@@ -837,6 +904,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						IsRequired =  false,
+					  						NoMetaDataField =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
@@ -897,6 +965,94 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInDocumentReferences =  false,
 					  						CopyToDW =  false,
 					  						IsRequired =  false,
+					  						NoMetaDataField =  false,
+					  						IsForeignKey =  true,
+					  						ForeignEntity =  "PrepaidCollect",
+					  						NavigationPropertyName =  "PrepaidCollect",
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldsDataType =  "Text",
+					  						FieldName =  "CustomerName",
+					  						PMPropertyPath =  "CustomerName",
+					  						ListPropertyPath =  "CustomerName",
+					  						FullFieldLable =  "CustomerName",
+					  						DefaultText =  "CustomerName",
+					  						FullLocalDefaultText =  "CustomerName",
+					  						ListFieldLable =  "CustomerNameListLable",
+					  						ListLableDefaultText =  "CustomerName",
+					  						ListLocalDefaultText =  "CustomerName",
+					  						ObjectTableName =  "CustomerProduct",
+					  						ValidForQuerySection1 =  "CustomerProduct",
+					  						NoMetaDataField =  true,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldsDataType =  "Text",
+					  						FieldName =  "ProductTypeName",
+					  						PMPropertyPath =  "ProductTypeName",
+					  						ListPropertyPath =  "ProductTypeName",
+					  						FullFieldLable =  "ProductTypeName",
+					  						DefaultText =  "ProductTypeName",
+					  						FullLocalDefaultText =  "ProductTypeName",
+					  						ListFieldLable =  "ProductTypeNameListLable",
+					  						ListLableDefaultText =  "ProductTypeName",
+					  						ListLocalDefaultText =  "ProductTypeName",
+					  						ObjectTableName =  "CustomerProduct",
+					  						ValidForQuerySection1 =  "CustomerProduct",
+					  						NoMetaDataField =  true,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldsDataType =  "Text",
+					  						FieldName =  "PrepaidCollectName",
+					  						PMPropertyPath =  "PrepaidCollectName",
+					  						ListPropertyPath =  "PrepaidCollectName",
+					  						FullFieldLable =  "PrepaidCollectName",
+					  						DefaultText =  "PrepaidCollectName",
+					  						FullLocalDefaultText =  "PrepaidCollectName",
+					  						ListFieldLable =  "PrepaidCollectNameListLable",
+					  						ListLableDefaultText =  "PrepaidCollectName",
+					  						ListLocalDefaultText =  "PrepaidCollectName",
+					  						ObjectTableName =  "CustomerProduct",
+					  						ValidForQuerySection1 =  "CustomerProduct",
+					  						NoMetaDataField =  true,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldsDataType =  "List",
+					  						FieldName =  "ProductLocations",
+					  						PMPropertyPath =  "ProductLocations",
+					  						ListPropertyPath =  "ProductLocations",
+					  						FullFieldLable =  "ProductLocations",
+					  						DefaultText =  "ProductLocations",
+					  						FullLocalDefaultText =  "ProductLocations",
+					  						ListFieldLable =  "ProductLocationsListLable",
+					  						ListLableDefaultText =  "ProductLocations",
+					  						ListLocalDefaultText =  "ProductLocations",
+					  						ObjectTableName =  "CustomerProduct",
+					  						ValidForQuerySection1 =  "CustomerProduct",
+					  						NoMetaDataField =  true,
+					  						IsMulti =  true,
+					  						MultiTableName =  "CustomerProductLocation",
+					  						ThisKey =  "CustomerId,ProductTypeCode",
+					  						OtherKey =  "CustomerId,ProductTypeCode",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  

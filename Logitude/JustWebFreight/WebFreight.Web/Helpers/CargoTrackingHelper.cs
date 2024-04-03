@@ -38,11 +38,16 @@ namespace WebFreight.Web.Helpers
                     MainColor = tenantManagementPM.MainColor,
                     SecondaryColor = tenantManagementPM.SecondaryColor,
                     BackgroundId = tenantManagementPM.BackgroundId,
+                    MobileBackgroundId = tenantManagementPM.MobileBackgroundId,
                     BrowserIconId = tenantManagementPM.BrowserIconId,
                     ComapnylogoId = tenantManagementPM.ComapnylogoId,
                     ShipmentHeaderImageId = tenantManagementPM.ShipmentHeaderImageId,
                     InvertedLogoId = tenantManagementPM.InvertedLogoId,
                     CustomerURL = tenantManagementPM.CustomerURL,
+                    ActivatePrivateSite = tenantManagementPM.ActivatePrivateSite,
+                    EnableExportToExcel = tenantManagementPM.EnableExportToExcel,
+                    ContactEmail = tenantManagementPM.ContactEmail,
+                    
                 };
                 SetCargoTrackingImages(cargoTrackingBrandingData, BrandingDataRequest, isFromPrivateSite);
             }
@@ -54,6 +59,7 @@ namespace WebFreight.Web.Helpers
                                             bool isFromPrivateSite)
         {
             SetBackgroundImageBase64(cargoTrackingBrandingData, BrandingDataRequest, isFromPrivateSite);
+            SetMobileBackgroundImageBase64(cargoTrackingBrandingData, BrandingDataRequest, isFromPrivateSite);
             SetComapnyLogoBase64(cargoTrackingBrandingData, BrandingDataRequest);
             SetInvertedLogoBase64(cargoTrackingBrandingData, BrandingDataRequest);
             SetBrowserIconBase64(cargoTrackingBrandingData, BrandingDataRequest);
@@ -70,6 +76,21 @@ namespace WebFreight.Web.Helpers
                 if (filedata != null)
                 {
                     cargoTrackingBrandingData.BackgroundBytes = filedata;
+                }
+            }
+
+        }
+        private void SetMobileBackgroundImageBase64(CargoTrackingBrandingData cargoTrackingBrandingData,
+                                              CargoTrackingBrandingDataRequest BrandingDataRequest,
+                                              bool isFromPrivateSite)
+        {
+            if (!string.IsNullOrEmpty(cargoTrackingBrandingData.MobileBackgroundId) &&
+                                      BrandingDataRequest.MobileBackgroundId != cargoTrackingBrandingData.MobileBackgroundId)
+            {
+                byte[] filedata = GeImageBytesById(cargoTrackingBrandingData.MobileBackgroundId);
+                if (filedata != null)
+                {
+                    cargoTrackingBrandingData.MobileBackgroundBytes = filedata;
                 }
             }
 

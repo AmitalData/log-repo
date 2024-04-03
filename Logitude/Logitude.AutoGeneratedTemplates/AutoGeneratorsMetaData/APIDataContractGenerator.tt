@@ -130,6 +130,8 @@ private void WriteApiDataContractQueryServiceMethod(dynamic entity,dynamic Maine
    var CPName = ((XElement)entity).Attributes().Where(a => a.Name == "ComputingPartnerName").FirstOrDefault(); 
    var TableName = ((XElement)Mainentity).Attributes().Where(a => a.Name == "DBTableName").FirstOrDefault().Value;
     var ObjectTableName = ((XElement)Mainentity).Attributes().Where(a => a.Name == "ObjectTableName").FirstOrDefault().Value.Trim('"'); 
+	   var IncludeTenant0Data = ((XElement)entity).Attributes().Where(a => a.Name == "IncludeTenant0Data").FirstOrDefault() != null ? 
+	                            ((XElement)entity).Attributes().Where(a => a.Name == "IncludeTenant0Data").FirstOrDefault().Value.Trim('"') : "false";
 	string DCName =  Name != null ? Name.Value.Trim('"') : "";//entity.Name.Trim('"');
 	if(DCName == "PickUp"){
 	ObjectTableName = "ShipmentPickUp";
@@ -163,6 +165,8 @@ using Logitude.BL.CommonDataModel.APIDataContract.<#= DCVersion #>;
 using Logitude.BL.QuoteModel.APIDataContract.<#= DCVersion #>;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
@@ -207,25 +211,41 @@ using <#=myspacestring#>
 			
 			 if(IsKey == "true" && IsComposition == "false"){ #>
 
-		public <#=DCName #> Get<#=DCName #>By<#=FieldName#>(<#=type#> <#=FieldName#>,int Tenant,string ComputingPartnerName = "")
+		public <#=DCName #> Get<#=DCName #>By<#=FieldName#>(<#=type#> <#=FieldName#>,int Tenant, <#+if(ObjectTableName == "Shipment"){#>string include,<#+}#> string ComputingPartnerName = "")
         { 
 		    try
             {
-
+				<#+if(ObjectTableName == "Shipment"){#>
 				<#+if(FieldName != "Id" && IsClosed != "true"){#>
 
-				var temp = query.GetSinglePMBy<#=FieldName#>(<#=FieldName#>,Tenant);<#+}else{#>
+				var temp = query.GetSinglePMWithIncludeBy<#=FieldName#>(<#=FieldName#>, Tenant, include);<#+}else{#>
 
-				var temp = query.GetSinglePM(<#=FieldName#>,Tenant);<#+}#>
-				
+				var temp = query.GetSinglePMWithInclude(<#=FieldName#>, Tenant, include);<#+}#><#+}
+
+
+				else if(ObjectTableName == "EventType"){#>
+				<#+if(FieldName != "Id" && IsClosed != "true"){#>
+
+				var temp = query.GetSinglePMBy<#=FieldName#>(<#=FieldName#>, Tenant, true);<#+}else{#>
+
+				var temp = query.GetSinglePM(<#=FieldName#>, Tenant);<#+}#><#+}
+
+				else{#> 
+				<#+if(FieldName != "Id" && IsClosed != "true"){#>
+
+				var temp = query.GetSinglePMBy<#=FieldName#>(<#=FieldName#>, Tenant);<#+}else{#>
+
+				var temp = query.GetSinglePM(<#=FieldName#>, Tenant);<#+}#>
+				<#+}#>
+
 				 if (temp == null)
                     throw new ApplicationException("<#=ObjectTableName#> with <#=FieldName#> " + <#=FieldName#> + " doesn't exist");
 
 				return <#=DCName #>DataMapping(temp,Tenant,ComputingPartnerName);
 			}
+
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }
@@ -287,7 +307,7 @@ using <#=myspacestring#>
 				   }
 <#+}else{#>
 				
-				CustomFieldQueryService customFieldService = new CustomFieldQueryService(Tenant,"<#=ObjectTableName#>");
+				CustomFieldQueryService customFieldService = new CustomFieldQueryService(Tenant,"<#+if(ObjectTableName == "Card"){#><#=DCName #><#+}else{#><#=ObjectTableName#><#+}#>");
 				temp.CustomFields = customFieldService.CustomFieldCustomDataMapping(MyEntityPM, Tenant);
 				 
 <#+}#>
@@ -395,7 +415,7 @@ using <#=myspacestring#>
 
 					if (!string.IsNullOrEmpty(<#+if(IsComposition == "true"){#>item<#+}else{#>MyEntity<#+}#>.<#=DCFieldName#>))
 					{
-						temp = query.GetSinglePM<#+if(IsClosed == "false"){#>By<#=FieldName#><#+}#>(<#+if(IsComposition == "true"){#>item<#+}else{#>MyEntity<#+}#>.<#=DCFieldName#><#+if(IsClosed == "false"){#>, Tenant<#+}#>);
+						temp = query.GetSinglePM<#+if(IsClosed == "false"){#>By<#=FieldName#><#+}#>(<#+if(IsComposition == "true"){#>item<#+}else{#>MyEntity<#+}#>.<#=DCFieldName#><#+if(IsClosed == "false"){#>, Tenant<#+if(ObjectTableName == "EventType"){#>, true<#+}#>  <#+}#>);
 					} <#+}
 					if(IsCompositKey == "true" && IsSpecialField == "false" &&  Keys != null && Keys.Count > 0 && HasCompositKey == "true"){
 					  MyErrorField = KeysAsParam;#>
@@ -418,15 +438,24 @@ using <#=myspacestring#>
 						{
 						  throw new ApplicationException("<#=ObjectTableName#> with Partner Code " + <#+if(IsComposition == "true"){#>item<#+}else{#>MyEntity<#+}#>.<#=DCFieldName#> + " doesn't match any record");
 						}
-						temp = query.GetSinglePM<#+if(IsClosed == "false"){#>By<#=FieldName#><#+}#>(MyCode<#+if(IsClosed == "false"){#>, Tenant<#+}#>);
+						temp = query.GetSinglePM<#+if(IsClosed == "false"){#>By<#=FieldName#><#+}#>(MyCode<#+if(IsClosed == "false"){#>, Tenant<#+if(ObjectTableName == "EventType"){#>, true<#+}#> <#+}#>);
 						
 						
 					}
-					
-					   <#+}
-					   }#>
-					   
+					<#+}}#>
+
+					<#+if(IncludeTenant0Data == "True"){#>
+
 					if(temp == null)
+					{             
+					
+				    	temp =  Get<#=DCName #>FromTenantZero( MyEntity, Tenant)   ;
+								
+					}
+				
+					<#+} #>
+
+			  	   if(temp == null)
 					{   <#+
 					     if(Keys.Count == 0)
 						 {
@@ -443,6 +472,7 @@ using <#=myspacestring#>
 						#>
 
 					} 
+				 
 					<#+if(HasConcarancyCheck == true || IsMulty == true){#>
 					 
 					if(IsUpdate == true)
@@ -502,8 +532,8 @@ using <#=myspacestring#>
 						 <#+if(IsUpdateAllowed == "false" || IsKey == "true"){#> 
 						if(!IsUpdate)
 						{<#+}#>
-								//throw new ApplicationException("<#=DCFieldName#> Can't be update"); 
-								temp.<#=FieldName#> = <#+if(IgnoreCustomTypeCheck == "true"){#><#=DCFieldName#><#+}else{#><#=type.Replace("List<","").Replace(">","")#><#+}#>Service<#=i#>.<#+if(IgnoreCustomTypeCheck == "true"){#><#=DCFieldName#><#+}else{#><#=type.Replace("List<","").Replace(">","")#><#+}#><#+if(IsManualMapping == "true"){#>Custom<#+}#>DataMappingAndValidatin(<#+if(IsManualMapping == "true"){if(IsComposition == "true"){#>item<#+}else{#>MyEntity<#+}#>,<#+}#><#+if(IsComposition == "true"){if(customType == "List"){#>item<#+}else{#><#=temp#><#+}}else{#>MyEntity<#+}#>.<#=DCFieldName#>,Tenant,ComputingPartnerName<#+if(IsManualMapping == "false"){#>,IsUpdate<#+}#>);
+								
+							temp.<#=FieldName#> = <#+if(IgnoreCustomTypeCheck == "true"){#><#=DCFieldName#><#+}else{#><#=type.Replace("List<","").Replace(">","")#><#+}#>Service<#=i#>.<#+if(IgnoreCustomTypeCheck == "true"){#><#=DCFieldName#><#+}else{#><#=type.Replace("List<","").Replace(">","")#><#+}#><#+if(IsManualMapping == "true"){#>Custom<#+}#>DataMappingAndValidatin(<#+if(IsManualMapping == "true"){if(IsComposition == "true"){#>item<#+}else{#>MyEntity<#+}#>,<#+}#><#+if(IsComposition == "true"){if(customType == "List"){#>item<#+}else{#><#=temp#><#+}}else{#>MyEntity<#+}#>.<#=DCFieldName#>,Tenant,ComputingPartnerName,IsUpdate);
 
 					<#+if(IsUpdateAllowed == "false" || IsKey == "true"){#> 
 						} <#+}#> 
@@ -528,9 +558,9 @@ using <#=myspacestring#>
 
 						 <#+if(IsUpdateAllowed == "false" || IsKey == "true"){#>
 
-							if(!IsUpdate)
+							if(!IsUpdate<#+if(IsComposition == "true" && ObjectTableName == "ShipmentPackage"){#>|| string.IsNullOrEmpty(item.Id)<#+}#>)
 							{<#+}#>
-								//throw new ApplicationException("<#=DCFieldName#> Can't be update"); 
+								
 								temp.<#=FieldName#> = my<#=DCFieldName#>PM.<#+if(FieldName.Contains("Code")){#>Code<#+}else{#>Id<#+}#>;
 						 <#+if(IsUpdateAllowed == "false" || IsKey == "true"){#> 
 							} <#+}#> 
@@ -545,7 +575,7 @@ using <#=myspacestring#>
 
 						if(!IsUpdate)
 						{<#+}#>
-								//throw new ApplicationException("<#=DCFieldName#> Can't be update"); 
+								
 								temp.<#=FieldName#> = my<#=DCFieldName#>PM;
 
 						<#+if(IsUpdateAllowed == "false" || IsKey == "true"){#>
@@ -558,7 +588,7 @@ using <#=myspacestring#>
 					}
 <#+}else{#>
 
-				CustomFieldQueryService customFieldService = new CustomFieldQueryService(Tenant,"<#=ObjectTableName#>");
+				CustomFieldQueryService customFieldService = new CustomFieldQueryService(Tenant,"<#+if(ObjectTableName == "Card"){#><#=DCName #><#+}else{#><#=ObjectTableName#><#+}#>");
 				if (<#+if(IsComposition == "true"){#>item<#+}else{#>MyEntity<#+}#>.<#=DCFieldName#> != null)
 				{
 					 customFieldService.CustomFieldCustomDataMappingAndValidatin(MyEntity.CustomFields, temp, Tenant);
@@ -589,9 +619,8 @@ using <#=myspacestring#>
 						 <#+if(IsUpdateAllowed == "false" || IsKey == "true"){#>
 
 						if(!IsUpdate)//<#=HasValueString#>)
-						{
-								//throw new ApplicationException("<#=DCFieldName#> Can't be update"); 
-								temp.<#=FieldName#> = <#+if(IsComposition == "true"){#>item<#+}else{#>MyEntity<#+}#>.<#=DCFieldName#>;
+						{								
+							temp.<#=FieldName#> = <#+if(IsComposition == "true"){#>item<#+}else{#>MyEntity<#+}#>.<#=DCFieldName#>;
 								<#+}#>
 
 						
@@ -604,10 +633,10 @@ using <#=myspacestring#>
 
                     <#+if(IsUpdateAllowed == "false" || IsKey == "true"){#>
 
-					if(!IsUpdate)//<#=HasValueString#>)
+					if(!IsUpdate<#+if(IsComposition == "true" && ObjectTableName == "ShipmentPackage"){#>|| string.IsNullOrEmpty(item.Id)<#+}#>)
 					{<#+}#>
-							//throw new ApplicationException("<#=DCFieldName#> Can't be update"); 
-							temp.<#=FieldName#> = <#+if(IsComposition == "true"){#>item<#+}else{#>MyEntity<#+}#>.<#=DCFieldName#>;
+							
+						temp.<#=FieldName#> = <#+if(IsComposition == "true"){#>item<#+}else{#>MyEntity<#+}#>.<#=DCFieldName#>;
 
 					<#+if(IsUpdateAllowed == "false" || IsKey == "true"){#>
 					} <#+}#> 
@@ -628,7 +657,50 @@ using <#=myspacestring#>
                 throw ex;
             } 
         }
-		 
+
+
+	<#+if(IncludeTenant0Data == "True"){#>
+  public <#=ObjectTableName#>PM Get<#=DCName #>FromTenantZero(<#=DCName #> MyEntity,int Tenant)
+        {
+		    try
+            {
+					var temp = new <#=ObjectTableName#>PM();
+					<#=ObjectTableName#>Service service = new <#=ObjectTableName#>Service(context, Tenant);
+					
+					<#+if(ObjectTableName == "Port"){#>
+
+					if (!string.IsNullOrEmpty(MyEntity.Code))
+					{
+						temp = query.GetSinglePMByCombinedCode(MyEntity.Code, 0);
+					}
+
+					<#+}else{#>
+
+					f (!string.IsNullOrEmpty(MyEntity.Code))
+					{
+						temp = query.GetSinglePMByCode(MyEntity.Code, 0);
+					}
+
+					<#+}#>
+
+					if (temp != null)
+					{
+				    	temp.Tenant = Tenant;
+						service.Create(temp);
+					}
+
+
+		return temp;	
+		    }
+       catch (Exception ex)
+            {
+
+                throw ex;
+            } 
+
+		 }
+					<#+}#>
+					   
    }
 }
 <#+

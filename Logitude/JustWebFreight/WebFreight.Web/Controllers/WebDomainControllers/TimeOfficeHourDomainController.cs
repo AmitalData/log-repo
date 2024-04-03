@@ -91,6 +91,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 foreach (var item in args)
                 {
+                    SecurityUtility.AuthenticationOnTenant(item.Tenant);
+                    SecurityUtility.AuthenticationOnEntityTenant("TMOfficeHour", item.Tenant, tenant);
+
                     TMOfficeHour OfficeHourItem = repository.GetSingle(item.Id, tenant);
                     OfficeHourItem.Inactive = item.Inactive;
                     OfficeHourItem.ExitTime = item.ExitTime;

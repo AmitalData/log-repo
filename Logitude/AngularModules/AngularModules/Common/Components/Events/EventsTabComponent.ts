@@ -299,6 +299,7 @@ export class EventsTabComponent implements OnDestroy {
                     if (myResponse != null) {
                         if (!myResponse.HasError) {
                             this.LoadData();
+                            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                         }
                     }
                 });
@@ -335,7 +336,11 @@ export class EventsTabComponent implements OnDestroy {
                 this.IsRefreshFollowUp = true;
                 this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
 
-            } 
+            }
+
+            else if (this.ObjectTableName == "Container" && this.CurrentSession.CurrentEditComponent && this.entityArgs && this.entityArgs.EntityPM && event != "Cancel") {
+                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+            }
         });
 
     }

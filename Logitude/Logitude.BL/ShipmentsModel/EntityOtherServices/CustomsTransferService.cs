@@ -82,12 +82,12 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
             {
                 case "AMOS":
                     {
-                        sheet1.Range["A1:AX1"].CellStyle.Font.Bold = true;
-                        sheet1.Range["A1:AX1"].CellStyle.Font.Size = 10;
-                        sheet1.Range["A1:AX1"].CellStyle.Font.FontName = "Calibri";
-                        sheet1.Range["A1:AX1"].CellStyle.Font.Color = ExcelKnownColors.Black;
-                        sheet1.Range["A1:AX1"].CellStyle.Color = System.Drawing.Color.FromArgb(255, 242, 220, 219);
-                        sheet1.Range["A1:AX1"].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignCenter;
+                        sheet1.Range["A1:AY1"].CellStyle.Font.Bold = true;
+                        sheet1.Range["A1:AY1"].CellStyle.Font.Size = 10;
+                        sheet1.Range["A1:AY1"].CellStyle.Font.FontName = "Calibri";
+                        sheet1.Range["A1:AY1"].CellStyle.Font.Color = ExcelKnownColors.Black;
+                        sheet1.Range["A1:AY1"].CellStyle.Color = System.Drawing.Color.FromArgb(255, 242, 220, 219);
+                        sheet1.Range["A1:AY1"].CellStyle.HorizontalAlignment = ExcelHAlign.HAlignCenter;
                         sheet1.Range["K1"].EntireColumn.IsStringsPreserved = true;
                         sheet1.Range["O1"].EntireColumn.IsStringsPreserved = true;
                         sheet1.Range["AQ2"].EntireColumn.IsStringsPreserved = true;
@@ -167,6 +167,7 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
                         dataTable.Columns.Add("Service_Type_Code");
                         dataTable.Columns.Add("Gross_Weight");
                         dataTable.Columns.Add("Total_Number_of_Pieces2");
+                        dataTable.Columns.Add("Referencia");
                         break;
                     }
 
@@ -455,6 +456,7 @@ namespace Logitude.BL.ShipmentsModel.EntityOtherServices
                     row[47] = shipmentType;
                     row[48] = grossWeight;
                     row[49] = item.ShipmentTypeId == "FCLD" ? totalInsidePackages : item.NumberOfPackages;
+                    row[50] = ".";
 
                     dataTable.Rows.Add(row);
                 }

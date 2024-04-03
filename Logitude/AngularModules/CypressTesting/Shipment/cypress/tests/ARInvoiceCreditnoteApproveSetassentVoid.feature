@@ -1,7 +1,7 @@
-@smoke @stable @all 
+@smoke @smoke1 @stable
 Feature: AR Invoice Credit Note Approve, Set as Sent and Void
-   The user creates a Direct Export Air shipment, creates receivable, creates AR Invoice, 
-   creates and approves credit note, sets credit note as sent and voids the credit note.
+    The user creates a Direct Export Air shipment, creates receivable, creates AR Invoice,
+    creates and approves credit note, sets credit note as sent and voids the credit note.
 
     Scenario: Update Accounting System
         Given the user logged in
@@ -44,16 +44,19 @@ Feature: AR Invoice Credit Note Approve, Set as Sent and Void
             | VATType             | Zero        |
         When create invoice
         Then the invoice should create successfully
+        And the status value should be "Draft"
 
     Scenario: Approve credit note ARInvoice
         When approve invoice
         Then the invoice should approve successfully
+        And the status value should be "Unpaid"
 
     Scenario: Set credit note ARInvoice as sent
-        When set invoice as sent
+        When set invoice as sent with "sent invoice" as a note
         Then the invoice should set as sent successfully
+        And the status value should be "Unpaid"
 
     Scenario: Void credit note ARInvoice
         When void invoice
         Then the invoice should void successfully
-
+        And the status value should be "Void"

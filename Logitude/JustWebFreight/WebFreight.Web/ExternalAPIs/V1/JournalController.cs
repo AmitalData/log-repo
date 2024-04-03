@@ -32,7 +32,9 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
 				SecurityUtility.AuthenticateAPICall(authToken.Tenant);
-				JournalQueryService Service = new JournalQueryService(tenant);
+                SecurityUtility.AuthenticateAccessibleAPI("Journal", authToken.Tenant);
+
+                JournalQueryService Service = new JournalQueryService(tenant);
                 ServiceResponse response = new ServiceResponse();
                 Journal Result = new Journal();
 
@@ -69,9 +71,10 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
             if (ModelState.IsValid)
             {
+                string CommunicationId = "0";
                 try
                 {
-
+                    CommunicationId = APIHelper.AddCommunicationLog(oldEntity, entity, "Journal", null, "Journal API", entity.Tenant);
                     using (TransactionScope scope = TransactionFactory.GetTransaction())
                     {
                         string token = HttpContext.Current.Request.Headers["Token"];
@@ -79,13 +82,16 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         entity.Tenant = authToken.Tenant;
 						SecurityUtility.AuthenticateAPICall(authToken.Tenant);
-						if (entity != null)
+                        SecurityUtility.AuthenticateAccessibleAPI("Journal", authToken.Tenant);
+
+                        if (entity != null)
                         {
                             oldEntity = LogitudeXmlSerializer.DeserializeObject<Logitude.Accounting.BL.APIDataContract.ApiV1.Journal>(LogitudeXmlSerializer.SerializeObjectToXmlString(entity));
                         }
 
                         IAccountingContext MyContext = AccountingContext.GetContext(entity.Tenant);
                         JournalQueryService mappingService = new JournalQueryService(entity.Tenant);
+                        entity = mappingService.SetJournalSystemUser(entity);
                         JournalPM entityPM = mappingService.JournalDataMappingAndValidatin(entity, entity.Tenant);
 
                        // entityPM.VoidedByJournalId = mappingService.SetVoidedByJournal(entity, entity.Tenant);
@@ -101,7 +107,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         service.Update(entityPM, true);
 
                         entity = mappingService.JournalDataMappingAndValidatin(entityPM, entity.Tenant);
-                        APIHelper.AddCommunicationLog("D", oldEntity, entity, "Journal", entityPM.Id, "Journal API", entity.Tenant);
+                        APIHelper.UpdateCommunicationLog(CommunicationId,"D", oldEntity, entity, "Journal", entityPM.Id, "Journal API", entity.Tenant);
 
                         scope.Complete();
 
@@ -113,7 +119,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 catch (Exception ex)
                 {
                     var apiExceptionResult = ApiExceptionHandler.HandleException(ex);
-                    APIHelper.AddCommunicationLog("F", oldEntity, apiExceptionResult.Exception, "Journal", null, "Journal API");
+                    APIHelper.UpdateCommunicationLog(CommunicationId,"F", oldEntity, apiExceptionResult.Exception, "Journal", null, "Journal API");
                     return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
                 }
             }
@@ -142,13 +148,16 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                         int tenant = authToken.Tenant;
 						SecurityUtility.AuthenticateAPICall(authToken.Tenant);
-						if (entity != null)
+                        SecurityUtility.AuthenticateAccessibleAPI("Journal", authToken.Tenant);
+
+                        if (entity != null)
                         {
                             oldEntity = LogitudeXmlSerializer.DeserializeObject<Logitude.Accounting.BL.APIDataContract.ApiV1.Journal>(LogitudeXmlSerializer.SerializeObjectToXmlString(entity));
                         }
 
                         IAccountingContext MyContext = AccountingContext.GetContext(tenant);
                         JournalQueryService mappingService = new JournalQueryService(tenant);
+                        entity = mappingService.SetJournalSystemUser(entity);
                         JournalPM entityPM = mappingService.JournalDataMappingAndValidatin(entity, tenant);
                        // entityPM.VoidedByJournalId = mappingService.SetVoidedByJournal(entity, entity.Tenant);
                         entityPM.OriginalJournalId = mappingService.SetOriginalJournal(entity, entity.Tenant);

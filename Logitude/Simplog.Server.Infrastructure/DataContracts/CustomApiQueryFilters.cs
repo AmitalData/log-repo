@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Simplog.Server.Infrastructure.DataContracts
+﻿namespace Simplog.Server.Infrastructure.DataContracts
 {
     public class CustomApiQueryFilters
     {  
@@ -63,8 +57,5 @@ namespace Simplog.Server.Infrastructure.DataContracts
         public string Filter10Operator { get; set; }
 
         public string AdditionalFilters { get; set; }
-
-
-
     }
 }

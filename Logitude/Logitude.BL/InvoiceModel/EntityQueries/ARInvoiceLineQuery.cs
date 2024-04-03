@@ -14,6 +14,8 @@ using Simplog.Data.ShipmentsModel.Repositories;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.Server.Tools.Helpers;
+using Logitude.Accounting.Data;
 
 namespace Logitude.BL.InvoiceModel.EntityQueries
 {
@@ -30,9 +32,64 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
         {
             repository = arInvoiceLineRepository;
         }
+        public List<ARInvoiceLinePM> GetGLAccountLocalNameAndDisplayNumber(List<ARInvoiceLinePM> lines, string invoiceId, int tenant)
+        {
+            IAccountingContext context = AccountingContext.GetContext(tenant);
+            var glaAccountIds = from a in lines select a.GLAccountId;
+            glaAccountIds = glaAccountIds.Distinct().ToList();
+
+            List<ARInvoiceLinePM> gLAccountsInfo = (
+            from gLAccount in context.GLAccounts
+            where glaAccountIds.Contains(gLAccount.Id)
+            select new ARInvoiceLinePM()
+            {
+                GLAccountId = gLAccount != null ? gLAccount.Id : "",
+                GLAccountLocalName = gLAccount != null ? gLAccount.LocalName : "",
+                GLAccountDisplayNumber = gLAccount != null ? gLAccount.DisplayNumber : "",
+            }).ToList();
+
+            lines = lines.Select(x =>
+            {
+                x.GLAccountLocalName = gLAccountsInfo.FirstOrDefault(y => y.GLAccountId == x.GLAccountId)?.GLAccountLocalName;
+                x.GLAccountDisplayNumber = gLAccountsInfo.FirstOrDefault(y => y.GLAccountId == x.GLAccountId)?.GLAccountDisplayNumber;
+                return x;
+            }
+            ).ToList();
+
+            return lines;
+        }
+        public Contact GetLogContact(int tenant)
+        {
+            ContactRepository contactRep = new ContactRepository(tenant);
+            string email = "";
+            if (AuthenticationUtil.IsAuthenticatedUserExists())
+            {
+                email = AuthenticationUtil.GetAuthenticatedUser();
+            }
+
+            else
+            {
+                email = "system@tenant" + tenant + ".com";
+            }
+
+            Contact contact = contactRep.GetSingleContactByEmail(email, tenant);
+
+
+            return contact;
+
+        }
+        public bool IsFullAccountingActivated(int tenant)
+        {
+            TenantRepository tenantRepository = new TenantRepository(tenant);
+            Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
+            bool isFullAccountingActivated = tenantPOCO.AccountingActivated;
+            return isFullAccountingActivated;
+        }
 
         public List<ARInvoiceLinePM> GetInvoiceLinePMsByInvoiceId(string invoiceId, int tenant)
         {
+            var isFullAccountingActivated = IsFullAccountingActivated(tenant);
+            Contact loggedContact = GetLogContact(tenant);
             List<ARInvoiceLinePM> list = (from a in repository.context.ARInvoiceLines.Include("ARInvoiceLineAction")
                                           where a.Tenant == tenant && a.ARInvoiceId == invoiceId
                                           select new ARInvoiceLinePM()
@@ -41,8 +98,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                               ForiegnCurrencyAmount = a.ForiegnCurrencyAmount,
                                               InvoiceCurrencyAmount = a.InvoiceCurrencyAmount,
                                               LocalCurrencyAmount = a.LocalCurrencyAmount,
-                                              ChargesTypeId = a.ChargesTypeId,                                              
-                                              ForiegnCurrencyId = a.ForiegnCurrencyId,                                              
+                                              ChargesTypeId = a.ChargesTypeId,
+                                              ForiegnCurrencyId = a.ForiegnCurrencyId,
                                               Id = a.Id,
                                               EntityId = a.EntityId,
                                               ForiegnExchangeRate = a.ForiegnExchangeRate,
@@ -52,9 +109,10 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                               MeasurementId = a.MeasurementId,
                                               Quantity = a.Quantity,
                                               UnitPrice = a.UnitPrice,
-                                              IsExchangeRateFixed = a.IsExchangeRateFixed,                                              
+                                              IsExchangeRateFixed = a.IsExchangeRateFixed,
                                               ProfitCurrencyAmount = a.ProfitCurrencyAmount,
                                               InvoiceCurrencyCode = a.ARInvoice == null ? "" : (a.ARInvoice.InvoiceCurrency == null ? "" : a.ARInvoice.InvoiceCurrency.Code),
+                                              InvoiceCurrencyId =  a.ARInvoice == null ? "" : ( ( a.ARInvoice.InvoiceCurrencyId != null && isFullAccountingActivated ) ? a.ARInvoice.InvoiceCurrency.Id  : "" ),
                                               InvoiceLocalCurrencyCode = a.ARInvoice == null ? "" : (a.ARInvoice.LocalCurrency == null ? "" : a.ARInvoice.LocalCurrency.Code),
                                               MeasurementCode = a.Measurement == null ? "" : a.Measurement.Code,
                                               ExchangeRateDate = a.ExchangeRateDate,
@@ -66,6 +124,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                               ValueDate = a.ValueDate,
                                               GLAccountId = a.GLAccountId,
                                               LineActionCode = a.LineActionCode,
+                                              ReportedinTaxReport = loggedContact.DontShowLocalLabels ?( a.LineActionCode == "1" ? "Y":"N"): (a.LineActionCode == "1" ? "כן" : "לא"),
                                               VatTypeId = a.VatTypeId,
                                               VatPercentage = a.VatPercentage,
                                               IsBackToBack = a.IsBackToBack,
@@ -128,6 +187,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
         public ARInvoiceLinePM GetSinglePM(string id, int tenant)
         {
+            Contact loggedContact = GetLogContact(tenant);
             ARInvoiceLinePM myResult = (from a in repository.context.ARInvoiceLines.Include("VatType")
                                         where a.Id == id
                                         select new ARInvoiceLinePM()
@@ -157,6 +217,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                             ValueDate = a.ValueDate,
                                             GLAccountId = a.GLAccountId,
                                             LineActionCode = a.LineActionCode,
+                                            ReportedinTaxReport = loggedContact.DontShowLocalLabels ? (a.LineActionCode == "1" ? "Y" : "N") : (a.LineActionCode == "1" ? "כן" : "לא"),
                                             VatTypeId = a.VatTypeId,
                                             VatPercentage = a.VatPercentage,
                                             VatTypeName = a.VatType == null ? null : a.VatType.EnglishName,
@@ -215,47 +276,61 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
         public List<ARInvoiceLinePM> GetInvoiceLinePMsByInvoiceIds(List<string> invoiceIds, int tenant)
         {
-            List<ARInvoiceLinePM> list = (from a in repository.context.ARInvoiceLines
-                                          where a.Tenant == tenant && invoiceIds.Contains(a.ARInvoiceId)
-                                          select new ARInvoiceLinePM()
-                                          {
-                                              ARInvoiceId = a.ARInvoiceId,
-                                              ForiegnCurrencyAmount = a.ForiegnCurrencyAmount,
-                                              InvoiceCurrencyAmount = a.InvoiceCurrencyAmount,
-                                              LocalCurrencyAmount = a.LocalCurrencyAmount,
-                                              ChargesTypeId = a.ChargesTypeId,
-                                              ForiegnCurrencyId = a.ForiegnCurrencyId,
-                                              Id = a.Id,
-                                              EntityId = a.EntityId,
-                                              ForiegnExchangeRate = a.ForiegnExchangeRate,
-                                              Tenant = a.Tenant,
-                                              LineNumber = a.LineNumber,
-                                              ReceivableId = a.ReceivableId,
-                                              MeasurementId = a.MeasurementId,
-                                              Quantity = a.Quantity,
-                                              UnitPrice = a.UnitPrice,
-                                              IsExchangeRateFixed = a.IsExchangeRateFixed,
-                                              ProfitCurrencyAmount = a.ProfitCurrencyAmount,
-                                              InvoiceCurrencyCode = a.ARInvoice == null ? "" : (a.ARInvoice.InvoiceCurrency == null ? "" : a.ARInvoice.InvoiceCurrency.Code),
-                                              InvoiceLocalCurrencyCode = a.ARInvoice == null ? "" : (a.ARInvoice.LocalCurrency == null ? "" : a.ARInvoice.LocalCurrency.Code),
-                                              MeasurementCode = a.Measurement == null ? "" : a.Measurement.Code,
-                                              ExchangeRateDate = a.ExchangeRateDate,
-                                              CreditAccount = a.CreditAccount,
-                                              Description = a.Description,
-                                              LocalDescription = a.LocalDescription,
-                                              Notes = a.Notes,
-                                              DateForInterest = a.DateForInterest,
-                                              ValueDate = a.ValueDate,
-                                              GLAccountId = a.GLAccountId,
-                                              LineActionCode = a.LineActionCode,
-                                              VatTypeId = a.VatTypeId,
-                                              VatPercentage = a.VatPercentage,
-                                              IsBackToBack = a.IsBackToBack,
-                                              IsExpense = a.IsExpense,
-                                              PrepaidCollectId = a.PrepaidCollectId,
-                                              IsRegionalTax = a.IsRegionalTax,
-                                          }).ToList();
+            var isFullAccountingActivated = IsFullAccountingActivated(tenant);
+            Contact loggedContact = GetLogContact(tenant);
+            List<ARInvoiceLinePM> list = new List<ARInvoiceLinePM>();
+            const int sqlLimit = 5000;
+
+            int iterations = invoiceIds.Count() / sqlLimit;
+
+            for (int i = 0; i <= iterations; i++)
+            {
+                var tempInvoiceIds = invoiceIds.Skip(i * sqlLimit).Take(sqlLimit).ToList();
+                List<ARInvoiceLinePM> tempList = (from a in repository.context.ARInvoiceLines
+                                              where a.Tenant == tenant && tempInvoiceIds.Contains(a.ARInvoiceId)
+                                              select new ARInvoiceLinePM()
+                                              {
+                                                  ARInvoiceId = a.ARInvoiceId,
+                                                  ForiegnCurrencyAmount = a.ForiegnCurrencyAmount,
+                                                  InvoiceCurrencyAmount = a.InvoiceCurrencyAmount,
+                                                  LocalCurrencyAmount = a.LocalCurrencyAmount,
+                                                  ChargesTypeId = a.ChargesTypeId,
+                                                  ForiegnCurrencyId = a.ForiegnCurrencyId,
+                                                  Id = a.Id,
+                                                  EntityId = a.EntityId,
+                                                  ForiegnExchangeRate = a.ForiegnExchangeRate,
+                                                  Tenant = a.Tenant,
+                                                  LineNumber = a.LineNumber,
+                                                  ReceivableId = a.ReceivableId,
+                                                  MeasurementId = a.MeasurementId,
+                                                  Quantity = a.Quantity,
+                                                  UnitPrice = a.UnitPrice,
+                                                  IsExchangeRateFixed = a.IsExchangeRateFixed,
+                                                  ProfitCurrencyAmount = a.ProfitCurrencyAmount,
+                                                  InvoiceCurrencyCode = a.ARInvoice == null ? "" : (a.ARInvoice.InvoiceCurrency == null ? "" : a.ARInvoice.InvoiceCurrency.Code),
+                                                  InvoiceCurrencyId = a.ARInvoice == null ? "" : ((a.ARInvoice.InvoiceCurrencyId != null && isFullAccountingActivated) ? a.ARInvoice.InvoiceCurrency.Id : ""),
+                                                  InvoiceLocalCurrencyCode = a.ARInvoice == null ? "" : (a.ARInvoice.LocalCurrency == null ? "" : a.ARInvoice.LocalCurrency.Code),
+                                                  MeasurementCode = a.Measurement == null ? "" : a.Measurement.Code,
+                                                  ExchangeRateDate = a.ExchangeRateDate,
+                                                  CreditAccount = a.CreditAccount,
+                                                  Description = a.Description,
+                                                  LocalDescription = a.LocalDescription,
+                                                  Notes = a.Notes,
+                                                  DateForInterest = a.DateForInterest,
+                                                  ValueDate = a.ValueDate,
+                                                  GLAccountId = a.GLAccountId,
+                                                  LineActionCode = a.LineActionCode,
+                                                  ReportedinTaxReport = loggedContact.DontShowLocalLabels ? (a.LineActionCode == "1" ? "Y" : "N") : (a.LineActionCode == "1" ? "כן" : "לא"),
+                                                  VatTypeId = a.VatTypeId,
+                                                  VatPercentage = a.VatPercentage,
+                                                  IsBackToBack = a.IsBackToBack,
+                                                  IsExpense = a.IsExpense,
+                                                  PrepaidCollectId = a.PrepaidCollectId,
+                                                  IsRegionalTax = a.IsRegionalTax,
+                                              }).ToList();
+                list.AddRange(tempList);
+            }
             return list;
-        }
+        }     
     }
 }

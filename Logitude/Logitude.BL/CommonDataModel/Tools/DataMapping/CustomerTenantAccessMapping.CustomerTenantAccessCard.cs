@@ -22,8 +22,9 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
                itemPoco.CustomerTenantAccessId = itemPM.CustomerTenantAccessId;
                itemPoco.CreateByUserId = loggedContactId;
                itemPoco.CreateDate = TenantServerConfigration.GetCurrentDateTime(loggedTenant.Id);
-              
-           }
+               itemPoco.IsCustomsActivated = true;
+                itemPoco.IsExportActivated = false;
+            }
            else
            {
                itemPoco.CreateDate = itemPM.CreateDate;
@@ -36,8 +37,9 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
            itemPoco.LastMappingDateTime = itemPM.LastMappingDateTime;
            itemPoco.StatusTypeCode = itemPM.StatusTypeCode;
            itemPoco.UpdateDateTime = TenantServerConfigration.GetCurrentDateTime(loggedTenant.Id);
-
-       }
+            itemPoco.IsCustomsActivated = itemPM.IsCustomsActivated;
+            itemPoco.IsExportActivated = itemPM.IsExportActivated;
+        }
 
     }
 }

@@ -9,6 +9,9 @@
   ObjectTablePlural="&quot;Container Status Sources&quot;"
   HasCustomFilter="false"
   HasCustomFields="false"
+  AvailableInCustomization="false"
+  SupportSubEntity="false"
+  ApplyGenericCustomFields="false"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -39,7 +42,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Container Status Source&quot;"
-  Code="&quot;d379&quot;"
+  Code="&quot;1e17&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -56,6 +59,7 @@
   HasApiHelper="false"
   AllowedForComputingPartners="false"
   IsBusinessUnitEnabled="false"
+  TenantZeroData="false"
   Code1="&quot;920d&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -87,6 +91,7 @@
     SystemMaxLength="3"
     DisplayInList="false"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="true"
@@ -160,6 +165,7 @@
     SystemMaxLength="40"
     DisplayInList="false"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="true"
@@ -233,6 +239,7 @@
     SystemMaxLength="1000"
     DisplayInList="false"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -329,6 +336,10 @@
       Code="&quot;OIN&quot;"
       Name="&quot;Ocean Insights&quot;"
       SearchFields="&quot;OIN,Ocean Insights&quot;" />
+    <Record
+      Code="&quot;2&quot;"
+      Name="&quot;Vizion&quot;"
+      SearchFields="&quot;2,Vizion&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

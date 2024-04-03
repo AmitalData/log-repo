@@ -151,7 +151,8 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
             CardExternalAccountsByProductRepository myCardExternalAccountsByProductRepository = new CardExternalAccountsByProductRepository(commonContext);
             MeasurementRepository measurementRepository = new MeasurementRepository(this.commonContext);
             AddressQuery addressQuery = new AddressQuery(new AddressRepository(this.commonContext));
-            ShipmentQuery shipmentQuery = new ShipmentQuery(new ShipmentRepository(this.shipmentsContext));
+            ShipmentRepository shipmentRepository = new ShipmentRepository(this.shipmentsContext);
+            ShipmentQuery shipmentQuery = new ShipmentQuery(shipmentRepository);
             ShipmentPayableRepository shipmentPayableRepository = new ShipmentPayableRepository(this.shipmentsContext);
             PrepaidCollectRepository prepaidCollectRepository = new PrepaidCollectRepository(tenant);
             VatTypePercentageRepository vatTypePercentageRepository = new VatTypePercentageRepository(commonContext);
@@ -411,6 +412,21 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                         }                        
                     }
 
+                    if (item.IsMultipleEntities)
+                    {
+                        if (FeatureToggleHelper.HasFeatureToggle("MLS", tenant))
+                        {
+                            if (!string.IsNullOrEmpty(myline.EntityId))
+                            {
+                                Shipment multipleLineShipment = shipmentRepository.GetSingleShipment(myline.EntityId, tenant);
+                                if (multipleLineShipment != null)
+                                {
+                                    lineElement.ShipmentNumber = multipleLineShipment.ShipmentNumber;
+                                }
+                            }
+                        }
+                    }
+
                     invoiceElement.InvoiceLines.Add(lineElement);
                     count++;
 
@@ -421,19 +437,6 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
 
                     #endregion
                 }
-
-                //if (dueVatLines.Count != 0)
-                //{
-                //    foreach (APInvoiceLine myline in dueVatLines)
-                //    {
-                //        invoiceElement.TotalTaxAmountInInvoiceCurrency += (decimal)((myline.InvoiceCurrencyAmount != null ? myline.InvoiceCurrencyAmount : 0) * (myline.VatPercentage != null ? (myline.VatPercentage / 100) : 0)).Value;
-                //    }
-                //}
-
-                //else
-                //{
-                //    invoiceElement.TotalTaxAmountInInvoiceCurrency = 0;
-                //}
                 #endregion
 
                 #region Shipment
@@ -2025,7 +2028,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         private void SetCustomFields(string objectTableName, int tenant, Object entity, APShipmentDetailsElement element)
         {
             TextCodeRepository textCodeRepository = new TextCodeRepository(this.tenant);
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
             List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName(objectTableName, tenant).ToList();
 
             foreach (ObjectField field in customFields)

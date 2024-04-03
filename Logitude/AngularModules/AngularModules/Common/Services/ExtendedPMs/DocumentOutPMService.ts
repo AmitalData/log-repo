@@ -8,8 +8,9 @@ import { defer, of } from 'rxjs';
 import {DocumentOutPM} from '../../EntityPMs/DocumentOutPM';
 
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
-import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse'; 
+import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { property } from 'cypress/types/lodash';
+import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 
 
 @Injectable()
@@ -23,32 +24,30 @@ export class DocumentOutPMService {
     }
 
 
-    GetEntityPartners(entityId: string, objectTableName: string, childEntityId: string = "" , childobjectTableName: string = "" ) {
-        var authHeader = new Headers();
+    GetEntityPartners(entityId: string, objectTableName: string, childEntityId: string = '' , childobjectTableName: string = '' , GlAccountId: string = '' ) {
+        const authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
-        return this._http.get(this._apiUrl + '/getentitypartners/?' + 'entityId=' + entityId + '&objectTableName=' + objectTableName + '&childEntityId=' + childEntityId + '&childobjectTableName=' + childobjectTableName,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return this._http.get(this._apiUrl + '/getentitypartners/?' + 'entityId=' + entityId +
+            '&objectTableName=' + objectTableName +
+            '&childEntityId=' + childEntityId +
+            '&childobjectTableName=' + childobjectTableName +
+            '&gLAccountId=' + GlAccountId
+            , ServiceHelper.GetHttpHeaders()).pipe(map(response => {
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
 
             pmresponse.Result = response;
             return pmresponse;
-        }),catchError(ServiceHelper.HandleServiceError));
+        }), catchError(ServiceHelper.HandleServiceError));
     }
-
-
-
-
-
-
-
 
     getDocumentOutsByEntityIdAndObjectTable(entityId: string, childEntityId: string, objectTableId: string, tenant: number) {
 
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         return this._http.get(this._apiUrl + '/getdocumentoutsbyentityidandobjecttable/?' + 'entityId=' + entityId + '&childEntityId=' + childEntityId + '&objectTableId=' + objectTableId + '&tenant=' + tenant ,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-        
-            
+
+
                 var result :any = response;
                 var entity: DocumentOutPM;
                 var DocumentOutPMLists: DocumentOutPM[];
@@ -66,9 +65,9 @@ export class DocumentOutPMService {
     }
 
 
+    private CurrentSession = SessionLocator.SelectedSession;
 
-
-    getCreateDocumentOut(documentTypeId: string, entityId: string, childEntityId: string, childReference: string, objectTableId: string, tenant: number) {
+    getCreateDocumentOut(documentTypeId: string, entityId: string, childEntityId: string, childReference: string, objectTableId: string, tenant: number, documentTypeTemplateId:string = null,signHSM:boolean=false) {
 
         var createDocumentOutArgs: CreateDocumentOutArgs = new CreateDocumentOutArgs();
         createDocumentOutArgs.DocumentTypeId = documentTypeId;
@@ -77,17 +76,21 @@ export class DocumentOutPMService {
         createDocumentOutArgs.ChildReference = childReference;
         createDocumentOutArgs.ObjectTableId = objectTableId;
         createDocumentOutArgs.Tenant = tenant;
+        createDocumentOutArgs.DocumentTypeTemplateId = documentTypeTemplateId;
+        createDocumentOutArgs.SignHSM = signHSM;
+
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
         authHeader.append('Content-Type', 'application/json');
         return defer(() => {
             return this._http.put(this._apiUrl + "/PutCreateDocumentOut", JSON.stringify(createDocumentOutArgs), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var result: any = response;
+                 var result: any = response;
                 var entity: DocumentOutPM;
                 entity = this.MapJsonToEntityPM(result);
                 var pmresponse: ServiceResponse;
                 pmresponse = new ServiceResponse();
                 pmresponse.Result = entity;
+                this.CurrentSession.FireEvent("IsSignedChanged");
                 return pmresponse;
             }), catchError(ServiceHelper.HandleServiceError));
         }
@@ -169,7 +172,7 @@ export class DocumentOutPMService {
 
         return this._http.get(this._apiUrl + '/GetCalculatedFileNameForDocumentOutCopy/?' + 'documentOutId=' + documentOutId + '&documentTypeCopyId=' + documentTypeCopyId,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
             var result :any = response;
-          
+
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
 
@@ -178,9 +181,9 @@ export class DocumentOutPMService {
         }),catchError(ServiceHelper.HandleServiceError));
     }
 
-    
- 
-    
+
+
+
     putDocumentOut(entityPM: DocumentOutPM) {
 
 
@@ -224,7 +227,7 @@ export class DocumentOutPMService {
         }),catchError(ServiceHelper.HandleServiceError));
     }
 
-    
+
 
 
 
@@ -258,6 +261,7 @@ export class CreateDocumentOutArgs{
     ChildReference: string;
     ObjectTableId: string;
     Tenant: number;
-
+    DocumentTypeTemplateId: string;
+    SignHSM:boolean
 }
 

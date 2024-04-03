@@ -18,8 +18,9 @@ import { PaymentGatewayComponent } from './Components/PaymentGateway/PaymentGate
 import { ChangeCurrencyComponent } from './Components/SystemCurrencies/ChangeCurrencyComponent';
 import { SystemDefaultsComponent } from './Components/SystemDefaults/SystemDefaultsComponent';
 import { DefaultRatiosComponent } from './Components/SystemDefaults/DefaultRatiosComponent';
-import { ShaamTokensComponent } from './Components/ShaamSettings/shaamTokensComponent';
-
+ import { ShaamTokensComponent } from './Components/ShaamSettings/shaamTokensComponent';
+ import { CustomizedARInvoiceCounterComponent } from './Components/Counters/EditComponents/CustomizedARInvoiceCounterComponent';
+ 
 export const Components =
     [
         GettingStartedComponent,
@@ -42,8 +43,9 @@ export const Components =
         PaymentGatewayComponent,
         ChangeCurrencyComponent,
         DefaultRatiosComponent,
-        ShaamTokensComponent,
-    ];
+         ShaamTokensComponent,
+         CustomizedARInvoiceCounterComponent,
+     ];
 
 export class ModuleDeclarations {
     public static Get(name: string) {
@@ -70,9 +72,11 @@ export class ModuleDeclarations {
             case "UploadLogoComponent": { myResult = UploadLogoComponent; break; }
             case "PaymentGatewayComponent": { myResult = PaymentGatewayComponent; break; }
             case "ChangeCurrencyComponent": { myResult = ChangeCurrencyComponent; break; }
-            case "DefaultRatiosComponent": { myResult = DefaultRatiosComponent; break; }  
-            case "ShaamTokensComponent": { myResult = ShaamTokensComponent; break; }  
-        }
+            case "DefaultRatiosComponent": { myResult = DefaultRatiosComponent; break; }
+             case "ShaamTokensComponent": { myResult = ShaamTokensComponent; break; }  
+             case "CustomizedARInvoiceCounterComponent": { myResult = CustomizedARInvoiceCounterComponent; break; }
+
+         }
 
         return myResult;
     }

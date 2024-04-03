@@ -8,15 +8,23 @@ import { CargoTrackingShipmentList } from '../../../EntityLists/CargoTrackingShi
 import { CargoTrackingBrandingData } from 'src/CargoTracking/DataContracts/CargoTrackingBrandingData';
 import { CaptchaParameters } from 'src/CargoTracking/DataContracts/CaptchaParameters';
 import { ServiceResponse } from 'src/CargoTracking/DataContracts/ServiceResponse';
+import { CargoTrackingSearchRequest } from 'src/CargoTracking/DataContracts/CargoTrackingSearchRequest';
+import { CargoTrackingSearchResponse } from 'src/CargoTracking/DataContracts/CargoTrackingSearchResponse';
 
+
+const mobileScreenMaxWidth = 470;
+const invalidCaptchaMessage = "Please re-enter the characters you see in the image above";
+import { MessageWindowComponent } from '../../../../Infrastructure/Components/MessageWindow/MessageWindowComponent';
+import { DateTimeFormatPipe } from '../../../../Infrastructure/Pipes/DateTimeFormatPipe';
+
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
     selector: 'SearchComponent',
     templateUrl: './SearchComponent.html',
     styleUrls: ['./SearchComponent.css']
 })
-export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
-{
+export class SearchComponent implements AfterViewInit, OnInit, OnDestroy {
 
     @ViewChild('input') input: ElementRef;
     isLoading: boolean = false;
@@ -28,20 +36,24 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
     searchForm;
     ServiceError;
     Shipments: CargoTrackingShipmentList[] = [];
-    searchCounter: number =+ sessionStorage.getItem("searchCounter");
+    searchCounter: number = + sessionStorage.getItem("searchCounter");
     public CaptchaImageUrl: any;
-    public IsShowAreaCaptcha: boolean = false
-    public CaptchaKey: string;
-    public CaptchaTextValue: string;
+    public ShowCaptcha: boolean = false
+    public CaptchaKey: string = "";
+    public CaptchaTextValue: string = "";
     private captchaParameters: CaptchaParameters;
     public errorMessage: string;
+    public ShortSearchValueBlockingMessage: string = "Search value must have at least three characters";
+    MobileReferencesViewCount = 1;
+    WebReferencesViewCount = 3
     constructor(private router: Router,
         private route: ActivatedRoute,
         private formBuilder: FormBuilder,
         private location: Location,
         private searchService: CargoTrackingSearchService,
-        public DatePipe: DatePipe)
-    {
+        public dialog: MatDialog,
+        public DatePipe: DatePipe,
+        public dateTimeFormatPipe: DateTimeFormatPipe) {
         this.GetSearchTextFromURI();
         this.listenToRouterEvents();
 
@@ -51,20 +63,19 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
         this.InitForm();
     }
 
-   get  tenant(){
-    return CargoTrackingBrandingData.Tenant;
-   }
-    ngOnInit()
-    {
+    get tenant() {
+        return CargoTrackingBrandingData.Tenant;
+    }
+    ngOnInit() {
 
-        if(this.SearchText){
-               if(SearchComponent.Last_Search_Shipments){
+        if (this.SearchText) {
+            if (SearchComponent.Last_Search_Shipments) {
                 this.Shipments = SearchComponent.Last_Search_Shipments;
-               }
-               else{
-                 this.Search("on init");
-               }
-           }
+            }
+            else {
+                this.Search("on init");
+            }
+        }
         // if(localStorage.getItem('SearchKey') == this.SearchText){
         //     if (localStorage.getItem('Shipments'))
         //         this.Shipments = JSON.parse(localStorage.getItem('Shipments'));
@@ -78,8 +89,7 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
         // }
     }
 
-    ngOnDestroy()
-    {
+    ngOnDestroy() {
         if (this.Shipments.length > 0) {
             //localStorage.setItem('SearchKey', this.SearchText);
             //localStorage.setItem('Shipments', JSON.stringify(this.Shipments));
@@ -87,14 +97,13 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
         }
     }
 
-    private static Last_Search_Shipments:CargoTrackingShipmentList[];
+    private static Last_Search_Shipments: CargoTrackingShipmentList[];
 
-    private GetSearchTextFromURI()
-    {
+    private GetSearchTextFromURI() {
         let searchKey = this.route.snapshot.paramMap.get('searchKey');
 
         const queryParams = this.route.snapshot.queryParams;
-        if(queryParams){
+        if (queryParams) {
             var searchKeyFromQueryParams = queryParams['searchKey'];
             this.SearchText = searchKeyFromQueryParams;
         }
@@ -103,20 +112,17 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
 
 
 
-    private InitForm()
-    {
+    private InitForm() {
         this.searchForm = this.formBuilder.group({
             SearchText: ''
         });
     }
 
-    ngAfterViewInit()
-    {
+    ngAfterViewInit() {
         //   document.documentElement.style.setProperty('--MainColor', CargoTrackingBrandingData.MainColor);
     }
 
-    SubscribeInputTextChanges()
-    {
+    SubscribeInputTextChanges() {
         // server-side search // after view init
         // fromEvent(this.input.nativeElement,'keyup')
         //     .pipe(
@@ -160,10 +166,8 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
     }
 
 
-    private listenToRouterEvents()
-    {
-        this.router.events.subscribe((event: Event) =>
-        {
+    private listenToRouterEvents() {
+        this.router.events.subscribe((event: Event) => {
             if (event instanceof RoutesRecognized) {
 
                 var url = event.urlAfterRedirects;
@@ -180,73 +184,60 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
 
 
     private _SearchText: string;
-    public get SearchText(): string
-    {
+    public get SearchText(): string {
         return this._SearchText;
     }
-    public set SearchText(v: string)
-    {
+    public set SearchText(v: string) {
         this._SearchText = v;
         if (!this.SearchText)
             this.Search("searchText");
     }
 
-    Clear()
-    {
+
+
+    get IsMobileView() {
+        const isPortrait = window.innerHeight > window.innerWidth;
+        return (window.innerWidth <= mobileScreenMaxWidth && isPortrait)
+            || (window.innerHeight <= mobileScreenMaxWidth && !isPortrait);
+    }
+
+    Clear() {
+        
         this.SearchText = '';
         this.noResult = false;
         this.Shipments = [];
-        this.location.go( 'public-tracking/search/' );
+        this.location.go('public-tracking/search/');
+
     }
+    private timerToken: any;
+    onSearchChange() {
+        
+        if (this.SearchText == "" || this.SearchText == null){
+            this.timerToken = setTimeout(() =>   this.LoadShipments(), 800);
 
-    ValidateUser() {
-        this.captchaParameters = new CaptchaParameters();
-        this.captchaParameters.CaptchaCode = this.CaptchaTextValue;
-        this.captchaParameters.CaptchaKey = this.CaptchaKey;
-        this.PostUserValidation(this.captchaParameters);
-    }
-    PostUserValidation(CaptchaParameters: CaptchaParameters) {
-        this.searchService.PostUserValidation(CaptchaParameters).subscribe(
-            (result: any) => {
-                if (result && result.HasError == true  ) {
-                    this.CaptchaKey = result ? result.CaptchaKey : "";
-                    this.errorMessage = "";
-                    if (result.InValidCaptcha) {
-                        if (this.IsShowAreaCaptcha) {
-                            this.CaptchaTextValue = "";
-                        }
-                        this.IsShowAreaCaptcha = true;
-                        this.CaptchaImageUrl = result.CaptchaImage;
-                    }
-                    if (result.InValidCaptcha && result.CaptchaImage) this.errorMessage = "Please re-enter the characters you see in the image above";
-
-                }
-
-                else {
-                    this.IsShowAreaCaptcha = false;
-                    this.ResetStorageData();
-                    this.LoadShipments();
-
-                }
-            });
-    }
-    Search(searchSource:any)
-    {
-        if (this.IsShowAreaCaptcha) {
-            this.ValidateUser();
         }
-        else {
-            this.CheckSearchTimes(searchSource);
-            if (this.tenant != null && this.SearchText) {
-                // this.router.navigate(['public-tracking/search',  this.SearchText]);
-                // this.router.navigate(['public-tracking/search',  this.SearchText]);
-                //this.location.go( 'public-tracking/search?searchKey=' + this.SearchText);
-                this.router.navigate(['public-tracking/search'], { queryParams: { searchKey: this.SearchText } });
-                this.LoadShipments();
-            }
-        }
-
+        
+         
     }
+    Search(searchSource: any) {
+
+        this.CheckSearchTimes(searchSource);
+        var minimumCharactersLimitForSearch = 3;
+        if (this.SearchText?.length <= minimumCharactersLimitForSearch && searchSource != "searchText" && this.checkValidSearchSpace()) {
+            this.OpenMessageWindow(this.ShortSearchValueBlockingMessage);
+        }
+        else if (this.tenant != null && this.SearchText) {
+            this.router.navigate(['public-tracking/search'], { queryParams: { searchKey: this.SearchText } });
+            this.LoadShipments();
+        }
+    }
+
+    checkValidSearchSpace() {
+        const searchText = this.SearchText;
+        const firstChar = searchText[0];
+        return firstChar === " " ;
+    }    
+    
     CheckSearchTimes(searchSource: any) {
         this.currentDate = new Date();
         if (this.searchCounter == 0) sessionStorage.setItem("FirstSearchDate", this.currentDate.getTime());
@@ -275,11 +266,19 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
                 this.CaptchaTextValue = "";
                 this.CaptchaImageUrl = result.CaptchaImage;
                 this.CaptchaKey = result.CaptchaKey;
-                this.IsShowAreaCaptcha = true;
             });
     }
-    ItemClicked(item)
-    {
+
+    OpenMessageWindow(messageDescription) {
+        this.dialog.open(MessageWindowComponent, {
+            data: {
+                title: "Alert",
+                description: messageDescription,
+            }
+        });
+    }
+
+    ItemClicked(item) {
         var selection = window.getSelection();
         if (selection.toString().length === 0) {
             var SecurityKey = item.SecurityKey;
@@ -287,8 +286,7 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
             this.router.navigate(['public-tracking/search', 'shipment', SecurityKey]);
         }
     }
-    LoadShipments()
-    {
+    LoadShipments() {
         this.noResult = false;
         var searchText = this._SearchText.trim().toLowerCase();
         if (searchText) {
@@ -296,35 +294,65 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
             this.hasError = false;
             this.isLoading = true;
             RootContext.StartBusyIndicatorLoading();
-            this.searchService.getShipments(searchText, this.tenant).subscribe(
-            (result: any) =>
-            {   RootContext.StopBusyIndicator();
-                this.isLoading = false;
-                console.log("[getShipments]", result);
 
-                this.Shipments = this.SortShipmentsBasedOnCurrentMilestoneDate(result);
-                this.noResult = this.Shipments.length == 0 && !!this.SearchText;
-            },
-            errorObject=>
-            {
-                RootContext.StopBusyIndicator();
-                this.isLoading = false;
-                this.hasError = true;
-                this.ServiceError = errorObject.error;
-                console.log("[ERROR FOUND]", errorObject);
+            let searchRequest = this.BuildSearchRequest(searchText);
+            this.searchService.getShipments(searchRequest).subscribe(
+                (result: any) => {
+                    RootContext.StopBusyIndicator();
+                    this.isLoading = false;
+                    console.log("[getShipments]", result);
 
-            });
+                    var searchResponse: CargoTrackingSearchResponse = result;
+                    if (searchResponse.CaptchaRequired)
+                        this.ShowCaptchaCode(searchResponse);
+                    else {
+                        this.ResetCaptcha();
+                        this.Shipments = this.SortShipmentsBasedOnCurrentMilestoneDate(searchResponse.Shipments);
+                        this.noResult = this.Shipments.length == 0 && !!this.SearchText;
+                    }
+
+                },
+                errorObject => {
+                    RootContext.StopBusyIndicator();
+                    this.isLoading = false;
+                    this.hasError = true;
+                    this.ServiceError = errorObject.error;
+                    console.log("[ERROR FOUND]", errorObject);
+
+                });
             this.searchService.TrackSearch(searchText)
-                // .subscribe(arg => {
+            // .subscribe(arg => {
 
-                // });
+            // });
 
         } else {
             this.Shipments = [];
         }
     }
 
-    private SortShipmentsBasedOnCurrentMilestoneDate(result: any) : CargoTrackingShipmentList[] {
+    private ResetCaptcha() {
+        this.ShowCaptcha = false;
+        this.CaptchaKey = "";
+    }
+
+    private ShowCaptchaCode(searchResponse: CargoTrackingSearchResponse) {
+        this.CaptchaTextValue = "";
+        this.CaptchaImageUrl = searchResponse.CaptchaImage;
+        this.CaptchaKey = searchResponse.CaptchaKey;
+        this.ShowCaptcha = true;
+        this.errorMessage = searchResponse.InvalidCaptcha ? invalidCaptchaMessage : '';
+    }
+
+    private BuildSearchRequest(searchText: string) {
+        let searchRequest = new CargoTrackingSearchRequest();
+        searchRequest.Tenant = this.tenant;
+        searchRequest.SearchKey = searchText;
+        searchRequest.CaptchaCode = this.CaptchaTextValue;
+        searchRequest.CaptchaKey = this.CaptchaKey;
+        return searchRequest;
+    }
+
+    private SortShipmentsBasedOnCurrentMilestoneDate(result: any): CargoTrackingShipmentList[] {
         var sortedShipments: CargoTrackingShipmentList[] = result.sort((first, second) => {
             var isBothCurrentMilestoneDateExistAndNotEqual = first.CurrentMilestoneDate != null && second.CurrentMilestoneDate != null && first.CurrentMilestoneDate != second.CurrentMilestoneDate;
             if (isBothCurrentMilestoneDateExistAndNotEqual) {
@@ -353,12 +381,54 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
     }
 
     references: string[];
-    SplitReference(reference: string){
-        this.references = reference != null ? reference.split(',').slice(0, 6) : null;
+    SplitReference(shipment: CargoTrackingShipmentList) {
+
+
+        this.references = this.getReference(shipment);
+        this.references = this.references.filter((el, i, a) => i === a.indexOf(el));
+
+    }
+    getReference(shipment: CargoTrackingShipmentList): string[] {
+        var references = shipment.CustomerReference != null ? shipment.CustomerReference.split(',') : [];
+        references = references.filter(e => e.length > 0);
+        var houseReferences = this.getHouseReferences(shipment);
+
+        references = [...houseReferences, ...references]
+        return references;
+    }
+    getHouseReferences(shipment): string[] {
+        var houseReferences: string[] = [];
+        if (shipment.House && !houseReferences.find(e => e == shipment.House)) {
+            houseReferences.push(shipment.House);
+        }
+        if (shipment.ForwardingHouse && !houseReferences.find(e => e == shipment.ForwardingHouse)) {
+            houseReferences.push(shipment.ForwardingHouse);
+        }
+        if (shipment.SHOHouse && !houseReferences.find(e => e == shipment.SHOHouse)) {
+            houseReferences.push(shipment.SHOHouse);
+        }
+        return houseReferences;
+    }
+    showReference(event, shipment: CargoTrackingShipmentList, isMobile) {
+        event.stopPropagation();
+        var references = this.getReference(shipment);
+        references = references.filter(e => e.length > 0);
+        references = references.slice(isMobile ? this.MobileReferencesViewCount : this.WebReferencesViewCount)
+        this.dialog.open(MessageWindowComponent, {
+            data: {
+                title: 'References',
+                description: references.join("\n"),
+            }
+            ,
+              position: {
+                top: event.clientY + 'px',
+                left: event.clientX + 'px',
+              },
+          
+        });
     }
     public transform: string;
-    GetModeIcon(mode: string)
-    {
+    GetModeIcon(mode: string) {
         var iconPath = "";
         switch (mode) {
             case 'A':
@@ -380,35 +450,32 @@ export class SearchComponent implements AfterViewInit,OnInit, OnDestroy
         return iconPath;
     }
 
-    GetShipmentStatus(shipment: CargoTrackingShipmentList)
-    {
-        if(shipment.CurrentMilestoneCode)
+    GetShipmentStatus(shipment: CargoTrackingShipmentList) {
+        if (shipment.CurrentMilestoneCode)
             var status = this.GetShipmentStatusFromCurrentMilestone(shipment);
-        else if(shipment.FutureMilstoneCode)
+        else if (shipment.FutureMilstoneCode)
             var status = this.GetShipmentStatusFromFutureMilestone(shipment);
 
         return status;
     }
 
-    private GetShipmentStatusFromFutureMilestone(shipment: CargoTrackingShipmentList)
-    {
+    private GetShipmentStatusFromFutureMilestone(shipment: CargoTrackingShipmentList) {
         let name = shipment.FutureMilstoneName;
         let status = name;
-        if (shipment.FutureMilstoneDate){
+        if (shipment.FutureMilstoneDate) {
             let date = shipment.FutureMilstoneDate;
-            status += ' on ' + this.DatePipe.transform(date, 'd-MMM-y, HH:mm');
+            status += "\n on " + this.dateTimeFormatPipe.transform(this.DatePipe.transform(date, 'd-MMM-y, HH:mm'));
         }
         return status;
     }
 
-    private GetShipmentStatusFromCurrentMilestone(shipment: CargoTrackingShipmentList)
-    {
+    private GetShipmentStatusFromCurrentMilestone(shipment: CargoTrackingShipmentList) {
         let name = shipment.CurrentMilestoneName;
         var status = name;
 
-        if (shipment.CurrentMilestoneDate){
+        if (shipment.CurrentMilestoneDate) {
             var date = shipment.CurrentMilestoneDate;
-            status += ' on ' + this.DatePipe.transform(date, 'd-MMM-y, HH:mm')
+            status += "\n on " + this.dateTimeFormatPipe.transform(this.DatePipe.transform(date, 'd-MMM-y, HH:mm'));
         }
         return status;
     }

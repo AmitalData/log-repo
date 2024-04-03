@@ -217,7 +217,9 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 Branch = entityPM.BankBranch,
                 Account = entityPM.Account,
                 Bank = entityPM.Bank,
-                IsNewEntity = isNew
+                IsNewEntity = isNew,
+                IsFromReconcileScreen = entityPM.UpdateAmountAndStatuses,
+                IsExternalEntity = entityPM.IsExternalEntity
             };
 
             ValidateFullAccounting(arpaymentValidatorArgs);
@@ -448,11 +450,6 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                         }
                     }
 
-                    if (arguments.PaymentMethodCode == "BT" && arguments.ValueDate != null && arguments.ValueDate > TenantServerConfigration.GetCurrentDateTime(arguments.Tenant))
-                    {
-                        string msg = TranslateTextsClass.Translate("ARPayment.M.ValueDateCantBeFutureDate", arguments.Tenant, useLocal);
-                        errors += msg + ";";
-                    }
                     bool showLocal = LoggedContactResolver.GetLoggedContactShowLocal(arguments.Tenant);
 
                     if (arguments.PaymentMethodCode == "CH" && string.IsNullOrEmpty(arguments.Branch) && arguments.ChequeReplicas.Count == 0)
@@ -485,7 +482,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     }
                 }
                 GLAccountPM glAccount = getGLAccount(arguments.BillToId, arguments.Tenant);
-                if (glAccount == null)
+                if (glAccount == null && !arguments.IsFromReconcileScreen)
                 {
 
                     string msg = TranslateTextsClass.Translate("ARPayment.M.BillToGLAccount", arguments.Tenant, useLocal);
@@ -497,7 +494,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     if (glAccount.CurrencyId != arguments.PaymentCurrencyId)
                     {
                         string msg = TranslateTextsClass.Translate("ARPayment.M.BillToGLAccountCurrency", arguments.Tenant, useLocal);
-                        msg += " " + glAccount.CurrencyCode;
+                        msg += " " + glAccount.CurrencyCode + " (" + glAccount.DisplayNumber + ")";
                         //throw new ApplicationException(msg);
                         errors += msg + ";";
                     }
@@ -564,10 +561,24 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             if (accountingPeriodList != null && arguments.RegisterDate != null)
             {
                 var month = arguments.RegisterDate.Value.Month;
-                if (month > accountingPeriodList.OpenMonth || month <= accountingPeriodList.ClosedMonth)
+
+
+
+                if (arguments.IsExternalEntity)
                 {
-                    string msg = TranslateTextsClass.Translate("ARPayment.M.ClosedMonth", arguments.Tenant, useLocal);
-                    errors += msg + ";";
+                    if (month <= accountingPeriodList.ClosedMonth)
+                    {
+                        string msg = TranslateTextsClass.Translate("ARPayment.M.ClosedMonth", arguments.Tenant, useLocal);
+                        errors += msg + ";";
+                    }
+                }
+                else
+                {
+                    if (month > accountingPeriodList.OpenMonth || month <= accountingPeriodList.ClosedMonth)
+                    {
+                        string msg = TranslateTextsClass.Translate("ARPayment.M.ClosedMonth", arguments.Tenant, useLocal);
+                        errors += msg + ";";
+                    }
                 }
             }
             else

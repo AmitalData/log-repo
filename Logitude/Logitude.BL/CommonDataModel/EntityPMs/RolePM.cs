@@ -31,8 +31,8 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string SearchFields { get; set; }
-
         public bool IsCustomRole { get; set; }
+        public bool Inactive { get; set; }
 
         // Dummy
         public bool Exists { get; set; }

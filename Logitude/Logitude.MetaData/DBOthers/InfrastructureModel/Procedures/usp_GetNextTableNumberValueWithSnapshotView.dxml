@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Procedure
+  DBType="Main"
+  Name="usp_GetNextTableNumberValueWithSnapshotView"
+  Schema="dbo"
+  Module="Infrastructure">
+  <SqlScript>
+	  <![CDATA[
+
+CREATE PROCEDURE [dbo].[usp_GetNextTableNumberValueWithSnapshotView]
+(
+  @pLastValue INT OUTPUT,
+  @pTenant    INT,
+  @pCounterId    nvarchar(40),
+  @pPrefix    nvarchar(15),
+  @pStartNumber    INT
+)
+AS
+SET TRANSACTION ISOLATION LEVEL SNAPSHOT
+DECLARE @COUNTER AS INT
+declare @ID as varchar(15)
+   SET @COUNTER = @pStartNumber
+Declare @Current As Int   
+IF @pPrefix IS NOT NULL 
+BEGIN
+    IF NOT EXISTS (SELECT CounterId
+         FROM CounterStats with (UPDLOCK ROWLOCK) WHERE CounterId = @pCounterId and Prefix = @pPrefix and Tenant =  @pTenant)
+BEGIN;  
+      SET @COUNTER = @pStartNumber
+         INSERT INTO CounterStats
+   (
+       Tenant,
+       CounterId,
+       Prefix,
+       LastValue
+   )
+   VALUES
+   (
+      @pTenant,
+      @pCounterId,
+      @pPrefix,
+      @pStartNumber
+     )
+     Set @Current = @pStartNumber
+     End
+   Else   
+BEGIN;
+-----
+set @ID = (select Id from CounterStats where CounterId = @pCounterId and Prefix = @pPrefix  and Tenant =  @pTenant)
+-----        
+Set @Current    = (SELECT  LastValue
+         FROM CounterStats with (UPDLOCK ROWLOCK) 
+           Where Id = @ID )
+         Set @Current = @Current + 1 
+         Update CounterStats
+         set LastValue = @Current
+         Where   Id = @ID 
+End;
+END
+ELSE
+BEGIN
+    IF NOT EXISTS (SELECT CounterId
+         FROM CounterStats WHERE CounterId = @pCounterId and Tenant =  @pTenant)
+BEGIN;  
+      SET @COUNTER = @pStartNumber
+         INSERT INTO CounterStats
+   (
+       Tenant,
+       CounterId,
+       Prefix,
+       LastValue
+   )
+   VALUES
+   (
+      @pTenant,
+      @pCounterId,
+      @pPrefix,
+      @pStartNumber
+     )
+     Set @Current = @pStartNumber
+     End
+   Else   
+BEGIN;
+-----
+set @ID = (select Id from CounterStats where CounterId = @pCounterId  and Tenant =  @pTenant)
+-----        
+Set @Current    = (SELECT  LastValue
+         FROM CounterStats with (UPDLOCK ROWLOCK) 
+           Where Id = @ID )
+         Set @Current = @Current + 1
+          Update CounterStats
+         set LastValue = @Current
+         Where  Id = @ID
+End;
+END 
+  Set @pLastValue = @Current
+]]></SqlScript>
+  <OracleScript>
+</OracleScript>
+</Procedure>

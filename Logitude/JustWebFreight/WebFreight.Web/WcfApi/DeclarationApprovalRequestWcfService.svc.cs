@@ -1,5 +1,6 @@
 ﻿
 using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.DataContracts;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;

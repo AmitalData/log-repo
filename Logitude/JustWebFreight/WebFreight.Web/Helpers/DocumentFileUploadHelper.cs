@@ -289,23 +289,14 @@ namespace WebFreight.Web.Helpers
                 throw new ApplicationException("Invalid blob extension");
             }
 
-
-            //BlobChunkDetails blobChunkDetails = new BlobChunkDetails();
-            //blobChunkDetails.SentBytes = blobInfo.BlobChunk.Length;
-            //blobChunkDetails.BlockIdsList = new List<string>();
             IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
-            //if (!string.IsNullOrEmpty(blobInfo.BlobId))
-            //{
-            //    string cachedBlobDetails = LogitudeCacheManager.ServerCache.GetFromCache("BlobChunkDetails:" + blobInfo.BlobId + "." + blobInfo.Extension);
-            //    if (!string.IsNullOrEmpty(cachedBlobDetails))
-            //    {
-            //        blobChunkDetails = JsonConvert.DeserializeObject<BlobChunkDetails>(cachedBlobDetails);
-            //        blobChunkDetails.BlobNumber += 1;
-            //        blobChunkDetails.SentBytes += blobInfo.BlobChunk.Length;
 
-            //    }
-            //}
-            //blobChunkDetails.BlockIdsList.Add(Convert.ToBase64String(Guid.NewGuid().ToByteArray()));
+            if (blobInfo.UploadAsOneBlock)
+            {
+                UpoloadDocumentAsOneBlock(blobInfo, tenant, storageservice);
+                return blobInfo;
+            }
+
             if (blobInfo.TotalSentChunksSize < blobInfo.BlobSize)
             {
                 var fileName = BuidDocument(tenant, blobInfo.BlobId, blobInfo.Extension, blobInfo.BlobSize, blobInfo.BlobId, false);
@@ -352,7 +343,29 @@ namespace WebFreight.Web.Helpers
             return blobInfo;
         }
 
-        
+        private void UpoloadDocumentAsOneBlock(BlobInfo blobInfo, int tenant, IBlobService storageservice)
+        {
+            BlobFileInfo fileInfo = GetBlobFileInfo(blobInfo, tenant);
+            storageservice.Write(blobInfo.BlobChunk, fileInfo);
+            blobInfo.BlobId = fileInfo.FileName;
+        }
+
+        private BlobFileInfo GetBlobFileInfo(BlobInfo blobInfo, int tenant)
+        {
+            string fileName = BuidDocument(tenant, blobInfo.BlobId, blobInfo.Extension, blobInfo.BlobSize, blobInfo.BlobId, true);
+            string filePath = "tenant" + tenant.ToString() + "/" + StorageAcountDetails.GetBlobNameByLocation(fileName.ToLower(), "docsin");
+            string[] fileParams = fileName.Split('.');
+           return  new BlobFileInfo()
+            {
+                FileName = fileParams[0],
+                FolderName = "docsin",
+                Extension = fileParams[1],
+                Tenant = tenant,
+                FileSize = blobInfo.BlobSize,
+
+            };
+        }
+
     }
 
     //public class BlobChunkDetails

@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
 
 namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 {
@@ -33,6 +34,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 entityPM.CustomerContactId = null;
                 entityPM.CustomerReference1 = null;
                 entityPM.CustomerReference2 = null;
+                entityPM.CustomerReference3 = IsShipmentFromToLogbox() || entityPM.IsExternalAPI ? entityPM.CustomerReference3 : null;
             }
 
             if (entityPM.ShipmentLevelCode == "C")
@@ -47,6 +49,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 this.MapCustomerFields();
                 this.GetCustomerEntity();
             }
+        }
+
+        private bool IsShipmentFromToLogbox()
+        {
+            bool isShipmentFromUNF = entityPM.IsHybrid;
+            bool isShipmentFromOrToLogbox = isShipmentFromUNF || entityPM.IsImporterShipment || !string.IsNullOrEmpty(entityPM.ForwarderShipmentNumber);
+            return isShipmentFromOrToLogbox;
         }
 
         private void SetCustomerType()
@@ -66,7 +75,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
             else
             {
-                this.CheckCustomerValue();
+                //this.CheckCustomerValue();
             }
         }
 
@@ -144,6 +153,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                             {
                                 MapCustomClearance();
                             }
+                            else if (entityPM.CustomerId == entityPM.TruckerId)
+                            {
+                                MapTrucker();
+                            }
+
                         }
 
                         break;
@@ -153,84 +167,92 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
         private void CheckCustomerValue()
         {
-            if (entityPM.CustomerId == entityPM.ShipperId)
+            if (!entityPM.IsExternalAPI)
             {
-                entityPM.ShipmentCustomerTypeCode = "SHI";
-            }
+                if (entityPM.CustomerId == entityPM.TruckerId)
+                {
+                    entityPM.ShipmentCustomerTypeCode = "TRK";
+                }
 
-            else if (entityPM.CustomerId == entityPM.ConsigneeId)
-            {
-                entityPM.ShipmentCustomerTypeCode = "CON";
-            }
+                if (entityPM.CustomerId == entityPM.ShipperId)
+                {
+                    entityPM.ShipmentCustomerTypeCode = "SHI";
+                }
 
-            else if (entityPM.CustomerId == entityPM.AgentId)
-            {
-                entityPM.ShipmentCustomerTypeCode = "AGT";
-            }
+                else if (entityPM.CustomerId == entityPM.ConsigneeId)
+                {
+                    entityPM.ShipmentCustomerTypeCode = "CON";
+                }
 
-            else if (entityPM.CustomerId == entityPM.IssuingCarrierAgentId)
-            {
-                entityPM.ShipmentCustomerTypeCode = "IGT";
-            }
+                else if (entityPM.CustomerId == entityPM.AgentId)
+                {
+                    entityPM.ShipmentCustomerTypeCode = "AGT";
+                }
 
-            else if (entityPM.CustomerId == entityPM.CustomAgentExportId)
-            {
-                entityPM.ShipmentCustomerTypeCode = "CAE";
-            }
+                else if (entityPM.CustomerId == entityPM.IssuingCarrierAgentId)
+                {
+                    entityPM.ShipmentCustomerTypeCode = "IGT";
+                }
 
-            else if (entityPM.CustomerId == entityPM.CustomAgentImportId)
-            {
-                entityPM.ShipmentCustomerTypeCode = "CAI";
-            }
+                else if (entityPM.CustomerId == entityPM.CustomAgentExportId)
+                {
+                    entityPM.ShipmentCustomerTypeCode = "CAE";
+                }
 
-            else if (entityPM.CustomerId == entityPM.Notify1Id)
-            {
-                entityPM.ShipmentCustomerTypeCode = "NT1";
-            }
+                else if (entityPM.CustomerId == entityPM.CustomAgentImportId)
+                {
+                    entityPM.ShipmentCustomerTypeCode = "CAI";
+                }
 
-            else if (entityPM.CustomerId == entityPM.Notify2Id)
-            {
-                entityPM.ShipmentCustomerTypeCode = "NT2";
-            }
+                else if (entityPM.CustomerId == entityPM.Notify1Id)
+                {
+                    entityPM.ShipmentCustomerTypeCode = "NT1";
+                }
 
-            else if (entityPM.CustomerId == entityPM.ShipperNotExporterId)
-            {
-                entityPM.ShipmentCustomerTypeCode = "SNE";
-            }
+                else if (entityPM.CustomerId == entityPM.Notify2Id)
+                {
+                    entityPM.ShipmentCustomerTypeCode = "NT2";
+                }
 
-            else if (entityPM.CustomerId == entityPM.ConsigneeNotImporterId)
-            {
-                entityPM.ShipmentCustomerTypeCode = "CNI";
-            }
+                else if (entityPM.CustomerId == entityPM.ShipperNotExporterId)
+                {
+                    entityPM.ShipmentCustomerTypeCode = "SNE";
+                }
 
-            else if (entityPM.CustomerId == entityPM.FreightForwarderId)
-            {
-                entityPM.ShipmentCustomerTypeCode = "FOR";
-            }
+                else if (entityPM.CustomerId == entityPM.ConsigneeNotImporterId)
+                {
+                    entityPM.ShipmentCustomerTypeCode = "CNI";
+                }
 
-            else if (entityPM.CustomerId == entityPM.ColoaderId)
-            {
-                entityPM.ShipmentCustomerTypeCode = "COL";
-            }
+                else if (entityPM.CustomerId == entityPM.FreightForwarderId)
+                {
+                    entityPM.ShipmentCustomerTypeCode = "FOR";
+                }
 
-            else if (entityPM.CustomerId == entityPM.CustomClearancePointId)
-            {
-                entityPM.ShipmentCustomerTypeCode = "CCP";
-            }
+                else if (entityPM.CustomerId == entityPM.ColoaderId)
+                {
+                    entityPM.ShipmentCustomerTypeCode = "COL";
+                }
 
-            else if (entityPM.CustomerId == entityPM.ConsolidatorId)
-            {
-                entityPM.ShipmentCustomerTypeCode = "CSD";
-            }
+                else if (entityPM.CustomerId == entityPM.CustomClearancePointId)
+                {
+                    entityPM.ShipmentCustomerTypeCode = "CCP";
+                }
 
-            else if (entityPM.CustomerId == entityPM.ReleasingAgentId)
-            {
-                entityPM.ShipmentCustomerTypeCode = "REA";
-            }
+                else if (entityPM.CustomerId == entityPM.ConsolidatorId)
+                {
+                    entityPM.ShipmentCustomerTypeCode = "CSD";
+                }
 
-            else
-            {
-                entityPM.ShipmentCustomerTypeCode = "OTH";
+                else if (entityPM.CustomerId == entityPM.ReleasingAgentId)
+                {
+                    entityPM.ShipmentCustomerTypeCode = "REA";
+                }
+
+                else
+                {
+                    entityPM.ShipmentCustomerTypeCode = "OTH";
+                }
             }
         }
 
@@ -249,6 +271,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 entityPM.CustomerAddressId = entityPM.ShipperAddressId;
                 entityPM.CustomerReference1 = entityPM.ShipperReference1;
                 entityPM.CustomerReference2 = entityPM.ShipperReference2;
+                //entityPM.CustomerReference3 = entityPM.ShipperReference3;
             }
         }
 
@@ -265,6 +288,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             entityPM.CustomerAddressId = entityPM.ConsigneeAddressId;
             entityPM.CustomerReference1 = entityPM.ConsigneeReference1;
             entityPM.CustomerReference2 = entityPM.ConsigneeReference2;
+            //entityPM.CustomerReference3 = entityPM.ConsigneeReference3;
         }
 
         private void MapAgent()
@@ -275,6 +299,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             entityPM.CustomerAddressId = entityPM.AgentAddressId;
             entityPM.CustomerReference1 = entityPM.AgentReference1;
             entityPM.CustomerReference2 = entityPM.AgentReference2;
+            //entityPM.CustomerReference3 = null;
         }
 
         private void MapIssuingCarrierAgent()
@@ -285,6 +310,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             entityPM.CustomerAddressId = entityPM.IssuingCarrierAddressId;
             entityPM.CustomerReference1 = null;
             entityPM.CustomerReference2 = null;
+
         }
 
         private void MapCustomAgentExport()
@@ -295,6 +321,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             entityPM.CustomerAddressId = entityPM.CustomAgentExportAddressId;
             entityPM.CustomerReference1 = entityPM.CustomAgentExportReference;
             entityPM.CustomerReference2 = null;
+            //entityPM.CustomerReference3 = null;
         }
 
         private void MapCustomAgentImport()
@@ -305,6 +332,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             entityPM.CustomerAddressId = entityPM.CustomAgentImportAddressId;
             entityPM.CustomerReference1 = entityPM.CustomAgentImportReference;
             entityPM.CustomerReference2 = null;
+            //entityPM.CustomerReference3 = null;
         }
 
         private void MapNotify1()
@@ -314,7 +342,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             entityPM.CustomerContactId = entityPM.Notify1ContactId;
             entityPM.CustomerAddressId = entityPM.Notify1AddressId;
             entityPM.CustomerReference1 = entityPM.Notify1Reference;
-            entityPM.CustomerReference2 = null;
+            entityPM.CustomerReference2 = entityPM.Notify1Reference2;
+            //entityPM.CustomerReference3 = null;
         }
 
         private void MapNotify2()
@@ -325,6 +354,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             entityPM.CustomerAddressId = entityPM.Notify2AddressId;
             entityPM.CustomerReference1 = entityPM.Notify2Reference;
             entityPM.CustomerReference2 = null;
+            //entityPM.CustomerReference3 = null;
         }
 
         private void MapShipperNotExporter()
@@ -334,7 +364,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             entityPM.CustomerContactId = entityPM.ShipperNotExporterContactId;
             entityPM.CustomerAddressId = entityPM.ShipperNotExporterAddressId;
             entityPM.CustomerReference1 = entityPM.ShipperNotExporterReference;
-            entityPM.CustomerReference2 = null;
+            entityPM.CustomerReference1 = entityPM.ShipperNotExporterReference1;
+            entityPM.CustomerReference2 = entityPM.ShipperNotExporterReference2;
+            //entityPM.CustomerReference3 = null;
         }
 
         private void MapConsigneeNotImporter()
@@ -345,6 +377,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             entityPM.CustomerAddressId = entityPM.ConsigneeNotImporterAddressId;
             entityPM.CustomerReference1 = entityPM.ConsigneeNotImporterReference;
             entityPM.CustomerReference2 = null;
+            //entityPM.CustomerReference3 = null;
         }
 
         private void MapFreightForwarder()
@@ -355,6 +388,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             entityPM.CustomerAddressId = entityPM.FreightForwarderAddressId;
             entityPM.CustomerReference1 = entityPM.FreightForwarderReference;
             entityPM.CustomerReference2 = null;
+            //entityPM.CustomerReference3 = null;
         }
 
         private void MapColoader()
@@ -365,6 +399,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             entityPM.CustomerAddressId = entityPM.ColoaderAddressId;
             entityPM.CustomerReference1 = entityPM.ColoaderReference1;
             entityPM.CustomerReference2 = null;
+            //entityPM.CustomerReference3 = null;
         }
 
         private void MapCustomClearance()
@@ -375,7 +410,19 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             entityPM.CustomerAddressId = entityPM.CustomClearancePointAddressId;
             entityPM.CustomerReference1 = entityPM.CustomClearancePointReference1;
             entityPM.CustomerReference2 = null;
+            //entityPM.CustomerReference3 = null;
         }
+
+        private void MapTrucker()
+        {
+            entityPM.TruckerName = entityPM.TruckerName;
+            entityPM.TruckerNote = entityPM.TruckerNote;
+            entityPM.TruckerContactId = entityPM.TruckerContactId;
+            entityPM.TruckerAddressId = entityPM.TruckerAddressId;
+            entityPM.TruckerReference1 = entityPM.TruckerReference1;
+            entityPM.TruckerReference2 = entityPM.TruckerReference2;
+        }
+
 
         private void GetCustomerEntity()
         {

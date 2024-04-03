@@ -151,7 +151,7 @@
   </Column>
   <Column
     Name="ViewFieldDisplayName"
-    OldNames="ViewDisplayName,DataViewDisplayName"
+    OldNames="DataViewDisplayName,ViewDisplayName"
     Type="nvarchar"
     Size="200">
     <Constraints
@@ -182,6 +182,12 @@
     Size="100">
     <Constraints
       Nullable="true" />
+  </Column>
+  <Column
+    Name="UseUnitSelection"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
   <Relation
     ForeignKeyColumn="DWObjectTableCode"

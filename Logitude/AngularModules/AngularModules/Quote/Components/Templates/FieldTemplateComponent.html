@@ -4,6 +4,34 @@
         <td>
             <div class="MediaFill">
 
+                <!--NextActivityDate -->
+                <div *ngIf="FieldName == 'NextActivityDate'">
+                    <div>
+                        <table>
+                            <tr>
+                                <td style="width:80px;">
+                                    {{Entity[FieldName] | DateTimePipe:'D'}}
+                                </td>
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- NextActivityTypeCode -->
+                <div *ngIf="FieldName == 'NextActivityTypeCode'">
+                    <img [title]="Entity.NextActivityTypeName" [attr.src]="ImageSrc" style="width:16px;height:16px" />
+                    {{Entity['NextActivitySubject']}}
+                </div>
+
+                <!-- LastActivityTypeCode -->
+                <div *ngIf="FieldName == 'LastActivityTypeCode'">
+                    <img [title]="Entity.LastActivityTypeName" [attr.src]="ImageSrc" style="width:16px;height:16px" />
+                    {{Entity['LastActivitySubject']}}
+                </div>
+
                 <div *ngIf="FieldName == 'FollowUpDate'" [ngStyle]="{color: FieldValue | FollowUpDatePipe:'F'}">{{FieldValue | DateTimeToDatePipe}}</div>
                 <div *ngIf="FieldName == 'AcceptedDate'">{{FieldValue | DateTimePipe :'DT'}}</div>
 
@@ -78,7 +106,7 @@
                 </table>
 
                 <div *ngIf="FieldName == 'GrossWeight'|| FieldName == 'GrossWeightInKG' || FieldName == 'GrossWeightPerTon' || FieldName == 'VolumeInCBM'" class="TemplateTrimming">
-                    <div class="TemplateTrimmingChild TextRight">{{FieldValue | NumbersPipe:'N2'}}</div>
+                    <div class="TemplateTrimmingChild TextRight" [style.padding-right]="NumberFieldRightPadding">{{FieldValue | NumbersPipe:'N2'}}</div>
                 </div>
 
                 <div *ngIf="FieldName == 'SentDate'" class="TemplateTrimming">

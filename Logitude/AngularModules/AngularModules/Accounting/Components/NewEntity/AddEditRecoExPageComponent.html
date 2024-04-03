@@ -311,7 +311,16 @@
                                         *ngIf="ReconcileExternalPagePM.StatusCode == '1' || isApprovedButtonClicked"
                                         [Name]="'Add'" (click)="AddButtonClicked()"></IconButton>
                                 </div>
-
+                                <div *ngIf="ReconcileExternalPagePM.StatusCode == '1' || isApprovedButtonClicked" style="width: 50px; float: left;" >
+                                    <input class="upload" style="display: none;width:65px"
+                                           type="file" (change)="OnFileChanged($event)"
+                                           (click)="fileInput.value = null" value="" accept=".xls,.xlsx"
+                                           #fileInput>
+                                    <a href="#" style="text-decoration:none">
+                                        <button [disabled]="!UploadButtonIsEnabled" style="width:55px;" class="Button" (click)="openFileUploader()">Upload</button>
+                                        <input #myInput  accept=".xlsx, .xls"  type="file" [(ngModel)]="FileData" (change)="UploadFile($event)" (click)="UploadFile($event)" style="display:none;width:65px" class="upload" />
+                                    </a>
+                                </div>
                                 <div style="width: 220px; float: right;">
                                     <!--<SearchTextBox [ObjectTableName]="'ReconcileExternalPage'" (SearchTextChangeEvent)="TextChanged($event)"></SearchTextBox>-->
                                 </div>
@@ -328,10 +337,11 @@
                         <tr style="height: 110px;">
                             <td colspan="3" style="height: 250px;">
                                 <div class="CellContent" *ngIf="AmountColHeader">
-                                    <logitude-edit-grid GridWidth="100%" GridHeight="100%"
-                                        [IsReadOnly]="ReconcileExternalPagePM.StatusCode != '1'"
-                                        [ItemSource]="PageLinesList" (RowEnded)="OnRowEnded($event)"
-                                        (Ondblclick)="OnFocus()">
+
+                                        <logitude-edit-grid GridWidth="100%" GridHeight="100%"
+                                                            [IsReadOnly]="ReconcileExternalPagePM.StatusCode != '1'"
+                                                            [ItemSource]="PageLinesList" (RowEnded)="OnRowEnded($event)"
+                                                            (Ondblclick)="OnFocus()">
 
                                         <!-- LineNumber -->
                                         <log-column

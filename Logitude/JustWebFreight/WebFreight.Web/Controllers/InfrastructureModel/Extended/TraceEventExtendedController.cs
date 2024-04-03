@@ -31,6 +31,12 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
         {
             try
             {
+
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+
                 EventTypeRepository eventTypesRepository = new EventTypeRepository(eventTypeArgs.Tenant);
                 EventTypeQuery eventTypeQuery = new EventTypeQuery(eventTypesRepository);
                 List<EventTypeList> eventList = null;
@@ -76,6 +82,8 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                 {
                     foreach (EventTypeList eventTypeList in eventList)
                     {
+                        SecurityUtility.AuthenticationOnEntityTenant("QuoteTemplate", eventTypeList.Tenant, authToken.Tenant);
+
                         TraceEvent newEvent = new TraceEvent()
                         {
                             Id = IdCounter.GetNumber("EventType", eventTypeArgs.Tenant).ToString(),

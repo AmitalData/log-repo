@@ -1,4 +1,4 @@
-﻿
+
 <style type="text/css">
     .LogitudeHelperNotes {
         position: relative;
@@ -127,7 +127,7 @@
                                             {{'General.B.ClickToAddText' | TextCodeTranslationPipe}}
                                         </span>
 
-                                        <textarea class="LogitudeHelperNotesTextBox"
+                                        <textarea [attr.data-cy]="'HelperNotes'" class="LogitudeHelperNotesTextBox"
                                                   [class.LogitudeHelperNotesTextBoxFocused]="IsTextBoxFocused && IsEnabled"
                                                   [(ngModel)]="Text"
                                                   (keydown)="OnTextBoxKeydown($event)"

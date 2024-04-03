@@ -1,0 +1,9 @@
+﻿<Script DBType="Main" Module="Workflow">
+  <Sql Version="2">
+    <![CDATA[
+    
+    update WorkFlowInstances set [WorkflowId] = (select WorkflowId from WorkFlowVersions where id = WorkFlowVersionId)
+	
+    ]]>
+  </Sql>
+</Script>

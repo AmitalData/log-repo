@@ -1,8 +1,8 @@
 ﻿<Script DBType="Main" Module="Quote">
-  <Sql Version="1">
+  <Sql Version="2">
     <![CDATA[
-    
-    declare @QuoteTemplateId as varchar(15)
+     
+        declare @QuoteTemplateId as varchar(15)
 		declare @QuoteTemplateTextCodeId as varchar(15)
 		declare @Tenant as int
 		declare @NewEntityId as varchar(15)

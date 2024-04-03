@@ -43,11 +43,8 @@ export function FillCurrencyNotes(notes: string) {
     cy.FillLogTextBox(CurrencySelectors.Notes, notes)
 }
 
-export function CheckInActiveCurrencyCheckBox() {
-    Actions.FillCheckBoxProcess(CurrencySelectors.InActiveCurrencyCheckBox, constants.YES)
-}
-
 export function FillCurrencyAccountingExternalId(externalId) {
+    cy.FillLogTextBox(CurrencySelectors.AccountingExternalID, " ")
     cy.FillLogTextBox(CurrencySelectors.AccountingExternalID, externalId);
 }
 

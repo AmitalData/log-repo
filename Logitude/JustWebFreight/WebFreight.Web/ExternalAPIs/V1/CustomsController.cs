@@ -34,9 +34,11 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
 				SecurityUtility.AuthenticateAPICall(authToken.Tenant);
-				CustomsQueryService Service = new CustomsQueryService(tenant);
+                //SecurityUtility.AuthenticateAccessibleAPI("Customs", authToken.Tenant);
+
+                CustomsQueryService Service = new CustomsQueryService(tenant);
                 ServiceResponse response = new ServiceResponse();
-                var Result = Service.GetCustomsById(id, tenant);
+                var Result = Service.GetCustomsById(id, tenant, null);
                 string xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(Result);
                 return Request.CreateResponse(HttpStatusCode.OK, Result);
             }
@@ -55,10 +57,11 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
 				SecurityUtility.AuthenticateAPICall(authToken.Tenant);
-				CustomsQueryService Service = new CustomsQueryService(tenant);
+                //SecurityUtility.AuthenticateAccessibleAPI("Customs", authToken.Tenant);
+
+                CustomsQueryService Service = new CustomsQueryService(tenant);
                 ServiceResponse response = new ServiceResponse();
-                var Result = Service.GetCustomsByShipmentNumber(number, tenant);
-                //string xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(Result);
+                var Result = Service.GetCustomsByShipmentNumber(number, tenant, null);
                 return Request.CreateResponse(HttpStatusCode.OK, Result);
             }
             catch (Exception ex)
@@ -79,7 +82,9 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 					SecurityUtility.AuthenticateAPICall(authToken.Tenant);
-					IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
+                    //SecurityUtility.AuthenticateAccessibleAPI("Customs", authToken.Tenant);
+
+                    IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
                     CustomsQueryService mappingService = new CustomsQueryService(authToken.Tenant);
                     ShipmentPM entityPM = mappingService.CustomsCustomDataMappingAndValidatin(entity, authToken.Tenant);
                     entityPM.IsExternalAPI = true;
@@ -117,23 +122,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         }
 
                         AddressRepository addressRepository = new AddressRepository(entityPM.Tenant);
-                        if (!string.IsNullOrEmpty(entityPM.CustomerId))
-                        {
-                            Address address = addressRepository.GetMainAddressByCardId(entityPM.CustomerId, authToken.Tenant);
-                            if (address != null)
-                            {
-                                entityPM.CustomerAddressId = address.Id;
-                            }
-
-                            CardRepository cardRepository = new CardRepository(entityPM.Tenant);
-                            Card customer = cardRepository.GetSingleCard(entityPM.CustomerId, entityPM.Tenant);
-                            if (customer != null)
-                            {
-                                entityPM.SalesmanUserId = string.IsNullOrEmpty(customer.SalesmanUserId) ? entityPM.CreatedByUserId : customer.SalesmanUserId;
-                                entityPM.AccountManagerUserId = !string.IsNullOrEmpty(customer.Customer.AccountManagerUserId) ? customer.Customer.AccountManagerUserId : entityPM.CreatedByUserId;
-                            }
-                        }
-   
+                        this.ValidateAndSetCustomerData(entityPM, addressRepository, authToken.Tenant);
+                           
                         if (!string.IsNullOrEmpty(entityPM.ShipperId))
                         {
                             Address address = addressRepository.GetMainAddressByCardId(entityPM.ShipperId, authToken.Tenant);
@@ -161,8 +151,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                             }
                         }
 
-                        ComputeHelper.ComputeTotals(entityPM);
-                       
+                        ComputeHelper.ComputeTotals(entityPM);                       
 
                         ShipmentService service = new ShipmentService(MyContext, entityPM, SecurityUtility.GetAuthenticatedUser());
                         if (!string.IsNullOrEmpty(entityPM.ShipmentNumber))
@@ -174,17 +163,13 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                 throw new ApplicationException("The Shipment Number already exists");
                         }
 
-
                         service.Create();
                         scope.Complete();
-
-
-
                     }
-                    var result = mappingService.GetCustomsById(entityPM.Id, authToken.Tenant);
+
+                    var result = mappingService.GetCustomsById(entityPM.Id, authToken.Tenant, null);
                     APIHelper.AddCommunicationLog("D", entity, result, "Shipment", entityPM.Id, "Customs API", authToken.Tenant);
                     return Request.CreateResponse(HttpStatusCode.OK, result);
-
                 }
 
                 catch (Exception ex)
@@ -213,12 +198,13 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 					SecurityUtility.AuthenticateAPICall(authToken.Tenant);
-					IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
+                    //SecurityUtility.AuthenticateAccessibleAPI("Customs", authToken.Tenant);
+
+                    IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
                     CustomsQueryService mappingService = new CustomsQueryService(authToken.Tenant);
                     ShipmentQuery query = new ShipmentQuery(authToken.Tenant);
                     ShipmentPM entityPM = query.GetSinglePMByShipmentNumber(entity.ShipmentNumber, authToken.Tenant);
                     
-
                     using (TransactionScope scope = TransactionFactory.GetTransaction())
                     {
                         ShipmentRepository entityRepository = new ShipmentRepository(MyContext);
@@ -241,8 +227,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                 directPM.GrossWeightUnitCode = entity.GrossWeightUnit!=null? entity.GrossWeightUnit.Code:null;
                                 directPM.ChargeableWeightUnitCode = entity.ChargeableWeightUnit!=null? entity.ChargeableWeightUnit.Code:null;
 
-                                this.MapCustomsToEntityPM(directPM, entityPM, MyContext);
-
+                                this.MapCustomsToEntityPM(directPM, entityPM);
 
                                 if (entityPM.IsOperationalClosed || entityPM.IsAccountingClosed || entityPM.IsCancelled)
                                 {
@@ -262,16 +247,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                             entityPM.OtherPrepaidCollectId = myIncoterm.OtherCharges;
                                         }
                                     }
-                                    if (!string.IsNullOrEmpty(entityPM.CustomerId))
-                                    {
-                                        CardRepository cardRepository = new CardRepository(entityPM.Tenant);
-                                        Card customer = cardRepository.GetSingleCard(entityPM.CustomerId, entityPM.Tenant);
-                                        if (customer != null)
-                                        {
-                                            entityPM.SalesmanUserId = string.IsNullOrEmpty(customer.SalesmanUserId) ? entityPM.CreatedByUserId : customer.SalesmanUserId;
-                                            entityPM.AccountManagerUserId = !string.IsNullOrEmpty(customer.Customer.AccountManagerUserId) ? customer.Customer.AccountManagerUserId : entityPM.CreatedByUserId;
-                                        }
-                                    }
+                                    
                                     if (entityPM.ShipmentPackages.Count > 0)
                                     {
                                         foreach (ShipmentPackagePM item in entityPM.ShipmentPackages)
@@ -281,10 +257,11 @@ namespace WebFreight.Web.ExternalAPIs.V1
                                         }
                                     }
 
+                                    AddressRepository addressRepository = new AddressRepository(authToken.Tenant);
+                                    this.ValidateAndSetCustomerData(entityPM, addressRepository, authToken.Tenant);
                                     ComputeHelper.ComputeTotals(entityPM);
 
                                     ShipmentService service = new ShipmentService(MyContext, entityPM, SecurityUtility.GetAuthenticatedUser());
-
                                     service.Update(true);
                                 }
                             }
@@ -294,7 +271,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         scope.Complete();
                     }
 
-                    var result = mappingService.GetCustomsById(entityPM.Id, authToken.Tenant);
+                    var result = mappingService.GetCustomsById(entityPM.Id, authToken.Tenant, null);
 
                     APIHelper.AddCommunicationLog("D", entity, result, "Shipment", entityPM.Id, "Customs API", authToken.Tenant);
 
@@ -571,7 +548,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
         }
         
-        private void MapCustomsToEntityPM(ShipmentPM customsPM, ShipmentPM entityPM, IShipmentsContext MyContext)
+        private void MapCustomsToEntityPM(ShipmentPM customsPM, ShipmentPM entityPM)
         {
             entityPM.ShipmentLevelCode = customsPM.ShipmentLevelCode;
             entityPM.DirectionId = customsPM.DirectionId;
@@ -611,6 +588,88 @@ namespace WebFreight.Web.ExternalAPIs.V1
             entityPM.MainCarriageToPortId = customsPM.MainCarriageToPortId;
             entityPM.DeclarationNumber = customsPM.DeclarationNumber;
             entityPM.DeclarationXMLData = customsPM.DeclarationXMLData;
+            entityPM.CustomerReference3 = customsPM.CustomerReference3;
+        }
+
+        private void ValidateAndSetCustomerData(ShipmentPM entityPM, AddressRepository addressRepository, int tenant)
+        {
+            if (!string.IsNullOrEmpty(entityPM.CustomerId))
+            {
+                if (!IsSentCustomerAShipmentPatrner(entityPM))
+                {
+                    throw new ApplicationException("The sent customer is not one of the sent partners");
+                }
+
+                this.SetCustomerTypeCode(entityPM);
+
+                Address address = addressRepository.GetMainAddressByCardId(entityPM.CustomerId, tenant);
+                if (address != null)
+                {
+                    entityPM.CustomerAddressId = address.Id;
+                }
+
+                CardRepository cardRepository = new CardRepository(tenant);
+                Card customer = cardRepository.GetSingleCard(entityPM.CustomerId, tenant);
+                if (customer != null)
+                {
+                    if (string.IsNullOrEmpty(entityPM.SalesmanUserId))
+                    {
+                        entityPM.SalesmanUserId = string.IsNullOrEmpty(customer.SalesmanUserId) ? entityPM.CreatedByUserId : customer.SalesmanUserId;
+                    }
+
+                    if (customer.Customer != null)
+                    {
+                        if (string.IsNullOrEmpty(entityPM.AccountManagerUserId))
+                        {
+                            entityPM.AccountManagerUserId = !string.IsNullOrEmpty(customer.Customer.AccountManagerUserId) ? customer.Customer.AccountManagerUserId : entityPM.CreatedByUserId;
+                        }
+                    }
+                }
+            }
+
+            else
+            {
+                if (entityPM.DirectionId == "I")
+                {
+                    entityPM.CustomerId = entityPM.ConsigneeId;
+                    entityPM.ShipmentCustomerTypeCode = "CON";
+                }
+
+                else
+                {
+                    entityPM.CustomerId = entityPM.ShipperId;
+                    entityPM.ShipmentCustomerTypeCode = "SHI";
+                }
+
+                if (string.IsNullOrEmpty(entityPM.CustomerId))
+                {
+                    throw new ApplicationException("The customer is required");
+                }
+            }
+        }
+        private bool IsSentCustomerAShipmentPatrner(ShipmentPM entityPM)
+        {
+            if (entityPM.CustomerId == entityPM.ShipperId)
+            {
+                return true;
+            }
+            else if (entityPM.CustomerId == entityPM.ConsigneeId)
+            {
+                return true;
+            }           
+            return false;
+        }
+        private void SetCustomerTypeCode(ShipmentPM entityPM)
+        {
+            if (entityPM.CustomerId == entityPM.ShipperId)
+            {
+                entityPM.ShipmentCustomerTypeCode = "SHI";
+            }
+
+            else if (entityPM.CustomerId == entityPM.ConsigneeId)
+            {
+                entityPM.ShipmentCustomerTypeCode = "CON";
+            }           
         }
     }
 }

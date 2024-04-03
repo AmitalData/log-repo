@@ -59,7 +59,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
+                SecurityUtility.CheckContactFeature("ARPaymentCheque", "READ", authToken.Tenant);
+	                IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
                 ARPaymentChequeListQueryService aRPaymentChequeQuery = new ARPaymentChequeListQueryService(MyContext);
                 ARPaymentChequeList aRPaymentChequeList = aRPaymentChequeQuery.GetSingle(id);
  				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
@@ -81,7 +82,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
+                SecurityUtility.CheckContactFeature("ARPaymentCheque", "READ", authToken.Tenant);
+	                IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
                 ARPaymentChequeListQueryService aRPaymentChequeQuery = new ARPaymentChequeListQueryService(MyContext);
                 List<ARPaymentChequeList> result = aRPaymentChequeQuery.GetList(authToken.Tenant);
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
@@ -103,7 +105,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                
+                SecurityUtility.CheckContactFeature("ARPaymentCheque", "READ", authToken.Tenant);
+	                
 				int tenant = authToken.Tenant;
 
                 QueryOperations queryOperations = new QueryOperations()
@@ -151,7 +154,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                             object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
 
                             //queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList);
-							  queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode);
+							  queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode, field.IsListFilter);
 
                         }
                         else
@@ -181,7 +184,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                             object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
 
                             //queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList);
-							  queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode);
+							  queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode, field.IsListFilter);
 
                         }
                         else
@@ -194,12 +197,23 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 IAccountingContext MyContext = AccountingContext.GetContext(tenant);
 				ARPaymentChequeListQueryService aRPaymentChequeQuery = new ARPaymentChequeListQueryService(MyContext);
 
-                List<ARPaymentChequeList> entityLists = aRPaymentChequeQuery.GetList(queryOperations, tenant);
-				
+                TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
+                 { 
+                     AdditionalTreeFilter = filters.TreeFilters,
+                     ObjectTableName = "ARPaymentCheque",
+                     ParentEntityId = filters.ParentEntityId,
+                     ParentObjectTableName = filters.ParentObjectTableName, 
+                     Tenant = tenant ,
+                     ParentEntity = filters.ParentEntity
+                 };
+
+
+                List<ARPaymentChequeList> entityLists = aRPaymentChequeQuery.GetList(queryOperations, tenant , treeFilterQueryArgs);
+
 				ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)
                 {
-                    int count = aRPaymentChequeQuery.GetListCount(queryOperations, tenant);
+                    int count = aRPaymentChequeQuery.GetListCount(queryOperations, tenant , treeFilterQueryArgs);
                     response.Count = count;
                 }
 

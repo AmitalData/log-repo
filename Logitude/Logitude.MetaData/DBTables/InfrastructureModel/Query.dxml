@@ -75,8 +75,8 @@
   <Column
     Name="QuerySection"
     Type="varchar"
-    Size="50">
-    <Constraints
+     Size="100">
+     <Constraints
       Nullable="true" />
   </Column>
   <Column
@@ -236,7 +236,12 @@
     <Constraints
       Nullable="false" />
   </Column>
-    
+  <Column
+    Name="IsDefault"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column> 
   <Relation
     ForeignKeyColumn="UserId"
     ReferencedTable="Users"

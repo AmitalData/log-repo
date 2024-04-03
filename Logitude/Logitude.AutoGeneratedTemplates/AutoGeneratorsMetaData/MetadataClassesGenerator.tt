@@ -212,6 +212,12 @@ using Logitude.TariffModule.BL.CLoseTable;
 using Logitude.CargoTracking.Data.Repositories;
 using Logitude.CargoTracking.BL;
 using Logitude.CargoTracking.Data.EntityPOCOs;
+using Logitude.Workflow.Data.Repositories;
+using Logitude.Workflow.Data.EntityPOCOs;
+using Logitude.Workflow.BL.CLoseTable;
+using Logitude.DashboardModule.Data.Repositories;
+using Logitude.DashboardModule.Data.EntityPOCOs;
+using Logitude.DashboardModule.BL;
 
 //using Amital.QuoteOPM.BL.CLoseTable;
 using Amital.QuoteOPM.Data.Repsitories;
@@ -242,7 +248,7 @@ namespace <#= UpdateClassnamespacestring #>
 					  && p.Name != "DescriptionTextCodeId" && p.Name != "DownloadToExcelFeatureCode"
 					  && p.Name != "Code1"  && p.Name != "Name1" && p.Name != "Code2"  && p.Name != "Name2"
 					   && p.Name != "Code3"  && p.Name != "Name3" && p.Name != "Code4"  && p.Name != "Name4" && p.Name != "HeaderScreenId" && p.Name != "HeaderScreenCode" && p.Name != "NoDefaultFeatures" && p.Name != "IsMetadataOnlyTable" && p.Name != "DxmlDatabaseTypeCode" && p.Name != "DxmlDatabaseSchemaCode" && p.Name != "DBTableShortName" && p.Name != "DBTableOldNames"
-&& p.Name != "IsBusinessUnitEnabled")
+                       && p.Name != "IsBusinessUnitEnabled" && p.Name != "TenantZeroData")
                 {
 				  #>
 				    <#= p.Name #> =  <#= p.Value #>,
@@ -634,13 +640,7 @@ private void WriteAddFieldMethod(XElement entity,XElement field)
 		isCustomField = (field.Attribute(XName.Get("IsCustom")).Value.ToLower() == "true");
     }
 
-	bool noObjectField = false;
-	if(field.Attribute(XName.Get("NoMetaDataField")) != null)
-    {
-		noObjectField = (field.Attribute(XName.Get("NoMetaDataField")).Value.ToLower() == "true");
-    }
-
-	if( noObjectField || isCustomField)//field.Attribute(XName.Get("FieldName")).Value.Trim('"') == "Id" || field.Attribute(XName.Get("FieldName")).Value.Trim('"') == "Tenant" ||
+	if(isCustomField)//field.Attribute(XName.Get("FieldName")).Value.Trim('"') == "Id" || field.Attribute(XName.Get("FieldName")).Value.Trim('"') == "Tenant" ||
     {
 		return;
     }
@@ -658,7 +658,7 @@ private void WriteAddFieldMethod(XElement entity,XElement field)
 					 <#+
 		   foreach (XAttribute p in field.Attributes())
 				{  
-					if(p.Name != "Id" && p.Name != "ObjectFieldNotRequired" && p.Name != "IsForeignKey" && p.Name != "ForeignEntity"&& p.Name != "NavigationPropertyName"&& p.Name != "IsPrimaryKey"&& p.Name != "Order" && p.Name != "IsNullable" && p.Name != "HasDataBaseField"&& p.Name != "HasPMField" && p.Name != "AssociationName" && p.Name != "ThisKey" && p.Name != "OtherKey" && p.Name != "IsComposition" && p.Name != "NoMetaDataField" && p.Name != "GenerateInList" 
+					if(p.Name != "Id" && p.Name != "ObjectFieldNotRequired" && p.Name != "IsPrimaryKey"&& p.Name != "Order" && p.Name != "IsNullable" && p.Name != "HasDataBaseField"&& p.Name != "HasPMField" && p.Name != "AssociationName" && p.Name != "IsComposition" && p.Name != "GenerateInList" 
 					&& p.Name != "IsSpellCheckedFullFieldLable" && p.Name != "IsSpellCheckedHelpLocalDefaultText" && p.Name != "IsSpellCheckedShortLocalDefaultText" && p.Name != "IsSpellCheckedListLocalDefaultText"
 					&& p.Name != "IsChecked" && p.Name != "IsDeleted" && p.Name != "IsNew" && p.Name != "IsRequiered"  && p.Name != "LookUpTableId" && p.Name != "DontBuildRelationOnDB" && p.Name != "ShortName" && p.Name != "OldNames"
 					&& p.Name != "FullNameTextCodeId"
@@ -672,7 +672,7 @@ private void WriteAddFieldMethod(XElement entity,XElement field)
 					if(!string.IsNullOrEmpty(p.Value.Trim('"')))
 					{
 					   var propValue = p.Value.Replace("\n",@"\n");
-					   if(propValue.StartsWith("\"") && propValue.EndsWith("\"") && p.Name.ToString().Contains("DefaultText"))
+					   if((propValue.StartsWith("\"") && propValue.EndsWith("\"") && p.Name.ToString().Contains("DefaultText")) || p.Name == "ForeignEntity" || p.Name == "NavigationPropertyName" || p.Name == "ThisKey" || p.Name == "OtherKey")
 					   {
                         //&quot;Allows recording AR Payments in negative amounts using payment method &quot;Offset&quot;&quot;
 					     //propValue =  (!propValue.Trim('"').Contains("\"")? "@":"") + '"'  + propValue.Trim('"').Replace("\"",  "''") + '"';
@@ -1188,6 +1188,16 @@ private void WriteAddQueryFilterMethod(XElement entity,XElement Column,int index
 	   var PredefinedValue = Column.Attributes().Where(a => a.Name == "PredefinedValue").FirstOrDefault().Value;
 	   var PredefinedValue2Attr = Column.Attributes().Where(a => a.Name == "PredefinedValue2").FirstOrDefault();
 	   string PredefinedValue2 = "null";
+	   var CustomPredefinedAttr = Column.Attributes().Where(a => a.Name == "CustomPredefined").FirstOrDefault();
+	   string CustomPredefined;
+		if (CustomPredefinedAttr == null)
+		{
+			 CustomPredefined = "false";
+		}
+		else
+		{
+			  CustomPredefined =  CustomPredefinedAttr.Value.ToString().ToLower().Trim('"');  
+		}
        var OperatorAttr = Column.Attributes().Where(a => a.Name == "Operator").FirstOrDefault();
        string Operator = "";
 	   if(PredefinedValue2Attr != null)
@@ -1202,7 +1212,7 @@ private void WriteAddQueryFilterMethod(XElement entity,XElement Column,int index
        var FieldCode= TblName.Trim('"') + "." + ObjectFieldName.Trim('"');
 #>
 
-             AdvancedQueryFilter <#= Code.Trim(new char[]{' ','"'}).Replace(" ","").Replace(".","_") #>QueryFilter_<#= index #> = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "<#= FieldCode #>", PredefinedValue = <#= PredefinedValue #>,PredefinedValue2 = <#= PredefinedValue2 #>, QueryId = <#= Code.Trim(new char[]{' ','"'}).Replace(" ","").Replace(".","_") #>Query.Id,QueryCode = <#= Code.Trim(new char[]{' ','"'}).Replace(" ","").Replace(".","_") #>Query.UniqueCode, Tenant = 0<#= !string.IsNullOrEmpty(Operator) ?",Operator = " + Operator  : "" #>}, addedQueryFilters);
+             AdvancedQueryFilter <#= Code.Trim(new char[]{' ','"'}).Replace(" ","").Replace(".","_") #>QueryFilter_<#= index #> = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "<#= FieldCode #>", PredefinedValue = <#= PredefinedValue #>,PredefinedValue2 = <#= PredefinedValue2 #>, CustomPredefined = <#= CustomPredefined #>, QueryId = <#= Code.Trim(new char[]{' ','"'}).Replace(" ","").Replace(".","_") #>Query.Id,QueryCode = <#= Code.Trim(new char[]{' ','"'}).Replace(" ","").Replace(".","_") #>Query.UniqueCode, Tenant = 0<#= !string.IsNullOrEmpty(Operator) ?",Operator = " + Operator  : "" #>}, addedQueryFilters);
 
 <#+
 }

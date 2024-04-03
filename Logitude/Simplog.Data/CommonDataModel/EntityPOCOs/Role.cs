@@ -16,6 +16,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string Description { get; set; }
         public string ParentRoleId { get; set; }
         public bool IsCustomRole { get; set; }
+        public bool Inactive { get; set; }
         public string SearchFields { get; set; }
 
         [ForeignKey("RoleTypeCode")]

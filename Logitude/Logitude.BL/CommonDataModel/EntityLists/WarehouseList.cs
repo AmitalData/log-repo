@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Logitude.BL.InfrastructureModel.EntityLists;
 using System.ComponentModel.DataAnnotations;
 
 namespace Logitude.BL.CommonDataModel.EntityLists
 {
-    public class WarehouseList
+    public class WarehouseList : CustomFieldList
     {
         [Key]
         public string Id { get; set; }
@@ -39,12 +39,10 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public bool MyWarehouse { get; set; }
         public string UsoCFDICode { get; set; }
         public string SATForeignRFC { get; set; }
-
         public string PrimaryContactName { get; set; }
         public string PrimaryContactEmail { get; set; }
         public string PrimaryContactPhone { get; set; }
         public string StateName { get; set; }
-
         public bool ChargeStorage { get; set; }
         public string CurrencyId { get; set; }
         public string AirWeightMeasurementCode { get; set; }
@@ -53,9 +51,10 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string AirWeightRoundingCode { get; set; }
         public string OceanWeightRoundingCode { get; set; }
         public string InlandWeightRoundingCode { get; set; }
-
+        public string RegimenFiscalCode { get; set; }
+        public string SATReceptorName { get; set; }
         public string GLAccountNumber { get; set; }
         public int? StorageFreeDays { get; set; }
-
+        public string PaymentTermEnglishName { get; set; }
     }
 }

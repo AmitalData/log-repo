@@ -1,0 +1,15 @@
+<View DBType="Main" Name="DBA_View_AuthenticationTokens_ToBeDeleted_IsAPIToken" Schema="dbo" Module="Common">
+  <SqlScript>
+    <![CDATA[
+
+create VIEW [dbo].[DBA_View_AuthenticationTokens_ToBeDeleted_IsAPIToken] AS
+    SELECT   TOP 1000 *
+	FROM      dbo.AuthenticationTokens
+	WHERE apitoken=1 and   (CreateDate < DATEADD(Month, - 6, GETDATE()))
+    ORDER BY CreateDate;
+
+    ]]>
+  </SqlScript>
+  <OracleScript>
+  </OracleScript>
+</View>

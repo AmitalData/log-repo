@@ -89,7 +89,9 @@ a:focus {
 
 /* phone styles */
 
-@media screen and (max-width: 479px) {
+@media screen and (max-width: 479px) and (orientation: portrait),
+(max-height: 479px) and (orientation: landscape)
+ {
   .hide-mobile {
       display: none;
   }
@@ -171,7 +173,10 @@ footer{
         position: relative;
     }
 
-@media screen and (max-width: 479px) {
+
+@media screen and (max-width: 479px) and (orientation: portrait),
+(max-height: 479px) and (orientation: landscape)
+ {
   .side-menu {
       display: block;
       text-align: center;

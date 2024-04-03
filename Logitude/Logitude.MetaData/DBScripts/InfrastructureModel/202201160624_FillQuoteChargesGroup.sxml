@@ -1,0 +1,54 @@
+﻿<Script DBType="Main" Module="Infrastructure">
+  <Sql Version="3">
+    <![CDATA[
+	    delete from DBIdCounters  where TableName = 'QuoteChargesGroup'
+        update ChargesTypes set QuoteChargesGroupId = null, QuoteChargesGroupCode = null
+		delete from QuoteChargesGroups
+		declare @Tenant as int
+		declare @ChargesTypeId as varchar(15)
+		declare @MeasurementId as varchar(15)
+		declare @ChargesGroupId as varchar(15)
+		declare @ChargesGroupCode as varchar(5)
+		declare @NewEntityId as varchar(15)
+		BEGIN 
+			DECLARE TenantsCursor CURSOR READ_ONLY
+			FOR
+			SELECT Id
+			FROM Tenants
+			OPEN TenantsCursor FETCH NEXT FROM TenantsCursor INTO @Tenant        
+			WHILE @@FETCH_STATUS = 0
+				BEGIN
+		
+					if not exists (select * from ChargesGroups where   Tenant = @Tenant AND Code = 'ORCH')
+					begin
+						EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'QuoteChargesGroup'
+						insert into QuoteChargesGroups (Id,Code, Name,LocalName, SearchFields,Tenant,ViewOrder) values (@NewEntityId,'ORCH','Origin Charges','Origin Charges','Origin Charges,ORCH', @Tenant,10)
+					end
+
+					if not exists (select * from ChargesGroups where   Tenant = @Tenant AND Code = 'FRCH')
+					begin
+						EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'QuoteChargesGroup'
+						insert into QuoteChargesGroups (Id,Code, Name,LocalName, SearchFields,Tenant,ViewOrder) values (@NewEntityId,'FRCH','Freight Charges','Freight Charges','Freight Charges,FRCH', @Tenant,20)
+					end
+
+					if not exists (select * from ChargesGroups where   Tenant = @Tenant AND Code = 'DECH')
+					begin
+						EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'QuoteChargesGroup'
+						insert into QuoteChargesGroups (Id,Code, Name,LocalName, SearchFields,Tenant,ViewOrder) values (@NewEntityId,'DECH','Destination Charges','Destination Charges','Destination Charges,DECH', @Tenant,30)
+					end
+
+					if not exists (select * from ChargesGroups where   Tenant = @Tenant AND Code = 'OTCH')
+					begin
+						EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'QuoteChargesGroup'
+						insert into QuoteChargesGroups (Id,Code, Name,LocalName, SearchFields,Tenant,ViewOrder) values (@NewEntityId,'OTCH','Other Charges','Other Charges','Other Charges,OTCH', @Tenant,40)
+					end
+
+				   FETCH NEXT FROM TenantsCursor INTO @Tenant      
+				END
+			CLOSE TenantsCursor
+			DEALLOCATE TenantsCursor
+		END
+
+    ]]>
+  </Sql>
+</Script>

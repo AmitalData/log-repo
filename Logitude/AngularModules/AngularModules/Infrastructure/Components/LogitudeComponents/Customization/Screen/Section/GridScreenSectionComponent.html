@@ -1,0 +1,63 @@
+<style>
+	.section-title {
+		font-size: 14px;
+		color: #1B90CB;
+	}
+</style>
+<table *ngIf="IsReady" style="width:100%;">
+	<tr>
+		<td>
+			<table>
+				<tr class="TabTitleRow">
+					<td *ngIf="ScreenSection.Title && ScreenSection.ScreenColumns && ScreenSection.ScreenColumns.length > 0" class="section-title">{{ScreenSection.Title}}</td>
+					<td style="text-align:center;width:50px">
+						<button class="Button" (click)="AddChildEntityClicked()">Add {{ScreenSectionName}}</button>
+					</td>
+					<td style="width:10px"></td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+	<tr style="height:100%">
+		<td>
+			<div class="MediaFill" style="width:99.3%">
+				<logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="DataSource" [ShowNoDataFoundText]="true">
+					<log-column [width]="'150'" *ngFor="let ScreenColumn of ScreenSection.ScreenColumns" [header]="ScreenColumn.ObjectFields[0].FullNameTextCodeCode | TextCodeTranslationPipe" title="ScreenColumn.ObjectFields[0].FullNameTextCodeCode | TextCodeTranslationPipe">
+						<ng-template let-item>
+							<log-cell-template #logcelltemplate [IsEnabled]="false">
+								<div *ngIf="ScreenColumn.ObjectFields[0].HasTemplate && (ScreenColumn.ObjectFields[0].DataTypeCode == 'Date' || ScreenColumn.ObjectFields[0].DataTypeCode == 'DateTime')" style="width: 100%; text-align: right;" [style.textAlign]="TextAlign">
+									{{item[ScreenColumn.ObjectFields[0].Code] | DateTimePipe:'DT'}}
+								</div>
+								<ObjectFieldTemplate *ngIf="(ScreenColumn.ObjectFields[0].DataTypeCode != 'Date' && ScreenColumn.ObjectFields[0].DataTypeCode != 'DateTime') || !ScreenColumn.ObjectFields[0].HasTemplate" [ObjectTable]="ObjectTable" [ObjectField]="ScreenColumn.ObjectFields[0]" [Entity]="item" [IsHeaderScreenTemplate]="true"  style="width:100%;"></ObjectFieldTemplate>
+							</log-cell-template>
+						</ng-template>
+					</log-column>
+
+					<!-- Buttons -->
+					<log-column [width]="'100'">
+						<ng-template let-item>
+							<log-cell-template [TabIndex]="-1">
+								<div style="width: 100%; height: 100%; position: relative;">
+									<div class="LeftCenter" style="height: 20px;">
+										<table>
+											<tr>
+												<td style="width: 4px;">
+													<span class="CellSeparator"></span>
+												</td>
+												<td>
+													<span class="CellSeparator"></span>
+													<IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="3" (click)="EditChildEntityClicked(item)"></IconButton>
+													<IconButton [Name]="'Delete'" [IsSmall]="true" [Left]="3" (click)="DeleteChildEntityClicked(item)" [IsEnabled]="true"></IconButton>
+												</td>
+											</tr>
+										</table>
+									</div>
+								</div>
+							</log-cell-template>
+						</ng-template>
+					</log-column>
+				</logitude-edit-grid>
+			</div>
+		</td>
+	</tr>
+</table>

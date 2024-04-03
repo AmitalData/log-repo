@@ -277,7 +277,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public bool IsDocumentsArchive { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public bool IsCustomerTenantShare { get; set; }
+        public bool CustomerTenantShareCustomsFile { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public bool CustomerTenantShareImportFile { get; set; }
@@ -366,6 +366,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string StockTypeCode { get; set; }
 
         public bool AutoArchiveOnInvoice { get; set; }
+        public bool AutoArchiveOnPODExport { get; set; }
         public string EcommerceSupportEmail { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
@@ -398,6 +399,9 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public bool SharedLogisMasterMessageLink { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public bool ShowMultiUnitsOfMeasurements { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public double? AirRatio { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
@@ -414,8 +418,20 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
 
         public bool IsQuotesRequestActivatedInShared { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public bool IsCargoTrackWebAccessActivated { get; set; }        
+        public bool EnableDeliveryOptions { get; set; }
+        public int? EmptyReturnClosingDays { get; set; }
+        public int? ShipmentATAClosingDays { get; set; }
+        public bool IsDigitalPortalAccessActivated { get; set; }
+        public bool UseNewTermsOfUse { get; set; }
+        public string ShipmentATADateIndicator { get; set; }
+        public int? TotalDefaultNumberOfUsers { get; set; }
+        public bool IsNewLogboxFromCloud { get; set; }
+        public bool ApproveUploadedDocuments { get; set; }
 
-
-        
+        public int? DPArchiveShipmentCreateFilter { get; set; }
+        public int? DPArchiveShipmentArrivalFilter { get; set; }
+        public int? DPArchiveShipmentDepartFilter { get; set; }
     }
 }

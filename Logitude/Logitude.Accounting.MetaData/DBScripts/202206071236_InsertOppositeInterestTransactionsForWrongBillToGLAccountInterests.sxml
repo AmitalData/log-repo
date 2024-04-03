@@ -1,0 +1,14 @@
+﻿<Script DBType="Main" Module="Accounting">
+  <Sql Version="1">
+    <![CDATA[
+
+INSERT INTO InterestTransactions (Id, Tenant, CreateDateTime, UpdateDateTime, InterestValueDate, SearchFields, GLAccountId, EntityId, OriginalEntityLineNumber, LocalAmount, ForeignAmount, CurrencyId,InterestEntityTypeCode, InterestReportId, IsClosed, IsCancelled)
+SELECT CONCAT('A', InterestTransactions.Id) as Id, InterestTransactions.Tenant, CreateDateTime, UpdateDateTime, InterestValueDate, InterestTransactions.SearchFields, InterestTransactions.GLAccountId, InterestTransactions.EntityId, InterestTransactions.OriginalEntityLineNumber + 40, InterestTransactions.LocalAmount * -1 as LocalAmount, InterestTransactions.ForeignAmount *-1 as ForeignAmount, InterestTransactions.CurrencyId, InterestEntityTypeCode, Null, 0, InterestTransactions.IsCancelled
+	from InterestTransactions
+	inner join ARInvoices on ARInvoices.Id = InterestTransactions.EntityId AND InterestTransactions.InterestEntityTypeCode = '1' AND ARInvoices.Tenant = InterestTransactions.Tenant 
+	inner join GLAccounts on ARInvoices.BillToGLAccountId = GLAccounts.Id AND GLAccounts.Tenant = ARInvoices.Tenant
+	where ARInvoices.BillToGLAccountId != InterestTransactions.GLAccountId  AND GLAccounts.ChartOfAccountsTypeCode = '6' AND  InterestReportId is not null
+
+     ]]>
+ </Sql>
+</Script>

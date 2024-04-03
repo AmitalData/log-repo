@@ -1,12 +1,17 @@
+import { Location } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouteReuseStrategy } from '@angular/router';
+import { Session } from 'protractor';
 import { AuthService } from 'src/app/auth.service';
+import { CustomRouteReuseStrategy } from 'src/app/custom-route-reuse-strategy.service';
 import { CargoTrackingBrandingData } from 'src/CargoTracking/DataContracts/CargoTrackingBrandingData';
 import { ServiceResponse } from 'src/CargoTracking/DataContracts/ServiceResponse';
 import { CargoTrackingBrandingDataExtendedService } from 'src/CargoTracking/Services/Others/CargoTrackingBrandingDataExtendedService';
+import { CargoTrackingSearchService } from 'src/CargoTracking/Services/Others/CargoTrackingSearchService';
 import { ServiceHelper } from 'src/CargoTracking/Utilities/ServiceHelper';
 import { CommonDataExtendedService } from 'src/Infrastructure/Services/Extended/CommonDataExtendedService';
 import { LoginExtendedService } from 'src/Infrastructure/Services/Extended/LoginExtendedService';
+import { SessionTimeoutServiceService } from 'src/Infrastructure/Services/session-timeout-service.service';
 import { LoginServiceHelper } from 'src/Infrastructure/Utilities/LoginServiceHelper';
 import { SessionInfo } from 'src/Infrastructure/Utilities/SessionInfo';
 
@@ -35,39 +40,57 @@ export class LoginComponent implements OnInit {
     public SecondaryColor: string = null;
     public BackGroundImg: string;
 
+
     constructor(private router: Router,
+        public routeReuseStrategy:RouteReuseStrategy,
         private route: ActivatedRoute,
         private loginExtendedService: LoginExtendedService,
         private commonDataExtendedService: CommonDataExtendedService,
         private authService: AuthService,
         private cargoTrackingBrandingDataExtendedService: CargoTrackingBrandingDataExtendedService,
         private loginServiceHelper: LoginServiceHelper,
+        private location: Location,
         @Inject('BASE_URL') baseUrl: string) {
         this.RouteToMainPage();
         this.GetcargoTrackingData(baseUrl);
     }
 
     private GetcargoTrackingData(baseUrl:string) {
+        
         this.LogoImgSrc = "./assets/images/logo/White.jpg";
         this.cargoTrackingBrandingDataExtendedService.GetUserDashboardBrandingData(ServiceHelper.GetcargoTrackingDataRequest(baseUrl)).subscribe((response: ServiceResponse) => {
             if(response.Result){
+                if (response.Result?.ForceHttps) 
+                    this.RedirectAppToHttps();
+                
                 this.Tenant = response.Result.Tenant;
-                ServiceHelper.SetCargoTrackingDate(response.Result,baseUrl);
+                ServiceHelper.SetCargoTrackingDate(response.Result, baseUrl);
                 this.LogoImgSrc = this.loginServiceHelper.GetLoginLogoImg();
                 this.BackGroundImg = CargoTrackingBrandingData.BackgroundURL;
                 this.MainColor = response.Result.MainColor;
                 this.SecondaryColor = response.Result.SecondaryColor;
+                
             }
             else{
                 this.GoToError401();
             }
         });
     }
+    RedirectAppToHttps(){
+        const isLocally = window.location.origin.indexOf('localhost') > -1;
+
+        if (!isLocally && location.protocol === 'http:') {
+            window.location.href = location.href.replace('http', 'https');
+        }
+    }
 
     ngOnInit() {
         this.initComponent();
     }
-
+    
+    clearRouteReuseStrategy() {
+        (this.routeReuseStrategy as CustomRouteReuseStrategy).clear();
+    }
     private initComponent() {
         // document.body.style.background = "#fff";
     }
@@ -80,6 +103,9 @@ export class LoginComponent implements OnInit {
     }
 
     public LogInClicked() {
+        
+        this.clearRouteReuseStrategy();
+
         this.ShowbusyIndicator = true;
         this.errorMessage = "";
         const isCargoTrackingSite = this.IsCargoTrackingDomain();
@@ -102,6 +128,7 @@ export class LoginComponent implements OnInit {
         };
 
         this.loginExtendedService.PostUserValidation(LoginParams).subscribe((userData: any) => {
+            
             if ((userData && (userData.HasError == true || userData.ExceptionMessage)) || !userData) {
                 this.LoginFailed(userData);
                 this.ShowbusyIndicator = false;
@@ -165,19 +192,24 @@ export class LoginComponent implements OnInit {
     }
 
     private Login(LoginParams: any, userData: any) {
+        
         this.errorMessage = "";
         let tenantList = userData.CompanyLogins;
         let LogInToTenant  = tenantList.filter(tenan => tenan.Tenant == this.Tenant)[0];
+        SessionInfo.DisplayCookies=true;
+        sessionStorage.setItem("DisplayCookies",JSON.stringify(true));
         if(!LogInToTenant) {
             this.errorMessage = "Login failed! unauthorized user.";
             this.ShowbusyIndicator = false;
         }
         else {
+            
             SessionInfo.LoggedUserCompanyLogins = userData.CompanyLogins;
             sessionStorage.setItem("LoggedUserCompanyLogins", JSON.stringify(userData.CompanyLogins));
 
             this.loginExtendedService.PostLoginData(LoginParams, LogInToTenant.Tenant).subscribe((userData: any) => {
                 this.ShowbusyIndicator = false;
+                SessionInfo.IsAdmin=userData.IsAdmin;
                 if (userData) {
                     this.FillSessionInfoData(userData);
                     this.RouteToMainPage();
@@ -187,18 +219,31 @@ export class LoginComponent implements OnInit {
             this.GetLoggedUserPM(LoginParams.Email, LogInToTenant.Tenant);
         }
     }
-
+    
     private GetLoggedUserPM(email: any, tenant: any)
     {
         this.loginExtendedService.GetLoggedUser(email, tenant).subscribe((loggedUserPM: any) =>
         {
             if (loggedUserPM) {
                 SessionInfo.LoggedUserPM = loggedUserPM;
+            }else{
+                this.GetLoggedContact();
+            }
+        });
+    }
+
+    private GetLoggedContact()
+    {
+        this.cargoTrackingBrandingDataExtendedService.GetLoggedContact().subscribe((loggedContact: any) =>
+        {
+            if (loggedContact) {
+                SessionInfo.LoggedContact = loggedContact;
             }
         });
     }
 
     private FillSessionInfoData(userData: any) {
+       
         sessionStorage.setItem("Token", userData.Token);
         sessionStorage.setItem("LoggedUserTenant", userData.CurrentTenant);
         sessionStorage.setItem("LoggedUserEmail", userData.UserName);
@@ -210,7 +255,8 @@ export class LoginComponent implements OnInit {
         SessionInfo.LoggedUserTenant = userData.CurrentTenant;
         SessionInfo.Token = userData.Token;
         SessionInfo.DocumentDownloadToken = userData.DocumentDownloadToken;
-    }
+       
+       }
 
     private RouteToMainPage(){
         if (this.authService.redirectUrl) {

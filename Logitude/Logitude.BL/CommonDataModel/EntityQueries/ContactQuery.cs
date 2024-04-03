@@ -92,6 +92,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                           CompanyName = a.CompanyName,
                                           CreateDate = a.CreateDate,
                                           IndexColor = a.IndexColor,
+                                          DigitalPortalLanguage = a.DigitalPortalLanguage
                                       }).FirstOrDefault();
 
                 if (instance != null)
@@ -145,49 +146,60 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         }
         public ContactPM GetSinglePM(string id, int tenant)
         {
-            if (!string.IsNullOrEmpty(id))
+            if (!string.IsNullOrWhiteSpace(id))
             {
-                ContactPM instance = (from a in repository.context.Contacts
-                                      where a.Tenant == tenant && a.UserType == "R"
-                                      && a.Id == id
-                                      select new ContactPM()
-                                      {
-                                          Anniversary = a.Anniversary,
-                                          Birthday = a.Birthday,
-                                          BusinessPhone = a.BusinessPhone,
-                                          Email = a.Email,
-                                          EnglishName = a.EnglishName,
-                                          FacebookId = a.FacebookId,
-                                          Fax = a.Fax,
-                                          Id = a.Id,
-                                          InActive = a.InActive,
-                                          LocalName = a.LocalName,
-                                          SearchFields = a.SearchFields,
-                                          DontShowLocalLabels = a.DontShowLocalLabels,
-                                          Mobile = a.Mobile,
-                                          Notes = a.Notes,
-                                          Tenant = a.Tenant,
-                                          Signature = a.Signature,
-                                          SignatureHtml = a.SignatureHtml,
-                                          ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
-                                          DontShowLocal = a.DontShowLocalLabels,
-                                          DisplayGettingStarted = a.DisplayGettingStarted,
-                                          BirthdayReminder = a.BirthdayReminder,
-                                          AnniversaryReminder = a.AnniversaryReminder,
-                                          ImageDetailId = a.ImageDetailId,
-                                          DoneDate = a.DoneDate,
-                                          BirthDayOfYear = a.BirthDayOfYear,
-                                          ContactDoneMethodCode = a.ContactDoneMethod != null ? a.ContactDoneMethod.Code : null,
-                                          ContactDoneMethodName = a.ContactDoneMethod != null ? a.ContactDoneMethod.Name : null,
-                                          Position = a.Position,
-                                          ExternalId = a.ExternalId,
-                                          CompanyName = a.CompanyName,
-                                          CreateDate = a.CreateDate,
-                                          IndexColor = a.IndexColor,
-                                      }).FirstOrDefault();
+                ContactPM instance = repository.context
+                                               .Contacts
+                                               .Where(a => a.Tenant == tenant
+                                                           && a.UserType.Equals("R", StringComparison.InvariantCultureIgnoreCase)
+                                                           && a.Id == id)
+                                               .Select( a => new ContactPM()
+                                               {
+                                                   Anniversary = a.Anniversary,
+                                                   Birthday = a.Birthday,
+                                                   BusinessPhone = a.BusinessPhone,
+                                                   Email = a.Email,
+                                                   EnglishName = a.EnglishName,
+                                                   FacebookId = a.FacebookId,
+                                                   Fax = a.Fax,
+                                                   Id = a.Id,
+                                                   InActive = a.InActive,
+                                                   LocalName = a.LocalName,
+                                                   SearchFields = a.SearchFields,
+                                                   DontShowLocalLabels = a.DontShowLocalLabels,
+                                                   Mobile = a.Mobile,
+                                                   Notes = a.Notes,
+                                                   Tenant = a.Tenant,
+                                                   Signature = a.Signature,
+                                                   SignatureHtml = a.SignatureHtml,
+                                                   ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
+                                                   DontShowLocal = a.DontShowLocalLabels,
+                                                   DisplayGettingStarted = a.DisplayGettingStarted,
+                                                   BirthdayReminder = a.BirthdayReminder,
+                                                   AnniversaryReminder = a.AnniversaryReminder,
+                                                   ImageDetailId = a.ImageDetailId,
+                                                   DoneDate = a.DoneDate,
+                                                   BirthDayOfYear = a.BirthDayOfYear,
+                                                   ContactDoneMethodCode = a.ContactDoneMethod != null ? a.ContactDoneMethod.Code : null,
+                                                   ContactDoneMethodName = a.ContactDoneMethod != null ? a.ContactDoneMethod.Name : null,
+                                                   Position = a.Position,
+                                                   ExternalId = a.ExternalId,
+                                                   CompanyName = a.CompanyName,
+                                                   CreateDate = a.CreateDate,
+                                                   IndexColor = a.IndexColor,
+                                                   DigitalPortalLanguage = a.DigitalPortalLanguage
+                                               })
+                                               .FirstOrDefault();
 
                 if (instance != null)
                 {
+                    TenantRepository tenantRepository = new TenantRepository(tenant);
+
+                    var tenantInfo = tenantRepository.GetSingleTenantWithOutIncluded(tenant);
+
+                    var tenantAddress = tenantInfo.Address != null ? tenantInfo.Address.City : "";
+
+                    instance.TimeZone = $"(UTC {tenantInfo.TimeZoneOffset}:00) {tenantAddress}";
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                     {
                         IGlobalContext globalContext = GlobalContext.GetContext();
@@ -272,6 +284,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                             IndexColor = a.IndexColor,
                                             CompanyName = a.CompanyName,
                                             CreateDate = a.CreateDate,
+                                            DigitalPortalLanguage = a.DigitalPortalLanguage
                                         }).ToList();
 
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -333,9 +346,50 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                             IndexColor = a.IndexColor,
                                             CompanyName = a.CompanyName,
                                             CreateDate = a.CreateDate,
+                                            DigitalPortalLanguage = a.DigitalPortalLanguage
                                         }).ToList(); 
 
             return contacts;
+        }
+
+        public List<ExtendedContactPM> GetExtendedContactPMsByTenant(int tenant)
+        {
+            List<ExtendedContactPM> contacts = (from Contact in repository.context.Contacts.Include("User")
+                                                where Contact.Tenant == tenant && Contact.UserType == "R"
+                                                join CardContact in repository.context.CardContacts
+                                                on Contact.Id equals CardContact.ContactId
+                                                into CardContacts
+                                                select new ExtendedContactPM()
+                                                {
+                                                    Id = Contact.Id,
+                                                    Tenant = Contact.Tenant,
+                                                    EnglishName = Contact.EnglishName,
+                                                    Email = Contact.Email,
+                                                    UserRoles = Contact.User != null ? Contact.User.UserRoles : null,
+                                                    CardId = CardContacts.FirstOrDefault() != null ? CardContacts.FirstOrDefault().CardId : null
+                                                }).ToList();
+
+            return contacts;
+        }
+
+        public ExtendedContactPM GetSingleExtendedContactPMsByTenant(string id, int tenant)
+        {
+            ExtendedContactPM contact = (from Contact in repository.context.Contacts.Include("User")
+                                         where Contact.Tenant == tenant && Contact.UserType == "R" && Contact.Id == id
+                                         join CardContact in repository.context.CardContacts
+                                         on Contact.Id equals CardContact.ContactId
+                                         into CardContacts
+                                         select new ExtendedContactPM()
+                                         {
+                                             Id = Contact.Id,
+                                             Tenant = Contact.Tenant,
+                                             EnglishName = Contact.EnglishName,
+                                             Email = Contact.Email,
+                                             UserRoles = Contact.User != null ? Contact.User.UserRoles : null,
+                                             CardId = CardContacts.FirstOrDefault() != null ? CardContacts.FirstOrDefault().CardId : null
+                                         }).FirstOrDefault();
+
+            return contact;
         }
 
         public List<ContactPM> GetContactsByEmail(string email, int tenant)
@@ -376,6 +430,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                             IndexColor = a.IndexColor,
                                             CompanyName = a.CompanyName,
                                             CreateDate = a.CreateDate,
+                                            DigitalPortalLanguage = a.DigitalPortalLanguage
                                         }).ToList();
 
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -457,6 +512,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                      IndexColor = a.IndexColor,
                                      CompanyName = a.CompanyName,
                                      CreateDate = a.CreateDate,
+                                     DigitalPortalLanguage = a.DigitalPortalLanguage
                                  }).FirstOrDefault();
 
             if (contact != null)
@@ -516,6 +572,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                      IndexColor = a.IndexColor,
                                      CompanyName = a.CompanyName,
                                      CreateDate = a.CreateDate,
+                                     DigitalPortalLanguage = a.DigitalPortalLanguage
                                  }).FirstOrDefault();
 
             if (contact != null)
@@ -574,6 +631,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                      IndexColor = a.IndexColor,
                                      CompanyName = a.CompanyName,
                                      CreateDate = a.CreateDate,
+                                     DigitalPortalLanguage = a.DigitalPortalLanguage
                                  }).FirstOrDefault();
 
             if (contact != null)
@@ -682,6 +740,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        IndexColor = a.IndexColor,
                                        CompanyName = a.CompanyName,
                                        CreateDate = a.CreateDate,
+                                       DigitalPortalLanguage = a.DigitalPortalLanguage
                                    }).FirstOrDefault();
 
                         isTenant0User = true;
@@ -707,7 +766,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                             if (contactPassword != null)
                             {
-                                contact.IsUser = globalContact.IsUser;
+                                contact.IsUser = globalContact != null ? globalContact.IsUser: false;
                                 contact.HasPassword = true;
                                 contact.IsLocked = contactPassword.IsLocked;
                                 contact.MustChangePassword = contactPassword.MustChangePassword;
@@ -770,6 +829,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                          IndexColor = a.IndexColor,
                                          CompanyName = a.CompanyName,
                                          CreateDate = a.CreateDate,
+                                         DigitalPortalLanguage = a.DigitalPortalLanguage
                                      }).FirstOrDefault();
 
                 if (contact == null)
@@ -809,6 +869,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                    IndexColor = a.IndexColor,
                                    CompanyName = a.CompanyName,
                                    CreateDate = a.CreateDate,
+                                   DigitalPortalLanguage = a.DigitalPortalLanguage
                                }).FirstOrDefault();
 
                     isTenant0User = true;
@@ -891,6 +952,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              IndexColor = a.IndexColor,
                                              CompanyName = a.CompanyName,
                                              CreateDate = a.CreateDate,
+                                             DigitalPortalLanguage = a.DigitalPortalLanguage
                                          }).FirstOrDefault();
 
                     if (contact == null)
@@ -930,6 +992,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        IndexColor = a.IndexColor,
                                        CompanyName = a.CompanyName,
                                        CreateDate = a.CreateDate,
+                                       DigitalPortalLanguage = a.DigitalPortalLanguage
                                    }).FirstOrDefault();
 
                         isTenant0User = true;
@@ -1018,6 +1081,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                          IndexColor = a.IndexColor,
                                          CompanyName = a.CompanyName,
                                          CreateDate = a.CreateDate,
+                                         DigitalPortalLanguage = a.DigitalPortalLanguage
                                      }).FirstOrDefault();
 
                 if (contact == null)
@@ -1057,6 +1121,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                    IndexColor = a.IndexColor,
                                    CompanyName = a.CompanyName,
                                    CreateDate = a.CreateDate,
+                                   DigitalPortalLanguage = a.DigitalPortalLanguage
                                }).FirstOrDefault();
 
                     isTenant0User = true;
@@ -1132,6 +1197,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       IndexColor = a.IndexColor,
                                       CompanyName = a.CompanyName,
                                       CreateDate = a.CreateDate,
+                                      DigitalPortalLanguage = a.DigitalPortalLanguage
                                   }).FirstOrDefault();
 
                         if (entity != null)
@@ -1203,6 +1269,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              IndexColor = a.IndexColor,
                                              CompanyName = a.CompanyName,
                                              CreateDate = a.CreateDate,
+                                             DigitalPortalLanguage = a.DigitalPortalLanguage
                                          }).FirstOrDefault();
 
                     if (contact != null)
@@ -1260,6 +1327,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                          ExternalId = a.ExternalId,
                                          CompanyName = a.CompanyName,
                                          CreateDate = a.CreateDate,
+                                         DigitalPortalLanguage = a.DigitalPortalLanguage
                                      }).FirstOrDefault();
 
                 if (contact != null)
@@ -1314,6 +1382,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                  IndexColor = a.IndexColor,
                                                  CompanyName = a.CompanyName,
                                                  CreateDate = a.CreateDate,
+                                                 DigitalPortalLanguage = a.DigitalPortalLanguage
                                              };
 
             return result;
@@ -1323,6 +1392,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         {
             CardContactRepository cardContactRepository = new CardContactRepository(tenant);
             CardContactAdditionalServiceQuery cardContactAdditionalServiceQuery = new CardContactAdditionalServiceQuery(tenant);
+            CardContactProductQuery cardContactProductQuery = new CardContactProductQuery(tenant);
             IQueryable<CardContact> cardContacts = cardContactRepository.GetCardContacts(tenant);
 
             IQueryable<ContactPM> contacts = from a in cardContacts
@@ -1368,6 +1438,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 if (cardContact != null)
                 {
                     contact.CardContactAdditionalServices = cardContactAdditionalServiceQuery.GetCardContactAdditionalServicePMsByCardContactId(cardContact.Id, tenant);
+                    contact.CardContactProducts = cardContactProductQuery.GetCardContactProductPMsByCardContactId(cardContact.Id, tenant);
                 }
             }
 
@@ -1443,6 +1514,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                         IndexColor = a.IndexColor,
                                                         CompanyName = a.CompanyName,
                                                         CreateDate = a.CreateDate,
+                                                        DigitalPortalLanguage = a.DigitalPortalLanguage
                                                     });
 
             return contactLists;
@@ -1481,6 +1553,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                         IndexColor = a.IndexColor,
                                                         CompanyName = a.CompanyName,
                                                         CreateDate = a.CreateDate,
+                                                        DigitalPortalLanguage = a.DigitalPortalLanguage
                                                     });
             return contactLists;
         }
@@ -1531,6 +1604,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                   IndexColor = a.IndexColor,
                                                   CompanyName = a.CompanyName,
                                                   CreateDate = a.CreateDate,
+                                                  DigitalPortalLanguage = a.DigitalPortalLanguage
                                               }).ToList();
             return contactLists;
         }
@@ -1687,7 +1761,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                           CompanyName = a.CompanyName,
                                           CreateDate = a.CreateDate,
                                           IndexColor = a.IndexColor,
-
+                                          DigitalPortalLanguage = a.DigitalPortalLanguage
                                       }).FirstOrDefault();
 
                 if (instance != null)
@@ -1769,7 +1843,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       CompanyName = a.CompanyName,
                                       CreateDate = a.CreateDate,
                                       IndexColor = a.IndexColor,
-
+                                      DigitalPortalLanguage = a.DigitalPortalLanguage
                                   }).FirstOrDefault();
 
 
@@ -1902,6 +1976,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                      IndexColor = a.IndexColor,
                                      CompanyName = a.CompanyName,
                                      CreateDate = a.CreateDate,
+                                     DigitalPortalLanguage = a.DigitalPortalLanguage
                                  }).FirstOrDefault();
 
             if (contact != null)
@@ -1923,7 +1998,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return contact;
         }
 
-
+        public ContactPM GetSinglePMByEmail(string email, int tenant)
+        {
+            return this.GetSingleByEmail(email, tenant);
+        }
         public IQueryable<ContactList> GetDemoTenantContactList(IQueryable<Contact> iQueryable, string loggedUserId, int tenant)
         {
             List<ContactList> result = new List<ContactList>();
@@ -1971,6 +2049,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     IndexColor = contact.IndexColor,
                     CompanyName = contact.CompanyName,
                     CreateDate = contact.CreateDate,
+                    DigitalPortalLanguage = contact.DigitalPortalLanguage
                 };
                 result.Add(newItem);
                 index++;
@@ -1997,7 +2076,30 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                  }).FirstOrDefault();
             return contact;
         }
-        
 
+        public IQueryable<ContactPM> GetContactsbyCustomerId(string id, int tenant)
+        {
+            CardContactRepository cardContactRepository = new CardContactRepository(tenant);
+            IQueryable<ContactPM> contacts = from a in cardContactRepository.context.CardContacts.Include("Contact")
+                                             where a.CardId == id && a.Tenant == tenant
+                                             select new ContactPM()
+                                             {
+                                                 BusinessPhone = a.Contact.BusinessPhone,
+                                                 Email = a.Contact.Email,
+                                                 EnglishName = a.Contact.EnglishName,
+                                                 Fax = a.Contact.Fax,
+                                                 Id = a.Contact.Id,
+                                                 InActive = a.Contact.InActive,
+                                                 LocalName = a.Contact.LocalName,
+                                                 Mobile = a.Contact.Mobile,
+                                                 Notes = a.Contact.Notes,
+                                                 Tenant = a.Contact.Tenant,
+                                                 CardId = id,
+                                                 Position = a.Contact.Position,
+                                                 CreateDate = a.Contact.CreateDate
+                                             };
+
+            return contacts;
+        }
     }
 }

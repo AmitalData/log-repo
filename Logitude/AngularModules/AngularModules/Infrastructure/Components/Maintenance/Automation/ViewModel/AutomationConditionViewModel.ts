@@ -14,6 +14,7 @@ import {ApiQueryFilters} from '../../../../../Infrastructure/DataContracts/ApiQu
 import {AutomationHelper} from '../../../../../Infrastructure/Helpers/AutomationHelper';
 import {TextCodeTranslationPipe} from '../../../../../Controls/Pipes/TextCodeTranslationPipe';
 import {TextCodeTranslator} from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { SessionLocator } from '../../../../Utilities/SessionLocator';
 
 
 export class AutomationConditionViewModel extends BaseComponent implements OnInit {
@@ -50,6 +51,7 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
    ObjectFieldCode: string = "";
     IsRefreshAutomationCondationField: boolean;
     IsValid: boolean;
+    DependencyFilter1Value: string;
 
    //IsSystemVariables: boolean = false;
     CustomObjectFieldCode: string = "";
@@ -84,10 +86,9 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
         if (this.ObjectFieldPM) {
             this.ChosenOperatorList(this.ObjectFieldPM.DataTypeCode, false, this.ObjectFieldPM);
             this.ObjectFieldCode = this.ObjectFieldPM.FieldCode;
- 
-
+         
             this.SelectedCustomField = this.ObjectFieldPM;
-
+            this.SetDependencyFilter1Value();
 
             this.UIProperties.SetEnabled(this.SelectedCustomField.FieldName, this.AddEditAutomationsViewModel.ObjectTableName, true);
             this.UIProperties.SetRequired(this.SelectedCustomField.FieldName, this.AddEditAutomationsViewModel.ObjectTableName, false);
@@ -177,6 +178,11 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
 
     }
 
+    SetDependencyFilter1Value() {
+        this.DependencyFilter1Value = null;
+        if (!this.SelectedCustomField || this.SelectedCustomField.ObjectTable_LookUpTableName != "EntityStatus") return;
+        this.DependencyFilter1Value = this.SelectedCustomField.ObjectTableId;
+    }
 
     FullListDate() {
         this.DateTypeList = [];
@@ -206,7 +212,12 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
             var objectFieldName = objectField.FullNameTextCodeDefaultText;
             if (objectFieldName == "Company")//this is for now. we need a new field to get the name of the entity(objectField.FullNameAutomationEntity)
                 objectFieldName = "Customer";
-            this.AutomationEntityLists.push(new AutomationEntityList(objectFieldName, objectField.LookUpTableId, objectField.FieldCode, objectFieldName));
+            if (objectFieldName == "Ticket") {
+                this.AddTicketAutomationToEntityLists(objectFieldName, objectField);
+            }
+            else {
+                this.AutomationEntityLists.push(new AutomationEntityList(objectFieldName, objectField.LookUpTableId, objectField.FieldCode, objectFieldName));
+            }
         });
 
         this.SelectedAutomationEntity = this.AutomationEntityLists.filter(d => d.ObjectFieldCode == this.PartnerObjectFieldCode)[0];
@@ -221,6 +232,13 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
     }
 
     
+    private AddTicketAutomationToEntityLists(objectFieldName: any, objectField: any) {
+        const TicketEntityAutomationFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "TAU")[0];
+        if (TicketEntityAutomationFeatureToggle != null) {
+            this.AutomationEntityLists.push(new AutomationEntityList(objectFieldName, objectField.LookUpTableId, objectField.FieldCode, objectFieldName));
+        }
+    }
+
     get IsSystemVariables() {
         var result = false;
         if (this.SelectedOperator) {
@@ -349,7 +367,7 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
 
 
         if (this.CurrentEntityType != "OnCreate") {
-            if (this.SelectedAutomationEntity != null && AppTool.IsNullOrEmpty(this.SelectedAutomationEntity.ObjectFieldCode) ) {
+            if (!this.IsDelayAutomationConditions() && this.SelectedAutomationEntity != null && AppTool.IsNullOrEmpty(this.SelectedAutomationEntity.ObjectFieldCode) ) {
                 this.OperatorList.push(new Operator("Changed to", "CHANGEDTO"));
                 this.OperatorList.push(new Operator("Changed", "CHANGED"));
             }
@@ -359,7 +377,7 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
         if (dataTypeCode == "DateTime" || dataTypeCode == "Date" ) {
 
             if (!this.OperatorList.filter(d => d.Code == "CHANGED")[0]) {
-                if (this.SelectedAutomationEntity != null && AppTool.IsNullOrEmpty(this.SelectedAutomationEntity.ObjectFieldCode)) {
+                if (!this.IsDelayAutomationConditions() && this.SelectedAutomationEntity != null && AppTool.IsNullOrEmpty(this.SelectedAutomationEntity.ObjectFieldCode)) {
                     this.OperatorList.push(new Operator("Changed", "CHANGED"));
                 }
             }
@@ -378,6 +396,12 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
     }
 
 
+    IsDelayAutomationConditions() {
+        return this.DelayAutomationconditionsViewModel ? true : false;
+    }
+
+    
+
     CustomFieldValueChanged(item) {
         {
             if (item) {
@@ -388,8 +412,7 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
 
                     this.IsHideGeneralControl = false;
                     this.FieldValue = item.DataTypeCode == "Date" || item.DataTypeCode == "DateTime" ? 0 : "";
-
-
+                    this.ObjectFieldCode = item.FieldCode;
                     if (item.DataTypeCode == "Date" || item.DataTypeCode == "DateTime") {
                         var todayDate = DateTool.GetCurrentDateTimeAsUtc();
                         this.CurrentEntityPM.Value = this.SelectedDateType.Name + "*" + this.FieldValue + "*" + FieldValueResolver.ConvertUTCDateToString(todayDate, "Automation");
@@ -406,6 +429,7 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
                     }
 
                     this.SelectedCustomField = this.AllowedinAutomationConditionsFieldLists.filter(d => d.FieldCode == item.FieldCode)[0];
+                    this.SetDependencyFilter1Value();
                     this.IsCustomCombox = false;
                   
                     if (this.SelectedCustomField) {
@@ -425,7 +449,7 @@ export class AutomationConditionViewModel extends BaseComponent implements OnIni
                     
                     this.IsSetValue = false;
                     this.CurrentEntityPM.ObjectFieldType = this.SelectedCustomField.DataTypeCode;
-
+             
                     if (ischange) {
                         this.IsRefrachCustomField = !this.IsRefrachCustomField;
                     }
@@ -637,7 +661,7 @@ export class Operator {
 
 
 
-class AutomationEntityList {
+export class AutomationEntityList {
 
     DisplayName: string;
 

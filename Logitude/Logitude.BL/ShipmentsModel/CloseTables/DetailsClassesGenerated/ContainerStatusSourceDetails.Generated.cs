@@ -34,6 +34,13 @@ namespace Logitude.BL.ShipmentsModel
                 Name = "Ocean Insights", 
                 SearchFields = "OIN,Ocean Insights", 
 			});
+			 
+            all.Add(new ContainerStatusSourceDetails()
+            {    
+                Code = "2", 
+                Name = "Vizion", 
+                SearchFields = "2,Vizion", 
+			});
 			
             return all;
        }

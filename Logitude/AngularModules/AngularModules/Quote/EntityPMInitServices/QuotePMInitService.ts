@@ -28,6 +28,7 @@ export class QuotePMInitService {
             entityPM.BusinessUnitId = SessionLocator.LoggedUserPM.BusinessUnitId;
             entityPM.RatingCode = "N";
             entityPM.ValueOfGoodsCurrencyId = SessionLocator.TenantPM.FreightCurrencyId;
+            entityPM.ValidByTypeCode = 'EAD'; 
         }
     }
 

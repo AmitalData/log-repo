@@ -12,5 +12,6 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public int Order { get; set; }
         public bool InActive { get; set; }
         public string SearchFields { get; set; }
+        public string Code { get; set; }
     }
 }

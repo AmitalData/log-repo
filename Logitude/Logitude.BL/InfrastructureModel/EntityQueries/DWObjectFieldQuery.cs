@@ -8,6 +8,7 @@ using Logitude.BL.InfrastructureModel.EntityPMs;
 using System.Collections.Generic;
 using System;
 using Logitude.BL.Helpers;
+using System.Threading.Tasks;
 
 namespace Logitude.BL.InfrastructureModel.EntityQueries
 {
@@ -62,6 +63,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                    DontDisplayInView = a.DontDisplayInView,
                                                    DimensionDataViewName  = a.DimensionDataViewName,
                                                    IsMultipleSelection = a.IsMultipleSelection,
+                                                   UseUnitSelection = a.UseUnitSelection,
                                                    RecordType = a.RecordType,
                                                }).FirstOrDefault();
 
@@ -111,6 +113,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         DontDisplayInView = a.DontDisplayInView,
                         DimensionDataViewName = a.DimensionDataViewName,
                         IsMultipleSelection = a.IsMultipleSelection,
+                        UseUnitSelection = a.UseUnitSelection,
                         RecordType = a.RecordType,
 
 
@@ -149,6 +152,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                 DontDisplayInView = a.DontDisplayInView,
                                                 DimensionDataViewName = a.DimensionDataViewName,
                                                 IsMultipleSelection = a.IsMultipleSelection,
+                                                UseUnitSelection = a.UseUnitSelection,
                                                 RecordType = a.RecordType,
 
 
@@ -163,7 +167,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             DWObjectTableQuery dwObjectTableQuery = new DWObjectTableQuery(tenant);
             List<DWObjectFieldPM> FinalList = new List<DWObjectFieldPM>();
             List<string> dwObjectTablesCodes = dwObjectTableQuery.GetDWObjectTablePMs(tenant).Where(dwTable => dwTable.TypeCode == "Fact" && string.IsNullOrEmpty(dwTable.ParentFactCode)).Select(dwTable => dwTable.Code).ToList();
-            dwObjectTablesCodes.ForEach(dwTableCode => {
+           
+            Parallel.ForEach(dwObjectTablesCodes, (dwTableCode) =>
+            {
                 FinalList.AddRange(GetDWObjectFieldWithChildrenFieldsPMsByDWObjectTabelAndTenant(tenant, dwTableCode));
             });
 
@@ -234,6 +240,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                 DontDisplayInView = a.DontDisplayInView,
                                 DimensionDataViewName = a.DimensionDataViewName,
                                 IsMultipleSelection = a.IsMultipleSelection,
+                                UseUnitSelection = a.UseUnitSelection,
                                 RecordType = a.RecordType,
 
 
@@ -272,6 +279,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                 DontDisplayInView = item.DontDisplayInView,
                 DimensionDataViewName = item.DimensionDataViewName,
                 IsMultipleSelection = item.IsMultipleSelection,
+                UseUnitSelection = item.UseUnitSelection,
                 RecordType = item.RecordType,
                 FactTableCode = dwotCode,
 
@@ -281,7 +289,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
         private IEnumerable<IGrouping<string, DWObjectFieldPM>> GetDWObjectFieldPMDimensionListsGroups(int tenant ,List<string> dimensionTableLists)
         {
-            IEnumerable<IGrouping<string, DWObjectFieldPM>> list = (from a in repository.webFreightContext.DWObjectFields
+            IEnumerable<IGrouping<string, DWObjectFieldPM>> list = (from a in new DWObjectFieldRepository(tenant).webFreightContext.DWObjectFields
                                                                     where a.Tenant == tenant && dimensionTableLists.Contains(a.DWObjectTableCode) && a.DisplayInQueryBuilder == true
                                                                     select new DWObjectFieldPM()
                                                                     {
@@ -309,6 +317,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                                         DontDisplayInView = a.DontDisplayInView,
                                                                         DimensionDataViewName = a.DimensionDataViewName,
                                                                         IsMultipleSelection = a.IsMultipleSelection,
+                                                                        UseUnitSelection = a.UseUnitSelection,
                                                                         RecordType = a.RecordType,
 
 
@@ -349,6 +358,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         DontDisplayInView = a.DontDisplayInView,
                         DimensionDataViewName = a.DimensionDataViewName,
                         IsMultipleSelection = a.IsMultipleSelection,
+                        UseUnitSelection = a.UseUnitSelection,
                         RecordType = a.RecordType,
 
 
@@ -388,6 +398,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         DontDisplayInView = a.DontDisplayInView,
                         DimensionDataViewName = a.DimensionDataViewName,
                         IsMultipleSelection = a.IsMultipleSelection,
+                        UseUnitSelection = a.UseUnitSelection,
                         RecordType = a.RecordType,
 
 
@@ -425,6 +436,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                        DontDisplayInView = a.DontDisplayInView,
                                                        DimensionDataViewName = a.DimensionDataViewName,
                                                        IsMultipleSelection = a.IsMultipleSelection,
+                                                       UseUnitSelection = a.UseUnitSelection,
                                                        RecordType = a.RecordType,
 
 
@@ -473,6 +485,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         DontDisplayInView = a.DontDisplayInView,
                         DimensionDataViewName = a.DimensionDataViewName,
                         IsMultipleSelection = a.IsMultipleSelection,
+                        UseUnitSelection = a.UseUnitSelection,
                         RecordType = a.RecordType,
 
 
@@ -524,6 +537,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                         DontDisplayInView = a.DontDisplayInView,
                         DimensionDataViewName = a.DimensionDataViewName,
                         IsMultipleSelection = a.IsMultipleSelection,
+                        UseUnitSelection = a.UseUnitSelection,
                         RecordType = a.RecordType,
 
 
@@ -569,6 +583,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                  DontDisplayInView = a.DontDisplayInView,
                                                  DimensionDataViewName = a.DimensionDataViewName,
                                                  IsMultipleSelection = a.IsMultipleSelection,
+                                                 UseUnitSelection = a.UseUnitSelection,
                                                  RecordType = a.RecordType,
 
 
@@ -603,10 +618,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             return results;
         }
 
-        public DWObjectField GetDWObjectFieldByDimTable(string DWDimTableCode)
+        public DWObjectField GetDWObjectFieldByDimTable(string DWDimTableCode , string dWObjectTableCode)
         {
             return (from a in repository.webFreightContext.DWObjectFields
-                    where a.DimensionTableCode == DWDimTableCode
+                    where a.DimensionTableCode == DWDimTableCode && a.DWObjectTableCode == dWObjectTableCode
                     select a).FirstOrDefault();
         }
     }

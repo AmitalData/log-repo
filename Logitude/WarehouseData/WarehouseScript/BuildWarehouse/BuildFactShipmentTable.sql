@@ -1,4 +1,73 @@
 
+If(OBJECT_ID('tempdb..#TempPartnerAddressContactDetails') Is Not Null) Begin  Drop Table #TempPartnerAddressContactDetails End 
+
+
+SELECT dw_Shipments.Id as Id	, ShipperAddress.Id_Number as ShipperAddressId ,ShipperContact.Id_Number as ShipperContactId,ShipperNotExporterAddress.Id_Number as ShipperNotExporterAddressId ,ShipperNotExporterContact.Id_Number as ShipperNotExporterContactId ,
+	 FreelancerAddress.Id_Number as FreelancerAddressId ,FreelancerContact.Id_Number as FreelancerContactId ,ReleasingAgentAddress.Id_Number as ReleasingAgentAddressId ,ReleasingAgentContact.Id_Number as ReleasingAgentContactId,
+	 CustomerAddress.Id_Number as CustomerAddressId ,CustomerContact.Id_Number as CustomerContactId ,ConsigneeAddress.Id_Number as ConsigneeAddressId ,ConsigneeContact.Id_Number as ConsigneeContactId, 
+	 AgentAddress.Id_Number as AgentAddressId ,AgentContact.Id_Number as AgentContactId ,CustomAgentExportAddress.Id_Number as CustomAgentExportAddressId ,CustomAgentExportContact.Id_Number as CustomAgentExportContactId,
+	 CustomAgentImportAddress.Id_Number as CustomAgentImportAddressId, CustomAgentImportContact.Id_Number as CustomAgentImportContactId ,Notify1Address.Id_Number as Notify1AddressId ,Notify1Contact.Id_Number as Notify1ContactId,
+	 Notify2Address.Id_Number as Notify2AddressId ,Notify2Contact.Id_Number as Notify2ContactId ,FreightForwarderAddress.Id_Number as FreightForwarderAddressId ,FreightForwarderContact.Id_Number as FreightForwarderContactId,
+	 ConsigneeNotImporterAddress.Id_Number as ConsigneeNotImporterAddressId ,ConsigneeNotImporterContact.Id_Number as ConsigneeNotImporterContactId ,CustomClearancePointAddress.Id_Number as CustomClearancePointAddressId ,CustomClearancePointContact.Id_Number as CustomClearancePointContactId ,
+	 ColoaderAddress.Id_Number as ColoaderAddressId ,ColoaderContact.Id_Number as ColoaderContactId ,ConsolidatorAddress.Id_Number as ConsolidatorAddressId ,ConsolidatorContact.Id_Number as ConsolidatorContactId
+	 INTO #TempPartnerAddressContactDetails
+      FROM dw_Shipments  
+
+   inner JOIN NewDIM_Addresses ShipperAddress ON dw_Shipments.ShipperAddressId = ShipperAddress.Id
+   inner JOIN NewDIM_Contacts ShipperContact ON dw_Shipments.ShipperContactId = ShipperContact.Id   
+
+   inner JOIN NewDIM_Addresses ShipperNotExporterAddress ON dw_Shipments.ShipperNotExporterAddressId = ShipperNotExporterAddress.Id
+   inner JOIN NewDIM_Contacts ShipperNotExporterContact ON dw_Shipments.ShipperNotExporterContactId = ShipperNotExporterContact.Id
+
+   inner JOIN NewDIM_Addresses FreelancerAddress ON dw_Shipments.FreelancerAddressId = FreelancerAddress.Id
+   inner JOIN NewDIM_Contacts FreelancerContact ON dw_Shipments.FreelancerContactId = FreelancerContact.Id
+
+   inner JOIN NewDIM_Addresses ReleasingAgentAddress ON dw_Shipments.ReleasingAgentAddressId = ReleasingAgentAddress.Id
+   inner JOIN NewDIM_Contacts ReleasingAgentContact ON dw_Shipments.ReleasingAgentContactId = ReleasingAgentContact.Id
+
+   inner JOIN NewDIM_Addresses CustomerAddress ON dw_Shipments.CustomerAddressId = CustomerAddress.Id
+   inner JOIN NewDIM_Contacts CustomerContact ON dw_Shipments.CustomerContactId = CustomerContact.Id
+
+   inner JOIN NewDIM_Addresses ConsigneeAddress ON dw_Shipments.ConsigneeAddressId = ConsigneeAddress.Id
+   inner JOIN NewDIM_Contacts ConsigneeContact ON dw_Shipments.ConsigneeContactId = ConsigneeContact.Id
+
+   inner JOIN NewDIM_Addresses AgentAddress ON dw_Shipments.AgentAddressId = AgentAddress.Id
+   inner JOIN NewDIM_Contacts AgentContact ON dw_Shipments.AgentContactId = AgentContact.Id
+
+   inner JOIN NewDIM_Addresses CustomAgentExportAddress ON dw_Shipments.CustomAgentExportAddressId = CustomAgentExportAddress.Id
+   inner JOIN NewDIM_Contacts CustomAgentExportContact ON dw_Shipments.CustomAgentExportContactId = CustomAgentExportContact.Id
+
+   inner JOIN NewDIM_Addresses CustomAgentImportAddress ON dw_Shipments.CustomAgentImportAddressId = CustomAgentImportAddress.Id
+   inner JOIN NewDIM_Contacts CustomAgentImportContact ON dw_Shipments.CustomAgentImportContactId = CustomAgentImportContact.Id
+
+   inner JOIN NewDIM_Addresses Notify1Address ON dw_Shipments.Notify1AddressId = Notify1Address.Id
+   inner JOIN NewDIM_Contacts Notify1Contact ON dw_Shipments.Notify1ContactId = Notify1Contact.Id
+
+   inner JOIN NewDIM_Addresses Notify2Address ON dw_Shipments.Notify2AddressId = Notify2Address.Id
+   inner JOIN NewDIM_Contacts Notify2Contact ON dw_Shipments.Notify2ContactId = Notify2Contact.Id
+
+   inner JOIN NewDIM_Addresses FreightForwarderAddress ON dw_Shipments.FreightForwarderAddressId = FreightForwarderAddress.Id
+   inner JOIN NewDIM_Contacts FreightForwarderContact ON dw_Shipments.FreightForwarderContactId = FreightForwarderContact.Id
+
+   inner JOIN NewDIM_Addresses ConsigneeNotImporterAddress ON dw_Shipments.ConsigneeNotImporterAddressId = ConsigneeNotImporterAddress.Id
+   inner JOIN NewDIM_Contacts ConsigneeNotImporterContact ON dw_Shipments.ConsigneeNotImporterContactId = ConsigneeNotImporterContact.Id
+
+   inner JOIN NewDIM_Addresses CustomClearancePointAddress ON dw_Shipments.CustomClearancePointAddressId = CustomClearancePointAddress.Id
+   inner JOIN NewDIM_Contacts CustomClearancePointContact ON dw_Shipments.CustomClearancePointContactId = CustomClearancePointContact.Id
+
+   inner JOIN NewDIM_Addresses ColoaderAddress ON dw_Shipments.ColoaderAddressId = ColoaderAddress.Id
+   inner JOIN NewDIM_Contacts ColoaderContact ON dw_Shipments.ColoaderContactId = ColoaderContact.Id
+
+   inner JOIN NewDIM_Addresses ConsolidatorAddress ON dw_Shipments.ConsolidatorAddressId = ConsolidatorAddress.Id
+   inner JOIN NewDIM_Contacts ConsolidatorContact ON dw_Shipments.ConsolidatorContactId = ConsolidatorContact.Id
+
+	 where dw_Shipments.IsCancelled = 0 and dw_Shipments.ShipmentLevelCode in ('H','D' , 'C') and   $LastCounterWhere$
+
+   ALTER TABLE #TempPartnerAddressContactDetails ADD PRIMARY KEY CLUSTERED (Id) 
+
+
+
+
 
    declare @Id as varchar(15)
    declare @SourceTenant as int
@@ -10,7 +79,7 @@
    declare @OBLType as varchar(25)
    declare @Department as int
    declare @Branch as int
-   declare @ShipmentNumber as varchar(15)
+   declare @ShipmentNumber as varchar(20)
    declare @House as varchar(20)
    declare @Master as varchar(30)
    declare @AirlinePrefix as varchar(3)
@@ -179,7 +248,7 @@
   declare @VolumeUnitCode as  varchar(3)
   declare @OrderGrossWeightWithUnitCode as  varchar(40)
     declare @OrderVolumeWithUnitCode as  varchar(40)
-    declare @OrderNumberOfPackagesWithUnitCode as  varchar(15)
+
 
 	declare @ConsigneeNotImporter as   varchar(15)
     declare @IssuingCarrierAgent  as   varchar(15)
@@ -297,6 +366,77 @@
 
    declare @ShipmentLevelCode as varchar(1)
     
+   declare @MasterOnCarriageATA as datetime 
+   declare @MasterOnCarriageATD as datetime
+   declare @MasterOnCarriageETD as datetime
+   declare @MasterOnCarriageETA as datetime  
+
+   declare @PlannedCargoReadyDate as datetime  
+   declare @ApprovedCargoReadyDate as datetime   
+   declare @Notify1Reference2 as varchar(50)
+   declare @HandlerUser as int
+   declare @AccountingClosedByUser as  int
+   declare @IsStandalonePickupDelivery as bit
+
+   declare @ShipperContact as  int
+   declare @ShipperAddress as  int  
+   declare @ShipperNotExporterContact as  int
+   declare @ShipperNotExporterAddress as  int
+   declare @FreelancerAddress as int
+   declare @FreelancerContact as int
+   declare @ReleasingAgentAddress as int
+   declare @ReleasingAgentContact as int
+   declare @CustomerAddress as int
+   declare @CustomerContact as int
+   declare @ConsigneeAddress as int
+   declare @ConsigneeContact as int
+   declare @AgentAddress as int
+   declare @AgentContact as int
+   declare @CustomAgentExportAddress as int
+   declare @CustomAgentExportContact as int
+   declare @CustomAgentImportAddress as int
+   declare @CustomAgentImportContact as int
+   declare @Notify1Address as int
+   declare @Notify1Contact as int
+   declare @Notify2Address as int
+   declare @Notify2Contact as int
+   declare @FreightForwarderAddress as int
+   declare @FreightForwarderContact as int
+   declare @ConsigneeNotImporterAddress as int
+   declare @ConsigneeNotImporterContact as int
+   declare @CustomClearancePointAddress as int
+   declare @CustomClearancePointContact as int
+   declare @ColoaderAddress as int
+   declare @ColoaderContact as int
+   declare @ConsolidatorAddress as int
+   declare @ConsolidatorContact as int
+   declare @ShipmentSubType as int
+
+   declare @PODReceivedDate as datetime
+   declare @ComputedMainCarriageATA as datetime
+   declare @Transshipment2Vessel as int
+   declare @Transshipment3Vessel as int
+   declare @OBL as  varchar(15)
+   declare @WarehouseLegVGMCutOffDate as datetime
+   declare @WarehouseLegCutOffDate as datetime
+
+   declare @ENSNumber as varchar(25)
+   declare @ENSDate as datetime
+   declare @ITDate as datetime
+   declare @ITNumber as varchar(25)
+
+   declare @ISFDate as datetime
+   declare @ISFNumber as varchar(25)
+
+   declare @PackagesQuantityAndType as NVARCHAR(2000) 
+   declare @NotesSharedWithCustomer as nvarchar(2000)
+
+   declare @FirstPickupFromAddress as NVARCHAR(1000) 
+   declare @LastDeliveryToAddress as NVARCHAR(1000) 
+   declare @MainCarriageFinalATA as datetime
+   declare @MainCarriageFinalETA as datetime
+   declare @MainCarriageFinalDestination as int 
+
 	DECLARE ShipmentsCursor CURSOR READ_ONLY
 	FOR
 	SELECT dw_Shipments.Id, SourceTenant.[Tenant Number], ParentTenant.[Tenant Number] ,  NewDIM_Directions.Name, TransportModes.Name ,NewDIM_Levels.Name, NewDIM_Types.Name, NewDIM_OBLTypes.Name, NewDIM_Departments.Id_Number ,NewDIM_Branches.Id_Number , dw_Shipments.ShipmentNumber, dw_Shipments.House ,dw_ShipmentMasterDatas.Master,shipperPartners.Id_Number, consigneePartners.Id_Number,
@@ -311,7 +451,7 @@
 	mainCarriageCarrierPartners.Id_Number,valueOfGoodsCurrency.Id_Number,WarehouseLegWarehousePartners.Id_Number,freightForwarder.Id_Number,createdByUser.Id_Number,customerAgentImportPartners.Id_Number , customerAgentExportPartners.Id_Number, dw_ShipmentMasterDatas.AirlinePrefix,
 	dw_ShipmentMasterDatas.BookingConfirmationNumber , dw_ShipmentMasterDatas.MainCarriageATA , dw_ShipmentMasterDatas.MAWBOBLDate , dw_Shipments.CustomsDeclarationNumber ,  dw_Shipments.FirstOperationalCloseDate,
 	dw_Shipments.EstimatedFinalArrivalDate , dw_Shipments.ActualFinalArrivalDate,  dw_Shipments.Routing , dw_Shipments.DescriptionOfGoods , dw_ShipmentMasterDatas.PreCarriageETD , dw_ShipmentMasterDatas.MainCarriageETA , NewDIM_MoveTypes.Id_Number , NewDIM_Vessels.Id_Number , NewDIM_SpecialServicesTypes.Id_Number,
-	dw_ShipmentMasterDatas.MasterShipmentNumber , dw_Shipments.ARInvoices , @dw_Shipments.CustomFieldsVariable, dw_ShipmentMasterDatas.CutoffDate , ConsolidatorIdPartners.Id_Number,dw_Shipments.ConsolidatorReference,dw_Shipments.Notes ,Notify1Partners.Id_Number,dw_Shipments.Notify1Reference, Notify2Partners.Id_Number,dw_Shipments.Notify2Reference,ColoaderPartners.Id_Number,dw_Shipments.ColoaderReference1,ShipperNotExporterPartners.Id_Number,dw_Shipments.ShipperNotExporterReference,ReleasingAgentPartners.Id_Number,dw_Shipments.ReleasingAgentReference1,
+	dw_ShipmentMasterDatas.MasterShipmentNumber , dw_Shipments.ARInvoices , @dw_Shipments.CustomFieldsVariable, dw_ShipmentMasterDatas.CutoffDate , ConsolidatorIdPartners.Id_Number,dw_Shipments.ConsolidatorReference,dw_Shipments.Notes ,Notify1Partners.Id_Number,dw_Shipments.Notify1Reference, Notify2Partners.Id_Number,dw_Shipments.Notify2Reference,ColoaderPartners.Id_Number,dw_Shipments.ColoaderReference1,ShipperNotExporterPartners.Id_Number,dw_Shipments.ShipperNotExporterReference1,ReleasingAgentPartners.Id_Number,dw_Shipments.ReleasingAgentReference1,
 	dw_Shipments.IncludesCustoms , dw_Shipments.DeclarationNumber , dw_Shipments.DeclarationDate, dw_Shipments.CustomsClearanceDate,dw_Shipments.TerminalAvailable,dw_Shipments.WarehouseLegLastFreeDate,  dw_Shipments.WarehouseLegActualEntryDate, dw_Shipments.WarehouseLegExpectedEntryDate, dw_Shipments.WarehouseLegActualReleaseDate, dw_Shipments.WarehouseLegExpectedReleaseDate,  dw_Shipments.ChargeableWeightUnitCode,
 	dw_ShipmentComputedFields.FirstPickupATD, dw_ShipmentComputedFields.FirstPickupATA,dw_ShipmentComputedFields.FinalDeliveryETD, dw_ShipmentComputedFields.FinalDeliveryETA,dw_ShipmentComputedFields.FinalDeliveryATD,dw_ShipmentComputedFields.FinalDeliveryATA, dw_ShipmentMasterDatas.Transshipment1ETA , dw_ShipmentMasterDatas.Transshipment1ETD , dw_ShipmentMasterDatas.Transshipment1ATA ,  dw_ShipmentMasterDatas.Transshipment1ATD ,Transshipment1Vessel.Id_Number,Transshipment1Carrier.Id_Number,dw_ShipmentMasterDatas.Transshipment1AdditionalMAWBOBLBL, dw_ShipmentComputedFields.FirstPickupLocation, dw_ShipmentComputedFields.ContainersNumbers , dw_Shipments.Ratio , dw_Shipments.VolumetricWeight
 	,dw_Shipments.OrderGrossWeight,dw_Shipments.BookingVolume,dw_Shipments.BookingNumberOfPackages,dw_Shipments.OrderChargeableWeight,dw_Shipments.EstimateProfitInProfitCurrency,dw_Shipments.EstimateProfitInLocalCurrency , dw_Shipments.GrossWeightUnitCode,dw_Shipments.VolumeUnitCode,
@@ -331,8 +471,30 @@
 	Transshipment2Carrier.Id_Number,Transshipment3Carrier.Id_Number, dw_Shipments.QuoteNumber,
 
 	 dw_Shipments.ShipmentLevelCode,dw_Shipments.PreForwardingETD, dw_Shipments.PreForwardingETA, dw_Shipments.PreForwardingATA,dw_Shipments.PreForwardingATD,
-	 dw_Shipments.PreForwardingCarrierNumber, PreForwardingCarrier.Id_Number, PreForwardingFromPort.Id_Number,PreForwardingToPort.Id_Number, PreForwardingTransportModes.Name
-	  
+
+	 dw_Shipments.PreForwardingCarrierNumber, PreForwardingCarrier.Id_Number, PreForwardingFromPort.Id_Number,PreForwardingToPort.Id_Number, PreForwardingTransportModes.Name,
+	  fromPort.Id_Number, toPort.Id_Number, dw_ShipmentMasterDatas.OnCarriageATA, dw_ShipmentMasterDatas.OnCarriageATD, dw_ShipmentMasterDatas.OnCarriageETD, dw_ShipmentMasterDatas.OnCarriageETA,
+	  dw_Shipments.PlannedCargoReadyDate,  dw_Shipments.ApprovedCargoReadyDate, dw_Shipments.Notify1Reference2,  HandlerUser.Id_Number, AccountingClosedByUser.Id_Number, dw_Shipments.IsStandalonePickupDelivery, 
+   	 
+	 
+     PartnerAddressContactDetails.ShipperAddressId,PartnerAddressContactDetails.ShipperContactId,PartnerAddressContactDetails.ShipperNotExporterAddressId,PartnerAddressContactDetails.ShipperNotExporterContactId,
+	 PartnerAddressContactDetails.FreelancerAddressId,PartnerAddressContactDetails.FreelancerContactId,PartnerAddressContactDetails.ReleasingAgentAddressId,PartnerAddressContactDetails.ReleasingAgentContactId,
+	 PartnerAddressContactDetails.CustomerAddressId,PartnerAddressContactDetails.CustomerContactId,PartnerAddressContactDetails.ConsigneeAddressId,PartnerAddressContactDetails.ConsigneeContactId,
+	 PartnerAddressContactDetails.AgentAddressId,PartnerAddressContactDetails.AgentContactId,PartnerAddressContactDetails.CustomAgentExportAddressId,PartnerAddressContactDetails.CustomAgentExportContactId,PartnerAddressContactDetails.
+	 CustomAgentImportAddressId,PartnerAddressContactDetails.CustomAgentImportContactId,PartnerAddressContactDetails.Notify1AddressId,PartnerAddressContactDetails.Notify1ContactId,
+	 PartnerAddressContactDetails.Notify2AddressId,PartnerAddressContactDetails.Notify2ContactId,PartnerAddressContactDetails.FreightForwarderAddressId,PartnerAddressContactDetails.FreightForwarderContactId,
+	 PartnerAddressContactDetails.ConsigneeNotImporterAddressId,PartnerAddressContactDetails.ConsigneeNotImporterContactId,PartnerAddressContactDetails.CustomClearancePointAddressId,PartnerAddressContactDetails.CustomClearancePointContactId,
+	 PartnerAddressContactDetails.ColoaderAddressId,PartnerAddressContactDetails.ColoaderContactId,PartnerAddressContactDetails.ConsolidatorAddressId,PartnerAddressContactDetails.ConsolidatorContactId,
+
+	 
+	 
+	 NewDIM_ShipmentSubTypes.Id_Number, dw_Shipments.PODReceivedDate, dw_ShipmentMasterDatas.MainCarriageFinalDestinationATA, Transshipment2Vessel.Id_Number ,Transshipment3Vessel.Id_Number,dw_ShipmentMasterDatas.MainCarriageCarrierNumber,
+	 dw_Shipments.WarehouseLegVGMCutOffDate,dw_Shipments.WarehouseLegCutOffDate,
+	 dw_Shipments.ENSNumber, dw_Shipments.ENSDate, dw_Shipments.ITDate, dw_Shipments.ITNumber,
+	 dw_Shipments.ISFDate, dw_Shipments.ISFNumber, dw_ShipmentComputedFields.PackagesQuantityAndType,dw_Shipments.NotesSharedWithCustomer,dw_Shipments.FirstPickupFullAddress,dw_Shipments.LastDeliveryFullAddress,
+	 dw_ShipmentMasterDatas.MainCarriageFinalDestinationATA,dw_ShipmentMasterDatas.MainCarriageFinalDestinationETA,MainCarriageFinalDestination.Id_Number
+	 
+
 	 
 
     From dw_Shipments
@@ -390,7 +552,7 @@
 	inner JOIN NewDIM_Partners ReleasingAgentPartners ON dw_Shipments.ReleasingAgentId = ReleasingAgentPartners.Id
     inner JOIN NewDIM_Vessels Transshipment1Vessel ON dw_ShipmentMasterDatas.Transshipment1VesselId = Transshipment1Vessel.Id
 	inner JOIN NewDIM_Partners Transshipment1Carrier ON dw_ShipmentMasterDatas.Transshipment1CarrierId = Transshipment1Carrier.Id
-	inner JOIN NewDIM_TransportModes  OnCarriageTransportModes ON dw_Shipments.OnForwardingTransportModeId = OnCarriageTransportModes.Code
+	inner JOIN NewDIM_TransportModes  OnCarriageTransportModes ON dw_ShipmentMasterDatas.OnCarriageTransportModeId = OnCarriageTransportModes.Code
 	inner JOIN NewDIM_Partners ConsigneeNotImporter ON dw_Shipments.ConsigneeNotImporterId = ConsigneeNotImporter.Id
 	inner JOIN NewDIM_Partners IssuingCarrierAgent ON dw_Shipments.IssuingCarrierAgentId = IssuingCarrierAgent.Id
 	inner JOIN NewDIM_Ports DeliveryToPort  ON dw_ShipmentComputedFields.DeliveryToPortId = DeliveryToPort.Id
@@ -411,9 +573,9 @@
 
    inner JOIN NewDIM_Ports Transshipment1FromPort  ON dw_ShipmentMasterDatas.Transshipment1FromPortId = Transshipment1FromPort.Id
    inner JOIN NewDIM_Ports Transshipment2FromPort  ON dw_ShipmentMasterDatas.Transshipment2FromPortId = Transshipment2FromPort.Id
-   inner JOIN NewDIM_Ports Transshipment3FromPort  ON dw_ShipmentMasterDatas.Transshipment3FromPortId = Transshipment3FromPort.Id 
+   inner JOIN NewDIM_Ports Transshipment3FromPort  ON dw_ShipmentMasterDatas.Transshipment3FromPortId = Transshipment3FromPort.Id
    inner JOIN NewDIM_Partners PreCarriageCarrier  ON dw_ShipmentMasterDatas.PreCarriageCarrierId = PreCarriageCarrier.Id
-   inner JOIN NewDIM_Partners OnCarriageCarrier  ON dw_Shipments.OnForwardingCarrierId = OnCarriageCarrier.Id   
+   inner JOIN NewDIM_Partners OnCarriageCarrier  ON dw_ShipmentMasterDatas.OnCarriageCarrierId    = OnCarriageCarrier.Id  
    inner JOIN NewDIM_Partners Transshipment2Carrier ON dw_ShipmentMasterDatas.Transshipment2CarrierId = Transshipment2Carrier.Id
    inner JOIN NewDIM_Partners Transshipment3Carrier ON dw_ShipmentMasterDatas.Transshipment3CarrierId = Transshipment3Carrier.Id
 
@@ -421,8 +583,15 @@
    inner JOIN NewDIM_Ports PreForwardingFromPort  ON dw_Shipments.PreForwardingFromPortId = PreForwardingFromPort.Id
    inner JOIN NewDIM_Ports PreForwardingToPort  ON dw_Shipments.PreForwardingToPortId = PreForwardingToPort.Id
    inner JOIN NewDIM_TransportModes  PreForwardingTransportModes ON dw_Shipments.PreForwardingTransportModeId = PreForwardingTransportModes.Code
-
-	 where dw_Shipments.IsCancelled = 0 and dw_Shipments.ShipmentLevelCode in ('H','D' , 'C') 
+   inner JOIN NewDIM_Users HandlerUser ON dw_Shipments.HandlerUserId = HandlerUser.Id
+   inner JOIN NewDIM_Users AccountingClosedByUser ON dw_ShipmentComputedFields.AccountingClosedByUserId = AccountingClosedByUser.Id
+   inner JOIN NewDIM_ShipmentSubTypes   ON dw_Shipments.ShipmentSubTypeId = NewDIM_ShipmentSubTypes.Id
+   inner JOIN #TempPartnerAddressContactDetails PartnerAddressContactDetails ON dw_Shipments.Id = PartnerAddressContactDetails.Id
+   inner JOIN NewDIM_Vessels Transshipment2Vessel ON dw_ShipmentMasterDatas.Transshipment2VesselId = Transshipment2Vessel.Id
+   inner JOIN NewDIM_Vessels Transshipment3Vessel ON dw_ShipmentMasterDatas.Transshipment3VesselId = Transshipment3Vessel.Id
+   inner JOIN NewDIM_Ports MainCarriageFinalDestination  ON dw_ShipmentMasterDatas.MainCarriageFinalDestinationPortId = MainCarriageFinalDestination.Id 
+   
+	 where dw_Shipments.IsCancelled = 0 and dw_Shipments.ShipmentLevelCode in ('H','D' , 'C') and   $LastCounterWhere$
 
 	OPEN ShipmentsCursor FETCH NEXT FROM ShipmentsCursor INTO    @Id ,@SourceTenant, @ParentTenant ,@Direction , @TransportMode, @DirectHouse , @Type, @OBLType , @Department , @Branch , @ShipmentNumber , @House , @Master , @Shipper , @Consignee , @Agent, @Customer 
 	,@Incoterm , @TotalGrossWeightInKG, @TotalChargeableWeightInKG , @TotalVolumeInCBM , @NumberOfPackages ,@DangerousGoods , @NumberOfContainers , @Salesman ,@AccountManager,@TotalProfitInLocalCurrency ,
@@ -450,21 +619,39 @@
       @Transshipment2AdditionalMAWBOBLBL, @Transshipment3AdditionalMAWBOBLBL, @Transshipment2Carrier,@Transshipment3Carrier, @QuoteNumber,
 
 	  @ShipmentLevelCode,
-	  @PreForwardingETD,@PreForwardingETA,@PreForwardingATA,@PreForwardingATD, 
-	  @PreForwardingCarrierNumber, @PreForwardingCarrier, @PreForwardingFromPort, @PreForwardingToPort, @PreForwardingTransportMode
+	  @PreForwardingETD,@PreForwardingETA,@PreForwardingATA,@PreForwardingATD, @PreForwardingCarrierNumber, @PreForwardingCarrier, @PreForwardingFromPort, @PreForwardingToPort, @PreForwardingTransportMode,  @MainCarriageFromPort, 
+	  @MainCarriageToPortId, @MasterOnCarriageATA, @MasterOnCarriageATD,@MasterOnCarriageETD,@MasterOnCarriageETA, @PlannedCargoReadyDate,@ApprovedCargoReadyDate,@Notify1Reference2, @HandlerUser, @AccountingClosedByUser, @IsStandalonePickupDelivery, 
+	  
+	  @ShipperAddress,@ShipperContact,
+	  @ShipperNotExporterAddress,@ShipperNotExporterContact,
+	  @FreelancerAddress,@FreelancerContact,
+	  @ReleasingAgentAddress,@ReleasingAgentContact,
+	  @CustomerAddress,@CustomerContact,
+	  @ConsigneeAddress,@ConsigneeContact,
+	  @AgentAddress,@AgentContact,
+	  @CustomAgentExportAddress,@CustomAgentExportContact,
+	  @CustomAgentImportAddress,@CustomAgentImportContact,
+	  @Notify1Address,@Notify1Contact,
+	  @Notify2Address,@Notify2Contact,
+	  @FreightForwarderAddress,@FreightForwarderContact,
+	  @ConsigneeNotImporterAddress,@ConsigneeNotImporterContact,
+	  @CustomClearancePointAddress,@CustomClearancePointContact,
+	  @ColoaderAddress,@ColoaderContact,
+	  @ConsolidatorAddress,@ConsolidatorContact,
+	  @ShipmentSubType, @PODReceivedDate, @ComputedMainCarriageATA,@Transshipment2Vessel,@Transshipment3Vessel,@OBL,@WarehouseLegVGMCutOffDate, @WarehouseLegCutOffDate,
+	  @ENSNumber, @ENSDate, @ITDate, @ITNumber,
+	  @ISFDate, @ISFNumber, @PackagesQuantityAndType,@NotesSharedWithCustomer,@FirstPickupFromAddress,@LastDeliveryToAddress,@MainCarriageFinalATA,@MainCarriageFinalETA,@MainCarriageFinalDestination
 
+
+	  
 
 
 
 	WHILE @@FETCH_STATUS = 0
 	BEGIN
 	
-
-
-	 --   declare @RecordType as varchar(100)
-		--set @RecordType = 'Master';
-		--if(@DirectHouse = 'House' or @DirectHouse = 'Direct') begin  set @RecordType = 'Shipment'; end
-
+	   declare @IsInlandDomesticShipment as  bit = 0; If(@DirectionId = 'D' and @TransportModeId = 'I') begin  set @IsInlandDomesticShipment =1; end
+       
 
 		   declare @percentage as   float=1000
 		   declare @OrderGrossWeightinTon as   float =null
@@ -488,18 +675,30 @@
     ----------------------------------------------
 
 	  ------- Pre Carriage & On Carriage for house shipment ----
-	  if(@ShipmentLevelCode = 'H')
-	   begin
-	  SET @PreCarriageCarrierNumber = @PreForwardingCarrierNumber;
-	  SET @PreCarriageCarrier = @PreForwardingCarrier;
-	  SET @PreCarriageETD = @PreForwardingETD;
-	  SET @PreCarriageETA = @PreForwardingETA;
-	  SET @PreCarriageATA = @PreForwardingATA;
-	  SET @PreCarriageATD = @PreForwardingATD;
-	  SET @PreCarriageFromPort = @PreForwardingFromPort;
-	  SET @PreCarriageToPort = @PreForwardingToPort; 
-	  SET @PreCarriageTransportMode = @PreForwardingTransportMode;   
-	   end
+	  --if(@ShipmentLevelCode = 'H')
+	  --begin
+	  --SET @PreCarriageCarrierNumber = @PreForwardingCarrierNumber;
+	  --SET @PreCarriageCarrier = @PreForwardingCarrier;
+	  --SET @PreCarriageETD = @PreForwardingETD;
+	  --SET @PreCarriageETA = @PreForwardingETA;
+	  --SET @PreCarriageATA = @PreForwardingATA;
+	  --SET @PreCarriageATD = @PreForwardingATD;
+	  --SET @PreCarriageFromPort = @PreForwardingFromPort;
+	  --SET @PreCarriageToPort = @PreForwardingToPort; 
+	  --SET @PreCarriageTransportMode = @PreForwardingTransportMode;   
+	  -- end
+	   
+	     ------- On Carriage for direct and master shipment ----
+	 -- if(@ShipmentLevelCode = 'D' or @ShipmentLevelCode = 'C')
+	   --begin
+	       
+      SET @OnCarriageATA= @MasterOnCarriageATA
+      SET @OnCarriageATD= @MasterOnCarriageATD
+      SET @OnCarriageETD= @MasterOnCarriageETD
+      SET @OnCarriageETA=  @MasterOnCarriageETA
+	  
+	   --end
+
 
 
 
@@ -523,6 +722,11 @@
 	if(@DirectionId != 'I')
 	    BEGIN
             set @InWarehouseDate = null
+        End
+
+	if(@IsStandalonePickupDelivery is null)
+	    BEGIN
+            set @IsStandalonePickupDelivery = 0
         End
 
 	--------------CarrierDate CustomAgent----------
@@ -565,6 +769,7 @@
      if(@ArrivedDate is null) begin set @IsArrived= 0; end
 	 if(@MainCarriageATD is null) begin set @IsDeparted=0; end
      if(@CustomsClearanceDate is null) begin set @IsCustomsCleared= 0 end
+     if(@NumberOfPackages is null) begin set @NumberOfPackages= 0 end
 	 -------------------------------------------------
 
 	 ----------------Entry And Release-------------------
@@ -584,18 +789,27 @@
 	 ---------------------Ratio---------------
   SET @FinalRatio = '1:' +  CAST(CAST(@Ratio AS FLOAT(20)) AS VARCHAR(100))  ;
 	 ----------------------------------------------------
-	    SET @OrderGrossWeightWithUnitCode =  CAST(CAST(@OrderGrossWeight AS FLOAT(20)) AS VARCHAR(36))  +' ('+ @ChargeableWeightUnitCode +')';
+	    SET @OrderGrossWeightWithUnitCode =  CAST(CAST(@OrderGrossWeight AS FLOAT(20)) AS VARCHAR(36))  +' ('+ @GrossWeightUnitCode +')';
 		SET @OrderVolumeWithUnitCode =  CAST(CAST(@BookingVolume AS FLOAT(20)) AS VARCHAR(36))  +' ('+ @VolumeUnitCode +')';
-	    SET @OrderNumberOfPackagesWithUnitCode= CAST(@BookingNumberOfPackages AS VARCHAR(11)) +  +' ('+ @GrossWeightUnitCode +')'
+	    --SET @OrderNumberOfPackagesWithUnitCode= CAST(@BookingNumberOfPackages AS VARCHAR(11)) +  +' ('+ @GrossWeightUnitCode +')'
 
+     -----------------------HandlerByUserId--------------------- 
 
+	 if(@HandlerUser is null) begin SET @HandlerUser = 1;end
+
+	 ---------------------------------------------------------
 
 	 ------------Resolve Custom Field Data Type Code-------------------
             
 			    --@[ResolveCustomFieldDataTypeCodeVariable]
 
 	 ----------------------------------------------------
-	 
+	 declare @AccountedProfit as float
+	 declare @AccountedProfitLocal as float
+
+	 set @AccountedProfit = @AccountedReceivablesInProfitCurrency - @AccountedPayablesInProfitCurrency;
+	 set @AccountedProfitLocal = @AccountedReceivablesInLocalCurrency - @AccountedPayablesInLocalCurrency;
+
 	 BEGIN TRY  
       insert into #Fact_ShipmentsTemp ([Id],[Source Tenant],[Parent Tenant],[Direction],[Transport Mode],[DirectHouse],[Type],[OBL Type],[Department],[Branch],[Shipment Number],[House],[Master],[Shipper],[Consignee],[Agent],[Customer],[Incoterm],[Gross Weight (KG)],[Chargeable Weight (KG)],[Total Volume (CBM)],[Number of Packages],[Dangerous Goods],[Number of Containers],[Salesman],[Account Manager],[Profit ( Local )],[Profit],[Local Currency ],[Profit Currency],[Operationally Closed],[Accounting Closed],[Status],[Location],[MainCarriage From Port],[MainCarriage To Port],[Is Departed],[MainCarriage ATD],[Is Arrived],[Arrived Date],[Is Customs Cleared],[Total Shipments],[Create Date],[Last Update Date],[Operational Date],[Operational Close Date],[Accounting Close Date],[Open Receivables ( Local )],[Open Receivables ( Profit )],[Accounted Receivables ( Local )],[Accounted Receivables ( Profit )],[Open Payables ( Local )],[Open Payables ( Profit )],[Accounted Payables ( Local )],[Accounted Payables ( Profit )], [Agent Ref1],[Agent Ref2],[AMS BL],[Consignee Ref1],[Consignee Ref2],[Created By],[Custom Agent],[Customer Ref1],[Customer Ref2],[First Pickup Date],[Freight PC],[Carrier Date ],[Carrier],[Carrier Number],[Main Harmonize],[Other Charge PC],[Project#],[Shipper Ref1],[Shipper Ref2],[TEU],[Value of Goods],[Value of Goods Currency],[Warehouse Terminal],[Freight Forwarder] , [Booking Confirmation Number], [Main Carriage ATA],[Master Date] , [Transshipment 1 Master Date], [Status Date], [Customs Declaration Number],  [First Operational Close Date],   [Estimated Final Arrival Date], [Actual Final Arrival Date],  [Routing], [Description Of Goods], [Pre Carriage ETD], [Main Carriage ETA] , [Main Carriage ETD] , [Move Type]  , [Vessel] , [Special Services] , [First Pickup ETA] , [First Pickup ETD] , [Master Shipment Number] , [AR Invoices] ,[CustomFieldNamesVariable] , [Create Date Time], [Update Date Time],[Operational Date Time],[Cutoff Date],[Consolidator],[Consolidator Ref1] ,[Shipment Notes], [Notify 1],[Notify 1 Ref1],[Notify 2],[Notify 2 Ref1],[Coloader],[Coloader Ref1],[Shipper Not Exporter],[Shipper Not Exporter Ref1],[Releasing Agent],[Releasing Agent Ref1]
 	  ,[Transshipment 1 Vessel] ,[Transshipment 1 Carrier],[Includes Customs],[Declaration Number], [Declaration Date],[Customs Clearance Date],[Terminal Available],[Warehouse Last free Date],[First Pickup ATD],[First Pickup ATA],[Final Delivery ETD],[Final Delivery ETA],[Final Delivery ATD],[Final Delivery ATA],[Transshipment 1 ETA],[Transshipment 1 ETD],[Transshipment 1 ATA],[Transshipment 1 ATD],[Transshipment 1 Master],[First Pickup Location],[ContainersNumbers Array],[Ratio],[Volumetric Weight],[Warehouse Entry Date],[Warehouse Release Date] , [Order Gross Weight],[Order Volume],[Order Number of Packages],[Order Chargeable Weight],[Estimated Profit (Profit)],[Estimated Profit (Local)]
@@ -612,11 +826,23 @@
        [On Carriage Carrier], [Pre Carriage ETA], [Pre Carriage ATD], [Pre Carriage ATA], [On Carriage ETD],  [On Carriage ETA], [On Carriage ATD],
        [On Carriage ATA], [Transshipment 2 ATA], [Transshipment 3 ATA],[Transshipment 2 ETA], [Transshipment 3 ETA], [Transshipment 2 ATD],
        [Transshipment 3 ATD], [Transshipment 2 ETD], [Transshipment 3 ETD],[Transshipment 2 Master], [Transshipment 3 Master],
-	   [Transshipment 2 Carrier], [Transshipment 3 Carrier], [Connected Quote]
+	   [Transshipment 2 Carrier], [Transshipment 3 Carrier], [Connected Quote], [Main Carriage Leg 1 From Port],  [Main Carriage Leg 1 To Port],[Planned Cargo Ready Date],
+	   [Approved Cargo Ready Date], [Notify 1 Ref2],[Handler],[Accounting Closed By],
+	  
+	   [Shipper Address], [Shipper Contact], [Shipper Not Exporter Address], [Shipper Not Exporter Contact],
+	   [Freelancer Address],[Freelancer Contact],[Releasing Agent Address],[Releasing Agent Contact],
+	   [Customer Address],[Customer Contact],[Consignee Address],[Consignee Contact],
+	   [Agent Address],[Agent Contact],[Custom Agent Export Address],[Custom Agent Export Contact],
+	   [Custom Agent Import Address],[Custom Agent Import Contact],[Notify1 Address],[Notify1 Contact],
+	   [Notify2 Address],[Notify2 Contact],[Freight Forwarder Address],[Freight Forwarder Contact],
+	   [Consignee Not Importer Address],[Consignee Not Importer Contact],[Custom Clearance Point Address],[Custom Clearance Point Contact],
+	   [Coloader Address],[Coloader Contact],[Consolidator Address],[Consolidator Contact],[IsInland Domestic Shipment],[Is Standalone Pickup Delivery],[Shipment Sub Type], [POD Received Date],[Main Carriage Final Destination ATA],[Transshipment 2 Vessel],[Transshipment 3 Vessel],[OBL], [VGM cut off date],[Warehouse Cut off],
+	   [ENS #],[ENS Date],[IT Date],[IT #],
+	   [ISF Date], [ISF #], [Package Quantity and Type],[Notes Shared with Customer],[First Pickup From Address],[Last Delivery To Address],[Main Carriage Final ATA],[Main Carriage Final ETA],[Main Carriage Final Destination],[Accounted Profit],[Accounted Profit(Local)]
 	  ) 
 
       values(@Id, @SourceTenant,@ParentTenant,@Direction,@TransportMode, @DirectHouse, @Type, @OBLType, @Department ,@Branch , @ShipmentNumber , @House ,@Master , @Shipper,  @Consignee , @Agent,@Customer,@Incoterm ,@TotalGrossWeightInKG,@TotalChargeableWeightInKG, @TotalVolumeInCBM,  @NumberOfPackages, @DangerousGoods, @NumberOfContainers, @Salesman , @AccountManager ,    @TotalProfitInLocalCurrency , @TotalProfitInProfitCurrency , @LocalCurrency,@ProfitCurrency ,@OperationallyClosed,@AccountingClosed, @ComputedStatus, @Location,  @MainCarriageFromPort , @FinalDestination , @IsDeparted , @MainCarriageATD  ,@IsArrived , @ArrivedDate   , @IsCustomsCleared , 1 ,dbo.GetDateFormateAsNumber(@CreateDate)    ,dbo.GetDateFormateAsNumber(@LastUpdateDate)   , dbo.GetDateFormateAsNumber(@OperationalDate),dbo.GetDateFormateAsNumber(@OperationalCloseDate),dbo.GetDateFormateAsNumber(@AccountingCloseDate) ,@OpenReceivablesInLocalCurrency , @OpenReceivablesInProfitCurrency ,@AccountedReceivablesInLocalCurrency,@AccountedReceivablesInProfitCurrency, @OpenPayablesInLocalCurrency ,@OpenPayablesInProfitCurrency , @AccountedPayablesInLocalCurrency ,@AccountedPayablesInProfitCurrency , @AgentReference1, @AgentReference2,@AMSBL ,@ConsigneeReference1,@ConsigneeReference2,@CreatedBy,@CustomAgent,@CustomerReference1,@CustomerReference2,dbo.GetDateFormateAsNumber(@FirstPickupDate)   ,@FreightPC, dbo.GetDateFormateAsNumber(@CarrierDate)   ,@Carrier,@CarrierNumber,@MainHarmonize,@OtherChargePC,@ProjectNumber,@ShipperReference1,@ShipperReference2,@TEU,@ValueOfGoods,@ValueOfGoodsCurrency,@Warehouse,@FreightForwarder ,  @BookingConfirmationNumber,@MainCarriageATA , dbo.GetDateFormateAsNumber(@MAWBOBLDate) ,@MAWBOBLDate , dbo.GetDateFormateAsNumber(@ComputedStatusDate) , @CustomsDeclarationNumber ,dbo.GetDateFormateAsNumber(@FirstOperationalCloseDate) ,  @EstimatedFinalArrivalDate , @ActualFinalArrivalDate , REPLACE(@Routing,',','>'), @DescriptionOfGoods, @PreCarriageETD ,  @MainCarriageETA , @MainCarriageETD,@MoveType ,@Vessel,@SpecialServices ,@FirstPickupETA, @FirstPickupETD, @MasterShipmentNumber , @ARInvoices,[CustomFieldValuesVariable],@CreateDate,@LastUpdateDate,@OperationalDate,@CutoffDate ,@Consolidator,@ConsolidatorRef1, @ShipmentNotes, @Notify1, @Notify1Ref1, @Notify2, @Notify2Ref1, @Coloader, @ColoaderRef1, @ShipperNotExporter, @ShipperNotExporterRef1, @ReleasingAgent , @ReleasingAgentRef1 ,
-	  @Transshipment1Vessel,@Transshipment1Carrier,@IncludesCustoms,@DeclarationNumber,@DeclarationDate,@CustomsClearanceDate,@TerminalAvailable,@WarehouseLegLastFreeDate,@FirstPickupATD,@FirstPickupATA,@FinalDeliveryETD,@FinalDeliveryETA,@FinalDeliveryATD,@FinalDeliveryATA,@Transshipment1ETA,@Transshipment1ETD,@Transshipment1ATA,@Transshipment1ATD, @Transshipment1AdditionalMAWBOBLBL,@FirstPickupLocation,@ContainersNumbers,@FinalRatio,@FinalVolumetricWeight,@WarehouseLegEntryDate,@WarehouseLegReleaseDate ,@OrderGrossWeightWithUnitCode ,@OrderVolumeWithUnitCode , @OrderNumberOfPackagesWithUnitCode ,@OrderChargeableWeight,@EstimateProfitInProfitCurrency , @EstimateProfitInLocalCurrency , 
+	  @Transshipment1Vessel,@Transshipment1Carrier,@IncludesCustoms,@DeclarationNumber,dbo.GetDateFormateAsNumber(@DeclarationDate),dbo.GetDateFormateAsNumber(@CustomsClearanceDate),@TerminalAvailable,@WarehouseLegLastFreeDate,@FirstPickupATD,@FirstPickupATA,@FinalDeliveryETD,@FinalDeliveryETA,@FinalDeliveryATD,@FinalDeliveryATA,@Transshipment1ETA,@Transshipment1ETD,@Transshipment1ATA,@Transshipment1ATD, @Transshipment1AdditionalMAWBOBLBL,@FirstPickupLocation,@ContainersNumbers,@FinalRatio,@FinalVolumetricWeight,@WarehouseLegEntryDate,@WarehouseLegReleaseDate ,@OrderGrossWeightWithUnitCode ,@OrderVolumeWithUnitCode , @BookingNumberOfPackages ,@OrderChargeableWeight,@EstimateProfitInProfitCurrency , @EstimateProfitInLocalCurrency , 
 
 	  @ConsigneeNotImporter,@IssuingCarrierAgent,@OnCarriageTransportMode,@FirstARInvoiceApprovalDate,@BookingConfirmationNotes,@BookingConfirmedBy,
 	   @NumberOfDeliveries,@OperationallyClosedByUser,@LastPickupATA,@LastPickupETA,@DeliveryToPort,@LastPickupETD,@LastPickupATD,@DeliveryFrom,@DeliveryTo,@PickupFrom,@PickupTo,@FreightRelease,
@@ -629,7 +855,18 @@
 	  @OnCarriageCarrier,@PreCarriageETA, @PreCarriageATD,  @PreCarriageATA, @OnCarriageETD,  @OnCarriageETA, @OnCarriageATD, 
 	  @OnCarriageATA, @Transshipment2ATA, @Transshipment3ATA, @Transshipment2ETA , @Transshipment3ETA , @Transshipment2ATD,
       @Transshipment3ATD, @Transshipment2ETD, @Transshipment3ETD, @Transshipment2AdditionalMAWBOBLBL, @Transshipment3AdditionalMAWBOBLBL, 
-	  @Transshipment2Carrier,@Transshipment3Carrier, @QuoteNumber
+	  @Transshipment2Carrier,@Transshipment3Carrier, @QuoteNumber, @MainCarriageFromPort, @MainCarriageToPortId, @PlannedCargoReadyDate,@ApprovedCargoReadyDate,@Notify1Reference2,@HandlerUser, @AccountingClosedByUser,
+	 
+	  @ShipperAddress,@ShipperContact,@ShipperNotExporterAddress,@ShipperNotExporterContact,
+	  @FreelancerAddress ,@FreelancerContact ,@ReleasingAgentAddress ,@ReleasingAgentContact ,
+	  @CustomerAddress ,@CustomerContact ,@ConsigneeAddress ,@ConsigneeContact ,
+	  @AgentAddress ,@AgentContact ,@CustomAgentExportAddress ,@CustomAgentExportContact ,
+	  @CustomAgentImportAddress ,@CustomAgentImportContact ,@Notify1Address ,@Notify1Contact ,
+	  @Notify2Address ,@Notify2Contact ,@FreightForwarderAddress ,@FreightForwarderContact ,
+	  @ConsigneeNotImporterAddress ,@ConsigneeNotImporterContact ,@CustomClearancePointAddress ,@CustomClearancePointContact ,
+	  @ColoaderAddress ,@ColoaderContact ,@ConsolidatorAddress ,@ConsolidatorContact ,@IsInlandDomesticShipment, @IsStandalonePickupDelivery,@ShipmentSubType, @PODReceivedDate,@ComputedMainCarriageATA,@Transshipment2Vessel,@Transshipment3Vessel,@OBL,dbo.GetDateFormateAsNumber(@WarehouseLegVGMCutOffDate), dbo.GetDateFormateAsNumber(@WarehouseLegCutOffDate),
+	  @ENSNumber, dbo.GetDateFormateAsNumber(@ENSDate), dbo.GetDateFormateAsNumber(@ITDate), @ITNumber,
+	  dbo.GetDateFormateAsNumber(@ISFDate), @ISFNumber, @PackagesQuantityAndType,@NotesSharedWithCustomer,@FirstPickupFromAddress,@LastDeliveryToAddress,@MainCarriageFinalATA,@MainCarriageFinalETA,@MainCarriageFinalDestination,@AccountedProfit,@AccountedProfitLocal
 	  	  )
 	END TRY 
 BEGIN CATCH  
@@ -667,12 +904,26 @@ END CATCH
 	@OnCarriageATD, @OnCarriageATA, @Transshipment2ATA, @Transshipment3ATA, @Transshipment2ETA , @Transshipment3ETA , @Transshipment2ATD,
     @Transshipment3ATD, @Transshipment2ETD, @Transshipment3ETD, @Transshipment2AdditionalMAWBOBLBL, @Transshipment3AdditionalMAWBOBLBL, 
 	@Transshipment2Carrier,@Transshipment3Carrier, @QuoteNumber,   @ShipmentLevelCode, @PreForwardingETD,@PreForwardingETA,@PreForwardingATA,@PreForwardingATD,
-	 @PreForwardingCarrierNumber, @PreForwardingCarrier, @PreForwardingFromPort, @PreForwardingToPort, @PreForwardingTransportMode 
+ 
+	 @PreForwardingCarrierNumber, @PreForwardingCarrier, @PreForwardingFromPort, @PreForwardingToPort, @PreForwardingTransportMode, @MainCarriageFromPort,@MainCarriageToPortId, @MasterOnCarriageATA, @MasterOnCarriageATD,@MasterOnCarriageETD,@MasterOnCarriageETA, @PlannedCargoReadyDate,@ApprovedCargoReadyDate,@Notify1Reference2,@HandlerUser, @AccountingClosedByUser, @IsStandalonePickupDelivery,
+	  @ShipperAddress,@ShipperContact,@ShipperNotExporterAddress,@ShipperNotExporterContact,
+	  @FreelancerAddress ,@FreelancerContact ,@ReleasingAgentAddress ,@ReleasingAgentContact ,
+	  @CustomerAddress ,@CustomerContact ,@ConsigneeAddress ,@ConsigneeContact ,
+	  @AgentAddress ,@AgentContact ,@CustomAgentExportAddress ,@CustomAgentExportContact ,
+	  @CustomAgentImportAddress ,@CustomAgentImportContact ,@Notify1Address ,@Notify1Contact ,
+	  @Notify2Address ,@Notify2Contact ,@FreightForwarderAddress ,@FreightForwarderContact ,
+	  @ConsigneeNotImporterAddress ,@ConsigneeNotImporterContact ,@CustomClearancePointAddress ,@CustomClearancePointContact ,
+	  @ColoaderAddress ,@ColoaderContact ,@ConsolidatorAddress ,@ConsolidatorContact,@ShipmentSubType, @PODReceivedDate,@ComputedMainCarriageATA, @Transshipment2Vessel,@Transshipment3Vessel,@OBL, @WarehouseLegVGMCutOffDate, @WarehouseLegCutOffDate,
+	  @ENSNumber, @ENSDate, @ITDate, @ITNumber,
+	  @ISFDate, @ISFNumber, @PackagesQuantityAndType,@NotesSharedWithCustomer,@FirstPickupFromAddress,@LastDeliveryToAddress,@MainCarriageFinalATA,@MainCarriageFinalETA,@MainCarriageFinalDestination
+ 
 
 
 		End
 	CLOSE ShipmentsCursor
 	DEALLOCATE ShipmentsCursor
 
+	If(OBJECT_ID('tempdb..#TempPartnerAddressContactDetails') Is Not Null) Begin  Drop Table #TempPartnerAddressContactDetails End 
+   
 
-	
+

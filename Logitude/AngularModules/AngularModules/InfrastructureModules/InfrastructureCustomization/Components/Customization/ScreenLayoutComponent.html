@@ -1,4 +1,4 @@
-﻿
+
 <style>
     .SimpleGridViewRow:hover {
         color: black;
@@ -38,7 +38,7 @@
             margin-bottom: 3px;
         }
 
-         .MyObjectField {
+    .MyObjectField {
         height: 60px;
         width: 97%;
         background-color: gainsboro;
@@ -51,22 +51,57 @@
             background-color: gray;
             margin: 3px;
         }
+    .text-with-dots {
+        display: inline-block;
+        max-width: 80px;
+        min-width: 80px;
+        width: 80px;
+        white-space: nowrap;
+        overflow: hidden !important;
+        text-overflow: ellipsis;
+    }
+
+    .Header-with-dots {
+        display: inline-block;
+        max-width: 400px;
+        white-space: nowrap;
+        overflow: hidden !important;
+        text-overflow: ellipsis;
+    }
 </style>
 <table style="padding:10px">
 
     <tr>
         <td>
             <table>
+
+                <tr *ngIf="(!IsObjectTableFilterEnabled || IsTabsCustomizationEnabled)" style="height: 40px;">
+
+                    <td *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" ></td>
+                    <td *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0">
+                        <table style="height:1px;">
+                            <tr style="height:1px;">
+                                <td>
+                                    <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
+                                </td>
+                                <td></td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td colspan="5" style="text-align: right; height: 40px;">
+                        <button class="Button" style="width: 100px;float:right;margin-right:5px" (click)="NewScreenButtonClicked()">New Screen</button>
+                    </td>
+
+                </tr>
                 <tr>
-                    <td style="width:206px;border:solid 1px silver">
+                    <!-- Left Sidebar -->
+                    <td style="width: 155px; border: solid 1px silver">
                         <div class="SimpleGridView MediaFillAbsolute">
                             <div class="SimpleGridViewHeader">
                                 <table>
                                     <tr>
-                                        <td style="width: 198px; min-width: 198px; max-width: 198px;">Screen Name</td>
-                                        <td class="LastChild">
-                                            <div></div>
-                                        </td>
+                                        <td style="width: 135px; min-width: 135px; max-width: 135px; ">Screen Name</td>
+
                                     </tr>
                                 </table>
                             </div>
@@ -74,106 +109,120 @@
                             <div class="SimpleGridViewBody">
                                 <table>
                                     <tr class="SimpleGridViewRow" *ngFor="let item of TableScreensCollection" (click)="SelectionChanged(item)" [class.Selected]="item == SelectedItem">
-                                        <td class="GridViewCell" style="width: 198px; min-width: 198px; max-width: 198px;">
-                                            {{item.Name}}
+                                        <td [attr.data-cy]="item.Name">
+
+                                            <div [attr.title]="item.Name" *ngIf="!item.Inactive" class="GridViewCell" style="width: 135px; min-width: 135px; max-width: 135px; font-size: 11px ">
+                                                {{item.Name}}
+                                            </div>
+
+                                            <div [attr.title]="item.Name" class="text-with-dots GridViewCell" *ngIf="item.Inactive" style="font-size: 11px">
+                                                {{item.Name}}
+                                            </div>
+
+                                            <div *ngIf="item.Inactive" style="display:inline-block;font-size:11px;font-style:italic;color:gray;text-align:left;vertical-align:central;display:inline">
+                                                (inactive)
+                                            </div>
+
                                         </td>
-                                        <td>
-                                            <div></div>
-                                        </td>
+
                                     </tr>
                                 </table>
                             </div>
                         </div>
 
-                        <!--<div class="MediaFillAbsolute">
-                            <ul>
-                                <li class="DefaultMenuItem" *ngFor="let item of ListBoxItemSource" (click)="SelectionChanged(item)" [class.SelectedMenuItem]="item === SelectedItem" [class.DisabledTabItem]="item.IsDisabled == true">
-                                    <div class="TextTrimming">{{item.Name}}</div>
-                                </li>
-                            </ul>
-                        </div>-->
-
 
                     </td>
-                    <td style="width:2px"></td>
-                    <td>
-                        <table style="border:solid 1px silver">
-                            <tr>
-                                <td style="width:216px;border-right:dashed 1px silver;vertical-align: top;" *ngFor="let item of ScreenRows; let row = index" >
-                                    <div (drop)="onMyDrop($event,item,row)" dropzone="true" (dragover)="onMyDragEnter($event)" style="position:absolute;top:0;bottom:0;left:0;right:0;overflow:auto;">
-                                        <div class="MyObjectField PreventSelect" *ngFor="let item1 of item.ObjectFieldPMs" draggable="true" (dragstart)="OnScreenFieldDragStart($event,item1)">
-                                            <table>
-                                                <tr>
-                                                    <td>
-                                                        <table>
-                                                            <tr style="height:1px;">
-                                                                <td class="GridViewCell TextTrimming" style="width: 178px; min-width: 178px; max-width: 178px;">
-                                                                    {{item1 != null ? item1.FullNameTextCodeDefaultText : ''}}
-                                                                </td>
-                                                            </tr>
-                                                            <tr style="height:1px;">
-                                                                <td class="GridViewCell TextTrimming" style="width: 178px; min-width: 178px; max-width: 178px;">
-                                                                    ({{item1 != null ? item1.PMPropertyPath : ''}})
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td></td>
-                                                            </tr>
-                                                        </table>
-                                                    </td>
-                                                    <td style="width:30px;height:60px;">
-                                                        <img class="DeleteButton RightCenter" style="right: 4px;cursor: pointer;" src="Images/RedX.png" (click)="OnDeleteField(item1)" />
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td></td>
-                            </tr>
-                        </table>
+
+                    <!-- Content -->
+                    <td *ngIf="!IsMuiltSectionScreen && !IsGridScreen" style="border-top: 1px solid silver;border-bottom: 1px solid silver;">
+                        <div class="LocationDirective" LocationDirective Code="ClASSIC"> </div>
                     </td>
-                    <td style="width:2px"></td>
-                    <td style="width:216px;border:solid 1px silver;">
+
+                    <td *ngIf="IsMuiltSectionScreen || IsGridScreen" style=" border: 1px solid silver;">
+
+                        <div *ngIf="(!IsObjectTableFilterEnabled || IsTabsCustomizationEnabled)" class="screen-designer-header">
+                            <div class="title">
+                                <span [attr.title]="SelectedItem.Name" class="Header-with-dots">{{SelectedItem.Name || 'Screen'}}</span>
+                                <IconButton style="top:-1px" [Name]="'edit'" (click)="EditSelectedScreen()"></IconButton>
+                            </div>
+                            <div *ngIf="IsSubEntity && !IsGridScreen" class="buttons" style="width:45px;">
+                                <ToggleButton [Title]="'New'" [DropDownWidth]="110" [DropDownHeight]="IsEnabledAddingSummarySection()?'52':'30'">
+                                    <ToggleButtonItem [Text]="'Section'" (click)="NewSectionButtonClick('Standard')" style="height:100%; width: 100%;"></ToggleButtonItem>
+                                    <ToggleButtonItem [hidden]="!IsEnabledAddingSummarySection()" [Text]="'Summary'" (click)="NewSectionButtonClick('Summary')" style="height:100%; width: 100%"></ToggleButtonItem>
+                                </ToggleButton>
+                            </div>
+                            <div *ngIf="!IsSubEntity && !IsGridScreen && IsReferenceTypeCustomObject" class="buttons">
+                                <button class="Button" (click)="NewSectionButtonClick('Standard')">New Section</button>
+                            </div>
+                            <div *ngIf="!IsSubEntity && !IsGridScreen && !IsReferenceTypeCustomObject" class="buttons" style="width:45px;">
+                                <ToggleButton [Title]="'New'" [DropDownWidth]="110" [DropDownHeight]="IsEnabledCreatingSubCustomObjects?'52':'30'">
+                                    <ToggleButtonItem [Text]="'Section'" (click)="NewSectionButtonClick('Standard')" style="height:100%; width: 100%;"></ToggleButtonItem>
+                                    <ToggleButtonItem [hidden]="!IsEnabledCreatingSubCustomObjects" [Text]="'Child Objects Grids'" (click)="NewSectionButtonClick('Grid')" style="height:100%; width: 100%"></ToggleButtonItem>
+                                </ToggleButton>
+                            </div>
+                        </div>
+                        <div *ngIf="!IsGridScreen" class="component-wrapper">
+                            <div class="LocationDirective" LocationDirective Code="LIGHTENING"> </div>
+                        </div>
+                        <div *ngIf="IsGridScreen" class="component-wrapper">
+                            <div class="LocationDirective" LocationDirective Code="Grid"> </div>
+                        </div>
+
+                    </td>
+
+                    <td style="width:2px;border-top: 1px solid silver;border-bottom: 1px solid silver;"></td>
+
+                    <!-- Right Sidebar -->
+                    <td *ngIf="!IsGridScreen" style="width:216px;border:solid 1px silver;">
                         <div class="SimpleGridView MediaFillAbsolute">
-                            <div class="SimpleGridViewHeader" style="height:50px;">
+                            <div class="SimpleGridViewHeader" style="height:75px;">
                                 <table>
+
+
                                     <tr>
                                         <td style="width: 198px; min-width: 198px; max-width: 198px;">Available Screen Fields</td>
                                     </tr>
                                     <tr>
                                         <td style="width:200px;padding-right: 4px;">
-                                            <SearchBox [UseTimer]="true" [Watermark]="'Search'" (TextChanged)="SearchTextChanged($event)"></SearchBox>
+                                            <SearchBox [attr.data-cy]="'Available Screen Fields Search'" [UseTimer]="true" [Watermark]="'Search'" (TextChanged)="SearchTextChanged($event)"></SearchBox>
                                         </td>
                                     </tr>
                                 </table>
                             </div>
 
-                            <div class="SimpleGridViewBody" style="top:50px;">
+                            <div class="SimpleGridViewBody" style="top: 75px;">
 
-                                <div class="ObjectField PreventSelect" draggable="true" (dragstart)="OnObjectFieldDragStart($event,item)" *ngFor="let item of banckStackFields">
+                                <div [style.background-color]="IsLineSpaceField(item.DataTypeCode) ? 'darkgrey':''" class="ObjectField PreventSelect" draggable="true" (dragstart)="OnObjectFieldDragStart($event,item)" *ngFor="let item of banckStackFields">
                                     <table>
                                         <tr>
                                             <td>
-                                                <table>
-                                                    <tr style="height:1px;">
-                                                        <td class="GridViewCell TextTrimming" style="width: 178px; min-width: 178px; max-width: 178px;">
-                                                            {{item != null ? item.FullNameTextCodeDefaultText : ''}}
-                                                        </td>
-                                                    </tr>
-                                                    <tr style="height:1px;">
-                                                        <td class="GridViewCell TextTrimming" style="width: 178px; min-width: 178px; max-width: 178px;">
-                                                            ({{item != null ? item.PMPropertyPath : ''}})
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td></td>
-                                                    </tr>
-                                                </table>
+                                                <div attr.data-cy="{{'Column_ ' + item.FieldName}}">
+                                                    <table>
+                                                        <tr *ngIf="!IsLineSpaceField(item.DataTypeCode)" style="height:1px;">
+                                                            <td class="GridViewCell TextTrimming" style="width: 178px; min-width: 178px; max-width: 178px; font-size: 11px">
+                                                                {{item != null ? item.FullNameTextCodeDefaultText : ''}}
+                                                            </td>
+                                                        </tr>
+                                                        <tr *ngIf="!IsLineSpaceField(item.DataTypeCode)" style="height:1px;">
+                                                            <td class="GridViewCell TextTrimming" style="width: 178px; min-width: 178px; max-width: 178px; ">
+                                                                <span style="font-size: 11px"> ({{item != null ? item.PMPropertyPath : ''}})</span>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr *ngIf="IsLineSpaceField(item.DataTypeCode)" style="height:1px;text-align:center">
+                                                            <td class="GridViewCell TextTrimming" style="width: 178px; min-width: 178px; max-width: 178px;">
+                                                                <span style="color: ivory; font-style: italic; font-size: 11px">Insert Space</span>
+                                                            </td>
+                                                        </tr>
+
+
+                                                        <tr>
+                                                            <td></td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
                                             </td>
-                                            <!--<td style="width:30px;height:60px;">
-                                                <img class="DeleteButton RightCenter" style="right: 4px;" src="Images/RedX.png" (click)="OnDeleteValue()" />
-                                            </td>-->
+
                                         </tr>
                                     </table>
                                 </div>
@@ -188,30 +237,4 @@
         </td>
     </tr>
 
-    <tr style="height: 32px;">
-        <td style="vertical-align: bottom">
-            <table style="height: 22px;">
-                <tr>
-                    <td>
-                        <div></div>
-                    </td>
-                    <td>
-                        <div></div>
-                    </td>
-
-                    <td style="width: 57px;">
-                        <button class="Button" (click)="CancelClicked()">Cancel</button>
-                    </td>
-
-                    <td style="width:5px;">
-                        <div></div>
-                    </td>
-
-                    <td style="width: 57px;">
-                        <button class="RedButton" (click)="OkClicked()">Ok</button>
-                    </td>
-                </tr>
-            </table>
-        </td>
-    </tr>
 </table>

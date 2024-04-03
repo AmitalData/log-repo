@@ -28,6 +28,7 @@ using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using WebFreight.Web.WebServices;
 
 namespace WebFreight.Web.ReportsWebServices
 {
@@ -55,25 +56,28 @@ namespace WebFreight.Web.ReportsWebServices
         APInvoiceQuery invoiceQuery;
         CountryRepository countryRepository;
         int currentTenant;
-
+        private WebServiceHelper servicHelper;
+        public APInvoicePM myAPInvoice;
         [WebMethod]
         public byte[] GetAPInvoiceData(string invoiceId, int tenant)
         {
             APInvoiceDataProvider invoicedataprovider = GetAPInvoiceDataProvider(invoiceId, tenant);
-
             XmlSerializer serializer = new XmlSerializer(typeof(APInvoiceDataProvider));
-            MemoryStream memstream = new MemoryStream();
-            serializer.Serialize(memstream, invoicedataprovider);
-            memstream.Seek(0, SeekOrigin.Begin);
-            var reader = new StreamReader(memstream);
-            string content = reader.ReadToEnd();
-            byte[] bytearray = memstream.ToArray();
-            return bytearray;
+            using (MemoryStream memstream = new MemoryStream())
+            {
+                serializer.Serialize(memstream, invoicedataprovider);
+                memstream.Seek(0, SeekOrigin.Begin);
+                var reader = new StreamReader(memstream);
+                string content = reader.ReadToEnd();
+                byte[] bytearray = memstream.ToArray();
+                return bytearray;
+            }
         }
 
         public APInvoiceDataProvider GetAPInvoiceDataProvider(string invoiceId, int tenant)
         {
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            servicHelper = new WebServiceHelper(tenant);
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
             APInvoiceDataProvider invoiceDataProvider = new APInvoiceDataProvider();
 
             currentTenant = tenant;
@@ -92,7 +96,7 @@ namespace WebFreight.Web.ReportsWebServices
             cardRepository = new CardRepository(commonContext);
             invoiceQuery = new APInvoiceQuery(invoiceRepository);
             countryRepository = new CountryRepository(commonContext);
-            APInvoicePM myAPInvoice = invoiceQuery.GetSinglePM(invoiceId, tenant);
+            myAPInvoice = invoiceQuery.GetSinglePM(invoiceId, tenant);
 
             if (myAPInvoice != null)
             {
@@ -231,7 +235,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                 #region Shipment
                 if (shipment != null)
-                {
+                {                   
                     if (!string.IsNullOrEmpty(shipment.BranchId))
                     {
                         BranchRepository branchRepository = new BranchRepository(currentTenant);
@@ -310,19 +314,22 @@ namespace WebFreight.Web.ReportsWebServices
 
                     if (shipment.DirectionId == "D" && shipment.TransportModeId == "I")
                     {
-                        Address fromAddress = addressRepository.GetSingleAddress(shipment.MainCarriageFromAddressId, currentTenant);
-                        Address toAddress = addressRepository.GetSingleAddress(shipment.MainCarriageToAddressId, currentTenant);
-
-                        if (fromAddress != null)
+                        InlandDomesticArgs args = new InlandDomesticArgs()
                         {
-                            invoiceDataProvider.FromLocation = fromAddress.City + " " + (fromAddress.Country != null ? fromAddress.Country.Code : "");
-                        }
-
-                        if (toAddress != null)
-                        {
-                            invoiceDataProvider.ToLocation = toAddress.City + " " + (toAddress.Country != null ? toAddress.Country.Code : "");
-                            invoiceDataProvider.FinalLocation = toAddress.City + " " + (toAddress.Country != null ? toAddress.Country.Code : "");
-                        }
+                            InlandDomesticFromTypeCode = shipment.InlandDomesticFromTypeCode,
+                            MainCarriageFromAddressId = shipment.MainCarriageFromAddressId,
+                            MainCarriageFromPortId = shipment.MainCarriageFromPortId,
+                            InlandDomesticFromCity = shipment.InlandDomesticFromCity,
+                            InlandDomesticFromCountryId = shipment.InlandDomesticFromCountryId,
+                            InlandDomesticToTypeCode = shipment.InlandDomesticToTypeCode,
+                            MainCarriageToAddressId = shipment.MainCarriageToAddressId,
+                            InlandDomesticToCity = shipment.InlandDomesticToCity,
+                            InlandDomesticToCountryId = shipment.InlandDomesticToCountryId,
+                            MainCarriageToPortId = shipment.MainCarriageToPortId,
+                        };
+                        invoiceDataProvider.FromLocation = servicHelper.GetInlandDomesticFromLocation(args);
+                        invoiceDataProvider.ToLocation = servicHelper.GetInlandDomesticToLocation(args);
+                        invoiceDataProvider.FinalLocation = invoiceDataProvider.ToLocation;
                     }
                     else
                     {
@@ -383,13 +390,14 @@ namespace WebFreight.Web.ReportsWebServices
                         invoiceDataProvider.MainCarriageVesselLabel = "Vessel";
                         invoiceDataProvider.HouseNumberLabel = "FBL";
                         invoiceDataProvider.ContainersLabel = "Containers";
+                        invoiceDataProvider.MainCarriageVesselName = shipment.MainCarriageVesselName;
 
-                        Vessel maincarriagevessel = (from v in commonContext.Vessels where v.Id == shipment.MainCarriageVesselId select v).FirstOrDefault();
+                        //Vessel maincarriagevessel = (from v in commonContext.Vessels where v.Id == shipment.MainCarriageVesselId select v).FirstOrDefault();
 
-                        if (maincarriagevessel != null)
-                        {
-                            invoiceDataProvider.MainCarriageVesselName = maincarriagevessel.EnglishName;
-                        }
+                        //if (maincarriagevessel != null)
+                        //{
+                        //    invoiceDataProvider.MainCarriageVesselName = maincarriagevessel.EnglishName;
+                        //}
                     }
 
                     else if (shipment.TransportModeId == "I")
@@ -1130,6 +1138,9 @@ namespace WebFreight.Web.ReportsWebServices
             singleRecord.Currency = item.Currency;
             singleRecord.PayablesAccounted = item.SubTotalInInvoiceCurrency;
             singleRecord.LongMaster = item.LongMaster;
+            singleRecord.TotalAmountinLocalCurrency = item.SubTotalInLocalCurrency;
+            singleRecord.GrossweightinKG = item.GrossWeightInKG;
+            singleRecord.VolumeinCBM = item.VolumeinCBM;
         }
 
         private void CalculateFreight(APInvoiceMultipleEntity singleRecord, APInvoiceMultipleShipmentPM item, APInvoiceFreights aPInvoiceFreights)

@@ -1,0 +1,35 @@
+﻿<Script DBType="Main" Module="Accounting" AOT="true" TargetTableName="InterestTransactions" Env="local,test,cloud">
+	<Sql Version="1">
+		<![CDATA[
+
+        update InterestTransactions 
+		set SearchFields =
+		InterestTransactions.SearchFields
+		+ ',' + 
+		CASE
+	    WHEN InterestTransactions.ForeignAmount != InterestTransactions.LocalAmount
+	    THEN
+		CAST(InterestTransactions.ForeignAmount AS varchar)
+		+ ',' + 
+		CAST(InterestTransactions.LocalAmount AS varchar)
+		ELSE
+		CAST(InterestTransactions.LocalAmount AS varchar)
+		END
+		+ ',' + 
+		GLADisplayNumber from InterestTransactions 
+        inner join(
+        Select InterestTransactions.Id, InterestTransactions.Tenant, GLAccounts.DisplayNumber as GLADisplayNumber
+        from InterestTransactions
+        inner join GLAccounts  
+		on InterestTransactions.GLAccountId = GLAccounts.Id
+		AND InterestTransactions.Tenant = GLAccounts.Tenant 
+	    ) as InterestTransactionsWithGLAccountsAnd
+        on InterestTransactions.Id = InterestTransactionsWithGLAccountsAnd.Id
+        AND InterestTransactions.Tenant = InterestTransactionsWithGLAccountsAnd.Tenant
+		
+		where $LastCounterWhere$
+
+
+    ]]>       
+  </Sql>
+</Script>

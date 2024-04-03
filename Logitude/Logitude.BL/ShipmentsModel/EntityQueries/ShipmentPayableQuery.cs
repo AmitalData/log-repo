@@ -8,6 +8,7 @@ using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 
 using Logitude.BL.ShipmentsModel.EntityPMs;
+using Logitude.Server.Tools.CustomFields;
 
 namespace Logitude.BL.ShipmentsModel.EntityQueries
 {
@@ -42,7 +43,19 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 item.ChildShipmentPayables = this.MapPocoToPM(iQueryableChilds);
             }
 
-            shipmentPayables = shipmentPayables.OrderBy(d => d.ViewOrder).ThenBy(d => d.ChargesTypeCode).ToList();
+            shipmentPayables = shipmentPayables.OrderBy(d => d.Id).ToList();
+
+
+            new ChildEntitiesCustomFieldService().Set(new ChildEntitiesCustomFieldArgs()
+            {
+                Tenant = tenant,
+                EntityId = shipmentId,
+                ObjectTableName = "Shipment",
+                ChildObjectTableName = "ShipmentPayable",
+                ChildEntities = shipmentPayables.Cast<object>().ToList()
+            });
+
+
 
             return shipmentPayables;
         }
@@ -61,7 +74,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
         private List<ShipmentPayablePM> MapPocoToPM(IQueryable<ShipmentPayable> iQueryable)
         {
-            List<ShipmentPayablePM> myResult = (from a in iQueryable.Include("ChargesType").Include("DueType").Include("Measurement").Include("Currency").Include("ShipmentPayableLineStatus").Include("VendorCard").Include("ShipmentPayableAmountType").Include("Shipment")
+            List<ShipmentPayablePM> myResult = (from a in iQueryable.Include("ChargesType").Include("DueType").Include("Measurement").Include("Currency").Include("ShipmentPayableLineStatus").Include("VendorCard").Include("ShipmentPayableAmountType").Include("Shipment").Include("CreatedByUser.Contact").Include("UpdateByUser.Contact")
                                                 select new ShipmentPayablePM()
                                                 {
                                                     AWBPrint = a.AWBPrint,
@@ -126,12 +139,15 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                     ReceivableId = a.ReceivableId,
                                                     QuoteCostMinAmount = a.QuoteCostMinAmount,
                                                     QuoteCostMaxAmount = a.QuoteCostMaxAmount,
-                                                    TariffId = a.TariffId, 
+                                                    TariffId = a.TariffId,
+                                                    IsCustomsChargesTariff = a.IsCustomsChargesTariff,
                                                     TariffNumber = a.TariffNumber,
                                                     TariffLineId = a.TariffLineId,
                                                     TariffVersion = a.TariffVersion,
                                                     VatAmountProfit = a.VatAmountProfit,
                                                     VatAmountLocal = a.VatAmountLocal,
+                                                    CreatedByUserName = a.CreatedByUser == null ? null : (a.CreatedByUser.Contact == null ? null : a.CreatedByUser.Contact.EnglishName),
+                                                    UpdateByUserName = a.UpdateByUser == null ? null : (a.UpdateByUser.Contact == null ? null : a.UpdateByUser.Contact.EnglishName),
                                                 }).ToList();
 
             return myResult;
@@ -140,7 +156,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         public ShipmentPayablePM GetSinglePM(string id, int tenant)
         {
             ShipmentPayablePM myResult
-                = (from a in repository.context.ShipmentPayables.Include("ChargesType").Include("DueType").Include("Measurement").Include("Currency").Include("ShipmentPayableLineStatus").Include("VendorCard").Include("ShipmentPayableAmountType").Include("Shipment")
+                = (from a in repository.context.ShipmentPayables.Include("ChargesType").Include("DueType").Include("Measurement").Include("Currency").Include("ShipmentPayableLineStatus").Include("VendorCard").Include("ShipmentPayableAmountType").Include("Shipment").Include("CreatedByUser.Contact").Include("UpdateByUser.Contact")
                    where a.Id == id && a.Tenant == tenant
                    select new ShipmentPayablePM()
                    {
@@ -206,12 +222,29 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                        QuoteCostMinAmount = a.QuoteCostMinAmount,
                        QuoteCostMaxAmount = a.QuoteCostMaxAmount,
                        TariffId = a.TariffId,
+                       IsCustomsChargesTariff = a.IsCustomsChargesTariff,
                        TariffLineId = a.TariffLineId,
                        TariffNumber = a.TariffNumber,
                        TariffVersion = a.TariffVersion,
                        VatAmountProfit = a.VatAmountProfit,
                        VatAmountLocal = a.VatAmountLocal,
+                       CreatedByUserName = a.CreatedByUser == null ? null : (a.CreatedByUser.Contact == null ? null : a.CreatedByUser.Contact.EnglishName),
+                       UpdateByUserName = a.UpdateByUser == null ? null : (a.UpdateByUser.Contact == null ? null : a.UpdateByUser.Contact.EnglishName),
                    }).FirstOrDefault();
+
+            if (myResult != null)
+            {
+                new ChildEntitiesCustomFieldService().Set(new ChildEntitiesCustomFieldArgs()
+                {
+                    Tenant = tenant,
+                    EntityId = myResult.ShipmentId,
+                    ObjectTableName = "Shipment",
+                    ChildObjectTableName = "ShipmentPayable",
+                    ChildEntityId = myResult?.Id,
+                    ChildEntities = new List<object>() { myResult }.ToList(),
+                });
+            }
+
 
             return myResult;
         }

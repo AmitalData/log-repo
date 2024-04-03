@@ -1,5 +1,9 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.InfrastructureModel.EntityPMs;
+using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.BL.ShipmentsModel.EntityPMs;
+using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.Server.Tools.KafkaConfigurations;
 using Logitude.Server.Tools.Messages;
 using Logitude.Server.Tools.QueueService;
@@ -33,9 +37,17 @@ namespace CommunicationWorkerRole
                             long messageType = GetMessageType(response);
 
                             var TransfareOnGoingMessageProducer = new Producer();
+
                             var serializedObjectUpdateMessage = JsonConvert.SerializeObject(entityPM, Formatting.Indented);
                             var result = TransfareOnGoingMessageProducer.Produce(KafkaTopics.LookupsTopic, messageType, serializedObjectUpdateMessage);
+
                             queueservice.Complete();
+                            TransfareOnGoingMessageProducer.ProducerBuilder.Flush();
+                            TransfareOnGoingMessageProducer.ProducerBuilder.Dispose();
+                        }
+                        else
+                        {
+                            Thread.Sleep(5000);
                         }
                     }
                     catch (Exception ex)
@@ -78,8 +90,6 @@ namespace CommunicationWorkerRole
             }
         }
 
-
-
         #region Private Methods
 
         private object GetEntityById(QueueResponse response)
@@ -98,9 +108,82 @@ namespace CommunicationWorkerRole
                     return GetCountryById(Tenant, EntityId);
                 case "Port":
                     return GetPortById(Tenant, EntityId);
+                case "Vessel":
+                    return GetVesselById(Tenant, EntityId);
+                case "DocumentType":
+                    return GetDocumentTypeById(Tenant, EntityId);
+                case "Currency":
+                    return GetCurrencyById(Tenant, EntityId);
+                case "EntityStatus":
+                    return GetEntityStatusById(Tenant, EntityId);
+                case "SpecialServicesType":
+                    return GetSpecialServicesTypeById(Tenant, EntityId);
+                case "PackageType":
+                    return GetPackageTypeById(Tenant, EntityId);
+                case "ObjectField":
+                    return GetObjectFieldById(Tenant, EntityId);
+                case "UpsertCustomPickListValue":
+                    return GetCustomPickListValueById(Tenant, EntityId);
+                case "DeleteCustomPickListValue":
+                    return EntityId;
+                case "DisconectFromContact":
+                    return JsonConvert.DeserializeObject(EntityId);
+                case "Department":
+                    return GetDepartmentById(Tenant, EntityId);
+                case "CustomerTeam":
+                    return GetCustomerTeamById(Tenant, EntityId);
                 default:
                     return null;
             }
+        }
+
+        private object GetCustomerTeamById(int tenant, string id)
+        {
+            CustomerTeamQuery customerTeamQuery = new CustomerTeamQuery(tenant);
+            CustomerTeamPM customerTeamPM = customerTeamQuery.GetSinglePM(id, tenant);
+            return customerTeamPM;
+        }
+
+        private object GetDepartmentById(int tenant, string id)
+        {
+            DepartmentQuery departmentQuery = new DepartmentQuery(tenant);
+            DepartmentPM departmentPM = departmentQuery.GetSinglePM(id, tenant);
+            return departmentPM;
+        }
+
+        private object GetCustomPickListValueById(int tenant, string id)
+        {
+            CustomPickListQuery customPickListQuery = new CustomPickListQuery(tenant);
+            CustomPickListPM customPickListPM = customPickListQuery.GetSinglePM(id, tenant);
+            return customPickListPM;
+        }
+
+        private object GetObjectFieldById(int tenant, string id)
+        {
+            ObjectFieldQuery objectFeildQuery = new ObjectFieldQuery(tenant);
+            ObjectFieldPM objectFieldPM = objectFeildQuery.GetSinglePM(id, tenant);
+            return objectFieldPM;
+        }
+
+        private object GetPackageTypeById(int tenant, string id)
+        {
+            PackageTypeQuery packageTypeQuery = new PackageTypeQuery(tenant);
+            PackageTypePM packageTypePM = packageTypeQuery.GetSinglePM(id, tenant);
+            return packageTypePM;
+        }
+
+        private object GetDocumentTypeById(int tenant, string id)
+        {
+            DocumentTypeQuery documentTypeQuery = new DocumentTypeQuery(tenant);
+            DocumentTypePM documentTypePM = documentTypeQuery.GetSingelDocumentTypeById(id, tenant);
+            return documentTypePM;
+        }
+
+        private object GetVesselById(int Tenant, string Id)
+        {
+            VesselQuery vesselQuery = new VesselQuery(Tenant);
+            VesselPM vesselPM = vesselQuery.GetSinglePM(Id, Tenant);
+            return vesselPM;
         }
 
         private CardPM GetCardById(int Tenant, string Id)
@@ -110,10 +193,10 @@ namespace CommunicationWorkerRole
             return cardPM;
         }
 
-        private ContactPM GetContactById(int Tenant, string Id)
+        private ExtendedContactPM GetContactById(int Tenant, string Id)
         {
             ContactQuery contactQuery = new ContactQuery(Tenant);
-            ContactPM contactPM = contactQuery.GetSinglePM(Id, Tenant);
+            ExtendedContactPM contactPM = contactQuery.GetSingleExtendedContactPMsByTenant(Id, Tenant);
             return contactPM;
         }
 
@@ -131,24 +214,66 @@ namespace CommunicationWorkerRole
             return portPM;
         }
 
+        private CurrencyPM GetCurrencyById(int tenant, string Id)
+        {
+            CurrencyQuery currencyQuery = new CurrencyQuery(tenant);
+            CurrencyPM currencyPM = currencyQuery.GetSinglePM(Id,tenant);
+            return currencyPM;
+        }
+        private EntityStatusPM GetEntityStatusById(int tenant, string Id)
+        {
+            EntityStatusQuery entityStatusQuery = new EntityStatusQuery(tenant);
+            EntityStatusPM entityStatusPM = entityStatusQuery.GetSinglePM(Id, tenant);
+            return entityStatusPM;
+        }
+        private SpecialServicesTypePM GetSpecialServicesTypeById(int tenant, string Id)
+        {
+            SpecialServicesTypeQuery specialServicesTypeQuery = new SpecialServicesTypeQuery(tenant);
+            SpecialServicesTypePM specialServicesTypePM = specialServicesTypeQuery.GetSinglePM(Id, tenant);
+            return specialServicesTypePM;
+        }
+
         private long GetMessageType(QueueResponse response)
         {
             string Entity = response.MessageValues["Entity"].ToString();
             switch (Entity)
             {
                 case "Card":
-                    return 4;
+                    return KakaMessageTypes.Card;
                 case "Contact":
-                    return 5;
+                    return KakaMessageTypes.Contact;
                 case "Country":
-                    return 7;
+                    return KakaMessageTypes.Country;
                 case "Port":
-                    return 6;
+                    return KakaMessageTypes.Port;
+                case "Vessel":
+                    return KakaMessageTypes.Vessel;
+                case "DocumentType":
+                    return KakaMessageTypes.DocumentType;
+                case "Currency":
+                    return KakaMessageTypes.Currency;
+                case "EntityStatus":
+                    return KakaMessageTypes.EntityStatus;
+                case "SpecialServicesType":
+                    return KakaMessageTypes.SpecialServicesType;
+                case "PackageType":
+                    return KakaMessageTypes.PackageType;
+                case "ObjectField":
+                    return KakaMessageTypes.CustomField;
+                case "UpsertCustomPickListValue":
+                    return KakaMessageTypes.CustomPickList;
+                case "DeleteCustomPickListValue":
+                    return KakaMessageTypes.DeleteCustomPickListValue;
+                case "DisconectFromContact":
+                    return KakaMessageTypes.DisconectFromContact;
+                case "Department":
+                    return KakaMessageTypes.Department;
+                case "CustomerTeam":
+                    return KakaMessageTypes.CustomerTeam;
                 default:
                     return 0;
             }
         }
-
         #endregion
     }
 }

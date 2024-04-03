@@ -36,6 +36,7 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
         public string FullNameTextCodeDefaultText { get; set; }
         public string DimensionDataViewName { get; set; }
         public bool IsMultipleSelection { get; set; }
+        public bool UseUnitSelection { get; set; }
         public string RecordType { get; set; }
 
 

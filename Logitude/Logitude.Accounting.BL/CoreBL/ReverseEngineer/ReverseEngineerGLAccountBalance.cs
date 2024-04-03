@@ -163,7 +163,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 bool UnionreturnsDistinctvalues = true;
                 if (UnionreturnsDistinctvalues)
                 {
-                    qThe = qNotInTot.Concat(qNotInGLAcc).Concat(qDiff)
+                    qThe = qNotInTot.Take(30).Concat(qNotInGLAcc.Take(30)).Concat(qDiff.Take(30))
                         //.Concat(qTotalOpenAmountInTransactionDiffBalanceInLocalCurrency)
                         //.Concat(qTotalOpenAmountInTransactionDiffBalanceInForeign); 
                         ;
@@ -179,9 +179,36 @@ namespace Logitude.Accounting.BL.CoreBL
                     TotalOpenReconciliation = myTotalOpenReconciliation,
                     Took = sw.Elapsed
                 };
+                Convert2DisplayNumber(CompareReport.GLAccountBalanceList, _Tenant);
             }
         }
+        private void Convert2DisplayNumber(List<GLAccountBalanceDTO> rows, int tenant)
+        {
+            if (rows == null)
+            {
+                return;
+            }
+            try
+            {
+                var AccountIdList = rows.Where(r => !string.IsNullOrWhiteSpace(r.AccountId)).Select(x => x.AccountId).Distinct().ToList();
+                var repo = new GLAccountRepository(tenant);
+                var res = repo.GetDisplayNumberList(AccountIdList.ToHashSet(), tenant);
+                foreach (var item in rows)
+                {
+                    var display = res.FirstOrDefault(r => r.Key == item.AccountId);
+                    if (string.IsNullOrEmpty(display.Value))
+                    {
+                        continue;
+                    }
+                    item.AccountDisplayNumber = display.Value;
+                }
+            }
+            catch (Exception)
+            {
 
+
+            }
+        }
         private IQueryable<GLAccountBalanceDTO> GetTotalOpenAmountInTransactionDiffBalanceInForeign(
             GLAccountRepository myGLAccountRepo, 
             LedgerTransactionRepository myLedgerTransactionRepository, 
@@ -297,6 +324,10 @@ namespace Logitude.Accounting.BL.CoreBL
     public class GLAccountBalanceDTO
     {
         public string AccountId { get; set; }
+        public string DisplayNumber { get; set; }
+        public string LocalName { get; set; }
+
+        public string AccountDisplayNumber { get; set; }
 
         public decimal BalanceInLocalCurrency { get; set; }
         public decimal BalanceInForeignCurrency { get; set; }

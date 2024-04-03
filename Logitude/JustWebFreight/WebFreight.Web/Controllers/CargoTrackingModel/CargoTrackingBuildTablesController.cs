@@ -1,4 +1,7 @@
 ﻿
+using Logitude.BL.CommonDataModel.Helpers;
+using Logitude.BL.GlobalModel.EntityPMs;
+using Logitude.BL.GlobalModel.EntityQueries;
 using Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses;
 using Logitude.CargoTracking.BL.CargoTrackingServices.Services;
 using Logitude.CargoTracking.BL.CoreBL.Batch;
@@ -40,8 +43,11 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                if(Args.Tenant.HasValue)
+                    SecurityUtility.AuthenticationOnTenant(Args.Tenant.Value);
+
                 int tenant = authToken.Tenant;
-                CreateBatchTaskExecution(Args, "Build Cargo Tracking Shipments", "Logitude.CargoTracking.BL.CoreBL.Batch.BuildCargoTrackingShipments,Logitude.CargoTracking.BL", tenant);
+                CreateBatchTaskExecution(Args, BatchTaskNames.BuildCargoTrackingShipments, "Logitude.CargoTracking.BL.CoreBL.Batch.BuildCargoTrackingShipments,Logitude.CargoTracking.BL", tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, Args);
             }
 
@@ -52,18 +58,14 @@ namespace WebFreight.Web.Controllers.AccountingModel
 
         }
 
- 
-
         private string CreateBatchTaskExecution(Logitude.CargoTracking.BL.CoreBL.Batch.CargoTrackingXMLParameters Args, string Subject, string ClassName, int tenant)
         {
             // 1- create BTE record
             BatchTaskExecutionPM taskExe;
-
             var stringwriter = new System.IO.StringWriter();
             var serializer = new XmlSerializer(typeof(Logitude.CargoTracking.BL.CoreBL.Batch.CargoTrackingXMLParameters));
             serializer.Serialize(stringwriter, Args);
             string xmlParameters = stringwriter.ToString();
-
 
             taskExe = new BatchTaskExecutionPM()
             {
@@ -71,10 +73,9 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 Tenant = tenant,
                 ChangeSetOp = ChangeSetOperation.Insert,
                 ClassName = ClassName,
-                CreateDate = DateTime.Now,
-                PrametersXml = xmlParameters,
+                CreateDate = DateTime.Now,                
+                PrametersXml = xmlParameters,                
                 StatusCode = "C",
-
             };
 
 
@@ -94,12 +95,5 @@ namespace WebFreight.Web.Controllers.AccountingModel
 
             return taskExe.Id;
         }
-
-     
-
     }
-
-
-
-
 }

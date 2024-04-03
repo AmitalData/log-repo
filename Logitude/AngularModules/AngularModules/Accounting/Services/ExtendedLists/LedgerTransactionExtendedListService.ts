@@ -332,7 +332,7 @@ export class LedgerTransactionExtendedListService {
 
         var url = this._reconciliationUrl + "/GetFirst500LedgerForReconciliation";
 
-        var callUrl = this.ParseFiltersIntoURL(accountId, filters, url); 
+        var callUrl = this.ParseFiltersIntoURL(accountId, filters, url);
 
         return this.httpClient.get(callUrl, ServiceHelper.GetHttpHeaders()).pipe(
             map((response: ServiceResponse) => {
@@ -344,6 +344,56 @@ export class LedgerTransactionExtendedListService {
 
     }
 
+
+    GetFirstXLedgerForReconciliationByParam(accountId: string, filters: ApiQueryFilters) {
+
+
+        var url = this._reconciliationUrl + "/GetFirstXLedgerForReconciliationByParam";
+
+        var callUrl = this.ParseFiltersIntoURL(accountId, filters, url);
+
+        return this.httpClient.get(callUrl, ServiceHelper.GetHttpHeaders()).pipe(
+            map((response: ServiceResponse) => {
+                var serviceResponse: ServiceResponse = new ServiceResponse();
+                serviceResponse = response;
+                return serviceResponse;
+            }),
+            catchError(ServiceHelper.HandleServiceError));
+
+    }
+    GetFirstXLedgerForReconciliationByParams(accountId: string, filters: ApiQueryFilters) {
+      
+
+        var url = this._reconciliationUrl + "/GetReconciliationsByFilter";
+
+        var callUrl = this.ParseFiltersIntoURL(accountId, filters, url);
+
+        return this.httpClient.get(callUrl, ServiceHelper.GetHttpHeaders()).pipe(
+            map((response: ServiceResponse) => {
+                var serviceResponse: ServiceResponse = new ServiceResponse();
+                serviceResponse = response;
+                return serviceResponse;
+            }),
+            catchError(ServiceHelper.HandleServiceError));
+
+    }
+
+    GetFirstXLedgerForExtReconciliationByParam(objectTableName: string, objectTableId: string, entityId: string, filters: ApiQueryFilters) {
+      
+        
+        var url = ServiceHelper.GetLogitudeURL()+'api/ReconcileExternalPagesExtended/getExternalReoncilioationsByFilter?objectTableId='+
+         objectTableId+'&entityId='+entityId;
+        var callUrl = this.parseFiltersToURL(filters,url);
+
+        return this.httpClient.get(callUrl, ServiceHelper.GetHttpHeaders()).pipe(
+            map((response: ServiceResponse) => {
+                var serviceResponse: ServiceResponse = new ServiceResponse();
+                serviceResponse = response;
+                return serviceResponse;
+            }),
+            catchError(ServiceHelper.HandleServiceError));
+
+    }
 
     private ParseFiltersIntoURL(accountId: string, filters: ApiQueryFilters, url: string)
     {
@@ -400,9 +450,29 @@ export class LedgerTransactionExtendedListService {
 
     }
 
-    GetTransactionsCurrencies(AccountId:string) {
+    GetTransactionsForAPPayment(appaymentId: string, billToGLAccountId: string, paymentCurrencyId:string) {
 
-        var urlparameters = '/GetTransactionsCurrencies?AccountId=' + AccountId;
+
+
+        var url = this._apiUrl + '/GetTransactionsForAPPayment?appaymentId=' + appaymentId
+            + '&billToGLAccountId=' + billToGLAccountId + '&paymentCurrencyId=' + paymentCurrencyId;
+
+        return this.httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(
+            map((response: ServiceResponse) => {
+                var serviceResponse: ServiceResponse = new ServiceResponse();
+                serviceResponse = response;
+                return serviceResponse;
+            }),
+            catchError(ServiceHelper.HandleServiceError));
+
+    }
+
+    
+
+    GetTransactionsCurrencies(AccountId:string, splittedByCurrencyCheckBox: boolean, attachedGLAccountChanged: boolean) {
+
+        var urlparameters = '/GetTransactionsCurrencies?AccountId=' + AccountId + '&splittedByCurrencyCheckBox=' + splittedByCurrencyCheckBox
+        + '&attachedGLAccountChanged=' + attachedGLAccountChanged;
 
         var callUrl = this._apiUrl.concat(urlparameters);
         return this.httpClient.get(callUrl, ServiceHelper.GetHttpHeaders()).pipe(
@@ -415,7 +485,7 @@ export class LedgerTransactionExtendedListService {
 
 
     }
-
+    
 
     MapJsonToEntityList(jsonList: any) {
 

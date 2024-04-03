@@ -11,6 +11,22 @@ namespace Simplog.Data.QuoteModel.Mocks
 {
     public class MockQuoteContext : IQuotesContext
     {
+        List<ValidByType> validByTypes;
+        MockObjectSet<ValidByType> validByTypeObjectSet;
+        public IDbSet<ValidByType> ValidByTypes
+        {
+            get
+            {
+                if (validByTypes == null)
+                {
+                    validByTypes = new List<ValidByType>() {
+                        new ValidByType() { Code="EAD" } };
+                    validByTypeObjectSet = new MockObjectSet<ValidByType>(validByTypes);
+                }
+                return validByTypeObjectSet;
+            }
+        }
+
         List<MarkUpType> markUpTypes;
         MockObjectSet<MarkUpType> markUpObjectSet;
         public IDbSet<MarkUpType> MarkUpTypes
@@ -256,6 +272,8 @@ namespace Simplog.Data.QuoteModel.Mocks
         {
             get { throw new NotImplementedException(); }
         }
+
+        public IDbSet<QuoteAnalytic> QuoteAnalytics => throw new NotImplementedException();
 
         public System.Data.Common.DbConnection GetConnection()
         {

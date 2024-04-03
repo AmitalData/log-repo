@@ -7,7 +7,7 @@
 //------------------------------------------------------------------------------
 
 export class GLAccountList {
-   
+
 	Id: string;
 	Tenant: number;
 	InternalNumber: string;
@@ -106,6 +106,7 @@ export class GLAccountList {
 	InterestCalculationStartDate: Date;
 	ActiveForInterestCreditInvoice: boolean;
 	InterestCreditLimit: number;
+	InterestOpenBalance: number;
 	NameForPrintingCheques: string;
 	Smallcashbook: boolean;
 	MinimumInterestInvoiceBilling: number;
@@ -141,6 +142,7 @@ export class GLAccountList {
 	LastReconcileDate: Date;
 	CreditLimit: number;
 	PaymentTerm: string;
+	PaymentTerms: string;
 	TotalOpenShipments: number;
 	Phone: string;
 	Salesman: string;
@@ -157,6 +159,12 @@ export class GLAccountList {
 	PostponedChequesCommission: number;
 	BalanceInForeignCurrency: number;
 	ForeignBalanceInDue: number;
+	ChartOfAccountSecurityLevel: number;
 	
+    Access: boolean;
+	Obligo: number;
+	CreditUsed: number;
+	InsuredCreditPercentage: number;
+	DateFormat: string;
+
 }
- 

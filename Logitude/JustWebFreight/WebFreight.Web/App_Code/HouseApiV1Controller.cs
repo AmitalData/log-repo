@@ -28,12 +28,13 @@ namespace WebFreight.Web.App_Code
         {
             try
             {
-                //string token = HttpContext.Current.Request.Headers["Token"];
-                //AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = 951;// authToken.Tenant;
-                HouseQueryService Service = new HouseQueryService(tenant);
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                HouseQueryService Service = new HouseQueryService(authToken.Tenant);
                 ServiceResponse response = new ServiceResponse();
-                var Result = Service.GetHouseById(id, tenant);
+                var Result = Service.GetHouseById(id, authToken.Tenant, null);
                 string xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(Result);
                 string json = LogitudeXmlSerializer.SerializeObjectToJosnString(Result);
                 return Request.CreateResponse(HttpStatusCode.OK, Result);

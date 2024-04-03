@@ -20,6 +20,9 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ProductTypeName { get; set; }
 
+        public string CardId { get; set; }
+        public string ContactId { get; set; }
+
         public ChangeSetOperation ChangeSetOp { get; set; }
     }
 }

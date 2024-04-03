@@ -44,6 +44,7 @@ using Simplog.Server.Infrastructure;
 using System.Data.Entity.Infrastructure;
 using System.Data.SqlClient;
 using System.ComponentModel;
+using WebFreight.Web.Helpers.APIHelpers;
 
 namespace WebFreight.Web.WcfApi
 {
@@ -92,8 +93,8 @@ namespace WebFreight.Web.WcfApi
                     TenantPM tenantPM = tenantQuery.GetSinglePM(entityPM.Tenant);
                     CountryRepository countryRepository = new CountryRepository(commoncontext);
                     AddressRepository addressRepository = new AddressRepository(commoncontext);
-                    TruckerRepository truckerRepository = new TruckerRepository(commoncontext); 
-
+                    TruckerRepository truckerRepository = new TruckerRepository(commoncontext);
+                    ShipmentAdditionalCloudDataRepository shipmentAdditionalCloudDataRepository = new ShipmentAdditionalCloudDataRepository(objectContext);
 
                     // ???????????
                     //"system@tenant1.com"
@@ -355,7 +356,7 @@ namespace WebFreight.Web.WcfApi
                             return response;
                         }
                     }
-                     
+
 
                     if (entityPM.MainCarriageCarrierId != null)
                     {
@@ -677,6 +678,17 @@ namespace WebFreight.Web.WcfApi
                     MapCustomAgent(entityPM, cardsReporistory);
                     #endregion
 
+                    #region ForwarderPartner
+                    MapForwarderPartnert(entityPM, cardsReporistory);
+                    #endregion
+
+                    #region FreightForwarder
+                    MapFreightForwarder(entityPM, cardsReporistory);
+                    #endregion
+
+                    CalculateShipmentPackagesTotalFields(entityPM);
+
+                    MapDatesFields(entityPM, shipmentAdditionalCloudDataRepository, shipmentRepository);
 
                     if (response.HasError)
                     {
@@ -693,7 +705,7 @@ namespace WebFreight.Web.WcfApi
                         entityPM.StatusDate = entityPM.CreateDateTime;
 
                         service = new ShipmentService(objectContext, entityPM, contact.Email);
-                        service.SetChangeSet(entityPM.ShipmentPackages, new List<ShipmentOrderPackagePM>(), entityPM.ShipmentPickUps, entityPM.ShipmentDeliveries, new List<ShipmentReceivablePM>(), new List<ShipmentPayablePM>(), new List<ShipmentFollowUpPM>(), new List<ShipmentAWBPrintOnlyPM>(), new List<ConsoleShipmentPM>(), new List<ShipmentCarrierStatusPM>(), new List<AWBOCIPM>(), new List<ShipmentCommodityPM>(), new List<ShipmentAssemblyPM>(), new List<ShipmentStoragePricingPM>(), new List<ShipmentProductItemPM>());
+                        service.SetChangeSet(entityPM.ShipmentPackages, new List<ShipmentOrderPackagePM>(), entityPM.ShipmentPickUps, entityPM.ShipmentDeliveries, new List<ShipmentReceivablePM>(), new List<ShipmentPayablePM>(), new List<ShipmentFollowUpPM>(), new List<ShipmentAWBPrintOnlyPM>(), new List<ConsoleShipmentPM>(), new List<ShipmentCarrierStatusPM>(), new List<AWBOCIPM>(), new List<ShipmentCommodityPM>(), new List<ShipmentAssemblyPM>(), new List<ShipmentStoragePricingPM>(), new List<ShipmentProductItemPM>(),new List<ShipmentUnassignedFieldPM>());
 
                         service.Create();
 
@@ -736,6 +748,7 @@ namespace WebFreight.Web.WcfApi
                         entityPM.StatusId = entity.StatusId;
                         entityPM.StatusDate = entity.StatusDate;
                         entityPM.LastStatusLogDate = entity.LastStatusLogDate;
+                        entityPM.IsShipmentOrder = false;
 
                         if (entity.ShipmentLevelCode == "H" && entityPM.ShipmentLevelCode == "D")
                         {
@@ -774,10 +787,10 @@ namespace WebFreight.Web.WcfApi
                             entityPM.ShipmentDeliveries.Add(deliveryPM);
                         }
 
-                        service.SetChangeSet(entityPM.ShipmentPackages, new List<ShipmentOrderPackagePM>(), entityPM.ShipmentPickUps, entityPM.ShipmentDeliveries, new List<ShipmentReceivablePM>(), new List<ShipmentPayablePM>(), new List<ShipmentFollowUpPM>(), new List<ShipmentAWBPrintOnlyPM>(), new List<ConsoleShipmentPM>(), new List<ShipmentCarrierStatusPM>(), new List<AWBOCIPM>(), new List<ShipmentCommodityPM>(), new List<ShipmentAssemblyPM>(), new List<ShipmentStoragePricingPM>(), new List<ShipmentProductItemPM>());
+                        service.SetChangeSet(entityPM.ShipmentPackages, new List<ShipmentOrderPackagePM>(), entityPM.ShipmentPickUps, entityPM.ShipmentDeliveries, new List<ShipmentReceivablePM>(), new List<ShipmentPayablePM>(), new List<ShipmentFollowUpPM>(), new List<ShipmentAWBPrintOnlyPM>(), new List<ConsoleShipmentPM>(), new List<ShipmentCarrierStatusPM>(), new List<AWBOCIPM>(), new List<ShipmentCommodityPM>(), new List<ShipmentAssemblyPM>(), new List<ShipmentStoragePricingPM>(), new List<ShipmentProductItemPM>(), new List<ShipmentUnassignedFieldPM>());
 
 
-                        
+
 
                         if (entityPM.ShipmentLevelCode == "A")
                         {
@@ -899,29 +912,118 @@ namespace WebFreight.Web.WcfApi
                 }
                 return response;
             }
-             
 
+
+        }
+
+        private static void CalculateShipmentPackagesTotalFields(ShipmentPM entityPM)
+        {
+            double? shipmentChargeableWeight = entityPM.ChargeableWeight;
+            double? shipmentGrossWeight = entityPM.GrossWeight;
+            ComputeHelper.ComputeTotals(entityPM);
+            CalculateChargeableWeight(entityPM, shipmentChargeableWeight);
+            CalculateGrossWeight(entityPM, shipmentGrossWeight);
+        }
+
+        private static void CalculateChargeableWeight(ShipmentPM entityPM, double? shipmentChargeableWeight)
+        {
+            if (shipmentChargeableWeight == entityPM.ChargeableWeight) return;
+            entityPM.ChargeableWeight = shipmentChargeableWeight;
+            entityPM.ChargeableWeightEdited = true;
+        }
+
+        private static void CalculateGrossWeight(ShipmentPM entityPM, double? shipmentGrossWeight)
+        {
+            if (shipmentGrossWeight == entityPM.GrossWeight) return;
+            entityPM.GrossWeight = shipmentGrossWeight;
+            entityPM.GrossWeightEdited = true;
+        }
+
+        private void MapDatesFields(ShipmentPM entityPM, ShipmentAdditionalCloudDataRepository shipmentAdditionalCloudDataRepository, ShipmentRepository shipmentRepository)
+        {
+            Shipment shipment = shipmentRepository.GetSingleShipmentByShipmentNumber(entityPM.ShipmentNumber, entityPM.Tenant);
+
+            if (shipment == null)
+                return;
+              
+            ShipmentAdditionalCloudData shipmentAdditionalCloudData = shipmentAdditionalCloudDataRepository.GetSingleShipmentAdditionalCloudData(shipment.Id, entityPM.Tenant);
+
+            if (shipmentAdditionalCloudData == null)
+                return;
+            
+            MapPaymentRequestDateTime(entityPM, shipmentAdditionalCloudDataRepository, shipmentRepository, shipmentAdditionalCloudData);
+            shipmentAdditionalCloudData.GatepassDocumentsReady = entityPM.GatepassDocumentsReady;
+            shipmentAdditionalCloudData.GoodsClassification = entityPM.GoodsClassification;
+            shipmentAdditionalCloudData.DocumentInspection = entityPM.DocumentInspection;
+            shipmentAdditionalCloudData.InvoiceIssuedDate = entityPM.InvoiceIssuedDate;
+
+            UpdateShipmentAdditionalCloudData(shipmentAdditionalCloudDataRepository, shipmentAdditionalCloudData);
+
+        }
+
+        private void MapPaymentRequestDateTime(ShipmentPM entityPM, ShipmentAdditionalCloudDataRepository shipmentAdditionalCloudDataRepository, ShipmentRepository shipmentRepository, ShipmentAdditionalCloudData shipmentAdditionalCloudData)
+        {
+            if (entityPM.PaymentRequestDateTime != null)
+            {
+                 shipmentAdditionalCloudData.PaymentRequestDateTime = entityPM.PaymentRequestDateTime;
+            }
+        }
+
+        private static void UpdateShipmentAdditionalCloudData( ShipmentAdditionalCloudDataRepository shipmentAdditionalCloudDataRepository, ShipmentAdditionalCloudData shipmentAdditionalCloudData)
+        {
+            shipmentAdditionalCloudDataRepository.Update(shipmentAdditionalCloudData);
+            shipmentAdditionalCloudDataRepository.SubmitChanges();
+        }
+        private void MapFreightForwarder(ShipmentPM entityPM, CardRepository cardsReporistory)
+        {
+            if (entityPM.FreightForwarderId == null)
+                return;
+            string cardId = cardsReporistory.GetCardIdByCode(entityPM.FreightForwarderId, entityPM.Tenant);
+
+            if(string.IsNullOrEmpty(cardId))
+                throw new ApplicationException("FreightForwarderId field doesn't exist in the database,Upsert this entity before using it.");
+
+            entityPM.FreightForwarderId = cardId;
+
+        }
+
+
+        private void MapForwarderPartnert(ShipmentPM entityPM, CardRepository cardsReporistory)
+        {
+           if (entityPM.ForwarderPartnerId != null)
+            {
+                string cardId = cardsReporistory.GetCardIdByCode(entityPM.ForwarderPartnerId, entityPM.Tenant);
+                if (!string.IsNullOrEmpty(cardId))
+                {
+                    entityPM.ForwarderPartnerId = cardId;
+                }
+                else
+                {
+                    throw new ApplicationException("ForwarderPartnerId field doesn't exist in the database,Upsert this entity before using it.");
+                }
+            }
+              
         }
 
         private void MapCustomAgent(ShipmentPM entityPM, CardRepository cardsReporistory)
         {
 
-            if (entityPM.AssginedtoCustomsAgentId == "--")
+            if (entityPM.CustomAgentImportId == "--")
             {
-                entityPM.AssginedtoCustomsAgentId = null;
+                entityPM.CustomAgentImportId = null;
             }
 
-            if (entityPM.AssginedtoCustomsAgentId != null)
+            if (entityPM.CustomAgentImportId != null)
             {
-                Card customAgent = cardsReporistory.GetSingleCardByCode(entityPM.AssginedtoCustomsAgentId, entityPM.Tenant, false);
+                Card customAgent = cardsReporistory.GetSingleCardByCode(entityPM.CustomAgentImportId, entityPM.Tenant, false);
 
                 if (customAgent != null && !string.IsNullOrEmpty(customAgent.Id))
                 {
-                    entityPM.AssginedtoCustomsAgentId = customAgent.Id;
+                    entityPM.CustomAgentImportId = customAgent.Id;
                 }
                 else
                 {
-                    throw new ApplicationException("AssginedtoCustomsAgentId field doesn't exist in the database, Upsert this entity before using it.");
+                    throw new ApplicationException("CustomAgentImportId field doesn't exist in the database, Upsert this entity before using it.");
                 }
             }
          
@@ -1524,7 +1626,7 @@ namespace WebFreight.Web.WcfApi
                         ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("Shipment", 0, true);
                         string objectTableId = objectTable.Id;
 
-                        List<TraceEvent> shipmentEvents = traceEventRepository.GetTraceEvents(tenant, entityPoco.Id, objectTableId).ToList();
+                        var shipmentEvents = traceEventRepository.GetTraceEvents(tenant, entityPoco.Id, objectTableId);
                         List<TraceEventParams> toBuildEvents = new List<TraceEventParams>();
                         foreach (TraceEventPM traceEvent in eventsList)
                         {

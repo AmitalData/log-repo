@@ -642,6 +642,7 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
         public IDbSet<ProductTypeModification> ProductTypeModifications { get; set; }
         public IDbSet<CustomerSalesmanByProduct> CustomerSalesmanByProducts { get; set; }
         public IDbSet<CustomerAccountManagerByProduct> CustomerAccountManagerByProducts { get; set; }
+        public IDbSet<CargoTenantMilestoneDefinition> CargoTenantMilestoneDefinitions { get; set; }
         public IDbSet<CustomerFreelancerByProduct> CustomerFreelancerByProducts { get; set; }
         public IDbSet<CustomerCustomsAgentByProduct> CustomerCustomsAgentByProducts
         {
@@ -1350,7 +1351,7 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
         }
 
 
-        public IDbSet<ImageLibrary> ImageLibrarys
+        public IDbSet<ImageLibrary> ImageLibraries
         {
             get;
             set;
@@ -4942,6 +4943,7 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new TaxReportLineTypeMap());
             modelBuilder.Configurations.Add(new TaxReportStatusMap());
             modelBuilder.Configurations.Add(new VatReportStatusMap());
+            modelBuilder.Configurations.Add(new CargoTenantMilestoneDefinitionMap());
             base.OnModelCreating(modelBuilder);
         }
     }

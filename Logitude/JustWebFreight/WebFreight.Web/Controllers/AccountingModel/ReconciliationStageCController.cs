@@ -11,6 +11,10 @@ using System.Text.RegularExpressions;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.BL.CoreBL.Batch;
 using System.Globalization;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using WebFreight.Web.Security;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace WebFreight.Web.Controllers.AccountingModel
 {
@@ -26,7 +30,12 @@ namespace WebFreight.Web.Controllers.AccountingModel
         {
             try
             {
+                bool retry = true;
+                int timeoutinmin = 10; 
                 string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 ReconciliationStageCArg args = null;
                 string message = "";
                 decimal maximalDifference = Decimal.MaxValue;
@@ -52,7 +61,24 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 else
                 {
                     ReconciliationStageCBatch reconciliationStageCBatch = new ReconciliationStageCBatch();
-                    reconciliationStageCBatch.RunReconciliationStageC(args);
+                    retry = true;
+                    while (retry)
+                    {
+                        retry = false;
+                        using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(timeoutinmin)))
+                        {
+
+                            try
+                            {
+                                reconciliationStageCBatch.RunReconciliationStageC(args, timeoutinmin - 1, ref retry);
+                                scope.Complete();
+                            }
+                            catch (Exception e)
+                            {
+                                throw;
+                            }
+                        }
+                    }
                     string responseText = reconciliationStageCBatch.ResponseText();
                     HttpStatusCode StatusCode = reconciliationStageCBatch.StatusCode();
                     var res1 = new { Success = true, Message = responseText };
@@ -131,6 +157,8 @@ namespace WebFreight.Web.Controllers.AccountingModel
         {
             try
             {
+                bool retry = true;
+                int timeoutinmin = 10; 
                 string token = HttpContext.Current.Request.Headers["Token"];
                 ReconciliationStageCArg args = null;
                 string message = "";
@@ -159,8 +187,25 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 else
                 {
                     ReconciliationStageCBatch reconciliationStageCBatch = new ReconciliationStageCBatch();
-                    reconciliationStageCBatch.RunReconciliationStageC(args);
-                    string responseText = reconciliationStageCBatch.ResponseText();
+                        retry = true;
+                        while (retry)
+                        {
+                            retry = false;
+                            using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(timeoutinmin)))
+                            {
+
+                                try
+                                {
+                                    reconciliationStageCBatch.RunReconciliationStageC(args, timeoutinmin - 1, ref retry);
+                                    scope.Complete();
+                                }
+                                catch (Exception e)
+                                {
+                                    throw;
+                                }
+                            }
+                        }
+                        string responseText = reconciliationStageCBatch.ResponseText();
                     HttpStatusCode StatusCode = reconciliationStageCBatch.StatusCode();
                     var res1 = new { Success = true, Message = responseText };
 

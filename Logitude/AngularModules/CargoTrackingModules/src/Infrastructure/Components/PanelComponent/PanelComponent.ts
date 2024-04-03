@@ -1,4 +1,4 @@
-import { Component, EventEmitter, HostListener, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
 
 @Component({
     selector: 'panel',
@@ -19,7 +19,10 @@ export class PanelComponent implements OnInit
     @Input() HeaderLinkText: string;
     @Input() Title: string = "";
     @Input() TransparentBackground: boolean = false;
-    @Input() DetailsSectionToggleEvent: EventEmitter<any> = new EventEmitter();
+    @Input() InputDetailsSectionToggleEvent: EventEmitter<any> = new EventEmitter();
+    @Input() AlwaysExpanded: boolean = false;
+    @Input() Width: string = null;    
+    @Output() OutputDetailsSectionToggleEvent = new EventEmitter<boolean>();
 
     constructor() { }
 
@@ -44,10 +47,14 @@ export class PanelComponent implements OnInit
         if (width < 470 && this.HaveDetailsSection) {
             this.ShowDetailsSection = true;
         }
+
+        if(this.AlwaysExpanded){
+            this.ShowDetailsSection = true;
+        }
     }
 
     private SubscribeDetailsSectionToggleEvent() {
-        this.DetailsSectionToggleEvent.subscribe(event => {
+        this.InputDetailsSectionToggleEvent.subscribe(event => {
             this.ShowMoreDetails();
         });
     }
@@ -55,6 +62,7 @@ export class PanelComponent implements OnInit
     ShowMoreDetails()
     {
         this.ShowDetailsSection = !this.ShowDetailsSection;
+        this.OutputDetailsSectionToggleEvent.emit(this.ShowDetailsSection);
         // event emit
     }
     HeaderLinkClicked()

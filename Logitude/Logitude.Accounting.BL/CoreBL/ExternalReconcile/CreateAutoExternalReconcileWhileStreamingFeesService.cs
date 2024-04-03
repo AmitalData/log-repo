@@ -18,11 +18,11 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             //if (!_JournalPM.JournalExternalReconciles.TrueForAll(r => string.IsNullOrWhiteSpace(r.LedgerTransactionId)))
             if (_JournalPM.JournalExternalReconciles.Any(r=> string.IsNullOrWhiteSpace(r.ReconcileExternalPageLineId) && string.IsNullOrWhiteSpace(r.LedgerTransactionId)))
             {
-                throw new Exception("there is line with empty ReconcileExternalPageLineId && empty LedgerTransactionId");
+                throw new ApplicationException("there is line with empty ReconcileExternalPageLineId && empty LedgerTransactionId");
             }
             if (!_JournalPM.JournalExternalReconciles.Where(r => !string.IsNullOrWhiteSpace(r.ReconcileExternalPageLineId) && string.IsNullOrWhiteSpace(r.LedgerTransactionId)).Any())
             {
-                throw new Exception("at least one JournalExternalReconciles LedgerTransactionId must be empty   ");
+                throw new ApplicationException("at least one JournalExternalReconciles LedgerTransactionId must be empty   ");
             }
 
             List<ReconcileExternalPageList> listOfpageList = RecheckAndGetListOfpageList();
@@ -53,15 +53,17 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             bool CheckWhileStreaming = true;
             List<string> ledgerTransactionIds= _JournalPM.JournalExternalReconciles.Where(r => !String.IsNullOrWhiteSpace(r.LedgerTransactionId)).Select(r => r.LedgerTransactionId).ToList();
 
+            var skipValidation = _JournalPM.JournalExternalReconciles.Any(r => r.SkipAccountsValidation == true);
+
             myExternalReconcileAdjustBankFeesService.PrapareAndValid(_JournalPM.Tenant, reconcileExternalPageLineIdList, adjustGLAccountId, out listOfpageLineList, out listOfpageList, CheckWhileStreaming,
                  
                 ledgerTransactionIds,
-                out string accountingCurrencyId, out List<LedgerTransactionPM> ledgerTransactionList
+                out string accountingCurrencyId, out List<LedgerTransactionPM> ledgerTransactionList, skipValidation
                 );
 
             if (listOfpageLineList.Any(r => !r.InProgressExternalReconcile))
             {
-                throw new Exception("All connected ReconcileExternalPageLineList  must be InProgress");
+                throw new ApplicationException("All connected ReconcileExternalPageLineList  must be InProgress");
             }
 
             return listOfpageList;

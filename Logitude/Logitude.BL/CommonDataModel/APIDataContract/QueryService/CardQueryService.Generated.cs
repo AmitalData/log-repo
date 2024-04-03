@@ -10,6 +10,8 @@ using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.QuoteModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
@@ -40,40 +42,40 @@ using Simplog.Data.CommonDataModel;
         }
 
 		
-		public Card GetCardById(string Id,int Tenant,string ComputingPartnerName = "")
+		public Card GetCardById(string Id,int Tenant,  string ComputingPartnerName = "")
         { 
 		    try
             {
-
+				 
 				
-				var temp = query.GetSinglePM(Id,Tenant);				
+				var temp = query.GetSinglePM(Id, Tenant);				
 				 if (temp == null)
                     throw new ApplicationException("Card with Id " + Id + " doesn't exist");
 
 				return CardDataMapping(temp,Tenant,ComputingPartnerName);
 			}
+
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }
 		
-		public Card GetCardByCode(string Code,int Tenant,string ComputingPartnerName = "")
+		public Card GetCardByCode(string Code,int Tenant,  string ComputingPartnerName = "")
         { 
 		    try
             {
-
+				 
 				
-				var temp = query.GetSinglePMByCode(Code,Tenant);				
+				var temp = query.GetSinglePMByCode(Code, Tenant);				
 				 if (temp == null)
                     throw new ApplicationException("Card with Code " + Code + " doesn't exist");
 
 				return CardDataMapping(temp,Tenant,ComputingPartnerName);
 			}
+
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }
@@ -103,7 +105,8 @@ using Simplog.Data.CommonDataModel;
 				   temp.IsDisconnectedFromGLAccount = MyEntityPM.IsDisconnectedFromGLAccount;
 				   temp.ReceivablesAccountingCard = MyEntityPM.ReceivablesAccountingCard;
 				   temp.PayablesAccountingCard = MyEntityPM.PayablesAccountingCard;
-				   temp.ICAO = MyEntityPM.ICAO;					
+				   temp.ICAO = MyEntityPM.ICAO;
+				   temp.AllowUnassignedEntry = MyEntityPM.AllowUnassignedEntry;					
 				   return temp;
 			}
             catch (Exception ex)
@@ -125,7 +128,7 @@ using Simplog.Data.CommonDataModel;
 					
 					if (!string.IsNullOrEmpty(MyEntity.Code))
 					{
-						temp = query.GetSinglePMByCode(MyEntity.Code, Tenant);
+						temp = query.GetSinglePMByCode(MyEntity.Code, Tenant  );
 					} 
 					if (!string.IsNullOrEmpty(MyEntity.PartnerCode))
 					{
@@ -137,16 +140,17 @@ using Simplog.Data.CommonDataModel;
 						{
 						  throw new ApplicationException("Card with Partner Code " + MyEntity.PartnerCode + " doesn't match any record");
 						}
-						temp = query.GetSinglePMByCode(MyCode, Tenant);
+						temp = query.GetSinglePMByCode(MyCode, Tenant );
 						
 						
 					}
 					
-					   					   
-					if(temp == null)
+					
+			  	   if(temp == null)
 					{   
 					    throw new ApplicationException("Card with Code " + MyEntity.Code + " doesn't exist");
 					} 
+				 
 					
 					if(string.IsNullOrEmpty(temp.Id))
 					{
@@ -165,17 +169,17 @@ using Simplog.Data.CommonDataModel;
 						
 					}
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.EnglishName))
-					{							//throw new ApplicationException("EnglishName Can't be update"); 
-							temp.EnglishName = MyEntity.EnglishName;
+					if(!IsUpdate)
+					{							
+						temp.EnglishName = MyEntity.EnglishName;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.LocalName))
-					{							//throw new ApplicationException("LocalName Can't be update"); 
-							temp.LocalName = MyEntity.LocalName;
+					if(!IsUpdate)
+					{							
+						temp.LocalName = MyEntity.LocalName;
 
 										}  
 
@@ -185,9 +189,8 @@ using Simplog.Data.CommonDataModel;
 					   
 						 
 						if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Code))
-						{
-								//throw new ApplicationException("Code Can't be update"); 
-								temp.Code = MyEntity.Code;
+						{								
+							temp.Code = MyEntity.Code;
 								
 						
 						}  
@@ -204,7 +207,7 @@ using Simplog.Data.CommonDataModel;
 
 						 
 							if(!IsUpdate)
-							{								//throw new ApplicationException("MainAddress Can't be update"); 
+							{								
 								temp.MainAddressId = myMainAddressPM.Id;
 						  
 							}  
@@ -216,9 +219,9 @@ using Simplog.Data.CommonDataModel;
 			
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.VatNumber))
-					{							//throw new ApplicationException("VatNumber Can't be update"); 
-							temp.VatNumber = MyEntity.VatNumber;
+					if(!IsUpdate)
+					{							
+						temp.VatNumber = MyEntity.VatNumber;
 
 										}  
 
@@ -228,9 +231,8 @@ using Simplog.Data.CommonDataModel;
 					   
 						 
 						if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.PartnerCode))
-						{
-								//throw new ApplicationException("PartnerCode Can't be update"); 
-								temp.Code = MyEntity.PartnerCode;
+						{								
+							temp.Code = MyEntity.PartnerCode;
 								
 						
 						}  
@@ -238,33 +240,41 @@ using Simplog.Data.CommonDataModel;
 						
 					}
                     
-					if(!IsUpdate)// && (MyEntity.IsDisconnectedFromGLAccount != temp.IsDisconnectedFromGLAccount))
-					{							//throw new ApplicationException("IsDisconnectedFromGLAccount Can't be update"); 
-							temp.IsDisconnectedFromGLAccount = MyEntity.IsDisconnectedFromGLAccount;
+					if(!IsUpdate)
+					{							
+						temp.IsDisconnectedFromGLAccount = MyEntity.IsDisconnectedFromGLAccount;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.ReceivablesAccountingCard))
-					{							//throw new ApplicationException("ReceivablesAccountingCard Can't be update"); 
-							temp.ReceivablesAccountingCard = MyEntity.ReceivablesAccountingCard;
+					if(!IsUpdate)
+					{							
+						temp.ReceivablesAccountingCard = MyEntity.ReceivablesAccountingCard;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.PayablesAccountingCard))
-					{							//throw new ApplicationException("PayablesAccountingCard Can't be update"); 
-							temp.PayablesAccountingCard = MyEntity.PayablesAccountingCard;
+					if(!IsUpdate)
+					{							
+						temp.PayablesAccountingCard = MyEntity.PayablesAccountingCard;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.ICAO))
-					{							//throw new ApplicationException("ICAO Can't be update"); 
-							temp.ICAO = MyEntity.ICAO;
+					if(!IsUpdate)
+					{							
+						temp.ICAO = MyEntity.ICAO;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)
+					{							
+						temp.AllowUnassignedEntry = MyEntity.AllowUnassignedEntry;
 
 										}  
 
@@ -278,11 +288,15 @@ using Simplog.Data.CommonDataModel;
             } 
         }
 
-		public List<CardPM> GetAllLocalCards(int tenant)
+ 		public List<CardPM> GetAllLocalCards(int tenant)
 		{
 			List<CardPM> clientsPMList = query.GetAllLocalCards(tenant);
 			return clientsPMList;
 		}
 
+ 
+
+
+						   
 	}
-}
+}

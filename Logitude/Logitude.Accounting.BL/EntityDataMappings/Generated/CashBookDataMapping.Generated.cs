@@ -36,7 +36,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         CashBookTypeCode, 
 	         TotalAmount, 
 	         AccountId, 
-	         BranchId,
+	         BranchId, 
+	         InDepositingProgress,
 	      }
 
 
@@ -66,7 +67,10 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         AccountName, 
 	         BranchId, 
 	         CurrencySign, 
-	         BranchName,
+	         BranchName, 
+	         InDepositingProgress, 
+	         IsTotalUpdatedByCC, 
+	         BalanceInForeignCurrency,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -143,6 +147,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.BranchId))
             {
 				entityPOCO.BranchId = entityPM.BranchId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InDepositingProgress))
+            {
+				entityPOCO.InDepositingProgress = entityPM.InDepositingProgress;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -226,6 +235,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.BranchId = entityPOCO.BranchId;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.InDepositingProgress))
+            {
+					entityPM.InDepositingProgress = entityPOCO.InDepositingProgress;
+            }
+
 		}
 
 		public void PMToOldPM(CashBookPM entityPM, CashBookPM oldEntityPM)
@@ -300,6 +314,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.BranchId))
             {
                 oldEntityPM.BranchId = entityPM.BranchId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InDepositingProgress))
+            {
+                oldEntityPM.InDepositingProgress = entityPM.InDepositingProgress;
             }
 			
 		}

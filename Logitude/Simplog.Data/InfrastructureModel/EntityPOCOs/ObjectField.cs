@@ -175,5 +175,14 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public bool DisplayInRequiredFields { get; set; }
 
 
+        public string LeftKey { get; set; }
+        public string RightKey { get; set; }
+        public bool IsForeignKey { get; set; }
+        public string ForeignEntity { get; set; }
+        public string NavigationPropertyName { get; set; }
+        public string DefaultAdditionalFilters { get; set; }
+        public bool ForMetaDataOnly { get; set; }
+        public bool IsListFilter { get; set; }
+
     }
 }

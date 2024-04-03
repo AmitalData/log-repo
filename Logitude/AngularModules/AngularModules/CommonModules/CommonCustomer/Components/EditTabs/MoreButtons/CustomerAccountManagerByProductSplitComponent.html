@@ -16,11 +16,11 @@
                     <log-column [width]="'200'" [header]="'Account Manager'">
                         <ng-template let-item>
                             <log-cell-template #logcelltemplate [IsEnabled]="true">
-                                <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: left;" class="TextTrimming">
+                                <div *ngIf="IsDisabled || logcelltemplate.IsDisplayMode" style="width: 100%; text-align: left;" class="TextTrimming">
                                     {{item.PartnerName}}
                                 </div>
 
-                                <div *ngIf="logcelltemplate.IsEditMode">
+                                <div *ngIf="!IsDisabled && logcelltemplate.IsEditMode">
                                     <LogLov *ngIf="item.LOVIsVisible"
                                             [FocusOnMe]="true"
                                             [ObjectFieldName]="'PartnerId'"
@@ -57,7 +57,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="RedButton" (click)="OkButtonClicked()">Ok</button>
+                        <button [disabled]="IsDisabled" class="RedButton" (click)="OkButtonClicked()">Ok</button>
                     </td>
                 </tr>
             </table>

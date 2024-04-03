@@ -343,7 +343,7 @@ export class ClaimPMService {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
-                var pmProperty = pmKeysArray[pmKey];
+				                  var pmProperty = pmKeysArray[pmKey];
                 newClaimImporterDeclarsPage3PM[pmProperty] = jItem[pmProperty];
             }
            
@@ -449,7 +449,7 @@ export class ClaimPMService {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
-                var pmProperty = pmKeysArray[pmKey];
+				                  var pmProperty = pmKeysArray[pmKey];
                 newClaimImporterDeclarsP3LoiPM[pmProperty] = jItem[pmProperty];
             }
            
@@ -547,7 +547,7 @@ export class ClaimPMService {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
-                var pmProperty = pmKeysArray[pmKey];
+				                  var pmProperty = pmKeysArray[pmKey];
                 newClaimsRelatedEntityPM[pmProperty] = jItem[pmProperty];
             }
            
@@ -709,7 +709,7 @@ export class ClaimPMService {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
-                var pmProperty = pmKeysArray[pmKey];
+				                  var pmProperty = pmKeysArray[pmKey];
                 newClaimsRelatedEntitiesAmountPM[pmProperty] = jItem[pmProperty];
             }
            
@@ -806,7 +806,7 @@ export class ClaimPMService {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
-                var pmProperty = pmKeysArray[pmKey];
+				                  var pmProperty = pmKeysArray[pmKey];
                 newClaimsRelatedEntitiesReasonPM[pmProperty] = jItem[pmProperty];
             }
            
@@ -917,7 +917,7 @@ export class ClaimPMService {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
-                var pmProperty = pmKeysArray[pmKey];
+				                  var pmProperty = pmKeysArray[pmKey];
                 newClaimsRelatedEntsReasonsExpPM[pmProperty] = jItem[pmProperty];
             }
            
@@ -1015,7 +1015,7 @@ export class ClaimPMService {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
-                var pmProperty = pmKeysArray[pmKey];
+				                  var pmProperty = pmKeysArray[pmKey];
                 newClaimsRelatedEntsExpDeclarPM[pmProperty] = jItem[pmProperty];
             }
            
@@ -1112,7 +1112,7 @@ export class ClaimPMService {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
-                var pmProperty = pmKeysArray[pmKey];
+				                  var pmProperty = pmKeysArray[pmKey];
                 newClaimsRelatedEntitiesSeizurePM[pmProperty] = jItem[pmProperty];
             }
            
@@ -1209,7 +1209,7 @@ export class ClaimPMService {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
-                var pmProperty = pmKeysArray[pmKey];
+				                  var pmProperty = pmKeysArray[pmKey];
                 newClaimsRelatedEntitiesRefundPM[pmProperty] = jItem[pmProperty];
             }
            
@@ -1307,7 +1307,7 @@ export class ClaimPMService {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
-                var pmProperty = pmKeysArray[pmKey];
+				                  var pmProperty = pmKeysArray[pmKey];
                 newClaimImporterDeclarsPage3APM[pmProperty] = jItem[pmProperty];
             }
            
@@ -1399,7 +1399,7 @@ export class ClaimPMService {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
-                var pmProperty = pmKeysArray[pmKey];
+				                  var pmProperty = pmKeysArray[pmKey];
                 newClaimImporterDeclarsPage3BPM[pmProperty] = jItem[pmProperty];
             }
            

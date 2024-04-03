@@ -150,6 +150,24 @@ namespace Logitude.Accounting.Data.EntityLists
        public DateTime? PaymentValueDate  { get; set; }
        [DataMember]
        public string PaymentChequeStatus  { get; set; }
+       [DataMember]
+       public string JournalCreatedByUser  { get; set; }
+       [DataMember]
+       public string AccountLocalName  { get; set; }
+       [DataMember]
+       public DateTime? UpdateDateTime  { get; set; }
+       [DataMember]
+       public string UpdatedByUserName  { get; set; }
+       [DataMember]
+       public string InternalNote  { get; set; }
+       [DataMember]
+       public int SecurityLevelFiltering  { get; set; }
+       [DataMember]
+       public string TaxReportId  { get; set; }
+       [DataMember]
+       public string TaxReportNumber  { get; set; }
+       [DataMember]
+       public decimal AmountInNIS  { get; set; }
    }
 
 }

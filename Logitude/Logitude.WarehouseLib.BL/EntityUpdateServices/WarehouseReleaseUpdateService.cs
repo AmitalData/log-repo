@@ -1,7 +1,9 @@
 ﻿using Logitude.BL.CommonDataModel.EntityLists;
+using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.EntityChanges;
 using Logitude.Server.Tools.Helpers;
 using Logitude.WarehouseLib.BL.EntityPMs;
 using Logitude.WarehouseLib.BL.Helpers;
@@ -32,7 +34,20 @@ namespace Logitude.WarehouseLib.BL.EntityUpdateServices
                 entityPM.Id = IdCounter.GetNumber("WarehouseRelease", entityPM.Tenant);
                 entityPM.ReleaseNumber = TableCounter.GetNumber(entityPM.Tenant, "WARC", null, null).ToString();
                 this.BuildActivityLog("N", entityPM);
+
+                SetPartnerContactField(entityPM);
+                new MainEntityChangeService(new EntityChangeArgs()
+                {
+                    EntityPM = entityPM,
+                    ProcessType = "OnCreate",
+                    ObjectTableName = "WarehouseRelease",
+                    EntityId = entityPM.Id,
+                    Tenant = entityPM.Tenant,
+                    StartDate = DateTime.Now,
+                    EntityReference = entityPM.ReleaseNumber
+                }).AddEntityChange();
             }
+           
         }
 
         protected override void OnUpdating(WarehouseReleasePM entityPM)
@@ -64,12 +79,42 @@ namespace Logitude.WarehouseLib.BL.EntityUpdateServices
       
         protected override void OnUpdating(WarehouseReleasePM entityPM, WarehouseRelease entityPOCO)
         {
+
             AddTraceEvents(entityPM, entityPOCO);
 
 
             base.OnUpdating(entityPM, entityPOCO);
+
+            if (entityPM.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Update) return;
+
+            if (!entityPM.IsUpdateByAutomation)
+            {
+                SetPartnerContactField(entityPM);
+                new MainEntityChangeService(new EntityChangeArgs() {
+                    EntityPM = entityPM,
+                    OldEntityPM = this.OldEntityPM, 
+                    ProcessType = "OnUpdate", 
+                    EntityChangeFieldXml = this.EntityChangeFieldXml, 
+                    ObjectTableName = "WarehouseRelease", 
+                    EntityId = entityPM.Id, 
+                    Tenant = entityPM.Tenant, 
+                    EntityReference = entityPM.ReleaseNumber 
+                }).AddEntityChange();
+            }
         }
 
+        public void SetPartnerContactField(WarehouseReleasePM entityPM)
+        {
+            entityPM.CustomerPrimaryContactId = GetPrimaryContactId(entityPM.CustomerId, entityPM.Tenant);
+        }
+
+        private string GetPrimaryContactId(string cardId, int tenant)
+        {
+            CardQuery cardQuery = new CardQuery(tenant);
+            CardPM cardPM = cardQuery.GetSinglePM(cardId, tenant);
+            if (cardPM == null) return null;
+            return cardPM.PrimaryContactId;
+        }
 
         private void AddTraceEvents(WarehouseReleasePM entityPM, WarehouseRelease entityPOCO)
         {
@@ -90,7 +135,7 @@ namespace Logitude.WarehouseLib.BL.EntityUpdateServices
         {
             ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
             ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("WarehouseRelease", 0, true);
-            string email = HttpContext.Current.User.Identity.Name;
+            string email = GetLoggedUserEmail(entityPM);
             ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
             Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);
             if (loggedContact != null)
@@ -101,7 +146,13 @@ namespace Logitude.WarehouseLib.BL.EntityUpdateServices
 
             }
         }
-
+        private string GetLoggedUserEmail(WarehouseReleasePM entityPM)
+        {
+            if (HttpContext.Current != null) return HttpContext.Current.User.Identity.Name;
+            UserRepository userRepository = new UserRepository(entityPM.Tenant);
+            User loggedUser = userRepository.GetSingleUserById(entityPM.UpdatedByUserId);
+            return loggedUser?.Contact?.Email;
+        }
         private void ComputeTotalQuantities(WarehouseReleasePM entityPM)
         {
             if (entityPM != null && entityPM.WarehouseReleasePackages != null && entityPM.WarehouseReleasePackages.Count() > 0)

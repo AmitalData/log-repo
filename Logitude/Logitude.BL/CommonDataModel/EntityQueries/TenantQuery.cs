@@ -18,6 +18,10 @@ using Logitude.BL.GlobalModel.EntityPMs;
 using Logitude.BL.GlobalModel.EntityQueries;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.Data;
+using Logitude.BL.InfrastructureModel.EntityPMs;
+using Logitude.BL.InfrastructureModel.Tools.EntityService;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
 
 namespace Logitude.BL.CommonDataModel.EntityQueries
 {
@@ -123,7 +127,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 IsIncrementalBuildRunning = a.IsIncrementalBuildRunning,
                                                 CustomerId = a.CustomerId,
                                                 CustomerName = a.CustomerCard != null ? a.CustomerCard.EnglishName : null,
-                                                IsCustomerTenantShare = a.IsCustomerTenantShare,
+                                                CustomerTenantShareCustomsFile = a.CustomerTenantShareCustomsFile,
 
                                                 CustomerTenantShareExportFile = a.CustomerTenantShareExportFile,
                                                 AllowAgentInCustomersLOV = a.AllowAgentInCustomersLOV,
@@ -134,7 +138,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 IsNumeric = a.IsNumeric,
                                                 VatSize = a.VatSize,
                                                 IsWebAccessActivated = a.IsWebAccessActivated,
-
+                                                IsCargoTrackWebAccessActivated = a.IsCargoTrackWebAccessActivated,
+                                                IsDigitalPortalAccessActivated = a.IsDigitalPortalAccessActivated,
                                                 IsCorrespondenceRightToLeftEnabled = a.IsCorrespondenceRightToLeftEnabled,
                                                 IsNotesRightToLeftEnabled = a.IsNotesRightToLeftEnabled,
                                                 IsInternalTicketByDefault = a.IsInternalTicketByDefault,
@@ -157,6 +162,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 IsDocumentsArchive = a.LogBoxTenantSetting.IsDocumentsArchive,
                                                 CustomerTenantShareImportFile = a.LogBoxTenantSetting.CustomerTenantShareImportFile,
                                                 AutoArchiveOnInvoice = a.LogBoxTenantSetting.AutoArchiveOnInvoice,
+                                                AutoArchiveOnPODExport = a.LogBoxTenantSetting.AutoArchiveOnPODExport,
                                                 StockTypeCode = a.LogBoxTenantSetting.StockTypeCode,
                                                 DocumentShareAsDefault = a.LogBoxTenantSetting.DocumentShareAsDefault,
                                                 LogBoxAdminUserId = a.LogBoxTenantSetting.LogBoxAdminUserId,
@@ -166,12 +172,19 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 VatUniquePartnerTypeCode = a.VatUniquePartnerTypeCode,
                                                 TransferQuotationsToUnifreightTrigger = a.TransferQuotationsToUnifreightTrigger,
                                                 SharedLogisMasterMessageLink = a.SharedLogisMasterMessageLink,
+                                                ShowMultiUnitsOfMeasurements = a.ShowMultiUnitsOfMeasurements,
                                                 AirRatio = a.AirRatio,
                                                 FCLRatio = a.FCLRatio,
                                                 LCLRatio = a.LCLRatio,
                                                 FTLRatio = a.FTLRatio,
                                                 LTLRatio = a.LTLRatio,
                                                 IsQuotesRequestActivatedInShared = a.IsQuotesRequestActivatedInShared,
+                                                EmptyReturnClosingDays = a.EmptyReturnClosingDays,
+                                                ShipmentATAClosingDays = a.ShipmentATAClosingDays,
+                                                EnableDeliveryOptions = a.EnableDeliveryOptions,
+                                                UseNewTermsOfUse = a.UseNewTermsOfUse,
+                                                ShipmentATADateIndicator = a.ShipmentATADateIndicator,
+                                                ApproveUploadedDocuments = a.ApproveUploadedDocuments,
                                             });
 
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -184,6 +197,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     t.TemporalPackageCode = tenantmanagements.Where(d => d.Id == t.Id).FirstOrDefault().TemporalPackageCode;
                     t.TemporalStartDate = tenantmanagements.Where(d => d.Id == t.Id).FirstOrDefault().TemporalStartDate;
                     t.TemporalEndDate = tenantmanagements.Where(d => d.Id == t.Id).FirstOrDefault().TemporalEndDate;
+                    t.TemporalEndDate = tenantmanagements.Where(d => d.Id == t.Id).FirstOrDefault().TemporalEndDate;
+                    t.DPArchiveShipmentCreateFilter = tenantmanagements.Where(d => d.Id == t.Id).FirstOrDefault().DPArchiveShipmentCreateFilter;
+                    t.DPArchiveShipmentDepartFilter = tenantmanagements.Where(d => d.Id == t.Id).FirstOrDefault().DPArchiveShipmentDepartFilter;
+                    t.DPArchiveShipmentArrivalFilter = tenantmanagements.Where(d => d.Id == t.Id).FirstOrDefault().DPArchiveShipmentArrivalFilter;                   
                 }
             }
             return tenants;
@@ -202,14 +219,14 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return tenantLists;
         }
 
-        public TenantPM GetSinglePM(int id)
+        public TenantPM GetSinglePM(int id, bool useCache = true)
         {
-            string entityName = "TenantPM" + id;
+            string entityName = "TenantPM" + id; 
 
             TenantPM entity;
             if (true)//HttpContext.Current != null)
             {
-                if (CacheManager.CacheWrapper.Get(entityName) == null)
+                if (CacheManager.CacheWrapper.Get(entityName) == null || !useCache)
                 {
                     Tenant tt = (from a in repository.context.Tenants.Include("Address").Include("PaymentTerm").Include("OtherChargesCurrency").Include("QuoteSaleCurrency").Include("AgentCard").Include("Currency").Include("ProfitCurrency").Include("FreightCurrency").Include("PasswordPolicy").Include("Address.Country").Include("LogBoxTenantSetting")
                                  where a.Id == id
@@ -300,7 +317,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         
                         CustomerId = tt.CustomerId,
                         CustomerName = tt.CustomerCard != null ? tt.CustomerCard.EnglishName : null,
-                        IsCustomerTenantShare = tt.IsCustomerTenantShare,
+                        CustomerTenantShareCustomsFile = tt.CustomerTenantShareCustomsFile,
                       
                         CustomerTenantShareExportFile = tt.CustomerTenantShareExportFile,
                         AllowAgentInCustomersLOV = tt.AllowAgentInCustomersLOV,
@@ -313,6 +330,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         VatSize = tt.VatSize,
                        
                         IsWebAccessActivated = tt.IsWebAccessActivated,
+                        IsCargoTrackWebAccessActivated = tt.IsCargoTrackWebAccessActivated,
+                        IsDigitalPortalAccessActivated = tt.IsDigitalPortalAccessActivated,
                         IsCorrespondenceRightToLeftEnabled = tt.IsCorrespondenceRightToLeftEnabled,
                         IsNotesRightToLeftEnabled = tt.IsNotesRightToLeftEnabled,
                         AccountingActivationDate = tt.AccountingActivationDate,
@@ -338,6 +357,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         IsDocumentsArchive = tt.LogBoxTenantSetting != null ? tt.LogBoxTenantSetting.IsDocumentsArchive : false,
                         CustomerTenantShareImportFile = tt.LogBoxTenantSetting != null ? tt.LogBoxTenantSetting.CustomerTenantShareImportFile : false,
                         AutoArchiveOnInvoice = tt.LogBoxTenantSetting != null ? tt.LogBoxTenantSetting.AutoArchiveOnInvoice : false,
+                        AutoArchiveOnPODExport = tt.LogBoxTenantSetting != null ? tt.LogBoxTenantSetting.AutoArchiveOnPODExport : false,
                         StockTypeCode = tt.LogBoxTenantSetting != null ? tt.LogBoxTenantSetting.StockTypeCode : null,
                         DocumentShareAsDefault = tt.LogBoxTenantSetting != null ? tt.LogBoxTenantSetting.DocumentShareAsDefault : false,
                         LogBoxAdminUserId = tt.LogBoxTenantSetting != null ? tt.LogBoxTenantSetting.LogBoxAdminUserId : null,
@@ -345,15 +365,20 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         DisplayDocumentsAndEvents = tt.DisplayDocumentsAndEvents,
                         TransferQuotationsToUnifreightTrigger = tt.TransferQuotationsToUnifreightTrigger,
                         SharedLogisMasterMessageLink = tt.SharedLogisMasterMessageLink,
+                        ShowMultiUnitsOfMeasurements = tt.ShowMultiUnitsOfMeasurements,
                         AirRatio = tt.AirRatio,
                         FCLRatio = tt.FCLRatio,
                         LCLRatio = tt.LCLRatio,
                         FTLRatio = tt.FTLRatio,
                         LTLRatio = tt.LTLRatio,
                         IsQuotesRequestActivatedInShared = tt.IsQuotesRequestActivatedInShared,
-
-                    };
-
+                        EmptyReturnClosingDays = tt.EmptyReturnClosingDays,
+                        ShipmentATAClosingDays = tt.ShipmentATAClosingDays,
+                        EnableDeliveryOptions = tt.EnableDeliveryOptions,
+                        UseNewTermsOfUse = tt.UseNewTermsOfUse,
+                        ShipmentATADateIndicator = tt.ShipmentATADateIndicator,
+                        ApproveUploadedDocuments = tt.ApproveUploadedDocuments,
+                    }; 
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                     {
                         IGlobalContext globalObjectContext = GlobalContext.GetContext();
@@ -361,11 +386,12 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         tenant.TemporalPackageCode = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().TemporalPackageCode;
                         tenant.TemporalStartDate = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().TemporalStartDate;
                         tenant.TemporalEndDate = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().TemporalEndDate;
+                        tenant.DPArchiveShipmentCreateFilter = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().DPArchiveShipmentCreateFilter;
+                        tenant.DPArchiveShipmentDepartFilter = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().DPArchiveShipmentDepartFilter;
+                        tenant.DPArchiveShipmentArrivalFilter = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().DPArchiveShipmentArrivalFilter;
                         //tenant.StockTypeCode = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().StockTypeCode;
                     }
-
-                    this.GetTenantOtherFields(tenant);
-
+                    this.GetTenantOtherFields(tenant); 
                     entity = tenant;
                     if (CacheManager.CacheWrapper.Get(entityName) == null)
                     {
@@ -469,7 +495,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                    
                     CustomerId = tt.CustomerId,
                     CustomerName = tt.CustomerCard != null ? tt.CustomerCard.EnglishName : null,
-                    IsCustomerTenantShare = tt.IsCustomerTenantShare,
+                    CustomerTenantShareCustomsFile = tt.CustomerTenantShareCustomsFile,
                    
                     CustomerTenantShareExportFile = tt.CustomerTenantShareExportFile,
                     AllowAgentInCustomersLOV = tt.AllowAgentInCustomersLOV,
@@ -482,6 +508,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     VatSize = tt.VatSize,
                     
                     IsWebAccessActivated = tt.IsWebAccessActivated,
+                    IsCargoTrackWebAccessActivated = tt.IsCargoTrackWebAccessActivated,
+                    IsDigitalPortalAccessActivated = tt.IsDigitalPortalAccessActivated,
                     IsCorrespondenceRightToLeftEnabled = tt.IsCorrespondenceRightToLeftEnabled,
                     IsNotesRightToLeftEnabled = tt.IsNotesRightToLeftEnabled,
                     AccountingActivationDate = tt.AccountingActivationDate,
@@ -507,6 +535,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     IsDocumentsArchive = tt.LogBoxTenantSetting!= null ? tt.LogBoxTenantSetting.IsDocumentsArchive : false,
                     CustomerTenantShareImportFile = tt.LogBoxTenantSetting != null ? tt.LogBoxTenantSetting.CustomerTenantShareImportFile:false,
                     AutoArchiveOnInvoice = tt.LogBoxTenantSetting != null ? tt.LogBoxTenantSetting.AutoArchiveOnInvoice : false,
+                    AutoArchiveOnPODExport = tt.LogBoxTenantSetting != null ? tt.LogBoxTenantSetting.AutoArchiveOnPODExport : false,
                     StockTypeCode = tt.LogBoxTenantSetting != null ? tt.LogBoxTenantSetting.StockTypeCode : null,
                     DocumentShareAsDefault = tt.LogBoxTenantSetting != null ? tt.LogBoxTenantSetting.DocumentShareAsDefault : false,
                     LogBoxAdminUserId = tt.LogBoxTenantSetting != null ? tt.LogBoxTenantSetting.LogBoxAdminUserId : null,
@@ -515,13 +544,19 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     DisplayDocumentsAndEvents = tt.DisplayDocumentsAndEvents,
                     TransferQuotationsToUnifreightTrigger = tt.TransferQuotationsToUnifreightTrigger,
                     SharedLogisMasterMessageLink = tt.SharedLogisMasterMessageLink,
+                    ShowMultiUnitsOfMeasurements = tt.ShowMultiUnitsOfMeasurements,
                     AirRatio = tt.AirRatio,
                     FCLRatio = tt.FCLRatio,
                     LCLRatio = tt.LCLRatio,
                     FTLRatio = tt.FTLRatio,
                     LTLRatio = tt.LTLRatio,
                     IsQuotesRequestActivatedInShared = tt.IsQuotesRequestActivatedInShared,
-
+                    EmptyReturnClosingDays = tt.EmptyReturnClosingDays,
+                    ShipmentATAClosingDays = tt.ShipmentATAClosingDays,
+                    EnableDeliveryOptions = tt.EnableDeliveryOptions,
+                    UseNewTermsOfUse = tt.UseNewTermsOfUse,
+                    ShipmentATADateIndicator = tt.ShipmentATADateIndicator,
+                    ApproveUploadedDocuments = tt.ApproveUploadedDocuments,
                 };
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -531,6 +566,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     tenant.TemporalPackageCode = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().TemporalPackageCode;
                     tenant.TemporalStartDate = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().TemporalStartDate;
                     tenant.TemporalEndDate = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().TemporalEndDate;
+                    tenant.DPArchiveShipmentCreateFilter = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().DPArchiveShipmentCreateFilter;
+                    tenant.DPArchiveShipmentDepartFilter = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().DPArchiveShipmentDepartFilter;
+                    tenant.DPArchiveShipmentArrivalFilter = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().DPArchiveShipmentArrivalFilter;
+
                     //tenant.StockTypeCode = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().StockTypeCode;
                     scope.Complete();
                 }
@@ -541,8 +580,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             }
             return entity;
         }
-
-
 
         public static TenantPM GetSingleTenantPM(int id)
         {
@@ -630,7 +667,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                          
                                            CustomerId = a.CustomerId,
                                            CustomerName = a.CustomerCard != null ? a.CustomerCard.EnglishName : null,
-                                           IsCustomerTenantShare = a.IsCustomerTenantShare,
+                                           CustomerTenantShareCustomsFile = a.CustomerTenantShareCustomsFile,
                                          
                                            CustomerTenantShareExportFile = a.CustomerTenantShareExportFile,
                                            AllowAgentInCustomersLOV = a.AllowAgentInCustomersLOV,
@@ -643,6 +680,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            VatSize = a.VatSize,
                                          
                                            IsWebAccessActivated = a.IsWebAccessActivated,
+                                           IsCargoTrackWebAccessActivated = a.IsCargoTrackWebAccessActivated,
+                                           IsDigitalPortalAccessActivated = a.IsDigitalPortalAccessActivated,
                                            IsCorrespondenceRightToLeftEnabled = a.IsCorrespondenceRightToLeftEnabled,
                                            IsNotesRightToLeftEnabled = a.IsNotesRightToLeftEnabled,
                                            IsInternalTicketByDefault = a.IsInternalTicketByDefault,
@@ -667,13 +706,20 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            DisplayDocumentsAndEvents = a.DisplayDocumentsAndEvents,
                                            TransferQuotationsToUnifreightTrigger = a.TransferQuotationsToUnifreightTrigger,
                                            SharedLogisMasterMessageLink = a.SharedLogisMasterMessageLink,
+                                           ShowMultiUnitsOfMeasurements = a.ShowMultiUnitsOfMeasurements,
                                            AirRatio = a.AirRatio,
                                            FCLRatio = a.FCLRatio,
                                            LCLRatio = a.LCLRatio,
                                            FTLRatio = a.FTLRatio,
                                            LTLRatio = a.LTLRatio,
                                            IsQuotesRequestActivatedInShared = a.IsQuotesRequestActivatedInShared,
-
+                                           EmptyReturnClosingDays = a.EmptyReturnClosingDays,
+                                           ShipmentATAClosingDays = a.ShipmentATAClosingDays,
+                                           EnableDeliveryOptions = a.EnableDeliveryOptions,
+                                           AccountingActivated = a.AccountingActivated,
+                                           UseNewTermsOfUse = a.UseNewTermsOfUse,
+                                           ShipmentATADateIndicator = a.ShipmentATADateIndicator,
+                                           ApproveUploadedDocuments = a.ApproveUploadedDocuments
                                        }).FirstOrDefault();
 
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -683,6 +729,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         tenant.TemporalPackageCode = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().TemporalPackageCode;
                         tenant.TemporalStartDate = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().TemporalStartDate;
                         tenant.TemporalEndDate = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().TemporalEndDate;
+                        tenant.DPArchiveShipmentCreateFilter = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().DPArchiveShipmentCreateFilter;
+                        tenant.DPArchiveShipmentDepartFilter = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().DPArchiveShipmentDepartFilter;
+                        tenant.DPArchiveShipmentArrivalFilter = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().DPArchiveShipmentArrivalFilter;
+
                         //tenant.StockTypeCode = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().StockTypeCode;
                     }
 
@@ -778,7 +828,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                     
                                        CustomerId = a.CustomerId,
                                        CustomerName = a.CustomerCard != null ? a.CustomerCard.EnglishName : null,
-                                       IsCustomerTenantShare = a.IsCustomerTenantShare,
+                                       CustomerTenantShareCustomsFile = a.CustomerTenantShareCustomsFile,
                                     
                                        CustomerTenantShareExportFile = a.CustomerTenantShareExportFile,
                                        AllowAgentInCustomersLOV = a.AllowAgentInCustomersLOV,
@@ -791,6 +841,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        VatSize = a.VatSize,
                               
                                        IsWebAccessActivated = a.IsWebAccessActivated,
+                                       IsCargoTrackWebAccessActivated = a.IsCargoTrackWebAccessActivated,
+                                       IsDigitalPortalAccessActivated = a.IsDigitalPortalAccessActivated,
                                        IsCorrespondenceRightToLeftEnabled = a.IsCorrespondenceRightToLeftEnabled,
                                        IsNotesRightToLeftEnabled = a.IsNotesRightToLeftEnabled,
                                        IsInternalTicketByDefault = a.IsInternalTicketByDefault,
@@ -815,13 +867,20 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        DisplayDocumentsAndEvents = a.DisplayDocumentsAndEvents,
                                        TransferQuotationsToUnifreightTrigger = a.TransferQuotationsToUnifreightTrigger,
                                        SharedLogisMasterMessageLink = a.SharedLogisMasterMessageLink,
+                                       ShowMultiUnitsOfMeasurements = a.ShowMultiUnitsOfMeasurements,
                                        AirRatio = a.AirRatio,
                                        FCLRatio = a.FCLRatio,
                                        LCLRatio = a.LCLRatio,
                                        FTLRatio = a.FTLRatio,
                                        LTLRatio = a.LTLRatio,
                                        IsQuotesRequestActivatedInShared = a.IsQuotesRequestActivatedInShared,
-
+                                       EmptyReturnClosingDays = a.EmptyReturnClosingDays,
+                                       ShipmentATAClosingDays = a.ShipmentATAClosingDays,
+                                       EnableDeliveryOptions = a.EnableDeliveryOptions,
+                                       AccountingActivated = a.AccountingActivated,
+                                       UseNewTermsOfUse = a.UseNewTermsOfUse,
+                                       ShipmentATADateIndicator = a.ShipmentATADateIndicator,
+                                       ApproveUploadedDocuments = a.ApproveUploadedDocuments,
                                    }).FirstOrDefault();
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -831,6 +890,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     tenant.TemporalPackageCode = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().TemporalPackageCode;
                     tenant.TemporalStartDate = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().TemporalStartDate;
                     tenant.TemporalEndDate = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().TemporalEndDate;
+                    tenant.DPArchiveShipmentCreateFilter = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().DPArchiveShipmentCreateFilter;
+                    tenant.DPArchiveShipmentDepartFilter = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().DPArchiveShipmentDepartFilter;
+                    tenant.DPArchiveShipmentArrivalFilter = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().DPArchiveShipmentArrivalFilter;
                     // tenant.StockTypeCode = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().StockTypeCode;
                 }
 
@@ -929,7 +991,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                             
                                                CustomerId = a.CustomerId,
                                                CustomerName = a.CustomerCard != null ? a.CustomerCard.EnglishName : null,
-                                               IsCustomerTenantShare = a.IsCustomerTenantShare,
+                                               CustomerTenantShareCustomsFile = a.CustomerTenantShareCustomsFile,
                                             
                                                CustomerTenantShareExportFile = a.CustomerTenantShareExportFile,
                                                AllowAgentInCustomersLOV = a.AllowAgentInCustomersLOV,
@@ -942,6 +1004,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                VatSize = a.VatSize,
                                              
                                                IsWebAccessActivated = a.IsWebAccessActivated,
+                                               IsCargoTrackWebAccessActivated = a.IsCargoTrackWebAccessActivated,
+                                               IsDigitalPortalAccessActivated = a.IsDigitalPortalAccessActivated,
                                                IsCorrespondenceRightToLeftEnabled = a.IsCorrespondenceRightToLeftEnabled,
                                                IsNotesRightToLeftEnabled = a.IsNotesRightToLeftEnabled,
                                                AccountingActivated = a.AccountingActivated,
@@ -968,6 +1032,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                IsDocumentsArchive = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.IsDocumentsArchive : false,
                                                CustomerTenantShareImportFile = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.CustomerTenantShareImportFile : false,
                                                AutoArchiveOnInvoice = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.AutoArchiveOnInvoice : false,
+                                               AutoArchiveOnPODExport = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.AutoArchiveOnPODExport : false,
                                                StockTypeCode = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.StockTypeCode : null,
                                                DocumentShareAsDefault = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.DocumentShareAsDefault : false,
                                                LogBoxAdminUserId = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.LogBoxAdminUserId : null,
@@ -975,13 +1040,19 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                DisplayDocumentsAndEvents = a.DisplayDocumentsAndEvents,
                                                TransferQuotationsToUnifreightTrigger = a.TransferQuotationsToUnifreightTrigger,
                                                SharedLogisMasterMessageLink = a.SharedLogisMasterMessageLink,
+                                               ShowMultiUnitsOfMeasurements = a.ShowMultiUnitsOfMeasurements,
                                                AirRatio = a.AirRatio,
                                                FCLRatio = a.FCLRatio,
                                                LCLRatio = a.LCLRatio,
                                                FTLRatio = a.FTLRatio,
                                                LTLRatio = a.LTLRatio,
                                                IsQuotesRequestActivatedInShared = a.IsQuotesRequestActivatedInShared,
-
+                                               EmptyReturnClosingDays = a.EmptyReturnClosingDays,
+                                               ShipmentATAClosingDays = a.ShipmentATAClosingDays,
+                                               EnableDeliveryOptions = a.EnableDeliveryOptions,
+                                               UseNewTermsOfUse = a.UseNewTermsOfUse,                                          
+                                               ShipmentATADateIndicator = a.ShipmentATADateIndicator,
+                                               ApproveUploadedDocuments = a.ApproveUploadedDocuments,
                                            }).FirstOrDefault();
 
                         using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -992,6 +1063,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                             tenant.TemporalStartDate = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().TemporalStartDate;
                             tenant.TemporalEndDate = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().TemporalEndDate;
                             tenant.PrivateLabelId = globalObjectContext.GlobalTenants.Where(d => d.Id == tenant.Id).FirstOrDefault().PrivateLabelId;
+                            tenant.DPArchiveShipmentCreateFilter = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().DPArchiveShipmentCreateFilter;
+                            tenant.DPArchiveShipmentDepartFilter = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().DPArchiveShipmentDepartFilter;
+                            tenant.DPArchiveShipmentArrivalFilter = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().DPArchiveShipmentArrivalFilter;
                             //tenant.StockTypeCode = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().StockTypeCode;
                         }
 
@@ -1090,7 +1164,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                         
                                            CustomerId = a.CustomerId,
                                            CustomerName = a.CustomerCard != null ? a.CustomerCard.EnglishName : null,
-                                           IsCustomerTenantShare = a.IsCustomerTenantShare,
+                                           CustomerTenantShareCustomsFile = a.CustomerTenantShareCustomsFile,
                                          
                                            CustomerTenantShareExportFile = a.CustomerTenantShareExportFile,
                                            AllowAgentInCustomersLOV = a.AllowAgentInCustomersLOV,
@@ -1103,6 +1177,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            VatSize = a.VatSize,
                                          
                                            IsWebAccessActivated = a.IsWebAccessActivated,
+                                           IsCargoTrackWebAccessActivated = a.IsCargoTrackWebAccessActivated,
+                                           IsDigitalPortalAccessActivated = a.IsDigitalPortalAccessActivated,
                                            IsCorrespondenceRightToLeftEnabled = a.IsCorrespondenceRightToLeftEnabled,
                                            IsNotesRightToLeftEnabled = a.IsNotesRightToLeftEnabled,
                                            AccountingActivated = a.AccountingActivated,
@@ -1130,6 +1206,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            IsDocumentsArchive = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.IsDocumentsArchive : false,
                                            CustomerTenantShareImportFile = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.CustomerTenantShareImportFile : false,
                                            AutoArchiveOnInvoice = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.AutoArchiveOnInvoice : false,
+                                           AutoArchiveOnPODExport = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.AutoArchiveOnPODExport : false,
                                            StockTypeCode = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.StockTypeCode : null,
                                            DocumentShareAsDefault = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.DocumentShareAsDefault : false,
                                            LogBoxAdminUserId = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.LogBoxAdminUserId : null,
@@ -1137,13 +1214,19 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            DisplayDocumentsAndEvents = a.DisplayDocumentsAndEvents,
                                            TransferQuotationsToUnifreightTrigger = a.TransferQuotationsToUnifreightTrigger,
                                            SharedLogisMasterMessageLink = a.SharedLogisMasterMessageLink,
+                                           ShowMultiUnitsOfMeasurements = a.ShowMultiUnitsOfMeasurements,
                                            AirRatio = a.AirRatio,
                                            FCLRatio = a.FCLRatio,
                                            LCLRatio = a.LCLRatio,
                                            FTLRatio = a.FTLRatio,
                                            LTLRatio = a.LTLRatio,
                                            IsQuotesRequestActivatedInShared = a.IsQuotesRequestActivatedInShared,
-
+                                           EmptyReturnClosingDays = a.EmptyReturnClosingDays,
+                                           ShipmentATAClosingDays = a.ShipmentATAClosingDays,
+                                           EnableDeliveryOptions = a.EnableDeliveryOptions,
+                                           UseNewTermsOfUse = a.UseNewTermsOfUse,
+                                           ShipmentATADateIndicator = a.ShipmentATADateIndicator,
+                                           ApproveUploadedDocuments = a.ApproveUploadedDocuments,
                                        }).FirstOrDefault();
 
                     using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -1154,6 +1237,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         tenant.TemporalStartDate = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().TemporalStartDate;
                         tenant.TemporalEndDate = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().TemporalEndDate;
                         tenant.PrivateLabelId = globalObjectContext.GlobalTenants.Where(d => d.Id == tenant.Id).FirstOrDefault().PrivateLabelId;
+                        tenant.DPArchiveShipmentCreateFilter = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().DPArchiveShipmentCreateFilter;
+                        tenant.DPArchiveShipmentDepartFilter = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().DPArchiveShipmentDepartFilter;
+                        tenant.DPArchiveShipmentArrivalFilter = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().DPArchiveShipmentArrivalFilter;
                         //tenant.StockTypeCode = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().StockTypeCode;
                     }
 
@@ -1241,7 +1327,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   
                                        CustomerId = a.CustomerId,
                                        CustomerName = a.CustomerCard != null ? a.CustomerCard.EnglishName : null,
-                                       IsCustomerTenantShare = a.IsCustomerTenantShare,
+                                       CustomerTenantShareCustomsFile = a.CustomerTenantShareCustomsFile,
                                     
                                        CustomerTenantShareExportFile = a.CustomerTenantShareExportFile,
                                        AllowAgentInCustomersLOV = a.AllowAgentInCustomersLOV,
@@ -1254,6 +1340,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        VatSize = a.VatSize,
                                      
                                        IsWebAccessActivated = a.IsWebAccessActivated,
+                                       IsCargoTrackWebAccessActivated = a.IsCargoTrackWebAccessActivated,
+                                       IsDigitalPortalAccessActivated = a.IsDigitalPortalAccessActivated,
                                        IsCorrespondenceRightToLeftEnabled = a.IsCorrespondenceRightToLeftEnabled,
                                        IsNotesRightToLeftEnabled = a.IsNotesRightToLeftEnabled,
                                        AccountingActivated = a.AccountingActivated,
@@ -1280,6 +1368,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        IsDocumentsArchive = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.IsDocumentsArchive : false,
                                        CustomerTenantShareImportFile = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.CustomerTenantShareImportFile : false,
                                        AutoArchiveOnInvoice = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.AutoArchiveOnInvoice : false,
+                                       AutoArchiveOnPODExport = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.AutoArchiveOnPODExport : false,
                                        StockTypeCode = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.StockTypeCode : null,
                                        DocumentShareAsDefault = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.DocumentShareAsDefault : false,
                                        LogBoxAdminUserId = a.LogBoxTenantSetting != null ? a.LogBoxTenantSetting.LogBoxAdminUserId : null,
@@ -1287,13 +1376,19 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        DisplayDocumentsAndEvents = a.DisplayDocumentsAndEvents,
                                        TransferQuotationsToUnifreightTrigger = a.TransferQuotationsToUnifreightTrigger,
                                        SharedLogisMasterMessageLink = a.SharedLogisMasterMessageLink,
+                                       ShowMultiUnitsOfMeasurements = a.ShowMultiUnitsOfMeasurements,
                                        AirRatio = a.AirRatio,
                                        FCLRatio = a.FCLRatio,
                                        LCLRatio = a.LCLRatio,
                                        FTLRatio = a.FTLRatio,
                                        LTLRatio = a.LTLRatio,
                                        IsQuotesRequestActivatedInShared = a.IsQuotesRequestActivatedInShared,
-
+                                       EmptyReturnClosingDays = a.EmptyReturnClosingDays,
+                                       ShipmentATAClosingDays = a.ShipmentATAClosingDays,
+                                       EnableDeliveryOptions = a.EnableDeliveryOptions,
+                                       UseNewTermsOfUse = a.UseNewTermsOfUse,
+                                       ShipmentATADateIndicator = a.ShipmentATADateIndicator,
+                                       ApproveUploadedDocuments = a.ApproveUploadedDocuments,
                                    }).FirstOrDefault();
                 if (tenant != null)
                 {
@@ -1305,6 +1400,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         tenant.TemporalStartDate = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().TemporalStartDate;
                         tenant.TemporalEndDate = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().TemporalEndDate;
                         tenant.PrivateLabelId = globalObjectContext.GlobalTenants.Where(d => d.Id == tenant.Id).FirstOrDefault().PrivateLabelId;
+                        tenant.DPArchiveShipmentCreateFilter = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().DPArchiveShipmentCreateFilter;
+                        tenant.DPArchiveShipmentDepartFilter = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().DPArchiveShipmentDepartFilter;
+                        tenant.DPArchiveShipmentArrivalFilter = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().DPArchiveShipmentArrivalFilter;
                         //tenant.StockTypeCode = globalObjectContext.TenantManagements.Where(d => d.Id == tenant.Id).FirstOrDefault().StockTypeCode;
                     }
 
@@ -1410,7 +1508,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                     CustomerId = myPOCO.CustomerId,
                     CustomerName = myPOCO.CustomerCard != null ? myPOCO.CustomerCard.EnglishName : null,
-                    IsCustomerTenantShare = myPOCO.IsCustomerTenantShare,
+                    CustomerTenantShareCustomsFile = myPOCO.CustomerTenantShareCustomsFile,
 
                     CustomerTenantShareExportFile = myPOCO.CustomerTenantShareExportFile,
                     AllowAgentInCustomersLOV = myPOCO.AllowAgentInCustomersLOV,
@@ -1423,6 +1521,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     VatSize = myPOCO.VatSize,
 
                     IsWebAccessActivated = myPOCO.IsWebAccessActivated,
+                    IsCargoTrackWebAccessActivated = myPOCO.IsCargoTrackWebAccessActivated,
+                    IsDigitalPortalAccessActivated = myPOCO.IsDigitalPortalAccessActivated,
                     IsCorrespondenceRightToLeftEnabled = myPOCO.IsCorrespondenceRightToLeftEnabled,
                     IsNotesRightToLeftEnabled = myPOCO.IsNotesRightToLeftEnabled,
                     AccountingActivationDate = myPOCO.AccountingActivationDate,
@@ -1448,6 +1548,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     IsDocumentsArchive = myPOCO.LogBoxTenantSetting !=null ? myPOCO.LogBoxTenantSetting.IsDocumentsArchive:false,
                     CustomerTenantShareImportFile = myPOCO.LogBoxTenantSetting != null ? myPOCO.LogBoxTenantSetting.CustomerTenantShareImportFile:false,
                     AutoArchiveOnInvoice = myPOCO.LogBoxTenantSetting != null ? myPOCO.LogBoxTenantSetting.AutoArchiveOnInvoice: false,
+                    AutoArchiveOnPODExport = myPOCO.LogBoxTenantSetting != null ? myPOCO.LogBoxTenantSetting.AutoArchiveOnPODExport : false,
                     StockTypeCode = myPOCO.LogBoxTenantSetting != null ? myPOCO.LogBoxTenantSetting.StockTypeCode : null,
                     DocumentShareAsDefault = myPOCO.LogBoxTenantSetting != null ? myPOCO.LogBoxTenantSetting.DocumentShareAsDefault:false,
                     LogBoxAdminUserId = myPOCO.LogBoxTenantSetting != null ? myPOCO.LogBoxTenantSetting.LogBoxAdminUserId : null,
@@ -1456,13 +1557,19 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     DisplayDocumentsAndEvents = myPOCO.DisplayDocumentsAndEvents,
                     TransferQuotationsToUnifreightTrigger = myPOCO.TransferQuotationsToUnifreightTrigger,
                     SharedLogisMasterMessageLink = myPOCO.SharedLogisMasterMessageLink,
+                    ShowMultiUnitsOfMeasurements = myPOCO.ShowMultiUnitsOfMeasurements,
                     AirRatio = myPOCO.AirRatio,
                     FCLRatio = myPOCO.FCLRatio,
                     LCLRatio = myPOCO.LCLRatio,
                     FTLRatio = myPOCO.FTLRatio,
                     LTLRatio = myPOCO.LTLRatio,
                     IsQuotesRequestActivatedInShared = myPOCO.IsQuotesRequestActivatedInShared,
-
+                    EmptyReturnClosingDays = myPOCO.EmptyReturnClosingDays,
+                    ShipmentATAClosingDays = myPOCO.ShipmentATAClosingDays,
+                    EnableDeliveryOptions = myPOCO.EnableDeliveryOptions,
+                    UseNewTermsOfUse = myPOCO.UseNewTermsOfUse,
+                    ShipmentATADateIndicator = myPOCO.ShipmentATADateIndicator,
+                    ApproveUploadedDocuments = myPOCO.ApproveUploadedDocuments,
                 };
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -1472,6 +1579,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     entityPM.TemporalPackageCode = globalObjectContext.TenantManagements.Where(d => d.Id == entityPM.Id).FirstOrDefault().TemporalPackageCode;
                     entityPM.TemporalStartDate = globalObjectContext.TenantManagements.Where(d => d.Id == entityPM.Id).FirstOrDefault().TemporalStartDate;
                     entityPM.TemporalEndDate = globalObjectContext.TenantManagements.Where(d => d.Id == entityPM.Id).FirstOrDefault().TemporalEndDate;
+                    entityPM.DPArchiveShipmentCreateFilter = globalObjectContext.TenantManagements.Where(d => d.Id == entityPM.Id).FirstOrDefault().DPArchiveShipmentCreateFilter;
+                    entityPM.DPArchiveShipmentDepartFilter = globalObjectContext.TenantManagements.Where(d => d.Id == entityPM.Id).FirstOrDefault().DPArchiveShipmentDepartFilter;
+                    entityPM.DPArchiveShipmentArrivalFilter = globalObjectContext.TenantManagements.Where(d => d.Id == entityPM.Id).FirstOrDefault().DPArchiveShipmentArrivalFilter;
+
                 }
 
                 this.GetTenantOtherFields(entityPM);
@@ -1558,12 +1669,14 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                     
                                                 CustomerId = a.CustomerId,
                                                 CustomerName = a.CustomerCard != null ? a.CustomerCard.EnglishName : null,
-                                                IsCustomerTenantShare = a.IsCustomerTenantShare,
+                                                CustomerTenantShareCustomsFile = a.CustomerTenantShareCustomsFile,
                                               
                                                 CustomerTenantShareExportFile = a.CustomerTenantShareExportFile,
                                                 AllowAgentInCustomersLOV = a.AllowAgentInCustomersLOV,
                                                 AllowCustomersInAgentsLOV = a.AllowCustomersInAgentsLOV,
                                                 IsWebAccessActivated = a.IsWebAccessActivated,
+                                                IsCargoTrackWebAccessActivated = a.IsCargoTrackWebAccessActivated,
+                                                IsDigitalPortalAccessActivated = a.IsDigitalPortalAccessActivated,
                                                 IsCorrespondenceRightToLeftEnabled = a.IsCorrespondenceRightToLeftEnabled,
                                                 IsNotesRightToLeftEnabled = a.IsNotesRightToLeftEnabled,
                                                 IsInternalTicketByDefault = a.IsInternalTicketByDefault,
@@ -1581,8 +1694,13 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 CheckDigitControlAlgorithmCode = a.CheckDigitControlAlgorithmCode,
                                                 HideFCLAllIn = a.HideFCLAllIn,
                                                 SharedLogisMasterMessageLink = a.SharedLogisMasterMessageLink,
+                                                ShowMultiUnitsOfMeasurements = a.ShowMultiUnitsOfMeasurements,
                                                 IsQuotesRequestActivatedInShared = a.IsQuotesRequestActivatedInShared,
-
+                                                EmptyReturnClosingDays = a.EmptyReturnClosingDays,
+                                                ShipmentATAClosingDays = a.ShipmentATAClosingDays,
+                                                EnableDeliveryOptions = a.EnableDeliveryOptions,
+                                                UseNewTermsOfUse = a.UseNewTermsOfUse,
+                                                ApproveUploadedDocuments = a.ApproveUploadedDocuments,
                                             };
             return result;
         }
@@ -1603,6 +1721,20 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                    CustomerPhone = a.CustomerCard != null && a.CustomerCard.PrimaryContact != null ? a.CustomerCard.PrimaryContact.BusinessPhone : "",
                                  
                                }).FirstOrDefault();
+            return entity;
+        }
+
+        public TenantPM GetDigitalSingleTenantId(int id)
+        {
+            TenantPM entity = repository.context
+                                        .Tenants
+                                        .Select(a => new TenantPM()
+                                        {
+                                            Id = a.Id,
+                                            CurrencyCode = a.Currency.Code,
+                                            ProfitCurrencyCode = a.ProfitCurrency.Code
+                                        })
+                                        .FirstOrDefault(a => a.Id == id);
             return entity;
         }
 
@@ -1806,7 +1938,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 {
                     TenantRepository tenantRepository = new TenantRepository(tenant);
                     vatNumber = tenantRepository.GetTenantVatNumberOnly(tenant);
-                    CacheManager.CacheWrapper.Insert(cacheKey, vatNumber, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                    if(vatNumber != null)
+                        CacheManager.CacheWrapper.Insert(cacheKey, vatNumber, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
                 }
                 else
                 {
@@ -1914,5 +2047,40 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             TenantRepository tenantRepository = new TenantRepository(tenant);
             return tenantRepository.GetLocalCurrencyFromTenant(tenant);
         }
+        public void CopyFromTenant0(int tenant, int tenatToCopy)
+        {
+
+            TenantService service = new TenantService(repository.context, tenatToCopy);
+
+            List<Tenant> pocos = this.repository.context.Tenants.Where(r =>  r.Id == tenant).ToList();
+            TenantPM myTenant = this.GetTenantFromDB(tenatToCopy);
+            
+
+            foreach (var item in pocos)
+            {
+
+                myTenant.ApplyVATForAllPartners = item.ApplyVATForAllPartners;
+                myTenant.VatFormatTypeCode = item.VatFormatTypeCode;
+                myTenant.VatFormatCountryId = item.VatFormatCountryId;
+                myTenant.IsNumeric = item.IsNumeric;
+                myTenant.VatSize = item.VatSize;
+                myTenant.CheckDigitControlAlgorithmCode = item.CheckDigitControlAlgorithmCode;
+                myTenant.VatMandatoryTypeCode = item.VatMandatoryTypeCode;
+                myTenant.VatMandatoryCountryId = item.VatMandatoryCountryId;
+                myTenant.VatMandatoryForPotentialCustomers = item.VatMandatoryForPotentialCustomers;
+                myTenant.VatUniqueTypeCode = item.VatUniqueTypeCode;
+                myTenant.VatUniqueCountryId = item.VatUniqueCountryId;
+                myTenant.VatUniquePartnerTypeCode = item.VatUniquePartnerTypeCode;
+
+
+
+                service.Update(myTenant);
+
+            }
+            this.repository.context.SaveChanges();
+
+        }
+
     }
+
 }

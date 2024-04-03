@@ -54,7 +54,18 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         NumberofPeriods, 
 	         FirstPeriodsMonths, 
 	         SecondPeriodsMonths, 
-	         ThirdsPeriodsMonths,
+	         ThirdsPeriodsMonths, 
+	         IsSecurityLevelActivated, 
+	         VATreportEveryTwoMonths, 
+	         CreateRevaluationJournal, 
+	         TaxInstitutionGLAccountId, 
+	         HSM, 
+	         HSMtoken, 
+	         HSMaddress, 
+	         AllowEditingExchangeRate, 
+	         AmountForConfirmationNumber, 
+	         NumberingByChartOfAccount, 
+	         OppositeAccountNumber,
 	      }
 
 
@@ -110,7 +121,18 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         NumberofPeriods, 
 	         FirstPeriodsMonths, 
 	         SecondPeriodsMonths, 
-	         ThirdsPeriodsMonths,
+	         ThirdsPeriodsMonths, 
+	         IsSecurityLevelActivated, 
+	         VATreportEveryTwoMonths, 
+	         CreateRevaluationJournal, 
+	         TaxInstitutionGLAccountId, 
+	         HSM, 
+	         HSMtoken, 
+	         HSMaddress, 
+	         AllowEditingExchangeRate, 
+	         AmountForConfirmationNumber, 
+	         NumberingByChartOfAccount, 
+	         OppositeAccountNumber,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -277,6 +299,61 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ThirdsPeriodsMonths))
             {
 				entityPOCO.ThirdsPeriodsMonths = entityPM.ThirdsPeriodsMonths;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsSecurityLevelActivated))
+            {
+				entityPOCO.IsSecurityLevelActivated = entityPM.IsSecurityLevelActivated;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.VATreportEveryTwoMonths))
+            {
+				entityPOCO.VATreportEveryTwoMonths = entityPM.VATreportEveryTwoMonths;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreateRevaluationJournal))
+            {
+				entityPOCO.CreateRevaluationJournal = entityPM.CreateRevaluationJournal;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TaxInstitutionGLAccountId))
+            {
+				entityPOCO.TaxInstitutionGLAccountId = entityPM.TaxInstitutionGLAccountId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.HSM))
+            {
+				entityPOCO.HSM = entityPM.HSM;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.HSMtoken))
+            {
+				entityPOCO.HSMtoken = entityPM.HSMtoken;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.HSMaddress))
+            {
+				entityPOCO.HSMaddress = entityPM.HSMaddress;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AllowEditingExchangeRate))
+            {
+				entityPOCO.AllowEditingExchangeRate = entityPM.AllowEditingExchangeRate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AmountForConfirmationNumber))
+            {
+				entityPOCO.AmountForConfirmationNumber = entityPM.AmountForConfirmationNumber;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NumberingByChartOfAccount))
+            {
+				entityPOCO.NumberingByChartOfAccount = entityPM.NumberingByChartOfAccount;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OppositeAccountNumber))
+            {
+				entityPOCO.OppositeAccountNumber = entityPM.OppositeAccountNumber;
 			}
 			}
 
@@ -448,6 +525,61 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.ThirdsPeriodsMonths = entityPOCO.ThirdsPeriodsMonths;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsSecurityLevelActivated))
+            {
+					entityPM.IsSecurityLevelActivated = entityPOCO.IsSecurityLevelActivated;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.VATreportEveryTwoMonths))
+            {
+					entityPM.VATreportEveryTwoMonths = entityPOCO.VATreportEveryTwoMonths;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CreateRevaluationJournal))
+            {
+					entityPM.CreateRevaluationJournal = entityPOCO.CreateRevaluationJournal;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TaxInstitutionGLAccountId))
+            {
+					entityPM.TaxInstitutionGLAccountId = entityPOCO.TaxInstitutionGLAccountId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.HSM))
+            {
+					entityPM.HSM = entityPOCO.HSM;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.HSMtoken))
+            {
+					entityPM.HSMtoken = entityPOCO.HSMtoken;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.HSMaddress))
+            {
+					entityPM.HSMaddress = entityPOCO.HSMaddress;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AllowEditingExchangeRate))
+            {
+					entityPM.AllowEditingExchangeRate = entityPOCO.AllowEditingExchangeRate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AmountForConfirmationNumber))
+            {
+					entityPM.AmountForConfirmationNumber = entityPOCO.AmountForConfirmationNumber;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.NumberingByChartOfAccount))
+            {
+					entityPM.NumberingByChartOfAccount = entityPOCO.NumberingByChartOfAccount;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.OppositeAccountNumber))
+            {
+					entityPM.OppositeAccountNumber = entityPOCO.OppositeAccountNumber;
+            }
+
 		}
 
 		public void PMToOldPM(FullAccountingSettingPM entityPM, FullAccountingSettingPM oldEntityPM)
@@ -612,6 +744,61 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ThirdsPeriodsMonths))
             {
                 oldEntityPM.ThirdsPeriodsMonths = entityPM.ThirdsPeriodsMonths;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsSecurityLevelActivated))
+            {
+                oldEntityPM.IsSecurityLevelActivated = entityPM.IsSecurityLevelActivated;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.VATreportEveryTwoMonths))
+            {
+                oldEntityPM.VATreportEveryTwoMonths = entityPM.VATreportEveryTwoMonths;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreateRevaluationJournal))
+            {
+                oldEntityPM.CreateRevaluationJournal = entityPM.CreateRevaluationJournal;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TaxInstitutionGLAccountId))
+            {
+                oldEntityPM.TaxInstitutionGLAccountId = entityPM.TaxInstitutionGLAccountId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.HSM))
+            {
+                oldEntityPM.HSM = entityPM.HSM;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.HSMtoken))
+            {
+                oldEntityPM.HSMtoken = entityPM.HSMtoken;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.HSMaddress))
+            {
+                oldEntityPM.HSMaddress = entityPM.HSMaddress;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AllowEditingExchangeRate))
+            {
+                oldEntityPM.AllowEditingExchangeRate = entityPM.AllowEditingExchangeRate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AmountForConfirmationNumber))
+            {
+                oldEntityPM.AmountForConfirmationNumber = entityPM.AmountForConfirmationNumber;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NumberingByChartOfAccount))
+            {
+                oldEntityPM.NumberingByChartOfAccount = entityPM.NumberingByChartOfAccount;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OppositeAccountNumber))
+            {
+                oldEntityPM.OppositeAccountNumber = entityPM.OppositeAccountNumber;
             }
 			
 		}

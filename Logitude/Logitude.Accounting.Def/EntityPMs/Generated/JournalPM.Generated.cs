@@ -1110,7 +1110,30 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-   }
+	  private int? securityLevel ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? SecurityLevel  
+	   {
+	    
+	     get
+		{
+		   return securityLevel;
+		 }
+		 set
+		 {
+		   if(securityLevel != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SecurityLevel",OldValue=securityLevel,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   securityLevel=value;
+		   }
+			
+		 }
+	   }
+	    }
    
 }
 	 

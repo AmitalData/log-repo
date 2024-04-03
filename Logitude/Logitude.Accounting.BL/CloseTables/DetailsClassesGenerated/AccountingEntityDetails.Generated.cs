@@ -104,6 +104,13 @@ namespace Logitude.Accounting.BL
                 LocalName = "התאמת בנק", 
                 EnglishName = "Bank Adjustment", 
 			});
+			 
+            all.Add(new AccountingEntityDetails()
+            {    
+                Code = "13", 
+                LocalName = "דוח מע''מ", 
+                EnglishName = "Tax Report", 
+			});
 			
             return all;
        }

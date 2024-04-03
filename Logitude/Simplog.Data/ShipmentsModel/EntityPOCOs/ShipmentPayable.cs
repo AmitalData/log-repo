@@ -64,9 +64,12 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string TariffNumber { get; set; }
         public string TariffLineId { get; set; }
         public int TariffVersion { get; set; }
+        public bool IsCustomsChargesTariff { get; set; }
         public DateTime? AutomaticLastUpdateDate { get; set; }
         public double? VatAmountLocal { get; set; }
         public double? VatAmountProfit { get; set; }
+        public double? ProratedAmountInLocalCurrency { get; set; }
+        public double? ProratedAmountInProfitCurrency { get; set; }
 
         [ForeignKey("VatTypeId")]
         public virtual VatType VatType { get; set; }

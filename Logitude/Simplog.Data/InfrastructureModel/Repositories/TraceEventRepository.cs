@@ -142,5 +142,21 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                                      select a).OrderByDescending(d=>d.LogDateTime).FirstOrDefault();
             return traceevent;
         }
+
+        public TraceEvent GetLastExceptionTraceEventByContainerId(string entityId, string eventCode, int tenant)
+        {
+            TraceEvent traceevent = (from a in context.TraceEvent.Include("EventType").Include("EventType.EntityStatus")
+                                     where a.EntityId == entityId && a.Tenant == tenant && a.EventType.Code == eventCode
+                                     select a).OrderByDescending(d => d.LogDateTime).FirstOrDefault();
+            return traceevent;
+        }
+
+        public bool IsTraceEventExistByEntityIdAndEventCode(string entityId, string eventCode, int tenant)
+        {
+            var isTraceEventExist = (from a in context.TraceEvent.Include("EventType").Include("EventType.EntityStatus")
+                                     where a.EntityId == entityId && a.Tenant == tenant && a.EventType.Code == eventCode
+                                     select a).Any();
+            return isTraceEventExist;
+        }
     }
 }

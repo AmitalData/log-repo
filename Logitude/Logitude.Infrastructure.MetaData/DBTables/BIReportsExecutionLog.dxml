@@ -75,4 +75,6 @@
     ReferencedTable="CommunicationStatusTypes"
     ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
+  <Index
+	Columns="CreateDate" />
 </Table>

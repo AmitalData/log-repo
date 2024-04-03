@@ -27,7 +27,8 @@
                                         <td>
                                             <div class="MediaFill">
                                                 <!--<div class="OrangeInfo">{{EntityWarning}}</div>-->
-                                                <WarningSummary *ngIf="EntityWarningsList != null && EntityWarningsList.length > 0" [ItemsSource]="EntityWarningsList"></WarningSummary>
+                                                <!-- SM: solved manual SATTransferStatusCode -->
+                                                <WarningSummary *ngIf="EntityWarningsList != null && EntityWarningsList.length > 0 && EntityPM.SATTransferStatusCode != 'SM'" [ItemsSource]="EntityWarningsList"></WarningSummary>
                                             </div>
 
                                         </td>
@@ -61,7 +62,9 @@
                                                             [DataContext]="DataContext"
                                                             [LookUpTableName]="'Card'"
                                                             [DependencyFilter1Value]="BillToDependencyValue1"
-                                                            [DependencyFilter1IsList]="true">
+                                                            [DependencyFilter1IsList]="true"
+                                                            [StartSearchFromChar]="3"
+                                            [StartSearchFromNumber]="6">
                                                     </LogLov>
                                                 </td>
 
@@ -78,7 +81,9 @@
                                                             [SelectedValue]="BillToId"
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
-                                                            [LookUpTableName]="'Card'">
+                                                            [LookUpTableName]="'Card'"
+                                                            [StartSearchFromChar]="3"
+                                            [StartSearchFromNumber]="6">
                                                     </LogLov>
                                                 </td>
                                             </tr>
@@ -239,6 +244,7 @@
                                                 </td>
                                             </tr>
 
+
                                             <tr>
                                                 <td colspan="3">
                                                     <div></div>
@@ -353,7 +359,7 @@
                                     </td>
 
                                     <td style="width: 80px;">
-                                        <button id="{{'VATApplyToAll' | IdGeneratorPipe}}" class="Button" [disabled]="!VatTypeFilterIsEnabled" (click)="VatTypeFilterClicked()">{{'ARInvoice.B.Details.ApplyToAll' | TextCodeTranslationPipe}}</button>
+                                        <button id="{{'VATApplyToAll' | IdGeneratorAsyncPipe | async}}" class="Button" [disabled]="!VatTypeFilterIsEnabled" (click)="VatTypeFilterClicked()">{{'ARInvoice.B.Details.ApplyToAll' | TextCodeTranslationPipe}}</button>
                                     </td>
 
                                     <td style="width: 20px;">
@@ -596,7 +602,7 @@
                                     </div>
                                 </div>
 
-                                <logitude-edit-grid *ngIf="IsManifest" GridWidth="100%" GridHeight="100%" [ItemSource]="ObservableItems" [groupby]="'Description'" [ShowCount]="true">
+                                <logitude-edit-grid *ngIf="IsManifest" GridWidth="100%" GridHeight="100%" [ItemSource]="ObservableItems" [groupby]="'Description'" [ShowCount]="true" [UseVirtuallization]="IsUsingVirtuallization"> 
 
                                     <!-- Exists -->
                                     <log-column [width]="'25'" [Editable]="false">

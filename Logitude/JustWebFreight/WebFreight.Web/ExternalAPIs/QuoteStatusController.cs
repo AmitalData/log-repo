@@ -33,7 +33,9 @@ namespace WebFreight.Web.ExternalAPIs
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
 				SecurityUtility.AuthenticateAPICall(authToken.Tenant);
-				QuoteStatusQueryService Service = new QuoteStatusQueryService(tenant);
+                SecurityUtility.AuthenticateAccessibleAPI("Quote", authToken.Tenant);
+
+                QuoteStatusQueryService Service = new QuoteStatusQueryService(tenant);
                 QuoteStatus Result = Service.GetQuoteStatusById(id, tenant);
 
                 return Request.CreateResponse(HttpStatusCode.OK, Result);
@@ -54,7 +56,9 @@ namespace WebFreight.Web.ExternalAPIs
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
 				SecurityUtility.AuthenticateAPICall(authToken.Tenant);
-				QuoteStatusQueryService Service = new QuoteStatusQueryService(tenant);
+                SecurityUtility.AuthenticateAccessibleAPI("Quote", authToken.Tenant);
+
+                QuoteStatusQueryService Service = new QuoteStatusQueryService(tenant);
                 QuoteStatus Result = Service.GetQuoteStatusByNumber(quoteNumber, tenant);
 
                 return Request.CreateResponse(HttpStatusCode.OK, Result);
@@ -80,7 +84,9 @@ namespace WebFreight.Web.ExternalAPIs
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 						SecurityUtility.AuthenticateAPICall(authToken.Tenant);
-						QuoteStageRepository repository = new QuoteStageRepository(authToken.Tenant);
+                        SecurityUtility.AuthenticateAccessibleAPI("Quote", authToken.Tenant);
+
+                        QuoteStageRepository repository = new QuoteStageRepository(authToken.Tenant);
                         QuoteQuery quoteQuery = new QuoteQuery(authToken.Tenant);
                         QuotePM quotePM = quoteQuery.GetSinglePMByQuoteNumber(entity.QuoteNumber, authToken.Tenant);
                          

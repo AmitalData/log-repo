@@ -51,18 +51,58 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         protected override void OnUpdating(ExternalReconciliationPM externalRecoPM)
         {
             this.externalRecoPM = externalRecoPM;
+            
             if (externalRecoPM.ChangeSetOp == ChangeSetOperation.Insert)
             {
 
                 List<LedgerTransactionPM> reconciliationLedgerTransactions = GetLedgerTransactionsOfExternalReconcile(externalRecoPM);
+                List<ReconcileExternalPageLinePM> reconciliationExternalPagesLines = GetExternalPageLinesOfExternalReconcile(externalRecoPM);
 
                 SetTransactionsAsExternallyReconciled(externalRecoPM.Tenant, reconciliationLedgerTransactions);
                 SetExtenalPageAsReconciled(externalRecoPM);
 
                 RedeemARPaymentCheques(reconciliationLedgerTransactions);
-                RedeemPaymentCheques(reconciliationLedgerTransactions);                
+                RedeemPaymentCheques(reconciliationLedgerTransactions);
 
+                BankAccount bankAccount = GetBankAccountConnectedToReconcile(externalRecoPM);
+
+                externalRecoPM.CrossYearReconcile = CheckCrossYearReconcile(reconciliationLedgerTransactions, reconciliationExternalPagesLines, bankAccount);
             }
+        }
+
+        private static BankAccount GetBankAccountConnectedToReconcile(ExternalReconciliationPM externalRecoPM)
+        {
+            var accountingContext = AccountingContext.GetContext(externalRecoPM.Tenant);
+            var bankAccount = accountingContext.BankAccounts.Where(e => e.Id == externalRecoPM.BankAccountId).FirstOrDefault();
+            return bankAccount;
+        }
+
+        private bool CheckCrossYearReconcile(List<LedgerTransactionPM> reconciliationLedgerTransactions, List<ReconcileExternalPageLinePM> reconciliationExternalPagesLines, BankAccount bankAccount)
+        {
+            List<IGrouping<int, LedgerTransactionPM>> ledgerGroupedByYears;
+
+            if (bankAccount != null)
+                ledgerGroupedByYears = reconciliationLedgerTransactions.Where(e=>e.AccountId != bankAccount.TransferGLAcccountId).GroupBy(ledger => ledger.AccountingDate.Year).ToList();
+            else
+                ledgerGroupedByYears = reconciliationLedgerTransactions.GroupBy(ledger => ledger.AccountingDate.Year).ToList();
+
+            var pageLinesGroupedByYears = reconciliationExternalPagesLines.GroupBy(pageLine => pageLine.ReferenceDate.Year).ToList();
+
+            var bothLinesSelected = pageLinesGroupedByYears.Count() > 0 && ledgerGroupedByYears.Count() > 0;
+
+            var ledgerHasDifferentYears = ledgerGroupedByYears.Count() > 1;
+            var pageLinesHasDifferentYears = pageLinesGroupedByYears.Count() > 1;
+            var hasSingleDifferentYears = ledgerGroupedByYears.Count() == 1 && pageLinesGroupedByYears.Count() == 1
+                                            && ledgerGroupedByYears.First().Key != pageLinesGroupedByYears.First().Key;
+
+
+            //return ledgerHasDifferentYears
+            //    || (pageLinesHasDifferentYears && bothLinesSelected)
+            //    || (hasSingleDifferentYears);
+
+            return ledgerHasDifferentYears
+                || pageLinesHasDifferentYears 
+                || (hasSingleDifferentYears);
         }
 
         private void SetExtenalPageAsReconciled(ExternalReconciliationPM externalRecoPM)
@@ -140,10 +180,11 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 var transactionComesFromDeferedAccountChequesMovingService = transactionPM.OppositeAccountId == bankAccount?.DeferredGLAccountId;
                 bool transactionHasOnlyOneCheque = !string.IsNullOrEmpty(transactionPM.Reference2);
                 var isDebitTransaction = (transactionPM.ForeignAmountDebit + transactionPM.LocalAmountDebit) != 0;
-
+                
                 if (isDebitTransaction && transactionComesFromDeferedAccountChequesMovingService)
                     return GetChequeOfDepositTransactionBySourceAndReference(transactionPM.Reference1, transactionPM.SourceId, transactionPM.Tenant);
-                else if (isDebitTransaction && !transactionHasOnlyOneCheque)
+                else if(isDebitTransaction && !transactionHasOnlyOneCheque) 
+
                     return GetChequeOfDepositTransactionBySource(transactionPM.SourceId, transactionPM.Tenant);
                 else
                     return GetChequeOfDepositTransactionBySourceAndReference(transactionPM.Reference2, transactionPM.SourceId, transactionPM.Tenant);
@@ -291,7 +332,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             foreach (BankDepositLinePM depLine in depositPM.BankDepositLines)
             {
                 var isChequeComesFromDebitTransaction = transactionPM.Reference2 == null && transactionPM.SourceId == depLine.DepositId;
-                var isTransactionBelongsToCheque = transactionPM.Reference2 == depLine.ChequeNumber;
+                var isTransactionBelongsToCheque = (transactionPM.Reference1 == depLine.ChequeNumber) || (transactionPM.Reference2 == depLine.ChequeNumber);
 
                 if (isChequeComesFromDebitTransaction || isTransactionBelongsToCheque)
                     ReturnChequeToBankAccount(entityPM.Tenant, depLine.ARPaymentChequeId);
@@ -308,11 +349,13 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         private void ReturnChequeToBankAccount(int tenant, string chequeId)
         {
             ARPaymentChequePM chequePM = GetARPaymentCheque(tenant, chequeId);
-
-            ARPaymentChequeUpdateService arpChequeUpdateService = new ARPaymentChequeUpdateService(MainContext, AdditionalContexts, tenant);
-            chequePM.ChangeSetOp = ChangeSetOperation.Update;
-            chequePM.StatusCode = ARPaymentChequeStatusValues.InBankAccount;
-            arpChequeUpdateService.Update(chequePM, true);
+            if (chequePM.StatusCode == ARPaymentChequeStatusValues.Redeemed)
+            {
+                ARPaymentChequeUpdateService arpChequeUpdateService = new ARPaymentChequeUpdateService(MainContext, AdditionalContexts, tenant);
+                chequePM.ChangeSetOp = ChangeSetOperation.Update;
+                chequePM.StatusCode = ARPaymentChequeStatusValues.InBankAccount;
+                arpChequeUpdateService.Update(chequePM, true);
+            }
         }
 
         private static ARPaymentChequePM GetARPaymentCheque(int tenant, string id)

@@ -20,7 +20,7 @@ export class CustomerSizePM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-          this.UIProperties = new UIProperties(this); 
+		            this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -48,6 +48,11 @@ export class CustomerSizePM {
     private inActive: boolean;
     public get InActive() { return this.inActive; }
     public set InActive(newValue: boolean) { if (this.inActive != newValue) { this.inActive = newValue; this.MarkAsDirty("InActive"); } }
+       
+	 
+    private code: string;
+    public get Code() { return this.code; }
+    public set Code(newValue: string) { if (this.code != newValue) { this.code = newValue; this.MarkAsDirty("Code"); } }
        
 	 
     private searchFields: string;

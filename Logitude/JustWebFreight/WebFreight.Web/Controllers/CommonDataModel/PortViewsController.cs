@@ -60,8 +60,11 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 mytenant = authToken.Tenant;
                 if (filters.Tenant != null)
+                {
+                    SecurityUtility.AuthenticationOnTenant(filters.Tenant.Value);
                     mytenant = filters.Tenant.Value;
-
+                }
+                  
                 SecurityUtility.CheckContactFeature("Port", "READ", authToken.Tenant);
 
                 QueryOperations queryOperations = new QueryOperations()

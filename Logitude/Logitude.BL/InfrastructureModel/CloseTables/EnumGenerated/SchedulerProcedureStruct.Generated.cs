@@ -32,6 +32,17 @@ namespace Logitude.BL.InfrastructureModel.CloseTables
        public const string QuoteAutomaticallyClosingTask = "QuoteAutomaticallyClosingTask";  
        public const string DeleteOldCargoTrackingData = "DeleteOldCargoTrackingData";  
        public const string ExchangeRateUpdateTask = "ExchangeRateUpdateTask";  
+       public const string ContainerAutomaticallyClosingTask = "ContainerAutomaticallyClosingTask";  
+       public const string RecalculateCashbooksTotalsTask = "RecalculateCashbooksTotalsTask";  
+       public const string ResetFullTextSearchIndexChangeTrackingTask = "ResetFullTextSearchIndexChangeTrackingTask";  
+       public const string UpdateCanceledSATEntitiesStatusesTask = "UpdateCanceledSATEntitiesStatusesTask";  
+       public const string DeleteOldContactActivityLogsTask = "DeleteOldContactActivityLogsTask";  
+       public const string DeleteOldAnalyzeQueuesTask = "DeleteOldAnalyzeQueuesTask";  
+       public const string DeleteOldMobileNotificationLogsTask = "DeleteOldMobileNotificationLogsTask";  
+       public const string DeleteOldPerformanceLogsTask = "DeleteOldPerformanceLogsTask";  
+       public const string DeleteOldBIReportsExecutionLogsTask = "DeleteOldBIReportsExecutionLogsTask";  
+       public const string DeleteOldReportExecutionLogsTask = "DeleteOldReportExecutionLogsTask";  
+       public const string DeleteOldDocumentsExecutionLogsTask = "DeleteOldDocumentsExecutionLogsTask";  
     }
 }
 

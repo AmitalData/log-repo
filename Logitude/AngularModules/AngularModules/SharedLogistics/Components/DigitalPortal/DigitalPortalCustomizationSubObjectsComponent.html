@@ -1,0 +1,45 @@
+<table>
+    <tr>
+        <td>
+            <table>
+
+                <tr style="height: 5px;">
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <div class="MediaFill">
+                            <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="ItemsSource">
+
+                                <!-- Object Name -->
+                                <log-column [width]="'350'" [header]="'Field Name'" [Alignment]="'left'">
+                                    <ng-template let-item>
+                                        <log-cell-template #logcelltemplate [Alignment]="'left'">
+                                            <div style="width: 100%; text-align: left;">
+                                                {{item.ObjectTableName}}
+                                            </div>
+                                        </log-cell-template>
+                                    </ng-template>
+                                </log-column>
+
+                                <log-column [width]="'55'" [Editable]="true" [Alignment]="'left'">
+                                    <ng-template let-item>
+                                        <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                            <span class="CellSeparator" style="float: right;"></span>
+                                            <div style="width: 22px; float: right; height:20px; padding-top: 2px; display:block">
+                                                <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="EditButtonClicked(item)"></IconButton>
+                                            </div>
+                                        </log-cell-template>
+                                    </ng-template>
+                                </log-column>
+
+                            </logitude-edit-grid>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+</table>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
@@ -122,6 +123,21 @@ namespace Simplog.Server.Infrastructure.Helpers
             return new TransactionScope(TransactionScopeOption.RequiresNew, new TransactionOptions() { IsolationLevel = IsolationLevel.Snapshot });
         }
 
+        private static void SetTransactionManagerField(string fieldName, object value)
+        {
+            typeof(TransactionManager).GetField(fieldName, BindingFlags.NonPublic | BindingFlags.Static).SetValue(null, value);
+        }
+
+        public static TransactionScope CreateTransactionScope(TimeSpan timeout)
+        {
+            // or for netcore / .net5+ use these names instead:
+            //    s_cachedMaxTimeout
+            //    s_maximumTimeout
+            SetTransactionManagerField("_cachedMaxTimeout", true);
+            SetTransactionManagerField("_maximumTimeout", timeout);
+            return new TransactionScope(TransactionScopeOption.RequiresNew, timeout);
+        }
+
         public static TransactionScope GetNewTransactionWithDefaultIsolationLevel(TimeSpan? timeOut = null)
         {
             if (timeOut != null)
@@ -138,6 +154,15 @@ namespace Simplog.Server.Infrastructure.Helpers
                 return new TransactionScope(TransactionScopeOption.RequiresNew, new TransactionOptions() { IsolationLevel = IsolationLevel.ReadCommitted, Timeout = timeOut.Value });
             }
             return new TransactionScope(TransactionScopeOption.RequiresNew, new TransactionOptions() { IsolationLevel = IsolationLevel.ReadCommitted });
+        }
+
+        public static TransactionScope GetNewReadUncommittedTransaction(TimeSpan? timeOut = null)
+        {
+            if (timeOut != null)
+            {
+                return new TransactionScope(TransactionScopeOption.RequiresNew, new TransactionOptions() { IsolationLevel = IsolationLevel.ReadUncommitted, Timeout = timeOut.Value });
+            }
+            return new TransactionScope(TransactionScopeOption.RequiresNew, new TransactionOptions() { IsolationLevel = IsolationLevel.ReadUncommitted });
         }
         // I USING THAT WHILE DEBUG AT IMMEDIATE WINDOW>
         //Simplog.Server.Infrastructure.Helpers.TransactionFactory.RegisterTransactionCompleted()

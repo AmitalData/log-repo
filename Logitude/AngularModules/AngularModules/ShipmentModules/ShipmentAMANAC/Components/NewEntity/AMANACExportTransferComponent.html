@@ -22,7 +22,7 @@
                         <div *ngIf="!IsExportingInProgress">
 
                             <div *ngIf="IsExportingSuccess" style="text-align: center;">
-                                <div attr.data-cy="{{'ValidationMsg' | IdGeneratorPipe}}" class="ColorGreen" style="font-size: 13px;">Transferred Successfully</div>
+                                <div attr.data-cy="{{'ValidationMsg' | IdGeneratorAsyncPipe | async}}" class="ColorGreen" style="font-size: 13px;">Transferred Successfully</div>
                                 <Hyperlink (click)="DownloadClicked()">{{'General.B.DownloadFile' | TextCodeTranslationPipe}}</Hyperlink>
                             </div>
 
@@ -32,7 +32,7 @@
                             </div>
 
                             <div *ngIf="IsValidated" style="text-align: center;">
-                                <div  attr.data-cy="{{'ValidationMsg' | IdGeneratorPipe}}" class="ColorBlack" style="font-size: 13px;">Please fill all the mandatory fields before exporting to AMANAC</div>
+                                <div  attr.data-cy="{{'ValidationMsg' | IdGeneratorAsyncPipe | async}}" class="ColorBlack" style="font-size: 13px;">Please fill all the mandatory fields before exporting to AMANAC</div>
                                 <Hyperlink (click)="ViewErrorsClicked()">View</Hyperlink>
                             </div>
                         </div>
@@ -55,7 +55,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button attr.data-cy="{{'CloseExportingScreen' | IdGeneratorPipe}}" class="Button" (click)="CloseButtonClicked()" [disabled]="IsExportingInProgress">Close</button>
+                        <button attr.data-cy="{{'CloseExportingScreen' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="CloseButtonClicked()" [disabled]="IsExportingInProgress">{{'General.B.Close' | TextCodeTranslationPipe}}</button>
                     </td>
                 </tr>
             </table>

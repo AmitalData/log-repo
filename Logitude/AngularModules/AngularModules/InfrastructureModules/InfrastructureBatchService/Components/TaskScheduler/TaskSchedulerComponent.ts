@@ -36,6 +36,7 @@ export class TaskSchedulerComponent implements OnInit {
     ShowUTCTimeEnabled: boolean = false;
     HasUTCFeature: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    SearchFilter: string = "";
     constructor(private _entityListService: EntityListService) {
         this.infraDomainService = new InfrastructureDomainService();
         if (FeatureLocator.HasFeaturePermession("TasksScheduler", "SHOWUTCBUTTON")) {
@@ -356,6 +357,11 @@ export class TaskSchedulerComponent implements OnInit {
             filters.AdditionalFilters = filters.AdditionalFilters.filter(a => a.FieldName != "Type");
         }
         filters.addAdditionalFilter("Type", this.SchedulerType, null, null, "Equals", true, false, false, "String");
+
+        if (!AppTool.IsNullOrEmpty(this.SearchFilter)) {
+            filters.addAdditionalFilter("Name", this.SearchFilter, null, null, "Contains", true, false, false, "String");
+        }
+
         filters.GetCount = getCount;
         filters.PageIndex = skip;
         filters.PageSize = take;
@@ -392,6 +398,10 @@ export class TaskSchedulerComponent implements OnInit {
         }
         this.filterAgrs.addAdditionalFilter("Type", this.SchedulerType, null, null, "Equals", true, false, false, "String");
 
+        if (!AppTool.IsNullOrEmpty(this.SearchFilter)) {
+            this.filterAgrs.addAdditionalFilter("Name", this.SearchFilter, null, null, "Contains", true, false, false, "String");
+        }
+
         this.MenuHeaderchangeeventTasks.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
     }
 
@@ -424,6 +434,12 @@ export class TaskSchedulerComponent implements OnInit {
             //    this.ItemsSource = this.FixedItemsSource;
             //}
         }
+    }
+
+    onSearchTextChangeEvent(searchText: string) {
+        if (!searchText) searchText = "";
+        this.SearchFilter = searchText.replace(/\s+$/, '');
+        this.LoadTaskSchedulers();
     }
 }
 
@@ -503,10 +519,20 @@ export class TaskSchedulerItemClass extends BaseComponent {
 
         if (this.EntityPM.StartDateTime != newValue) {
             this.EntityPM.StartDateTime = newValue;
-            this.newValueinDateFormat = new Date(newValue);
-            this.EntityPM.StartDateTimeUTC = new Date(this.newValueinDateFormat.getUTCFullYear(), this.newValueinDateFormat.getUTCMonth(), this.newValueinDateFormat.getUTCDate(), this.newValueinDateFormat.getUTCHours(), this.newValueinDateFormat.getUTCMinutes(), this.newValueinDateFormat.getUTCSeconds(), this.newValueinDateFormat.getUTCMilliseconds());
+            this.EntityPM.StartDateTimeUTC = this.GetUtcTenantDateValueFromDate(newValue);
 
         }
+    }
+
+    private GetUtcTenantDateValueFromDate(newValue: Date) {
+        let utcDateValue = new Date(newValue);
+        if (SessionLocator.TenantPM.TimeZoneOffset && SessionLocator.TenantPM.TimeZoneOffset != 0) {
+            utcDateValue.setHours(utcDateValue.getHours() - SessionLocator.TenantPM.TimeZoneOffset);
+        }
+        //if (SessionLocator.TenantPM.DayLightOffset && SessionLocator.TenantPM.DayLightOffset != 0) {
+        //    utcDateValue.setHours(utcDateValue.getHours() + SessionLocator.TenantPM.DayLightOffset);
+        //}
+        return utcDateValue;
     }
 
     get RepeatInMinutes() { return this.EntityPM.RepeatInMinutes; }
@@ -698,6 +724,7 @@ export class TaskSchedulerItemClass extends BaseComponent {
     SetSchedulerDetailsData(schedulerDetailsData: SchedulerDetails) {
         this.SchedulerDetailsData = schedulerDetailsData;
         if (schedulerDetailsData) {
+            this.RemoveReportDetails(schedulerDetailsData);
             if (this.EntityPM.Type == "FTP" || this.EntityPM.Type == "SFTP") {
                 if (!schedulerDetailsData.FTPDetails) {
                     schedulerDetailsData.FTPDetails = new FTPSchedulerDetails();
@@ -710,6 +737,12 @@ export class TaskSchedulerItemClass extends BaseComponent {
                 this.EntityPM.SchedulerDetailsData = schedulerDetailsData;
 
             }
+        }
+    }
+
+    private RemoveReportDetails(schedulerDetailsData: SchedulerDetails) {
+        if (this.EntityPM.Type != "Report") {
+            schedulerDetailsData.ReportDetails = null;
         }
     }
 }

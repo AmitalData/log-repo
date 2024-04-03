@@ -1,7 +1,6 @@
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
 import * as AirLineActions from "../../actions/AirLineActions";
 import { AirLineSelectors } from "../../selectors/AirLineSelectors";
-import { AddressSelectors } from "../../selectors/AddressSelectors";
 import * as Actions from "../../actions/Actions";
 import { AirLineDetails } from "../../models/AirLineDetails";
 import { AddressDetails } from "../../models/AddressDetails";
@@ -9,6 +8,7 @@ import * as Assists from "../../../../Base/cypress/assists/Assists";
 import { EventTypeDetails } from "../../../../Base/cypress/models/EventTypeDetails";
 import * as BaseActions from "../../../../Base/cypress/actions/Actions"
 import * as GeneralActions from "../../actions/BaseActions";
+import { GenerateRandomNumberAndString } from '../../../../Base/cypress/actions/GenerateRandoms';
 
 //#region import new air line
 Given("the user logged in and open {string} in maintenance menu", (maintenanceItemName) => {
@@ -80,16 +80,16 @@ Then("the air line should create successfully", () => {
 //#endregion
 
 //#region Search for the shipping line by code
-When("search for {string} air line", (searchValueField) => {
-    GeneralActions.Search(searchValueField)
+When("search for {string} air line", (searchFieldValue) => {
+    AirLineActions.Search(searchFieldValue)
 });
 
-Then("the {string} air line should appear successfully", (searchValueField) => {
-    GeneralActions.AssertSearch(searchValueField)
+Then("the {string} air line should appear successfully", (searchFieldValue) => {
+    AirLineActions.AssertSearch(searchFieldValue)
 });
 //#endregion
 
-//#region Open the shipping line
+//#region Open the Air line
 When("open air line", () => {
     AirLineActions.OpenAirLine();
 });
@@ -99,7 +99,7 @@ Then("the air line should open successfully", () => {
 });
 //#endregion
 
-//#region Create shipping line address
+//#region Create Air line address
 Given("fill the following Address details in Addresses air line tab", (dataTable) => {
     let addressDetails = Assists.CreateInstance<AddressDetails>(dataTable, true);
     cy.Navigate(AirLineSelectors.AddressesTab);
@@ -193,8 +193,8 @@ Then("the air line awb special handling code should create successfully", () => 
 });
 //#endregion
 
-//#region Inactivate shipping line
-Given("the user Inactivate air line", () => {
+//#region Inactivate Air Line and then reactivate it
+Given("the user change inactive checkBox value", () => {
     cy.Navigate(AirLineSelectors.GeneralTab);
     Actions.ChangeInactiveCheckBoxValue(AirLineSelectors.InactiveAirline)
 });

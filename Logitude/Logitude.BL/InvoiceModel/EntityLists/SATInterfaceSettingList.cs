@@ -16,6 +16,10 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public string CompanyId { get; set; }
         public DateTime? ActivationDate { get; set; }
         public string MetodoPagoCode { get; set; }
+        public bool IsARInvoiceTransferEnabled { get; set; }
+        public bool IsCartaPorteTransferEnabled { get; set; }
+        public string SATCompanyName { get; set; }
+        public bool TransferExpenseCharges { get; set; }
 
     }
 }

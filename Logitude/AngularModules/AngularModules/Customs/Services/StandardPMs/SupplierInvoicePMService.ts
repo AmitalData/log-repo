@@ -404,7 +404,7 @@ export class SupplierInvoicePMService {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
-                var pmProperty = pmKeysArray[pmKey];
+				                  var pmProperty = pmKeysArray[pmKey];
                 newSupplierInvoiceItemPM[pmProperty] = jItem[pmProperty];
             }
            
@@ -678,7 +678,7 @@ export class SupplierInvoicePMService {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
-                var pmProperty = pmKeysArray[pmKey];
+				                  var pmProperty = pmKeysArray[pmKey];
                 newSupplierInvoiceItemsTaxPM[pmProperty] = jItem[pmProperty];
             }
            
@@ -775,7 +775,7 @@ export class SupplierInvoicePMService {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
-                var pmProperty = pmKeysArray[pmKey];
+				                  var pmProperty = pmKeysArray[pmKey];
                 newSupplierInvoiceItemsConDeclarPM[pmProperty] = jItem[pmProperty];
             }
            
@@ -872,7 +872,7 @@ export class SupplierInvoicePMService {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
-                var pmProperty = pmKeysArray[pmKey];
+				                  var pmProperty = pmKeysArray[pmKey];
                 newSupplierInvioceItemCertificatPM[pmProperty] = jItem[pmProperty];
             }
            
@@ -969,7 +969,7 @@ export class SupplierInvoicePMService {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
-                var pmProperty = pmKeysArray[pmKey];
+				                  var pmProperty = pmKeysArray[pmKey];
                 newSupplierInvoiceItemsModPM[pmProperty] = jItem[pmProperty];
             }
            
@@ -1066,7 +1066,7 @@ export class SupplierInvoicePMService {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
-                var pmProperty = pmKeysArray[pmKey];
+				                  var pmProperty = pmKeysArray[pmKey];
                 newSupplierInvoiceItemsSerialNumPM[pmProperty] = jItem[pmProperty];
             }
            
@@ -1163,7 +1163,7 @@ export class SupplierInvoicePMService {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
-                var pmProperty = pmKeysArray[pmKey];
+				                  var pmProperty = pmKeysArray[pmKey];
                 newSupplierInvoiceItemsDescriptPM[pmProperty] = jItem[pmProperty];
             }
            
@@ -1260,7 +1260,7 @@ export class SupplierInvoicePMService {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
-                var pmProperty = pmKeysArray[pmKey];
+				                  var pmProperty = pmKeysArray[pmKey];
                 newSupplierInvoiceItemsProdIdentPM[pmProperty] = jItem[pmProperty];
             }
            
@@ -1357,7 +1357,7 @@ export class SupplierInvoicePMService {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
-                var pmProperty = pmKeysArray[pmKey];
+				                  var pmProperty = pmKeysArray[pmKey];
                 newSupplierInvoiceItemProcesTypePM[pmProperty] = jItem[pmProperty];
             }
            
@@ -1454,7 +1454,7 @@ export class SupplierInvoicePMService {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
-                var pmProperty = pmKeysArray[pmKey];
+				                  var pmProperty = pmKeysArray[pmKey];
                 newSupplierInvoiceItemsLevyPM[pmProperty] = jItem[pmProperty];
             }
            
@@ -1551,7 +1551,7 @@ export class SupplierInvoicePMService {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
-                var pmProperty = pmKeysArray[pmKey];
+				                  var pmProperty = pmKeysArray[pmKey];
                 newSupplierInvoiceItemVehiclePM[pmProperty] = jItem[pmProperty];
             }
            
@@ -1676,7 +1676,7 @@ export class SupplierInvoicePMService {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
-                var pmProperty = pmKeysArray[pmKey];
+				                  var pmProperty = pmKeysArray[pmKey];
                 newSupplierInvoiceItemVehicleModPM[pmProperty] = jItem[pmProperty];
             }
            
@@ -1773,7 +1773,7 @@ export class SupplierInvoicePMService {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
-                var pmProperty = pmKeysArray[pmKey];
+				                  var pmProperty = pmKeysArray[pmKey];
                 newSupplierInvoiceItemVehicleAddPM[pmProperty] = jItem[pmProperty];
             }
            
@@ -1871,7 +1871,7 @@ export class SupplierInvoicePMService {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
-                var pmProperty = pmKeysArray[pmKey];
+				                  var pmProperty = pmKeysArray[pmKey];
                 newSupplierInvoiceItemModVehiclePM[pmProperty] = jItem[pmProperty];
             }
            
@@ -1968,7 +1968,7 @@ export class SupplierInvoicePMService {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
-                var pmProperty = pmKeysArray[pmKey];
+				                  var pmProperty = pmKeysArray[pmKey];
                 newSupplierInvoiceItemsPricePM[pmProperty] = jItem[pmProperty];
             }
            
@@ -2065,7 +2065,7 @@ export class SupplierInvoicePMService {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
-                var pmProperty = pmKeysArray[pmKey];
+				                  var pmProperty = pmKeysArray[pmKey];
                 newSuppInvoiceItemsAbachStatementPM[pmProperty] = jItem[pmProperty];
             }
            
@@ -2163,7 +2163,7 @@ export class SupplierInvoicePMService {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
-                var pmProperty = pmKeysArray[pmKey];
+				                  var pmProperty = pmKeysArray[pmKey];
                 newSupplierInvoiceModificationPM[pmProperty] = jItem[pmProperty];
             }
            
@@ -2255,7 +2255,7 @@ export class SupplierInvoicePMService {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
-                var pmProperty = pmKeysArray[pmKey];
+				                  var pmProperty = pmKeysArray[pmKey];
                 newSupplierInvoiceFreightAmountPM[pmProperty] = jItem[pmProperty];
             }
            
@@ -2347,7 +2347,7 @@ export class SupplierInvoicePMService {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
-                var pmProperty = pmKeysArray[pmKey];
+				                  var pmProperty = pmKeysArray[pmKey];
                 newSupplierInvoicePaymentPM[pmProperty] = jItem[pmProperty];
             }
            
@@ -2439,7 +2439,7 @@ export class SupplierInvoicePMService {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
-                var pmProperty = pmKeysArray[pmKey];
+				                  var pmProperty = pmKeysArray[pmKey];
                 newSupplierInvoiceUCRPM[pmProperty] = jItem[pmProperty];
             }
            

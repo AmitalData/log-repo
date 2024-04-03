@@ -42,6 +42,13 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
             BuildSearchFields(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
             entityPM.ReleaseDate = entityPM.ActualReleaseDate != null ? entityPM.ActualReleaseDate : entityPM.ExpectedReleaseDate;
         }
+        private string GetPrimaryContactId(string cardId, int tenant)
+        {
+            CardQuery cardQuery = new CardQuery(tenant);
+            CardPM cardPM = cardQuery.GetSinglePM(cardId, tenant);
+            if (cardPM == null) return null;
+            return cardPM.PrimaryContactId;
+        }
 
         public void CustomPOCOToPM(WarehouseReleasePM entityPM, WarehouseRelease entityPOCO)
         {
@@ -52,6 +59,7 @@ namespace Logitude.WarehouseLib.BL.EntityDataMappings
             CardQuery cardQuery = new CardQuery(entityPM.Tenant);
             CardPM cardPM = cardQuery.GetSinglePM(entityPM.CustomerId, entityPM.Tenant);
             if (cardPM != null) entityPM.CustomerName = cardPM.EnglishName;
+            entityPM.CustomerPrimaryContactId = GetPrimaryContactId(entityPM.CustomerId, entityPM.Tenant);
 
             WarehouseQuery warehouseQuery = new WarehouseQuery(entityPM.Tenant);
             WarehousePM warehousePM = warehouseQuery.GetSinglePM(entityPM.WarehouseId, entityPM.Tenant);

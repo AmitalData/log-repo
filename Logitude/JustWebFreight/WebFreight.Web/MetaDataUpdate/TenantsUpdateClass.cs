@@ -53,6 +53,8 @@ using WebFreight.Web.MetaDataUpdate.GeneratedUpdate.SystemLogsModel;
 using WebFreight.Web.Helpers.AutomationModel;
 using Microsoft.VisualStudio.Services.Common;
 using Simplog.Global.Data.GlobalModel.Helpers;
+using WebFreight.Web.Helpers.QuoteTemplate;
+using Logitude.BL.CommonDataModel.ExternalService;
 
 namespace WebFreight.Web.MetaDataUpdate
 {
@@ -119,6 +121,9 @@ namespace WebFreight.Web.MetaDataUpdate
                             WriteLogMessage("Updating Warehouse Module ...");
                             UpdateWarehouseModule(context, false);
 
+                            WriteLogMessage("Updating Shipment Order Module ...");
+                            UpdateShipmentOrderModule(context, false);
+
                             WriteLogMessage("Updating Social Module ...");
                             UpdateSocialModule(context, false);
 
@@ -127,6 +132,12 @@ namespace WebFreight.Web.MetaDataUpdate
 
                             WriteLogMessage("Updating CRM Module ...");
                             UpdateCRMModule(context, false);
+
+                            WriteLogMessage("Updating Workflow Module ...");
+                            UpdateWorkflow(context, false);
+
+                            WriteLogMessage("Updating Dashboard Module ...");
+                            UpdateDashboardModule(context, false);
 
                             WriteLogMessage("Updating Menus tables ...");
                             updateClass.LoadMenustables();
@@ -280,6 +291,18 @@ namespace WebFreight.Web.MetaDataUpdate
                             break;
                         }
 
+                    case "workflow":
+                        {
+                            UpdateWorkflow(context, true);
+                            break;
+                        }
+
+                    case "dashboard":
+                        {
+                            UpdateDashboardModule(context, true);
+                            break;
+                        }
+
 
                     case "cargotracking":
                         {
@@ -304,11 +327,7 @@ namespace WebFreight.Web.MetaDataUpdate
                             UpdateQuoteModule(context, true);
                             break;
                         }
-                    case "quoteopm":
-                        {
-                            UpdateQuoteOPMModule(context, true);
-                            break;
-                        }
+            
                     case "invoice":
                         {
                             UpdateInvoiceModule(context, true);
@@ -328,6 +347,11 @@ namespace WebFreight.Web.MetaDataUpdate
                     case "infrastructurem":
                         {
                             UpdateBusinessInfrastrutureModule(context, true);
+                            break;
+                        }
+                    case "shipmentorder":
+                        {
+                            UpdateShipmentOrderModule(context, true);
                             break;
                         }
                     case "global":
@@ -372,6 +396,20 @@ namespace WebFreight.Web.MetaDataUpdate
                             break;
                         }
 
+                    case "quotetemplatesettings":
+                        {
+                            QuoteTemplateSettingDataUpdater quoteTemplateSettingDataUpdater = new QuoteTemplateSettingDataUpdater();
+                            quoteTemplateSettingDataUpdater.UpdateAllQuoteTempolateSettings();
+
+                            break;
+                        }
+                    case "fixmodifiedsystemreportstemplates":
+                        {
+                            ReportHelper reportHelper = new ReportHelper();
+                            reportHelper.CopyModifiedSystemReportsTemplates();
+
+                            break;
+                        }
                     case "encryptiondocument":
                         {
                             DocumentHelper documentHelper = new DocumentHelper();
@@ -401,7 +439,6 @@ namespace WebFreight.Web.MetaDataUpdate
 
                             break;
                         }
-
 
                     case "all":
                         {
@@ -523,11 +560,19 @@ namespace WebFreight.Web.MetaDataUpdate
                             TariffModuleUpdate tariffModuleUpdate = new TariffModuleUpdate();
                             tariffModuleUpdate.loadScreens();
 
+
+                            WorkflowUpdateClass workflowUpdateClass = new WorkflowUpdateClass();
+                            workflowUpdateClass.LoadObjectTablesMetadata(context, false);
+
                             // New Infrastructure 
                             InfrastructureUpdateClass modelUpdateClass = new InfrastructureUpdateClass();
                             modelUpdateClass.LoadObjectTablesMetadata(context,false);
 
                             MetadataUpdateUtility.RunPostDeleteProcedure();
+
+                            //shipment order
+                            ShipmentOrderModuleUpdateClass shipmentOrderUpdateClass = new ShipmentOrderModuleUpdateClass();
+                            shipmentOrderUpdateClass.LoadObjectTablesMetadata(context, false);
 
                             break;
                         }
@@ -612,7 +657,7 @@ namespace WebFreight.Web.MetaDataUpdate
                     ChargesGroupRepository chargesGroupRepository = new ChargesGroupRepository(context);
 
                     TenantZeroMeasurements = measurementsRepository.GetMeasurementsByTenant(0).ToDictionary(d => d.Code, a => a);
-                    TenantZeroEntityStatus = entityStatusRepository.GetEntityStatusByTenant(0).ToDictionary(d => d.Code, a => a);
+                    TenantZeroEntityStatus = entityStatusRepository.GetEntityStatusByTenant(0).ToDictionary(d => d.Code + d.Id, a => a);
                     TenantZeroEventTypes = eventTypeRepository.GetEventTypesByTenant(0).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
                     TenantZeroRanks = rankRepository.GetRanks(0).ToDictionary(d => d.Code, a => a);
                     TenantZeroDocumentTypes = documentTypeQuery.GetDocumentTypePMsByTenant(0).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
@@ -863,7 +908,7 @@ namespace WebFreight.Web.MetaDataUpdate
             Dictionary<string, Measurement> tenantZeroMeasurements = TenantZeroMeasurements;
             Dictionary<string, Measurement> currentTenantMeasurements = measurementsRepository.GetMeasurementsByTenant(tenant).ToDictionary(d => d.Code, a => a);
             Dictionary<string, EntityStatus> tenantZeroEntityStatus = TenantZeroEntityStatus;
-            Dictionary<string, EntityStatus> currentTenantEntityStatus = entityStatusRepository.GetEntityStatusByTenant(tenant).ToDictionary(d => d.Code, a => a);
+            Dictionary<string, EntityStatus> currentTenantEntityStatus = entityStatusRepository.GetEntityStatusByTenant(tenant).ToDictionary(d => d.Code + d.Id, a => a);
 
             Dictionary<string, EventType> tenantZeroEventTypes;
 
@@ -883,7 +928,7 @@ namespace WebFreight.Web.MetaDataUpdate
             Dictionary<string, DocumentType> currentTenantDocumentTypes = documentTypeRepository.GetDocumentTypes(tenant).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
             List<DocumentTypeCustomField> tenantZeroCustomFields = TenantZeroCustomFields;
             Dictionary<string, CreditCardType> tenantZeroCreditCardTypes = TenantZeroCreditCardTypes;
-            Dictionary<string, CreditCardType> currentTenantCreditCardTypes = creditCardTypeRepositoryRepository.GetCreditCardTypes(tenant).ToDictionary(d => d.Code, a => a);
+            //Dictionary<string, CreditCardType> currentTenantCreditCardTypes = creditCardTypeRepositoryRepository.GetCreditCardTypes(tenant).ToDictionary(d => d.Code, a => a);
             Dictionary<string, MoveType> tenantZeroMoveTypes = TenantZeroMoveTypes;
             Dictionary<string, MoveType> currentTenantMoveTypes = moveTypeRepository.GetMoveTypesByTenant(tenant).ToDictionary(d => d.Code, a => a);
             Dictionary<string, EmailAlertSetting> tenantZeroEmailAlertSettings = TenantZeroEmailAlertSettings;
@@ -1059,22 +1104,7 @@ namespace WebFreight.Web.MetaDataUpdate
 
             performanceTimerLogger.LogMessage("Generated" + ",QuoteModelUpdateClass");
         }
-        private static void UpdateQuoteOPMModule(IWebFreightContext context, bool runPostDeleteProcedure)
-        {
-            var modelUpdateClass = new QuoteOPMUpdateClass();
-            if (runOldUpdateCode)
-                modelUpdateClass.LoadObjectsTenantZero(context);
-            else
-                modelUpdateClass.LoadObjectTablesMetadata(context, runPostDeleteProcedure);
-
-
-            var quoteOPMUpdate = new QuoteOPMUpdate();
-            quoteOPMUpdate.LoadObjectsTenantZero(context);
-            context.SaveChanges();
-
-            performanceTimerLogger.LogMessage("Generated" + ",QuoteOPMModelUpdateClass");
-        }
-        private static void UpdateShipmentAndMasterModules(IWebFreightContext context, bool runPostDeleteProcedure)
+         private static void UpdateShipmentAndMasterModules(IWebFreightContext context, bool runPostDeleteProcedure)
         {
             MetaDataUpdateClass updateClass = new MetaDataUpdateClass();
             updateClass.LoadObjectTablesToTenantZero(context);
@@ -1167,6 +1197,30 @@ namespace WebFreight.Web.MetaDataUpdate
             //updateClass.loadScreens();
         }
 
+        private static void UpdateWorkflow(IWebFreightContext context, bool runPostDeleteProcedure)
+        {
+            WorkflowUpdateClass workflowUpdateClass = new WorkflowUpdateClass();
+            if (runOldUpdateCode)
+                workflowUpdateClass.LoadObjectsTenantZero(context);
+            else
+                workflowUpdateClass.LoadObjectTablesMetadata(context, runPostDeleteProcedure);
+
+            performanceTimerLogger.LogMessage("Generated" + ",WorkflowUpdateClass");
+        }
+
+        private static void UpdateDashboardModule(IWebFreightContext context, bool runPostDeleteProcedure)
+        {
+            DashboardModuleUpdateClass workflowUpdateClass = new DashboardModuleUpdateClass();
+            if (runOldUpdateCode)
+                workflowUpdateClass.LoadObjectsTenantZero(context);
+            else
+                workflowUpdateClass.LoadObjectTablesMetadata(context, runPostDeleteProcedure);
+
+            performanceTimerLogger.LogMessage("Generated" + ",DashboardUpdateClass");
+            performanceTimerLogger.LogMessage("Updateing Analytic Tables");
+            new DashboardAnalyticTablesUpdateClass(context).Update();
+        }
+
         private static void UpdateTimeManagementModule(IWebFreightContext context, bool runPostDeleteProcedure)
         {
             TimeManagementUpdateClass modelUpdateClass = new TimeManagementUpdateClass();
@@ -1200,6 +1254,18 @@ namespace WebFreight.Web.MetaDataUpdate
 
             //updateClass.LoadOtherFields(context);
             //performanceTimerLogger.LogMessage("Manual" + ",WarehouseUpdate.LoadOtherFields");
+        }
+
+        private static void UpdateShipmentOrderModule(IWebFreightContext context, bool runPostDeleteProcedure)
+        {
+            ShipmentOrderModuleUpdateClass modelUpdateClass = new ShipmentOrderModuleUpdateClass();
+            if (runOldUpdateCode)
+                modelUpdateClass.LoadObjectsTenantZero(context);
+            else
+                modelUpdateClass.LoadObjectTablesMetadata(context, runPostDeleteProcedure);
+
+            performanceTimerLogger.LogMessage("Generated" + ",ShipmentOrderModuleUpdateClass");
+
         }
 
         private static void UpdateSocialModule(IWebFreightContext context, bool runPostDeleteProcedure)
@@ -1528,6 +1594,8 @@ namespace WebFreight.Web.MetaDataUpdate
                 updateClassHashString = TimeManagementUpdateClass.GetAllTablesHashStrings().ContainsKey(table.Name) ? TimeManagementUpdateClass.GetAllTablesHashStrings()[table.Name] : null;
             if (string.IsNullOrEmpty(updateClassHashString))
                 updateClassHashString = WarehouseLibUpdateClass.GetAllTablesHashStrings().ContainsKey(table.Name) ? WarehouseLibUpdateClass.GetAllTablesHashStrings()[table.Name] : null;
+            if (string.IsNullOrEmpty(updateClassHashString))
+                updateClassHashString = ShipmentOrderModuleUpdateClass.GetAllTablesHashStrings().ContainsKey(table.Name) ? ShipmentOrderModuleUpdateClass.GetAllTablesHashStrings()[table.Name] : null;
             //if (string.IsNullOrEmpty(updateClassHashString))
             //updateClassHashString = CustomsUpdateClass.GetAllTablesHashStrings().ContainsKey(table.Name) ? CustomsUpdateClass.GetAllTablesHashStrings()[table.Name] : null;
 
@@ -2193,6 +2261,12 @@ namespace WebFreight.Web.MetaDataUpdate
             string countryCode = GetCurrentTenantCountryCode(tenant);
             bool sameCountry = false;
 
+            DocumentTypeTemplateQuery documentTypeTemplateQuery = new DocumentTypeTemplateQuery(documentTypeTemplateRepository);
+            List<DocumentTypeTemplatePM> allSystemTenantZeroDocumentTypeTemplatePMs = documentTypeTemplateQuery.GetDocumentTypeTemplatePMsByTenant(0).Where(t => t.IsSystem).ToList();
+            List<DocumentTypeTemplatePM> allSystemCurrentTenantDocumentTypeTemplatePMs = documentTypeTemplateQuery.GetDocumentTypeTemplatePMsByTenant(tenant).Where(t => t.IsSystem).ToList();
+
+            CopyDocumentTypeTemplateService copyDocumentTypeTemplateService = new CopyDocumentTypeTemplateService(new CopyDocumentTypeTemplateArgs { Tenant = tenant, AllTenantZeroDocumentTypes = tenantZeroDocumentTypes, AllSystemTenantZeroDocumentTypeTemplatePMs = allSystemTenantZeroDocumentTypeTemplatePMs, AllSystemCurrentTenantDocumentTypeTemplatePMs = allSystemCurrentTenantDocumentTypeTemplatePMs, CountryCode = countryCode });
+
             foreach (DocumentTypePM docType in tenantZeroDocumentTypes.Values)
             {
                 AutomationHelper automationHelper = new AutomationHelper();
@@ -2200,7 +2274,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 sameCountry = docType.CountryCode == countryCode;
                 if (((!docType.InActive && docType.IsCopiedAtSignup && docType.IsEnabledForCustomers) || automationDocumentTypeIds.Contains(docType.Id)) && (string.IsNullOrEmpty(docType.CountryCode?.Trim()) || sameCountry))
                 {
-                    DocumentTypeTemplateQuery documentTypeTemplateQuery = new DocumentTypeTemplateQuery(documentTypeTemplateRepository);
+                    
 
 
                     //if (!currentTenantDocumentTypes.Keys.Contains(docType.Code + docType.ObjectTableId))
@@ -2210,150 +2284,153 @@ namespace WebFreight.Web.MetaDataUpdate
                                             select a).FirstOrDefault();
 
                     if (documentType == null)
+                    {
+                        List<DocumentTypeCustomField> zeroCustomFields = tenantZeroCustomFields.Where(d => d.DocumentTypeId == docType.Id).ToList();
+                        DocumentType newDocType = new DocumentType()
                         {
-                            List<DocumentTypeCustomField> zeroCustomFields = tenantZeroCustomFields.Where(d => d.DocumentTypeId == docType.Id).ToList();
-                            DocumentType newDocType = new DocumentType()
-                            {
-                                Id = IdCounter.GetNumber("DocumentType", tenant).ToString(),
-                                Code = docType.Code.Trim(),
-                                Name = docType.Name,
-                                IsOcean = docType.IsOcean,
-                                IsAir = docType.IsAir,
-                                IsInland = docType.IsInland,
-                                IsDocIn = docType.IsDocIn,
-                                IsDocOut = false,
-                                FollowUpTypeId = docType.FollowUpTypeId,
-                                Tenant = tenant,
-                                ObjectTableId = docType.ObjectTableId,
-                                SearchFields = docType.SearchFields,
-                                IsMaster = docType.IsMaster,
-                                IsDirect = docType.IsDirect,
-                                IsHouse = docType.IsHouse,
-                                TemplateFormatCode = docType.TemplateFormatCode,
-                                IsCustomerView = docType.IsCustomerView,
-                                IsAgentView = docType.IsAgentView,
-                                DocumentTypeCategoryCode = docType.DocumentTypeCategoryCode,
-                                CountryCode = docType.CountryCode,
-                                Subject = docType.Subject,
-                                IsEnabledForCustomers = true,
-                                Notes = docType.Notes,
-                                DocumentTypeDefaultHTMLTemplateId = docType.DocumentTypeDefaultHTMLTemplateId,
-                                DocumentTypeDefaultReportTemplateId = docType.DocumentTypeDefaultReportTemplateId,
-                                IsSystemAdditionalPrintingFields = docType.IsSystemAdditionalPrintingFields,
-                                PrintingFieldsScreenCode = docType.PrintingFieldsScreenCode,
-                                OrderBy = docType.OrderBy,
-                                OnPrintPopulateDateFieldName = docType.OnPrintPopulateDateFieldName ,
-                                OnSendPopulateDateFieldName = docType.OnSendPopulateDateFieldName,
-                                OnUploadPopulateDateFieldName = docType.OnUploadPopulateDateFieldName,
-                            };
-                            documentTypeRepository.Add(newDocType);
+                            Id = IdCounter.GetNumber("DocumentType", tenant).ToString(),
+                            Code = docType.Code.Trim(),
+                            Name = docType.Name,
+                            IsOcean = docType.IsOcean,
+                            IsAir = docType.IsAir,
+                            IsInland = docType.IsInland,
+                            IsDocIn = docType.IsDocIn,
+                            IsDocOut = false,
+                            FollowUpTypeId = docType.FollowUpTypeId,
+                            Tenant = tenant,
+                            ObjectTableId = docType.ObjectTableId,
+                            SearchFields = docType.SearchFields,
+                            IsMaster = docType.IsMaster,
+                            IsDirect = docType.IsDirect,
+                            IsHouse = docType.IsHouse,
+                            TemplateFormatCode = docType.TemplateFormatCode,
+                            IsCustomerView = docType.IsCustomerView,
+                            IsAgentView = docType.IsAgentView,
+                            DocumentTypeCategoryCode = docType.DocumentTypeCategoryCode,
+                            CountryCode = docType.CountryCode,
+                            Subject = docType.Subject,
+                            IsEnabledForCustomers = true,
+                            Notes = docType.Notes,
+                            DocumentTypeDefaultHTMLTemplateId = docType.DocumentTypeDefaultHTMLTemplateId,
+                            DocumentTypeDefaultReportTemplateId = docType.DocumentTypeDefaultReportTemplateId,
+                            IsSystemAdditionalPrintingFields = docType.IsSystemAdditionalPrintingFields,
+                            PrintingFieldsScreenCode = docType.PrintingFieldsScreenCode,
+                            OrderBy = docType.OrderBy,
+                            OnPrintPopulateDateFieldName = docType.OnPrintPopulateDateFieldName ,
+                            OnSendPopulateDateFieldName = docType.OnSendPopulateDateFieldName,
+                            OnUploadPopulateDateFieldName = docType.OnUploadPopulateDateFieldName,
+                        };
+                        documentTypeRepository.Add(newDocType);
 
-                            foreach (DocumentTypeCopyPM copy in docType.DocumentTypeCopies)
+                        foreach (DocumentTypeCopyPM copy in docType.DocumentTypeCopies)
+                        {
+                            if (!copy.InActive)
                             {
-                                if (!copy.InActive)
+                                DocumentTypeCopy newCopy = new DocumentTypeCopy()
                                 {
-                                    DocumentTypeCopy newCopy = new DocumentTypeCopy()
-                                    {
-                                        Id = IdCounter.GetNumber("DocumentTypeCopy", tenant).ToString(),
-                                        Code = copy.Code,
-                                        Name = copy.Name,
-                                        Tenant = tenant,
-                                        IndexOrder = copy.IndexOrder,
-                                        IsSelectedByDefault = copy.IsSelectedByDefault,
-                                        DocumentTypeId = newDocType.Id,
-                                    };
-                                    documentTypeCopyRepository.Add(newCopy);
-                                }
-                            }
-                            foreach (DocumentTypeCustomField customField in zeroCustomFields)
-                            {
-                                DocumentTypeCustomField newCustomField = new DocumentTypeCustomField()
-                                {
-                                    DocumentTypeId = newDocType.Id,
-                                    DefaultValue = customField.DefaultValue,
-                                    FieldCode = customField.FieldCode,
-                                    FieldDataTypeCode = customField.FieldDataTypeCode,
-                                    Id = IdCounter.GetNumber("DocumentTypeCustomField", tenant).ToString(),
-                                    InActive = customField.InActive,
-                                    IndexOrder = customField.IndexOrder,
-                                    IsRequired = customField.IsRequired,
-                                    MultiLine = customField.MultiLine,
-                                    Name = customField.Name,
+                                    Id = IdCounter.GetNumber("DocumentTypeCopy", tenant).ToString(),
+                                    Code = copy.Code,
+                                    Name = copy.Name,
                                     Tenant = tenant,
+                                    IndexOrder = copy.IndexOrder,
+                                    IsSelectedByDefault = copy.IsSelectedByDefault,
+                                    DocumentTypeId = newDocType.Id,
                                 };
-                                documentTypeCustomFieldRepository.Add(newCustomField);
+                                documentTypeCopyRepository.Add(newCopy);
                             }
-
-                            List<DocumentTypeTemplatePM> documentTypeTemplateList = documentTypeTemplateQuery.GetDocumentTypeTemplatesByDocumentTypeId(docType.Id, 0).ToList();
-                            foreach (DocumentTypeTemplatePM a in documentTypeTemplateList)
-                            {
-                                DocumentTypePM documenttype = tenantZeroDocumentTypes.Values.Where(d => d.Id == a.DocumentTypeId && d.Tenant == 0).FirstOrDefault();
-
-                                bool isDefault = (from doc in tenantZeroDocumentTypes.Values
-                                                  where doc.DocumentTypeDefaultHTMLTemplateId == a.Id || doc.DocumentTypeDefaultReportTemplateId == a.Id
-                                                  select doc).Any();
-
-
-                                if (((a.IsEnabledForCustomers && a.IsCopiedAtSignup) || automationDocumentTypeIds.Contains(docType.Id)) && (sameCountry || (string.IsNullOrEmpty(a.CountryCode?.Trim()) || a.CountryCode == countryCode)))
-                                {
-                                    DocumentTypeTemplate newtemplate = new DocumentTypeTemplate()
-                                    {
-                                        Id = IdCounter.GetNumber("DocumentTypeTemplate", tenant).ToString(),
-                                        Tenant = tenant,
-                                        TemplateBody = a.TemplateBody,
-                                        TemplateType = a.TemplateType,
-                                        HorizontalShift = a.HorizontalShift,
-                                        InActive = a.InActive,
-                                        Description = a.Description,
-                                        DocumentTypeId = newDocType.Id,
-                                        EditorTool = a.EditorTool,
-                                        CountryCode = a.CountryCode,
-                                        Subject = a.CountryCode,
-                                        Language = a.Language,
-                                        OriginalTemplateId = a.Id,
-                                        VerticalShift = a.VerticalShift,
-                                        InternalRemarks = a.InternalRemarks,
-                                        IsEnabledForCustomers = true,
-                                        TemplateBodyHtml = a.TemplateBodyHtml,
-                                        TemplateFooterHtml = a.TemplateFooterHtml,
-                                        TemplateHeaderHtml = a.TemplateHeaderHtml,
-                                       TemplateFooterHeight = a.TemplateFooterHeight,
-                                       TemplateHeaderHeight = a.TemplateHeaderHeight,
-                                       CC  = a.CC,
-                                       From = a.From,
-                                       ReplyTo = a.ReplyTo,
-                                       To =  a.To,
-
-
-                                    };
-                                    if (isDefault)
-                                    {
-                                        if (newtemplate.TemplateType == "P")
-                                        {
-                                            newDocType.DocumentTypeDefaultReportTemplateId = newtemplate.Id;
-                                        }
-                                        else
-                                        {
-                                            newDocType.DocumentTypeDefaultHTMLTemplateId = newtemplate.Id;
-                                        }
-                                    }
-                                    newDocType.IsDocOut = documenttype.IsDocOut;
-
-                                    documentTypeTemplateRepository.Add(newtemplate);
-
-
-                                }
-                            }
-
                         }
-                        else
+                        foreach (DocumentTypeCustomField customField in zeroCustomFields)
                         {
-
-                            documentType.OnPrintPopulateDateFieldName = docType.OnPrintPopulateDateFieldName;
-                            documentType.OnSendPopulateDateFieldName = docType.OnSendPopulateDateFieldName;
-                            documentType.OnUploadPopulateDateFieldName = docType.OnUploadPopulateDateFieldName;
-                            documentTypeRepository.Update(documentType);
+                            DocumentTypeCustomField newCustomField = new DocumentTypeCustomField()
+                            {
+                                DocumentTypeId = newDocType.Id,
+                                DefaultValue = customField.DefaultValue,
+                                FieldCode = customField.FieldCode,
+                                FieldDataTypeCode = customField.FieldDataTypeCode,
+                                Id = IdCounter.GetNumber("DocumentTypeCustomField", tenant).ToString(),
+                                InActive = customField.InActive,
+                                IndexOrder = customField.IndexOrder,
+                                IsRequired = customField.IsRequired,
+                                MultiLine = customField.MultiLine,
+                                Name = customField.Name,
+                                Tenant = tenant,
+                            };
+                            documentTypeCustomFieldRepository.Add(newCustomField);
                         }
+
+                        List<DocumentTypeTemplatePM> documentTypeTemplateList = documentTypeTemplateQuery.GetDocumentTypeTemplatesByDocumentTypeId(docType.Id, 0).ToList();
+                        foreach (DocumentTypeTemplatePM a in documentTypeTemplateList)
+                        {
+                            DocumentTypePM documenttype = tenantZeroDocumentTypes.Values.Where(d => d.Id == a.DocumentTypeId && d.Tenant == 0).FirstOrDefault();
+
+                            bool isDefault = (from doc in tenantZeroDocumentTypes.Values
+                                              where doc.DocumentTypeDefaultHTMLTemplateId == a.Id || doc.DocumentTypeDefaultReportTemplateId == a.Id
+                                              select doc).Any();
+
+
+                            if ((((a.IsEnabledForCustomers && a.IsCopiedAtSignup) || a.IsSystem) || automationDocumentTypeIds.Contains(docType.Id)) && (sameCountry || (string.IsNullOrEmpty(a.CountryCode?.Trim()) || a.CountryCode == countryCode)))
+                            {
+                                DocumentTypeTemplate newtemplate = new DocumentTypeTemplate()
+                                {
+                                    Id = IdCounter.GetNumber("DocumentTypeTemplate", tenant).ToString(),
+                                    Tenant = tenant,
+                                    TemplateBody = a.TemplateBody,
+                                    TemplateType = a.TemplateType,
+                                    HorizontalShift = a.HorizontalShift,
+                                    InActive = a.InActive,
+                                    Description = a.Description,
+                                    DocumentTypeId = newDocType.Id,
+                                    EditorTool = a.EditorTool,
+                                    CountryCode = a.CountryCode,
+                                    Subject = a.CountryCode,
+                                    Language = a.Language,
+                                    OriginalTemplateId = a.Id,
+                                    VerticalShift = a.VerticalShift,
+                                    InternalRemarks = a.InternalRemarks,
+                                    IsEnabledForCustomers = true,
+                                    TemplateBodyHtml = a.TemplateBodyHtml,
+                                    TemplateFooterHtml = a.TemplateFooterHtml,
+                                    TemplateHeaderHtml = a.TemplateHeaderHtml,
+                                    TemplateFooterHeight = a.TemplateFooterHeight,
+                                    TemplateHeaderHeight = a.TemplateHeaderHeight,
+                                    CC  = a.CC,
+                                    From = a.From,
+                                    ReplyTo = a.ReplyTo,
+                                    To =  a.To,
+                                    LastUpdateDate = a.LastUpdateDate,
+                                    IsSystem = a.IsSystem,
+
+                                };
+                                if (isDefault)
+                                {
+                                    if (newtemplate.TemplateType == "P")
+                                    {
+                                        newDocType.DocumentTypeDefaultReportTemplateId = newtemplate.Id;
+                                    }
+                                    else
+                                    {
+                                        newDocType.DocumentTypeDefaultHTMLTemplateId = newtemplate.Id;
+                                    }
+                                }
+                                newDocType.IsDocOut = documenttype.IsDocOut;
+
+                                documentTypeTemplateRepository.Add(newtemplate);
+
+
+                            }
+                        }
+
+                    }
+                    else
+                    {
+
+                        documentType.OnPrintPopulateDateFieldName = docType.OnPrintPopulateDateFieldName;
+                        documentType.OnSendPopulateDateFieldName = docType.OnSendPopulateDateFieldName;
+                        documentType.OnUploadPopulateDateFieldName = docType.OnUploadPopulateDateFieldName;
+                        documentTypeRepository.Update(documentType);
+
+                        copyDocumentTypeTemplateService.Execute(documentType, docType);
+                    }
                     //}
 
                 }
@@ -2548,17 +2625,17 @@ namespace WebFreight.Web.MetaDataUpdate
                         continue;
                 }
 
-                if (currentTenantEntityStatus.Keys.Contains(entityStatus.Code))
+                if (currentTenantEntityStatus.Keys.Contains(entityStatus.Code + entityStatus.Id))
                 {
-                    EntityStatus updatedEntityStatus = currentTenantEntityStatus[entityStatus.Code];
-                    updatedEntityStatus.Name = entityStatus.Name;
-                    updatedEntityStatus.DisplayName = !string.IsNullOrEmpty(entityStatus.DisplayName) ? entityStatus.DisplayName : entityStatus.Name;  
-                    updatedEntityStatus.ObjectTableId = entityStatus.ObjectTableId;
-                    updatedEntityStatus.Tenant = tenant;
-                    updatedEntityStatus.StatusWeight = entityStatus.StatusWeight;
-                    updatedEntityStatus.InActive = entityStatus.InActive;
-                    updatedEntityStatus.SearchFields = entityStatus.SearchFields;
-                    entityStatusRepository.Update(updatedEntityStatus);
+                    //EntityStatus updatedEntityStatus = currentTenantEntityStatus[entityStatus.Code];
+                    //updatedEntityStatus.Name = entityStatus.Name;
+                    //updatedEntityStatus.DisplayName = !string.IsNullOrEmpty(entityStatus.DisplayName) ? entityStatus.DisplayName : entityStatus.Name;  
+                    //updatedEntityStatus.ObjectTableId = entityStatus.ObjectTableId;
+                    //updatedEntityStatus.Tenant = tenant;
+                    //updatedEntityStatus.StatusWeight = entityStatus.StatusWeight;
+                    //updatedEntityStatus.InActive = entityStatus.InActive;
+                    //updatedEntityStatus.SearchFields = entityStatus.SearchFields;
+                    //entityStatusRepository.Update(updatedEntityStatus);
                 }
                 else
                 {
@@ -2599,7 +2676,7 @@ namespace WebFreight.Web.MetaDataUpdate
 
                 if (tenantZeroEntityStatu != null)
                 {
-                    currentTenantEntityStatu = currentTenantEntityStatus[tenantZeroEntityStatu.Code];
+                    currentTenantEntityStatu = currentTenantEntityStatus[tenantZeroEntityStatu.Code+ tenantZeroEntityStatu.Id];
                 }
 
                
@@ -2608,24 +2685,24 @@ namespace WebFreight.Web.MetaDataUpdate
                     EventType updatedEventType = currentTenantEventTypes[eventType.Code + eventType.ObjectTableId];
                     if((updatedEventType.UpdateDate != eventType.UpdateDate))
                     {
-                        updatedEventType.EnglishName = eventType.EnglishName;
-                        updatedEventType.AddedManually = eventType.AddedManually;
-                        if (!updatedEventType.IsStatusNotModified)
-                            updatedEventType.EntityStatusId = currentTenantEntityStatu != null ? currentTenantEntityStatu.Id : null;
-                        updatedEventType.FollowUpEnglishName = eventType.FollowUpEnglishName;
-                        updatedEventType.FollowUpLocalName = eventType.FollowUpLocalName;
-                        updatedEventType.InActive = eventType.InActive;
-                        updatedEventType.IsFollowUp = eventType.IsFollowUp;
-                        updatedEventType.IsManualEntry = eventType.IsManualEntry;
-                        updatedEventType.LocalName = eventType.LocalName;
-                        updatedEventType.ManualActivatedFollowUp = eventType.ManualActivatedFollowUp;
-                        updatedEventType.ObjectTableId = eventType.ObjectTableId;
-                        updatedEventType.ShortView = eventType.ShortView;
-                        updatedEventType.Tenant = tenant;
-                        updatedEventType.SearchFields = eventType.SearchFields;
-                        updatedEventType.EventTypeCategoryCode = eventType.EventTypeCategoryCode;
-                        updatedEventType.AllowedInAutomation = eventType.AllowedInAutomation;
-                        updatedEventType.UpdateDate = eventType.UpdateDate;
+                        //updatedEventType.EnglishName = eventType.EnglishName;
+                        //updatedEventType.AddedManually = eventType.AddedManually;
+                        //if (!updatedEventType.IsStatusNotModified)
+                        //    updatedEventType.EntityStatusId = currentTenantEntityStatu != null ? currentTenantEntityStatu.Id : null;
+                        //updatedEventType.FollowUpEnglishName = eventType.FollowUpEnglishName;
+                        //updatedEventType.FollowUpLocalName = eventType.FollowUpLocalName;
+                        //updatedEventType.InActive = eventType.InActive;
+                        //updatedEventType.IsFollowUp = eventType.IsFollowUp;
+                        //updatedEventType.IsManualEntry = eventType.IsManualEntry;
+                        //updatedEventType.LocalName = eventType.LocalName;
+                        //updatedEventType.ManualActivatedFollowUp = eventType.ManualActivatedFollowUp;
+                        //updatedEventType.ObjectTableId = eventType.ObjectTableId;
+                        //updatedEventType.ShortView = eventType.ShortView;
+                        //updatedEventType.Tenant = tenant;
+                        //updatedEventType.SearchFields = eventType.SearchFields;
+                        //updatedEventType.EventTypeCategoryCode = eventType.EventTypeCategoryCode;
+                        //updatedEventType.AllowedInAutomation = eventType.AllowedInAutomation;
+                        updatedEventType.EventTrigger = eventType.EventTrigger;
                         eventTypesRepository.Update(updatedEventType);
                     }
                 }

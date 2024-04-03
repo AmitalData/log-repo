@@ -28,6 +28,7 @@ export function AddNewCustomer(customerDetails: CustomerDetails) {
     cy.Click(CommonSelectors.NewCustomer, null);
     cy.FillLogTextBox(CommonSelectors.CustomerCompanyName, customerDetails.CompanyName);
     cy.FillLogTextBox(CommonSelectors.CustomerPhoneNumber,customerDetails.PhoneNumber)
+    cy.FillLogTextBox(CommonSelectors.CustomerVatNumber,customerDetails.VatNumber)
     cy.FillLogTextBox(CommonSelectors.CustomerFaxNumber,customerDetails.FaxNumber)
     cy.FillLogTextBox(CommonSelectors.CustomerCity, customerDetails.City);
     cy.FillLogLov(CommonSelectors.CustomerCountry, customerDetails.Country, true);

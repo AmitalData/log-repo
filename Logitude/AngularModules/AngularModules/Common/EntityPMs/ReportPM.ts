@@ -20,7 +20,7 @@ export class ReportPM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-          this.UIProperties = new UIProperties(this); 
+		            this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -133,6 +133,16 @@ export class ReportPM {
     private disablePreview: boolean;
     public get DisablePreview() { return this.disablePreview; }
     public set DisablePreview(newValue: boolean) { if (this.disablePreview != newValue) { this.disablePreview = newValue; this.MarkAsDirty("DisablePreview"); } }
+       
+	 
+    private defaultExcelTemplateId: string;
+    public get DefaultExcelTemplateId() { return this.defaultExcelTemplateId; }
+    public set DefaultExcelTemplateId(newValue: string) { if (this.defaultExcelTemplateId != newValue) { this.defaultExcelTemplateId = newValue; this.MarkAsDirty("DefaultExcelTemplateId"); } }
+       
+	 
+    private isExcelReportAllowed: boolean;
+    public get IsExcelReportAllowed() { return this.isExcelReportAllowed; }
+    public set IsExcelReportAllowed(newValue: boolean) { if (this.isExcelReportAllowed != newValue) { this.isExcelReportAllowed = newValue; this.MarkAsDirty("IsExcelReportAllowed"); } }
        
 	 
 

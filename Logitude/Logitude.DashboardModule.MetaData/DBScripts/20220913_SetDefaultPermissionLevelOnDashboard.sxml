@@ -1,0 +1,15 @@
+﻿<Script DBType="Main" Module="Dashboard">
+  <Sql Version="2">
+    <![CDATA[
+     
+     if not exists (select Code from PermissionLevels where Code = 'ONM')
+	begin
+		insert into PermissionLevels(Code, Name, SearchFields)
+		values ('ONM', 'Only Me', 'ONM,Only Me')
+	end
+     
+      update Dashboards set PermissionLevelCode = 'ONM'
+
+    ]]>       
+  </Sql>
+</Script>

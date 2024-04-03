@@ -1,0 +1,23 @@
+@smoke @CloudSmokeTestingTag
+Feature: AP Payment
+    The user creates new AP Payment and approve the AP Payment
+
+    Scenario: Create new AP Payment
+        Given the user logged in and navigates to Full Accounting workspace
+        And an AP Payment with the following details
+            | Vendor        | קטרינג כהן ובניו     |
+            | PaymentMethod | Cash       |
+            | PaymentAmount | 100        |
+            | RegisterDate  | 02/09/2021 |
+            | BranchId      | Main Office            | 
+             
+        When save the AP Payment
+        Then the AP Payment should save successfully
+
+    Scenario: Approve the AP Payment
+        When approve the AP Payment
+        Then the AP Payment should approve successfully
+
+    Scenario: Void AP Payment
+        When void AP Payment
+        Then the AP Payment should void successfully

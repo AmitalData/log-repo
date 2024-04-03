@@ -11,7 +11,7 @@ import { SettingsWorkspaceComponent } from './Components/Workspaces/SettingsWork
 import { ContainerDefaultsComponent } from './Components/Workspaces/ContainerDefaultsComponent';
 import { NewTariffProductsComponent } from './Components/NewEntity/NewTariffProductsComponent';
 import { TariffShortTitleComponent } from './Components/ShortTitles/TariffShortTitleComponent';
-
+import { SaleWorkspaceComponent } from './Components/Workspaces/SaleWorkspaceComponent';
 // Tabs
 import { TariffDetailsTabComponent } from './Components/EditTabs/Tariff/TariffDetailsTabComponent';
 import { VersionTabComponent } from './Components/EditTabs/Tariff/VersionTabComponent';
@@ -29,11 +29,14 @@ import { OceanFCLSurchargeVersionTabComponent } from './Components/EditTabs/Tari
 import { AddTariffContainersComponent } from './Components/NewEntity/AddTariffContainersComponent';
 import { ChooseCountryComponent } from './Components/EditTabs/Tariff/ChooseCountryComponent';
 import { UploadedExcelsComponent } from './Components/EditTabs/Tariff/UploadedExcelsComponent';
+import { CustomChargesVersionTabComponent } from './Components/EditTabs/Tariff/CustomChargesVersionTabComponent';
+import { LocalChargesVersionTabComponent } from './Components/EditTabs/Tariff/LocalChargesVersionTabComponent';
 
 export const Components =
     [
         ContainerDefaultsComponent,
         CostWorkspaceComponent,
+        SaleWorkspaceComponent,
         TariffSettingComponent,
         NewAirFreightCostComponent,
         FieldTemplateComponent,
@@ -61,6 +64,8 @@ export const Components =
         TariffShortTitleComponent,
         ChooseCountryComponent,
         UploadedExcelsComponent,
+        CustomChargesVersionTabComponent,
+        LocalChargesVersionTabComponent,
     ];
 
 export const ControlsComponents =
@@ -101,8 +106,10 @@ export class ModuleDeclarations {
             case "NewTariffProductsComponent": { myResult = NewTariffProductsComponent; break; }
             case "TariffShortTitleComponent": { myResult = TariffShortTitleComponent; break; }
             case "ChooseCountryComponent": { myResult = ChooseCountryComponent; break; }
-            case "UploadedExcelsComponent": { myResult = UploadedExcelsComponent; break;}
-        
+            case "UploadedExcelsComponent": { myResult = UploadedExcelsComponent; break; }
+            case "CustomChargesVersionTabComponent": { myResult = CustomChargesVersionTabComponent; break; }
+            case "SaleWorkspaceComponent": { myResult = SaleWorkspaceComponent; break; }
+            case "LocalChargesVersionTabComponent": { myResult = LocalChargesVersionTabComponent; break; }
         }
 
         return myResult;

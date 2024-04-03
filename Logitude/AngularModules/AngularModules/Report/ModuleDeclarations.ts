@@ -57,6 +57,9 @@ import { DetailedShipmentChargesAnalysisComponent } from './Components/FiltersCo
 import { VendorChargesAnalysisFilterComponent } from './Components/FiltersComponent/Accounting/VendorChargesAnalysisFilterComponent';
 import { AutomationTestReportFilterComponent } from './Components/FilterReportComponent/AutomationTestReportFilterComponent';
 import { ExternalReconciliationLinesReportFilterControl } from './Components/FilterReportComponent/ExternalReconciliationLinesReportFilterControl';
+import { PerVendorReportFilterComponent } from './Components/FiltersComponent/Accounting/PerVendorReportFilterComponent';
+import { ARinvoiceSequencesReportFilterComponent } from './Components/FiltersComponent/Accounting/ARinvoiceSequencesReportFilterComponent';
+import { ControlInvoiceLinesReportFilterComponent } from './Components/FiltersComponent/Accounting/ControlInvoiceLinesReportFilterComponent';
 
 // Quotes
 import {QuotesFilterComponent} from './Components/FilterReportComponent/QuotesFilterComponent';
@@ -91,6 +94,9 @@ import { ShipmentDetailsFilterComponent } from './Components/FilterReportCompone
 //VDK Templates
 import { VDKFilterComponent } from './Components/FilterReportComponent/VDKFilterComponent';
 import { UserDefinedReportFilterControl } from './Components/FilterReportComponent/UserDefinedReportFilterControl';
+import { LogitudeCRMReportFilterComponent } from './Components/FiltersComponent/CRM/LogitudeCRMReportFilterComponent';
+import { ExcelReportTemplateComponent } from './Components/ExcelReportTemplateComponent';
+import { SpotRateQuoteReportFilterComponent } from './Components/FiltersComponent/Quote/SpotRate/SpotRateQuoteReportFilterComponent';
 
 export const Components =
     [
@@ -168,7 +174,14 @@ export const Components =
         RacingQuotesComponent,
         BluesnapPaymentsReportFilterComponent,
         ExternalReconciliationLinesReportFilterControl,
-        UserDefinedReportFilterControl
+        UserDefinedReportFilterControl,
+        LogitudeCRMReportFilterComponent,
+        ExcelReportTemplateComponent,
+        PerVendorReportFilterComponent,
+        ARinvoiceSequencesReportFilterComponent,
+        SpotRateQuoteReportFilterComponent,
+        ControlInvoiceLinesReportFilterComponent
+
     ];
 
 export class ModuleDeclarations {
@@ -252,6 +265,12 @@ export class ModuleDeclarations {
             case "BluesnapPaymentsReportFilterComponent": { myResult = BluesnapPaymentsReportFilterComponent; break; }
             case "ExternalReconciliationLinesReportFilterControl": { myResult = ExternalReconciliationLinesReportFilterControl; break; }
             case "UserDefinedReportFilterControl": { myResult = UserDefinedReportFilterControl; break; }
+            case "LogitudeCRMReportFilterComponent": { myResult = LogitudeCRMReportFilterComponent; break; }
+            case "ExcelReportTemplateComponent": { myResult = ExcelReportTemplateComponent; break; }
+            case "PerVendorReportFilterComponent": { myResult = PerVendorReportFilterComponent; break; }
+            case "ARinvoiceSequencesReportFilterComponent": { myResult = ARinvoiceSequencesReportFilterComponent; break; }
+            case "SpotRateQuoteReportFilterComponent": { myResult = SpotRateQuoteReportFilterComponent; break; }
+            case "ControlInvoiceLinesReportFilterComponent": { myResult = ControlInvoiceLinesReportFilterComponent; break; }
 
         }
 

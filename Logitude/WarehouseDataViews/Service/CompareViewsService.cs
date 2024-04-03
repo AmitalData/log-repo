@@ -184,7 +184,7 @@ namespace WarehouseDataViews.Service
             var result = new List<WarehouseView>();
             if (!string.IsNullOrEmpty(privateDBConnectionString))
             {
-                var oldViews = GetDataTableFromSql(privateDBConnectionString, "select v.name as view_name,   m.definition from sys.views v join sys.sql_modules m  on m.object_id = v.object_id where v.name !='database_firewall_rules'");
+                var oldViews = GetDataTableFromSql(privateDBConnectionString, "select v.name as view_name,   m.definition from sys.views v join sys.sql_modules m  on m.object_id = v.object_id where v.name !='database_firewall_rules' and v.name !='ipv6_database_firewall_rules' ");
                 foreach (DataRow row in oldViews.AsEnumerable())
                 {
                     string viewName = row["view_name"] != null ? row["view_name"].ToString() : "";

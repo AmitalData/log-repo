@@ -47,9 +47,11 @@ namespace WebFreight.Web.Helpers
         public bool ReturnToOriginValue { get; set; }
         public string ControlType { get; set; }
         public bool IsEditField { get; set; }
+        public double OriginalFontSize { get; set; }
+        public double NewFontSize { get; set; }
 
-
-
+        public bool IsFontSizeChange { get; set; }
+        public bool IsTextValueChange { get; set; }
 
     }
 }

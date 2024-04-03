@@ -1,0 +1,14 @@
+﻿<Script DBType="Main" Module="Common">
+  <Sql Version="2">
+    <![CDATA[
+
+     
+
+--update Tenants set AutomaticallyClosingField ='EMPTR' where AutomaticallyCloseDays is not null 
+
+
+
+
+    ]]>
+  </Sql>
+</Script>

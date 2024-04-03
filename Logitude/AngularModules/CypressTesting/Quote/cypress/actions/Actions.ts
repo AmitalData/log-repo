@@ -31,6 +31,19 @@ export function OpenQuote(QuoteNumber: string) {
 }
 //#endregion
 
+//#region Edit details
+export function EditDetailsTab(transitTime) {
+    OpenDetailsTab()
+    cy.FillLogTextBox(QuoteSelectors.TransitTime, transitTime)
+}
+export function OpenDetailsTab(){
+    cy.Click(QuoteSelectors.DetailsTab, null);
+}
+export function AssertTransitTimeDisabled(){
+cy.get (QuoteSelectors.TextBoxTransitTime).should('have.class', 'InputDiv InputDivDisabled')
+}
+//#endregion
+
 //#region Create Quote
 export function FillQuoteFields(quoteDetails: QuoteDetails) {
     cy.Click(QuoteSelectors.NewQuote, null);
@@ -40,7 +53,7 @@ export function FillQuoteFields(quoteDetails: QuoteDetails) {
     FillMainCarriagePorts(quoteDetails);
 }
 
-function FillMainFields(quoteDetails: QuoteDetails) {
+export function FillMainFields(quoteDetails: QuoteDetails) {
     FillDirection(quoteDetails.Direction);
     FillTransportMode(quoteDetails.TransportMode);
     FillShipmentType(quoteDetails.ShipmentType, quoteDetails.TransportMode);
@@ -72,11 +85,11 @@ function FillShipmentType(ShipmentType: string, TransportMode: string) {
 function FillCustomerType(direction: string) {
     if (Conditions.IsImport(direction)) {
         //cy.FillLogLov(QuoteSelectors.QuoteCustomerType, "Consignee", true)
-        cy.SelectDropDownListItem(QuoteSelectors.LogLovQuoteCustomerType,"Consignee")
+        cy.SelectDropDownListItem(QuoteSelectors.LogLovQuoteCustomerType, "Consignee")
 
     } else {
-       // cy.FillLogLov(QuoteSelectors.QuoteCustomerType, "Shipper", true)
-       cy.SelectDropDownListItem(QuoteSelectors.LogLovQuoteCustomerType,"Shipper")
+        // cy.FillLogLov(QuoteSelectors.QuoteCustomerType, "Shipper", true)
+        cy.SelectDropDownListItem(QuoteSelectors.LogLovQuoteCustomerType, "Shipper")
 
     }
 }
@@ -94,7 +107,7 @@ function FillShipperAndConsignee(quoteDetails: QuoteDetails) {
     }
 }
 
-function FillMainCarriagePorts(quoteDetails: QuoteDetails) {
+export function FillMainCarriagePorts(quoteDetails: QuoteDetails) {
     if (!Conditions.IsInlandDomestic(quoteDetails.Direction, quoteDetails.TransportMode)) {
         cy.FillLogLov(QuoteSelectors.QuoteFromPort, quoteDetails.MainCarriageFromPort, false)
         cy.FillLogLov(QuoteSelectors.QuoteToPort, quoteDetails.MainCarriageToPort, false)
@@ -108,6 +121,18 @@ export function CreateQuote() {
 //#endregion
 
 //#region Update Quote
+export function AddContainer(packagesDetails: PackagesDetails) {
+    cy.Click(QuoteSelectors.PackagesTab, null)
+    cy.FillLogTextBox(QuoteSelectors.ContainerQuantity, packagesDetails.Quantity.toString())
+    cy.FillLogLov(QuoteSelectors.ContainerType, packagesDetails.PackageType, true)
+}
+
+export function DeleteContainer() {
+    cy.Click(QuoteSelectors.PackagesTab, null)
+    cy.get(QuoteSelectors.ContainerType).clear()
+    cy.get(QuoteSelectors.ContainerQuantity).clear()
+}
+
 export function FillPackageTab(packagesDetails: PackagesDetails[], shipmentType?: string) {
     cy.Click(QuoteSelectors.PackagesTab, null)
     for (let i = 0; i < packagesDetails.length; i++) {
@@ -146,20 +171,43 @@ export function FillExpectedOrderDetailsDimensions(packagesDetails: PackagesDeta
     cy.Click(BaseSelectors.RedButton, BaseSelectors.ContainsOK);
 }
 
-export function OpenQuoteAction(action:string, note:string){
+export function OpenQuoteAction(action: string, note: string) {
     cy.Click(BaseSelectors.MenuButtons, null, true);
-    cy.Click(QuoteSelectors.QuotationActionsButton(action), null,true);
-    FillActionNote(note)
+    cy.Click(QuoteSelectors.QuotationActionsButton(action), null, true);
+    FillActionNote(QuoteSelectors.QuoteEventNote,note)
 }
 
-function FillActionNote(note:string){
-    cy.FillLogTextBox(QuoteSelectors.QuoteEventNote, note)
+export function QuoteActionAcceptDecline(action: string, note: string) {
+    cy.Click(BaseSelectors.MenuButtons, null, true);
+    cy.Click(QuoteSelectors.QuotationActionsButton(action), null, true);
+    FillActionNote(QuoteSelectors.QuoteClosingReasonNotes,note)
+}
+
+function FillActionNote(noteselector: string,note: string) {
+    cy.FillLogTextBox(noteselector, note)
     UpdateQuote(BaseSelectors.ConfrimApproved)
 }
 
-export function UpdateQuote(selector:string) {
+export function UpdateQuote(selector: string) {
     cy.DefineRequestWait(RestAPI.PUT, QuoteURLs.Quotes, RequestAliases.Quotes);
     cy.Click(selector, null);
+}
+
+export function ConvertQuote() {
+    cy.DefineRequestWait(RestAPI.PUT, QuoteURLs.Quotes, RequestAliases.Quotes);
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null);
+}
+
+export function OpenConvertQuoteWizerd(action) {
+    cy.Click(BaseSelectors.MenuButtons, null, true);
+    cy.Click(QuoteSelectors.QuotationActionsButton(action), null, true);
+}
+
+export function ConvertQuoteToOceanFCL(quoteDetails: QuoteDetails) {
+    FillTransportMode(quoteDetails.TransportMode);
+    FillShipmentType(quoteDetails.ShipmentType, quoteDetails.TransportMode);
+    FillMainCarriagePorts(quoteDetails)
 }
 //#endregion
 
@@ -207,12 +255,12 @@ function FillCustomerEmail(email: string) {
 
 function SentToCustomer() {
     cy.DefineRequestWait(RestAPI.POST, BaseURLs.PostSendhtmlDocument, RequestAliases.SentToCustomer)
-    cy.Click(QuoteSelectors.SendMessageButton, null,true)
+    cy.Click(QuoteSelectors.SendMessageButton, null, true)
 }
 //#endregion
 
 //#region Copy quote
-export function CopyQuote(action:string){
+export function CopyQuote(action: string) {
     cy.DefineRequestWait(RestAPI.GET, QuoteURLs.GetQuoteSettings, RequestAliases.GetQuoteSettings);
     cy.Click(BaseSelectors.MenuButtons, null, true);
     cy.Click(QuoteSelectors.QuotationActionsButton(action), null);
@@ -220,23 +268,108 @@ export function CopyQuote(action:string){
     CreateQuote()
 }
 
-export function QuoteConversionEventsMapping(eventDetailsList: EventTypeDetails[] ,QuoteNumber :string): EventTypeDetails[]{
+export function QuoteConversionEventsMapping(eventDetailsList: EventTypeDetails[], QuoteNumber: string): EventTypeDetails[] {
     for (let i = 0; i < eventDetailsList.length; i++) {
         eventDetailsList[i].Notes = eventDetailsList[i].Notes.replace(/\"OldQuoteNumber\"/gi, QuoteNumber);
     }
     return eventDetailsList;
 }
 
-export function ValidatePackageCells(expectedOrderDetails:PackagesDetails[]){
-    for(let i = 0 ; i<expectedOrderDetails.length;i++){
-        BaseAssertion.AssertElementContain(BaseSelectors.CellWithRowAndCol("1",i.toString()),expectedOrderDetails[i].Quantity.toString())
-        BaseAssertion.AssertElementContain(BaseSelectors.CellWithRowAndCol("2",i.toString()),Dimensions_L_W_H(expectedOrderDetails[i]))
-        BaseAssertion.AssertElementContain(BaseSelectors.CellWithRowAndCol("4",i.toString()),expectedOrderDetails[i].GrossWeight.toString())
+export function ValidatePackageCells(expectedOrderDetails: PackagesDetails[]) {
+    for (let i = 0; i < expectedOrderDetails.length; i++) {
+        BaseAssertion.AssertElementContain(BaseSelectors.CellWithRowAndCol("1", i.toString()), expectedOrderDetails[i].Quantity.toString())
+        BaseAssertion.AssertElementContain(BaseSelectors.CellWithRowAndCol("2", i.toString()), Dimensions_L_W_H(expectedOrderDetails[i]))
+        BaseAssertion.AssertElementContain(BaseSelectors.CellWithRowAndCol("4", i.toString()), expectedOrderDetails[i].GrossWeight.toString())
     }
 }
 
-function Dimensions_L_W_H(expectedOrderDetails:PackagesDetails){
-    return expectedOrderDetails.Length+"-"+expectedOrderDetails.Width+"-"+expectedOrderDetails.Height
+function Dimensions_L_W_H(expectedOrderDetails: PackagesDetails) {
+    return expectedOrderDetails.Length + "-" + expectedOrderDetails.Width + "-" + expectedOrderDetails.Height
+}
+//#endregion
+
+//#region add delete partners
+export function AddPartner(partnerTypeId: string, partnerFieldId: string, partner?: string) {
+    cy.Click("label", "Add Partners")
+    cy.get(partnerTypeId).then((btn) => {
+        if (!btn.is('[disabled]')) {
+            cy.Click(partnerTypeId, null)
+            let partnerFieldSelector = "addeditpartnercomponent input[id^='" + partnerFieldId.replace("#", "") + "']"
+            cy.FillLogLov(partnerFieldSelector, partner, false)
+            cy.Click(ShipmentSelectors.PartnerOKButton, null)
+        }
+    })
 }
 
+export function DeletePartner() {
+    cy.Click(BaseSelectors.DeleteButton, null)
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null)
+}
 //#endregion
+
+//#region add pickup and delivery
+export function AddPickUp() {
+    cy.ClickRadio(QuoteSelectors.IncludePickUpCheckBox)
+}
+
+export function AddDelivery(city, country) {
+    cy.ClickRadio(QuoteSelectors.IncludeDelivery)
+    cy.FillLogTextBox(QuoteSelectors.ToAddressCity, city)
+    cy.FillLogLov(QuoteSelectors.ToAddressCountryId, country, true)
+}
+//#endregion
+
+//#region charges
+export function DeleteAllCharges() {
+    cy.Click(QuoteSelectors.DeleteAllChargesButton, null)
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null)
+}
+
+export function AddCharge(chargeType) {
+    cy.Click(QuoteSelectors.AddChargesButton, null)
+    cy.FillLogLov(QuoteSelectors.ChargesType, chargeType, true)
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null)
+}
+
+export function AssertSaleCurrencyValue(currencyValue) {
+    cy.Click(BaseSelectors.StartsWithEditButton + BaseSelectors.FirstElement, null)
+    BaseAssertion.AssertElementHaveValue(QuoteSelectors.ChargeSaleCurrency, currencyValue)
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null)
+}
+
+export function ChangeSaleCurrencyModeValueToSameAsCost() {
+    cy.Click(QuoteSelectors.SameAsCostCurrencyComboBox, null, true)
+}
+//#endregion
+
+//#region build shipment
+export function BuildShipmentFromQuote() {
+    cy.Click(QuoteSelectors.BuildShipmentButton, null)
+    cy.ClickRadio(QuoteSelectors.ShipmentLevelDirectRadio)
+}
+
+export function CreateShipment() {
+    cy.DefineRequestWait(RestAPI.POST, QuoteURLs.Shipment, RequestAliases.ShipmentRequest)
+    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null)
+}
+
+export function AssertCreateShipment() {
+    BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200)
+}
+//#endregion
+
+export function AssertQuoteExistInCorrectList(queryLink: string, searchFieldValue: string) {
+    cy.get(BaseSelectors.Backbutton).click()
+    cy.get(queryLink).click()
+    cy.FillLogTextBox(BaseSelectors.SearchTextboxInput, searchFieldValue);
+    cy.get(BaseSelectors.ListDataLoaded)
+    cy.get(BaseSelectors.RowClass).eq(0).invoke(BaseSelectors.TextElement).then((text) => {
+        expect(text).to.contain(searchFieldValue);
+    });
+}
+
+export function AssertQuoteSatgeHaveDeclineValue() {
+    cy.get(BaseSelectors.RowClass).eq(0).invoke(BaseSelectors.TextElement).then((text) => {
+        expect(text).to.contain("Declined");
+    });
+}

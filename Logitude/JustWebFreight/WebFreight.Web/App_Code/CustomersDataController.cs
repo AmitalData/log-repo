@@ -39,7 +39,10 @@ namespace WebFreight.Web.App_Code
 
         public CustomerPM GetSingleCustomerPM(string singleCustomerId, int tenant)
         {
-            //SecurityUtility.AuthenticationOnTenant(tenant);
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+            SecurityUtility.AuthenticationOnTenant(tenant);
             CustomerQuery entityQuery = new CustomerQuery(tenant);
             CustomerPM entityPM = entityQuery.GetSinglePM(singleCustomerId, tenant);
 
@@ -48,7 +51,10 @@ namespace WebFreight.Web.App_Code
 
         public List<CustomerList> PostFilteredCustomers(int tenant, CustomerFilters filters)
         {
-            //SecurityUtility.AuthenticationOnTenant(tenant);
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+            SecurityUtility.AuthenticationOnTenant(tenant);
 
             CustomerRepository customerRepository = new CustomerRepository(tenant);
             CustomerQuery customerQuery = new CustomerQuery(customerRepository);
@@ -119,10 +125,15 @@ namespace WebFreight.Web.App_Code
                              Field10 = customer.Field10,
                              RankCode = customer.RankCode,
                              RankName = customer.RankName,
+                             TeamName = customer.TeamName,
                              SharedLogisticsInvitationStatusName = customer.SharedLogisticsInvitationStatusName,
+                             CargoTrackingInvitationStatusName = customer.CargoTrackingInvitationStatusName,
                              LastLoginDate = customer.LastLoginDate,
+                             LastLoginDateViaPC = customer.LastLoginDateViaPC,
+                             LastLoginDateViaMobile = customer.LastLoginDateViaMobile,
                              InvitationDate = customer.InvitationDate,
-                          
+                             CargoTrackingInvitationDate = customer.CargoTrackingInvitationDate,
+
                              ClassifierName = customer.ClassifierName,
                              CollectorName = customer.CollectorName,
                              //ClassifierName = TenantContext.Current.ContactContext.UserLists.Where(d => d.Id == ClassifierId).FirstOrDefault().EnglishName;
@@ -155,7 +166,10 @@ namespace WebFreight.Web.App_Code
 
         public List<CustomerProductActualDataPM> GetCustomerActualData(string actualDataCustomerId, int tenant)
         {
-            //SecurityUtility.AuthenticationOnTenant(tenant);
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+            SecurityUtility.AuthenticationOnTenant(tenant);
 
             CustomerProductActualDataQuery query = new CustomerProductActualDataQuery(tenant);
             return query.GetCustomerActualData(actualDataCustomerId, DateTime.Now.Year, DateTime.Now.Month, tenant);
@@ -163,7 +177,10 @@ namespace WebFreight.Web.App_Code
 
         public List<ChartingDataClass> GetCustomerShipmentsData(string customerid, int tenant, int lastMonthsCount)
         {
-            //SecurityUtility.AuthenticationOnTenant(tenant);
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+            SecurityUtility.AuthenticationOnTenant(tenant);
 
             ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
 
@@ -275,7 +292,10 @@ namespace WebFreight.Web.App_Code
 
         public List<ChartingDataClass> GetQuoteStatusChartData(string quotesChartCustomerId, int tenant)
         {
-            //SecurityUtility.AuthenticationOnTenant(tenant);
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+            SecurityUtility.AuthenticationOnTenant(tenant);
 
             List<ChartingDataClass> result = new List<ChartingDataClass>();
             
@@ -297,7 +317,10 @@ namespace WebFreight.Web.App_Code
 
         public List<AddressPM> GetAddressesbyCardId(string addressesCustomerId, int tenant)
         {
-            //SecurityUtility.AuthenticationOnTenant(tenant);
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+            SecurityUtility.AuthenticationOnTenant(tenant);
 
             AddressQuery addressQuery = new AddressQuery(tenant);
             List<AddressPM> result = addressQuery.GetAddressesByCardId(addressesCustomerId, tenant);            
@@ -306,7 +329,10 @@ namespace WebFreight.Web.App_Code
 
         public List<ContactPM> GetContactsbyCardId(string contactsCustomerId, int tenant)
         {
-            //SecurityUtility.AuthenticationOnTenant(tenant);
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+            SecurityUtility.AuthenticationOnTenant(tenant);
 
             ContactQuery contactQuery = new ContactQuery(tenant);
             List<ContactPM> result = contactQuery.GetContactsbyCardId(contactsCustomerId, tenant).ToList();
@@ -315,7 +341,10 @@ namespace WebFreight.Web.App_Code
 
         public CRMMoneyInformation GetCRMMoneyInformation(string CRMMoneyCustomerId, int tenant)
         {
-            //SecurityUtility.AuthenticationOnTenant(tenant);
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+            SecurityUtility.AuthenticationOnTenant(tenant);
 
             ShipmentRepository shipmentrep = new ShipmentRepository(tenant);
             ARInvoiceRepository invoiceRep = new ARInvoiceRepository(tenant);
@@ -334,7 +363,10 @@ namespace WebFreight.Web.App_Code
 
         public CRMDataCounts GetDataCountsForCRM(string customerId, int tenant)
         {
-            //SecurityUtility.AuthenticationOnTenant(tenant);
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+            SecurityUtility.AuthenticationOnTenant(tenant);
             PartnersDomainService partnersDomain = new PartnersDomainService();
             CRMDataCounts result = partnersDomain.GetDataCountsForCRM(tenant, customerId);
 

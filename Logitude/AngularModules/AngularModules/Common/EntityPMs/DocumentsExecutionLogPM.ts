@@ -20,7 +20,7 @@ export class DocumentsExecutionLogPM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-          this.UIProperties = new UIProperties(this); 
+		            this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -93,6 +93,11 @@ export class DocumentsExecutionLogPM {
     private subject: string;
     public get Subject() { return this.subject; }
     public set Subject(newValue: string) { if (this.subject != newValue) { this.subject = newValue; this.MarkAsDirty("Subject"); } }
+       
+	 
+    private executedByServerName: string;
+    public get ExecutedByServerName() { return this.executedByServerName; }
+    public set ExecutedByServerName(newValue: string) { if (this.executedByServerName != newValue) { this.executedByServerName = newValue; this.MarkAsDirty("ExecutedByServerName"); } }
        
 	 
 

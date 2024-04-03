@@ -542,7 +542,6 @@ foreach (string file in Directory.EnumerateFiles(sourceFilePath, "*.lxml"))
       //  {
         //    get; set;
        // }
-
 #>
   
  }

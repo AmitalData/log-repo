@@ -22,13 +22,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
 
 @import url("_Resources/css/PrimeWebComponent.css");
-
-/* @import url("_Resources/css/PrimeWebComponent.css");
-@import "node_modules/primeng/resources/themes/saga-blue/theme.css";
-@import "node_modules/primeng/resources/primeng.min.css";
-@import "node_modules/primeflex/primeflex.css";
-@import "node_modules/primeicons/primeicons.css";
-@import "node_modules/quill/dist/quill.snow.css"; */
+@import url("_Resources/css/logitude-workflow-styles.css");
+@import url("_Resources/css/custom-ng-zorro-antd-styles.css");
+@import "~logitude-workflow/dist/index.css"; 
+@import "~ng-zorro-antd/tree-select/style/index.min.css"; 
+@import url("_Resources/css/pretty-print-json.css");
 
 .p-field {
     margin-bottom: 1rem;

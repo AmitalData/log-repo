@@ -33,6 +33,7 @@ namespace Logitude.Accounting.Data.Utilities
                 EntityIconsDictionary.Add("10", "AJ");// 10-Adjustment
                 EntityIconsDictionary.Add("11", "YT");// Year Transfer
                 EntityIconsDictionary.Add("12", "BA");// Bank Adjustment
+                EntityIconsDictionary.Add("13", "TR");// Tax Report
             }
         }
         public string getEntityIcon(string _sourceTypeCode)
@@ -96,5 +97,25 @@ namespace Logitude.Accounting.Data.Utilities
             return 0;
 
         }
+        public decimal CalculateAmountInNIS(LedgerTransactionList LedgerTransaction)
+        {
+            if (!string.IsNullOrEmpty(LedgerTransaction.ReconcileMethodCode))
+            {
+                if (LedgerTransaction.ReconcileMethodCode == "1")
+                {
+                    if (LedgerTransaction.LocalAmountCredit == 0)
+                    {
+                        return LedgerTransaction.LocalAmountDebit;
+                    }
+                    else
+                    {
+                        return LedgerTransaction.LocalAmountCredit;
+                    }
+                }
+            }
+            return 0;
+
+        }
+
     }
 }

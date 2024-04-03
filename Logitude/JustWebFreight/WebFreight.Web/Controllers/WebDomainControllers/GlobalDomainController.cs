@@ -38,6 +38,74 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 {
     public class GlobalDomainController : ApiController
     {
+        public HttpResponseMessage GetTenantManagmentTTY(string tty, int id)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                if (string.IsNullOrEmpty(tty))
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, "");
+                }
+
+                IGlobalContext objectContext = GlobalContext.GetContext();
+                TenantManagementRepository entityRepository = new TenantManagementRepository(objectContext);
+                IQueryable<TenantManagement> iQueryable = entityRepository.GetAllTenants();
+                var duplicationMsg = "";
+                var tenantManagmentWithTTY = iQueryable.Where(d => d.TTY == tty && d.Id != id).ToList();
+                if (tenantManagmentWithTTY != null && tenantManagmentWithTTY.Count() > 0)
+                {
+                    var tenantsWithTheSameTTY = String.Join(",", tenantManagmentWithTTY.Select(a => a.Id));
+                    duplicationMsg = "This PIMA is already used by another tenant (" + tenantsWithTheSameTTY + "), confirm using it again.";
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, duplicationMsg);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+        public HttpResponseMessage GetCheckDigitalPortalAddsOn(int tenant)
+        {
+            try
+            {
+                TenantAddOnRepository tenantAddOnRepository = new TenantAddOnRepository(tenant);
+                var digitalPortalPackageCode = "DGP";
+                var addOn = tenantAddOnRepository.GetSingleTenantAddOnByPackageCode(digitalPortalPackageCode, tenant);
+                return Request.CreateResponse(HttpStatusCode.OK, addOn);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetCheckInttraAddsOn()
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                TenantAddOnRepository tenantAddOnRepository = new TenantAddOnRepository(tenant);
+                var inttraPackageCode = "INTTR";
+                var addOn = tenantAddOnRepository.GetSingleTenantAddOnByPackageCode(inttraPackageCode, tenant);
+                return Request.CreateResponse(HttpStatusCode.OK, addOn);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
         public HttpResponseMessage GetMessagingStockTenantsList(int tenant)
         {
             try
@@ -119,7 +187,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         myResult.ReleaseNotesURL = mySetting.ReleaseNotesURL;
                         myResult.LogitudeDemoTenants = mySetting.LogitudeDemoTenants;
                         myResult.TMPersonalAccessExpirationDate = mySetting.TMPersonalAccessExpirationDate;
-                        
+                        myResult.ReleaseDateString = mySetting.ReleaseDateString;
+                        myResult.DNSZone = mySetting.DNSZone;
                         if (LogitudeSettings.IsCostomsDeploy)
                         {
                             myResult.ProductInfo = LogitudeSettings.ProductInfo;//.Replace(Environment.NewLine ,"<br>") ;
@@ -258,6 +327,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 IGlobalContext context = new GlobalContext();
                 GlobalDomainService globalDomainService = new GlobalDomainService(context);
                 IQueryable<HelpResource> result = globalDomainService.GetAllHelpResources(tenant);
@@ -494,6 +564,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 IGlobalContext objectContext = GlobalContext.GetContext();
                 TenantManagementRepository repository = new TenantManagementRepository(objectContext);
@@ -560,8 +631,10 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         TrialEndDate = entityPM.TrialEndDate,
                         TrialStartDate = entityPM.TrialStartDate,
                         BluesnapAccount = entityPM.BluesnapAccount,
+                        PaymentChannelCode = entityPM.PaymentChannelCode,
                         BluesnapContractId = entityPM.BluesnapContractId,
                         ChangeHeaderColor = entityPM.ChangeHeaderColor,
+                        HeaderColor = entityPM.HeaderColor,
                         IsCargonautEnabled = entityPM.IsCargonautEnabled,
                         IsDEXXConnectionEnabled = entityPM.IsDEXXConnectionEnabled,
                         IsEAWBOnlyDemo = entityPM.IsEAWBOnlyDemo,
@@ -597,6 +670,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         BluesnapInttraStockContractId = entityPM.BluesnapInttraStockContractId,
                         BluesnapInttraStockContractQTY = entityPM.BluesnapInttraStockContractQTY,
                         MainAdditionalPackageApplied = entityPM.MainAdditionalPackageApplied,
+                        CustomerURL = entityPM.CustomerURL,
+                        IsContainerTrackingPrepaid = entityPM.IsContainerTrackingPrepaid,
                     };
 
                     if (entityPM.PaymentFailure)
@@ -710,7 +785,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         oceanInsightGlobalSetting.OITenantNumber = setting.OITenantNumber;
                         oceanInsightGlobalSetting.AmitalCloudEnvironmentURL = setting.AmitalCloudEnvironmentURL;
                         oceanInsightGlobalSetting.AmitalCloudLogitudeTenantPrimaryKey = setting.AmitalCloudLogitudeTenantPrimaryKey;
-                       
+
                     }
                     scope.Complete();
                     return Request.CreateResponse(HttpStatusCode.OK, oceanInsightGlobalSetting);
@@ -721,7 +796,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        
+
         public HttpResponseMessage GetUpdateOceanInsightGlobalSetting(int oITenantNumber, string amitalCloudEnvironmentURL, string amitalCloudLogitudeTenantPrimaryKey)
         {
             try
@@ -777,16 +852,15 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         public bool SameUserLoginEnabled { get; set; }
         public string LayoutDirection { get; set; }
         public string ProductInfo { get; internal set; }
-
         public string ProductMessage { get; internal set; }
-        
         public bool ReportsRunUsingWR { get; set; }
         public string DocumentFilingEmailDomain { get; set; }
         public string DeploymentStage { get; set; }
         public string ReleaseNotesURL { get; set; }
-
         public string LogitudeDemoTenants { get; set; }
         public DateTime? TMPersonalAccessExpirationDate { get; set; }
+        public string ReleaseDateString { get; set; }
+        public string DNSZone { get; set; }
     }
 
     public class TenantManagementJS
@@ -817,6 +891,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         public DateTime? ExpirationDate { get; set; }
         public bool ManageLicencesPerUser { get; set; }
         public bool ChangeHeaderColor { get; set; }
+        public string HeaderColor { get; set; }
         public int TrailDaysLeft { get; set; }
         public int PaidDaysLeft { get; set; }
         public int SuspendDaysLeft { get; set; }
@@ -824,6 +899,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         public int NumberOfFreeUsers { get; set; }
         public string BluesnapContractId { get; set; }
         public string BluesnapAccount { get; set; }
+        public string PaymentChannelCode { get; set; }
         public string BluesnapCRMContractId { get; set; }
         public string BluesnapEAWBContractId { get; set; }
         public string BluesnapEAWBSContractId { get; set; }
@@ -843,6 +919,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         public string TemporalPackageCode { get; set; }
         public string CountryName { get; set; }
         public bool MainAdditionalPackageApplied { get; set; }
+        public bool IsContainerTrackingPrepaid { get; set; }
+        public string CustomerURL { get; set; }
+
 
         private List<string> packagesCodes_PK;
         public List<string> PackagesCodes_PK

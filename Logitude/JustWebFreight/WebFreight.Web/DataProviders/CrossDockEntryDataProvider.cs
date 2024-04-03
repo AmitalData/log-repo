@@ -39,6 +39,8 @@ namespace WebFreight.Web.DataProviders
         public string ShipmentNumber { get; set; }
         public string EntryNumber { get; set; }
         public string DestinationCountryName { get; set; }
+        public string DestinationCountryCode { get; set; }
+        public string DestinationPortCode { get; set; }
         public string Trucker { get; set; }
         public string BarCode { get; set; }
         public List<EntryPackage> EntryPackages { get; set; }
@@ -71,7 +73,14 @@ namespace WebFreight.Web.DataProviders
         public string ShipmentField10 { get; set; }
         public string ProjectNumber { get; set; }
         public string MasterProjectNumber { get; set; }
+        public string GrossWeightInKG { get; set; }
+        public string GrossWeightInLB { get; set; }
+        public double? VolumeInCBM { get; set; }
+        public double? VolumeInCBF { get; set; }
 
+        public string ConsigneeReference1 { get; set; }
+        public string ConsigneeReference2 { get; set; }
+        public string TruckerReference { get; set; }
         public CrossDockEntryDataProvider ShallowCopy()
         {
             return (CrossDockEntryDataProvider)this.MemberwiseClone();
@@ -103,5 +112,10 @@ namespace WebFreight.Web.DataProviders
         public string RegistrationNumber { get; set; }
         public string CountryName { get; set; }
         public int InStock { get; set; }
+        public string GrossWeightInKG { get; set; }
+        public string GrossWeightInLB { get; set; }
+        public double? VolumeInCBM { get; set; }
+        public double? VolumeInCBF { get; set; }
+        public string Location { get; set; }
     }
 }

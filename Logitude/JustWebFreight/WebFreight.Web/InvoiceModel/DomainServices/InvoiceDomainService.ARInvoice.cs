@@ -70,7 +70,7 @@ namespace WebFreight.Web.InvoiceModel.DomainServices
                 entityList = iQueryableEntityList.FirstOrDefault();
             }
 
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
             customFieldResolver.SetCustomFieldsValues("ARInvoice", tenant, new List<ARInvoiceList> { entityList }.Cast<object>().ToList());
 
             return entityList;
@@ -178,7 +178,7 @@ namespace WebFreight.Web.InvoiceModel.DomainServices
 
             List<ARInvoiceList> listQuery = query2.ToList();
 
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
             customFieldResolver.SetCustomFieldsValues("ARInvoice", tenant, listQuery.Cast<object>().ToList());
 
 

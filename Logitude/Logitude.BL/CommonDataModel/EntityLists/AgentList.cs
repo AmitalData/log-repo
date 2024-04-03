@@ -1,9 +1,10 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using Logitude.BL.InfrastructureModel.EntityLists;
 
 namespace Logitude.BL.CommonDataModel.EntityLists
 {
-    public class AgentList
+    public class AgentList : CustomFieldList
     { 
         [Key]
         public string Id { get; set; }
@@ -23,6 +24,7 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string PaymentTermId { get; set; }
         public string SearchFields { get; set; }
         public string SharedLogisticsInvitationStatusName { get; set; }
+        public string CargoTrackingInvitationStatusName { get; set; }
         public DateTime? LastLoginDate { get; set; }
         public bool EnableConsolidationInvoices { get; set; }
         public string CityName { get; set; }
@@ -46,14 +48,13 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string Address1 { get; set; }
         public string Address2 { get; set; }
         public string Phone { get; set; }
-
         public string PrimaryContactName { get; set; }
         public string PrimaryContactEmail { get; set; }
         public string PrimaryContactPhone { get; set; }
         public string StateName { get; set; }
         public int? StorageFreeDays { get; set; }
-
         public string GLAccountNumber { get; set; }
-
+        public string RegimenFiscalCode { get; set; }
+        public string SATReceptorName { get; set; }
     }
 }

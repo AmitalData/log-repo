@@ -36,16 +36,41 @@ using WebFreight.Web.Helpers.Analyzers;
 using WebFreight.Web.Security;
 using WebFreight.Web.WcfApi;
 using ContainerOISimulator;
+using Logitude.BL.Helpers;
+using Logitude.BL.ShipmentsModel.Tools.ContainerTracking;
+using Logitude.BL.ShipmentsModel.APIDataContract;
+using System.Globalization;
+using System.Configuration;
+using Logitude.XSD.Simulators;
 
 namespace WebFreight.Web.Controllers.WebServices
 {
     public class ShipmentContainersWebServiceController : ApiController
     {
-      
 
-        public HttpResponseMessage Post(ShipmentContainerSimulator simulator)
+
+        public HttpResponseMessage PostOceanInsightSimulator(ShipmentContainerSimulator simulator)
         {
-            try
+			DateTime stopLogAt = DateTime.MinValue;
+			try
+			{
+				string UntilDateyyyyMMdd = ConfigurationManager.AppSettings["20230718T104900.LogUntilDateyyyyMMdd"];
+				if (!string.IsNullOrWhiteSpace(UntilDateyyyyMMdd))
+				{
+					stopLogAt = DateTime.ParseExact(UntilDateyyyyMMdd,
+														"yyyyMMdd",
+														CultureInfo.InvariantCulture,
+														DateTimeStyles.None);
+				}
+				var logData = Newtonsoft.Json.JsonConvert.SerializeObject(simulator);
+				LogitudeSettings.HandleLogMe("SUCSSED PostOceanInsightSimulator: " + logData, false, "ShipmentContainerSimulator", stopLogAt);
+			}
+			catch (Exception ex)
+			{
+				LogitudeSettings.HandleLogMe("FAIELD PostOceanInsightSimulator: " + ex.Message?.ToString(), false, "ShipmentContainerSimulator", stopLogAt);
+
+			}
+			try
             {
                 ShipmentContainerSimulator shipmentContainerSimulator = new ShipmentContainerSimulator();
                 if (simulator.IsFromContainer)
@@ -57,6 +82,65 @@ namespace WebFreight.Web.Controllers.WebServices
                     shipmentContainerSimulator = RunContainerStatusResponseSimulator(simulator);
                 }
                 return Request.CreateResponse(HttpStatusCode.OK, shipmentContainerSimulator);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+        public HttpResponseMessage PostGeneralContainerStatus(GeneralContainerTrackingArgs containerTrackingArgs)
+        {
+			DateTime stopLogAt = DateTime.MinValue;
+			try
+			{
+				string UntilDateyyyyMMdd = ConfigurationManager.AppSettings["20230718T104900.LogUntilDateyyyyMMdd"];
+				if (!string.IsNullOrWhiteSpace(UntilDateyyyyMMdd))
+				{
+					stopLogAt = DateTime.ParseExact(UntilDateyyyyMMdd,
+														"yyyyMMdd",
+														CultureInfo.InvariantCulture,
+														DateTimeStyles.None);
+				}
+				var logData = Newtonsoft.Json.JsonConvert.SerializeObject(containerTrackingArgs);
+				LogitudeSettings.HandleLogMe("SUCSSED PostGeneralContainerStatus: " + logData, false, "GeneralContainerTrackingArgs", stopLogAt);
+			}
+			catch (Exception ex)
+			{
+				LogitudeSettings.HandleLogMe("FAIELD PostGeneralContainerStatus: " + ex.Message?.ToString(), false, "GeneralContainerTrackingArgs", stopLogAt);
+
+			}
+			try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                GeneralContainerTrackingService containerTrackingService = new GeneralContainerTrackingService(containerTrackingArgs);
+                containerTrackingService.TrackContainer();
+
+                return Request.CreateResponse(HttpStatusCode.OK, containerTrackingArgs);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+        public HttpResponseMessage PostUnsubscribeFromVizion(GeneralContainerTrackingArgs unsubscribeArgs)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                unsubscribeArgs.Tenant = tenant;
+                ShipmentContainerSimulator shipmentContainerSimulator = new ShipmentContainerSimulator();
+                GeneralContainerTrackingService containerTrackingService = new GeneralContainerTrackingService(unsubscribeArgs);
+                var result  = containerTrackingService.UnsubscribeFromVizion();
+
+                return Request.CreateResponse(HttpStatusCode.OK, result);
             }
 
             catch (Exception ex)
@@ -140,7 +224,7 @@ namespace WebFreight.Web.Controllers.WebServices
                                 ConnectedToEntity = false,
                                 ConnectedToTenant = false,
                                 FileSize = fileBytes.Length,
-                                Tenant = tenant,
+                                //Tenant = tenant,
                                 FileName = "XmlString Simulator",
                             };
 
@@ -183,7 +267,14 @@ namespace WebFreight.Web.Controllers.WebServices
                     }
                     else
                     {
-                        throw new ApplicationException("The ScacCode code or Container number are empty, please fill them first");
+                        if (!myHelper.IsValidShippingLine())
+                        {
+                            throw new ApplicationException("The Shipping Line is not supported by Ocean Insights.");
+                        }
+                        else
+                        {
+                            throw new ApplicationException("The SCAC Code of the Shipping Line or the Container Number is empty, please make sure they are filled.");
+                        }
                     }
                     scope.Complete();
                     return Request.CreateResponse(HttpStatusCode.OK, "");

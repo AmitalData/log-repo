@@ -252,6 +252,29 @@ namespace WebFreight.Web.Helpers
                     stop = true;
                 }
             }
+            if (stop == false)
+            {
+                MethodsInfo = getMethodsInfo("WebFreight.Web.TariffModel.DomainServices.TariffDomainService", tableName);
+                if (MethodsInfo != null)
+                {
+                    getListMethodInfo = MethodsInfo.ListMethodInfo;
+                    getCountMethodInfo = MethodsInfo.CountMethodInfo;
+                    context = MethodsInfo.context;
+                    stop = true;
+                }
+            }
+
+            if (stop == false)
+            {
+                MethodsInfo = getMethodsInfo("WebFreight.Web.DashboardModel.DomainServices.DashboardDomainService", tableName);
+                if (MethodsInfo != null)
+                {
+                    getListMethodInfo = MethodsInfo.ListMethodInfo;
+                    getCountMethodInfo = MethodsInfo.CountMethodInfo;
+                    context = MethodsInfo.context;
+                    stop = true;
+                }
+            }
 
             if (stop == false)
             {
@@ -373,9 +396,11 @@ namespace WebFreight.Web.Helpers
                         object listQuery = Activator.CreateInstance(tableQueryType, parameters1);
 
                         Type[] parameterstypes = new Type[] { typeof(QueryOperations), typeof(int) };
+                        Type[] parameterstypesGetListCount = new Type[] { typeof(QueryOperations) };
+
 
                         MethodInfo getListMethodInfo = listQuery.GetType().GetMethod("GetList", parameterstypes);
-                        MethodInfo getCountMethodInfo = listQuery.GetType().GetMethod("GetListCount");
+                        MethodInfo getCountMethodInfo = listQuery.GetType().GetMethod("GetListCount" , parameterstypesGetListCount);
 
 
                         if (getListMethodInfo != null && getCountMethodInfo != null)

@@ -27,6 +27,7 @@ namespace WebFreight.Web.DataProviders
         public string Account { get; set; }
 
         //paid to - Vendor
+        public string VendorWebsite { get; set; }
         public string PaidTo { get; set; }
         public string PaidToName { get; set; }
         public string PaidToAddress { get; set; }
@@ -89,8 +90,9 @@ namespace WebFreight.Web.DataProviders
         public DateTime? TodayLocal { get; set; }
         public string TotalPaymentInWordFR { get; set; }
         public string BankAccountEnglishName { get; set; }
+		public string GLAccountDisplayNumber { get; set; }
 
-        public List<ReportAPInvoicePayments> PaidAPInvoicesList { get; set; }
+		public List<ReportAPInvoicePayments> PaidAPInvoicesList { get; set; }
 
         public class ReportAPInvoicePayments
         {

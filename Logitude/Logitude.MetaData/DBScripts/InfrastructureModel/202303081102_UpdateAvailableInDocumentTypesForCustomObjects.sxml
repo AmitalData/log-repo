@@ -1,0 +1,7 @@
+﻿<Script DBType="Main" Module="Infrastructure">
+	<Sql Version="1">
+		<![CDATA[
+         update ObjectTables set AvailableInDocumentTypes = 1 Where IsCustom=1 and ParentObjectTableId is null    
+		]]>
+	</Sql> 
+</Script>

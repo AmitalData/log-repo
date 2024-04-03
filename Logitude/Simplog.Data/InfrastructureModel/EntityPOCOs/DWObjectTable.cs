@@ -32,5 +32,9 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public bool HasCustomFields { get; set; }
         public string AdditionalFactRelationType { get; set; }
 
+        public string AdditionalConditions { get; set; }
+        public string Description { get; set; }
+
+        
     }
 }

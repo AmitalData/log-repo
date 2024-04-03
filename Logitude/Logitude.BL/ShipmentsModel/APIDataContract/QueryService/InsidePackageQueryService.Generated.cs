@@ -10,6 +10,8 @@ using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.QuoteModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
@@ -93,11 +95,13 @@ using Simplog.Data.ShipmentsModel;
 					{
 						temp = query.GetSinglePM(item.Id, Tenant);
 					} 
-										   
-					if(temp == null)
+					
+					
+			  	   if(temp == null)
 					{   
 					    throw new ApplicationException("InsideShipmentPackage with Id " + item.Id + " doesn't exist");
 					} 
+				 
 					
 					if(string.IsNullOrEmpty(temp.Id))
 					{
@@ -125,7 +129,7 @@ using Simplog.Data.ShipmentsModel;
 
 						 
 							if(!IsUpdate)
-							{								//throw new ApplicationException("PackageType Can't be update"); 
+							{								
 								temp.PackageTypeId = myPackageTypePM.Id;
 						  
 							}  
@@ -137,97 +141,97 @@ using Simplog.Data.ShipmentsModel;
 			
 					
                     
-					if(!IsUpdate)// && item.Quantity != null)
-					{							//throw new ApplicationException("Quantity Can't be update"); 
-							temp.Quantity = item.Quantity;
+					if(!IsUpdate)
+					{							
+						temp.Quantity = item.Quantity;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && item.Width != null)
-					{							//throw new ApplicationException("Width Can't be update"); 
-							temp.Width = item.Width;
+					if(!IsUpdate)
+					{							
+						temp.Width = item.Width;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && item.Length != null)
-					{							//throw new ApplicationException("Length Can't be update"); 
-							temp.Length = item.Length;
+					if(!IsUpdate)
+					{							
+						temp.Length = item.Length;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && item.Height != null)
-					{							//throw new ApplicationException("Height Can't be update"); 
-							temp.Height = item.Height;
+					if(!IsUpdate)
+					{							
+						temp.Height = item.Height;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && item.Volume != null)
-					{							//throw new ApplicationException("Volume Can't be update"); 
-							temp.Volume = item.Volume;
+					if(!IsUpdate)
+					{							
+						temp.Volume = item.Volume;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && item.GrossWeight != null)
-					{							//throw new ApplicationException("GrossWeight Can't be update"); 
-							temp.Weight = item.GrossWeight;
+					if(!IsUpdate)
+					{							
+						temp.Weight = item.GrossWeight;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(item.Commodity))
-					{							//throw new ApplicationException("Commodity Can't be update"); 
-							temp.CommodityNumber = item.Commodity;
+					if(!IsUpdate)
+					{							
+						temp.CommodityNumber = item.Commodity;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(item.Reference1))
-					{							//throw new ApplicationException("Reference1 Can't be update"); 
-							temp.Reference1 = item.Reference1;
+					if(!IsUpdate)
+					{							
+						temp.Reference1 = item.Reference1;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(item.Reference2))
-					{							//throw new ApplicationException("Reference2 Can't be update"); 
-							temp.Reference2 = item.Reference2;
+					if(!IsUpdate)
+					{							
+						temp.Reference2 = item.Reference2;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(item.Reference3))
-					{							//throw new ApplicationException("Reference3 Can't be update"); 
-							temp.Reference3 = item.Reference3;
+					if(!IsUpdate)
+					{							
+						temp.Reference3 = item.Reference3;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(item.Reference4))
-					{							//throw new ApplicationException("Reference4 Can't be update"); 
-							temp.Reference4 = item.Reference4;
+					if(!IsUpdate)
+					{							
+						temp.Reference4 = item.Reference4;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(item.Description))
-					{							//throw new ApplicationException("Description Can't be update"); 
-							temp.Description = item.Description;
+					if(!IsUpdate)
+					{							
+						temp.Description = item.Description;
 
 										}  
 
@@ -243,6 +247,8 @@ using Simplog.Data.ShipmentsModel;
                 throw ex;
             } 
         }
-		 
+
+
+						   
    }
 }

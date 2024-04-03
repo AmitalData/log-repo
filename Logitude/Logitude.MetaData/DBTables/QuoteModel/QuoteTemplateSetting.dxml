@@ -1210,6 +1210,43 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="XMLData"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ShowUnitsContainers"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowSaleIncludingVATContainers"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowSaleIncludingVATPackages"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowLocalSaleIncludingVATContainers"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShowLocalSaleIncludingVATPackages"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="PageHeaderArea1ImageDetailId"
     ReferencedTable="ImageDetails"

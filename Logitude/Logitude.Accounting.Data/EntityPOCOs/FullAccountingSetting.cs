@@ -139,6 +139,31 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public string SecondPeriodsMonths { get; set; }
         [Column("ThirdsPeriodsMonths")]
 	    public string ThirdsPeriodsMonths { get; set; }
+        [Column("IsSecurityLevelActivated")]
+	    public bool IsSecurityLevelActivated { get; set; }
+        [Column("VATreportEveryTwoMonths")]
+	    public bool VATreportEveryTwoMonths { get; set; }
+        [Column("CreateRevaluationJournal")]
+	    public bool CreateRevaluationJournal { get; set; }
+        [ForeignKey("TaxInstitutionGLAccount")]
+        [Column("TaxInstitutionGLAccountId")]
+	    public string TaxInstitutionGLAccountId { get; set; }
+	      
+        public virtual GLAccount TaxInstitutionGLAccount { get; set; }
+        [Column("HSM")]
+	    public string HSM { get; set; }
+        [Column("HSMtoken")]
+	    public string HSMtoken { get; set; }
+        [Column("HSMaddress")]
+	    public string HSMaddress { get; set; }
+        [Column("AllowEditingExchangeRate")]
+	    public bool AllowEditingExchangeRate { get; set; }
+        [Column("AmountForConfirmationNumber")]
+	    public int? AmountForConfirmationNumber { get; set; }
+        [Column("NumberingByChartOfAccount")]
+	    public bool NumberingByChartOfAccount { get; set; }
+        [Column("OppositeAccountNumber")]
+	    public bool OppositeAccountNumber { get; set; }
     }
 }
 	 

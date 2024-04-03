@@ -19,5 +19,6 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public byte[] FileData { get; set; }
 
         public string PrivateLabelId { get; set; }
+        public bool IsNew { get; set; }
     }
 }

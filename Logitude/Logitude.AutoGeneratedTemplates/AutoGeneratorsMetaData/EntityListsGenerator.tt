@@ -110,11 +110,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
+<#+ if(entity.ApplyGenericCustomFields.ToString() == "true") {#>using Simplog.Server.Infrastructure.Helpers;
+<#+}#>
 
 namespace <#= listnamespacestring #>
 {
    [DataContract]
-   public partial class <#=tableName #>List
+   public partial class <#=tableName #>List<#+if(entity.ApplyGenericCustomFields.ToString() == "true"){#> : CustomFieldList<#+
+   }#>
+
    {
    <#+
  	foreach(var field in entity["field"])  //get all classes

@@ -17,7 +17,8 @@ import {EditLastRateComponent} from './Components/Maintenance/EditLastRateCompon
 import {LogBoxSettings} from '../Common/Components/Maintenance/LogBoxSettings';
 import {TenantImportComponent} from './Components/Maintenance/TenantImportComponent';
 import {MeasurementGeneralComponent} from './Components/Maintenance/Measurement/MeasurementGeneralComponent';
-import {ChargesTypeGeneralTabComponent} from './Components/Maintenance/ChargesType/ChargesTypeGeneralTabComponent';
+import { ChargesTypeGeneralTabComponent } from './Components/Maintenance/ChargesType/ChargesTypeGeneralTabComponent';
+import { ChargesTypeQuotationsTabComponent } from './Components/Maintenance/ChargesType/ChargesTypeQuotationsTabComponent';
 import {CreditLimitSettingsComponent} from './Components/Maintenance/CreditLimit/CreditLimitSettingsComponent';
 import { CustomerActivationSettingsComponent } from '../Common/Components/Maintenance/CustomerActivationSettingsComponent';
 import { VATSettingsComponent } from '../Common/Components/Maintenance/VATSettingsComponent';
@@ -56,19 +57,21 @@ import {CustomsShipperFiltersMenuComponent} from './Components/FiltersMenu/Custo
 import { GLAccountSelectComponent } from './Components/AccountingTab/GLAccountSelectWindow/GLAccountSelectComponent';
 import { NewHorseComponent } from './Components/Maintenance/Horse/NewHorseComponent';
 import { HorseGeneralTabComponent } from './Components/Maintenance/Horse/HorseGeneralTabComponent';
-import { EnglishNameListHeaderTemplate } from './Components/Templates/ListHeaderTemplates/EnglishNameListHeaderTemplate';
+ import { EnglishNameListHeaderTemplate } from './Components/Templates/ListHeaderTemplates/EnglishNameListHeaderTemplate';
 import { CityNameListHeaderTemplate } from './Components/Templates/ListHeaderTemplates/CityNameListHeaderTemplate';
 import { CodeListHeaderTemplate } from './Components/Templates/ListHeaderTemplates/CodeListHeaderTemplate';
 import { StartWorkingListHeaderTemplate } from './Components/Templates/ListHeaderTemplates/StartWorkingListHeaderTemplate';
 import { OcrDefaultsSettingsComponent } from './Components/Maintenance/OcrDefaultsSettingsComponent';
-import { APISettingsComponent } from './Components/Maintenance/AmitalAPI/APISettingsComponent';
+ import { APISettingsComponent } from './Components/Maintenance/AmitalAPI/APISettingsComponent';
 import { AmitalAPISettingsComponent } from './Components/Maintenance/AmitalAPI/AmitalAPISettingsComponent';
 import { AmitalAPIAddApiWindowComponent } from './Components/Maintenance/AmitalAPI/AmitalAPIAddApiWindowComponent';
 import { AmitalAPIAddClientWindowComponent } from './Components/Maintenance/AmitalAPI/AmitalAPIAddClientWindowComponent';
 import { AmitalAPIAddSchemaWindowComponent } from './Components/Maintenance/AmitalAPI/AmitalAPIAddSchemaWindowComponent';
 import { AmitalAPISchemaTable } from './Components/Maintenance/AmitalAPI/AmitalAPISchemaTable';
 
-export const Components =
+  import { TariffsTabComponent } from './Components/TariffsTab/TariffsTabComponent';
+ 
+ export const Components =
     [
         CustomerHelperComponent,
         CustomerShortTitleComponent,
@@ -88,6 +91,7 @@ export const Components =
         NewCurrencyComponent,
         NewChargesTypeComponent,
         ChargesTypeGeneralTabComponent,
+        ChargesTypeQuotationsTabComponent,
         NewVatTypePercentageComponent,
         CreditLimitSettingsComponent,
         CompetitorComponent,
@@ -129,18 +133,19 @@ export const Components =
         TransmissionLogAuditTabComponent,
         NewHorseComponent,
         HorseGeneralTabComponent,
-        CodeListHeaderTemplate,
+         CodeListHeaderTemplate,
         CityNameListHeaderTemplate,
         EnglishNameListHeaderTemplate,
         StartWorkingListHeaderTemplate,
-        APISettingsComponent,
+         APISettingsComponent,
         AmitalAPISettingsComponent,
         AmitalAPIAddApiWindowComponent,
         AmitalAPIAddClientWindowComponent,
         AmitalAPIAddSchemaWindowComponent,
         AmitalAPISchemaTable,
-    ];
-
+         TariffsTabComponent,
+     ];
+ 
 export class ModuleDeclarations {
     public static Get(name: string) {
 
@@ -165,6 +170,7 @@ export class ModuleDeclarations {
             case "NewCurrencyComponent": { myResult = NewCurrencyComponent; break; }
             case "NewChargesTypeComponent": { myResult = NewChargesTypeComponent; break; }
             case "ChargesTypeGeneralTabComponent": { myResult = ChargesTypeGeneralTabComponent; break; }
+            case "ChargesTypeQuotationsTabComponent": { myResult = ChargesTypeQuotationsTabComponent; break; }
             case "NewVatTypePercentageComponent": { myResult = NewVatTypePercentageComponent; break; }
             case "CreditLimitSettingsComponent": { myResult = CreditLimitSettingsComponent; break; }
             case "CustomerActivationSettingsComponent": { myResult = CustomerActivationSettingsComponent; break }
@@ -209,7 +215,7 @@ export class ModuleDeclarations {
             case "TransmissionLogAuditTabComponent": { myResult = TransmissionLogAuditTabComponent; break; }
             case "NewHorseComponent": { myResult = NewHorseComponent; break; }
             case "HorseGeneralTabComponent": { myResult = HorseGeneralTabComponent; break; }
-            case "CodeListHeaderTemplate": { myResult = CodeListHeaderTemplate; break; }
+             case "CodeListHeaderTemplate": { myResult = CodeListHeaderTemplate; break; }
             case "CityNameListHeaderTemplate": { myResult = CityNameListHeaderTemplate; break; }
             case "EnglishNameListHeaderTemplate": { myResult = EnglishNameListHeaderTemplate; break; }
             case "StartWorkingListHeaderTemplate": { myResult = StartWorkingListHeaderTemplate; break; }
@@ -219,7 +225,10 @@ export class ModuleDeclarations {
             case "AmitalAPIAddClientWindowComponent": { myResult = AmitalAPIAddClientWindowComponent; break; }
             case "AmitalAPIAddSchemaWindowComponent": { myResult = AmitalAPIAddSchemaWindowComponent; break; }
             case "AmitalAPISchemaTable": { myResult = AmitalAPISchemaTable; break; }
-        }
+
+
+             case "TariffsTabComponent": { myResult = TariffsTabComponent; break; }
+         }
 
         return myResult;
     }

@@ -27,6 +27,12 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
         public List<DeficitList> GetList(QueryOperations queryOperations, int tenant)
         {
+            return GetList(queryOperations, tenant, new TreeFilterQueryArgs());
+        }
+
+      
+        public List<DeficitList> GetList(QueryOperations queryOperations, int tenant, TreeFilterQueryArgs treeFilterQueryArgs)
+        {
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
 
@@ -143,7 +149,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
            
         }
 
-        public int GetListCount(QueryOperations queryOperations, int tenant)
+        public int GetListCount(QueryOperations queryOperations, int tenant, TreeFilterQueryArgs treeFilterQueryArgs)
         {
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
@@ -167,7 +173,12 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             return count;
         }
 
-      
+        public int GetListCount(QueryOperations queryOperations, int tenant)
+        {
+            return GetListCount(queryOperations, tenant, new TreeFilterQueryArgs());
+
+
+        }
     }
 }
 	 

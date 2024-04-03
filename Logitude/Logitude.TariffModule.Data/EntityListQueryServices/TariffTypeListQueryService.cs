@@ -30,6 +30,8 @@ namespace Logitude.TariffModule.Data.EntityListQueryServices
 					                          Name = a.Name,
 					
 					                          SearchFields = a.SearchFields,
+											  TransportModeCode = a.TransportModeCode,
+											  DirectionCode = a.DirectionCode
 					
 		                    	            });
             return query;

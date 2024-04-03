@@ -1,7 +1,10 @@
 ﻿using Logitude.BL.CommonDataModel.EntityAMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.BL.GlobalModel.EntityPMs;
 using Logitude.BL.GlobalModel.EntityQueries;
+using Logitude.BL.GlobalModel.Tools.EntityService;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
 using Logitude.Server.Tools;
@@ -36,7 +39,8 @@ namespace CommunicationWorkerRole
         IQueueService queue;
         string URI = "";//"http://localhost:9996/api/CustomerTenantAccessRequestApprovalController";//// controller
 
-        public CustomerTenantAccessWorkerRole()
+        public CustomerTenantAccessWorkerRole
+            ()
         {
             IGlobalContext objectContext = GlobalContext.GetContext();
             SettingRepository SettingRepository = new SettingRepository(objectContext);
@@ -106,6 +110,8 @@ namespace CommunicationWorkerRole
                         LastActivity = DateTime.UtcNow;
                         int tenant = 0;
                         int CustomerTenant = 0;
+                        bool IsCustomsActivated = false ;
+                        bool IsExportActivated = false;
 
 
                         if (response != null && response.MessageId != null)
@@ -113,6 +119,8 @@ namespace CommunicationWorkerRole
                             string Id = response.MessageValues["Id"].ToString();
                             int.TryParse(response.MessageValues["Tenant"], out tenant);
                             int.TryParse(response.MessageValues["CustomerTenant"], out CustomerTenant);
+                            bool.TryParse(response.MessageValues["IsCustomsActivated"], out IsCustomsActivated);
+                            bool.TryParse(response.MessageValues["IsExportActivated"], out IsExportActivated);
                             string CorrelationId = response.MessageId;
                             IWebFreightContext webFreightContext = WebFreightContext.GetContext(tenant);
                             ObjectTableRepository objectTabelRepository = new ObjectTableRepository(tenant);
@@ -169,11 +177,19 @@ namespace CommunicationWorkerRole
                                     client.DefaultRequestHeaders.Add("Token", Token);
                                     client.DefaultRequestHeaders.Add("CorrelationId", CorrelationId);
                                     ICommonDataContext commoncontext = CommonDataContext.GetContext(tenant);
+                                     
+                                     
+
                                     CustomerTenantAccessRequestAM customerTenantAccessRequest = new CustomerTenantAccessRequestAM()
                                     {
                                         CustomerTenant = CustomerTenant,
-                                        PartnerTenant = tenant
+                                        PartnerTenant = tenant,
+                                        IsExportActivated = IsExportActivated,
+                                        IsCustomsActivated = IsCustomsActivated
                                     };
+
+                                    //UpdateCustomerTenantAccessRequests(customerTenantAccessRequest);
+
                                     var serializedObject = JsonConvert.SerializeObject(customerTenantAccessRequest);
                                     LogPM.Subject = "Start To Send Response To Importer By CustomerTenantAccessRequestApproval Controller";
                                     if (IsNewLog)
@@ -242,7 +258,7 @@ namespace CommunicationWorkerRole
                                             {
                                                 Communications.AddEmailCommunicationLogQueue(emailParams, tenant);
                                             }
-                                            
+
                                         }
                                         queue.Complete();
                                         CustomerTenantAccessRepository repo = new CustomerTenantAccessRepository(tenant);
@@ -338,6 +354,33 @@ namespace CommunicationWorkerRole
             }
            
         }
+
+        private void UpdateCustomerTenantAccessRequests(CustomerTenantAccessRequestAM customerTenantAccessRequest)
+        {
+            CustomerTenantAccessRequestQuery customerTenantAccessRequestQuery = new CustomerTenantAccessRequestQuery(customerTenantAccessRequest.PartnerTenant);
+            HybridPartnerQuery hybridPartnerQuery = new HybridPartnerQuery(customerTenantAccessRequest.PartnerTenant); 
+
+            List<string> customerTenantAccessRequestIds = customerTenantAccessRequestQuery.GetCustomerTenantAccessRequestForwarderIdsByTenant(customerTenantAccessRequest.CustomerTenant);
+            List<string> forwarderIds = hybridPartnerQuery.GetPartnersForRequest(customerTenantAccessRequest.PartnerTenant, customerTenantAccessRequestIds);
+            IQueryable<CustomerTenantAccessRequestPM> customerTenantAccessRequestList = customerTenantAccessRequestQuery.GetCustomerTenantAccessRequestByTenantAndForwarderIds(customerTenantAccessRequest.CustomerTenant, forwarderIds);
+  
+            UpdateCustomerTenantAccessRequestsList(customerTenantAccessRequest, customerTenantAccessRequestList);
+             
+        }
+
+        private void UpdateCustomerTenantAccessRequestsList(CustomerTenantAccessRequestAM customerTenantAccessRequest, IQueryable<CustomerTenantAccessRequestPM> customerTenantAccessRequestList)
+        {
+            ICommonDataContext context = CommonDataContext.GetContext(customerTenantAccessRequest.PartnerTenant);
+            CustomerTenantAccessRequestService customerTenantAccessRequestService = new CustomerTenantAccessRequestService(context, customerTenantAccessRequest.CustomerTenant);
+
+            foreach (var request in customerTenantAccessRequestList)
+            {
+                request.IsCustoms = customerTenantAccessRequest.IsCustomsActivated;
+                request.IsExport = customerTenantAccessRequest.IsExportActivated;
+                customerTenantAccessRequestService.Update(request);
+            }
+        }
+ 
         private void ConnectClient()
         {
             try

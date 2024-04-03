@@ -1,5 +1,9 @@
-﻿
+
+
 <style>
+
+
+
     .CustomToolBar {
         color: #222222;
         background: #ffffff;
@@ -36,9 +40,8 @@
 
             <div *ngIf="!UseNormalPreview" [attr.id]="Id"></div>
 
-            <div  class="CustomToolBar" [style.height]="PreviewDivHeight" style="vertical-align:top;margin-top:-7px" *ngIf="IsDisableMode && UseNormalPreview">
+            <div class="CustomToolBar" [style.height]="PreviewDivHeight" style="vertical-align:top;margin-top:-7px" *ngIf="IsDisableMode && UseNormalPreview">
                 <iframe [style.height]="PreviewDivHeight2" style="margin:0px;overflow-y:auto; overflow-x :hidden;vertical-align:top;width:100%;" [attr.id]="PreviewDivId">
-
                 </iframe>
             </div>
         </td>

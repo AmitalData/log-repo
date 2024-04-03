@@ -1,5 +1,5 @@
 declare var window: any;
-import {Directive, ElementRef, Input, Output, Component, EventEmitter, OnInit, OnChanges, OnDestroy} from '@angular/core';
+import {Directive, ElementRef, Input, Output, Component, EventEmitter, OnInit, OnChanges, OnDestroy, ChangeDetectorRef} from '@angular/core';
 import {BaseComponent} from './BaseComponent';
 import {UIProperty, UIProperties, UIPropertyArgs} from './UIProperties';
 import {ObjectFieldPM} from '../../EntityPMs/ObjectFieldPM';
@@ -17,8 +17,9 @@ import {CustomFieldClass} from '../../DataContracts/CustomFieldClass';
     <table *ngIf="uiProperty.IsVisible">
         <tr>
             <td style="width: 16px;">
-                <div class="CheckBox">
-                    <input [attr.id]="ControlId" type="checkbox" [disabled]="IsDisabled" [checked]="BoolValue" [(ngModel)]="BoolValue" (focus)="onFocus()" (blur)="onBlur()" (change)="OnChecked($event)"/>
+
+                <div [attr.data-cy]="DataCy" class="CheckBox">
+                    <input [attr.data-cy]="DataCy+'_input'" [attr.id]="ControlId" type="checkbox" [checked]="BoolValue"  [disabled]="IsDisabled" [(ngModel)]="BoolValue" (focus)="onFocus()" (blur)="onBlur() (change)="OnChecked($event)"" />
                     <label [attr.for]="ControlId">{{Text}}</label>
                 </div>
             </td>
@@ -34,7 +35,7 @@ import {CustomFieldClass} from '../../DataContracts/CustomFieldClass';
     </table>
     `,
 
-    inputs: ['ObjectFieldName', 'ObjectTableName', 'DataContext', 'HideColumns', 'IsDisabled','Text'],
+    inputs: ['ObjectFieldName', 'ObjectTableName', 'DataContext', 'HideColumns', 'IsDisabled', 'Text','DataCy'],
 })
 
 export class LogCheckboxComponent implements OnInit, OnDestroy {
@@ -51,9 +52,10 @@ export class LogCheckboxComponent implements OnInit, OnDestroy {
     public uiProperty: UIProperty;
     CopyValueSubs: any;
     private show: boolean;
-    @Output() Changed: EventEmitter<boolean> = new EventEmitter<boolean>();
+     @Output() Changed: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-    private isDisabled: boolean;
+     public DataCy: string;
+     private isDisabled: boolean;
     @Input()  public get IsDisabled() {
         return this.isDisabled;
     }
@@ -142,7 +144,7 @@ export class LogCheckboxComponent implements OnInit, OnDestroy {
    
     @Input() LogitudeForm: FormGroup;
     @Output() ValueChanged = new EventEmitter();
-    constructor() {
+    constructor(private cd: ChangeDetectorRef) {
         this.show = false;
     }
 
@@ -176,13 +178,25 @@ export class LogCheckboxComponent implements OnInit, OnDestroy {
         else {
             baseIdCombination = this.ObjectFieldName;
         }
+        
         if (this.CheckIfExists(baseIdCombination)) {
             this.counterId = ControlsIdCounter.GetNextControlIdCounter(baseIdCombination);
+            if (this.counterId != null) {
+                baseIdCombination = baseIdCombination + '_' + this.counterId.toString();
+            }
+
+            setTimeout(() => { 
+                if (!this.CheckIfExists(baseIdCombination.replace('_' + this.counterId.toString(),''))) {
+                    baseIdCombination = baseIdCombination.replace('_' + this.counterId.toString(),'');
+                    this.SetControlIds(baseIdCombination);
+                    this.cd.detectChanges();
+                }
+            }, 1000) 
         }
 
-        if (this.counterId != null) {
-            baseIdCombination = baseIdCombination + '_' + this.counterId.toString();
-        }
+        // if (this.counterId != null) {
+        //     baseIdCombination = baseIdCombination + '_' + this.counterId.toString();
+        // }
 
         this.SetControlIds(baseIdCombination);
         //if (this.FocusOnMe) {// it means it is inside a grid.

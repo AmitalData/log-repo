@@ -20,6 +20,13 @@ using System.Web.UI;
 using Microsoft.Practices.Unity;
 using Logitude.Server.Tools.StorageService;
 using WebFreight.Web.Helpers;
+using WebFreight.Web.Stimulsoft.fonts;
+using WebFreight.Web.Helpers.StimulReportCustomizationDataProvider;
+using System.Collections.Generic;
+using System.Linq;
+using System.IO;
+using WebFreight.Web.DataProviders;
+using Logitude.BL.ShipmentsModel.EntityPMs;
 
 namespace WebFreight.Web.Stimulsoft
 {
@@ -28,6 +35,7 @@ namespace WebFreight.Web.Stimulsoft
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            StimulsoftFontsService.AddFonts();
             StiWebDesigner.CacheHelper = new StiMyCacheHelper();
             StiWebViewer.CacheHelper = new StiMyCacheHelper();
 
@@ -46,9 +54,11 @@ namespace WebFreight.Web.Stimulsoft
 
                 var templateId = Request.QueryString["templateId"];
                 var reportTemplateId = Request.QueryString["reportTemplateId"];
+                var reportsTemplateId = Request.QueryString["reportsTemplateId"];
                 var tenantPar = Request.QueryString["tenant"];
                 var token = Request.QueryString["token"];
                 var processType = Request.QueryString["processtype"];
+                var templateType = Request.QueryString["templateType"];
 
                 StiReport report = new StiReport();
                 #region Document Type Template
@@ -68,8 +78,15 @@ namespace WebFreight.Web.Stimulsoft
                             {
                                 logo.ValueObject = null;
                             }
-
                         }
+
+                        List<StiBusinessObjectData> stiBusinessObjects = new StiBusinessObjectDataService().Get(documentTypeTemplatePM);
+                        if (stiBusinessObjects.Count > 0)
+                        {
+                            report.RegBusinessObject(stiBusinessObjects);
+                            report.Dictionary.SynchronizeBusinessObjects(stiBusinessObjects.Count());
+                        }
+
                     }
                     #endregion
 
@@ -77,12 +94,12 @@ namespace WebFreight.Web.Stimulsoft
                     else if(!string.IsNullOrEmpty(reportTemplateId))
                     {
                         ReportHelper reportHelper = new ReportHelper();
-                        byte[] fileData = reportHelper.LoadDataToStimulReport(processType, reportTemplateId, tenant);
+                        byte[] fileData = reportHelper.LoadDataToStimulReport(processType, reportTemplateId, tenant, reportsTemplateId, templateType);
                         if (fileData != null)
                         {
                             report.Load(fileData);
                         }
-                        if (processType == "ReportPreview")
+                        if (processType == "ReportPreview" || templateType == "E")
                         {
                             LogitudeStiWebDesigner.ShowSaveButton = false;
                             LogitudeStiWebDesigner.ShowSaveDialog = false;
@@ -94,6 +111,7 @@ namespace WebFreight.Web.Stimulsoft
                             LogitudeStiWebDesigner.ShowFileMenu = false;
                             LogitudeStiWebDesigner.ShowInsertButton = false;
                             LogitudeStiWebDesigner.ShowLayoutButton = false;
+                            LogitudeStiWebDesigner.ShowPreviewButton = templateType != "E";
                             LogitudeStiWebDesigner.ViewStateMode = ViewStateMode.Disabled;
                             LogitudeStiWebDesigner.Enabled = false;
                             //  LogitudeStiWebDesigner.ShowPropertiesGrid = false;
@@ -123,13 +141,23 @@ namespace WebFreight.Web.Stimulsoft
             }
         }
 
-        //protected void StiMobileDesigner1_SaveReport(object sender, StiMobileDesigner.StiSaveReportEventArgs e)
-        //{
 
-
-
-        //}
-
+        public bool ByteArrayToFile(string fileName, byte[] byteArray)
+        {
+            try
+            {
+                using (var fs = new FileStream(fileName, FileMode.Create, FileAccess.Write))
+                {
+                    fs.Write(byteArray, 0, byteArray.Length);
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Exception caught in process: {0}", ex);
+                return false;
+            }
+        }
         protected void LogitudeStiWebDesigner_SaveReport(object sender, StiSaveReportEventArgs e)
         {
             //try

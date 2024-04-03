@@ -195,6 +195,22 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+      Name="OnUpdateDocumentAutomationFailedXml"
+      ShortName="OnUpdateDocumentFailedXml"
+      Type="nvarchar"
+      Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="OnUpdateDocumentAutomationSsucceedXml"
+    ShortName="OnUpdateDocumentSsucceedXml"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
  
     <Column
       Name="CreateTaskAutomationFailedXml"
@@ -212,7 +228,23 @@
     <Constraints
       Nullable="true" />
   </Column>
-  
+	<Column
+		Name="EventAutomationFailedXml"
+		ShortName="EventFailedXml"
+		Type="nvarchar"
+		Size="-1">
+		<Constraints
+		  Nullable="true" />
+	</Column>
+	<Column
+	  Name="EventAutomationSsucceedXml"
+	  ShortName="EventSsucceedXml"
+	  Type="nvarchar"
+	  Size="-1">
+		<Constraints
+		  Nullable="true" />
+	</Column>
+	
   
   <Relation
     ForeignKeyColumn="CreateByUserId"

@@ -36,6 +36,8 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.BaseCurrencyId).HasColumnName("BaseCurrencyId");
             this.Property(t => t.ForeignCurrencyId).HasColumnName("ForeignCurrencyId");
             this.Property(t => t.LogDateTime).HasColumnName("LogDateTime");
+            this.Property(t => t.UpdatedByUserId).HasColumnName("UpdatedByUserId");
+            this.Property(t => t.UpdatedDate).HasColumnName("UpdatedDate");
 
             // Relationships
             this.HasRequired(t => t.BaseCurrency)
@@ -45,6 +47,10 @@ namespace Simplog.Data.InfrastructureModel.Mapping
                 .WithMany()
                 .HasForeignKey(d => d.ForeignCurrencyId)
                 .WillCascadeOnDelete(false);
+
+            this.HasRequired(t => t.UpdatedByUser)
+              .WithMany()
+              .HasForeignKey(d => d.UpdatedByUserId);
 
         }
     }

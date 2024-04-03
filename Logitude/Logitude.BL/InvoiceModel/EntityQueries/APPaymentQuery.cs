@@ -89,6 +89,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                        UpdatedByUserId = a.UpdatedByUserId,
                                        VendorName = a.VendorCard == null ? "" : (loggedContact.DontShowLocalLabels ? a.VendorCard.EnglishName : a.VendorCard.LocalName),
                                        VendorLocalName = a.VendorCard == null ? "" : a.VendorCard.LocalName,
+                                       VendorCode = a.VendorCard == null ? "" : a.VendorCard.Code,
                                        ExternalAccountingEntityId = a.ExternalAccountingEntityId,
                                        TransferError = a.TransferError,
                                        TransferStatusCode = a.TransferStatusCode,
@@ -114,6 +115,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                        ExternalPaymentAmount = a.ExternalPaymentAmount,
                                        ExternalPaymentDate = a.ExternalPaymentDate,
                                        ExternalPaymentNotes = a.ExternalPaymentNotes,
+                                       ConnectedInvoicesNumbers = a.ConnectedInvoicesNumbers,
+                                       VendorGLAccountId = a.VendorCard != null ? a.VendorCard.GLAccountId : null,
                                    }).FirstOrDefault();
 
             payment.PaymentInvoices = apInvoicePaymentQuery.GetAPPaymentInvoicePMsForPayment(payment.Id, tenant);
@@ -171,6 +174,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
 
         }
+
         private void MapJournalFields(APPaymentPM entityPM)
         {
             Journal journal = GetJournalOfAPPayment(entityPM);
@@ -278,6 +282,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                        ExternalPaymentAmount = a.ExternalPaymentAmount,
                                        ExternalPaymentDate = a.ExternalPaymentDate,
                                        ExternalPaymentNotes = a.ExternalPaymentNotes,
+                                       ConnectedInvoicesNumbers = a.ConnectedInvoicesNumbers,
                                    }).FirstOrDefault();
             if (payment != null)
             {
@@ -427,7 +432,9 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                        ExternalPaymentAmount = a.ExternalPaymentAmount,
                                        ExternalPaymentDate = a.ExternalPaymentDate,
                                        ExternalPaymentNotes = a.ExternalPaymentNotes,
+                                       ConnectedInvoicesNumbers = a.ConnectedInvoicesNumbers,
                                    }).FirstOrDefault();
+
             payment.PaymentInvoices = apInvoicePaymentQuery.GetAPPaymentInvoicePMsForPayment(payment.Id, tenant).ToList();
 
             AccountingPaymentMethod method = apPaymentMethodRep.GetSingleAccountingPaymentMethod(payment.AccountingPaymentMethodId, tenant);
@@ -479,6 +486,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                    PaymentCurrencyCode = a.PaymentCurrency == null ? "" : a.PaymentCurrency.Code,
                                                    VendorName = a.VendorCard == null ? "" : a.VendorCard.EnglishName,
                                                    VendorLocalName = a.VendorCard == null ? "" : a.VendorCard.LocalName,
+                                                   VendorCode = a.VendorCard == null ? "" : a.VendorCard.Code,
                                                    CreatedByUserName = a.CreatedByUser == null ? "" : (a.CreatedByUser.Contact == null ? "" : a.CreatedByUser.Contact.EnglishName),
                                                    CreditCardTypeId = a.CreditCardTypeId,
                                                    AmountInProfitCurrency = a.AmountInProfitCurrency,
@@ -514,9 +522,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                    ExternalPaymentAmount = a.ExternalPaymentAmount,
                                                    ExternalPaymentDate = a.ExternalPaymentDate,
                                                    ExternalPaymentNotes = a.ExternalPaymentNotes,
+                                                   ConnectedInvoicesNumbers = a.ConnectedInvoicesNumbers,
                                                };
-
-
             return result;
         }
 
@@ -567,6 +574,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             PaymentMethodCode = a.AccountingPaymentMethod == null ? null : a.AccountingPaymentMethod.Code,
                             VendorName = a.VendorCard == null ? "" : a.VendorCard.EnglishName,
                             VendorLocalName = a.VendorCard == null ? "" : a.VendorCard.LocalName,
+                            VendorCode = a.VendorCard == null ? "" : a.VendorCard.Code,
                             ExternalAccountingEntityId = a.ExternalAccountingEntityId,
                             TransferError=a.TransferError,
                             TransferStatusCode=a.TransferStatusCode,
@@ -597,11 +605,10 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             ExternalPaymentAmount = a.ExternalPaymentAmount,
                             ExternalPaymentDate = a.ExternalPaymentDate,
                             ExternalPaymentNotes = a.ExternalPaymentNotes,
+                            ConnectedInvoicesNumbers = a.ConnectedInvoicesNumbers,
                         };
 
             return query;
-        }
-
-      
+        }      
     }
 }

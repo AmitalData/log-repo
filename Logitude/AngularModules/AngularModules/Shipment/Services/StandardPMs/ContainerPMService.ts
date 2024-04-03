@@ -22,6 +22,7 @@ import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLo
 import {ContainerPM} from '../../EntityPMs/ContainerPM';
 
 import {ContainerPMInitService} from '../../EntityPMInitServices/ContainerPMInitService';
+import { CustomChildObjectPMService } from '../../../Infrastructure/Services/ExtendedPMs/CustomChildObjectPMService';
 
 @Injectable()
 
@@ -160,7 +161,7 @@ export class ContainerPMService {
         }
 
 		var customFields: Array<string> = [];
-        for (var i = 1; i < 11; i++) {
+        for (var i = 1; i < 41; i++) {
             customFields.push("Field" + i);
         }
             var jsonPMKeys = Object.keys(jsonPM);
@@ -184,8 +185,10 @@ export class ContainerPMService {
             }
                  
             }
-			
-			 
+          let customChildObjectPMService: CustomChildObjectPMService = new CustomChildObjectPMService(entityPM, "Container");
+          customChildObjectPMService.MapCustomChildEntities(jsonPM, mapParent);
+
+
             
 
 		if (mapParent) {

@@ -60,8 +60,11 @@ namespace Logitude.TariffModule.Data.EntityPOCOs
 	    public DateTime? LastExpirationDate { get; set; }
         [Column("PriceSteps")]
 	    public string PriceSteps { get; set; }
+        [ForeignKey("TariffType")]
         [Column("TypeCode")]
 	    public string TypeCode { get; set; }
+	      
+        public virtual TariffType TariffType { get; set; }
         [Column("LastStartDate")]
 	    public DateTime? LastStartDate { get; set; }
         [Column("LastVersion")]
@@ -211,6 +214,23 @@ namespace Logitude.TariffModule.Data.EntityPOCOs
 	    public string FreightChargeId { get; set; }
 	      
         public virtual ChargesType ChargesType { get; set; }
+        [ForeignKey("CustomsBroker")]
+        [Column("CustomsBrokerId")]
+	    public string CustomsBrokerId { get; set; }
+	      
+        public virtual Card CustomsBroker { get; set; }
+        [Column("CustomsBrokerPartnerTypeId")]
+	    public string CustomsBrokerPartnerTypeId { get; set; }
+        [ForeignKey("UnitOfMeasurement")]
+        [Column("UnitOfMeasurementCode")]
+	    public string UnitOfMeasurementCode { get; set; }
+	      
+        public virtual WeightUnit UnitOfMeasurement { get; set; }
+        [ForeignKey("CustomerGroup")]
+        [Column("CustomerGroupId")]
+	    public string CustomerGroupId { get; set; }
+	      
+        public virtual CustomerGroup CustomerGroup { get; set; }
     }
 }
 	 

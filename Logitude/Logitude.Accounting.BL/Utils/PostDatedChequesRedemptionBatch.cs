@@ -56,13 +56,12 @@ namespace Logitude.Accounting.BL.Utils
         public void RunAllPayablePostDatedARPaymentCheques(int tenant)
         {
             List<ARPaymentChequeList> aRPaymentCheques = null;
-            using (var scope = TransactionFactory.GetNewTransaction(TimeSpan.FromMinutes(3)))
-            {
-                IAccountingContext context = AccountingContext.GetContext(tenant);
-                ARPaymentChequeListQueryService aRPaymentChequeListQueryService = new ARPaymentChequeListQueryService(context);
-                aRPaymentCheques = aRPaymentChequeListQueryService.GetPayablePostDatedARPaymentChequeList(tenant);
-            }
-            var uniqueCheques = aRPaymentCheques.Distinct();
+
+            IAccountingContext context = AccountingContext.GetContext(tenant);
+            ARPaymentChequeListQueryService aRPaymentChequeListQueryService = new ARPaymentChequeListQueryService(context);
+            aRPaymentCheques = aRPaymentChequeListQueryService.GetPayablePostDatedARPaymentChequeList(tenant);
+            
+            var uniqueCheques = aRPaymentCheques.GroupBy(d=>d.ChequeNumber).Select(d=>d.First()).ToList();
 
 
             if (aRPaymentCheques != null)
@@ -256,8 +255,7 @@ namespace Logitude.Accounting.BL.Utils
             var lockPoco = repo.GetSingleGeneralLockNOWAIT(_AggregateKey, tenant);
             if (lockPoco == null)
             {
-                using (var scope = TransactionFactory.GetNewTransaction())
-                {
+
                     repo.Add(new GeneralLock()
                     {
                         Tenant = tenant,
@@ -266,8 +264,7 @@ namespace Logitude.Accounting.BL.Utils
                     });
                   //  _logger.AppendLine("add GeneralLock");
                     repo.SubmitChanges();
-                    scope.Complete();
-                }
+
                 lockPoco = repo.GetSingleGeneralLockNOWAIT(_AggregateKey, tenant);
             }
 
@@ -368,6 +365,16 @@ namespace Logitude.Accounting.BL.Utils
             // End
             journalUpdateService.Update(newJournal, true);
 
+            AddAccountingEntityJournal(newJournal, AccountingEntityJournalActions.BankDepositChequeRedemption, aRPaymentCheque.Id);
+
+        }
+
+
+        public static void AddAccountingEntityJournal(JournalPM journal, string actionName, string childEntityId = null)
+        {
+            IAccountingContext context = AccountingContext.GetContext(journal.Tenant);
+            AccountingEntityJournalUpdateService service = new AccountingEntityJournalUpdateService(context, new Dictionary<string, IContext>(), journal.Tenant);
+            service.AddAccountingEntitieJournal(journal, actionName, childEntityId);
         }
 
 

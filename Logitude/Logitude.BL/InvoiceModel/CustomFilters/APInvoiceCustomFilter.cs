@@ -2,7 +2,6 @@
 using System.Linq;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.Repositories;
-using Logitude.BL.DataContracts;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Data.InvoiceModel;
 
@@ -71,7 +70,7 @@ namespace Logitude.BL.InvoiceModel.CustomFilters
                             queryableData =
                                 (from r in queryableData
                                  where
-                                 !string.IsNullOrEmpty(r.InvoiceNumber) && r.InvoiceNumber.ToUpper().StartsWith(searchText.ToUpper())
+                                 !string.IsNullOrEmpty(r.InvoiceNumber) && r.InvoiceNumber.ToUpper().Contains(searchText.ToUpper())
                                  ||
                                  r.VendorCard != null && r.VendorCard.EnglishName.ToUpper().Contains(searchText.ToUpper())
                                  select r);

@@ -13,16 +13,16 @@
       Nullable="false" />
   </Column>
   <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
     Name="Line"
     Type="int">
     <Constraints
       PrimaryKey="true"
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="Tenant"
-    Type="int">
-    <Constraints
       Nullable="false" />
   </Column>
   <Column
@@ -81,8 +81,8 @@
   <Column
     Name="LocalAmount"
     Type="decimal"
-    Precision="16"
-    Scale="2">
+    Precision="18"
+    Scale="4">
     <Constraints
       Nullable="false" />
   </Column>
@@ -96,8 +96,8 @@
   <Column
     Name="ForeignAmount"
     Type="decimal"
-    Precision="16"
-    Scale="2">
+    Precision="18"
+    Scale="4">
     <Constraints
       Nullable="false" />
   </Column>
@@ -162,6 +162,13 @@
     Name="ActionId"
     Type="varchar"
     Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ConfirmationNumber"
+    Type="nvarchar"
+    Size="30">
     <Constraints
       Nullable="true" />
   </Column>

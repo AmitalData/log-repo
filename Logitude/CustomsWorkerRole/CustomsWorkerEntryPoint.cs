@@ -2,6 +2,7 @@
 using Logitude.CustomsMessaging.MessagingServices;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.TreeFilterQuery;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Linq;
@@ -44,9 +45,10 @@ namespace CustomsWorkerRole
                 //throw;
             }
            
-            InjectionUtil.Init(null, null, checkContactFeature, () => (new ByteCompressorUtil()) as IByteCompressorUtil, null,null,null);
+            InjectionUtil.Init(null, null, checkContactFeature, () => (new ByteCompressorUtil()) as IByteCompressorUtil, null,null,null, null, () => (new TreeFilterQueryService()) as ITreeFilterQueryService);
+
             //ProxyUtil.SecurityUtilityCheckFeature = SecurityUtility.CheckFeature;
-            
+             
             //string storageServiceMode = ConfigurationManager.AppSettings.Get("StorageServiceMode");
             //ContainerAccessor.InitContainer(storageServiceMode);
 

@@ -28,6 +28,7 @@ export class FieldTemplateComponent extends BaseComponent {
     public DisplaySATFields: boolean = false;
     public isRTL: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    public NumberFieldRightPadding = "20px";
     constructor() {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
@@ -212,6 +213,17 @@ export class FieldTemplateComponent extends BaseComponent {
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run({ EntityId: id, ObjectTableName: 'Journal' });
+                    cmpRef.instance.BackCompleted.subscribe(bk => {
+                    });
+                });
+        }
+    }
+    OpenInterestReport(id) {
+        if (!AppTool.IsNullOrEmpty(id)) {
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+                .then(cmpRef => {
+                    cmpRef.instance.ComponentRef = cmpRef;
+                    cmpRef.instance.Run({ EntityId: id, ObjectTableName: 'InterestReport' });
                     cmpRef.instance.BackCompleted.subscribe(bk => {
                     });
                 });

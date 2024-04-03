@@ -5,14 +5,6 @@
   DBType="Main"
   Module="Accounting">
   <Column
-    Name="Id"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      PrimaryKey="true"
-      Nullable="false" />
-  </Column>
-  <Column
     Name="Code"
     Type="varchar"
     Size="15">
@@ -47,6 +39,14 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
     Name="Inactive"
     Type="bit">
     <Constraints
@@ -56,6 +56,13 @@
     Name="LogoId"
     Type="varchar"
     Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DateFormat"
+    Type="nvarchar"
+    Size="50">
     <Constraints
       Nullable="true" />
   </Column>

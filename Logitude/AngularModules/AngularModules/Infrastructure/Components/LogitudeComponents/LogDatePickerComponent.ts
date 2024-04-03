@@ -35,7 +35,7 @@ import { ObjectsLocator } from "../../Locators/ObjectsLocator";
 
 @Component({
     selector: "LogDatePicker",
-    
+
     templateUrl: "./LogDatePickerComponent.html",
     //directives: [CORE_DIRECTIVES, FORM_DIRECTIVES, HelpIcon, LogCalendarComponent, TimeSelectComponent, FixedPositionDirective],
     inputs: [
@@ -51,6 +51,11 @@ import { ObjectsLocator } from "../../Locators/ObjectsLocator";
         "ForceSubscribe",
         "RefreshMe",
         "IsDisabled",
+        "IsDisabledWithColor",
+        "DisableRules",
+        "DataCy",
+        "ForceDisabled",
+        "ForceSetValidity",
     ]
     //changeDetection: ChangeDetectionStrategy.OnPush,
 })
@@ -81,8 +86,15 @@ export class LogDatePickerComponent
     public InputType: string;
     public IsFreeValue: boolean = false;
     public ForceSubscribe: boolean = false;
-    @Input() UseDefaultPosition: boolean = false;
+     @Input() UseDefaultPosition: boolean = false;
+     public DisableRules: boolean = false;
 
+    public DataCy: string;
+
+    public ForceDisabled: boolean = false;
+
+    public ForceSetValidity: boolean = false;
+ 
     private dataContext: BaseComponent;
     public uiProperty: UIProperty;
     private show: boolean;
@@ -92,7 +104,19 @@ export class LogDatePickerComponent
         return this.isDisabled;
     }
     public set IsDisabled(newValue: boolean) {
-        this.isDisabled = newValue;
+        if (this.ForceDisabled) {
+            this.isDisabled = true;
+        }else{
+            this.isDisabled = this.IsFreeValue ? false : newValue;
+        }
+    }
+
+    private isDisabledWithColor: boolean;
+    public get IsDisabledWithColor() {
+        return this.isDisabledWithColor;
+    }
+    public set IsDisabledWithColor(newValue: boolean) {
+        this.isDisabledWithColor = newValue;
     }
     public TimeMode: string;
     InputValue: string;
@@ -379,8 +403,8 @@ export class LogDatePickerComponent
             this.uiProperty.UIPropertyChanged.subscribe((value) => {
                 this.HandleUIPropertyChanged(value);
             });
-            
-            if (this.DataContext.EntityPM && this.DataContext.EntityPM.UIProperties){
+
+            if (this.DataContext.EntityPM && this.DataContext.EntityPM.UIProperties) {
                 const pmuiProperty = this.DataContext.EntityPM.UIProperties.GetUIProperty(this.ObjectFieldName, this.ObjectTableName, this.DataContext.EntityPM);
                 pmuiProperty?.UIPropertyChanged.subscribe((value) => {
                     this.HandleUIPropertyChanged(value);
@@ -399,7 +423,7 @@ export class LogDatePickerComponent
         this.SetParsedDateValueToDatePickerInput();
     }
     private HandleUIPropertyChanged(value: any) {
-         if (value == "datevaluechanges") {
+        if (value == "datevaluechanges") {
             if (this.ObjectField && this.ObjectField.IsCustom) {
                 var customFieldClass: CustomFieldClass = this
                     .DataContext[this.ObjectFieldName];
@@ -490,7 +514,7 @@ export class LogDatePickerComponent
             }
         }
     }
-    SetParsedDateValueToDatePickerInput(){
+    SetParsedDateValueToDatePickerInput() {
         var valueDate = this.DataContext[this.ObjectFieldName];
         if (this.ObjectField && this.ObjectField.IsCustom) {
             var customFieldClass: CustomFieldClass = this.DataContext[
@@ -624,7 +648,7 @@ export class LogDatePickerComponent
 
         if (this.uiProperty.ValidValue) {
             this.DatePickerInputDivStyle = null;
-        }else {
+        } else {
             this.DatePickerInputDivStyle = { border: "1px solid #ff0000" };
         }
 
@@ -1124,12 +1148,13 @@ export class LogDatePickerComponent
                 var timeUiProp = this.DataContext.UIProperties.GetUIProperty(
                     this.ObjectFieldName + "_timepicker",
                     this.ObjectTableName,
-                    this.DataContext
+                    this.DataContext,
+                    !this.DisableRules
                 );
                 timeUiProp.UIPropertyChanged.emit("datevaluechanges");
                 dateUiProp.UIPropertyChanged.emit("datevaluechanges");
 
-                if (!this.IsFreeValue) {
+                if (!this.IsFreeValue || this.ForceSetValidity) {
                     this.SetValidity(true, null);
                     this.ValidateField();
                 }
@@ -2365,15 +2390,31 @@ export class LogDatePickerComponent
     SetDisabled() {
         var inputDiv = document.getElementById(this.InputDivId); //("DatePickerInputDiv");
         if (inputDiv != null && inputDiv != undefined) {
-            inputDiv.classList.add("DatePickerInputDivDisabled");
+            this.AddDisabledClass(inputDiv);
         }
+    }
+
+    private AddDisabledClass(inputDiv: HTMLElement) {
+        if (this.IsDisabledWithColor)
+            inputDiv.classList.add("DatePickerInputDivDisabledWithColor");
+
+        else
+            inputDiv.classList.add("DatePickerInputDivDisabled");
     }
 
     SetEnabled() {
         var inputDiv = document.getElementById(this.InputDivId); //("DatePickerInputDiv");
         if (inputDiv != null && inputDiv != undefined) {
-            inputDiv.classList.remove("DatePickerInputDivDisabled");
+            this.RemoveDisabledClass(inputDiv);
         }
+    }
+
+    private RemoveDisabledClass(inputDiv: HTMLElement) {
+        if (this.IsDisabledWithColor)
+            inputDiv.classList.remove("DatePickerInputDivDisabledWithColor");
+
+        else
+            inputDiv.classList.remove("DatePickerInputDivDisabled");
     }
 
     GetDate(
@@ -2493,13 +2534,13 @@ export class LogDatePickerComponent
     }
 
     SetValidity(validValue: boolean, errorMessage) {
-        if (!this.IsFreeValue) {
+        if (!this.IsFreeValue || this.ForceSetValidity) {
             var siblingUIProperty: UIProperty = null;
             if (this.uiProperty) {
                 this.uiProperty.ValidValue = validValue;
                 this.uiProperty.ValidationError = errorMessage;
                 if (!validValue) {
-                    
+
                     this.DatePickerInputDivStyle = {
                         border: "1px solid #ff0000"
                     };

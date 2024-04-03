@@ -89,6 +89,8 @@ export class AgentGeneralTabComponent extends BaseComponent implements OnInit, O
     LoadChildComponent() {
         SessionLocator.DynamicLoader.Load('./Infrastructure/GenericComponents/GeneratedComponent', this.viewContainerRef)
             .then(cmpRef => {
+                cmpRef.instance.HideLastColumn = true;
+                cmpRef.instance.LabelWidth = 120;
                 cmpRef.instance.Run(this.entityArgs.EntityPM, this.entityArgs.ObjectTableName, this.ScreenCode);
             });
     }
@@ -143,6 +145,13 @@ export class AgentGeneralTabComponent extends BaseComponent implements OnInit, O
     set CASSCode(newValue: string) {
         if (this.EntityPM.CASSCode != newValue) {
             this.EntityPM.CASSCode = newValue;
+        }
+    }
+
+    get EORInumber() { return this.EntityPM.EORInumber; }
+    set EORInumber(newValue: string) {
+        if (this.EntityPM.EORInumber != newValue) {
+            this.EntityPM.EORInumber = newValue;
         }
     }
 

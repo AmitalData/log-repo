@@ -45,13 +45,15 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         DocumentsFilingQueryService mappingService = new DocumentsFilingQueryService(authToken.Tenant);
 
                         DocumentsFilingPM entityPM = mappingService.DocumentsFilingCustomDataMappingAndValidating(entity, authToken.Tenant, true);
-
+                        entityPM.IsUoloadedField = true;
+                        entityPM.DocumentTypeCode = entity.DocumentType != null ? entity.DocumentType.Code : null;
                         DocumentsFilingService service = new DocumentsFilingService(MyContext, authToken.Tenant);
                         service.Create(entityPM, null, null, true);
                         if (!string.IsNullOrEmpty(entityPM.DocumentId) && !string.IsNullOrEmpty(entityPM.FileName))
                         {
                             DocumentRepository documentRepository = new DocumentRepository(MyContext);
                             Document document = documentRepository.GetSingleDocument(authToken.Tenant, entityPM.DocumentId);
+                            if (!document.HasFile) throw new Exception("this document's file has been deleted");
                             document.FileName = entityPM.FileName;
                             documentRepository.Update(document);
                             documentRepository.SubmitChanges();
@@ -109,7 +111,6 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         service.Update(entityPM, null, null, true);
 
                         var result = mappingService.GetDocumentsFilingById(entityPM.Id, authToken.Tenant);
-
                         APIHelper.AddCommunicationLog("D", entity, result, "DocumentsFiling", entityPM.Id, "Documents Filing API", authToken.Tenant);
 
                         scope.Complete();

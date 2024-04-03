@@ -72,7 +72,7 @@ namespace WebFreight.Web.DataProviders
         public string DepositBankAccountNumber { get; set; }
         public string SATTransferStatus { get; set; }
 		public string BillToCountryCode { get; set; }
-
+       
         public string PaymentBankName { get; set; }
 
 
@@ -108,6 +108,8 @@ namespace WebFreight.Web.DataProviders
             public double? Vat { get; set; }
             public double? OriginalAmount { get; set; }
             public string BillTo { get; set; }
+          
+
             public string ShipmentNumber { set; get; }
 
             public string UUID { get; set; }
@@ -164,6 +166,12 @@ namespace WebFreight.Web.DataProviders
         public string CertPago { get; set; }
         public string CadPago { get; set; }
         public string SelloPago { get; set; }
+        public string RegimenFiscalReceptor { get; set; }
+        public string RegimenFiscalReceptorCode { get; set; }
+        public string BillToSATName { get; set; }
+        public string BillToCity { get; set; }
+        public string BillToCountry { get; set; }
+        public string BillToPostalCode { get; set; }
 
         //public string UUID { get; set; }
         //public string QR { get; set; }

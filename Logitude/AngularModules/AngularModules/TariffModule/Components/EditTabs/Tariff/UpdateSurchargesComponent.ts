@@ -37,6 +37,7 @@ export class UpdateSurchargesComponent extends BaseComponent {
     public TypeCode: string;
     public FatherComponent: any;
     public ContainerPricesItemsSource: ContainerPriceClass[];
+    public IsUsingVirtuallization: boolean = false;
     constructor() {
         super();
         this.FromTariffAreaDropButton += this.CurrentSession.GetNewId("FromTariffAreaDropButton_1");
@@ -47,6 +48,7 @@ export class UpdateSurchargesComponent extends BaseComponent {
     }
     
     SetWindowArgs(arg: UpdateTariffArgs) {
+        this.SetIsUsingVirtuallization();
         this.EntityPM = arg.Version;
         this.TypeCode = arg.TypeCode;
         this.FatherComponent = arg.FatherComponent;
@@ -55,6 +57,13 @@ export class UpdateSurchargesComponent extends BaseComponent {
         this.FillTariffCharges(arg.TariffCharges);
         this.FillTariffContainerPrices(arg.TariffCharges);
         this.LoadCarrierAreas(arg.CarrierId);
+    }
+
+    SetIsUsingVirtuallization() {
+        var hasGridVirtuallizationToggleFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "EVG")[0]
+        if (hasGridVirtuallizationToggleFeature) {
+            this.IsUsingVirtuallization = true;
+        }
     }
 
     SetUIProperties() {

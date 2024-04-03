@@ -44,6 +44,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string StatusTypeCode { get; set; }
 
         public virtual CustomerTenantAccessStatusType StatusType { get; set; }
-
+        public bool IsExportActivated { get; set; }
+        public bool IsCustomsActivated { get; set; }
     }
 }

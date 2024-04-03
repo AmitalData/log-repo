@@ -178,6 +178,8 @@ namespace WarehouseData
                             });
 
 
+                            mainDataWarehouseService.FinishUpdatingDataWarehouse(destinationConnectionString);
+
                             #endregion
 
                             stopWatch.Stop();
@@ -187,11 +189,27 @@ namespace WarehouseData
 
                             IsUpdateDataRunning = false;
                         }
-                        catch (Exception ex)
+                       
+                        catch (AggregateException aggregateException)
                         {
+
+                            foreach (var exception in aggregateException.Flatten().InnerExceptions)
+                            {
+                                MessageBox.Show(GeneralDataWarehouseService.GetFullExceptionMessageFromException(exception));
+                            }
                             IsUpdateDataRunning = false;
-                            MessageBox.Show(ex.Message + (ex.InnerException != null ? ex.InnerException.ToString() : ""), stepName);
+
                         }
+                        catch (Exception exception)
+                        {
+                            MessageBox.Show(GeneralDataWarehouseService.GetFullExceptionMessageFromException(exception));
+                            IsUpdateDataRunning = false;
+
+                        }
+
+
+
+
                     }
                 }
                 else MessageBox.Show("Connection Problem");

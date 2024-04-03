@@ -48,6 +48,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 LogBoxAdminUserId = a.LogBoxAdminUserId,
                                                 DocumentShareAsDefault = a.DocumentShareAsDefault,
                                                 AutoArchiveOnInvoice = a.AutoArchiveOnInvoice,
+                                                AutoArchiveOnPODExport   = a.AutoArchiveOnPODExport ,
                                                 StockTypeCode = a.StockTypeCode,
                                                          });
 
@@ -71,6 +72,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 LogBoxAdminUserId = tt.LogBoxAdminUserId,
                 DocumentShareAsDefault = tt.DocumentShareAsDefault,
                 AutoArchiveOnInvoice = tt.AutoArchiveOnInvoice,
+                AutoArchiveOnPODExport = tt.AutoArchiveOnPODExport,
                 StockTypeCode = tt.StockTypeCode,
                 ShowTaxAmountWarning = tt.ShowTaxAmountWarning
             };
@@ -106,6 +108,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            LogBoxAdminUserId = a.LogBoxAdminUserId,
                                            DocumentShareAsDefault = a.DocumentShareAsDefault,
                                            AutoArchiveOnInvoice = a.AutoArchiveOnInvoice,
+                                           AutoArchiveOnPODExport = a.AutoArchiveOnPODExport,
                                            StockTypeCode = a.StockTypeCode,
                                        }).FirstOrDefault();
 

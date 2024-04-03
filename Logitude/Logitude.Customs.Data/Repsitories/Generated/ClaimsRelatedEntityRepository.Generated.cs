@@ -49,7 +49,7 @@ namespace Logitude.Customs.Data.Repsitories
                     where a.ClaimId == keys.ClaimId && a.EntityCounterKey == keys.EntityCounterKey
                     select a).FirstOrDefault();
         }
-		         
+		 		                 
         partial void onAdd();//Partial Methods Definition in Generated
         public void Add(ClaimsRelatedEntity entity)
         {

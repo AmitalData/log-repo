@@ -215,6 +215,7 @@ namespace Logitude.WarehouseLib.BL.EntityQueryServices
                                                                                         VolumetricWeight = a.VolumetricWeight,
                                                                                         EntryReference = a.WarehouseEntry != null ? a.WarehouseEntry.EntryReference : "",
                                                                                         Commodity = a.CommodityNumber,
+                                                                                        ShipmentNumber = a.WarehouseEntry.ShipmentNumber,
                                                                                     });
 
 

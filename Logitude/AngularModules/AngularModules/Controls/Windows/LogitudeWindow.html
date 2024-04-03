@@ -97,13 +97,47 @@
         position: relative;
         transition: 0.3s;
     }
+
+    .WindowFooter {
+        cursor: default;
+        width: 100%;
+        height: 100%;
+        padding-top: 4px;
+        border-radius: 8px 8px 0 0;
+        font-size: 18px;
+        position: relative;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+    .FooterTable {
+        height: 22px;
+    }
+
+    .FooterCell {
+        width: 57px;
+    }
+
+    .FooterSplit {
+        width: 5px;
+    }
+    
+    :host ::ng-deep .ViewModeContainer > * {
+        opacity: 0.65 !important;
+    }
+
+    :host ::ng-deep .ViewModeContainer * {
+        cursor: default !important;
+    }
 </style>
 
-<div class="WindowLayout" tabindex="-1" contenteditable="false" *ngIf="ShowModal"></div>
+<div class="WindowLayout" tabindex="-1" contenteditable="false" *ngIf="ShowModal" [ngStyle]="ZIndexModified && {'z-index': ZIndex}"></div>
 <LogitudeHotKeysComponent  (CTRL_S_HotKey)="OnCTRL_S_HotKeyPressed()"  (ESCHotKey)="OnEscHotKeyPressed()" (CTRL_Shift_S_HotKey)="OnCTRL_Shift_S_HotKeyPressed()"></LogitudeHotKeysComponent>
 <div class="MediaFillAbsolute">
     <div class="MediaFillRelative" [attr.id]="WindowContainerId" style="overflow:hidden;" (mouseup)="OnMouseUp()">
-        <div [attr.id]="WindowId" class="LogitudeWindow" [ngStyle]="{width: Width, height: Height, top: Top, left: Left}">
+        <div [attr.id]="WindowId" class="LogitudeWindow" [ngStyle]="!ZIndexModified ? {width: Width, height: Height, top: Top, left: Left} : {width: Width, height: Height, top: Top, left: Left,'z-index': ZIndex}">
 
             <input [attr.id]="FocusElementId" style="position: absolute; width: 0px; height: 0px; border:0px; outline: none;">
 
@@ -211,7 +245,7 @@
                                     </td>
 
                                     <td>
-                                        <div class="MediaFill">
+                                        <div class="MediaFill" [class.ViewModeContainer]="IsViewMode">
                                             <div ChildDirective></div>
                                         </div>
                                     </td>
@@ -220,6 +254,43 @@
                                         <div></div>
                                     </td>
                                 </tr>
+
+                                <tr *ngIf="ShowFooterButtons" style="height: 22px">
+                                    <td style="width: 10px;" *ngIf="!IsEditComponent && !IsFullScreen && !IsHideWindowMargin">
+                                        <div></div>
+                                    </td>
+
+                                    <td>
+                                        <div class="WindowFooter">
+                                            <table class="FooterTable">
+                                                <tr>
+                                                    <td>
+                                                        <div></div>
+                                                    </td>
+                                            
+                                                    <td class="FooterCell">
+                                                        <button class="Button" (click)="FooterButtonsClicked('cancel')" [disabled]="false"
+                                                            [attr.data-cy]="'CancelButton'">{{(IsViewMode ? 'Close' : CancelFooterButtonLabel) || 'Cancel'}}</button>
+                                                    </td>
+                                            
+                                                    <td *ngIf="!IsViewMode" class="FooterSplit">
+                                                        <div></div>
+                                                    </td>
+                                            
+                                                    <td *ngIf="!IsViewMode" class="FooterCell">
+                                                        <button class="RedButton" (click)="FooterButtonsClicked('submit')" [disabled]="false"
+                                                            [attr.data-cy]="'SubmitButton'">{{SubmitFooterButtonLabel || 'Ok'}}</button>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </td>
+                                    
+                                    <td style="width: 10px;" *ngIf="!IsEditComponent && !IsFullScreen && !IsHideWindowMargin">
+                                        <div></div>
+                                    </td>
+                                </tr>
+
                             </table>
                         </div>
                     </td>

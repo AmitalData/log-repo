@@ -78,6 +78,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomFilters\TeamCustomFilter.cs" />
+    <Compile Include="EntityKeys\AuditLogKeys.cs" />
     <Compile Include="EntityKeys\BatchTaskExecutionKeys.cs" />
     <Compile Include="EntityKeys\BatchTaskExecutionStatusKeys.cs" />
     <Compile Include="EntityKeys\BIFoldersPermissionKeys.cs" />
@@ -87,6 +88,13 @@
     <Compile Include="EntityKeys\BIReportsTypeKeys.cs" />
     <Compile Include="EntityKeys\BusinessProcessQueueKeys.cs" />
     <Compile Include="EntityKeys\BusinessRoleKeys.cs" />
+    <Compile Include="EntityKeys\ContainerSettingKeys.cs" />
+    <Compile Include="EntityKeys\DigitalFieldSecurityKeys.cs" />
+    <Compile Include="EntityKeys\DigitalPortalLanguageKeys.cs" />
+    <Compile Include="EntityKeys\DigitalPortalScreenKeys.cs" />
+    <Compile Include="EntityKeys\DigitalPreDefinedComponentKeys.cs" />
+    <Compile Include="EntityKeys\DigitalProfileKeys.cs" />
+    <Compile Include="EntityKeys\DigitalTextCodeKeys.cs" />
     <Compile Include="EntityKeys\FeatureToggleKeys.cs" />
     <Compile Include="EntityKeys\LastRunDetailKeys.cs" />
     <Compile Include="EntityKeys\LBPTeamMemberKeys.cs" />
@@ -95,6 +103,7 @@
     <Compile Include="EntityKeys\TeamKeys.cs" />
     <Compile Include="EntityKeys\TeamMemberBusinessRoleKeys.cs" />
     <Compile Include="EntityKeys\ToggleKeys.cs" />
+    <Compile Include="EntityListQueryServices\AuditLogListQueryService.cs" />
     <Compile Include="EntityListQueryServices\BatchTaskExecutionListQueryService.cs" />
     <Compile Include="EntityListQueryServices\BatchTaskExecutionStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\BIFoldersPermissionListQueryService.cs" />
@@ -104,7 +113,15 @@
     <Compile Include="EntityListQueryServices\BIReportsTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\BusinessProcessQueueListQueryService.cs" />
     <Compile Include="EntityListQueryServices\BusinessRoleListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\ContainerSettingListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\DigitalFieldSecurityListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\DigitalPortalLanguageListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\DigitalPortalScreenListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\DigitalPreDefinedComponentListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\DigitalProfileListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\DigitalTextCodeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\FeatureToggleListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\Generated\AuditLogListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\BatchTaskExecutionListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\BatchTaskExecutionStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\BIFoldersPermissionListQueryService.Generated.cs" />
@@ -114,6 +131,13 @@
     <Compile Include="EntityListQueryServices\Generated\BIReportsTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\BusinessProcessQueueListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\BusinessRoleListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\ContainerSettingListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\DigitalFieldSecurityListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\DigitalPortalLanguageListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\DigitalPortalScreenListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\DigitalPreDefinedComponentListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\DigitalProfileListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\DigitalTextCodeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\FeatureToggleListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\LastRunDetailListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\LBPTeamMemberListQueryService.Generated.cs" />
@@ -129,6 +153,7 @@
     <Compile Include="EntityListQueryServices\TeamListQueryService.cs" />
     <Compile Include="EntityListQueryServices\TeamMemberBusinessRoleListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ToggleListQueryService.cs" />
+    <Compile Include="EntityLists\Generated\AuditLogList.Generated.cs" />
     <Compile Include="EntityLists\Generated\BatchTaskExecutionList.Generated.cs" />
     <Compile Include="EntityLists\Generated\BatchTaskExecutionStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\BIFoldersPermissionList.Generated.cs" />
@@ -138,6 +163,13 @@
     <Compile Include="EntityLists\Generated\BIReportsTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\BusinessProcessQueueList.Generated.cs" />
     <Compile Include="EntityLists\Generated\BusinessRoleList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ContainerSettingList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\DigitalFieldSecurityList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\DigitalPortalLanguageList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\DigitalPortalScreenList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\DigitalPreDefinedComponentList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\DigitalProfileList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\DigitalTextCodeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\FeatureToggleList.Generated.cs" />
     <Compile Include="EntityLists\Generated\LastRunDetailList.Generated.cs" />
     <Compile Include="EntityLists\Generated\LBPTeamMemberList.Generated.cs" />
@@ -146,6 +178,14 @@
     <Compile Include="EntityLists\Generated\TeamList.Generated.cs" />
     <Compile Include="EntityLists\Generated\TeamMemberBusinessRoleList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ToggleList.Generated.cs" />
+    <Compile Include="EntityMapping\AuditLogMap.cs" />
+    <Compile Include="EntityMapping\ContainerSettingMap.cs" />
+    <Compile Include="EntityMapping\DigitalFieldSecurityMap.cs" />
+    <Compile Include="EntityMapping\DigitalPortalLanguageMap.cs" />
+    <Compile Include="EntityMapping\DigitalPortalScreenMap.cs" />
+    <Compile Include="EntityMapping\DigitalPreDefinedComponentMap.cs" />
+    <Compile Include="EntityMapping\DigitalProfileMap.cs" />
+    <Compile Include="EntityMapping\DigitalTextCodeMap.cs" />
     <Compile Include="EntityMapping\BatchTaskExecutionMap.cs" />
     <Compile Include="EntityMapping\BatchTaskExecutionStatusMap.cs" />
     <Compile Include="EntityMapping\BIFoldersPermissionMap.cs" />
@@ -163,6 +203,7 @@
     <Compile Include="EntityMapping\TeamMap.cs" />
     <Compile Include="EntityMapping\TeamMemberBusinessRoleMap.cs" />
     <Compile Include="EntityMapping\ToggleMap.cs" />
+    <Compile Include="EntityPOCOs\AuditLog.cs" />
     <Compile Include="EntityPOCOs\BatchTaskExecution.cs" />
     <Compile Include="EntityPOCOs\BatchTaskExecutionStatus.cs" />
     <Compile Include="EntityPOCOs\BIFoldersPermission.cs" />
@@ -172,7 +213,15 @@
     <Compile Include="EntityPOCOs\BIReportsType.cs" />
     <Compile Include="EntityPOCOs\BusinessProcessQueue.cs" />
     <Compile Include="EntityPOCOs\BusinessRole.cs" />
+    <Compile Include="EntityPOCOs\ContainerSetting.cs" />
+    <Compile Include="EntityPOCOs\DigitalFieldSecurity.cs" />
+    <Compile Include="EntityPOCOs\DigitalPortalLanguage.cs" />
+    <Compile Include="EntityPOCOs\DigitalPortalScreen.cs" />
+    <Compile Include="EntityPOCOs\DigitalPreDefinedComponent.cs" />
+    <Compile Include="EntityPOCOs\DigitalProfile.cs" />
+    <Compile Include="EntityPOCOs\DigitalTextCode.cs" />
     <Compile Include="EntityPOCOs\FeatureToggle.cs" />
+    <Compile Include="EntityPOCOs\IndexerWaterMark.cs" />
     <Compile Include="EntityPOCOs\LastRunDetail.cs" />
     <Compile Include="EntityPOCOs\LBPTeamMember.cs" />
     <Compile Include="EntityPOCOs\PriceStep.cs" />
@@ -180,9 +229,13 @@
     <Compile Include="EntityPOCOs\Team.cs" />
     <Compile Include="EntityPOCOs\TeamMemberBusinessRole.cs" />
     <Compile Include="EntityPOCOs\Toggle.cs" />
+    <Compile Include="ExtendedServices\AvailableForSchedulingBIReportService.cs" />
     <Compile Include="IInfrastructureContext.cs" />
     <Compile Include="InfrastructureContext.cs" />
+    <Compile Include="Models\AuditLog\FieldChange.cs" />
+    <Compile Include="Models\BIReportsFilterArguments.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repsitories\AuditLogRepository.cs" />
     <Compile Include="Repsitories\BatchTaskExecutionRepository.cs" />
     <Compile Include="Repsitories\BatchTaskExecutionStatusRepository.cs" />
     <Compile Include="Repsitories\BIFoldersPermissionRepository.cs" />
@@ -191,8 +244,16 @@
     <Compile Include="Repsitories\BIReportsExecutionLogRepository.cs" />
     <Compile Include="Repsitories\BIReportsTypeRepository.cs" />
     <Compile Include="Repsitories\BusinessProcessQueueRepository.cs" />
+    <Compile Include="Repsitories\ContainerSettingRepository.cs" />
+    <Compile Include="Repsitories\DigitalFieldSecurityRepository.cs" />
+    <Compile Include="Repsitories\DigitalPortalLanguageRepository.cs" />
+    <Compile Include="Repsitories\DigitalPortalScreenRepository.cs" />
+    <Compile Include="Repsitories\DigitalPreDefinedComponentRepository.cs" />
+    <Compile Include="Repsitories\DigitalProfileRepository.cs" />
+    <Compile Include="Repsitories\DigitalTextCodeRepository.cs" />
     <Compile Include="Repsitories\BusinessRoleRepository.cs" />
     <Compile Include="Repsitories\FeatureToggleRepository.cs" />
+    <Compile Include="Repsitories\Generated\AuditLogRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\BatchTaskExecutionRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\BatchTaskExecutionStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\BIFoldersPermissionRepository.Generated.cs" />
@@ -202,6 +263,13 @@
     <Compile Include="Repsitories\Generated\BIReportsTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\BusinessProcessQueueRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\BusinessRoleRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\ContainerSettingRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\DigitalFieldSecurityRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\DigitalPortalLanguageRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\DigitalPortalScreenRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\DigitalPreDefinedComponentRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\DigitalProfileRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\DigitalTextCodeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\FeatureToggleRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\LastRunDetailRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\LBPTeamMemberRepository.Generated.cs" />
@@ -224,6 +292,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <ProjectReference Include="..\Logitude.DashboardModule.Data\Logitude.DashboardModule.Data.csproj">
+      <Project>{156bdc54-4d7d-4964-9b48-c0b86b571de9}</Project>
+      <Name>Logitude.DashboardModule.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Simplog.Data\Simplog.Data.csproj">
       <Project>{78ec8434-e6ad-4e93-9b17-c746f5403f7b}</Project>
       <Name>Simplog.Data</Name>

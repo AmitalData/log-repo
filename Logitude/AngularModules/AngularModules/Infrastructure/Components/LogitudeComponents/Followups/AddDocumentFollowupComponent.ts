@@ -27,7 +27,7 @@ export class AddDocumentFollowupComponent extends BaseComponent {
     validator: Validator;
     Date: Date;
     OwnerUserId: string;
-    Note: string;
+    Notes: string;
 
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
@@ -94,7 +94,7 @@ export class AddDocumentFollowupComponent extends BaseComponent {
                     myQuoteFollowUpPM.ManualActivatedFollowUp = this.CurrentFollowUp.ManualActivatedFollowUp;
                     myQuoteFollowUpPM.Date = this.CurrentFollowUp.Date;
                     myQuoteFollowUpPM.OwnerUserId = this.CurrentFollowUp.OwnerUserId;
-                    myQuoteFollowUpPM.Note = this.CurrentFollowUp.Notes;
+                    myQuoteFollowUpPM.Notes = this.CurrentFollowUp.Notes;
                     myQuoteFollowUpPM.Done = this.CurrentFollowUp.Done;
                     myQuoteFollowUpPM.DocumentTypeId = this.CurrentFollowUp.DocumentTypeId;
                     myQuoteFollowUpPM.Area = this.CurrentFollowUp.Area;
@@ -113,7 +113,7 @@ export class AddDocumentFollowupComponent extends BaseComponent {
                     myShipmentFollowUpPM.ManualActivatedFollowUp = this.CurrentFollowUp.ManualActivatedFollowUp;
                     myShipmentFollowUpPM.Date = this.CurrentFollowUp.Date;
                     myShipmentFollowUpPM.OwnerUserId = this.CurrentFollowUp.OwnerUserId;
-                    myShipmentFollowUpPM.Note = this.CurrentFollowUp.Notes;
+                    myShipmentFollowUpPM.Notes = this.CurrentFollowUp.Notes;
                     myShipmentFollowUpPM.Done = this.CurrentFollowUp.Done;
                     myShipmentFollowUpPM.DocumentTypeId = this.CurrentFollowUp.DocumentTypeId;
                     myShipmentFollowUpPM.Area = this.CurrentFollowUp.Area;

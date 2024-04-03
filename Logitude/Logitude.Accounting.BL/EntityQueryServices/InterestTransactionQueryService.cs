@@ -1,4 +1,6 @@
-﻿using Logitude.Accounting.Data.EntityPOCOs;
+﻿using Logitude.Accounting.BL.DataContract;
+using Logitude.Accounting.Data;
+using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Data.Utilities;
 using Logitude.Accounting.Def.EntityPMs;
@@ -19,7 +21,6 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
             List <InterestTransactionPM> interestTransactionPMs = MapInterestTransactionsPocosToPMs(interestTransactions);
             return interestTransactionPMs;
-
         }
  
         public List<InterestTransactionPM> GetInterestTransactionsByInterestReportId(string interestReportId, int tenant)
@@ -50,6 +51,27 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
         }
 
+        public List<InterestTransactionPM> GetInterestTransactionsByPaymentId(string entityId, int tenant)
+        {
+          
+            List<InterestTransactionPM> interestTransactionPMs = (from a in context.InterestTransactions
+                                                           where a.EntityId == entityId && a.Tenant == tenant && a.InterestEntityTypeCode == InterestEntities.ARPayment
+                                                                  select new InterestTransactionPM()
+                                                           {
+                                                               Id = a.Id,
+                                                               OriginalEntityLineNumber = a.OriginalEntityLineNumber,
+                                                               EntityId = a.EntityId,
+                                                               InterestEntityTypeCode = a.InterestEntityTypeCode,
+                                                               InterestValueDate = a.InterestValueDate,
+                                                               LocalAmount = a.LocalAmount,
+                                                               ForeignAmount= a.ForeignAmount
+                                                              
+                                                           }).ToList();
+
+            return interestTransactionPMs;
+
+        }
+
         public InterestTransactionPM GetOpenBalanceInterestTransactionsByInterestReportId(string interestReportId, int tenant)
         {
             InterestTransactionRepository interestTransactionRepository = new InterestTransactionRepository(tenant);
@@ -76,5 +98,72 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             }
             return interestTransactionPMs;
         }
+
+        public InterestTransactionPM GetTransactionByUniqueConstraintFields(InterestTransactionUniqueConstraintFields uniqueConstraintFields)
+        {
+            InterestTransactionRepository interestTransactionRepository = new InterestTransactionRepository(uniqueConstraintFields.Tenant);
+            InterestTransaction interestTransactions = (from a in context.InterestTransactions
+                                                              where
+                                                                  a.InterestEntityTypeCode == uniqueConstraintFields.InterestEntityTypeCode
+                                                                  && a.OriginalEntityLineNumber == uniqueConstraintFields.OriginalEntityLineNumber
+                                                                  && a.Tenant == uniqueConstraintFields.Tenant
+                                                                  && a.GLAccountId == uniqueConstraintFields.GLAccountId
+                                                                  && a.EntityId == uniqueConstraintFields.EntityId
+                                                              select a).FirstOrDefault();
+
+            InterestTransactionPM interestTransactionPMs = GetEntityPM(interestTransactions);
+            return interestTransactionPMs;
+
+        }
+
+        public List<InterestTransactionPM> GetInterestTransactionPMsByEntityTypeCodeIdAccount(string typeCode, string entityId, string gLAccountId, int tenant)
+        {
+            InterestTransactionRepository interestTransactionRepository = new InterestTransactionRepository(tenant);
+
+            var lt_list = (from a in context.InterestTransactions
+                                                        where
+                                                            a.InterestEntityTypeCode == typeCode
+                                                            && a.Tenant == tenant
+                                                            && a.GLAccountId == gLAccountId
+                                                            && a.EntityId == entityId
+                     select a).ToList();
+
+            List<InterestTransactionPM> interestTransactionPMs = new List<InterestTransactionPM>();
+            lt_list.ForEach(intt => interestTransactionPMs.Add(GetEntityPM(intt)));
+            return interestTransactionPMs;
+
+        }
+        public List<InterestTransactionPM> GetInterestTransactionPMsByEntityTypeCodeIdAccountCurr(string typeCode, string entityId, string gLAccountId, int tenant, string currId)
+        {
+            InterestTransactionRepository interestTransactionRepository = new InterestTransactionRepository(tenant);
+
+            var lt_list = (from a in context.InterestTransactions
+                     where
+                         a.InterestEntityTypeCode == typeCode
+                         && a.Tenant == tenant
+                         && a.GLAccountId == gLAccountId
+                         && a.EntityId == entityId
+                         && (String.IsNullOrEmpty(currId) || a.CurrencyId == currId)
+                     select a).ToList();
+
+            List<InterestTransactionPM> interestTransactionPMs = new List<InterestTransactionPM>();
+            lt_list.ForEach(intt => interestTransactionPMs.Add(GetEntityPM(intt)));
+            return interestTransactionPMs;
+
+        }
+
+        public InterestTransaction MapInterestTransactionNotes(InterestTransactionPM interestTransactionPM)
+        {
+            InterestTransactionRepository interestTransactionRepository = new InterestTransactionRepository(interestTransactionPM.Tenant);
+            var interestTransaction =interestTransactionRepository.GetSingle(interestTransactionPM.Id, interestTransactionPM.Tenant);
+            interestTransaction.Notes = interestTransactionPM.Notes;
+            interestTransactionRepository.Update(interestTransaction);
+            interestTransactionRepository.SubmitChanges();
+
+
+            return interestTransaction;
+        }
+
+
     }
 }

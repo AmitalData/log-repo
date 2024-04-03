@@ -41,12 +41,6 @@ export class NewBIReportFolderComponent extends BaseComponent {
         this.IsNew = args.IsNew;
         this.FolderId = args.FolderId;
         this.SetEntityPM();
-        if (FeatureLocator.HasFeaturePermession("BIReportFolder", "UPDATE")) {
-            this.IsShareFolderAvailable = true;
-            this.LoadUsers();
-            this.FillShareValuesList();
-            this.SetSelectedSharedValue();
-        }
     }
 
     SetEntityPM() {
@@ -57,6 +51,7 @@ export class NewBIReportFolderComponent extends BaseComponent {
             this.EntityPM.UpdatedByUserId = SessionLocator.LoggedUserId;
             this.EntityPM.PermissionForAll = true;
             this.IsReady = true;
+            this.SetShareFolderDetails();
         }
         else {
             this.myService.get(this.FolderId).subscribe((myResponse: ServiceResponse) => {
@@ -65,12 +60,20 @@ export class NewBIReportFolderComponent extends BaseComponent {
                 }
                 else {
                     this.EntityPM = myResponse.Result;
-                    this.EntityPM.PermissionForAll = true;
                     this.EntityPM.UpdatedByUserId = SessionLocator.LoggedUserId;
                     this.IsReady = true;
+                    this.SetShareFolderDetails();
                 }
             });
         }
+    }
+
+    SetShareFolderDetails() {
+        if (!FeatureLocator.HasFeaturePermession("BIReportFolder", "UPDATE")) return;
+        this.IsShareFolderAvailable = true;
+        this.LoadUsers();
+        this.FillShareValuesList();
+        this.SetSelectedSharedValue();
     }
 
     SetUIProperties() {

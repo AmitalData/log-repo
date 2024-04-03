@@ -280,7 +280,7 @@ export class DeclarationCargoSplitPMService {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
-                var pmProperty = pmKeysArray[pmKey];
+				                  var pmProperty = pmKeysArray[pmKey];
                 newDecCargoSplitConPM[pmProperty] = jItem[pmProperty];
             }
            
@@ -386,7 +386,7 @@ export class DeclarationCargoSplitPMService {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
-                var pmProperty = pmKeysArray[pmKey];
+				                  var pmProperty = pmKeysArray[pmKey];
                 newDecCargoSplitConsItemPM[pmProperty] = jItem[pmProperty];
             }
            
@@ -497,7 +497,7 @@ export class DeclarationCargoSplitPMService {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
-                var pmProperty = pmKeysArray[pmKey];
+				                  var pmProperty = pmKeysArray[pmKey];
                 newDecCargoSplitConsPackDetPM[pmProperty] = jItem[pmProperty];
             }
            
@@ -596,7 +596,7 @@ export class DeclarationCargoSplitPMService {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
-                var pmProperty = pmKeysArray[pmKey];
+				                  var pmProperty = pmKeysArray[pmKey];
                 newDecCargoSplitCargoIdentifierPM[pmProperty] = jItem[pmProperty];
             }
            

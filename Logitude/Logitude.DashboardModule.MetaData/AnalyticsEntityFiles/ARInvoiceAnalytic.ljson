@@ -1,0 +1,465 @@
+{
+  "HashString": "cba2254e71ba4c0cb22ec62631c0657c",
+  "Name": "AR Invoices Statistics",
+  "TableName": "ARInvoiceAnalytics",
+  "ObjectTableName": "ARInvoice",
+  "AnalyticsFactsFieldsMetaDatas": [
+    {
+      "HashString": "1894c97ca98b44b5a324659ae02eaee7",
+      "DataTypeCode": "DateTime",
+      "CanMeasure": true,
+      "CanGroup": true,
+      "FieldCode": "InvoiceDate",
+      "DisplayName": "Invoice Date",
+      "DisplayNamePlural": "Invoice Date"
+    },
+    {
+      "HashString": "bf7e52abb6c44aa5b5da871e01cb82f9",
+      "DataTypeCode": "LookUp",
+      "CanGroup": true,
+      "CanSecondaryGroup": true,
+      "FieldCode": "PaymentTermId",
+      "DisplayName": "Payment Term",
+      "DisplayNamePlural": "Payment Term",
+      "JoinedTableName": "PaymentTerm",
+      "JoinedTableDBName": "PaymentTerms",
+      "JoinedTableKey": "Id",
+      "JoinedTableDisplayField": "EnglishName"
+    },
+    {
+      "HashString": "10fd4998443a4228a4b5367ac348cde6",
+      "DataTypeCode": "DateTime",
+      "CanMeasure": true,
+      "CanGroup": true,
+      "FieldCode": "DueDate",
+      "DisplayName": "Due Date",
+      "DisplayNamePlural": "Due Date"
+    },
+    {
+      "HashString": "163e01a61c284341ab53b5850534770f",
+      "DataTypeCode": "LookUp",
+      "CanGroup": true,
+      "CanSecondaryGroup": true,
+      "FieldCode": "InvoiceCurrencyId",
+      "DisplayName": "Currency",
+      "DisplayNamePlural": "Currency",
+      "JoinedTableName": "Currency",
+      "JoinedTableDBName": "Currencies",
+      "JoinedTableKey": "Id",
+      "JoinedTableDisplayField": "Code"
+    },
+    {
+      "HashString": "b66e28ed8724487e9851f382e476eaec",
+      "DataTypeCode": "Decimal",
+      "CanMeasure": true,
+      "FieldCode": "SubTotalInLocalCurrency",
+      "DisplayName": "Sub Total In Local Currency",
+      "DisplayNamePlural": "Sub Total In Local Currency",
+      "HasUnit": true,
+      "Unit": "{(LocalCurrency)}"
+    },
+    {
+      "HashString": "64cc97baf712481488c9555efa8c9194",
+      "DataTypeCode": "Decimal",
+      "CanMeasure": true,
+      "FieldCode": "AmountInLocalCurrency",
+      "DisplayName": "Amount In Local Currency",
+      "DisplayNamePlural": "AmountInLocalCurrency",
+      "HasUnit": true,
+      "Unit": "{(LocalCurrency)}"
+    },
+    {
+      "HashString": "6bd0b2bfbb5b41589e3174a3951eccf5",
+      "DataTypeCode": "LookUp",
+      "CanGroup": true,
+      "CanSecondaryGroup": true,
+      "FieldCode": "StatusCode",
+      "DisplayName": "Status Code",
+      "DisplayNamePlural": "StatusCode",
+      "JoinedTableName": "ARInvoiceStatus",
+      "JoinedTableDBName": "ARInvoiceStatus",
+      "JoinedTableKey": "Code",
+      "JoinedTableDisplayField": "Name",
+      "AllowTenantZeroFilter": true
+    },
+    {
+      "HashString": "f3de0a0e39dc4e30be9ead5565948750",
+      "DataTypeCode": "DateTime",
+      "CanMeasure": true,
+      "CanGroup": true,
+      "FieldCode": "CreateDate",
+      "DisplayName": "Create Date",
+      "DisplayNamePlural": "CreateDate",
+      "CommonFilterCode": "CreateDate"
+    },
+    {
+      "HashString": "487ed7f1cc13467f958f9235ab419ca7",
+      "DataTypeCode": "LookUp",
+      "CanGroup": true,
+      "FieldCode": "CreatedByUserId",
+      "DisplayName": "Created By User",
+      "DisplayNamePlural": "CreatedByUserId",
+      "JoinedTableName": "Contact",
+      "JoinedTableDBName": "Contacts",
+      "JoinedTableKey": "Id",
+      "JoinedTableDisplayField": "EnglishName"
+    },
+    {
+      "HashString": "05e20a08b9c346649e37014f71178171",
+      "DataTypeCode": "Boolean",
+      "CanGroup": true,
+      "FieldCode": "IsClosed",
+      "DisplayName": "Is Closed",
+      "DisplayNamePlural": "IsClosed"
+    },
+    {
+      "HashString": "3df5666073af459ca1c07c90f0d03481",
+      "DataTypeCode": "LookUp",
+      "CanGroup": true,
+      "CanSecondaryGroup": true,
+      "FieldCode": "ProfitCurrencyId",
+      "DisplayName": "Profit Currency",
+      "DisplayNamePlural": "ProfitCurrencyId",
+      "JoinedTableName": "Currency",
+      "JoinedTableDBName": "Currencies",
+      "JoinedTableKey": "Id",
+      "JoinedTableDisplayField": "Code"
+    },
+    {
+      "HashString": "130b4e545ba344b1b4dfb11128db769c",
+      "DataTypeCode": "Decimal",
+      "CanMeasure": true,
+      "FieldCode": "AmountInProfitCurrency",
+      "DisplayName": "Amount In Profit Currency",
+      "DisplayNamePlural": "AmountInProfitCurrency",
+      "HasUnit": true,
+      "Unit": "{(ProfitCurrency)}"
+    },
+    {
+      "HashString": "2dd570f613d14907915f741a2953e324",
+      "DataTypeCode": "LookUp",
+      "CanGroup": true,
+      "FieldCode": "UpdatedByUserId",
+      "DisplayName": "Updated By User",
+      "DisplayNamePlural": "Updated By User",
+      "JoinedTableName": "Contact",
+      "JoinedTableDBName": "Contacts",
+      "JoinedTableKey": "Id",
+      "JoinedTableDisplayField": "EnglishName"
+    },
+    {
+      "HashString": "6759c7b823c847e987434d6302fbe208",
+      "DataTypeCode": "DateTime",
+      "CanMeasure": true,
+      "CanGroup": true,
+      "FieldCode": "UpdateDate",
+      "DisplayName": "Update Date",
+      "DisplayNamePlural": "UpdateDate"
+    },
+    {
+      "HashString": "23505b4b084d47e6a30efe4e619c8c4c",
+      "DataTypeCode": "Text",
+      "FieldCode": "MainEntityReference",
+      "DisplayName": "Main Entity Reference",
+      "DisplayNamePlural": "MainEntityReference"
+    },
+    {
+      "HashString": "21a69dd6767e46578f8968716def5307",
+      "DataTypeCode": "Decimal",
+      "CanMeasure": true,
+      "FieldCode": "AmountDueInLocalCurrency",
+      "DisplayName": "Amount Due In Local Currency",
+      "DisplayNamePlural": "AmountDueInLocalCurrency",
+      "HasUnit": true,
+      "Unit": "{(LocalCurrency)}"
+    },
+    {
+      "HashString": "30c3b641a6814076bdb3dee14ce89da3",
+      "DataTypeCode": "Decimal",
+      "CanMeasure": true,
+      "FieldCode": "AmountDueInProfitCurrency",
+      "DisplayName": "Amount Due In Profit Currency",
+      "DisplayNamePlural": "AmountDueInProfitCurrency",
+      "HasUnit": true,
+      "Unit": "{(ProfitCurrency)}"
+    },
+    {
+      "HashString": "a62897fc0aab4f4980ffe4df27d6955c",
+      "DataTypeCode": "LookUp",
+      "CanGroup": true,
+      "CanSecondaryGroup": true,
+      "FieldCode": "BranchId",
+      "DisplayName": "Branch",
+      "DisplayNamePlural": "BranchId",
+      "JoinedTableName": "Branch",
+      "JoinedTableDBName": "Branches",
+      "JoinedTableKey": "Id",
+      "JoinedTableDisplayField": "EnglishName"
+    },
+    {
+      "HashString": "d527a8ab6e924948b6db3a010b3cd72c",
+      "DataTypeCode": "Text",
+      "FieldCode": "TransferError",
+      "DisplayName": "Transfer Error",
+      "DisplayNamePlural": "TransferError"
+    },
+    {
+      "HashString": "8a58d20d39f144ce9404bb0be89e58fa",
+      "DataTypeCode": "Boolean",
+      "CanGroup": true,
+      "FieldCode": "IsTransferStarted",
+      "DisplayName": "Is Transfer Started",
+      "DisplayNamePlural": "IsTransferStarted"
+    },
+    {
+      "HashString": "d29699fe881a4345bd4fbf25451535fc",
+      "DataTypeCode": "LookUp",
+      "CanGroup": true,
+      "FieldCode": "TransferStatusCode",
+      "DisplayName": "Transfer Status Code",
+      "DisplayNamePlural": "TransferStatusCode",
+      "JoinedTableName": "ARInvoiceTransferStatus",
+      "JoinedTableDBName": "ARInvoiceTransferStatus",
+      "JoinedTableKey": "Code",
+      "JoinedTableDisplayField": "Name",
+      "AllowTenantZeroFilter": true
+    },
+    {
+      "HashString": "127dfd8923ab470685e7a847fcf2cdca",
+      "DataTypeCode": "DateTime",
+      "CanMeasure": true,
+      "CanGroup": true,
+      "FieldCode": "ApprovedDate",
+      "DisplayName": "Approved Date",
+      "DisplayNamePlural": "ApprovedDate"
+    },
+    {
+      "HashString": "38dfa56bd8fc4645901be55118dee844",
+      "DataTypeCode": "Text",
+      "FieldCode": "InvoiceNumber",
+      "DisplayName": "Invoice Number",
+      "DisplayNamePlural": "InvoiceNumber"
+    },
+    {
+      "HashString": "78e02c30d4d84314aee9d0d6c05a7164",
+      "DataTypeCode": "LookUp",
+      "CanGroup": true,
+      "FieldCode": "ApprovedByUserId",
+      "DisplayName": "Approved By User",
+      "DisplayNamePlural": "ApprovedByUserId",
+      "JoinedTableName": "Contact",
+      "JoinedTableDBName": "Contacts",
+      "JoinedTableKey": "Id",
+      "JoinedTableDisplayField": "EnglishName"
+    },
+    {
+      "HashString": "10a63a2d3ff64c35a95ba62be62161f8",
+      "DataTypeCode": "DateTime",
+      "CanMeasure": true,
+      "CanGroup": true,
+      "FieldCode": "OperationalDate",
+      "DisplayName": "Operational Date",
+      "DisplayNamePlural": "OperationalDate"
+    },
+    {
+      "HashString": "44a19276e7a840879fc4cb8a7c9d52e9",
+      "DataTypeCode": "DateTime",
+      "CanMeasure": true,
+      "CanGroup": true,
+      "FieldCode": "PaidDate",
+      "DisplayName": "Paid Date",
+      "DisplayNamePlural": "PaidDate"
+    },
+    {
+      "HashString": "c5e630253d1e4e1a9fc3c4c1d35bb750",
+      "DataTypeCode": "LookUp",
+      "CanGroup": true,
+      "CanSecondaryGroup": true,
+      "FieldCode": "ARInvoiceTypeCode",
+      "DisplayName": "ARInvoice Type",
+      "DisplayNamePlural": "ARInvoiceTypeCode",
+      "JoinedTableName": "ARInvoiceType",
+      "JoinedTableDBName": "ARInvoiceTypes",
+      "JoinedTableKey": "Code",
+      "JoinedTableDisplayField": "Name",
+      "AllowTenantZeroFilter": true
+    },
+    {
+      "HashString": "aa75e3e74d8f45eb9a2aec4be308627f",
+      "DataTypeCode": "LookUp",
+      "CanGroup": true,
+      "FieldCode": "PrepaidCollectId",
+      "DisplayName": "Prepaid Collect",
+      "DisplayNamePlural": "PrepaidCollectId",
+      "JoinedTableName": "PrepaidCollect",
+      "JoinedTableDBName": "PrepaidCollects",
+      "JoinedTableKey": "Id",
+      "JoinedTableDisplayField": "Name",
+      "AllowTenantZeroFilter": true
+    },
+    {
+      "HashString": "3186034570e8459fa75749a402a625b4",
+      "DataTypeCode": "Text",
+      "FieldCode": "DraftNumber",
+      "DisplayName": "Draft Number",
+      "DisplayNamePlural": "DraftNumber"
+    },
+    {
+      "HashString": "483b1c095b7a482f8454b8070fa75cff",
+      "DataTypeCode": "LookUp",
+      "CanGroup": true,
+      "FieldCode": "BillToId",
+      "DisplayName": "Bill To",
+      "DisplayNamePlural": "BillToId",
+      "JoinedTableName": "Card",
+      "JoinedTableDBName": "Cards",
+      "JoinedTableKey": "Id",
+      "JoinedTableDisplayField": "EnglishName"
+    },
+    {
+      "HashString": "9e432a0327324409aeed562dbb6662eb",
+      "DataTypeCode": "LookUp",
+      "CanGroup": true,
+      "FieldCode": "BillToAddressId",
+      "DisplayName": "Bill To Address",
+      "DisplayNamePlural": "BillToAddressId",
+      "JoinedTableName": "Address",
+      "JoinedTableDBName": "Addresses",
+      "JoinedTableKey": "Id",
+      "JoinedTableDisplayField": "Name"
+    },
+    {
+      "HashString": "f02022107a6f4294ab7255b223d78cd4",
+      "DataTypeCode": "Text",
+      "FieldCode": "VatNumber",
+      "DisplayName": "Vat Number",
+      "DisplayNamePlural": "VatNumber"
+    },
+    {
+      "HashString": "01cee4f418ac4778b69affff9b027c88",
+      "DataTypeCode": "LookUp",
+      "CanGroup": true,
+      "FieldCode": "PrintByUserId",
+      "DisplayName": "Print By User",
+      "DisplayNamePlural": "PrintByUserId",
+      "JoinedTableName": "Contact",
+      "JoinedTableDBName": "Contacts",
+      "JoinedTableKey": "Id",
+      "JoinedTableDisplayField": "EnglishName"
+    },
+    {
+      "HashString": "21573745978641a79692573308dbf595",
+      "DataTypeCode": "Boolean",
+      "FieldCode": "IsPrinted",
+      "DisplayName": "Is Printed",
+      "DisplayNamePlural": "IsPrinted"
+    },
+    {
+      "HashString": "08d8530d35654029b63bc5731e929bb9",
+      "DataTypeCode": "DateTime",
+      "CanMeasure": true,
+      "CanGroup": true,
+      "FieldCode": "PrintDate",
+      "DisplayName": "Print Date",
+      "DisplayNamePlural": "PrintDate"
+    },
+    {
+      "HashString": "f8711fa40fb5440f814d74b33b38fce6",
+      "DataTypeCode": "Boolean",
+      "FieldCode": "Sent",
+      "DisplayName": "Sent",
+      "DisplayNamePlural": "Sent"
+    },
+    {
+      "HashString": "56a82f0b6a7c46dca22bf66a9c1cdb4a",
+      "DataTypeCode": "Boolean",
+      "FieldCode": "IsInvoiceNumberManuallySet",
+      "DisplayName": "Is Invoice Number Manually Set",
+      "DisplayNamePlural": "IsInvoiceNumberManuallySet"
+    },
+    {
+      "HashString": "be45f872004a4ece9c0ef4876866b40e",
+      "DataTypeCode": "Boolean",
+      "FieldCode": "IsConstituentInvoice",
+      "DisplayName": "Is Constituent Invoice",
+      "DisplayNamePlural": "IsConstituentInvoice"
+    },
+    {
+      "HashString": "897a77c8fb7943369fd1125786dbecae",
+      "DataTypeCode": "Boolean",
+      "FieldCode": "IsConsolidationInvoice",
+      "DisplayName": "Is Consolidation Invoice",
+      "DisplayNamePlural": "IsConsolidationInvoice"
+    },
+    {
+      "HashString": "8ac85ce4a55d49c9b6913aa24a492afb",
+      "DataTypeCode": "Boolean",
+      "FieldCode": "IsMultiCurrency",
+      "DisplayName": "Is Multi Currency",
+      "DisplayNamePlural": "IsMultiCurrency"
+    },
+    {
+      "HashString": "dd028113328d4f5e81026f5897c98ef4",
+      "DataTypeCode": "LookUp",
+      "CanGroup": true,
+      "FieldCode": "SalesmanUserId",
+      "DisplayName": "Salesman User",
+      "DisplayNamePlural": "SalesmanUserId",
+      "JoinedTableName": "Contact",
+      "JoinedTableDBName": "Contacts",
+      "JoinedTableKey": "Id",
+      "JoinedTableDisplayField": "EnglishName"
+    },
+    {
+      "HashString": "a80c856630e0429cb1fa7a969e0bdc2c",
+      "DataTypeCode": "Boolean",
+      "FieldCode": "Intercompany",
+      "DisplayName": "Inter company",
+      "DisplayNamePlural": "Intercompany"
+    },
+    {
+      "HashString": "5cebcecec7aa4038845d9865f827b3de",
+      "DataTypeCode": "LookUp",
+      "CanGroup": true,
+      "FieldCode": "BankAccountLiteId",
+      "DisplayName": "Bank Account Lite",
+      "DisplayNamePlural": "BankAccountLiteId",
+      "JoinedTableName": "BankAccountLite",
+      "JoinedTableDBName": "BankAccountLites",
+      "JoinedTableKey": "Id",
+      "JoinedTableDisplayField": "EnglishName"
+    },
+    {
+      "HashString": "bc6de8b3efe6499fb8a00fca327b8b5a",
+      "DataTypeCode": "LookUp",
+      "CanGroup": true,
+      "FieldCode": "RegionalTaxId",
+      "DisplayName": "Regional Tax",
+      "DisplayNamePlural": "RegionalTaxId",
+      "JoinedTableName": "VatType",
+      "JoinedTableDBName": "VatTypes",
+      "JoinedTableKey": "Id",
+      "JoinedTableDisplayField": "EnglishName"
+    },
+    {
+      "HashString": "bd218a4bcc2d4145bc99a14975ea9e8b",
+      "DataTypeCode": "Decimal",
+      "CanMeasure": true,
+      "FieldCode": "RegionalTaxPercentage",
+      "DisplayName": "RegionalTaxPercentage",
+      "DisplayNamePlural": "RegionalTaxPercentage"
+    },
+    {
+      "HashString": "60e1de66b3f24f918e03454cdb4ffbc9",
+      "DataTypeCode": "LookUp",
+      "CanGroup": true,
+      "FieldCode": "PartnerId",
+      "DisplayName": "Partner",
+      "DisplayNamePlural": "PartnerId",
+      "JoinedTableName": "Card",
+      "JoinedTableDBName": "Cards",
+      "JoinedTableKey": "Id",
+      "JoinedTableDisplayField": "EnglishName"
+    }
+  ]
+}

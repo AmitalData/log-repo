@@ -1,4 +1,4 @@
-import { Component} from '@angular/core';
+import { Component } from '@angular/core';
 import { SessionLocator } from '../../../../../../Infrastructure/Utilities/SessionLocator';
 import { InterestReportLinesByDatePM } from '../../../../../EntityPMs/InterestReportLinesByDatePM';
 import { InterestTransactionExtendedListService } from '../../../../../Services/ExtendedLists/InterestTransactionExtendedListService';
@@ -9,10 +9,11 @@ import { TextCodeTranslator } from '../../../../../../Infrastructure/Utilities/T
 import { ObjectsLocator } from '../../../../../../Infrastructure/Locators/ObjectsLocator';
 import { AccountingEntityHelper } from '../../../../../Utilities/AccountingEntityHelper';
 import { AppTool } from '../../../../../../Infrastructure/Tools';
+import { LogitudeWindow } from '../../../../../../Controls/Windows/LogitudeWindow';
 
 
 @Component({
-    
+
     templateUrl: './InterestReportLineByDateDetailsComponent.html',
 })
 
@@ -22,10 +23,10 @@ export class InterestReportLineByDateDetailsComponent {
     public myService: InterestTransactionExtendedListService;
     public InterestTransactions: ObservableCollection;
     public InterestLineDataList: ObservableCollection;
-    public TotalInterests:number;
-    public TotalAmount:number;
+    public TotalInterests: number;
+    public TotalAmount: number;
     public isRTL: boolean = false;
-    public IconCode: string=null;
+    public IconCode: string = null;
     constructor() {
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         this.myService = new InterestTransactionExtendedListService();
@@ -44,6 +45,7 @@ export class InterestReportLineByDateDetailsComponent {
     public TotalInterestHeader = TextCodeTranslator.Translate("InterestReportLinesByDate.F.TotalInterest");
     public PercentageHeader = TextCodeTranslator.Translate("InterestReportLinesByDate.O.Percentage");
     public TotalHeader = TextCodeTranslator.Translate("InterestReportLinesByDate.O.Total");
+    public InterestTransactionNotes = TextCodeTranslator.Translate("ARInvoice.F.InternalNotes");
 
     public interestTransactionsWithTotal: InterestTransactionsWithTotal;
     public TotalLocalAmount: number;
@@ -103,35 +105,52 @@ export class InterestReportLineByDateDetailsComponent {
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }
-    InterestLineParameters:InterestLineParameters[]=[];
-    BuildInterestLineData(){
-        var interestLine1:InterestLineParameters = new InterestLineParameters(TextCodeTranslator.Translate("InterestReportLinesByDate.F.StandardInterestPercentage"),this.EntityPM.StandardInterestPercentage,this.EntityPM.StandardInterestAmount,this.EntityPM.CalculatedStandInterestAmount);
-        var interestLine2:InterestLineParameters = new InterestLineParameters(TextCodeTranslator.Translate("InterestReportLinesByDate.F.ExceptionalInterestPercentage"),this.EntityPM.ExceptionalInterestPercentage,this.EntityPM.ExceptionalInterestAmount,this.EntityPM.CalculatedExcepInterestAmount);
-        var interestLine3:InterestLineParameters = new InterestLineParameters(TextCodeTranslator.Translate("InterestReportLinesByDate.F.CreditInterestPercentage"),this.EntityPM.CreditInterestPercentage,this.EntityPM.CreditInterestAmount,this.EntityPM.CalculatedCreditInterestAmount);
-        this.TotalInterests =  this.EntityPM.CalculatedStandInterestAmount + this.EntityPM.CalculatedExcepInterestAmount +this.EntityPM.CalculatedCreditInterestAmount;
-        this.TotalAmount =  this.EntityPM.StandardInterestAmount + this.EntityPM.ExceptionalInterestAmount +this.EntityPM.CreditInterestAmount;
+    InterestLineParameters: InterestLineParameters[] = [];
+    BuildInterestLineData() {
+        var interestLine1: InterestLineParameters = new InterestLineParameters(TextCodeTranslator.Translate("InterestReportLinesByDate.F.StandardInterestPercentage"), this.EntityPM.StandardInterestPercentage, this.EntityPM.StandardInterestAmount, this.EntityPM.CalculatedStandInterestAmount);
+        var interestLine2: InterestLineParameters = new InterestLineParameters(TextCodeTranslator.Translate("InterestReportLinesByDate.F.ExceptionalInterestPercentage"), this.EntityPM.ExceptionalInterestPercentage, this.EntityPM.ExceptionalInterestAmount, this.EntityPM.CalculatedExcepInterestAmount);
+        var interestLine3: InterestLineParameters = new InterestLineParameters(TextCodeTranslator.Translate("InterestReportLinesByDate.F.CreditInterestPercentage"), this.EntityPM.CreditInterestPercentage, this.EntityPM.CreditInterestAmount, this.EntityPM.CalculatedCreditInterestAmount);
+        this.TotalInterests = this.EntityPM.CalculatedStandInterestAmount + this.EntityPM.CalculatedExcepInterestAmount + this.EntityPM.CalculatedCreditInterestAmount;
+        this.TotalAmount = this.EntityPM.StandardInterestAmount + this.EntityPM.ExceptionalInterestAmount + this.EntityPM.CreditInterestAmount;
         this.InterestLineParameters.push(interestLine1);
         this.InterestLineParameters.push(interestLine2);
         this.InterestLineParameters.push(interestLine3);
         this.InterestLineDataList.InsertCollection(this.InterestLineParameters);
     }
+
+    OpenInterestTransactionNote(line: any) {
+
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 450;
+        logWindow.Height = 350;
+        logWindow.Title = TextCodeTranslator.Translate("ARInvoice.F.InternalNotes");
+        logWindow.WindowArgs = { interestTransaction: line };
+        logWindow.Show('./Accounting/Components/Others/InterestTransactionNotesComponent');
+        logWindow.WindowClosed.subscribe(($event: any) => {
+        });
+
+        
+    }
 }
- 
-  export class  InterestTransactionsWithTotal {
+
+export class InterestTransactionsWithTotal {
     public interestTransactionLists: InterestTransactionList[];
     public TotalLocalAmount: number;
-  }
-  export class  InterestLineParameters {
-    public Title:string;
+}
+export class InterestLineParameters {
+    public Title: string;
     public Percentage: number;
     public TotalInterest: number;
     public TotalAmount: number;
 
-    constructor(Title:string,Percentage:number,TotalInterest:number,TotalAmount:number){
-        this.Title=Title;
-        this.Percentage=Percentage;
-        this.TotalInterest=TotalInterest;
-        this.TotalAmount=TotalAmount;
-              }
-               
-  }
+    constructor(Title: string, Percentage: number, TotalInterest: number, TotalAmount: number) {
+        this.Title = Title;
+        this.Percentage = Percentage;
+        this.TotalInterest = TotalInterest;
+        this.TotalAmount = TotalAmount;
+    }
+
+
+
+
+}

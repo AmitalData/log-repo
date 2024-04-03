@@ -756,6 +756,9 @@ namespace Simplog.Data.QuoteModel.Mapping
               .HasMaxLength(10)
               .IsUnicode(false);
 
+            this.Property(t => t.XMLData)
+                .IsMaxLength()
+                .IsUnicode(true);
 
             // Table & Column Mappings
             this.ToTable("QuoteTemplateSettings");
@@ -1028,6 +1031,8 @@ namespace Simplog.Data.QuoteModel.Mapping
             this.Property(t => t.HidePageNumber).HasColumnName("HidePageNumber");
             this.Property(t => t.ShowRegionalTAXPackages).HasColumnName("ShowRegionalTAXPackages");
             this.Property(t => t.ShowRegionalTAXContainers).HasColumnName("ShowRegionalTAXContainers");
+
+            this.Property(t => t.XMLData).HasColumnName("XMLData");
 
             //#if ORACLE_DB
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");

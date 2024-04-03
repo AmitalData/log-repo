@@ -20,7 +20,7 @@ export class ApiCredintialsPM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-          this.UIProperties = new UIProperties(this); 
+		            this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -63,6 +63,11 @@ export class ApiCredintialsPM {
     private allowedIPs: string;
     public get AllowedIPs() { return this.allowedIPs; }
     public set AllowedIPs(newValue: string) { if (this.allowedIPs != newValue) { this.allowedIPs = newValue; this.MarkAsDirty("AllowedIPs"); } }
+       
+	 
+    private tokenExpirationTime: number;
+    public get TokenExpirationTime() { return this.tokenExpirationTime; }
+    public set TokenExpirationTime(newValue: number) { if (this.tokenExpirationTime != newValue) { this.tokenExpirationTime = newValue; this.MarkAsDirty("TokenExpirationTime"); } }
        
 	 
     private createdBy: string;

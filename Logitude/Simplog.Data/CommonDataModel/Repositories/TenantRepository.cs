@@ -92,7 +92,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             return (from record in context.Tenants where record.Id == id  select record.TenantEmailSendingQuota).FirstOrDefault();
         }
-
+        public bool GetTenantAccountingActivated(int id)
+        {
+            return (from record in context.Tenants where record.Id == id select record.AccountingActivated).FirstOrDefault();
+        }
         public  Tenant GetSingleTenantByIdAndTenant(int id, bool getFromCache)
         {
             string entityName = "Tenant" + id;
@@ -130,14 +133,29 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public  Tenant GetSingleTenant(int id)
         {
-            Tenant entity = (from a in context.Tenants.Include("Address").Include("PaymentTerm").Include("OtherChargesCurrency").Include("QuoteSaleCurrency").Include("AgentCard").Include("Currency").Include("ProfitCurrency").Include("FreightCurrency").Include("PasswordPolicy").Include("Address.Country").Include("Address.State").Include("CustomerCard") where a.Id == id select a).FirstOrDefault();                      
+            Tenant entity =  context.Tenants
+                                    .Include("PaymentTerm")
+                                    .Include("OtherChargesCurrency")
+                                    .Include("QuoteSaleCurrency")
+                                    .Include("AgentCard")
+                                    .Include("Currency")
+                                    .Include("ProfitCurrency")
+                                    .Include("FreightCurrency")
+                                    .Include("PasswordPolicy")
+                                    .Include("Address.Country")
+                                    .Include("Address.State")
+                                    .Include("CustomerCard")
+                                    .FirstOrDefault(a => a.Id == id);
             return entity;
         }
 
 
         public Tenant GetSingleTenantWithOutIncluded(int id)
         {
-            Tenant entity = (from a in context.Tenants where a.Id == id select a).FirstOrDefault();
+            Tenant entity = context.Tenants
+                                   .Include("Address.Country")
+                                   .Include("Address.State")
+                                   .FirstOrDefault(a => a.Id == id);
             return entity;
         }
 

@@ -18,7 +18,10 @@ export class LoginExtendedService {
 		return defer(() => {
 			return this._http.post(this._apiUrl + "Authentication", loginParameters, { headers: authHeaders })
 				.pipe(
+                    
 					map((response: HttpResponse<any>) => {
+                        debugger
+
 						let userData = response;
 
 						return userData;
@@ -114,6 +117,16 @@ export class LoginExtendedService {
 					})));
 		});
 	}
+    GetDocumentDownloadToken() {
+        var url = this._apiUrl +'Authentication/GetDocumentDownloadToken?documentToken=' + SessionInfo.DocumentDownloadToken;
+        var authHeaders = ServiceHelper.GetHeadersWithToken();
+
+        return this._http.get(url, authHeaders ).pipe(map(response => {
+            return response;
+        }), catchError(error=>{
+            return error;
+        }));
+    }
 }
 
 

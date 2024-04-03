@@ -138,7 +138,7 @@
                                                             [SelectedValue]="OnCarriageCarrierId"
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
-                                                            [LookUpTableName]="'Carrier'">
+                                                            [LookUpTableName]="'Carrier'" [ShowInActive]="'true'" [ShowInActivePopUpWindow]="'true'">
                                                     </LogLov>
                                                 </td>
                                             </tr>
@@ -154,18 +154,34 @@
                                                 </td>
                                             </tr>
 
-                                            <!-- OnCarriageVesselId -->
-                                            <tr class="FormFieldRow">
+                                            <!-- OnCarriageVesselName -->
+                                            <tr class="FormFieldRow" *ngIf="OnCarriageTransportModeId == 'O'">
                                                 <td>
-                                                    <LogLabel [ObjectFieldName]="'OnCarriageVesselId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.O.Routings.Vessel'"></LogLabel>
+                                                    <LogLabel [ObjectFieldName]="'OnCarriageVesselName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.O.Routings.Vessel'"></LogLabel>
                                                 </td>
 
-                                                <td>
+                                                <td *ngIf="IsVesselFreeTextVisible">
+                                                    <table>
+                                                        <tr>
+                                                            <td>
+                                                                <LogTextBox [HideLastColumn]="true" [ObjectFieldName]="'OnCarriageVesselName'" [Text]="OnCarriageVesselName" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                            </td>
+                                                            <td style="width: 20px; left:-15px;">
+                                                                <span *ngIf="IsChooseVesselVisible" class="hyperlink" [class.HyperlinkDisabled]="!IsEditingEnabled" (click)="ChooseVesselClicked('O')">
+                                                                    <img style="vertical-align: middle; width: 14px; height: 14px; cursor: pointer;" src="./Images/LOVSearch.png" />
+                                                                </span>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+
+                                                <td *ngIf="!IsVesselFreeTextVisible">
                                                     <LogLov [ObjectFieldName]="'OnCarriageVesselId'"
                                                             [SelectedValue]="OnCarriageVesselId"
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
-                                                            [LookUpTableName]="'Vessel'">
+                                                            [LookUpTableName]="'Vessel'"
+                                                            (SelectedItemChanged)="OnCarriageVessel = $event">
                                                     </LogLov>
                                                 </td>
                                             </tr>
@@ -516,7 +532,7 @@
                                                             [SelectedValue]="OnForwardingCarrierId"
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
-                                                            [LookUpTableName]="'Carrier'">
+                                                            [LookUpTableName]="'Carrier'" [ShowInActive]="'true'" [ShowInActivePopUpWindow]="'true'">
                                                     </LogLov>
                                                 </td>
                                             </tr>
@@ -532,18 +548,34 @@
                                                 </td>
                                             </tr>
 
-                                            <!-- OnForwardingVesselId -->
-                                            <tr class="FormFieldRow">
+                                            <!-- OnForwardingVesselName -->
+                                            <tr class="FormFieldRow" *ngIf="OnForwardingTransportModeId == 'O'">
                                                 <td>
-                                                    <LogLabel [ObjectFieldName]="'OnForwardingVesselId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.O.Routings.Vessel'"></LogLabel>
+                                                    <LogLabel [ObjectFieldName]="'OnForwardingVesselName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.O.Routings.Vessel'"></LogLabel>
                                                 </td>
 
-                                                <td>
+                                                <td *ngIf="IsVesselFreeTextVisible">
+                                                    <table>
+                                                        <tr>
+                                                            <td>
+                                                                <LogTextBox [HideLastColumn]="true" [ObjectFieldName]="'OnForwardingVesselName'" [Text]="OnForwardingVesselName" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                            </td>
+                                                            <td style=" width: 20px; left:-15px;">
+                                                                <span *ngIf="IsChooseVesselVisible" class="hyperlink" [class.HyperlinkDisabled]="!IsEditingEnabled" (click)="ChooseVesselClicked('F')">
+                                                                    <img style="vertical-align: middle; width: 14px; height: 14px; cursor: pointer;" src="./Images/LOVSearch.png" />
+                                                                </span>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+
+                                                <td *ngIf="!IsVesselFreeTextVisible">
                                                     <LogLov [ObjectFieldName]="'OnForwardingVesselId'"
                                                             [SelectedValue]="OnForwardingVesselId"
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
-                                                            [LookUpTableName]="'Vessel'">
+                                                            [LookUpTableName]="'Vessel'"
+                                                            (SelectedItemChanged)="OnForwardingVessel = $event">
                                                     </LogLov>
                                                 </td>
                                             </tr>
@@ -706,7 +738,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="Button" id="{{ 'OnCarriageCancelBtn' | IdGeneratorPipe}}" (click)="CancelButtonClicked()">Cancel</button>
+                        <button class="Button" id="{{ 'OnCarriageCancelBtn' | IdGeneratorAsyncPipe | async}}" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -714,7 +746,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="RedButton" (click)="OkButtonClicked()" [disabled]="!IsOkButtonEnabled" id="{{ 'OnCarriageOKBtn' | IdGeneratorPipe}}">Ok</button>
+                        <button class="RedButton" (click)="OkButtonClicked()" [disabled]="!IsOkButtonEnabled" id="{{ 'OnCarriageOKBtn' | IdGeneratorAsyncPipe | async}}">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
                     </td>
                 </tr>
             </table>

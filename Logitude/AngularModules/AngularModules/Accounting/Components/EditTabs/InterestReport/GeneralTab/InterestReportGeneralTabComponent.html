@@ -94,7 +94,9 @@
                                                                     [DataContext]="DataContext"
                                                                     [LookUpTableName]="'Card'"
                                                                     [DependencyFilter1Value]="'CS'"
-                                                                    [HideLastColumn]="true">
+                                                                    [HideLastColumn]="true"
+                                                                    [StartSearchFromChar]="3"
+                                            [StartSearchFromNumber]="6">
                                                             </LogLov>
                                                         </tr>
                                                         <tr style="height:5px;">
@@ -327,7 +329,7 @@
             </div>
         </div>
 
-        <div float-start style="width: calc(100% - 300px); overflow: auto;">
+        <div float-start style="width: 400px; overflow: auto;">
             <div class="footer-title">
                 {{'InterestReport.F.InvoiceAmount' | TextCodeTranslationPipe}}:
                 <span style="font-size: 15px; color:#21a373;direction: ltr;">
@@ -341,6 +343,15 @@
                 </span>
             </div>
 
+        </div>
+
+        <div float-start style="width: calc(100% - 700px); overflow: auto;">
+            <div class="footer-title">
+                {{'InterestReport.F.CalculatedPostponedChequesCommision' | TextCodeTranslationPipe}}:
+                <span style="font-size: 15px; color:#21a373;direction: ltr;">
+                    {{EntityPM.CalculatedPostponedChequesCommision | NumbersPipe:'N2'}}
+                </span>
+            </div>
         </div>
     </div>
 </div>

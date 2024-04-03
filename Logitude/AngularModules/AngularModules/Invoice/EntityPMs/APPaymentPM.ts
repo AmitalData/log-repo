@@ -9,6 +9,8 @@
 
 
 import {APPaymentInvoicePM} from './APPaymentInvoicePM';
+
+import {LedgerTransactionPM} from './../../Accounting/EntityPMs/LedgerTransactionPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -511,6 +513,56 @@ export class APPaymentPM {
     private externalPaymentNotes: string;
     public get ExternalPaymentNotes() { return this.externalPaymentNotes; }
     public set ExternalPaymentNotes(newValue: string) { if (this.externalPaymentNotes != newValue) { this.externalPaymentNotes = newValue; this.MarkAsDirty("ExternalPaymentNotes"); } }
+       
+	 
+     
+	private reconcileInternalTrans: LedgerTransactionPM[];
+    get  ReconcileInternalTrans() {
+        if (this.reconcileInternalTrans == null) {
+            this.reconcileInternalTrans = [];
+        }
+
+        return this.reconcileInternalTrans;
+    }
+    set  ReconcileInternalTrans(newValue: LedgerTransactionPM[]) {
+        if (this.reconcileInternalTrans != newValue) {
+            this.reconcileInternalTrans = newValue;
+        }
+    }
+    //public ReconcileInternalTrans: Array<LedgerTransactionPMPM>= [];
+     private vendorCode: string;
+    public get VendorCode() { return this.vendorCode; }
+    public set VendorCode(newValue: string) { if (this.vendorCode != newValue) { this.vendorCode = newValue; this.MarkAsDirty("VendorCode"); } }
+       
+	 
+    private connectedInvoicesNumbers: string;
+    public get ConnectedInvoicesNumbers() { return this.connectedInvoicesNumbers; }
+    public set ConnectedInvoicesNumbers(newValue: string) { if (this.connectedInvoicesNumbers != newValue) { this.connectedInvoicesNumbers = newValue; this.MarkAsDirty("ConnectedInvoicesNumbers"); } }
+       
+	 
+    private isCreatedFromInvoiceSide: boolean;
+    public get IsCreatedFromInvoiceSide() { return this.isCreatedFromInvoiceSide; }
+    public set IsCreatedFromInvoiceSide(newValue: boolean) { if (this.isCreatedFromInvoiceSide != newValue) { this.isCreatedFromInvoiceSide = newValue; this.MarkAsDirty("IsCreatedFromInvoiceSide"); } }
+       
+	 
+    private createdFromInvoiceId: string;
+    public get CreatedFromInvoiceId() { return this.createdFromInvoiceId; }
+    public set CreatedFromInvoiceId(newValue: string) { if (this.createdFromInvoiceId != newValue) { this.createdFromInvoiceId = newValue; this.MarkAsDirty("CreatedFromInvoiceId"); } }
+       
+	 
+    private invoiceAmountDue: number;
+    public get InvoiceAmountDue() { return this.invoiceAmountDue; }
+    public set InvoiceAmountDue(newValue: number) { if (this.invoiceAmountDue != newValue) { this.invoiceAmountDue = newValue; this.MarkAsDirty("InvoiceAmountDue"); } }
+       
+	 
+    private invoiceRate: number;
+    public get InvoiceRate() { return this.invoiceRate; }
+    public set InvoiceRate(newValue: number) { if (this.invoiceRate != newValue) { this.invoiceRate = newValue; this.MarkAsDirty("InvoiceRate"); } }
+       
+	 
+    private invoiceCurrencyId: string;
+    public get InvoiceCurrencyId() { return this.invoiceCurrencyId; }
+    public set InvoiceCurrencyId(newValue: string) { if (this.invoiceCurrencyId != newValue) { this.invoiceCurrencyId = newValue; this.MarkAsDirty("InvoiceCurrencyId"); } }
        
 	 
 

@@ -28,6 +28,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPOCO.IsCustomRole = entityPM.IsCustomRole;
             entityPM.SearchFields = entityPM.Name;
             entityPOCO.SearchFields = entityPM.Name;
+            entityPOCO.Inactive = entityPM.Inactive;
         }
     }
 }

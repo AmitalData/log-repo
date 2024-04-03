@@ -11,7 +11,19 @@ namespace Simplog.Server.Infrastructure.Helpers
 {
     public class GenericSort
     {
-        public IQueryable<T> GetSorterQuery<T,N>(QueryOperations queryOperations, IQueryable<T> querableData)
+
+        int tenant = 0;
+        public GenericSort(int tenant)
+        {
+            this.tenant = tenant;
+        }
+
+        public GenericSort()
+        {
+
+        }
+
+        public IQueryable<T> GetSorterQuery<T, N>(QueryOperations queryOperations, IQueryable<T> querableData)
         {
             string keyName = null;
             if (!string.IsNullOrEmpty(queryOperations.ObjectTableName))
@@ -21,7 +33,7 @@ namespace Simplog.Server.Infrastructure.Helpers
             SortParams<T, N> sortParams = new SortParams<T, N>();
             sortParams.QuerableData = querableData;
             sortParams.SortDirection = queryOperations.SortDirectin;
-            sortParams.FirstSortExpression= GetSortExpression<T, N>(queryOperations.SortByColumnName);
+            sortParams.FirstSortExpression = GetSortExpression<T, N>(queryOperations.SortByColumnName);
             if (!String.IsNullOrWhiteSpace(keyName) && //LogitudeSettings.DatabaseManagementSystem == "oracle" &&
                 typeof(T).GetProperty(keyName).PropertyType == typeof(Guid)
                 && LogitudeSettings.IsCostomsDeploy // crush on sql server on branch amital - fast respone 
@@ -39,7 +51,7 @@ namespace Simplog.Server.Infrastructure.Helpers
             {
                 return GetSortedQuery<T, N>(sortParams);
             }
-           
+
         }
         private IQueryable<T> GetSortedQuery<T, N>(SortParams<T, N> sortParams)
         {
@@ -72,13 +84,13 @@ namespace Simplog.Server.Infrastructure.Helpers
             return sortExpression;
         }
 
-        private string GetObjectTableKeyName(QueryOperations queryOperations)
+        private string GetObjectTableKeyName(QueryOperations queryOperations , int tenant = 0)
         {
             string keyName = null;
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
                 IObjectTablePropertyGetter objectTablePropertyGetter = InjectionContainer.Container.Resolve(typeof(IObjectTablePropertyGetter), "ObjectTablePropertyGetter", new ParameterOverride("", 1)) as IObjectTablePropertyGetter;
-                keyName = objectTablePropertyGetter.GetKeyPropertyPath(queryOperations.ObjectTableName, 0);
+                keyName = objectTablePropertyGetter.GetKeyPropertyPath(queryOperations.ObjectTableName, tenant);
                 scope.Complete();
             }
             return keyName;

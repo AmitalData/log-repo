@@ -187,10 +187,10 @@ namespace Logitude.Server.Tools.Helpers
         }
 
         //<--- Yuval Chalup 14.04.2015
-        public static string Translate(string textCodeCode, int tenant, bool getLocalDefaultText)
+        public static string Translate(string textCodeCode, int tenant, bool getLocalDefaultText, bool getTextByLanguage = false)
         {
 
-            string key = "TranslateTextsClass/Translate1," + textCodeCode + "," + tenant.ToString() + "," + getLocalDefaultText;
+            string key = "TranslateTextsClass/Translate1," + textCodeCode + "," + tenant.ToString() + "," + getLocalDefaultText + "," + getTextByLanguage;
             var val = CacheManager.GetOrInsertNewObject<string>(key, () =>
             {
                 string result = string.Empty;
@@ -213,14 +213,30 @@ namespace Logitude.Server.Tools.Helpers
                         TextCode textCode = textCodeRepository.GetTextCodeByTenantAndCode(textCodeCode, tenant);
                         if (textCode != null)
                         {
-                            if (getLocalDefaultText)
-                            {
-                                result = textCode.LocalDefaultText;
+							if (!getTextByLanguage)
+							{
+                                if (getLocalDefaultText)
+                                {
+                                    result = textCode.LocalDefaultText;
+                                }
+                                else
+                                {
+                                    result = textCode.DefaultText;
+                                }
+
                             }
-                            else
-                            {
-                                result = textCode.DefaultText;
+							else
+							{
+                                if (myTenant.Language== "HB")
+                                {
+                                    result = !string.IsNullOrEmpty(textCode.LocalDefaultText)? textCode.LocalDefaultText: textCode.DefaultText;
+                                }
+                                else
+                                {
+                                    result = textCode.DefaultText;
+                                }
                             }
+                           
                         }
                     }
                 }

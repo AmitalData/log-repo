@@ -1,0 +1,34 @@
+﻿using FluentAssertions;
+using Logitude.FullAccounting.Test.Models;
+using Logitude.FullAccounting.Test.Services;
+using Logitude.Base.Models.Shared;
+using Logitude.Base.Models.UserTenant;
+using Logitude.Base.Services;
+using System;
+using TechTalk.SpecFlow;
+
+namespace Logitude.FullAccounting.Test.Steps.ARInvoice
+{
+    [Binding]
+    public class GetARInvoiceSteps
+    {
+        private readonly FullAccountingContext context;
+        private readonly ARInvoiceService arInvoiceService;
+        public GetARInvoiceSteps(FullAccountingContext context, ARInvoiceService arInvoiceService)
+        {
+            this.context = context;
+            this.arInvoiceService = arInvoiceService;
+        }
+        [When(@"get ar invoice with ARInvoiceId")]
+        public void WhenGetArInvoiceWithARInvoiceId()
+        {
+            context.ARInvoicePM = APICaller.CallGet<ARInvoicePM>(Urls.ARInvoicesGetSingle(FullAccountingData.ARInvoiceId), UserTenant.Token).Data;
+        }
+
+        [Then(@"ar invoice should be available")]
+        public void ThenArInvoiceShouldBeAvailable()
+        {
+            context.ARInvoicePM.Should().NotBeNull();
+        }
+    }
+}

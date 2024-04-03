@@ -25,6 +25,7 @@ namespace WebFreight.Web.AccountingModel.Reports.BankDeposit
 {
     class BankDepositPrintService
     {
+        public BankDepositPM bankDepositPM;
         public void BuildBankDepositReport(string entityId, int tenant, string documentOutId)
         {
             // 1 
@@ -52,12 +53,12 @@ namespace WebFreight.Web.AccountingModel.Reports.BankDeposit
             //Build report
             Byte[] templatedata = null;
             StiReport report = new StiReport();
-            DocumentTypeTemplateRepository documentTypeTemplaterep = new DocumentTypeTemplateRepository(tenant);
+            DocumentTypeTemplateQuery documentTypeTemplateQuery = new DocumentTypeTemplateQuery(tenant);
             DocumentOutRepository documentOutRepository = new DocumentOutRepository(tenant);
 
 
             DocumentOut documentOut = documentOutRepository.GetSingleDocumentOut(documentOutId, tenant);
-            DocumentTypeTemplate defaulttemplate = documentTypeTemplaterep.GetSingleDocumentTypeTemplate(documentOut.DocumentTemplateId);
+            DocumentTypeTemplatePM defaulttemplate = documentTypeTemplateQuery.GetById(documentOut.DocumentTemplateId, tenant);
 
             if (defaulttemplate != null)
                 templatedata = defaulttemplate.TemplateBody;
@@ -65,8 +66,10 @@ namespace WebFreight.Web.AccountingModel.Reports.BankDeposit
 
             if (templatedata != null)
             {
+
                 if (templatedata.Length != 0)
                 {
+                    defaulttemplate.DocumentOutId = documentOut?.Id;
                     ExportDocumentHelper exportDocumentHelper = new ExportDocumentHelper();
                     report = exportDocumentHelper.LoadandRender( defaulttemplate, currentBusinessObject, tenant);
                 }
@@ -84,7 +87,7 @@ namespace WebFreight.Web.AccountingModel.Reports.BankDeposit
             CurrencyQuery currencyQuery = new CurrencyQuery(tenant);
             TenantQuery tenantQuery = new TenantQuery(tenant);
 
-            BankDepositPM bankDepositPM = bankDepositQuery.GetSingle(entityId, true, false);
+            bankDepositPM = bankDepositQuery.GetSingle(entityId, true, false);
    
             if(bankDepositPM != null)
             {

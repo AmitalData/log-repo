@@ -1229,6 +1229,13 @@ namespace MeatadataGeneratorTool
             set { objectTableName = value; FirePropertyChanged("ObjectTableName"); }
         }
 
+        string parentObjectTableName;
+        public string ParentObjectTableName
+        {
+            get { return parentObjectTableName; }
+            set { parentObjectTableName = value; FirePropertyChanged("ParentObjectTableName"); }
+        }
+
         string defaultText;
 
         public string DefaultText
@@ -1328,6 +1335,13 @@ namespace MeatadataGeneratorTool
         {
             get { return applyOnPropertyChangedCode; }
             set { applyOnPropertyChangedCode = value; FirePropertyChanged("ApplyOnPropertyChangedCode"); }
+        }
+
+        bool tenantZeroData;
+        public bool TenantZeroData
+        {
+            get { return tenantZeroData; }
+            set { tenantZeroData = value; FirePropertyChanged("TenantZeroData"); }
         }
 
 
@@ -1735,6 +1749,35 @@ namespace MeatadataGeneratorTool
             set { hasCustomFields = value; FirePropertyChanged("HasCustomFields"); }
         }
 
+        bool availableInCustomization;
+
+        public bool AvailableInCustomization
+        {
+            get { return availableInCustomization; }
+            set { availableInCustomization = value; FirePropertyChanged("AvailableInCustomization"); }
+        }
+
+        bool supportSubEntity;
+
+        public bool SupportSubEntity
+        {
+            get { return supportSubEntity; }
+            set { supportSubEntity = value; FirePropertyChanged("SupportSubEntity"); }
+        }
+
+        bool applyGenericCustomFields;
+        public bool ApplyGenericCustomFields
+        {
+            get { return applyGenericCustomFields; }
+            set { applyGenericCustomFields = value; FirePropertyChanged("ApplyGenericCustomFields"); }
+        }
+
+        bool availableInDocumentTypes;
+        public bool AvailableInDocumentTypes
+        {
+            get { return availableInDocumentTypes; }
+            set { availableInDocumentTypes = value; FirePropertyChanged("AvailableInDocumentTypes"); }
+        }
 
         bool hasShortTitle;
 
@@ -1769,9 +1812,6 @@ namespace MeatadataGeneratorTool
             get { return hasCustomValidator; }
             set { hasCustomValidator = value; FirePropertyChanged("HasCustomValidator"); }
         }
-
-
-
 
         string clientModuleName;
 
@@ -2000,7 +2040,7 @@ namespace MeatadataGeneratorTool
 
             DCWindow = new Window();
             DCWindow.Width = 500;
-            DCWindow.Height = 185;
+            DCWindow.Height = 235;
             DCWindow.Content = DataContractControl;
             DCWindow.Show();
         }

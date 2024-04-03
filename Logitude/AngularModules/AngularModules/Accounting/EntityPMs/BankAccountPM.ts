@@ -15,11 +15,11 @@ import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/Propert
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
 export class BankAccountPM {
-
+      
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-          this.UIProperties = new UIProperties(this); 
+                    this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -227,6 +227,16 @@ export class BankAccountPM {
     private bankCodeLocalName: string;
     public get BankCodeLocalName() { return this.bankCodeLocalName; }
     public set BankCodeLocalName(newValue: string) { if (this.bankCodeLocalName != newValue) { this.bankCodeLocalName = newValue; this.MarkAsDirty("BankCodeLocalName"); } }
+       
+	 
+    private totalOpenExternalTransactions: string;
+    public get TotalOpenExternalTransactions() { return this.totalOpenExternalTransactions; }
+    public set TotalOpenExternalTransactions(newValue: string) { if (this.totalOpenExternalTransactions != newValue) { this.totalOpenExternalTransactions = newValue; this.MarkAsDirty("TotalOpenExternalTransactions"); } }
+       
+	 
+    private totalOpenPagesLines: string;
+    public get TotalOpenPagesLines() { return this.totalOpenPagesLines; }
+    public set TotalOpenPagesLines(newValue: string) { if (this.totalOpenPagesLines != newValue) { this.totalOpenPagesLines = newValue; this.MarkAsDirty("TotalOpenPagesLines"); } }
        
 	 
 

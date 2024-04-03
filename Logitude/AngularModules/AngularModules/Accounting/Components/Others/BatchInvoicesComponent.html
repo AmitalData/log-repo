@@ -17,7 +17,7 @@
 
 <table>
     <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
-        <td colspan="12">
+        <td colspan="15">
             <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
         </td>
     </tr>
@@ -44,8 +44,8 @@
 
         <td style="width:120px;">
             <LogDatePicker [ObjectFieldName]="'FromDate'" [ObjectTableName]="ObjectTableName"
-                                                        [NoObjectField]="true" [ForceSubscribe]="true" [DataContext]="DataContext"
-                                                        [HideColumns]="true" [SelectedDateValue]="FromDate"></LogDatePicker>
+                           [NoObjectField]="true" [ForceSubscribe]="true" [DataContext]="DataContext"
+                           [HideColumns]="true" [SelectedDateValue]="FromDate"></LogDatePicker>
         </td>
 
 
@@ -57,46 +57,100 @@
 
         <td style="width:120px;">
             <LogDatePicker [ObjectFieldName]="'ToDate'" [ObjectTableName]="ObjectTableName"
-                                                        [NoObjectField]="true" [ForceSubscribe]="true" [DataContext]="DataContext"
-                                                        [HideColumns]="true" [SelectedDateValue]="ToDate"></LogDatePicker>
+                           [NoObjectField]="true" [ForceSubscribe]="true" [DataContext]="DataContext"
+                           [HideColumns]="true" [SelectedDateValue]="ToDate"></LogDatePicker>
         </td>
         <td style="width:10px"></td>
 
         <td style="width: 30px;">
             <IconButton [Name]="'Refresh'" (click)="Refresh()"></IconButton>
         </td>
-        <td style="width:10px"></td>
-        <td style="width: 35px;height:23px;">
-            <div>
-                <CheckBox [IsChecked]="ShowInProgressReports" (Checked)="ShowInProgressReports = $event "></CheckBox>
+
+        <!-- Category -->
+        <td style="width:70px">
+            <LogLabel [ObjectFieldName]="'Category'" [ObjectTableName]="'GLAccount'"
+                      [Text]="'Category'" [DataContext]="DataContext"></LogLabel>
+        </td>
+        <td style="width:120px">
+            <ComboBox [ItemsSource]="CategoriesList"
+                      [SelectedItem]="SelectedCategory" (SelectedItemChanged)="SelectedCategory=$event" ></ComboBox>
+        </td>
+        <td style="width:120px;padding-left: 5px;">
+            <div [ngSwitch]="SelectedCategory" [class.disabled]="IsCategoryDisabled">
+
+                <!-- Category 1 -->
+                <LogLov *ngSwitchCase="'Category 1'" [ObjectFieldName]="'Category1Id'"
+                        [ObjectTableName]="'GLAccount'" [DataContext]="DataContext"
+                        [DisplayMemberPath]="'LocalName'" [LookUpTableName]="'Category1'"
+                        [HideColumns]="true">
+                </LogLov>
+
+                <!-- Category 2 -->
+                <LogLov *ngSwitchCase="'Category 2'" [ObjectFieldName]="'Category2Id'"
+                        [ObjectTableName]="'GLAccount'" [DataContext]="DataContext"
+                        [DisplayMemberPath]="'LocalName'" [LookUpTableName]="'Category2'"
+                        [HideColumns]="true">
+                </LogLov>
+
+                <!-- Category 3 -->
+                <LogLov *ngSwitchCase="'Category 3'" [ObjectFieldName]="'Category3Id'"
+                        [ObjectTableName]="'GLAccount'" [DataContext]="DataContext"
+                        [DisplayMemberPath]="'LocalName'" [LookUpTableName]="'Category3'"
+                        [HideColumns]="true">
+                </LogLov>
+
+                <!-- Category 4 -->
+                <LogLov *ngSwitchCase="'Category 4'" [ObjectFieldName]="'Category4Id'"
+                        [ObjectTableName]="'GLAccount'" [DataContext]="DataContext"
+                        [DisplayMemberPath]="'LocalName'" [LookUpTableName]="'Category4'"
+                        [HideColumns]="true">
+                </LogLov>
+
+                <!-- Category 5 -->
+                <LogLov *ngSwitchCase="'Category 5'"  [ObjectFieldName]="'Category5Id'"
+                        [ObjectTableName]="'GLAccount'" [DataContext]="DataContext"
+                        [DisplayMemberPath]="'LocalName'" [LookUpTableName]="'Category5'"
+                        [HideColumns]="true">
+                </LogLov>
+
+                <!-- Default -->
+                <div *ngSwitchDefault>
+                    <!--<span style="font-style: italic; color: #d1d1d1;font-size: 10px;">Select category first...</span>-->
+                    <ComboBox [ItemsSource]="[]" [IsDisabled]="true"></ComboBox>
+                </div>
 
             </div>
-        </td>
-        <td>
 
-            {{'InterestReport.O.ShowInvoicingInProgressReports' | TextCodeTranslationPipe}}
         </td>
-        <td style=" "></td>
+      <td style="width:10px"></td>
 
+    <td style="width: 35px;height:23px;">
+        <div>
+            <CheckBox [IsChecked]="ShowInProgressReports" (Checked)="ShowInProgressReports = $event "></CheckBox>
+
+        </div>
+    </td>
+        {{'InterestReport.O.ShowInvoicingInProgressReports' | TextCodeTranslationPipe}}
+    <td style=" "></td>
 
     </tr>
     <tr style="height:5px"></tr>
     <tr>
-        <td colspan="12" style="height: 100%; padding-bottom: 3px; vertical-align: top;">
+        <td colspan="15" style="height: 100%; padding-bottom: 3px; vertical-align: top;">
             <div class="GeneratedGridContainer" style="height: calc(100% - 20px)" *ngIf="LoadGrids">
                 <logitude-grid GridWidth="100%" GridHeight="100%" [ObjectTable]="'InterestReport'"
                                [dataSource]="DataSource" [FireCheckBoxChecked]="FireCheckBoxChecked"
                                [MenuHeaderchangeevent]="MenuHeaderchangeevent" [columns]="Columns" [autoLoad]="true"
                                [QueryChangeEvent]="onQueryChangeEvent" [IsCustomTemplate]="true"
                                [PassAdditionalDataToTemplates]="true" [MarkIsChecked]="MarkIsChecked"
-                               (DataLoaded)="OnDataLoaded($event)" (CheckBoxChecked)="onCheckBoxChecked($event)"  [IsAllRecordsChecked]="AllSelected"    [CustomColumnsReady]="ColumnsReady">
+                               (DataLoaded)="OnDataLoaded($event)" (CheckBoxChecked)="onCheckBoxChecked($event)" [IsAllRecordsChecked]="AllSelected" [CustomColumnsReady]="ColumnsReady">
                 </logitude-grid>
             </div>
         </td>
     </tr>
 
     <tr style="height: 32px;">
-        <td colspan="12" style="vertical-align: bottom">
+        <td colspan="15" style="vertical-align: bottom">
             <table style="height: 22px;">
                 <tr>
                     <td>

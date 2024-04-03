@@ -83,6 +83,7 @@ export class QuoteTemplateHeaderDetailsSettingComponent extends BaseComponent im
     QuoteTemplateSectionTypeName: string = "QuoteHeader";
     QuoteTemplateSectionTypeCode: string = "QH";
     @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
+    public IsUsingVirtuallization: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         super();
@@ -103,6 +104,7 @@ export class QuoteTemplateHeaderDetailsSettingComponent extends BaseComponent im
 
     SelectedTabCode: string;
     SetWindowArgs(args: any) {
+        this.SetIsUsingVirtuallization();
         this.SelectedTabCode = "TAC";
         this.QuoteTemplatePM = args.QuoteTemplatePM;
         this.QuoteTemplateSectionTypeName = args.QuoteTemplateSectionTypeName;
@@ -143,6 +145,12 @@ export class QuoteTemplateHeaderDetailsSettingComponent extends BaseComponent im
     }
 
 
+    SetIsUsingVirtuallization() {
+        var hasGridVirtuallizationToggleFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "EVG")[0]
+        if (hasGridVirtuallizationToggleFeature) {
+            this.IsUsingVirtuallization = true;
+        }
+    }
 
     BorderTypesSelectedChanged(border: BorderType) {
         if (this.QuoteTemplateSettingPM) {
@@ -304,7 +312,7 @@ export class QuoteTemplateHeaderDetailsSettingComponent extends BaseComponent im
     CustomQuoteFieldList() {
         if (this.QuoteTemplateSectionTypeCode == "QD") {
 
-            var QuoteFieldNameString = "Expiration Date, Expiration Days, Shipper Name, Shipper Address, Quote Number, Shipper Contact, Shipper References , Consignee Name, Consignee Address, Consignee Contact, Consignee References, Customer Name, Customer Address, Customer Contact, Customer References, Pickup From, Delivery To, Incoterms, Service, Salesman, Description of goods , Dangerous goods, Chargeable Weight, Gross Weight, Volume, Transit Time, Notify Name, Notify Address, Notify Contact ,Move Type, Departure Frequency"  ;
+            var QuoteFieldNameString = "Expiration Date, Expiration Days, Shipper Name, Shipper Address, Quote Number, Shipper Contact, Shipper References , Consignee Name, Consignee Address, Consignee Contact, Consignee References, Customer Name, Customer Address, Customer Contact, Customer References, Pickup From, Delivery To, Incoterms, Service, Salesman, Description of goods , Dangerous goods, Chargeable Weight, Gross Weight, Volume, Transit Time, Notify Name, Notify Address, Notify Contact ,Move Type, Departure Frequency,Transport Mode,Direction,Start Date";
 
 
             var quoteFieldList = QuoteFieldNameString.split(',');
@@ -341,6 +349,8 @@ export class QuoteTemplateHeaderDetailsSettingComponent extends BaseComponent im
                 if (this.QuotePM.DirectionId == "D") {
                     quoteFieldList.push("From Location");
                     quoteFieldList.push("To Location");
+                    quoteFieldList.push("From Location Include Country");
+                    quoteFieldList.push("To Location Include Country");
 
                 }
                 else {
@@ -352,6 +362,8 @@ export class QuoteTemplateHeaderDetailsSettingComponent extends BaseComponent im
                 quoteFieldList.push("AirLine");
                 quoteFieldList.push("From Location");
                 quoteFieldList.push("To Location");
+                quoteFieldList.push("From Location Include Country");
+                quoteFieldList.push("To Location Include Country");
                 quoteFieldList.push("Number Of Packages");
             }
 
@@ -360,8 +372,8 @@ export class QuoteTemplateHeaderDetailsSettingComponent extends BaseComponent im
 
         }
 
-        else {
-            var QuoteFieldNameString = "Quote Date, Expiration Date, Quote Number, Customer, ATTN";
+        else { 
+            var QuoteFieldNameString = "Quote Date, Expiration Date, Quote Number, Customer, ATTN,Transport Mode,Direction,Start Date";
             quoteFieldList = QuoteFieldNameString.split(',');
             
         }
@@ -653,7 +665,13 @@ export class QuoteTemplateHeaderDetailsSettingComponent extends BaseComponent im
 
         else if (fieldname == "FROMPORT") {
                 Field = "From Port";
-            }
+        }
+        else if (fieldname == "FROMLOCATIONINCLUDECOUNTRY") {
+            Field = "From Location Include Country";
+        }
+        else if (fieldname == "TOLOCATIONINCLUDECOUNTRY") {
+            Field = "To Location Include Country";
+        }
             else
                 if (fieldname == "FROMLOCATION") {
                     Field = "From Location";
@@ -725,6 +743,15 @@ export class QuoteTemplateHeaderDetailsSettingComponent extends BaseComponent im
             Field = "Number Of Containers";
         }
 
+        else if (fieldname == "TRANSPORTMODE") {
+            Field = "Transport Mode";
+        }
+        else if (fieldname == "DIRECTION") {
+            Field = "Direction";
+        }
+        else if (fieldname == "STARTDATE") {
+            Field = "Start Date";
+        }
         return Field;
     }
 
@@ -744,15 +771,23 @@ export class QuoteTemplateHeaderDetailsSettingComponent extends BaseComponent im
         else if (fieldname == "EXPIRATIONDATE") {
             Field = "Expiration Date";
         }
-        else
-            if (fieldname == "CUSTOMER") {
-                Field = "Customer";
-            }
+        else if (fieldname == "CUSTOMER") {
+            Field = "Customer";
+        }
 
-            else
-                if (fieldname == "ATTN") {
-                    Field = "ATTN";
-                }
+        else if (fieldname == "ATTN") {
+            Field = "ATTN";
+        }
+
+        else if (fieldname == "TRANSPORTMODE") {
+            Field = "Transport Mode";
+        }
+        else if (fieldname == "DIRECTION") {
+            Field = "Direction";
+        }
+        else if (fieldname == "STARTDATE") {
+            Field = "Start Date";
+        }
         return Field;
     }
     // End Prop setting 

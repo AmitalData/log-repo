@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28010.2046
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33627.172
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsApplication1", "WindowsFormsApplication1\WindowsFormsApplication1.csproj", "{C087CBF0-EF27-444F-BE1A-CAAAF035F0F3}"
 EndProject
@@ -15,6 +15,12 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebFreight.Web", "..\..\Logitude\JustWebFreight\WebFreight.Web\WebFreight.Web.csproj", "{8408E4E5-B4B7-46BC-8300-1AE163B36E2D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommunicationWorkerRole", "..\..\Logitude\CommunicationWorkerRole\CommunicationWorkerRole.csproj", "{BA2A42B8-A348-4D44-984C-1D718CB20B6F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logitude.Accounting.BL", "..\..\Logitude\Logitude.Accounting.BL\Logitude.Accounting.BL.csproj", "{00E5D96D-DD45-47E8-AAA3-FDBFD8ADD61A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logitude.Accounting.Data", "..\..\Logitude\Logitude.Accounting.Data\Logitude.Accounting.Data.csproj", "{A3799525-14A2-42FC-A2DE-69ED3FD1C5D1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logitude.CargoTracking.BL", "..\..\Logitude\Logitude.CargoTracking.BL\Logitude.CargoTracking.BL.csproj", "{6B7FB227-28D2-45B8-B079-2E2F4251510D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -100,6 +106,30 @@ Global
 		{BA2A42B8-A348-4D44-984C-1D718CB20B6F}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{BA2A42B8-A348-4D44-984C-1D718CB20B6F}.Release|x86.ActiveCfg = Release|Any CPU
 		{BA2A42B8-A348-4D44-984C-1D718CB20B6F}.Release|x86.Build.0 = Release|Any CPU
+		{6B7FB227-28D2-45B8-B079-2E2F4251510D}.All Projects|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B7FB227-28D2-45B8-B079-2E2F4251510D}.All Projects|Any CPU.Build.0 = Debug|Any CPU
+		{6B7FB227-28D2-45B8-B079-2E2F4251510D}.All Projects|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{6B7FB227-28D2-45B8-B079-2E2F4251510D}.All Projects|Mixed Platforms.Build.0 = Debug|Any CPU
+		{6B7FB227-28D2-45B8-B079-2E2F4251510D}.All Projects|x86.ActiveCfg = Debug|Any CPU
+		{6B7FB227-28D2-45B8-B079-2E2F4251510D}.All Projects|x86.Build.0 = Debug|Any CPU
+		{6B7FB227-28D2-45B8-B079-2E2F4251510D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B7FB227-28D2-45B8-B079-2E2F4251510D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B7FB227-28D2-45B8-B079-2E2F4251510D}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{6B7FB227-28D2-45B8-B079-2E2F4251510D}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{6B7FB227-28D2-45B8-B079-2E2F4251510D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{6B7FB227-28D2-45B8-B079-2E2F4251510D}.Debug|x86.Build.0 = Debug|Any CPU
+		{6B7FB227-28D2-45B8-B079-2E2F4251510D}.None|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B7FB227-28D2-45B8-B079-2E2F4251510D}.None|Any CPU.Build.0 = Debug|Any CPU
+		{6B7FB227-28D2-45B8-B079-2E2F4251510D}.None|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{6B7FB227-28D2-45B8-B079-2E2F4251510D}.None|Mixed Platforms.Build.0 = Debug|Any CPU
+		{6B7FB227-28D2-45B8-B079-2E2F4251510D}.None|x86.ActiveCfg = Debug|Any CPU
+		{6B7FB227-28D2-45B8-B079-2E2F4251510D}.None|x86.Build.0 = Debug|Any CPU
+		{6B7FB227-28D2-45B8-B079-2E2F4251510D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B7FB227-28D2-45B8-B079-2E2F4251510D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B7FB227-28D2-45B8-B079-2E2F4251510D}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{6B7FB227-28D2-45B8-B079-2E2F4251510D}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{6B7FB227-28D2-45B8-B079-2E2F4251510D}.Release|x86.ActiveCfg = Release|Any CPU
+		{6B7FB227-28D2-45B8-B079-2E2F4251510D}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -76,6 +76,10 @@ export class GLAccountPM {
     public get CurrencyId() { return this.currencyId; }
     public set CurrencyId(newValue: string) { if (this.currencyId != newValue) { this.currencyId = newValue; this.MarkAsDirty("CurrencyId"); } }
        
+    private paymentTerms: string;
+    public get PaymentTerms() { return this.paymentTerms; }
+    public set PaymentTerms(newValue: string) { if (this.paymentTerms != newValue) { this.paymentTerms = newValue; this.MarkAsDirty("PaymentTerms"); } }
+       
 	 
     private revenueExpenseType: string;
     public get RevenueExpenseType() { return this.revenueExpenseType; }
@@ -260,7 +264,10 @@ export class GLAccountPM {
     private parentAccountNumber: string;
     public get ParentAccountNumber() { return this.parentAccountNumber; }
     public set ParentAccountNumber(newValue: string) { if (this.parentAccountNumber != newValue) { this.parentAccountNumber = newValue; this.MarkAsDirty("ParentAccountNumber"); } }
-       
+    
+    private parentCurrencyGLAccountCardId: string;
+    public get ParentCurrencyGLAccountCardId() { return this.parentCurrencyGLAccountCardId; }
+    public set ParentCurrencyGLAccountCardId(newValue: string) { if (this.parentCurrencyGLAccountCardId != newValue) { this.parentCurrencyGLAccountCardId = newValue; this.MarkAsDirty("parentCurrencyGLAccountCardId"); } }
 	 
     private customerGLAccountInternalNumber: string;
     public get CustomerGLAccountInternalNumber() { return this.customerGLAccountInternalNumber; }
@@ -619,7 +626,10 @@ export class GLAccountPM {
     public get InterestCreditLimit() { return this.interestCreditLimit; }
     public set InterestCreditLimit(newValue: number) { if (this.interestCreditLimit != newValue) { this.interestCreditLimit = newValue; this.MarkAsDirty("InterestCreditLimit"); } }
        
-	 
+    private interestOpenBalance: number;
+    public get InterestOpenBalance() { return this.interestOpenBalance; }
+    public set InterestOpenBalance(newValue: number) { if (this.interestOpenBalance != newValue) { this.interestOpenBalance = newValue; this.MarkAsDirty("InterestOpenBalance"); } }
+
     private nameForPrintingCheques: string;
     public get NameForPrintingCheques() { return this.nameForPrintingCheques; }
     public set NameForPrintingCheques(newValue: string) { if (this.nameForPrintingCheques != newValue) { this.nameForPrintingCheques = newValue; this.MarkAsDirty("NameForPrintingCheques"); } }
@@ -878,7 +888,27 @@ export class GLAccountPM {
     public set ForeignBalanceInDue(newValue: number) { if (this.foreignBalanceInDue != newValue) { this.foreignBalanceInDue = newValue; this.MarkAsDirty("ForeignBalanceInDue"); } }
        
 	 
+    private chartOfAccountSecurityLevel: number;
+    public get ChartOfAccountSecurityLevel() { return this.chartOfAccountSecurityLevel; }
+    public set ChartOfAccountSecurityLevel(newValue: number) { if (this.chartOfAccountSecurityLevel != newValue) { this.chartOfAccountSecurityLevel = newValue; this.MarkAsDirty("ChartOfAccountSecurityLevel"); } }
+       
+    private obligo: number;
+    public get Obligo() { return this.obligo; }
+    public set Obligo(newValue: number) { if (this.obligo != newValue) { this.obligo = newValue; this.MarkAsDirty("Obligo"); } }
+       
+	 
+    private creditUsed: number;
+    public get CreditUsed() { return this.creditUsed; }
+    public set CreditUsed(newValue: number) { if (this.creditUsed != newValue) { this.creditUsed = newValue; this.MarkAsDirty("CreditUsed"); } }
 
+    private insuredCreditPercentage: number;
+    public get InsuredCreditPercentage() { return this.insuredCreditPercentage; }
+    public set InsuredCreditPercentage(newValue: number) { if (this.insuredCreditPercentage != newValue) { this.insuredCreditPercentage = newValue; this.MarkAsDirty("InsuredCreditPercentage"); } }
+    
+    private dateFormat: string;
+    public get DateFormat() { return this.dateFormat; }
+    public set DateFormat(newValue: string) { if (this.dateFormat != newValue) { this.dateFormat = newValue; this.MarkAsDirty("DateFormat"); } }
+    
     public OldEntityPM: GLAccountPM;
 		
     public IsDirty: boolean;
@@ -906,4 +936,4 @@ export class GLAccountPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

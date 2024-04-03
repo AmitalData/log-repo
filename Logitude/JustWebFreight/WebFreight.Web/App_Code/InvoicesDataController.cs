@@ -44,8 +44,11 @@ namespace WebFreight.Web.App_Code
 
         public ShipmentARInvoiceMoneyPM GetShipmentARInvoicesCharges(string shipmentId, string cardId, int tenant)
         {
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
             SecurityUtility.AuthenticationOnTenant(tenant);
-            
+
             ShipmentRepository rep = new ShipmentRepository(tenant);
             Shipment shipment=  rep.GetSingleShipment(shipmentId, tenant);
 
@@ -132,8 +135,12 @@ namespace WebFreight.Web.App_Code
         }
 
         public List<ARInvoiceList> PostFilteredARInvoices(int tenant, InvoiceFilters filters)
-        {            
+        {
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
             SecurityUtility.AuthenticationOnTenant(tenant);
+
             SecurityUtility.CheckSharedContactAuthentication(tenant, filters.PartnerId);
             TenantQuery tenantQuery = new TenantQuery(tenant);
             TenantPM currentTenant = tenantQuery.GetSinglePM(tenant);
@@ -151,8 +158,7 @@ namespace WebFreight.Web.App_Code
             ARInvoiceRepository aRInvoiceRepository = new ARInvoiceRepository(tenant);
             IQueryable<ARInvoice> invoices = aRInvoiceRepository.GetIQueryableInvoices(tenant);
 
-            invoices = customfilters.GetFilteredQuery(queryOperations, invoices);
-            List<ARInvoice> xx = invoices.ToList();
+            invoices = customfilters.GetFilteredQuery(queryOperations, invoices); 
 
             QueryOperations nonListQueryOperation = new QueryOperations();
             nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
@@ -160,8 +166,7 @@ namespace WebFreight.Web.App_Code
             listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
 
             invoices = filter.GetFilteredQuery<ARInvoice>(nonListQueryOperation, invoices);
-            int skippedShipments = queryOperations.PageIndex;
-            xx = invoices.ToList(); 
+            int skippedShipments = queryOperations.PageIndex; 
 
             var query2 = from entity in invoices
                          select new ARInvoiceList()
@@ -214,6 +219,7 @@ namespace WebFreight.Web.App_Code
                              ExpectedPaymentDate = entity.ExpectedPaymentDate,
                              DraftNumber = entity.DraftNumber,
                              IsPrinted = entity.IsPrinted,
+                             HasDoc = entity.DocumentFilingId != null ? true : false,
                              ProfitCurrencyCode = entity.ProfitCurrency != null ? entity.ProfitCurrency.Code : null,
                              AmountDueInLocalCurrency = entity.AmountDueInLocalCurrency,
                              AmountDueInProfitCurrency = entity.AmountDueInProfitCurrency,
@@ -244,8 +250,7 @@ namespace WebFreight.Web.App_Code
             {
                 query2 = query2.Where(d => d.StatusCode != "DR" && d.StatusCode != "VD" && !d.IsAutoCredit && !d.IsCancelled && d.IsClosed == false);
             }
-
-            var xx1 = query2.ToList();
+             
 
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
@@ -306,10 +311,11 @@ namespace WebFreight.Web.App_Code
             }
 
             query2 = query2.Skip(0);
+            query2 = query2.Take(filters.PageSize);
 
             List<ARInvoiceList> listQuery = query2.ToList();
 
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
             customFieldResolver.SetCustomFieldsValues("ARInvoice", tenant, listQuery.Cast<object>().ToList());
 
             return listQuery;
@@ -317,6 +323,11 @@ namespace WebFreight.Web.App_Code
 
         public List<ARPaymentList> GetFilteredARPayments(string arInvoiceId,int tenant)
         {
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+            SecurityUtility.AuthenticationOnTenant(tenant);
+
             List<ARPaymentList> result = new List<ARPaymentList>();
 
             ARPaymentStatusRepository statusRepository = new ARPaymentStatusRepository(tenant);
@@ -371,7 +382,11 @@ namespace WebFreight.Web.App_Code
 
         public ARInvoicePM GetSingleARInvoicePM(string invoiceId, int tenant)
         {
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
             SecurityUtility.AuthenticationOnTenant(tenant);
+
             ARInvoiceQuery entityQuery = new ARInvoiceQuery(tenant);
             ARInvoicePM entityPM = entityQuery.GetSinglePM(invoiceId, tenant);
 
@@ -434,6 +449,10 @@ namespace WebFreight.Web.App_Code
         {
             if (tenant != 0)
             {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 bool exists = false;
                 if (!string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
@@ -473,6 +492,10 @@ namespace WebFreight.Web.App_Code
         {
             if (tenant != 0)
             {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 bool exists = false;
                 if (!string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))

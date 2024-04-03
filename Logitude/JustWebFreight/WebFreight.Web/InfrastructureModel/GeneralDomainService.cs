@@ -181,8 +181,7 @@ namespace WebFreight.Web.InfrastructureModel
         private TextCodeQuery textCodeQuery;
         private TipQuery tipQuery;
         private TipsVisibilityQuery tipsVisibilityQuery;
-
-
+        private List<ObjectTable> objectTables;
 
         public GeneralDomainService(UserData currentuser)
         {
@@ -2388,7 +2387,7 @@ namespace WebFreight.Web.InfrastructureModel
         #endregion
 
         #region Translations
-        public List<Translation> GetTranslations(int tenant)
+        public IQueryable<Translation> GetTranslations(int tenant)
         {
             TranslationRepository = new TranslationRepository(tenant);
             this.ChangeConnectionString(tenant);
@@ -3567,7 +3566,8 @@ namespace WebFreight.Web.InfrastructureModel
             this.ChangeConnectionString(translationTenant);
             List<FieldsTranslations> fieldsTranslationList = new List<FieldsTranslations>();
             List<TextCode> textCodesList = TextCodeRepository.GetTextCodesByTenant(translationTenant).Where(d => d.InActive == false).ToList<TextCode>();
-            List<Translation> translationsList = TranslationRepository.GetTranslationsByTenant(translationTenant).ToList<Translation>();
+            var textCodes = textCodesList.Select(x => x.Code);
+            var translationsList = TranslationRepository.GetTranslationsByTenant(translationTenant).Where(x=> textCodes.Contains(x.TextCode.Code)).ToList();
 
             foreach (TextCode tc in textCodesList)
             {
@@ -3575,10 +3575,9 @@ namespace WebFreight.Web.InfrastructureModel
                                           where t.TextCode.Code == tc.Code
                                           select t).FirstOrDefault();
 
-                FieldsTranslations ft = new FieldsTranslations();
-
                 if (translaion != null)
                 {
+                    FieldsTranslations ft = new FieldsTranslations();
                     ft.IsTranslated = true;
                     ft.TranslateDate = translaion.TranslateDate;
                     ft.TranslatedText = translaion.TranslatedText;
@@ -3652,8 +3651,10 @@ namespace WebFreight.Web.InfrastructureModel
             //    textCodesList = textCodesList.Select(r=>r.ObjectTable.ObjectFields.Where(o=>o.IsCustom == false &&o.FieldLable == r.Code)))
             //}
             // GeneralDomainService defaultDomain = new GeneralDomainService();
-            List<Translation> translaionList = TranslationRepository.GetTranslationsByTenant(translationTenant).Where(t => t.TranslationHeaderCode == translationLanguageCode).ToList();
-            List<Translation> defaultTranslationsList = defaultDomain.GetTranslations(0).Where(d => d.TranslationHeaderCode == translationLanguageCode).ToList();//TranslationRepository.GetTranslations().Where(w => w.TranslationHeader.Tenant == 0 && w.TranslationHeader.Description == translationLanguage).ToList<Translation>();
+            var textCodes = textCodesList.Select(x => x.Code);
+            List<Translation> defaultTranslationsList = defaultDomain.GetTranslations(0).Where(d => d.TranslationHeaderCode == translationLanguageCode && textCodes.Contains(d.TextCode.Code)).ToList();
+            List<Translation> translaionList = TranslationRepository.GetTranslationsByTenant(translationTenant).Where(t => t.TranslationHeaderCode == translationLanguageCode && textCodes.Contains(t.TextCodeCode)).ToList();
+            //TranslationRepository.GetTranslations().Where(w => w.TranslationHeader.Tenant == 0 && w.TranslationHeader.Description == translationLanguage).ToList<Translation>();
             foreach (TextCode tc in textCodesList)
             {
                 Translation translaion = translaionList.Where(t => t.TextCodeCode == tc.Code).FirstOrDefault();
@@ -3711,7 +3712,129 @@ namespace WebFreight.Web.InfrastructureModel
             return fieldsTranslationList.OrderBy(f => f.Code).ToList();
         }
 
-       // List<FieldsTranslations> NewFieldsTranslationsList = null;
+        private List<Translation> translaionList;
+        private List<Translation> defaultTranslationsList;
+        private List<FieldsTranslations> fieldsTranslationList;
+        // This method the same as GetTranslationsByParam method for Customization, need more clean code as this for fixing bug
+        public List<FieldsTranslations> GetTranslationsByParamForCustomization(int translationTenant, string typeCode, string tableId, string translationLanguageCode)
+        {
+            TextCodeRepository = new TextCodeRepository(translationTenant);
+            TranslationRepository = new TranslationRepository(translationTenant);
+            this.ChangeConnectionString(translationTenant);
+            fieldsTranslationList = new List<FieldsTranslations>();
+            List<TextCode> textCodesList;
+            GeneralDomainService defaultDomain = new GeneralDomainService();
+            objectTables = GetObjectTablesByTenant(translationTenant, typeCode, tableId);
+            if (!string.IsNullOrEmpty(tableId) && !string.IsNullOrEmpty(typeCode))
+            {
+                textCodesList = TextCodeRepository.GetTextCodesByTenantForCustomization(translationTenant).Where(t => t.TextCodeTypeCode == typeCode && t.ObjectTableId == tableId).ToList<TextCode>();
+            }
+            else if (string.IsNullOrEmpty(tableId) && !string.IsNullOrEmpty(typeCode))
+            {
+                textCodesList = GetTextCodesByTenantAndType(translationTenant, typeCode);
+            }
+            else if (!string.IsNullOrEmpty(tableId) && string.IsNullOrEmpty(typeCode))
+            {
+                textCodesList = TextCodeRepository.GetTextCodesByTenantForCustomization(translationTenant).Where(t => t.ObjectTableId == tableId).ToList<TextCode>();
+            }
+            else
+            {
+                throw new ApplicationException("Error Loading Translations");
+            }
+
+            translaionList = TranslationRepository.GetTranslationsByTenant(translationTenant).Where(t => t.TranslationHeaderCode == translationLanguageCode).ToList();
+            defaultTranslationsList = defaultDomain.GetTranslations(0).Where(d => d.TranslationHeaderCode == translationLanguageCode).ToList();
+            foreach (TextCode textcode in textCodesList)
+            {
+                FillTranslationList(textcode, translationTenant, translationLanguageCode);
+            }
+            return fieldsTranslationList.OrderBy(f => f.Code).ToList();
+        }
+
+        private List<TextCode> GetTextCodesByTenantAndType(int translationTenant, string typeCode)
+        {
+            List<TextCode> textCodesList = TextCodeRepository.GetTextCodesByTenantForCustomization(translationTenant).Where(t => t.TextCodeTypeCode == typeCode).ToList<TextCode>();
+            return FiltertextCodesLists(textCodesList, objectTables);
+        }
+
+        private List<ObjectTable> GetObjectTablesByTenant(int translationTenant, string typeCode, string tableId)
+        {
+            ObjectTableRepository objectTableRepository = new ObjectTableRepository(translationTenant);
+
+            if (string.IsNullOrEmpty(tableId) && !string.IsNullOrEmpty(typeCode))
+            {
+                return   objectTableRepository.GetObjectsByTenant(translationTenant).Where(d => d.AvailableInCustomization).ToList();
+            }
+
+            return   objectTableRepository.GetObjectsByTenant(translationTenant).ToList();
+
+        }
+
+        private List<TextCode> FiltertextCodesLists(List<TextCode> textCodesList , List<ObjectTable> objectTables)
+        {
+            List<TextCode> textCodes = new List<TextCode>();
+          
+            foreach (ObjectTable objectTable in objectTables)
+            {
+                TextCode textCode = textCodesList.Where(d => d.ObjectTableId == objectTable.Id && d.Id != objectTable.DescriptionTextCodeId).FirstOrDefault();
+                textCodes.Add(textCode);
+            }
+
+            return textCodes;
+        }
+
+        private void FillTranslationList(TextCode textcode, int translationTenant, string translationLanguageCode)
+        {
+            ObjectTable objectTable = objectTables.Where(a => a.Id == textcode.ObjectTableId).FirstOrDefault();
+            Translation translaion = translaionList.Where(t => t.TextCodeCode == textcode.Code).FirstOrDefault();
+            FieldsTranslations fieldsTranslation = new FieldsTranslations();
+
+            if (translaion != null)
+            {
+                fieldsTranslation.IsTranslated = true;
+                fieldsTranslation.TranslateDate = translaion.TranslateDate;
+                fieldsTranslation.TranslatedText = translaion.TranslatedText;
+                fieldsTranslation.TranslatedByUserId = translaion.TranslatedByUserId;
+                fieldsTranslation.TranslatedTextPlural = translaion.TranslatedTextPlural;
+            }
+            else
+            {
+                Translation defaultTranslation = (from a in defaultTranslationsList
+                                                  where a.TextCode.Code == textcode.Code
+                                                  select a).FirstOrDefault();
+                if (defaultTranslation != null)
+                {
+                    fieldsTranslation.IsTranslated = true;
+                    fieldsTranslation.TranslateDate = defaultTranslation.TranslateDate;
+                    fieldsTranslation.TranslatedText = defaultTranslation.TranslatedText;
+                    fieldsTranslation.TranslatedByUserId = defaultTranslation.TranslatedByUserId;
+                    fieldsTranslation.TranslatedTextPlural = defaultTranslation.TranslatedTextPlural;
+                }
+
+                else
+                {
+                    fieldsTranslation.TranslatedText = textcode.DefaultText;
+                    fieldsTranslation.TranslatedTextPlural = textcode.DefaultTextPlural;
+                }
+            }
+
+            fieldsTranslation.Tenant = textcode.Tenant;
+            fieldsTranslation.DefaultText = textcode.DefaultText;
+            fieldsTranslation.DefaultTextPlural = textcode.DefaultTextPlural;
+            fieldsTranslation.Code = textcode.Code;
+            fieldsTranslation.TextCodeId = textcode.Id;
+            fieldsTranslation.TextCodeCode = textcode.Code;
+            fieldsTranslation.TypeCode = textcode.TextCodeTypeCode;
+            fieldsTranslation.ObjectTableID = textcode.ObjectTableId;
+            fieldsTranslation.TranslationTenent = translationTenant;
+            fieldsTranslation.TranslationLanguageCode = translationLanguageCode;
+            fieldsTranslation.ObjectTableName = objectTable.Name;
+            fieldsTranslation.ObjectTableTypeCode = objectTable.ObjectTableTypeCode;
+            fieldsTranslationList.Add(fieldsTranslation);
+        }
+
+
+        // List<FieldsTranslations> NewFieldsTranslationsList = null;
         string[] lineOfStrings;
         string[] thisLine;
         [Invoke]
@@ -3908,7 +4031,7 @@ namespace WebFreight.Web.InfrastructureModel
             Dictionary<string, Translation> translationsDictionary = new Dictionary<string, Translation>();
             Dictionary<string, Translation> defaultTranslationsDictionary = new Dictionary<string, Translation>();
             
-            List<Translation> translationsList = TranslationRepository.GetTranslationsByTenant(tenant).Where(w => w.Tenant == tenant && w.TranslationHeaderCode == language).ToList<Translation>();
+            List<Translation> translationsList = TranslationRepository.GetTranslationsByTenant(tenant).Where(w => w.Tenant == tenant && w.TranslationHeaderCode == language).ToList();
 
             List<Translation> defaultTranslationsList = TranslationRepository.GetTranslationsWithoutESByTenant(0).Where(d => d.TranslationHeaderCode == language && d.Tenant == 0).ToList();
 
@@ -4058,7 +4181,7 @@ namespace WebFreight.Web.InfrastructureModel
         #endregion
 
         #region FieldDataTypeDataTypes
-        public IQueryable<FieldDataType> GetFieldDataTypes(int tenant)
+        public List<FieldDataType> GetFieldDataTypes(int tenant)
         {
             DataTypeRepository = new DataTypeRepository(tenant);
             this.ChangeConnectionString(tenant);
@@ -4873,7 +4996,7 @@ namespace WebFreight.Web.InfrastructureModel
         #endregion 
 
         #region ObjectTableTabs
-        public IQueryable<ObjectTableTabPM> GetObjectTableTabsByTenant(int tenant)
+        public List<ObjectTableTabPM> GetObjectTableTabsByTenant(int tenant)
         {
             ObjectTableTabsRepository = new ObjectTableTabRepository(tenant);
             this.ChangeConnectionString(tenant);

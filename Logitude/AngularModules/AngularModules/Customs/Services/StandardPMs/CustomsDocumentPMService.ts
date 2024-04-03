@@ -239,7 +239,7 @@ export class CustomsDocumentPMService {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
-                var pmProperty = pmKeysArray[pmKey];
+				                  var pmProperty = pmKeysArray[pmKey];
                 newCustomsDocumentMetaDataValuePM[pmProperty] = jItem[pmProperty];
             }
            

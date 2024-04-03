@@ -66,6 +66,7 @@ namespace WebFreight.Web.Controllers.AccountingModel //AccountingPeriodViewsCont
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                    SecurityUtility.AuthenticationOnTenant(tenant);
                     SecurityUtility.CheckContactFeature("Journal", "UPDATE", authToken.Tenant);
 
                     IAccountingContext MyContext = AccountingContext.GetContext(tenant);

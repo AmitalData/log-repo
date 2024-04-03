@@ -35,13 +35,17 @@ using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
+using WebFreight.Web.DataProviders;
 using WebFreight.Web.Helpers;
+using Logitude.Accounting.Data.Repositories;
+using System.Web;
+using Logitude.Accounting.Def.EntityPMs;
 
 namespace CommunicationWorkerRole.Services
 {
     public class ReportSchedulerTaskService
     {
-        
+
         int trackerCounter = 0;
         string[,] trackerLogs = new string[,] //tracker(Step, DateTime)
         {
@@ -51,6 +55,10 @@ namespace CommunicationWorkerRole.Services
             {"Export pdf report", null},
             {"Stored pdf report in Blob", null},
             {"Send email to reciepents", null},
+            {"", null},
+            {"", null},
+            {"", null},
+
         };
 
         TaskManagerBase currentTask;
@@ -58,20 +66,21 @@ namespace CommunicationWorkerRole.Services
         {
             this.currentTask = task;
         }
-        
+
         public void RunTask(TasksSchedulerPM reportTask)
         {
             try
             {
+
                 SchedulerDetails schedulerDetails = GetSchedulerDetails(reportTask);
                 reportTask.CreatedBy = schedulerDetails.ReportDetails.CreatedByUserId;
                 ReportFliter reportFilter = GetReportFilters(reportTask, schedulerDetails);
 
-                if (reportTask.ResultType == null || reportTask.ResultType == "Email" )
+                if (reportTask.ResultType == null || reportTask.ResultType == "Email")
                 {
                     SendPdfReportToReceipent(reportTask, schedulerDetails, reportFilter);
                 }
-                else if(reportTask.ResultType == "FTP")
+                else if (reportTask.ResultType == "FTP")
                 {
                     SendReportToFTP(reportTask, schedulerDetails, reportFilter);
                 }
@@ -131,7 +140,7 @@ namespace CommunicationWorkerRole.Services
             {
                 StiExcel2007ExportSettings stiExcelSettings = new StiExcel2007ExportSettings();
                 bool useOnePageHeaderAndFooter = reportTask.Format == "EXCL" || reportTask.AdvancedFormat == "OP";
-                bool exportDataOnly =  reportTask.AdvancedFormat == "DO";
+                bool exportDataOnly = reportTask.AdvancedFormat == "DO";
                 stiExcelSettings.ExportObjectFormatting = false;
                 stiExcelSettings.UseOnePageHeaderAndFooter = useOnePageHeaderAndFooter;
                 stiExcelSettings.ExportDataOnly = exportDataOnly;
@@ -166,8 +175,8 @@ namespace CommunicationWorkerRole.Services
             else
             {
                 this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Exporting report to pdf file"));
-                string documentId = GetDocumentIdAfterExport(stiReport, reportTask.Name, reportTask.Tenant);
-                SendPdfReportIfIsValid(reportTask, schedulerDetails, documentId);
+                string documentId = GetDocumentIdAfterExport(stiReport, reportTask.Name, reportTask.Tenant, schedulerDetails, reportFilter, reportTask);
+                SendPdfReportIfIsValid(reportTask, schedulerDetails, documentId, stiReport);
             }
         }
 
@@ -178,11 +187,11 @@ namespace CommunicationWorkerRole.Services
             string gLAccountId = GetFilterFieldValueByName(schedulerDetails.ReportDetails.ReportFilterItems, mainCustomerFieldName);
             List<ContactList> allPermittedCards = GetAllPermittedContacts(reportTask.Tenant, gLAccountId);
             allPermittedContacts = allPermittedContacts.Concat(allPermittedCards).ToList();
-            ReportSchedulerRecepients recepients =  RemoveNonPermittedContacts(schedulerDetails.ReportDetails.Recepients, allPermittedContacts);
+            ReportSchedulerRecepients recepients = RemoveNonPermittedContacts(schedulerDetails.ReportDetails.Recepients, allPermittedContacts);
             return recepients;
         }
 
-        private void SendPdfReportIfIsValid(TasksSchedulerPM reportTask, SchedulerDetails schedulerDetails, string documentId)
+        private void SendPdfReportIfIsValid(TasksSchedulerPM reportTask, SchedulerDetails schedulerDetails, string documentId, StiReport stiReport)
         {
             AdditionalValidate additionalValidate = new AdditionalValidate();
             ReportSchedulerRecepients reportRecepients = schedulerDetails.ReportDetails.Recepients;
@@ -194,16 +203,31 @@ namespace CommunicationWorkerRole.Services
             }
             this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Validate Selected Partners"));
             ValidateResult result = ValidateSelectedPartners(schedulerDetails.ReportDetails.ReportFilterItems, reportTask.Tenant, additionalValidate);
+            ValidateResult gLAccountBalanceInLocalValidateResult = ValidateGLAccountBalanceInLocalCurrency(schedulerDetails.ReportDetails.ReportFilterItems, stiReport, reportTask.Tenant);
+            ValidateResult gLAccountLocalBalanceInDueValidateResult = ValidateGLAccountLocalBalanceInDue(schedulerDetails.ReportDetails.ReportFilterItems, stiReport, reportTask.Tenant, gLAccountId);
 
-            if (result.IsValid)
+            if (result.IsValid && gLAccountBalanceInLocalValidateResult.IsValid && gLAccountLocalBalanceInDueValidateResult.IsValid)
             {
                 this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Sending report to reciepents"));
-                SendHtmlDocument(documentId, reportRecepients, reportTask);
+                SendHtmlDocument(new SendHtmlDocumentArgs() { documentId = documentId, recepients = reportRecepients, reportTask = reportTask, stiReport = stiReport });
                 this.currentTask.LogInfo(FTPLogBuilder.BuildLogLine("Sending report to reciepents finished successfully"));
             }
             else
             {
+                LogErrorMessage(result, gLAccountBalanceInLocalValidateResult);
+            }
+
+        }
+
+        private void LogErrorMessage(ValidateResult result, ValidateResult gLAccountBalanceInLocalValidateResult) {
+            if (!result.IsValid)
+            {
                 currentTask.LogWarning(result.ErrorMessage);
+            }
+
+            if (!gLAccountBalanceInLocalValidateResult.IsValid)
+            {
+                currentTask.LogWarning(gLAccountBalanceInLocalValidateResult.ErrorMessage);
             }
         }
 
@@ -231,7 +255,7 @@ namespace CommunicationWorkerRole.Services
             return fieldValue;
         }
 
-        private ReportSchedulerRecepients RemoveNonPermittedContacts(ReportSchedulerRecepients recepients, List<ContactList> allPermittedContacts)
+        public ReportSchedulerRecepients RemoveNonPermittedContacts(ReportSchedulerRecepients recepients, List<ContactList> allPermittedContacts)
         {
             List<ActivatedEmail> toEmails = FillAllRecepients(recepients.To, false);
             List<ActivatedEmail> ccEmails = FillAllRecepients(recepients.Cc, false);
@@ -290,7 +314,7 @@ namespace CommunicationWorkerRole.Services
             string[] recepientsEmails = inActiveRecipientsEmails.Split(',');
             string[] recepients = recepientsEmails.Distinct().ToArray();
             string emails = string.Join(",", recepients);
-            
+
             return emails;
         }
 
@@ -310,7 +334,7 @@ namespace CommunicationWorkerRole.Services
             }
             return activatedEmails;
         }
-        
+
         private string FillOnlyActiveRecepients(List<ActivatedEmail> emails)
         {
             string recepients = "";
@@ -318,12 +342,12 @@ namespace CommunicationWorkerRole.Services
                 if (to.IsActive)
                     recepients += to.To + ";";
             });
-            if(recepients.Length > 0)
+            if (recepients.Length > 0)
                 recepients = recepients.Substring(0, recepients.Length - 1);
             return recepients;
         }
 
-        private List<ContactList> GetAllPermittedContacts(int tenant, string cardId)
+        public List<ContactList> GetAllPermittedContacts(int tenant, string cardId)
         {
             QueryOperations queryOperations = new QueryOperations()
             {
@@ -416,41 +440,56 @@ namespace CommunicationWorkerRole.Services
             return stiReport;
         }
 
-        private string GetDocumentIdAfterExport(StiReport stiReport, string reportName, int tenant)
+        private string GetDocumentIdAfterExport(StiReport stiReport, string reportName, int tenant, SchedulerDetails schedulerDetails, ReportFliter reportFilter, TasksSchedulerPM reportTask)
         {
             string documentId = String.Empty;
             MemoryStream memoryStream = new MemoryStream();
-            stiReport.ExportDocument(StiExportFormat.Pdf, memoryStream);
+            if (reportFilter.ReportCode == "LTRP" && schedulerDetails?.ReportDetails?.ReportTemplateType == "E")
+            {
+                reportTask.Format = "Excel";
+                memoryStream = GetMemoryStreamAfterExportDocument(reportTask, reportFilter);
+            }
+            else
+            {
+                stiReport.ExportDocument(StiExportFormat.Pdf, memoryStream);
+            }
             this.trackerLogs[trackerCounter, 1] = DateTime.Now.ToString();
             this.trackerCounter += 1;
-
-            if (memoryStream != null)
+            if (memoryStream == null)
             {
-                documentId = CreateDocument(reportName, tenant, memoryStream);
+                return documentId;
             }
+            //LogitudeSettings.WorkEnvironment == "cloud" &&
+            if (reportFilter.ReportCode == "LTRP" && schedulerDetails?.ReportDetails?.ReportTemplateType == "E")
+            {
+                documentId = CreateDocument(new ReportScedulerDocumentArgs { Name = reportName, Format = "xlsx", Tenant = tenant, ByteData = memoryStream.ToArray() });
+            }
+            else
+            {
+                documentId = CreateDocument(new ReportScedulerDocumentArgs { Name = reportName, Format = "pdf", Tenant = tenant, ByteData = memoryStream.ToArray() });
+            }
+
             return documentId;
         }
 
-        private string CreateDocument(string reportName, int tenant, MemoryStream memoryStream)
+        public string CreateDocument(ReportScedulerDocumentArgs reportScedulerDocumentArgs)
         {
-            byte[] ByteData = memoryStream.ToArray();
-
-            DocumentRepository documentRepository = new DocumentRepository(tenant);
+            DocumentRepository documentRepository = new DocumentRepository(reportScedulerDocumentArgs.Tenant);
             Document document = new Document()
             {
-                FileName = reportName,
+                FileName = reportScedulerDocumentArgs.Name,
                 CreateDate = DateTime.Now,
-                Extension = "pdf",
-                FileSize = ByteData.Length,
-                Tenant = tenant,
-                Id = IdCounter.GetNumber("Document", tenant),
+                Extension = reportScedulerDocumentArgs.Format,
+                FileSize = reportScedulerDocumentArgs.ByteData.Length,
+                Tenant = reportScedulerDocumentArgs.Tenant,
+                Id = IdCounter.GetNumber("Document", reportScedulerDocumentArgs.Tenant),
                 HasFile = true,
                 Folder = "reports",
             };
 
             documentRepository.Add(document);
             documentRepository.SubmitChanges();
-            StoredDocumentInBlob(document, tenant, ByteData);
+            StoredDocumentInBlob(document, reportScedulerDocumentArgs.Tenant, reportScedulerDocumentArgs.ByteData);
             this.trackerLogs[trackerCounter, 1] = DateTime.Now.ToString();
             this.trackerCounter += 1;
 
@@ -497,6 +536,113 @@ namespace CommunicationWorkerRole.Services
             ReportSchedulerValidator reportSchedulerValidator = new ReportSchedulerValidator(reportFilterItems, tenant, additionalValidate);
             ValidateResult result = reportSchedulerValidator.validate();
             return result;
+        }
+
+        private ValidateResult ValidateGLAccountBalanceInLocalCurrency(List<QueryFilterItem> reportFilterItems, StiReport stiReport, int tenant)
+        {
+            ValidateResult result = new ValidateResult() { IsValid = true, ErrorMessage = ""};
+            string balanceInLocalCurrency = GetFilterFieldValueByName(reportFilterItems, "BalanceInLocalCurrency");
+            string balanceInLocalCurrencyOperator = GetFilterFieldOperatorByName(reportFilterItems, "BalanceInLocalCurrency");
+            if (stiReport.BusinessObjectsStore.Where(x => x.Category == "LTRP").Any() && !string.IsNullOrWhiteSpace(balanceInLocalCurrency)
+                && !string.IsNullOrWhiteSpace(balanceInLocalCurrencyOperator))
+            {
+                var stiBusinessObjectData = stiReport.BusinessObjectsStore.Where(x => x.Category == "LTRP").FirstOrDefault();
+                var ledgerTransactionsDataProvider = stiBusinessObjectData != null ? (LedgerTransactionsDataProvider)stiBusinessObjectData.BusinessObjectValue : null;
+                result.IsValid = CompareBalanceInLocalCurrencyWithLocalClosedBalance(Convert.ToDecimal(balanceInLocalCurrency), ledgerTransactionsDataProvider.LocalClosedBalance, balanceInLocalCurrencyOperator);
+                if (!result.IsValid)
+                    result.ErrorMessage = "The E-mail was not sent, the GLaccount local closed balance " + getOperatorName(balanceInLocalCurrencyOperator) + " the closed balance in local currency";
+            }
+            return result;
+        }
+
+        private ValidateResult ValidateGLAccountLocalBalanceInDue(List<QueryFilterItem> reportFilterItems, StiReport stiReport, int tenant,string gLAccountId)
+        {
+            ValidateResult result = new ValidateResult() { IsValid = true, ErrorMessage = "" };
+            string LocalBalanceInDue = GetFilterFieldValueByName(reportFilterItems, "LocalBalanceInDue");
+            string LocalBalanceInDueOperator = GetFilterFieldOperatorByName(reportFilterItems, "LocalBalanceInDue");
+            GLAccountMoreDataPM accountMoreData=null;
+            if (gLAccountId != null)
+            {
+                GLAccountMoreDataQueryService accountMoreDataQueryService = new GLAccountMoreDataQueryService(tenant);
+                 accountMoreData = accountMoreDataQueryService.GetSingle(gLAccountId,false,false);
+
+            }
+            if (stiReport.BusinessObjectsStore.Where(x => x.Category == "LTRP").Any() && !string.IsNullOrWhiteSpace(LocalBalanceInDue)
+                && !string.IsNullOrWhiteSpace(LocalBalanceInDueOperator) &&accountMoreData!=null)
+            {
+                var stiBusinessObjectData = stiReport.BusinessObjectsStore.Where(x => x.Category == "LTRP").FirstOrDefault();
+                var ledgerTransactionsDataProvider = stiBusinessObjectData != null ? (LedgerTransactionsDataProvider)stiBusinessObjectData.BusinessObjectValue : null;
+                result.IsValid = CompareBalanceInLocalCurrencyWithLocalClosedBalance(Convert.ToDecimal(LocalBalanceInDue), accountMoreData.LocalBalanceInDue, LocalBalanceInDueOperator);
+                if (!result.IsValid)
+                    result.ErrorMessage = "The E-mail was not sent, the GLaccount closing balance according to the balance In Due " + getOperatorName(LocalBalanceInDueOperator) + " the closing balance according to the balance In Due";
+            }
+            return result;
+        }
+
+        private bool CompareBalanceInLocalCurrencyWithLocalClosedBalance(decimal balanceInLocalCurrency, decimal localclosedBalance, string balanceInLocalCurrencyOperator)
+        {
+            bool isValid = false;
+            switch (balanceInLocalCurrencyOperator) {
+                case "Equals":
+                    isValid = (localclosedBalance == balanceInLocalCurrency);
+                    break;
+                case "NotEqual":
+                    isValid = (localclosedBalance != balanceInLocalCurrency);
+                    break;
+                case "LargerThan":
+                    isValid = (localclosedBalance > balanceInLocalCurrency);
+                    break;
+                case "LessThan":
+                    isValid = (localclosedBalance < balanceInLocalCurrency);
+                    break;
+                case "LessThanOrEqual":
+                    isValid = (localclosedBalance <= balanceInLocalCurrency);
+                    break;
+                case "GreaterThanOrEqual":
+                    isValid = (localclosedBalance >= balanceInLocalCurrency);
+                    break;
+            }
+            return isValid;
+        }
+
+        private string getOperatorName(string operatorCode)
+        {
+            string operatorName = "";
+            switch (operatorCode)
+            {
+                case "Equals":
+                    operatorName = "is not equal";
+                    break;
+                case "NotEqual":
+                    operatorName = "is equal";
+                    break;
+                case "LargerThan":
+                    operatorName = "is not larger than";
+                    break;
+                case "LessThan":
+                    operatorName = "is not less than";
+                    break;
+                case "LessThanOrEqual":
+                    operatorName = "is not less than or equal";
+                    break;
+                case "GreaterThanOrEqual":
+                    operatorName = "is not greater than or equal";
+                    break;
+            }
+            return operatorName;
+        }
+
+        private string GetFilterFieldOperatorByName(List<QueryFilterItem> reportFilterItems, string fieldName)
+        {
+            string fieldOperator = null;
+            reportFilterItems.ForEach(item => {
+                if (item.FieldName == fieldName)
+                {
+                    if (item.FieldValue != null)
+                        fieldOperator = item.Operator.ToString();
+                }
+            });
+            return fieldOperator;
         }
 
         private ReportSchedulerRecepients RemoveInActiveCustomerRecepients(ReportSchedulerRecepients recepients, List<ShortPartnersDetails> connectedPartners, int tenant)
@@ -565,20 +711,104 @@ namespace CommunicationWorkerRole.Services
             {
                 if (partner.InActive) inactivePartnerCounts += 1;
             });
-            
+
             return inactivePartnerCounts;
         }
-        private void SendHtmlDocument(string documentId, ReportSchedulerRecepients recepients, TasksSchedulerPM reportTask)
+        private void SendHtmlDocument(SendHtmlDocumentArgs args)
         {
             HtmlEditorHelper htmlEditorHelper = new HtmlEditorHelper();
-            System.Text.UTF8Encoding enc = new System.Text.UTF8Encoding();
-            Byte[] htmlData = enc.GetBytes("");
-            string reportTableId = GetReportTableId(reportTask.Tenant);
-            htmlEditorHelper.SendHtmlDocument(htmlData, null, null, reportTask.Tenant, recepients.To, reportTask.Name, recepients.Cc, recepients.Bcc, reportTask.CreatedBy, reportTask.EntityId, reportTableId, documentId + ",", "", "", "");
+            SchedulerDetails schedulerDetails = GetSchedulerDetails(args.reportTask); 
+            EmailDetails emailDetails = GetEmailDetailsByMessageTemplateId(new GetEmailDetailsByMessageTemplateIdArgs() { messageTemplateId = schedulerDetails.ReportDetails.MessageTemplateId, tenant = args.reportTask.Tenant, userId = args.reportTask.CreatedBy, stiReport = args.stiReport });
+            string reportTableId = GetReportTableId(args.reportTask.Tenant);
+            string subject = !string.IsNullOrEmpty(emailDetails.Subject) ? emailDetails.Subject : args.reportTask.Name;
+            htmlEditorHelper.SendHtmlDocument(emailDetails.Body, null, null, args.reportTask.Tenant, args.recepients.To, subject, args.recepients.Cc, args.recepients.Bcc, args.reportTask.CreatedBy, args.reportTask.EntityId, reportTableId, args.documentId + ",", "", "", "");
             this.trackerLogs[trackerCounter, 1] = DateTime.Now.ToString();
             this.trackerCounter += 1;
         }
+        public EmailDetails GetEmailDetailsByMessageTemplateId(GetEmailDetailsByMessageTemplateIdArgs args)
+        {
+            if (string.IsNullOrEmpty(args.messageTemplateId) || string.IsNullOrWhiteSpace(args.messageTemplateId))
+            {
+                return GetInstanceOfEmailDetails();
+            }
+            return GetEmailDetails(new GetEmailDetailsArgs() { messageTemplateId = args.messageTemplateId, tenant = args.tenant, userId = args.userId, stiReport = args.stiReport });
+        }
 
+        private EmailDetails GetEmailDetails(GetEmailDetailsArgs args)
+        {
+            ReportsTemplatesVersionRepository reportsTemplatesVersionRepository = new ReportsTemplatesVersionRepository(args.tenant);
+            string documentId = reportsTemplatesVersionRepository.GetReportDocumentIdByReportTemplateId(args.messageTemplateId, args.tenant);
+            ReportsTemplateQuery reportsTemplateQuery = new ReportsTemplateQuery(args.tenant);
+            ReportsTemplatePM reportsTemplatePM = reportsTemplateQuery.GetSinglePM(args.messageTemplateId, args.tenant);
+            EmailDetails emailDetails = GetInstanceOfEmailDetails();
+
+            if (string.IsNullOrEmpty(documentId)) return emailDetails;
+            string html = GetHtmlBody(args.tenant, documentId);
+
+            HtmlEditorHelper htmlEditorHelper = new HtmlEditorHelper();
+            string subject = reportsTemplatePM != null ? reportsTemplatePM.Subject : null;
+            string from = null;
+            string replyTo = null;
+            string cc = null;
+            UTF8Encoding utf8Encoding = new UTF8Encoding();
+
+            object dataProvider = GetDataProviderFromStiReport(args.stiReport);
+            string dataProviderName = GetDataProviderNameFromStiReport(args.stiReport);
+            html = htmlEditorHelper.ResolveDataProviderHtml(new DataProviderResolverArgs() { htmlValue = html, dataProvider = dataProvider, dataProviderName = dataProviderName });
+            subject = htmlEditorHelper.ResolveDataProviderHtml(new DataProviderResolverArgs() { htmlValue = subject, dataProvider = dataProvider, dataProviderName = dataProviderName });
+            string htmlstring = htmlEditorHelper.ResolveSystemDataHtml(html, args.userId, ref subject, ref from, ref replyTo, ref cc, args.tenant);     
+            emailDetails.Body = utf8Encoding.GetBytes(htmlstring);
+            emailDetails.Subject = subject;
+            return emailDetails;
+        }
+
+        private object GetDataProviderFromStiReport(StiReport stiReport)
+        {
+            if (stiReport == null) return null;
+            if (stiReport.BusinessObjectsStore == null) return null;
+            if (stiReport.BusinessObjectsStore[0] == null) return null;
+            return stiReport.BusinessObjectsStore[0].BusinessObjectValue;
+        }
+
+        private string GetDataProviderNameFromStiReport(StiReport stiReport)
+        {
+            if (stiReport == null) return null;
+            if (stiReport.BusinessObjectsStore == null) return null;
+            if (stiReport.BusinessObjectsStore[0] == null) return null;
+            return stiReport.BusinessObjectsStore[0].Name;
+        }
+
+        private static string GetHtmlBody(int tenant, string documentId)
+        {
+            IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+            BlobFileInfo fileInfo = new BlobFileInfo()
+            {
+                FileName = documentId,
+                FolderName = "reports",
+                Extension = "html",
+                Tenant = tenant,
+
+            };
+
+            var fileData = storageservice.Read(fileInfo);
+            string html = string.Empty;
+            if (fileData != null)
+            {
+                html = System.Text.Encoding.UTF8.GetString(fileData);
+            }
+
+            return html;
+        }
+
+        private static EmailDetails GetInstanceOfEmailDetails()
+        {
+            UTF8Encoding utf8Encoding = new UTF8Encoding();
+            return new EmailDetails()
+            {
+                Body = utf8Encoding.GetBytes(""),
+                Subject = null
+            };
+        }
         private string GetReportTableId(int tenant)
         {
             ObjectTableQuery objectTableQuery = new ObjectTableQuery(tenant);
@@ -586,7 +816,7 @@ namespace CommunicationWorkerRole.Services
             return reportId;
         }
 
-        private string GetAllTaskLogs()
+        public string GetAllTaskLogs()
         {
             string logsMessage = "";
             int trackerLogsCount;
@@ -616,6 +846,40 @@ namespace CommunicationWorkerRole.Services
     {
         public string To;
         public bool IsActive;
+    }
+
+    public class ReportScedulerDocumentArgs
+    {
+        public string Name;
+        public string Format;
+        public int Tenant;
+        public byte[] ByteData;
+    }
+    public class SendHtmlDocumentArgs
+    {
+        public string documentId;
+        public ReportSchedulerRecepients recepients;
+        public TasksSchedulerPM reportTask;
+        public StiReport stiReport;
+    }
+    public class GetEmailDetailsByMessageTemplateIdArgs
+    {
+        public string messageTemplateId;
+        public int tenant;
+        public string userId;
+        public StiReport stiReport;
+    }
+    public class GetEmailDetailsArgs
+    {
+        public string messageTemplateId;
+        public int tenant;
+        public string userId;
+        public StiReport stiReport;
+    }
+    public class EmailDetails
+    {
+        public byte[] Body;
+        public string Subject;
     }
 }
 

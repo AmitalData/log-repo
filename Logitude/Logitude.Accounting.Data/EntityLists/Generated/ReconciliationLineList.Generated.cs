@@ -43,7 +43,7 @@ namespace Logitude.Accounting.Data.EntityLists
        [DataMember]
        public DateTime CreateDate  { get; set; }
        [DataMember]
-       public DateTime DueDate  { get; set; }
+       public DateTime? DueDate  { get; set; }
        [DataMember]
        public decimal AmountDebit  { get; set; }
        [DataMember]
@@ -78,6 +78,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public decimal TransactionAmount  { get; set; }
        [DataMember]
        public decimal ExcelTransactionAmount  { get; set; }
+       [DataMember]
+       public DateTime? RefDate  { get; set; }
    }
 
 }

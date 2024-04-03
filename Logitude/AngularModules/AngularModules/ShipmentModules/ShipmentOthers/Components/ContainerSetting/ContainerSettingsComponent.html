@@ -1,0 +1,197 @@
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <div class="MediaFill">
+                <div class="TabControl">
+                    <div class="TabControlHead">
+                        <ul>
+                            <li [class.Selected]="SelectedTabCode === 'G'" (click)="SelectedTabCode = 'G'">
+                                <div class="InnerChild">General</div>
+                            </li>
+
+                            <li *ngIf="IsContainerTrackingPrepaid" [class.Selected]="SelectedTabCode === 'R'" (click)="AutomaticRequestsTabClicked()">
+                                <div class="InnerChild">Automatic Requests</div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="TabControlBody">
+                        <div class="container-setting-tab-body-container">
+                            <div class="container-setting-tab-header-container">
+                                <p style="font-size: 14px; color: #1B90CB;">{{SelectedTabCode ==
+                                    'G'?'General Settings' : 'Automatic Requests'}} </p>
+                                <HelpIcon *ngIf="SelectedTabCode == 'R'" [Header]="'Automatic Requests'" [Height]="90"
+                                    [Text]="'The definitions in this section will determine which containers to automatically send requests for.'">
+                                </HelpIcon>
+                            </div>
+
+                            <table [hidden]="SelectedTabCode != 'G'">
+                                <tr class="FormFieldRow">
+                                    <td style="width: 170px;">
+                                        <LogLabel [ObjectFieldName]="'EmptyReturnClosingDays'" [NoObjectField]="true"
+                                            [Text]="'Empty Return Closing Days'" [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext">
+                                        </LogLabel>
+                                    </td>
+
+                                    <td style="width: 200px;">
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <LogTextBox [InputType]="'unsinteger'"
+                                                        [ObjectFieldName]="'EmptyReturnClosingDays'"
+                                                        [Text]="EmptyReturnClosingDays"
+                                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
+                                                        [HideColumns]="true">
+                                                    </LogTextBox>
+                                                </td>
+                                                <td>
+                                                    <div float-end>
+                                                        <HelpIcon [Header]="'Help'"
+                                                            [Text]="ClosingContainerToolTipMessage">
+                                                        </HelpIcon>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td>
+                                    </td>
+                                </tr>
+
+                                <tr class="FormFieldRow">
+                                    <td style="width: 170px;">
+                                        <LogLabel [ObjectFieldName]="'ShipmentATAClosingDays'" [NoObjectField]="true"
+                                            [Text]="'Shipment ATA Closing Days'" [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext">
+                                        </LogLabel>
+                                    </td>
+
+                                    <td style="width: 200px;">
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <LogTextBox [InputType]="'unsinteger'"
+                                                        [ObjectFieldName]="'ShipmentATAClosingDays'"
+                                                        [Text]="ShipmentATAClosingDays"
+                                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
+                                                        [HideColumns]="true">
+                                                    </LogTextBox>
+                                                </td>
+                                                <td>
+                                                    <div float-end>
+                                                        <HelpIcon [Header]="'Help'"
+                                                            [Text]="'How many days after the Shipment ATA Date to wait before automatically closing the container.'">
+                                                        </HelpIcon>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td>
+                                    </td>
+                                </tr>
+
+                                <tr class="FormFieldRow">
+                                    <td style="width: 170px;">
+                                        <LogLabel [ObjectFieldName]="'ShipmentATADateIndicator'" [NoObjectField]="true"
+                                            [Text]="'Shipment ATA Source'" [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext">
+                                        </LogLabel>
+                                    </td>
+
+                                    <td style="width: 200px;">
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <ComboBox [ItemsSource]="ShipmentATADateComboList"
+                                                        [SelectedItem]="SelectedShipmentATADateItem"
+                                                        (SelectedItemChanged)="SelectedShipmentATADateItem = $event"
+                                                        [Binding]="'Name'"></ComboBox>
+                                                </td>
+                                                <td style="width: 18px;">
+                                                    <div float-end></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+
+                                
+                                <tr class="FormFieldRow" *ngIf="IsContainerTrackingPrepaid">
+                                    <td style="width: 170px;">
+                                        <LogLabel [ObjectFieldName]="'ActivationDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
+                                        </LogLabel>
+                                    </td>
+
+                                    <td style="width: 200px;">
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <LogDatePicker [ObjectFieldName]="'ActivationDate'" [ObjectTableName]="ObjectTableName"
+                                                    [DataContext]="DataContext" [HideColumns]="true" *ngIf="Loaded"></LogDatePicker>
+                                                </td>
+                                                <td style="width: 18px;">
+                                                    <div float-end></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td colspan="2">
+                                        <div></div>
+                                    </td>
+                                </tr>
+
+                            </table>
+                            <ContainerSettingsRequest style="flex: 1 1 auto;margin-bottom: 10px;" *ngIf="Loaded"
+                                [DataContext]="DataContext" [hidden]="SelectedTabCode != 'R'"
+                                [ShippingLines]="ShippingLines">
+                            </ContainerSettingsRequest>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' |
+                            TextCodeTranslationPipe}}</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">{{'General.B.Ok' |
+                            TextCodeTranslationPipe}}</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

@@ -1,20 +1,20 @@
-.prime-web-component .cdk-virtual-scroll-content-wrapper, .p-dialog .cdk-virtual-scroll-content-wrapper {
+.prime-web-component .cdk-virtual-scroll-content-wrapper, .prime-web-component .p-dialog .cdk-virtual-scroll-content-wrapper {
     contain: unset !important;
 }
 
-.p-dropdown.p-component {
+.prime-web-component .p-dropdown.p-component {
     width: 100% !important;
 }
 
-p-autocomplete {
+.prime-web-component p-autocomplete {
     width: 100% !important;
 }
 
-p-dropdown {
+.prime-web-component p-dropdown {
     width: 100% !important;
 }
 
-.p-field-checkbox label {
+.prime-web-component .p-field-checkbox label {
     margin-bottom: 0 !important;
 }
 
@@ -26,15 +26,15 @@ p-dropdown {
     margin-bottom: 0 !important;
 }
 
-.p-datepicker-touch-ui {
+.prime-web-component .p-datepicker-touch-ui {
     min-width: 20vw !important;
 }
 
-.p-calendar .p-datepicker {
+.prime-web-component .p-calendar .p-datepicker {
     width: 400px !important;
 }
 
-.p-inputtext {
+.prime-web-component .p-inputtext {
     height: unset !important;
     min-height: unset !important;
     max-height: unset !important;
@@ -46,41 +46,41 @@ p-dropdown {
     -moz-box-shadow: unset !important;
 }
 
-.p-button {
+.prime-web-component .p-button {
     display: inline-flex !important;
     height: auto !important;
 }
 
-.p-button:not(.p-button-icon-only) {
+.prime-web-component .p-button:not(.p-button-icon-only) {
     width: auto;
     height: auto !important;
 }
 
-.p-button.p-button-icon-only.p-button-rounded {
+.prime-web-component .p-button.p-button-icon-only.p-button-rounded {
     height: 2.357rem !important;
 }
 
-.prime-web-component *, .p-dialog * {
+.prime-web-component *, .prime-web-component .p-dialog * {
     white-space: initial !important;
     font-size: 12px !important;
 }
 
-.p-button:not(.p-button-sm) {
+.prime-web-component .p-button:not(.p-button-sm) {
     padding: 0.5rem 1rem !important;
 }
 
-.p-button.p-button-icon-only {
+.prime-web-component .p-button.p-button-icon-only {
     padding: 0.5rem 0 !important;
 }
 
-.AddLabel {
+.prime-web-component .AddLabel {
     padding-bottom: 0.54rem !important;
 }
 
-.QueryColumnOrFiltersContainer br {
+.prime-web-component .QueryColumnOrFiltersContainer br {
     display: none !important;
 }
 
-.p-checkbox {
+.prime-web-component .p-checkbox {
     margin-bottom: 3px !important;
 }

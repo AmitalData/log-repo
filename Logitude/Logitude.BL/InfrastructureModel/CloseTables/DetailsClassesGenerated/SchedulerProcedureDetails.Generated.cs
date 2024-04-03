@@ -179,6 +179,104 @@ namespace Logitude.BL.InfrastructureModel
                 Description = "ExchangeRateUpdateTask", 
                 IsInternallyDefined = false, 
 			});
+			 
+            all.Add(new SchedulerProcedureDetails()
+            {    
+                Code = "ContainerAutomaticallyClosingTask", 
+                Name = "ContainerAutomaticallyClosingTask", 
+                SearchFields = "ContainerAutomaticallyClosingTask", 
+                Description = "ContainerAutomaticallyClosingTask", 
+                IsInternallyDefined = false, 
+			});
+			 
+            all.Add(new SchedulerProcedureDetails()
+            {    
+                Code = "RecalculateCashbooksTotalsTask", 
+                Name = "RecalculateCashbooksTotalsTask", 
+                SearchFields = "RecalculateCashbooksTotalsTask", 
+                IsInternallyDefined = false, 
+			});
+			 
+            all.Add(new SchedulerProcedureDetails()
+            {    
+                Code = "ResetFullTextSearchIndexChangeTrackingTask", 
+                Name = "ResetFullTextSearchIndexChangeTrackingTask", 
+                SearchFields = "ResetFullTextSearchIndexChangeTrackingTask", 
+                Description = "ResetFullTextSearchIndexChangeTrackingTask", 
+                IsInternallyDefined = false, 
+			});
+			 
+            all.Add(new SchedulerProcedureDetails()
+            {    
+                Code = "UpdateCanceledSATEntitiesStatusesTask", 
+                Name = "UpdateCanceledSATEntitiesStatusesTask", 
+                SearchFields = "UpdateCanceledSATEntitiesStatusesTask", 
+                IsInternallyDefined = false, 
+                Description = "UpdateCanceledSATEntitiesStatusesTask", 
+			});
+			 
+            all.Add(new SchedulerProcedureDetails()
+            {    
+                Code = "DeleteOldContactActivityLogsTask", 
+                Name = "DeleteOldContactActivityLogsTask", 
+                SearchFields = "DeleteOldContactActivityLogsTask", 
+                Description = "DeleteOldContactActivityLogsTask", 
+                IsInternallyDefined = false, 
+			});
+			 
+            all.Add(new SchedulerProcedureDetails()
+            {    
+                Code = "DeleteOldAnalyzeQueuesTask", 
+                Name = "DeleteOldAnalyzeQueuesTask", 
+                SearchFields = "DeleteOldAnalyzeQueuesTask", 
+                Description = "DeleteOldAnalyzeQueuesTask", 
+                IsInternallyDefined = false, 
+			});
+			 
+            all.Add(new SchedulerProcedureDetails()
+            {    
+                Code = "DeleteOldMobileNotificationLogsTask", 
+                Name = "DeleteOldMobileNotificationLogsTask", 
+                SearchFields = "DeleteOldMobileNotificationLogsTask", 
+                Description = "DeleteOldMobileNotificationLogsTask", 
+                IsInternallyDefined = false, 
+			});
+			 
+            all.Add(new SchedulerProcedureDetails()
+            {    
+                Code = "DeleteOldPerformanceLogsTask", 
+                Name = "DeleteOldPerformanceLogsTask", 
+                SearchFields = "DeleteOldPerformanceLogsTask", 
+                Description = "DeleteOldPerformanceLogsTask", 
+                IsInternallyDefined = false, 
+			});
+			 
+            all.Add(new SchedulerProcedureDetails()
+            {    
+                Code = "DeleteOldBIReportsExecutionLogsTask", 
+                Name = "DeleteOldBIReportsExecutionLogsTask", 
+                SearchFields = "DeleteOldBIReportsExecutionLogsTask", 
+                Description = "DeleteOldBIReportsExecutionLogsTask", 
+                IsInternallyDefined = false, 
+			});
+			 
+            all.Add(new SchedulerProcedureDetails()
+            {    
+                Code = "DeleteOldReportExecutionLogsTask", 
+                Name = "DeleteOldReportExecutionLogsTask", 
+                SearchFields = "DeleteOldReportExecutionLogsTask", 
+                Description = "DeleteOldReportExecutionLogsTask", 
+                IsInternallyDefined = false, 
+			});
+			 
+            all.Add(new SchedulerProcedureDetails()
+            {    
+                Code = "DeleteOldDocumentsExecutionLogsTask", 
+                Name = "DeleteOldDocumentsExecutionLogsTask", 
+                SearchFields = "DeleteOldDocumentsExecutionLogsTask", 
+                Description = "DeleteOldDocumentsExecutionLogsTask", 
+                IsInternallyDefined = false, 
+			});
 			
             return all;
        }

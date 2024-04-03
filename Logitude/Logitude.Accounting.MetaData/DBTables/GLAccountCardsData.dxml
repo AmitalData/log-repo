@@ -53,7 +53,8 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="VatNumber"
+    Name="VatNumber1"
+    OldNames="VatNumber"
     Type="varchar"
     Size="20">
     <Constraints

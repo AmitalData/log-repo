@@ -16,6 +16,7 @@ using System.Text.RegularExpressions;
 using Logitude.Infrastructure.BL.EntityPMs;
 using Logitude.Infrastructure.BL.EntityUpdateServices;
 using Logitude.Infrastructure.Data;
+using System.Diagnostics;
 
 namespace Logitude.Accounting.BL.Utils
 {
@@ -50,10 +51,11 @@ namespace Logitude.Accounting.BL.Utils
         {
             return _StatusCode;
         }
-        public void RunReconciliationStageC(ReconciliationStageCArg reconciliationStageCArg)
+        public void RunReconciliationStageC(ReconciliationStageCArg reconciliationStageCArg, int timeoutinmin, ref bool retry)
         {
             try
             {
+                var sw = Stopwatch.StartNew(); 
                 DateTime fromDate = DateTime.MinValue;
                 DateTime oldDate = DateTime.MinValue;
               //  decimal oldAmount = Decimal.MaxValue;
@@ -92,7 +94,8 @@ namespace Logitude.Accounting.BL.Utils
 
                     if (gLAccountIdList != null && gLAccountIdList.Count > 0)
                     {
-                        gLAccountIdList.ForEach(accId =>
+                        foreach (string accId in gLAccountIdList)
+                       //     gLAccountIdList.ForEach(accId =>
                         {
                             ReconciliationStageCArg innerArgs = reconciliationStageCArg;
                             innerArgs.GLAccountId = accId;
@@ -100,9 +103,13 @@ namespace Logitude.Accounting.BL.Utils
                             while (one_made)
                             {
                                 one_made = RunReconciliationStageC_OneAccount(innerArgs);
-                            } 
-                           
-                        });
+                            }
+                            if (sw.Elapsed.TotalMinutes >= timeoutinmin)
+                            {
+                                retry = true;
+                                break;
+                            }
+                        }
                     }
                 }
                 else

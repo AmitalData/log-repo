@@ -9,6 +9,9 @@
   ObjectTablePlural="&quot;Quote Packages&quot;"
   HasCustomFilter="false"
   HasCustomFields="false"
+  AvailableInCustomization="true"
+  SupportSubEntity="false"
+  ApplyGenericCustomFields="false"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -30,13 +33,13 @@
   IsSaveButtonVisible="true"
   IsComposition="true"
   EnableSecurity="true"
-  AllowCustomFields="false"
+  AllowCustomFields="true"
   HasDynamicHeader="false"
   ObjectTableTypeCode="&quot;BR&quot;"
-  MaxNumberOfCustomFields="0"
+  MaxNumberOfCustomFields="50"
   ParentTableName="Quote"
   DefaultText="&quot;QuotePackage&quot;"
-  Code="&quot;6a2e&quot;"
+  Code="&quot;1fdf&quot;"
   Name="&quot;QuotePackage&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Quote&quot;"
@@ -50,6 +53,8 @@
   ApplyOnPropertyChangedCode="false"
   HasApiHelper="false"
   AllowedForComputingPartners="false"
+  IsBusinessUnitEnabled="false"
+  TenantZeroData="false"
   Code1="&quot;43e7&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -82,6 +87,7 @@
     SystemMaxLength="0"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -155,6 +161,7 @@
     SystemMaxLength="0"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -228,6 +235,7 @@
     SystemMaxLength="0"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -257,9 +265,9 @@
     ListLocalDefaultText="&quot;QuoteId&quot;"
     IsNullable="false"
     IsForeignKey="true"
-    ForeignEntity="Quote"
+    ForeignEntity="&quot;Quote&quot;"
     DontBuildRelationOnDB="false"
-    NavigationPropertyName="Quote"
+    NavigationPropertyName="&quot;Quote&quot;"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -304,6 +312,7 @@
     SystemMaxLength="0"
     DisplayInList="false"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;Equals&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -333,9 +342,9 @@
     DefaultText="&quot;Package Type&quot;"
     IsNullable="false"
     IsForeignKey="true"
-    ForeignEntity="PackageType"
+    ForeignEntity="&quot;PackageType&quot;"
     DontBuildRelationOnDB="false"
-    NavigationPropertyName="PackageType"
+    NavigationPropertyName="&quot;PackageType&quot;"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -380,6 +389,7 @@
     SystemMaxLength="0"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;StartsWith&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -456,6 +466,7 @@
     SystemMaxLength="0"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;Equals&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -532,6 +543,7 @@
     SystemMaxLength="0"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;Equals&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -591,7 +603,7 @@
     FieldName="&quot;Volume&quot;"
     OldNames="Volume"
     IsNew="false"
-    IsChecked="false"
+    IsChecked="true"
     IsDeleted="false"
     ObjectTableName="&quot;QuotePackage&quot;"
     FieldsDataType="&quot;Double&quot;"
@@ -608,6 +620,7 @@
     SystemMaxLength="0"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;Equals&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -629,8 +642,8 @@
     DisplayInSearchWindowFilters="false"
     DisplayInSearchWindowFiltersIndex="0"
     DisplayInDocumentReferences="false"
-    NumberOfDigits="0"
-    DigitsAfterPoint="0"
+    NumberOfDigits="3"
+    DigitsAfterPoint="3"
     InActive="false"
     DisplayLongName="false"
     FullFieldLable="&quot;Volume&quot;"
@@ -684,6 +697,7 @@
     SystemMaxLength="0"
     DisplayInList="false"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;Equals&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -758,6 +772,7 @@
     SystemMaxLength="0"
     DisplayInList="false"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;Equals&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -832,6 +847,7 @@
     SystemMaxLength="0"
     DisplayInList="false"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;Equals&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -906,6 +922,7 @@
     SystemMaxLength="0"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;Equals&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -982,6 +999,7 @@
     SystemMaxLength="0"
     DisplayInList="false"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -1055,6 +1073,7 @@
     SystemMaxLength="0"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;Equals&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -1118,6 +1137,16 @@
     NumberOfRows="1">
     <ScreenFields />
   </Screen>
+  <Screen
+    Name="&quot;Additional Fields&quot;"
+    ObjectTableName="&quot;QuotePackage&quot;"
+    IsReadOnly="false"
+    IsHeaderScreen="false"
+    Code="&quot;QuotePackage.AdditionalFields&quot;"
+    NumberOfColumns="2"
+    NumberOfRows="1">
+    <ScreenFields />
+  </Screen>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
@@ -1150,7 +1179,8 @@
   <DataContracts>
     <DataContract
       Name="&quot;QuotePackage&quot;"
-      Version="&quot;ApiV1&quot;">
+      Version="&quot;ApiV1&quot;"
+      IncludeTenant0Data="false">
       <DCField
         DCFieldName="&quot;Id&quot;"
         FieldName="&quot;Id&quot;"
@@ -1164,7 +1194,8 @@
         IsAttribute="true"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;PackageType&quot;"
         FieldName="&quot;PackageTypeId&quot;"
@@ -1178,7 +1209,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;Quantity&quot;"
         FieldName="&quot;Quantity&quot;"
@@ -1192,7 +1224,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;GrossWeight&quot;"
         FieldName="&quot;GrossWeight&quot;"
@@ -1206,7 +1239,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;Volume&quot;"
         FieldName="&quot;Volume&quot;"
@@ -1220,7 +1254,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;Height&quot;"
         FieldName="&quot;Height&quot;"
@@ -1234,7 +1269,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;Width&quot;"
         FieldName="&quot;Width&quot;"
@@ -1248,7 +1284,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;Length&quot;"
         FieldName="&quot;Length&quot;"
@@ -1262,7 +1299,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;VolumetricWeight&quot;"
         FieldName="&quot;VolumetricWeight&quot;"
@@ -1276,7 +1314,8 @@
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
         IsCloseField="false"
-        IsCompositKey="false" />
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
     </DataContract>
   </DataContracts>
   <AdditionalTextCodes />

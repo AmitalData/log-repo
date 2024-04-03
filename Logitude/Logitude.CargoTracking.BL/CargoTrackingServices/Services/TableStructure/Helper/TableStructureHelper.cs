@@ -135,6 +135,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
         private  void SetPrimartKeyCoulmn(object coulmnnPrimarykey,string columnName)
         {
             bool? isPrimartKey = false;
+            var isNull = coulmnnPrimarykey.GetType().Name == "DBNull";
             try { isPrimartKey = bool.Parse((string)coulmnnPrimarykey); }
             catch (Exception e) { isPrimartKey = false; }
             if (isPrimartKey == true) { PrimarykeyColumn = columnName; }
@@ -169,6 +170,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                
                 }
             }
+            tableIndexsCommand += "IF NOT EXISTS (SELECT name FROM sysindexes WHERE name = 'IX_CargoTrackingShipments_EntityType_ForwardingShipmentHeaderId') CREATE NONCLUSTERED INDEX [IX_CargoTrackingShipments_EntityType_ForwardingShipmentHeaderId] ON [dbo].[CargoTrackingShipments] ([EntityType], [ForwardingShipmentHeaderId]) INCLUDE ([ArrivalDate], [ArrivalDone], [ArrivalEstimationDate], [BookingDate], [CreateDate], [CreatedDone], [DepartureDate], [DepartureDone], [DepartureEstimationDate], [FromWarehouseDate], [FromWarehouseDone], [FromWarehouseEstimationDate], [FromWarehouseNotes], [PickupDate], [PickupDone], [PickupEstimationDate])";
+            tableIndexsCommand += "IF NOT EXISTS (SELECT name FROM sysindexes WHERE name = 'IX_CargoTrackingShipmentSearches_Tenant') CREATE NONCLUSTERED INDEX [IX_CargoTrackingShipmentSearches_Tenant] ON [dbo].[CargoTrackingShipmentSearches] ([Tenant]) INCLUDE ([SearchFields], [ShipmentId])";
             tableIndexsCommand += " End \n";
             return tableIndexsCommand;
         }

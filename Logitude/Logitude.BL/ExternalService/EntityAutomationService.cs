@@ -28,6 +28,7 @@ namespace Logitude.BL.ExternalService
         private object oldEntityPM = null;
         private string entityId = string.Empty;
         private EntityAutomationArgs entityAutomationArgs = null;
+        private MainEntityChangeService mainEntityChangeService = null;
         public EntityAutomationService(EntityAutomationArgs args)
         {
             this.entityPM = args.EntityPM;
@@ -55,10 +56,17 @@ namespace Logitude.BL.ExternalService
             
             string entityChangeFieldXml = automationType == "OnCreate" ? "" : GetEntityChangeFieldXml();
 
-            var mainEntityChangeService = new MainEntityChangeService(new EntityChangeArgs() {EntityPM = entityPM, OldEntityPM= oldEntityPM , ProcessType = automationType, EntityChangeFieldXml = entityChangeFieldXml  , ObjectTableName = objectTableName , EntityId = this.entityId, Tenant = tenant, StartDate = DateTime.Now , OtherObjectTableName = entityAutomationArgs.OtherObjectTableName, ExternalEntity = entityAutomationArgs.ExternalEntity });
+            mainEntityChangeService = new MainEntityChangeService(new EntityChangeArgs() {EntityPM = entityPM, OldEntityPM= oldEntityPM , ProcessType = automationType, EntityChangeFieldXml = entityChangeFieldXml  , ObjectTableName = objectTableName , EntityId = this.entityId, Tenant = tenant, StartDate = DateTime.Now , OtherObjectTableName = entityAutomationArgs.OtherObjectTableName, ExternalEntity = entityAutomationArgs.ExternalEntity  , DontExecuteAutomationThatDependencyOnLastEntityUpdate = automationType == "OnCreate"  ? true:false, EntityReference = entityAutomationArgs.EntityReference});
             mainEntityChangeService.AddEntityChange();
 
         }
+
+        public void RunAutomationThatDependencyOnLastEntityUpdate()
+        {
+            if (!mainEntityChangeService.CheckIfUserDefinedAutomationDependencyOnLastEntityUpdate()) return;
+            mainEntityChangeService.ExecuteAutomationThatDependencyOnLastEntityUpdate(entityPM, entityAutomationArgs.EntityReference);
+        }
+
 
         private List<ObjectFieldPM> GetObjectFieldsUsedInAutomation()
         {
@@ -185,6 +193,7 @@ namespace Logitude.BL.ExternalService
         public string ObjectTableName { get; set; }
         public int Tenant { get; set; }
         public string EntityId { get; set; }
+        public string EntityReference { get; set; }
         public IEntityAutomationMappingPMFields EntityAutomationMappingPMFields { get; set; }
     }
 

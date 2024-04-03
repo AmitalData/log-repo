@@ -1,0 +1,199 @@
+﻿<Script DBType="Main" Module="Accounting">
+  <Sql Version="1">
+    <![CDATA[
+    update JournalLines set DebitAccountId = JournlaLinesGlAccountCurrencies.GLAccountId, CreditControlAccountId = ControlAccountId from JournalLines
+    inner join(
+    Select case 
+		when GLAccountCurrencies.CurrencyId = ARInvoices.InvoiceCurrencyId then GLAccountCurrencies.GLAccountId 
+		else CardGLA.Id
+		end as GLAccountId
+	,  case 
+		when GLA2.ControlAccountId IS NOT Null then GLA2.ControlAccountId
+		else CardGLA.ControlAccountId
+		end as ControlAccountId, journallines.DebitAccountId, BillToGLAccountId ,Journals.Id as JournalId, journallines.Line,Journals.JournalNumber, journallines.CreditAccountId
+    , journallines.LocalAmount, journallines.ForeignAmount, journallines.CurrencyId, journallines.ActionCode, journallines.Tenant
+    from Journals
+    inner join journallines on journallines.JournalId = Journals.Id AND journallines.Tenant = Journals.Tenant 
+    inner join ARInvoices on ARInvoices.Id = Journals.AccountingEntityId AND ARInvoices.Tenant = Journals.Tenant
+	inner join Cards on ARInvoices.BillToId = Cards.Id  AND ARInvoices.Tenant = Cards.Tenant
+	inner join GLAccounts as CardGLA on Cards.GLAccountId = CardGLA.Id AND Cards.Tenant = CardGLA.Tenant 
+    left join GLAccounts as GLA1 on ARInvoices.BillToGLAccountId = GLA1.Id AND ARInvoices.Tenant = GLA1.Tenant 
+    left join GLAccountCurrencies on Cards.GLAccountId = GLAccountCurrencies.MainGLAccountId AND GLAccountCurrencies.CurrencyId = ARInvoices.InvoiceCurrencyId AND Cards.Tenant = GLAccountCurrencies.Tenant 
+    left join GLAccounts as GLA2 on GLAccountCurrencies.GLAccountId = GLA2.Id AND GLAccountCurrencies.Tenant = GLA2.Tenant 
+    where  AccountingEntityCode = 2 AND CardGLA.IsMultiCurrency = 1 AND ARInvoices.IsMultiCurrency = 0  and ActionCode = '1' 
+	--and GLAccountCurrencies.CurrencyId = ARInvoices.InvoiceCurrencyId
+	--AND journallines.DebitAccountId != GLAccountCurrencies.GLAccountId
+	AND NOT (ARInvoices.BillToGLAccountId is NOT null AND GLA1.ChartOfAccountsTypeCode = '6')
+	) as JournlaLinesGlAccountCurrencies
+    on JournlaLinesGlAccountCurrencies.JournalId = JournalLines.JournalId AND JournlaLinesGlAccountCurrencies.Line = JournalLines.Line
+    AND JournlaLinesGlAccountCurrencies.Tenant = JournalLines.Tenant
+	AND JournlaLinesGlAccountCurrencies.GLAccountId != JournlaLinesGlAccountCurrencies.DebitAccountId
+    
+    
+    update LedgerTransactions set OppositeAccountId = JournlaLinesGlAccountCurrencies.GLAccountId from LedgerTransactions
+    inner join (
+	Select case 
+		when GLAccountCurrencies.CurrencyId = ARInvoices.InvoiceCurrencyId then GLAccountCurrencies.GLAccountId 
+		else CardGLA.Id
+		end as GLAccountId,
+		journallines.DebitAccountId, BillToGLAccountId ,Journals.Id as JournalId , journallines.Line,Journals.JournalNumber, journallines.CreditAccountId
+    , journallines.LocalAmount, journallines.ForeignAmount, journallines.CurrencyId, journallines.ActionCode, journallines.Tenant
+    from Journals
+    inner join journallines on journallines.JournalId = Journals.Id AND journallines.Tenant = Journals.Tenant 
+    inner join ARInvoices on ARInvoices.Id = Journals.AccountingEntityId AND ARInvoices.Tenant = Journals.Tenant
+	inner join Cards on ARInvoices.BillToId = Cards.Id  AND ARInvoices.Tenant = Cards.Tenant
+	inner join GLAccounts as CardGLA on Cards.GLAccountId = CardGLA.Id AND Cards.Tenant = CardGLA.Tenant 
+    left join GLAccounts as GLA1 on ARInvoices.BillToGLAccountId = GLA1.Id AND ARInvoices.Tenant = GLA1.Tenant 
+    left join GLAccountCurrencies on Cards.GLAccountId = GLAccountCurrencies.MainGLAccountId AND GLAccountCurrencies.CurrencyId = ARInvoices.InvoiceCurrencyId AND Cards.Tenant = GLAccountCurrencies.Tenant
+    where  AccountingEntityCode = 2 AND CardGLA.IsMultiCurrency = 1 AND ARInvoices.IsMultiCurrency = 0  and ActionCode = '1' 
+	--AND journallines.DebitAccountId != GLAccountCurrencies.GLAccountId
+	AND NOT (ARInvoices.BillToGLAccountId is NOT null AND GLA1.ChartOfAccountsTypeCode = '6')
+	) as JournlaLinesGlAccountCurrencies
+    on JournlaLinesGlAccountCurrencies.JournalId = LedgerTransactions.JournalId AND JournlaLinesGlAccountCurrencies.Line = LedgerTransactions.JournalLineNumber
+    AND JournlaLinesGlAccountCurrencies.Tenant = LedgerTransactions.Tenant
+	AND JournlaLinesGlAccountCurrencies.GLAccountId != JournlaLinesGlAccountCurrencies.DebitAccountId
+    
+    
+    
+update InterestTransactions set GLAccountId = InterestTransactionsGlAccountCurrencies.SplitCurrencyGLAccountId from InterestTransactions
+inner join (
+	Select case 
+		when GLAccountCurrencies.CurrencyId = ARInvoices.InvoiceCurrencyId then GLAccountCurrencies.GLAccountId 
+		else CardGLA.Id
+		end as SplitCurrencyGLAccountId, InterestTransactions.EntityId, InterestTransactions.GLAccountId, InterestTransactions.Tenant, InterestTransactions.CurrencyId, InterestTransactions.OriginalEntityLineNumber, InterestTransactions.InterestEntityTypeCode
+	from InterestTransactions
+	inner join ARInvoiceLines on ARInvoiceLines.ARInvoiceId = InterestTransactions.EntityId AND InterestTransactions.InterestEntityTypeCode = '1'AND ARInvoiceLines.LineNumber = InterestTransactions.OriginalEntityLineNumber AND ARInvoiceLines.Tenant = InterestTransactions.Tenant 
+	inner join ARInvoices on ARInvoices.Id = InterestTransactions.EntityId AND InterestTransactions.InterestEntityTypeCode = '1' AND ARInvoices.Tenant = InterestTransactions.Tenant 
+	inner join Cards on ARInvoices.BillToId = Cards.Id  AND ARInvoices.Tenant = Cards.Tenant
+	inner join GLAccounts as CardGLA on Cards.GLAccountId = CardGLA.Id AND Cards.Tenant = CardGLA.Tenant
+	left join GLAccounts as BillToGLAccount on ARInvoices.BillToGLAccountId = BillToGLAccount.Id AND BillToGLAccount.Tenant = ARInvoices.Tenant
+	left join GLAccountCurrencies on Cards.GLAccountId = GLAccountCurrencies.MainGLAccountId AND GLAccountCurrencies.CurrencyId = ARInvoices.InvoiceCurrencyId AND CardGLA.Tenant = GLAccountCurrencies.Tenant
+	where 
+	 CardGLA.IsMultiCurrency = 1 AND ARInvoices.IsMultiCurrency = 0
+	AND InterestReportId is null
+	AND NOT (ARInvoices.BillToGLAccountId is NOT null AND BillToGLAccount.ChartOfAccountsTypeCode = '6')
+) as InterestTransactionsGlAccountCurrencies
+on InterestTransactions.EntityId = InterestTransactionsGlAccountCurrencies.EntityId AND InterestTransactions.OriginalEntityLineNumber = InterestTransactionsGlAccountCurrencies.OriginalEntityLineNumber  AND InterestTransactions.InterestEntityTypeCode = InterestTransactionsGlAccountCurrencies.InterestEntityTypeCode
+AND InterestTransactions.Tenant = InterestTransactionsGlAccountCurrencies.Tenant
+AND InterestTransactions.GLAccountId != InterestTransactionsGlAccountCurrencies.SplitCurrencyGLAccountId
+
+
+INSERT INTO InterestTransactions (Id, Tenant, CreateDateTime, UpdateDateTime, InterestValueDate, SearchFields, GLAccountId, EntityId, OriginalEntityLineNumber, LocalAmount, ForeignAmount, CurrencyId,InterestEntityTypeCode, InterestReportId, IsClosed, IsCancelled)
+SELECT Distinct CONCAT('OS', InterestTransactions.Id) as Id, InterestTransactions.Tenant, CreateDateTime, UpdateDateTime, InterestValueDate, InterestTransactions.SearchFields, InterestTransactions.GLAccountId, InterestTransactions.EntityId, InterestTransactions.OriginalEntityLineNumber + 200, InterestTransactions.LocalAmount * -1 as LocalAmount, InterestTransactions.ForeignAmount *-1 as ForeignAmount, InterestTransactions.CurrencyId, InterestEntityTypeCode, Null, 0, InterestTransactions.IsCancelled
+	from InterestTransactions
+	inner join ARInvoiceLines on ARInvoiceLines.ARInvoiceId = InterestTransactions.EntityId AND InterestTransactions.InterestEntityTypeCode = '1'AND ARInvoiceLines.LineNumber = InterestTransactions.OriginalEntityLineNumber AND ARInvoiceLines.Tenant = InterestTransactions.Tenant 
+	inner join ARInvoices on ARInvoices.Id = InterestTransactions.EntityId AND InterestTransactions.InterestEntityTypeCode = '1' AND ARInvoices.Tenant = InterestTransactions.Tenant 
+	inner join Cards on ARInvoices.BillToId = Cards.Id  AND ARInvoices.Tenant = Cards.Tenant
+	inner join GLAccounts as CardGLA on Cards.GLAccountId = CardGLA.Id AND Cards.Tenant = CardGLA.Tenant
+	left join GLAccounts as BillToGLAccount on ARInvoices.BillToGLAccountId = BillToGLAccount.Id AND BillToGLAccount.Tenant = ARInvoices.Tenant
+	left join GLAccountCurrencies on Cards.GLAccountId = GLAccountCurrencies.MainGLAccountId AND GLAccountCurrencies.CurrencyId = ARInvoices.InvoiceCurrencyId AND CardGLA.Tenant = GLAccountCurrencies.Tenant
+	where 
+		case 
+			when GLAccountCurrencies.CurrencyId = ARInvoices.InvoiceCurrencyId then GLAccountCurrencies.GLAccountId 
+			else CardGLA.Id
+		end != InterestTransactions.GLAccountId AND
+	CardGLA.IsMultiCurrency = 1 AND ARInvoices.IsMultiCurrency = 0 AND
+	InterestReportId is not null
+	AND NOT (ARInvoices.BillToGLAccountId is NOT null AND BillToGLAccount.ChartOfAccountsTypeCode = '6')
+
+	INSERT INTO InterestTransactions (Id, Tenant, CreateDateTime, UpdateDateTime, InterestValueDate, SearchFields, GLAccountId, EntityId, OriginalEntityLineNumber, LocalAmount, ForeignAmount, CurrencyId,InterestEntityTypeCode, InterestReportId, IsClosed, IsCancelled)
+	SELECT Distinct CONCAT('NS', InterestTransactions.Id) as Id, InterestTransactions.Tenant, CreateDateTime, UpdateDateTime, InterestValueDate, InterestTransactions.SearchFields,
+	case 
+			when GLAccountCurrencies.CurrencyId = ARInvoices.InvoiceCurrencyId then GLAccountCurrencies.GLAccountId 
+			else CardGLA.Id
+		end as GLAccountId,
+	InterestTransactions.EntityId, InterestTransactions.OriginalEntityLineNumber + 220, InterestTransactions.LocalAmount , InterestTransactions.ForeignAmount, InterestTransactions.CurrencyId, InterestEntityTypeCode, Null, 0, InterestTransactions.IsCancelled
+	from InterestTransactions
+	inner join ARInvoiceLines on ARInvoiceLines.ARInvoiceId = InterestTransactions.EntityId AND InterestTransactions.InterestEntityTypeCode = '1'AND ARInvoiceLines.LineNumber = InterestTransactions.OriginalEntityLineNumber AND ARInvoiceLines.Tenant = InterestTransactions.Tenant 
+	inner join ARInvoices on ARInvoices.Id = InterestTransactions.EntityId AND InterestTransactions.InterestEntityTypeCode = '1' AND ARInvoices.Tenant = InterestTransactions.Tenant 
+	inner join Cards on ARInvoices.BillToId = Cards.Id  AND ARInvoices.Tenant = Cards.Tenant
+	inner join GLAccounts as CardGLA on Cards.GLAccountId = CardGLA.Id AND Cards.Tenant = CardGLA.Tenant
+	left join GLAccounts as BillToGLAccount on ARInvoices.BillToGLAccountId = BillToGLAccount.Id AND BillToGLAccount.Tenant = ARInvoices.Tenant
+	left join GLAccountCurrencies on Cards.GLAccountId = GLAccountCurrencies.MainGLAccountId AND GLAccountCurrencies.CurrencyId = ARInvoices.InvoiceCurrencyId AND CardGLA.Tenant = GLAccountCurrencies.Tenant
+	where 
+		case 
+			when GLAccountCurrencies.CurrencyId = ARInvoices.InvoiceCurrencyId then GLAccountCurrencies.GLAccountId 
+			else CardGLA.Id
+		end != InterestTransactions.GLAccountId AND
+	CardGLA.IsMultiCurrency = 1 AND ARInvoices.IsMultiCurrency = 0 AND
+	InterestReportId is not null
+	AND NOT (ARInvoices.BillToGLAccountId is NOT null AND BillToGLAccount.ChartOfAccountsTypeCode = '6')
+	
+--------------------------------------------------VAT Interests
+update InterestTransactions set GLAccountId = InterestTransactionsGlAccountCurrencies.SplitCurrencyGLAccountId from InterestTransactions
+inner join (
+Select InterestTransactions.Id,  
+case 
+	when GLAccountCurrencies.CurrencyId = ARInvoices.InvoiceCurrencyId then GLAccountCurrencies.GLAccountId 
+	else CardGLA.Id
+end as SplitCurrencyGLAccountId,
+InterestTransactions.EntityId, InterestTransactions.GLAccountId, InterestTransactions.Tenant, InterestTransactions.CurrencyId, InterestTransactions.OriginalEntityLineNumber, InterestTransactions.InterestEntityTypeCode
+from InterestTransactions
+inner join ARInvoiceTotalVATs on ARInvoiceTotalVATs.ARInvoiceId = InterestTransactions.EntityId AND InterestTransactions.InterestEntityTypeCode = '1'
+AND ARInvoiceTotalVATs.LocalVATAmount = InterestTransactions.LocalAmount
+AND ARInvoiceTotalVATs.InvoiceCurrencyVATAmount = InterestTransactions.ForeignAmount
+AND ARInvoiceTotalVATs.Tenant = InterestTransactions.Tenant
+inner join ARInvoices on ARInvoices.Id = InterestTransactions.EntityId AND InterestTransactions.InterestEntityTypeCode = '1' AND ARInvoices.Tenant = InterestTransactions.Tenant
+inner join Cards on ARInvoices.BillToId = Cards.Id  AND ARInvoices.Tenant = Cards.Tenant
+inner join GLAccounts as CardGLA on Cards.GLAccountId = CardGLA.Id AND Cards.Tenant = CardGLA.Tenant
+left join GLAccounts as BillToGLAccount on ARInvoices.BillToGLAccountId = BillToGLAccount.Id AND BillToGLAccount.Tenant = ARInvoices.Tenant
+left join GLAccountCurrencies on Cards.GLAccountId = GLAccountCurrencies.MainGLAccountId AND GLAccountCurrencies.CurrencyId = ARInvoices.InvoiceCurrencyId AND CardGLA.Tenant = GLAccountCurrencies.Tenant
+where 
+CardGLA.IsMultiCurrency = 1 AND ARInvoices.IsMultiCurrency = 0
+AND InterestReportId is null
+AND NOT (ARInvoices.BillToGLAccountId is NOT null AND BillToGLAccount.ChartOfAccountsTypeCode = '6')
+) as InterestTransactionsGlAccountCurrencies
+on InterestTransactions.EntityId = InterestTransactionsGlAccountCurrencies.EntityId AND InterestTransactions.OriginalEntityLineNumber = InterestTransactionsGlAccountCurrencies.OriginalEntityLineNumber  AND InterestTransactions.InterestEntityTypeCode = InterestTransactionsGlAccountCurrencies.InterestEntityTypeCode
+AND InterestTransactions.Tenant = InterestTransactionsGlAccountCurrencies.Tenant
+AND InterestTransactions.GLAccountId != InterestTransactionsGlAccountCurrencies.SplitCurrencyGLAccountId
+
+
+INSERT INTO InterestTransactions (Id, Tenant, CreateDateTime, UpdateDateTime, InterestValueDate, SearchFields, GLAccountId, EntityId, OriginalEntityLineNumber, LocalAmount, ForeignAmount, CurrencyId,InterestEntityTypeCode, InterestReportId, IsClosed, IsCancelled)
+SELECT CONCAT('OSV', InterestTransactions.Id) as Id, InterestTransactions.Tenant, CreateDateTime, UpdateDateTime, InterestValueDate, InterestTransactions.SearchFields, InterestTransactions.GLAccountId, InterestTransactions.EntityId, InterestTransactions.OriginalEntityLineNumber + 100, InterestTransactions.LocalAmount * -1 as LocalAmount, InterestTransactions.ForeignAmount *-1 as ForeignAmount, InterestTransactions.CurrencyId, InterestEntityTypeCode, Null, 0, InterestTransactions.IsCancelled
+from InterestTransactions
+inner join ARInvoiceTotalVATs on ARInvoiceTotalVATs.ARInvoiceId = InterestTransactions.EntityId AND InterestTransactions.InterestEntityTypeCode = '1'
+AND ARInvoiceTotalVATs.LocalVATAmount = InterestTransactions.LocalAmount
+AND ARInvoiceTotalVATs.InvoiceCurrencyVATAmount = InterestTransactions.ForeignAmount
+AND ARInvoiceTotalVATs.Tenant = InterestTransactions.Tenant
+inner join ARInvoices on ARInvoices.Id = InterestTransactions.EntityId AND InterestTransactions.InterestEntityTypeCode = '1' AND ARInvoices.Tenant = InterestTransactions.Tenant
+inner join Cards on ARInvoices.BillToId = Cards.Id  AND ARInvoices.Tenant = Cards.Tenant
+inner join GLAccounts as CardGLA on Cards.GLAccountId = CardGLA.Id AND Cards.Tenant = CardGLA.Tenant
+left join GLAccounts as BillToGLAccount on ARInvoices.BillToGLAccountId = BillToGLAccount.Id AND BillToGLAccount.Tenant = ARInvoices.Tenant
+left join GLAccountCurrencies on Cards.GLAccountId = GLAccountCurrencies.MainGLAccountId AND GLAccountCurrencies.CurrencyId = ARInvoices.InvoiceCurrencyId AND CardGLA.Tenant = GLAccountCurrencies.Tenant
+where case 
+	when GLAccountCurrencies.CurrencyId = ARInvoices.InvoiceCurrencyId then GLAccountCurrencies.GLAccountId 
+	else CardGLA.Id
+end != InterestTransactions.GLAccountId AND
+CardGLA.IsMultiCurrency = 1 AND ARInvoices.IsMultiCurrency = 0 
+AND InterestReportId is NOT null
+AND NOT (ARInvoices.BillToGLAccountId is NOT null AND BillToGLAccount.ChartOfAccountsTypeCode = '6')
+
+
+INSERT INTO InterestTransactions (Id, Tenant, CreateDateTime, UpdateDateTime, InterestValueDate, SearchFields, GLAccountId, EntityId, OriginalEntityLineNumber, LocalAmount, ForeignAmount, CurrencyId,InterestEntityTypeCode, InterestReportId, IsClosed, IsCancelled)
+SELECT CONCAT('NSV', InterestTransactions.Id) as Id, InterestTransactions.Tenant, CreateDateTime, UpdateDateTime, InterestValueDate, InterestTransactions.SearchFields,
+case 
+	when GLAccountCurrencies.CurrencyId = ARInvoices.InvoiceCurrencyId then GLAccountCurrencies.GLAccountId 
+	else CardGLA.Id
+end as GLAccountId,
+InterestTransactions.EntityId, InterestTransactions.OriginalEntityLineNumber + 200, InterestTransactions.LocalAmount , InterestTransactions.ForeignAmount, InterestTransactions.CurrencyId, InterestEntityTypeCode, Null, 0, InterestTransactions.IsCancelled
+from InterestTransactions
+inner join ARInvoiceTotalVATs on ARInvoiceTotalVATs.ARInvoiceId = InterestTransactions.EntityId AND InterestTransactions.InterestEntityTypeCode = '1'
+AND ARInvoiceTotalVATs.LocalVATAmount = InterestTransactions.LocalAmount
+AND ARInvoiceTotalVATs.InvoiceCurrencyVATAmount = InterestTransactions.ForeignAmount
+AND ARInvoiceTotalVATs.Tenant = InterestTransactions.Tenant
+inner join ARInvoices on ARInvoices.Id = InterestTransactions.EntityId AND InterestTransactions.InterestEntityTypeCode = '1' AND ARInvoices.Tenant = InterestTransactions.Tenant
+inner join Cards on ARInvoices.BillToId = Cards.Id  AND ARInvoices.Tenant = Cards.Tenant
+inner join GLAccounts as CardGLA on Cards.GLAccountId = CardGLA.Id AND Cards.Tenant = CardGLA.Tenant
+left join GLAccounts as BillToGLAccount on ARInvoices.BillToGLAccountId = BillToGLAccount.Id AND BillToGLAccount.Tenant = ARInvoices.Tenant
+left join GLAccountCurrencies on Cards.GLAccountId = GLAccountCurrencies.MainGLAccountId AND GLAccountCurrencies.CurrencyId = ARInvoices.InvoiceCurrencyId AND CardGLA.Tenant = GLAccountCurrencies.Tenant
+where case 
+	when GLAccountCurrencies.CurrencyId = ARInvoices.InvoiceCurrencyId then GLAccountCurrencies.GLAccountId 
+	else CardGLA.Id
+end != InterestTransactions.GLAccountId AND
+CardGLA.IsMultiCurrency = 1 AND ARInvoices.IsMultiCurrency = 0 
+AND InterestReportId is NOT null
+AND NOT (ARInvoices.BillToGLAccountId is NOT null AND BillToGLAccount.ChartOfAccountsTypeCode = '6')
+     ]]>
+ </Sql>
+
+</Script>

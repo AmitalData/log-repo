@@ -20,7 +20,7 @@ export class ShipmentComputedFieldsPM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-          this.UIProperties = new UIProperties(this); 
+		            this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -303,6 +303,21 @@ export class ShipmentComputedFieldsPM {
     private t1Received: Date;
     public get T1Received() { return this.t1Received; }
     public set T1Received(newValue: Date) { if (this.t1Received != newValue) { this.t1Received = newValue; this.MarkAsDirty("T1Received"); } }
+       
+	 
+    private accountingClosedByUserId: string;
+    public get AccountingClosedByUserId() { return this.accountingClosedByUserId; }
+    public set AccountingClosedByUserId(newValue: string) { if (this.accountingClosedByUserId != newValue) { this.accountingClosedByUserId = newValue; this.MarkAsDirty("AccountingClosedByUserId"); } }
+       
+	 
+    private packagesQuantityAndType: string;
+    public get PackagesQuantityAndType() { return this.packagesQuantityAndType; }
+    public set PackagesQuantityAndType(newValue: string) { if (this.packagesQuantityAndType != newValue) { this.packagesQuantityAndType = newValue; this.MarkAsDirty("PackagesQuantityAndType"); } }
+       
+	 
+    private isDocumentsNeedApprove: boolean;
+    public get IsDocumentsNeedApprove() { return this.isDocumentsNeedApprove; }
+    public set IsDocumentsNeedApprove(newValue: boolean) { if (this.isDocumentsNeedApprove != newValue) { this.isDocumentsNeedApprove = newValue; this.MarkAsDirty("IsDocumentsNeedApprove"); } }
        
 	 
 

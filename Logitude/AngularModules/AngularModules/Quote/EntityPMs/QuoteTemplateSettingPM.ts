@@ -100,6 +100,31 @@ export class QuoteTemplateSettingPM {
     public set ShowFixedPriceContainers(newValue: boolean) { if (this.showFixedPriceContainers != newValue) { this.showFixedPriceContainers = newValue; this.MarkAsDirty("ShowFixedPriceContainers"); } }
        
 	 
+    private showUnitsContainers: boolean;
+    public get ShowUnitsContainers() { return this.showUnitsContainers; }
+    public set ShowUnitsContainers(newValue: boolean) { if (this.showUnitsContainers != newValue) { this.showUnitsContainers = newValue; this.MarkAsDirty("ShowUnitsContainers"); } }
+       
+	 
+    private showSaleIncludingVATContainers: boolean;
+    public get ShowSaleIncludingVATContainers() { return this.showSaleIncludingVATContainers; }
+    public set ShowSaleIncludingVATContainers(newValue: boolean) { if (this.showSaleIncludingVATContainers != newValue) { this.showSaleIncludingVATContainers = newValue; this.MarkAsDirty("ShowSaleIncludingVATContainers"); } }
+       
+	 
+    private showSaleIncludingVATPackages: boolean;
+    public get ShowSaleIncludingVATPackages() { return this.showSaleIncludingVATPackages; }
+    public set ShowSaleIncludingVATPackages(newValue: boolean) { if (this.showSaleIncludingVATPackages != newValue) { this.showSaleIncludingVATPackages = newValue; this.MarkAsDirty("ShowSaleIncludingVATPackages"); } }
+       
+	 
+    private showLocalSaleIncludingVATContainers: boolean;
+    public get ShowLocalSaleIncludingVATContainers() { return this.showLocalSaleIncludingVATContainers; }
+    public set ShowLocalSaleIncludingVATContainers(newValue: boolean) { if (this.showLocalSaleIncludingVATContainers != newValue) { this.showLocalSaleIncludingVATContainers = newValue; this.MarkAsDirty("ShowLocalSaleIncludingVATContainers"); } }
+       
+	 
+    private showLocalSaleIncludingVATPackages: boolean;
+    public get ShowLocalSaleIncludingVATPackages() { return this.showLocalSaleIncludingVATPackages; }
+    public set ShowLocalSaleIncludingVATPackages(newValue: boolean) { if (this.showLocalSaleIncludingVATPackages != newValue) { this.showLocalSaleIncludingVATPackages = newValue; this.MarkAsDirty("ShowLocalSaleIncludingVATPackages"); } }
+       
+	 
     private showChargeDescriptionPackages: boolean;
     public get ShowChargeDescriptionPackages() { return this.showChargeDescriptionPackages; }
     public set ShowChargeDescriptionPackages(newValue: boolean) { if (this.showChargeDescriptionPackages != newValue) { this.showChargeDescriptionPackages = newValue; this.MarkAsDirty("ShowChargeDescriptionPackages"); } }
@@ -928,6 +953,16 @@ export class QuoteTemplateSettingPM {
     private showRegionalTAXContainers: boolean;
     public get ShowRegionalTAXContainers() { return this.showRegionalTAXContainers; }
     public set ShowRegionalTAXContainers(newValue: boolean) { if (this.showRegionalTAXContainers != newValue) { this.showRegionalTAXContainers = newValue; this.MarkAsDirty("ShowRegionalTAXContainers"); } }
+       
+	 
+    private xMLData: string;
+    public get XMLData() { return this.xMLData; }
+    public set XMLData(newValue: string) { if (this.xMLData != newValue) { this.xMLData = newValue; this.MarkAsDirty("XMLData"); } }
+       
+	 
+    private quoteTemplateSettingData: any;
+    public get QuoteTemplateSettingData() { return this.quoteTemplateSettingData; }
+    public set QuoteTemplateSettingData(newValue: any) { if (this.quoteTemplateSettingData != newValue) { this.quoteTemplateSettingData = newValue; this.MarkAsDirty("QuoteTemplateSettingData"); } }
        
 	 
 

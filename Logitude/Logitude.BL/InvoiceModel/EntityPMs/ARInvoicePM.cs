@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
-using Logitude.BL.ShipmentsModel.EntityPMs;
 
 namespace Logitude.BL.InvoiceModel.EntityPMs
 {
@@ -22,7 +21,9 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
 
         public string InvoiceNumber { get; set; }
         public string ARInvoiceTypeCode { get; set; }
-        
+        public string ARInvoiceTypeName { get; set; }
+
+
         public string MainEntityStatus { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
@@ -46,6 +47,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public bool HasCreditLimitOverrideFeature { get; set; }
         public bool HasInterestFeature { get; set; }
         public bool IsFromInterestBatchInvoice { get; set; }
+        public bool HasDoc { get; set; }
 
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
@@ -62,6 +64,9 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string PrintByUserId { get; set; }
         public string PrintByUserName { get; set; }
         public string IssuedByUserId { get; set; }
+
+        public string IsSigned { get; set; }
+
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string InvoiceCurrencyId { get; set; }
@@ -100,6 +105,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
 
         public string HouseNumber { get; set; }
         public string MasterNumber { get; set; }
+        public string MainEntityMasterShipmentNumbers { get; set; }
         public string Description { get; set; }
         public bool IsClosed { get; set; }
         public string ProfitCurrencyId { get; set; }
@@ -210,6 +216,9 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public bool IsShowAmountLocalCurrencyColumnInSharedLogistics { get; set; }
 
         public string ShipmentsNumbers { get; set; }
+        public string MasterNumbers { get; set; }
+        public string MasterShipmentNumbers { get; set; }
+        public string HouseNumbers { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string BankAccountLiteId { get; set; }
@@ -373,6 +382,8 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string SATAdditionalFieldsXML { get; set; }
         public string MetodoPagoCode { get; set; }
         public string UsoCFDICode { get; set; }
+        public string PeriodCode { get; set; }
+        public string RegimenFiscalCode { get; set; }
         public bool IsDraft { get; set; }
 
         public bool IsMultiCurrency { get; set; }
@@ -406,12 +417,36 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public double? RegionalTaxPercentage { get; set; }
 
+        public string PaidStatus { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public DateTime? PaidDate { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string PartnerId { get; set; }
+        public string GlobalTaxCalculation { get; set; }
+        public string InterestReportNumber { get; set; }
+        public string InterestReportId { get;  set; }
+        public string PaymentReferences { get; set; }
 
+        public string AgentReference1 { get; set; }
+        public string AgentReference2 { get; set; }
+        public bool BillToIsCustomer { get; set; }
+        public bool ResendToSAT { get; set; }
+        public string SATCancelReasonCode { get; set; }
+
+        public bool IsDigitalDueDateColorRed { get; set; }
+        public string TotalEquation { get; set; }
+        public bool IsFromAutomation { get; set; }
+        public string DocumentTemplateId { get; set; }
+
+        public bool IsUpdatedByQBO { get; set; }
+        public bool IsUpdatedBySAT { get; set; }
+        public bool IsUpdatedByPrint { get; set; }
+        public string TransferStatusCode_Original { get; set; }
+        public bool IsTransferStarted_Original { get; set; }
+        public string TransferError_Original { get; set; }
+        public bool VatsAmountsManulAdjuested { get; set; }
+        public string ConfirmationNumber { get; set; }
     }
 }

@@ -29,6 +29,8 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public string SearchFields { get; set; }
         [Column("Inactive")]
 	    public bool Inactive { get; set; }
+        [Column("Order")]
+	    public int? Order { get; set; }
     }
 }
 	 

@@ -139,6 +139,13 @@
       Nullable="false" />
   </Column>
   <Column
+    Name="ObjectTableId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="TemplateFooterHtml"
     Type="varbinary"
     Size="-1">
@@ -234,6 +241,19 @@
     Name="AttachedExternalDocumentsIds"
     Type="varchar"
     Size="300">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IsSystem"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="EntityId"
+    Type="varchar"
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>

@@ -20,7 +20,7 @@ export class DWObjectFieldPM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-          this.UIProperties = new UIProperties(this); 
+		            this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -193,6 +193,11 @@ export class DWObjectFieldPM {
     private isMultipleSelection: boolean;
     public get IsMultipleSelection() { return this.isMultipleSelection; }
     public set IsMultipleSelection(newValue: boolean) { if (this.isMultipleSelection != newValue) { this.isMultipleSelection = newValue; this.MarkAsDirty("IsMultipleSelection"); } }
+       
+	 
+    private useUnitSelection: boolean;
+    public get UseUnitSelection() { return this.useUnitSelection; }
+    public set UseUnitSelection(newValue: boolean) { if (this.useUnitSelection != newValue) { this.useUnitSelection = newValue; this.MarkAsDirty("UseUnitSelection"); } }
        
 	 
     private recordType: string;

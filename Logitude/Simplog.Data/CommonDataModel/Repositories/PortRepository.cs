@@ -45,7 +45,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public IQueryable<Port> GetPorts(int tenant)
         {
-            return (from record in context.Ports.Include("Country") where record.Tenant == tenant select record);
+            return (from record in context.Ports.Include("Country").Include("State") where record.Tenant == tenant select record);
         }
 
         public Port GetSinglePort(string id, int tenant)
@@ -515,6 +515,17 @@ namespace Simplog.Data.CommonDataModel.Repositories
             var entity = (from a in context.Ports.Include("Country").Include("State")
                           where a.CombinedCode == code && a.Tenant == tenant && a.IsOcean
                           select a).FirstOrDefault();
+            return entity;
+        }
+        public Port GetOceanPortByNames(string name1, string name2, int tenant)
+        {
+            var name1HasValue = !string.IsNullOrEmpty(name1);
+            var name2HasValue = !string.IsNullOrEmpty(name2);
+            var entity = context.Ports.Where(a =>
+                ( (a.EnglishName == name1 && name1HasValue) || (a.EnglishName == name2 && name2HasValue) )
+                && a.Tenant == tenant
+                && a.IsOcean
+            ).FirstOrDefault();
             return entity;
         }
 

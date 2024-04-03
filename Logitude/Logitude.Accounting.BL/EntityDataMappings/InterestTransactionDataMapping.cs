@@ -10,6 +10,10 @@ using Logitude.Server.Tools;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs; 
 using Logitude.Accounting.Data;
+using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.Server.Tools.Helpers;
+using Logitude.Accounting.Data.EntityListQueryServices;
+using Logitude.Accounting.Data.EntityLists;
 
 namespace Logitude.Accounting.BL.EntityDataMappings
 {
@@ -31,13 +35,16 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 entityPOCO.Id = entityPM.Id;
                 entityPOCO.InterestValueDate = entityPM.InterestValueDate.Date;
             }
+
+            entityPOCO.AccountingEntityCode = entityPM.AccountingEntityCode;
         }
 
         public void CustomPOCOToPM(InterestTransactionPM entityPM, InterestTransaction entityPOCO)
         {
-            //throw new NotImplementedException();
+            entityPM.AccountingEntityCode = entityPOCO.AccountingEntityCode;
         }
-   }
+
+    }
 
 
 }

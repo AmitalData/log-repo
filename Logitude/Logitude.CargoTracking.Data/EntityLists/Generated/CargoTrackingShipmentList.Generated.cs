@@ -53,7 +53,7 @@ namespace Logitude.CargoTracking.Data.EntityLists
        [DataMember]
        public DateTime? PickupDate  { get; set; }
        [DataMember]
-       public DateTime CreateDate  { get; set; }
+       public DateTime? CreateDate  { get; set; }
        [DataMember]
        public string SecurityKey  { get; set; }
        [DataMember]
@@ -198,6 +198,130 @@ namespace Logitude.CargoTracking.Data.EntityLists
        public int? NumberOfPackages  { get; set; }
        [DataMember]
        public string CurrentMilestoneExceptions  { get; set; }
+       [DataMember]
+       public string ForwardingCustomerReference1  { get; set; }
+       [DataMember]
+       public string ForwardingCustomerReference2  { get; set; }
+       [DataMember]
+       public string ForwardingContainersNumbers  { get; set; }
+       [DataMember]
+       public string ForwardingHouse  { get; set; }
+       [DataMember]
+       public string ForwardingMaster  { get; set; }
+       [DataMember]
+       public string ForwardingCustomFileNumber  { get; set; }
+       [DataMember]
+       public string ForwardingShipperName  { get; set; }
+       [DataMember]
+       public string ForwardingConsigneeName  { get; set; }
+       [DataMember]
+       public string ForwardingShipmentLevelCode  { get; set; }
+       [DataMember]
+       public DateTime? GoodsClassificationDate  { get; set; }
+       [DataMember]
+       public DateTime? GoodsClassificationEstDate  { get; set; }
+       [DataMember]
+       public string GoodsClassificationNotes  { get; set; }
+       [DataMember]
+       public DateTime? DocumentInspectionDate  { get; set; }
+       [DataMember]
+       public DateTime? DocumentInspectionEstDate  { get; set; }
+       [DataMember]
+       public string DocumentInspectionNotes  { get; set; }
+       [DataMember]
+       public bool? DocumentInspectionDone  { get; set; }
+       [DataMember]
+       public bool? GoodsClassificationDone  { get; set; }
+       [DataMember]
+       public DateTime? GatepassArrivedDate  { get; set; }
+       [DataMember]
+       public DateTime? GatepassArrivedEstDate  { get; set; }
+       [DataMember]
+       public string GatepassArrivedNotes  { get; set; }
+       [DataMember]
+       public bool? GatepassArrivedDone  { get; set; }
+       [DataMember]
+       public string ImportManifest  { get; set; }
+       [DataMember]
+       public bool? CreatedDone  { get; set; }
+       [DataMember]
+       public string PrevForwardingShipmentId  { get; set; }
+       [DataMember]
+       public bool? BookingDone  { get; set; }
+       [DataMember]
+       public DateTime? BookingDate  { get; set; }
+       [DataMember]
+       public DateTime? BookingEstimationDate  { get; set; }
+       [DataMember]
+       public string BookingNotes  { get; set; }
+       [DataMember]
+       public string BookingExceptionReason  { get; set; }
+       [DataMember]
+       public bool? PaymentRequiredDone  { get; set; }
+       [DataMember]
+       public DateTime? PaymentRequiredEstimationDate  { get; set; }
+       [DataMember]
+       public DateTime? PaymentRequiredDate  { get; set; }
+       [DataMember]
+       public string PaymentRequiredNotes  { get; set; }
+       [DataMember]
+       public bool? PaymentReceivedDone  { get; set; }
+       [DataMember]
+       public DateTime? PaymentReceivedEstomationDate  { get; set; }
+       [DataMember]
+       public DateTime? PaymentReceivedDate  { get; set; }
+       [DataMember]
+       public string PaymentReceivedNotes  { get; set; }
+       [DataMember]
+       public string PoNumber  { get; set; }
+       [DataMember]
+       public string DescriptionOfGoods  { get; set; }
+       [DataMember]
+       public DateTime? SupplyDateTime  { get; set; }
+       [DataMember]
+       public DateTime? ATAETASortingField  { get; set; }
+       [DataMember]
+       public DateTime? ATDETDSortingField  { get; set; }
+       [DataMember]
+       public bool ActivatedForDeclarationApprove  { get; set; }
+       [DataMember]
+       public bool IsImporterApprovalRequried  { get; set; }
+       [DataMember]
+       public string TenantDeclarationMessage  { get; set; }
+       [DataMember]
+       public bool? IsOperationalClosed  { get; set; }
+       [DataMember]
+       public DateTime? ApprovedDate  { get; set; }
+       [DataMember]
+       public DateTime? DenyDate  { get; set; }
+       [DataMember]
+       public string DenyReason  { get; set; }
+       [DataMember]
+       public string ConnectedShipmentsNumbers  { get; set; }
+       [DataMember]
+       public DateTime? InvoicedDate  { get; set; }
+       [DataMember]
+       public bool? InvoicedDone  { get; set; }
+       [DataMember]
+       public string InvoicedNotes  { get; set; }
+       [DataMember]
+       public string InvoicedExceptionReason  { get; set; }
+       [DataMember]
+       public string SHOHouse  { get; set; }
+       [DataMember]
+       public double? ChargeableWeightInKG  { get; set; }
+       [DataMember]
+       public double? ChargeableWeight  { get; set; }
+       [DataMember]
+       public string ChargeableWeightUnitCode  { get; set; }
+       [DataMember]
+       public string IncotermName  { get; set; }
+       [DataMember]
+       public bool ShowMoneyOrder  { get; set; }
+       [DataMember]
+       public bool CargoTrackingPrivateShowEvents  { get; set; }
+       [DataMember]
+       public bool CargoTrackingPublicShowEvents  { get; set; }
    }
 
 }

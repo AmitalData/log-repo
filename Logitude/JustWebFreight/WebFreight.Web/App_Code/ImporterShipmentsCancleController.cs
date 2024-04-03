@@ -43,10 +43,14 @@ namespace WebFreight.Web.App_Code
         {
             try
             {
-                //var temp = id.Split(',');
+
+
                 string ShipmentNumber = Shipment.CustomerShipmentNumber;//temp[0];
                 int Tenant = Shipment.ImporterTenant;//int.Parse(temp[1]);
-                SecurityUtility.AuthenticationOnTenant(Tenant);
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(Shipment.ImporterTenant);
                 ShipmentQuery shipmentQuery = new ShipmentQuery(Tenant);
                 var ImporterShipment = shipmentQuery.GetSingleShipmentPMByNumber(ShipmentNumber, Tenant);
 

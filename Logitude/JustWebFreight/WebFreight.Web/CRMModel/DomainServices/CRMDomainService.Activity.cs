@@ -111,7 +111,7 @@ namespace WebFreight.Web.CRMModel.DomainServices
             ActivityListQueryService listService = new ActivityListQueryService(crmContext);
             ActivityList list = listService.GetSingle(id);
 
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
             customFieldResolver.SetCustomFieldsValues("Activity", tenant, new List<ActivityList> { list }.Cast<object>().ToList());
 
             return list;
@@ -180,7 +180,7 @@ namespace WebFreight.Web.CRMModel.DomainServices
 
             List<ActivityList> listQuery = listService.GetList(queryOperations, tenant);
 
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
             customFieldResolver.SetCustomFieldsValues("Activity", tenant, listQuery.Cast<object>().ToList());
 
             return listQuery;
@@ -301,8 +301,6 @@ namespace WebFreight.Web.CRMModel.DomainServices
                         opportunity.LastActivitySubject = entity.Subject;
                         opportunity.LastCompletedActivityTypeCode = entity.ActivityTypeCode;
                         opportunity.LastCompletedActivityDate = entity.CompleteDate;
-                        opportunityRepository.Update(opportunity);
-                        opportunityRepository.SubmitChanges();
 
                         //Next activity
                         IQueryable<Activity> iQueryableActivities = activityRepository.GetActivitiesByOpportunityId(entity.OpportunityId, tenant);

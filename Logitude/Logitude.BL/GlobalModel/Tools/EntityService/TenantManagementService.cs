@@ -5,8 +5,12 @@ using Logitude.BL.GlobalModel.EntityPMs;
 using Logitude.BL.GlobalModel.Tools.DataMapping;
 using Logitude.BL.GlobalModel.Tools.TraceEvents;
 using Logitude.BL.GlobalModel.Tools.Validating;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.QueueService;
+using Logitude.SystemLogs;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -26,6 +30,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
+using System.Web;
 
 namespace Logitude.BL.GlobalModel.Tools.EntityService
 {
@@ -42,14 +47,14 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
         private TenantManagementRepository entityRepository;
         private TenantManagementLicenseRepository tenantManagementLicenseRepository;
         private TenantAddOnRepository tenantAddOnRepository;
-        public TenantManagementService(IGlobalContext objectContext, int tenant = 0, ICommonDataContext CommonContext=null)
+        public TenantManagementService(IGlobalContext objectContext, int tenant = 0, ICommonDataContext CommonContext = null)
         {
             this.objectContext = objectContext;
             this.CommonContext = CommonContext;
             this.entityRepository = new TenantManagementRepository(objectContext);
             this.tenantManagementLicenseRepository = new TenantManagementLicenseRepository(objectContext);
             this.tenantAddOnRepository = new TenantAddOnRepository(objectContext);
-           
+
         }
 
         private List<TenantManagementLicensePM> licensesChangeSet;
@@ -95,17 +100,19 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
             {
                 CacheManager.CacheWrapper.Invalidate(entityPmName);
             }
-
             this.UpdateParticipants();
             this.UpdateDocumentsArchive();
             this.UpdateGlobalTenants();
-            
+
             this.UpdateLicenses();
             this.UpdateAddOns();
             this.ClearAllUsersCache();
             this.BrandingEvent();
-            this.CheckParentTenants();         
+            this.CheckParentTenants();
             this.DeleteOldImages();
+            this.CreateContainerSettings();
+            this.UpdateHybridTenantActivity(entityPoco, entityPM);
+            this.UpdateHybridTenantHybridization(entityPM);
             if (entityPM.Id == 341)
             {
                 this.UpdateCustomer();
@@ -117,12 +124,44 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
             entityRepository.SubmitChanges();
         }
 
+        private void UpdateHybridTenantActivity(TenantManagement entityPoco, TenantManagementPM entityPM)
+        {
+            if (entityPoco.GlobalTenant.IsActive == entityPM.IsActive)
+                return;
+            entityPoco.GlobalTenant.IsActive = entityPM.IsActive;
+            new TenantHybridPartnerService(entityPM.Id).UpdateHybridPartnerActivity(entityPM.IsActive);
+        }
+        private void UpdateHybridTenantHybridization(TenantManagementPM entityPM)
+        {
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            {
+                var tenantRepository = new TenantRepository(0);
+                Tenant currentTenant = tenantRepository.GetSingleTenant(entityPM.Id);
+                if (currentTenant == null)
+                {
+                    scope.Complete();
+                    return;
+                }
+                if (currentTenant.IsHybrid == entityPM.IsHybrid)
+                {
+                    scope.Complete();
+                    return;
+                }
+                new TenantHybridPartnerService(entityPM.Id).UpdateHybridPartnerHybridization(entityPM.IsHybrid);
+
+                scope.Complete();
+            }
+        }
 
         private void DeleteOldImages()
         {
             if (this.entityPM.BackgroundId != this.entityPoco.BackgroundId)
             {
-              DeleteImageFromCargoTrackingImages(entityPoco.BackgroundId);
+                DeleteImageFromCargoTrackingImages(entityPoco.BackgroundId);
+            }
+            if (this.entityPM.MobileBackgroundId != this.entityPoco.MobileBackgroundId)
+            {
+                DeleteImageFromCargoTrackingImages(entityPoco.MobileBackgroundId);
             }
             if (this.entityPM.ComapnylogoId != this.entityPoco.ComapnylogoId)
             {
@@ -161,7 +200,7 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
         {
             return imgName + "." + CargoTrackingImageExtensionType;
         }
-        private void  UpdateCargoTrackingColors()
+        private void UpdateCargoTrackingColors()
         {
             //int index =  (entityPM.MainColor!= null && entityPM.MainColor.Length > 7) ? 3 : 1;
             //this.entityPM.MainColor= (this.entityPM.MainColor!= null && entityPM.MainColorOpacity != null) ? "#" +entityPM.MainColorOpacity + entityPM.MainColor.ToString().Substring(index, 6): entityPM.MainColor;
@@ -249,6 +288,53 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
                 }
             }
         }
+
+        private void CreateContainerSettings()
+        {
+            if (!entityPM.IsContainerTrackingPrepaid || entityPoco.IsContainerTrackingPrepaid) return;
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            {
+                var containerSettingRepository = new ContainerSettingRepository(entityPM.Id);
+                var containerSetting = containerSettingRepository.GetAll(entityPM.Id).FirstOrDefault();
+                if (containerSetting != null)
+                {
+                    UpdateContainerSettingActivationDate(containerSettingRepository, containerSetting);
+                    scope.Complete();
+                    return;
+                }
+                containerSetting = GetDefaultContainerSetting();
+                containerSettingRepository.Add(containerSetting);
+                containerSettingRepository.SubmitChanges();
+                scope.Complete();
+            }
+        }
+
+        private void UpdateContainerSettingActivationDate(ContainerSettingRepository containerSettingRepository, ContainerSetting containerSetting)
+        {
+            if (containerSetting.ActivationDate != null) return;
+            containerSetting.ActivationDate = TenantServerConfigration.GetCurrentDateTime(0);
+            containerSettingRepository.Update(containerSetting);
+            containerSettingRepository.SubmitChanges();
+        }
+
+        private ContainerSetting GetDefaultContainerSetting()
+        {
+            return new ContainerSetting
+            {
+                IsDomestic = true,
+                IsExport = true,
+                IsImport = true,
+                IsDrop = true,
+                EmptyReturnClosingDays = 5,
+                ShipmentATAClosingDays = 90,
+                ShipmentATADateIndicator = "Vessel",
+                ActivationDate = TenantServerConfigration.GetCurrentDateTime(0),
+                AddedManually = false,
+                Id = IdCounter.GetNumber("ContainerSetting", entityPM.Id),
+                Tenant = entityPM.Id
+            };
+        }
+
         private void UpdateDocumentsArchive()
         {
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -258,7 +344,7 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
                 var LBtenantRepository = new LogBoxTenantSettingRepository(0);
                 LogBoxTenantSetting LBcurrentTenant = LBtenantRepository.GetSingleLBTenant(entityPM.Id);
 
-                if (LBcurrentTenant!= null && currentTenant != null && entityPM.PackageCode == "IMPO" && !LBcurrentTenant.IsDocumentsArchive)
+                if (LBcurrentTenant != null && currentTenant != null && entityPM.PackageCode == "IMPO" && !LBcurrentTenant.IsDocumentsArchive)
                 {
                     LBcurrentTenant.IsDocumentsArchive = true;
                     tenantRepository.Update(currentTenant);
@@ -277,15 +363,93 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
         }
         private void UpdateGlobalTenants()
         {
-            GlobalTenantRepository Rep = new GlobalTenantRepository();
-            GlobalTenant Gtenant = Rep.GetGlobalTenantsByTenant(this.entityPM.Id);
-            if (Gtenant != null)
+            GlobalTenantRepository globalTenantRepository = new GlobalTenantRepository();
+            GlobalTenant globalTenant = globalTenantRepository.GetGlobalTenantsByTenant(this.entityPM.Id);
+            if (globalTenant == null) return;
+
+            string oldPrivateLabelId = globalTenant.PrivateLabelId;
+            bool oldIsActive = globalTenant.IsActive;
+            globalTenant.PrivateLabelId = this.entityPM.PrivateLabelId;
+            globalTenantRepository.Update(globalTenant);
+            globalTenantRepository.SubmitChanges();
+            BuildForwarderQueues(oldPrivateLabelId, oldIsActive);
+        }
+
+        private void BuildForwarderQueues(string oldPrivateLabelId, bool oldIsActive)
+        {
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
-                Gtenant.PrivateLabelId = this.entityPM.PrivateLabelId;
-                Rep.Update(Gtenant);
-                Rep.SubmitChanges();
+                BuildPrivateLabelQueue(oldPrivateLabelId);
+                BuildIsActiveQueue(oldIsActive);
+                BuildIsTrialQueue();
+                scope.Complete();
             }
         }
+
+        private void BuildPrivateLabelQueue(string oldPrivateLabelId)
+        {
+            if (string.IsNullOrEmpty(oldPrivateLabelId) && string.IsNullOrEmpty(this.entityPM.PrivateLabelId)) return;
+            if (!string.IsNullOrEmpty(oldPrivateLabelId) && !string.IsNullOrEmpty(this.entityPM.PrivateLabelId)) return;
+            bool isPrivateLabel = !string.IsNullOrEmpty(this.entityPM.PrivateLabelId);
+
+            try
+            {
+                IQueueService queue = new DbQueueService();
+                queue.InitializeQueue("CustomerTenantAccessRequestQueue", 0);
+                queue.Send(new Dictionary<string, string>() { { "IsPrivateLabel", isPrivateLabel.ToString() }, { "Tenant", tenant.ToString() } }, tenant);
+            }
+            catch (Exception ex)
+            {
+                HandleForwarderQueuesException(ex);
+            }
+        }
+
+        private void BuildIsActiveQueue(bool oldIsActive)
+        {
+            if (oldIsActive && this.entityPM.IsActive) return;
+            if (!oldIsActive && !this.entityPM.IsActive) return;
+            if (this.entityPM.IsActive) return;
+
+            try
+            {
+                IQueueService queue = new DbQueueService();
+                queue.InitializeQueue("CustomerTenantAccessRequestQueue", 0);
+                queue.Send(new Dictionary<string, string>() { { "IsActiveTenant", this.entityPM.IsActive.ToString() }, { "Tenant", tenant.ToString() } }, tenant);
+            }
+            catch (Exception ex)
+            {
+                HandleForwarderQueuesException(ex);
+            }
+        }
+
+        private void BuildIsTrialQueue()
+        {
+            if (!this.entityPM.IsTrial || this.entityPM.TrialEndDate == null) return;
+            bool IsPassedTrialEndDate = this.entityPM.TrialEndDate < DateTime.Now.Date;
+            if (!IsPassedTrialEndDate) return;
+
+            try
+            {
+                IQueueService queue = new DbQueueService();
+                queue.InitializeQueue("CustomerTenantAccessRequestQueue", 0);
+                queue.Send(new Dictionary<string, string>() { { "IsPassedTrialEndDate", IsPassedTrialEndDate.ToString() }, { "Tenant", tenant.ToString() } }, tenant);
+            }
+            catch (Exception ex)
+            {
+                HandleForwarderQueuesException(ex);
+            }
+        }
+
+        private static void HandleForwarderQueuesException(Exception ex)
+        {
+            string ip = "";
+            if (HttpContext.Current != null && HttpContext.Current.Request != null)
+            {
+                ip = string.IsNullOrEmpty(HttpContext.Current.Request.Headers["X-Real-IP"]) ? HttpContext.Current.Request.UserHostAddress : HttpContext.Current.Request.Headers["X-Real-IP"];
+            }
+            ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "TenantManagement Service", null, ip);
+        }
+
         private void CheckSubscriptionSwitch()
         {
             if (entityPM.MainAdditionalPackageApplied != entityPoco.MainAdditionalPackageApplied)
@@ -307,7 +471,7 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
                             }
                         }
 
-                        this.SwitchToMainAdditionalPackageMulti();                        
+                        this.SwitchToMainAdditionalPackageMulti();
                     }
 
                     else
@@ -318,7 +482,7 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
 
                 else
                 {
-                    throw new ApplicationException("Switching to Single/Multi Package is not allowed");                   
+                    throw new ApplicationException("Switching to Single/Multi Package is not allowed");
                 }
             }
         }
@@ -431,7 +595,7 @@ namespace Logitude.BL.GlobalModel.Tools.EntityService
                 userLicenseRepository.SubmitChanges();
             }
         }
-        
+
         private void UpdateLicenses()
         {
             if (isNewEntity)

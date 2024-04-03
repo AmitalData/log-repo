@@ -16,6 +16,8 @@ using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using WebFreight.Web.WebServices;
+using WebFreight.Web.Services;
 
 namespace WebFreight.Web.ReportsWebServices.LogitudeReports
 {
@@ -30,10 +32,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
         private DateTime? ToDate = null;
         private ICommonDataContext myCommonContext;
         private IShipmentsContext myShipmentsContext;
+        private WebServiceHelper servicHelper;
+
         public ShipmentProfitVSQuoteEstimateManager(byte[] xmlFilters, int tenant)
         {
             this.tenant = tenant;
-
+            servicHelper = new WebServiceHelper(this.tenant);
             myCommonContext = CommonDataContext.GetContext(tenant);
             myShipmentsContext = ShipmentsContext.GetContext(tenant);
 
@@ -110,15 +114,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
         public byte[] GetData()
         {
             ShipmentProfitVSQuoteEstimateDataProvider myDataProvider = this.LoadDataProvider();
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(ShipmentProfitVSQuoteEstimateDataProvider));
-            MemoryStream memoryStream = new MemoryStream();
-            xmlSerializer.Serialize(memoryStream, myDataProvider);
-            memoryStream.Seek(0, SeekOrigin.Begin);
-
-            StreamReader streamReader = new StreamReader(memoryStream);
-            string content = streamReader.ReadToEnd();
-            byte[] bytearray = memoryStream.ToArray();
-            return bytearray;
+            return new ReportMemoryStreamService().Convert(myDataProvider, typeof(ShipmentProfitVSQuoteEstimateDataProvider), tenant);
         }
 
         private ShipmentProfitVSQuoteEstimateDataProvider LoadDataProvider()
@@ -312,20 +308,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
 
             if (item.DirectionId == "D" && item.TransportModeId == "I")
             {
-                if (myMasterData != null)
-                {
-                    if (myMasterData.MainCarriageFromAddressId != null)
-                    {
-                        Address address = allAddresses.Where(d => d.Id == myMasterData.MainCarriageFromAddressId).FirstOrDefault();
-                        myResult = address.City;
-                    }
-
-                    if (myMasterData.MainCarriageToAddressId != null)
-                    {
-                        Address address = allAddresses.Where(d => d.Id == myMasterData.MainCarriageToAddressId).FirstOrDefault();
-                        myResult = string.IsNullOrEmpty(myResult) ? address.City : myResult + " > " + address.City;
-                    }
-                }
+                myResult = this.GetRoutingFieldForInlandDomestic(myMasterData);
             }
 
             else
@@ -383,6 +366,31 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
 
             return myResult;
         }
+
+        private string GetRoutingFieldForInlandDomestic(ShipmentMasterData masterData)
+        {
+            string routing = "";
+
+            InlandDomesticArgs args = new InlandDomesticArgs()
+            {
+                InlandDomesticFromTypeCode = masterData.InlandDomesticFromTypeCode,
+                MainCarriageFromAddressId = masterData.MainCarriageFromAddressId,
+                MainCarriageFromPortId = masterData.MainCarriageFromPortId,
+                InlandDomesticFromCity = masterData.InlandDomesticFromCity,
+                InlandDomesticFromCountryId = masterData.InlandDomesticFromCountryId,
+                InlandDomesticToTypeCode = masterData.InlandDomesticToTypeCode,
+                MainCarriageToAddressId = masterData.MainCarriageToAddressId,
+                InlandDomesticToCity = masterData.InlandDomesticToCity,
+                InlandDomesticToCountryId = masterData.InlandDomesticToCountryId,
+                MainCarriageToPortId = masterData.MainCarriageToPortId,
+            };
+
+            var fromCity = servicHelper.GetRoutingFromCity(args);
+            var toCity = servicHelper.GetRoutingToCity(args);
+            routing = string.IsNullOrEmpty(toCity) ? fromCity : fromCity + " > " + toCity;
+            return routing;
+        }
+
         private string GetDateString(DateTime? date)
         {
             string myResult = null;

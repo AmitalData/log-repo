@@ -55,6 +55,14 @@ export class FullAccountingSettingList {
 	FirstPeriodsMonths: string;
 	SecondPeriodsMonths: string;
 	ThirdsPeriodsMonths: string;
+	IsSecurityLevelActivated: boolean;
+	CreateRevaluationJournal: boolean;
+	TaxInstitutionGLAccountId: string;
+	HSM: string;
+	HSMtoken: string;
+	HSMaddress: string;
+	AllowEditingExchangeRate: boolean;
+	OppositeAccountNumber: boolean;
 	
 }
  

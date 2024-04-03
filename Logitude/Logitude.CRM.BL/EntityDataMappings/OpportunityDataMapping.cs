@@ -21,6 +21,8 @@ using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Logitude.Server.Tools.Helpers;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
 
 namespace Logitude.CRM.BL.EntityDataMappings
 {
@@ -167,6 +169,7 @@ namespace Logitude.CRM.BL.EntityDataMappings
             {
                 entityPM.LeadSourceName = source.Name;
             }
+
 
             //entityPM.Field1 = new CustomFieldClass("Field1", "Opportunity", entityPOCO.Field1);
             //entityPM.Field2 = new CustomFieldClass("Field2", "Opportunity", entityPOCO.Field2);

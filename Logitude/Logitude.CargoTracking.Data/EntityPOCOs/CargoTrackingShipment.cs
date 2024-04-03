@@ -65,7 +65,7 @@ namespace Logitude.CargoTracking.Data.EntityPOCOs
         [Column("PickupDate")]
 	    public DateTime? PickupDate { get; set; }
         [Column("CreateDate")]
-	    public DateTime CreateDate { get; set; }
+	    public DateTime? CreateDate { get; set; }
         [Column("SecurityKey")]
 	    public string SecurityKey { get; set; }
         [Column("ConsigneeName")]
@@ -179,6 +179,96 @@ namespace Logitude.CargoTracking.Data.EntityPOCOs
 	    public string ShipmentTypeCode { get; set; }
         [Column("CurrentMilestoneExceptions")]
 	    public string CurrentMilestoneExceptions { get; set; }
+        [Column("ForwardingHouse")]
+	    public string ForwardingHouse { get; set; }
+        [Column("ForwardingMaster")]
+	    public string ForwardingMaster { get; set; }
+        [Column("ForwardingShipmentLevelCode")]
+	    public string ForwardingShipmentLevelCode { get; set; }
+        [Column("GoodsClassificationDate")]
+	    public DateTime? GoodsClassificationDate { get; set; }
+        [Column("GoodsClassificationEstDate")]
+	    public DateTime? GoodsClassificationEstDate { get; set; }
+        [Column("GoodsClassificationNotes")]
+	    public string GoodsClassificationNotes { get; set; }
+        [Column("DocumentInspectionDate")]
+	    public DateTime? DocumentInspectionDate { get; set; }
+        [Column("DocumentInspectionEstDate")]
+	    public DateTime? DocumentInspectionEstDate { get; set; }
+        [Column("DocumentInspectionNotes")]
+	    public string DocumentInspectionNotes { get; set; }
+        [Column("DocumentInspectionDone")]
+	    public bool? DocumentInspectionDone { get; set; }
+        [Column("GoodsClassificationDone")]
+	    public bool? GoodsClassificationDone { get; set; }
+        [Column("GatepassArrivedDate")]
+	    public DateTime? GatepassArrivedDate { get; set; }
+        [Column("GatepassArrivedEstDate")]
+	    public DateTime? GatepassArrivedEstDate { get; set; }
+        [Column("GatepassArrivedNotes")]
+	    public string GatepassArrivedNotes { get; set; }
+        [Column("GatepassArrivedDone")]
+	    public bool? GatepassArrivedDone { get; set; }
+        [Column("ImportManifest")]
+	    public string ImportManifest { get; set; }
+        [Column("CreatedDone")]
+	    public bool? CreatedDone { get; set; }
+        [Column("PrevForwardingShipmentId")]
+	    public string PrevForwardingShipmentId { get; set; }
+        [Column("BookingDone")]
+	    public bool? BookingDone { get; set; }
+        [Column("BookingDate")]
+	    public DateTime? BookingDate { get; set; }
+        [Column("BookingEstimationDate")]
+	    public DateTime? BookingEstimationDate { get; set; }
+        [Column("BookingNotes")]
+	    public string BookingNotes { get; set; }
+        [Column("BookingExceptionReason")]
+	    public string BookingExceptionReason { get; set; }
+        [Column("PaymentRequiredDone")]
+	    public bool? PaymentRequiredDone { get; set; }
+        [Column("PaymentRequiredEstimationDate")]
+	    public DateTime? PaymentRequiredEstimationDate { get; set; }
+        [Column("PaymentRequiredDate")]
+	    public DateTime? PaymentRequiredDate { get; set; }
+        [Column("PaymentRequiredNotes")]
+	    public string PaymentRequiredNotes { get; set; }
+        [Column("PaymentReceivedDone")]
+	    public bool? PaymentReceivedDone { get; set; }
+        [Column("PaymentReceivedEstomationDate")]
+	    public DateTime? PaymentReceivedEstomationDate { get; set; }
+        [Column("PaymentReceivedDate")]
+	    public DateTime? PaymentReceivedDate { get; set; }
+        [Column("PaymentReceivedNotes")]
+	    public string PaymentReceivedNotes { get; set; }
+        [Column("PoNumber")]
+	    public string PoNumber { get; set; }
+        [Column("DescriptionOfGoods")]
+	    public string DescriptionOfGoods { get; set; }
+        [Column("SupplyDateTime")]
+	    public DateTime? SupplyDateTime { get; set; }
+        [Column("IsOperationalClosed")]
+	    public bool? IsOperationalClosed { get; set; }
+        [Column("DenyDate")]
+	    public DateTime? DenyDate { get; set; }
+        [Column("InvoicedDate")]
+	    public DateTime? InvoicedDate { get; set; }
+        [Column("InvoicedDone")]
+	    public bool? InvoicedDone { get; set; }
+        [Column("InvoicedNotes")]
+	    public string InvoicedNotes { get; set; }
+        [Column("InvoicedExceptionReason")]
+	    public string InvoicedExceptionReason { get; set; }
+        [Column("SHOHouse")]
+	    public string SHOHouse { get; set; }
+        [Column("ChargeableWeightInKG")]
+	    public double? ChargeableWeightInKG { get; set; }
+        [Column("ChargeableWeight")]
+	    public double? ChargeableWeight { get; set; }
+        [Column("ChargeableWeightUnitCode")]
+	    public string ChargeableWeightUnitCode { get; set; }
+        [Column("IncotermName")]
+	    public string IncotermName { get; set; }
     }
 }
 	 

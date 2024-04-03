@@ -3,6 +3,8 @@ export class RequestAliases {
     public static readonly performancelogs = "performancelogs"
     public static readonly PartnersDomainRequest = 'PartnersDomainRequest';
     public static readonly ShipmentRequest = 'ShipmentRequest';
+    public static readonly GetbyfiltersRequest = 'getbyfilters';
+    public static readonly ShipmentStandaloneRequest = 'ShipmentStandaloneRequest';
     public static readonly GetShipmentConnectedEntities = 'GetShipmentConnectedEntities';
     public static readonly SplitShipmentRequest = 'SplitShipmentRequest';
     public static readonly GetTraceEvent = 'GetTraceEvent';
@@ -11,6 +13,8 @@ export class RequestAliases {
     public static readonly APInvoicesRequest = 'APInvoicesRequest';
     public static readonly ARInvoicesRequest = 'ARInvoicesRequest';
     public static readonly ARInvoicesPutRequest = 'ARInvoicesPutRequest';
+    public static readonly DeclarationRequest = 'DeclarationRequest';
+    public static readonly SupplierInvoiceRequest = 'SupplierInvoiceRequest';
     public static readonly APInvoiceView = 'APInvoiceView';
     public static readonly ARInvoiceviews = 'ARInvoiceviews';
     public static readonly ARInvoiceViewsGetByFilters = "ARInvoiceViewsGetByFilters"
@@ -29,6 +33,9 @@ export class RequestAliases {
     public static readonly SentToCustomer = 'SentToCustomer';
     public static readonly SendReport = 'SendReport';
     public static readonly ShipmentViews = 'ShipmentViews';
+    public static readonly EntityResource = 'EntityResource';
+    public static readonly ObjectFields = 'ObjectFields';
+
 
     public static readonly PrintQuotationWindowOpen = 'PrintQuotationWindowOpen';
 
@@ -39,6 +46,10 @@ export class RequestAliases {
     public static readonly GetAll = 'GetAll';
     public static readonly EntityResourceAccountingPeriod = "EntityResource"
     public static readonly ContainerFollowUpViewsGetbyfilters = 'ContainerFollowUpViewsGetbyfilters';
+
+    public static readonly PostQuery = "PostQuery"
+    public static readonly PutQuery = "PutQuery"
+    public static readonly DeleteQuery = "DeleteQuery"
     // Tariff
     public static readonly PostTariff = 'PostTariff';
     public static readonly PutTariff = 'PutTariff';
@@ -94,9 +105,13 @@ export class RequestAliases {
 
     public static readonly PostVessel = "PostVessel";
     public static readonly PutVessel = "PutVessel";
-    public static readonly AccountingSettings = "AccountingSettings"
+    public static readonly AccountingSettings = "accountingsettings"
+
     public static readonly Tenants = "Tenants"
 
+    //Report
+    public static readonly PostReport = "PostReport"
+    public static readonly PutReport = "PutReport"
 
     public static readonly PostCountry = "PostCountry"
     public static readonly PutCountry = "PutCountry"
@@ -179,6 +194,8 @@ export class RequestAliases {
     public static readonly PostCustomAgent = "PostCustomAgent";
     public static readonly PutCustomAgent = "PutCustomAgent";
 
+    public static readonly PutAgent = "PutAgent";
+
     public static readonly PutTrucker = "PostTrucker"
     public static readonly PostTrucker = "PostTrucker"
 
@@ -213,6 +230,16 @@ export class RequestAliases {
     public static readonly PostShippingLineAreaPort = "PostShippingLineAreaPort"
     public static readonly PostShippingLineAreaCountryPort = "PostShippingLineAreaCountryPort"
 
+    public static readonly PutCompanyAddressSettings = "PutCompanyAddressSettings"
+
+    public static readonly PostUser = "PostUser"
+    public static readonly PutUser = "PutUser"
+
+    public static readonly PutShipperConsignee = "PutShipperConsignee"
+
+    public static readonly Signature = "Signature"
+    public static readonly PUTAccountingSettings = "PUTAccountingSettings"
+
     public static readonly GetSignle = "GetSignle"
     public static readonly GetByFilter = "GetByFilter"
     public static readonly GetFilterSearch = "GetFilterSearch"
@@ -222,6 +249,7 @@ export class RequestAliases {
     public static readonly ContactViewsGetByFilters = "ContactViewsGetByFilters";
     public static readonly GetCustomersQuickSearch = "GetCustomersQuickSearch"
     public static readonly GetList = "GetList"
+    public static readonly GetQuickSearch = "GetQuickSearch"
 
     //#endregion
     public static readonly PostChangePassword = "PostChangePassword"
@@ -241,4 +269,64 @@ export class RequestAliases {
     public static readonly InfoIconImage = "InfoIconImage"
     public static readonly PrintReportWindowOpen = 'PrintReportWindowOpen';
 
+    //CRM
+    public static readonly PostActivity = "PostActivity"
+    public static readonly PutActivity = "PutActivity"
+    public static readonly GetCompleteActivity = "GetCompleteActivity"
+    public static readonly PutCompleteActivity = "PutCompleteActivity"
+
+    public static readonly GetTodayActivity = "getbyfilters"
+    public static readonly PostOpportunities = "PostOpportunities"
+    public static readonly PutOpportunities = "PutOpportunities"
+    public static readonly GetQuotesByOpportunityId = "GetQuotesByOpportunityId"
+
+    //Full Accounting
+    public static readonly PostAPPayments = 'PostAPPayments';
+    public static readonly PutAPPayments = 'PutAPPayments';
+    public static readonly ARInvoiceView = 'APInvoiceView';
+    public static readonly ARPaymentView = 'ARPaymentView';
+
+    public static readonly PostGLAccounts = 'PostGLAccounts';
+    public static readonly PutGLAccounts = 'PutGLAccounts';
+
+    public static readonly PostBankAccounts = 'PostBankAccounts';
+
+    public static readonly PostCustomer = 'PostCustomer';
+
+    public static readonly PostChartOfAccount = 'PostChartOfAccount';
+    public static readonly PutChartOfAccount = 'PutChartOfAccount';
+
+    public static readonly PostJournal = 'PostJournal';
+    public static readonly PutJournal = 'PutJournal';
+
+    public static readonly PostInterestBases = 'PostInterestBases';
+    public static readonly PutInterestBases = 'PutInterestBases';
+
+    public static readonly PostChequeDeposit = "PostChequeDeposit"
+    public static readonly PutChequeDeposit = "PutChequeDeposit"
+    public static readonly CashbookViewGetSingle = "CashbookViewGetSingle"
+    public static readonly Getsingle = "getsingle"
+    public static readonly DocumentTypeTemplateExtended = "DocumentTypeTemplateExtended"
+    public static readonly DocumentTypeExtended = "DocumentTypeExtended"
+    public static readonly DocumentTypeCustomField = "DocumentTypeCustomField"
+
+    //VAT
+    public static readonly PutVATSettings = "PutVATSettings"
+
+    //Workflow
+    public static readonly GetWorkflowViews = 'GetWorkflowViews';
+    public static readonly MockSingleWorkflowView = 'MockSingleWorkflowView';
+    public static readonly GetWorkflowFlowBuilder = 'GetWorkflowFlowBuilder';
+    public static readonly PutWorkflowFlowBuilder = 'PutWorkflowFlowBuilder';
+    public static readonly PostWorkflowFlowBuilder = 'PostWorkflowFlowBuilder';
+    public static readonly GetNewWorkflow = 'GetNewWorkflow';
+    public static readonly GetObjectFieldViews = 'GetObjectFieldViews';
+    public static readonly GetBackToWorkflowViews = 'GetBackToWorkflowViews';
+    public static readonly GetQueryExportExecution = 'GetQueryExportExecution';
+    public static readonly GetMockWorkflowInstances = 'GetMockWorkflowInstances';
+    public static readonly GetMockWorkflowSingleInstance = 'GetMockWorkflowSingleInstance';
+    public static readonly GetMockSingleInstanceActivityList = 'GetMockSingleInstanceActivityList';
+    public static readonly GetMockSingleInstanceVariables = 'GetMockSingleInstanceVariables';
+
+    public static readonly GetQueryToExcelData = 'GetQueryToExcelData';
 }

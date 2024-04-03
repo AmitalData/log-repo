@@ -20,11 +20,14 @@ import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceRespons
 import {LogitudeWindow} from '../../Controls/Windows/LogitudeWindow';
 import {CustomerPMService} from '../../Common/Services/StandardPMs/CustomerPMService';
 import {TenantPMService} from '../../Common/Services/StandardPMs/TenantPMService';
+import { TenantManagementPMService } from 'Infrastructure/Services/StandardPMs/TenantManagementPMService';
 import {TenantPM} from '../../Common/EntityPMs/TenantPM';
 import {SharedLogisticsService} from '../Services/Others/SharedLogisticsService';
 import {DocumentTypeListService} from '../../Common/Services/StandardLists/DocumentTypeListService';
 import {ApiQueryFilters} from '../../Infrastructure/DataContracts/ApiQueryFilters';
 import {CustomerPM} from '../../Common/EntityPMs/CustomerPM';
+import { AppTool } from '../../Infrastructure/Tools';
+import { TenantManagementPM } from 'Infrastructure/EntityPMs/TenantManagementPM';
 
 @Component({
     
@@ -70,15 +73,33 @@ export class SharedLogisticsMainComponent implements OnInit {
     LastMonthAgentIsEnabled: boolean;
 
     TitleSettings: string;
-    TitleStatus: string;
+    SharedTitleType: string;
     public LastPartnersList: LastLoginPartners[];
     public SelectLastPartnersList: LastLoginPartners;
     public SupportManagement: any;
     public ResetUserPassword: any;
     sharedLogisticsSummary: SharedLogisticsSummary;
     myTenantPM: TenantPM;
+    myTenantManagementPM: TenantManagementPM;
+    
+    public CargoTrackingPublicShowEvents:boolean = false;
+    public CargoTrackingPrivateShowEvents:boolean= false;
+
     public tenantPMService: TenantPMService;
+    public tenantManagementPMService: TenantManagementPMService;
     private CurrentSession = SessionLocator.SelectedSession;
+    public LastMonthAccessVisibility: boolean = false;
+    public LastActivityVisibility: boolean = false;
+    public InviteLinkLable: string = "Invite Customers";
+    public IsCtoolSetting: boolean = false;
+    private ObjectTableInviteName: string = "Customer";
+    public DisplayObjectTableInviteName: string = "Customers";
+    private InviteQueryCode: string = "Shared Logistics Customers";
+    public IsShowDisplaySetting: boolean = false;
+    public IsShowAgentStatisticsArea: boolean = false;
+    public HasCustomizedInvitationDocumentFeature: boolean = false;
+    public HasCustomizedResetPasswordEmailFeature: boolean = false;
+
     constructor(public _sharedLogisticsService: SharedLogisticsService, public _documentTypeListService: DocumentTypeListService) {
         if (this.tenantPMService == null) {
             this.tenantPMService = new TenantPMService();
@@ -86,20 +107,102 @@ export class SharedLogisticsMainComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.SetFeatures();
+        this.SetVisibility();
+        this.SetSettings();
+        this.SetTitles();
         this.LoadData();
 
-        if (FeatureLocator.HasFeaturePermession("General", "MOBILE") && FeatureLocator.HasFeaturePermession("General", "SHAREDLOGISTICS")) this.TitleSettings = "Shared Logistics & Mobile Settings";
-        else if (FeatureLocator.HasFeaturePermession("General", "MOBILE")) this.TitleSettings = "Mobile Settings";
-        else if (FeatureLocator.HasFeaturePermession("General", "SHAREDLOGISTICS")) this.TitleSettings = "Shared Logistics Settings";
+    }
 
-        if (FeatureLocator.HasFeaturePermession("General", "MOBILE") && FeatureLocator.HasFeaturePermession("General", "SHAREDLOGISTICS")) this.TitleStatus = "Shared Logistics & Mobile Status";
-        else if (FeatureLocator.HasFeaturePermession("General", "MOBILE")) this.TitleStatus = "Mobile Status";
-        else if (FeatureLocator.HasFeaturePermession("General", "SHAREDLOGISTICS")) this.TitleStatus = "Shared Logistics Status";
+    SetFeatures() {
+        this.HasCustomizedInvitationDocumentFeature = FeatureLocator.HasFeaturePermession("General", "DocumentType.CustomizedInvitationDocument");
+        this.HasCustomizedResetPasswordEmailFeature = FeatureLocator.HasFeaturePermession("General", "DocumentType.CustomizedResetPasswordEmail");
+        this.IsDisplayAreaDocument = this.HasCustomizedInvitationDocumentFeature || this.HasCustomizedResetPasswordEmailFeature;
+    }
+
+    SetSettings() {
+
+        if (this.SharedTitleType != "CTool") return;
+        this.ObjectTableInviteName = "Card";
+        this.DisplayObjectTableInviteName = "Partners";
+        this.InviteQueryCode = "Ctool Partners";
+        this.IsCtoolSetting = true
+
+    }
+
+
+    SetVisibility() {
+
+        if (this.SharedTitleType == "CTool") return;
+        this.LastMonthAccessVisibility = this.LastActivityVisibility = true;
+        this.IsShowDisplaySetting = true;
+        this.IsShowAgentStatisticsArea = true;
+        
+
+    }
+
+    GetInviteToolTipMessage() {
+        return this.IsCtoolSetting ? "View shows all partners except customers" : "";
+    }
+
+    public get IsCargoTracking(): boolean {
+        return this.SharedTitleType == "CargoTracking";
+    }
+
+    public get IsShowActivatedMobileArea(): boolean {
+        if (this.SharedTitleType == "CTool" || this.SharedTitleType == "CargoTracking") return false;
+        return true;
+    }
+
+    public get TitleStatus(): string {
+        if (this.SharedTitleType == "CTool") return "CTool Status";
+        if (this.SharedTitleType == "CargoTracking") return "Cargo Tracking";
+        if (FeatureLocator.HasFeaturePermession("General", "MOBILE") && FeatureLocator.HasFeaturePermession("General", "SHAREDLOGISTICS")) return "Shared Logistics & Mobile Status";
+        if (FeatureLocator.HasFeaturePermession("General", "MOBILE")) return "Mobile Status";
+        if (FeatureLocator.HasFeaturePermession("General", "SHAREDLOGISTICS")) return "Shared Logistics Status";
+        return "Shared Logistics Status";
+    }
+
+    public get ActivatedLabel(): string {
+        if (this.SharedTitleType == "CTool") return "Activated Ctool";
+        if (this.SharedTitleType == "CargoTracking") return "Activated Cargo Tracking";
+        return "Activated Shared Logistics";
+    }
+
+    SetTitles() {
+
+
+          if (this.SharedTitleType == "CargoTracking")
+        {
+            this.TitleSettings = "Cargo Tracking Settings";
+        }
+        else {
+            if (FeatureLocator.HasFeaturePermession("General", "MOBILE") && FeatureLocator.HasFeaturePermession("General", "SHAREDLOGISTICS"))
+                this.TitleSettings = "Shared Logistics & Mobile Settings";
+            else if (FeatureLocator.HasFeaturePermession("General", "MOBILE"))
+                this.TitleSettings = "Mobile Settings";
+            else if (FeatureLocator.HasFeaturePermession("General", "SHAREDLOGISTICS"))
+                this.TitleSettings = "Shared Logistics Settings";
+        }
+
+        if (this.SharedTitleType != "CTool") return;
+        this.TitleSettings = "CTool Settings";
+        this.InviteLinkLable = "Invite CTool Partners";
+
+    }
+
+
+    SetSharedTitleType(titleType) {
+        this.SharedTitleType = titleType;
+        this.InviteQueryCode = this.IsCargoTracking ? "Cargo Tracking Customers" : this.InviteQueryCode;
     }
 
     LoadData() {
         this.LoadCurrentTenant();
-        this.LoadLastLoginPartners();
+        if (this.LastMonthAccessVisibility) {
+            this.LoadLastLoginPartners();
+        }        
     }
 
     LoadCurrentTenant() {
@@ -109,6 +212,7 @@ export class SharedLogisticsMainComponent implements OnInit {
                 var myResult = pmResponse.Result;
                 if (myResult) {
                     this.myTenantPM = myResult;
+                    this.GetTenantManagementData();
                     this.RefreshTenantScreenData();
                 }
             }
@@ -140,21 +244,26 @@ export class SharedLogisticsMainComponent implements OnInit {
 
         //this.MobileActivatedEnabled = false;
         this.LoadCardData();
-        this.LoadSharedLogisticsSummary();
+
+        if (this.LastActivityVisibility || this.LastMonthAccessVisibility) {
+            this.LoadSharedLogisticsSummary();
+        }
     }
 
     LoadCardData() {
-        this._sharedLogisticsService.getSharedLogisticsStatistics(SessionInfo.LoggedUserTenant).subscribe((res:any) => {
+        let invitationStatusType = this.IsCargoTracking ? "CargoTracking" : "";
+        this._sharedLogisticsService.getSharedLogisticsStatistics(SessionInfo.LoggedUserTenant, invitationStatusType).subscribe((res: any) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;
                 if (myResult) {
                     var data: SharedLogisticsStatusStatistics = myResult;
-
+                  
                     if (data != null) {
-                        this.InvitedCustomersCount = data.InvitedCustomersCount;
-                        this.NotInvitedCustomersCount = data.NotInvitedCustomersCount;
-                        this.ActivatedCustomersCount = data.ActivatedCustomersCount + data.ActivatedCustomersForMobileCount;
+                        this.InvitedCustomersCount = !this.IsCtoolSetting ? data.InvitedCustomersCount : data.InvitedCToolPartnersCount;
+                        this.NotInvitedCustomersCount = !this.IsCtoolSetting ? data.NotInvitedCustomersCount : data.NotInvitedCToolPartnersCount;
+
+                        this.ActivatedCustomersCount = !this.IsCtoolSetting ? data.ActivatedCustomersCount : data.ActivatedCToolPartnersCount;
                         this.ActivatedCustomersForMobileCount = data.ActivatedCustomersForMobileCount;
 
                         this.InvitedAgentsCount = data.InvitedAgentsCount;
@@ -260,6 +369,16 @@ export class SharedLogisticsMainComponent implements OnInit {
         logWindow.Show("./SharedLogistics/Components/SharedLogisticsEventPermissiosComponent");
     }
 
+    MilestonesPermissionsLinkClick() {
+        var windowArgs: any = {};
+        var logWindow = new LogitudeWindow();
+        logWindow.WindowArgs = windowArgs;
+        logWindow.Width = 820;
+        logWindow.Height = 520;
+        logWindow.Title = "Milestones Permissions";
+        logWindow.Show("./SharedLogistics/Components/CargoTrackingMilestonesPermissiosComponent");
+    }
+
     DocumentsPermissionsLinkClick() {
         var windowArgs: any = {};
         var logWindow = new LogitudeWindow();
@@ -280,8 +399,43 @@ export class SharedLogisticsMainComponent implements OnInit {
         logWindow.Show("./SharedLogistics/Components/SharedLogisticsMoneyPermissiosComponent");
     }
 
+    private GetTenantManagementData(){
+        var managementService: TenantManagementPMService = new TenantManagementPMService();
+        managementService.get(this.myTenantPM.Id).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                var ten: TenantManagementPM = myResponse.Result;
+                this.CargoTrackingPublicShowEvents = ten.CargoTrackingPublicShowEvents;
+                this.CargoTrackingPrivateShowEvents = ten.CargoTrackingPrivateShowEvents;            
+            }
+        });    
+    }
+
+    EventsLinkClick() {
+        var backButtonTitle = "Cargo Tracking";
+        var displayTitle = "Events";
+        var objectTableName = "EventType";
+        var queryCode = "Event types";
+        this.filterAgrs = new ApiQueryFilters();
+        var listArgs = new ListComponentArgs();
+        listArgs.Filters = this.filterAgrs;
+        listArgs.QueryCode = queryCode;
+        listArgs.ObjectTableName = objectTableName;
+        listArgs.DisplayTitle = displayTitle;
+        listArgs.BackButtonTitle = backButtonTitle;
+        listArgs.IsDigitalPortalMenuClicked = true;
+        this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response: any) => {
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
+                .then(cmpRef => {
+                    cmpRef.instance.ComponentRef = cmpRef;
+                    cmpRef.instance.Run(listArgs);
+                    this.CurrentSession.AddMenuReference(cmpRef);
+                });
+        });
+    }
+
     PartnersPermissionsLinkClick() {
         var windowArgs: any = {};
+        windowArgs.IsCargoTracking = this.SharedTitleType == "CargoTracking";
         var logWindow = new LogitudeWindow();
         logWindow.WindowArgs = windowArgs;
         logWindow.Width = 820;
@@ -297,7 +451,7 @@ export class SharedLogisticsMainComponent implements OnInit {
         logWindow.WindowArgs = windowArgs;
         logWindow.Width = 910;
         logWindow.Height = 550;
-        logWindow.Title = "Shared Logistics Wizard";
+        logWindow.Title = this.IsCargoTracking ? "Cargo Tracking Wizard" : "Shared Logistics Wizard";
         logWindow.DataContext = this.myTenantPM;
         logWindow.Show("./SharedLogistics/Components/SharedLogisticsWizardComponent");
     }
@@ -305,16 +459,18 @@ export class SharedLogisticsMainComponent implements OnInit {
     SettingsLinkClick() {
         var windowArgs: any = {};
         windowArgs.TenantPM = this.myTenantPM;
+        windowArgs.SharedTitleType = this.SharedTitleType;
         var logWindow = new LogitudeWindow();
         logWindow.WindowArgs = windowArgs;
         logWindow.Width = 900;
         logWindow.Height = 550;
-        logWindow.Title = "Shared Logistics Settings";
+        logWindow.Title = this.SharedTitleType == "CargoTracking" ? "Cargo Tracking Settings": "Shared Logistics Settings";
         logWindow.Show("./SharedLogistics/Components/SharedLogisticsSettingComponent");
     }
 
     InviteLinkClick(code: string) {
-        var backButtonTitle = "Shared Logistics";
+
+        var backButtonTitle = this.IsCargoTracking ? "Cargo Tracking" : (this.IsCtoolSetting ? "Ctool" : "Shared Logistics");
         var queryCode = "";
         var displayTitle = "";
         var objectTableName = "";
@@ -323,9 +479,9 @@ export class SharedLogisticsMainComponent implements OnInit {
             switch (code) {
                 case "Customers":
                     {
-                        displayTitle = "Customers";
-                        objectTableName = "Customer";
-                        queryCode = "Shared Logistics Customers";
+                        displayTitle = this.DisplayObjectTableInviteName;
+                        objectTableName = this.ObjectTableInviteName;
+                        queryCode = this.InviteQueryCode;
                         break;
                     }
 
@@ -340,13 +496,17 @@ export class SharedLogisticsMainComponent implements OnInit {
             }
 
             this.filterAgrs = new ApiQueryFilters();
+            if (this.IsCtoolSetting) {
+                this.filterAgrs.addAdditionalFilter("InActive", false, null, null, "Equals", true, false, false, "boolean");
+            }
             var listArgs = new ListComponentArgs();
             listArgs.Filters = this.filterAgrs;
             listArgs.QueryCode = queryCode;
             listArgs.ObjectTableName = objectTableName;
             listArgs.DisplayTitle = displayTitle;
             listArgs.BackButtonTitle = backButtonTitle;
-            //listArgs.ShowViews = false;
+            listArgs.IsCargoTrackingMenuClicked = this.SharedTitleType == "CargoTracking";
+            listArgs.DontCheckQueryFeature = this.IsCtoolSetting ? true : false;
             this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response:any) => {
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                     .then(cmpRef => {
@@ -360,13 +520,11 @@ export class SharedLogisticsMainComponent implements OnInit {
 
     CustomersZoomLinkClcik(code: string) {
         this.filterAgrs = new ApiQueryFilters();
-        this.filterAgrs.addAdditionalFilter("CustomerStatusCode", "ACT", null, null, "Equals", false, true, false, "string");
-        this.filterAgrs.addAdditionalFilter("PartnerTypeId", "CS", null, null, "Equals", false, true, false, "string");
-
-        var backButtonTitle = "Shared Logistics";
-        var queryCode = "Shared Logistics Customers";
+        this.SetAddAdditionalFilters();
+        var backButtonTitle = this.IsCargoTracking ? "Cargo Tracking" : (!this.IsCtoolSetting ? "Shared Logistics" : "Ctool");
+        var queryCode = this.InviteQueryCode;
         var displayTitle = "";
-        var objectTableName = "Customer";
+        var displayObjectTableName = this.DisplayObjectTableInviteName;
         var navigate: boolean = true;
         switch (code) {
             case "invited":
@@ -375,10 +533,10 @@ export class SharedLogisticsMainComponent implements OnInit {
                         navigate = false;
                     }
                     else {
-                        this.filterAgrs.SortBy = "InvitationDate";
+                        this.filterAgrs.SortBy = this.IsCargoTracking ? "CargoTrackingInvitationDate" : "InvitationDate";
                         this.filterAgrs.SortDirection = "Descending";
-                        this.filterAgrs.addAdditionalFilter("SharedLogisticsInvitationStatusCode", 2, null, null, "Equals", false, true, false, "string");
-                        displayTitle = "Invited Customers";
+                        this.filterAgrs.addAdditionalFilter(this.IsCargoTracking ? "CargoTrackingInvitationStatusCode" : "SharedLogisticsInvitationStatusCode", 2, null, null, "Equals", false, true, false, "string");
+                        displayTitle = "Invited " + displayObjectTableName;
                     }
                     break;
                 }
@@ -388,10 +546,11 @@ export class SharedLogisticsMainComponent implements OnInit {
                         navigate = false;
                     }
                     else {
-                        this.filterAgrs.SortBy = "LastShipmentDate";
+                        this.filterAgrs.SortBy = this.IsCtoolSetting ? "InvitationDate" : "LastShipmentDate";
                         this.filterAgrs.SortDirection = "Descending";
-                        this.filterAgrs.addAdditionalFilter("SharedLogisticsInvitationStatusCode", 1, null, null, "Equals", false, true, false, "string");
-                        displayTitle = "Not Invited Customers";
+                        this.filterAgrs.addAdditionalFilter(this.IsCargoTracking ? "CargoTrackingInvitationStatusCode" : "SharedLogisticsInvitationStatusCode", 1, null, null, "Equals", false, true, false, "string");
+                        displayTitle = "Not Invited " + displayObjectTableName;
+
                     }
                     break;
                 }
@@ -405,8 +564,10 @@ export class SharedLogisticsMainComponent implements OnInit {
                         this.filterAgrs.SortBy = "LastLoginDate";
                         this.filterAgrs.SortDirection = "Descending";
 
-                        this.filterAgrs.addAdditionalFilter("SharedLogisticsInvitationStatusCode", 3, null, null, "Equals", false, true, false, "string");
-                        displayTitle = "Activated Customers";
+                        this.filterAgrs.addAdditionalFilter(this.IsCargoTracking ? "CargoTrackingInvitationStatusCode" : "SharedLogisticsInvitationStatusCode", 3, null, null, "Equals", false, true, false, "string");
+
+                        displayTitle = "Activated " + displayObjectTableName;
+
 
                     }
                     break;
@@ -422,7 +583,7 @@ export class SharedLogisticsMainComponent implements OnInit {
                         this.filterAgrs.SortBy = "LastLoginDate";
                         this.filterAgrs.SortDirection = "Descending";
 
-                        this.filterAgrs.addAdditionalFilter("SharedLogisticsInvitationStatusCode", 3, null, null, "Equals", false, true, false, "string");
+                        this.filterAgrs.addAdditionalFilter(this.IsCargoTracking ? "CargoTrackingInvitationStatusCode" : "SharedLogisticsInvitationStatusCode", 3, null, null, "Equals", false, true, false, "string");
                         this.filterAgrs.addAdditionalFilter("IsActiveForMobile", true, null, null, "Equals", false, true, false, "boolen");
                         displayTitle = "Activated Mobile Customers";
 
@@ -435,10 +596,12 @@ export class SharedLogisticsMainComponent implements OnInit {
             var listArgs = new ListComponentArgs();
             listArgs.Filters = this.filterAgrs;
             listArgs.QueryCode = queryCode;
-            listArgs.ObjectTableName = objectTableName;
+            listArgs.ObjectTableName = this.ObjectTableInviteName;
             listArgs.DisplayTitle = displayTitle;
             listArgs.BackButtonTitle = backButtonTitle;
             listArgs.ShowViews = false;
+            listArgs.DontCheckQueryFeature = this.IsCtoolSetting ? true : false;
+            listArgs.IsCargoTrackingMenuClicked = this.SharedTitleType == "CargoTracking";
 
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                 .then(cmpRef => {
@@ -447,6 +610,19 @@ export class SharedLogisticsMainComponent implements OnInit {
                     this.CurrentSession.AddMenuReference(cmpRef);
                 });
         }
+    }
+
+
+
+
+
+    private SetAddAdditionalFilters() {
+        if (this.IsCtoolSetting) {
+            this.filterAgrs.addAdditionalFilter("InActive", false, null, null, "Equals", true, false, false, "boolean");
+            return;
+        }
+        this.filterAgrs.addAdditionalFilter("CustomerStatusCode", "ACT", null, null, "Equals", false, true, false, "string");
+        this.filterAgrs.addAdditionalFilter("PartnerTypeId", "CS", null, null, "Equals", false, true, false, "string");
     }
 
     ActivityZoomLinkClick(m: string) {
@@ -572,5 +748,9 @@ export class SharedLogisticsMainComponent implements OnInit {
         var logWindow = new LogitudeWindow();
         logWindow.Title = "Document Type" + " Edit";
         logWindow.ShowEditComponent(documentId, "DocumentType");
+    }
+
+    RefreshButtonClicked() {
+        this.LoadData();
     }
 }

@@ -49,7 +49,7 @@ namespace Logitude.Accounting.Data.Repositories
                     where a.AccountId == keys.AccountId && a.DateTypeCode == keys.DateTypeCode && a.Year == keys.Year && a.Month == keys.Month && a.CurrencyId == keys.CurrencyId
                     select a).FirstOrDefault();
         }
-		         
+		 		                 
         partial void onAdd();//Partial Methods Definition in Generated
         public void Add(GLAccountTotalByMonth entity)
         {

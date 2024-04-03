@@ -58,7 +58,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     BranchRepository branchRepository = new BranchRepository(context);
                     BranchQuery branchQuery = new BranchQuery(branchRepository);
                     myResult.Branches = branchQuery.GetBranchPMsByTenant(tenant).ToList();
-
+                    myResult.Branches = myResult.Branches.Where(a=>!a.InActive).ToList();
                     List<ShippingLinePM> ShippingLines = (from d in context.ShippingLines.Include("Card")
                                                           where d.IsINTTRARegistered == true && d.Tenant == tenant
                                                           select new ShippingLinePM()

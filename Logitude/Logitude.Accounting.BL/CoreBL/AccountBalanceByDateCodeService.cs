@@ -61,7 +61,9 @@ namespace Logitude.Accounting.BL.CoreBL
             bool checkHaveAccountingQueued ,
             bool inclusiveTheDateLTransaction /*= false*/, 
             bool verbose /*= false*/,
-            bool ClacOpenReconciledAmount)
+            bool ClacOpenReconciledAmount,
+            bool SumOpenTransactions
+            )
         {
             _TheDate = theDate;
             _DateTypeCode = DateTypeCode;
@@ -76,11 +78,11 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 if (String.IsNullOrWhiteSpace(_GLAccountId))
                 {
-                    throw new Exception("GLAccountId is must");
+                    throw new ApplicationException("GLAccountId is must");
                 }
                 if (!_ListOfAccountId.Contains(_GLAccountId))
                 {
-                    throw new Exception("_ListOfAccountId.Contains(_GLAccountId)");
+                    throw new ApplicationException("_ListOfAccountId.Contains(_GLAccountId)");
                 }
                 if (_AccountingContext == null)
                 {
@@ -209,7 +211,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         if (_ListOfAccountId.Count() > 1)
                         {
-                            throw new Exception("if (ClacOpenReconciledAmount && _ListOfAccountId.Count()>1)");
+                            throw new ApplicationException("if (ClacOpenReconciledAmount && _ListOfAccountId.Count()>1)");
                         }
 
                         var res=
@@ -222,11 +224,17 @@ namespace Logitude.Accounting.BL.CoreBL
                         }
 
                     }
+                    if (SumOpenTransactions)
+                    {
+                        AccountBalance.TotalOpenTransactionAmount =  myLedgerTransactionQueryService.TotalOpenTransactionAmount(_GLAccountId, _Tenant);
 
+                    }
 
                     AccountBalance.Totals = totals;
                     AccountBalance.TotalLocalAmountDebit = AccountBalance.Totals.Sum(r => r.LocalAmountDebit);
                     AccountBalance.TotalLocalAmountCredit = AccountBalance.Totals.Sum(r => r.LocalAmountCredit);
+                    AccountBalance.TotalForiegnAmountDebit = AccountBalance.Totals.Sum(r => r.ForeignAmountDebit);
+                    AccountBalance.TotalForiegnAmountCredit = AccountBalance.Totals.Sum(r => r.ForeignAmountCredit);
 
 
                     var mustDue = true;//https://startbigthinksmall.wordpress.com/2009/05/04/the-transaction-has-aborted-tricky-net-transactionscope-behavior/
@@ -339,17 +347,20 @@ namespace Logitude.Accounting.BL.CoreBL
         public List<CurrencySum> Totals { get; set; }
 
         public decimal? TotalLocalAmountDebit { get; set; }
-
         public decimal? TotalLocalAmountCredit { get; set; }
+        public decimal? TotalForiegnAmountDebit { get; set; }
+        public decimal? TotalForiegnAmountCredit { get; set; }
         public List<string> YearTransferLedgerTransactionIds { get; internal set; }
         public string OpenAmountCurrencyId { get; set; }
         public decimal StartTotalOpenAmount { get; set; }
+        public decimal TotalOpenTransactionAmount { get; set; }
+        
 
         internal List<CallBackBalance> GetCallBackBalanceOfCurrency(string currencyId)
         {
             if (string.IsNullOrWhiteSpace(currencyId))
             {
-                throw new Exception("string.IsNullOrWhiteSpace(currencyId)");
+                throw new ApplicationException("string.IsNullOrWhiteSpace(currencyId)");
             }
             return GetCallBackBalance().Where(r => r.CurrencyId == currencyId).ToList();
 
@@ -370,7 +381,7 @@ namespace Logitude.Accounting.BL.CoreBL
         {
             if (string.IsNullOrWhiteSpace(currencyId))
             {
-                throw new Exception("string.IsNullOrWhiteSpace(currencyId)");
+                throw new ApplicationException("string.IsNullOrWhiteSpace(currencyId)");
             }
             var tot = Totals.Where(r => r.CurrencyId == currencyId).FirstOrDefault();
             if (tot == null)
@@ -379,11 +390,26 @@ namespace Logitude.Accounting.BL.CoreBL
             }
             return (tot.LocalAmountDebit - tot.LocalAmountCredit);
         }
+
+        internal decimal? GetBalanceOfForeignAmount(string currencyId)
+        {
+            if (string.IsNullOrWhiteSpace(currencyId))
+            {
+                throw new ApplicationException("string.IsNullOrWhiteSpace(currencyId)");
+            }
+            var tot = Totals.Where(r => r.CurrencyId == currencyId).FirstOrDefault();
+            if (tot == null)
+            {
+                return null;
+            }
+            return (tot.ForeignAmountDebit - tot.ForeignAmountCredit);
+        }
+
         public decimal? GetBalanceOfCurrency(string currencyId)
         {
             if (string.IsNullOrWhiteSpace(currencyId))
             {
-                throw new Exception("string.IsNullOrWhiteSpace(currencyId)");
+                throw new ApplicationException("string.IsNullOrWhiteSpace(currencyId)");
             }
             //var accountingCurrencyId=  AccountingSettingResolver.ResolveAccountingCurrencyId(Tenant);
             //if (accountingCurrencyId == currencyId)
@@ -407,11 +433,8 @@ namespace Logitude.Accounting.BL.CoreBL
             return (TotalLocalAmountDebit.GetValueOrDefault() - TotalLocalAmountCredit.GetValueOrDefault());
         }
 
-
-
-
-
-
+        public decimal? GetBalanceOfForiegnAmount() =>
+            TotalForiegnAmountDebit.GetValueOrDefault() - TotalForiegnAmountCredit.GetValueOrDefault();
     }
 
     public class AccountBalanceverboseM

@@ -5,7 +5,11 @@ using Logitude.BL.CommonDataModel.Tools.DataMapping;
 using Logitude.BL.CommonDataModel.Tools.TraceEvents;
 using Logitude.BL.CommonDataModel.Tools.Validating;
 using Logitude.BL.Helpers;
+using Logitude.BL.InfrastructureModel.EntityPMs;
+using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.QueueService;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -19,6 +23,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         bool isNewEntity;
         private int tenant;
         public DocumentType Poco { get; set; }
+        public ObjectTablePM orderObjectTable;
 
         public ICommonDataContext ObjectContext
         {
@@ -29,6 +34,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private DocumentTypePM entityPM;
         private ICommonDataContext objectContext;
         private DocumentTypeRepository entityRepository;
+        private ObjectTableQuery tablesQuery;
         DocumentTypeCopyRepository documentTypeCopyRepository;
         DocumentTypeCustomFieldRepository documentTypeCustomFieldRepository;
 
@@ -37,6 +43,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.tenant = tenant;
             this.ObjectContext = objectContext;
             this.entityRepository = new DocumentTypeRepository(objectContext);
+            tablesQuery = new ObjectTableQuery(tenant);
+            orderObjectTable = tablesQuery.GetObjectTableByName("ShipmentOrder", 0);
         }
 
         public void Create(DocumentTypePM theEntityPm)
@@ -146,6 +154,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 documentTypeCustomFieldRepository.Add(cutomfield1);
             }
             #endregion
+
+            AddDocumentTypeKafkaQueueMessage();
         }
 
         public void Update(DocumentTypePM theEntityPm , List<DocumentTypeCopyPM> documentTypeCopyList = null)
@@ -209,7 +219,9 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityRepository.SubmitChanges();
             RemoveEntityFromCache(theEntityPm);
             TableLastUpdateClass.UpdateTableHistory(theEntityPm.Tenant, "DocumentType");
-		}
+
+            AddDocumentTypeKafkaQueueMessage();
+        }
 
         public void Update(DocumentTypePM theEntityPm, bool mapComposition = false)
         {
@@ -259,12 +271,52 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             DocumentTypeValidating.Validate(theEntityPm);
             DocumentTypeTracing.Trace(theEntityPm, Poco, isNewEntity);
             DocumentTypeMapping.MapEntity(theEntityPm, Poco, isNewEntity);
+
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
             RemoveEntityFromCache(theEntityPm);
             TableLastUpdateClass.UpdateTableHistory(theEntityPm.Tenant, "DocumentType");
-		}
 
+            AddDocumentTypeKafkaQueueMessage();
+
+
+            if (orderObjectTable != null)
+            {
+                var orderPoco = GetOrderDocumentType("SO" + theEntityPm.Code, theEntityPm.Tenant, orderObjectTable.Id);
+                if (orderPoco != null)
+                {
+                    orderPoco.IsCustomerView = theEntityPm.IsCustomerView;
+                    entityRepository.Update(orderPoco);
+                    entityRepository.SubmitChanges();
+                }
+            }
+        }
+
+        public DocumentType GetOrderDocumentType(string code, int tenant, string orderObjectTable)
+        {
+            return entityRepository.GetByCodeAndObjectTable(code, orderObjectTable, tenant);
+        }
+
+
+        private void AddDocumentTypeKafkaQueueMessage()
+        {
+            if (!FeatureToggleHelper.HasFeatureToggle("CTL", entityPM.Tenant) || entityPM.IsDocIn == false)
+            {
+                return;
+            }
+            AddKafkaQueueMessage();
+        }
+
+        private void AddKafkaQueueMessage()
+        {
+            IQueueService queueservice = new DbQueueService();
+            queueservice.InitializeQueue("CToolLookups", 0);
+            var queueMessage = new Dictionary<string, string>() {
+                { "Entity", "DocumentType" },
+                { "EntityId", entityPM.Id },
+                { "Tenant", tenant.ToString()}};
+            queueservice.Send(queueMessage, tenant);
+        }
 
         private void RemoveEntityFromCache(DocumentTypePM entityPm)
         {

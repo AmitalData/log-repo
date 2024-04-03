@@ -49,7 +49,7 @@ export class LoginService {
 
 
     PostUserValidation(loginParameters: LoginParameters) {
-        var url = this.baseUrlApi + "Authentication";
+        var url = this.baseUrlApi + "Authentication" + '/PostUserValidation';
         loginParameters.IsAngularLogin = true;
         const httpOptions = {
             headers: new HttpHeaders({
