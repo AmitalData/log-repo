@@ -74,7 +74,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
             return entity;
         }
 
-        public SettingPM GetSinglePMFromCahche() => CacheHelper.GetFromCache("SettingPM", GetSinglePM);
+        public SettingPM GetSinglePMFromCahche() => Helpers.CacheHelper.GetFromCache("SettingPM", GetSinglePM);
 
         public SettingPM GetSinglePM()
         {
@@ -181,8 +181,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
             return Settings;
         }
 
-        public SettingPM GetSinglePMFromCahche() => CacheHelper.GetFromCache("SettingPM", GetSinglePM);        
-
+ 
         public string GetJwtToken(int tenant)
         {            
             string cacheKey = "jwt" + tenant;

@@ -1137,7 +1137,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     StorageFreeDays = entityPOCO.StorageFreeDays,
                     BillToId = entityPOCO.BillToId,
                     Address1 = entityPOCO.Address1,
-                    Address2 = entityPOCO.Address2
+                    Address2 = entityPOCO.Address2,
                     SATCustomerName = entityPOCO.SATCustomerName,
                     EORInumber = entityPOCO.EORInumber,
                     SingleInvoiceTemplateId = entityPOCO.SingleInvoiceTemplateId,

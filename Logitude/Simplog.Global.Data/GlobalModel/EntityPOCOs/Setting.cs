@@ -89,7 +89,7 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
         public string TaxesRediractUrl { get; set; }
         public string AmitalApiAddress { get; set; }
         public string AmitalApiXFunctionsKey { get; set; }
-    }
+    
          public string ReleaseDateString { get; set; }
 
         public string AzurePrincipalSecretKey { get; set; }

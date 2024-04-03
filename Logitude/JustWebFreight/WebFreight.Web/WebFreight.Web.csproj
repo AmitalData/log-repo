@@ -475,7 +475,6 @@
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-
     <Reference Include="NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <HintPath>..\..\packages\NLog.5.2.4\lib\net46\NLog.dll</HintPath>
     </Reference>
@@ -581,7 +580,6 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data.Services.Client" />
     <Reference Include="System.Design" />
-
     <Reference Include="System.Diagnostics.TraceSource, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Diagnostics.TraceSource.4.0.0\lib\net46\System.Diagnostics.TraceSource.dll</HintPath>
       <Private>True</Private>
@@ -602,7 +600,6 @@
       <Private>True</Private>
       <Private>True</Private>
     </Reference>
-  
     <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.IO.Compression.ZipFile, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.IO.Compression.ZipFile.4.0.1\lib\net46\System.IO.Compression.ZipFile.dll</HintPath>
@@ -753,8 +750,6 @@
       <Private>True</Private>
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Runtime.CompilerServices.Unsafe.5.0.0\lib\net45\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
@@ -783,9 +778,6 @@
       <Private>True</Private>
       <Private>True</Private>
     </Reference>
- 
- 
-   
     <Reference Include="System.Security.AccessControl, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Security.AccessControl.4.7.0\lib\net461\System.Security.AccessControl.dll</HintPath>
     </Reference>
@@ -964,7 +956,6 @@
     <Compile Include="AccountingModel\DomainServices\TaxReportDomainService.cs" />
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\ChequeCounterSerialViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\APInvoiceStatusUpdateController.cs" />
-
     <Compile Include="Controllers\AccountingModel\GLAccountMultiToCurrencyController.cs" />
     <Compile Include="Controllers\CommonDataModel\ApiHelpers\CardAPiHelper.cs" />
     <!-- <Compile Include="ContainerTracking\ContainerTrackingHelper.cs" /> -->
@@ -1472,7 +1463,7 @@
     <Compile Include="Controllers\CustomsModel\Extended\DecCargoSplitConExtendedController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\PendingByKeywordsExtendedController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\ClientItemExtendedController.cs" />
-     <Compile Include="Controllers\CustomsModel\Extended\DeclarationCourierStatusViewsController.cs" />
+    <Compile Include="Controllers\CustomsModel\Extended\DeclarationCourierStatusViewsController.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CarWeightViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CB_AdditionRulesDetailsHistoryViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CB_ComputationMethodDataViewsController.Generated.cs" />
@@ -1501,15 +1492,13 @@
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CB_TradeLevyViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CB_VendorViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CertificateOfOriginInvoiceViewsController.Generated.cs" />
- 
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CertificateOfOriginItemViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CertificateOfOriginMandatoryFieldsViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CertificateOfOriginStatusCodeEnumViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CertificateOfOriginTypeCodeEnumViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CertificateOfOriginViewsController.Generated.cs" />
-     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ChangeTypeViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ChangeTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ClientItemViewsController.Generated.cs" />
- 
     <Compile Include="Controllers\CustomsModel\Extended\SupplierInvioceExportDefaultExtendedController.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ClientIndicationViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ComputationMethodViewsController.Generated.cs" />
@@ -1831,7 +1820,7 @@
     <Compile Include="Controllers\TariffModuleModel\Generated\ListControllers\TariffVersionUploadedExcelViewsController.Generated.cs" />
     <Compile Include="Controllers\TariffModuleModel\Generated\PMControllers\TariffVersionUploadedExcelController.Generated.cs" />
     <Compile Include="Controllers\Test\HybridTestController.cs" />
-    <Compile Include="Controllers\Test\TestController.cs" />
+    <Compile Include="Controllers\FromAppCode\TestController.cs" />
     <Compile Include="Controllers\WebDomainControllers\PotentialAddressController.cs" />
     <Compile Include="Controllers\WebDomainControllers\QuoteOPDomainController.cs" />
     <Compile Include="Controllers\WebServices\AmitalAPIControllerBase.cs" />
@@ -3163,11 +3152,9 @@
     <Compile Include="DataProviders\ArchivoExportadoDataProvider.Shared.cs" />
     <Compile Include="DataProviders\ARInvoiceDepositDataProvider.Shared.cs" />
     <Compile Include="DataProviders\ARInvoiceIncludeVATRoutingsDataProvider.Shared.cs" />
-
     <Compile Include="Controllers\FromAppCode\AngularJS_App_Code\CarrierViewsController.cs" />
     <Compile Include="Controllers\FromAppCode\AngularJS_App_Code\Common\PortListViewsExtededController.cs" />
     <Compile Include="Controllers\FromAppCode\AngularJS_App_Code\Global\QueryColumnsController.cs" />
-    <Compile Include="Controllers\FromAppCode\TestController.cs" />
     <Compile Include="Controllers\FromAppCode\AngularJS_App_Code\Common\UserExtendedController.cs" />
     <Compile Include="Controllers\FromAppCode\AngularJS_App_Code\Common\RoleExtendedController.cs" />
     <Compile Include="Controllers\FromAppCode\AngularJS_App_Code\Common\BranchListExtendedController.cs" />
@@ -3491,7 +3478,6 @@
     <Compile Include="Helpers\AmitalAPI\Structs\AmitalApiClientapi.cs" />
     <Compile Include="Helpers\AmitalAPI\Structs\AmitalApiSchema.cs" />
     <Compile Include="Helpers\AmitalAPI\Structs\AmitalApiSettings.cs" />
-    <Compile Include="Helpers\ContainerStatusesHelper.cs" />
     <Compile Include="Helpers\APIHelpers\UpdateContainersBatchService.cs" />
     <Compile Include="Helpers\AttachmentDocumentNotifyService.cs" />
     <Compile Include="Helpers\AutomationModel\OnUpdateDocumentService.cs" />
