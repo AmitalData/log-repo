@@ -114,6 +114,7 @@ namespace Logitude.BL.GlobalModel.EntityLists
         public int MobileTotalLastWeek { get; set; }
         public int MobileTotalLastMonth { get; set; }
         public bool EnableBranding { get; set; }
+        public bool TranzilaPaymentWithBit { get; set; }
         public bool EnableExportToExcel { get; set; }
         public string CustomerURL { get; set; }
         public bool HideSharedlogistics { get; set; }
@@ -171,14 +172,14 @@ namespace Logitude.BL.GlobalModel.EntityLists
         public string WhatsAppMessagingPhoneNumber { get; set; }
         public bool ActivatedforDeclarationApprove { get; set; }
         public string DeclarationMessage { get; set; }
-        public bool ActivatePrivateSite { get; set; }       
+        public bool ActivatePrivateSite { get; set; }
         public bool IsContainerTrackingPrepaid { get; set; }
         public DateTime? DigitalPortalLastDate { get; set; }
         public int? DigitalPortalTotalLastWeek { get; set; }
         public int? DigitalPortalTotalLastMonth { get; set; }
         public DateTime? DigitalPortalMobileLastDate { get; set; }
         public int? DigitalPortalMobTotalLastWeek { get; set; }
-        public int? DigitalPortalMobTotalLastMonth{ get; set; }
+        public int? DigitalPortalMobTotalLastMonth { get; set; }
         public int? DPArchiveShipmentCreateFilter { get; set; }
         public int? DPArchiveShipmentArrivalFilter { get; set; }
         public int? DPArchiveShipmentDepartFilter { get; set; }
@@ -189,6 +190,9 @@ namespace Logitude.BL.GlobalModel.EntityLists
         public string LogoURL { get; set; }
         public string ServiceAgreementURL { get; set; }
         public string EcommerceSupportEmail { get; set; }
+        public bool EcommerceTenant { get; set; }
+		public bool SearchAbsoluteValuePublic { get; set; }
 
-    }
+
+	}
 }

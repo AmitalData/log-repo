@@ -3,4 +3,5 @@ export interface ChequeDepositDetails {
     CashBook: string,
     BankAccount: string,
     ForeignAmount:string,
+    
 }

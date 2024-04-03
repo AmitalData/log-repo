@@ -153,5 +153,6 @@ export class CustomerList {
 		LastLoginDateViaPC: Date;
 		LastLoginDateViaMobile: Date;
 		EmailForSendingSingArinvoice: string;
-	
-}
+		SendingInterestReport: boolean;
+
+}

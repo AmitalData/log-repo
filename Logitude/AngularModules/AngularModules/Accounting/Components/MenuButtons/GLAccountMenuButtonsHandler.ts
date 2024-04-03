@@ -147,7 +147,6 @@ export class GLAccountMenuButtonsHandler {
                                 break;
                             }
                     }
-
                 }
             }
         }
@@ -215,32 +214,28 @@ export class GLAccountMenuButtonsHandler {
         var myGLAccountListService: GLAccountListService = new GLAccountListService();
         myGLAccountListService.getSingle(this.EntityPM.Id)
             .subscribe((response: ServiceResponse) => {
-                var gLAccount: GLAccountList = response.Result as GLAccountList;
                 
-                if (!gLAccount.BalanceInLocalCurrency || gLAccount.BalanceInLocalCurrency == 0) 
-                    this.SetReactivateAccount(inactive);
-                
-                else if (!inactive) 
-                    this.SetReactivateAccount(inactive);
-                
-                else {
-                    this.entityArgs.EditComponent.ValidationErrorsList = [];
-                    this.entityArgs.EditComponent.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.GLABalanceNotEqual0"));
-                }
-            });
-    }
+                // var gLAccount: GLAccountList = response.Result as GLAccountList; //
 
-    private SetReactivateAccount(inactive) {
-        this.EntityPM.Inactive = inactive;
-        if (inactive) {
-            this.EntityPM.ActiveStatusName = TextCodeTranslator.Translate("GLAccounts.Q.Inactive");
-        }
-        this.SaveChenges();
+                // if (!gLAccount.BalanceInLocalCurrency || gLAccount.BalanceInLocalCurrency == 0) { // check if the balance is 0 
+                    this.EntityPM.Inactive = inactive;
+                    if (inactive) {
+                        this.EntityPM.ActiveStatusName = TextCodeTranslator.Translate("GLAccounts.Q.Inactive");
+                    }else{
+                        this.EntityPM.ActiveStatusName = TextCodeTranslator.Translate("GLAccounts.Q.Active");
+                    }
+                    this.SaveChenges();
+
+                // } else { // if the balance is not 0
+                //     this.entityArgs.EditComponent.ValidationErrorsList = [];
+                //     this.entityArgs.EditComponent.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.GLABalanceNotEqual0"));
+                // }
+            });
     }
     private StopBusyIndicator() {
         this.CurrentSession.StopBusyIndicator();
     }
-    
+
     ReconcileButtonClicked() {
         var screenWidth = this.getScreenWidth();
         var screenHeight = this.getScreenHeight();

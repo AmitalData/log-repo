@@ -974,10 +974,10 @@
     DisplayLongName="false"
     FullFieldLable="&quot;InvoiceDate&quot;"
     DefaultText="&quot;Invoice Date&quot;"
-    FullLocalDefaultText="&quot;,תאריך אסמכתא&quot;"
+    FullLocalDefaultText="&quot;תאריך אסמכתא&quot;"
     ListFieldLable="&quot;InvoiceDateListLable&quot;"
     ListLableDefaultText="&quot;Invoice Date&quot;"
-    ListLocalDefaultText="&quot;,תאריך אסמכתא&quot;"
+    ListLocalDefaultText="&quot;תאריך אסמכתא&quot;"
     IsNullable="true"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -10424,10 +10424,10 @@
     DisplayLongName="false"
     FullFieldLable="&quot;ConfirmationNumber&quot;"
     DefaultText="&quot;Confirmation Number&quot;"
-    FullLocalDefaultText="&quot;מספר אישור&quot;"
+    FullLocalDefaultText="&quot;מספר הקצאה&quot;"
     ListFieldLable="&quot;ConfirmationNumberListLable&quot;"
     ListLableDefaultText="&quot;Confirmation Number&quot;"
-    ListLocalDefaultText="&quot;מספר אישור&quot;"
+    ListLocalDefaultText="&quot;מספר הקצאה &quot;"
     IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -12757,6 +12757,12 @@
       Code="&quot;APInvoice.F.Notes&quot;"
       DefaultText="&quot;Notes&quot;"
       TextCodeTypeCode="&quot;F&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;APInvoice.M.InvoiceDetailAmountVatNotMatched&quot;"
+      DefaultText="&quot;Do not include in the same invoice lines of credit and debit according to the regulations, they must be separated into two separate thoughts&quot;"
+      LocalDefaultText="&quot;לא ניתן לקלוט באותה חשבונית שורות של זיכוי וחיוב ע&quot;פ התקנות יש להפרידם לשתי חשבוניות נפרדות&quot;"
+      TextCodeTypeCode="&quot;M&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>

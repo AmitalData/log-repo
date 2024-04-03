@@ -118,6 +118,7 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
         public string RegisteredAirlines { get; set; }
         public string PendingAirlines { get; set; }
         public bool EnableBranding { get; set; }
+        public bool TranzilaPaymentWithBit { get; set; }
         public bool EnableExportToExcel { get; set; }
         public bool ActivatedforDeclarationApprove { get; set; }
         public string DeclarationMessage { get; set; }
@@ -236,6 +237,10 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
         public int? DPArchiveShipmentDepartFilter { get; set; }
         public string LogoURL { get; set; }
         public string ServiceAgreementURL { get; set; }
+        public string ExportLoginCredintial { get; set; }
+        public int? ExportTenant { get; set; }
+		public bool SearchAbsoluteValuePublic { get; set; }
 
-     }
-}
+
+      }
+ }

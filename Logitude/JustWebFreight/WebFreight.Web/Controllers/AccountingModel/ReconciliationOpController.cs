@@ -48,9 +48,9 @@ using Logitude.Server.Tools.StorageService;
 using Logitude.Server.Tools.QueueService;
 using Newtonsoft.Json;
 using Simplog.Data.CommonDataModel;
+using System.Collections;
 using Logitude.Accounting.Data.EntityMapping;
 using Intuit.Ipp.Data;
-using System.Collections;
 
 namespace WebFreight.Web.Controllers.AccountingModel //AccountingPeriodViewsController.cs
 {
@@ -1015,15 +1015,15 @@ tenant);
         public List<QueryColumnPM> QueryColumns { get; set; }
         public int Tenant { get; set; }
     }
-    public class CancelRecoRequest
-    {
-        public List<string> SelectedIds { get; set; }
-    }
     public class ReconcileExtExcelDataArgs
     {
         public string Title { get; set; } = "Draft Reconciliation";
         public List<ReconcileExternalPageLinePM> Data { get; set; }
         public List<QueryColumnPM> QueryColumns { get; set; }
         public int Tenant { get; set; }
+    }
+    public class CancelRecoRequest
+    {
+        public List<string> SelectedIds { get; set; }
     }
 }

@@ -6,9 +6,10 @@ import { RequestAliases } from "../../../Base/cypress/constants/RequestAliases";
 import * as BaseAssertion from '../../../Base/cypress/actions/Assertion';
 import { URLs } from '../constants/URLs';
 import { RestAPI } from '../../../Base/cypress/constants/RestAPI'
+import * as gr from '../../../Base/cypress/Actions/GenerateRandoms';
 
 export function NavigatesChequeDepositWizerd() {
-    debugger
+   
     cy.Click(BankAccountsSelectors.BankAccountsTab, null)
     cy.Click(ChequeDepositSelectors.NewDepositButton, null)
 
@@ -16,7 +17,11 @@ export function NavigatesChequeDepositWizerd() {
 }
 
 export function FillChequeDepositDetails(chequeDepositDetails: ChequeDepositDetails) {
-    cy.FillLogTextBox(ChequeDepositSelectors.AccountingDate, chequeDepositDetails.AccountingDate)
+    var generatedInvoiceNumber = "CH" + gr.GenerateRandomNumber(10000, 99999);
+    const now = new Date();
+
+    //cy.FillLogTextBox(ChequeDepositSelectors.AccountingDate, chequeDepositDetails.AccountingDate)
+    cy.FillDate(ChequeDepositSelectors.AccountingDate,now.toLocaleDateString('fr-FR') )
     cy.FillLogLov(ChequeDepositSelectors.CashBook, chequeDepositDetails.CashBook, true)
     cy.FillLogLov(ChequeDepositSelectors.BankAccount, chequeDepositDetails.BankAccount, true)
 }

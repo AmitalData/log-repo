@@ -95,7 +95,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
                 SecurityUtility.CheckContactFeature("Shipment", "READ", tenant);
 
                 ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
-                ShipmentPM shipmentPM = shipmentQuery.GetSingleShipmentPMByForwarderNumber(fsn, tenant,0); // Check the 0
+                ShipmentPM shipmentPM = shipmentQuery.GetSingleShipmentPMByForwarderNumber(fsn, tenant, 0); // Check the 0
 
                 //DateTime completionTime = DateTime.Now;
                 //int executionTime = (int)((completionTime.Ticks - callTime.Ticks) / TimeSpan.TicksPerMillisecond);
@@ -114,7 +114,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
             }
         }
 
-        
+
         public HttpResponseMessage Post(ShipmentPM entityPM)
         {
             if (ModelState.IsValid)
@@ -129,9 +129,9 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
 
                         SecurityUtility.AuthenticationOnTenant(tenant);
                         SecurityUtility.CheckContactFeature("Shipment", "NEW", tenant);
-						SecurityUtility.AuthenticationOnEntityTenant("Shipment", entityPM.Tenant, authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("Shipment", entityPM.Tenant, authToken.Tenant);
 
-						IShipmentsContext objectContext = ShipmentsContext.GetContext(entityPM.Tenant);
+                        IShipmentsContext objectContext = ShipmentsContext.GetContext(entityPM.Tenant);
                         ShipmentService service = new ShipmentService(objectContext, entityPM, SecurityUtility.GetAuthenticatedUser());
                         service.Create();
 
@@ -172,9 +172,9 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
 
                         SecurityUtility.AuthenticationOnTenant(tenant);
                         SecurityUtility.CheckContactFeature("Shipment", "UPDATE", tenant);
-						SecurityUtility.AuthenticationOnEntityTenant("Shipment", entityPM.Tenant, authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("Shipment", entityPM.Tenant, authToken.Tenant);
 
-						IShipmentsContext objectContext = ShipmentsContext.GetContext(entityPM.Tenant);
+                        IShipmentsContext objectContext = ShipmentsContext.GetContext(entityPM.Tenant);
                         ShipmentService service = new ShipmentService(objectContext, entityPM, SecurityUtility.GetAuthenticatedUser());
                         service.Update(true);
 
@@ -194,7 +194,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
                                 }
                             }
                         }
-                                                  
+
                         scope.Complete();
                         return Request.CreateResponse(HttpStatusCode.OK, entityPM);
                     }
@@ -215,7 +215,8 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
         // PATCH api/shipment?id={shipmentId}
         public HttpResponseMessage Patch(string id, JsonPatchDocument<ShipmentPM> shipmentJsonPatch)
         {
-            try {
+            try
+            {
                 using (TransactionScope transactionScope = TransactionFactory.GetTransaction())
                 {
                     string token = HttpContext.Current.Request.Headers["Token"];
@@ -249,7 +250,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildJsonPatchException(exception, id, shipmentJsonPatch));
             }
-            catch (Exception exception) 
+            catch (Exception exception)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(exception));
             }
@@ -326,7 +327,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
             }
         }
 
-        public HttpResponseMessage GetByCustomerReferences1or3ForUpdate(string CustomerReference1,string ShipmentId, bool IsForwarderShipment)
+        public HttpResponseMessage GetByCustomerReferences1or3ForUpdate(string CustomerReference1, string ShipmentId, bool IsForwarderShipment)
         {
             try
             {
@@ -380,7 +381,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
                     shipmentPM.IsOperationalClosed = true;
                     ShipmentService service = new ShipmentService(objectContext, shipmentPM, SecurityUtility.GetAuthenticatedUser());
                     service.Update(true);
-                   
+
                 }
 
                 return Request.CreateResponse(HttpStatusCode.OK);
@@ -405,7 +406,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckContactFeature("Shipment", "READ", authToken.Tenant);
                 int tenant = authToken.Tenant;
-                
+
                 QueryOperations queryOperations = new QueryOperations()
                 {
                     ObjectTableName = "Shipment",
@@ -432,7 +433,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
                     {
                         string filterName = filterNameProp.ToString();
                         string filterOperator = filterOperatorProp != null ? filterOperatorProp.ToString() : "Equals";
-                        
+
                         ObjectField field = ShipmentObjectFields.FirstOrDefault(f => f.FieldName == filterName);
                         if (field != null)
                         {
@@ -475,13 +476,13 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
                         }
                     }
                 }
-               
+
 
                 ShipmentAPiHelper.AddFilters(queryOperations, tenant);
 
                 ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
 
-                
+
                 GenericFilter genericFilter = new GenericFilter();
                 GenericSort sortClass = new GenericSort();
                 ShipmentCustomFilter customfilters = new ShipmentCustomFilter(tenant);
@@ -494,10 +495,10 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
                 listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
 
                 shipments = genericFilter.GetFilteredQuery<ShipmentDataView>(nonListQueryOperation, shipments);
-               
+
 
                 ShipmentQuery myShipmentQuery = new ShipmentQuery(shipmentRepository);
-               
+
                 var entityLists = myShipmentQuery.GetIQueryableShipmentList(shipments, tenant);
 
                 entityLists = genericFilter.GetFilteredQuery<ShipmentList>(listQueryOperation, entityLists);
@@ -673,7 +674,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
                 ShipmentAdditionalCloudCustomData CustomData = shipmentQuery.GetSingleShipmentAdditionalCloudCustomData(key, tenant);//GetSingleShipmentPMBySecurityKeyTenant(key,tenant); // Check the 0
                 if (CustomData != null && !string.IsNullOrEmpty(CustomData.PaymentRequestXML))
                 {
-                    AddWhatsAppMessagingPhoneNumberToResponseHeader(tenant);
+                    AddDataToResponseHeader(tenant);
                     TenantAdditionalDataRepository TADR = new TenantAdditionalDataRepository(tenant);
                     var MyAdditionalData = TADR.GetSingleTenantAdditionalData(tenant);
                     if (MyAdditionalData != null)
@@ -744,24 +745,25 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
         public HttpResponseMessage GetLogoAndUrlWithoutToken(string securityKey)
         {
             int? tenant = new ShipmentQuery(0).GetTenantBySecurityKey(securityKey);
-            if (tenant == null) 
+            if (tenant == null)
                 return Request.CreateResponse(HttpStatusCode.BadRequest, "tenant not found");
 
             var tenantManagement = new TenantManagementQuery().GetSinglePM(tenant.Value);
             byte[] filedata = new Uploader().DownloadFile("smalllogo" + tenant.Value, "jpg", "logos", tenant.Value);
             string logo = "data:image/jpg;base64," + Convert.ToBase64String(filedata);
-            
+
             return Request.CreateResponse(new { url = tenantManagement.LogoURL, logo = logo, serviceAgreementURL = tenantManagement.ServiceAgreementURL });
         }
 
-        private static void AddWhatsAppMessagingPhoneNumberToResponseHeader(int tenant)
+        private static void AddDataToResponseHeader(int tenant)
         {
             TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(tenant);
             TenantManagementPM tenantManagementPM = tenantManagementQuery.GetSinglePM(tenant);
             if (tenantManagementPM != null && !string.IsNullOrEmpty(tenantManagementPM.WhatsAppMessagingPhoneNumber))
             {
+                HttpContext.Current.Response.Headers.Add("TranzilaPaymentWithBit", tenantManagementPM.TranzilaPaymentWithBit ? "1" : "0");
                 HttpContext.Current.Response.Headers.Add("WhatsAppMessagingPhoneNumber", tenantManagementPM.WhatsAppMessagingPhoneNumber);
-                HttpContext.Current.Response.Headers.Add("Access-Control-Expose-Headers", "WhatsAppMessagingPhoneNumber");
+                HttpContext.Current.Response.Headers.Add("Access-Control-Expose-Headers", "WhatsAppMessagingPhoneNumber, TranzilaPaymentWithBit");
             }
         }
 
@@ -770,7 +772,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
             PaymentData MyPaymentData = new PaymentData();
 
             string postbackUrl = @"https://direct.tranzila.com/amitaltest/";
-           
+
             Dictionary<string, string> dict = GetParamsAsDict(MyParams + "&" + thtk);
             MyPaymentData.currency = dict["currency"];
             MyPaymentData.sum = dict["sum"];
@@ -781,7 +783,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
             MyPaymentData.thtk = dict["thtk"];
             MyPaymentData.TargetEnv = dict["TargetEnv"];
             return MyPaymentData;
-            
+
         }
 
         private Dictionary<string, string> GetParamsAsDict(string text)
@@ -846,12 +848,12 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
 
                 IShipmentsContext objectContext = ShipmentsContext.GetContext(tenant);
 
-                ShipmentComputedFieldsRepository shipmentComputedFieldsRepository = new ShipmentComputedFieldsRepository(tenant); 
+                ShipmentComputedFieldsRepository shipmentComputedFieldsRepository = new ShipmentComputedFieldsRepository(tenant);
                 DocumentsFilingRepository DocRepo = new DocumentsFilingRepository(tenant);
                 var entityComputedFields = shipmentComputedFieldsRepository.GetSingleShipmentComputedFields(id, tenant);
                 var ShipmentDocs = DocRepo.GetRequestedDocumentsFilingPMsByEntityId(id, tenant);
                 foreach (var Doc in ShipmentDocs)
-                {  
+                {
                     Doc.IsRequested = false;
                     Doc.IsDigitalSignRequired = false;
                     DocRepo.Update(Doc);
@@ -915,19 +917,19 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
             }
         }
 
-        public HttpResponseMessage GetUserIdDetailsByShipmentSecurityKeyWithoutToken(int tenant,string key)
+        public HttpResponseMessage GetUserIdDetailsByShipmentSecurityKeyWithoutToken(int tenant, string key)
         {
             try
             {
-               
+
                 ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
-                var RequestedShipment = shipmentQuery.GetSingleShipmentPMBySecurityKeyTenant(key,tenant);
+                var RequestedShipment = shipmentQuery.GetSingleShipmentPMBySecurityKeyTenant(key, tenant);
                 var MyData = LogitudeXmlSerializer.DeserializeObject<UserIdNumberRequestPM>(RequestedShipment.UserIdNumberXMLData);
                 MyData.Id = RequestedShipment.Id;
                 MyData.IsUserIDNumberRequired = RequestedShipment.IsUserIDNumberRequired;
                 MyData.UserIdNumberUpdateDate = RequestedShipment.UserIdNumberUpdateDate;
                 MyData.UserIdNumber = RequestedShipment.UserIdNumber;
-                return Request.CreateResponse(HttpStatusCode.OK, MyData); 
+                return Request.CreateResponse(HttpStatusCode.OK, MyData);
             }
 
             catch (Exception ex)
@@ -971,7 +973,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
                 SecurityUtility.CheckContactFeature("Shipment", "READ", tenant);
 
                 ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
-                ShipmentPM shipmentPM = shipmentQuery.GetSinglePMByShipmentNumber(number, tenant,true);
+                ShipmentPM shipmentPM = shipmentQuery.GetSinglePMByShipmentNumber(number, tenant, true);
 
                 return Request.CreateResponse(HttpStatusCode.OK, shipmentPM); ;
             }

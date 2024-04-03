@@ -90,6 +90,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 entityPOCO.BalanceInLocalCurrency = 0;
             }
 
+            if (entityPM.BalanceInForeignCurrency == null)
+            {
+                AddPOCOPropertyName(POCOPropertyNames.BalanceInForeignCurrency);
+                entityPOCO.BalanceInForeignCurrency = 0;
+            }
 
 #endif
 
@@ -255,10 +260,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                     }
                     else
                     {
-
-                        var gLAccountPM = gLAccountQueryService.GetSingle(entityPOCO.ControlAccountId, false, true);
-                        entityPM.ControlAccountName = (showLocals ? gLAccountPM.LocalName : gLAccountPM.EnglishName);
-                        entityPM.ControlAccountNumber = gLAccountPM.DisplayNumber;
+                        var gLAccount = gLAccountQueryService.GetSingleByAccountId(entityPOCO.ControlAccountId, entityPOCO.Tenant);
+                        entityPM.ControlAccountName = (showLocals ? gLAccount.LocalName : gLAccount.EnglishName);
+                        entityPM.ControlAccountNumber = gLAccount.DisplayNumber;
                     }
 
                 }
@@ -333,12 +337,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 
                     if (true)
                     {
-                        var gLAccountPM = gLAccountQueryService.GetSingle(entityPOCO.CustomerGLAccountId, false, true);
-                        if (gLAccountPM != null)
-                        {
-                            entityPM.CustomerGLAccountName = (showLocals ? gLAccountPM.LocalName : gLAccountPM.EnglishName);
-                            entityPM.CustomerGLAccountNumber = gLAccountPM.DisplayNumber;
-                        }
+                        var gLAccount = gLAccountQueryService.GetSingleByAccountId(entityPOCO.CustomerGLAccountId, entityPOCO.Tenant);
+                        entityPM.CustomerGLAccountName = (showLocals ? gLAccount.LocalName : gLAccount.EnglishName);
+                        entityPM.CustomerGLAccountNumber = gLAccount.DisplayNumber;
                     }
                     else
                     {
@@ -357,9 +358,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 {
                     if (true)
                     {
-                        var gLAccountPM = gLAccountQueryService.GetSingle(entityPOCO.ParentAccountId, false, true);
-                        entityPM.ParentAccountName = (showLocals ? gLAccountPM.LocalName : gLAccountPM.EnglishName);
-                        entityPM.ParentAccountNumber = gLAccountPM.DisplayNumber;
+                        var gLAccount = gLAccountQueryService.GetSingleByAccountId(entityPOCO.ParentAccountId, entityPOCO.Tenant);
+                        entityPM.ParentAccountName = (showLocals ? gLAccount.LocalName : gLAccount.EnglishName);
+                        entityPM.ParentAccountNumber = gLAccount.DisplayNumber;
                     }
                     else
                     {
@@ -441,6 +442,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                     entityPM.NextDueDate = poco.NextDueDate;
                     entityPM.LocalBalanceInDue = poco.LocalBalanceInDue;
                     entityPM.BalanceInLocalCurrency = poco.BalanceInLocalCurrency;
+                    entityPM.BalanceInForeignCurrency = poco.BalanceInForeignCurrency;
                 }
                 //if (entityPOCO.Category3Id != null)
                 if (!String.IsNullOrWhiteSpace(entityPOCO.Category3Id))
@@ -531,13 +533,12 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             CardQuery cardQuery = new CardQuery(entityPM.Tenant);
             bool fromCache = true;
             CardList cardList = cardQuery.GetSingleByGLAccount(entityPM.Id, entityPM.Tenant, false);
-            if(cardList != null)
+            /*if(cardList != null)
             {
                 entityPM.CardId = cardList.Id;
                 entityPM.SalesmanUserId = cardList.SalesmanUserId;
                 entityPM.CollectorId = cardList.CollectorId;
-
-            }
+            }*/
 
             List<CardList> CardLists = cardQuery.GetAllCardsByGLAccount(entityPM.Id, entityPM.Tenant);
             bool IsSalesmanUserIdSameOnAllCards = false;

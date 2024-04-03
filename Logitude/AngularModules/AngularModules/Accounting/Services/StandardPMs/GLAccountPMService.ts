@@ -86,7 +86,7 @@ export class GLAccountPMService {
 
 				var mappedEntity: GLAccountPM = this.MapJsonToEntityPM(entityPM, false);
 				
-				return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
+				return this._http.post(this._apiUrl + "/post", JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
 					.pipe(
 						map((response: HttpResponse<any>) => {
 
@@ -603,7 +603,7 @@ export class GLAccountPMService {
 			entityPM.Tenant = InfraSettings.TenantPM.Id;
 			return entityPM;
     }
-
+    
     UpdateFromCsv(fileUploadParamerter: any) {
         return defer(() => {
             return this._http.post(this._apiUrl + "/UpdateFromCsv", JSON.stringify(fileUploadParamerter), ServiceHelper.GetHttpHeaders()).pipe(map((response: any) => {                    
@@ -614,6 +614,5 @@ export class GLAccountPMService {
                 }), catchError(ServiceHelper.HandleServiceError));
         });
     }
-		 
 
 }

@@ -226,6 +226,7 @@ namespace Logitude.BL.GlobalModel.EntityPMs
         public string PendingAirlines { get; set; }
 
         public bool EnableBranding { get; set; }
+        public bool TranzilaPaymentWithBit { get; set; }
         public bool EnableExportToExcel { get; set; }
         public bool ActivatedforDeclarationApprove { get; set; }
         public bool ShowMoneyOrder { get; set; }
@@ -413,5 +414,11 @@ namespace Logitude.BL.GlobalModel.EntityPMs
         public string LogoURL { get; set; }
         public string ServiceAgreementURL { get; set; }
         public string EcommerceSupportEmail { get; set; }
-     }
+
+        public bool EcommerceTenant { get; set; }
+        public string ExportLoginCredintial { get; set; }
+        public int? ExportTenant { get; set; }
+		public bool SearchAbsoluteValuePublic { get; set; }
+
+	}
 }

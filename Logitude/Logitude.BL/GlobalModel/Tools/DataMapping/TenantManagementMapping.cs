@@ -105,6 +105,7 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
             entityPOCO.LoginPageNotes = entityPM.LoginPageNotes;
             entityPOCO.SupportActivated = entityPM.SupportActivated;
             entityPOCO.SupportEmail = entityPM.SupportEmail;
+            entityPOCO.TranzilaPaymentWithBit=entityPM.TranzilaPaymentWithBit;
             entityPOCO.IsMultiPackage = entityPM.IsMultiPackage;
             entityPOCO.Technology = entityPM.Technology;
             entityPOCO.MobileLastDate = entityPM.MobileLastDate;
@@ -117,6 +118,7 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
             entityPOCO.RegisteredAirlines = entityPM.RegisteredAirlines;
             entityPOCO.PendingAirlines = entityPM.PendingAirlines;
             entityPOCO.EnableBranding = entityPM.EnableBranding;
+            entityPOCO.TranzilaPaymentWithBit = entityPM.TranzilaPaymentWithBit;
             entityPOCO.EnableExportToExcel = entityPM.EnableExportToExcel;
             entityPOCO.ActivatePrivateSite = entityPM.ActivatePrivateSite;
             entityPOCO.ContactEmail = entityPM.ContactEmail;
@@ -185,8 +187,11 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
             entityPOCO.CargoTrackingPrivateShowEvents = entityPM.CargoTrackingPrivateShowEvents;
             entityPOCO.LogoURL = entityPM.LogoURL;
             entityPOCO.ServiceAgreementURL = entityPM.ServiceAgreementURL;
+            entityPOCO.ExportTenant = entityPM.ExportTenant;
+            entityPOCO.ExportLoginCredintial = entityPM.ExportLoginCredintial;
+			entityPOCO.SearchAbsoluteValuePublic = entityPM.SearchAbsoluteValuePublic;
 
-            string packageName = null;
+			string packageName = null;
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
                 TenantRepository tenantRepository = new TenantRepository(entityPM.Id);
@@ -217,6 +222,7 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
                     tenant.IsTestTenant = entityPM.IsTestTenant;
                     tenant.IsHybrid = entityPM.IsHybrid;
                     tenant.EcommerceSupportEmail = entityPM.EcommerceSupportEmail;
+                    tenant.EcommerceTenant = entityPM.EcommerceTenant;
 
 
                     tenantRepository.Update(tenant);

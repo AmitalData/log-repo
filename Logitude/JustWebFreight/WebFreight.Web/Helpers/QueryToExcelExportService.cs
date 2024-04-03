@@ -86,6 +86,7 @@ namespace WebFreight.Web.Helpers
         {
             var queryFilters = args.QueryFilters;
             var queryOperations = this.GetQueryOperations(queryFilters);
+            var IsXslxFormatFilter = queryOperations.QueryFilterItems.FirstOrDefault(x => x.FieldName == "IsXslxFormat");
             FilterSerializer serializer = new FilterSerializer();
             byte[] arrayOfBytes = serializer.SerializeFilterItems(queryOperations);
 
@@ -104,7 +105,8 @@ namespace WebFreight.Web.Helpers
                 QueryCode = queryCode,
                 Tenant = tenant,
                 UserId = userid,
-                TypeName = null
+                TypeName = null,
+                IsXslxFormat = IsXslxFormatFilter != null ? true : false,
             });
             //Uploader uploaderService = new Uploader();
             //string[] blockIdlist = { Convert.ToBase64String(Guid.NewGuid().ToByteArray()) };

@@ -28,12 +28,12 @@ namespace Logitude.Accounting.Data.Repositories
             if (getFromCache)
             {
                 entity = CacheManager.GetOrInsertNewObject(entityName, () =>
-            {
-                return (from a in context.WithholdingTaxDeductionTypes
-                        where a.Code == Code && a.Tenant == tenant
+                {
+                    return (from a in context.WithholdingTaxDeductionTypes
+                            where a.Code == Code && a.Tenant == tenant
 
-                        select a).FirstOrDefault();
-            });
+                            select a).FirstOrDefault();
+                });
             }
             else
             {
@@ -43,6 +43,14 @@ namespace Logitude.Accounting.Data.Repositories
                           select a).FirstOrDefault();
             }
             return entity;
+        }
+        public WithholdingTaxDeductionType GetSingleWithholdingTaxDeductionTypeByCode(string Code, int tenant)
+        {
+            return (from a in context.WithholdingTaxDeductionTypes
+                    where a.Code == Code && a.Tenant == tenant
+
+                          select a).FirstOrDefault();
+           
         }
 
         public List<WithholdingTaxDeductionType> GetAll()

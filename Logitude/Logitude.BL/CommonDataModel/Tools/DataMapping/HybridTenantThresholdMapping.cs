@@ -22,8 +22,9 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
 
             entityPoco.WaitingThresold = entityPM.WaitingThresold;
             entityPoco.FailedThresold = entityPM.FailedThresold;
+            entityPoco.TypeCode = entityPM.TypeCode;
 
-       
+
         }
     }
 }

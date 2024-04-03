@@ -353,7 +353,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
 
 
         public HttpResponseMessage GetByCompactFiltersShort([FromUri] ApiQueryFilters filters)
-        {
+   {
             try
             {
                 string logKey = PerformanceLogger.LogCurrentTime();
@@ -461,7 +461,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                     ParentEntity = filters.ParentEntity
                 };
 
-                QueryFilterItem item = queryOperations.QueryFilterItems.Where(f => f.FieldName == "CompactSearchField").FirstOrDefault();
+                QueryFilterItem item = queryOperations.QueryFilterItems.Where(f => f.FieldName == "CompactSearchField" || f.FieldName == "CardSearchField").FirstOrDefault();
+
                 queryOperations.QueryFilterItems.Remove(item);
                 object compactSeachvalue = item != null ? item.FieldValue : null;
 
@@ -477,7 +478,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                 listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true || d.IsListFilter).ToList();
 
                 CardCustomFilter customfilters = new CardCustomFilter(tenant);
-                entityPocos = customfilters.GetFilteredQuery(queryOperations, entityPocos);
+                entityPocos = customfilters.GetFilteredQuery(queryOperations, entityPocos, true, MyContext);
 
                 entityPocos = genericFilter.GetFilteredQuery<Card>(nonListQueryOperation, entityPocos);
                 int skippedEntities = queryOperations.PageIndex;

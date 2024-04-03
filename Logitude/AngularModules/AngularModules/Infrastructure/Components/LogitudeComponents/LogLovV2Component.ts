@@ -2325,9 +2325,10 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
         if (AppTool.IsMobileDetected()) {
             logitudeWindow.IsFullScreen = true;
         }
-
+       
         logitudeWindow.WindowArgs = args;
-        logitudeWindow.Title = tablename + " Search";
+        logitudeWindow.Title = this.isRTL ? TextCodeTranslator.Translate("Accounting.General.O.Search") + " " + TextCodeTranslator.Translate("Accounting.General.O." + tablename) + TextCodeTranslator.TranslateTable(tablename) : tablename + " Search";
+
         logitudeWindow.Show('./Infrastructure/Components/LogitudeComponents/LogSearchWindowComponent');
         logitudeWindow.WindowClosed.subscribe(($event: any) => this.OnSearchWindowClosed($event));
 
@@ -3004,6 +3005,7 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     }
     private GetObjectTableNameForDependency(dependency: string, parentObjectName: string) {
         let partnerType: PartnerTypeList = this.PartnerTypes ? this.PartnerTypes.filter(p => p.Id?.toLowerCase() == dependency?.toLowerCase())[0] : null;
+        
         if (partnerType != null && partnerType != undefined) {
             var name: string = partnerType.Name.replace(" ", "");
 
@@ -3101,8 +3103,6 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     }
 
     CallDataFromCache(searchText: string, filters: ApiQueryFilters, setFirstAsSelected: boolean = false) {
-
-debugger
         if (!this.LookUpTable.AutoCompleteSearchWindow) {
             filters.PageSize = 1000;
         }
@@ -3320,7 +3320,6 @@ debugger
     }
 
     CallDataFromServer(searchText: string, filters: ApiQueryFilters) {
-debugger
         if (!this.LookUpTable.AutoCompleteSearchWindow) {
             if (this.DefaultPageSize) {
                 filters.PageSize = this.DefaultPageSize;

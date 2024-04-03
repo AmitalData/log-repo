@@ -30,14 +30,14 @@
             <div>
                 <div float-start style="width: 160px;">{{'Journal.O.CoefficientForAmountsAndCurrencies' | TextCodeTranslationPipe}}</div>
                 <div float-start style="width: 35px; padding-top: 5px;">
-                    <LogTextBox style="width:240px;" [ObjectFieldName]="'CoefficientForAmountsAndCurrencies'"                    
-                     [NoObjectField]="true"
-                        [HideColumns]="true" [ObjectTableName]="ObjectTableName" [InputType]="'number'"
-                        [DataContext]="DataContext">
+                    <LogTextBox style="width:240px;" [ObjectFieldName]="'CoefficientForAmountsAndCurrencies'"
+                                [NoObjectField]="true"
+                                [HideColumns]="true" [ObjectTableName]="ObjectTableName" [InputType]="'number'"
+                                [DataContext]="DataContext">
                     </LogTextBox>
                 </div>
             </div>
-           
+
             <div>
                 <div float-start style="width: 160px;">{{'Journal.O.Dates' | TextCodeTranslationPipe}}</div>
                 <div float-start style="width: 20px; padding-top: 5px;">
@@ -46,34 +46,85 @@
             </div>
             <div>
                 <div>
-                    <div float-start style="width: 160px;">{{'Journal.O.ReferencesAndNotes' | TextCodeTranslationPipe}}
+                    <div float-start style="width: 160px;">
+                        {{'JournalLine.F.Notes' | TextCodeTranslationPipe}}
                     </div>
                     <div float-start style="width: 20px; padding-top: 5px;">
-                        <CheckBox [IsChecked]="ReferencesAndNotes" (Checked)="ReferencesAndNotes = $event"></CheckBox>
+                        <CheckBox [IsChecked]="NotesCB" (Checked)="NotesCB = $event"></CheckBox>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div>
+                    <div float-start style="width: 160px;">
+                        {{'JournalLine.F.Reference1' | TextCodeTranslationPipe}}
+                    </div>
+                    <div float-start style="width: 20px; padding-top: 5px;">
+                        <CheckBox [IsChecked]="Ref1CB" (Checked)="Ref1CB = $event"></CheckBox>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div>
+                    <div float-start style="width: 160px;">
+                        {{'JournalLine.F.Reference2' | TextCodeTranslationPipe}}
+                    </div>
+                    <div float-start style="width: 20px; padding-top: 5px;">
+                        <CheckBox [IsChecked]="Ref2CB" (Checked)="Ref2CB = $event"></CheckBox>
                     </div>
                 </div>
             </div>
         </td>
-        <td class="fields-wrapper" >
+        <td class="fields-wrapper">
             <div>
                 <div float-start style="width: 160px;">{{'Accounting.General.O.AccountingDate' | TextCodeTranslationPipe}}</div>
                 <div [class.force-disable]="disableDates" float-start style="width: 120px">
-                    <LogDatePicker  [ObjectFieldName]="'AccountingDate'" [ObjectTableName]="'cheese'"
-                        [DataContext]="DataContext" [HideColumns]="true"  [SelectedDateValue]="AccountingDate"></LogDatePicker>
+                    <LogDatePicker [ObjectFieldName]="'AccountingDate'" [ObjectTableName]="'cheese'"
+                                   [DataContext]="DataContext" [HideColumns]="true" [SelectedDateValue]="AccountingDate"></LogDatePicker>
                 </div>
             </div>
             <div>
                 <div float-start style="width: 160px;">{{'Journal.F.DocumentDate' | TextCodeTranslationPipe}}</div>
                 <div [class.force-disable]="disableDates" float-start style="width: 120px">
                     <LogDatePicker [ObjectFieldName]="'DocumentDate'" [ObjectTableName]="ObjectTableName"
-                        [DataContext]="DataContext" [HideColumns]="true"  [SelectedDateValue]="DocumentDate"></LogDatePicker>
+                                   [DataContext]="DataContext" [HideColumns]="true" [SelectedDateValue]="DocumentDate"></LogDatePicker>
                 </div>
             </div>
             <div>
                 <div float-start style="width: 160px;">{{'Journal.F.DueDate' | TextCodeTranslationPipe}}</div>
                 <div [class.force-disable]="disableDates" float-start style="width: 120px">
                     <LogDatePicker [ObjectFieldName]="'DueDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
-                        [HideColumns]="true"  [SelectedDateValue]="DueDate"></LogDatePicker>
+                                   [HideColumns]="true" [SelectedDateValue]="DueDate"></LogDatePicker>
+                </div>
+            </div>
+            <div>
+                <div float-start style="width: 160px;">{{'JournalLine.F.Notes' | TextCodeTranslationPipe}}</div>
+                <div [class.force-disable]="disableNotes" float-start style="width: 245px; padding-top: 5px;">
+                    <LogTextBox style="width:240px;" [ObjectFieldName]="'NotesUserText'"
+                                [NoObjectField]="true" [Text]="DataContext.NotesUserText"
+                                [HideColumns]="true" [ObjectTableName]="ObjectTableName" [InputType]="'ntext'"
+                                [DataContext]="DataContext" [ForceTextValueChanges]="true">
+                    </LogTextBox>
+                </div>
+            </div>
+            <div>
+                <div float-start style="width: 160px;">{{'JournalLine.F.Reference1' | TextCodeTranslationPipe}}</div>
+                <div [class.force-disable]="disableRef1" float-start style="width: 245px; padding-top: 5px;">
+                    <LogTextBox style="width:240px;" [ObjectFieldName]="'Reference1UserText'"
+                                [NoObjectField]="true" [Text]="DataContext.Reference1UserText"
+                                [HideColumns]="true" [ObjectTableName]="ObjectTableName" [InputType]="'ntext'"
+                                [DataContext]="DataContext" [ForceTextValueChanges]="true">
+                    </LogTextBox>
+                </div>
+            </div>
+            <div>
+                <div float-start style="width: 160px;">{{'JournalLine.F.Reference2' | TextCodeTranslationPipe}}</div>
+                <div [class.force-disable]="disableRef2" float-start style="width: 245px; padding-top: 5px;">
+                    <LogTextBox style="width:240px;" [ObjectFieldName]="'Reference2UserText'"
+                                [NoObjectField]="true" [Text]="DataContext.Reference2UserText"
+                                [HideColumns]="true" [ObjectTableName]="ObjectTableName" [InputType]="'ntext'"
+                                [DataContext]="DataContext" [ForceTextValueChanges]="true">
+                    </LogTextBox>
                 </div>
             </div>
         </td>

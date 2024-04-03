@@ -174,6 +174,22 @@ export class EditAccountingPeriodComponent extends BaseComponent {
                 toDate.setDate(endDayNumber);
 
                 filters.addAdditionalFilter("AccountingDate", fromDate, toDate, null, "Between", false, false, false, "number");
+                switch (this.PeriodTypeCode) {
+                    case "2": { // Regular Invoice
+                        filters.addAdditionalFilter("OnlyNonInterestInvoice", true, null, null, "Equal", true, false, false, "boolean");
+                        break;
+                    }
+
+                    case "3": { // Interest Invoice
+                        filters.addAdditionalFilter("OnlyInterestInvoice", true, null, null, "Equal", true, false, false, "boolean");
+                        break;
+                    }
+
+                    default: {  
+                        filters.addAdditionalFilter("OnlyNonInvoice", true, null, null, "Equal", true, false, false, "boolean");
+                        break;
+                    }
+                }
 
                 this.transactionsService.getByFilters(filters).subscribe((myResponse: ServiceResponse) => {
                     if (myResponse != null) {

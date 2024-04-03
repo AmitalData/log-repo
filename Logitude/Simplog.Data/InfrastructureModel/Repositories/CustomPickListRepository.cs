@@ -34,7 +34,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 			return context.CustomPickLists.Where(t=>t.Tenant == tenant);
 		}
 
-		public List<CustomPickList> GetCustomPickListsCash(int tenant)
+		public List<CustomPickList> GetCustomPickListsCashe(int tenant)
 		{
 			List<CustomPickList> customPickLists;
 			string listName = "CustomPickList" + tenant;

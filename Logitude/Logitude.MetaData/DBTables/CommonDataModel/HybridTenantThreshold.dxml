@@ -23,4 +23,13 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="TypeCode"
+    OldNames="Type"
+    Type="int"
+     DefaultValue="0">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
 </Table>

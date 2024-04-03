@@ -22,8 +22,14 @@ import { AmitalGatewayUtil } from '../../Utilities/AmitalGatewayUtil';
 //import {RecallClientsForCutoms} from '../../../Customs/Components/CustomsRequests/GeneralRequests/RecallClientsForCutoms';
 import { TextCodeTranslationPipe } from '../../../Controls/Pipes/TextCodeTranslationPipe';
 import { CustomizationPermissionService } from '../../../InfrastructureModules/InfrastructureCustomization/ExternalService/CustomizationPermissionService';
- 
-@Component({
+ import { ThresholdTypes } from 'InfrastructureModules/InfrastructureOthers/Components/CustomizeLogitude/HybridTenantThresholdComponent';
+import { HostScreenService } from 'Common/Components/HostScreen/HostScreenService';
+import { CustomsCloudComponentArgs } from 'InfrastructureModules/InfrastructureOthers/Components/CustomsCloud/CustomsCloudComponent';
+import { HomeScreenEvent, HomeScreenEventTypes, HostScreenComponent } from 'Common/Components/HostScreen/HostScreenComponent';
+import { filter } from 'rxjs/operators';
+import { TaxesWebService } from 'Customs/Services/WebServices/TaxesWebService';
+
+ @Component({
 
 
     templateUrl: './MaintenanceComponent.html',
@@ -37,6 +43,7 @@ export class MaintenanceComponent {
      private readonly invoiceConfirmationNumber = "InvoiceConfirmationNumber";
 
      private textCodeTranslationPipe: TextCodeTranslationPipe;
+    private readonly invoiceConfirmationNumber = "InvoiceConfirmationNumber";
 
     public EntityStatusToggle: boolean = false;
      constructor() {
@@ -76,6 +83,9 @@ export class MaintenanceComponent {
         this.PagesMenu.push(new Menu("OTH", TextCodeTranslator.Translate("General.MC.Others.Others")));
         this.PagesMenu.push(new Menu("PRS", TextCodeTranslator.Translate("General.MC.PersonalSettings.PersonalSettings")));
         this.PagesMenu.push(new Menu("CMS", TextCodeTranslator.Translate("General.MC.SystemSettings.SystemSettings")));
+         
+        if (FeatureLocator.HasFeaturePermession("General", this.invoiceConfirmationNumber))
+            this.PagesMenu.push(new Menu("SHA", TextCodeTranslator.Translate("General.MC.ShaamTokenManagement")));
         
         if (SessionLocator.Tenant == 0) {
             this.PagesMenu.push(new Menu("MNG", TextCodeTranslator.Translate("General.MC.Management.Management")));
@@ -233,6 +243,14 @@ export class MaintenanceComponent {
     }
 
     private BuildSystemSettings() {
+        if (FeatureLocator.HasFeaturePermession("General", this.invoiceConfirmationNumber)) {
+            var item2 = new MenusTablePM();
+            item2.CategoryTypeCode = "CMS";
+            item2.Icon = "Settings"
+            item2.Code = "CUSC";
+            item2.ObjectTableName = "Customs Cloud";
+            this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item2));
+        }
 
         if (FeatureLocator.HasFeaturePermession("General", "TERMOFUSERFEATUE")) {
             var item2 = new MenusTablePM();
@@ -489,8 +507,16 @@ export class MaintenanceComponent {
                 item.ObjectTableName = "Container Settings";
                 this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
             }
- 
-            var item1 = new MenusTablePM();
+  
+             if (SessionLocator.Tenant == 0) {
+                var item = new MenusTablePM();
+                item.CategoryTypeCode = "CMS";
+                item.Icon = "Settings"
+                item.Code = "ReleaseSettings";
+                item.ObjectTableName = "Release Settings";
+                this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+            }
+             var item1 = new MenusTablePM();
             item1.CategoryTypeCode = "CMS";
             item1.Icon = "Settings"
             item1.Code = "SYIN";
@@ -794,16 +820,15 @@ export class MaintenanceComponent {
             item.ObjectTableName = "Cache Log";
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
         }
-
-
-        // if (FeatureLocator.HasFeaturePermession("UserDefinedReport", "Module")) {
-        //     var item = new MenusTablePM();
-        //     item.CategoryTypeCode = "OTH";
-        //     item.Icon = "Settings"
-        //     item.Code = "UDR";
-        //     item.ObjectTableName = "UserDefinedReport";
-        //     this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
-        // }
+        
+        if (FeatureLocator.HasFeaturePermession("General", "CARGOTRACKING")) {
+            var item = new MenusTablePM();
+            item.CategoryTypeCode = "OTH";
+            item.Icon = "Settings"
+            item.Code = "CARGO";
+            item.ObjectTableName = "Cargo Tracking";
+            this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+        }
 
 
         if (SessionLocator.Tenant == 0) {
@@ -837,18 +862,14 @@ export class MaintenanceComponent {
             item.ObjectTableName = "ErrorLog";
             item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "ErrorLog")[0].Id
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
-
+ 
             var item = new MenusTablePM();
             item.CategoryTypeCode = "OTH";
             item.Icon = "Settings"
             item.Code = "CARGO";
             item.ObjectTableName = "Cargo Tracking";
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
-
-
-
-
-            var item = new MenusTablePM();
+             var item = new MenusTablePM();
             item.CategoryTypeCode = "MNG";
             item.Icon = "List"
             item.Code = "BSLG";
@@ -856,8 +877,7 @@ export class MaintenanceComponent {
             item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "BatchServicesLog")[0].Id
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
 
-
-        }
+         }
 
         else {
             this.AllMaintenanceMenu = this.AllMaintenanceMenu.filter(d => d.Code != "MTDS");
@@ -887,7 +907,6 @@ export class MaintenanceComponent {
             }
         }
     }
-
 
     IsCustomizationMaintenanceMenuVisible(): boolean {
 
@@ -968,7 +987,7 @@ export class MaintenanceComponent {
         maintenanceMenuItem.DescriptionText = objectTable.Description != null ? objectTable.Description : TextCodeTranslator.Translate(objectTable.DescriptionTextCodeCode);
         this.AllMaintenanceMenu.push(maintenanceMenuItem);
     }
-     private BuildShaamTokenManagementMenu() {
+      private BuildShaamTokenManagementMenu() {
         if (!FeatureLocator.HasFeaturePermession("General", this.invoiceConfirmationNumber)) return;
 
         var item = new MenusTablePM();
@@ -1020,9 +1039,12 @@ export class MaintenanceComponent {
         item.ObjectTableName = TextCodeTranslator.Translate("Customs.MC.General.APISettings"),
         this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
     }
-
+ 
     // Commands
-    public PageChanged(item: Menu) {
+     PageChanged(item: Menu) {
+        if(item.Code === 'SHA') 
+            return this.navigateToExportCustoms('showShaamTokenManagment');
+ 
         this.SelectedMenu = item;
 
         var itemsSource: MaintenanceMenuItem[] = [];
@@ -1046,8 +1068,19 @@ export class MaintenanceComponent {
 
         if (item) {
             switch (item.Code) {
-                
-                case "AMITAL_API_SETTINGS": {
+                 
+                 case "CUSC": {
+                    const logWindow: LogitudeWindow = new LogitudeWindow();
+                    logWindow.Width = 500;
+                    logWindow.Height = 300;
+                    logWindow.Title = "Customs Cloud";
+                    logWindow.IsShowCloseButton = true;
+                    logWindow.WindowArgs = { windowInstance: logWindow } as CustomsCloudComponentArgs;
+                    logWindow.Show('./InfrastructureModules/InfrastructureOthers/Components/CustomsCloud/CustomsCloudComponent');
+                    break;
+                }
+
+                 case "AMITAL_API_SETTINGS": {
                         const logWindow = new LogitudeWindow();
                         logWindow.Width = window.outerWidth;
                         logWindow.Height = window.outerHeight;
@@ -1370,7 +1403,7 @@ export class MaintenanceComponent {
                     this._entityResourceService.getEntityResourceByTableName("FullAccountingSetting", 0).subscribe((response: any) => {
                         var logitudeWindow = new LogitudeWindow();
                         logitudeWindow.Width = 900;
-                        logitudeWindow.Height = 550;
+                        logitudeWindow.Height = 600;
                         logitudeWindow.Title = TextCodeTranslator.Translate("Accounting.O.FullAccountingSettings"); // "Full Accounting Settings";
                         logitudeWindow.Show('./Accounting/Components/Maintenance/FullAccountingSettingsComponent');
                     });
@@ -1670,6 +1703,7 @@ export class MaintenanceComponent {
                     logitudeWindow.Height = 250;
                     logitudeWindow.Width = 300;
                     logitudeWindow.ShowCloseButton = false;
+                    logitudeWindow.DataContext=ThresholdTypes.Hybrid
                     logitudeWindow.Show('./InfrastructureModules/InfrastructureOthers/Components/CustomizeLogitude/HybridTenantThresholdComponent');
                     break;
                 }
@@ -1827,6 +1861,15 @@ export class MaintenanceComponent {
                         logitudeWindow.Title = "Container Settings";
                         logitudeWindow.Show('./ShipmentModules/ShipmentOthers/Components/ContainerSetting/ContainerSettingsComponent');
                     });
+                    break;
+                }
+                case "ReleaseSettings": {
+                    var logitudeWindow = new LogitudeWindow();
+                    logitudeWindow.ShowCloseButton = true;
+                    logitudeWindow.Width = 1200;
+                    logitudeWindow.Height = 600;
+                    logitudeWindow.Title = "Release Settings";
+                    logitudeWindow.Show('./InfrastructureModules/InfrastructureGettingStarted/Components/Workspaces/ReleaseSettingsComponent');
                     break;
                 }
 
@@ -2069,6 +2112,30 @@ export class MaintenanceComponent {
                 }
             }
         }
+    }
+
+    async navigateToExportCustoms(logitudeCommandId: string) {
+        SessionLocator.SelectedSession.StartBusyIndicator('Redirect...');
+
+        try {
+            let link: string = await new TaxesWebService().getlinkLogin();
+            link += "&logitudeCommandId=" + logitudeCommandId;
+            open(link);
+        } catch (error) {
+            console.log('******* error throw when try get login link to export', error);            
+            SessionLocator.SelectedSession.StopBusyIndicator();
+            await this.showErrorMessage();            
+        }
+
+        SessionLocator.SelectedSession.StopBusyIndicator();
+    }
+
+    showErrorMessage(): Promise<void> {
+        const msgWin: MessageWindow = new MessageWindow();
+        msgWin.ShowErrorIcon = true;
+        msgWin.Show(TextCodeTranslator.Translate('General.B.Erroroccured'));
+
+        return new Promise<void>(res => msgWin.WindowClosed.subscribe(() => res()));
     }
 
     private ShowCustomObject(item: any) {

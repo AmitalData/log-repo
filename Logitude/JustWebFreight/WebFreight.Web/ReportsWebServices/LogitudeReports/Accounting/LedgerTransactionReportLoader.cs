@@ -78,7 +78,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             FillTenantFields();
             FillPrintingInformation();
             FillLedgerTransactions(cardIndexReportService);
-            if (GetFilterValue<string>("GLAccountId") != null)
+            if (GetFilterValue<string>("GLAccountId") != null && cardIndexReportService.CardIndexs.Count()>0)
                 FillGLAccountBalance(cardIndexReportService.CardIndexs);
 
             return transactionsDataProvider;
@@ -172,6 +172,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
                 GLAccountMoreDataRepository gLAccountMoreDataRepository = new GLAccountMoreDataRepository(tenant);
                 var gLAccountMoreData = gLAccountMoreDataRepository.GetSingle(LTBFilterCallBack.GLAccountId, tenant);
+               
 
                 transactionsDataProvider.LocalClosedBalanceList.Add(new GLAccountBalanceList()
                 {
@@ -182,7 +183,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     ForeignCurrencySign = currency.Sign,
                     LocalBalanceInDue = gLAccountMoreData.LocalBalanceInDue,
                     BalanceInForeignCurrency = gLAccountMoreData.BalanceInForeignCurrency,
-                    ForeignBalanceInDue = gLAccountMoreData.ForeignBalanceInDue
+                    ForeignBalanceInDue = gLAccountMoreData.ForeignBalanceInDue,
+                   
 
 
 
@@ -277,6 +279,14 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 reportTransaction.AccountNumber = account.DisplayNumber;
                 reportTransaction.AccountEnglishName = account.EnglishName;
                 reportTransaction.AccountLocalName = account.LocalName;
+                reportTransaction.Collector = account.Collector;
+                reportTransaction.PaymentTerms = account.PaymentTerms;
+                reportTransaction.Category1Id=account.Category1LocalName;
+                reportTransaction.Category2Id = account.Category2LocalName;
+            reportTransaction.Category3Id = account.Category3LocalName;
+            reportTransaction.Category4Id = account.Category4LocalName;
+            reportTransaction.Category5Id = account.Category5LocalName;
+
         }
 
         private ReportLedgerTransaction GetReportNewLedgerTransaction(LedgerTransactionList transaction)
@@ -339,7 +349,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         private void FillPrintingInformation()
         {
             string loggedContactName = GetLoggedContactName();           
+            string loggedContactEnglishName = GetLoggedContactEnglishName();           
             transactionsDataProvider.PrintedByUser = loggedContactName;
+            transactionsDataProvider.UserEnglishName = loggedContactEnglishName;
             transactionsDataProvider.PrintDate = TenantServerConfigration.GetCurrentDateTime(tenant);
         }
 
@@ -366,6 +378,20 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
                 loggedContact = GetLoggedContact();
                return GetContactName(loggedContact);
+            }
+        }
+        private string GetLoggedContactEnglishName()
+        {
+            ContactPM loggedContactEnglishName;
+            if (AuthenticationUtil.AuthenticatedUserEmail != null)
+            {
+                loggedContactEnglishName = GetContactByEmail(AuthenticationUtil.AuthenticatedUserEmail);
+                return loggedContactEnglishName.EnglishName;
+            }
+            else
+            {
+                loggedContactEnglishName = GetLoggedContact();
+                return loggedContactEnglishName.EnglishName;
             }
         }
         private ContactPM GetContactByEmail(string email)
@@ -406,7 +432,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 transactionsDataProvider.AccountCurrencySign = glaccountPM.CurrencySign;
                 transactionsDataProvider.AccountCurrencyCode = glaccountPM.CurrencyCode;
                 transactionsDataProvider.AccountReconcileMethod = glaccountPM.ReconcileMethodCode;
-
                 SetGLAccountStartTotalOpenAmountField(cardIndexReportService);
             }
         }
@@ -430,18 +455,18 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             LedgerTransactionBalanceFilterCallBack LTBFilterCallBack = new LedgerTransactionBalanceFilterCallBack()
             {
                 //EndBalanceForeign = cardIndexs.First().EndBalanceForeign,
-                EndBalanceForeignList = cardIndexs.First().EndBalanceForeignList,
-                EndBalanceLocal = cardIndexs.First().EndBalanceLocal,
-                Have1CurrencyIdInPeriod = cardIndexs.First().Have1CurrencyIdInPeriod,
-                MaxCreateAt = cardIndexs.First().MaxCreateAt,
+                EndBalanceForeignList = cardIndexs.FirstOrDefault().EndBalanceForeignList,
+                EndBalanceLocal = cardIndexs.FirstOrDefault().EndBalanceLocal,
+                Have1CurrencyIdInPeriod = cardIndexs.FirstOrDefault().Have1CurrencyIdInPeriod,
+                MaxCreateAt = cardIndexs.FirstOrDefault().MaxCreateAt,
 
                 //StartBalanceForeign = ledgerTransactionBalanceService.Response.StartBalanceForeign,
-                StartBalanceForeignList = cardIndexs.First().StartBalanceForeignList,
-                StartBalanceLocal = cardIndexs.First().StartBalanceLocal,
-                TotalRowCount = cardIndexs.First().TotalRowCount,
-                YearTransferLedgerTransactionIds = cardIndexs.First().YearTransferLedgerTransactionIds,
-                SuppressCumulativeDueMultiCurrencyInPeriod = cardIndexs.First().SuppressCumulativeDueMultiCurrencyInPeriod,
-                GLAccountId = cardIndexs.First().GLAccountId
+                StartBalanceForeignList = cardIndexs.FirstOrDefault().StartBalanceForeignList,
+                StartBalanceLocal = cardIndexs.FirstOrDefault().StartBalanceLocal,
+                TotalRowCount = cardIndexs.FirstOrDefault().TotalRowCount,
+                YearTransferLedgerTransactionIds = cardIndexs.FirstOrDefault().YearTransferLedgerTransactionIds,
+                SuppressCumulativeDueMultiCurrencyInPeriod = cardIndexs.FirstOrDefault().SuppressCumulativeDueMultiCurrencyInPeriod,
+                GLAccountId = cardIndexs.FirstOrDefault().GLAccountId
         };
             return LTBFilterCallBack;
         }
@@ -461,6 +486,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 PageStartAtRecordIndex = PAGE_RECORD_START_INDEX,
                 PageSize = PAGE_SIZE,
                 SalesmanId = GetFilterValue<string>("SalesmanUserId"),
+                CollectorId = GetFilterValue<string>("CollectorId"),
                 Category1Id = "",
                 Category2Id = "",
                 Category3Id = "",

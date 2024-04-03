@@ -91,7 +91,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class VesselUpdateClass
    {  		
-		public const string HashString = "059c33cd135b9da2bc693fe689b1647b";
+		public const string HashString = "059c33cd135b9da2bc693fe689b1648t";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -801,7 +801,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SearchFields",
 					  						DefaultText =  "Search codes/ names",
-					  						HelpTextCode =  "SearchFields",
+                                            FullLocalDefaultText = "חיפוש קודים/ שמות",
+											HelpTextCode =  "SearchFields",
 					  						HelpTextDefaultText =  "Searching by :\n1: code \n2: english name \n3: local name",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,

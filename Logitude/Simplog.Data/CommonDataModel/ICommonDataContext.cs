@@ -253,6 +253,9 @@ namespace Simplog.Data.CommonDataModel
 
         IDbSet<CustomFieldsMainObject> CustomFieldsMainObjects { get; }
 
+
+        IDbSet<AllActiveGLAccountsView> AllActiveGLAccountsViews { get; set; }
+
         void SetAsModified(object entity);
         void DetectChanges();
         int SaveChanges();

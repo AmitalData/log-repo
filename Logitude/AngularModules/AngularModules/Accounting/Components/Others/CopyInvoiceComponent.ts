@@ -23,6 +23,7 @@ import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator'
 import { APInvoiceLinePM } from '../../../Invoice/EntityPMs/APInvoiceLinePM';
 import { ChargesTypePMService } from '../../../Common/Services/StandardPMs/ChargesTypePMService';
 import { VatTypePMService } from '../../../Common/Services/StandardPMs/VatTypePMService';
+import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 
 
 @Component({
@@ -61,6 +62,7 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
     VendorLovSizeForFullAccounting: number;
 
     private CurrentSession = SessionLocator.SelectedSession;
+    public GLAccountsFilterItems: ApiQueryFilters;
 
     constructor() {
         super();
@@ -72,13 +74,17 @@ export class CopyInvoiceComponent extends BaseComponent implements OnInit  {
         }
         this.GetVatTypePercentegeListByDates();
         this.InitializeVendorLov();
+        this.InitLOVFilters();
 
     }
-
+    InitLOVFilters() {
+        this.GLAccountsFilterItems = new ApiQueryFilters();
+        this.GLAccountsFilterItems.addAdditionalFilter("GLAccountId", "null", null, null, "NotEqual", false, false, false, "string");
+    }
     private InitializeVendorLov() {
         if (this.IsAccountingActivated) {
-            this.DisplayFieldsFromList = "Code,CalculatedEnglishName,GLAccountDisplayNumber,CityName,CountryCode,PartnerTypeName";
-            this.DisplayLocalFieldsFromList = "Code,CalculatedLocalName,GLAccountDisplayNumber,CityName,CountryCode,PartnerTypeName";
+            this.DisplayFieldsFromList = "Code,CalculatedEnglishName,CalculatedLocalName,GLAccountDisplayNumber,CountryCode,PartnerTypeName";
+            this.DisplayLocalFieldsFromList = "Code,CalculatedLocalName,GLAccountDisplayNumber,CountryCode,PartnerTypeName";
             this.VendorLovSizeForFullAccounting = 550;
         }
     }

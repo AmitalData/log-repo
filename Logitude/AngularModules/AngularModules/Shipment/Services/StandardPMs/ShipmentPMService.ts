@@ -175,7 +175,10 @@ export class ShipmentPMService {
                 var pmresponse: ServiceResponse;
                 pmresponse = new ServiceResponse();
                 pmresponse.Result = entity;
-                pmresponse.Data = response.headers.get('WhatsAppMessagingPhoneNumber');
+                pmresponse.Data = {};
+                pmresponse.Data.WhatsAppMessagingPhoneNumber = response.headers.get('WhatsAppMessagingPhoneNumber');
+                pmresponse.Data.TranzilaPaymentWithBit = response.headers.get('TranzilaPaymentWithBit');
+
                 return pmresponse;
 
             }),catchError(ServiceHelper.HandleServiceError));

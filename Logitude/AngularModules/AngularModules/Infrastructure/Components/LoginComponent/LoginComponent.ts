@@ -43,17 +43,22 @@ import { ObjectsUpdater } from '../../Locators/ObjectsUpdater';
 //import { DWObjectFieldExtendedPMService } from '../../../../Infrastructure/Services/ExtendedPMs/DWObjectFieldExtendedPMService';
 import { UserExtendedPMService } from '../../../Common/Services/ExtendedPMs/UserExtendedPMService';
 import { GeneralDomainService } from '../../../Infrastructure/Services/GeneralDomainService';
- import { TenantList } from 'Common/EntityLists/TenantList';
  
-import { AuthenticateService, LogitudeTokensService, AuthorizedUser } from "collaboration-tool-core";
-import { SessionInfo as CToolSessionInfo } from "collaboration-tool-core";
- 
+import {
+    AuthenticateService,
+    LogitudeTokensService,
+    AuthorizedUser,
+} from 'collaboration-tool-core';
+import { SessionInfo as CToolSessionInfo } from 'collaboration-tool-core';
+  
 @Component({
-
     templateUrl: './LoginComponent.html',
-    providers: [ApplicationTimersManager, LogitudeApplicationService, UserLastLoginPMService]
+    providers: [
+        ApplicationTimersManager,
+        LogitudeApplicationService,
+        UserLastLoginPMService,
+    ],
 })
-
 export class LoginComponent implements OnInit {
     @Output() Blocking: EventEmitter<any> = new EventEmitter();
     @Output() LoginCompleted: EventEmitter<any> = new EventEmitter();
@@ -71,8 +76,9 @@ export class LoginComponent implements OnInit {
     public IsShowTenantList: boolean = false;
     public IsProduction: boolean = false;
     public UserData: any;
-    public LogoURL: string = "./Images/LoginScreen/header.jpg";
-    public SampleLogoURL: string = "./Images/ApplicationLogo/Angular/AngularLogo.png";
+    public LogoURL: string = './Images/LoginScreen/header.jpg';
+    public SampleLogoURL: string =
+        './Images/ApplicationLogo/Angular/AngularLogo.png';
     public blocked: boolean = false;
     public dataLoaded: boolean = false;
     public ShowTwoFactorAuthenScreen: boolean = false;
@@ -81,20 +87,26 @@ export class LoginComponent implements OnInit {
     public DefultText: string;
     //public LogoURL: string = "./Images/ApplicationLogo/UnifreightLogo.jpg";
     //public SampleLogoURL: string = "./Images/ApplicationLogo/UnifreightLogo.jpg";
-    private _objectTableRulePMService: ObjectTableRulePMService = new ObjectTableRulePMService();
-    private _objectTableRuleFieldPMService: ObjectTableRuleFieldPMService = new ObjectTableRuleFieldPMService();
+    private _objectTableRulePMService: ObjectTableRulePMService =
+        new ObjectTableRulePMService();
+    private _objectTableRuleFieldPMService: ObjectTableRuleFieldPMService =
+        new ObjectTableRuleFieldPMService();
     private myInfrastructureDomainService: InfrastructureDomainService;
     //public _DWObjectFieldPMService: DWObjectFieldExtendedPMService;
     private sATInterfaceSettingPMService: SATInterfaceSettingPMService;
     private UserExtendedPMService: UserExtendedPMService;
     private generalDomainService: GeneralDomainService;
     private isLocalPrivateLable: boolean = false;
-    constructor(private logitudeApplicationService: LogitudeApplicationService, private loginService: LoginService, public IndexedDbService: IndexedDbService, private entityResourceService: EntityResourceService, private _applicationTimersManager: ApplicationTimersManager, public entityListService: EntityListService,
+    constructor(
+        private logitudeApplicationService: LogitudeApplicationService,
+        private loginService: LoginService,
+        public IndexedDbService: IndexedDbService,
+        private entityResourceService: EntityResourceService,
+        private _applicationTimersManager: ApplicationTimersManager,
+        public entityListService: EntityListService,
         private _userLastLoginPMService: UserLastLoginPMService
     ) {
-
-
-        this.DefultText = "test";
+        this.DefultText = 'test';
         this.IsProduction = SessionLocator.IsProduction;
         this.ShowLoginBusyIndicator = false;
         this.HideLoginForm = false;
@@ -102,17 +114,15 @@ export class LoginComponent implements OnInit {
         this.LoginFailed = false;
         this.LoginParams = new LoginParameters();
         this.HidePendingLoading = true;
-        var temp = window.sessionStorage.getItem("LogoURL");
-        var LogoCode = window.sessionStorage.getItem("LogoCode");
+        var temp = window.sessionStorage.getItem('LogoURL');
+        var LogoCode = window.sessionStorage.getItem('LogoCode');
         if (temp) {
             this.LogoURL = temp;
             this.SampleLogoURL = temp;
-        }
-        else if (LogoCode) {
+        } else if (LogoCode) {
             this.LogoURL = AppTool.GetEnvironmentLogo(LogoCode);
             this.SampleLogoURL = AppTool.GetEnvironmentLogo(LogoCode);
         }
-
 
         window.Statuses = [];
         window.Ports = [];
@@ -152,30 +162,45 @@ export class LoginComponent implements OnInit {
     idxdb: IDBOpenDBRequest;
     public authHeader;
     ngOnInit() {
-        let AmitalSSOAngular = this.getParameterByName("AmitalSSOAngular", window.location.href);
-        let amitaltoken = this.getParameterByName("token", window.location.href);
-        let amitaltenant = this.getParameterByName("tenant", window.location.href);
-        if (!AppTool.IsNullOrEmpty(AmitalSSOAngular) && !AppTool.IsNullOrEmpty(amitaltoken) && !AppTool.IsNullOrEmpty(amitaltenant)) {
+        let AmitalSSOAngular = this.getParameterByName(
+            'AmitalSSOAngular',
+            window.location.href
+        );
+        let amitaltoken = this.getParameterByName(
+            'token',
+            window.location.href
+        );
+        let amitaltenant = this.getParameterByName(
+            'tenant',
+            window.location.href
+        );
+        if (
+            !AppTool.IsNullOrEmpty(AmitalSSOAngular) &&
+            !AppTool.IsNullOrEmpty(amitaltoken) &&
+            !AppTool.IsNullOrEmpty(amitaltenant)
+        ) {
             let loginParameters: any = {};
             loginParameters.Tenant = amitaltenant;
             loginParameters.Token = amitaltoken;
-            this.loginService.PostAuthentication(loginParameters).subscribe((userData: any) => {
-
-                if (!userData.HasError) {
-                    userData.AmitalBrowserInUse = true;
-                    var data = JSON.stringify(userData);
-                    window.sessionStorage.setItem('userdata', data);
-                    SessionLocator.IsExternalParams = false;
-                    this.StartLoginProcess();
-                }
-            });
+            this.loginService
+                .PostAuthentication(loginParameters)
+                .subscribe((userData: any) => {
+                    if (!userData.HasError) {
+                        userData.AmitalBrowserInUse = true;
+                        var data = JSON.stringify(userData);
+                        window.sessionStorage.setItem('userdata', data);
+                        SessionLocator.IsExternalParams = false;
+                        this.StartLoginProcess();
+                    }
+                });
         } else {
             this.StartLoginProcess();
-        }     
+         }     
         
          // if (isDevMode())
         //     this.developerLogin();         
 
+  
 
     }
 
@@ -198,22 +223,24 @@ export class LoginComponent implements OnInit {
     IsShowLoginForm: boolean = false;
 
     StartLoginProcess() {
-
         var url = window.location.href;
  
-            if (url.indexOf('AmitalSSOAngular') < 1 && url.indexOf('localhost') > -1 && !AppTool.IsNullOrEmpty(url.split('?')[1])) {
-             if (url.indexOf('?Menu') == -1) {
+             if (url.indexOf('AmitalSSOAngular') < 1 && url.indexOf('localhost') > -1 && !AppTool.IsNullOrEmpty(url.split('?')[1])) {
+              if (url.indexOf('?Menu') == -1) {
                  this.isLocalPrivateLable = true;
                 let isDSV = url.indexOf('?D') > -1;
-                window.sessionStorage.setItem('userdata', url.split(isDSV ? '?D' : '?P')[1]);
+                window.sessionStorage.setItem(
+                    'userdata',
+                    url.split(isDSV ? '?D' : '?P')[1]
+                );
                 SessionLocator.IsExternalParams = false;
             }
  
         }
         if (url && url.indexOf('localhost') > -1 && !this.isLocalPrivateLable) {
-                 this.Email = "angular@fnarsoft.com";
+                  this.Email = "angular@fnarsoft.com";
                 this.Password = "1";
-                this.IsShowLoginForm = true;
+                 this.IsShowLoginForm = true;
             }
 
          
@@ -222,48 +249,57 @@ export class LoginComponent implements OnInit {
         this.authHeader.append('Accept', 'application/json');
         this.loginService.AuthHeader = this.authHeader;
         var isUseDefultLogin: boolean = false;
-        window.indexedDB.deleteDatabase("MyDatabase");
+        window.indexedDB.deleteDatabase('MyDatabase');
 
         var data = window.sessionStorage.getItem('userdata');
 
         if (SessionLocator.IsExternalParams) {
             if (SessionLocator.ExternalParams) {
                 if (SessionLocator.ExternalParams.Menu) {
-                    var menuName = SessionLocator.ExternalParams.Menu.toLocaleLowerCase();
-                    if (menuName == "logbox" || menuName == "dapp" || menuName == "protractor" || menuName == "preq" || menuName == "uid") {
-                        if (menuName == "preq" || menuName == "uid") {
-                            this.LoginCompleted.emit("IgnoreTerms");
+                    var menuName =
+                        SessionLocator.ExternalParams.Menu.toLocaleLowerCase();
+                    if (
+                        menuName == 'logbox' ||
+                        menuName == 'dapp' ||
+                        menuName == 'protractor' ||
+                        menuName == 'preq' ||
+                        menuName == 'uid'
+                    ) {
+                        if (menuName == 'preq' || menuName == 'uid') {
+                            this.LoginCompleted.emit('IgnoreTerms');
                             return;
                         }
                         isUseDefultLogin = true;
-                    } else if (SessionLocator.ExternalParams.OneTimePasswordId) {
+                    } else if (
+                        SessionLocator.ExternalParams.OneTimePasswordId
+                    ) {
                         this.HideLoginForm = true;
                         this.HideTenantForm = true;
                         this.ShowLoginBusyIndicator = true;
                         this.OneUsePasswordMethod();
-                    } else document.location.href = ServiceHelper.GetLogitudeURL() + "Login.aspx";
+                    } else
+                        document.location.href =
+                            ServiceHelper.GetLogitudeURL() + 'Login.aspx';
                 }
-            }
-            else {
-
-                document.location.href = ServiceHelper.GetLogitudeURL() + "Login.aspx";
+            } else {
+                document.location.href =
+                    ServiceHelper.GetLogitudeURL() + 'Login.aspx';
             }
         }
 
         if (!SessionLocator.IsExternalParams || isUseDefultLogin) {
             if (data) {
-
                 this.HideLoginForm = true;
                 this.HideTenantForm = true;
                 this.HidePendingLoading = true;
                 this.ShowLoginBusyIndicator = true;
-                data = this.isLocalPrivateLable ? decodeURIComponent(data) : data;
+                data = this.isLocalPrivateLable
+                    ? decodeURIComponent(data)
+                    : data;
                 var userData = JSON.parse(data);
                 this.StartLoading(userData);
             }
         }
-
-
 
         //this.idxdb = window.indexedDB.open("mydb", 1);
         //this.indexDB = new AngularIndexedDB("mydb", 2);
@@ -278,12 +314,12 @@ export class LoginComponent implements OnInit {
     }
     getParameterByName(name, url) {
         if (!url) url = window.location.href;
-        name = name.replace(/[\[\]]/g, "\\$&");
-        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        name = name.replace(/[\[\]]/g, '\\$&');
+        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
             results = regex.exec(url);
         if (!results) return null;
         if (!results[2]) return '';
-        return decodeURIComponent(results[2].replace(/\+/g, " "));
+        return decodeURIComponent(results[2].replace(/\+/g, ' '));
     }
     StartLoading(userData: any) {
         if (userData) {
@@ -296,22 +332,29 @@ export class LoginComponent implements OnInit {
             SessionInfo.Token = userData.Token;
             SessionInfo.DocumentDownloadToken = userData.DocumentDownloadToken;
             SessionInfo.SessionTimeout = userData.SessionTimeout;
-            SessionInfo.WebTokenExpirationWarningInMinutes = userData.WebTokenExpirationWarningInMinutes;
-            SessionInfo.WebTokenLifeTimeInMinutes = userData.WebTokenLifeTimeInMinutes;
+            SessionInfo.WebTokenExpirationWarningInMinutes =
+                userData.WebTokenExpirationWarningInMinutes;
+            SessionInfo.WebTokenLifeTimeInMinutes =
+                userData.WebTokenLifeTimeInMinutes;
             SessionInfo.KeepUserLoggedIn = userData.KeepUserLoggedIn;
             SessionInfo.LastLoginDateTime = userData.LastLoginDateTime;
             this.FillProtractorEmails();
 
-
-            AmitalGatewayUtil.Instance.AmitalBrowserInUse = userData.AmitalBrowserInUse;
+            AmitalGatewayUtil.Instance.AmitalBrowserInUse =
+                userData.AmitalBrowserInUse;
             this.authHeader.append('token', userData.Token);
 
             if (userData.TwoFactorkey) {
-                window.localStorage.setItem('TwoFactorkey', userData.TwoFactorkey);
+                window.localStorage.setItem(
+                    'TwoFactorkey',
+                    userData.TwoFactorkey
+                );
             }
 
             if (userData.CurrentTenant != null) {
-                SessionInfo.LoggedUserTenant = Number(userData.CurrentTenant + "");
+                SessionInfo.LoggedUserTenant = Number(
+                    userData.CurrentTenant + ''
+                );
             }
 
             if (SessionInfo.LoggedUserTenant != null) {
@@ -321,106 +364,160 @@ export class LoginComponent implements OnInit {
                 this.loginService.LoggedUserEmail = SessionInfo.LoggedUserEmail;
 
                 this.loginService.GetLoggedUser().subscribe((myResult: any) => {
-
-                    SessionLocator.UseMemoryCachedData =myResult.DisableCachedData;
+                    SessionLocator.UseMemoryCachedData =
+                        myResult.DisableCachedData;
 
                     var iGlobalDomainService = new GlobalDomainService();
 
-                    iGlobalDomainService.GetTenantManagementJS(SessionInfo.LoggedUserId).subscribe((myResponse: ServiceResponse) => {
-                        ObjectsUpdater.UpdateLoggedUserPM(myResult);
-                        ObjectsUpdater.UpdateTenantManagementJS(myResponse.Result);
+                    iGlobalDomainService
+                        .GetTenantManagementJS(SessionInfo.LoggedUserId)
+                        .subscribe((myResponse: ServiceResponse) => {
+                            ObjectsUpdater.UpdateLoggedUserPM(myResult);
+                            ObjectsUpdater.UpdateTenantManagementJS(
+                                myResponse.Result
+                            );
 
-                        SessionInfo.LoggedUserPM = myResult;
+                            SessionInfo.LoggedUserPM = myResult;
 
-                        if (ObjectsLocator.LoggedUserPM.ExpirationDate != null && DateTool.GetDateParts(ObjectsLocator.LoggedUserPM.ExpirationDate).DateTicks < DateTool.GetCurrentDateAsUtc().valueOf()) {
-                            SessionLocator.BlockType = "user";
-                        }
+                            if (
+                                ObjectsLocator.LoggedUserPM.ExpirationDate !=
+                                    null &&
+                                DateTool.GetDateParts(
+                                    ObjectsLocator.LoggedUserPM.ExpirationDate
+                                ).DateTicks <
+                                    DateTool.GetCurrentDateAsUtc().valueOf()
+                            ) {
+                                SessionLocator.BlockType = 'user';
+                            }
 
-                        //   else {
-                        this.CheckTenantBlocking(userData);
-                        //   }
-                    });
+                            //   else {
+                            this.CheckTenantBlocking(userData);
+                            //   }
+                        });
                 });
             }
 
             this.SetCToolAuthorizedUser(userData);
         }
-        window.sessionStorage.setItem("userdata", "");
+        window.sessionStorage.setItem('userdata', '');
     }
 
     SetCToolAuthorizedUser(userData: any) {
-        this.myInfrastructureDomainService.GetFeatureToggles().subscribe((featureTogglesResponse: ServiceResponse) => {
-            if (!featureTogglesResponse.HasError) {
-                var userTenant = Number(userData.CurrentTenant + "");
-                var ctoolFeatureToggle = featureTogglesResponse.Result
-                    .filter((f: any) => (f.TenantNumber == userTenant || (userTenant >= f.FromTenantNumber && userTenant <= f.ToTenantNumber)) && f.ToggleCode === "CTL")[0];
-                if (ctoolFeatureToggle) {
-                    const authenticateService = new AuthenticateService();
-                    if (authenticateService) {
-                        var logitudeAuthenticate = "logitudeAuthenticate";
-                        if (authenticateService.hasOwnProperty(logitudeAuthenticate)) {
-                            authenticateService[logitudeAuthenticate]({ Tenant: userTenant, Token: userData.Token }).then((data: any) => {
-                                if (data !== null && data.User !== null && data.Token !== null) {
-                                    AuthorizedUser.setAuthorizedUser(data);
-                                    CToolSessionInfo.IsUserAuthorized = true;
-                                    CToolSessionInfo.AuthorizedUserToken = data.Token;
-                                    CToolSessionInfo.IsLogitudeAuthentication = true;
-                                    this.SetCToolLogitudeTokens();
-                                }
-                            });
+        this.myInfrastructureDomainService
+            .GetFeatureToggles()
+            .subscribe((featureTogglesResponse: ServiceResponse) => {
+                if (!featureTogglesResponse.HasError) {
+                    var userTenant = Number(userData.CurrentTenant + '');
+                    var ctoolFeatureToggle =
+                        featureTogglesResponse.Result.filter(
+                            (f: any) =>
+                                (f.TenantNumber == userTenant ||
+                                    (userTenant >= f.FromTenantNumber &&
+                                        userTenant <= f.ToTenantNumber)) &&
+                                f.ToggleCode === 'CTL'
+                        )[0];
+                    if (ctoolFeatureToggle) {
+                        const authenticateService = new AuthenticateService();
+                        if (authenticateService) {
+                            var logitudeAuthenticate = 'logitudeAuthenticate';
+                            if (
+                                authenticateService.hasOwnProperty(
+                                    logitudeAuthenticate
+                                )
+                            ) {
+                                authenticateService[logitudeAuthenticate]({
+                                    Tenant: userTenant,
+                                    Token: userData.Token,
+                                }).then((data: any) => {
+                                    if (
+                                        data !== null &&
+                                        data.User !== null &&
+                                        data.Token !== null
+                                    ) {
+                                        AuthorizedUser.setAuthorizedUser(data);
+                                        CToolSessionInfo.IsUserAuthorized =
+                                            true;
+                                        CToolSessionInfo.AuthorizedUserToken =
+                                            data.Token;
+                                        CToolSessionInfo.IsLogitudeAuthentication =
+                                            true;
+                                        this.SetCToolLogitudeTokens();
+                                    }
+                                });
+                            }
                         }
                     }
                 }
-            }
-        });
+            });
     }
 
     SetCToolLogitudeTokens() {
         const logitudeTokensService = new LogitudeTokensService();
         if (logitudeTokensService) {
-            var getTokens = "getTokens";
+            var getTokens = 'getTokens';
             if (logitudeTokensService.hasOwnProperty(getTokens)) {
-                logitudeTokensService[getTokens]().then((logitudeTokens: any) => {
-                    if (logitudeTokens) {
-                        let logitudeTokensJson = JSON.stringify(logitudeTokens);
-                        CToolSessionInfo.LogitudeTokensJson = logitudeTokensJson;
+                logitudeTokensService[getTokens]().then(
+                    (logitudeTokens: any) => {
+                        if (logitudeTokens) {
+                            let logitudeTokensJson =
+                                JSON.stringify(logitudeTokens);
+                            CToolSessionInfo.LogitudeTokensJson =
+                                logitudeTokensJson;
+                        }
                     }
-                });
+                );
             }
         }
     }
 
     FillProtractorEmails() {
-        SessionLocator.ProtractorEmails.push("razantest@protractor.com".toLowerCase());
-        SessionLocator.ProtractorEmails.push("protractor@test.com".toLowerCase());
-        SessionLocator.ProtractorEmails.push("ahmadb@logbox.com".toLowerCase());
-        SessionLocator.ProtractorEmails.push("ahmadb@test.com".toLowerCase());
-        SessionLocator.ProtractorEmails.push("raghad@protractor.com".toLowerCase());
-        SessionLocator.ProtractorEmails.push("sgautomation@pro.com".toLowerCase());
-        SessionLocator.ProtractorEmails.push("sumaya@cloud.com".toLowerCase());
-        SessionLocator.ProtractorEmails.push("sumaya@automation.com".toLowerCase());
-        SessionLocator.ProtractorEmails.push("sg1209@test.com".toLowerCase());
-        SessionLocator.ProtractorEmails.push("lana3@test.com".toLowerCase());
-        SessionLocator.ProtractorEmails.push("protractor2@test.com".toLowerCase());
-
+        SessionLocator.ProtractorEmails.push(
+            'razantest@protractor.com'.toLowerCase()
+        );
+        SessionLocator.ProtractorEmails.push(
+            'protractor@test.com'.toLowerCase()
+        );
+        SessionLocator.ProtractorEmails.push('ahmadb@logbox.com'.toLowerCase());
+        SessionLocator.ProtractorEmails.push('ahmadb@test.com'.toLowerCase());
+        SessionLocator.ProtractorEmails.push(
+            'raghad@protractor.com'.toLowerCase()
+        );
+        SessionLocator.ProtractorEmails.push(
+            'sgautomation@pro.com'.toLowerCase()
+        );
+        SessionLocator.ProtractorEmails.push('sumaya@cloud.com'.toLowerCase());
+        SessionLocator.ProtractorEmails.push(
+            'sumaya@automation.com'.toLowerCase()
+        );
+        SessionLocator.ProtractorEmails.push('sg1209@test.com'.toLowerCase());
+        SessionLocator.ProtractorEmails.push('lana3@test.com'.toLowerCase());
+        SessionLocator.ProtractorEmails.push(
+            'protractor2@test.com'.toLowerCase()
+        );
     }
 
     OneUsePasswordMethod() {
         this.loginService.GetOneUsePassword().subscribe((userData: any) => {
-
-            if ((userData && (userData.HasError == true || userData.ExceptionMessage)) || !userData) {
-                var message = "Can't use this key (" + SessionLocator.ExternalParams.OneTimePasswordId + ") again because you used it before ";
-                if (userData && userData.ExceptionMessage) message = userData.ExceptionMessage;
+            if (
+                (userData &&
+                    (userData.HasError == true || userData.ExceptionMessage)) ||
+                !userData
+            ) {
+                var message =
+                    "Can't use this key (" +
+                    SessionLocator.ExternalParams.OneTimePasswordId +
+                    ') again because you used it before ';
+                if (userData && userData.ExceptionMessage)
+                    message = userData.ExceptionMessage;
                 alert(message);
-                document.location.href = ServiceHelper.GetLogitudeURL() + "Login.aspx";
+                document.location.href =
+                    ServiceHelper.GetLogitudeURL() + 'Login.aspx';
                 SessionLocator.ExternalParams.OneTimePasswordId = null;
-            }
-            else {
+            } else {
                 this.StartLoading(userData);
             }
             this.HidePendingLoading = true;
         });
-
     }
 
     LoginClicked() {
@@ -429,14 +526,13 @@ export class LoginComponent implements OnInit {
                 Email: this.Email,
                 Password: this.Password,
                 ByToken: false,
-                CardId: "",
-                CardType: "",
+                CardId: '',
+                CardType: '',
                 IsMobileLogin: false,
                 IsUser: true,
                 GetToken: true,
                 IsAngularLogin: true,
-                ClientType: "Web",
-
+                ClientType: 'Web',
             };
 
             this.HidePendingLoading = false;
@@ -444,65 +540,57 @@ export class LoginComponent implements OnInit {
         }
     }
 
-
-
     ShowTenantList: boolean = false;
     PostUserValidation(loginParameters) {
-        this.loginService.PostUserValidation(loginParameters).subscribe((userData: any) => {
-
-            if ((userData && (userData.HasError == true || userData.ExceptionMessage)) || !userData) {
-                this.LoginFailed = true;
-                this.HidePendingLoading = true;
-
-                if (userData) alert(userData.ExceptionMessage);
-
-            }
-
-            else {
-                this.TenantList = userData.CompanyLogins;
-                this.HideLoginForm = true;
-                this.HideTenantForm = false;
-                this.HidePendingLoading = false;
-                this.LoginParams = loginParameters;
-
-                if (this.TenantList.length === 1) {
-                    this.HideTenantForm = true;
-                    this.Tenant = this.TenantList[0].Tenant;
-                    this.loginService.CurrentTenant = this.Tenant;
-
-                    var f = { valid: true };
-                    this.ChooseTenant(f, null);
-                }
-                else {
-                    var i = 0;
-                    this.TenantList.forEach((item) => {
-                        i += 1;
-                        item.Id = i;
-
-                    });
-
-                    this.SelectedCompany = this.TenantList[0];
-                    this.ShowTenantList = true;
+        this.loginService
+            .PostUserValidation(loginParameters)
+            .subscribe((userData: any) => {
+                if (
+                    (userData &&
+                        (userData.HasError == true ||
+                            userData.ExceptionMessage)) ||
+                    !userData
+                ) {
+                    this.LoginFailed = true;
                     this.HidePendingLoading = true;
-                    this.HideTenantForm = true;
 
+                    if (userData) alert(userData.ExceptionMessage);
+                } else {
+                    this.TenantList = userData.CompanyLogins;
+                    this.HideLoginForm = true;
+                    this.HideTenantForm = false;
+                    this.HidePendingLoading = false;
+                    this.LoginParams = loginParameters;
 
+                    if (this.TenantList.length === 1) {
+                        this.HideTenantForm = true;
+                        this.Tenant = this.TenantList[0].Tenant;
+                        this.loginService.CurrentTenant = this.Tenant;
 
+                        var f = { valid: true };
+                        this.ChooseTenant(f, null);
+                    } else {
+                        var i = 0;
+                        this.TenantList.forEach((item) => {
+                            i += 1;
+                            item.Id = i;
+                        });
 
+                        this.SelectedCompany = this.TenantList[0];
+                        this.ShowTenantList = true;
+                        this.HidePendingLoading = true;
+                        this.HideTenantForm = true;
+                    }
                 }
-            }
 
-            this.HidePendingLoading = true;
-        });
+                this.HidePendingLoading = true;
+            });
     }
     SelectedCompany: any;
     TenantListChangeSelected(value) {
-        this.SelectedCompany = this.TenantList.filter(d => d.Id == value)[0];
-
-
+        this.SelectedCompany = this.TenantList.filter((d) => d.Id == value)[0];
     }
     ContinueClicked() {
-
         if (this.SelectedCompany) {
             this.Tenant = this.SelectedCompany.Tenant;
             this.LoginParams = {
@@ -515,7 +603,7 @@ export class LoginComponent implements OnInit {
                 IsUser: this.SelectedCompany.IsUser,
                 GetToken: true,
                 IsAngularLogin: true,
-                ClientType: "Web",
+                ClientType: 'Web',
             };
 
             this.loginService.CurrentTenant = this.Tenant;
@@ -537,418 +625,567 @@ export class LoginComponent implements OnInit {
     public UserMobileNumber: string;
     public LoggedUserData: any = null;
     PostLoginData() {
-        this.loginService.PostLoginData(this.LoginParams).subscribe((userData: any) => {
-            if (userData.TwoFactorkey) {
-                window.localStorage.setItem('TwoFactorkey', userData.TwoFactorkey);
-            }
-            if (!userData.IsTwoFactorAuthenticationRequired || userData.IsTwoFactorAuthenticationRequired == false) {
-                this.StartLoading(userData);
-            } else {
+        this.loginService
+            .PostLoginData(this.LoginParams)
+            .subscribe((userData: any) => {
+                if (userData.TwoFactorkey) {
+                    window.localStorage.setItem(
+                        'TwoFactorkey',
+                        userData.TwoFactorkey
+                    );
+                }
+                if (
+                    !userData.IsTwoFactorAuthenticationRequired ||
+                    userData.IsTwoFactorAuthenticationRequired == false
+                ) {
+                    this.StartLoading(userData);
+                } else {
+                    this.LoggedUserData = userData;
+                    this.UserMobileNumber = userData.UserMobileNumber;
+                    this.ShowTwoFactorAuthenScreen = true;
 
-                this.LoggedUserData = userData;
-                this.UserMobileNumber = userData.UserMobileNumber;
-                this.ShowTwoFactorAuthenScreen = true;
-
-                //alert('Two factor authentication');
-            }
-        });
+                    //alert('Two factor authentication');
+                }
+            });
     }
 
     VerifyClicked() {
         if (!AppTool.IsNullOrEmpty(this.VerficationCode)) {
             this.HidePendingLoading = false;
-            this.loginService.PostAuthenticationDeviceVerificationCode(this.LoggedUserData.TwoFactorkey, this.VerficationCode, Number(this.LoggedUserData.CurrentTenant + "")).subscribe((res: any) => {
-                this.HidePendingLoading = true;
-                if (res == true) {
-                    this.ShowTwoFactorAuthenScreen = false;
-                    //this.StartLoading(this.LoggedUserData);
-                    this.PostLoginData();
-                }
-                else {
-                    this.InvalidVerificationCode = true;
-                }
-            });
+            this.loginService
+                .PostAuthenticationDeviceVerificationCode(
+                    this.LoggedUserData.TwoFactorkey,
+                    this.VerficationCode,
+                    Number(this.LoggedUserData.CurrentTenant + '')
+                )
+                .subscribe((res: any) => {
+                    this.HidePendingLoading = true;
+                    if (res == true) {
+                        this.ShowTwoFactorAuthenScreen = false;
+                        //this.StartLoading(this.LoggedUserData);
+                        this.PostLoginData();
+                    } else {
+                        this.InvalidVerificationCode = true;
+                    }
+                });
         }
     }
     ResendVerificationCodeClicked() {
         this.HidePendingLoading = false;
-        this.loginService.PostResendAuthenticationDeviceVerificationCode(this.LoggedUserData.TwoFactorkey, this.LoggedUserData.Id, Number(this.LoggedUserData.CurrentTenant + "")).subscribe((res: any) => {
-            this.HidePendingLoading = true;
-            if (res) {
-            }
-            //if (res == true) {
-            //    this.ShowTwoFactorAuthenScreen = false;
-            //    this.StartLoading(this.LoggedUserData);
-            //}
-            //else {
-            //    this.InvalidVerificationCode = true;
-            //}
-        });
-
+        this.loginService
+            .PostResendAuthenticationDeviceVerificationCode(
+                this.LoggedUserData.TwoFactorkey,
+                this.LoggedUserData.Id,
+                Number(this.LoggedUserData.CurrentTenant + '')
+            )
+            .subscribe((res: any) => {
+                this.HidePendingLoading = true;
+                if (res) {
+                }
+                //if (res == true) {
+                //    this.ShowTwoFactorAuthenScreen = false;
+                //    this.StartLoading(this.LoggedUserData);
+                //}
+                //else {
+                //    this.InvalidVerificationCode = true;
+                //}
+            });
     }
     GlobalSettings: any;
     LoadClosedTablesToWindow(CurrentTenant: number) {
+        this.IndexedDbService.InitializeIndexedDB().subscribe(
+            (response: any) => {
+                InfraSettings.IndexedDbService = IndexedDbService;
 
-        this.IndexedDbService.InitializeIndexedDB().subscribe((response: any) => {
+                this.loginService.AuthHeader = this.authHeader;
+                this.loginService.CurrentTenant = CurrentTenant;
+                this.loginService.LoggedUserId = SessionInfo.LoggedUserId;
+                this.loginService.LoggedUserEmail = SessionInfo.LoggedUserEmail;
 
-            InfraSettings.IndexedDbService = IndexedDbService;
+                // UserPM
+                this.loginService.GetLoggedUser().subscribe((myResult: any) => {
+                    var myUserPMService = new UserPMService();
+                    SessionInfo.LoggedUserPM =
+                        myUserPMService.MapJsonToEntityPM(myResult);
 
-            this.loginService.AuthHeader = this.authHeader;
-            this.loginService.CurrentTenant = CurrentTenant;
-            this.loginService.LoggedUserId = SessionInfo.LoggedUserId;
-            this.loginService.LoggedUserEmail = SessionInfo.LoggedUserEmail;
-
-            // UserPM
-            this.loginService.GetLoggedUser().subscribe((myResult: any) => {
-                var myUserPMService = new UserPMService();
-                SessionInfo.LoggedUserPM = myUserPMService.MapJsonToEntityPM(myResult);
-
-                if (SessionInfo.LoggedUserPM) {
-                    this.loginService.LoggedUserId = SessionInfo.LoggedUserPM.Id;
-                    SessionInfo.LoggedUserId = SessionInfo.LoggedUserPM.Id;
-                }
-
-                this.IncreaseProgressBar();
-                //1
-
-                // TenantPM
-                this.loginService.GetLoggedTenant().subscribe((myResult: any) => {
-                    var myTenantPMService = new TenantPMService();
-                    InfraSettings.TenantPM = myTenantPMService.MapJsonToEntityPM(myResult);
-                    this.GetFeatureToggles();
-                    this.IncreaseProgressBar();
-                    //2
-                });
-
-                this.loginService.GetGlobalSetting().subscribe((myResult: any) => {
-                    this.GlobalSettings = myResult;
-                    ObjectsLocator.UpdateGlobalSetting(this.GlobalSettings);
-
-                    CachedDataManager.CheckSystemMetadataLastUpdate().subscribe((response: any) => {
-                        this.entityResourceService.getEntityResourceByTableName("General", 0).subscribe((response: any) => {
-                            if (ObjectsLocator.GlobalSetting.WorkEnvironment == "customs") {
-                                this.entityResourceService.getEntityResourceByTableName("CustomsGeneral", 0).subscribe((response: any) => {
-                                    this.generalTableResourcesIsLoaded = true
-                                    this.IncreaseProgressBar("General Resources");
-                                    //26
-                                });
-                            }
-                            else {
-                                this.generalTableResourcesIsLoaded = true
-                                this.IncreaseProgressBar("General Resources");
-                            }
-
-                        });
-
-                    });
-
-                    this.IncreaseProgressBar();
-                    Environment.SetFavIconAndTitle();
-                    //20
-                });
-
-
-
-                this.generalDomainService.GetObjectFieldModificationForLoggedTenant().subscribe((response: ServiceResponse) => {
-
-                    if (!response.HasError) {
-                        window.ObjectFieldModifications = response.Result;
+                    if (SessionInfo.LoggedUserPM) {
+                        this.loginService.LoggedUserId =
+                            SessionInfo.LoggedUserPM.Id;
+                        SessionInfo.LoggedUserId = SessionInfo.LoggedUserPM.Id;
                     }
-                    this.IncreaseProgressBar("ObjectField Modifications");
-                    //26
 
-                });
-
-                // LastFilters
-                this.loginService.GetLastFilters().subscribe((myResult: any) => {
-                    LastFilterClass.MapJSON(myResult);
                     this.IncreaseProgressBar();
-                    //3
-                });
+                    //1
 
-                // TenantManagementPM
-                var iGlobalDomainService = new GlobalDomainService();
-                iGlobalDomainService.GetTenantManagementJS(SessionInfo.LoggedUserId).subscribe((myResponse: ServiceResponse) => {
-                    ObjectsUpdater.UpdateTenantManagementJS(myResponse.Result);
-                    this.IncreaseProgressBar();
-                    //4
-
-                    this.loginService.GetPrivateLableById(SessionLocator.TenantManagementJS.PrivateLabelId).subscribe((Result: any) => {
-                        ObjectsLocator.UpdatePrivateLableSettings(Result);
-                        SessionLocator.PrivateLableSettings = Result;
-                        this.IncreaseProgressBar();
-                        Environment.SetFavIconAndTitle();
-                        //5
-                    });
-                });
-
-                //this.loginService.GetTenantManagement().subscribe((myResult:any) => {
-
-                //});
-
-                this.myInfrastructureDomainService.GetAllowedFeaturesForLoggedUser().subscribe((myResponse: ServiceResponse) => {
-                    this.IncreaseProgressBar();
-                    //6
-
-                    // Ayman: please don't modify this (24)
-                    if (FeatureLocator.HasFeaturePermession("CreditLimitSetting", "READ") && ObjectsLocator.GlobalSetting && ObjectsLocator.GlobalSetting.WorkEnvironment != 'customs') {
-                        var myCreditLimitSettingPMService = new CreditLimitSettingPMService();
-                        myCreditLimitSettingPMService.get(CurrentTenant + "").subscribe((myResponse: ServiceResponse) => {
-                            ObjectsLocator.UpdateCreditLimitSettingPM(myResponse.Result);
+                    // TenantPM
+                    this.loginService
+                        .GetLoggedTenant()
+                        .subscribe((myResult: any) => {
+                            var myTenantPMService = new TenantPMService();
+                            InfraSettings.TenantPM =
+                                myTenantPMService.MapJsonToEntityPM(myResult);
+                            this.GetFeatureToggles();
                             this.IncreaseProgressBar();
-                            //24
+                            //2
                         });
-                    }
 
-                    else {
+                    this.loginService
+                        .GetGlobalSetting()
+                        .subscribe((myResult: any) => {
+                            this.GlobalSettings = myResult;
+                            ObjectsLocator.UpdateGlobalSetting(
+                                this.GlobalSettings
+                            );
+
+                            CachedDataManager.CheckSystemMetadataLastUpdate().subscribe(
+                                (response: any) => {
+                                    this.entityResourceService
+                                        .getEntityResourceByTableName(
+                                            'General',
+                                            0
+                                        )
+                                        .subscribe((response: any) => {
+                                            if (
+                                                ObjectsLocator.GlobalSetting
+                                                    .WorkEnvironment ==
+                                                'customs'
+                                            ) {
+                                                this.entityResourceService
+                                                    .getEntityResourceByTableName(
+                                                        'CustomsGeneral',
+                                                        0
+                                                    )
+                                                    .subscribe(
+                                                        (response: any) => {
+                                                            this.generalTableResourcesIsLoaded =
+                                                                true;
+                                                            this.IncreaseProgressBar(
+                                                                'General Resources'
+                                                            );
+                                                            //26
+                                                        }
+                                                    );
+                                            } else {
+                                                this.generalTableResourcesIsLoaded =
+                                                    true;
+                                                this.IncreaseProgressBar(
+                                                    'General Resources'
+                                                );
+                                            }
+                                        });
+                                }
+                            );
+
+                            this.IncreaseProgressBar();
+                            Environment.SetFavIconAndTitle();
+                            //20
+                        });
+
+                    this.generalDomainService
+                        .GetObjectFieldModificationForLoggedTenant()
+                        .subscribe((response: ServiceResponse) => {
+                            if (!response.HasError) {
+                                window.ObjectFieldModifications =
+                                    response.Result;
+                            }
+                            this.IncreaseProgressBar(
+                                'ObjectField Modifications'
+                            );
+                            //26
+                        });
+
+                    // LastFilters
+                    this.loginService
+                        .GetLastFilters()
+                        .subscribe((myResult: any) => {
+                            LastFilterClass.MapJSON(myResult);
+                            this.IncreaseProgressBar();
+                            //3
+                        });
+
+                    // TenantManagementPM
+                    var iGlobalDomainService = new GlobalDomainService();
+                    iGlobalDomainService
+                        .GetTenantManagementJS(SessionInfo.LoggedUserId)
+                        .subscribe((myResponse: ServiceResponse) => {
+                            ObjectsUpdater.UpdateTenantManagementJS(
+                                myResponse.Result
+                            );
+                            this.IncreaseProgressBar();
+                            //4
+
+                            this.loginService
+                                .GetPrivateLableById(
+                                    SessionLocator.TenantManagementJS
+                                        .PrivateLabelId
+                                )
+                                .subscribe((Result: any) => {
+                                    ObjectsLocator.UpdatePrivateLableSettings(
+                                        Result
+                                    );
+                                    SessionLocator.PrivateLableSettings =
+                                        Result;
+                                    this.IncreaseProgressBar();
+                                    Environment.SetFavIconAndTitle();
+                                    //5
+                                });
+                        });
+
+                    //this.loginService.GetTenantManagement().subscribe((myResult:any) => {
+
+                    //});
+
+                    this.myInfrastructureDomainService
+                        .GetAllowedFeaturesForLoggedUser()
+                        .subscribe((myResponse: ServiceResponse) => {
+                            this.IncreaseProgressBar();
+                            //6
+
+                            // Ayman: please don't modify this (24)
+                            if (
+                                FeatureLocator.HasFeaturePermession(
+                                    'CreditLimitSetting',
+                                    'READ'
+                                ) &&
+                                ObjectsLocator.GlobalSetting &&
+                                ObjectsLocator.GlobalSetting.WorkEnvironment !=
+                                    'customs'
+                            ) {
+                                var myCreditLimitSettingPMService =
+                                    new CreditLimitSettingPMService();
+                                myCreditLimitSettingPMService
+                                    .get(CurrentTenant + '')
+                                    .subscribe(
+                                        (myResponse: ServiceResponse) => {
+                                            ObjectsLocator.UpdateCreditLimitSettingPM(
+                                                myResponse.Result
+                                            );
+                                            this.IncreaseProgressBar();
+                                            //24
+                                        }
+                                    );
+                            } else {
+                                this.IncreaseProgressBar();
+                                //24
+                            }
+                        });
+
+                    this.loginService
+                        .GetQueries()
+                        .subscribe((myResult: any) => {
+                            window.Queries = myResult;
+                            this.IncreaseProgressBar();
+                            //7
+                        });
+
+                    this.loginService
+                        .GetStatuses()
+                        .subscribe((myResult: any) => {
+                            window.Statuses = myResult;
+                            this.IncreaseProgressBar();
+                            //8
+                        });
+
+                    this.loginService
+                        .GetPreDefinedFilters()
+                        .subscribe((myResult: any) => {
+                            window.PreDefinedFilters = myResult;
+                            this.IncreaseProgressBar();
+                            //9
+                        });
+
+                    this.loginService
+                        .GetTenantTranslations()
+                        .subscribe((myResult: any) => {
+                            window.TenantTranslations = myResult;
+                            this.IncreaseProgressBar();
+                            //10
+                        });
+
+                    this.loginService
+                        .GetTransportModes()
+                        .subscribe((myResult: any) => {
+                            window.TransportModes = myResult;
+                            this.IncreaseProgressBar();
+                            //11
+                        });
+
+                    this.loginService
+                        .GetDirections()
+                        .subscribe((myResult: any) => {
+                            window.Directions = myResult;
+                            this.IncreaseProgressBar();
+                            //12
+                        });
+
+                    this.loginService
+                        .GetMenusTables()
+                        .subscribe((myResult: any) => {
+                            window.MenusTables = myResult;
+                            this.IncreaseProgressBar();
+                            //13
+                        });
+
+                    this.loginService
+                        .GetObjectTables()
+                        .subscribe((myResult: any) => {
+                            window.ObjectTables = myResult;
+                            this.IncreaseProgressBar();
+                            //14
+                        });
+
+                    this.loginService
+                        .GetScreens()
+                        .subscribe((myResult: any) => {
+                            window.Screens = myResult;
+                            this.IncreaseProgressBar();
+                            //15
+                        });
+
+                    this.loginService
+                        .GetScreenFields()
+                        .subscribe((myResult: any) => {
+                            window.ScreenFields = myResult;
+                            this.IncreaseProgressBar();
+                            //16
+                        });
+
+                    this.loginService
+                        .GetObjectTableTabs()
+                        .subscribe((myResult: any) => {
+                            window.ObjectTableTabs = myResult;
+                            this.IncreaseProgressBar();
+                            //17
+                        });
+
+                    this.loginService
+                        .GetAccountingSetting()
+                        .subscribe((myResult: any) => {
+                            var myAccountingSettingPM: any = null;
+
+                            if (myResult) {
+                                var myAccountingSettingPMService =
+                                    new AccountingSettingPMService();
+                                myAccountingSettingPM =
+                                    myAccountingSettingPMService.MapJsonToEntityPM(
+                                        myResult
+                                    );
+                            }
+
+                            ObjectsUpdater.UpdateAccountingSettingPM(
+                                myAccountingSettingPM
+                            );
+
+                            this.IncreaseProgressBar();
+                            //18
+
+                            var myAccountingSystemCode = null;
+                            if (ObjectsLocator.AccountingSettingPM) {
+                                myAccountingSystemCode =
+                                    ObjectsLocator.AccountingSettingPM
+                                        .AccountingSystemCode;
+
+                                if (
+                                    ObjectsLocator.AccountingSettingPM
+                                        .EnableMultiPercentageVATTypes
+                                ) {
+                                    var myCommonDomain =
+                                        new CommonDomainService();
+                                    myCommonDomain
+                                        .GetAllVatTypesGroups()
+                                        .subscribe(
+                                            (myResponse: ServiceResponse) => {
+                                                if (!myResponse.HasError) {
+                                                    SessionLocator.AllVatTypesGroups =
+                                                        myResponse.Result;
+                                                }
+                                            }
+                                        );
+                                }
+                            }
+
+                            this.loginService
+                                .GetAccountingSystem(myAccountingSystemCode)
+                                .subscribe((myResult2) => {
+                                    SessionLocator.AccountingSystemPM =
+                                        myResult2;
+                                    this.IncreaseProgressBar();
+                                    //19
+                                });
+                        });
+
+                    this.loginService
+                        .GetCustomsInterfaceSetting()
+                        .subscribe((myResult: any) => {
+                            if (myResult) {
+                                var myCustomsInterfaceSettingPMService =
+                                    new CustomsInterfaceSettingPMService();
+                                ObjectsUpdater.UpdateCustomsInterfaceSettingPM(
+                                    myCustomsInterfaceSettingPMService.MapJsonToEntityPM(
+                                        myResult
+                                    )
+                                );
+                            }
+
+                            this.IncreaseProgressBar();
+                        });
+
+                    this.loginService
+                        .GetSharedLogisticsSetting()
+                        .subscribe((myResult: any) => {
+                            if (myResult) {
+                                var mySharedLogisticsSettingPMService =
+                                    new SharedLogisticsSettingPMService();
+                                ObjectsUpdater.UpdateSharedLogisticsSettingPM(
+                                    mySharedLogisticsSettingPMService.MapJsonToEntityPM(
+                                        myResult
+                                    )
+                                );
+                            }
+
+                            this.IncreaseProgressBar();
+                        });
+
+                    this.loginService
+                        .GetTenantSetting()
+                        .subscribe((myResult: any) => {
+                            SessionLocator.TenantSettings = myResult;
+                            this.IncreaseProgressBar();
+                            //21
+                        });
+
+                    this.loginService.GetTips().subscribe((myResult: any) => {
+                        window.Tips = myResult;
                         this.IncreaseProgressBar();
-                        //24
-                    }
-                });
+                        //22
+                    });
 
-                this.loginService.GetQueries().subscribe((myResult: any) => {
-                    window.Queries = myResult;
-                    this.IncreaseProgressBar();
-                    //7
-                });
+                    this.loginService
+                        .GetTipsVisibilities()
+                        .subscribe((myResult: any) => {
+                            window.TipsVisibilities = myResult;
+                            this.IncreaseProgressBar();
+                            //23
+                        });
 
-                this.loginService.GetStatuses().subscribe((myResult: any) => {
-                    window.Statuses = myResult;
-                    this.IncreaseProgressBar();
-                    //8
-                });
+                    if (!SessionLocator.UseCachedData) {
+                        this.loginService
+                            .GetObjectFields()
+                            .subscribe((myResult: any) => {
+                                if (!SessionLocator.UseCachedData) {
+                                    window.ObjectFields = myResult;
+                                }
 
-                this.loginService.GetPreDefinedFilters().subscribe((myResult: any) => {
-                    window.PreDefinedFilters = myResult;
-                    this.IncreaseProgressBar();
-                    //9
-                });
+                                this.IncreaseProgressBar();
+                            });
 
-                this.loginService.GetTenantTranslations().subscribe((myResult: any) => {
-                    window.TenantTranslations = myResult;
-                    this.IncreaseProgressBar();
-                    //10
-                });
+                        this.loginService
+                            .GetTextCodesTranslations()
+                            .subscribe((myResult: any) => {
+                                if (!SessionLocator.UseCachedData) {
+                                    window.TextCodesTranslations = myResult;
+                                }
 
-                this.loginService.GetTransportModes().subscribe((myResult: any) => {
-                    window.TransportModes = myResult;
-                    this.IncreaseProgressBar();
-                    //11
-                });
-
-                this.loginService.GetDirections().subscribe((myResult: any) => {
-                    window.Directions = myResult;
-                    this.IncreaseProgressBar();
-                    //12
-                });
-
-                this.loginService.GetMenusTables().subscribe((myResult: any) => {
-                    window.MenusTables = myResult;
-                    this.IncreaseProgressBar();
-                    //13
-                });
-
-                this.loginService.GetObjectTables().subscribe((myResult: any) => {
-                    window.ObjectTables = myResult;
-                    this.IncreaseProgressBar();
-                    //14
-                });
-
-                this.loginService.GetScreens().subscribe((myResult: any) => {
-                    window.Screens = myResult;
-                    this.IncreaseProgressBar();
-                    //15
-                });
-
-                this.loginService.GetScreenFields().subscribe((myResult: any) => {
-                    window.ScreenFields = myResult;
-                    this.IncreaseProgressBar();
-                    //16
-                });
-
-                this.loginService.GetObjectTableTabs().subscribe((myResult: any) => {
-                    window.ObjectTableTabs = myResult;
-                    this.IncreaseProgressBar();
-                    //17
-                });
-
-                this.loginService.GetAccountingSetting().subscribe((myResult: any) => {
-                    var myAccountingSettingPM: any = null;
-
-                    if (myResult) {
-                        var myAccountingSettingPMService = new AccountingSettingPMService();
-                        myAccountingSettingPM = myAccountingSettingPMService.MapJsonToEntityPM(myResult);
-                    }
-
-                    ObjectsUpdater.UpdateAccountingSettingPM(myAccountingSettingPM);
-
-                    this.IncreaseProgressBar();
-                    //18
-
-                    var myAccountingSystemCode = null;
-                    if (ObjectsLocator.AccountingSettingPM) {
-                        myAccountingSystemCode = ObjectsLocator.AccountingSettingPM.AccountingSystemCode;
-
-                        if (ObjectsLocator.AccountingSettingPM.EnableMultiPercentageVATTypes) {
-                            var myCommonDomain = new CommonDomainService();
-                            myCommonDomain.GetAllVatTypesGroups().subscribe((myResponse: ServiceResponse) => {
-                                if (!myResponse.HasError) {
-                                    SessionLocator.AllVatTypesGroups = myResponse.Result;
+                                window.TranslationsCache = [];
+                                this.IncreaseProgressBar();
+                            });
+                    } else {
+                        this.loginService
+                            .GetTenantTextCode()
+                            .subscribe((myResult: any) => {
+                                if (myResult) {
+                                    window.TextCodes =
+                                        window.TextCodes.concat(myResult);
+                                    this.IncreaseProgressBar();
+                                    //25
                                 }
                             });
-                        }
                     }
 
-                    this.loginService.GetAccountingSystem(myAccountingSystemCode).subscribe(myResult2 => {
-                        SessionLocator.AccountingSystemPM = myResult2;
-                        this.IncreaseProgressBar();
-                        //19
-                    });
+                    //CachedDataManager.CheckSystemMetadataLastUpdate().subscribe((response:any) => {
+                    //    this.entityResourceService.getEntityResourceByTableName("General", 0).subscribe((response:any) => {
+                    //        this.IncreaseProgressBar();
+                    //        //26
+                    //    });
+                    //});
                 });
+            }
+        );
 
-                this.loginService.GetCustomsInterfaceSetting().subscribe((myResult: any) => {
-                    if (myResult) {
-                        var myCustomsInterfaceSettingPMService = new CustomsInterfaceSettingPMService();
-                        ObjectsUpdater.UpdateCustomsInterfaceSettingPM(myCustomsInterfaceSettingPMService.MapJsonToEntityPM(myResult));
-                    }
-
-                    this.IncreaseProgressBar();
-                });
-
-                this.loginService.GetSharedLogisticsSetting().subscribe((myResult: any) => {
-                    if (myResult) {
-                        var mySharedLogisticsSettingPMService = new SharedLogisticsSettingPMService();
-                        ObjectsUpdater.UpdateSharedLogisticsSettingPM(mySharedLogisticsSettingPMService.MapJsonToEntityPM(myResult));
-                    }
-
-                    this.IncreaseProgressBar();
-                });
-
-
-
-                this.loginService.GetTenantSetting().subscribe((myResult: any) => {
-                    SessionLocator.TenantSettings = myResult;
-                    this.IncreaseProgressBar();
-                    //21
-                });
-
-                this.loginService.GetTips().subscribe((myResult: any) => {
-                    window.Tips = myResult;
-                    this.IncreaseProgressBar();
-                    //22
-                });
-
-                this.loginService.GetTipsVisibilities().subscribe((myResult: any) => {
-                    window.TipsVisibilities = myResult;
-                    this.IncreaseProgressBar();
-                    //23
-                });
-
-                if (!SessionLocator.UseCachedData) {
-
-                    this.loginService.GetObjectFields().subscribe((myResult: any) => {
-
-                        if (!SessionLocator.UseCachedData) {
-                            window.ObjectFields = myResult;
-                        }
-
-                        this.IncreaseProgressBar();
-                    });
-
-                    this.loginService.GetTextCodesTranslations().subscribe((myResult: any) => {
-
-                        if (!SessionLocator.UseCachedData) {
-                            window.TextCodesTranslations = myResult;
-                        }
-
-                        window.TranslationsCache = [];
-                        this.IncreaseProgressBar();
-                    });
+        this._objectTableRulePMService
+            .getAllByTenant(CurrentTenant)
+            .subscribe((response: any) => {
+                if (response) {
+                    window.ObjectTableRules = response.Result;
                 }
 
-                else {
-                    this.loginService.GetTenantTextCode().subscribe((myResult: any) => {
-                        if (myResult) {
-                            window.TextCodes = window.TextCodes.concat(myResult);
-                            this.IncreaseProgressBar();
-                            //25
-                        }
-                    });
-                }
-
-                //CachedDataManager.CheckSystemMetadataLastUpdate().subscribe((response:any) => {
-                //    this.entityResourceService.getEntityResourceByTableName("General", 0).subscribe((response:any) => {
-                //        this.IncreaseProgressBar();
-                //        //26
-                //    });
-                //});
+                this.IncreaseProgressBar();
+                //27
             });
-        });
 
-
-        this._objectTableRulePMService.getAllByTenant(CurrentTenant).subscribe((response: any) => {
-            if (response) {
-                window.ObjectTableRules = response.Result;
-            }
-
-            this.IncreaseProgressBar();
-            //27
-        });
-
-        this._objectTableRuleFieldPMService.getAllByTenant(CurrentTenant).subscribe((response: any) => {
-            if (response) {
-                window.ObjectTableRuleFields = response.Result;
-            }
-
-            this.IncreaseProgressBar();
-            //28
-        });
-
-        this._userLastLoginPMService.GetUserLastLogin(SessionInfo.LoggedUserId, CurrentTenant).subscribe((response: any) => {
-            if (!response.HasError && response.Result) {
-
-                var lastloginPM: UserLastLoginPM = response.Result;
-
-                var computerId: string = SessionLocator.GetComputerIdFromStorage();
-                if (AppTool.IsNullOrEmpty(computerId)) {
-                    computerId = Guid.newGuid();
-                    SessionLocator.StoreLogedComputerId(computerId);
+        this._objectTableRuleFieldPMService
+            .getAllByTenant(CurrentTenant)
+            .subscribe((response: any) => {
+                if (response) {
+                    window.ObjectTableRuleFields = response.Result;
                 }
 
-                lastloginPM.ComputerId = computerId;
-                this._userLastLoginPMService.update(lastloginPM).subscribe((response: any) => {
+                this.IncreaseProgressBar();
+                //28
+            });
+
+        this._userLastLoginPMService
+            .GetUserLastLogin(SessionInfo.LoggedUserId, CurrentTenant)
+            .subscribe((response: any) => {
+                if (!response.HasError && response.Result) {
+                    var lastloginPM: UserLastLoginPM = response.Result;
+
+                    var computerId: string =
+                        SessionLocator.GetComputerIdFromStorage();
+                    if (AppTool.IsNullOrEmpty(computerId)) {
+                        computerId = Guid.newGuid();
+                        SessionLocator.StoreLogedComputerId(computerId);
+                    }
+
+                    lastloginPM.ComputerId = computerId;
+                    this._userLastLoginPMService
+                        .update(lastloginPM)
+                        .subscribe((response: any) => {
+                            this.IncreaseProgressBar();
+                            //29
+                        });
+                } else {
                     this.IncreaseProgressBar();
                     //29
-                });
-            }
+                }
+            });
 
-            else {
+        this.loginService
+            .GeLoggedTenantObjectFields()
+            .subscribe((response: any) => {
+                if (response) {
+                    window.ObjectFields = window.ObjectFields.concat(response);
+                }
+
                 this.IncreaseProgressBar();
-                //29
-            }
-        });
+                //30
+            });
 
-        this.loginService.GeLoggedTenantObjectFields().subscribe((response: any) => {
-            if (response) {
-                window.ObjectFields = window.ObjectFields.concat(response);
-            }
+        this.loginService
+            .GetTenantLanguageTranslations()
+            .subscribe((myResult: any) => {
+                window.TenantLanguageTranslations = myResult;
+                this.IncreaseProgressBar();
+                //31
+            });
 
-            this.IncreaseProgressBar();
-            //30
-        });
-
-
-        this.loginService.GetTenantLanguageTranslations().subscribe((myResult: any) => {
-            window.TenantLanguageTranslations = myResult;
-            this.IncreaseProgressBar();
-            //31
-        });
-
-        this.sATInterfaceSettingPMService.get(CurrentTenant).subscribe((myResult: any) => {
-            SessionLocator.SATInterfaceSettings = myResult.Result;
-            this.IncreaseProgressBar();
-            //32
-        });
+        this.sATInterfaceSettingPMService
+            .get(CurrentTenant)
+            .subscribe((myResult: any) => {
+                SessionLocator.SATInterfaceSettings = myResult.Result;
+                this.IncreaseProgressBar();
+                //32
+            });
 
         //this.myInfrastructureDomainService.GetFeatureToggles().subscribe((myResponse: ServiceResponse) => {
         //    if (!myResponse.HasError) {
@@ -959,7 +1196,9 @@ export class LoginComponent implements OnInit {
         //    this.IncreaseProgressBar();
         //});
 
-        this.UserExtendedPMService.CheckUserReleaseNotesToolTip(SessionInfo.LoggedUserId).subscribe((myResponse: ServiceResponse) => {
+        this.UserExtendedPMService.CheckUserReleaseNotesToolTip(
+            SessionInfo.LoggedUserId
+        ).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 SessionLocator.ShowUserNewReleaseToolTip = myResponse.Result;
 
@@ -968,21 +1207,23 @@ export class LoginComponent implements OnInit {
             this.IncreaseProgressBar();
         });
 
-        this.myInfrastructureDomainService.getDWObjectFieldsWithChildren().subscribe((Result: ServiceResponse) => {
-            //var ObsList = [];
-            if (!Result.HasError) {
-                window.DWObjectFields = Result.Result;
+        this.myInfrastructureDomainService
+            .getDWObjectFieldsWithChildren()
+            .subscribe((Result: ServiceResponse) => {
+                //var ObsList = [];
+                if (!Result.HasError) {
+                    window.DWObjectFields = Result.Result;
 
-                //Result.Result.forEach((field) => {
-                //    if (field.DisplayInQueryBuilder == true || field.IsPrimaryKey == true) {
-                //        var view = new DWObjectFieldsDetails(field, null);
-                //        view.ParentDataTypeCode = field.DataTypeCode;
-                //        ObsList.push(view);
-                //    }
-                //});
-            }
-            this.IncreaseProgressBar();
-        });
+                    //Result.Result.forEach((field) => {
+                    //    if (field.DisplayInQueryBuilder == true || field.IsPrimaryKey == true) {
+                    //        var view = new DWObjectFieldsDetails(field, null);
+                    //        view.ParentDataTypeCode = field.DataTypeCode;
+                    //        ObsList.push(view);
+                    //    }
+                    //});
+                }
+                this.IncreaseProgressBar();
+            });
 
         //this._objectTableRuleFieldPMService.getAllByTenant(CurrentTenant).subscribe((myResult:any) => {
         //    window.ObjectTableRulePMs = myResult;
@@ -992,57 +1233,81 @@ export class LoginComponent implements OnInit {
     }
 
     private GetFeatureToggles() {
-        this.myInfrastructureDomainService.GetFeatureToggles().subscribe((myResponse: ServiceResponse) => {
-            if (!myResponse.HasError) {
-                SessionLocator.TenantZeroFeatureToggles = myResponse.Result.filter(d => d.TenantNumber == 0);
+        this.myInfrastructureDomainService
+            .GetFeatureToggles()
+            .subscribe((myResponse: ServiceResponse) => {
+                if (!myResponse.HasError) {
+                    SessionLocator.TenantZeroFeatureToggles =
+                        myResponse.Result.filter((d) => d.TenantNumber == 0);
 
-                var tenant = InfraSettings.TenantPM.Id;
-                SessionLocator.FeatureToggles = myResponse.Result.filter(d => d.TenantNumber == tenant ||
-                    (tenant >= d.FromTenantNumber && tenant <= d.ToTenantNumber));
-            }
-            this.IncreaseProgressBar();
-        });
+                    var tenant = InfraSettings.TenantPM.Id;
+                    SessionLocator.FeatureToggles = myResponse.Result.filter(
+                        (d) =>
+                            d.TenantNumber == tenant ||
+                            (tenant >= d.FromTenantNumber &&
+                                tenant <= d.ToTenantNumber)
+                    );
+                }
+                this.IncreaseProgressBar();
+            });
     }
-
 
     private CheckTenantBlocking(userData: any) {
         var isSystemBlocked = false;
         var todayDateTicks = DateTool.GetCurrentDateAsUtc().valueOf();
 
         if (SessionLocator.TenantManagementJS.PaymentFailure) {
-
-            if (AppTool.IsNullOrEmpty(SessionLocator.TenantManagementJS.SuspendDate)) {
+            if (
+                AppTool.IsNullOrEmpty(
+                    SessionLocator.TenantManagementJS.SuspendDate
+                )
+            ) {
                 isSystemBlocked = true;
-                SessionLocator.BlockType = "company";
-            }
-
-            else if (DateTool.GetDateParts(SessionLocator.TenantManagementJS.SuspendDate).DateTicks < todayDateTicks) {
+                SessionLocator.BlockType = 'company';
+            } else if (
+                DateTool.GetDateParts(
+                    SessionLocator.TenantManagementJS.SuspendDate
+                ).DateTicks < todayDateTicks
+            ) {
                 isSystemBlocked = true;
-                SessionLocator.BlockType = "suspend";
+                SessionLocator.BlockType = 'suspend';
             }
         }
 
         if (!isSystemBlocked) {
             if (SessionLocator.TenantManagementJS.IsTrial) {
-
-                if (AppTool.IsNullOrEmpty(SessionLocator.TenantManagementJS.TrialEndDate)) {
+                if (
+                    AppTool.IsNullOrEmpty(
+                        SessionLocator.TenantManagementJS.TrialEndDate
+                    )
+                ) {
                     isSystemBlocked = true;
-                    SessionLocator.BlockType = "company";
-                }
-
-                else if (DateTool.GetDateParts(SessionLocator.TenantManagementJS.TrialEndDate).DateTicks < todayDateTicks) {
+                    SessionLocator.BlockType = 'company';
+                } else if (
+                    DateTool.GetDateParts(
+                        SessionLocator.TenantManagementJS.TrialEndDate
+                    ).DateTicks < todayDateTicks
+                ) {
                     isSystemBlocked = true;
-                    SessionLocator.BlockType = "company";
+                    SessionLocator.BlockType = 'company';
                 }
             }
         }
 
         if (!isSystemBlocked) {
-            if (!AppTool.IsNullOrEmpty(SessionLocator.TenantManagementJS.PaidUntilDate)) {
-
-                if (DateTool.GetDateParts(SessionLocator.TenantManagementJS.PaidUntilDate).DateTicks < todayDateTicks && !SessionLocator.TenantManagementJS.IsRecurring) {
+            if (
+                !AppTool.IsNullOrEmpty(
+                    SessionLocator.TenantManagementJS.PaidUntilDate
+                )
+            ) {
+                if (
+                    DateTool.GetDateParts(
+                        SessionLocator.TenantManagementJS.PaidUntilDate
+                    ).DateTicks < todayDateTicks &&
+                    !SessionLocator.TenantManagementJS.IsRecurring
+                ) {
                     isSystemBlocked = true;
-                    SessionLocator.BlockType = "company";
+                    SessionLocator.BlockType = 'company';
                 }
             }
         }
@@ -1056,8 +1321,12 @@ export class LoginComponent implements OnInit {
     private LastLoadSize: number = 0;
     public LoadingCounter: number = 0;
     public CompletedLoadsCount = 0;
-    IncreaseProgressBar(loadOPName: string = "") {
-        console.log(loadOPName + "==>Completed Login Loads Count: " + this.CompletedLoadsCount);
+    IncreaseProgressBar(loadOPName: string = '') {
+        console.log(
+            loadOPName +
+                '==>Completed Login Loads Count: ' +
+                this.CompletedLoadsCount
+        );
         if (this.TotalNumberOfLoads == 0) {
             this.TotalNumberOfLoads = 38;
 
@@ -1067,12 +1336,11 @@ export class LoginComponent implements OnInit {
 
             this.LoadSize = 100 / this.TotalNumberOfLoads;
 
-            if (this.LoadSize.toString().indexOf(".") > -1) {
-                this.LoadSize = +this.LoadSize.toString().split(".")[0];
-                this.LastLoadSize = 100 - ((this.TotalNumberOfLoads - 1) * this.LoadSize);
-            }
-
-            else {
+            if (this.LoadSize.toString().indexOf('.') > -1) {
+                this.LoadSize = +this.LoadSize.toString().split('.')[0];
+                this.LastLoadSize =
+                    100 - (this.TotalNumberOfLoads - 1) * this.LoadSize;
+            } else {
                 this.LastLoadSize = this.LoadSize;
             }
         }
@@ -1080,8 +1348,7 @@ export class LoginComponent implements OnInit {
         this.CompletedLoadsCount++;
 
         if (this.CompletedLoadsCount <= this.TotalNumberOfLoads) {
-
-            var elem = document.getElementById("myBar");
+            var elem = document.getElementById('myBar');
 
             var length = this.LoadSize;
             if (this.CompletedLoadsCount == this.TotalNumberOfLoads) {
@@ -1095,8 +1362,11 @@ export class LoginComponent implements OnInit {
                 }
             }
 
-            if (this.CompletedLoadsCount === this.TotalNumberOfLoads && this.generalTableResourcesIsLoaded === true) {
-                console.log("===============>Changing Page<==================");
+            if (
+                this.CompletedLoadsCount === this.TotalNumberOfLoads &&
+                this.generalTableResourcesIsLoaded === true
+            ) {
+                console.log('===============>Changing Page<==================');
                 this.SetLayoutDirection();
 
                 ServiceLocator.RulesValidator = new RulesValidator();
@@ -1108,7 +1378,12 @@ export class LoginComponent implements OnInit {
     }
     private SetLayoutDirection() {
         if (InfraSettings.TenantPM) {
-            this.GlobalSettings.LayoutDirection = SessionInfo.LoggedUserPM.LayoutDirection ? SessionInfo.LoggedUserPM.LayoutDirection.toLowerCase() : (InfraSettings.TenantPM.LayoutDirection ? InfraSettings.TenantPM.LayoutDirection.toLowerCase() : InfraSettings.TenantPM.LayoutDirection);
+            this.GlobalSettings.LayoutDirection = SessionInfo.LoggedUserPM
+                .LayoutDirection
+                ? SessionInfo.LoggedUserPM.LayoutDirection.toLowerCase()
+                : InfraSettings.TenantPM.LayoutDirection
+                ? InfraSettings.TenantPM.LayoutDirection.toLowerCase()
+                : InfraSettings.TenantPM.LayoutDirection;
         }
         ObjectsLocator.SetLayoutDirection(this.GlobalSettings.LayoutDirection);
     }
@@ -1119,18 +1394,12 @@ export class LoginComponent implements OnInit {
 
         this._applicationTimersManager.StartApplicationTimers();
 
-        this.LoginCompleted.emit("event");
+        this.LoginCompleted.emit('event');
 
         if (SessionLocator.UseCachedData && SessionInfo.LoggedUserTenant != 0) {
-            CachedDataManager.GetCacheOnClientTablesData(this.entityListService);
+            CachedDataManager.GetCacheOnClientTablesData(
+                this.entityListService
+            );
         }
     }
-
-
-
-
-
 }
-
-
-

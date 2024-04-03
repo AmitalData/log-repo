@@ -288,7 +288,6 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
     _GLAccountExtendedListService: GLAccountExtendedListService = new GLAccountExtendedListService();
     isFullAccounting: boolean = SessionLocator.TenantPM.AccountingActivated;
     CurrencyFilters: ApiQueryFilters = new ApiQueryFilters();
-
     constructor(public CD: ChangeDetectorRef) {
         super();
 
@@ -319,13 +318,14 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
             this.windowArgs = args;
 
             this.GLAccountPM = args.GLAccountPM;
-            ReconcileEventManager.GLAccountReconcileMethodCode = this.GLAccountPM.ReconcileMethodCode;
+            ReconcileEventManager.SetGLAccountReconcileMethodCode(this.GLAccountPM.ReconcileMethodCode);
+
             if (!AppTool.IsNullOrEmpty(args.IsMultiWithReconcileMethodCodeEqualOne)) {
                 this.IsMultiWithReconcileMethodCodeEqualOne = args.IsMultiWithReconcileMethodCodeEqualOne;
                 this.ValidationErrorsList.push(TextCodeTranslator.Translate("Reconciliation.O.WarningMultiRecoOne"));
                 this.IsCheckBoxEnabled = false;
                 this.GetTransactionsCurrencies();
-                GLAccountSecurityLevelService.IsCheckBoxEnabledParameter=false;
+                GLAccountSecurityLevelService.IsCheckBoxEnabledParameter = false;
             }
             if (!AppTool.IsNullOrEmpty(this.GLAccountPM.CurrencyId)) {
                 this.CurrencyId = this.GLAccountPM.CurrencyId;
@@ -768,20 +768,19 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
         }
     }
     OpenAmountTextChanged(searchtext, OperatorChanged: boolean = false) {
+        debugger
         if (!AppTool.IsNullOrEmpty(searchtext) && !AppTool.IsNullOrEmpty(this.OpenAmountSelectedOperator)) {
-
+           console.log(searchtext+"!!!!!!!!!!!!!!!!!!!!")
             this.timerToken = setTimeout(() => {
                 var OpenAmountFilterOperator = this.OpenAmountSelectedOperator.EnglishName.replace(/ /g, ''); // remove white spaces
                 if (OpenAmountFilterOperator == "Equals") {
-                    this.openAmountFilter = new FilterItem("OpenAmount", searchtext, -1 * searchtext, null, OpenAmountFilterOperator, false, false, false, "number", false);
+                    this.openAmountFilter = new FilterItem("OpenAmount", searchtext, null, null, OpenAmountFilterOperator, false, false, false, "number", false);
                 }
                 else if (OpenAmountFilterOperator == "LessThan") {
-                    searchtext = Math.abs(searchtext);
-                    this.openAmountFilter = new FilterItem("OpenAmount", -1 * --searchtext, +searchtext, null, "Between", false, false, false, "number", false);
+                    this.openAmountFilter = new FilterItem("OpenAmount", searchtext, null, null, "LessThan", false, false, false, "number", false);
                 }
                 else if (OpenAmountFilterOperator == "LessThanOrEqual") {
-                    searchtext = Math.abs(searchtext);
-                    this.openAmountFilter = new FilterItem("OpenAmount", -1 * searchtext, +searchtext, null, "Between", false, false, false, "number", false);
+                    this.openAmountFilter = new FilterItem("OpenAmount", searchtext, null, null, "LessThanOrEqual", false, false, false, "number", false);
                 }
                 else {
                     this.openAmountFilter = new FilterItem("OpenAmount", searchtext, null, null, OpenAmountFilterOperator, false, false, false, "number", false);
@@ -866,18 +865,30 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
 
             //Adjust
             if (this.SelectedLines.Length > 0 && this.TotalsDeference != 0) {
-                //errors.push(TextCodeTranslator.Translate("Accounting.General.O.DifferenceMustEqual0"));//"The difference must be equal to zero"
-                //this.AdjustButton();
-                var confirmWindow = new ConfirmWindow();
-                confirmWindow.Width = 390;
-                confirmWindow.Show(TextCodeTranslator.Translate("Accounting.O.NewReconcileWithAdjusment"));
-                confirmWindow.WindowClosed.subscribe((event: any) => {
-                    if (confirmWindow.Yes) {
-                        this.AdjustWithNewJournalScreen();
-                    } else if (confirmWindow.No) {
-                    }
-                });
+
+                var chartType = this.GLAccountPM.ChartOfAccountsTypeCode; // 6 == Works
+                if (chartType == "6") {
+                    var confirmWindow = new ConfirmWindow();
+                    confirmWindow.Width = 390;
+                    confirmWindow.IsYesEnabled = false;
+                    confirmWindow.Show(TextCodeTranslator.Translate("Accounting.O.NewReconcileNoAdjusment"));
+                    confirmWindow.WindowClosed.subscribe((event: any) => {
+                    });
+                } else {
+                    //errors.push(TextCodeTranslator.Translate("Accounting.General.O.DifferenceMustEqual0"));//"The difference must be equal to zero"
+                    //this.AdjustButton();
+                    var confirmWindow = new ConfirmWindow();
+                    confirmWindow.Width = 390;
+                    confirmWindow.Show(TextCodeTranslator.Translate("Accounting.O.NewReconcileWithAdjusment"));
+                    confirmWindow.WindowClosed.subscribe((event: any) => {
+                        if (confirmWindow.Yes) {
+                            this.AdjustWithNewJournalScreen();
+                        } else if (confirmWindow.No) {
+                        }
+                    });
+                }
                 return;
+
             }
             //
 
@@ -1094,7 +1105,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
 
     }
 
-    onRowSelected($event) { 
+    onRowSelected($event) {
         if ($event && GLAccountSecurityLevelService.IsMultiWithReconcileMethodCodeEqualOneParameter && GLAccountSecurityLevelService.IsCheckBoxEnabledParameter) {
             const row = $event.rowData;
             const rowId = row.Id;
@@ -1242,7 +1253,23 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
             ServerSideSortable: true,
             SortByName: 'OriginalAmount',
         });
-        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("OriginalAmount", 'Decimal', this.OriginalAmountTextCode));
+       this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("OriginalAmount", 'Decimal', this.OriginalAmountTextCode));
+
+       if(this.GLAccountPM.ReconcileMethodCode == "0" && this.GLAccountPM.CurrencyCode!='NIS') {
+            this.columns.push({ // Check ReconcileMethodCode.GLAccounts:
+                FieldName: 'ForeignAmount',
+                DataTypeCode: 'String',
+                //Display: 'Original Amount (' + this.originalAmountCurrency + ')',
+                Display: TextCodeTranslator.Translate("LedgerTransaction.F.ForeignAmount"),
+                Styles: { width: '150px' },
+                HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
+                HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
+                IsCustomTemplate: true,
+                ServerSideSortable: true,
+                SortByName: 'ForeignAmount',
+            });
+           this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("ForeignAmount", 'Decimal', TextCodeTranslator.Translate("LedgerTransaction.F.ForeignAmount")));
+        }
         //this.columns.push({
         //    FieldName: 'OpenAmountCurrencyCode',
         //    DataTypeCode: 'String',
@@ -1353,11 +1380,14 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
 
         ReconcileEventManager.CheckBoxChecked.subscribe(($event) => {
             if (!AppTool.IsNullOrEmpty($event)) {
-                var row = $event.line;
-                var rowId = $event.line.Id;
-                var RowIndex = $event.RowIndex;
-                var isChecked = $event.isChecked;
-                var oneTime = $event.oneTime;
+                if ($event.SendSessionIndex != this.CurrentSession.SessionIndex)
+                    return;
+                var params = $event.Params;
+                var row = params.line;
+                var rowId = params.line.Id;
+                var RowIndex = params.RowIndex;
+                var isChecked = params.isChecked;
+                var oneTime = params.oneTime;
                 console.log("---->> Row Selected: ", rowId, row, isChecked);
 
                 if (isChecked) {
@@ -1529,6 +1559,11 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
             else
                 this.TotalDebit += +line.AmountToReconcile;
 
+            //if (line.OpenAmount < 0)
+            //    this.TotalCredit += +line.OpenAmount * -1; //cast number
+            //else
+            //    this.TotalDebit += +line.OpenAmount;
+
             // due this.TotalCredit + amountToReconcile;  == 335.78999999999996 <>335.79
             this.TotalDebit = AppTool.Round(this.TotalDebit, 2);
             this.TotalCredit = AppTool.Round(this.TotalCredit, 2);
@@ -1629,7 +1664,11 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
         newEntity.CreateDate = new Date();
         newEntity.CreatedByUserId = null;
         newEntity.CreatedByUserId = null;
-        newEntity.AccountCurrencyId = this.GLAccountPM.CurrencyId;
+        if (this.IsMultiWithReconcileMethodCodeEqualOne) {
+            newEntity.AccountCurrencyId = this.CurrencyId;
+        } else {
+            newEntity.AccountCurrencyId = this.GLAccountPM.CurrencyId;
+        }
         newEntity.CurrencyCode = this.GLAccountPM.CurrencyCode;
         newEntity.AccountReconcileMethodCode = this.GLAccountPM.ReconcileMethodCode;
 
@@ -2077,6 +2116,10 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
         newApPaymentPM.LocalCurrencyId = this.TenantPM.CurrencyId;
         newApPaymentPM.ValueDate = DateTool.GetCurrentDateAsUtc();
         newApPaymentPM.RegisterDate = DateTool.GetCurrentDateAsUtc();
+        newApPaymentPM.DontDisplayAPInvoices=true;
+        newApPaymentPM.PaymentCurrencyId = this.CurrencyId;
+        newApPaymentPM.IsFromReconcilePage = true;
+        newApPaymentPM.IsMultiCurrency = this.GLAccountPM.IsMultiCurrency;
         if (!SessionLocator.LoggedUserPM.IsCustomerCare) {
             newApPaymentPM.BranchId = SessionLocator.LoggedUserPM.BranchId;
         }

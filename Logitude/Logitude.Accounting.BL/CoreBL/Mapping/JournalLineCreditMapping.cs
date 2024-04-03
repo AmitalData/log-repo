@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Logitude.Accounting.BL.Validators;
+using Logitude.Accounting.Data.Repositories;
 
 namespace Logitude.Accounting.BL.CoreBL.Mapping
 {
@@ -57,10 +58,12 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
 
 
 
+            GLAccountRepository gLAccountMoreDataRepository = new GLAccountRepository(_JournalLine.Tenant);
 
             //GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(_JournalLine.Tenant);
-            GLAccountPM parentAccount  ///gLAccountQueryService.GetSingle(_JournalLine.CreditAccountId, false, false);
-            = GetGLAccountPM(_JournalLine.CreditAccountId, _JournalLine.Tenant);
+            var parentAccount = gLAccountMoreDataRepository.GetSingle(_JournalLine.CreditAccountId, _JournalLine.Tenant);
+            //GLAccountPM parentAccount  ///gLAccountQueryService.GetSingle(_JournalLine.CreditAccountId, false, false);
+            //= GetGLAccountPM(_JournalLine.CreditAccountId, _JournalLine.Tenant);
             if (parentAccount == null)
             {
                 throw new ApplicationException("CreditAccountId is not valid");

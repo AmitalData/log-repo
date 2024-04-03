@@ -438,5 +438,8 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         [DataMember]
         public string EmailForSendingSingArinvoice { get; set; }
 
+        [DataMember]
+        public bool SendingInterestReport { get; set; }
+
     }
 }

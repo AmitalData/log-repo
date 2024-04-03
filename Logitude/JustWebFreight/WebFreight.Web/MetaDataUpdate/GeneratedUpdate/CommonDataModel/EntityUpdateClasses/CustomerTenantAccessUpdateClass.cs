@@ -91,7 +91,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class CustomerTenantAccessUpdateClass
    {  		
-		public const string HashString = "ec3c9ae5307264e7ba99c4a8a35efc3a";
+		public const string HashString = "ec3c9ae5307264e7ba99c4a8a35efeef";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1207,7 +1207,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SearchFields",
 					  						DefaultText =  "Search by Contact , Customer , Company",
-					  						HelpTextCode =  "SearchFields",
+                                            FullLocalDefaultText = "חיפוש לפי איש קשר, לקוח, חברה",
+
+
+                                              HelpTextCode =  "SearchFields",
 					  						HelpTextDefaultText =  "Searching by :\n1: code\n2: EnglishName\n3: LocalName",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,

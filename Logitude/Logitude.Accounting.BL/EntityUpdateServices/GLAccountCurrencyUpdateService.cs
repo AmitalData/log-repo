@@ -34,8 +34,59 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             CreateGLAccountCurrencyEvents(entityPM);
 
+            //if should remove totally the card
+            //if(entityPM.ChangeSetOp == ChangeSetOperation.Delete)
+            //{
+            //    RemoveGLAccountMoreData(entityPM);
+            //    RemoveGLAccountRecocileData(entityPM);
+            //    RemoveGLAccountAgingData(entityPM);
+            //    RemoveGLAccount(entityPM);
+            //}
+
 
         }
+        //private void RemoveGLAccount(GLAccountCurrencyPM entityPM)
+        //{
+        //    var myGLAccountRecocileDataUpdateService = new GLAccountUpdateService(this.MainContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+        //    myGLAccountRecocileDataUpdateService.Update(new GLAccountPM()
+        //    {
+        //        CurrencyId=entityPM.CurrencyId,
+        //        Id = entityPM.GLAccountId,
+        //        Tenant = entityPM.Tenant,
+        //        ChangeSetOp = ChangeSetOperation.Delete,
+        //    }, false);
+        //}
+        //private void RemoveGLAccountRecocileData(GLAccountCurrencyPM entityPM)
+        //{
+        //    var myGLAccountRecocileDataUpdateService = new GLAccountRecocileDataUpdateService(this.MainContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+        //    myGLAccountRecocileDataUpdateService.Update(new GLAccountRecocileDataPM()
+        //    {
+        //        AccountId = entityPM.GLAccountId,
+        //        Tenant = entityPM.Tenant,
+        //        ChangeSetOp = ChangeSetOperation.Delete,
+        //    }, false);
+        //}
+        //private void RemoveGLAccountMoreData(GLAccountCurrencyPM entityPM)
+        //{
+        //    var myGLAccountMoreDataUpdateService = new GLAccountMoreDataUpdateService(this.MainContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+        //    myGLAccountMoreDataUpdateService.Update(new GLAccountMoreDataPM()
+        //    {
+        //        AccountId = entityPM.GLAccountId,
+        //        Tenant = entityPM.Tenant,
+        //        ChangeSetOp = ChangeSetOperation.Delete
+        //    }, false);
+        //}
+
+        //private void RemoveGLAccountAgingData(GLAccountCurrencyPM entityPM)
+        //{
+        //    var myGLAccountAgingDataPMUpdateService = new GLAccountAgingDataUpdateService(this.MainContext, new Dictionary<string, IContext>(), entityPM.Tenant);
+        //    myGLAccountAgingDataPMUpdateService.Update(new GLAccountAgingDataPM()
+        //    {
+        //        AccountId = entityPM.GLAccountId,
+        //        Tenant = entityPM.Tenant,
+        //        ChangeSetOp = ChangeSetOperation.Delete,
+        //    }, false);
+        //}
 
 
 

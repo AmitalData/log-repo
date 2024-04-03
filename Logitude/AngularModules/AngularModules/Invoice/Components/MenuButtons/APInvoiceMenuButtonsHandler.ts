@@ -41,12 +41,7 @@ export class APInvoiceMenuButtonsHandler {
 
                     switch (button.EventCode) {
                         case "SaveAPInvoice": {
-                            myButtonIsDisabled = true;
-
-                            if (AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || this.EntityPM.StatusCode == "WA" || (this.EntityPM.StatusCode == this.approvedStatusCode && SessionLocator.TenantPM.AccountingActivated == true)) {
-                                myButtonIsDisabled = false;
-                            }
-
+                            // display always the save button
                             break;
                         }
 
@@ -180,10 +175,6 @@ export class APInvoiceMenuButtonsHandler {
         }
     }
     private SetEnableForCopyInvoiceButton(myButtonIsDisabled: boolean) {
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) && this.EntityPM.StatusCode != this.approvedStatusCode) {
-            myButtonIsDisabled = true;
-        }
-
         if (this.EntityPM != null && this.EntityPM.IsExternalEntity) {
             myButtonIsDisabled = true;
         }

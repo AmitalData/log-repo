@@ -1179,6 +1179,9 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
             || this.ShipmentSearchInput.OpenDateGreaterThan
             || this.ShipmentSearchInput.ClearanceDateGreaterThan
             || this.ShipmentSearchInput.ATADateGreaterThan
+            || this.ShipmentSearchInput.OpenDateLessThan
+            || this.ShipmentSearchInput.ClearanceDateLessThan
+            || this.ShipmentSearchInput.ATADateLessThan
             || this.ShipmentSearchInput.TransportModeCodes.length > 0
             || this.ShipmentSearchInput.EstimatedArrivalOnly
             || this.ShipmentSearchInput.HasException

@@ -108,6 +108,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="DBOthers\CommonDataModel\Views\AllActiveGLAccountsView.dxml" />
     <None Include="DBOthers\InfrastructureModel\Procedures\DeleteOldBIReportsExecutionLogs.dxml" />
     <None Include="DBOthers\InfrastructureModel\Procedures\DeleteOldReportExecutionLogs.dxml" />
     <None Include="DBOthers\InfrastructureModel\Procedures\DeleteOldDocumentsExecutionLogs.dxml" />
@@ -140,6 +141,7 @@
     <None Include="DBScripts\CommonModel\202304051240_MarkDuplicatedDocumentsAsDeletedCloudIgnore.Ignoresxml" />
     <None Include="DBScripts\CommonModel\202304051240_MarkDuplicatedDocumentsAsDeletedLogboxIgnore.Ignoresxml" />
     <None Include="DBScripts\CommonModel\202307021535_FillCargoTrackingInvitationFromSharedLogistics.sxml" />
+    <None Include="DBScripts\CommonModel\202403201211_UpdateSendingInterestReportinDefult.sxml" />
     <None Include="DBScripts\CommonModel\202308031135_FillEORInumberCardFromCustomer.sxml" />
     <None Include="DBScripts\CommonModel\FillCodeForCustomerSizes.sxml" />
     <None Include="DBScripts\CommonModel\FillTenantManagmentArchiveShipmentFilters.sxml" />
@@ -307,6 +309,8 @@
     <None Include="DBTables\InfrastructureModel\EventRemark.dxml" />
     <None Include="DBTables\InfrastructureModel\ReferenceCustomObject.dxml" />
     <None Include="DBTables\InvoiceModel\ARInvoicesSignedStatus.dxml" />
+    <None Include="DBTables\InvoiceModel\ConfirmationNumberDefault.dxml" />
+    <None Include="DBTables\InvoiceModel\ConfirmationNumberStatus.dxml" />
     <None Include="DBTables\QuoteModel\ValidByType.dxml" />
     <None Include="DBTables\ShipmentsModel\ContainerDiscrepancy.dxml" />
     <None Include="DBTables\ShipmentsModel\ContainerTrackingProvider.dxml" />
@@ -331,6 +335,8 @@
     <None Include="EntityFiles\InfrastructureModel\ReferenceCustomObject.lxml" />
     <None Include="EntityFiles\InfrastructureModel\ScreenSection.lxml" />
     <None Include="EntityFiles\InvoiceModel\ARInvoicesSignedStatus.lxml" />
+    <None Include="EntityFiles\InvoiceModel\ConfirmationNumberDefault.lxml" />
+    <None Include="EntityFiles\InvoiceModel\ConfirmationNumberStatus.lxml" />
     <None Include="EntityFiles\QuoteModel\QuoteSalesAmountWithVATDetails.lxml" />
     <None Include="EntityFiles\QuoteModel\ValidByType.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ContainerDiscrepancy.lxml" />

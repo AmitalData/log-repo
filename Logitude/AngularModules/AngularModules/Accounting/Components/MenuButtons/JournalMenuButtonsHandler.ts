@@ -71,7 +71,7 @@ export class JournalMenuButtonsHandler {
 
                         case "JournalSave": // save and close
                             {
-                                if (this.EntityPM.StatusCode == "2" || this.EntityPM.StatusCode == "3" || this.EntityPM.StatusCode == this.CancelledStatusCode ) {
+                                if (this.EntityPM.StatusCode == "2" || this.EntityPM.StatusCode == "6" || this.EntityPM.StatusCode == "3" || this.EntityPM.StatusCode == this.CancelledStatusCode ) {
                                     button.IsDisabled = true;
                                 }
 
@@ -82,7 +82,7 @@ export class JournalMenuButtonsHandler {
                             }
                         case "JournalApprove":
                             {
-                                if (this.EntityPM.StatusCode == "3" || this.EntityPM.StatusCode == "2" || this.EntityPM.StatusCode == this.CancelledStatusCode  ) {
+                                if (this.EntityPM.StatusCode == "3" || this.EntityPM.StatusCode == "6" || this.EntityPM.StatusCode == "2" || this.EntityPM.StatusCode == this.CancelledStatusCode  ) {
                                     button.IsDisabled = true;
                                 }
 
@@ -93,7 +93,7 @@ export class JournalMenuButtonsHandler {
                             }
                         case "JournalSaveAsDraft":
                             {
-                                if (this.EntityPM.StatusCode == "2") {
+                                if (this.EntityPM.StatusCode == "2" || this.EntityPM.StatusCode == "6") {
                                     button.IsHidden = true;
                                 }
 
@@ -143,7 +143,7 @@ export class JournalMenuButtonsHandler {
                             }
                         case "CopyJournal":
                             {
-                                if (this.EntityPM.StatusCode == "2"   && this.EntityPM.AccountingEntityCode == "1") {
+                                if ((this.EntityPM.StatusCode == "2" || this.EntityPM.StatusCode == "6" )&& this.EntityPM.AccountingEntityCode == "1") {
                                     button.IsDisabled = false;
 
                                 }
@@ -167,7 +167,9 @@ export class JournalMenuButtonsHandler {
         const JournalAccountingEntity = "1";
         const RevaluationAccountingEntity = "8";
         const AdjustmentAccountingEntity = "10";
-        const ApprovedStatusCode = "6";
+        const ApprovedStatusCode = "2";
+        const InProcessingStatusCode = "6";
+
         const VoidedStatusCode = "3";
 
 
@@ -176,7 +178,7 @@ export class JournalMenuButtonsHandler {
             this.EntityPM.AccountingEntityCode == RevaluationAccountingEntity ||
             this.EntityPM.AccountingEntityCode == AdjustmentAccountingEntity;
 
-        let IsApprovedAndNotStorno: Boolean = this.EntityPM.StatusCode == ApprovedStatusCode
+        let IsApprovedAndNotStorno: Boolean = (this.EntityPM.StatusCode == ApprovedStatusCode || this.EntityPM.StatusCode == InProcessingStatusCode)
             && this.EntityPM.AccountingEntityCode == JournalAccountingEntity
             && this.EntityPM.OriginalJournalId == null; // Not Storno
 
@@ -217,7 +219,7 @@ export class JournalMenuButtonsHandler {
                 }
             case "JournalApprove":
                 {
-                    this.EntityPM.StatusCode = "2"; // Approved
+                    this.EntityPM.StatusCode = "6"; // Approved
                     this.EntityPM.JournalLines?.forEach(x => {
                         if (x.AccountingDate instanceof Date) {
                           x.AccountingDate = new Date(x.AccountingDate.getTime() - (x.AccountingDate.getTimezoneOffset() * 60000));
@@ -342,7 +344,7 @@ export class JournalMenuButtonsHandler {
         windowArgs.JournalPM = this.EntityPM;
         var logWindow = new LogitudeWindow();
         logWindow.Width = 700;
-        logWindow.Height = 250;
+        logWindow.Height = 320;
         logWindow.Title = windowTitle;
         logWindow.WindowArgs = windowArgs;
         logWindow.WindowClosed.subscribe(($event: any) => {

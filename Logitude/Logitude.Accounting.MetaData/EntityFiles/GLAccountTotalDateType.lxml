@@ -10,6 +10,9 @@
   HasCustomFilter="false"
   HasCustomFields="false"
   AvailableInCustomization="true"
+  SupportSubEntity="false"
+  ApplyGenericCustomFields="false"
+  AvailableInDocumentTypes="false"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -40,7 +43,7 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;סוג תאריך למצטברים חודשיים&quot;"
   DefaultText="&quot;Account monthly totals  Date Types&quot;"
-  Code="&quot;f477&quot;"
+  Code="&quot;b315&quot;"
   Name="&quot;GLAccountTotalDateType Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -57,6 +60,7 @@
   HasApiHelper="false"
   AllowedForComputingPartners="false"
   IsBusinessUnitEnabled="false"
+  TenantZeroData="false"
   Code1="&quot;5ffa&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -264,6 +268,9 @@
     <Record
       Code="&quot;3&quot;"
       Name="&quot;Document Date&quot;" />
+    <Record
+      Code="&quot;4&quot;"
+      Name="&quot;Tax&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

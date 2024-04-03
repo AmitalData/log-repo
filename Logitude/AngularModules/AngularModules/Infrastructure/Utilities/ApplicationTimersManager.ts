@@ -21,6 +21,8 @@ import { SignalRChannelService } from '../Services/SignalRServices/SignalRChanne
 import {ObjectsLocator} from '../Locators/ObjectsLocator';
 import { interval } from 'rxjs';
 import { timeInterval } from 'rxjs/operators';
+import { Environment } from 'Infrastructure/Locators/Environment';
+
 
 @Injectable()
 
@@ -174,19 +176,20 @@ export class ApplicationTimersManager {
 
     private HandleComputerIdChangedForLoggedUser(lastloginPM: UserLastLoginPM) {
         let computerId: string = SessionLocator.GetComputerIdFromStorage();
+        if(SessionLocator.LoggedUserPM.Tenant == 0) return;
         if (AppTool.IsNullOrEmpty(computerId)) return;
-        if (lastloginPM.ComputerId == computerId) return;
         if (ObjectsLocator.GlobalSetting.SameUserLoginEnabled) return;
+        if (lastloginPM.ComputerId == computerId) return;
         let workEnvironment: string = this.GetWorkEnvironment();
         if (this.IsSameUserLoginEnabledWithDifferentEnvironmentToggle() && lastloginPM.ComputerId != computerId && lastloginPM.WorkEnvironment?.toLowerCase() != workEnvironment?.toLowerCase()) return;
         this.HandleUserUnlocked();
+       
     }
 
     private GetWorkEnvironment(): string {
         if (AppTool.IsNullOrEmpty(ObjectsLocator?.GlobalSetting?.WorkEnvironment)) return "logitude";
         return ObjectsLocator?.GlobalSetting?.WorkEnvironment?.toLowerCase() == "logbox" ? location.href.toLowerCase().indexOf('.logbox.') > -1 ? "logbox" : "privatelabel" : ObjectsLocator?.GlobalSetting?.WorkEnvironment;
     }
-
     private IsSameUserLoginEnabledWithDifferentEnvironmentToggle() {
         let SameUserLoginEnabledWithDifferentEnvironmentToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "ULE")[0];
         if (SameUserLoginEnabledWithDifferentEnvironmentToggle)

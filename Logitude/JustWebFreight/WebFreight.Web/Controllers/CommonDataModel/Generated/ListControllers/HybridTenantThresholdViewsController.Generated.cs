@@ -51,7 +51,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
     {
 	  
        
-        public HttpResponseMessage GetSingle(int tenant)
+        public HttpResponseMessage GetSingle(int tenant, int typecode)
         {
 		  try
             {
@@ -64,7 +64,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 		    	ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
 				HybridTenantThresholdRepository  hybridTenantThresholdRepository = new HybridTenantThresholdRepository(MyContext);
 				HybridTenantThresholdList entityList = null;
-				HybridTenantThreshold entityPoco = hybridTenantThresholdRepository.GetSingleHybridTenantThreshold(tenant , authToken.Tenant);
+				HybridTenantThreshold entityPoco = hybridTenantThresholdRepository.GetSingleHybridTenantThreshold(tenant, typecode );
                 
                 if (entityPoco != null)
 				{

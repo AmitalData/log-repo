@@ -40,7 +40,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 Tenant = tenant,
                 UpdateDate = createdAt,
                 CreateDate = createdAt,
-                StatusCode = ((int)JournalStatusTypePM.StatusCodeEnum.Approved).ToString(),
+                StatusCode = ((int)JournalStatusTypePM.StatusCodeEnum.InProcessing).ToString(),
 
             };
 
@@ -73,7 +73,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 UpdateDate = DateTimeNow,
                 CreateDate = DateTimeNow,
                 JournalLines = new List<JournalLinePM>() { JournalLinePM },
-                StatusCode = ((int)JournalStatusTypePM.StatusCodeEnum.Approved).ToString(),
+                StatusCode = ((int)JournalStatusTypePM.StatusCodeEnum.InProcessing).ToString(),
                 QueueId = "QueueId",//Streaamed !!!
             };
 
@@ -276,7 +276,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 Tenant = tenant,
                 UpdateDate = createdAt,
                 CreateDate = createdAt,
-                StatusCode = ((int)JournalStatusTypePM.StatusCodeEnum.Approved).ToString(),
+                StatusCode = ((int)JournalStatusTypePM.StatusCodeEnum.InProcessing).ToString(),
                 QueueId = "QueueId "
 
             };
@@ -310,7 +310,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 UpdateDate = DateTimeNow,
                 CreateDate = DateTimeNow,
                 JournalLines = new List<JournalLinePM>() { JournalLinePM },
-                StatusCode = ((int)JournalStatusTypePM.StatusCodeEnum.Approved).ToString(),
+                StatusCode = ((int)JournalStatusTypePM.StatusCodeEnum.InProcessing).ToString(),
             };
 
 

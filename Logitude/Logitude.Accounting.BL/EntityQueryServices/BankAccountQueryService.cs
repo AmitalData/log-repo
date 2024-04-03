@@ -1,7 +1,9 @@
-﻿using Logitude.Accounting.Data.EntityKeys;
+﻿using Logitude.Accounting.Data;
+using Logitude.Accounting.Data.EntityKeys;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Server.Tools;
+using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,6 +26,13 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             }
 
             return EntityPM;
+        }
+        public override void GetComposition(EntityKeyFields entityKeys, BankAccountPM entityPM)
+        {
+            IAccountingContext context = MainContext as IAccountingContext;
+            BankAccountKeys bankAccountKeys = entityKeys as BankAccountKeys;
+            ChequeCounterSerialQueryService queryService = new ChequeCounterSerialQueryService(context);
+            entityPM.ChequeCounterSerials = queryService.GetMulti(bankAccountKeys, true);
         }
         public BankAccountPM GetByAccountNumber(string number, int tenant)
         {

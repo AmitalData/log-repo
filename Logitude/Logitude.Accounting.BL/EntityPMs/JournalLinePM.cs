@@ -14,10 +14,10 @@ namespace Logitude.Accounting.BL
         {
             if (String.IsNullOrWhiteSpace(@this.ActionTypeCode))
                 {
-                    if (!String.IsNullOrWhiteSpace(@this.ActionId))
+                    if (!String.IsNullOrWhiteSpace(@this.ActionCode))
                     {
                         var journalActionTypeQueryService = new JournalActionTypeQueryService(@this.Tenant);
-                        JournalActionTypePM action = journalActionTypeQueryService.GetSingle(@this.ActionId, false, true);
+                        JournalActionTypePM action = journalActionTypeQueryService.GetSingle(@this.ActionCode, false, true);
                         @this.ActionName = action?.EnglishName;
                         @this.ActionTypeCode = action?.Code;
                     }

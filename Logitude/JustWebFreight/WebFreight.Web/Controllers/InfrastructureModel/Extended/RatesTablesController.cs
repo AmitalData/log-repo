@@ -14,6 +14,10 @@ using System.Transactions;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Simplog.Data.InfrastructureModel;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
+using Logitude.Server.Tools;
+using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
 
 
 namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
@@ -62,7 +66,35 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
             }
         }
 
+        public HttpResponseMessage GetLastUpdateByCurrencyCode(string foreignCurrency,string tenantCurrencyId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                IWebFreightContext MyContext = WebFreightContext.GetContext(authToken.Tenant);
+                RatesTableQuery ratesTableQuery = new RatesTableQuery(authToken.Tenant);
+                CurrencyQuery queryService = new CurrencyQuery(authToken.Tenant);
 
+                if (IsFullAccountingActivated(authToken.Tenant))
+                {
+                    CurrencyPM currency = queryService.GetSingleCurrencyByCode(foreignCurrency, authToken.Tenant);
+                    if (currency != null)
+                    {
+                        var lastRate = ratesTableQuery.GetLastRecord(authToken.Tenant, currency.Id, tenantCurrencyId);
+                        return Request.CreateResponse(HttpStatusCode.OK, lastRate);
+                    }
+
+                }
+                return Request.CreateResponse(HttpStatusCode.OK);
+
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
         private double CalculateRateAccordingUnits(RatesTablePM ratesTable)
         {
             if (ratesTable.Unit != null)

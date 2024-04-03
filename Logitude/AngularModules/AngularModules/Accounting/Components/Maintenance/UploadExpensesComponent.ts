@@ -32,7 +32,6 @@ export class UploadExpensesComponent extends BaseComponent {
     public ValidationErrorsList: string[];
     public RowsValidationErrorsList: string[];
     public SuccessRow: string;
-    public ShowSuccessRow: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     _GLAccountPMService: GLAccountPMService;
     constructor() {
@@ -55,7 +54,6 @@ export class UploadExpensesComponent extends BaseComponent {
     }
 
     OkButtonClicked() {
-        this.ShowSuccessRow = false;
         this.FillErrors();
         if (this.ValidationErrorsList.length > 0) {
             return;
@@ -74,7 +72,6 @@ export class UploadExpensesComponent extends BaseComponent {
                         if (response.UpdateCounter == 0) {
                             this.RowsValidationErrorsList.push("No rows were updated.");
                         } else {
-                            this.ShowSuccessRow = true;
                             this.SuccessRow = response.UpdateCounter + " rows were updated."
                         }
                         if (response.Errors != null && response.Errors.length > 0) {

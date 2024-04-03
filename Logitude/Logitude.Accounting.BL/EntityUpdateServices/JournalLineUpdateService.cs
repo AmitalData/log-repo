@@ -42,13 +42,17 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             {
                 throw new ApplicationException("JournalLineUpdateService must be used only from JournalUpdateService(force check Approved Journal Can Only Change To Voided)");
             }
+            if(entityParentPM?.AccountingEntityCode == "12") 
+            { 
+               entityPM.Reference2 = entityParentPM.JournalNumber;
+            }
             
             // check payment terms and add days to due date if needed.
             ProcessGLAccountPaymentTerms(entityPM, entityParentPM);
 
-            base.OnCreating(entityPM, entityParentPM);
-        }
 
+			base.OnCreating(entityPM, entityParentPM);
+        }
         protected override void OnUpdating(JournalLinePM entityPM)
         {
             var myName = this.NameOf();
@@ -61,7 +65,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 throw new ApplicationException("JournalLineUpdateService must be used only from JournalUpdateService(force check Approved Journal Can Only Change To Voided)");
                 //throw new ApplicationException("BLException :Approved Journal Can Only Change To Voided");
             }
-
+   
             base.OnUpdating(entityPM);
         }
 
@@ -107,15 +111,36 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         private void UpdateDueDate( GLAccountPM glAccount, JournalLinePM journalLine)
         {
 
-            if (glAccount?.PaymentTerms != null)
+            PaymentTermRepository paymentTermQueryService = new PaymentTermRepository(journalLine.Tenant);
+                
+            string paymentTermsId = glAccount.PaymentTerms != null ? glAccount.PaymentTerms : glAccount.PaymentTermId != null ? glAccount.PaymentTermId : null;
+            if (paymentTermsId != null)
             {
-                PaymentTermRepository paymentTermQueryService = new PaymentTermRepository(journalLine.Tenant);
-                int paymentTermDays = paymentTermQueryService.GetSinglePaymentTerm(glAccount.PaymentTerms).Days;
+                PaymentTerm paymentTerm = paymentTermQueryService.GetSinglePaymentTerm(paymentTermsId);
+                int paymentTermDays = paymentTerm.Days;
                 if (paymentTermDays != 0)
                 {
-                    journalLine.DueDate = journalLine.DocumentDate.AddDays(paymentTermDays);
+                    DateTime updatedDocumentDate = journalLine.DocumentDate;
+                    if (paymentTerm.EndOfMonth) 
+                    {
+                        updatedDocumentDate = updatedDocumentDate.AddMonths(paymentTerm.NumberOfMonths);
+
+                        updatedDocumentDate = GetLastDayOfMonth(updatedDocumentDate);
+                    }
+
+                    journalLine.DueDate = updatedDocumentDate.AddDays(paymentTermDays);
                 }
             }
+        }
+
+        private DateTime GetLastDayOfMonth(DateTime currentDate)
+        {
+            // Use DaysInMonth to get the last day of the month
+            int lastDay = DateTime.DaysInMonth(currentDate.Year, currentDate.Month);
+            
+            // Create a new DateTime object with the same year and month, but the last day
+            DateTime lastDayOfMonth = new DateTime(currentDate.Year, currentDate.Month, lastDay);
+            return lastDayOfMonth;
         }
 
     }

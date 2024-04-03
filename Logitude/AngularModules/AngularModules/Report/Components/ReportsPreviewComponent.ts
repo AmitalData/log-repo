@@ -203,7 +203,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
     }
 
     LoadReportFilterComponent() {
-
+debugger
         SessionLocator.DynamicLoader.Load(this.Report.FilterHtmlComponentUrl, this.viewContainerRef)
             .then(cmpRef => {
                 this.ReportFilterConmponent = cmpRef.instance;

@@ -70,8 +70,9 @@ import { AmitalAPIAddSchemaWindowComponent } from './Components/Maintenance/Amit
 import { AmitalAPISchemaTable } from './Components/Maintenance/AmitalAPI/AmitalAPISchemaTable';
 
   import { TariffsTabComponent } from './Components/TariffsTab/TariffsTabComponent';
- 
- export const Components =
+ import { HostScreenComponent } from './Components/HostScreen/HostScreenComponent';
+
+  export const Components =
     [
         CustomerHelperComponent,
         CustomerShortTitleComponent,
@@ -144,8 +145,9 @@ import { AmitalAPISchemaTable } from './Components/Maintenance/AmitalAPI/AmitalA
         AmitalAPIAddSchemaWindowComponent,
         AmitalAPISchemaTable,
          TariffsTabComponent,
-     ];
- 
+         HostScreenComponent,
+    ];
+  
 export class ModuleDeclarations {
     public static Get(name: string) {
 
@@ -228,8 +230,9 @@ export class ModuleDeclarations {
 
 
              case "TariffsTabComponent": { myResult = TariffsTabComponent; break; }
-         }
-
+             case "HostScreenComponent": { myResult = HostScreenComponent; break; }
+        }
+ 
         return myResult;
     }
 }

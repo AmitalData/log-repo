@@ -193,6 +193,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         public void MarkDuplicateLines(TaxReportPM taxReportPM)
         {
+            // See also TaxReportService.MarkCreatedDuplicateLines 
+
             IAccountingContext accountingContext = AccountingContext.GetContext(taxReportPM.Tenant);
             TaxReportQueryService taxReportQuery = new TaxReportQueryService(accountingContext);
             TaxReportLineQueryService taxReportLineQuery = new TaxReportLineQueryService(accountingContext);
@@ -203,7 +205,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             duplicateRows.GroupBy(x => x.VatNumber + "_" + x.Reference)
                 .ToList().ForEach((group) =>
-            {
+                {
                 DuplicateRows firstRow = group.First();
 
                 bool notToSend = (firstRow.AccountingEntityCode == "1" || firstRow.AccountingEntityCode == "4") &&
@@ -232,7 +234,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 if (notToSendKeyList.Contains(row.Line))
                 {                    
                     isUpdate = true;
-                    row.TransmitStatusCode = TaxReportLineTransmitStatusValues.Notfortransmitforthisreport;
+                    row.TransmitStatusCode = TaxReportLineTransmitStatusValues.Notfortransmitatall;
+                    row.StatusCode = TaxReportLineStatusValues.Readyfortransmit;
                 }
                 else if (duplicateKeyList.Contains(row.Line))
                 {
@@ -256,7 +259,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             new TaxReportLineUpdateService(accountingContext, new Dictionary<string, IContext>(), taxReportPM.Tenant)
                 .UpdateMulti(updateList, new List<TaxReportLinePM>(), taxReportPM, true);
         }
-        private class DupLines
+
+         private class DupLines
         {
             public string VatNumber { get; set; }
             public string Reference { get; set; }

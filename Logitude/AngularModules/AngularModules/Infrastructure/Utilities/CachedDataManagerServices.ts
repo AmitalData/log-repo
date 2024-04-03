@@ -14,6 +14,7 @@ import { QuoteClosingReasonListService } from '../../Quote/Services/StandardList
 import { ValidByTypeListService } from '../../Quote/Services/StandardLists/ValidByTypeListService';
 import {AWBSpecialHandlingCodeListService} from '../../Shipment/Services/StandardLists/AWBSpecialHandlingCodeListService';
 import {AccountingPaymentMethodListService} from '../../Invoice/Services/StandardLists/AccountingPaymentMethodListService';
+
 import {CreditCardTypeListService} from '../../Invoice/Services/StandardLists/CreditCardTypeListService';
 import {EmployeeGroupListService} from '../../CRM/Services/StandardLists/EmployeeGroupListService';
 import {OpportunityClosingReasonListService} from '../../CRM/Services/StandardLists/OpportunityClosingReasonListService';
@@ -124,13 +125,15 @@ import { AutonomyRegionTypeListService } from '../../Customs/Services/StandardLi
  import { CancellationRequestStatusListService } from '../../Customs/Services/StandardLists/CancellationRequestStatusListService';
 import { CancellationReasonRequestTypeListService } from '../../Customs/Services/StandardLists/CancellationReasonRequestTypeListService';
 import { ReferantTeamListService } from '../../Customs/Services/StandardLists/ReferantTeamListService';
-import { ReferenceStatusListService } from '../../Customs/Services/StandardLists/ReferenceStatusListService';
+ import { ReferenceStatusListService } from '../../Customs/Services/StandardLists/ReferenceStatusListService';
 import { ReferenceInputTypeListService } from '../../Customs/Services/StandardLists/ReferenceInputTypeListService';
 import { LogisticsReferenceTypeListService } from '../../Customs/Services/StandardLists/LogisticsReferenceTypeListService';
 import { CancelRequestRejectReasonTypeListService } from '../../Customs/Services/StandardLists/CancelRequestRejectReasonTypeListService';
 import { BuyerRoleTypeListService } from '../../Customs/Services/StandardLists/BuyerRoleTypeListService';
 import { CurrencyTypeTenantListService } from 'Customs/Services/StandardLists/CurrencyTypeTenantListService';
-
+ import { ConfirmationNumberDefaultListService } from 'Invoice/Services/StandardLists/ConfirmationNumberDefaultListService';
+import { ConfirmationNumberStatusListService } from 'Invoice/Services/StandardLists/ConfirmationNumberStatusListService';
+ 
 
 
 export class CachedDataManagerServices {
@@ -169,6 +172,9 @@ export class CachedDataManagerServices {
             case "ValidByTypeListService": { myResult = new ValidByTypeListService(); break; }
             case "AWBSpecialHandlingCodeListService": { myResult = new AWBSpecialHandlingCodeListService(); break; }            
             case "AccountingPaymentMethodListService": { myResult = new AccountingPaymentMethodListService(); break; }
+            case "ConfirmationNumberDefaultListService": { myResult = new ConfirmationNumberDefaultListService(); break; }
+            case "ConfirmationNumberStatusListService": { myResult = new ConfirmationNumberStatusListService(); break; }
+
             case "CreditCardTypeListService": { myResult = new CreditCardTypeListService(); break; }
             case "EmployeeGroupListService": { myResult = new EmployeeGroupListService(); break; }
             case "OpportunityClosingReasonListService": { myResult = new OpportunityClosingReasonListService(); break; }

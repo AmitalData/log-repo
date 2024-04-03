@@ -131,15 +131,28 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         }
         public IQueryable<string> GetQGLAccIdBySalesmanId(int tenant, string SalesmanId, string AccountTypeCode)
         {
-            var q = (
-                from a in this.repository.GetQAllByAccountTypeCode(tenant, AccountTypeCode)
-                join card in (this.context as AccountingContext).Cards.Where(r => r.Tenant == tenant)
-                on a.Id equals card.GLAccountId
-                join cust in (this.context as AccountingContext).Customers
-                .Where(r => r.SalesmanUserId == SalesmanId && r.Tenant == tenant)
-                on card.Id equals cust.Id
-                select a.Id);
-            return q;
+            IQueryable<string> q = (
+               from a in this.repository.GetQAllByAccountTypeCode(tenant, AccountTypeCode)
+               join card in (this.context as AccountingContext).Cards.Where(r => r.Tenant == tenant)
+               on a.Id equals card.GLAccountId
+
+               join cust in (this.context as AccountingContext).Customers
+               .Where(r => r.SalesmanUserId == SalesmanId && r.Tenant == tenant)
+               on card.Id equals cust.Id
+
+               select a.Id);
+
+            IQueryable<string> qChild = (from b in q
+                                         join glaccountChild in this.context.GLAccountCurrencies.Where(r => r.Tenant == tenant)
+                                         on b equals glaccountChild.MainGLAccountId
+                                         select glaccountChild.GLAccountId);
+
+            IQueryable<string> combinedQuery = q.Concat(qChild);
+
+
+
+
+            return combinedQuery;
         }
         public bool CheckIfDisplayNumberExists(string displayNo, string internalNumber, int tenant)
         {
@@ -310,7 +323,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         }
 
         public IQueryable<string> GetAllIdAccountsTypeCat(int tenant, string GLAccountId, string cat1, string cat2, string cat3, string cat4, string cat5, string gLAccountType, string chartOfAccountsId, 
-    bool IncludeChildAccounts,string ChartOfAccountsTypeCode, string salesmanId,bool includeControlAccount, bool useSecurityLevel )
+    bool IncludeChildAccounts,string ChartOfAccountsTypeCode, string salesmanId, string collectorId, bool includeControlAccount, bool useSecurityLevel )
         {
             int? securityLevel = GetSecurityLevel(useSecurityLevel, tenant);
             // List<String> allIdAccounts = new List<string>() { GLAccountId };
@@ -318,11 +331,22 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             if (!String.IsNullOrWhiteSpace(cat1) || !String.IsNullOrWhiteSpace(cat2) || !String.IsNullOrWhiteSpace(cat3) || !String.IsNullOrWhiteSpace(cat4)
                 || !String.IsNullOrWhiteSpace(cat5) || !String.IsNullOrWhiteSpace(gLAccountType) || !String.IsNullOrWhiteSpace(chartOfAccountsId)
                 || !String.IsNullOrWhiteSpace(ChartOfAccountsTypeCode)
-                || !String.IsNullOrWhiteSpace(salesmanId)
+                || !String.IsNullOrWhiteSpace(salesmanId) || !String.IsNullOrWhiteSpace(collectorId)
                 )
             {
-               
-                allIdAccounts = repository.GetQAccIdByAcountIdTypeCategories(tenant, GLAccountId, cat1, cat2, cat3, cat4, cat5, gLAccountType, chartOfAccountsId, ChartOfAccountsTypeCode, salesmanId, includeControlAccount, securityLevel);
+
+                if (GLAccountId != null && collectorId != null)
+                {
+                    IAccountingContext context = AccountingContext.GetContext(tenant);
+                    GLAccountRepository repository = new GLAccountRepository(context);
+
+                    var myCollector = repository.GetCollectorByGLAccountId(tenant, GLAccountId);
+                    if (myCollector != collectorId)
+                    {                       
+                        return allIdAccounts;
+                    }
+                }
+                allIdAccounts = repository.GetQAccIdByAcountIdTypeCategories(tenant, GLAccountId, cat1, cat2, cat3, cat4, cat5, gLAccountType, chartOfAccountsId, ChartOfAccountsTypeCode, salesmanId, collectorId,includeControlAccount, securityLevel);
 
                 //   .ToList();
             }
@@ -816,6 +840,16 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                                 where c.MainGLAccountId == accountId && a.Tenant == tenant && a.ActiveForInterest ==true
                                                 select a.Id).ToList();
            
+        }
+        public List<string> GetChildrenByCurrencyGLAccountIds(string accountId, int tenant)
+        {
+            IQueryable<GLAccount> glaccounts = repository.GetAll(tenant);
+            return (from a in glaccounts
+                    join
+                   c in context.GLAccountCurrencies on a.Id equals c.GLAccountId
+                    where c.MainGLAccountId == accountId && a.Tenant == tenant 
+                    select a.Id).ToList();
+
         }
 
         public IQueryable<GLAccountPM> GetChildrenGLAccounts(string accountId, int tenant)
@@ -1358,9 +1392,14 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             if (!String.IsNullOrEmpty(args.CardId) && !String.IsNullOrEmpty(args.AccountId) && args.Tenant > 0)
             { 
                 int res = Update_ConnectCardToGLAccount(args.CardId, args.Tenant, args.AccountId, displayNumber); 
+                
             }
-
-
+            if (IsFullAccountingActivated(args.Tenant))
+            {
+                IAccountingContext context = MainContext as AccountingContext;
+                GLAccountUpdateService gLAccountUpdateService = new GLAccountUpdateService(context, new Dictionary<string, IContext>(), args.Tenant);
+                gLAccountUpdateService.UpdateGLAccountWithAdditionalData(args.AccountId, args.Tenant);
+            }
             //ICommonDataContext context = CommonDataContext.GetContext(args.Tenant);
             //CardRepository cardRepository = new CardRepository(context);
             //Card card = null;

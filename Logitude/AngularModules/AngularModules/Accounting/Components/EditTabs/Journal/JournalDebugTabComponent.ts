@@ -471,7 +471,7 @@ export class JournalDebugTabComponent extends BaseComponent implements OnInit {
         const journalLine = this.EntityPM.JournalLines.find(line=>line.Line == ledger.JournalLineNumber);
         const isConnectedToBankGLAccount = (journalLine.DebitAccountCOACode || journalLine.CreditAccountCOACode) == BanksChartOfAccountsTypeCode;
 
-        return isFromAmital && isConnectedToBankGLAccount;
+        return ((isFromAmital || SessionLocator.LoggedUserPM.IsCustomerCare) && isConnectedToBankGLAccount);
     }
 }
 

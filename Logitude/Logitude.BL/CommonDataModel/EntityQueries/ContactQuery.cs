@@ -1428,6 +1428,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                  IndexColor = a.Contact.IndexColor,
                                                  CompanyName = a.Contact.CompanyName,
                                                  CreateDate = a.Contact.CreateDate,
+                                                 ContactForAccounting = a.Contact.ContactForAccounting,
                                              };
 
             List<ContactPM> entityList = contacts.ToList();

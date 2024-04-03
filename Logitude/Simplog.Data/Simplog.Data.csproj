@@ -155,6 +155,7 @@
   <ItemGroup>
     <Compile Include="Azure\IErrorLogsRepository.cs" />
     <Compile Include="Azure\Repositories\CommunicationLogsRepository.cs" />
+    <Compile Include="CommonDataModel\EntityPOCOs\AllActiveGLAccountsView.cs" />
     <Compile Include="CommonDataModel\CommonDataContext.cs" />
     <Content Include="DecCourierStatusesView_Oracle.sql" />
     <Content Include="InfrastructureModel\DeleteQBOTranslations.sql" />
@@ -206,6 +207,8 @@
     <Compile Include="CommonDataModel\EntityPOCOs\AllARPaymentChequesView.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\TotalOpenTransInBankView.cs" />
     <Compile Include="CommonDataModel\Mapping\CarrierServiceLineMap.cs" />
+    <Compile Include="CommonDataModel\Mapping\AllActiveGLAccountsViewMap.cs" />
+    <Compile Include="CommonDataModel\Mapping\ChargesExternalAccountsByProductMap.cs" />
     <Compile Include="CommonDataModel\Mapping\CustomerGroupMap.cs" />
     <Compile Include="CommonDataModel\Mapping\CustomerTeamMap.cs" />
     <Compile Include="CommonDataModel\Mapping\DigitalContactLastSettingMap.cs" />
@@ -437,7 +440,6 @@
     <Compile Include="CommonDataModel\Mapping\CardContactAdditionalServiceMap.cs" />
     <Compile Include="CommonDataModel\Mapping\CardContactProduct.cs" />
     <Compile Include="CommonDataModel\Mapping\CardExternalAccountsByProductMap.cs" />
-    <Compile Include="CommonDataModel\Mapping\ChargesExternalAccountsByProductMap.cs" />
     <Compile Include="CommonDataModel\Mapping\CheckDigitControlAlgorithmMap.cs" />
     <Compile Include="CommonDataModel\Mapping\ColorIndexMap.cs" />
     <Compile Include="CommonDataModel\Mapping\ComputingPartnerCodeMap.cs" />
@@ -654,6 +656,7 @@
     <Compile Include="InfrastructureModel\EntityPOCOs\QueryExportExecutionLog.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\EntityStatusType.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\ReferenceCustomObject.cs" />
+    <Compile Include="InfrastructureModel\EntityPOCOs\ReleaseArgs.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\TabModification.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\ScreenSection.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\WorkerRoleName.cs" />
@@ -718,6 +721,8 @@
     <Compile Include="InfrastructureModel\Repositories\RuleUpdateHistoryRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\SchedulerProcedureRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\SharedUserQueryRepository.cs" />
+    <Compile Include="InvoiceModel\EntityPOCOs\ConfirmationNumberDefault.cs" />
+    <Compile Include="InvoiceModel\EntityPOCOs\ConfirmationNumberStatus.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\APInvoiceAnalytic.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\APPayment.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\ARInvoiceAnalytic.cs" />
@@ -737,6 +742,8 @@
     <Compile Include="InvoiceModel\EntityPOCOs\SATInvoiceStatus.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\QBOGlobalTaxCalculation.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\SATTransferStatus.cs" />
+    <Compile Include="InvoiceModel\Mapping\ConfirmationNumberStatusMap.cs" />
+    <Compile Include="InvoiceModel\Mapping\ConfirmationNumberDefaultMap.cs" />
     <Compile Include="InvoiceModel\Mapping\APPaymentTransferStatusMap.cs" />
     <Compile Include="InvoiceModel\Mapping\ARInvoicesSignedStatusMap.cs" />
     <Compile Include="InvoiceModel\Mapping\ARInvoiceStockLineMap.cs" />
@@ -762,6 +769,8 @@
     <Compile Include="InvoiceModel\Repositories\ARPaymentChequeReplicaRepository.cs" />
     <Compile Include="InvoiceModel\Repositories\ARPaymentChequeStatusReplicaRepository.cs" />
     <Compile Include="InvoiceModel\Repositories\BankAccountLiteRepository.cs" />
+    <Compile Include="InvoiceModel\Repositories\ConfirmationNumberDefaultRepository.cs" />
+    <Compile Include="InvoiceModel\Repositories\ConfirmationNumberStatusRepository.cs" />
     <Compile Include="InvoiceModel\Repositories\SATPaymentMethodRepository.cs" />
     <Compile Include="InvoiceModel\Repositories\SATInvoiceStatusRepository.cs" />
     <Compile Include="InvoiceModel\Repositories\QBOGlobalTaxCalculationRepository.cs" />

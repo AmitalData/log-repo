@@ -55,7 +55,7 @@ export function OpenGLAccounts() {
 }
 
 export function SaveGLAccounts() {
-    cy.DefineRequestWait(RestAPI.PUT, URLs.GLAccounts, RequestAliases.PutGLAccounts);
+    cy.DefineRequestWait(RestAPI.PUT, URLs.GLAccountsPut, RequestAliases.PutGLAccounts);
     cy.Click(GLAccountsSelectors.SaveButton, null)
 }
 

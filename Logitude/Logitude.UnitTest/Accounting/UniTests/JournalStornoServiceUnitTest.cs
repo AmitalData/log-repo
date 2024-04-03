@@ -105,7 +105,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
 
             Assert.AreEqual(defaultJournal.Id, baseJournal.Id);
             Assert.AreEqual(defaultJournal.OriginalJournalId, baseJournal.OriginalJournalId);
-            Assert.AreEqual("2", baseJournal.StatusCode);
+            Assert.AreEqual("6", baseJournal.StatusCode);
 
 
             Assert.AreEqual(defaultJournal.QueueId, baseJournal.QueueId);

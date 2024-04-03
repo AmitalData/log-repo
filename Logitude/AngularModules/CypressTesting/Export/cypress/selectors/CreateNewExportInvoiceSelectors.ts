@@ -20,6 +20,7 @@ export class CreateNewExportInvoiceSelectors {
     public static readonly PreferenceDocumentTypeCode  = '#Customs\\.SupplierInvoice_PreferenceDocumentTypeCode';
     public static readonly DutyRegimeProtocolCode  = '#Customs\\.SupplierInvoice_DutyRegimeProtocolCode';
     public static readonly ExportModificationCurrency  = '#LogLov_Customs\\.SupplierInvoice_ExportModificationCurrency';
+    public static readonly CheckBox = '#Customs\\.SupplierInvoice_IsPreference'
    
 
     public static readonly InsuranceCurrencyTypeCode = '#Customs\\.SupplierInvoiceModification_CurrencyTypeCode';

@@ -20,8 +20,10 @@ import { SystemDefaultsComponent } from './Components/SystemDefaults/SystemDefau
 import { DefaultRatiosComponent } from './Components/SystemDefaults/DefaultRatiosComponent';
  import { ShaamTokensComponent } from './Components/ShaamSettings/shaamTokensComponent';
  import { CustomizedARInvoiceCounterComponent } from './Components/Counters/EditComponents/CustomizedARInvoiceCounterComponent';
- 
-export const Components =
+  
+ import {ReleaseSettingsComponent} from './Components/Workspaces/ReleaseSettingsComponent';
+
+ export const Components =
     [
         GettingStartedComponent,
         SystemDefaultsComponent,
@@ -45,8 +47,9 @@ export const Components =
         DefaultRatiosComponent,
          ShaamTokensComponent,
          CustomizedARInvoiceCounterComponent,
-     ];
-
+         ReleaseSettingsComponent,
+    ];
+ 
 export class ModuleDeclarations {
     public static Get(name: string) {
 
@@ -75,6 +78,7 @@ export class ModuleDeclarations {
             case "DefaultRatiosComponent": { myResult = DefaultRatiosComponent; break; }
              case "ShaamTokensComponent": { myResult = ShaamTokensComponent; break; }  
              case "CustomizedARInvoiceCounterComponent": { myResult = CustomizedARInvoiceCounterComponent; break; }
+            case "ReleaseSettingsComponent": { myResult = ReleaseSettingsComponent; break; }
 
          }
 

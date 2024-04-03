@@ -2,6 +2,7 @@
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityListQueryServices;
+using Logitude.Accounting.Data.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -68,13 +69,25 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 var hashsetallIdAccounts = myGLAccountQueryService.GetAllIdAccountsTypeCat(_Param.Tenant, _Param.GLAccountId, _Param.Category1Id, _Param.Category2Id,
                     _Param.Category3Id, _Param.Category4Id, _Param.Category5Id, _Param.AccountTypeCode, _Param.ChartOfAccountsId, _Param.IncludeChildAccounts,
                     _Param.ChartOfAccountsTypeCode,
-                    _Param.SalesmanId,
+                    _Param.SalesmanId,_Param.CollectorId,
                     includeControlAccount,_Param.UseSecurityLevel);
                 var hash = new HashSet<string>(hashsetallIdAccounts);
                 _allIdAccounts = new List<string>(hash);// hashsetallIdAccounts);
             }
             else
             {
+                if (_Param.GLAccountId != null && _Param.CollectorId != null)
+                {
+                    IAccountingContext context = AccountingContext.GetContext(_Param.Tenant);
+                    GLAccountRepository repository = new GLAccountRepository(context);
+
+                    var myCollector = repository.GetCollectorByGLAccountId(_Param.Tenant, _Param.GLAccountId);
+                    if (myCollector != _Param.CollectorId)
+                    {
+                        _allIdAccounts = new List<string>();
+                        return;
+                    }
+                }
                 _allIdAccounts = new List<string>() { this._Param.GLAccountId };
             }
             if (_Param.IncludeRelatedCurrenciesAccount)
@@ -122,6 +135,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
         public bool? IsReconciled { get; set; }
         public string ChartOfAccountsTypeCode { get;  set; }
         public string SalesmanId { get; set; }
+        public string CollectorId { get; set; }
         public bool UseSecurityLevel { get; set; }
 
         //public bool IncludeRelatedCurrenciesAccount { get; set; }

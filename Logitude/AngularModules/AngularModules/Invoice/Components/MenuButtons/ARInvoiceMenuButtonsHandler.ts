@@ -63,19 +63,8 @@ export class ARInvoiceMenuButtonsHandler {
                                 button.IsHidden = true;
                             }
                             else {
-
-
-                                myButtonIsDisabled = !InvoiceTool.IsEditingARInvoiceEnabled(this.EntityPM);
-
-                                if (this.EntityPM.IsConstituentInvoice) {
-                                    if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
-                                        if (this.EntityPM.IsAutoCredit) {
-                                            myButtonIsDisabled = false;
-                                        }
-                                    }
-                                }
-
-                                button.LabelTextCodeCode = (this.EntityPM.IsConstituentInvoice) ? "General.B.Save" : "ARInvoice.B.SaveAsDraft";
+                                // display always the save button. show "save" label for all status different from draft
+                                button.LabelTextCodeCode = (this.EntityPM.StatusCode && this.EntityPM.StatusCode != "DR")? "General.B.Save": "ARInvoice.B.SaveAsDraft";
                             }
                             break;
                         }
@@ -548,6 +537,7 @@ export class ARInvoiceMenuButtonsHandler {
 
                 if (isSaveSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.CurrentSession.CurrentEditComponent.BuildHeaderScreen();
 
                     if (this.isPrintRequested || this.addDocumentFilling) {
                         var isShowPrintWindow:Boolean = this.menuButtonClicked.EventCode == "PrintInvoice";

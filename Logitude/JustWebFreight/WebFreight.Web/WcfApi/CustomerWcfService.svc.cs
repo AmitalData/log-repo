@@ -31,6 +31,7 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityLists;
+using Logitude.Accounting.BL.Utils;
 
 namespace WebFreight.Web.WcfApi
 {
@@ -532,10 +533,11 @@ namespace WebFreight.Web.WcfApi
                         service.SetChangeSet(new List<CustomerSalesNotePM>(), new List<CustomerProductPM>(), new List<CustomerCompetitorPM>(), new List<CustomerAdditionalServicePM>(), entityPM.CustomerSalesmanByProducts, entityPM.CustomerAccountManagerByProducts, entityPM.CustomerCustomsAgentByProducts, entityPM.CustomerForwarderByProducts, entityPM.CustomerMediatorByProducts, entityPM.CardExternalCodeByCurrencies, entityPM.CustomerProductItems);
                         service.Update();
                     }
+					CardGLAccountConnectBatch CardGLAccountConnectBatch = new CardGLAccountConnectBatch();
+					CardGLAccountConnectBatch.ConnectSingleCardToGLAccountInBatch(entityPM.Tenant, entityPM.Id);
 
 
-
-                    response.Result = entityPM.Id;
+					response.Result = entityPM.Id;
                     scope.Complete();
                     return response;
                 }

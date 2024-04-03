@@ -25,7 +25,8 @@
                                             [DataContext]="DataContext"
                                             [ColumnsWidths]="ColumnsWidths"
                                             [SelectedValue]="DataContext.ChargesTypeId"
-                                            [LookUpTableName]="'ChargesType'">
+                                            [LookUpTableName]="'ChargesType'"
+                                            [QueryFilterItems]="ChargeTypesQueryFilters">
                                     </LogLov>
                                 </td>
 
@@ -101,7 +102,8 @@
                                             [SelectedValue]="DataContext.VendorId"
                                             [LookUpTableName]="'Card'"
                                             [StartSearchFromChar]="3"
-                                            [StartSearchFromNumber]="6">
+                                            [StartSearchFromNumber]="5"
+                                            [QueryFilterItems]="GLAccountsFilterItems">
                                     </LogLov>
                                 </td>
 

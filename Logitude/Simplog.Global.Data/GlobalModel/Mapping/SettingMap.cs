@@ -79,6 +79,7 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.DNSIPAddress).HasMaxLength(1000).IsUnicode(false);
             this.Property(t => t.AzurePrincipalSecretKey).HasMaxLength(1000).IsUnicode(false);
 			this.Property(t => t.WindWardSettings).HasMaxLength(1000).IsUnicode(false);
+			this.Property(t => t.LogitudeIISURL).HasMaxLength(1000).IsUnicode(false);
 
 			// Table & Column Mappings
 			this.ToTable("Settings");
@@ -170,6 +171,7 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.ReleaseNotesURL).HasColumnName("ReleaseNotesURL");
             this.Property(t => t.TMPersonalAccessToken).HasColumnName("TMPersonalAccessToken");
 			this.Property(t => t.WindWardSettings).HasColumnName("WindWardSettings");
+			this.Property(t => t.LogitudeIISURL).HasColumnName("LogitudeIISURL");
 
 		}
 	}

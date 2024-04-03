@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Objects;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
@@ -17,6 +18,14 @@ namespace Logitude.Server.Tools.Utils
     {
         static Thread writeLogLoop = null;
         static Dictionary<string, string> suffixs = null;
+        public static readonly NLog.Logger NLogger = NLog.LogManager.GetLogger("AmitalLogger");
+
+        private static void InitNlogConfig()
+        {
+            if (NLog.LogManager.Configuration == null)
+               NLog.LogManager.Configuration = new NLog.Config.XmlLoggingConfiguration(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "NLog.config"));
+
+        }
         delegate DialogResult Show(string text, string caption);
         static ConcurrentQueue<Tuple<string, bool, string>> cq = null;
         static Dictionary<string, Dictionary<string, StreamWriter>> dicStream = null;
@@ -146,14 +155,19 @@ namespace Logitude.Server.Tools.Utils
                     UIErrorBufferAt = DateTime.Now;
                 }
                 #endregion
+
+                LogError(mess + " " + suffix);
             }
             else
             {
                 logMe = new LogMeDelegate(LogMessage);
 
+                LogInfo(mess + " " + suffix);
+
             }
             logMe.BeginInvoke(mess, suffix, null, null);
 
+            
         }
 
         private delegate void LogMeDelegate(string mess, string suffix);
@@ -458,13 +472,20 @@ namespace Logitude.Server.Tools.Utils
         }
 
 
-
-
-
         public static string WorkingDir = "";
         public static string OverrideExecutablePath = "";
 
+        #region Nlog functions
 
+        public static void LogDebug(string mess, params object[] args)
+        {
+            LogDebug(null, mess, args);
+        }
+        public static void LogDebug(Exception ex, string mess, params object[] args)
+        {
+
+            LogToNlog(NLog.LogLevel.Debug, ex, mess, args);
+        }
 
         public static bool ToLogUntilDateyyyyMMdd(string appSettingsLogUntilDateyyyyMMdd, DateTime? graceTimeUntill = null)
         {
@@ -499,4 +520,158 @@ namespace Logitude.Server.Tools.Utils
 
         }
     }
+
+        public static void LogInfo(string mess, params object[] args)
+        {
+            LogInfo(null, mess, args);
+        }
+        public static void LogInfo(Exception ex, string mess, params object[] args)
+        {
+
+            LogToNlog(NLog.LogLevel.Info, ex, mess, args);
+        }
+
+        public static void LogWarn(string mess, params object[] args)
+        {
+            LogWarn(null, mess, args);
+        }
+        public static void LogWarn(Exception ex, string mess, params object[] args)
+        {
+
+            LogToNlog(NLog.LogLevel.Warn, ex, mess, args);
+        }
+
+        public static void LogError(string mess, params object[] args)
+        {
+            LogError(null, mess, args);
+        }
+        public static void LogError(Exception ex, string mess, params object[] args)
+        {
+
+            LogToNlog(NLog.LogLevel.Error, ex, mess, args);
+        }
+
+        public static void LogFatal(string mess, params object[] args)
+        {
+            LogFatal(null, mess, args);
+        }
+        public static void LogFatal(Exception ex, string mess, params object[] args)
+        {
+
+            LogToNlog(NLog.LogLevel.Fatal, ex, mess, args);
+        }
+
+        public static void LogTrace(string mess, params object[] args)
+        {
+            LogTrace(null, mess, args);
+        }
+        public static void LogTrace(Exception ex, string mess, params object[] args)
+        {
+
+            LogToNlog(NLog.LogLevel.Trace, ex, mess, args);
+        }
+
+
+        private static void LogToNlog(NLog.LogLevel level, Exception exception, string mess, params object[] args)
+        {
+
+            InitNlogConfig();
+
+            switch (level.Ordinal)
+            {
+                case 1:// NLog.LogLevel.Debug:
+                    NLogger.Debug(exception, mess, args);
+                    break;
+                case 2:// NLog.LogLevel.Info:
+                    NLogger.Info(exception, mess, args);
+                    break;
+                case 3:// NLog.LogLevel.Warn:
+                    NLogger.Warn(exception, mess, args);
+                    break;
+                case 4: // NLog.LogLevel.Error:
+                    NLogger.Error(exception, mess, args);
+                    break;
+                case 5:// NLog.LogLevel.Fatal:                       
+                    NLogger.Fatal(exception, mess, args);
+                    break;
+
+                case 0:
+                    NLogger.Trace(exception, mess, args);
+                    break;
+
+
+                default:
+                    break;
+            }
+
+
+        }
+
+        #endregion
+    }
+
+
+
+    //public static class IQueryableExtensions
+    //{
+    //    /// <summary>
+    //    /// For an Entity Framework IQueryable, returns the SQL with inlined Parameters.
+    //    /// </summary>
+    //    /// <typeparam name="T"></typeparam>
+    //    /// <param name="query"></param>
+    //    /// <returns></returns>
+    //    public static string ToTraceQuery<T>(this IQueryable<T> query)
+    //    {
+    //        ObjectQuery<T> objectQuery = GetQueryFromQueryable(query);
+
+    //        var result = objectQuery.ToTraceString();
+    //        foreach (var parameter in objectQuery.Parameters)
+    //        {
+    //            var name = "@" + parameter.Name;
+    //            var value = parameter.Value is null ? "NULL" : "'" + parameter.Value.ToString() + "'";
+
+    //            DateTime dt = new DateTime();
+    //            if (value != null && value.ToString().Length > 10 && DateTime.TryParse(value.Substring(1,11), out dt))
+    //            {
+    //                value = string.Format("cast('{0}' as date)", dt.ToString("yyyy-MM-dd"));
+    //            }
+
+    //            result = result.Replace(name, value);
+    //        }
+
+    //        return result;
+    //    }
+
+    //    /// <summary>
+    //    /// For an Entity Framework IQueryable, returns the SQL and Parameters.
+    //    /// </summary>
+    //    /// <typeparam name="T"></typeparam>
+    //    /// <param name="query"></param>
+    //    /// <returns></returns>
+    //    public static string ToTraceString<T>(this IQueryable<T> query)
+    //    {
+    //        ObjectQuery<T> objectQuery = GetQueryFromQueryable(query);
+
+    //        var traceString = new StringBuilder();
+
+    //        traceString.AppendLine(objectQuery.ToTraceString());
+    //        traceString.AppendLine();
+
+    //        foreach (var parameter in objectQuery.Parameters)
+    //        {
+    //            traceString.AppendLine(parameter.Name + " [" + parameter.ParameterType.FullName + "] = " + parameter.Value);
+    //        }
+
+    //        return traceString.ToString();
+    //    }
+
+    //    private static System.Data.Entity.Core.Objects.ObjectQuery<T> GetQueryFromQueryable<T>(IQueryable<T> query)
+    //    {
+    //        var internalQueryField = query.GetType().GetFields(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).Where(f => f.Name.Equals("_internalQuery")).FirstOrDefault();
+    //        var internalQuery = internalQueryField.GetValue(query);
+    //        var objectQueryField = internalQuery.GetType().GetFields(System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance).Where(f => f.Name.Equals("_objectQuery")).FirstOrDefault();
+    //        return objectQueryField.GetValue(internalQuery) as System.Data.Entity.Core.Objects.ObjectQuery<T>;
+    //    }
+    //}
+
 }

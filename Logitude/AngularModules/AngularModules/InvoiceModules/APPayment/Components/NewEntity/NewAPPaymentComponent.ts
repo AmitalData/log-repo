@@ -46,13 +46,15 @@ export class NewAPPaymentComponent extends BaseComponent implements OnInit {
     DisplayLocalFieldsFromList: string;
     VendorLovSizeForFullAccounting: number;
     vendorAddressId: string;
+    public GLAccountsFilterItems: ApiQueryFilters;
+
     @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     constructor(private _entityResourceService: EntityResourceService) {
         super();
         this.accountingActivated = SessionLocator.TenantPM.AccountingActivated;
         this._entityResourceService.getEntityResourceByTableName("APPayment", 0).subscribe((response: any) => { });
         this._entityResourceService.getEntityResourceByTableName("APInvoice", 0).subscribe((response: any) => { });
-
+        this.InitLOVFilters();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
 
         this.TodayDate = DateTool.GetCurrentDateAsUtc();
@@ -66,7 +68,10 @@ export class NewAPPaymentComponent extends BaseComponent implements OnInit {
             this.IsEditExchangeRateVisible = true;
         }
     }
-
+    InitLOVFilters() {
+        this.GLAccountsFilterItems = new ApiQueryFilters();
+        this.GLAccountsFilterItems.addAdditionalFilter("GLAccountId", "null", null, null, "NotEqual", false, false, false, "string");
+    }
     InitializeInvoice() {
         if (this.invoicePm == null) {
             this.invoicePm = new APInvoicePM();

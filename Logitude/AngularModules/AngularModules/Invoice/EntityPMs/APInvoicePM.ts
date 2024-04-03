@@ -33,7 +33,7 @@ export class APInvoicePM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-          this.UIProperties = new UIProperties(this); 
+		            this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -862,6 +862,16 @@ export class APInvoicePM {
     private totalEquation: string;
     public get TotalEquation() { return this.totalEquation; }
     public set TotalEquation(newValue: string) { if (this.totalEquation != newValue) { this.totalEquation = newValue; this.MarkAsDirty("TotalEquation"); } }
+       
+	 
+    private confirmationNumber: string;
+    public get ConfirmationNumber() { return this.confirmationNumber; }
+    public set ConfirmationNumber(newValue: string) { if (this.confirmationNumber != newValue) { this.confirmationNumber = newValue; this.MarkAsDirty("ConfirmationNumber"); } }
+       
+	 
+    private confirmationNumberStatus: string;
+    public get ConfirmationNumberStatus() { return this.confirmationNumberStatus; }
+    public set ConfirmationNumberStatus(newValue: string) { if (this.confirmationNumberStatus != newValue) { this.confirmationNumberStatus = newValue; this.MarkAsDirty("ConfirmationNumberStatus"); } }
        
 	 
 

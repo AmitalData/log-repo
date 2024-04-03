@@ -160,11 +160,11 @@ namespace WebFreight.Web.WebPages
                         {
                             fileName = fileName.Split(new string[] { "!BIReportName=" }, StringSplitOptions.None)[1];
                         }
-                        if(QName != null)
+                         if(QName != null)
                             documentName = QName + ".xlsx";
                         else
                             documentName = fileName + ".xlsx";
-                    }
+                     }
                     else
                     {
                         HttpContext.Current.Response.ContentType = "application/" + "vnd.ms-excel";

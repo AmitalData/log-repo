@@ -349,8 +349,170 @@ namespace Logitude.Accounting.BL.CoreBL
             
         }
 
-        void CheckDbIntegrityOld()
+        //void CheckDbIntegrityOld()
+        //{
+        //    var sw = Stopwatch.StartNew();
+        //    string debugIt = "";
+        //    try
+        //    {
+
+
+        //        bool stopJournalApproval = true;
+        //        if (stopJournalApproval)
+        //        {
+        //            TODO_StopJournalApproval();
+        //        }
+        //        var startDayOfMonth = new DateTime(_SeedDate.Date.Year, _SeedDate.Date.Month, 1);
+        //        var endDayOfMonth = //start.AddMonths(1).AddMinutes(-1);
+        //            new DateTime(_SeedDate.Date.Year, _SeedDate.Date.Month, DateTime.DaysInMonth(_SeedDate.Date.Year, _SeedDate.Date.Month));
+
+        //        List<GLAccountTotalByMonthPM> dbGLATotalByMonths;
+        //        List<GLAccountTotalByMonth> calcGLATotalByMonthFromLTrans;
+        //        using (var scope = TransactionFactory.GetNewTransaction())
+        //        {
+        //            _AccountingContext = AccountingContext.GetContext(_Tenant);
+        //            var myGLAccountTotalByMonthQueryService = new GLAccountTotalByMonthQueryService(_AccountingContext);
+        //            dbGLATotalByMonths = myGLAccountTotalByMonthQueryService.GetMonthTotals(_SeedDate.Date.Year, _SeedDate.Date.Month, _Tenant);
+
+
+        //            var qs = new LedgerTransactionQueryService(_AccountingContext);
+        //            calcGLATotalByMonthFromLTrans = qs.CalcGLAccountTotalByMonthByAccountingDate(startDayOfMonth, endDayOfMonth, _Tenant);
+
+
+
+        //        }
+        //        var clacKeys = calcGLATotalByMonthFromLTrans.Select(rec => new { rec.AccountId, rec.CurrencyId });
+        //        var dbKeys = dbGLATotalByMonths.Select(rec => new { rec.AccountId, rec.CurrencyId });
+
+        //        var haveOnlyAtLedgerTransaction = clacKeys.Except(dbKeys);
+        //        var haveOnlyAtGLAccountTotalByMonth = dbKeys.Except(clacKeys);
+
+        //        var qDifferent = (
+        //            from db in dbGLATotalByMonths
+        //            join calc in calcGLATotalByMonthFromLTrans
+        //            on new { db.AccountId, db.CurrencyId } equals new { calc.AccountId, calc.CurrencyId }
+        //            //into dbJoinCalc
+        //            where
+        //            !db.ForeignAmountCredit.Equals(calc.ForeignAmountCredit) ||
+        //            !db.ForeignAmountDebit.Equals(calc.ForeignAmountDebit) ||
+        //            !db.LocalAmountCredit.Equals(calc.LocalAmountCredit) ||
+        //            !db.LocalAmountDebit.Equals(calc.LocalAmountDebit)
+        //            select new { db, calc }
+        //             );
+        //        var diff = qDifferent.ToList();
+        //        debugIt = String.Format("year{0}:Month:{1}:haveOnlyAtLedgerTransaction{2}:haveOnlyAtGLAccountTotalByMonth{3}:Different{4}",
+        //            _SeedDate.Date.Year, _SeedDate.Date.Month, haveOnlyAtLedgerTransaction.Count().ToString(), haveOnlyAtGLAccountTotalByMonth.Count().ToString(), qDifferent.Count().ToString());
+        //    }
+        //    finally
+        //    {
+        //        Debug.WriteLine(debugIt);
+        //    }
+
+
+        //}
+
+
+        public void FixDbIntegrityFromLedgeToAllMonths(ref List<Data.Repositories.GLAccountTotalByMonthsDTO> changedList)
         {
+
+            if (this._AccountingContext == null) this._AccountingContext = AccountingContext.GetContext(this._Tenant); ;
+            var qs = new LedgerTransactionQueryService(_AccountingContext);
+
+            var listOfDateTypeValues = new List<string>() {
+                    GLAccountTotalDateTypeValues.Accountingdate,
+                    GLAccountTotalDateTypeValues.DueDate,
+                    GLAccountTotalDateTypeValues.DocumentDate,
+                };
+
+            foreach (string dateTypeValue in listOfDateTypeValues)
+            {
+                DateTime firstDateDB = qs.GetFirstDateByDateType(dateTypeValue, this._GLAccountId, this._Tenant);
+                DateTime firstDate = new DateTime(firstDateDB.Date.Year, firstDateDB.Date.Month, 1);
+
+                DateTime today = DateTime.Today;
+                DateTime firstDateCurrent = new DateTime(today.Date.Year, today.Date.Month, 1);
+
+                for (DateTime dt = firstDate; dt <= firstDateCurrent; dt = dt.AddMonths(1))
+                {
+                    this.CompareReport = new CompareReportM();
+                    this.CompareReport.GLAccountTotalByMonthsList = new List<GLAccountTotalByMonthsDTO>();
+                    CheckDbIntegrityByMonthDateType(dt, dateTypeValue, ref changedList);
+
+                    if (this.CompareReport.GLAccountTotalByMonthsList != null && this.CompareReport.GLAccountTotalByMonthsList.Count > 0)
+                    {
+                        if (this.CompareReport.GLAccountTotalByMonthsList.Any(r => r.CHANGE_TYPE == const_qNotinLedgerTransaction))
+                        {
+                            var res = this.CompareReport.GLAccountTotalByMonthsList.Where(r => r.CHANGE_TYPE == const_qNotinLedgerTransaction).ToList();
+                            /// OHAD 2022 11 10 - NEW FEATURE CREATE 170020
+                            if (res.Any(r => r.ForeignAmountCredit != 0)
+                                || res.Any(r => r.ForeignAmountDebit != 0)
+                                || res.Any(r => r.LocalAmountCredit != 0)
+                                || res.Any(r => r.LocalAmountDebit != 0)
+                                )
+                            {
+                                var row = res.First();
+                                string total = $"Example- GLAccountTotalByMonth DateType:{row.DateTypeValue}  Year:{row.Year} Month:{row.Month} AccountId:{row.AccountId} ";
+                                throw new Exception("contains qNotinLedgerTransaction FIX - the problem there is Total but any LedgerTransaction" +
+                                "Deleting GLAccountTotalByMonths Requires A deeper examination - U do That not me!!!! " + total);
+                            }
+                        }
+                        using (var scope = TransactionFactory.GetNewSerializableTransaction())
+                        {
+                            _AccountingContext = AccountingContext.GetContext(_Tenant);
+                            var myGLAccountTotalByMonthRepository = new GLAccountTotalByMonthRepository(_AccountingContext);
+                            var tInsert = this.CompareReport.GLAccountTotalByMonthsList.Where(r => r.CHANGE_TYPE == Const_qNotinTotalByMonth).ToList();
+                            var tDeltaUpdate = this.CompareReport.GLAccountTotalByMonthsList.Where(r => r.CHANGE_TYPE == Const_qDiff).ToList();
+                            tInsert.ForEach(r =>
+                            {
+                                myGLAccountTotalByMonthRepository.Add(new GLAccountTotalByMonth()
+                                {
+                                    Tenant = this._Tenant,
+                                    AccountId = r.AccountId,
+                                    CurrencyId = r.CurrencyId,
+                                    DateTypeCode = r.DateTypeValue,// "1",// BETA-TO DO ...
+                                    Year = r.Year,
+                                    Month = r.Month,
+                                    ForeignAmountDebit = r.ForeignAmountDebit,
+                                    LocalAmountCredit = r.LocalAmountCredit,
+                                    ForeignAmountCredit = r.ForeignAmountCredit,
+                                    LocalAmountDebit = r.LocalAmountDebit
+
+
+                                });
+                            });
+                            tDeltaUpdate.ForEach(r =>
+                            {
+                                var poco = myGLAccountTotalByMonthRepository.GetSingle(r.AccountId, r.DateTypeValue, r.Year, r.Month, r.CurrencyId, _Tenant);
+                                poco.ForeignAmountCredit -= r.ForeignAmountCredit;
+
+                                poco.ForeignAmountDebit -= r.ForeignAmountDebit;
+                                poco.LocalAmountCredit -= r.LocalAmountCredit;
+
+                                poco.LocalAmountDebit -= r.LocalAmountDebit;
+                                myGLAccountTotalByMonthRepository.Update(poco);
+
+                            });
+                            myGLAccountTotalByMonthRepository.SubmitChanges();
+                            scope.Complete();
+
+
+                        }
+                    }
+                }
+            }
+
+            if (changedList == null || changedList.Count == 0)
+            {
+                throw new Exception("is ok - nothing done  !!!!");
+            }
+
+        }
+
+
+
+        public void CheckDbIntegrityByMonthDateType(DateTime seedDate, string dateTypeValue, ref List<Data.Repositories.GLAccountTotalByMonthsDTO> changedList)
+        {
+
             var sw = Stopwatch.StartNew();
             string debugIt = "";
             try
@@ -362,46 +524,181 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
                     TODO_StopJournalApproval();
                 }
-                var startDayOfMonth = new DateTime(_SeedDate.Date.Year, _SeedDate.Date.Month, 1);
+                var startDayOfMonth = new DateTime(seedDate.Date.Year, seedDate.Date.Month, 1);
                 var endDayOfMonth = //start.AddMonths(1).AddMinutes(-1);
-                    new DateTime(_SeedDate.Date.Year, _SeedDate.Date.Month, DateTime.DaysInMonth(_SeedDate.Date.Year, _SeedDate.Date.Month));
+                    new DateTime(seedDate.Date.Year, seedDate.Date.Month, DateTime.DaysInMonth(seedDate.Date.Year, seedDate.Date.Month));
 
-                List<GLAccountTotalByMonthPM> dbGLATotalByMonths;
-                List<GLAccountTotalByMonth> calcGLATotalByMonthFromLTrans;
-                using (var scope = TransactionFactory.GetNewTransaction())
-                {
-                    _AccountingContext = AccountingContext.GetContext(_Tenant);
-                    var myGLAccountTotalByMonthQueryService = new GLAccountTotalByMonthQueryService(_AccountingContext);
-                    dbGLATotalByMonths = myGLAccountTotalByMonthQueryService.GetMonthTotals(_SeedDate.Date.Year, _SeedDate.Date.Month, _Tenant);
+                var listOfDateTypeValues = new List<string>() {
+                    GLAccountTotalDateTypeValues.Accountingdate,
+                    GLAccountTotalDateTypeValues.DueDate,
+                    GLAccountTotalDateTypeValues.DocumentDate,
+                };
+                var myGLAccountTotalByMonthsList = new List<GLAccountTotalByMonthsDTO>();
+//              foreach (string dateTypeValue in listOfDateTypeValues)
+//              {
+                    using (var scope = TransactionFactory.GetNewTransaction(TimeSpan.FromMinutes(25)))
+                    {
+                        _AccountingContext = AccountingContext.GetContext(_Tenant);
+
+                        if ((this._AccountingContext as System.Data.Entity.DbContext).Database.CommandTimeout < 1200)//wrokerrole mode !!!
+                        {
+                            (this._AccountingContext as System.Data.Entity.DbContext).Database.CommandTimeout = 1200;
+                        }
+                        var myGLAccountRepo = new GLAccountRepository(_AccountingContext);
+                        var quaryAllControlAccount = myGLAccountRepo.GetQuaryAllControlAccount(_Tenant);
+                        var myGLAccountTotalByMonthRepo = new GLAccountTotalByMonthRepository(_AccountingContext);
+                        var quaryablMonthTotals1 = myGLAccountTotalByMonthRepo.GetQuaryableMonthTotals(seedDate.Date.Year, seedDate.Date.Month, _Tenant,
+                            dateTypeValue/*GLAccountTotalDateTypeValues.Accountingdate*/);
 
 
-                    var qs = new LedgerTransactionQueryService(_AccountingContext);
-                    calcGLATotalByMonthFromLTrans = qs.CalcGLAccountTotalByMonthByAccountingDate(startDayOfMonth, endDayOfMonth, _Tenant);
+                        var quaryablMonthTotalsWithoutControl = (
+                            from t in quaryablMonthTotals1
+                            where !(from controlAcc in quaryAllControlAccount select controlAcc.Id)
+                                    .Contains(t.AccountId)
+                            select t);
+
+                        var quaryablMonthTotalDTO = quaryablMonthTotalsWithoutControl
+                            .Select(totalByMonth =>
+                            new GLAccountTotalByMonthsDTO()
+                            {
+
+                                Tenant = totalByMonth.Tenant,
+                                AccountId = totalByMonth.AccountId,
+                                CurrencyId = totalByMonth.CurrencyId,
+                                Year = totalByMonth.Year,
+                                Month = totalByMonth.Month,
+                                LocalAmountCredit = totalByMonth.LocalAmountCredit,
+                                LocalAmountDebit = totalByMonth.LocalAmountDebit,
+                                ForeignAmountCredit = (decimal)totalByMonth.ForeignAmountCredit,
+                                ForeignAmountDebit = (decimal)totalByMonth.ForeignAmountDebit,
+                                CHANGE_TYPE = ""
+                            });
+
+
+                        List<string> listOfAccId = null;
+                        if (!String.IsNullOrWhiteSpace(this._GLAccountId))
+                        {
+                            quaryablMonthTotalDTO = quaryablMonthTotalDTO.Where(r => r.AccountId == this._GLAccountId);
+                            listOfAccId = new List<string>() { this._GLAccountId };
+                        }
+
+                        var ledgerTransactionRepository = new LedgerTransactionRepository(_AccountingContext);
+                        var qLedgerAsGLAccountTotalByMonthByAccountingDate = ledgerTransactionRepository.GetQueryableGLAccountTotalByMonthByDateTypeCode(
+                            dateTypeValue, startDayOfMonth, endDayOfMonth, _Tenant, listOfAccId);
 
 
 
-                }
-                var clacKeys = calcGLATotalByMonthFromLTrans.Select(rec => new { rec.AccountId, rec.CurrencyId });
-                var dbKeys = dbGLATotalByMonths.Select(rec => new { rec.AccountId, rec.CurrencyId });
 
-                var haveOnlyAtLedgerTransaction = clacKeys.Except(dbKeys);
-                var haveOnlyAtGLAccountTotalByMonth = dbKeys.Except(clacKeys);
+                        var qNotinLedgerTransaction = (from totalByMonth in quaryablMonthTotalDTO
+                                                       join ledgerTransaction in qLedgerAsGLAccountTotalByMonthByAccountingDate
+                                                       on
+                                                       new { totalByMonth.AccountId, totalByMonth.CurrencyId, totalByMonth.Year, totalByMonth.Month } equals
+                                                       new { ledgerTransaction.AccountId, ledgerTransaction.CurrencyId, ledgerTransaction.Year, ledgerTransaction.Month }
+                                                       into joinT
+                                                       from joinr in joinT.DefaultIfEmpty()
+                                                       where joinr == null
 
-                var qDifferent = (
-                    from db in dbGLATotalByMonths
-                    join calc in calcGLATotalByMonthFromLTrans
-                    on new { db.AccountId, db.CurrencyId } equals new { calc.AccountId, calc.CurrencyId }
-                    //into dbJoinCalc
-                    where
-                    !db.ForeignAmountCredit.Equals(calc.ForeignAmountCredit) ||
-                    !db.ForeignAmountDebit.Equals(calc.ForeignAmountDebit) ||
-                    !db.LocalAmountCredit.Equals(calc.LocalAmountCredit) ||
-                    !db.LocalAmountDebit.Equals(calc.LocalAmountDebit)
-                    select new { db, calc }
-                     );
-                var diff = qDifferent.ToList();
-                debugIt = String.Format("year{0}:Month:{1}:haveOnlyAtLedgerTransaction{2}:haveOnlyAtGLAccountTotalByMonth{3}:Different{4}",
-                    _SeedDate.Date.Year, _SeedDate.Date.Month, haveOnlyAtLedgerTransaction.Count().ToString(), haveOnlyAtGLAccountTotalByMonth.Count().ToString(), qDifferent.Count().ToString());
+                                                       select new GLAccountTotalByMonthsDTO()
+                                                       {
+                                                           Tenant = totalByMonth.Tenant,
+                                                           AccountId = totalByMonth.AccountId,
+                                                           CurrencyId = totalByMonth.CurrencyId,
+                                                           Year = totalByMonth.Year,
+                                                           Month = totalByMonth.Month,
+                                                           LocalAmountCredit = totalByMonth.LocalAmountCredit,
+                                                           LocalAmountDebit = totalByMonth.LocalAmountDebit,
+                                                           ForeignAmountCredit = totalByMonth.ForeignAmountCredit,
+                                                           ForeignAmountDebit = totalByMonth.ForeignAmountDebit,
+                                                           CHANGE_TYPE = const_qNotinLedgerTransaction
+                                                       }
+                                                       );
+
+                        var qNotinTotalByMonth = (from ledgerTransaction in qLedgerAsGLAccountTotalByMonthByAccountingDate
+                                                  join totalByMonth in quaryablMonthTotalDTO
+                                                  on
+                                                  new { ledgerTransaction.AccountId, ledgerTransaction.CurrencyId, ledgerTransaction.Year, ledgerTransaction.Month }
+                                                  equals
+                                                  new { totalByMonth.AccountId, totalByMonth.CurrencyId, totalByMonth.Year, totalByMonth.Month }
+                                                  into joinT
+                                                  from joinr in joinT.DefaultIfEmpty()
+                                                  where joinr == null
+                                                  select new GLAccountTotalByMonthsDTO()
+                                                  {
+                                                      Tenant = ledgerTransaction.Tenant,
+                                                      AccountId = ledgerTransaction.AccountId,
+                                                      CurrencyId = ledgerTransaction.CurrencyId,
+                                                      Year = ledgerTransaction.Year,
+                                                      Month = ledgerTransaction.Month,
+                                                      LocalAmountCredit = ledgerTransaction.LocalAmountCredit,
+                                                      LocalAmountDebit = ledgerTransaction.LocalAmountDebit,
+                                                      ForeignAmountCredit = ledgerTransaction.ForeignAmountCredit,
+                                                      ForeignAmountDebit = ledgerTransaction.ForeignAmountDebit,
+                                                      CHANGE_TYPE = Const_qNotinTotalByMonth
+                                                  });
+
+
+                        var qDiff = (from totalByMonth in quaryablMonthTotalDTO
+                                     join ledgerTransaction in qLedgerAsGLAccountTotalByMonthByAccountingDate
+                                     on
+                                     new { totalByMonth.AccountId, totalByMonth.CurrencyId, totalByMonth.Year, totalByMonth.Month } equals
+                                     new { ledgerTransaction.AccountId, ledgerTransaction.CurrencyId, ledgerTransaction.Year, ledgerTransaction.Month }
+                                     into joinT
+                                     from joinr in joinT
+                                     where
+                        !totalByMonth.ForeignAmountCredit.Equals(joinr.ForeignAmountCredit) ||
+                        !totalByMonth.ForeignAmountDebit.Equals(joinr.ForeignAmountDebit) ||
+
+
+
+                        !totalByMonth.LocalAmountCredit.Equals(joinr.LocalAmountCredit) ||
+                        !totalByMonth.LocalAmountDebit.Equals(joinr.LocalAmountDebit)
+                                     select new GLAccountTotalByMonthsDTO()
+                                     {
+
+                                         Tenant = totalByMonth.Tenant,
+                                         AccountId = totalByMonth.AccountId,
+                                         CurrencyId = totalByMonth.CurrencyId,
+                                         Year = totalByMonth.Year,
+                                         Month = totalByMonth.Month,
+                                         LocalAmountCredit = totalByMonth.LocalAmountCredit - joinr.LocalAmountCredit,
+                                         LocalAmountDebit = totalByMonth.LocalAmountDebit - joinr.LocalAmountDebit,
+                                         ForeignAmountCredit = totalByMonth.ForeignAmountCredit - joinr.ForeignAmountCredit,
+                                         ForeignAmountDebit = totalByMonth.ForeignAmountDebit - joinr.ForeignAmountDebit,
+                                         CHANGE_TYPE = Const_qDiff
+                                     });
+
+                        var GLAccountTotalByMonthsList =
+                            //qNotinLedgerTransaction.Union(qNotinTotalByMonth).Union(qDiff).ToList();
+                            qNotinLedgerTransaction.Take(30)
+                            .Concat(qNotinTotalByMonth.Take(30))
+                            .Concat(qDiff.Take(30)).ToList();
+                        ;
+                        GLAccountTotalByMonthsList.ForEach(
+                            r =>
+                            {
+
+                                r.DateTypeValue = dateTypeValue;
+                                myGLAccountTotalByMonthsList.Add(r);
+                            });
+
+
+                    }
+
+                    CompareReport = new CompareReportM()
+                    {
+                        CompareReportName = "ReverseEngineerTotalByMonthService",
+                        Year = seedDate.Date.Year,
+                        Month = seedDate.Date.Month,
+                        //rows = res,
+                        GLAccountTotalByMonthsList = myGLAccountTotalByMonthsList,
+                        Took = sw.Elapsed
+                    };
+
+                    Convert2DisplayNumber(CompareReport.GLAccountTotalByMonthsList, _Tenant);
+
+                    changedList.AddRange(CompareReport.GLAccountTotalByMonthsList);
+//              }
+
             }
             finally
             {
@@ -410,6 +707,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
         }
+
 
         private void TODO_StopJournalApproval()
         {

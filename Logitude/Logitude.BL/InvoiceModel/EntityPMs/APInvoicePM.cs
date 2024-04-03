@@ -116,6 +116,8 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public bool IsMultipleEntities { get; set; }
         public DateTime? ApprovedDate { get; set; }
         public string ApprovedByUserId { get; set; }
+        public string ConfirmationNumber { get; set; }
+
         public string ApprovedByUserName { get; set; }
         public string VendorContactId { get; set; }
         public string ExternalAccountingEntityId { get; set; }
@@ -358,6 +360,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public bool IsEquipment { get; set; }
         public string ConnectedPaymentsNumbers { get; set; }
         public string TotalEquation { get; set; }
-        public string ConfirmationNumber { get; set; }
+
+       
     }
 }

@@ -47,7 +47,16 @@
                             }}
                         </div>
                     </div>
-
+                    <div *ngIf="FieldName == 'CreditUsed'">
+                        <div [style.text-align]="isRTL ? 'right' : 'left'" style="text-align: left; padding-left: 3px; direction: ltr;">
+                            {{FieldValue| NumbersPipe:'n2'}}
+                        </div>
+                    </div>
+                    <div *ngIf="FieldName == 'Obligo'">
+                        <div [style.text-align]="isRTL ? 'right' : 'left'" style="text-align: left; padding-left: 3px; direction: ltr;">
+                            {{FieldValue| NumbersPipe:'n2'}}
+                        </div>
+                    </div>
                     <div *ngIf="FieldName == 'ForeignBalanceInDue'">
                         <div [style.text-align]="isRTL ? 'right' : 'left'" style="text-align: left; padding-left: 3px;direction: ltr;"
                              [style.color]="FieldValue > 0 ? 'green' : 'red'" [class.black]="FieldValue == 0">
@@ -60,14 +69,14 @@
                         </div>
                     </div>
 
-                    <div *ngIf="FieldName == 'BalanceInForeignCurrency'">
+                    <div *ngIf="FieldName == 'BalanceInForeignCurrency' && !Entity.IsMultiCurrency && Entity.CurrencyCode != 'NIS'">
                         <div [style.text-align]="isRTL ? 'right' : 'left'" style="text-align: left; padding-left: 3px;direction: ltr;"
                              [style.color]="FieldValue > 0 ? 'green' : 'red'" [class.black]="FieldValue == 0">
                             {{
                             FieldValue | NumbersPipe:'n2'
                             }} {{
  (IsHeaderScreenTemplate && Abs(FieldValue) > 0) ?
-                            TenantCurrencySign : ''
+                            Entity.CurrencySign : ''
                             }}
                         </div>
                     </div>
@@ -82,19 +91,7 @@
                             }}
                         </div>
                     </div>
-
-
-                    <div *ngIf="FieldName == 'BalanceInForeignCurrency'">
-                        <div [style.text-align]="isRTL ? 'right' : 'left'" style="text-align: left; padding-left: 3px;direction: ltr;"
-                             [style.color]="FieldValue > 0 ? 'green' : 'red'" [class.black]="FieldValue == 0">
-                            {{
-                            FieldValue | NumbersPipe:'n2'
-                            }} {{
- (IsHeaderScreenTemplate && Abs(FieldValue) > 0) ?
-                            TenantCurrencySign : ''
-                            }}
-                        </div>
-                    </div>
+                    
                     <div *ngIf="FieldName == 'ForeignBalanceInDue'">
                         <div [style.text-align]="isRTL ? 'right' : 'left'" style="text-align: left; padding-left: 3px;direction: ltr;"
                              [style.color]="FieldValue > 0 ? 'green' : 'red'" [class.black]="FieldValue == 0">
@@ -229,7 +226,20 @@
                             Entity.StatusLocalName : Entity.StatusName
                             }}
                         </div>
+                        <div *ngIf="FieldValue == 'In processing'" style="color: rgb(114, 19, 238);">
+                            {{
+ showLocal ?
+                            Entity.StatusLocalName : Entity.StatusName
+                            }}
+                        </div>
+                        <div *ngIf="FieldValue == 'Failed'" style="color: rgb(4, 159, 152);">
+                            {{
+ showLocal ?
+                            Entity.StatusLocalName : Entity.StatusName
+                            }}
+                        </div>
                     </div>
+                 
                     <div *ngIf="FieldName == 'AccountingEntityReference'">
                         <div *ngIf="IsHeaderScreenTemplate">
                             <a href="javascript:;" (click)="OpenSource(Entity.AccountingEntityId)">{{FieldValue}}</a>

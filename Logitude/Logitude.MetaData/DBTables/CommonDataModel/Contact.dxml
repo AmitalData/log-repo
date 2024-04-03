@@ -231,6 +231,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ContactForAccounting"
+    Type="bit">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="ImageDetailId"
     ReferencedTable="ImageDetails"

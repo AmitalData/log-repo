@@ -238,6 +238,14 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         [ForeignKey("IsSigned")]
         public virtual ARInvoicesSignedStatus ARInvoicesSignedStatus { get; set; }
         public string IsSigned { get; set; }
+
         public string ConfirmationNumber { get; set; }
+
+      
+
+        [ForeignKey("ConfirmationNumberStatus")]
+        public virtual ConfirmationNumberStatus Confirmation { get; set; }
+        public string ConfirmationNumberStatus { get; set; }
+
     }
 }

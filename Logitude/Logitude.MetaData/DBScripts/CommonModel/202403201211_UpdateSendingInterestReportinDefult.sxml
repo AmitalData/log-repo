@@ -1,0 +1,11 @@
+﻿<Script DBType="Main" Module="Common">
+  <Sql Version="1">
+    <![CDATA[
+   update Customers
+   set SendingInterestReport = 0
+   where SendingInterestReport is null
+    ]]>
+</Sql>
+</Script>
+
+

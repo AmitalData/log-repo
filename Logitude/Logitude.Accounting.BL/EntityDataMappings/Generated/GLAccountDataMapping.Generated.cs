@@ -57,6 +57,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         Category4Id, 
 	         Category5Id, 
 	         IsVATExempt, 
+	         CollectorId, 
+	         SalesmanUserId, 
 	         DeductionFileTypeId, 
 	         DeductionFileNumber, 
 	         AssessingOfficeCode, 
@@ -83,8 +85,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         CardsDataId, 
 	         PostponedChequesCommission,
              DateFormat,
-			 PaymentTerms
-			
+			 PaymentTerms,
+             ContactId,
         }
 
 
@@ -245,6 +247,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			 CreditUsed,
 			InsuredCreditPercentage,
             DateFormat,
+            ContactId,
+	         ContactName,
         }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -428,6 +432,16 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 				entityPOCO.IsVATExempt = entityPM.IsVATExempt;
 			}
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CollectorId))
+            {
+				entityPOCO.CollectorId = entityPM.CollectorId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SalesmanUserId))
+            {
+				entityPOCO.SalesmanUserId = entityPM.SalesmanUserId;
+			}
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DeductionFileTypeId))
             {
 				entityPOCO.DeductionFileTypeId = entityPM.DeductionFileTypeId;
@@ -555,6 +569,20 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DateFormat))
             {
                 entityPOCO.DateFormat = entityPM.DateFormat;
+            }
+			
+            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DateFormat))
+            {
+                entityPOCO.DateFormat = entityPM.DateFormat;
+            }
+            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DateFormat))
+            {
+                entityPOCO.DateFormat = entityPM.DateFormat;
+            }
+			
+            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ContactId))
+            {
+                entityPOCO.ContactId = entityPM.ContactId;
             }
 
             BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -738,6 +766,16 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.IsVATExempt = entityPOCO.IsVATExempt;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CollectorId))
+            {
+					entityPM.CollectorId = entityPOCO.CollectorId;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SalesmanUserId))
+            {
+					entityPM.SalesmanUserId = entityPOCO.SalesmanUserId;
+            }
+
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DeductionFileTypeId))
             {
 					entityPM.DeductionFileTypeId = entityPOCO.DeductionFileTypeId;
@@ -870,6 +908,12 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
                 entityPM.PaymentTerms = entityPOCO.PaymentTerms;
             }
+
+            if (!CustomMappedPMProperties.Contains(PMPropertyNames.ContactId))
+            {
+					entityPM.ContactId = entityPOCO.ContactId;
+            }
+
         }
 
 		public void PMToOldPM(GLAccountPM entityPM, GLAccountPM oldEntityPM)
@@ -1046,6 +1090,16 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 oldEntityPM.IsVATExempt = entityPM.IsVATExempt;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CollectorId))
+            {
+                oldEntityPM.CollectorId = entityPM.CollectorId;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SalesmanUserId))
+            {
+                oldEntityPM.SalesmanUserId = entityPM.SalesmanUserId;
+            }
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DeductionFileTypeId))
             {
                 oldEntityPM.DeductionFileTypeId = entityPM.DeductionFileTypeId;
@@ -1175,6 +1229,16 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 oldEntityPM.DateFormat = entityPM.DateFormat;
             }
 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PaymentTerms))
+            {
+                oldEntityPM.PaymentTerms = entityPM.PaymentTerms;
+            }
+			
+            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ContactId))
+            {
+                oldEntityPM.ContactId = entityPM.ContactId;
+            }
+			
         }
 
 	    public void EncodeBase64NVARCHARFields(GLAccountPM entityPM)

@@ -26,6 +26,7 @@ import { NewEntityArgs} from '../../Args';
 import {ImportEntityArgs} from '../../../Common/Components/Maintenance/TenantImportComponent';
 import {CachedDataManager} from '../../Utilities/CachedDataManager';
 import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
+import { CardExtendedPMService } from 'Common/Services/ExtendedPMs/CardExtendedPMService';
 
 const localLanguageCode = 'L';
 const englishLanguageCode = 'E';
@@ -104,6 +105,7 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
     UsingLogGridV2: boolean = false;
     SearchFieldName: string = null;
     LanguageFilterValue: string;
+    public isRTL: boolean = false;
     @Input() ForceShowLanguageFilter: boolean = false;
     @Input() ForceShowLocalAndEnglishColumns: boolean = false;
     ObjectFieldCode: string;
@@ -119,6 +121,7 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
         this._entityListService = new EntityListService;
         this.entityPMService = new EntityPMService;
         this.TenantPM = InfraSettings.TenantPM;
+        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         //this.CurrentSession.SubscriptionAdd(
         var UsingV2FeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "LV2")[0];
         if (UsingV2FeatureToggle || SessionLocator.LoggedUserPM.Email == "ahmada@logitudeworld.com") { this.UsingLogGridV2 = true; }
@@ -142,10 +145,12 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
     }
 
     SetWindowArgs(args: CustomEntityArgs) {
+        debugger
         this.ObjectTableName = args.ObjectTableName; // lookup table
         this.ObjectField = args.ObjectField;
         this.ObjectTableId = args.ObjectTableId;
-        this.ObjectTableNamePluralName = TextCodeTranslator.TranslateTablePlural(this.ObjectTableName);
+        this.ObjectTableNamePluralName = this.isRTL?TextCodeTranslator.TranslateTable(this.ObjectTableName)+" "+TextCodeTranslator.Translate("General.O.Mine"):"My "+TextCodeTranslator.TranslateTablePlural(this.ObjectTableName);
+
         this.ShowInActive = args.ShowInActive;
         this.PartnerTypes = args.PartnerTypes;
         this.Args = args;
@@ -279,7 +284,6 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
 
 
     BuildColumns() {
-
         var objectTableId = this.ObjectTableId;
         var lookupFields: any[];
         if (this.DisplayFieldsFromList != null && this.DisplayFieldsFromList != undefined) {
@@ -448,6 +452,11 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
         //}
         //else {
         filters = this.FillTreeFilterDetails(filters);
+        if (rowsObjectTable == "Card"){
+                    
+            return this.cardExtendedPMService.getByCompactFilters(rowsObjectTable, filters);
+
+        }
         return this._entityListService.getByFilters(rowsObjectTable, filters);
         //}
     }
@@ -531,6 +540,7 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
             return tempo;
         },
     };
+    private cardExtendedPMService:CardExtendedPMService=new CardExtendedPMService()
 
     //tenent 0
     getRows2(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
@@ -557,7 +567,7 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
         }
         var parentName = this.GetObjectTableName(this.ObjectTableName);
         var parenttable = window.ObjectTables.filter(d => d.Name === parentName)[0];
-        var inactiveField = window.ObjectFields.filter(d => d.FieldName.toLowerCase() === "inactive" &&( d.ObjectTableId === parenttable.Id || d.ObjectTableId === this.ObjectTable.Id))[0];
+        var inactiveField = window.ObjectFields.filter(d => d.FieldName?.toLowerCase() === "inactive" &&( d.ObjectTableId === parenttable.Id || d.ObjectTableId === this.ObjectTable.Id))[0];
 
         if (inactiveField && !this.ShowInActive) {
             filters.addAdditionalFilter(inactiveField.FieldName, false, null, null, "Equals", false, false, false, null);
@@ -575,6 +585,12 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
        // }
         //else {
             filters = this.FillTreeFilterDetails(filters);
+            if (rowsObjectTable == "Card"){
+                    
+                return this.cardExtendedPMService.getByCompactFilters(rowsObjectTable, filters);
+    
+            }
+
             return this._entityListService.getByFilters(rowsObjectTable, filters);
       //  }
     }

@@ -17,6 +17,7 @@ using Logitude.Server.Tools;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.Accounting.BL.Utils;
 
 namespace WebFreight.Web.WcfApi
 {
@@ -124,8 +125,11 @@ namespace WebFreight.Web.WcfApi
                         service.SetChangeSet(entityPM.CardExternalCodeByCurrencies);
                         service.Update(entityPM);
                     }
+					CardGLAccountConnectBatch CardGLAccountConnectBatch = new CardGLAccountConnectBatch();
+					CardGLAccountConnectBatch.ConnectSingleCardToGLAccountInBatch(entityPM.Tenant, entityPM.Id);
 
-                    response.Result = entityPM.Id;
+
+					response.Result = entityPM.Id;
                     scope.Complete();
                     return response;
                 }
@@ -163,8 +167,8 @@ namespace WebFreight.Web.WcfApi
                 return response;
             }
         }
-
-        private string GetPaymentTermId(AgentPM entityPM, ICommonDataContext commoncontext)
+		
+		private string GetPaymentTermId(AgentPM entityPM, ICommonDataContext commoncontext)
         {
             if (string.IsNullOrEmpty(entityPM.PaymentTermId)) return null;
             PaymentTermRepository paymentTermRepository = new PaymentTermRepository(commoncontext);

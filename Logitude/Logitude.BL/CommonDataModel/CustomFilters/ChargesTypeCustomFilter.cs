@@ -21,11 +21,6 @@ namespace Logitude.BL.CommonDataModel.CustomFilters
         public IQueryable<ChargesType> GetFilteredQuery(QueryOperations operations, IQueryable<ChargesType> queryableData)
         {
 
-            bool IsInterestFeatureVlid = SecurityUtility.CheckFeature("InterestReport", "Module", this.Tenant);
-            if (!IsInterestFeatureVlid)
-            {
-                queryableData = queryableData.Where(s => s.Code != "INT");
-            }
 
 
             List<QueryFilterItem> queryFilters = operations.QueryFilterItems;

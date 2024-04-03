@@ -19,7 +19,7 @@ export class RequestAliases {
     public static readonly ARInvoiceviews = 'ARInvoiceviews';
     public static readonly ARInvoiceViewsGetByFilters = "ARInvoiceViewsGetByFilters"
     public static readonly APPayments = 'APPayments';
-    public static readonly ARPayments = 'ARPayments';
+    public static readonly ARPayments = 'ARPaymentView';
     public static readonly CustomerViews = 'CustomerViews';
     public static readonly Customers = 'Customers';
     public static readonly InvoiceDomain = 'InvoiceDomain';
@@ -285,6 +285,7 @@ export class RequestAliases {
     public static readonly PutAPPayments = 'PutAPPayments';
     public static readonly ARInvoiceView = 'APInvoiceView';
     public static readonly ARPaymentView = 'ARPaymentView';
+    
 
     public static readonly PostGLAccounts = 'PostGLAccounts';
     public static readonly PutGLAccounts = 'PutGLAccounts';

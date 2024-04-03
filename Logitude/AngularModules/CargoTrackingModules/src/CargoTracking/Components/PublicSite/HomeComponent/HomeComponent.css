@@ -37,11 +37,12 @@ a:focus {
     z-index: 1;
 }
 .main-content {
-    padding-top:93px;
+    padding-top: 93px;
     min-height: calc(82vh - 110px);
     background-size: cover;
     background-repeat: no-repeat;
     flex: 1;
+    background-attachment: fixed;
 }
 .vertical-center {
     margin: 0;

@@ -532,15 +532,22 @@ using Simplog.Data.InvoiceModel;
 										}
 
 
+				    if (!IsUpdate)
+				    {
+					    temp.ConfirmationNumber = MyEntity.ConfirmationNumber;
+
+				                        }
+
+
                     if (!IsUpdate)
                     {
-                        temp.ConfirmationNumber = MyEntity.ConfirmationNumber;
+                        temp.MasterNumber = MyEntity.MasterNumber;
 
                                         }
 
 
 
-                    ARInvoiceTransferStatusQueryService TransferStatusARInvoiceTransferStatusService = new ARInvoiceTransferStatusQueryService(Tenant);
+                ARInvoiceTransferStatusQueryService TransferStatusARInvoiceTransferStatusService = new ARInvoiceTransferStatusQueryService(Tenant);
 					if(MyEntity.TransferStatus != null)
 					{
 						var myTransferStatusPM = TransferStatusARInvoiceTransferStatusService.ARInvoiceTransferStatusDataMappingAndValidatin(MyEntity.TransferStatus,Tenant,ComputingPartnerName,IsUpdate);

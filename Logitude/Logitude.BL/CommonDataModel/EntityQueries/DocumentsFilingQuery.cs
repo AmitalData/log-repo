@@ -3076,6 +3076,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     select new DocumentsFilingPM()
                     {
                         Id = a.Id,
+                        BillToId = a.BillToId,
                         DocumentId = a.DocumentId,
                         Code = a.Code,
                         DirectionCode = a.DirectionCode,

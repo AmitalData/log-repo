@@ -102,10 +102,11 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
     CreateBankTransferButtonFeatureEnabled = false;
     showBankTransferAlert = false;
     createdPaymentNumber;
-    public LogitudeGridExportToExcelComponent:LogitudeGridExportToExcelComponent= new LogitudeGridExportToExcelComponent();
+    public LogitudeGridExportToExcelComponent: LogitudeGridExportToExcelComponent = new LogitudeGridExportToExcelComponent();
     constructor(private CD: ChangeDetectorRef) {
         super();
-        this.isRTL = SessionLocator.TenantPM.LayoutDirection === 'rtl';
+        if (ObjectsLocator.GlobalSetting)
+        this.isRTL = ObjectsLocator.GlobalSetting.LayoutDirection == "rtl";
 
         this.ExternalRecoPM = new ExternalReconciliationPM();
         this.ExternalRecoPM.Tenant = SessionLocator.Tenant;
@@ -503,6 +504,9 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         if (this.dateFilter) {
             filters.AdditionalFilters.push(this.dateFilter);
         }
+        else {
+            filters.addAdditionalFilter("DueDate", "#today", null, null, "LessThan", false, false, false, "Date");
+        }
         if (this.searchFieldFilter) {
             filters.AdditionalFilters.push(this.searchFieldFilter);
         }
@@ -631,11 +635,11 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         //throw new Error("Method not implemented.");
         if (this.ExtPageSelectedLines.Length < 1) {
             console.error("(this.ExtPageSelectedLines.Length != 1)")
-            this.ValidationErrorsList.push("to adjust bank fees, select one or more row External page line ");
+            this.ValidationErrorsList.push(TextCodeTranslator.Translate('ExternalReconciliation.O.SelectOneOrMore'));
             return;
         }
         if (this.ExtPageSelectedLines.Length > 1 && this.TransactionSelectedLines.Length > 0) {
-            this.ValidationErrorsList.push("to adjust bank fees with Transaction select only one page line  ");
+            this.ValidationErrorsList.push(TextCodeTranslator.Translate('ExternalReconciliation.O.SelectOnePage'));
             return;
         }
         let LedgerTransactionIdList: string[] = [];
@@ -707,6 +711,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
     searchFieldFilter: FilterItem;
     openAmountFilter: FilterItem;
     public TransactionsQueryColumns: QueryColumnPM[] = [];
+    TransactionForeignAmount='';
     public TransactionsColumns: any[] = null;
     TransactionBuildColumns() {
         this.TransactionsColumns = [];
@@ -784,7 +789,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             ServerSideSortable: true,
             SortByName: 'Source'
         });
-        this.TransactionsQueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("Source",'String',TextCodeTranslator.Translate("LedgerTransaction.F.Source")));
+        this.TransactionsQueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("Source", 'String', TextCodeTranslator.Translate("LedgerTransaction.F.Source")));
 
         //this.TransactionsColumns.push({ // Check ReconcileMethodCode.GLAccounts:
         //    FieldName: 'OriginalAmount',
@@ -810,6 +815,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         //     ServerSideSortable: true,
         //     SortByName: 'Source'
         // });
+        this.TransactionForeignAmount= TextCodeTranslator.Translate("LedgerTransaction.F.ForeignAmount") + ' (' + this.openAmountCurrency + ')';
         this.TransactionsColumns.push({
             FieldName: 'ForeignAmount',
             DataTypeCode: 'String',
@@ -834,7 +840,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             ServerSideSortable: true,
             SortByName: 'Reference1'
         });
-        this.TransactionsQueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("Reference1",'String',TextCodeTranslator.Translate("LedgerTransaction.F.Reference1")));
+        this.TransactionsQueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("Reference1", 'String', TextCodeTranslator.Translate("LedgerTransaction.F.Reference1")));
 
         this.TransactionsColumns.push({
             FieldName: 'Reference2',
@@ -846,7 +852,6 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             SortByName: 'Reference2'
         });
         this.TransactionsQueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("Reference2",'String',TextCodeTranslator.Translate("LedgerTransaction.F.Reference2")));
-
         //this.TransactionsColumns.push({
         //    FieldName: 'JournalNumber',
         //    DataTypeCode: 'String',
@@ -867,12 +872,11 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             Styles: { width: '120px' },
             HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
-            IsCustomTemplate: true
-            ,
+            IsCustomTemplate: true,
             ServerSideSortable: true,
             SortByName: 'Notes'
         });
-        this.TransactionsQueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("Notes",'String',TextCodeTranslator.Translate("LedgerTransaction.F.Notes")));
+        this.TransactionsQueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("Notes", 'String', TextCodeTranslator.Translate("LedgerTransaction.F.Notes")));
 
         this.TransactionsColumns.push({
             FieldName: 'InternalNote',
@@ -886,15 +890,18 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             ServerSideSortable: true,
             SortByName: 'InternalNote'
         });
-        this.TransactionsQueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("InternalNote",'String',TextCodeTranslator.Translate("LedgerTransaction.F.InternalNote")));
+        this.TransactionsQueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("InternalNote", 'String', TextCodeTranslator.Translate("LedgerTransaction.F.InternalNote")));
 
         ReconcileEventManager.CheckBoxChecked.subscribe(($event) => {
             if (!AppTool.IsNullOrEmpty($event)) {
-                var row = $event.line;
-                var rowId = $event.line.Id;
-                var RowIndex = $event.RowIndex;
-                var isChecked = $event.isChecked;
-                var oneTime = $event.oneTime;
+                if ($event.SendSessionIndex != this.CurrentSession.SessionIndex)
+                    return;
+                var params = $event.Params;
+                var row = params.line;
+                var rowId = params.line.Id;
+                var RowIndex = params.RowIndex;
+                var isChecked = params.isChecked;
+                var oneTime = params.oneTime;
                 console.log("---->> Row Selected: ", rowId, row, isChecked);
 
                 if (isChecked) {
@@ -915,7 +922,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             const row = $event.rowData;
             const rowId = row.Id;
             const RowIndex = $event.rowIndex;
-            const index = this.TransactionSelectedLines.Collection.findIndex(c => c.Id == row.Id);           
+            const index = this.TransactionSelectedLines.Collection.findIndex(c => c.Id == row.Id);
             if (index < 0) {
 
                 this.PushLine(row, RowIndex);
@@ -1050,7 +1057,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
 
 
     PushLine(row, RowIndex) {
-        let countLines:number = 500;
+        let countLines: number = 500;
         var index = this.TransactionSelectedLines.Collection.findIndex(c => c.Id == row.Id);
         if (index < 0) { // DNE
 
@@ -1157,7 +1164,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
     ExtPage_currencyFilter: FilterItem;
     ExtPage_searchFieldFilter: FilterItem;
     ExtPage_openAmountFilter: FilterItem;
-
+    ReconcileExternalPageLineAmount='';
     public ExtPageColumns: any[] = null;
     ExportTransactions() {
         this.ValidationErrorsList = [];
@@ -1234,7 +1241,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             SortByName: 'ReferenceDate'
         });
         this.ExtPageQueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("ReferenceDate",'DateTime',TextCodeTranslator.Translate("ReconcileExternalPageLine.F.ReferenceDate")));
-
+        this.ReconcileExternalPageLineAmount= TextCodeTranslator.Translate("ReconcileExternalPageLine.F.Amount") + ' (' + this.openAmountCurrency + ')';
         this.ExtPageColumns.push({
             FieldName: 'Amount',
             DataTypeCode: 'String',
@@ -1246,7 +1253,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             ServerSideSortable: true,
             SortByName: 'Amount'
         });
-        this.ExtPageQueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("Amount",'Decimal',TextCodeTranslator.Translate("ReconcileExternalPageLine.F.Amount")));
+        this.ExtPageQueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("Amount", 'Decimal', TextCodeTranslator.Translate("ReconcileExternalPageLine.F.Amount")));
 
         this.ExtPageColumns.push({
             FieldName: 'Reference',
@@ -1259,7 +1266,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             ServerSideSortable: true,
             SortByName: 'Reference'
         });
-        this.ExtPageQueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("Reference",'String',TextCodeTranslator.Translate("ReconcileExternalPageLine.F.Reference")));
+        this.ExtPageQueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("Reference", 'String', TextCodeTranslator.Translate("ReconcileExternalPageLine.F.Reference")));
 
         this.ExtPageColumns.push({
             FieldName: 'Notes',
@@ -1272,15 +1279,18 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             ServerSideSortable: true,
             SortByName: 'Notes'
         });
-        this.ExtPageQueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("Notes",'String',TextCodeTranslator.Translate("ReconcileExternalPageLine.F.Notes")));
+        this.ExtPageQueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("Notes", 'String', TextCodeTranslator.Translate("ReconcileExternalPageLine.F.Notes")));
 
         ReconcileEventManager.ExtPageCheckBoxChecked.subscribe(($event) => {
             if (!AppTool.IsNullOrEmpty($event)) {
-                var row = $event.line;
-                var rowId = $event.line.Id;
-                var RowIndex = $event.RowIndex;
-                var isChecked = $event.isChecked;
-                var oneTime = $event.oneTime;
+                if ($event.SendSessionIndex != this.CurrentSession.SessionIndex)
+                    return;
+                var params = $event.Params;
+                var row = params.line;
+                var rowId = params.line.Id;
+                var RowIndex = params.RowIndex;
+                var isChecked = params.isChecked;
+                var oneTime = params.oneTime;
                 console.log("---->> ExtPage Row Selected: ", rowId, row, isChecked);
 
                 if (isChecked) {
@@ -1359,7 +1369,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
 
     ExtPagePushLine(row, RowIndex) {
         var index = this.ExtPageSelectedLines.Collection.findIndex(c => c.Id == row.Id);
-        let countLines:number = 500;
+        let countLines: number = 500;
         if (index < 0) { // DNE
             row.AmountToReconcile = row.CreditAmount != 0 ? row.CreditAmount : row.DebitAmount;
 
@@ -1381,7 +1391,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
                 this.ValidationErrorsList = [];
             }
             if (this.ExtPageSelectedLines.Length >= this.ExtPageDataSource.rowCount || this.ExtPageSelectedLines.Length >= countLines)
-               this._isAllSelectedExt = true;
+                this._isAllSelectedExt = true;
 
         }
     }
@@ -2342,7 +2352,6 @@ class TransactionLineModel extends BaseComponent {
     public RowIndex: number;
     public DataContext = this;
     public isRTL: boolean = false;
-
     constructor(
         private ledgerTransaction: LedgerTransactionPM,
         private parent: ExternalReconcileComponent,
@@ -2364,7 +2373,6 @@ class TransactionLineModel extends BaseComponent {
 
 
         this.IconCode = AccountingEntityHelper.getEntityIcon(this.LedgerTransactionPM.SourceTypeCode);
-
         //#endregion
     }
 
@@ -2459,15 +2467,14 @@ class TransactionLineModel extends BaseComponent {
         //
         // [i] copied from list template
         //
-
-        if (!AppTool.IsNullOrEmpty(ReconcileEventManager.GLAccountReconcileMethodCode)) {
+        let gLAccountReconcileMethodCode = ReconcileEventManager.GetGLAccountReconcileMethodCode();
+        if (!AppTool.IsNullOrEmpty(gLAccountReconcileMethodCode)) {
             // this code was copied to reconcile window, if it need change, please chenge it in reconcile window too
-            if (ReconcileEventManager.GLAccountReconcileMethodCode == "0") { // 0-local currency
+            if (gLAccountReconcileMethodCode == "0") { // 0-local currency
 
                 // local
                 return SessionLocator.TenantPM.CurrencySign;
-
-            } else if (ReconcileEventManager.GLAccountReconcileMethodCode == "1") { // 1-foreign currency
+            } else if (gLAccountReconcileMethodCode == "1") { // 1-foreign currency
 
                 // foreign
                 return this.ledgerTransaction.CurrencySign;

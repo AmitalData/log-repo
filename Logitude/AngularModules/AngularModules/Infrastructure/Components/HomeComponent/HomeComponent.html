@@ -494,9 +494,16 @@
                                     <table>
                                         <tr>
                                             <td style="width:70px;right: 10px;">
-
-                                                <span *ngIf="IsDailyCurrenciesRatesVisible" class="hyperlink" (click)="CurrenciesRatesClicked()" style="margin: 10px;">Daily Currencies Rates</span>
-
+                                                <div *ngIf="LayoutDirection != 'rtl'">
+                                                    <span *ngIf="IsDailyCurrenciesRatesVisible && !this.AccountingActivated" class="hyperlink" (click)="CurrenciesRatesClicked()" style="margin: 10px;">Daily Currencies Rates</span>
+                                                    <span *ngIf="IsDailyCurrenciesRatesVisible && this.AccountingActivated" class="hyperlink" (click)="CurrenciesRatesClicked()" style="margin: 10px;">טבלת שערי מטבע</span>
+                                                    <span *ngIf="IsDailyCurrenciesRatesVisible && USDLastUpdate != null">שער מטבע הדולר  עודכן לאחרונה בתאריך {{USDLastUpdate}}</span>
+                                                </div>
+                                                <div *ngIf="LayoutDirection == 'rtl'">
+                                                    <span *ngIf="IsDailyCurrenciesRatesVisible && USDLastUpdate != null">שער מטבע הדולר  עודכן לאחרונה בתאריך {{USDLastUpdate}}</span>
+                                                    <span *ngIf="IsDailyCurrenciesRatesVisible && !this.AccountingActivated" class="hyperlink" (click)="CurrenciesRatesClicked()" style="margin: 10px;">Daily Currencies Rates</span>
+                                                    <span *ngIf="IsDailyCurrenciesRatesVisible && this.AccountingActivated" class="hyperlink" (click)="CurrenciesRatesClicked()" style="margin: 10px;">טבלת שערי מטבע</span>
+                                                </div>
                                             </td>
                                             <td style="width:5px"></td>
                                             <td>

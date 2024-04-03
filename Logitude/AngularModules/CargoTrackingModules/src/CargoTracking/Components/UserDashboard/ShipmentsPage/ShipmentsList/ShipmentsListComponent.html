@@ -179,19 +179,28 @@
             </li>
 
             <!--FilterByOpenDateData  -->
-            <li *ngIf="this.ShipmentSearchInput.OpenDateGreaterThan" (click)="UnselectFilterByOpenDate()">
-                Open Date: {{this.ShipmentSearchInput.OpenDateGreaterThan}} <label *ngIf="this.ShipmentSearchInput.OpenDateLessThan"> - </label> {{this.ShipmentSearchInput.OpenDateLessThan}}
+            <li *ngIf="this.ShipmentSearchInput.OpenDateGreaterThan || this.ShipmentSearchInput.OpenDateLessThan" (click)="UnselectFilterByOpenDate()">
+                Open Date: 
+                <label *ngIf="this.ShipmentSearchInput.OpenDateGreaterThan"> {{this.ShipmentSearchInput.OpenDateGreaterThan}} </label>
+                <label *ngIf="this.ShipmentSearchInput.OpenDateGreaterThan && this.ShipmentSearchInput.OpenDateLessThan"> - </label> 
+                <label *ngIf="this.ShipmentSearchInput.OpenDateLessThan"> {{this.ShipmentSearchInput.OpenDateLessThan}}</label>
                 <span class="filter-close-btn">×</span>
             </li>
             <!--FilterByClearanceDateData  -->
-            <li *ngIf="this.ShipmentSearchInput.ClearanceDateGreaterThan" (click)="UnselectFilterByClearanceDate()">
-                Clearance Date: {{this.ShipmentSearchInput.ClearanceDateGreaterThan}} <label *ngIf="this.ShipmentSearchInput.ClearanceDateLessThan"> - </label> {{this.ShipmentSearchInput.ClearanceDateLessThan}}
-                <span class="filter-close-btn">×</span>
+            <li *ngIf="this.ShipmentSearchInput.ClearanceDateGreaterThan || this.ShipmentSearchInput.ClearanceDateLessThan" (click)="UnselectFilterByClearanceDate()">
+                Clearance Date: 
+                <label *ngIf="this.ShipmentSearchInput.ClearanceDateGreaterThan"> {{this.ShipmentSearchInput.ClearanceDateGreaterThan}} </label>
+                <label *ngIf="this.ShipmentSearchInput.ClearanceDateGreaterThan && this.ShipmentSearchInput.ClearanceDateLessThan"> - </label> 
+                <label *ngIf="this.ShipmentSearchInput.ClearanceDateLessThan"> {{this.ShipmentSearchInput.ClearanceDateLessThan}}</label>
+                <span class="filter-close-btn">×</span> 
             </li>
             <!--FilterByATADateData  -->
-            <li *ngIf="this.ShipmentSearchInput.ATADateGreaterThan" (click)="UnselectFilterByATADate()">
-                ATA Date: {{this.ShipmentSearchInput.ATADateGreaterThan}} <label *ngIf="this.ShipmentSearchInput.ATADateLessThan"> - </label>{{this.ShipmentSearchInput.ATADateLessThan}}
-                <span class="filter-close-btn">×</span>
+            <li *ngIf="this.ShipmentSearchInput.ATADateGreaterThan || this.ShipmentSearchInput.ATADateLessThan" (click)="UnselectFilterByATADate()">
+                ATA Date:
+                <label *ngIf="this.ShipmentSearchInput.ATADateGreaterThan"> {{this.ShipmentSearchInput.ATADateGreaterThan}} </label>
+                <label *ngIf="this.ShipmentSearchInput.ATADateGreaterThan && this.ShipmentSearchInput.ATADateLessThan"> - </label> 
+                <label *ngIf="this.ShipmentSearchInput.ATADateLessThan"> {{this.ShipmentSearchInput.ATADateLessThan}}</label>
+                <span class="filter-close-btn">×</span> 
             </li>
 
             <li class="clear" (click)="ClearFilters()">Clear</li>

@@ -66,6 +66,12 @@ export class AccountingMainTesterComponent extends BaseComponent {
     }
     selected() {
 
+    }    
+    UploadExpenses_Click() {
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Width = 750;
+        logitudeWindow.Title = "Upload Deduction Details";
+        logitudeWindow.Show('./Accounting/Components/Maintenance/UploadExpensesComponent');
     }
     JournalId2Void_click() {
         
@@ -97,7 +103,7 @@ export class AccountingMainTesterComponent extends BaseComponent {
         let parseobj = JSON.parse(this._TextBoxParam);
         let _http = ServiceHelper.HttpClient;
         let _apiUrl = ServiceHelper.GetLogitudeURL() + 'api/GLAccounts';
-        _http.post(_apiUrl, JSON.stringify(parseobj), ServiceHelper.GetHttpFullHeaders())
+        _http.post(_apiUrl + "/post", JSON.stringify(parseobj), ServiceHelper.GetHttpFullHeaders())
             //ajax.post(
             //    ServiceHelper.GetLogitudeURL() + 'api/journals',
             //    this._TextBoxParam,
@@ -310,6 +316,12 @@ export class AccountingMainTesterComponent extends BaseComponent {
         };
         this.StrandartOp(opr, obj, () => { });
     }
+
+    JournalApproveReturnToQueue_Click() {
+        let opr = "JournalApproveReturnToQueue_Click";
+        let obj = { Tenant: 1, AllTenants: false };
+        this.StrandartOp(opr, obj, () => { });
+    }
     WorkWithoutQueue_Click() {
         let opr = "WorkWithoutQueue_Click";
         let obj = { Tenant: 1, JournalId: "1-55235" };
@@ -326,34 +338,41 @@ export class AccountingMainTesterComponent extends BaseComponent {
 
     _ButtonReverseTrans_Click() {
         let opr = "_ButtonReverseTrans_Click";
-        let obj = { MyTenant: 1, MyDate: DateTool.AddDays(new Date(), -31), MyGLAccId: "1-131321" };
+        let obj = { MyTenant: SessionLocator.Tenant, MyDate: DateTool.AddDays(new Date(), 0), MyGLAccId: "" };
         this.StrandartOp(opr, obj, () => { });
       
     }
    
     _ButtonReverseTotal_Click() {
         let opr = "_ButtonReverseTotal_Click";
-        let obj = { MyTenant: 1, MyDate: DateTool.AddDays(new Date(), -31), MyGLAccId: "1-131321" };
+        let obj = { MyTenant: SessionLocator.Tenant, MyDate: DateTool.AddDays(new Date(), 0), MyGLAccId: "" };
         this.StrandartOp(opr, obj, () => { });
     }
 
     _ButtonReverseTotalFIX_Click() {
         let opr = "_ButtonReverseTotalFIX_Click";
-        let obj = { MyTenant: SessionLocator.Tenant, MyDate: DateTool.AddDays(new Date(), -31), MyGLAccId: "1-131321" };
+        let obj = { MyTenant: SessionLocator.Tenant, MyDate: DateTool.AddDays(new Date(), -0), MyGLAccId: "" };
         this.StrandartOp(opr, obj, () => { });
 
     }
+
+    _ButtonReverseAllMonthsFIX_Click() {
+        let opr = "_ButtonReverseAllMonthsFIX_Click";
+        let obj = { MyTenant: SessionLocator.Tenant, MyGLAccId: "" };
+        this.StrandartOp(opr, obj, () => { });
+    }
+
     BatchYearlyFIX_Click() {
         let opr = "BatchYearlyFIX_Click";
         let obj = {
-            MyTenant: SessionLocator.Tenant, MyDate: DateTool.AddDays(new Date(), -31),
+            MyTenant: SessionLocator.Tenant, MyDate: DateTool.AddDays(new Date(), 0),
             MyFixType: "ReverseEngineerTotalByMonthService", MyFixTypeOption: "ReverseEngineerTotalByMonthService,ReverseEngineerTotalByMonthServiceControl,TODOMORE"
         };
         this.StrandartOp(opr, obj, () => { });
     }
     _ButtonReverseGLBalanceFIX_Click() {
         let opr = "_ButtonReverseGLBalanceFIX_Click";
-        let obj = { MyTenant: SessionLocator.Tenant, MyDate: DateTool.AddDays(new Date(), -31), MyGLAccId: "1-131321" };
+        let obj = { MyTenant: SessionLocator.Tenant, MyDate: DateTool.AddDays(new Date(), 0), MyGLAccId: "" };
         this.StrandartOp(opr, obj, () => { });
 
     }
@@ -367,7 +386,7 @@ export class AccountingMainTesterComponent extends BaseComponent {
     
     _ButtonReverseDueDate_Click() {
         let opr = "_ButtonReverseDueDate_Click";
-        let obj = { MyTenant: SessionLocator.Tenant, MyGLAccId: "1-131321" };
+        let obj = { MyTenant: SessionLocator.Tenant, MyGLAccId: "" };
         this.StrandartOp(opr, obj, () => { });
 
     }
@@ -382,14 +401,14 @@ Line3
     }
     _ButtonFixDueLocalBalance_Click() {
         let opr = "_ButtonFixDueLocalBalance_Click";
-        let obj = { MyTenant: SessionLocator.Tenant, /*MyDate: DateTool.AddDays(new Date(), -31), MyGLAccId: "1-131321"*/ };
+        let obj = { MyTenant: SessionLocator.Tenant, /*MyDate: DateTool.AddDays(new Date(), 0), MyGLAccId: ""*/ };
         this.StrandartOp(opr, obj, () => { });
 
     }
 
     _ButtonReverseTotalFIXControl_Click() {
         let opr = "_ButtonReverseTotalFIXControl_Click";
-        let obj = { MyTenant: SessionLocator.Tenant, MyDate: DateTool.AddDays(new Date(), -31), ChangeSupplier2Customer : false, };
+        let obj = { MyTenant: SessionLocator.Tenant, MyDate: DateTool.AddDays(new Date(), 0), ChangeSupplier2Customer : false, };
         this.StrandartOp(opr, obj, () => { });
     }
     //type myCallback = () => any;
@@ -519,13 +538,6 @@ Line3
         logitudeWindow.Show('./Accounting/Components/Maintenance/AccountingLoadTestComponent');
     }
 
-    UploadExpenses_Click() {
-        var logitudeWindow = new LogitudeWindow();
-        logitudeWindow.Width = 750;
-        logitudeWindow.Title = "Upload Deduction details";
-        logitudeWindow.Show('./Accounting/Components/Maintenance/UploadExpensesComponent');
-    }
-
     BuildTenant_Click() {
         let paramDefault: any =
         {
@@ -555,7 +567,7 @@ Line3
             Immediate: false
         };
         let opr = "YearTransfer_Click";
-        //let obj = { MyTenant: 1, MyDate: DateTool.AddDays(new Date(), -31), MyGLAccId: "1-131321" };
+        //let obj = { MyTenant: 1, MyDate: DateTool.AddDays(new Date(), 0), MyGLAccId: "" };
         this.StrandartOp(opr, paramDefault, () => { });
     }
     YearTransferCancel_Click() {
@@ -566,7 +578,7 @@ Line3
            
         };
         let opr = "YearTransferCancel_Click";
-        //let obj = { MyTenant: 1, MyDate: DateTool.AddDays(new Date(), -31), MyGLAccId: "1-131321" };
+        //let obj = { MyTenant: 1, MyDate: DateTool.AddDays(new Date(), 0), MyGLAccId: "" };
         this.StrandartOp(opr, paramDefault, () => { });
     }
 
@@ -1051,8 +1063,6 @@ Line3
     }
 
 
-
-    
     ButtonBanksCCExternalReco_Click() {
         let defaultParam: any = {};
         defaultParam.Tenant = 1;
@@ -1060,7 +1070,7 @@ Line3
         defaultParam.AccountDisplayNumber = "12345678";
         defaultParam.ToAccountingDate = "30.04.2023";
         defaultParam.Batch = 0;
-      //  defaultParam.Comment = "Enter InvoiceNumber, or leave it empty but enter the dates";
+        //  defaultParam.Comment = "Enter InvoiceNumber, or leave it empty but enter the dates";
         if (AppTool.IsNullOrEmpty(this._TextBoxParam)) {
             this._TextBoxParam = JSON.stringify(defaultParam);
             return;
@@ -1082,6 +1092,8 @@ Line3
                 () => { this.CurrentSession.StopBusyIndicator(); }
             );
     }
+
+   
 
 
     ButtonGLAccountMultiToCurrency_Click() {
@@ -1114,6 +1126,9 @@ Line3
                 () => { this.CurrentSession.StopBusyIndicator(); }
             );
     }
+
+
+
 
 
 
@@ -1258,7 +1273,8 @@ Line4
             "VoidedByUserName": null,
             "IsVoided": null,
             "VoidedBy": null,
-            "ExternalSystem": "AMITAL"
+            "ExternalSystem": "AMITAL",
+            "AllTenants": "False"
         };
         this._TextBoxParam = JSON.stringify(journal);
 

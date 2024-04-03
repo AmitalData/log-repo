@@ -1,0 +1,13 @@
+﻿<Script DBType="CargoTracking" Module="CargoTracking" AOT="false" TargetTableName="CargoTrackingCards" Env="local,test,cloud">
+	<Sql Version="2">
+		<![CDATA[
+    
+    IF NOT EXISTS (SELECT * FROM sys.indexes WHERE object_id = OBJECT_ID(N'[dbo].[CargoTrackingCards]') AND name = N'IX_CargoTrackingCards_Tenant_Id')    
+  CREATE NONCLUSTERED INDEX [IX_CargoTrackingCards_Tenant_Id] 
+  ON [dbo].[CargoTrackingCards]
+  (
+    [Tenant],[Id] 
+  )
+    ]]>       
+  </Sql>
+</Script>

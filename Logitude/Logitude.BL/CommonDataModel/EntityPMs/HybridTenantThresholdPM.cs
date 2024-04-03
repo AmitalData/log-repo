@@ -10,10 +10,10 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 {
     [CustomValidation(typeof(Validators.ClassLevelValidator), "ValidateClass")]
     [DataContract]
-  public class HybridTenantThresholdPM
+    public class HybridTenantThresholdPM
     {
 
-         [Key]
+        [Key]
         [DataMember]
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public int Tenant { get; set; }
@@ -23,5 +23,10 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [DataMember]
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public int WaitingThresold { get; set; }
+        [Key]
+        [DataMember]
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public int TypeCode { get; set; }
     }
 }

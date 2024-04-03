@@ -25,6 +25,7 @@ import { ServiceLocator } from '../../../../Infrastructure/Locators/ServiceLocat
 import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
 import { DocumentTypeTemplatePMExtendedService } from '../../../../Common/Services/ExtendedPMs/DocumentTypeTemplatePMExtendedService';
 import { DocumentTypeTemplateList } from '../../../../Common/EntityLists/DocumentTypeTemplateList';
+import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 declare var window: any;
 
 @Component({
@@ -34,6 +35,8 @@ declare var window: any;
 
 export class NewConsolidationComponent extends BaseComponent {
     public EntityPM: ARInvoicePM;
+    public GLAccountsFilterItems: ApiQueryFilters;
+
     public ObjectTableName: string = "ARInvoice";
     public DataContext = this;
     public InvoicePartners: InvoicePartnerType[] = [];
@@ -53,7 +56,8 @@ export class NewConsolidationComponent extends BaseComponent {
 
     constructor(private entityResourceService: EntityResourceService) {
         super();
-        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");          
+        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");     
+        this.InitLOVFilters();     
         this.InitializeServices();
         
         if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {
@@ -75,7 +79,10 @@ export class NewConsolidationComponent extends BaseComponent {
         this.myEntityPMService = new ARInvoicePMService();
         this.documentTypeTemplatePMExtendedService = new DocumentTypeTemplatePMExtendedService();
     }
-   
+    InitLOVFilters() {
+        this.GLAccountsFilterItems = new ApiQueryFilters();
+        this.GLAccountsFilterItems.addAdditionalFilter("GLAccountId", "null", null, null, "NotEqual", false, false, false, "string");
+    }
     SetWindowArgs(typeCode: string) {
         this.entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((res: any) => {
             this.EntityPM = this.myEntityPMService.GetNewEntityPM();           

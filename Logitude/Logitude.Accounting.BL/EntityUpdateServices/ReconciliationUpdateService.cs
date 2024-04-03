@@ -48,6 +48,7 @@ using Logitude.BL.ShipmentsModel.APIDataContract;
 using Logitude.Customs.BL.EntityQueryServices;
 using Simplog.Data.InvoiceModel.Repositories;
 using Logitude.BL.Security;
+using Logitude.Server.Tools.Utils;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -559,7 +560,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
                     ledgerTransactionPM.IsReconciled = !reconciliationLine.IsPartial;
                 }
-                if (FeatureToggleHelper.HasFeatureToggle("ILO", ledgerTransactionPM.Tenant) && ledgerTransactionPM.SourceTypeCode == "4")
+             // if (FeatureToggleHelper.HasFeatureToggle("ILO", ledgerTransactionPM.Tenant) && ledgerTransactionPM.SourceTypeCode == "4")
+                if (ledgerTransactionPM.SourceTypeCode == "4")
                 {
                     IInvoiceContext invoiceContext = InvoiceContext.GetContext(ledgerTransactionPM.Tenant);
                     var invoiceRepository = new APInvoiceRepository(invoiceContext);
@@ -570,6 +572,12 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     var transactionAmount = account.ReconcileMethodCode == ReconcileMethodValues.LocalCurrency ? ledgerTransactionPM.LocalAmountCredit : ledgerTransactionPM.ForeignAmountCredit;
                     if (ledgerTransactionPM.OpenAmount == 0)
                     {
+                        //***102417/
+                        Logger.LogMe("ReconciliationUpdateService.UpdateLedgerTransaction: APInvoice status 'Paid' Inv No. " + invoice.InvoiceNumber.ToString()
+                         //   + ", HasFeatureToggle 'ILO'"
+                            + ", old status= " + invoice.StatusCode
+                            + ", ledgerTransactionPM.Id= " + ledgerTransactionPM.Id.ToString()
+                            + ", reconciliationLine.ReconciliationId= " + reconciliationLine.ReconciliationId.ToString(), false, "APINV_PD");
                         invoice.IsClosed = true;
                         invoice.StatusCode = "PD";
                     }
@@ -649,7 +657,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         {
             GLAccountQueryService query = new GLAccountQueryService(entityPM.Tenant);
             GLAccountPM account = query.GetSingle(entityPM.AccountId, false, false);
-            if (account != null)
+            if (account != null && !(account.IsMultiCurrency == true && account.ReconcileMethodCode == "1"))
             {
                 entityPM.AccountName = account.LocalName;
                 entityPM.AccountNumber = account.DisplayNumber;

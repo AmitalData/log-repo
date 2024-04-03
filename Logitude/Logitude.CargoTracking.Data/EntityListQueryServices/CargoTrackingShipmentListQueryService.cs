@@ -6,7 +6,7 @@ using Logitude.CargoTracking.Def.EntityPMs;
 using Simplog.Server.Infrastructure.DataContracts;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+//using System.Linq;
 using Simplog.Server.Infrastructure.Helpers;
 using System.Data.Entity.Core.Objects;
 using System.Reflection;
@@ -17,6 +17,15 @@ using System.Data.Common;
 using Simplog.Server.Infrastructure;
 using System.Configuration;
 using System.Runtime.Remoting.Contexts;
+using Logitude.CargoTracking.Data.Model;
+using System.Globalization;
+using Logitude.Server.Tools.Utils;
+using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools;
+using System.Linq;
+using Newtonsoft.Json;
+using System.Text;
+
 
 namespace Logitude.CargoTracking.Data.EntityListQueryServices
 {
@@ -193,7 +202,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
         {
             IQueryable<CargoTrackingShipmentList> query =
                 context.CargoTrackingShipments.Where(shipment =>
-                    shipment.Tenant == tenant                                                                
+                    shipment.Tenant == tenant
                     && shipment.IsMainRecord == true)
                 .Select(shipment => new CargoTrackingShipmentList()
                 {
@@ -755,14 +764,16 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
         }
 
         public List<CargoTrackingShipmentList> GetFilteredSortedShipments(CargoTrackingShipmentSearchInput shipmentSearchInput)
-        {
+       {
+           
             IQueryable<CargoTrackingShipmentList> shipments = GetIqueryableListWithouJoin(shipmentSearchInput.Tenant);
             shipments = FilterShipments(shipmentSearchInput, shipments);
             shipments = AddShipmentSearch(shipmentSearchInput, shipments);
             shipments = SortShipments(shipmentSearchInput, shipments);
             shipments = GetPageOfShipments(shipmentSearchInput.PageIndex, shipmentSearchInput.PageSize, shipments);
             shipments = AddCards(shipments);
-            List<CargoTrackingShipmentList> shipmentsLists = shipments.ToList();
+
+            List<CargoTrackingShipmentList> shipmentsLists = shipments.LogAndGetList(MethodBase.GetCurrentMethod().Name) as List<CargoTrackingShipmentList>; //shipments.ToList();
 
             List<CargoTrackingPortList> ports = GetPortFromCache();
             List<CargoTrackingTransportMode> transportModes = new CargoTrackingTransportModeListQueryService(context).GetAllFromCache();
@@ -782,18 +793,20 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                 shipment.TransportModeName = transportMode?.Name;
             });
 
+           
             return shipmentsLists;
         }
 
+
         private List<CargoTrackingPortList> GetPortFromCache() =>
-            CacheManager.GetOrInsertNewObject<List<CargoTrackingPortList>>("ListCargoTrackingPortList", () => GetPorts().ToList());        
+            CacheManager.GetOrInsertNewObject<List<CargoTrackingPortList>>("ListCargoTrackingPortList", () => GetPorts().ToList());
 
         public List<Model.Customer> GetShipmentsCustomers(int tenant)
         {
             CargoTrackingShipmentRepository shipmentRepository = new CargoTrackingShipmentRepository(context);
             return shipmentRepository.GetFilteredShipmentsByTenant(tenant).ToList();
         }
-        
+
         public IQueryable<CargoTrackingShipmentList> GetShipments(List<string> ShipmentIds, CargoTrackingShipmentSearchInput shipmentSearchInput)
         {
             IQueryable<CargoTrackingShipmentList> shipments = GetShipmentsQuerableByIds(ShipmentIds, shipmentSearchInput.Tenant);
@@ -802,7 +815,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
 
             return shipments;
         }
-        
+
         public IQueryable<CargoTrackingShipmentList> GetShipments(CargoTrackingShipmentSearchInput shipmentSearchInput)
         {
             IQueryable<CargoTrackingShipmentList> shipments = GetQueryableShipmentsBySearchText(shipmentSearchInput.SearchText, shipmentSearchInput.Tenant);
@@ -876,15 +889,15 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             shipments = FilterShipments(shipmentSearchInput, shipments);
             return shipments.Count();
         }
-        
+
         public int GetShipmentsCount(CargoTrackingShipmentSearchInput shipmentSearchInput)
-        {            
+        {
             IQueryable<CargoTrackingShipmentList> shipments = GetIqueryableListWithouJoin(shipmentSearchInput.Tenant);
 
             shipments = FilterShipments(shipmentSearchInput, shipments);
             shipments = AddShipmentSearch(shipmentSearchInput, shipments);
-
-            return shipments.Count();
+            var shipmentsCount = shipments.Select(x => 1);
+            return shipmentsCount.Count();
         }
 
         private IQueryable<CargoTrackingShipmentList> FilterShipments(CargoTrackingShipmentSearchInput shipmentSearchInput, IQueryable<CargoTrackingShipmentList> shipments)
@@ -930,110 +943,129 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
         private static IQueryable<CargoTrackingShipmentList> FilterByCustomers(CargoTrackingShipmentSearchInput shipmentSearchInput, IQueryable<CargoTrackingShipmentList> shipments)
         {
             if (shipmentSearchInput.CustomersIds.Count > 0)
+            {
+
+                Logger.LogDebug("FilterByCustomers count:{0}", shipmentSearchInput.CustomersIds.Count);
+
                 shipments = shipments.Where(d =>
                             shipmentSearchInput.CustomersIds.Contains(d.CustomerId)
                         );
+            }
             return shipments;
         }
 
         private static IQueryable<CargoTrackingShipmentList> FilterShipmentsWhichMoreFilter(CargoTrackingShipmentSearchInput shipmentSearchInput, IQueryable<CargoTrackingShipmentList> shipments)
         {
             if (shipmentSearchInput.HasException)
+            {
+                Logger.LogDebug("Filter HasException ");
                 shipments = shipments.Where(d => d.CurrentMilestoneExceptions != null);
+            }
             if (shipmentSearchInput.OrdersOnly)
+            {
+                Logger.LogDebug("Filter OrdersOnly ");
                 shipments = shipments.Where(d => d.EntityType == OrderType);
+            }
             if (shipmentSearchInput.EstimatedArrivalOnly)
+            {
+                Logger.LogDebug("Filter EstimatedArrivalOnly ");
                 shipments = shipments.Where(d => d.ArrivalEstimationDate != null && d.ArrivalDate == null);
+            }
             if (shipmentSearchInput.OperationalOpenedOnly)
+            {
+                Logger.LogDebug("Filter OperationalOpenedOnly ");
                 shipments = shipments.Where(d => d.IsOperationalClosed == false);
+            }
             return shipments;
         }
 
         private static IQueryable<CargoTrackingShipmentList> FilterShipmentsDate(CargoTrackingShipmentSearchInput shipmentSearchInput, IQueryable<CargoTrackingShipmentList> shipments, ICargoTrackingContext context)
         {
             if (shipmentSearchInput.FromDate.HasValue || shipmentSearchInput.ToDate.HasValue)
-                shipments = shipments.Join(context.CargoTrackingShipmentSearches,
-                    shipment => shipment.EntityId,
-                    search => search.ShipmentId,
-                    (shipment, search) =>
-                        new { shipment = shipment, shipmentDate = search.ShipmentDate })
-                    .Where(x => 
-                       (shipmentSearchInput.FromDate.HasValue && x.shipmentDate >= shipmentSearchInput.FromDate) ||
-                       (shipmentSearchInput.ToDate.HasValue && x.shipmentDate <= shipmentSearchInput.ToDate)
-                       )
-                    .Select(x => x.shipment);
+            {
+                Logger.LogDebug("Filter FromDate-ToDate ");
 
-            return shipments;
+                shipments = shipments.Where(x =>
+                      (shipmentSearchInput.FromDate.HasValue && x.CreateDate >= shipmentSearchInput.FromDate) ||
+                      (shipmentSearchInput.ToDate.HasValue && x.CreateDate <= shipmentSearchInput.ToDate)
+                      );
+            }
+
+            return shipments.Distinct();
         }
 
         private static IQueryable<CargoTrackingShipmentList> FilterByMileStones(CargoTrackingShipmentSearchInput shipmentSearchInput, IQueryable<CargoTrackingShipmentList> shipments)
         {
             if (shipmentSearchInput.MilestonesCodes.Count > 0)
+            {
+                Logger.LogDebug("Filter MilestonesCodes ");
                 shipments = shipments.Where(d =>
                             shipmentSearchInput.MilestonesCodes.Contains(d.CurrentMilestoneCode)
                         );
+            }
             return shipments;
         }
 
         //Greater Than
         private static IQueryable<CargoTrackingShipmentList> FilterByOpenDateGreaterThan(CargoTrackingShipmentSearchInput shipmentSearchInput, IQueryable<CargoTrackingShipmentList> shipments)
         {
-      
-            if (!string.IsNullOrEmpty(shipmentSearchInput.OpenDateGreaterThan))
+            if (!string.IsNullOrEmpty(shipmentSearchInput.OpenDateGreaterThan) &&
+                DateTime.TryParseExact(shipmentSearchInput.OpenDateGreaterThan, "d/M/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime openDateGreaterThan))
             {
-                DateTime openDateGreaterThan = DateTime.Parse(shipmentSearchInput.OpenDateGreaterThan);
-                shipments = shipments.Where(d => d.CreateDate > openDateGreaterThan);
+                Logger.LogDebug("Filter OpenDateGreaterThan {0} ", shipmentSearchInput.OpenDateGreaterThan);
+
+                shipments = shipments.Where(d => d.CreateDate >= openDateGreaterThan);
             }
             return shipments;
         }
         private static IQueryable<CargoTrackingShipmentList> FilterByClearanceDateGreaterThan(CargoTrackingShipmentSearchInput shipmentSearchInput, IQueryable<CargoTrackingShipmentList> shipments)
         {
-      
-            if (!string.IsNullOrEmpty(shipmentSearchInput.ClearanceDateGreaterThan))
+            if (!string.IsNullOrEmpty(shipmentSearchInput.ClearanceDateGreaterThan) &&
+                DateTime.TryParseExact(shipmentSearchInput.ClearanceDateGreaterThan, "d/M/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime clearanceDateGreaterThan))
             {
-                DateTime clearanceDateGreaterThan = DateTime.Parse(shipmentSearchInput.ClearanceDateGreaterThan);
-                shipments = shipments.Where(d => d.ClearanceDate > clearanceDateGreaterThan);
+                Logger.LogDebug("Filter clearanceDateGreaterThan {0} ", shipmentSearchInput.ClearanceDateGreaterThan);
+
+                shipments = shipments.Where(d => d.ClearanceDate >= clearanceDateGreaterThan);
             }
             return shipments;
-        }  
+        }
         private static IQueryable<CargoTrackingShipmentList> FilterByATADateGreaterThan(CargoTrackingShipmentSearchInput shipmentSearchInput, IQueryable<CargoTrackingShipmentList> shipments)
         {
-      
-            if (!string.IsNullOrEmpty(shipmentSearchInput.ATADateGreaterThan))
+            if (!string.IsNullOrEmpty(shipmentSearchInput.ATADateGreaterThan) &&
+                DateTime.TryParseExact(shipmentSearchInput.ATADateGreaterThan, "d/M/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime ATADateGreaterThan))
             {
-                DateTime ATADateGreaterThan = DateTime.Parse(shipmentSearchInput.ATADateGreaterThan);
-                shipments = shipments.Where(d => d.ArrivalDate > ATADateGreaterThan);
+                Logger.LogDebug("Filter ATADateGreaterThan {0} ", shipmentSearchInput.ClearanceDateGreaterThan);
+                shipments = shipments.Where(d => d.ArrivalDate >= ATADateGreaterThan);
             }
             return shipments;
         }
         // Less Than
         private static IQueryable<CargoTrackingShipmentList> FilterByOpenDateLessThan(CargoTrackingShipmentSearchInput shipmentSearchInput, IQueryable<CargoTrackingShipmentList> shipments)
         {
-
-            if (!string.IsNullOrEmpty(shipmentSearchInput.OpenDateLessThan))
+            if (!string.IsNullOrEmpty(shipmentSearchInput.OpenDateLessThan) &&
+                DateTime.TryParseExact(shipmentSearchInput.OpenDateLessThan, "d/M/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime openDateLessThan))
             {
-                DateTime openDateLessThan = DateTime.Parse(shipmentSearchInput.OpenDateLessThan);
-                shipments = shipments.Where(d => d.CreateDate < openDateLessThan);
+                Logger.LogDebug("Filter OpenDateLessThan {0} ", shipmentSearchInput.OpenDateLessThan);
+
+                shipments = shipments.Where(d => d.CreateDate <= openDateLessThan);
             }
             return shipments;
         }
         private static IQueryable<CargoTrackingShipmentList> FilterByClearanceDateLessThan(CargoTrackingShipmentSearchInput shipmentSearchInput, IQueryable<CargoTrackingShipmentList> shipments)
         {
-
-            if (!string.IsNullOrEmpty(shipmentSearchInput.ClearanceDateLessThan))
+            if (!string.IsNullOrEmpty(shipmentSearchInput.ClearanceDateLessThan) &&
+                DateTime.TryParseExact(shipmentSearchInput.ClearanceDateLessThan, "d/M/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime clearanceDateLessThan))
             {
-                DateTime clearanceDateLessThan = DateTime.Parse(shipmentSearchInput.ClearanceDateLessThan);
-                shipments = shipments.Where(d => d.ClearanceDate < clearanceDateLessThan);
+                shipments = shipments.Where(d => d.ClearanceDate <= clearanceDateLessThan);
             }
             return shipments;
         }
         private static IQueryable<CargoTrackingShipmentList> FilterByATADateLessThan(CargoTrackingShipmentSearchInput shipmentSearchInput, IQueryable<CargoTrackingShipmentList> shipments)
         {
-
-            if (!string.IsNullOrEmpty(shipmentSearchInput.ATADateLessThan))
+            if (!string.IsNullOrEmpty(shipmentSearchInput.ATADateLessThan) &&
+                DateTime.TryParseExact(shipmentSearchInput.ATADateLessThan, "d/M/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime ATADateLessThan))
             {
-                DateTime ATADateLessThan = DateTime.Parse(shipmentSearchInput.ATADateLessThan);
-                shipments = shipments.Where(d => d.ArrivalDate < ATADateLessThan);
+                shipments = shipments.Where(d => d.ArrivalDate <= ATADateLessThan);
             }
             return shipments;
         }
@@ -1046,7 +1078,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             IQueryable<CargoTrackingShipmentList> shipmentsListQuerable = GetIqueryableList(shipments);
             return shipmentsListQuerable;
         }
-        
+
         private IQueryable<CargoTrackingShipmentList> GetQueryableShipmentsBySearchText(string searchKey, int tenant)
         {
             CargoTrackingShipmentRepository shipmentRepository = new CargoTrackingShipmentRepository(context);
@@ -1119,3 +1151,5 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
     }
 
 }
+
+

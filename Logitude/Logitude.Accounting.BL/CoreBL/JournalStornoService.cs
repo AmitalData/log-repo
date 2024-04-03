@@ -148,7 +148,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
             Storno.CreateDate = _JournalPM.CreateDate;//irrelevant UpdateService>oncreate Supress it
 
-            Storno.StatusCodeEnum = JournalStatusTypePM.StatusCodeEnum.Approved; //Storno.StatusCode = "2";
+            Storno.StatusCodeEnum = JournalStatusTypePM.StatusCodeEnum.InProcessing; //Storno.StatusCode = "2";
             Storno.VoidedByJournalId = null;
             string updatedByUserId = _JournalPM.UpdatedByUserId;
             if (!AuthenticationUtil.IsResolveUserIdentityNameEqualSystem(_JournalPM.Tenant))

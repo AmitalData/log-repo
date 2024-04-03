@@ -77,7 +77,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                     var qAllIdAccounts = myGLAccountQueryService.GetAllIdAccountsTypeCat(_Param.Tenant, _Param.GLAccountId, _Param.Category1Id, _Param.Category2Id,
                         _Param.Category3Id, _Param.Category4Id, _Param.Category5Id, _Param.AccountTypeCode, _Param.ChartOfAccountsId, _Param.IncludeChildAccounts
                         ,null/*_Param.ChartOfAccountsTypeCode*/
-                        ,null //SALESMAN 
+                        ,null ,null//SALESMAN 
                         ,true,false
                         );
                     _allIdAccounts = qAllIdAccounts;// new List<string>(hashsetallIdAccounts);
@@ -85,7 +85,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
 
 
-                IQueryable<Data.EntityPOCOs.LedgerTransaction> query =
+                IQueryable<LedgerTransactionList> query =
                     ledgerTransactionRepository.GetQueryOrderByDateTypeAndIdByRec(_Param.Tenant, _allIdAccounts, _Param.From, _Param.To,
                     _Param.CurrencyId, _SearchByFilter, _Param.IsReconciled, _Param.DateTypeCode);
 
@@ -192,7 +192,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             return startAccountBalance;
         }
 
-        private MyBlance GetStartBalanceOfCurrPage(IQueryable<Data.EntityPOCOs.LedgerTransaction> QOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId)
+        private MyBlance GetStartBalanceOfCurrPage(IQueryable<LedgerTransactionList> QOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId)
         {
             MyBlance myBlance = new MyBlance() { SumForeignAmount = 0, SumLocalAmount = 0 };
             if (_Param.PageStartAtRecordIndex > 0)
@@ -215,7 +215,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             return myBlance;
         }
 
-        private IQueryable<Data.EntityPOCOs.LedgerTransaction> RemoveYearTransferLedgerTrans(IQueryable<Data.EntityPOCOs.LedgerTransaction> QOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId)
+        private IQueryable<LedgerTransactionList> RemoveYearTransferLedgerTrans(IQueryable<LedgerTransactionList> QOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId)
         {
             if (this.Response.YearTransferLedgerTransactionIds != null && this.Response.YearTransferLedgerTransactionIds.Count > 0)
             {
@@ -230,7 +230,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
 
 
-        private void BuildCallBack(IQueryable<Data.EntityPOCOs.LedgerTransaction> query, AccountBalanceM startAccountBalanceService,
+        private void BuildCallBack(IQueryable<LedgerTransactionList> query, AccountBalanceM startAccountBalanceService,
 AccountBalanceM endAccountBalanceService)
         {
             //var BeginOfYearLocalAmountCardIndex = GetBeginOfYearLocalAmountCardIndex(_AccountingContext,_Param.From);
@@ -442,7 +442,7 @@ AccountBalanceM endAccountBalanceService)
             this.Response.OpenBalanceForYearInLocalCurrency = _Param.CallBack.OpenBalanceForYearInLocalCurrency;
         }
 
-        public virtual List<LedgerTransactionList> Translate2ListMode(IQueryable<Data.EntityPOCOs.LedgerTransaction> QOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId)
+        public virtual List<LedgerTransactionList> Translate2ListMode(IQueryable<LedgerTransactionList> QOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId)
         {
             var ledgerTransactionListQueryService = new LedgerTransactionListQueryService(_AccountingContext);
             LedgerTransactionBalanceFilter LedgerTransactionBalanceFilter = new LedgerTransactionBalanceFilter()

@@ -158,7 +158,35 @@
                                         </table>
                                     </td>
                                 </tr>
+                                <tr style="height: 22px;">
+                                    <td>
+                                        <table>
+                                            <tr>
+                                                <td style="font-size: 12px; vertical-align: top;" class="ColorBlue"></td>
 
+                                                <td style="width: 1px; right: 19px;" *ngIf="item.SendingInterestReport && item.EmailForSending">
+                                                    <div>
+                                                        <span style="display:inline-block; color:#0075AF; font-size:11px;">Sending Interest Report</span>
+                                                        <span style="display:inline-block; width: 14px; height: 14px; margin-bottom: -2px; background: url('./Images/Menu/Person.png') center center; background-size: contain;"></span>
+                                                    </div>
+                                                </td>
+
+                                                <td style="width: 1px; right: 19px;" *ngIf="!item.SendingInterestReport && item.EmailForSending">
+                                                    <div class="SetPrimary" (mousedown)="item.SetSendingInterestReport()">
+                                                        <span class="SetPrimaryText" style="font-size: 11px;">Set as Sending Interest Report</span>
+                                                        <span class="SetPrimaryIcon" style="width: 14px; height: 14px; margin-bottom: -2px;"></span>
+                                                    </div>
+                                                </td>
+
+                                                <td style="width: 3px;padding-right: 23px;">
+                                                    <div></div>
+                                                </td>
+
+                                            </tr>
+                                            
+                                        </table>
+                                    </td>
+                                </tr>
                                 <tr>
                                     <td>
                                         <div class="MediaFill">
@@ -170,6 +198,15 @@
                                                             <div></div>
                                                         </td>
                                                         <td>{{item.Name}}</td>
+                                                        <td style="width:40%">
+                                                            <div>
+                                                                <LogCheckBox [ObjectFieldName]="'ContactForAccounting'"
+                                                                [Checked]="item.ContactForAccounting"
+                                                                [ObjectTableName]="item.ObjectTableName" (ValueChanged)="item.setContactForAccounting()"
+                                                                [DataContext]="item" Text="{{'Contact.F.ContactForAccounting' |TextCodeTranslationPipe}}"></LogCheckBox>
+                                                            </div>
+                                                        </td>
+
                                                     </tr>
                                                     <tr class="BoxItemRow">
                                                         <td style="width: 1px;">Email:</td>

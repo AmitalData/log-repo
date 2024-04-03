@@ -36,6 +36,7 @@ import {GLAccountPM} from '../../../../Accounting/EntityPMs/GLAccountPM';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
 import { GLAccountList } from 'Accounting/EntityLists/GLAccountList';
 import { GLAccountListService } from 'Accounting/Services/StandardLists/GLAccountListService';
+import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 declare var window: any;
 
 @Component({
@@ -64,10 +65,13 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     public AllowVatTypes: boolean = true;
     ColumnsWidths: any[] = [];
     public IsUsingVirtuallization: boolean = false;
+    public GLAccountsFilterItems: ApiQueryFilters;
+
     constructor(private entityArgs: EntityArgs) {
         super();
 
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
+        this.InitLOVFilters();
         this.SetIsUsingVirtuallization();
         this.IsFullAccounting = SessionLocator.TenantPM.AccountingActivated;
         this.EntityPM = entityArgs.EntityPM;
@@ -98,7 +102,10 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         }
   
     }
-
+    InitLOVFilters() {
+        this.GLAccountsFilterItems = new ApiQueryFilters();
+        this.GLAccountsFilterItems.addAdditionalFilter("GLAccountId", "null", null, null, "NotEqual", false, false, false, "string");
+    }
     SetIsUsingVirtuallization() {
         var hasGridVirtuallizationToggleFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "EVG")[0]
         if (hasGridVirtuallizationToggleFeature) {
@@ -236,6 +243,8 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                 this.UIProperties.SetEnabled("ExchangeRateDate", this.ObjectTableName, false);
             }
         }
+
+        this.UIProperties.SetEnabled("ConfirmationNumber", this.ObjectTableName, true);
 
         this.SetUIProperties_DueDate();
         this.SetUIProperties_VATNumber();
@@ -934,23 +943,31 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                     if (!AppTool.IsNullOrEmpty(list.InvoiceCurrencyId)) {
                         this.InvoiceCurrencyId = list.InvoiceCurrencyId;
                     }
-                    if (!AppTool.IsNullOrEmpty(list.PaymentTermId)) {
+                    if (!AppTool.IsNullOrEmpty(list.GLAccountId)) {
+                        this.myGLAccountPMService.get(list.GLAccountId).subscribe((myResponse: ServiceResponse) => {
+                            if (!myResponse.HasError) {
+                                this.glaccount = myResponse.Result;
+                                
+                                if(this.glaccount.PaymentTerms)
+                                    this.PaymentTermId = this.glaccount.PaymentTerms;
+                                else
+                                    this.PaymentTermId = this.glaccount.PaymentTermId;
+                                if (AppTool.IsNullOrEmpty(this.PaymentTermId)) {
+                                    this.PaymentTermId = SessionLocator.TenantPM.PaymentTermId;
+                                }
+                                this.EntityPM.VendorGLAccountId = this.glaccount.Id;
+                                this.EntityPM.IsEquipment = this.glaccount.IsEquipmentVendor;
+                            }
+                        });
+                    }
+                    else if (!AppTool.IsNullOrEmpty(list.PaymentTermId)) {
                         this.PaymentTermId = list.PaymentTermId;
                     }
 
                     if (!AppTool.IsNullOrEmpty(list.VatTypeId)) {
 
                     }
-
-                    if (!AppTool.IsNullOrEmpty(list.GLAccountId)) {
-                        this.myGLAccountPMService.get(list.GLAccountId).subscribe((myResponse: ServiceResponse) => {
-                            if (!myResponse.HasError) {
-                                this.glaccount = myResponse.Result;
-                                this.EntityPM.VendorGLAccountId = this.glaccount.Id;
-                                this.EntityPM.IsEquipment = this.glaccount.IsEquipmentVendor;
-                            }
-                        });
-                    }
+                   
                 }
                 if(this.IsFullAccounting)
                 this.GetConnectedGLAccount();
@@ -1048,7 +1065,6 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             if (AppTool.IsNullOrEmpty(newValue)) {
                 this.PaymentTermName = null;
             }
-
             else {
                 this.myPaymentTermListService.getSingleFromCache(newValue).subscribe((myResponse: ServiceResponse) => {
                     if (!myResponse.HasError) {
@@ -1095,6 +1111,13 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         }
     }
 
+    get ConfirmationNumber() { return this.EntityPM.ConfirmationNumber; }
+    set ConfirmationNumber(newValue: string) {
+        if (this.EntityPM.ConfirmationNumber != newValue) {
+            this.EntityPM.ConfirmationNumber = newValue;
+        }
+    }
+   
     get AccountingDate() { return this.EntityPM.AccountingDate; }
     set AccountingDate(value: Date) {
         if (this.EntityPM.AccountingDate != value) {
@@ -1115,6 +1138,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             this.EntityPM.InvoiceCurrencyId = value;
             this.InvoiceCurrencyExchangeRate = this.GetCurrencyRate(value);
             this.ExchangeRateDate = this.GetCurrencyRateDate(value);
+            this.SetUIProperties_ExchangeRate();
 
             if (AppTool.IsNullOrEmpty(value)) {
                 this.InvoiceCurrencyCode = null;
@@ -1456,11 +1480,10 @@ export class APInvoiceLineItem extends BaseComponent {
     }
     private SetUIProperties_VAT() {
         this.UIProperties.SetEnabled("VatTypeId", this.ObjectTableName, this.IsScreenEnabled);
-        this.UIProperties.SetEnabled("VatPercentage", this.ObjectTableName, this.IsScreenEnabled);
-
-        if (this.VatIsMultiPercentage) {
+          
+        //if (this.VatIsMultiPercentage) {
             this.UIProperties.SetEnabled("VatPercentage", this.ObjectTableName, false);
-        }
+       // }
 
         var isVatPercentageRequired = false;
 

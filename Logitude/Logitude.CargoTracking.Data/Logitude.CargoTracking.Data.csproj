@@ -58,6 +58,7 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
@@ -195,9 +196,17 @@
     <Compile Include="Repositories\Generated\CargoTrackingWatermarkRepository.Generated.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Logitude.BL\Logitude.BL.csproj">
+      <Project>{A663E7EF-B858-4BB6-BC33-E473F51B8E56}</Project>
+      <Name>Logitude.BL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Logitude.CargoTracking.Def\Logitude.CargoTracking.Def.csproj">
       <Project>{1602A405-278E-4FF9-B7B5-DFC6E525B497}</Project>
       <Name>Logitude.CargoTracking.Def</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.Server.Tools\Logitude.Server.Tools.csproj">
+      <Project>{9B477A08-8EE2-4457-88FE-17E8A6EC4D00}</Project>
+      <Name>Logitude.Server.Tools</Name>
     </ProjectReference>
     <ProjectReference Include="..\Simplog.Data\Simplog.Data.csproj">
       <Project>{78ec8434-e6ad-4e93-9b17-c746f5403f7b}</Project>

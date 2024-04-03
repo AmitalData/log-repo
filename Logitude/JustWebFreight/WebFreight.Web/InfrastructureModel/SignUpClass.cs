@@ -53,6 +53,8 @@ using Logitude.Server.Tools.QueueService;
 using WebFreight.Web.Helpers.SignUp.Logbox;
 using Logitude.Workflow.Data.Repositories;
 using Logitude.Workflow.Data.EntityPOCOs;
+using Logitude.Accounting.Def.EntityPMs;
+using Logitude.Accounting.BL.EntityQueryServices;
 
 namespace WebFreight.Web.InfrastructureModel
 {
@@ -103,6 +105,8 @@ namespace WebFreight.Web.InfrastructureModel
         static ChargesTypeRepository chargesTypeRepository;
         static ChargesGroupRepository chargesGroupRepository;
         static QuoteChargesGroupRepository quoteChargesGroupRepository;
+        static AccountingCompanyTypeRepository accountingCompanyTypeRepository;
+
         static RankRepository rankRepository;
         static PackageTypeRepository packageTypeRepository;
         static DocumentTypeCustomFieldRepository documentTypeCustomFieldRepository;
@@ -146,7 +150,8 @@ namespace WebFreight.Web.InfrastructureModel
         private static ChargesTypeQuery chargesTypeQuery;
         private static ChargesGroupQuery chargesGroupQuery;
         private static QuoteChargesGroupQuery quoteChargesGroupQuery;
-        private static EntityStatusQuery entityStatusQuery;
+        private static AccountingCompanyTypeQueryService AccountingCompanyTypeQuery;
+         private static EntityStatusQuery entityStatusQuery;
         private static EventTypeQuery eventTypeQuery;
         private static MenusTableQuery menusTableQuery;
         private static ObjectFieldQuery objectFieldsQuery;
@@ -217,8 +222,8 @@ namespace WebFreight.Web.InfrastructureModel
             get { return customsRequiredFieldRepository; }
             set { customsRequiredFieldRepository = value; }
         }
-   
-        public static DocumentTypeCustomsDataRepository DocumentTypeCustomsDataRepository
+         static TenantIdleStatusRepository tenantIdleStatusRepository;
+         public static DocumentTypeCustomsDataRepository DocumentTypeCustomsDataRepository
         {
             get { return documentTypeCustomsDataRepository; }
             set { documentTypeCustomsDataRepository = value; }
@@ -271,6 +276,8 @@ namespace WebFreight.Web.InfrastructureModel
             chargesTypeRepository = new ChargesTypeRepository(theTenant);
             chargesGroupRepository = new ChargesGroupRepository(theTenant);
             quoteChargesGroupRepository = new QuoteChargesGroupRepository(theTenant);
+            accountingCompanyTypeRepository = new AccountingCompanyTypeRepository(theTenant);
+
             rankRepository = new RankRepository(theTenant);
             packageTypeRepository = new PackageTypeRepository(theTenant);
             documentTypeCustomFieldRepository = new DocumentTypeCustomFieldRepository(theTenant);
@@ -322,6 +329,7 @@ namespace WebFreight.Web.InfrastructureModel
             chargesTypeQuery = new ChargesTypeQuery(theTenant);
             chargesGroupQuery = new ChargesGroupQuery(theTenant);
             quoteChargesGroupQuery = new QuoteChargesGroupQuery(theTenant);
+            AccountingCompanyTypeQuery = new AccountingCompanyTypeQueryService(theTenant);
             documentTypeQuery = new DocumentTypeQuery(theTenant);
             measurementQuery = new MeasurementQuery(theTenant);
             packageTypeQuery = new PackageTypeQuery(theTenant);
@@ -334,9 +342,9 @@ namespace WebFreight.Web.InfrastructureModel
             closingReasonQuery = new OpportunityClosingReasonQueryService(closingReasonRepository);
             quoteClosingReasonQuery = new QuoteClosingReasonQuery(quoteClosingReasonRepository);
             shipmentSubTypeQuery = new ShipmentSubTypeQuery(shipmentSubTypeRepository);
-
-            fullAccountingSettingsRepository = new FullAccountingSettingRepository(theTenant);
-            bankCodeRepository = new BankCodeRepository(theTenant);
+             fullAccountingSettingsRepository = new FullAccountingSettingRepository(theTenant);
+            tenantIdleStatusRepository = new TenantIdleStatusRepository(theTenant);
+             bankCodeRepository = new BankCodeRepository(theTenant);
             taxWithholdingAssessOfficeRepository = new TaxWithholdingAssessOfficeRepository(theTenant);
             customerGroupRepository = new CustomerGroupRepository(theTenant);
             #endregion
@@ -376,7 +384,8 @@ namespace WebFreight.Web.InfrastructureModel
                 List<ChargesTypePM> tenantZeroChargesTypes;
                 List<ChargesGroupPM> tenantZeroChargesGroups;
                 List<QuoteChargesGroupPM> tenantZeroQuoteChargesGroups;
-                List<PackageTypePM> tenantZeroPackageTypes;
+                List<AccountingCompanyTypePM> tenantZeroAccountingCompanyTypes;
+                 List<PackageTypePM> tenantZeroPackageTypes;
                 List<DocumentTypeCustomField> tenantZeroCustomFields;
                 List<CreditCardTypePM> tenantZeroCreditCardTypes;
                 List<MoveTypePM> tenantZeroMoveTypes;
@@ -427,6 +436,8 @@ namespace WebFreight.Web.InfrastructureModel
                     tenantZeroChargesTypes = chargesTypeQuery.GetChargesTypePMsByTenant(0).ToList();
                     tenantZeroChargesGroups = chargesGroupQuery.GetChargesGroupPMsByTenant(0).ToList();
                     tenantZeroQuoteChargesGroups = quoteChargesGroupQuery.GetQuoteChargesGroupPMsByTenant(0).ToList();
+                    tenantZeroAccountingCompanyTypes = AccountingCompanyTypeQuery.GetByTenant(0).ToList();
+
                     tenantZeroPackageTypes = packageTypeQuery.GetPackageTypePMsByTenant(0).ToList();
                     tenantZeroCustomFields = documentTypeCustomFieldRepository.GetDocumentTypeCustomFields(0).ToList();
 
@@ -538,6 +549,8 @@ namespace WebFreight.Web.InfrastructureModel
                 AddChargesTypes(tenant, chargesTypeRepository, tenantZeroChargesTypes, currentTenantMeasurement, tenantZeroVatTypes, currentTenantVatTypes);
                 AddChargesGroups(tenant, chargesGroupRepository, tenantZeroChargesGroups);
                 CopyQuoteChargesGroupsFromTenantZero(tenant, quoteChargesGroupRepository, tenantZeroQuoteChargesGroups);
+                CopyAccountingCompanyTypeFromTenantZero(tenant, accountingCompanyTypeRepository, tenantZeroAccountingCompanyTypes);
+
                 AddRanks(tenant, rankRepository);
                 AddPackageTypes(tenant, packageTypeRepository, measurementRepository, tenantZeroPackageTypes);
                 AddOpportunityTypes(tenant, opportunityTypeRepository, tenantZeroOpportunityTypes);
@@ -578,8 +591,12 @@ namespace WebFreight.Web.InfrastructureModel
                     PhoneNumber = "99999999"
                 };
                 string systemPassword = AddUser(systemUserShortDetails, userRepository, branchRepository, departmentRepository, roleRepository);
-                 
-                if (setting.WorkEnvironment != "customs")  AddDefaultFullAccountingSettings(tenant, fullAccountingSettingsRepository);
+
+                if (setting.WorkEnvironment != "customs") { 
+                    AddDefaultFullAccountingSettings(tenant, fullAccountingSettingsRepository);
+                    AddDefaultTenantIdleStatuses(tenant, tenantIdleStatusRepository);
+
+                }
 
                 AddReportFromTenantZero(tenant);
 
@@ -1116,7 +1133,7 @@ namespace WebFreight.Web.InfrastructureModel
                 EnglishName = "Debit+Credit+VAT Extract",
                 LocalName = "חובה+זכות+חילוץ מע\"מ",
                 SearchFields = "4חובה+זכות+חילוץ מע\"מDebit+Credit+VAT Extract",
-                Inactive = false,
+                Inactive = true,
             };
             repository.Add(type4);
 
@@ -2379,6 +2396,16 @@ namespace WebFreight.Web.InfrastructureModel
             theChargesGroupRepository.SubmitChanges();
         }
 
+
+        public static void CopyAccountingCompanyTypeFromTenantZero(int theTenant, AccountingCompanyTypeRepository accountingCompanyTypeRepository, List<AccountingCompanyTypePM> tenantZeroAccountingCompanyTypes)
+        {
+            foreach (AccountingCompanyTypePM accountingCompanyTypes in tenantZeroAccountingCompanyTypes)
+            {
+                AddAccountingCompanyType(accountingCompanyTypes, theTenant, accountingCompanyTypeRepository);
+            }
+            accountingCompanyTypeRepository.SubmitChanges();
+        }
+
         private static void AddQuoteChargesGroup(QuoteChargesGroupPM quoteChargesGroup, int theTenant, QuoteChargesGroupRepository theChargesGroupRepository)
         {
             string localName = !string.IsNullOrEmpty(quoteChargesGroup.LocalName) ? quoteChargesGroup.LocalName : quoteChargesGroup.Name;
@@ -2394,6 +2421,22 @@ namespace WebFreight.Web.InfrastructureModel
 
             };
             theChargesGroupRepository.Add(chargesGroup);
+        }
+        private static void AddAccountingCompanyType(AccountingCompanyTypePM accountingCompanyTypes, int theTenant, AccountingCompanyTypeRepository  accountingCompanyTypeRepository)
+        {
+
+            AccountingCompanyType accountingCompanyType = new AccountingCompanyType()
+            {
+                Id = IdCounter.GetNumber("AccountingCompanyType", theTenant).ToString(),
+                Tenant = theTenant,
+                Code = accountingCompanyTypes.Code,
+                EnglishName= accountingCompanyTypes.EnglishName,
+                LocalName = accountingCompanyTypes. LocalName,
+                SearchFields = accountingCompanyTypes.SearchFields,
+                Inactive = accountingCompanyTypes.Inactive,
+
+            };
+            accountingCompanyTypeRepository.Add(accountingCompanyType);
         }
 
         public static void AddRanks(int theTenant, RankRepository theRankRepository)
@@ -3220,6 +3263,22 @@ namespace WebFreight.Web.InfrastructureModel
 
             theFullAccountingSettingsRepository.Add(settings);
             theFullAccountingSettingsRepository.SubmitChanges();
+        }
+
+        private static void AddDefaultTenantIdleStatuses(int theTenant, TenantIdleStatusRepository tenantIdleStatusRepository)
+        {
+            TenantIdleStatus TenantIdleStatus = new TenantIdleStatus()
+            {
+                Id = theTenant.ToString(),
+                Tenant = theTenant,
+                CreateDate = DateTime.Now,
+                UpdateDate = DateTime.Now,
+                SearchFields=null,
+                Idle=false
+            };
+
+            tenantIdleStatusRepository.Add(TenantIdleStatus);
+            tenantIdleStatusRepository.SubmitChanges();
         }
 
         public static void AddWithholdingTaxDeductionTypes(int theTenant, WithholdingTaxDeductionTypeRepository withholdingTaxDeductionTypeRepository, List<WithholdingTaxDeductionType> tenantZeroTypes)

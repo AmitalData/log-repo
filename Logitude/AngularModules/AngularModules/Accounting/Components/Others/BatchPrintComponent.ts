@@ -322,10 +322,6 @@ private selectedItems:ObservableCollection;
   public set AllSelected(value: boolean) {
     if (this.allSelected != value) {
       this.allSelected = value;
-      //InterestReportEventManager.SelectAllEvent.emit({
-      //  value
-      //});
-      //InterestReportEventManager.AllSelected = value;
         if (value) {
             this.IsSelectedItemsTextVisibile = true;
             this.SelectedItemsCountText = "selected " + this.DataSource.rowCount + " of " + this.DataSource.rowCount;

@@ -1,0 +1,126 @@
+<style type="text/css">
+    .NumericButton:hover {
+        background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(221, 232, 245, 1) 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
+        background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(221, 232, 245, 1) ));
+        background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(221, 232, 245, 1) 100%);
+    }
+
+    .NumericButton {
+        width: 15px;
+        height: 100%;
+        border: 1px solid #6A8299;
+        background: -moz-linear-gradient(50% 0% -90deg,rgba(255, 255, 255, 1) 0%,rgba(186, 206, 227, 1) 100%);
+        background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+        background: -webkit-gradient(linear,50% 0%,50% 100%,color-stop(0,rgba(255, 255, 255, 1) ),color-stop(1,rgba(186, 206, 227, 1) ));
+        background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+        background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+        position: relative;
+    }
+</style>
+<table>
+    <tr style="height:1px;">
+        <td style="height: 100%;">
+                <table>                   
+                        <tr>
+                            <td style="vertical-align: top;">
+                                <tr>
+                                    <td style="width:150px; height: 42px">
+                                        <LogLabel [Text]="'Release Date'" [NoObjectField]="true" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+            
+                                    <td style="width:120px; height: 42px">                                   
+                                        <ComboBox (SelectedItemChanged)="MonthReleaseDateChange($event)"
+                                                  [ItemsSource]="Monthes" 
+                                                  [SelectedItem]="MonthReleaseDate">
+                                        </ComboBox>
+                                    </td>
+                                    <td style="width:7px;">
+                                        <div></div>
+                                    </td>
+                                    <td style="width:120px; height: 42px">
+                                        <LogTextBox 
+                                                    [ObjectFieldName]="'YearReleaseDate'"
+                                                    [InputType]="'integer'"
+                                                    [DataContext]="DataContext"
+                                                    [ObjectTableName]="ObjectTableName" 
+                                                    [HideColumns]="true"
+                                                    [Text]="YearReleaseDate">
+                                        </LogTextBox>
+                                    </td>
+                                    <td style="width:7px;">
+                                        <div></div>
+                                    </td>
+                                    <td style="width:20px;">
+                                        <table>
+                                            <tr>
+                                                <td style="height: 10px; width: 20px;">
+                                                    <div class="NumericButton" (mousedown)="YearButtonClicked(true)">
+                                                        <img class="CenterCenter" style="height: 3px; width: 5px;" src="./Images/Buttons/Up.png" />
+                                                    </div>
+                                                </td>
+                                            </tr>                                         
+                                            <tr style="height: 10px; width: 20px;">
+                                                <td>
+                                                    <div class="NumericButton" (mousedown)="YearButtonClicked(false)">
+                                                        <img class="CenterCenter" style="height: 3px; width: 5px;" src="./Images/Buttons/Down.png" />
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>                                                       
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <LogLabel [Text]="'Release Notes Url'" [NoObjectField]="true" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td style="height: 42px; width: 200px;">
+                                        <ComboBox (SelectedItemChanged)="ReleaseCode = $event.code"
+                                                  [ItemsSource]="HelpResourceNames" 
+                                                  [SelectedItem]="GetSelectedHelpResorce()"
+                                                  [Binding]="'name'">
+                                        </ComboBox>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <LogLabel [Text]="'Delete Release Notes Url'" [NoObjectField]="true" [DataContext]="DataContext"></LogLabel>
+                                    </td>
+                                    <td style="height: 42px">
+                                        <LogCheckBox [ObjectFieldName]="'IsDeleteReleaseURL'" [Checked]="IsDeleteReleaseURL" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" (ValueChanged)="IsDeleteChecked($event)"></LogCheckBox>
+            
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            
+                            </td>
+                        </tr>
+                        
+                    <tr style="height: 28px;">
+                        <td style="vertical-align: bottom">
+                            <table style="height: 22px;">
+                                <tr>
+                                    <td>
+                                        <div></div>
+                                    </td>    
+                                    <td style="width: 57px;">
+                                        <div></div>
+                                    </td>                                                
+                                    <td style="width: 5px;">
+                                        <div></div>
+                                    </td>
+                    
+                                    <td style="width: 57px;">
+                                        <button class="RedButton" (click)="OkButtonClicked()">Ok</button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+        </td>
+    </tr>
+</table>

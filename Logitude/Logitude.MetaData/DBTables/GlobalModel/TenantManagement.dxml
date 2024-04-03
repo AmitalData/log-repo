@@ -1121,8 +1121,33 @@
     <Constraints
       Nullable="true" />
   </Column>
-   <Relation
-    ForeignKeyColumn="Id"
+   <Column
+    Name="ExportLoginCredintial"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ExportTenant"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="TranzilaPaymentWithBit"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="SearchAbsoluteValuePublic"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Relation
+     ForeignKeyColumn="Id"
     ReferencedTable="GlobalTenants"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />

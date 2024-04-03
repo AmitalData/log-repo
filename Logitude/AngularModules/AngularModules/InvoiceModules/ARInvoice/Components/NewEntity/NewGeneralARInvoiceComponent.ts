@@ -35,6 +35,7 @@ import {GLAccountPM} from '../../../../Accounting/EntityPMs/GLAccountPM';
 import {AccountingPeriodExtendedListService} from '../../../../Accounting/Services/ExtendedLists/AccountingPeriodExtendedListService';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
 import { reject } from 'q';
+import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 
 @Component({
     selector: 'NewGeneralARInvoiceComponent',
@@ -59,9 +60,12 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
     DisplayFieldsFromList:string;
     DisplayLocalFieldsFromList:string;
     BillToLovSizeForFullAccounting:number;
+    public GLAccountsFilterItems: ApiQueryFilters;
+
     constructor(private entityResourceService: EntityResourceService) {
         super();
          this.IsAccountingActivated = SessionLocator.TenantPM.AccountingActivated;
+         this.InitLOVFilters();
          this.InitializeBillToLov();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         this.entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((res: any) => {
@@ -77,11 +81,14 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
             this.IsEditExchangeRateVisible = true;
         }
     }
-
+    InitLOVFilters() {
+        this.GLAccountsFilterItems = new ApiQueryFilters();
+        this.GLAccountsFilterItems.addAdditionalFilter("GLAccountId", "null", null, null, "NotEqual", false, false, false, "string");
+    }
     private InitializeBillToLov() {
         if (this.IsAccountingActivated) {
-            this.DisplayFieldsFromList = "Code,CalculatedEnglishName,GLAccountDisplayNumber,CityName,CountryCode,PartnerTypeName";
-            this.DisplayLocalFieldsFromList = "Code,CalculatedLocalName,GLAccountDisplayNumber,CityName,CountryCode,PartnerTypeName";
+            this.DisplayFieldsFromList = "Code,CalculatedEnglishName,CalculatedLocalName,GLAccountDisplayNumber,CountryCode,PartnerTypeName";
+            this.DisplayLocalFieldsFromList = "Code,CalculatedLocalName,GLAccountDisplayNumber,CountryCode,PartnerTypeName";
             this.BillToLovSizeForFullAccounting = 550;
         }
     }

@@ -644,7 +644,14 @@ export class TenantPM {
     public get EcommerceSupportEmail() { return this.ecommerceSupportEmail; }
     public set EcommerceSupportEmail(newValue: string) { if (this.ecommerceSupportEmail != newValue) { this.ecommerceSupportEmail = newValue; this.MarkAsDirty("EcommerceSupportEmail"); } }
        
-	 
+    private tranzilaPaymentWithBit: string;
+    public get TranzilaPaymentWithBit() { return this.tranzilaPaymentWithBit; }
+    public set TranzilaPaymentWithBit(newValue: string) { if (this.tranzilaPaymentWithBit != newValue) { this.tranzilaPaymentWithBit = newValue; this.MarkAsDirty("TranzilaPaymentWithBit"); } }
+       
+    private ecommerceTenant: boolean;
+    public get EcommerceTenant() { return this.ecommerceTenant; }
+    public set EcommerceTenant(newValue: boolean) { if (this.ecommerceTenant != newValue) { this.ecommerceTenant = newValue; this.MarkAsDirty("ecommerceTenant"); } }
+       
     private cBSA: string;
     public get CBSA() { return this.cBSA; }
     public set CBSA(newValue: string) { if (this.cBSA != newValue) { this.cBSA = newValue; this.MarkAsDirty("CBSA"); } }

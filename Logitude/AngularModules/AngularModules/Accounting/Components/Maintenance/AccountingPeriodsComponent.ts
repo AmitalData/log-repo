@@ -22,6 +22,8 @@ import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {AppTool} from '../../../Infrastructure/Tools';
 import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
+import { PeriodTypeListService } from '../../Services/StandardLists/PeriodTypeListService';
+import { PeriodTypeList } from '../../EntityLists/PeriodTypeList';
 
 
 @Component({
@@ -35,11 +37,14 @@ export class AccountingPeriodsComponent extends BaseComponent {
     public DataContext: AccountingPeriodsComponent = this;
     public ObjectTableName: string = "AccountingPeriod";
     accountingPeriodListService: AccountingPeriodListService;
+    periodTypeListService: PeriodTypeListService;
     accountingPeriodPMService: AccountingPeriodPMService;
     _AccountingPeriodExtendedListService: AccountingPeriodExtendedListService;
     _AccountingPeriodExtendedPMService: AccountingPeriodExtendedPMService;
     public ValidationErrorsList: string[];
+    GotPeriodsList: AccountingPeriodList[];
     PeriodsList: AccountingPeriodList[];
+    PeriodTypesList: PeriodTypeList[];
     ShowPrompt: boolean = false;
     public isRTL: boolean = false;
     public hasReadPermision: boolean = false;
@@ -47,6 +52,7 @@ export class AccountingPeriodsComponent extends BaseComponent {
     constructor(private _entityResourceService: EntityResourceService, public entityArgs: EntityArgs) {
         super();
         this.accountingPeriodListService = new AccountingPeriodListService();
+        this.periodTypeListService = new PeriodTypeListService();
         this.accountingPeriodPMService = new AccountingPeriodPMService();
         this._AccountingPeriodExtendedListService = new AccountingPeriodExtendedListService();
         this._AccountingPeriodExtendedPMService = new AccountingPeriodExtendedPMService();
@@ -60,7 +66,7 @@ export class AccountingPeriodsComponent extends BaseComponent {
         else
             this.UIProperties.SetEnabled("Year", this.ObjectTableName, false);
 
-
+        this.GetPeriodTypes();
     }
 
     // Properties
@@ -75,7 +81,7 @@ export class AccountingPeriodsComponent extends BaseComponent {
     noPeriodMsg: string = "";
     GetPeriods(year) {
         if (!AppTool.IsNullOrEmpty(year) && this.hasReadPermision) {
-
+            const showLocals = !SessionLocator.LoggedUserPM.DontShowLocalLabels;
             var filters = new ApiQueryFilters();
             filters.GetAll = true;
             filters.addAdditionalFilter("Year", year, null, null, "Equal", false, false, false, "number");
@@ -84,7 +90,22 @@ export class AccountingPeriodsComponent extends BaseComponent {
                 var result = myResult.Result;
                 if (!AppTool.IsNullOrEmpty(result) && result.length > 0) {
                     this.ShowPrompt = false;
-                    this.PeriodsList = result;
+                    this.GotPeriodsList = result;
+                    if (this.GotPeriodsList != null && showLocals && this.PeriodTypesList != null) {
+                        let localMap = new Map<string, string>();
+                        this.PeriodTypesList.forEach(s => {
+                            localMap.set(s.Code, s.LocalName);
+                        });
+                        this.PeriodsList = [];
+                        this.GotPeriodsList.forEach(s => {
+                            let localName = localMap.get(s.PeriodTypeCode);
+                            s.PeriodTypeName = localName;
+                            this.PeriodsList.push(s);
+                        });
+
+                    } else {
+                        this.PeriodsList = this.GotPeriodsList;
+                    }
 
                 } else {
                     this.PeriodsList = [];
@@ -97,7 +118,24 @@ export class AccountingPeriodsComponent extends BaseComponent {
 
         }
     }
+    GetPeriodTypes() {
+        var filters = new ApiQueryFilters();
+        filters.GetAll = true;
 
+        this.periodTypeListService.getByFilters(filters).subscribe((myResult: any) => {
+            var result = myResult.Result;
+            if (!AppTool.IsNullOrEmpty(result) && result.length > 0) {
+                this.ShowPrompt = false;
+                var periods = result;
+                this.PeriodTypesList = periods;
+
+            } else {
+                this.PeriodTypesList = [];
+            }
+        });
+
+
+    }
     BrowseButtonClicked() {
         if (AppTool.IsNullOrEmpty(this.year)) {
             this.Year = new Date().getFullYear();

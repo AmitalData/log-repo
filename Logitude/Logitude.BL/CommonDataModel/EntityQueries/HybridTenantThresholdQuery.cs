@@ -42,23 +42,25 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              Tenant = a.Tenant,
                              FailedThresold = a.FailedThresold,
                              WaitingThresold = a.WaitingThresold,
+                             TypeCode = a.TypeCode,
                          }).FirstOrDefault();
 
             return query;
         }
 
 
-        public HybridTenantThresholdPM GetSinglePM(int tenant2, int tenant)
+        public HybridTenantThresholdPM GetSinglePM(int tenant, int typoecode)
         {
 
             var query = (from a in repository.context.HybridTenantThresholds
-                         where a.Tenant == tenant
+                         where a.Tenant == tenant && a.TypeCode== typoecode
                          select new HybridTenantThresholdPM()
                          {
 
                              Tenant = a.Tenant,
                              FailedThresold = a.FailedThresold,
                              WaitingThresold = a.WaitingThresold,
+                             TypeCode = a.TypeCode,
                          }).FirstOrDefault();
 
             return query;
@@ -78,6 +80,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              Tenant = a.Tenant,
                              FailedThresold = a.FailedThresold,
                              WaitingThresold = a.WaitingThresold,
+                             TypeCode = a.TypeCode,
                          }).FirstOrDefault();
 
             return query;
@@ -95,6 +98,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              Tenant = a.Tenant,
                              FailedThresold = a.FailedThresold,
                              WaitingThresold = a.WaitingThresold,
+                             TypeCode = a.TypeCode,
                          }).FirstOrDefault();
 
             return query;
@@ -109,6 +113,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              Tenant = a.Tenant,
                              FailedThresold = a.FailedThresold,
                              WaitingThresold = a.WaitingThresold,
+                             TypeCode = a.TypeCode,
                          });
 
             return query;

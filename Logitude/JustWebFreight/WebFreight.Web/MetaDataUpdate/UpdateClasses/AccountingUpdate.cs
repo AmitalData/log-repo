@@ -29,8 +29,9 @@ using Logitude.Server.Tools.CloseTablesClasses;
 using Logitude.Accounting.BL.CloseTables;
 using Logitude.Accounting.BL.EntityUpdateServices;
 using Logitude.Accounting.Def.EntityPMs;
-using System.Configuration;
-
+ using System.Configuration;
+ using Telerik.Windows.Controls.MaskedInput;
+ 
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 {
     public class AccountingUpdate
@@ -179,7 +180,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             AddClosedTables.AddJournalActionType(new JournalActionTypeDetails() { Code = "1", JournalActionTypeID = "1", Tenant = 0, EnglishName = "Credit", LocalName = "זכות" }, journalActionTypeRepository);
             AddClosedTables.AddJournalActionType(new JournalActionTypeDetails() { Code = "2", JournalActionTypeID = "2", Tenant = 0, EnglishName = "Debit ", LocalName = "חובה" }, journalActionTypeRepository);
             AddClosedTables.AddJournalActionType(new JournalActionTypeDetails() { Code = "3", JournalActionTypeID = "3", Tenant = 0, EnglishName = "Debit And Credit", LocalName = "חובה+זכות" }, journalActionTypeRepository);
-            AddClosedTables.AddJournalActionType(new JournalActionTypeDetails() { Code = "4", JournalActionTypeID = "4", Tenant = 0, EnglishName = "Debit, Credit And Vat deduction ", LocalName = "חובה + זכות + חילוץ מעמ" }, journalActionTypeRepository);
+         // AddClosedTables.AddJournalActionType(new JournalActionTypeDetails() { Code = "4", JournalActionTypeID = "4", Tenant = 0, EnglishName = "Debit, Credit And Vat deduction ", LocalName = "חובה + זכות + חילוץ מעמ" }, journalActionTypeRepository);
 
             journalActionTypeRepository.SubmitChanges();
 
@@ -1334,7 +1335,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.Multi", DefaultText = "Multi", LocalDefaultText = "רב מטבעי", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.Active", DefaultText = "Active", LocalDefaultText = "פעיל", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.Inactive", DefaultText = "Inactive", LocalDefaultText = "חסום", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.DisplayNumberAlreadyExists", DefaultText = "Existing number - choose another one", LocalDefaultText = "מספר קיים - יש לבחור במספר אחר", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.DisplayNumberAlreadyExists", DefaultText = "The card the system is trying to open ({0}) is already exists. It can be connected by clicking on the ''Connect'' button.", LocalDefaultText = "הכרטיס שהמערת מנסה לפתוח ({0}) כבר קיים. ניתן לחבר אותו ע''י לחיצה על כפתור ''חיבור כרטיס קיים''.", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC" }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.InternalNumberAlreadyExists", DefaultText = "The Internal Number exists with another GL Account", LocalDefaultText = "המספר הפנימי קיים בחשבון אחר", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
             //alex test
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.ClientMultiAlreadyExists", DefaultText = "A multi-currency account already exists for the Client - please choose a currrency", LocalDefaultText = "ללקוח קיים כבר חשבון רב-מטבעי - אנא בחר מטבע", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);

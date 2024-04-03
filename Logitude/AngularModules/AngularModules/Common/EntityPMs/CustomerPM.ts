@@ -573,6 +573,11 @@ export class CustomerPM extends ObjectCustomFieldPM {
     public set EmailForSendingSingArinvoice(newValue: string) { if (this.emailForSendingSingArinvoice != newValue) { this.emailForSendingSingArinvoice = newValue; this.MarkAsDirty("EmailForSendingSingArinvoice"); } }
        
 	 
+    private sendingInterestReport: boolean;
+    public get SendingInterestReport() { return this.sendingInterestReport; }
+    public set SendingInterestReport(newValue: boolean) { if (this.sendingInterestReport != newValue) { this.sendingInterestReport = newValue; this.MarkAsDirty("SendingInterestReport"); } }
+       
+	 
     private customerStatusName: string;
     public get CustomerStatusName() { return this.customerStatusName; }
     public set CustomerStatusName(newValue: string) { if (this.customerStatusName != newValue) { this.customerStatusName = newValue; this.MarkAsDirty("CustomerStatusName"); } }
@@ -1443,6 +1448,11 @@ export class CustomerPM extends ObjectCustomFieldPM {
     private isPotential: boolean;
     public get IsPotential() { return this.isPotential; }
     public set IsPotential(newValue: boolean) { if (this.isPotential != newValue) { this.isPotential = newValue; this.MarkAsDirty("IsPotential"); } }
+       
+	 
+    private contactForAccounting: string;
+    public get ContactForAccounting() { return this.contactForAccounting; }
+    public set ContactForAccounting(newValue: string) { if (this.contactForAccounting != newValue) { this.contactForAccounting = newValue; this.MarkAsDirty("ContactForAccounting"); } }
        
 	 
 

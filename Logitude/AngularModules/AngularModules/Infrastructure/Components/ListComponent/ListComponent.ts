@@ -3767,6 +3767,8 @@ export class ListComponent implements OnInit, AfterViewInit {
             windowArgs.currentObjectTable = this.ObjectTableName;
             windowArgs.tenant = SessionInfo.LoggedUserTenant;
             windowArgs.userid = SessionInfo.LoggedUserId;
+            this.CurrentQueryFilters.addAdditionalFilter("IsXslxFormat", true, null, null, "Equal", true, false, false, "string");
+            windowArgs.Type = "SaveToMicrosoftExcel2007";
             windowArgs.Filters = this.CurrentQueryFilters
             var logitudeWindow = new LogitudeWindow();
             logitudeWindow.Width = 500;
@@ -3781,7 +3783,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         }
 
     }
-
+  
     RefreshBtntimerToken: any;
     RefreshBtnClick() {
         if (this.RefreshBtntimerToken) {

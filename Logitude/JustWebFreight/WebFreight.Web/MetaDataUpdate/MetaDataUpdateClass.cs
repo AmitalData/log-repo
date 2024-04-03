@@ -62155,7 +62155,7 @@ namespace WebFreight.Web.MetaDataUpdate
             #endregion
 
             #region Messages
-            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.M.ThisEntityhasunsavedchanges", LocalDefaultText = "%Entity זה שינויים שלא נשמרו האם ברצונך לשמור אותו?", DefaultText = "This %Entity has unsaved changes do you want to save it?", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.M.ThisEntityhasunsavedchanges", LocalDefaultText = "%Entity זו בוצעו שינויים שלא נשמרו האם לשמור?", DefaultText = "This %Entity has unsaved changes do you want to save it?", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.M.ContainerNumberFormatisInvalid", DefaultText = "Container Number Format is Invalid <Must be 4 Letters and 7 Digits>", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.M.ContainerNumberCheckDigitiswrong", DefaultText = "Container Number Check Digit is wrong <Must be %CheckDigit>", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.M.AddingIsNotAvailable", DefaultText = "Adding new %Entity is not available at this moment please send the requested %Entity by email to: support@logitudeworld.com", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "M", }, TextCodeRepository, textcodes);

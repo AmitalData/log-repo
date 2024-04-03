@@ -18,6 +18,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
 {
     public class TenantManagementQuery
     {
+        private int tenant = 0;
         private TenantManagementRepository repository;
         public TenantManagementQuery()
         {
@@ -25,6 +26,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
         }
         public TenantManagementQuery(int tenant)
         {
+            this.tenant = tenant;
             repository = new TenantManagementRepository();
         }
         public TenantManagementQuery(TenantManagementRepository repository)
@@ -42,7 +44,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                        Id = a.Id,
                                                        MainColor = a.MainColor,
                                                        SecondaryColor = a.SecondaryColor,
-                                                       TertiaryColor  =a.TertiaryColor,
+                                                       TertiaryColor=a.TertiaryColor,
                                                        BackgroundId = a.BackgroundId,
                                                        MobileBackgroundId = a.MobileBackgroundId,
                                                        ShipmentHeaderImageId = a.ShipmentHeaderImageId,
@@ -122,10 +124,10 @@ namespace Logitude.BL.GlobalModel.EntityQueries
 
         public int GetShipmentBuildMonth(int tenant)
         {
-            double? res = (from a in repository.context.TenantManagements 
-            where a.Id == tenant && a.ActivatePrivateSite
-            select a.PermissionBuildMonths).ToList().FirstOrDefault();
-            
+            double? res = (from a in repository.context.TenantManagements
+                           where a.Id == tenant && a.ActivatePrivateSite
+                           select a.PermissionBuildMonths).ToList().FirstOrDefault();
+
             return res != null ? (int)res.Value : 6;
         }
 
@@ -238,6 +240,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                      LoginPageNotes = a.LoginPageNotes,
                                                      SupportActivated = a.SupportActivated,
                                                      SupportEmail = a.SupportEmail,
+                                                     TranzilaPaymentWithBit=a.TranzilaPaymentWithBit,
                                                      IsMultiPackage = a.IsMultiPackage,
                                                      Technology = a.Technology,
                                                      MobileLastDate = a.MobileLastDate,
@@ -310,13 +313,18 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                      DigitalPortalMobTotalLastWeek = a.DigitalPortalMobTotalLastWeek,
                                                      DigitalPortalMobTotalLastMonth = a.DigitalPortalMobTotalLastMonth,
                                                      DPArchiveShipmentCreateFilter = a.DPArchiveShipmentCreateFilter,
-                                                     DPArchiveShipmentArrivalFilter= a.DPArchiveShipmentArrivalFilter, 
+                                                     DPArchiveShipmentArrivalFilter= a.DPArchiveShipmentArrivalFilter,
                                                      DPArchiveShipmentDepartFilter = a.DPArchiveShipmentDepartFilter,
                                                      CargoTrackingPublicShowEvents = a.CargoTrackingPublicShowEvents,
                                                      CargoTrackingPrivateShowEvents = a.CargoTrackingPrivateShowEvents,
                                                      LogoURL = a.LogoURL,
                                                      ServiceAgreementURL = a.ServiceAgreementURL,
-                                                  }).FirstOrDefault();
+
+                                                     ExportTenant = a.ExportTenant,
+                                                     ExportLoginCredintial = a.ExportLoginCredintial,
+													 SearchAbsoluteValuePublic = a.SearchAbsoluteValuePublic,
+
+												 }).FirstOrDefault();
                     if (tenant != null)
                     {
                         TenantAddOnQuery tenantAddOnQuery = new TenantAddOnQuery(tenant.Id);
@@ -338,6 +346,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                             tenant.IsTestTenant = ten.IsTestTenant;
                             tenant.IsHybrid = ten.IsHybrid;
                             tenant.EcommerceSupportEmail = ten.EcommerceSupportEmail;
+                            tenant.EcommerceTenant = ten.EcommerceTenant;
                         }
 
                         GlobalTenantRepository globalTenRep = new GlobalTenantRepository();
@@ -462,6 +471,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                   LoginPageNotes = a.LoginPageNotes,
                                                   SupportActivated = a.SupportActivated,
                                                   SupportEmail = a.SupportEmail,
+                                                  TranzilaPaymentWithBit=a.TranzilaPaymentWithBit,
                                                   IsMultiPackage = a.IsMultiPackage,
                                                   Technology = a.Technology,
                                                   MobileLastDate = a.MobileLastDate,
@@ -539,8 +549,9 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                   CargoTrackingPrivateShowEvents = a.CargoTrackingPrivateShowEvents,
                                                   LogoURL = a.LogoURL,
                                                   ServiceAgreementURL = a.ServiceAgreementURL,
+												  SearchAbsoluteValuePublic = a.SearchAbsoluteValuePublic,
 
-                                              }).FirstOrDefault();
+											  }).FirstOrDefault();
 
                 if (tenant1 != null)
                 {
@@ -564,6 +575,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         tenant1.IsTestTenant = ten.IsTestTenant;
                         tenant1.IsHybrid = ten.IsHybrid;
                         tenant1.EcommerceSupportEmail = ten.EcommerceSupportEmail;
+                        tenant1.EcommerceTenant = ten.EcommerceTenant;
                     }
 
                     GlobalTenantRepository globalTenRep = new GlobalTenantRepository();
@@ -686,6 +698,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         LoginPageNotes = a.LoginPageNotes,
                         SupportActivated = a.SupportActivated,
                         SupportEmail = a.SupportEmail,
+                        TranzilaPaymentWithBit=a.TranzilaPaymentWithBit,
                         IsMultiPackage = a.IsMultiPackage,
                         Technology = a.Technology,
                         MobileLastDate = a.MobileLastDate,
@@ -753,7 +766,9 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         CargoTrackingPrivateShowEvents = a.CargoTrackingPrivateShowEvents,
                         LogoURL = a.LogoURL,
                         ServiceAgreementURL = a.ServiceAgreementURL,
-                    });
+						SearchAbsoluteValuePublic = a.SearchAbsoluteValuePublic,
+
+					});
         }
         public TenantManagementList MapSingleList(TenantManagement entity)
         {
@@ -852,6 +867,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                     TenantTypeCode = entity.TenantTypeCode,
                     TenantConnectedToAirlineCode = entity.TenantConnectedToAirlineCode,
                     SupportEmail = entity.SupportEmail,
+                    TranzilaPaymentWithBit=entity.TranzilaPaymentWithBit,
                     SupportActivated = entity.SupportActivated,
                     IsMultiPackage = entity.IsMultiPackage,
                     Technology = entity.Technology,
@@ -911,9 +927,9 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                     ShowMoneyOrder = entity.ShowMoneyOrder,
                     CargoTrackingPublicShowEvents = entity.CargoTrackingPublicShowEvents,
                     CargoTrackingPrivateShowEvents = entity.CargoTrackingPrivateShowEvents,
-                     LogoURL = entity.LogoURL,
+                    LogoURL = entity.LogoURL,
                     ServiceAgreementURL = entity.ServiceAgreementURL,
-                };
+				};
             }
 
             return myResult;
@@ -1015,6 +1031,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                        TenantConnectedToAirlineCode = a.TenantConnectedToAirlineCode,
                        SupportActivated = a.SupportActivated,
                        SupportEmail = a.SupportEmail,
+                       TranzilaPaymentWithBit=a.TranzilaPaymentWithBit,
                        IsMultiPackage = a.IsMultiPackage,
                        MobileLastDate = a.MobileLastDate,
                        MobileTotalLastWeek = a.MobileTotalLastWeek,
@@ -1072,7 +1089,9 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                        CargoTrackingPrivateShowEvents = a.CargoTrackingPrivateShowEvents,
                        LogoURL = a.LogoURL,
                        ServiceAgreementURL = a.ServiceAgreementURL,
-                   };
+					   SearchAbsoluteValuePublic = a.SearchAbsoluteValuePublic,
+
+				   };
         }
 
         public int ComputeDaysLeft(DateTime? date)
@@ -1303,6 +1322,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                              LoginPageNotes = a.LoginPageNotes,
                                              SupportActivated = a.SupportActivated,
                                              SupportEmail = a.SupportEmail,
+                                             TranzilaPaymentWithBit=a.TranzilaPaymentWithBit,
                                              IsMultiPackage = a.IsMultiPackage,
                                              Technology = a.Technology,
                                              MobileLastDate = a.MobileLastDate,
@@ -1371,8 +1391,9 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                              CargoTrackingPrivateShowEvents = a.CargoTrackingPrivateShowEvents,
                                              LogoURL = a.LogoURL,
                                              ServiceAgreementURL = a.ServiceAgreementURL,
+											 SearchAbsoluteValuePublic = a.SearchAbsoluteValuePublic,
 
-                                         }).FirstOrDefault();
+										 }).FirstOrDefault();
 
             return tenant;
         }
@@ -1551,9 +1572,9 @@ namespace Logitude.BL.GlobalModel.EntityQueries
             return (from a in repository.context.GlobalTenants
                     where a.Id == tenant
                     select a.PrivateLabelId).FirstOrDefault();
-        }
+        }	
 
-        public List<TenantManagementPM> GetByTenantNumbers(List<int> tenantNumbers)
+		public List<TenantManagementPM> GetByTenantNumbers(List<int> tenantNumbers)
         {
             IQueryable<TenantManagementLicensePM> tenantManagementLicenses = GetTenantManagementLicensesByTenantNumbers(tenantNumbers);
 
@@ -1599,11 +1620,52 @@ namespace Logitude.BL.GlobalModel.EntityQueries
 
         public List<TenantManagement> GetWhereHavePermissionBuildMonths()
         {
-            var q = from a in repository.context.TenantManagements
+            IQueryable<TenantManagement> q;
+            if (tenant == 0)
+            {
+                q = from a in repository.context.TenantManagements
                     where a.PermissionBuildMonths != null
-            select a;
+                    select a;
+            }
+            else
+            {
+                q = from a in repository.context.TenantManagements
+                    where a.Id == tenant && a.PermissionBuildMonths != null
+                    select a;
+            }
 
             return q.ToList();
         }
-    }
+
+        public bool GetSearchAbsoluteValuePublicByTenant(int tenant)
+        {
+            string entityName = "GetSearchAbsoluteValuePublicByTenant" + tenant;
+
+			bool isSearchAbsoluteValuePublic = false;
+
+            if (HttpContext.Current != null)
+            {
+                if (CacheManager.CacheWrapper.Get(entityName) == null) { 
+
+					isSearchAbsoluteValuePublic = (from a in repository.context.TenantManagements
+                            where a.Id == tenant
+                            select a.SearchAbsoluteValuePublic).FirstOrDefault();
+
+					CacheManager.CacheWrapper.Insert(entityName, isSearchAbsoluteValuePublic);
+
+				}
+				else
+			    {
+				   isSearchAbsoluteValuePublic = (bool)CacheManager.CacheWrapper.Get(entityName);
+			    }
+		    }
+            else
+            {
+				isSearchAbsoluteValuePublic = (from a in repository.context.TenantManagements
+											   where a.Id == tenant
+											   select a.SearchAbsoluteValuePublic).FirstOrDefault();
+			}
+            return isSearchAbsoluteValuePublic;
+        }	
+	}
 }

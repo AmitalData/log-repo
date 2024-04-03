@@ -144,6 +144,7 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
             this.Property(t => t.RegisteredAirlines).HasColumnName("RegisteredAirlines");
             this.Property(t => t.PendingAirlines).HasColumnName("PendingAirlines");
             this.Property(t => t.EnableBranding).HasColumnName("EnableBranding");
+            this.Property(t => t.TranzilaPaymentWithBit).HasColumnName("TranzilaPaymentWithBit");
             this.Property(t => t.EnableExportToExcel).HasColumnName("EnableExportToExcel");
             this.Property(t => t.DeclarationMessage).HasColumnName("DeclarationMessage");
             this.Property(t => t.ActivatedforDeclarationApprove).HasColumnName("ActivatedforDeclarationApprove");
@@ -182,9 +183,10 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
 
             this.Property(t => t.CargoTrackingPublicShowEvents).HasColumnName("CargoTrackingPublicShowEvents");
             this.Property(t => t.CargoTrackingPrivateShowEvents).HasColumnName("CargoTrackingPrivateShowEvents");
+			this.Property(t => t.SearchAbsoluteValuePublic).HasColumnName("SearchAbsoluteValuePublic");
 
 
-            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+			string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
             {
                 this.Property(t => t.AgentSharedLogisticsStatisticsLastDate).HasColumnName("AgentSharedLogisticsLastDate");

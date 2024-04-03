@@ -8,7 +8,7 @@ import { JournalExtendedListService } from '../../Services/ExtendedLists/Journal
 import { ARPaymentExtendedListService } from '../../../Invoice/Services/ExtendedLists/ARPaymentExtendedListService';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { AppTool } from '../../../Infrastructure/Tools';
-import { ReconcileEventManager } from '../../Utilities/ReconcileEventManager';
+import { ReconcileEventManager, EventParams } from '../../Utilities/ReconcileEventManager';
 
 import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
 import { ListComponentArgs } from 'Infrastructure/Args';
@@ -186,11 +186,13 @@ export class GlAccountLedgerTransactionsListTemplate {
         //this.rowData['IsChecked'] = checked;
 
         if (this.IsCheckBoxEnabled) {
-            ReconcileEventManager.CheckBoxChecked.emit({
+            var reconcileEventParams=new EventParams();
+            reconcileEventParams.Params={
                 line: this.rowData,
                 isChecked: checked,
                 RowIndex: this.AdditionalData.rowIndex
-            });
+            };
+            ReconcileEventManager.CheckBoxChecked.emit(reconcileEventParams);
         }
         //ReconcileEventManager.RowUnselected.subscribe(($event) => {
         //    this.rowData = ro
@@ -198,13 +200,13 @@ export class GlAccountLedgerTransactionsListTemplate {
     }
 
     CalculateOriginalAmount() {
-
+        let gLAccountReconcileMethodCode = ReconcileEventManager.GetGLAccountReconcileMethodCode();
         if (
             !AppTool.IsNullOrEmpty(
-                ReconcileEventManager.GLAccountReconcileMethodCode
+                this.rowData["ReconcileMethodCode"]
             )
         ) {
-            if (ReconcileEventManager.GLAccountReconcileMethodCode == "0") {
+            if (this.rowData["ReconcileMethodCode"] == "0") {
                 // 0-local currency
 
                 if (this.rowData["LocalAmountCredit"] == 0) {
@@ -213,8 +215,28 @@ export class GlAccountLedgerTransactionsListTemplate {
                     return this.rowData["LocalAmountCredit"]; // -1 *
                 }
             } else if (
-                ReconcileEventManager.GLAccountReconcileMethodCode == "1"
+                this.rowData["ReconcileMethodCode"] == "1"
             ) {
+                // 1-foreign currency
+
+                if (this.rowData["ForeignAmountCredit"] == 0) {
+                    return this.rowData["ForeignAmountDebit"];
+                } else {
+                    return this.rowData["ForeignAmountCredit"];  // -1 *
+                }
+            }
+        } else if (
+            
+            !AppTool.IsNullOrEmpty(gLAccountReconcileMethodCode)) {
+            if (gLAccountReconcileMethodCode == "0") {
+                // 0-local currency
+
+                if (this.rowData["LocalAmountCredit"] == 0) {
+                    return this.rowData["LocalAmountDebit"];
+                } else {
+                    return this.rowData["LocalAmountCredit"]; // -1 *
+                }
+            } else if (gLAccountReconcileMethodCode == "1") {
                 // 1-foreign currency
 
                 if (this.rowData["ForeignAmountCredit"] == 0) {
@@ -227,20 +249,18 @@ export class GlAccountLedgerTransactionsListTemplate {
     }
 
     CalculatOriginalCurruncy() {
+        let gLAccountReconcileMethodCode = ReconcileEventManager.GetGLAccountReconcileMethodCode();
+
         if (
-            !AppTool.IsNullOrEmpty(
-                ReconcileEventManager.GLAccountReconcileMethodCode
-            )
+            !AppTool.IsNullOrEmpty(gLAccountReconcileMethodCode)
         ) {
             // this code was copied to reconcile window, if it need change, please chenge it in reconcile window too
-            if (ReconcileEventManager.GLAccountReconcileMethodCode == "0") {
+            if (gLAccountReconcileMethodCode == "0") {
                 // 0-local currency
 
                 // local
                 return SessionLocator.TenantPM.CurrencySign;
-            } else if (
-                ReconcileEventManager.GLAccountReconcileMethodCode == "1"
-            ) {
+            } else if (gLAccountReconcileMethodCode == "1") {
                 // 1-foreign currency
 
                 // foreign

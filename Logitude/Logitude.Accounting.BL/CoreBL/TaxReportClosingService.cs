@@ -77,14 +77,14 @@ namespace Logitude.Accounting.BL.CoreBL
         private void EnsureAbilityToCreateClosingJournal()
         {
             TaxReportQueryService taxReportQueryService = new TaxReportQueryService(tenant);
-            List<TaxReportLine> reconciledLines = null;
+            List<TaxReportLineForErrors> reconciledLines = null;
             var canHaveClosingJournal = taxReportQueryService.CheckIfTaxReportCanHaveClosingJournal(taxReportId, fullAccountingSettings.VATOutputGLAccountId, tenant, ref reconciledLines);
             if (!canHaveClosingJournal)
             {
                 string error_text = TranslateTextsClass.Translate("TaxReport.O.ClosingJournalValidationMessage", tenant);
                 if (reconciledLines != null && reconciledLines.Count > 0)
                 {
-                    reconciledLines = reconciledLines.OrderBy(rl => rl.Journal.JournalNumber).ThenBy(rl => rl.Line).ToList();
+                    reconciledLines = reconciledLines.OrderBy(rl => rl.JournalNumber).ThenBy(rl => rl.Line).ToList();
                     const int MAX = 5;
                     if (reconciledLines.Count > MAX)
                     {
@@ -92,7 +92,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     }
                     string lines = String.Join(",", reconciledLines.Select(rl => rl.Line)); 
 
-                    string journals = String.Join(",", reconciledLines.Select(rl => rl.Journal.JournalNumber));
+                    string journals = String.Join(",", reconciledLines.Select(rl => rl.JournalNumber));
 
                     string problem = TranslateTextsClass.Translate("Accounting.O.TaxRepProblem", tenant);
                     if (String.IsNullOrEmpty(problem)) problem = @"הבעיה מצויה בשורה";
@@ -300,7 +300,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 AccountingDate = TenantServerConfigration.GetLastOfMonthDate(taxReportPM.TaxReportMonth),
                 TypeCode = JournalTypeValues.Regular,
-                StatusCode = JournalStatusTypeValues.Approved,
+                StatusCode = "6",
                 AccountingEntityCode = AccountingEntityValues.TaxReport,
                 AccountingEntityId = taxReportId,
                 AccountingEntityReference = taxReportPM.TaxReportNumber,

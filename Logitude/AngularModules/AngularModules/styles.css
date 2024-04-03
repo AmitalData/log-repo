@@ -28,7 +28,7 @@
 @import "~ng-zorro-antd/tree-select/style/index.min.css"; 
 @import url("_Resources/css/pretty-print-json.css");
 
-.p-field {
+ .p-field {
     margin-bottom: 1rem;
     white-space: initial !important;
 }
@@ -45,3 +45,15 @@ html body .p-toast-message-text .p-toast-detail {
 .p-dynamic-dialog {
     z-index: 51 !important;    
 }
+ #enable-toolbar-trigger {
+    display: flex;
+    flex-direction: row-reverse;
+    -ms-transform: translateY(-100%)!important;
+    transform: translateY(-100%)!important;
+    position:relative;
+    top: -12px !important;
+    right: 6px !important;
+    transition: transform 0.3s ease-in-out;
+    width: 30px;
+}
+ 

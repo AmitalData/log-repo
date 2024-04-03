@@ -68,12 +68,15 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
     DisplayFieldsFromList:string;
     DisplayLocalFieldsFromList:string;
     BillToLovSizeForFullAccounting:number;
+    public GLAccountsFilterItems: ApiQueryFilters;
+
     @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     constructor(private _entityResourceService: EntityResourceService) {
         super();
         this.accountingActivated = SessionLocator.TenantPM.AccountingActivated;
         this._entityResourceService.getEntityResourceByTableName("ARPayment", 0).subscribe((response: any) => {});
         this._entityResourceService.getEntityResourceByTableName("ARInvoice", 0).subscribe((response: any) => {});
+        this.InitLOVFilters();
         this.InitializeBillToLov();
         this.loadPartnerTypesFilter();
 
@@ -102,6 +105,10 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
             this.IsEditExchangeRateVisible = true;
         }
     }
+    InitLOVFilters() {
+        this.GLAccountsFilterItems = new ApiQueryFilters();
+        this.GLAccountsFilterItems.addAdditionalFilter("GLAccountId", "null", null, null, "NotEqual", false, false, false, "string");
+    }
     InitializeInvoice() {
         if (this.invoicePm == null) {
             this.invoicePm = new ARInvoicePM();
@@ -109,8 +116,8 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
     }
     private InitializeBillToLov() {
         if (this.accountingActivated) {
-            this.DisplayFieldsFromList = "Code,CalculatedEnglishName,GLAccountDisplayNumber,CityName,CountryCode,PartnerTypeName";
-            this.DisplayLocalFieldsFromList = "Code,CalculatedLocalName,GLAccountDisplayNumber,CityName,CountryCode,PartnerTypeName";
+            this.DisplayFieldsFromList = "Code,CalculatedEnglishName,CalculatedLocalName,GLAccountDisplayNumber,CountryCode,PartnerTypeName";
+            this.DisplayLocalFieldsFromList = "Code,CalculatedLocalName,GLAccountDisplayNumber,CountryCode,PartnerTypeName";
             this.BillToLovSizeForFullAccounting = 550;
         }
     }
@@ -123,8 +130,44 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.Initialize();
-        this.BuildAdditionalFields();
+        var entity = new ARPaymentPM();
+        if(this.newARPaymentPM != null){
+            entity=this.newARPaymentPM;
+        }
+        entity.IsFullAccounting = true;
+        entity.BranchId = SessionLocator.LoggedUserPM?.BranchId;
+
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+            .then(cmpRef => {
+                cmpRef.instance.ComponentRef = cmpRef;
+                cmpRef.instance.Run({ EntityId: "", EntityPM: entity, ObjectTableName: 'ARPayment' });
+                let isEditComponentSaved = false;
+
+                cmpRef.instance.BackCompleted.subscribe(bk => {
+                    if (isEditComponentSaved) {
+                        this.CurrentSession.FireEvent("NewARPaymentInvoiceTabCreated");
+                        if (this.EntityPM.ForceUsingBankTransferMethod) {
+                            const paymentNo = cmpRef.instance.EntityPM.PaymentNo;
+                            this.CurrentSession.FireEvent({ Name: "BankTransferARPaymentCreated", PaymentNumber: paymentNo });
+                        }
+                    }
+                });
+
+                cmpRef.instance.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                    if (isSaveSuccess) {
+                        isEditComponentSaved = true;
+                    }
+                });
+
+                cmpRef.instance.SaveAndCloseCompleted.subscribe((isSaveSuccess: boolean) => {
+                    if (isSaveSuccess) {
+                        isEditComponentSaved = true;
+                    }
+                });
+            });
+
+
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     // Additional Fields
@@ -227,6 +270,8 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
 
             }
         }
+        this.Initialize();
+
     }
 
     public CurrencyList: CurrencyList[] = [];

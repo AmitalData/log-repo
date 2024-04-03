@@ -21,8 +21,8 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
         private const string ExportShipmentDirection = "E";
         private ShipmentOrderPM shipmentOrderPM;
         private ShipmentPM shipmentPM;
-		ShipmentPM forwardingShipmentPM;
-		private List<RoutingStep> routingSteps = new List<RoutingStep>();
+        ShipmentPM forwardingShipmentPM;
+        private List<RoutingStep> routingSteps = new List<RoutingStep>();
         public CargoTrackingShipmentRouteBuilder(ShipmentOrderPM ShipmentOrderPM, ShipmentPM shipmentPM, ShipmentPM forwardingShipmentPM)
         {
             this.shipmentOrderPM = ShipmentOrderPM;
@@ -126,7 +126,7 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
                     TransportModeCode = shipmentPM.TransportModeId,
                     FromPortLabel = mainCarrigeLeg.FromPortCode,
                     ToPortLabel = mainCarrigeLeg.ToPortCode,
-                    Description = mainCarrigeLeg.CarrierName != null || mainCarrigeLeg.CarrierTypeName != null ? mainCarrigeLeg.CarrierTypeName +" "+ mainCarrigeLeg.CarrierName : null
+                    Description = mainCarrigeLeg.CarrierName != null || mainCarrigeLeg.CarrierTypeName != null ? mainCarrigeLeg.CarrierTypeName + " " + mainCarrigeLeg.CarrierName : null
                 };
                 SetMainCarriageLegDirections(mainCarrigeLeg, step);
                 steps.Add(step);
@@ -174,8 +174,8 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
                     Type = "Pickup"
                 };
 
-                if (pickup.CarrierLocalName != null || pickup.CarrierTypeName != null )
-                    pickupRoute.Description = pickup.CarrierTypeName +" "+ pickup.CarrierLocalName;
+                if (pickup.CarrierLocalName != null || pickup.CarrierTypeName != null)
+                    pickupRoute.Description = pickup.CarrierTypeName + " " + pickup.CarrierLocalName;
 
                 SetPickupRouteDirections(pickup, pickupRoute);
 
@@ -222,7 +222,7 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
 
         private void BuildShipmentOrderGatewayRoute(ShipmentOrderPM shipmentOrderPM)
         {
-            if(shipmentOrderPM.GatewayCode == shipmentOrderPM.OriginPortCode || shipmentOrderPM.GatewayCode == shipmentOrderPM.DestinationPortCode)
+            if (shipmentOrderPM.GatewayCode == shipmentOrderPM.OriginPortCode || shipmentOrderPM.GatewayCode == shipmentOrderPM.DestinationPortCode)
             {
                 BuildShipmentOrderOriginRouteToDestinationRoute(shipmentOrderPM);
                 return;
@@ -258,7 +258,7 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
 
         private void BuildShipmentOrderOriginRoute(ShipmentOrderPM shipmentOrderPM)
         {
-            var step =  new RoutingStep()
+            var step = new RoutingStep()
             {
                 TransportModeCode = shipmentOrderPM.TransportModeId,
                 Description = "MainCarriageLeg 1",

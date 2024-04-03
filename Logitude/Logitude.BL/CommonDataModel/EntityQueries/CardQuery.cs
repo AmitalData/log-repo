@@ -1481,8 +1481,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public IQueryable<CardList> GetIQueryableEntityListShort(IQueryable<Card> iQueryable)
         {
-            IQueryable<CardList> myResult = from card in iQueryable
 
+
+
+            IQueryable<CardList> myResult = from card in iQueryable
+                                         
                                             select new CardList()
                                             {
                                                 Code = card.Code,
@@ -1500,7 +1503,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 CalculatedEnglishName = string.IsNullOrEmpty(card.EnglishName) ? card.LocalName : card.EnglishName,
                                                 CalculatedLocalName = string.IsNullOrEmpty(card.LocalName) ? card.EnglishName : card.LocalName,
                                                 GLAccountDisplayNumber = card.GLAccountDisplayNumber,
-
+                                                GLAccountId = card.GLAccountId,
 
 
                                             };

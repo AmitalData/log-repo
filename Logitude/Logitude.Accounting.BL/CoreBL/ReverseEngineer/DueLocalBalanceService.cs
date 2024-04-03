@@ -588,6 +588,22 @@ namespace Logitude.Accounting.BL.CoreBL
             }
 
         }
+
+        internal void RunOneTenantFast(int tenant)
+        {
+
+                try
+                {
+                    this.ReBuild(tenant, "", true);
+                }
+                catch (Exception e)
+                {
+
+                    ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "DueLocalBalanceService" + this.GetType().Name, " : RunOneTenantFast({tenant}) Method", null);
+                    Thread.Sleep(TimeSpan.FromSeconds(5));
+                }
+
+        }
     }
     public class DueLocalBalanceDiffM
     {

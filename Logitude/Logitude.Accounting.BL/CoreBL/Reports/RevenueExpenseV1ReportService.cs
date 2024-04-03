@@ -189,15 +189,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             var qsChartOfAccount = new ChartOfAccountQueryService(_AccountingContext);
             _QAllChartOfAccountFlattenBy5LevelofHierarchy = //Flatten ChartOfAccount By 5 Level hierarchy
                 qsChartOfAccount
-                .GetQChartOfAccount5LevelM(_RevenueExpenseReportParam.Tenant,
-                new List<string>()
-                {
-                    //Code	EnglishName	LocalName
-"1",//	Revenues	הכנסות
-"2",//	Expenses	הוצאות
-                }
+                .GetQChartOfAccount5LevelM(_RevenueExpenseReportParam.Tenant, _RevenueExpenseReportParam.ChartOfAccountsTypes, _RevenueExpenseReportParam.ChartOfAccounts); // send the filtered ids are selected, from ChartOfAccountsTypes and ChartOfAccounts tables from UI #192454
 
-                );
             QBaseAllCardsAndDetialsAccTypeBy5LevelHierarchy =
             JoinEachAccountWithisChartOfAccount5hierarchy(QAllRevenueExpenseCardsCOAM);
 
@@ -242,6 +235,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                      ChartOfAcountName3 = "",
                      ChartOfAcountName4 = "",
                      ChartOfAcountName5 = "",
+
+
                      ChartOfAcountCode1 = "",
                      ChartOfAcountCode2 = "",
                      ChartOfAcountCode3 = "",
@@ -254,6 +249,12 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                      GLAccountNumber = "",
                      GLAccountId = g.Key.AccountId,
                      ChartOfAccountId = "",
+
+                     ChartOfAcountName1English = "",
+                     ChartOfAcountName2English = "",
+                     ChartOfAcountName3English = "",
+                     ChartOfAcountName4English = "",
+                     ChartOfAcountName5English = "",
 
                      LocalCloseBalancePeriod1 =
                      (
@@ -287,6 +288,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                  ChartOfAcountName3 = chartf.Level3Name,
                  ChartOfAcountName4 = chartf.Level4Name,
                  ChartOfAcountName5 = chartf.Level5Name,
+
+
                  ChartOfAcountCode1 = chartf.Level1Code,
                  ChartOfAcountCode2 = chartf.Level2Code,
                  ChartOfAcountCode3 = chartf.Level3Code,
@@ -301,6 +304,11 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
                  ChartOfAccountId = chartf.ChartOfAccountId,
 
+                 ChartOfAcountName1English = chartf.Level1English,
+                 ChartOfAcountName2English = chartf.Level2English,
+                 ChartOfAcountName3English = chartf.Level3English,
+                 ChartOfAcountName4English = chartf.Level4English,
+                 ChartOfAcountName5English = chartf.Level5English,
 
                  LocalCloseBalancePeriod1 = groupJoinData.LocalCloseBalancePeriod1,
 
@@ -334,6 +342,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                  ChartOfAcountName3 = chartf.Level3Name,
                  ChartOfAcountName4 = chartf.Level4Name,
                  ChartOfAcountName5 = chartf.Level5Name,
+
+
                  ChartOfAcountCode1 = chartf.Level1Code,
                  ChartOfAcountCode2 = chartf.Level2Code,
                  ChartOfAcountCode3 = chartf.Level3Code,
@@ -344,6 +354,13 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                  GLAccountNumber = chartf.GLAccountNumber,
                  GLAccountId = chartf.GLAccountId,
                  ChartOfAccountId = chartf.ChartOfAccountId,
+
+
+                 ChartOfAcountName1English = chartf.Level1English,
+                 ChartOfAcountName2English = chartf.Level2English,
+                 ChartOfAcountName3English = chartf.Level3English,
+                 ChartOfAcountName4English = chartf.Level4English,
+                 ChartOfAcountName5English = chartf.Level5English,
 
                  LocalCloseBalancePeriod1 = data.LocalCloseBalancePeriod1,
 
@@ -398,6 +415,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                                                  ChartOfAcountName3 = "",
                                                  ChartOfAcountName4 = "",
                                                  ChartOfAcountName5 = "",
+
+
                                                  ChartOfAcountCode1 = "",
                                                  ChartOfAcountCode2 = "",
                                                  ChartOfAcountCode3 = "",
@@ -411,6 +430,12 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
                                                  ChartOfAccountId = "",
 
+
+                                                 ChartOfAcountName1English = "",
+                                                 ChartOfAcountName2English = "",
+                                                 ChartOfAcountName3English = "",
+                                                 ChartOfAcountName4English = "",
+                                                 ChartOfAcountName5English = "",
 
                                                  LocalCloseBalancePeriod1 = groupTrailOnlyCOAType.Sum(x => x.LocalCloseBalancePeriod1),
 
@@ -435,6 +460,14 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                                                  row.ChartOfAcountName3,
                                                  row.ChartOfAcountName4,
                                                  row.ChartOfAcountName5,
+
+                                                 row.ChartOfAcountName1English,
+                                                 row.ChartOfAcountName2English,
+                                                 row.ChartOfAcountName3English,
+                                                 row.ChartOfAcountName4English,
+                                                 row.ChartOfAcountName5English,
+
+
                                                  row.ChartOfAcountCode1,
                                                  row.ChartOfAcountCode2,
                                                  row.ChartOfAcountCode3,
@@ -461,6 +494,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                                                  ChartOfAcountName3 = groupTrailOnlyCOAType.Key.ChartOfAcountName3,
                                                  ChartOfAcountName4 = groupTrailOnlyCOAType.Key.ChartOfAcountName4,
                                                  ChartOfAcountName5 = groupTrailOnlyCOAType.Key.ChartOfAcountName5,
+
+
                                                  ChartOfAcountCode1 = groupTrailOnlyCOAType.Key.ChartOfAcountCode1,
                                                  ChartOfAcountCode2 = groupTrailOnlyCOAType.Key.ChartOfAcountCode2,
                                                  ChartOfAcountCode3 = groupTrailOnlyCOAType.Key.ChartOfAcountCode3,
@@ -474,6 +509,12 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                                                  ChartOfAccountId = "",
                                                  // CurrencyId = groupTrailOnlyCOAType.Key.CurrencyId,
 
+
+                                                 ChartOfAcountName1English = groupTrailOnlyCOAType.Key.ChartOfAcountName1English,
+                                                 ChartOfAcountName2English = groupTrailOnlyCOAType.Key.ChartOfAcountName2English,
+                                                 ChartOfAcountName3English = groupTrailOnlyCOAType.Key.ChartOfAcountName3English,
+                                                 ChartOfAcountName4English = groupTrailOnlyCOAType.Key.ChartOfAcountName4English,
+                                                 ChartOfAcountName5English = groupTrailOnlyCOAType.Key.ChartOfAcountName5English,
 
                                                  LocalCloseBalancePeriod1 = groupTrailOnlyCOAType.Sum(x => x.LocalCloseBalancePeriod1),
 
@@ -533,22 +574,27 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                  Level1Id = chart.Level1Id,
                  Level1Name = chart.Level1Name,
                  Level1Code = chart.Level1Code,
+                 Level1English = chart.Level1English,
 
                  Level2Id = chart.Level2Id,
                  Level2Name = chart.Level2Name,
                  Level2Code = chart.Level2Code,
+                 Level2English = chart.Level2English,
 
                  Level3Id = chart.Level3Id,
                  Level3Name = chart.Level3Name,
                  Level3Code = chart.Level3Code,
+                 Level3English = chart.Level3English,
 
                  Level4Id = chart.Level4Id,
                  Level4Name = chart.Level4Name,
                  Level4Code = chart.Level4Code,
+                 Level4English = chart.Level4English,
 
                  Level5Id = chart.Level5Id,
                  Level5Name = chart.Level5Name,
                  Level5Code = chart.Level5Code,
+                 Level5English = chart.Level5English,
 
 
                  GLAccountId = aGL.Id,
@@ -557,6 +603,10 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                  ChartOfAccountId = aGL.ChartOfAccountsId,
                  ChartOfAccountTypeCode = //aGL.AccountTypeCode,
                  aGL.ChartOfAccountsTypeCode,
+
+                 ChartOfAccountsTypeEnglish = chart.ChartOfAccountTypeCode,
+                 ChartOfAccountsEnglish = chart.ChartOfAccountTypeCode,
+                 GLAccountEnglish = chart.GLAccountEnglish,
 
                  LeafId = chart.LeafId,
 

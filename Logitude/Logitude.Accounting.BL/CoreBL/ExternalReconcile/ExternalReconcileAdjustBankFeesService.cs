@@ -561,7 +561,7 @@ new JournalLinePM()
             bool testedAndFoundAllOK = true;
             if (testedAndFoundAllOK)
             {
-                TheNewJournal.StatusCodeEnum = JournalStatusTypePM.StatusCodeEnum.Approved;
+                TheNewJournal.StatusCodeEnum = JournalStatusTypePM.StatusCodeEnum.InProcessing;
             }
             else
             {

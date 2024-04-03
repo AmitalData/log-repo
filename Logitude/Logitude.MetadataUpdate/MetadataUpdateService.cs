@@ -35,8 +35,13 @@ namespace Logitude.MetadataUpdate
             catch (Exception e)
             {
                 Console.WriteLine("Error: " + e.Message);
+                Console.WriteLine("Error: " + e.StackTrace);
+
                 Console.WriteLine(e.InnerException?.Message);
+                Console.WriteLine("Inner Exception Stack Trace:");
+                Console.WriteLine(e.InnerException?.StackTrace);
                 Environment.Exit(1);
+
             }
         }
 

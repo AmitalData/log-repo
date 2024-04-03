@@ -8,6 +8,7 @@ import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeT
 import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
 import {VatTypesValidator} from '../../../../Infrastructure/Validators/VatTypesValidator';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
+import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 
 @Component({
     
@@ -21,15 +22,31 @@ export class AddEditMultipleAPInvoiceLineComponent {
     public ValidationErrorsList: string[] = [];
     public isRTL: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor() {
-        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");       
-    }
+    public GLAccountsFilterItems: ApiQueryFilters;
 
+    constructor() {
+        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
+        this.InitLOVFilters();       
+    }
+    InitLOVFilters() {
+        this.GLAccountsFilterItems = new ApiQueryFilters();
+        this.GLAccountsFilterItems.addAdditionalFilter("GLAccountId", "null", null, null, "NotEqual", false, false, false, "string");
+    }
+     public ChargeTypesQueryFilters: ApiQueryFilters;
+    private BuildQueryFilters() {
+        this.ChargeTypesQueryFilters = new ApiQueryFilters();
+        this.ChargeTypesQueryFilters.addAdditionalFilter("InActive", false, null, null, "Equals", false, false, false, "boolean");
+        this.ChargeTypesQueryFilters.addAdditionalFilter("IsPayable", true, null, null, "Equals", false, false, false, "boolean");
+        this.ChargeTypesQueryFilters.addAdditionalFilter("PayableDebitGLAcountId", true, null, null, "IsNotNull", false, false, false, "Text");
+    }
+    
+     
     SetDataContext(dataContext: APInvoiceLineShortItem) {
         this.EntityPM = dataContext.EntityPM;
         this.DataContext = dataContext;
         this.EntityPM = dataContext.EntityPM;
         this.Clone();
+        this.BuildQueryFilters();
     }
 
     CancelButtonClicked() {

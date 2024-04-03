@@ -459,7 +459,7 @@ __pycache__/
 
 /Logitude/Logitude.CargoTrackingTests/Connections
 /Logitude/Logitude.CargoTrackingTests/Configurations/Configurations.xml
-/Logitude/AngularModules/LoginModules/Login/Components/binding work .js
+ /Logitude/AngularModules/LoginModules/Login/Components/binding work .js
 /Logitude/JustConfig
 /Logitude/AngularModules/CargoTrackingModules/.angular/cache/14.0.2
 /Logitude/JustConfig/2021.R5.appSettings.config
@@ -469,4 +469,33 @@ __pycache__/
 /Logitude/packages.rar
 
 /.nuget/NuGet.Config
-
+ /Logitude/Logitude.Accounting.MetaData/EntityFiles/InterestTransactionNote.lxml
+/Logitude/Logitude.Accounting.MetaData/DBTables/InterestTransactionNote.dxml
+/Logitude/Logitude.Accounting.Def/EntityPMs/Generated/InterestTransactionNotePM.Generated.cs
+/Logitude/Logitude.Accounting.Data/Repositories/InterestTransactionNoteRepository.cs
+/Logitude/Logitude.Accounting.Data/Repositories/Generated/InterestTransactionNoteRepository.Generated.cs
+/Logitude/Logitude.Accounting.Data/EntityPOCOs/InterestTransactionNote.cs
+/Logitude/Logitude.Accounting.Data/EntityMapping/InterestTransactionNoteMap.cs
+/Logitude/Logitude.Accounting.Data/EntityLists/Generated/InterestTransactionNoteList.Generated.cs
+/Logitude/Logitude.Accounting.Data/EntityListQueryServices/InterestTransactionNoteListQueryService.cs
+/Logitude/Logitude.Accounting.Data/EntityListQueryServices/Generated/InterestTransactionNoteListQueryService.Generated.cs
+/Logitude/Logitude.Accounting.Data/EntityKeys/InterestTransactionNoteKeys.cs
+/Logitude/Logitude.Accounting.BL/EntityUpdateServices/Generated/InterestTransactionNoteUpdateService.Generated.cs
+/Logitude/Logitude.Accounting.BL/EntityQueryServices/Generated/InterestTransactionNoteQueryService.Generated.cs
+/Logitude/Logitude.Accounting.BL/EntityDataMappings/InterestTransactionNoteDataMapping.cs
+/Logitude/Logitude.Accounting.BL/EntityDataMappings/Generated/InterestTransactionNoteDataMapping.Generated.cs
+/Logitude/JustWebFreight/WebFreight.Web/MetaDataUpdate/GeneratedUpdate/EntityUpdateClasses/InterestTransactionNoteUpdateClass.cs
+/Logitude/JustWebFreight/WebFreight.Web/Controllers/AccountingModel/Generated/PMControllers/InterestTransactionNoteController.Generated.cs
+/Logitude/JustWebFreight/WebFreight.Web/Controllers/AccountingModel/Generated/ListControllers/InterestTransactionNoteViewsController.Generated.cs
+/Logitude/AngularModules/AngularModules/Accounting/Services/StandardPMs/InterestTransactionNotePMService.ts
+/Logitude/AngularModules/AngularModules/Accounting/Services/StandardLists/InterestTransactionNoteListService.ts
+/Logitude/AngularModules/AngularModules/Accounting/Services/ExtendedLists/InterestTransactionNoteExtendedListService.ts
+/Logitude/AngularModules/AngularModules/Accounting/EntityPMs/InterestTransactionNotePM.ts
+/Logitude/AngularModules/AngularModules/Accounting/EntityLists/InterestTransactionNoteList.ts
+/Logitude/AngularModules/AngularModules/Accounting/Components/Others/InterestTransactionNoteComponent.ts
+/Logitude/AngularModules/AngularModules/Accounting/Components/Others/InterestTransactionNoteComponent.html
+/Logitude/AngularModules/AngularModules/Infrastructure/Services/StandardLists/CustomFieldsMainObjectsListService.ts
+/LogitudeTools/WorkerRoleSimulation/WindowsFormsApplication1/App.config
+/Logitude/Logitude.BL/packages.config
+/Logitude/JustWebFreight/WebFreight.Web/Nlog.config
+ 

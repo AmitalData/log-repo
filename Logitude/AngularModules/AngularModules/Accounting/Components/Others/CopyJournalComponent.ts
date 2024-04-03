@@ -23,6 +23,10 @@ export class CopyJournalComponent extends BaseComponent implements OnInit {
     private CurrentSession = SessionLocator.SelectedSession;
 
     disableDates: boolean = true;
+    disableNotes: boolean = true;
+    disableRef1: boolean = true;
+    disableRef2: boolean = true;
+    
     constructor() {
         super();
 
@@ -43,7 +47,7 @@ export class CopyJournalComponent extends BaseComponent implements OnInit {
     OkButtonClicked() {
 
         var valid: boolean = true;
-        valid = this.ValidateJournalDates();
+        valid = this.ValidateJournalDates();// && this.ValidateJournalNotes() && this.ValidateJournalRef1() && this.ValidateJournalRef2();
         if (valid) {
             var entityPM: JournalPM = new JournalPM();
             this.NewJournalMapping(entityPM);
@@ -60,6 +64,36 @@ export class CopyJournalComponent extends BaseComponent implements OnInit {
         }
         else return true;
     }
+
+    ValidateJournalNotes() {
+        this.ValidationErrorsList = [];
+        if (!this.NotesCB && this.NotesUserEmpty) {
+            this.NotesErrorMessage();
+            return false
+        }
+        else return true;
+    }
+
+    ValidateJournalRef1() {
+        this.ValidationErrorsList = [];
+        if (!this.Ref1CB && this.Ref1UserEmpty) {
+            this.Ref1ErrorMessage();
+            return false
+        }
+        else return true;
+    }
+
+    ValidateJournalRef2() {
+        this.ValidationErrorsList = [];
+        if (!this.Ref2CB && this.Ref2UserEmpty) {
+            this.Ref2ErrorMessage();
+            return false
+        }
+        else return true;
+    }
+
+
+
     FillErrorMessage() {
         var FIELD_IS_REQUIERD: string = null;
         FIELD_IS_REQUIERD = TextCodeTranslator.Translate("General.M.FieldIsRequired");
@@ -76,6 +110,28 @@ export class CopyJournalComponent extends BaseComponent implements OnInit {
             this.ValidationErrorsList.push(error);
         }
     }
+
+    NotesErrorMessage() {
+        var FIELD_IS_REQUIERD: string = null;
+        FIELD_IS_REQUIERD = TextCodeTranslator.Translate("General.M.FieldIsRequired");
+            var error: string = FIELD_IS_REQUIERD.replace("%FieldName", TextCodeTranslator.Translate("JournalLine.F.Notes"));
+            this.ValidationErrorsList.push(error);
+    }
+
+    Ref1ErrorMessage() {
+        var FIELD_IS_REQUIERD: string = null;
+        FIELD_IS_REQUIERD = TextCodeTranslator.Translate("General.M.FieldIsRequired");
+        var error: string = FIELD_IS_REQUIERD.replace("%FieldName", TextCodeTranslator.Translate("JournalLine.F.Reference1"));
+        this.ValidationErrorsList.push(error);
+    }
+
+    Ref2ErrorMessage() {
+        var FIELD_IS_REQUIERD: string = null;
+        FIELD_IS_REQUIERD = TextCodeTranslator.Translate("General.M.FieldIsRequired");
+        var error: string = FIELD_IS_REQUIERD.replace("%FieldName", TextCodeTranslator.Translate("JournalLine.F.Reference2"));
+        this.ValidationErrorsList.push(error);
+    }
+
     public forceFocus: boolean = false;
     ngOnInit() {
         var t = setTimeout(() => { this.forceFocus = true; }, 1);
@@ -117,25 +173,25 @@ export class CopyJournalComponent extends BaseComponent implements OnInit {
         return entityPM;
 
     }
-    NewJournalLine(journal: JournalPM, originalJourbnalLine: JournalLinePM) {
+    NewJournalLine(journal: JournalPM, originalJournalLine: JournalLinePM) {
         var journalLine = new JournalLinePM(journal);
-        journalLine = originalJourbnalLine;
-        journalLine.Reference1 = this.ReferencesAndNotes ? originalJourbnalLine.Reference1 : null;
-        journalLine.Reference2 = this.ReferencesAndNotes ? originalJourbnalLine.Reference2 : null;
-        journalLine.Reference3 = this.ReferencesAndNotes ? originalJourbnalLine.Reference3 : null;
-        journalLine.Notes = this.ReferencesAndNotes ? originalJourbnalLine.Notes : null;
-        journalLine.AccountingDate = this.Dates ? originalJourbnalLine.AccountingDate : this.AccountingDate;
-        journalLine.DueDate = this.Dates ? originalJourbnalLine.DueDate : this.DueDate;
-        journalLine.DocumentDate = this.Dates ? originalJourbnalLine.DocumentDate : this.DocumentDate;
-        journalLine.CurrencyId = this.AmountsAndCurrencies ? originalJourbnalLine.CurrencyId : null;
-        journalLine.CurrencyCode = this.AmountsAndCurrencies ? originalJourbnalLine.CurrencyCode : null;
+        journalLine = originalJournalLine;
+        journalLine.Reference1 = this.Ref1CB ? originalJournalLine.Reference1 : this.Reference1UserText;
+        journalLine.Reference2 = this.Ref2CB ? originalJournalLine.Reference2 : this.Reference2UserText;
+        journalLine.Reference3 = null;
+        journalLine.Notes = this.NotesCB ? originalJournalLine.Notes : this.NotesUserText;
+        journalLine.AccountingDate = this.Dates ? originalJournalLine.AccountingDate : this.AccountingDate;
+        journalLine.DueDate = this.Dates ? originalJournalLine.DueDate : this.DueDate;
+        journalLine.DocumentDate = this.Dates ? originalJournalLine.DocumentDate : this.DocumentDate;
+        journalLine.CurrencyId = this.AmountsAndCurrencies ? originalJournalLine.CurrencyId : null;
+        journalLine.CurrencyCode = this.AmountsAndCurrencies ? originalJournalLine.CurrencyCode : null;
        
         if (AppTool.IsNullOrEmpty(this.coefficientForAmountsAndCurrencies) || this.coefficientForAmountsAndCurrencies.toString() === '0') {
             this.coefficientForAmountsAndCurrencies = 1; // default value = 1
         }
 
-        journalLine.LocalAmount = this.AmountsAndCurrencies ? originalJourbnalLine.LocalAmount * this.coefficientForAmountsAndCurrencies : null;
-        journalLine.ForeignAmount = this.AmountsAndCurrencies ? originalJourbnalLine.ForeignAmount * this.coefficientForAmountsAndCurrencies : null;
+        journalLine.LocalAmount = this.AmountsAndCurrencies ? originalJournalLine.LocalAmount * this.coefficientForAmountsAndCurrencies : null;
+        journalLine.ForeignAmount = this.AmountsAndCurrencies ? originalJournalLine.ForeignAmount * this.coefficientForAmountsAndCurrencies : null;
 
         return journalLine;
     }
@@ -155,13 +211,93 @@ export class CopyJournalComponent extends BaseComponent implements OnInit {
         }
     }
 
-    private referencesAndNotes: boolean = true;
-    get ReferencesAndNotes() { return this.referencesAndNotes; }
-    set ReferencesAndNotes(value: boolean) {
-        if (this.referencesAndNotes != value) {
-            this.referencesAndNotes = value;
+
+
+
+    private notesUserText: string = "";
+    get NotesUserText() { return this.notesUserText; }
+    set NotesUserText(value: string) {
+        if (this.notesUserText != value) {
+            this.notesUserText = value;
         }
     }
+
+    get NotesUserEmpty() {
+        var rv: boolean = (this.notesUserText.trim().length === 0);
+        return (rv);
+    }
+
+
+
+
+    private reference1UserText: string = "";
+    get Reference1UserText() { return this.reference1UserText; }
+    set Reference1UserText(value: string) {
+        if (this.reference1UserText != value) {
+            this.reference1UserText = value;
+        }
+    }
+
+    get Ref1UserEmpty() {
+        var rv: boolean = (this.reference1UserText.trim().length === 0);
+        return (rv);
+    }
+
+
+
+
+    private reference2UserText: string = "";
+    get Reference2UserText() { return this.reference2UserText; }
+    set Reference2UserText(value: string) {
+        if (this.reference2UserText != value) {
+            this.reference2UserText = value;
+        }
+    }
+    get Ref2UserEmpty() {
+        var rv: boolean = (this.reference2UserText.trim().length === 0);
+        return (rv);
+    }
+
+
+
+    private notesCB: boolean = true;
+    get NotesCB() { return this.notesCB; }
+    set NotesCB(value: boolean) {
+        if (this.notesCB != value) {
+            this.notesCB = value;
+            this.disableNotes = value;
+
+            if (this.disableNotes)
+                this.ResetNotes();
+        }
+    }
+
+
+    private ref1CB: boolean = true;
+    get Ref1CB() { return this.ref1CB; }
+    set Ref1CB(value: boolean) {
+        if (this.ref1CB != value) {
+            this.ref1CB = value;
+            this.disableRef1 = value;
+
+            if (this.disableRef1)
+                this.ResetRef1();
+        }
+    }
+
+
+    private ref2CB: boolean = true;
+    get Ref2CB() { return this.ref2CB; }
+    set Ref2CB(value: boolean) {
+        if (this.ref2CB != value) {
+            this.ref2CB = value;
+            this.disableRef2 = value;
+
+            if (this.disableRef2)
+                this.ResetRef2();
+        }
+    }
+
 
     private dates: boolean = true;
     get Dates() { return this.dates; }
@@ -207,5 +343,16 @@ export class CopyJournalComponent extends BaseComponent implements OnInit {
         this.AccountingDate = null;
         this.DueDate = null;
         this.DocumentDate = null;
+    }
+
+    ResetNotes() {
+        this.NotesUserText = "";
+    }
+    ResetRef1() {
+        this.Reference1UserText = "";
+
+    }
+    ResetRef2() {
+        this.Reference2UserText = "";
     }
 }

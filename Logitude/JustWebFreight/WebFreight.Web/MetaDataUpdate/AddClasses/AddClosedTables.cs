@@ -932,6 +932,28 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
             }
         }
 
+        public static void AddConfirmationNumberStatus(ConfirmationNumberStatusDetails confirmationNumberStatusDetails, ConfirmationNumberStatusRepository confirmationNumberStatusRepository)
+        {
+            Dictionary<string, ConfirmationNumberStatus> tenantApConfirmationNumberStatus = confirmationNumberStatusRepository.GetAll().ToDictionary(d => d.Code, a => a);
+
+            if (tenantApConfirmationNumberStatus.Keys.Contains(confirmationNumberStatusDetails.Code))
+            {
+                ConfirmationNumberStatus confirmationNumberStatus = confirmationNumberStatusRepository.GetByCode(confirmationNumberStatusDetails.Code);
+                confirmationNumberStatus.Name = confirmationNumberStatusDetails.Name;
+                confirmationNumberStatus.SearchFields = (confirmationNumberStatusDetails.Code + "," + confirmationNumberStatusDetails.Name).ToLower();
+                confirmationNumberStatus.LocalName = confirmationNumberStatusDetails.LocalName;
+                confirmationNumberStatus.InActive = confirmationNumberStatusDetails.InActive;
+
+
+                confirmationNumberStatusRepository.Update(confirmationNumberStatus);
+            }
+            else
+            {
+                ConfirmationNumberStatus newInvoiceStatus = new ConfirmationNumberStatus() { Code = confirmationNumberStatusDetails.Code, InActive = confirmationNumberStatusDetails.InActive, LocalName = confirmationNumberStatusDetails.LocalName, Name = confirmationNumberStatusDetails.Name, SearchFields = (confirmationNumberStatusDetails.Code + "," + confirmationNumberStatusDetails.Name).ToLower() };
+                confirmationNumberStatusRepository.Add(newInvoiceStatus);
+            }
+        }
+
         public static void AddAPInvoiceTypes(APInvoiceTypeDetails invoiceTypeDetails, APInvoiceTypeRepository invoiceTypeRepository)
         {
             Dictionary<string, APInvoiceType> tenantApInvoiceType = invoiceTypeRepository.GetAPInvoiceTypes().ToDictionary(d => d.Code, a => a);

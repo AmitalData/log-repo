@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using WebFreight.Web.Helpers;
 
 namespace WebFreight.Web.AccountingModel
 {
@@ -53,6 +54,7 @@ namespace WebFreight.Web.AccountingModel
             ContainerAccessor.Container.RegisterType<IGLAccountCurrencyQueryServiceExt, GLAccountCurrencyQueryServiceExt>("GLAccountCurrencyQueryServiceExt", new InjectionFactory(c => new GLAccountCurrencyQueryServiceExt()));
             ContainerAccessor.Container.RegisterType<ILedgerTransactionQueryService, LedgerTransactionQueryServiceExt>("LedgerTransactionQueryServiceExt", new InjectionFactory(c => new LedgerTransactionQueryServiceExt()));
             ContainerAccessor.Container.RegisterType<IHSMSignFileService, HSMSignFileService>("HSMSignFileService", new InjectionFactory(c => new HSMSignFileService()));
+            ContainerAccessor.Container.RegisterType<IExportDocumentHelper, ExportDocumentHelper>("ExportDocumentHelper", new InjectionFactory(c => new ExportDocumentHelper()));
 
         }
     }

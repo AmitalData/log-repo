@@ -133,7 +133,7 @@ namespace Logitude.Accounting.BL
                     if (!loggedUser.SecurityLevel.HasValue || journalPM.SecurityLevel.Value > loggedUser.SecurityLevel.Value)
                     {
                         bool useLocal = true;
-                        string msg = TranslateTextsClassTranslate("Accounting.O.CantVoidJouranlItDidntTurnedToTransactions", 0, useLocal);
+                        string msg = TranslateTextsClassTranslate("Journal.O.SecurityHigherThanUsers", 0, useLocal);
                         // לא ניתן לתת רמת אבטחת לצפיה בפקודת היומן שגבוהה מרמת האבטחה שקיימת למשתמש
 
                         if (String.IsNullOrEmpty(msg))
@@ -247,7 +247,7 @@ namespace Logitude.Accounting.BL
 
                 case JournalStatusTypePM.StatusCodeEnum.WaitingforApprove:
                     break;
-                case JournalStatusTypePM.StatusCodeEnum.Approved:
+                case JournalStatusTypePM.StatusCodeEnum.InProcessing:
                     var journalApproveParser = NewJournalApproveParser(journalPM);
                     journalApproveParser.OnApproveUpdatingFillArrangeJournalPMResetControlAccount();
                     journalApproveParser.ParseIt();//throw exception if not valid !!!!

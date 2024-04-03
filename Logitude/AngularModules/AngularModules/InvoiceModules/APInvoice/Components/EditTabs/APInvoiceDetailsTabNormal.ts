@@ -36,6 +36,7 @@ import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator
 import { AccountingSettingListService } from '../../../../Common/Services/StandardLists/AccountingSettingListService';
 import { GLAccountList } from 'Accounting/EntityLists/GLAccountList';
 import { GLAccountListService } from 'Accounting/Services/StandardLists/GLAccountListService';
+import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 
 @Component({
     templateUrl: './APInvoiceDetailsTabNormal.html',
@@ -57,9 +58,11 @@ export class APInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
     QBOGlobalAccountingSystemCode = "QBOG";
     public IsAccountingActivated = false;
     public IsUsingVirtuallization: boolean = false;
+    public GLAccountsFilterItems: ApiQueryFilters;
 
     constructor(private entityArgs: EntityArgs) {
         super();
+        this.InitLOVFilters();
         this.SetIsUsingVirtuallization();
         if (ObjectsLocator.GlobalSetting) {
             this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
@@ -84,7 +87,10 @@ export class APInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
         }
         this.IsTotalVatEnabled = this.CheckIsTotalVatEnabled();
     }
-
+    InitLOVFilters() {
+        this.GLAccountsFilterItems = new ApiQueryFilters();
+        this.GLAccountsFilterItems.addAdditionalFilter("GLAccountId", "null", null, null, "NotEqual", false, false, false, "string");
+    }
     SetIsUsingVirtuallization() {
         var hasGridVirtuallizationToggleFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "EVG")[0]
         if (hasGridVirtuallizationToggleFeature) {

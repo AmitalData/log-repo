@@ -19,7 +19,6 @@ import { EntityListService } from '../../../Infrastructure/Services/EntityListSe
 import { ApiQueryFilters, FilterItem } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { ObservableCollection } from '../../../Infrastructure/Utilities/ObservableCollection';
 import { AppTool, DateTool } from '../../../Infrastructure/Tools';
-import { ReconcileEventManager } from '../../Utilities/ReconcileEventManager';
 import { ReconciliationExtendedPMService } from '../../Services/ExtendedPMs/ReconciliationExtendedPMService';
 import { LedgerTransactionExtendedListService } from '../../Services/ExtendedLists/LedgerTransactionExtendedListService';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';

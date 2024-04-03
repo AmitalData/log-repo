@@ -31,6 +31,7 @@ import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocato
 import {GLAccountPMService} from '../../../../Accounting/Services/StandardPMs/GLAccountPMService';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
+import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 
 @Component({
 
@@ -54,11 +55,13 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
     ShowLanguageFilterOnVendorSearchWindow: boolean = false;
     ColumnsWidths: any[] = [];
     ForceShowLocalAndEnglishColumns = false;
+    public GLAccountsFilterItems: ApiQueryFilters;
 
     constructor(private entityResourceService: EntityResourceService) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         this.IsAccountingActivated = SessionLocator.TenantPM.AccountingActivated;
+        this.InitLOVFilters();
         this.InitializeServices();
         this.InitializeVendorLov();
         if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {
@@ -66,7 +69,10 @@ export class NewGeneralAPInvoiceComponent extends BaseComponent {
         }
     }
 
-
+    InitLOVFilters() {
+        this.GLAccountsFilterItems = new ApiQueryFilters();
+        this.GLAccountsFilterItems.addAdditionalFilter("GLAccountId", "null", null, null, "NotEqual", false, false, false, "string");
+    }
     private InitializeVendorLov() {
         if (this.IsAccountingActivated) {
             this.DisplayFieldsFromList = "Code,CalculatedEnglishName,GLAccountDisplayNumber,CountryCode,PartnerTypeName";
