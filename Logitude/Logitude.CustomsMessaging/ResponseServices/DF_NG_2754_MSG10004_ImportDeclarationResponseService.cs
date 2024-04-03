@@ -980,6 +980,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 }
                             }
                         }
+                        if (declarationPendingPM_900 != null && declarationPendingPM_900.Status == "S")
+                        {
+                            isCollectActive = false;
+                        } 
 
                         if (isCollectActive)
                         {
@@ -990,38 +994,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             }
                             catch (Exception e)
                             {
+                                this.MyResponseData.ApplicationID = requestParams.AppicationId;
+                                this.MyResponseData.Succeeded = true;
+                                this.MyResponseData.UserMessage = "VPA cannot be found because there is an error in the URouter service";
+                                this.MyResponseData.HasException = true;
                                 LogMessagingUtil.Instance.AppendLine("Exception was thrown while checking if VPA exist in the file " + _MyDeclarationPM.CustomFileNo + Environment.NewLine + e.Message);
                             }
                             if (isStatusVPA) isCollectActive = false;
                         }
-
-                        // if (declarationPendingPM_900 == null)
-                        // {
-                        //     CourierPendingReasonQueryService myCourierPendingReasonQueryService = new CourierPendingReasonQueryService(context);
-                        //     CourierPendingReasonPM courierPendingReasonPM = myCourierPendingReasonQueryService.GetSingle("900", false, false);
-                        //     if (courierPendingReasonPM == null)
-                        //     {
-                        //         LogMessagingUtil.Instance.AppendLine("לא קיים קוד תהליך גביה- במידה ומופעל בדיקה האם להגדיר גבייה = 900 בטבלת סיבות Pending");
-                        //         isCollectActive = false;
-                        //     }
-                        // }
-
-             
-
-                        // if (isCollectActive)
-                        // {
-                        //     def = myGDFDATAQueryService.GetSingle("ISRAEL", "CGO_COL_LOW_DIF", "NON", "NON", false, true);
-                        //     string defValue = def.DEFDATA;
-                        //     decimal defaultAmount = 0;
-                        //     var boolvar = (decimal.TryParse(defValue, out defaultAmount));
-                        //     decimal totalTax = _MyDeclarationPM.TotalTax > 0 ? _MyDeclarationPM.TotalTax.Value : 0;
-                        //     decimal prevTotalTax = prev_TotalTax > 0 ? prev_TotalTax.Value : 0;
-                        //     if (defaultAmount > 0 && defaultAmount >= totalTax - prevTotalTax)
-                        //     {
-                        //         isCollectActive = false;
-                        //     }
-                        // }
-
 
                         if (isCollectActive)
                         {
