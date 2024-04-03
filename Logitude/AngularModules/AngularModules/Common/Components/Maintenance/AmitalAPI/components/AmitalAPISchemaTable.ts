@@ -3,9 +3,9 @@ import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 import { AmitalAPISchemaWebService, AmitalApiSchema } from "Common/Services/AmitalAPISchemaWebService";
 import { ConfirmWindow } from "Controls/Windows/ConfirmWindow";
 import { TextCodeTranslator } from "Infrastructure/Utilities/TextCodeTranslator";
-import { FieldData } from "./amitalApiTypes";
+import { FieldData } from "../amitalApiTypes";
 import { ObservableCollection } from "Infrastructure/Utilities/ObservableCollection";
-import { AmitalAPIAddSchemaWindowComponent } from "./AmitalAPIAddSchemaWindowComponent";
+import { AmitalAPIAddSchemaWindowComponent } from "../AmitalAPIAddSchemaWindowComponent";
 
 @Component({
     selector: 'app-amitalapi-schema-table',
@@ -38,7 +38,7 @@ import { AmitalAPIAddSchemaWindowComponent } from "./AmitalAPIAddSchemaWindowCom
             </logitude-edit-grid>
         </div>
     `,
-    styleUrls: ['./amitalApi.scss'],
+    styleUrls: ['../amitalApi.scss'],
     styles: [``],
 })
 export class AmitalAPISchemaTable {
