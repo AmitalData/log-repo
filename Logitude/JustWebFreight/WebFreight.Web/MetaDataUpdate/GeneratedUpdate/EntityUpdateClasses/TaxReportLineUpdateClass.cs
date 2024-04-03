@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class TaxReportLineUpdateClass
    {  		
-		public const string HashString = "f1f10cce56b72e94c8dfcf19b7b1207c";
+		public const string HashString = "4a2d5d77ef403d0917a711cd01d1bdc4";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -129,7 +129,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Tax Report Line",
-			      				    Code =  "e6dc",
+			      				    Code =  "bf48",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",
@@ -2289,6 +2289,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode TaxReportLineTextCode_TaxReportLineOLastUpdatedBy = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReportLine.O.LastUpdatedBy", DefaultText = "Last updated by",LocalDefaultText = "עודכן לאחרונה ע''י ", ObjectTableId = TaxReportLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode TaxReportLineTextCode_TaxReportLineOOn = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReportLine.O.On", DefaultText = "on",LocalDefaultText = @"בתאריך ", ObjectTableId = TaxReportLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode TaxReportLineTextCode_TaxReportLineOConfirmationMinNineDigits = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReportLine.O.ConfirmationMinNineDigits", DefaultText = "Confirmation number must contain at least nine digits",LocalDefaultText = @"מספר הקצאה חייב להכיל לפחות תשע ספרות", ObjectTableId = TaxReportLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

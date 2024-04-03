@@ -435,7 +435,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                              orderby a.FromDate descending
                                              select a
                                            ).FirstOrDefault();
-            if (confirmationNumberDefault == null || entityPM.TotalVAT < confirmationNumberDefault?.AmountForConfirmationNumber)
+            if (confirmationNumberDefault == null || totalVat < confirmationNumberDefault?.AmountForConfirmationNumber)
             {
                 entityPM.ConfirmationNumberStatus = "4";
             }
@@ -512,10 +512,10 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 Invoice_Issuance_Date = entityPM.CreateDate?.ToString("yyyy-MM-dd"),
                 Accounting_Software_Number = 99999999,
                 Client_Software_Key = "99999",
-                Amount_Before_Discount = (decimal)entityPM.TotaVatableAmountForTaxReport,
+                Amount_Before_Discount = (decimal)entityPM.InvoiceLines.Where(d => d.VatPercentage != 0 && d.LineActionCode == "1").Sum(a => a.LocalCurrencyAmount),
                 Discount = 0,
-                Payment_Amount = (decimal)entityPM.TotaVatableAmountForTaxReport,
-                VAT_Amount = entityPM.TotalVAT,
+                Payment_Amount = (decimal)entityPM.InvoiceLines.Where(d => d.VatPercentage != 0 && d.LineActionCode == "1").Sum(a => a.LocalCurrencyAmount),
+                VAT_Amount = totalVat,
                 Payment_Amount_Including_VAT = (decimal)entityPM.AmountInLocalCurrency,
                
               
@@ -4494,28 +4494,40 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         #endregion
 
         #region Tax Report variables 
+        public decimal totalVat;
+
         private void CalculationOfTaxReportfields(ARInvoicePM theEntityPm, bool isApprovingInvoice)
         {
             int tenant = theEntityPm.Tenant;
             TenantRepository tenantRepository = new TenantRepository(tenant);
             Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
-            if (tenantPOCO.AccountingActivated && isApprovingInvoice)
+            if (tenantPOCO.AccountingActivated )
             {
                 if (theEntityPm.InvoiceLines != null && theEntityPm.InvoiceLines.Count() > 0)
                 {
-                    theEntityPm.TotalAmountForTaxReport = (decimal)theEntityPm.InvoiceLines.Where(d => d.LineActionCode == "1").Sum(a => a.LocalCurrencyAmount);
-                    theEntityPm.TotaVatableAmountForTaxReport = (decimal)theEntityPm.InvoiceLines.Where(d => d.VatPercentage != 0 && d.LineActionCode == "1").Sum(a => a.LocalCurrencyAmount);
-
+                    
+                    if (isApprovingInvoice)
+                    {
+                        theEntityPm.TotalAmountForTaxReport = (decimal)theEntityPm.InvoiceLines.Where(d => d.LineActionCode == "1").Sum(a => a.LocalCurrencyAmount);
+                        theEntityPm.TotaVatableAmountForTaxReport = (decimal)theEntityPm.InvoiceLines.Where(d => d.VatPercentage != 0 && d.LineActionCode == "1").Sum(a => a.LocalCurrencyAmount);
+                    }
+                    
                     List<ARInvoiceTotalVAT> ARInvoiceTotalVATs = new List<ARInvoiceTotalVAT>();
                     ARInvoiceTotalVATRepository vatRepository = new ARInvoiceTotalVATRepository(tenant);
                     ARInvoiceTotalVATs = vatRepository.GetInvoiceTotalVatsForInvoiceWithoutZeroVATPercent(theEntityPm.Id, tenant).ToList();
                     if (ARInvoiceTotalVATs != null && ARInvoiceTotalVATs.Count() > 0)
                     {
-                        theEntityPm.TotalVAT = (decimal)ARInvoiceTotalVATs.Sum(a => a.LocalVATAmount);
+                        totalVat = (decimal)ARInvoiceTotalVATs.Sum(a => a.LocalVATAmount);
+                        if (isApprovingInvoice)
+                            theEntityPm.TotalVAT = totalVat;
+
+
                     }
                     else if (group_data != null && group_data.Count() > 0)
                     {
-                        theEntityPm.TotalVAT = (decimal)group_data.Sum(a => MethodHelper.Roundd((a.LocalCurrencyAmount * MethodHelper.Roundd(a.VatTypePercentage, 2) / 100), 2));
+                        totalVat = (decimal)group_data.Sum(a => MethodHelper.Roundd((a.LocalCurrencyAmount * MethodHelper.Roundd(a.VatTypePercentage, 2) / 100), 2));
+                        if (isApprovingInvoice)
+                            theEntityPm.TotalVAT = totalVat;
                     }
                 }
             }

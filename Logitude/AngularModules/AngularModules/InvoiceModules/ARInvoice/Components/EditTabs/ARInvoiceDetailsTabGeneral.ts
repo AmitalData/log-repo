@@ -68,7 +68,7 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     public IsUsingVirtuallization: boolean = false;
     public InvoicePartners: InvoicePartnerType[] = [];
 
-    public BillToFilter:ApiQueryFilters;
+    public BillToFilter: ApiQueryFilters;
     public PartnerTypeComboBoxIsDisabled: boolean = true;
  public GLAccountsFilterItems: ApiQueryFilters;
     constructor(private entityArgs: EntityArgs, private cdRef: ChangeDetectorRef) {
@@ -169,12 +169,17 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     private Listen() {
         if (this.entityArgs.EditComponent != null) {
 
-           
+
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
-                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;
-                    this.SetUIProperties();
-                    this.BuildScreenData();
+                    this.myEntityPMService.get(this.EntityPM.Id).subscribe(res => {
+                        this.CurrentSession.CurrentEditComponent.EntityPM = res.Result;
+                        this.EntityPM = res.Result;
+                        this.SetUIProperties();
+                        this.BuildScreenData();
+                    })
+
+
                 }
             });
 
@@ -188,13 +193,13 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
                 if (s == "IsSignedChanged") {
                     this.myEntityPMService.get(this.EntityPM.Id).subscribe(res => {
-                        this.CurrentSession.CurrentEditComponent.EntityPM=res.Result;
+                        this.CurrentSession.CurrentEditComponent.EntityPM = res.Result;
                         this.EntityPM = res.Result;
                         this.IsSigned = this.EntityPM.IsSigned;
-                 })
+                    })
                 }
             });
-            
+
 
         }
     }
@@ -612,7 +617,7 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             this.myRelativeRateDate = value;
         }
     }
-    get ExchangeRateDate (){ return this.EntityPM.ExchangeRateDate; }
+    get ExchangeRateDate() { return this.EntityPM.ExchangeRateDate; }
     set ExchangeRateDate(value: Date) {
         if (this.EntityPM.ExchangeRateDate != value) {
             this.EntityPM.ExchangeRateDate = value;
@@ -1497,7 +1502,7 @@ export class ARInvoiceLineItem extends BaseComponent {
     public IsRateEnabled: boolean = false;
     public IsEditExchangeRateVisible: boolean = false;
     SetUIProperties() {
-        
+
         this.IsEditExchangeRateVisible = this.fatherComponent.IsEditExchangeRateVisible;
 
         this.IsEditingEnabled = this.fatherComponent.IsEditingEnabled;
