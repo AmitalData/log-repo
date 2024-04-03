@@ -235,7 +235,11 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         button.Width = 100;
                         if (this.EntityPM.Direction == "E" && this.EntityPM.DeclarationNumber != null) {
                             button.IsHidden = false;
-                            if (this.EntityPM.IsSubmitDeclaration)
+                            if(this.EntityPM.IsAmendment){
+                                button.IsDisabled = false;
+    
+                             }
+                             else if (this.EntityPM.IsSubmitDeclaration)
                                 button.IsDisabled = false
                             else
                                 button.IsDisabled = true
@@ -271,6 +275,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
 
                     }
                     if (button.EventCode == "SendDeclaration") {
+                     
                         if (this.IsDisplayOnly) {
                             button.IsDisabled = true;
                             button.IsHidden = false;
