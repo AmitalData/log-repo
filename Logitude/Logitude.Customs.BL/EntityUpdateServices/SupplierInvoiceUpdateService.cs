@@ -641,17 +641,18 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             bool toUpdateClassification = false;
             string defaultClassificationCode = null;
             string defaultClassificationCodeUnit = null;
+            bool isInvoiceItemInsertNullClassification = (from a in entityPM.SupplierInvoiceItems
+                                                          where a.ChangeSetOp == ChangeSetOperation.Insert && a.ClassificationCode is null
+                                                          select a).Any();
             //if ((entityPM.ChangeSetOp == ChangeSetOperation.Insert || (entityPM.ChangeSetOp == ChangeSetOperation.Update && IsProcedureCurrentCodeChanged)) && declarationPM.IsCourierDeclaration && entityPM.InvoiceAmountInUSD <= 1000 && (declarationPM.ProcedureCurrentCode == "4000512" || declarationPM.ProcedureCurrentCode == "4000507"))
             LogMessagingUtil.Instance.AppendLine($"ChangeSetOp{entityPM.ChangeSetOp} IsProcedureCurrentCodeChanged{IsProcedureCurrentCodeChanged} ProcedureCurrentCode{defaultDeclarationPM.ProcedureCurrentCode}");
-            if ((entityPM.ChangeSetOp == ChangeSetOperation.Insert || (entityPM.ChangeSetOp == ChangeSetOperation.Update && IsProcedureCurrentCodeChanged)) && defaultDeclarationPM.IsCourierDeclaration && entityPM.InvoiceAmountInUSD <= 1000 && (defaultDeclarationPM.ProcedureCurrentCode == "4000512" || defaultDeclarationPM.ProcedureCurrentCode == "4000507"))
+            if ((entityPM.ChangeSetOp == ChangeSetOperation.Insert || (entityPM.ChangeSetOp == ChangeSetOperation.Update && isInvoiceItemInsertNullClassification || IsProcedureCurrentCodeChanged)) && defaultDeclarationPM.IsCourierDeclaration && entityPM.InvoiceAmountInUSD <= 1000 && (defaultDeclarationPM.ProcedureCurrentCode == "4000512" || defaultDeclarationPM.ProcedureCurrentCode == "4000507"))
              {
                 try
                 {
                     using (_AmitalContext = AmitalContext.GetContext(entityPM.Tenant))
                     {
-                        bool isInvoiceItemInsertNullClassification = (from a in entityPM.SupplierInvoiceItems
-                                                                      where a.ChangeSetOp == ChangeSetOperation.Insert && a.ClassificationCode is null
-                                                                      select a).Any();
+                        
                         if (isInvoiceItemInsertNullClassification || IsProcedureCurrentCodeChanged)
                         {
                             string IntegratorCode = null;
