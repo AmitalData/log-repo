@@ -1231,6 +1231,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             ContactQuery entityQuery = new ContactQuery(entityPM.Tenant);
             ContactRepository repository = new ContactRepository(objectContext);
             var myResult = entityQuery.GetContactsbyCardId(entityPM.Id, entityPM.Tenant).ToList();
+            string newContactForAccounting = null;
+            string oldContactForAccounting = null;
             foreach (var item in myResult)
             {
                 if (item.ContactForAccounting == true && item.Id != entityPM.ContactForAccounting)
@@ -1240,8 +1242,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     if (entity != null)
                     {
                         entity.ContactForAccounting = false;
+                        oldContactForAccounting = entity.Id;
                         repository.Update(entity);
-                        this.UpdateGLAccount(entityPM.Card.Id);
                     }
                 }
                 if (item.ContactForAccounting != true && item.Id == entityPM.ContactForAccounting)
@@ -1251,18 +1253,19 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     if (entity != null)
                     {
                         entity.ContactForAccounting = true;
+                        newContactForAccounting = entity.Id;
                         repository.Update(entity);
-                        this.UpdateGLAccount();
                     }
                 }
             }
             repository.SubmitChanges();
+            this.UpdateGLAccountWithOldAndNewContactForAccounting(oldContactForAccounting, newContactForAccounting);
 
         }
-        private void UpdateGLAccount(string excludeId = null)
+        private void UpdateGLAccountWithOldAndNewContactForAccounting(string excludeContactId , string includeContactId)
         {
             IGLAccountUpdateServiceExt glaccountUpdate = ContainerAccessor.Container.Resolve(typeof(IGLAccountUpdateServiceExt), "GLAccountUpdateServiceExt", new ParameterOverride("", 1)) as IGLAccountUpdateServiceExt;
-            glaccountUpdate.UpdateGLAccountWithAdditionalData(entityPM.Card.GLAccountId, entityPM.Card.Tenant, excludeId);
+            glaccountUpdate.UpdateGLAccountWithAdditionalData(entityPM.Card.GLAccountId, entityPM.Card.Tenant, null, excludeContactId, includeContactId);
         }
 
         private void SaveGLAccountChanges(GLAccountPM accountPM)

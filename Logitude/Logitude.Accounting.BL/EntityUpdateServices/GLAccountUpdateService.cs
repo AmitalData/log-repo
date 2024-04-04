@@ -2731,7 +2731,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
 
 
-        public void UpdateGLAccountWithAdditionalData(string glaccountId, int tenant, string excludeId = null)
+        public void UpdateGLAccountWithAdditionalData(string glaccountId, int tenant, string excludeCardId=null, string excludeContactId=null, string includeContactId=null)
         {
             GLAccountQueryService gLAccountQuery = new GLAccountQueryService(tenant);
             var glaccount = gLAccountQuery.GetSingle(glaccountId, true, false);
@@ -2739,9 +2739,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             {
                 ContactRepository contactRep = new ContactRepository(tenant);
                 CustomerRepository customerRepository = new CustomerRepository(tenant);
-                glaccount.ContactId = contactRep.GetContactForAccountingByGLAccountIdExcludeOneCard(glaccount.Id, excludeId);
-                glaccount.SalesmanUserId = customerRepository.GetSalesManByGLAccountId(glaccount.Id, tenant, excludeId);
-                glaccount.CollectorId = customerRepository.GetCollectorByGLAccount(glaccount.Id, tenant, excludeId);
+                glaccount.ContactId = contactRep.GetContactForAccountingByGLAccountIdExcludeOneCard(glaccount.Id,tenant, excludeContactId, includeContactId);
+                glaccount.SalesmanUserId = customerRepository.GetSalesManByGLAccountId(glaccount.Id, tenant, excludeCardId);
+                glaccount.CollectorId = customerRepository.GetCollectorByGLAccount(glaccount.Id, tenant, excludeCardId);
                 glaccount.ChangeSetOp = ChangeSetOperation.Update;
                 Update(glaccount, true);
                 var listOfChildren = gLAccountQuery.GetChildrenByCurrencyGLAccountIds(glaccount.Id, tenant);
