@@ -53,6 +53,7 @@ using System.Data.Entity.Core;
 using Logitude.BL.Helpers.ExportServer;
 using Newtonsoft.Json;
 using System.Text.Json;
+using Logitude.Server.Tools.TreeFilterQuery.Expression;
 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
@@ -517,8 +518,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 Payment_Amount = (decimal)entityPM.InvoiceLines.Where(d => d.VatPercentage != 0 && d.LineActionCode == "1").Sum(a => a.LocalCurrencyAmount),
                 VAT_Amount = totalVat,
                 Payment_Amount_Including_VAT = (decimal)entityPM.AmountInLocalCurrency,
-               
-              
+
             };
            
             return JsonConvert.SerializeObject(confirmationNumberAPI,
@@ -5133,6 +5133,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 Notes = Notes,
             });
         }
+       
 
         public class ConfirmationNumberAPI
         {
@@ -5154,13 +5155,21 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             public decimal VAT_Amount { get; set; }
             public decimal? Payment_Amount_Including_VAT { get; set; }
             public string Invoice_Note { get; set; }
+
+            [JsonIgnore]
             public int Action { get; set; }
+
+            [JsonIgnore]
             public long Vehicle_License_Number { get; set; } // Consider using a nullable long
             public string Phone_Of_Driver { get; set; }
             public string Arrival_Date { get; set; }
             public string Estimated_Arrival_Time { get; set; }
-            public int Transition_Location { get; set; }
+
+            [JsonIgnore]
+              public int Transition_Location { get; set; }
             public string Delivery_Address { get; set; }
+
+            [JsonIgnore]
             public int Additional_Information { get; set; }
             public List<InvoiceItem> Items { get; set; }
         }
