@@ -503,7 +503,11 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                          ChartOfAccountsTypeEnglishName = r.ChartOfAccountsTypeEnglishName,
                          ChartOfAccountsTypeLocalName = r.ChartOfAccountsTypeLocalName,
                          ChartOfAccountSecurityLevel = r.ChartOfAccountSecurityLevel,
-                         AccountPhone = r.AccountPhone
+                         AccountPhone = r.AccountPhone,
+
+                         AccountContactName = r.AccountContactName,
+                         AccountContactEmail = r.AccountContactEmail,
+                         AccountContactPhone = r.AccountContactPhone,
 
                      }
                     ).ToList();
@@ -1092,6 +1096,9 @@ _Param.AgingForDate.Date, false, true, true,false, false);
                                                       ChartOfAccountsTypeLocalName = account != null ? account.ChartOfAccountsTypeLocalName : null,
                                                       ChartOfAccountSecurityLevel = account != null ? account.ChartOfAccountSecurityLevel : null,
                                                       AccountPhone = account != null ? account.AccountPhone : null,
+                                                      AccountContactPhone = account != null ? account.AccountContactPhone : null,
+                                                      AccountContactName = account != null ? account.AccountContactName : null,
+                                                      AccountContactEmail = account != null ? account.AccountContactEmail : null,
                                                   }).ToList();
             return namedPeriods;
         }
@@ -1938,6 +1945,9 @@ Period	Acc	Currency	Total
         public string ChartOfAccountsTypeEnglishName { get; set; }
         public string ChartOfAccountsTypeLocalName { get; set; }
         public int? ChartOfAccountSecurityLevel { get; set; }
+        public string AccountContactName { get; set; }
+        public string AccountContactEmail { get; set; }
+        public string AccountContactPhone { get; set; }
     }
 
     public class AgingReportParam
