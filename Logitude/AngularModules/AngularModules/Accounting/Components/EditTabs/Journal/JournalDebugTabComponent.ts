@@ -469,7 +469,8 @@ export class JournalDebugTabComponent extends BaseComponent implements OnInit {
     IsExternalBankTransaction(ledger: LedgerTransactionList){
         const isFromAmital = this.EntityPM.ExternalSystem?.toLowerCase() == amitalExternalSystemCode;
         const journalLine = this.EntityPM.JournalLines.find(line=>line.Line == ledger.JournalLineNumber);
-        const isConnectedToBankGLAccount = (journalLine.DebitAccountCOACode || journalLine.CreditAccountCOACode) == BanksChartOfAccountsTypeCode;
+        const isConnectedToBankGLAccount = ((ledger.AccountId == journalLine.DebitAccountId && journalLine.DebitAccountCOACode == BanksChartOfAccountsTypeCode)
+            || (ledger.AccountId == journalLine.CreditAccountId && journalLine.CreditAccountCOACode == BanksChartOfAccountsTypeCode));
 
         return ((isFromAmital || SessionLocator.LoggedUserPM.IsCustomerCare) && isConnectedToBankGLAccount);
     }
