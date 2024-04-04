@@ -122,9 +122,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
             var myDeclarationPaymentQueryService = new DeclarationPaymentQueryService(context);
 
             DeclarationErrorPointerService mydDclarationErrorPointerService = new DeclarationErrorPointerService();
-
+            string defIsCollectActive = "";
             //var mySupplierInvioceItemCertificatUpdateService = new SupplierInvioceItemCertificatUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant); 
-
+            bool isStatusVPA = false;
+            bool isCollectActive =false;
+            CourierMasterPM courierMaster=null;
             this.MyResponseData = new INF_MSG_GenericResponseData();
 
             if (string.IsNullOrWhiteSpace(requestParams.AppicationId))
@@ -162,6 +164,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 return;
             }
 
+
+
             if (_MyDeclarationPM.IsCourierDeclaration && customResponse.Response != null && customResponse.Response.Status != null && (customResponse.Response.Status.NameCode.Value == "13" ||   customResponse.Response.Status.NameCode.Value == "14"))
             {
                 // update payment status code
@@ -177,7 +181,40 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
             }
 
+            if (_MyDeclarationPM.IsCourierDeclaration)
+            {
+                CourierMasterQueryService courierMasterService = new CourierMasterQueryService(requestParams.Tenant);
+                  courierMaster = courierMasterService.GetSingle(_MyDeclarationPM.CourierMasterId, false, false);
 
+
+                if (courierMaster != null)
+                {
+                    DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(_MyDeclarationPM.Tenant);
+
+                    defIsCollectActive = defaultValueQueryService.GetDefault("ISRAEL", "CGO_ACT_COLLECT", "NON", courierMaster.IntegratorNumber, _MyDeclarationPM.Tenant);
+
+                    isCollectActive = defIsCollectActive == "Y";
+                    if (isCollectActive)
+                    {
+                        try
+                        {
+                            isStatusVPA = myDeclarationUpdateService.CheckFileStatus(_MyDeclarationPM, requestParams.LoggingUserId, "VPA");
+                        }
+                        catch (Exception e)
+                        {
+                            this.MyResponseData.ApplicationID = requestParams.AppicationId;
+                            this.MyResponseData.Succeeded = true;
+                            this.MyResponseData.UserMessage = "Error in the URouter service , VPA cannot be check(תקלה בUROUTER , לא ניתן לבדוק סטטוס VPA)";
+                            this.MyResponseData.HasException = true;
+
+                            LogMessagingUtil.Instance.AppendLine("Exception was thrown while checking if VPA exist in the file " + _MyDeclarationPM.CustomFileNo + Environment.NewLine + e.Message);
+                            return;
+                        }
+                    }
+                }
+              
+
+            }
             if (this._MyDeclarationPM.PaymentDate.HasValue)
             {
                 if (customResponse.Response != null && customResponse.Response.Status != null && (customResponse.Response.Status.NameCode.Value == "13" || customResponse.Response.Status.NameCode.Value == "14") )
@@ -941,8 +978,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     //    }
                     //}
                     // Pending 900
-                    CourierMasterQueryService courierMasterService = new CourierMasterQueryService(requestParams.Tenant);
-                    CourierMasterPM courierMaster = courierMasterService.GetSingle(_MyDeclarationPM.CourierMasterId, false, false);
+                    //CourierMasterQueryService courierMasterService = new CourierMasterQueryService(requestParams.Tenant);
+                    //CourierMasterPM courierMaster = courierMasterService.GetSingle(_MyDeclarationPM.CourierMasterId, false, false);
 
 
                     if (courierMaster != null)
@@ -951,10 +988,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 
                         var myGDFDATAQueryService = new GDFDATAQueryService(AmitalContext.GetContext(requestParams.Tenant));
-                        var def = defaultValueQueryService.GetDefault("ISRAEL", "CGO_ACT_COLLECT", "NON", courierMaster.IntegratorNumber, _MyDeclarationPM.Tenant);
                         string defValue = defaultValueQueryService.GetDefault("ISRAEL", "CGO_CUST_CAS", "NON", "NON", _MyDeclarationPM.Tenant);
 
-                        bool isCollectActive = def == "Y";
+                      
 
                         
                         if (declarationPendingPM_900 == null)
@@ -985,21 +1021,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         //    isCollectActive = false;
                         //} 
 
+                        
                         if (isCollectActive)
                         {
-                            bool isStatusVPA = false;
-                            try
-                            {
-                                isStatusVPA = myDeclarationUpdateService.CheckFileStatus(_MyDeclarationPM, requestParams.LoggingUserId, "VPA");
-                            }
-                            catch (Exception e)
-                            {
-                                this.MyResponseData.ApplicationID = requestParams.AppicationId;
-                                this.MyResponseData.Succeeded = true;
-                                this.MyResponseData.UserMessage = "VPA cannot be found because there is an error in the URouter service";
-                                this.MyResponseData.HasException = true;
-                                LogMessagingUtil.Instance.AppendLine("Exception was thrown while checking if VPA exist in the file " + _MyDeclarationPM.CustomFileNo + Environment.NewLine + e.Message);
-                            }
+                          
                             if (isStatusVPA) isCollectActive = false;
                         }
 
