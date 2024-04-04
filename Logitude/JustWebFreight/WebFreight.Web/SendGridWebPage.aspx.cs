@@ -53,7 +53,7 @@ namespace WebFreight.Web
                             Response = x["response"] != null ? (x["response"]).ToString() : null,
                             CommunicationLogId = x["CommunicationLogId"] != null ? (x["CommunicationLogId"]).ToString() : null,
                             Tenant = x["Tenant"] != null ? (int)x["Tenant"] : 0,
-                            CommunicationLogCreateDate = x["CommunicationLogCreateDate"] != null ? (x["CommunicationLogCreateDate"]).ToString() : null
+                            CommunicationLogCreateDate = x["CommunicationLogCreateDate"] != null ? (x["CommunicationLogCreateDate"]).ToString() : null,
 							DeploymentStage = x["DeploymentStage"] != null ? (x["DeploymentStage"]).ToString() : null
 
 						}).ToList();
