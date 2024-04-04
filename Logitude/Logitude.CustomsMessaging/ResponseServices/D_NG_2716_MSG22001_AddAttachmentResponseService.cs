@@ -29,6 +29,7 @@ using Logitude.Customs.Def.EntityQueryServicesExt;
 using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using Simplog.Data.CommonDataModel.Repositories;
+using Logitude.Customs.BL.Messaging.Customs.SignQueueBL;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -36,6 +37,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         ResponseServiceBase<AddAttachmentResponseData, D_NG_2716_MSG22001_AddAttachmentResponse, D_NG_2715_MSG22002_AddAGlobalScannedAttachmentToEntityRequestParam>
     {
         CustomsDocumentPM _MyCustomsDocumentPM;
+       
         public override AddAttachmentResponseData GetResponse(D_NG_2716_MSG22001_AddAttachmentResponse customResponse, D_NG_2715_MSG22002_AddAGlobalScannedAttachmentToEntityRequestParam requestParams)
         {
 
@@ -296,22 +298,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
 
             // for the Diamonds declaration in export, send it automatically to the mehes
-            if (declarationPM.IsDiamondDeclaration && declarationPM.Direction == "E" && declarationPM.AutoSending)
-            {
-                try
-                {
-                    LogMessagingUtil.Instance.AppendLine("Check to send diamonds declaration to mehes");
-                    SendAutomaticReadyDeclaration(declarationPM);
-                }
-                catch (System.Exception e)
-                {
-                    LogMessagingUtil.Instance.AppendLine("Failed to send automatic diamonds declarations: " + e.ToString());
-                }
-            }
-            else
-            {
-                LogMessagingUtil.Instance.AppendLine("No check for diamonds process");
-            }
+          
 
             UpdateDeclarationCourierStatus(context, _MyCustomsDocumentPM, requestParams.DeclaretionId);
             this.MyResponseData.ApplicationID = _MyCustomsDocumentPM.CustomsDocId;
@@ -383,6 +370,27 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         //throw;
                     }
                 }
+
+
+                  if (declarationPM.IsDiamondDeclaration && declarationPM.Direction == "E" && declarationPM.AutoSending)
+            {
+              
+            }
+            else
+            {
+                LogMessagingUtil.Instance.AppendLine("No check for diamonds process");
+            }
+            }
+
+
+            try
+            {
+                LogMessagingUtil.Instance.AppendLine("Check to send diamonds declaration to mehes");
+                SendAutomaticReadyDeclaration(declarationPM);
+            }
+            catch (System.Exception e)
+            {
+                LogMessagingUtil.Instance.AppendLine("Failed to send automatic diamonds declarations: " + e.ToString());
             }
         }
 
@@ -399,8 +407,26 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 // check the declaration is ready to be sent the mehes. if then send it
                 var declarationQueryService = new DeclarationQueryService(declaration.Tenant);
-                bool declarationReadyForSending = declarationQueryService.CheckDiamondsDeclarationReadyForSending(declaration);
+                var signQueueHSMService = new SignQueueHSMService();
+                 bool declarationReadyForSending = declarationQueryService.CheckDiamondsDeclarationReadyForSending(declaration);
+                var loggedUserId = string.Empty;
 
+                var objecttableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
+                if (signQueueHSMService.IsHSMSign_IsOn(declaration.Tenant))
+                {
+                    loggedUserId = AuthenticationUtil.ResolveUserId(declaration.Tenant);
+                }
+                else
+                {
+                    if (!string.IsNullOrEmpty(declaration.SignedByUserId))
+                    {
+                        loggedUserId = declaration.SignedByUserId;
+                    }
+                    else
+                    {
+                        loggedUserId = declarationQueryService.GetSignedByUserIdByCustomFileNo(declaration.Tenant, declaration.CustomFileNo);
+                    }
+                }
                 if (declarationReadyForSending)
                 {
                     GenericRequestParams requestParamsData = new GenericRequestParams()
@@ -408,15 +434,17 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         AppicationId = declaration.Id,
                         Tenant = declaration.Tenant,
                         RequestVIA = SendRequestVIA.Default,
-                        ForcePersonalSign = false,
+                        ForcePersonalSign = true,
                         LoggingEnabled = true,
                         LoggingEntityId = declaration.Id,
                         LoggingEntityReference = declaration.DeclarationNumber,
-                        LoggingUserId = declaration.CreatedByUserId,
+                        LoggingUserId = loggedUserId,
                         RequestName = "Declaration Request",
                         ResponseName = "Declaration Response",
-                        ForceCompanySign = true,
-                        LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration")
+                        ForceCompanySign = false,
+                        LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration"),
+                        FutureSendDateTime= DateTime.Now.AddMinutes(5),
+                        
                     };
 
                     LogMessagingUtil.Instance.AppendLine("Send declaration to mehes");
