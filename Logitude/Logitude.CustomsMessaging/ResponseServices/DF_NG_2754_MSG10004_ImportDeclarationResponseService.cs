@@ -980,10 +980,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 }
                             }
                         }
-                        if (declarationPendingPM_900 != null && declarationPendingPM_900.Status == "S")
-                        {
-                            isCollectActive = false;
-                        } 
+                        //if (declarationPendingPM_900 != null && declarationPendingPM_900.Status == "S")
+                        //{
+                        //    isCollectActive = false;
+                        //} 
 
                         if (isCollectActive)
                         {
