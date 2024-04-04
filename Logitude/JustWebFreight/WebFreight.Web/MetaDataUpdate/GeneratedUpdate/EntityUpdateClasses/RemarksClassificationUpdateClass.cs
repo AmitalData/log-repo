@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class RemarksClassificationUpdateClass
    {  		
-		public const string HashString = "c7d868836fe83ba15911f1ff4e5f3396";
+		public const string HashString = "4291e56c204c1817bff14a9db56e2934";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -127,7 +127,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  " הערות סיווג",
 			      				    DefaultText =  "RemarksClassification ",
-			      				    Code =  "b7fd",
+			      				    Code =  "bf3e",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  true,
 			      				    ClientModuleName =  "Customs",
@@ -171,6 +171,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Id",
 					  						ListPropertyPath =  "Id",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -193,7 +194,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListLableDefaultText =  "Id",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
-					  						EnableAutoFill =  true,
+					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
@@ -230,6 +231,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "CustomsItemsID",
 					  						ListPropertyPath =  "CustomsItemsID",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -290,6 +292,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "RemarkDescription",
 					  						ListPropertyPath =  "RemarkDescription",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -333,7 +336,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
+	    {   
+
+		   ObjectTable RemarksClassificationObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.RemarksClassification" && d.Tenant == 0).FirstOrDefault();
+		   //List<ObjectField> RemarksClassificationObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.RemarksClassification").ToList();
+		       
+	      
+
+	         Screen RemarksClassificationCustomsRemarksClassificationHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "RemarksClassification.HeaderScreen", Name = "Customs.RemarksClassificationHeaderScreen", ObjectTableId = RemarksClassificationObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    RemarksClassificationObjectTable.HeaderScreenId = RemarksClassificationCustomsRemarksClassificationHeaderScreenScreen0.Id;
+		    RemarksClassificationObjectTable.HeaderScreenCode = RemarksClassificationCustomsRemarksClassificationHeaderScreenScreen0.Code;
+
+	   		  
 
 	    }
 
