@@ -181,6 +181,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
             }
 
+            
             if (_MyDeclarationPM.IsCourierDeclaration)
             {
                 CourierMasterQueryService courierMasterService = new CourierMasterQueryService(requestParams.Tenant);
@@ -203,12 +204,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         catch (Exception e)
                         {
                             this.MyResponseData.ApplicationID = requestParams.AppicationId;
-                            this.MyResponseData.Succeeded = true;
+                            this.MyResponseData.Succeeded = false;
                             this.MyResponseData.UserMessage = "Error in the URouter service , VPA cannot be check(תקלה בUROUTER , לא ניתן לבדוק סטטוס VPA)";
                             this.MyResponseData.HasException = true;
-
+                            
                             LogMessagingUtil.Instance.AppendLine("Exception was thrown while checking if VPA exist in the file " + _MyDeclarationPM.CustomFileNo + Environment.NewLine + e.Message);
-                            return;
+                           
+                            throw new System.Exception("Error in the URouter service , VPA cannot be check(תקלה בUROUTER , לא ניתן לבדוק סטטוס VPA)");
                         }
                     }
                 }
