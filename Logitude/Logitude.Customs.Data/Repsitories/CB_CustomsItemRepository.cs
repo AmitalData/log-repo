@@ -65,7 +65,7 @@ namespace Logitude.Customs.Data.Repsitories
                                 GoodsDescription = reader["GoodsDescription"] != DBNull.Value ? (string)reader["GoodsDescription"] : null,
                                 Rules = reader["Rules"] != DBNull.Value ? (int?)reader["Rules"] : null,
                                 Remarks = reader["Remarks"] != DBNull.Value ? (string)reader["Remarks"] : null,
-                                Agreements = reader["Agreements"] != DBNull.Value ? (string)reader["Agreements"] : null,
+                                Agreements = reader["Agreements"] != DBNull.Value ? (int?)reader["Agreements"] : null,
                                 CustomsRate = reader["CustomsRate"] != DBNull.Value ? (string)reader["CustomsRate"] : null,
                                 PurchaseTax = reader["PurchaseTax"] != DBNull.Value ? (string)reader["PurchaseTax"] : null,
                                 OptionalTaxAddition = reader["OptionalTaxAddition"] != DBNull.Value ? (decimal?)reader["OptionalTaxAddition"] : null,
@@ -119,7 +119,7 @@ namespace Logitude.Customs.Data.Repsitories
                                 GoodsDescription = reader["GoodsDescription"] != DBNull.Value ? (string)reader["GoodsDescription"] : null,
                                 Rules = reader["Rules"] != DBNull.Value ? (int?)reader["Rules"] : null,
                                 Remarks = reader["Remarks"] != DBNull.Value ? (string)reader["Remarks"] : null,
-                                Agreements = reader["Agreements"] != DBNull.Value ? (string)reader["Agreements"] : null,
+                                Agreements = reader["Agreements"] != DBNull.Value ? (int?)reader["Agreements"] : null,
                                 CustomsRate = reader["CustomsRate"] != DBNull.Value ? (string)reader["CustomsRate"] : null,
                                 PurchaseTax = reader["PurchaseTax"] != DBNull.Value ? (string)reader["PurchaseTax"] : null,
                                 OptionalTaxAddition = reader["OptionalTaxAddition"] != DBNull.Value ? (decimal?)reader["OptionalTaxAddition"] : null,
@@ -152,6 +152,7 @@ namespace Logitude.Customs.Data.Repsitories
                     var command = connection.CreateCommand();
                     command.CommandText = "usp_CustomsBookMainView";
                     command.CommandType = System.Data.CommandType.StoredProcedure;
+
                     AddSqlParameter(command, "@CustomsBookType", customsBookType);
                     command.Parameters.AddWithValue("@SkippedRows", skippedRows);
                     command.Parameters.AddWithValue("@PageSize", pageSize);
@@ -169,7 +170,7 @@ namespace Logitude.Customs.Data.Repsitories
                                 GoodsDescription = reader["GoodsDescription"] != DBNull.Value ? (string)reader["GoodsDescription"] : null,
                                 Rules = reader["Rules"] != DBNull.Value ? (int?)reader["Rules"] : null,
                                 Remarks = reader["Remarks"] != DBNull.Value ? (string)reader["Remarks"] : null,
-                                Agreements = reader["Agreements"] != DBNull.Value ? (string)reader["Agreements"] : null,
+                                Agreements = reader["Agreements"] != DBNull.Value ? (int?)reader["Agreements"] : null,
                                 CustomsRate = reader["CustomsRate"] != DBNull.Value ? (string)reader["CustomsRate"] : null,
                                 PurchaseTax = reader["PurchaseTax"] != DBNull.Value ? (string)reader["PurchaseTax"] : null,
                                 OptionalTaxAddition = reader["OptionalTaxAddition"] != DBNull.Value ? (decimal?)reader["OptionalTaxAddition"] : null,

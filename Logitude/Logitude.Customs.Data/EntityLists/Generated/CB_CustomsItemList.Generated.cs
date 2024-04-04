@@ -37,7 +37,7 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string Remarks  { get; set; }
        [DataMember]
-       public string Agreements  { get; set; }
+       public int? Agreements  { get; set; }
        [DataMember]
        public string CustomsRate  { get; set; }
        [DataMember]

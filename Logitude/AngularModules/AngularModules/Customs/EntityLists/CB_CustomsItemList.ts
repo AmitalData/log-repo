@@ -20,7 +20,7 @@ export class CB_CustomsItemList {
 	GoodsDescription: string;
 	Rules: number;
 	Remarks: string;
-	Agreements: string;
+	Agreements: number;
 	CustomsRate: string;
 	PurchaseTax: string;
 	OptionalTaxAddition: number;

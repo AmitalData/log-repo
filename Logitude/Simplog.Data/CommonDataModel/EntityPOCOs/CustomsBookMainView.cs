@@ -18,7 +18,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string GoodsDescription { get; set; }
         public int? Rules { get; set; }
         public string Remarks { get; set; }
-        public string Agreements { get; set; }
+        public int Agreements { get; set; }
         public string CustomsRate { get; set; }
         public string PurchaseTax { get; set; }
         public decimal? OptionalTaxAddition { get; set; }
