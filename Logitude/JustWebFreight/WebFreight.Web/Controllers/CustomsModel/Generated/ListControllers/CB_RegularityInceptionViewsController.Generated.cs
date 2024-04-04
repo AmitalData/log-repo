@@ -51,7 +51,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
     {
 	  
        
-        public HttpResponseMessage GetSingle(string id)
+        public HttpResponseMessage GetSingle(string cb_id)
         {
 		  try
             {
@@ -61,7 +61,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
                 CB_RegularityInceptionListQueryService cB_RegularityInceptionQuery = new CB_RegularityInceptionListQueryService(MyContext);
-                CB_RegularityInceptionList cB_RegularityInceptionList = cB_RegularityInceptionQuery.GetSingle(id);
+                CB_RegularityInceptionList cB_RegularityInceptionList = cB_RegularityInceptionQuery.GetSingle(cb_id);
  				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 				           
                 return Request.CreateResponse(HttpStatusCode.OK,  cB_RegularityInceptionList);

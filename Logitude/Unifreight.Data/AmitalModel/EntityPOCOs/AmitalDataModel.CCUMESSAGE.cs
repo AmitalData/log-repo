@@ -21,14 +21,14 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
     /// There are no comments for Unifreight.Data.AmitalModel.CCUMESSAGE in the schema.
     /// </summary>
     [System.Runtime.Serialization.DataContractAttribute(IsReference=true)]
-    public partial class CCUMESSAGE : INotifyPropertyChanged    {
+    public partial class CCUMESSAGE : UNIFBASICPOCO, INotifyPropertyChanged    {
 
         public CCUMESSAGE()
         {
         }
 
         #region Properties
-    
+
         /// <summary>
         /// There are no comments for FILENO in the schema.
         /// </summary>

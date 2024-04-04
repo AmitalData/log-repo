@@ -48,9 +48,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
             mapping = new CB_LevyExclusionDataMapping();
         }
 		 
-		public  CB_LevyExclusionPM GetSingle(string id,bool getComposition, bool getFromCache)
+		public  CB_LevyExclusionPM GetSingle(string cb_id,bool getComposition, bool getFromCache)
         {
-             EntityKeys = new CB_LevyExclusionKeys(){ ID = id };
+             EntityKeys = new CB_LevyExclusionKeys(){ CB_ID = cb_id };
 
 			 return base.GetSingle(EntityKeys, getComposition, getFromCache);
         }
@@ -58,7 +58,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
        
 	    protected override EntityKeyFields GetKeys(CB_LevyExclusion entityPOCO)
         {
-            CB_LevyExclusionKeys entityKeys = new CB_LevyExclusionKeys() { ID = entityPOCO.ID,  };
+            CB_LevyExclusionKeys entityKeys = new CB_LevyExclusionKeys() { CB_ID = entityPOCO.CB_ID,  };
             return entityKeys;
         }
      

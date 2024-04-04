@@ -539,4 +539,18 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+  Name="AmitalApiAddress"
+  Type="nvarchar"
+  Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+  Name="AmitalApiXFunctionsKey"
+  Type="nvarchar"
+  Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
 </Table>

@@ -444,6 +444,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new CustomsItemDetailsHistoryMap());
 	
+            modelBuilder.Configurations.Add(new CustomsItemGroupMap());
+	
             modelBuilder.Configurations.Add(new CustomsItemHierarchicLocationMap());
 	
             modelBuilder.Configurations.Add(new CustomsPartnerFtpMap());
@@ -553,6 +555,8 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new DepositEssenceTypeMap());
 	
             modelBuilder.Configurations.Add(new DepositFileTypeMap());
+	
+            modelBuilder.Configurations.Add(new DiscountTypeRegulationMap());
 	
             modelBuilder.Configurations.Add(new DocumentRejectTypeMap());
 	
@@ -809,6 +813,8 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new RegularitySourceMap());
 	
             modelBuilder.Configurations.Add(new ReleaseMessageTypeMap());
+	
+            modelBuilder.Configurations.Add(new RemarksClassificationMap());
 	
             modelBuilder.Configurations.Add(new RenewalMethodMap());
 	
@@ -2650,6 +2656,12 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<CustomsItemGroup> CustomsItemGroups 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<CustomsItemHierarchicLocation> CustomsItemHierarchicLocations 
 	 {
 	      get; set;
@@ -2975,6 +2987,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<DepositFileType> DepositFileTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<DiscountTypeRegulation> DiscountTypeRegulations 
 	 {
 	      get; set;
 	 
@@ -3743,6 +3761,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<ReleaseMessageType> ReleaseMessageTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<RemarksClassification> RemarksClassifications 
 	 {
 	      get; set;
 	 

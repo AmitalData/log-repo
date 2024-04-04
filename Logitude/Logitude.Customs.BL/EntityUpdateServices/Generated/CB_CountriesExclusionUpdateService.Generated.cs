@@ -50,7 +50,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 		
 		protected override EntityKeyFields GetKeys(CB_CountriesExclusionPM entityPM)
         {
-            CB_CountriesExclusionKeys entityKeys = new CB_CountriesExclusionKeys() { ID = entityPM.ID };
+            CB_CountriesExclusionKeys entityKeys = new CB_CountriesExclusionKeys() { CB_ID = entityPM.CB_ID };
             return entityKeys;
         }
 

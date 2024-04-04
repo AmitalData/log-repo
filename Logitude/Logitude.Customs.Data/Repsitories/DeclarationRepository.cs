@@ -141,7 +141,8 @@ namespace Logitude.Customs.Data.Repsitories
                     allDecSameFile = qAllCustomFileNo.ToList();
                 }
                 var qGetAcceptDeclarationAmendment = (from a in allDecSameFile
-                                                      where ((a.Id == id && a.AmendmentDontDisplayInList == false && a.DeclarationNumber != null) ||
+                                                      where ( (a.Id == id && a.AmendmentDontDisplayInList == false && a.IsAmendment != true) ||
+                                                      (a.Id == id && a.AmendmentDontDisplayInList == false && a.DeclarationNumber != null) ||
                             (a.AmendmentOriginalDeclartation == id && a.DeclarationNumber != null && a.AmendmentDontDisplayInList == false))
                             && a.Tenant == tenant
                                                       select a
@@ -1549,7 +1550,7 @@ namespace Logitude.Customs.Data.Repsitories
 			return decSignedByUserId;
 
 		}
-		public List<Declaration> GetDeclarationsByExportFile(int tenant,string exportFile)
+		public List<Declaration> GetDeclarationsByExportFileNotClose(int tenant,string exportFile)
 		{
 			(context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false;
 
@@ -1567,7 +1568,19 @@ namespace Logitude.Customs.Data.Repsitories
                                      select a.Tenant).FirstOrDefault();
             return tenant;
         }
-	}
+        public Declaration GetDeclarationsByExportFile(int tenant, string exportFile)
+        {
+            (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false;
+
+            Declaration declaration = (from a in context.Declarations
+                                              where a.Tenant == tenant && a.ExportFile == exportFile
+                                              select a).FirstOrDefault();
+
+            return declaration;
+        }
+        
+
+    }
 
 
     public class ExportReport1

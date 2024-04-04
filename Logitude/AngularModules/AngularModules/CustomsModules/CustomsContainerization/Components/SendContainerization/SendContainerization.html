@@ -3,6 +3,7 @@
         <td style="width: 110px; vertical-align: bottom; padding-left: 3px; padding-right: 3px">
             <custom-send-options #MyCustomSendOptionsComponent
                                  (SendButtonClicked)="OnCustomSendOptionsButtonClick($event)"
+                                 [HaveTestCase]="'true'"
                                  [ButtonText]="ButtonText"
                                  [IsDisabled]="IsDisabled"></custom-send-options>
         </td>

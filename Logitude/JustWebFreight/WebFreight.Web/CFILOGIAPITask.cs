@@ -128,6 +128,15 @@ customs.Declarations d on p.PARENTENTITYID = d.id where t.DOCUMENTSFILINGID=@DOC
 <DAT name=""EXAMPLE_RESULT"" xml:space='preserve'></DAT>
 <DAT name=""LINQ"">true</DAT><DAT name=""HAS_TENANT"">true</DAT></OCC>
 <OCC>
+<DAT name=""CODE"">A74</DAT>
+<DAT name=""NAME_ENG"" xml:space='preserve'>SELECT ID from Declarations </DAT>
+<DAT name=""REFERENCE"">CFIRDEC.Lp_Get_LogiFile</DAT>
+<DAT name=""PARAMETERS"">Declarations.CUSTOMFILENO=True</DAT>
+<DAT name=""EXAMPLE_SQL"" xml:space='preserve'>SELECT ID FROM Declarations WHERE Declarations.CUSTOMFILENO = '5043' AND Declarations.AmendmentDontDisplayInList = 0 and TENANT=1</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>SELECT ID FROM Customs.Declarations WHERE Declarations.CUSTOMFILENO = @CUSTOMFILENO AND Declarations.AmendmentDontDisplayInList = 0 AND TENANT=@Tenant</DAT>
+<DAT name=""EXAMPLE_RESULT"">455993853</DAT>
+<DAT name=""LINQ"">true</DAT><DAT name=""HAS_TENANT"">true</DAT></OCC>
+<OCC>
 <DAT name=""CODE"">A1</DAT>
 <DAT name=""NAME_ENG"" xml:space='preserve'>SELECT LoadingFactor</DAT>
 <DAT name=""REFERENCE"">CFIFFORMS.Lp_LogiDeclarationsDB</DAT>

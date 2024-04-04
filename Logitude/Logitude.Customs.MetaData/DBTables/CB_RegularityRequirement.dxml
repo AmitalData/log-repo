@@ -6,10 +6,8 @@
   Module="Customs">
   <Column
     Name="ID"
-    Type="varchar"
-    Size="15">
+    Type="int">
     <Constraints
-      PrimaryKey="true"
       Nullable="false" />
   </Column>
   <Column
@@ -39,8 +37,7 @@
   </Column>
   <Column
     Name="CustomsItemID"
-    Type="varchar"
-    Size="15">
+    Type="int">
     <Constraints
       Nullable="true" />
   </Column>
@@ -96,11 +93,14 @@
     <Constraints
       Nullable="true" />
   </Column>
-  <Relation
-    ForeignKeyColumn="CustomsItemID"
-    ReferencedTable="CB_CustomsItems"
-    ReferencedColumn="ID"
-    ReferencedTableSchema="Customs" />
+  <Column
+    Name="CB_ID"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="InceptionCodeID"
     ReferencedTable="InceptionCodes"

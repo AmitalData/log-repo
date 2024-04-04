@@ -24,9 +24,9 @@ export class CB_LevyExclusionPM {
       }
  	 
     
-    private iD: string;
+    private iD: number;
     public get ID() { return this.iD; }
-    public set ID(newValue: string) { if (this.iD != newValue) { this.iD = newValue; this.MarkAsDirty("ID"); } }
+    public set ID(newValue: number) { if (this.iD != newValue) { this.iD = newValue; this.MarkAsDirty("ID"); } }
        
 	 
     private levyExclusionNumber: number;
@@ -34,19 +34,24 @@ export class CB_LevyExclusionPM {
     public set LevyExclusionNumber(newValue: number) { if (this.levyExclusionNumber != newValue) { this.levyExclusionNumber = newValue; this.MarkAsDirty("LevyExclusionNumber"); } }
        
 	 
-    private tradeLevyID: string;
+    private tradeLevyID: number;
     public get TradeLevyID() { return this.tradeLevyID; }
-    public set TradeLevyID(newValue: string) { if (this.tradeLevyID != newValue) { this.tradeLevyID = newValue; this.MarkAsDirty("TradeLevyID"); } }
+    public set TradeLevyID(newValue: number) { if (this.tradeLevyID != newValue) { this.tradeLevyID = newValue; this.MarkAsDirty("TradeLevyID"); } }
        
 	 
-    private vendorID: string;
+    private vendorID: number;
     public get VendorID() { return this.vendorID; }
-    public set VendorID(newValue: string) { if (this.vendorID != newValue) { this.vendorID = newValue; this.MarkAsDirty("VendorID"); } }
+    public set VendorID(newValue: number) { if (this.vendorID != newValue) { this.vendorID = newValue; this.MarkAsDirty("VendorID"); } }
        
 	 
     private countryGroupID: string;
     public get CountryGroupID() { return this.countryGroupID; }
     public set CountryGroupID(newValue: string) { if (this.countryGroupID != newValue) { this.countryGroupID = newValue; this.MarkAsDirty("CountryGroupID"); } }
+       
+	 
+    private cB_ID: string;
+    public get CB_ID() { return this.cB_ID; }
+    public set CB_ID(newValue: string) { if (this.cB_ID != newValue) { this.cB_ID = newValue; this.MarkAsDirty("CB_ID"); } }
        
 	 
 

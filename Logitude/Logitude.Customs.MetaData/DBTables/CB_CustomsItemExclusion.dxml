@@ -6,34 +6,28 @@
   Module="Customs">
   <Column
     Name="ID"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="RegularityRequirementID"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="CustomsItemID"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="CB_ID"
     Type="varchar"
     Size="15">
     <Constraints
       PrimaryKey="true"
       Nullable="false" />
   </Column>
-  <Column
-    Name="RegularityRequirementID"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="CustomsItemID"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Relation
-    ForeignKeyColumn="RegularityRequirementID"
-    ReferencedTable="CB_RegularityRequirements"
-    ReferencedColumn="ID"
-    ReferencedTableSchema="Customs" />
-  <Relation
-    ForeignKeyColumn="CustomsItemID"
-    ReferencedTable="CB_CustomsItems"
-    ReferencedColumn="ID"
-    ReferencedTableSchema="Customs" />
 </Table>

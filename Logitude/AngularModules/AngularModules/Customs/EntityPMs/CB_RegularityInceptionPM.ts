@@ -24,14 +24,14 @@ export class CB_RegularityInceptionPM {
       }
  	 
     
-    private iD: string;
+    private iD: number;
     public get ID() { return this.iD; }
-    public set ID(newValue: string) { if (this.iD != newValue) { this.iD = newValue; this.MarkAsDirty("ID"); } }
+    public set ID(newValue: number) { if (this.iD != newValue) { this.iD = newValue; this.MarkAsDirty("ID"); } }
        
 	 
-    private regularityRequirementID: string;
+    private regularityRequirementID: number;
     public get RegularityRequirementID() { return this.regularityRequirementID; }
-    public set RegularityRequirementID(newValue: string) { if (this.regularityRequirementID != newValue) { this.regularityRequirementID = newValue; this.MarkAsDirty("RegularityRequirementID"); } }
+    public set RegularityRequirementID(newValue: number) { if (this.regularityRequirementID != newValue) { this.regularityRequirementID = newValue; this.MarkAsDirty("RegularityRequirementID"); } }
        
 	 
     private interConditionsRelationshipID: string;
@@ -57,6 +57,11 @@ export class CB_RegularityInceptionPM {
     private isCarnetIncluded: boolean;
     public get IsCarnetIncluded() { return this.isCarnetIncluded; }
     public set IsCarnetIncluded(newValue: boolean) { if (this.isCarnetIncluded != newValue) { this.isCarnetIncluded = newValue; this.MarkAsDirty("IsCarnetIncluded"); } }
+       
+	 
+    private cB_ID: string;
+    public get CB_ID() { return this.cB_ID; }
+    public set CB_ID(newValue: string) { if (this.cB_ID != newValue) { this.cB_ID = newValue; this.MarkAsDirty("CB_ID"); } }
        
 	 
 

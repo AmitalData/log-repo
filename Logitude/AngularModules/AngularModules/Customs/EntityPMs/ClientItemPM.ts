@@ -69,6 +69,11 @@ export class ClientItemPM {
     public set Id(newValue: string) { if (this.id != newValue) { this.id = newValue; this.MarkAsDirty("Id"); } }
        
 	 
+    private itemKey: string;
+    public get ItemKey() { return this.itemKey; }
+    public set ItemKey(newValue: string) { if (this.itemKey != newValue) { this.itemKey = newValue; this.MarkAsDirty("ItemKey"); } }
+       
+	 
 
     public OldEntityPM: ClientItemPM;
 		

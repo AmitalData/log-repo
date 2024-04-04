@@ -18,9 +18,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
     {
 	 string dbms;
 
-        [Key]
-        [Column("ID")]
-	    public string ID { get; set; }
+           [Column("ID")]
+	    public int ID { get; set; }
         [Column("CreateDate")]
 	    public DateTime CreateDate { get; set; }
         [Column("UpdateDate")]
@@ -60,11 +59,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
         public virtual RenewalMethod RenewalMethodCode { get; set; }
         [Column("RenewalUntilDate")]
 	    public DateTime? RenewalUntilDate { get; set; }
-        [ForeignKey("Quota")]
         [Column("QuotaID")]
-	    public string QuotaID { get; set; }
-	      
-        public virtual CB_Quota Quota { get; set; }
+	    public int QuotaID { get; set; }
         [Column("ChangeRequestTypePriority")]
 	    public int ChangeRequestTypePriority { get; set; }
         [Column("QuotaValueIncrement")]
@@ -79,6 +75,9 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string CurrencyTypeID { get; set; }
 	      
         public virtual CurrencyType CurrencyTypeCode { get; set; }
+     [Key]
+        [Column("CB_ID")]
+	    public string CB_ID { get; set; }
     }
 }
 	 

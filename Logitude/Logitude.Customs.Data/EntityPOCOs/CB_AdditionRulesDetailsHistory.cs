@@ -18,9 +18,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
     {
 	 string dbms;
 
-        [Key]
-        [Column("ID")]
-	    public string ID { get; set; }
+           [Column("ID")]
+	    public int ID { get; set; }
         [Column("CreateDate")]
 	    public DateTime CreateDate { get; set; }
         [Column("UpdateDate")]
@@ -44,13 +43,13 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string RulesRTF { get; set; }
         [Column("ChangeRequestTypePriority")]
 	    public int ChangeRequestTypePriority { get; set; }
-        [ForeignKey("CustomsBookAddition")]
         [Column("CustomsBookAdditionID")]
-	    public string CustomsBookAdditionID { get; set; }
-	      
-        public virtual CB_CustomsBookAddition CustomsBookAddition { get; set; }
+	    public int CustomsBookAdditionID { get; set; }
         [Column("EnglishRulesRTF")]
 	    public string EnglishRulesRTF { get; set; }
+     [Key]
+        [Column("CB_ID")]
+	    public string CB_ID { get; set; }
     }
 }
 	 

@@ -178,5 +178,11 @@ namespace Unifreight.BL.EntityPMs
         public int? TOTALINVOICELINESNO { get; set; }
         public int Tenant { get; set; }
 
+
+        public bool IS_SYNCH { get; set; }
+
+        public DateTime? LAST_UPDATE_DT { get; set; }
+
+
     }
 }

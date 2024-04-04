@@ -12,5 +12,11 @@ namespace Unifreight.BL.EntityPMs.UGenerated
         public string ENTNAME { get; set; }
 
         public string FILENO { get; set; }
+
+        public int Tenant { get; set; }
+
+        public bool IS_SYNCH { get; set; }
+
+        public DateTime? LAST_UPDATE_DT { get; set; }
     }
 }

@@ -233,7 +233,18 @@ export class DeclarationExtendedListService {
         });
     }
 
+    GetDiamondsDeclarationsCounts(requestedCounts) {
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetDiamondsDeclarationsCounts/?requestedCounts=' + JSON.stringify(requestedCounts),
+                ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
+                    var serviceResponse: ServiceResponse = new ServiceResponse();
+                    serviceResponse.Result = response;
+
+                    return serviceResponse;
+                }),catchError(ServiceHelper.HandleServiceError));
+        });
+    }
 
     GetDeclarationAmendmentsById(id: string) {
         return defer(() => {

@@ -97,7 +97,7 @@ namespace Unifreight.BL.EntityPMs
 
         public string STATUS { get; set; }
 
-        public double? EXPTASKTIME { get; set; }
+        public long? EXPTASKTIME { get; set; }
 
         public int? TRY { get; set; }
 
@@ -118,6 +118,10 @@ namespace Unifreight.BL.EntityPMs
         public string GSTRING3 { get; set; }
         public bool? QUEUEMANAGEMENT { get; set; }
 
-        
+        public int Tenant { get; set; }
+
+        public bool IS_SYNCH { get; set; }
+
+        public DateTime? LAST_UPDATE_DT { get; set; }
     }
 }

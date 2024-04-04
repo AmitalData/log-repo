@@ -1,7 +1,8 @@
 ﻿<Script DBType="Main"  Module="Common">
-	<Sql Version="5">
+	<Sql Version="6">
 		<![CDATA[
 		
+	
 declare @TermOfUsePK nvarchar(1000)
 declare @Command nvarchar(1000)
 
@@ -21,7 +22,7 @@ ALTER TABLE TermsofUseSignatures
 DROP CONSTRAINT [FK_TermsofUseSignatures_TermsofUses_TermsofUseId];
 end
 
-
+ 
 
 IF OBJECT_ID('dbo.[PK_TermsofUses]') IS NOT NULL
 begin
@@ -30,6 +31,22 @@ DROP CONSTRAINT [PK_TermsofUses];
 end
 
 
+set @TermOfUsePK = (select C.CONSTRAINT_NAME  FROM
+INFORMATION_SCHEMA.TABLE_CONSTRAINTS T
+JOIN INFORMATION_SCHEMA.CONSTRAINT_COLUMN_USAGE C
+ON C.CONSTRAINT_NAME=T.CONSTRAINT_NAME
+WHERE
+C.TABLE_NAME='TERMSOFUSESIGNATURES' and COLUMN_NAME='TERMSOFUSEID')
+
+
+select @Command = ('ALTER TABLE TermsofUseSignatures
+DROP CONSTRAINT ' + @TermOfUsePK);
+ 
+ print @command
+if(@TermOfUsePK is not null)
+begin
+execute (@Command)
+end
 
 set @TermOfUsePK = (select C.CONSTRAINT_NAME FROM
 INFORMATION_SCHEMA.TABLE_CONSTRAINTS T
@@ -41,11 +58,11 @@ and T.CONSTRAINT_TYPE='PRIMARY KEY')
 
 
 
+ 
+
 select @Command = ('ALTER TABLE TermsofUses
 DROP CONSTRAINT ' + @TermOfUsePK);
-
-
-
+ 
 if(@TermOfUsePK is not null)
 begin
 execute (@Command)
@@ -66,6 +83,7 @@ begin
 ALTER TABLE [dbo].[TermsofUseSignatures] WITH CHECK ADD CONSTRAINT [FK_TermsofUseSignatureTermsofUse] FOREIGN KEY([TermsofUseId])
 REFERENCES [dbo].[TermsofUses] ([Id])
 end
+    
     
     ]]>
 	</Sql>

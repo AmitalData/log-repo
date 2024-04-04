@@ -21,17 +21,19 @@ namespace Logitude.Customs.Data.EntityMapping
         { 
 			  this.ToTable("CB_CustomsItemLinkages", "Customs");
 		
-		    this.HasKey(t => new { t.ID });
+		    this.HasKey(t => new { t.CB_ID });
 	 
-            this.Property(t => t.ID).HasColumnName("ID").IsRequired().HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.ID).HasColumnName("ID");
 
             this.Property(t => t.ChangeTypeID).HasColumnName("ChangeTypeID").HasMaxLength(4).IsUnicode(false);
 
-            this.Property(t => t.CustomsItemDetailsHistoryID).HasColumnName("CustomsItemDetailsHistoryID").HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.CustomsItemDetailsHistoryID).HasColumnName("CustomsItemDetailsHistoryID");
 
-            this.Property(t => t.Connect_CustItemDetailsHistID).HasColumnName("Connect_CustItemDetailsHistID").HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.Connect_CustItemDetailsHistID).HasColumnName("Connect_CustItemDetailsHistID");
 
             this.Property(t => t.CreateDate).HasColumnName("CreateDate");
+
+            this.Property(t => t.CB_ID).HasColumnName("CB_ID").IsRequired().HasMaxLength(15).IsUnicode(false);
         }
     }
 }

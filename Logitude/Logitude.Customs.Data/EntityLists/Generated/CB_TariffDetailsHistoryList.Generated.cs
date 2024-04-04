@@ -12,18 +12,16 @@ namespace Logitude.Customs.Data.EntityLists
    [DataContract]
    public partial class CB_TariffDetailsHistoryList
    {
-   
-       [Key]
-       [DataMember]
-       public string ID  { get; set; }
+          [DataMember]
+       public int ID  { get; set; }
        [DataMember]
        public DateTime CreateDate  { get; set; }
        [DataMember]
        public DateTime? UpdateDate  { get; set; }
        [DataMember]
-       public string TariffID  { get; set; }
+       public int TariffID  { get; set; }
        [DataMember]
-       public string QuotaID  { get; set; }
+       public int? QuotaID  { get; set; }
        [DataMember]
        public DateTime? StartDate  { get; set; }
        [DataMember]
@@ -31,11 +29,15 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string EntityStatusID  { get; set; }
        [DataMember]
-       public string WithinQuota_ComputMethDataID  { get; set; }
+       public int? WithinQuota_ComputMethDataID  { get; set; }
        [DataMember]
-       public string WithoutQuota_ComputMethDataID  { get; set; }
+       public int? WithoutQuota_ComputMethDataID  { get; set; }
        [DataMember]
        public int ChangeRequestTypePriority  { get; set; }
+
+       [Key]
+       [DataMember]
+       public string CB_ID  { get; set; }
    }
 
 }

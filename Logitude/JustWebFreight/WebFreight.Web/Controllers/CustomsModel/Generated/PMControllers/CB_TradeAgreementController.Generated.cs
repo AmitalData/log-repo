@@ -51,7 +51,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
     {
 	  
        
-        public HttpResponseMessage GetSingle(string id)
+        public HttpResponseMessage GetSingle(string cb_id)
         {
 		  try
             {
@@ -63,7 +63,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
                 CB_TradeAgreementQueryService cB_TradeAgreementQuery = new CB_TradeAgreementQueryService(MyContext);
 				cB_TradeAgreementQuery.InitializeSettings();
-                CB_TradeAgreementPM cB_TradeAgreementPM = cB_TradeAgreementQuery.GetSingle(id,true,false);
+                CB_TradeAgreementPM cB_TradeAgreementPM = cB_TradeAgreementQuery.GetSingle(cb_id,true,false);
 
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
             

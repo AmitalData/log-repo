@@ -12,20 +12,38 @@ namespace Logitude.Customs.Data.EntityLists
    [DataContract]
    public partial class CB_TariffList
    {
-   
-       [Key]
-       [DataMember]
-       public string ID  { get; set; }
+          [DataMember]
+       public int ID  { get; set; }
        [DataMember]
        public DateTime CreateDate  { get; set; }
        [DataMember]
        public DateTime? UpdateDate  { get; set; }
        [DataMember]
-       public string TradeAgreementID  { get; set; }
+       public int? TradeAgreementID  { get; set; }
        [DataMember]
-       public string CustomsItemID  { get; set; }
+       public int CustomsItemID  { get; set; }
        [DataMember]
        public string Title  { get; set; }
+
+       [Key]
+       [DataMember]
+       public string CB_ID  { get; set; }
+       [DataMember]
+       public string Country  { get; set; }
+       [DataMember]
+       public string CustomsRate  { get; set; }
+       [DataMember]
+       public string CustomsRateWithinQuota  { get; set; }
+       [DataMember]
+       public int? QuotaID  { get; set; }
+       [DataMember]
+       public string MeasurementUnitName  { get; set; }
+       [DataMember]
+       public decimal? OptionalTaxAddition  { get; set; }
+       [DataMember]
+       public DateTime? StartDate  { get; set; }
+       [DataMember]
+       public DateTime? EndDate  { get; set; }
    }
 
 }

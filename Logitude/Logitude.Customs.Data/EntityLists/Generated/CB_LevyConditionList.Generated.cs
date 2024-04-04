@@ -12,18 +12,16 @@ namespace Logitude.Customs.Data.EntityLists
    [DataContract]
    public partial class CB_LevyConditionList
    {
-   
-       [Key]
-       [DataMember]
-       public string ID  { get; set; }
+          [DataMember]
+       public int ID  { get; set; }
        [DataMember]
        public int? LevyConditionNumber  { get; set; }
        [DataMember]
        public string LevyGoodsDescription  { get; set; }
        [DataMember]
-       public string CustomsItemID  { get; set; }
+       public int CustomsItemID  { get; set; }
        [DataMember]
-       public string VendorID  { get; set; }
+       public int? VendorID  { get; set; }
        [DataMember]
        public string CountryGroupID  { get; set; }
        [DataMember]
@@ -31,11 +29,15 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string CountryID  { get; set; }
        [DataMember]
-       public string TradeLevyID  { get; set; }
+       public int TradeLevyID  { get; set; }
        [DataMember]
        public DateTime StartDate  { get; set; }
        [DataMember]
        public DateTime? EndDate  { get; set; }
+
+       [Key]
+       [DataMember]
+       public string CB_ID  { get; set; }
    }
 
 }

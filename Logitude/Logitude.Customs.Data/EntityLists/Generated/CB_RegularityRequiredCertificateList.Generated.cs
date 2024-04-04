@@ -12,12 +12,10 @@ namespace Logitude.Customs.Data.EntityLists
    [DataContract]
    public partial class CB_RegularityRequiredCertificateList
    {
-   
-       [Key]
+          [DataMember]
+       public int ID  { get; set; }
        [DataMember]
-       public string ID  { get; set; }
-       [DataMember]
-       public string RegularityInceptionID  { get; set; }
+       public int RegularityInceptionID  { get; set; }
        [DataMember]
        public string ConfirmationTypeID  { get; set; }
        [DataMember]
@@ -28,6 +26,10 @@ namespace Logitude.Customs.Data.EntityLists
        public int? TrNumber  { get; set; }
        [DataMember]
        public string AuthorityID  { get; set; }
+
+       [Key]
+       [DataMember]
+       public string CB_ID  { get; set; }
    }
 
 }

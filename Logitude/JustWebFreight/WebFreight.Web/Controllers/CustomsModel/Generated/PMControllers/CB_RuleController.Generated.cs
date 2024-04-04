@@ -51,7 +51,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
     {
 	  
        
-        public HttpResponseMessage GetSingle(string id)
+        public HttpResponseMessage GetSingle(string cb_id)
         {
 		  try
             {
@@ -63,7 +63,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
                 CB_RuleQueryService cB_RuleQuery = new CB_RuleQueryService(MyContext);
 				cB_RuleQuery.InitializeSettings();
-                CB_RulePM cB_RulePM = cB_RuleQuery.GetSingle(id,true,false);
+                CB_RulePM cB_RulePM = cB_RuleQuery.GetSingle(cb_id,true,false);
 
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
             

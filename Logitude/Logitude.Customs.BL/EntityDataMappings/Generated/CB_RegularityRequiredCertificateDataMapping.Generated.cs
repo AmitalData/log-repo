@@ -28,7 +28,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         Number, 
 	         TextualCondition, 
 	         TrNumber, 
-	         AuthorityID,
+	         AuthorityID, 
+	         CB_ID,
 	      }
 
 
@@ -41,7 +42,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         Number, 
 	         TextualCondition, 
 	         TrNumber, 
-	         AuthorityID,
+	         AuthorityID, 
+	         CB_ID,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -50,6 +52,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	    public void PMToPOCO(CB_RegularityRequiredCertificatePM entityPM, CB_RegularityRequiredCertificate entityPOCO)
         {
 			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ID))
+            {
+				entityPOCO.ID = entityPM.ID;
+			}
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RegularityInceptionID))
             {
 				entityPOCO.RegularityInceptionID = entityPM.RegularityInceptionID;
@@ -119,12 +126,22 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.AuthorityID = entityPOCO.AuthorityID;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CB_ID))
+            {
+					entityPM.CB_ID = entityPOCO.CB_ID;
+            }
+
 		}
 
 		public void PMToOldPM(CB_RegularityRequiredCertificatePM entityPM, CB_RegularityRequiredCertificatePM oldEntityPM)
         {
 		     oldEntityPM.ChangedProperties.Clear();
 			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ID))
+            {
+                oldEntityPM.ID = entityPM.ID;
+            }
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RegularityInceptionID))
             {
                 oldEntityPM.RegularityInceptionID = entityPM.RegularityInceptionID;

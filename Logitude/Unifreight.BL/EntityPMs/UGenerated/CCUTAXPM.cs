@@ -1,4 +1,6 @@
 ﻿using Logitude.Server.Tools;
+using System;
+
 namespace Unifreight.BL.EntityPMs
 {
     public partial class CCUTAXPM : EntityPM
@@ -36,5 +38,10 @@ namespace Unifreight.BL.EntityPMs
         public string PRATMEHESN { get; set; }
 
         public string TAXTYPEN { get; set; }
+        public int Tenant { get; set; }
+
+        public bool IS_SYNCH { get; set; }
+
+        public DateTime? LAST_UPDATE_DT { get; set; }
     }
 }

@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CB_TradeAgreementHistoryUpdateClass
    {  		
-		public const string HashString = "5144e81a3dd006ffaef4362c05356c5d";
+		public const string HashString = "d3d0b0ccfd15918940d5d55c596d516a";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -104,8 +104,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasFiltersMenu =  false,
 			      				    IsEditable =  false,
 			      				    IsNewWizard =  false,
-			      				    LookUp1 =  "ID",
-			      				    LookUp2 =  "ID",
+			      				    LookUp1 =  "CB_ID",
+			      				    LookUp2 =  "CB_ID",
 			      				    KeyPropertyPath =  "ID",
 			      				    AutoCompleteSearchWindow =  false,
 			      				    IsClosed =  false,
@@ -128,7 +128,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "גרסת הסכם סחר",
 			      				    DefaultText =  "Trade Agreement Details History",
-			      				    Code =  "f18f",
+			      				    Code =  "3531",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -533,8 +533,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "TradeAgreementID",
 					  						ObjectTableName =  "Customs.CB_TradeAgreementHistory",
-					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "CB_TradeAgreement",
+					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,

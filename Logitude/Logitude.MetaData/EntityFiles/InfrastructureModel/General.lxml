@@ -35,7 +35,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;280b&quot;"
+  Code="&quot;f1d1&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -5105,6 +5105,24 @@
       DefaultText="&quot;Logs&quot;"
       LocalDefaultText="&quot;&quot;"
       TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.O.UpdateFailed&quot;"
+      DefaultText="&quot;Update failed&quot;"
+      LocalDefaultText="&quot;עידכון נכשל&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.O.AddFailed&quot;"
+      DefaultText="&quot;Add Failed&quot;"
+      LocalDefaultText="&quot;הוספה נכשלה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.O.ClientAPIAlreadyExists&quot;"
+      DefaultText="&quot;Client API already exists&quot;"
+      LocalDefaultText="&quot;Client API כבר קיים&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>

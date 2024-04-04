@@ -50,7 +50,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 		
 		protected override EntityKeyFields GetKeys(CB_CustomsBookAdditionPM entityPM)
         {
-            CB_CustomsBookAdditionKeys entityKeys = new CB_CustomsBookAdditionKeys() { ID = entityPM.ID };
+            CB_CustomsBookAdditionKeys entityKeys = new CB_CustomsBookAdditionKeys() { CB_ID = entityPM.CB_ID };
             return entityKeys;
         }
 

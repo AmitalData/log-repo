@@ -41,6 +41,7 @@ export class ClientItemsTabComponent extends BaseComponent {
     private myService: ClientItemListService = new ClientItemListService();;
     public ItemsList: ObservableCollection;
     public filters = new ApiQueryFilters();
+    public ClientCode : string;
     constructor(private _EntityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
         super();
         this.EntityResourceService.getEntityResourceByTableName("Customs.ClientItem").subscribe((response: any) => {
@@ -55,13 +56,13 @@ export class ClientItemsTabComponent extends BaseComponent {
     LoadDate() {
 
         this.ItemsList = new ObservableCollection([]);
-
+        let Code = this.entityPM?.Code ?? this.ClientCode;
 
         this.filters.PageIndex = 0;
         this.filters.PageSize = 100;
 
         this.filters.addAdditionalFilter("Tenant", SessionLocator.Tenant, null, null, "Equals", false, false, false, "number");
-        this.filters.addAdditionalFilter("ClientCode", this.entityPM.Code, null, null, "Contains", false, false, false, "string");
+        this.filters.addAdditionalFilter("ClientCode", Code, null, null, "Contains", false, false, false, "string");
 
 
         this.myService.getByFilters(this.filters).subscribe((myResponse: ServiceResponse) => {
@@ -89,6 +90,10 @@ export class ClientItemsTabComponent extends BaseComponent {
 
             this.entityPM = args.EntityPM;
             this.Parent = args.Parent;
+            if(args?.isFromSupplierInvoice){
+                this.ClientCode = args.ClientCode;
+                this.LoadDate();
+            }
         }
     }
 
@@ -102,7 +107,7 @@ export class ClientItemsTabComponent extends BaseComponent {
     public SearchFilterChangedEvent: any;
 
     TextChanged(searchText) {
-        
+
         if (AppTool.IsNullOrEmpty(searchText))
             this.LoadDate();
         else {
@@ -113,7 +118,7 @@ export class ClientItemsTabComponent extends BaseComponent {
             TempItemList = TempItemList.filter(f => f.ClassificationCode?.toUpperCase().includes(searchText?.toUpperCase().toString()) || f.ItemCode?.toUpperCase().includes(searchText?.toUpperCase().toString()));
 
             this.ItemsList.InsertCollection(TempItemList);
-           
+
         }
 
     }

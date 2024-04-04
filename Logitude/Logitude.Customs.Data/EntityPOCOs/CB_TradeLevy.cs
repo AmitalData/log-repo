@@ -18,9 +18,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
     {
 	 string dbms;
 
-        [Key]
-        [Column("ID")]
-	    public string ID { get; set; }
+           [Column("ID")]
+	    public int ID { get; set; }
         [Column("CreateDate")]
 	    public DateTime CreateDate { get; set; }
         [Column("UpdateDate")]
@@ -48,11 +47,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string TradeLevyStatusID { get; set; }
 	      
         public virtual TradeLevyStatus TradeLevyStatusCode { get; set; }
-        [ForeignKey("ComputationMethodData")]
         [Column("ComputationMethodDataID")]
-	    public string ComputationMethodDataID { get; set; }
-	      
-        public virtual CB_ComputationMethodData ComputationMethodData { get; set; }
+	    public int? ComputationMethodDataID { get; set; }
         [ForeignKey("LevyTrustCode")]
         [Column("LevyTrustID")]
 	    public string LevyTrustID { get; set; }
@@ -63,6 +59,9 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string ParagraphTypeID { get; set; }
 	      
         public virtual ParagraphType ParagraphTypeCode { get; set; }
+     [Key]
+        [Column("CB_ID")]
+	    public string CB_ID { get; set; }
     }
 }
 	 

@@ -6,10 +6,8 @@
   Module="Customs">
   <Column
     Name="ID"
-    Type="varchar"
-    Size="15">
+    Type="int">
     <Constraints
-      PrimaryKey="true"
       Nullable="false" />
   </Column>
   <Column
@@ -91,10 +89,9 @@
   </Column>
   <Column
     Name="QuotaID"
-    Type="varchar"
-    Size="15">
+    Type="int">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="ChangeRequestTypePriority"
@@ -124,6 +121,14 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="CB_ID"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="EntityStatusID"
     ReferencedTable="CustomsEntityStatuses"
@@ -148,11 +153,6 @@
     ForeignKeyColumn="RenewalMethodID"
     ReferencedTable="RenewalMethods"
     ReferencedColumn="Code"
-    ReferencedTableSchema="Customs" />
-  <Relation
-    ForeignKeyColumn="QuotaID"
-    ReferencedTable="CB_Quotas"
-    ReferencedColumn="ID"
     ReferencedTableSchema="Customs" />
   <Relation
     ForeignKeyColumn="PerYearFrequency"

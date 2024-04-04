@@ -51,7 +51,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
     {
 	  
        
-        public HttpResponseMessage GetSingle(string id)
+        public HttpResponseMessage GetSingle(string cb_id)
         {
 		  try
             {
@@ -63,7 +63,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
                 CB_CustomsBookAdditionQueryService cB_CustomsBookAdditionQuery = new CB_CustomsBookAdditionQueryService(MyContext);
 				cB_CustomsBookAdditionQuery.InitializeSettings();
-                CB_CustomsBookAdditionPM cB_CustomsBookAdditionPM = cB_CustomsBookAdditionQuery.GetSingle(id,true,false);
+                CB_CustomsBookAdditionPM cB_CustomsBookAdditionPM = cB_CustomsBookAdditionQuery.GetSingle(cb_id,true,false);
 
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
             

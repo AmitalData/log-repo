@@ -1,0 +1,19 @@
+:host ::ng-deep .user-select .TextTrimming {
+    user-select: text !important;
+}
+
+.subTitle {
+    color: #4b90cb;
+    font-size: 14px;
+    padding-left: 5px;
+}
+
+.Button {
+    display: inline-block;
+    width: 50px;
+    margin: 0 5px;
+}
+
+.margin-vertical {
+    margin: 15px 0;
+}

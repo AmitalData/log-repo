@@ -8,21 +8,22 @@
 
 export class CB_RuleDetailsHistoryList {
    
-	ID: string;
+	ID: number;
 	CreateDate: Date;
 	UpdateDate: Date;
 	Title: string;
 	StartDate: Date;
 	EndDate: Date;
 	EntityStatusID: string;
-	RuleID: string;
+	RuleID: number;
 	Rules: string;
 	EnglishRules: string;
 	OrderinalPostion: number;
-	Parent_RuleDetailsHistoryID: string;
+	Parent_RuleDetailsHistoryID: number;
 	ChangeRequestTypePriority: number;
 	RulesRTF: string;
 	EnglishRulesRTF: string;
+	CB_ID: string;
 	
 }
  

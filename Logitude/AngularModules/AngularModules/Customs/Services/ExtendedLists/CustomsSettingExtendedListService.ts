@@ -105,12 +105,12 @@ export class CustomsSettingExtendedListService {
         });
     }
 
-    GetSincroOption(tenant: number, SincroScreen: string): any {
+    GetSincroOption(tenant: number, SincroScreen: string,objectTable:string): any {
         var authHeader = new Headers();
         authHeader.append('Token', SessionInfo.Token);
 
         return defer(() => {
-            return this._http.get(this._apiUrl + '/GetSincroOption/?SincroScreen=' + SincroScreen.toString() + '&tenant=' + tenant.toString() , ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(this._apiUrl + '/GetSincroOption/?SincroScreen=' + SincroScreen.toString() + '&tenant=' + tenant.toString()+'&objectTable=' + objectTable , ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                     var obj = response;
 
 

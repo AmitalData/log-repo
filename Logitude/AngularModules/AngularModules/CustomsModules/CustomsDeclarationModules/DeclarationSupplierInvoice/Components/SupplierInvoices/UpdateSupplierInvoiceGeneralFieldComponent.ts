@@ -8,6 +8,7 @@ import { SupplierInvoicePM } from '../../../../../Customs/EntityPMs/SupplierInvo
 
 import { TextCodeTranslator } from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { CustomsCountryPM } from '../../../../../Customs/EntityPMs/CustomsCountryPM';
+import { FeatureLocator } from 'Infrastructure/Utilities/FeatureLocator';
 
 
 @Component({
@@ -29,12 +30,15 @@ export class UpdateSupplierInvoiceGeneralFieldComponent extends BaseComponent {
     public ValidationErrorsList: string[] = [];
     IsDisplayOnly: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    public hasOcr: boolean;
+
     constructor() {
         super();
         this.ItemsSource = new ObservableCollection([]);
         this.UIProperties.SetEnabled("FromNumber", null, false);
         this.UIProperties.SetEnabled("ToNumber", null, false);
         this.IsAddButtonEnabled = false;
+        this.hasOcr = FeatureLocator.HasFeaturePermession("Customs.Declaration", "OCR");
     }
     SetWindowArgs(args: any) {
         if (!AppTool.IsNullOrEmpty(args)) {

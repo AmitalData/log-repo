@@ -11,7 +11,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
     /// There are no comments for Unifreight.Data.AmitalModel.CCUCAR in the schema.
     /// </summary>
     [System.Runtime.Serialization.DataContractAttribute(IsReference = true)]
-    public partial class CCUCAR : INotifyPropertyChanged
+    public partial class CCUCAR : UNIFBASICPOCO, INotifyPropertyChanged
     {
 
         public CCUCAR()

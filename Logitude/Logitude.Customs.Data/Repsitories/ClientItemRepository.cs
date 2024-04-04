@@ -28,6 +28,13 @@ namespace Logitude.Customs.Data.Repsitories
                     select a).FirstOrDefault();
         }
 
+        public ClientItem GetSingleWithTenantDescription(string itemDescription, string clientcode, int tenant)
+        {
+            return (from a in context.ClientItems
+                    where a.ItemDescription == itemDescription && a.ClientCode == clientcode && a.Tenant == tenant
+                    select a).FirstOrDefault();
+        }
+
     }
 
 }

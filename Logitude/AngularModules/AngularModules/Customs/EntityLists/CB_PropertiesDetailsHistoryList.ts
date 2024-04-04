@@ -8,10 +8,10 @@
 
 export class CB_PropertiesDetailsHistoryList {
    
-	ID: string;
+	ID: number;
 	CreateDate: Date;
 	UpdateDate: Date;
-	CustomsItemID: string;
+	CustomsItemID: number;
 	StartDate: Date;
 	EndDate: Date;
 	EntityStatusID: string;
@@ -39,6 +39,7 @@ export class CB_PropertiesDetailsHistoryList {
 	Discount_CustomsItemGroupTypeID: string;
 	IsCarDiscount: boolean;
 	DiscountRegularityRequirementType: string;
+	CB_ID: string;
 	
 }
  

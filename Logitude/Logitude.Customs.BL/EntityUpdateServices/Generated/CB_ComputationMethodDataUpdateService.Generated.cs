@@ -50,7 +50,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 		
 		protected override EntityKeyFields GetKeys(CB_ComputationMethodDataPM entityPM)
         {
-            CB_ComputationMethodDataKeys entityKeys = new CB_ComputationMethodDataKeys() { ID = entityPM.ID };
+            CB_ComputationMethodDataKeys entityKeys = new CB_ComputationMethodDataKeys() { CB_ID = entityPM.CB_ID };
             return entityKeys;
         }
 

@@ -50,7 +50,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 		
 		protected override EntityKeyFields GetKeys(CB_TradeLevyPM entityPM)
         {
-            CB_TradeLevyKeys entityKeys = new CB_TradeLevyKeys() { ID = entityPM.ID };
+            CB_TradeLevyKeys entityKeys = new CB_TradeLevyKeys() { CB_ID = entityPM.CB_ID };
             return entityKeys;
         }
 

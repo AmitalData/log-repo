@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Logitude.Customs.Def.EntityQueryServicesExt;
+using Logitude.Customs.BL.Messaging.Customs.SignQueueBL;
 
 namespace Logitude.Customs.BL.EntityQueryServices
 {
@@ -164,6 +165,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
             }
             var setting = this.GetSettingByTenantN(tenant);
 
+            var signQueueHSMService = new SignQueueHSMService();
+            bool hasValidHsm = (bool)(signQueueHSMService.GetHSMAllCertificates(tenant, false)?.Any(i => i.IsOk == true));
 
             bool fromEnvSetting =
                 !string.IsNullOrEmpty(environmentSettingPM.HSMActiveCertUrl) &&
@@ -175,7 +178,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             bool fromTenantSetting =
                 !string.IsNullOrEmpty(setting.HSMCompanyId) &&
                 !string.IsNullOrEmpty(setting.HSMToken);
-            return fromEnvSetting && fromTenantSetting;
+            return fromEnvSetting && fromTenantSetting && hasValidHsm;
         }
 
         public CustomsSettingPM GetSingleByTenant(int tenant)

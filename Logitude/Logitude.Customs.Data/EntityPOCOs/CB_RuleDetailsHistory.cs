@@ -18,9 +18,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
     {
 	 string dbms;
 
-        [Key]
-        [Column("ID")]
-	    public string ID { get; set; }
+           [Column("ID")]
+	    public int ID { get; set; }
         [Column("CreateDate")]
 	    public DateTime CreateDate { get; set; }
         [Column("UpdateDate")]
@@ -36,28 +35,25 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string EntityStatusID { get; set; }
 	      
         public virtual CustomsEntityStatus EntityStatusCode { get; set; }
-        [ForeignKey("Rule")]
         [Column("RuleID")]
-	    public string RuleID { get; set; }
-	      
-        public virtual CB_Rule Rule { get; set; }
+	    public int RuleID { get; set; }
         [Column("Rules")]
 	    public string Rules { get; set; }
         [Column("EnglishRules")]
 	    public string EnglishRules { get; set; }
         [Column("OrderinalPostion")]
 	    public int OrderinalPostion { get; set; }
-        [ForeignKey("ParentRuleDetailsHistoryID")]
         [Column("Parent_RuleDetailsHistoryID")]
-	    public string Parent_RuleDetailsHistoryID { get; set; }
-	      
-        public virtual CB_RuleDetailsHistory ParentRuleDetailsHistoryID { get; set; }
+	    public int? Parent_RuleDetailsHistoryID { get; set; }
         [Column("ChangeRequestTypePriority")]
 	    public int ChangeRequestTypePriority { get; set; }
         [Column("RulesRTF")]
 	    public string RulesRTF { get; set; }
         [Column("EnglishRulesRTF")]
 	    public string EnglishRulesRTF { get; set; }
+     [Key]
+        [Column("CB_ID")]
+	    public string CB_ID { get; set; }
     }
 }
 	 

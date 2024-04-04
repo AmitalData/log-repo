@@ -12,16 +12,18 @@ namespace Logitude.Customs.Data.EntityLists
    [DataContract]
    public partial class CB_QuotaList
    {
-   
-       [Key]
-       [DataMember]
-       public string ID  { get; set; }
+          [DataMember]
+       public int ID  { get; set; }
        [DataMember]
        public DateTime CreateDate  { get; set; }
        [DataMember]
        public DateTime UpdateDate  { get; set; }
        [DataMember]
        public string Title  { get; set; }
+
+       [Key]
+       [DataMember]
+       public string CB_ID  { get; set; }
    }
 
 }

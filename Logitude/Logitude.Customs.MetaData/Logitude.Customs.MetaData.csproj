@@ -164,6 +164,7 @@
     <None Include="DBScripts\Post\20220905_UpdateDeclarationPhysicalCheckAfter.sxml" />
     <None Include="DBScripts\Post\202212281351_UpdateBothINTERFACEMANAGEMENTS.sxml" />
     <None Include="DBScripts\Post\202301291730_SetDeclarationToDisplayDeclarationReferantData.sxml" />
+    <None Include="DBScripts\Post\202403171200_CreateIndexOnCourierAndDeclaration.sxml" />
     <None Include="DBScripts\Pre\202309071150_DropColumnJsonData_OcrDocument.sxml" />
     <None Include="DBScripts\Pre\202211290910_DropExportStorageShipCode.sxml" />
     <None Include="DBScripts\Pre\20230310_DropDeclarationStatusTable.sxml" />
@@ -398,6 +399,7 @@
     <None Include="DBTables\CustomsItem.dxml" />
     <None Include="DBTables\CustomsItemCategory.dxml" />
     <None Include="DBTables\CustomsItemDetailsHistory.dxml" />
+    <None Include="DBTables\CustomsItemGroup.dxml" />
     <None Include="DBTables\CustomsItemHierarchicLocation.dxml" />
     <None Include="DBTables\CustomsPartnerFtp.dxml" />
     <None Include="DBTables\CustomsPartnersItem.dxml" />
@@ -451,6 +453,7 @@
     <None Include="DBTables\DepositCustomerActivity.dxml" />
     <None Include="DBTables\DepositEssenceType.dxml" />
     <None Include="DBTables\DepositFileType.dxml" />
+    <None Include="DBTables\DiscountTypeRegulation.dxml" />
     <None Include="DBTables\DocumentRejectType.dxml" />
     <None Include="DBTables\DocumentTypeCustomsData.dxml" />
     <None Include="DBTables\EntitlementType.dxml" />
@@ -576,6 +579,7 @@
     <None Include="DBTables\RegularityRequirementWarning.dxml" />
     <None Include="DBTables\RegularitySource.dxml" />
     <None Include="DBTables\ReleaseMessageType.dxml" />
+    <None Include="DBTables\RemarksClassification.dxml" />
     <None Include="DBTables\RenewalMethod.dxml" />
     <None Include="DBTables\RequestReasonCodeEnum.dxml" />
     <None Include="DBTables\RequestStatus.dxml" />
@@ -670,6 +674,8 @@
     <None Include="EntityFiles\CB_RegularityRequiredCertificate.lxml" />
     <None Include="EntityFiles\CB_TradeLevy.lxml" />
     <None Include="EntityFiles\CB_Vendor.lxml" />
+    <None Include="EntityFiles\DiscountTypeRegulation.lxml" />
+    <None Include="EntityFiles\CustomsItemGroup.lxml" />
     <None Include="EntityFiles\RegularityRequirementWarning.lxml" />
     <None Include="EntityFiles\CB_ComputationMethodData.lxml" />
     <None Include="EntityFiles\CB_CountriesExclusion.lxml" />
@@ -702,6 +708,7 @@
     <None Include="EntityFiles\ChangeType.lxml" />
     <None Include="EntityFiles\EntryExitType.lxml" />
     <None Include="EntityFiles\CB_RuleDetailsHistory.lxml" />
+    <None Include="EntityFiles\RemarksClassification.lxml" />
     <None Include="EntityFiles\TradeAgreementDetailsHistory_777.lxml" />
     <None Include="EntityFiles\TradeLevyStatus.lxml" />
     <None Include="EntityFiles\RegularityPublication.lxml" />

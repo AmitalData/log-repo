@@ -471,16 +471,31 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                             supplierInvoiceItemPM.OriginCountryCode = CustomsCountry.Code;
                     }
-                    if (supplierInvoiceItem.TryGetValue("Item_unit", out string ItemUnit))
+                    if (supplierInvoiceItem.TryGetValue("ITEM_HS_CODE", out string itemCode))
                     {
-                        MeasurmentUnitQueryService measurmentUnitQueryService = new MeasurmentUnitQueryService(tenant);
-                        MeasurmentUnitPM MeasurmentUnit = measurmentUnitQueryService.GetSingle(ItemUnit, false, true);
-                        if (MeasurmentUnit == null)
-                            invalidValuesRemarks += $" FieldJson: Item_unit, FieldName: InvoiceQuantityType, InvalidValueReceived: {ItemUnit};";
+                        if (itemCode.Length > 11)
+                            supplierInvoiceItemPM.ClassificationCode = itemCode.Substring(0, 11);
                         else
-                            supplierInvoiceItemPM.InvoiceQuantityType = MeasurmentUnit.Code;
+                            supplierInvoiceItemPM.ClassificationCode = itemCode;
+
                     }
-                    
+                    else if(dic.TryGetValue("HS_CODE", out string classificationCode))
+                    {
+                        if (classificationCode.Length > 11)
+                            supplierInvoiceItemPM.ClassificationCode = classificationCode.Substring(0, 11);
+                        else
+                            supplierInvoiceItemPM.ClassificationCode = classificationCode;
+                    }
+                    //if (supplierInvoiceItem.TryGetValue("Item_unit", out string ItemUnit))
+                    //{
+                    //    MeasurmentUnitQueryService measurmentUnitQueryService = new MeasurmentUnitQueryService(tenant);
+                    //    MeasurmentUnitPM MeasurmentUnit = measurmentUnitQueryService.GetSingle(ItemUnit, false, true);
+                    //    if (MeasurmentUnit == null)
+                    //        invalidValuesRemarks += $" FieldJson: Item_unit, FieldName: InvoiceQuantityType, InvalidValueReceived: {ItemUnit};";
+                    //    else
+                    //        supplierInvoiceItemPM.InvoiceQuantityType = MeasurmentUnit.Code;
+                    //}
+
                     if (string.IsNullOrEmpty(supplierInvoiceItemPM.OriginCountryCode) && !string.IsNullOrEmpty(originCountryField))
                     {
                         supplierInvoiceItemPM.OriginCountryCode = originCountryField;

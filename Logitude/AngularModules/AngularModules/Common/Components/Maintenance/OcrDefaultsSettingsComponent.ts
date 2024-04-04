@@ -53,14 +53,39 @@ export class OcrDefaultsSettingsComponent extends BaseComponent {
     public DeclarationPM: DeclarationPM;
     public supplierInvoicePMService = new SupplierInvoicePMService();
     public ItemsSource: ObservableCollection;
-    private claimReasonCodeChecked: boolean = true
-    private transactionNatureCodeChecked: boolean = true
-    private processTypeCodeChecked: boolean = true
-    private buyerRoleCodeChecked: boolean = true
-    private partyRelationshipCodeChecked: boolean = true
-    private accountTypeCodeChecked: boolean = true
+    private claimReasonCodeChecked: boolean = true;
+    private transactionNatureCodeChecked: boolean = true;
+    private processTypeCodeChecked: boolean = true;
+    private buyerRoleCodeChecked: boolean = true;
+    private partyRelationshipCodeChecked: boolean = true;
+    private accountTypeCodeChecked: boolean = true;
+    public IsChecked: boolean = true;
     FIELD_IS_REQUIERD: string;
     public ProcessTypeCodeFilterItems: ApiQueryFilters;
+
+    
+
+    OnAllBtnClicked() {
+        this.IsChecked = true;
+        this.claimReasonCodeChecked = true
+        this.transactionNatureCodeChecked = true
+        this.processTypeCodeChecked = true
+        this.buyerRoleCodeChecked = true
+        this.partyRelationshipCodeChecked = true
+        this.accountTypeCodeChecked= true
+    }
+    
+    OnNoneBtnClicked() {
+        this.IsChecked = false;
+        this.claimReasonCodeChecked = false
+        this.transactionNatureCodeChecked = false
+        this.processTypeCodeChecked = false
+        this.buyerRoleCodeChecked = false
+        this.partyRelationshipCodeChecked = false
+        this.accountTypeCodeChecked= false
+    }
+
+
 
     constructor() {
         super();

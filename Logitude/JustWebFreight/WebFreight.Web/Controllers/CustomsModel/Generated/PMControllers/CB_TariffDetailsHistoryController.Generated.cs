@@ -51,7 +51,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
     {
 	  
        
-        public HttpResponseMessage GetSingle(string id)
+        public HttpResponseMessage GetSingle(string cb_id)
         {
 		  try
             {
@@ -63,7 +63,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
                 CB_TariffDetailsHistoryQueryService cB_TariffDetailsHistoryQuery = new CB_TariffDetailsHistoryQueryService(MyContext);
 				cB_TariffDetailsHistoryQuery.InitializeSettings();
-                CB_TariffDetailsHistoryPM cB_TariffDetailsHistoryPM = cB_TariffDetailsHistoryQuery.GetSingle(id,true,false);
+                CB_TariffDetailsHistoryPM cB_TariffDetailsHistoryPM = cB_TariffDetailsHistoryQuery.GetSingle(cb_id,true,false);
 
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
             

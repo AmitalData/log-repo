@@ -28,10 +28,10 @@ namespace Logitude.Customs.Data.Repsitories
 
 		 
 		
-		public  CB_Vendor GetSingle(string id)
+		public  CB_Vendor GetSingle(string cb_id)
         {
             return (from a in context.CB_Vendors
-                    where a.ID == id 
+                    where a.CB_ID == cb_id 
                     select a).FirstOrDefault();
         }
 
@@ -45,7 +45,7 @@ namespace Logitude.Customs.Data.Repsitories
         {
             CB_VendorKeys keys = entityKeys as CB_VendorKeys;
             return (from a in context.CB_Vendors
-                    where a.ID == keys.ID
+                    where a.CB_ID == keys.CB_ID
                     select a).FirstOrDefault();
         }
 		         

@@ -18,5 +18,11 @@ namespace Unifreight.BL.EntityPMs
         public int? QUANTITY { get; set; }
 
         public string TSRUFANO { get; set; }
+
+        public int Tenant { get; set; }
+
+        public bool IS_SYNCH { get; set; }
+
+        public DateTime? LAST_UPDATE_DT { get; set; }
     }
 }

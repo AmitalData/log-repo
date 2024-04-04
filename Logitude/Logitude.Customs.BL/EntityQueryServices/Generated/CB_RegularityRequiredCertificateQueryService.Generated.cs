@@ -48,9 +48,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
             mapping = new CB_RegularityRequiredCertificateDataMapping();
         }
 		 
-		public  CB_RegularityRequiredCertificatePM GetSingle(string id,bool getComposition, bool getFromCache)
+		public  CB_RegularityRequiredCertificatePM GetSingle(string cb_id,bool getComposition, bool getFromCache)
         {
-             EntityKeys = new CB_RegularityRequiredCertificateKeys(){ ID = id };
+             EntityKeys = new CB_RegularityRequiredCertificateKeys(){ CB_ID = cb_id };
 
 			 return base.GetSingle(EntityKeys, getComposition, getFromCache);
         }
@@ -58,7 +58,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
        
 	    protected override EntityKeyFields GetKeys(CB_RegularityRequiredCertificate entityPOCO)
         {
-            CB_RegularityRequiredCertificateKeys entityKeys = new CB_RegularityRequiredCertificateKeys() { ID = entityPOCO.ID,  };
+            CB_RegularityRequiredCertificateKeys entityKeys = new CB_RegularityRequiredCertificateKeys() { CB_ID = entityPOCO.CB_ID,  };
             return entityKeys;
         }
      

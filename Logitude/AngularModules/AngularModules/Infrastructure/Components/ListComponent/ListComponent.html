@@ -170,8 +170,8 @@
                         </td>
 
                         <td style="width: 1px;" *ngIf="HasPermition == true">
-                            <span class="Counter" *ngIf="dataSource.rowCount > 1000" style="font-size: 18px; color: #1B90CB;">1000+ {{Title}}</span>
-                            <span class="Counter" *ngIf="dataSource.rowCount <= 1000" style="font-size: 18px; color: #1B90CB;">{{dataSource.rowCount}} {{Title}}</span>
+                            <span class="Counter" *ngIf="CustomGetTotalCount == null" style="font-size: 18px; color: #1B90CB;">{{ dataSource.rowCount > 1000? "1000+": dataSource.rowCount }} {{Title}}</span>
+                            <span class="Counter" *ngIf="CustomGetTotalCount != null" style="font-size: 18px; color: #1B90CB;">{{ CustomGetTotalCount > 1000? "1000+": CustomGetTotalCount }} {{Title}}</span>
                         </td>
 
                         <td style="width:3px" *ngIf="IsEditBIReportVisible">
@@ -309,10 +309,10 @@
                         <td *ngIf="IsPhysicalCheckObjectTable || IsLogisticActionRequestObjectTable" style="width: 100px;">
                             <div LocationDirective Code="MNO"></div>
                         </td>
-                        <td style="width:200px;vertical-align:central">
+                        <td *ngIf="IsShowAddReportFromLibraryLink" style="width:200px;vertical-align:central">
 
                             <div style="width:200px;height:20px">
-                                <p *ngIf="IsShowAddReportFromLibraryLink" (click)="LinkAddReportFromLibraryClick()" class="CustomLink" style="font-size:12px;float:right;width:200px;height:20px">Add Report From Library</p>
+                                <p (click)="LinkAddReportFromLibraryClick()" class="CustomLink" style="font-size:12px;float:right;width:200px;height:20px">Add Report From Library</p>
 
                             </div>
 
@@ -328,7 +328,7 @@
                             <div></div>
                         </td>
 
-                        <td *ngIf="HasCustomsFilterMenu" style="width: 700px; left:50PX;">
+                        <td *ngIf="HasCustomsFilterMenu" style="left:50PX;">
                             <div LocationDirective Code="MNH"></div>
                         </td>
                         <td style="width: 1px;" *ngIf="IsNavigateButtonVisible">

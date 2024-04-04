@@ -53,5 +53,11 @@ namespace Unifreight.BL.EntityPMs
         public long? TOTALPAYTAX { get; set; }
         [DataMember]
         public string TRANSIMPORTERNAME { get; set; }
+
+        public int Tenant { get; set; }
+
+        public bool IS_SYNCH { get; set; }
+
+        public DateTime? LAST_UPDATE_DT { get; set; }
     }
 }

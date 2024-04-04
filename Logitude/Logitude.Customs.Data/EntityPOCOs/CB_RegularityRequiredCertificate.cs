@@ -18,14 +18,10 @@ namespace Logitude.Customs.Data.EntityPOCOs
     {
 	 string dbms;
 
-        [Key]
-        [Column("ID")]
-	    public string ID { get; set; }
-        [ForeignKey("RegularityInception")]
+           [Column("ID")]
+	    public int ID { get; set; }
         [Column("RegularityInceptionID")]
-	    public string RegularityInceptionID { get; set; }
-	      
-        public virtual CB_RegularityInception RegularityInception { get; set; }
+	    public int RegularityInceptionID { get; set; }
         [ForeignKey("ConfirmationTypeCode")]
         [Column("ConfirmationTypeID")]
 	    public string ConfirmationTypeID { get; set; }
@@ -42,6 +38,9 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string AuthorityID { get; set; }
 	      
         public virtual Authority AuthorityCode { get; set; }
+     [Key]
+        [Column("CB_ID")]
+	    public string CB_ID { get; set; }
     }
 }
 	 

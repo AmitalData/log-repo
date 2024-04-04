@@ -148,7 +148,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         }
                     }
 
-                    if (doUpdateCustomsItem )
+                    if (doUpdateCustomsItem && (mehesCustomsItemRow.isDiscountCode == true || currentDBListCustomsItemRow.FullClassification.Contains("-")))
                     {
                         currentDBListCustomsItemRow.FullClassification = mehesCustomsItemRow.fullClassification.Split('/')[0]?? mehesCustomsItemRow.fullClassification;
                         currentDBListCustomsItemRow.CustomsItemHierarchicLocationID = mehesCustomsItemRow.HierarchicLocationID;
@@ -162,7 +162,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             logContext.SaveChanges();
                        
                     }
-                    if(doUpdateCustomsItemDetailsHistory)
+                    if(doUpdateCustomsItemDetailsHistory && (mehesCustomsItemRow.isDiscountCode == true || currentDBListCustomsItemRow.FullClassification.Contains("-")))
                      {
                         currentDBListCustomsItemDetailsHistoryRow.CustomsItemID = mehesCustomsItemRow.ID.ToString();
                         currentDBListCustomsItemDetailsHistoryRow.Title = mehesCustomsItemRow.GoodsDescription;
@@ -175,7 +175,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                     }
 
-                    if (doUpdatePropertiesDetailsHistory)
+                    if (doUpdatePropertiesDetailsHistory && (mehesCustomsItemRow.isDiscountCode == true || currentDBListCustomsItemRow.FullClassification.Contains("-")))
                     {
                         currentDBListPropertiesDetailsHistoryRow.CustomsItemID = mehesCustomsItemRow.ID.ToString();
                         currentDBListPropertiesDetailsHistoryRow.StartDate= DateTime.Today.AddDays(-30);

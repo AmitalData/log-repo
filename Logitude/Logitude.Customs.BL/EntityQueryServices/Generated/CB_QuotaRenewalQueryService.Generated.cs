@@ -48,9 +48,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
             mapping = new CB_QuotaRenewalDataMapping();
         }
 		 
-		public  CB_QuotaRenewalPM GetSingle(string id,bool getComposition, bool getFromCache)
+		public  CB_QuotaRenewalPM GetSingle(string cb_id,bool getComposition, bool getFromCache)
         {
-             EntityKeys = new CB_QuotaRenewalKeys(){ ID = id };
+             EntityKeys = new CB_QuotaRenewalKeys(){ CB_ID = cb_id };
 
 			 return base.GetSingle(EntityKeys, getComposition, getFromCache);
         }
@@ -58,7 +58,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
        
 	    protected override EntityKeyFields GetKeys(CB_QuotaRenewal entityPOCO)
         {
-            CB_QuotaRenewalKeys entityKeys = new CB_QuotaRenewalKeys() { ID = entityPOCO.ID,  };
+            CB_QuotaRenewalKeys entityKeys = new CB_QuotaRenewalKeys() { CB_ID = entityPOCO.CB_ID,  };
             return entityKeys;
         }
      

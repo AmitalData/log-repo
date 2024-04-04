@@ -26,7 +26,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ChangeTypeID, 
 	         CustomsItemDetailsHistoryID, 
 	         Connect_CustItemDetailsHistID, 
-	         CreateDate,
+	         CreateDate, 
+	         CB_ID,
 	      }
 
 
@@ -37,7 +38,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ChangeTypeID, 
 	         CustomsItemDetailsHistoryID, 
 	         Connect_CustItemDetailsHistID, 
-	         CreateDate,
+	         CreateDate, 
+	         CB_ID,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -46,6 +48,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	    public void PMToPOCO(CB_CustomsItemLinkagePM entityPM, CB_CustomsItemLinkage entityPOCO)
         {
 			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ID))
+            {
+				entityPOCO.ID = entityPM.ID;
+			}
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ChangeTypeID))
             {
 				entityPOCO.ChangeTypeID = entityPM.ChangeTypeID;
@@ -95,12 +102,22 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.CreateDate = entityPOCO.CreateDate;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CB_ID))
+            {
+					entityPM.CB_ID = entityPOCO.CB_ID;
+            }
+
 		}
 
 		public void PMToOldPM(CB_CustomsItemLinkagePM entityPM, CB_CustomsItemLinkagePM oldEntityPM)
         {
 		     oldEntityPM.ChangedProperties.Clear();
 			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ID))
+            {
+                oldEntityPM.ID = entityPM.ID;
+            }
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ChangeTypeID))
             {
                 oldEntityPM.ChangeTypeID = entityPM.ChangeTypeID;

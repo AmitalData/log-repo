@@ -79,6 +79,7 @@ import { ClientIndicationPM } from 'Customs/EntityPMs/ClientIndicationPM';
 import { ClientIndicationListService } from 'Customs/Services/StandardLists/ClientIndicationListService';
 import { ClientItemExtendedPMService } from 'Customs/Services/ExtendedPMs/ClientItemExtendedPMService';
 import { ClientItemPM } from 'Customs/EntityPMs/ClientItemPM';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -1613,6 +1614,94 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
     
     }
 
+    UpdateGroupingAccountLines(){
+        let GroupedItemsSource = new ObservableCollection([]);        
+        let GroupedResult: string = `${TextCodeTranslator.Translate("Customs.Declaration.O.GroupedAccountLinesResult")}: \n`; 
+        
+        this.ItemsSource.Collection.forEach(item => {
+            AppTool.IsNullOrEmpty(item.ClassificationCode) ? item.ClassificationCode = "" : item.ClassificationCode;
+
+            if(GroupedItemsSource.Collection.filter(j=> j.ClassificationCode == item.entityPM.ClassificationCode && item.OriginCountryCode == j.OriginCountryCode).length == 0){
+                let filterItems: SupplierInvoiceItemLine[] = this.ItemsSource.Collection.filter(i => i.ClassificationCode == item.ClassificationCode && item.OriginCountryCode == i.OriginCountryCode);
+                if(filterItems && filterItems.length > 1){
+                    let GroupedItem:SupplierInvoiceItemPM = item.entityPM;
+                    if (!AppTool.IsNullOrEmpty(GroupedItem.ClassificationCode) && !AppTool.IsNullOrEmpty(GroupedItem.OriginCountryCode)) {
+                        GroupedResult += `${filterItems.length}- ${GroupedItem.ClassificationCode} / ${GroupedItem.OriginCountryName} \n`;
+                    }
+                    else if (!AppTool.IsNullOrEmpty(GroupedItem.ClassificationCode)) {
+                        GroupedResult += `${filterItems.length}- ${GroupedItem.ClassificationCode} \n`;
+                    } 
+                    else if (!AppTool.IsNullOrEmpty(GroupedItem.OriginCountryCode)) {
+                        GroupedResult += `${filterItems.length}- ${GroupedItem.OriginCountryName} \n`;
+                    } 
+                    else {
+                        GroupedResult += `${filterItems.length}- ${TextCodeTranslator.Translate("Customs.Declaration.O.GroupedEmptyLines")} \n`;
+                    }
+                    
+                    GroupedItemsSource.Insert(new SupplierInvoiceItemLine(GroupedItem, this, this.allowExport)); 
+                }
+            }
+        });
+
+        if(GroupedItemsSource.Collection.length == 0) 
+            GroupedResult = `${TextCodeTranslator.Translate("General.B.No")} קובצו ${TextCodeTranslator.Translate("Customs.Declaration.O.GroupedAccountLinesResult")}`;
+        this.openConfirmWindowGroupingAccountLines(GroupedResult); 
+    }
+
+    openConfirmWindowGroupingAccountLines(GroupedResult: string =  "") {
+        var confirm = new ConfirmWindow();
+        confirm.Cancel = true;
+        confirm.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+        confirm.ShowNoButton = true;
+        confirm.Show(GroupedResult);
+        confirm.WindowClosed.subscribe((event: any) => {
+            if (confirm.Yes){
+                this.GroupingAccountLines();
+            } 
+        }); 
+    }
+
+    GroupingAccountLines(){
+        let GroupedItemsSource = new ObservableCollection([]);
+        let GroupedItems: SupplierInvoiceItemPM[] = []; 
+        let sequenceNumeric = 0;
+    
+        this.ItemsSource.Collection.forEach(item => {
+            if(GroupedItemsSource.Collection.filter(j=> j.ClassificationCode == item.entityPM.ClassificationCode && item.OriginCountryCode == j.OriginCountryCode).length == 0){
+                let filterItems: SupplierInvoiceItemLine[] = this.ItemsSource.Collection.filter(i => i.ClassificationCode == item.ClassificationCode && item.OriginCountryCode == i.OriginCountryCode);
+                if(filterItems && filterItems.length > 1){
+                    let GroupedItem:SupplierInvoiceItemPM = item.entityPM;
+                    let invoiceQuantity = 0;
+                    let itemPrice = 0;
+
+                    filterItems.forEach(i => {
+                        invoiceQuantity += AppTool.IsNullOrEmpty(i.entityPM.InvoiceQuantity) ? 0 : i.entityPM.InvoiceQuantity;
+                        itemPrice += AppTool.IsNullOrEmpty(i.entityPM.ItemPrice) ? 0 : i.entityPM.ItemPrice;
+                    });
+
+                    GroupedItem.InvoiceQuantity = invoiceQuantity != 0 ? invoiceQuantity : null;
+                    GroupedItem.ItemPrice = itemPrice != 0 ? itemPrice : null;
+                    GroupedItem.ItemDescription = "";
+                    GroupedItem.ItemCode = "";
+                    GroupedItem.SequenceNumeric = sequenceNumeric += 1;
+                    GroupedItemsSource.Insert(new SupplierInvoiceItemLine(GroupedItem, this, this.allowExport)); 
+                    GroupedItems.push(GroupedItem);  
+                }
+                else{
+                    item.SequenceNumeric = sequenceNumeric += 1;
+                    GroupedItemsSource.Insert(item);  
+                    GroupedItems.push(item.entityPM);   
+                }
+            }
+        });
+
+        if(GroupedItemsSource && GroupedItems){
+            this.ItemsSource = GroupedItemsSource;
+            this.EntityPM.SupplierInvoiceItems = GroupedItems;
+        }
+    }
+
+    
 
     UpdateClicked(type:UpdateOptions){
         let selectedOptionsSettings=this.updateOptionsMap[type];
@@ -1696,11 +1785,17 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
             case 'DutyRegimeProtocolCode': {
                 item.DutyRegimeProtocolCode = args.FinalValue.Code;
                 item.DutyRegimeProtocolLocalName = args.FinalValue.LocalName;
+                if (this.Parent.declarationPM.Direction == "E") {
+                    this.DutyRegimeProtocolCode = item.DutyRegimeProtocolCode;
+                }
                 break;
             }
             case 'TradeAgreementCode': {
                 item.TradeAgreementCode = args.FinalValue.Code;
                 item.TradeAgreementName = args.FinalValue.LocalName;
+                if (this.Parent.declarationPM.Direction == "E") {
+                    this.PreferenceDocumentTypeCode = item.TradeAgreementCode;
+                }
                 break;
             }
         }
@@ -4447,9 +4542,9 @@ export class SupplierInvoiceItemLine extends BaseComponent {
         if (!this.entityPM.ClassificationCode) this.entityPM.ClassificationCode = "";
         if (!this.entityPM.ItemDescription) this.entityPM.ItemDescription = "";
 
-        if (AppTool.IsNullOrEmpty(this.ItemCode)) {
-            return;
-        }
+        // if (AppTool.IsNullOrEmpty(this.ItemCode)) {
+        //     return;
+        // }
         //if (this.Parent.Parent.ItemCode_LocalCache != null && this.Parent.Parent.ItemCode_LocalCache.length > 0) {
         //if (GITITEMCacheService.Instance.ItemCode_LocalCache != null && GITITEMCacheService.Instance.ItemCode_LocalCache.length > 0)
         {
@@ -4532,39 +4627,52 @@ export class SupplierInvoiceItemLine extends BaseComponent {
                 }
             }
             else if (FeatureLocator.HasFeaturePermession("Customs.Declaration", "OCR")) {
-                if (AppTool.IsNullOrEmpty(this.entityPM.ClassificationCode) && !AppTool.IsNullOrEmpty(this.Parent.declarationPM.ExporterImporterCode) && !AppTool.IsNullOrEmpty(this.ItemCode)) {
-                    var clientItemExtendedPMService: ClientItemExtendedPMService = new ClientItemExtendedPMService();
-                    clientItemExtendedPMService.GetClientItemPM(this.ItemCode, this.Parent.declarationPM.ExporterImporterCode, SessionLocator.Tenant)
-                        .subscribe((response: ServiceResponse) => {
-                            if (response?.Result) {
-                                var clientItemPM: ClientItemPM = response.Result;
-                                this.entityPM.ClassificationCode = clientItemPM?.ClassificationCode;
-                                if (AppTool.IsNullOrEmpty(this.entityPM.ItemDescription))
-                                    this.entityPM.ItemDescription = clientItemPM?.ItemDescription;
-                                if (AppTool.IsNullOrEmpty(this.entityPM.OriginCountryCode)) {
-                                    this.entityPM.OriginCountryCode = clientItemPM?.OriginCountryCode;
-                                    this.entityPM.OriginCountryName = clientItemPM?.OriginCountryName;
-                                }
-                                if(!AppTool.IsNullOrEmpty(this.entityPM.ClassificationCode))
-                                {
-                                    this.Parent.quantityTypeMessageService.GetQuantityType(this.entityPM.ClassificationCode, this.Parent.declarationPM.Direction === 'E').subscribe((myServiceResponse: ServiceResponse) => {
-                                        if (!myServiceResponse.HasError && myServiceResponse.Result != null) {
-                                            this.entityPM.InvoiceQuantityType = myServiceResponse.Result;
-                                            this.QunatityTypeCode = "(" + myServiceResponse.Result + ")";
-                                           
-                                        }
+                if (AppTool.IsNullOrEmpty(this.entityPM.ClassificationCode) &&
+                    !AppTool.IsNullOrEmpty(this.Parent.declarationPM.ExporterImporterCode) &&
+                    (!AppTool.IsNullOrEmpty(this.ItemCode) || !AppTool.IsNullOrEmpty(this.ItemDescription))) {
                     
-                    
-                    
-                                    });
-                                }
-
-
+                    const clientItemExtendedPMService = new ClientItemExtendedPMService();
+                    let clientItemRequest: Observable<ServiceResponse>;
+            
+                    if (!AppTool.IsNullOrEmpty(this.ItemCode)) {
+                        clientItemRequest = clientItemExtendedPMService.GetClientItemPM(
+                            this.ItemCode,
+                            this.Parent.declarationPM.ExporterImporterCode,
+                            SessionLocator.Tenant
+                        );
+                    } else {
+                        clientItemRequest = clientItemExtendedPMService.GetClientItemDescriptionPM(
+                            this.ItemDescription,
+                            this.Parent.declarationPM.ExporterImporterCode,
+                            SessionLocator.Tenant
+                        );
+                    }
+            
+                    clientItemRequest.subscribe((response: ServiceResponse) => {
+                        if (response?.Result) {
+                            const clientItemPM: ClientItemPM = response.Result;
+                            this.entityPM.ClassificationCode = clientItemPM?.ClassificationCode;
+                            this.entityPM.ItemDescription = this.entityPM.ItemDescription || clientItemPM?.ItemDescription;
+                            this.entityPM.ItemCode = this.entityPM.ItemCode || clientItemPM?.ItemCode;
+                            this.entityPM.OriginCountryCode = this.entityPM.OriginCountryCode || clientItemPM?.OriginCountryCode;
+                            this.entityPM.OriginCountryName = this.entityPM.OriginCountryName || clientItemPM?.OriginCountryName;
+            
+                            if (!AppTool.IsNullOrEmpty(this.entityPM.ClassificationCode)) {
+                                this.Parent.quantityTypeMessageService.GetQuantityType(
+                                    this.entityPM.ClassificationCode,
+                                    this.Parent.declarationPM.Direction === 'E'
+                                ).subscribe((myServiceResponse: ServiceResponse) => {
+                                    if (!myServiceResponse.HasError && myServiceResponse.Result != null) {
+                                        this.entityPM.InvoiceQuantityType = myServiceResponse.Result;
+                                        this.QunatityTypeCode = "(" + myServiceResponse.Result + ")";
+                                    }
+                                });
                             }
-
-                        })
+                        }
+                    });
                 }
             }
+            
 
         }
 
@@ -4636,37 +4744,54 @@ export class SupplierInvoiceItemLine extends BaseComponent {
     }
     ClassificationCodeDblClick(logCellTemplate: LogCellTemplateComponent, ClassificationTextBox) {
 
-        if (this.Parent.declarationPM.Direction != "E" || !AmitalGatewayUtil.Instance.AmitalBrowserInUse || this.Parent.declarationPM.IsConnectedToUnifreight) return;
+        if (this.Parent.declarationPM.Direction != "E" || this.Parent.declarationPM.IsConnectedToUnifreight) return;
 
-        if (!this.Parent.IsReadOnly) {
-            console.log("[Double Click] ", this.entityPM);
-
-            if (this.Parent.IsDisplayOnly)
-                return;
-
-            //close the cell before showing window; to avoid [true] to [false] problem
-            logCellTemplate.IsDisplayMode = true;
-            logCellTemplate.IsEditMode = false;
-
+        if (this.Parent.hasOcr && SessionLocator.FeatureToggles.find(t => t.ToggleCode === "TCR")) {
             var logWindow = new LogitudeWindow();
             logWindow.Width = 850;
             logWindow.Height = 650;
             logWindow.Title = TextCodeTranslator.Translate("Customs.CustomsPartnersItem.Q.ItemQuery");
             logWindow.ShowCloseButton = true;
             logWindow.WindowArgs = {
-
-                searchText: this.ClassificationCode,
-                customFileNo: this.Parent.declarationPM.CustomFileNo,
-                declarationId: this.Parent.declarationPM.Id,
-
+                isFromSupplierInvoice: true,
+                ClientCode: this.Parent.declarationPM?.ExporterImporterCode,
             };
             logWindow.WindowClosed.subscribe(($event: any) => {
-
-                this.PartnerItemsDescreptionSelectionCompleted(this.entityPM, $event, logCellTemplate, ClassificationTextBox);
-
+                this.PartnerItemsSelectionCompleted(this.entityPM, $event);
             });
+            logWindow.Show('./CustomsModules/CustomsClient/Components/EditTabs/Items/ClientItemsTabComponent');
+        } else if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
 
-            logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/PartnersItemsDescreptionSelectionComponent');
+            if (!this.Parent.IsReadOnly) {
+                console.log("[Double Click] ", this.entityPM);
+
+                if (this.Parent.IsDisplayOnly)
+                    return;
+
+                //close the cell before showing window; to avoid [true] to [false] problem
+                logCellTemplate.IsDisplayMode = true;
+                logCellTemplate.IsEditMode = false;
+
+                var logWindow = new LogitudeWindow();
+                logWindow.Width = 850;
+                logWindow.Height = 650;
+                logWindow.Title = TextCodeTranslator.Translate("Customs.CustomsPartnersItem.Q.ItemQuery");
+                logWindow.ShowCloseButton = true;
+                logWindow.WindowArgs = {
+
+                    searchText: this.ClassificationCode,
+                    customFileNo: this.Parent.declarationPM.CustomFileNo,
+                    declarationId: this.Parent.declarationPM.Id,
+
+                };
+                logWindow.WindowClosed.subscribe(($event: any) => {
+
+                    this.PartnerItemsDescreptionSelectionCompleted(this.entityPM, $event, logCellTemplate, ClassificationTextBox);
+
+                });
+
+                logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/PartnersItemsDescreptionSelectionComponent');
+            }
         }
     }
     PartnerItemsDescreptionSelectionCompleted(item, partnersItem, logcelltemplate, ClassificationTextBox) {

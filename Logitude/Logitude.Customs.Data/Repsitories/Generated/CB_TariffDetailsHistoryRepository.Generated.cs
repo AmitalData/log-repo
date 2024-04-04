@@ -28,10 +28,10 @@ namespace Logitude.Customs.Data.Repsitories
 
 		 
 		
-		public  CB_TariffDetailsHistory GetSingle(string id)
+		public  CB_TariffDetailsHistory GetSingle(string cb_id)
         {
             return (from a in context.CB_TariffDetailsHistorys
-                    where a.ID == id 
+                    where a.CB_ID == cb_id 
                     select a).FirstOrDefault();
         }
 
@@ -45,7 +45,7 @@ namespace Logitude.Customs.Data.Repsitories
         {
             CB_TariffDetailsHistoryKeys keys = entityKeys as CB_TariffDetailsHistoryKeys;
             return (from a in context.CB_TariffDetailsHistorys
-                    where a.ID == keys.ID
+                    where a.CB_ID == keys.CB_ID
                     select a).FirstOrDefault();
         }
 		         

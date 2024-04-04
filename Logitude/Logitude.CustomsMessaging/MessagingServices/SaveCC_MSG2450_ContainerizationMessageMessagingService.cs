@@ -56,19 +56,61 @@ namespace Logitude.CustomsMessaging.MessagingServices
             exceptionMessage = null;
             var response = new INF_MSG_Generic();
 
-            customRequest.RequestContentHeader = new  RequestContentHeader() { SenderID = 1, RecieverID = new int[] { 1 } };
+            //customRequest.RequestContentHeader = new  RequestContentHeader() { SenderID = 1, RecieverID = new int[] { 1 } };
 
-
-
-            using (var uifreightSdkGateway = new UnifreightSdkGateway(base.CustomsSetting.IIGServiceAddress))
+            if (requestParams.TestCase != null)
             {
-                _ResponseHeader = uifreightSdkGateway.GetChannel<IContainerizationMessageOperation>()
-                    .ContainerizationMessage(
-                    this.RequestsSheetExternalId,
-                    base.CustomsSetting.CustomsAgentId,
-                    customRequest,
-                    ref this._IIGGatewayMoreParams,
-                    out response);
+                BuildRequestContentHeaderB4Sign(customRequest);
+
+                switch (requestParams.TestCase.Code)
+                {
+                    case "2450NotFound":
+                        var Fake2450NotFoundMsg = new Fake_2450_NotFound(requestParams);
+                        Fake2450NotFoundMsg.AddResponseHeader();
+                        _ResponseHeader = Fake2450NotFoundMsg.CallWS(requestParams, out response);
+                        break;
+
+                    case "2450Found":
+                        var Fake2450FoundMsg = new Fake_2450_Found(requestParams);
+                        Fake2450FoundMsg.AddResponseHeader();
+                        _ResponseHeader = Fake2450FoundMsg.CallWS(requestParams, out response);
+                        break;
+
+                    case "2450UpdateContainerWithError":
+                        var Fake2450UpdateContainerWithErrorMsg = new Fake_2450_UpdateContainerWithError(requestParams);
+                        Fake2450UpdateContainerWithErrorMsg.AddResponseHeader();
+                        _ResponseHeader = Fake2450UpdateContainerWithErrorMsg.CallWS(requestParams, out response);
+                        break;
+
+                    case "2450UpdateContainer":
+                        var Fake2450UpdateContainerMsg = new Fake_2450_UpdateContainer(requestParams);
+                        Fake2450UpdateContainerMsg.AddResponseHeader();
+                        _ResponseHeader = Fake2450UpdateContainerMsg.CallWS(requestParams, out response);
+                        break;
+
+                    case "2450CancelContainerization":
+                        var Fake2450CancelContainerizationMsg = new Fake_2450_CancelContainerization(requestParams);
+                        Fake2450CancelContainerizationMsg.AddResponseHeader();
+                        _ResponseHeader = Fake2450CancelContainerizationMsg.CallWS(requestParams, out response);
+                        break;
+
+                }
+
+                exceptionMessage = null;
+
+            }
+            else
+            {
+                using (var uifreightSdkGateway = new UnifreightSdkGateway(base.CustomsSetting.IIGServiceAddress))
+                {
+                    _ResponseHeader = uifreightSdkGateway.GetChannel<IContainerizationMessageOperation>()
+                        .ContainerizationMessage(
+                        this.RequestsSheetExternalId,
+                        base.CustomsSetting.CustomsAgentId,
+                        customRequest,
+                        ref this._IIGGatewayMoreParams,
+                        out response);
+                }
             }
             
             if (response.ResponseContentHeader.Exception != null && response.ResponseContentHeader.Exception.Any(x => x.ExceptionLevel == 3))

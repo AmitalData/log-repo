@@ -8,24 +8,26 @@
 
 export class CB_CustomsItemList {
    
-	ID: string;
+	ID: number;
 	CreateDate: Date;
 	UpdateDate: Date;
 	FullClassification: string;
-	Parent_CustomsItemID: string;
+	Parent_CustomsItemID: number;
 	ComputedCheckDigit: string;
 	CustomsBookTypeID: string;
 	CustomsItemCategoryID: string;
 	CustomsItemHierarchicLocationID: string;
 	GoodsDescription: string;
-	Rules: string;
+	Rules: number;
 	Remarks: string;
-	Agreements: string;
+	Agreements: number;
 	CustomsRate: string;
 	PurchaseTax: string;
 	OptionalTaxAddition: number;
 	MeasurementUnit: string;
 	SearchFields: string;
+	CB_ID: string;
+	SearchByTextResult: string;
 	
 }
  

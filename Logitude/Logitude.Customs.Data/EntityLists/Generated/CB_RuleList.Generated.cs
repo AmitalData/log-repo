@@ -12,10 +12,8 @@ namespace Logitude.Customs.Data.EntityLists
    [DataContract]
    public partial class CB_RuleList
    {
-   
-       [Key]
-       [DataMember]
-       public string ID  { get; set; }
+          [DataMember]
+       public int ID  { get; set; }
        [DataMember]
        public DateTime CreateDate  { get; set; }
        [DataMember]
@@ -23,7 +21,11 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string Title  { get; set; }
        [DataMember]
-       public string CustomsItemID  { get; set; }
+       public int CustomsItemID  { get; set; }
+
+       [Key]
+       [DataMember]
+       public string CB_ID  { get; set; }
    }
 
 }

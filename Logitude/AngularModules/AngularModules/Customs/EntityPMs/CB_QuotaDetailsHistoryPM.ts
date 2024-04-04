@@ -24,9 +24,9 @@ export class CB_QuotaDetailsHistoryPM {
       }
  	 
     
-    private iD: string;
+    private iD: number;
     public get ID() { return this.iD; }
-    public set ID(newValue: string) { if (this.iD != newValue) { this.iD = newValue; this.MarkAsDirty("ID"); } }
+    public set ID(newValue: number) { if (this.iD != newValue) { this.iD = newValue; this.MarkAsDirty("ID"); } }
        
 	 
     private createDate: Date;
@@ -89,9 +89,9 @@ export class CB_QuotaDetailsHistoryPM {
     public set RenewalUntilDate(newValue: Date) { if (this.renewalUntilDate != newValue) { this.renewalUntilDate = newValue; this.MarkAsDirty("RenewalUntilDate"); } }
        
 	 
-    private quotaID: string;
+    private quotaID: number;
     public get QuotaID() { return this.quotaID; }
-    public set QuotaID(newValue: string) { if (this.quotaID != newValue) { this.quotaID = newValue; this.MarkAsDirty("QuotaID"); } }
+    public set QuotaID(newValue: number) { if (this.quotaID != newValue) { this.quotaID = newValue; this.MarkAsDirty("QuotaID"); } }
        
 	 
     private changeRequestTypePriority: number;
@@ -112,6 +112,11 @@ export class CB_QuotaDetailsHistoryPM {
     private currencyTypeID: string;
     public get CurrencyTypeID() { return this.currencyTypeID; }
     public set CurrencyTypeID(newValue: string) { if (this.currencyTypeID != newValue) { this.currencyTypeID = newValue; this.MarkAsDirty("CurrencyTypeID"); } }
+       
+	 
+    private cB_ID: string;
+    public get CB_ID() { return this.cB_ID; }
+    public set CB_ID(newValue: string) { if (this.cB_ID != newValue) { this.cB_ID = newValue; this.MarkAsDirty("CB_ID"); } }
        
 	 
 

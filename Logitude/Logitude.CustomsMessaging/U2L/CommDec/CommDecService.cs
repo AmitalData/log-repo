@@ -716,7 +716,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 
                         if (this.IsAutonomy)
                         {
-                            UpdateDeclarationPending("901", _tenant);
+                            UpdateDeclarationPending("901");
                         }
 
 
@@ -727,7 +727,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                             foreach (var pending in _LogitudeCommDecFile.Pendings.Pending)
                             {
 
-                                UpdateDeclarationPending(pending.PendingCode, _tenant);
+                                UpdateDeclarationPending(pending.PendingCode);
                             }
                           
                         }
@@ -1115,12 +1115,12 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
             }
         }
 
-        private void UpdateDeclarationPending(string declarationPendingCode, int tenant)
+        private void UpdateDeclarationPending(string declarationPendingCode)
         {
             if (currentDeclarationCourierStatusPM != null)
             {
                 CourierPendingReasonQueryService myCourierPendingReasonQueryService = new CourierPendingReasonQueryService(_context);
-                CourierPendingReasonPM courierPendingReasonPM = myCourierPendingReasonQueryService.GetSingleCourierPendingReasonByCode(declarationPendingCode, tenant);
+                CourierPendingReasonPM courierPendingReasonPM = myCourierPendingReasonQueryService.GetSingle(declarationPendingCode, false, false);
                 if (courierPendingReasonPM == null || courierPendingReasonPM.Inactive == true)
                 {
                     LogMessagingUtil.Instance.AppendLine("לא קיים קוד Pending = " + declarationPendingCode + " בטבלת סיבות Pending");
@@ -2715,9 +2715,9 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                 {
                     SupplierInvoiceItemPM.StatisticQuantityType = TranslateMeasurmentUnit(invoiceItem.StatisticQuantityType);
                 }
-                if (string.IsNullOrWhiteSpace(SupplierInvoiceItemPM.ItemDescription) && !string.IsNullOrWhiteSpace(invoiceItem.ItemDescription))
+                if (!string.IsNullOrWhiteSpace(invoiceItem.ITEMDESCRIPTION))
                 {
-                    SupplierInvoiceItemPM.ItemDescription = invoiceItem.ItemDescription;
+                    SupplierInvoiceItemPM.ItemDescription = invoiceItem.ITEMDESCRIPTION.Length > 256 ? invoiceItem.ITEMDESCRIPTION.Substring(0, 256) : invoiceItem.ITEMDESCRIPTION;
                 }
                 SupplierInvoiceItemPMList.Add(SupplierInvoiceItemPM);
             }

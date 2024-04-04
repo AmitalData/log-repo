@@ -48,9 +48,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
             mapping = new CB_TradeAgreementDataMapping();
         }
 		 
-		public  CB_TradeAgreementPM GetSingle(string id,bool getComposition, bool getFromCache)
+		public  CB_TradeAgreementPM GetSingle(string cb_id,bool getComposition, bool getFromCache)
         {
-             EntityKeys = new CB_TradeAgreementKeys(){ ID = id };
+             EntityKeys = new CB_TradeAgreementKeys(){ CB_ID = cb_id };
 
 			 return base.GetSingle(EntityKeys, getComposition, getFromCache);
         }
@@ -58,7 +58,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
        
 	    protected override EntityKeyFields GetKeys(CB_TradeAgreement entityPOCO)
         {
-            CB_TradeAgreementKeys entityKeys = new CB_TradeAgreementKeys() { ID = entityPOCO.ID,  };
+            CB_TradeAgreementKeys entityKeys = new CB_TradeAgreementKeys() { CB_ID = entityPOCO.CB_ID,  };
             return entityKeys;
         }
      

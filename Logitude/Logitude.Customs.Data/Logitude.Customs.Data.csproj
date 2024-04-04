@@ -205,6 +205,7 @@
     <Compile Include="EntityKeys\CustomsGeneralKeys.cs" />
     <Compile Include="EntityKeys\CustomsHouseTypeTenantKeys.cs" />
     <Compile Include="EntityKeys\CustomsItemCategoryKeys.cs" />
+    <Compile Include="EntityKeys\CustomsItemGroupKeys.cs" />
     <Compile Include="EntityKeys\CustomsItemHierarchicLocationKeys.cs" />
     <Compile Include="EntityKeys\CustomsPartnerFtpKeys.cs" />
     <Compile Include="EntityKeys\CustomsShipKeys.cs" />
@@ -231,6 +232,7 @@
     <Compile Include="EntityKeys\DefaultValueKeys.cs" />
     <Compile Include="EntityKeys\DeficitDecisionKeys.cs" />
     <Compile Include="EntityKeys\DeliveryTypeKeys.cs" />
+    <Compile Include="EntityKeys\DiscountTypeRegulationKeys.cs" />
     <Compile Include="EntityKeys\DocumentRejectTypeKeys.cs" />
     <Compile Include="EntityKeys\DocumentTypeCustomsDataKeys.cs" />
     <Compile Include="EntityKeys\EntryExitTypeKeys.cs" />
@@ -292,6 +294,7 @@
     <Compile Include="EntityKeys\RegularityRequirementWarningKeys.cs" />
     <Compile Include="EntityKeys\RegularitySourceKeys.cs" />
     <Compile Include="EntityKeys\ReleaseMessageTypeKeys.cs" />
+    <Compile Include="EntityKeys\RemarksClassificationKeys.cs" />
     <Compile Include="EntityKeys\RenewalMethodKeys.cs" />
     <Compile Include="EntityKeys\RequestToAdvanceAQueueKeys.cs" />
     <Compile Include="EntityKeys\RequestReasonCodeEnumKeys.cs" />
@@ -431,6 +434,7 @@
     <Compile Include="EntityListQueryServices\CustomsGeneralListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CustomsHouseTypeTenantListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CustomsItemCategoryListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\CustomsItemGroupListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CustomsItemHierarchicLocationListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CustomsPartnerFtpListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CustomsShipListQueryService.cs" />
@@ -457,6 +461,7 @@
     <Compile Include="EntityListQueryServices\DefaultValueListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DeficitDecisionListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DeliveryTypeListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\DiscountTypeRegulationListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DocumentRejectTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DocumentTypeCustomsDataListQueryService.cs" />
     <Compile Include="EntityListQueryServices\EntryExitTypeListQueryService.cs" />
@@ -575,6 +580,7 @@
     <Compile Include="EntityListQueryServices\Generated\CustomsGeneralListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CustomsHouseTypeTenantListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CustomsItemCategoryListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\CustomsItemGroupListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CustomsItemHierarchicLocationListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CustomsPartnerFtpListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CustomsShipListQueryService.Generated.cs" />
@@ -601,6 +607,7 @@
     <Compile Include="EntityListQueryServices\Generated\DefaultValueListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DeficitDecisionListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DeliveryTypeListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\DiscountTypeRegulationListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DocumentRejectTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DocumentTypeCustomsDataListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\EntryExitTypeListQueryService.Generated.cs" />
@@ -661,6 +668,7 @@
     <Compile Include="EntityListQueryServices\Generated\RegularityRequirementWarningListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\RegularitySourceListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ReleaseMessageTypeListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\RemarksClassificationListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\RenewalMethodListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\RequestToAdvanceAQueueListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\RequestReasonCodeEnumListQueryService.Generated.cs" />
@@ -742,6 +750,7 @@
     <Compile Include="EntityListQueryServices\RegularityRequirementWarningListQueryService.cs" />
     <Compile Include="EntityListQueryServices\RegularitySourceListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ReleaseMessageTypeListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\RemarksClassificationListQueryService.cs" />
     <Compile Include="EntityListQueryServices\RenewalMethodListQueryService.cs" />
     <Compile Include="EntityListQueryServices\RequestToAdvanceAQueueListQueryService.cs" />
     <Compile Include="EntityListQueryServices\RequestReasonCodeEnumListQueryService.cs" />
@@ -826,10 +835,12 @@
     <Compile Include="EntityLists\Generated\CustomsEntityStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CustomsHouseTypeTenantList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CustomsItemCategoryList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\CustomsItemGroupList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CustomsItemHierarchicLocationList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DeclarationCounterList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DefaultTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DefaultValueList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\DiscountTypeRegulationList.Generated.cs" />
     <Compile Include="EntityLists\Generated\EntryExitTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\GovernmentProcTypeTenantList.Generated.cs" />
     <Compile Include="EntityLists\Generated\InceptionCodeList.Generated.cs" />
@@ -841,6 +852,7 @@
     <Compile Include="EntityLists\Generated\RegularityPublicationList.Generated.cs" />
     <Compile Include="EntityLists\Generated\RegularityRequirementWarningList.Generated.cs" />
     <Compile Include="EntityLists\Generated\RegularitySourceList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\RemarksClassificationList.Generated.cs" />
     <Compile Include="EntityLists\Generated\RenewalMethodList.Generated.cs" />
     <Compile Include="EntityLists\Generated\LevyTrustList.Generated.cs" />
     <Compile Include="EntityLists\Generated\SupplierInvioceExportDefaultList.Generated.cs" />
@@ -1110,6 +1122,7 @@
     <Compile Include="EntityMapping\CustomsGeneralMap.cs" />
     <Compile Include="EntityMapping\CustomsHouseTypeTenantMap.cs" />
     <Compile Include="EntityMapping\CustomsItemCategoryMap.cs" />
+    <Compile Include="EntityMapping\CustomsItemGroupMap.cs" />
     <Compile Include="EntityMapping\CustomsItemHierarchicLocationMap.cs" />
     <Compile Include="EntityMapping\CustomsPartnerFtpMap.cs" />
     <Compile Include="EntityMapping\CustomsShipMap.cs" />
@@ -1136,6 +1149,7 @@
     <Compile Include="EntityMapping\DefaultValueMap.cs" />
     <Compile Include="EntityMapping\DeficitDecisionMap.cs" />
     <Compile Include="EntityMapping\DeliveryTypeMap.cs" />
+    <Compile Include="EntityMapping\DiscountTypeRegulationMap.cs" />
     <Compile Include="EntityMapping\DocumentRejectTypeMap.cs" />
     <Compile Include="EntityMapping\DocumentTypeCustomsDataMap.cs" />
     <Compile Include="EntityMapping\EntryExitTypeMap.cs" />
@@ -1197,6 +1211,7 @@
     <Compile Include="EntityMapping\RegularityRequirementWarningMap.cs" />
     <Compile Include="EntityMapping\RegularitySourceMap.cs" />
     <Compile Include="EntityMapping\ReleaseMessageTypeMap.cs" />
+    <Compile Include="EntityMapping\RemarksClassificationMap.cs" />
     <Compile Include="EntityMapping\RenewalMethodMap.cs" />
     <Compile Include="EntityMapping\RequestToAdvanceAQueueMap.cs" />
     <Compile Include="EntityMapping\RequestReasonCodeEnumMap.cs" />
@@ -1336,6 +1351,7 @@
     <Compile Include="EntityPOCOs\CustomsGeneral.cs" />
     <Compile Include="EntityPOCOs\CustomsHouseTypeTenant.cs" />
     <Compile Include="EntityPOCOs\CustomsItemCategory.cs" />
+    <Compile Include="EntityPOCOs\CustomsItemGroup.cs" />
     <Compile Include="EntityPOCOs\CustomsItemHierarchicLocation.cs" />
     <Compile Include="EntityPOCOs\CustomsPartnerFtp.cs" />
     <Compile Include="EntityPOCOs\CustomsShip.cs" />
@@ -1362,6 +1378,7 @@
     <Compile Include="EntityPOCOs\DefaultValue.cs" />
     <Compile Include="EntityPOCOs\DeficitDecision.cs" />
     <Compile Include="EntityPOCOs\DeliveryType.cs" />
+    <Compile Include="EntityPOCOs\DiscountTypeRegulation.cs" />
     <Compile Include="EntityPOCOs\DocumentRejectType.cs" />
     <Compile Include="EntityPOCOs\DocumentTypeCustomsData.cs" />
     <Compile Include="EntityPOCOs\EntryExitType.cs" />
@@ -1424,6 +1441,7 @@
     <Compile Include="EntityPOCOs\RegularityRequirementWarning.cs" />
     <Compile Include="EntityPOCOs\RegularitySource.cs" />
     <Compile Include="EntityPOCOs\ReleaseMessageType.cs" />
+    <Compile Include="EntityPOCOs\RemarksClassification.cs" />
     <Compile Include="EntityPOCOs\RenewalMethod.cs" />
     <Compile Include="EntityPOCOs\RequestToAdvanceAQueue.cs" />
     <Compile Include="EntityPOCOs\RequestReasonCodeEnum.cs" />
@@ -1563,6 +1581,7 @@
     <Compile Include="Repsitories\CustomsGeneralRepository.cs" />
     <Compile Include="Repsitories\CustomsHouseTypeTenantRepository.cs" />
     <Compile Include="Repsitories\CustomsItemCategoryRepository.cs" />
+    <Compile Include="Repsitories\CustomsItemGroupRepository.cs" />
     <Compile Include="Repsitories\CustomsItemHierarchicLocationRepository.cs" />
     <Compile Include="Repsitories\CustomsPartnerFtpRepository.cs" />
     <Compile Include="Repsitories\CustomsShipRepository.cs" />
@@ -1589,6 +1608,7 @@
     <Compile Include="Repsitories\DefaultValueRepository.cs" />
     <Compile Include="Repsitories\DeficitDecisionRepository.cs" />
     <Compile Include="Repsitories\DeliveryTypeRepository.cs" />
+    <Compile Include="Repsitories\DiscountTypeRegulationRepository.cs" />
     <Compile Include="Repsitories\DocumentRejectTypeRepository.cs" />
     <Compile Include="Repsitories\DocumentTypeCustomsDataRepository.cs" />
     <Compile Include="Repsitories\EntryExitTypeRepository.cs" />
@@ -1707,6 +1727,7 @@
     <Compile Include="Repsitories\Generated\CustomsGeneralRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CustomsHouseTypeTenantRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CustomsItemCategoryRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\CustomsItemGroupRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CustomsItemHierarchicLocationRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CustomsPartnerFtpRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CustomsShipRepository.Generated.cs" />
@@ -1733,6 +1754,7 @@
     <Compile Include="Repsitories\Generated\DefaultValueRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DeficitDecisionRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DeliveryTypeRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\DiscountTypeRegulationRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DocumentRejectTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DocumentTypeCustomsDataRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\EntryExitTypeRepository.Generated.cs" />
@@ -1793,6 +1815,7 @@
     <Compile Include="Repsitories\Generated\RegularityRequirementWarningRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\RegularitySourceRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ReleaseMessageTypeRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\RemarksClassificationRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\RenewalMethodRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\RequestToAdvanceAQueueRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\RequestReasonCodeEnumRepository.Generated.cs" />
@@ -1874,6 +1897,7 @@
     <Compile Include="Repsitories\RegularityRequirementWarningRepository.cs" />
     <Compile Include="Repsitories\RegularitySourceRepository.cs" />
     <Compile Include="Repsitories\ReleaseMessageTypeRepository.cs" />
+    <Compile Include="Repsitories\RemarksClassificationRepository.cs" />
     <Compile Include="Repsitories\RenewalMethodRepository.cs" />
     <Compile Include="Repsitories\RequestToAdvanceAQueueRepository.cs" />
     <Compile Include="Repsitories\RequestReasonCodeEnumRepository.cs" />

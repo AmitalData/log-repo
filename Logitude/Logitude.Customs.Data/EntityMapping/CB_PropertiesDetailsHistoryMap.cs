@@ -21,15 +21,15 @@ namespace Logitude.Customs.Data.EntityMapping
         { 
 			  this.ToTable("CB_PropertiesDetailsHistorys", "Customs");
 		
-		    this.HasKey(t => new { t.ID });
+		    this.HasKey(t => new { t.CB_ID });
 	 
-            this.Property(t => t.ID).HasColumnName("ID").IsRequired().HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.ID).HasColumnName("ID");
 
             this.Property(t => t.CreateDate).HasColumnName("CreateDate");
 
             this.Property(t => t.UpdateDate).HasColumnName("UpdateDate");
 
-            this.Property(t => t.CustomsItemID).HasColumnName("CustomsItemID").HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.CustomsItemID).HasColumnName("CustomsItemID");
 
             this.Property(t => t.StartDate).HasColumnName("StartDate");
 
@@ -82,11 +82,11 @@ namespace Logitude.Customs.Data.EntityMapping
             dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
             {
-              this.Property(t => t.Discount_CustomsItemGroupTypeID).HasColumnName("Discount_CustomsItemGroupTypeI").HasMaxLength(2).IsUnicode(false);
+              this.Property(t => t.Discount_CustomsItemGroupTypeID).HasColumnName("Discount_CustomsItemGroupTypeI").HasMaxLength(4).IsUnicode(false);
 			}
 			else
 			{
-              this.Property(t => t.Discount_CustomsItemGroupTypeID).HasColumnName("Discount_CustomsItemGroupTypeID").HasMaxLength(2).IsUnicode(false);
+              this.Property(t => t.Discount_CustomsItemGroupTypeID).HasColumnName("Discount_CustomsItemGroupTypeID").HasMaxLength(4).IsUnicode(false);
 			}
 
 
@@ -95,13 +95,15 @@ namespace Logitude.Customs.Data.EntityMapping
             dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
             {
-              this.Property(t => t.DiscountRegularityRequirementType).HasColumnName("DiscountRegularityRequirementT").HasMaxLength(2).IsUnicode(false);
+              this.Property(t => t.DiscountRegularityRequirementType).HasColumnName("DiscountRegularityRequirementT").HasMaxLength(4).IsUnicode(false);
 			}
 			else
 			{
-              this.Property(t => t.DiscountRegularityRequirementType).HasColumnName("DiscountRegularityRequirementType").HasMaxLength(2).IsUnicode(false);
+              this.Property(t => t.DiscountRegularityRequirementType).HasColumnName("DiscountRegularityRequirementType").HasMaxLength(4).IsUnicode(false);
 			}
 
+
+            this.Property(t => t.CB_ID).HasColumnName("CB_ID").IsRequired().HasMaxLength(15).IsUnicode(false);
         }
     }
 }

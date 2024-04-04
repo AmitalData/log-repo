@@ -289,7 +289,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         }
 
 
-        private static void Send2MasofDueMasterChanged(CourierDeclarationPM courierDeclaration, CourierMasterPM  courierMasterPM)
+        private static void Send2MasofDueMasterChanged(CourierDeclarationPM courierDeclaration, CourierMasterPM courierMasterPM)
         {
             var send2MasofIfNeededService = new Send2MasofIfNeededService();
             var declarationQueryService = new DeclarationQueryService(courierDeclaration.Tenant);
@@ -308,7 +308,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             if (!DbContextBaseUtil.UnifreightDataIncludedInMain_FeatureOn)
             {
-                scope = TransactionFactory.GetNewOracleReadCommittedTransaction();
+                scope = TransactionFactory.GetNewOracleReadCommittedTransaction();               
             }
             try
             {
@@ -359,6 +359,27 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                         //GSTRING1 = myYCULTASKPM.TASKID,
                     };
+
+                    var isConnectedToUniFreight = CustomsSettingQueryService.GetSettingByTenant(entityPM.Tenant).IsConnectedToUniFreight;
+                    if (!isConnectedToUniFreight)
+                    {
+                        myGGGQPM.Tenant = EntityPM.Tenant;
+                        myGGGQPM.IS_SYNCH = false;
+                        myGGGQPM.LAST_UPDATE_DT = DateTime.Now;
+                        if (myGGGQPM.GGGQCPMs.Count > 0)
+                        {
+                            foreach (var GGGQC_Item in myGGGQPM.GGGQCPMs)
+                            {
+                                GGGQC_Item.Tenant = EntityPM.Tenant;
+                                GGGQC_Item.IS_SYNCH = false;
+                                GGGQC_Item.LAST_UPDATE_DT = DateTime.Now;
+                            }
+                        }
+
+                        _AmitalContext = AmitalContext.GetContext(entityPM.Tenant);
+                        myGGGQUpdateService = new GGGQUpdateService(_AmitalContext);
+                    }
+
                     myGGGQUpdateService.Update(myGGGQPM, true);
 
                     if (scope != null)
@@ -507,7 +528,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
                 using (SqlConnection cn = new SqlConnection(strConnString))
                 {
-                    string cmd = "Update DECLARATIONS set " +
+                    string cmd = "Update Customs.DECLARATIONS set " +
                         "ISCLOSE= 0  , ISCANCELLED =0 ";
                     cmd = cmd + " where ID IN " + "(" + declarations + ")";
 
@@ -574,47 +595,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
                 using (SqlConnection cn = new SqlConnection(strConnString))
                 {
-                    string cmd = "Update DECLARATIONS set " +
+                    string cmd = "Update Customs.DECLARATIONS set " +
                         "ISCLOSE= 1  , ISCANCELLED =1 ";
                     cmd = cmd + " where ID IN " + "(" + declarations + ")";
-
-                    SqlCommand sqlCommand = new SqlCommand(cmd, cn);
-
-                    cn.Open();
-                    sqlCommand.ExecuteNonQuery();
-                    cn.Close();
-                }
-            }
-        }
-
-
-        private void SetDeclarationChanged(string declarations, string courierManifestStatusCode, int Tenant)
-        {
-            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-            string strConnString = GetConnection(Tenant);
-            if (dbms == "oracle")
-            {
-                using (OracleConnection con = new OracleConnection(strConnString))
-                {
-                    string cmd = "Update DECLARATIONCOURIERSTATUSES set " +
-                        "COURIERMANIFESTSTATUSCODE= '" + courierManifestStatusCode + "' ";
-                    cmd = cmd + " where DECLARATIONID IN " + "(" + declarations + ")";
-
-                    OracleCommand sqlCommand = new OracleCommand(cmd, con);
-
-                    con.Open();
-                    sqlCommand.ExecuteNonQuery();
-                    con.Close();
-                }
-
-            }
-            else
-            {
-                using (SqlConnection cn = new SqlConnection(strConnString))
-                {
-                    string cmd = "Update DECLARATIONCOURIERSTATUSES set " +
-                        "COURIERMANIFESTSTATUSCODE= '" + courierManifestStatusCode + "' ";
-                    cmd = cmd + " where DECLARATIONID IN " + "(" + declarations + ")";
 
                     SqlCommand sqlCommand = new SqlCommand(cmd, cn);
 
@@ -679,49 +662,51 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     (errorsForCourierDeclaration != null && errorsForCourierDeclaration.RequiredFields != null && errorsForCourierDeclaration.RequiredFields.Count == 0))
                 {
                     string CourierMasterId = EntityPM.Id;
-                    //string toCourierManifestStatusCode = "R";
-                    string updateCourierManifestStatusCodeToR =
-                        $"Update DECLARATIONCOURIERSTATUSES set CourierManifestStatusCode ='{setCourierManifestStatusCode}' where DECLARATIONID  in (select DECLARATIONID   from CourierDeclarations  where CourierMasterId ='{CourierMasterId}' and tenant ={EntityPM.Tenant} ) and CourierManifestStatusCode !='M' and CourierManifestStatusCode !='R' ";
-                    int commandTimeout = 30;
-                    CustomContext.CommandExecuteNonQuery(EntityPM.Tenant, updateCourierManifestStatusCodeToR, commandTimeout);
-
-                    //setDeclarationsList = OldNotInUse(entityPM, setCourierManifestStatusCode, setDeclarationsList);
+                    UpdateCourierManifestStatusCodeToR(CourierMasterId, setCourierManifestStatusCode, EntityPM.Tenant);
                 }
             }
         }
 
-        private string OldNotInUse(CourierMasterPM entityPM, string setCourierManifestStatusCode, string setDeclarationsList)
+        private void UpdateCourierManifestStatusCodeToR(string courierMasterId, string setCourierManifestStatusCode, int tenant)
         {
-            CourierDeclarationRepository courierDeclarationRepository = new CourierDeclarationRepository(entityPM.Tenant);
-            List<string> declarations = courierDeclarationRepository.GetCourierConnectedDeclaratinsList(entityPM.Id, entityPM.Tenant);
-            if (declarations != null)
-            {
-                DeclarationCourierStatusQueryService declarationCourierStatusQueryService = new DeclarationCourierStatusQueryService(entityPM.Tenant);
-                foreach (var declarationId in declarations)
-                {
-                    DeclarationCourierStatusPM myDeclarationCourierStatusPM = declarationCourierStatusQueryService.GetSingle(declarationId, true, false);
-                    if (myDeclarationCourierStatusPM.CourierManifestStatusCode != "M" && myDeclarationCourierStatusPM.CourierManifestStatusCode != "R")
-                    {
-                        if (setDeclarationsList == "")
-                        {
-                            setDeclarationsList = string.Concat("'", declarationId, "'");
-                        }
-                        else
-                        {
-                            setDeclarationsList = string.Concat(setDeclarationsList, ",", "'", declarationId, "'");
-                        }
-                    }
-                }
+            string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            string strConnString = GetConnection(tenant);
+            string updateQuery = string.Empty;
 
-                if (!string.IsNullOrWhiteSpace(setDeclarationsList))
+            if (dbms == "oracle")
+            {
+                updateQuery = $"Update DECLARATIONCOURIERSTATUSES set CourierManifestStatusCode ='{setCourierManifestStatusCode}' " +
+                              $"where DECLARATIONID in (select DECLARATIONID from CourierDeclarations where CourierMasterId ='{courierMasterId}' and tenant ={tenant} ) " +
+                              $"and CourierManifestStatusCode !='M' and CourierManifestStatusCode !='R' ";
+
+                using (OracleConnection con = new OracleConnection(strConnString))
                 {
-                    this.SetDeclarationChanged(setDeclarationsList, setCourierManifestStatusCode, entityPM.Tenant);
+                    OracleCommand sqlCommand = new OracleCommand(updateQuery, con);
+                    con.Open();
+                    sqlCommand.CommandTimeout = 30;
+                    sqlCommand.ExecuteNonQuery();
+                    con.Close();
                 }
             }
+            else
+            {
+                updateQuery = $"Update Customs.DECLARATIONCOURIERSTATUSES set CourierManifestStatusCode ='{setCourierManifestStatusCode}' " +
+                              $"where DECLARATIONID in (select DECLARATIONID from Customs.CourierDeclarations where CourierMasterId ='{courierMasterId}' and tenant ={tenant} ) " +
+                              $"and CourierManifestStatusCode !='M' and CourierManifestStatusCode !='R' ";
 
-            return setDeclarationsList;
+                using (SqlConnection cn = new SqlConnection(strConnString))
+                {
+                    SqlCommand sqlCommand = new SqlCommand(updateQuery, cn);
+                    cn.Open();
+                    sqlCommand.CommandTimeout = 30;
+                    sqlCommand.ExecuteNonQuery();
+                    cn.Close();
+                }
+            }
         }
 
+
+ 
         public void OpenUnifreighTask(CourierMasterPM dirtyCourierMasterPM, string taskType, string status, bool raiseStatus, string xmlStatus)
         {
             var sw = Stopwatch.StartNew();
@@ -744,7 +729,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 {
                     unifreightUser = AuthenticationUtil.ResolveUnifreightUserId(dirtyCourierMasterPM.Tenant);
                 }
-                
+
                 var myYCULTASKPM = new YCULTASKPM()
                 {
                     ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,

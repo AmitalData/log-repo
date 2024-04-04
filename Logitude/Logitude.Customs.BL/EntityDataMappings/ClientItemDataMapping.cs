@@ -6,17 +6,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
-using Logitude.Server.Tools; 
+using Logitude.Server.Tools;
 using Logitude.Customs.Data.EntityPOCOs;
-using Logitude.Customs.Def.EntityPMs; 
+using Logitude.Customs.Def.EntityPMs;
 using Logitude.Customs.Data;
 using Logitude.Customs.BL.EntityQueryServices;
 
 namespace Logitude.Customs.BL.EntityDataMappings
 {
-   
-   public partial class ClientItemDataMapping: IMapping<ClientItemPM, ClientItem>
-   {
+
+    public partial class ClientItemDataMapping : IMapping<ClientItemPM, ClientItem>
+    {
 
         public void CustomPMToPOCO(ClientItemPM entityPM, ClientItem entityPOCO)
         {
@@ -32,6 +32,17 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 entityPOCO.ItemDescription = entityPM.ItemDescription;
                 entityPOCO.Id = entityPM.Id;
             }
+            BuildSearchFields(entityPM, entityPOCO, entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert);
+        }
+
+        private static void BuildSearchFields(ClientItemPM entityPM, ClientItem poco, bool isNewEntity)
+        {
+            string result = "";
+
+            result = entityPM.ClassificationCode + "," + entityPM.ItemCode + "," + entityPM.ItemDescription;
+
+            entityPM.SearchFields = result.ToLower(); ;
+            poco.SearchFields = entityPM.SearchFields;
         }
 
         public void CustomPOCOToPM(ClientItemPM entityPM, ClientItem entityPOCO)
@@ -46,8 +57,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
                     entityPM.OriginCountryName = country.LocalName;
             }
         }
-   }
+    }
 
 
 }
-   

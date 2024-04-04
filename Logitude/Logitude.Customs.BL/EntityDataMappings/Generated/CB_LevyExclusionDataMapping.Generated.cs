@@ -26,7 +26,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         LevyExclusionNumber, 
 	         TradeLevyID, 
 	         VendorID, 
-	         CountryGroupID,
+	         CountryGroupID, 
+	         CB_ID,
 	      }
 
 
@@ -37,7 +38,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         LevyExclusionNumber, 
 	         TradeLevyID, 
 	         VendorID, 
-	         CountryGroupID,
+	         CountryGroupID, 
+	         CB_ID,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -46,6 +48,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	    public void PMToPOCO(CB_LevyExclusionPM entityPM, CB_LevyExclusion entityPOCO)
         {
 			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ID))
+            {
+				entityPOCO.ID = entityPM.ID;
+			}
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LevyExclusionNumber))
             {
 				entityPOCO.LevyExclusionNumber = entityPM.LevyExclusionNumber;
@@ -95,12 +102,22 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.CountryGroupID = entityPOCO.CountryGroupID;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CB_ID))
+            {
+					entityPM.CB_ID = entityPOCO.CB_ID;
+            }
+
 		}
 
 		public void PMToOldPM(CB_LevyExclusionPM entityPM, CB_LevyExclusionPM oldEntityPM)
         {
 		     oldEntityPM.ChangedProperties.Clear();
 			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ID))
+            {
+                oldEntityPM.ID = entityPM.ID;
+            }
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LevyExclusionNumber))
             {
                 oldEntityPM.LevyExclusionNumber = entityPM.LevyExclusionNumber;

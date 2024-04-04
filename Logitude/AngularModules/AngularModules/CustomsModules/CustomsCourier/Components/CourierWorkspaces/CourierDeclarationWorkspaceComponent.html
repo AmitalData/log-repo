@@ -94,7 +94,7 @@
                     <div class="ScrollViewer">
                         <div class="ScrollContent">-->
                                     <!-- CourierMaster -->
-                                    <div class="QueriesSection" *ngIf="counters">
+                                    <div class="QueriesSection">
 
                                         <!--<div>{{'Customs.CourierMaster.O.CourierMasterQueries' | TextCodeTranslationPipe}}</div>-->
                                         <!--
@@ -104,24 +104,24 @@
                                                             -->
                                         <div>שטרי מטען</div>
                                         <div style="margin-right:10px;">
-                                            <p class="QueryLink" *ngIf="OpenCourierMasterVisibility" (click)="ViewCourierMasterQuery('OpenCourierMaster')"> {{'Customs.CourierMaster.O.CourierMasterOpen' | TextCodeTranslationPipe}} ({{counters.OpenCourierMasterCount}}) </p>
-                                            <p class="QueryLink" *ngIf="UnReleasedFastProcessVisibility" (click)="ViewCourierMasterQuery('UnReleasedFastProcess')"> {{'Customs.CourierMaster.O.UnReleasedFastProcess' | TextCodeTranslationPipe}} ({{counters.UnReleasedFastProcessCount}})  </p>
-                                            <p class="QueryLink" *ngIf="WithoutIdVisibility" (click)="ViewCourierMasterQuery('WithoutId')"> {{'Customs.CourierMaster.O.WithoutId' | TextCodeTranslationPipe}} ({{counters.WithoutIdCount}}) </p>
-                                            <p class="QueryLink" *ngIf="WithoutClassificationVisibility" (click)="ViewCourierMasterQuery('WithoutClassification')"> {{'Customs.CourierMaster.O.WithoutClassification' | TextCodeTranslationPipe}} ({{counters.WithoutClassificationCount}})</p>
-                                            <p class="QueryLink" *ngIf="PendingPaymentVisibility" (click)="ViewCourierMasterQuery('PendingPayment')"> {{'Customs.CourierMaster.O.PendingPayment' | TextCodeTranslationPipe}} ({{counters.PendingPaymentCount}}) </p>
-                                            <p class="QueryLink" *ngIf="PendingCustomsVisibility" (click)="ViewCourierMasterQuery('PendingCustoms')"> {{'Customs.CourierMaster.O.PendingCustoms' | TextCodeTranslationPipe}} ({{counters.PendingCustomsCount}}) </p>
-                                            <p class="QueryLink" *ngIf="PendingVisibility" (click)="ViewCourierMasterQuery('Pending')"> {{'Customs.CourierMaster.O.Pending' | TextCodeTranslationPipe}} ({{counters.PendingCount}})</p>
+                                            <p class="QueryLink" *ngIf="OpenCourierMasterVisibility" (click)="ViewCourierMasterQuery('OpenCourierMaster')"> {{'Customs.CourierMaster.O.CourierMasterOpen' | TextCodeTranslationPipe}}<span *ngIf="counters"> ({{counters.OpenCourierMasterCount}})</span></p>
+                                            <p class="QueryLink" *ngIf="UnReleasedFastProcessVisibility" (click)="ViewCourierMasterQuery('UnReleasedFastProcess')"> {{'Customs.CourierMaster.O.UnReleasedFastProcess' | TextCodeTranslationPipe}}<span *ngIf="counters"> ({{counters.UnReleasedFastProcessCount}})</span></p>
+                                            <p class="QueryLink" *ngIf="WithoutIdVisibility" (click)="ViewCourierMasterQuery('WithoutId')"> {{'Customs.CourierMaster.O.WithoutId' | TextCodeTranslationPipe}}<span *ngIf="counters"> ({{counters.WithoutIdCount}})</span></p>
+                                            <p class="QueryLink" *ngIf="WithoutClassificationVisibility" (click)="ViewCourierMasterQuery('WithoutClassification')"> {{'Customs.CourierMaster.O.WithoutClassification' | TextCodeTranslationPipe}}<span *ngIf="counters"> ({{counters.WithoutClassificationCount}})</span></p>
+                                            <p class="QueryLink" *ngIf="PendingPaymentVisibility" (click)="ViewCourierMasterQuery('PendingPayment')"> {{'Customs.CourierMaster.O.PendingPayment' | TextCodeTranslationPipe}}<span *ngIf="counters"> ({{counters.PendingPaymentCount}})</span></p>
+                                            <p class="QueryLink" *ngIf="PendingCustomsVisibility" (click)="ViewCourierMasterQuery('PendingCustoms')"> {{'Customs.CourierMaster.O.PendingCustoms' | TextCodeTranslationPipe}}<span *ngIf="counters"> ({{counters.PendingCustomsCount}})</span></p>
+                                            <p class="QueryLink" *ngIf="PendingVisibility" (click)="ViewCourierMasterQuery('Pending')"> {{'Customs.CourierMaster.O.Pending' | TextCodeTranslationPipe}}<span *ngIf="counters"> ({{counters.PendingCount}})</span></p>
                                             <p class="QueryLink" *ngIf="AllCourierDeclarationVisibility" (click)="ViewCourierMasterQuery('AllCourierDeclarations')"> {{'Customs.Declaration.O.AllCourierDeclarations' | TextCodeTranslationPipe}} </p>
 
                                         </div>
 
                                     </div>
 
-                                    <div class="QueriesSection"  *ngIf="counters">
+                                    <div class="QueriesSection">
                                         <div>שטרי מטען פרטני</div>
                                         <div style="margin-right:10px;">
-                                            <p class="QueryLink" *ngIf="CourierMasterOpenIndividualVisibility" (click)="ViewCourierMasterQuery('CourierMasterOpenIndividual')"> {{'Customs.CourierMaster.O.CourierMasterOpenIndividual' | TextCodeTranslationPipe}} ({{counters.CourierMasterOpenIndividualCount}}) </p>
-                                            <p class="QueryLink" *ngIf="UnReleasedIndividualVisibility" (click)="ViewCourierMasterQuery('UnReleasedIndividual')"> {{'Customs.CourierMaster.O.UnReleasedIndividual' | TextCodeTranslationPipe}} ({{counters.UnReleasedIndividualCount}}) </p>
+                                            <p class="QueryLink" *ngIf="CourierMasterOpenIndividualVisibility" (click)="ViewCourierMasterQuery('CourierMasterOpenIndividual')"> {{'Customs.CourierMaster.O.CourierMasterOpenIndividual' | TextCodeTranslationPipe}}<span *ngIf="counters"> ({{counters.CourierMasterOpenIndividualCount}})</span></p>
+                                            <p class="QueryLink" *ngIf="UnReleasedIndividualVisibility" (click)="ViewCourierMasterQuery('UnReleasedIndividual')"> {{'Customs.CourierMaster.O.UnReleasedIndividual' | TextCodeTranslationPipe}}<span *ngIf="counters"> ({{counters.UnReleasedIndividualCount}})</span></p>
                                         </div>
                                     </div>
 

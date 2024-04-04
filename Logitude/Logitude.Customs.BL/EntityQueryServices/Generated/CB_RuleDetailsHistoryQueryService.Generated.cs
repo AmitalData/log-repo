@@ -48,9 +48,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
             mapping = new CB_RuleDetailsHistoryDataMapping();
         }
 		 
-		public  CB_RuleDetailsHistoryPM GetSingle(string id,bool getComposition, bool getFromCache)
+		public  CB_RuleDetailsHistoryPM GetSingle(string cb_id,bool getComposition, bool getFromCache)
         {
-             EntityKeys = new CB_RuleDetailsHistoryKeys(){ ID = id };
+             EntityKeys = new CB_RuleDetailsHistoryKeys(){ CB_ID = cb_id };
 
 			 return base.GetSingle(EntityKeys, getComposition, getFromCache);
         }
@@ -58,7 +58,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
        
 	    protected override EntityKeyFields GetKeys(CB_RuleDetailsHistory entityPOCO)
         {
-            CB_RuleDetailsHistoryKeys entityKeys = new CB_RuleDetailsHistoryKeys() { ID = entityPOCO.ID,  };
+            CB_RuleDetailsHistoryKeys entityKeys = new CB_RuleDetailsHistoryKeys() { CB_ID = entityPOCO.CB_ID,  };
             return entityKeys;
         }
      
