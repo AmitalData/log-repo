@@ -113,6 +113,7 @@
     <Compile Include="EntityPMs\Generated\RegularityPublicationPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\RegularityRequirementWarningPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\RegularitySourcePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\RemarksClassificationPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\RenewalMethodPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\LevyTrustPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\RequestToAdvanceAQueuePM.Generated.cs" />

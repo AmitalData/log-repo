@@ -59,8 +59,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         {     
   
 		
-		    entityPM.Id = IdCounter.GetNumber("RemarksClassification", entityPM.Tenant); 
-					
 	    }
         
 		protected override void FillDefaultValuesOnUpdate(RemarksClassificationPM entityPM)

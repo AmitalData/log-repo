@@ -1001,6 +1001,7 @@
     <Compile Include="EntityDataMappings\Generated\RegularityRequirementWarningDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\RegularitySourceDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ReleaseMessageTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\RemarksClassificationDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\RenewalMethodDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\RequestReasonCodeEnumDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\RequestStatusDataMapping.Generated.cs" />
@@ -1205,6 +1206,7 @@
     <Compile Include="EntityDataMappings\RegularityRequirementWarningDataMapping.cs" />
     <Compile Include="EntityDataMappings\RegularitySourceDataMapping.cs" />
     <Compile Include="EntityDataMappings\ReleaseMessageTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\RemarksClassificationDataMapping.cs" />
     <Compile Include="EntityDataMappings\RenewalMethodDataMapping.cs" />
     <Compile Include="EntityDataMappings\RequestReasonCodeEnumDataMapping.cs" />
     <Compile Include="EntityDataMappings\RequestStatusDataMapping.cs" />
@@ -1369,6 +1371,7 @@
     <Compile Include="EntityQueryServices\Generated\RegularityPublicationQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\RegularityRequirementWarningQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\RegularitySourceQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\RemarksClassificationQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\RenewalMethodQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\RequestToAdvanceAQueueQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\OriginCriterionQueryService.Generated.cs" />
@@ -1966,6 +1969,7 @@
     <Compile Include="EntityUpdateServices\Generated\RegularityPublicationUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\RegularityRequirementWarningUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\RegularitySourceUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\RemarksClassificationUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\RenewalMethodUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\RequestToAdvanceAQueueUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\CertificateOfOriginUpdateService.cs" />

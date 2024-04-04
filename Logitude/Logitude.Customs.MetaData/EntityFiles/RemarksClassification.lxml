@@ -39,7 +39,7 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot; הערות סיווג&quot;"
   DefaultText="&quot;RemarksClassification &quot;"
-  Code="&quot;b7fd&quot;"
+  Code="&quot;bf3e&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="true"
   ClientModuleName="&quot;Customs&quot;"
@@ -91,6 +91,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;Id&quot;"
     ListPropertyPath="&quot;Id&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -122,7 +123,7 @@
     NoMetaDataField="false"
     GenerateInList="true"
     IsFixedLength="false"
-    EnableAutoFill="true"
+    EnableAutoFill="false"
     IncludeInSearchField="false"
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
@@ -163,6 +164,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;Tenant&quot;"
     ListPropertyPath="&quot;Tenant&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -194,7 +196,7 @@
     NoMetaDataField="true"
     GenerateInList="true"
     IsFixedLength="false"
-    EnableAutoFill="true"
+    EnableAutoFill="false"
     IncludeInSearchField="false"
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
@@ -235,6 +237,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;CB_ID&quot;"
     ListPropertyPath="&quot;CB_ID&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -266,7 +269,7 @@
     NoMetaDataField="true"
     GenerateInList="true"
     IsFixedLength="false"
-    EnableAutoFill="false"
+    EnableAutoFill="true"
     IncludeInSearchField="false"
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
@@ -307,6 +310,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;CustomsItemsID&quot;"
     ListPropertyPath="&quot;CustomsItemsID&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -380,6 +384,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;RemarkDescription&quot;"
     ListPropertyPath="&quot;RemarkDescription&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -426,6 +431,15 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <Screen
+    Name="&quot;Customs.RemarksClassificationHeaderScreen&quot;"
+    ObjectTableName="&quot;Customs.RemarksClassification&quot;"
+    IsReadOnly="true"
+    IsHeaderScreen="true"
+    NumberOfColumns="2"
+    NumberOfRows="1">
+    <ScreenFields />
+  </Screen>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
@@ -454,6 +468,7 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
   </EventTypes>
+  <Records />
   <DataContracts />
   <AdditionalTextCodes />
   <AdditionalFeatures />
