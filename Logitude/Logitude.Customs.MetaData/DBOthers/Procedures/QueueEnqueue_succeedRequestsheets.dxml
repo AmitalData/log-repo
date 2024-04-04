@@ -29,7 +29,7 @@ AS BEGIN
 		0,
 		crsh.id
     FROM customs.customsrequestssheets crsh
-    WHERE  crsh.requeststatuscode = '21' -- tshuva tkina
+    WHERE  crsh.requeststatuscode = '21' and crsh.REQUESTCREATEDATE > sysdate-3 -- tshuva tkina
 		AND not exists (SELECT 1
                         FROM   queuemessages
                         WHERE  queuemessages.entityid = crsh.id);
@@ -69,7 +69,7 @@ BEGIN
        0,
        crsh.id
     FROM customsrequestssheets crsh
-    WHERE  crsh.requeststatuscode = '21' -- tshuva tkina
+    WHERE  crsh.requeststatuscode = '21' and crsh.REQUESTCREATEDATE > sysdate-3 -- tshuva tkina
        AND NOT EXISTS (SELECT 1
                        FROM   queuemessages
                        WHERE  queuemessages.entityid = crsh.id);
