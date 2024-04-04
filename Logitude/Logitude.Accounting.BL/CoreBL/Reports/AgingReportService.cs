@@ -282,7 +282,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
                 GLAccountListQueryService accountQS = new GLAccountListQueryService(_AccountingContext);
                 bool noNeedTenant = true;
-                IQueryable<GLAccountList> q_accountsList = accountQS.GetByIds(accountsIds, _Param.Tenant, noNeedTenant);
+                IQueryable<GLAccountList> q_accountsList = accountQS.GetByIdsForAgingReport(accountsIds, _Param.Tenant, noNeedTenant);
                 bool blanceCureency4SplitIsNeeded = true;
                 if (!blanceCureency4SplitIsNeeded)
                 {
