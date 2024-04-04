@@ -56,6 +56,9 @@ export class InterestReportList {
 	Category3Id: string;
 	Category4Id: string;
 	Category5Id: string;
+	ChartOfAccountsId: string;
+	ChartOfAccountsName: string;
+	ChartOfAccountsCode: string;
 	
 }
  
