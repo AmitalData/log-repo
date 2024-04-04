@@ -43,8 +43,7 @@ export class MaintenanceComponent {
      private readonly invoiceConfirmationNumber = "InvoiceConfirmationNumber";
 
      private textCodeTranslationPipe: TextCodeTranslationPipe;
-    private readonly invoiceConfirmationNumber = "InvoiceConfirmationNumber";
-
+ 
     public EntityStatusToggle: boolean = false;
      constructor() {
         this.SetEntityStatusToggle();

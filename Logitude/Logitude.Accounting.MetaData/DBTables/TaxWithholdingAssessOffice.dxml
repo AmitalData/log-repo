@@ -10,7 +10,7 @@
     Size="15">
     <Constraints
       PrimaryKey="true"
-      Nullable="false" />
+      Nullable="false" /> 
   </Column>
   <Column
     Name="Code"
