@@ -28,6 +28,22 @@ namespace Logitude.Customs.Data.EntityLists
        [Key]
        [DataMember]
        public string CB_ID  { get; set; }
+       [DataMember]
+       public string Country  { get; set; }
+       [DataMember]
+       public string CustomsRate  { get; set; }
+       [DataMember]
+       public string CustomsRateWithinQuota  { get; set; }
+       [DataMember]
+       public int? QuotaID  { get; set; }
+       [DataMember]
+       public string MeasurementUnitName  { get; set; }
+       [DataMember]
+       public decimal? OptionalTaxAddition  { get; set; }
+       [DataMember]
+       public DateTime? StartDate  { get; set; }
+       [DataMember]
+       public DateTime? EndDate  { get; set; }
    }
 
 }

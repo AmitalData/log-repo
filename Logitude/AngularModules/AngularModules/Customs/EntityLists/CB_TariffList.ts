@@ -15,6 +15,14 @@ export class CB_TariffList {
 	CustomsItemID: number;
 	Title: string;
 	CB_ID: string;
+	Country: string;
+	CustomsRate: string;
+	CustomsRateWithinQuota: string;
+	QuotaID: number;
+	MeasurementUnitName: string;
+	OptionalTaxAddition: number;
+	StartDate: Date;
+	EndDate: Date;
 	
 }
  
