@@ -33,11 +33,11 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string GoodsDescription  { get; set; }
        [DataMember]
-       public string Rules  { get; set; }
+       public int? Rules  { get; set; }
        [DataMember]
        public string Remarks  { get; set; }
        [DataMember]
-       public string Agreements  { get; set; }
+       public int? Agreements  { get; set; }
        [DataMember]
        public string CustomsRate  { get; set; }
        [DataMember]
@@ -52,6 +52,8 @@ namespace Logitude.Customs.Data.EntityLists
        [Key]
        [DataMember]
        public string CB_ID  { get; set; }
+       [DataMember]
+       public string SearchByTextResult  { get; set; }
    }
 
 }
