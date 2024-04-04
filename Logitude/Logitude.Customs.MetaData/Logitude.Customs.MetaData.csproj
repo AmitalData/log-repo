@@ -704,6 +704,7 @@
     <None Include="EntityFiles\ChangeType.lxml" />
     <None Include="EntityFiles\EntryExitType.lxml" />
     <None Include="EntityFiles\CB_RuleDetailsHistory.lxml" />
+    <None Include="EntityFiles\RemarksClassification.lxml" />
     <None Include="EntityFiles\TradeAgreementDetailsHistory_777.lxml" />
     <None Include="EntityFiles\TradeLevyStatus.lxml" />
     <None Include="EntityFiles\RegularityPublication.lxml" />

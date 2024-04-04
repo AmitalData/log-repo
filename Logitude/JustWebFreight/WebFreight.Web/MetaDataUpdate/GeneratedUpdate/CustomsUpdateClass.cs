@@ -448,6 +448,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 		RegularityRequirementWarningUpdateClass  RegularityRequirementWarningUpdateClass = new RegularityRequirementWarningUpdateClass();
 		RegularitySourceUpdateClass  RegularitySourceUpdateClass = new RegularitySourceUpdateClass();
 		ReleaseMessageTypeUpdateClass  ReleaseMessageTypeUpdateClass = new ReleaseMessageTypeUpdateClass();
+		RemarksClassificationUpdateClass  RemarksClassificationUpdateClass = new RemarksClassificationUpdateClass();
 		RenewalMethodUpdateClass  RenewalMethodUpdateClass = new RenewalMethodUpdateClass();
 		RequestReasonCodeEnumUpdateClass  RequestReasonCodeEnumUpdateClass = new RequestReasonCodeEnumUpdateClass();
 		RequestStatusUpdateClass  RequestStatusUpdateClass = new RequestStatusUpdateClass();
@@ -1068,6 +1069,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 			TablesHashStrings.Add("RegularityRequirementWarning",  RegularityRequirementWarningUpdateClass.HashString);
 			TablesHashStrings.Add("RegularitySource",  RegularitySourceUpdateClass.HashString);
 			TablesHashStrings.Add("ReleaseMessageType",  ReleaseMessageTypeUpdateClass.HashString);
+			TablesHashStrings.Add("RemarksClassification",  RemarksClassificationUpdateClass.HashString);
 			TablesHashStrings.Add("RenewalMethod",  RenewalMethodUpdateClass.HashString);
 			TablesHashStrings.Add("RequestReasonCodeEnum",  RequestReasonCodeEnumUpdateClass.HashString);
 			TablesHashStrings.Add("RequestStatus",  RequestStatusUpdateClass.HashString);
@@ -13506,6 +13508,39 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 				}
 			}
 
+			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.RemarksClassification", ObjectTables, RemarksClassificationUpdateClass.HashString))
+			{
+				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+				{				
+					MetadataUpdateUtility.DeleteAllTableMetadata("Customs.RemarksClassification");
+					RemarksClassificationUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+					this.ObjectContext.SaveChanges();
+					List<ObjectField> addedFields = new List<ObjectField>();
+					List<TextCode> addedTextCodes = new List<TextCode>();
+					RemarksClassificationUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository, TextCodeRepository, addedFields, addedTextCodes);
+					SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+					SqlBulkInsert.BulkInsert("ObjectFields", addedFields);					
+					//this.ObjectContext.TextCodes.AddRange(addedTextCodes);
+					//this.ObjectContext.ObjectFields.AddRange(addedFields);
+					//this.ObjectContext.SaveChanges();
+					RemarksClassificationUpdateClass.AddTableQueries(Queries, QueryColumns, ObjectTables, TextCodes, queryGroupRepository, queriesRepository, queryColumnsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, advancedQueryFiltersRepository, tenantAdvancedFilters,tenantQueryGroups);
+					//this.ObjectContext.SaveChanges();
+					RemarksClassificationUpdateClass.AddTableScreens(tenantScreens, tenantScreenFields, screensRepository, screenFieldsRepository, ObjectContext);
+					//this.ObjectContext.SaveChanges();
+					RemarksClassificationUpdateClass.AddTableTabs(TenantObjectTableTabs, TextCodes, objectTableTabsRepository, TextCodeRepository, FeaturesRepository, TenantFeatures, ObjectContext);
+					//this.ObjectContext.SaveChanges();
+					RemarksClassificationUpdateClass.AddTableEventTypes(tenantEventTypes, EventTypeRepository, ObjectContext, AllEntityStatuses);
+					//this.ObjectContext.SaveChanges();
+					RemarksClassificationUpdateClass.AddTableFeatures(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+					//this.ObjectContext.SaveChanges();
+					RemarksClassificationUpdateClass.AddTableTextCodes(TextCodeRepository, FeaturesRepository, TenantFeatures, TextCodes, ObjectContext);
+					//this.ObjectContext.SaveChanges();
+					RemarksClassificationUpdateClass.AddTableMenuButtons(tenantMenuButtons, tenantMenuButtonGroups, TextCodes, TextCodeRepository, FeaturesRepository, menuButtonRepository, TenantFeatures, menuButtonGroupRepository, ObjectContext);
+					this.ObjectContext.SaveChanges();
+					scope.Complete();
+				}
+			}
+
 			if(MetadataUpdateUtility.IsChangedMetadataTable("Customs.RenewalMethod", ObjectTables, RenewalMethodUpdateClass.HashString))
 			{
 				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -17263,6 +17298,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   ReleaseMessageTypeUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 	
+	   	   RemarksClassificationUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
+	
 	   	   RenewalMethodUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
 	
 	   	   RequestReasonCodeEnumUpdateClass.AddObjectTable(ObjectTables, TextCodes, ObjectTableRepository,TextCodeRepository);
@@ -18199,6 +18236,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   //ReleaseMessageTypeUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository,TextCodeRepository);
 	
+	   	   //RemarksClassificationUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository,TextCodeRepository);
+	
 	   	   //RenewalMethodUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository,TextCodeRepository);
 	
 	   	   //RequestReasonCodeEnumUpdateClass.AddObjectFields(ObjectFields, ObjectTables, TextCodes, ObjectFieldsRepository,TextCodeRepository);
@@ -19133,6 +19172,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	   	   RegularitySourceUpdateClass.AddTableQueries(Queries,QueryColumns, ObjectTables, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters,tenantQueryGroups);
 	
 	   	   ReleaseMessageTypeUpdateClass.AddTableQueries(Queries,QueryColumns, ObjectTables, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters,tenantQueryGroups);
+	
+	   	   RemarksClassificationUpdateClass.AddTableQueries(Queries,QueryColumns, ObjectTables, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters,tenantQueryGroups);
 	
 	   	   RenewalMethodUpdateClass.AddTableQueries(Queries,QueryColumns, ObjectTables, TextCodes,queryGroupRepository,queriesRepository,queryColumnsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,advancedQueryFiltersRepository,tenantAdvancedFilters,tenantQueryGroups);
 	
@@ -20069,6 +20110,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   ReleaseMessageTypeUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
 	
+	   	   RemarksClassificationUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
+	
 	   	   RenewalMethodUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
 	
 	   	   RequestReasonCodeEnumUpdateClass.AddTableScreens(tenantScreens,tenantScreenFields,screensRepository,screenFieldsRepository,ObjectContext);
@@ -21003,6 +21046,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	   	   RegularitySourceUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
 	
 	   	   ReleaseMessageTypeUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
+	
+	   	   RemarksClassificationUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
 	
 	   	   RenewalMethodUpdateClass.AddTableTabs(TenantObjectTableTabs,TextCodes,objectTableTabsRepository,TextCodeRepository,FeaturesRepository,TenantFeatures,ObjectContext);
 	
@@ -21939,6 +21984,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   ReleaseMessageTypeUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext,AllEntityStatuses);
 	
+	   	   RemarksClassificationUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext,AllEntityStatuses);
+	
 	   	   RenewalMethodUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext,AllEntityStatuses);
 	
 	   	   RequestReasonCodeEnumUpdateClass.AddTableEventTypes(tenantEventTypes,EventTypeRepository,ObjectContext,AllEntityStatuses);
@@ -22874,6 +22921,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   ReleaseMessageTypeUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
 	
+	   	   RemarksClassificationUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
+	
 	   	   RenewalMethodUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
 	
 	   	   RequestReasonCodeEnumUpdateClass.AddTableFeatures(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
@@ -23807,6 +23856,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	   	   RegularitySourceUpdateClass.AddTableTextCodes(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
 	
 	   	   ReleaseMessageTypeUpdateClass.AddTableTextCodes(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
+	
+	   	   RemarksClassificationUpdateClass.AddTableTextCodes(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
 	
 	   	   RenewalMethodUpdateClass.AddTableTextCodes(TextCodeRepository,FeaturesRepository,TenantFeatures,TextCodes,ObjectContext);
 	
@@ -24742,6 +24793,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 	
 	   	   ReleaseMessageTypeUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
 	
+	   	   RemarksClassificationUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
+	
 	   	   RenewalMethodUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
 	
 	   	   RequestReasonCodeEnumUpdateClass.AddTableMenuButtons(tenantMenuButtons,tenantMenuButtonGroups,TextCodes,TextCodeRepository,FeaturesRepository,menuButtonRepository,TenantFeatures,menuButtonGroupRepository ,ObjectContext);
@@ -24929,6 +24982,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 		public void CreateAllClosedTables()
         {
    
+	   
 	   
 	   
 	   

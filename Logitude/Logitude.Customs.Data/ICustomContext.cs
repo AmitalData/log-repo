@@ -389,6 +389,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<RegularityRequirementWarning> RegularityRequirementWarnings { get; }
 		 IDbSet<RegularitySource> RegularitySources { get; }
 		 IDbSet<ReleaseMessageType> ReleaseMessageTypes { get; }
+		 IDbSet<RemarksClassification> RemarksClassifications { get; }
 		 IDbSet<RenewalMethod> RenewalMethods { get; }
 		 IDbSet<RequestReasonCodeEnum> RequestReasonCodeEnums { get; }
 		 IDbSet<RequestStatus> RequestStatuses { get; }
