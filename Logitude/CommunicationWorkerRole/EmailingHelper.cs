@@ -18,6 +18,7 @@ using SendGrid.SmtpApi;
 using System.Diagnostics;
 using CommunicationWorkerRole.Services;
 using Logitude.Server.Tools;
+using Simplog.Server.Infrastructure;
 
 namespace CommunicationWorkerRole
 {
@@ -54,8 +55,9 @@ namespace CommunicationWorkerRole
                 var uniqueArgs = new Dictionary<string, string> {
                   {"CommunicationLogId", parameters.CommunicationLogId},
                   {"Tenant", parameters.Tenant +""},
-                  { "CommunicationLogCreateDate", createDate}
-                };
+                  { "CommunicationLogCreateDate", createDate},
+				  { "DeploymentStage", LogitudeSettings.DeploymentStage}
+				};
                 header.AddUniqueArgs(uniqueArgs);
                 var xmstpapiJson = header.JsonString();
                 myMessage.Headers.Add("X-SMTPAPI", xmstpapiJson);
