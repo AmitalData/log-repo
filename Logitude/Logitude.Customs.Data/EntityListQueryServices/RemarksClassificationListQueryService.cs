@@ -28,9 +28,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 					                          Id = a.Id,
 					
 					                          Tenant = a.Tenant,
-					
-					                          CB_ID = a.CB_ID,
-					
+										
 					                          CustomsItemsID = a.CustomsItemsID,
 					
 					                          RemarkDescription = a.RemarkDescription,
