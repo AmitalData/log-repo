@@ -24,19 +24,14 @@ export class RemarksClassificationPM {
       }
  	 
     
-    private id: number;
+    private id: string;
     public get Id() { return this.id; }
-    public set Id(newValue: number) { if (this.id != newValue) { this.id = newValue; this.MarkAsDirty("Id"); } }
+    public set Id(newValue: string) { if (this.id != newValue) { this.id = newValue; this.MarkAsDirty("Id"); } }
        
 	 
     private tenant: number;
     public get Tenant() { return this.tenant; }
     public set Tenant(newValue: number) { if (this.tenant != newValue) { this.tenant = newValue; this.MarkAsDirty("Tenant"); } }
-       
-	 
-    private cB_ID: string;
-    public get CB_ID() { return this.cB_ID; }
-    public set CB_ID(newValue: string) { if (this.cB_ID != newValue) { this.cB_ID = newValue; this.MarkAsDirty("CB_ID"); } }
        
 	 
     private customsItemsID: number;

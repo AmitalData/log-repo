@@ -18,12 +18,14 @@ namespace Logitude.Customs.Def.EntityPMs
    [DataContract]
    public partial class RemarksClassificationPM : EntityPM
    {
-   	  private int id ;
-	  	  
+   	  private string id ;
+	  
+       [Key]
+	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public int Id  
+       public string Id  
 	   {
 	    
 	     get
@@ -34,7 +36,7 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(id != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Id",OldValue=id,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Id",OldValue=id,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   id=value;
 		   }
@@ -60,31 +62,6 @@ namespace Logitude.Customs.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Tenant",OldValue=tenant,NewValue=value,PropertyType="int"};
 		    NotifyPropertyChanged(values);
 		   tenant=value;
-		   }
-			
-		 }
-	   }
-	  private string cB_ID ;
-	  
-       [Key]
-	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CB_ID  
-	   {
-	    
-	     get
-		{
-		   return cB_ID;
-		 }
-		 set
-		 {
-		   if(cB_ID != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CB_ID",OldValue=cB_ID,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   cB_ID=value;
 		   }
 			
 		 }

@@ -44,7 +44,7 @@ namespace WebFreight.Web.CustomModel.DomainServices
 		  //service = ContainerAccessor.Container.Resolve(typeof(IDomainServiceUpdateClass<RemarksClassificationPM>), "CustomDomainServiceUpdateClass", new ParameterOverride("", 1)) as IDomainServiceUpdateClass<RemarksClassificationPM>;
 		}
        
-        public RemarksClassificationPM GetSingleRemarksClassificationPM(string cb_id,int tenant)
+        public RemarksClassificationPM GetSingleRemarksClassificationPM(string id,int tenant)
         {
             if (MyContext == null)
             {
@@ -52,13 +52,13 @@ namespace WebFreight.Web.CustomModel.DomainServices
             }
 
             RemarksClassificationQueryService remarksClassificationQuery = new RemarksClassificationQueryService(MyContext);
-            RemarksClassificationPM remarksClassificationPM = remarksClassificationQuery.GetSingle(cb_id,false,false);
+            RemarksClassificationPM remarksClassificationPM = remarksClassificationQuery.GetSingle(id,false,false);
             return remarksClassificationPM;
            
         }
 
          
-		public RemarksClassificationList GetSingleRemarksClassificationList(string cb_id,int tenant)
+		public RemarksClassificationList GetSingleRemarksClassificationList(string id,int tenant)
         {
             SecurityUtility.AuthenticationOnTenant(tenant);
 			             SecurityUtility.CheckContactFeature("Customs.RemarksClassification", "READ", tenant); if ( MyContext == null)
@@ -68,7 +68,7 @@ namespace WebFreight.Web.CustomModel.DomainServices
 
           
             RemarksClassificationListQueryService listService = new RemarksClassificationListQueryService(MyContext);
-            return listService.GetSingle(cb_id);
+            return listService.GetSingle(id);
         }
 
 		public List<RemarksClassificationList> GetRemarksClassificationLists(int tenant)

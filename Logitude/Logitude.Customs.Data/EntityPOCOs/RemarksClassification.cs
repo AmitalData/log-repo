@@ -18,13 +18,11 @@ namespace Logitude.Customs.Data.EntityPOCOs
     {
 	 string dbms;
 
-           [Column("Id")]
-	    public int Id { get; set; }
+        [Key]
+        [Column("Id")]
+	    public string Id { get; set; }
         [Column("Tenant")]
 	    public int Tenant { get; set; }
-     [Key]
-        [Column("CB_ID")]
-	    public string CB_ID { get; set; }
         [Column("CustomsItemsID")]
 	    public int CustomsItemsID { get; set; }
         [Column("RemarkDescription")]

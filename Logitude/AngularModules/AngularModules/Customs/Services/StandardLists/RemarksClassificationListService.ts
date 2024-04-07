@@ -32,12 +32,12 @@ export class RemarksClassificationListService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/remarksclassificationviews';  
     }
 
-	getSingle(cb_id: string) {
+	getSingle(id: string) {
 	   
 		var callTime = new Date();
 
 		return defer(() => {
-			return this._http.get(this._apiUrl + '/getsingle/?' + 'cb_id=' + cb_id, ServiceHelper.GetHttpFullHeaders())
+			return this._http.get(this._apiUrl + '/getsingle/?' + 'id=' + id, ServiceHelper.GetHttpFullHeaders())
 				.pipe(			
 					map((response: HttpResponse<any>) => {
 
@@ -52,7 +52,7 @@ export class RemarksClassificationListService {
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "RemarksClassification", "GetSingleList", 'cb_id=' + cb_id); 
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "RemarksClassification", "GetSingleList", 'id=' + id); 
 
 						return serviceResponse;
 					}),
