@@ -477,7 +477,7 @@
   <Column
     Name="SendingInterestReport"
     Type="bit"
-     DefaultValue="0">
+    DefaultValue="0">
     <Constraints
       Nullable="false" />
   </Column>
