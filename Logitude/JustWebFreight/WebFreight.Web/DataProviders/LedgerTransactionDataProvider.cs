@@ -107,8 +107,6 @@ namespace WebFreight.Web.DataProviders
 
         public string PaymentTerms { get; set; }
 
-
-
         // calculated fields
         public decimal OriginalAmount
         {

@@ -62,34 +62,18 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             var myGLAccountQueryService = new GLAccountQueryService(_AccountingContext);
             //                    var hashsetallIdAccounts = myGLAccountQueryService.GetAllIdAccountsCat(_Param.Tenant, _Param.GLAccountId, _Param.Category1Id, _Param.Category2Id,
             //                        _Param.Category3Id, _Param.Category4Id, _Param.Category5Id, _Param.IncludeChildAccounts);
-            if (string.IsNullOrWhiteSpace(this._Param.GLAccountId))
-            {
+           
 
 
                 var hashsetallIdAccounts = myGLAccountQueryService.GetAllIdAccountsTypeCat(_Param.Tenant, _Param.GLAccountId, _Param.Category1Id, _Param.Category2Id,
                     _Param.Category3Id, _Param.Category4Id, _Param.Category5Id, _Param.AccountTypeCode, _Param.ChartOfAccountsId, _Param.IncludeChildAccounts,
                     _Param.ChartOfAccountsTypeCode,
-                    _Param.SalesmanId,_Param.CollectorId,
-                    includeControlAccount,_Param.UseSecurityLevel);
+                    _Param.SalesmanId,
+                    includeControlAccount,_Param.UseSecurityLevel,_Param.CollectorId);
                 var hash = new HashSet<string>(hashsetallIdAccounts);
                 _allIdAccounts = new List<string>(hash);// hashsetallIdAccounts);
-            }
-            else
-            {
-                if (_Param.GLAccountId != null && _Param.CollectorId != null)
-                {
-                    IAccountingContext context = AccountingContext.GetContext(_Param.Tenant);
-                    GLAccountRepository repository = new GLAccountRepository(context);
-
-                    var myCollector = repository.GetCollectorByGLAccountId(_Param.Tenant, _Param.GLAccountId);
-                    if (myCollector != _Param.CollectorId)
-                    {
-                        _allIdAccounts = new List<string>();
-                        return;
-                    }
-                }
-                _allIdAccounts = new List<string>() { this._Param.GLAccountId };
-            }
+           
+            
             if (_Param.IncludeRelatedCurrenciesAccount)
             {
 
@@ -137,8 +121,9 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
         public string SalesmanId { get; set; }
         public string CollectorId { get; set; }
         public bool UseSecurityLevel { get; set; }
+        public string CollectorId { get; set; }
 
         //public bool IncludeRelatedCurrenciesAccount { get; set; }
-        
+
     }
 }

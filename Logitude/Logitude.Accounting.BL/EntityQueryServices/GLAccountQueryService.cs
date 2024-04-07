@@ -323,7 +323,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         }
 
         public IQueryable<string> GetAllIdAccountsTypeCat(int tenant, string GLAccountId, string cat1, string cat2, string cat3, string cat4, string cat5, string gLAccountType, string chartOfAccountsId, 
-    bool IncludeChildAccounts,string ChartOfAccountsTypeCode, string salesmanId, string collectorId, bool includeControlAccount, bool useSecurityLevel )
+    bool IncludeChildAccounts,string ChartOfAccountsTypeCode, string salesmanId,bool includeControlAccount, bool useSecurityLevel,string collectorId )
         {
             int? securityLevel = GetSecurityLevel(useSecurityLevel, tenant);
             // List<String> allIdAccounts = new List<string>() { GLAccountId };
@@ -343,10 +343,8 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                     var myCollector = repository.GetCollectorByGLAccountId(tenant, GLAccountId);
                     if (myCollector != collectorId)
                     {                       
-                        return allIdAccounts;
-                    }
-                }
-                allIdAccounts = repository.GetQAccIdByAcountIdTypeCategories(tenant, GLAccountId, cat1, cat2, cat3, cat4, cat5, gLAccountType, chartOfAccountsId, ChartOfAccountsTypeCode, salesmanId, collectorId,includeControlAccount, securityLevel);
+               
+                allIdAccounts = repository.GetQAccIdByAcountIdTypeCategories(tenant, GLAccountId, cat1, cat2, cat3, cat4, cat5, gLAccountType, chartOfAccountsId, ChartOfAccountsTypeCode, salesmanId, includeControlAccount,  collectorId,securityLevel);
 
                 //   .ToList();
             }
