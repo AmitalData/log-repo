@@ -503,7 +503,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                          ChartOfAccountsTypeEnglishName = r.ChartOfAccountsTypeEnglishName,
                          ChartOfAccountsTypeLocalName = r.ChartOfAccountsTypeLocalName,
                          ChartOfAccountSecurityLevel = r.ChartOfAccountSecurityLevel,
-                         AccountPhone = r.AccountPhone,
+                         AccountPhone = r.AccountPhone , 
 
                          AccountContactName = r.AccountContactName,
                          AccountContactEmail = r.AccountContactEmail,
@@ -1948,9 +1948,7 @@ Period	Acc	Currency	Total
         public string ChartOfAccountsTypeEnglishName { get; set; }
         public string ChartOfAccountsTypeLocalName { get; set; }
         public int? ChartOfAccountSecurityLevel { get; set; }
-        public string AccountContactName { get; set; }
-        public string AccountContactEmail { get; set; }
-        public string AccountContactPhone { get; set; }
+
     }
 
     public class AgingReportParam
