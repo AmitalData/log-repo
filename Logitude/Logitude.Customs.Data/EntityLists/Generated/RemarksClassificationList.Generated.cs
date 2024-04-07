@@ -12,14 +12,12 @@ namespace Logitude.Customs.Data.EntityLists
    [DataContract]
    public partial class RemarksClassificationList
    {
-          [DataMember]
-       public int Id  { get; set; }
-       [DataMember]
-       public int Tenant  { get; set; }
-
+   
        [Key]
        [DataMember]
-       public string CB_ID  { get; set; }
+       public string Id  { get; set; }
+       [DataMember]
+       public int Tenant  { get; set; }
        [DataMember]
        public int CustomsItemsID  { get; set; }
        [DataMember]

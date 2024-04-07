@@ -32,12 +32,12 @@ export class RemarksClassificationPMService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/remarksclassifications';      
     }
 
-	get(cb_id: string) {       
+	get(id: string) {       
 
 		var callTime = new Date();		
 
 		return defer(() => {
-			return this._http.get(this._apiUrl + '/getsingle?' + 'cb_id=' + cb_id, ServiceHelper.GetHttpFullHeaders())
+			return this._http.get(this._apiUrl + '/getsingle?' + 'id=' + id, ServiceHelper.GetHttpFullHeaders())
 				.pipe(
 					map((response: HttpResponse<any>) => {
 						var pm = response.body;
@@ -51,7 +51,7 @@ export class RemarksClassificationPMService {
 						serviceResponse.Result = entity;
               
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "RemarksClassification", "GetSinglePM", 'cb_id=' + cb_id);
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "RemarksClassification", "GetSinglePM", 'id=' + id);
 				 
 						return serviceResponse;
 

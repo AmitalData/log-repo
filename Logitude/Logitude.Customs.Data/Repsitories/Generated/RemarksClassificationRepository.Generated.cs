@@ -28,10 +28,10 @@ namespace Logitude.Customs.Data.Repsitories
 
 		 
 		
-		public  RemarksClassification GetSingle(string cb_id, int tenant)
+		public  RemarksClassification GetSingle(string id, int tenant)
         {
             return (from a in context.RemarksClassifications
-                    where a.CB_ID == cb_id && a.Tenant == tenant
+                    where a.Id == id && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
 
@@ -46,7 +46,7 @@ namespace Logitude.Customs.Data.Repsitories
         {
             RemarksClassificationKeys keys = entityKeys as RemarksClassificationKeys;
             return (from a in context.RemarksClassifications
-                    where a.CB_ID == keys.CB_ID
+                    where a.Id == keys.Id
                     select a).FirstOrDefault();
         }
 		         

@@ -24,7 +24,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 		     None,  
 	         Id, 
 	         Tenant, 
-	         CB_ID, 
 	         CustomsItemsID, 
 	         RemarkDescription,
 	      }
@@ -35,7 +34,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 		     None,  
 	         Id, 
 	         Tenant, 
-	         CB_ID, 
 	         CustomsItemsID, 
 	         RemarkDescription,
 	      }
@@ -46,11 +44,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	    public void PMToPOCO(RemarksClassificationPM entityPM, RemarksClassification entityPOCO)
         {
 			 
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Id))
-            {
-				entityPOCO.Id = entityPM.Id;
-			}
-			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
             {
 				entityPOCO.Tenant = entityPM.Tenant;
@@ -80,11 +73,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.Tenant = entityPOCO.Tenant;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CB_ID))
-            {
-					entityPM.CB_ID = entityPOCO.CB_ID;
-            }
-
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CustomsItemsID))
             {
 					entityPM.CustomsItemsID = entityPOCO.CustomsItemsID;
@@ -101,11 +89,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
         {
 		     oldEntityPM.ChangedProperties.Clear();
 			 
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Id))
-            {
-                oldEntityPM.Id = entityPM.Id;
-            }
-			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
             {
                 oldEntityPM.Tenant = entityPM.Tenant;

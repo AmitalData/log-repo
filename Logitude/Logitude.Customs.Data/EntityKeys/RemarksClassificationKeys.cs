@@ -12,7 +12,7 @@ namespace Logitude.Customs.Data.EntityKeys
 {
    public partial class RemarksClassificationKeys : EntityKeyFields
    {
-   	  public string CB_ID  { get; set; }
+   	  public string Id  { get; set; }
 	  
 				 
 	    			   
@@ -20,7 +20,7 @@ namespace Logitude.Customs.Data.EntityKeys
 	 
 	  public override string GetFullKey()
       {
-                 return CB_ID ;
+                 return Id ;
                  
       }
 

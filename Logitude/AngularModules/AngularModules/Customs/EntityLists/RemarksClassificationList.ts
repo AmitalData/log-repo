@@ -8,9 +8,8 @@
 
 export class RemarksClassificationList {
    
-	Id: number;
+	Id: string;
 	Tenant: number;
-	CB_ID: string;
 	CustomsItemsID: number;
 	RemarkDescription: string;
 	
