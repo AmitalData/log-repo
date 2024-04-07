@@ -51,7 +51,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
     {
 	  
        
-        public HttpResponseMessage GetSingle(string cb_id)
+        public HttpResponseMessage GetSingle(string id)
         {
 		  try
             {
@@ -61,7 +61,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
                 RemarksClassificationListQueryService remarksClassificationQuery = new RemarksClassificationListQueryService(MyContext);
-                RemarksClassificationList remarksClassificationList = remarksClassificationQuery.GetSingle(cb_id);
+                RemarksClassificationList remarksClassificationList = remarksClassificationQuery.GetSingle(id);
  				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 				           
                 return Request.CreateResponse(HttpStatusCode.OK,  remarksClassificationList);

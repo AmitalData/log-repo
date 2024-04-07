@@ -48,9 +48,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
             mapping = new RemarksClassificationDataMapping();
         }
 		 
-		public  RemarksClassificationPM GetSingle(string cb_id,bool getComposition, bool getFromCache)
+		public  RemarksClassificationPM GetSingle(string id,bool getComposition, bool getFromCache)
         {
-             EntityKeys = new RemarksClassificationKeys(){ CB_ID = cb_id };
+             EntityKeys = new RemarksClassificationKeys(){ Id = id };
 
 			 return base.GetSingle(EntityKeys, getComposition, getFromCache);
         }
@@ -58,7 +58,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
        
 	    protected override EntityKeyFields GetKeys(RemarksClassification entityPOCO)
         {
-            RemarksClassificationKeys entityKeys = new RemarksClassificationKeys() { CB_ID = entityPOCO.CB_ID,  };
+            RemarksClassificationKeys entityKeys = new RemarksClassificationKeys() { Id = entityPOCO.Id,  };
             return entityKeys;
         }
      

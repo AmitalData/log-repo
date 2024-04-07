@@ -104,7 +104,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                             }
                         default:
                             {
-                                query2 = query2.OrderByDescending(d => d.CB_ID);
+                                query2 = query2.OrderByDescending(d => d.Id);
                                 break;
                             }
                     }
@@ -113,7 +113,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             }
 		    else
             {
-                query2 = query2.OrderByDescending(d => d.CB_ID);
+                query2 = query2.OrderByDescending(d => d.Id);
             }
 			if(!queryOperations.GetAll)
 			{
@@ -130,10 +130,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
              return GetList(new QueryOperations() { QueryFilterItems=new List<QueryFilterItem>(),PageIndex = 0,GetAll = true},tenant);
          }
 
-        public RemarksClassificationList GetSingle(string cb_id)
+        public RemarksClassificationList GetSingle(string id)
         {
             IQueryable<RemarksClassification> RemarksClassificationQuery = (from a in context.RemarksClassifications
-                                                       where a.CB_ID == cb_id
+                                                       where a.Id == id
                                                        select a);
 
              

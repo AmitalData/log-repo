@@ -50,7 +50,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 		
 		protected override EntityKeyFields GetKeys(RemarksClassificationPM entityPM)
         {
-            RemarksClassificationKeys entityKeys = new RemarksClassificationKeys() { CB_ID = entityPM.CB_ID };
+            RemarksClassificationKeys entityKeys = new RemarksClassificationKeys() { Id = entityPM.Id };
             return entityKeys;
         }
 
@@ -59,6 +59,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         {     
   
 		
+		    entityPM.Id = IdCounter.GetNumber("RemarksClassification", entityPM.Tenant); 
+					
 	    }
         
 		protected override void FillDefaultValuesOnUpdate(RemarksClassificationPM entityPM)
