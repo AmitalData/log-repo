@@ -97,7 +97,14 @@ namespace WebFreight.Web.DataProviders
         public decimal CumulativeOpenAmount { get; set; }
         public decimal CalculatedForeignAmount { get; set; }
 
+        public string Category1Id { get; set; }
+        public string Category2Id { get; set; }
+        public string Category3Id { get; set; }
+        public string Category4Id { get; set; }
+        public string Category5Id { get; set; }
+        public string Collector { get; set; }
 
+        public string PaymentTerms { get; set; }
 
         // calculated fields
         public decimal OriginalAmount

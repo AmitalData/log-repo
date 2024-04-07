@@ -460,6 +460,15 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
         queryFilterItems.push(queryFilterItem);
 
         queryFilterItem = new QueryFilterItem();
+
+        queryFilterItem.FieldName = "CollectorId";
+        queryFilterItem.FieldValue = this.GetLookUpFieldValue(this.collector);
+        queryFilterItem.Operator = "Equals";
+        queryFilterItem.DisplayInList = true; // server code will take this value from DB.ObjectField.DisplayInList
+        queryFilterItems.push(queryFilterItem);
+        
+
+        queryFilterItem = new QueryFilterItem();
         queryFilterItem.FieldName = "SalesmanUserId";
         queryFilterItem.FieldValue = this.GetLookUpFieldValue(this.salesman);
         queryFilterItem.Operator = "Equals";
@@ -606,6 +615,9 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
                 case "SalesmanUserId":
                     this.Salesman = queryFilterItem.FieldValue;
                     break;
+                case "CollectorId":
+                        this.Collector = queryFilterItem.FieldValue;
+                        break;
                 case "CategoryIndex":
                     this.SelectedItemChanged(this.GetLookUpFieldValue(queryFilterItem.FieldValue));
                     break;

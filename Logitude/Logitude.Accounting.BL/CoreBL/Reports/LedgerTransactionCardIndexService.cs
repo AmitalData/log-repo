@@ -78,7 +78,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                         _Param.Category3Id, _Param.Category4Id, _Param.Category5Id, _Param.AccountTypeCode, _Param.ChartOfAccountsId, _Param.IncludeChildAccounts
                         ,null/*_Param.ChartOfAccountsTypeCode*/
                         ,null //SALESMAN 
-                        ,true,false
+                        ,true,false,null
                         );
                     _allIdAccounts = qAllIdAccounts;// new List<string>(hashsetallIdAccounts);
                 }
