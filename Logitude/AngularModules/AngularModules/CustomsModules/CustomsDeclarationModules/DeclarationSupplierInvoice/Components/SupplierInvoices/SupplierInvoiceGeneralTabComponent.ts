@@ -204,100 +204,100 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
         this.initTradeAgreementFilter();
     }
 
-    private buildQuantityTypeGeneralParams(){
-        let params= new UpdateGeneralParams();
-        params.Title=TextCodeTranslator.Translate("Customs.Declaration.O.CopyNow");
-        params.Arguments=new UpdateGeneralArgsParams();
-        params.Arguments.UpdateField ='InvoiceQuantityType';
-        params.Arguments.Title=TextCodeTranslator.Translate("Customs.Declaration.O.MultiQantityType");
-        params.Arguments.IsItemsWithNoValue= true;
-        params.Arguments.LookUpTableName ='Customs.MeasurmentUnit';
-        params.Arguments.ObjectTableName ='Customs.SupplierInvoiceItem';
-        params.Arguments.ItemsWithNoValueTitle=TextCodeTranslator.Translate('Customs.Declaration.O.ItemsWithNoQuantityType');
-        params.Arguments.SelectionCompletedMethod=  (comp) => {
+    private buildQuantityTypeGeneralParams() {
+        let params = new UpdateGeneralParams();
+        params.Title = TextCodeTranslator.Translate("Customs.Declaration.O.CopyNow");
+        params.Arguments = new UpdateGeneralArgsParams();
+        params.Arguments.UpdateField = 'InvoiceQuantityType';
+        params.Arguments.Title = TextCodeTranslator.Translate("Customs.Declaration.O.MultiQantityType");
+        params.Arguments.IsItemsWithNoValue = true;
+        params.Arguments.LookUpTableName = 'Customs.MeasurmentUnit';
+        params.Arguments.ObjectTableName = 'Customs.SupplierInvoiceItem';
+        params.Arguments.ItemsWithNoValueTitle = TextCodeTranslator.Translate('Customs.Declaration.O.ItemsWithNoQuantityType');
+        params.Arguments.SelectionCompletedMethod = (comp) => {
             this.SelectionOriginCompleted(comp);
-         };   
-        this.updateOptionsMap[UpdateOptions.QuantityType]= params;
+        };
+        this.updateOptionsMap[UpdateOptions.QuantityType] = params;
     }
 
-    private buildProcessCodeGeneralParams(){
-        let params= new UpdateGeneralParams();
-        params.Title=TextCodeTranslator.Translate("Customs.Declaration.O.UpdateProcessCode");
-        params.Arguments=new UpdateGeneralArgsParams();
-        params.Arguments.UpdateField ='ProcessTypeCode';
+    private buildProcessCodeGeneralParams() {
+        let params = new UpdateGeneralParams();
+        params.Title = TextCodeTranslator.Translate("Customs.Declaration.O.UpdateProcessCode");
+        params.Arguments = new UpdateGeneralArgsParams();
+        params.Arguments.UpdateField = 'ProcessTypeCode';
         params.Arguments.LookUpTableName = 'Customs.ItemGovernmentProcedureType';
-        params.Arguments.ObjectTableName ='Customs.SupplierInvoiceItemProcesType';
-        params.Arguments.Title=TextCodeTranslator.Translate("Customs.Declaration.O.MultiProcessCode");
-        params.Arguments.IsItemsWithNoValue= false;
-        params.Arguments.SelectionCompletedMethod= (comp) => {
+        params.Arguments.ObjectTableName = 'Customs.SupplierInvoiceItemProcesType';
+        params.Arguments.Title = TextCodeTranslator.Translate("Customs.Declaration.O.MultiProcessCode");
+        params.Arguments.IsItemsWithNoValue = false;
+        params.Arguments.SelectionCompletedMethod = (comp) => {
             this.SelectionCompleted(comp);
-         }; ;   
-        this.updateOptionsMap[UpdateOptions.ProcessCode]= params;
+        };;
+        this.updateOptionsMap[UpdateOptions.ProcessCode] = params;
     }
 
-    private buildCountryOfOriginGeneralParams(){
-        let params= new UpdateGeneralParams();
-        params.Title=TextCodeTranslator.Translate("Customs.Declaration.O.UpdateCountryOfOrigin");
-        params.Arguments=new UpdateGeneralArgsParams();
-        params.Arguments.UpdateField ='OriginCountryCode';
-        params.Arguments.Title=TextCodeTranslator.Translate("Customs.Declaration.O.MultiCountryOfOrigin");
-        params.Arguments.ItemsWithNoValueTitle=TextCodeTranslator.Translate("Customs.Declaration.O.ItemsWithNoCountrOfOrigin");
-        params.Arguments.IsItemsWithNoValue= true;
-        params.Arguments.LookUpTableName='Customs.CustomsCountry';
-        params.Arguments.ObjectTableName ='Customs.SupplierInvoiceItem';
-        params.Arguments.SelectionCompletedMethod= (comp) => {
+    private buildCountryOfOriginGeneralParams() {
+        let params = new UpdateGeneralParams();
+        params.Title = TextCodeTranslator.Translate("Customs.Declaration.O.UpdateCountryOfOrigin");
+        params.Arguments = new UpdateGeneralArgsParams();
+        params.Arguments.UpdateField = 'OriginCountryCode';
+        params.Arguments.Title = TextCodeTranslator.Translate("Customs.Declaration.O.MultiCountryOfOrigin");
+        params.Arguments.ItemsWithNoValueTitle = TextCodeTranslator.Translate("Customs.Declaration.O.ItemsWithNoCountrOfOrigin");
+        params.Arguments.IsItemsWithNoValue = true;
+        params.Arguments.LookUpTableName = 'Customs.CustomsCountry';
+        params.Arguments.ObjectTableName = 'Customs.SupplierInvoiceItem';
+        params.Arguments.SelectionCompletedMethod = (comp) => {
             this.SelectionOriginCompleted(comp);
-         };   
-        this.updateOptionsMap[UpdateOptions.CountryOfOrigin]= params;
+        };
+        this.updateOptionsMap[UpdateOptions.CountryOfOrigin] = params;
     }
 
-    private buildClassificationCodeGeneralParams(){
-        let params= new UpdateGeneralParams();
-        params.Title=TextCodeTranslator.Translate("Customs.Declaration.O.UpdateClassificationCode");
-        params.Arguments=new UpdateGeneralArgsParams();
-        params.Arguments.UpdateField ='ClassificationCode';
-        params.Arguments.Title=TextCodeTranslator.Translate("Customs.Declaration.O.MultiClassificationCode");
-        params.Arguments.Validate=SupplierInvoiceItemLine.validateClassificationCode;
-        params.Arguments.ItemsWithNoValueTitle=TextCodeTranslator.Translate("Customs.Declaration.O.ItemsWithNoClassificationCode");
-        params.Arguments.IsItemsWithNoValue= true;
-        params.Arguments.SelectionCompletedMethod= (comp) => {
+    private buildClassificationCodeGeneralParams() {
+        let params = new UpdateGeneralParams();
+        params.Title = TextCodeTranslator.Translate("Customs.Declaration.O.UpdateClassificationCode");
+        params.Arguments = new UpdateGeneralArgsParams();
+        params.Arguments.UpdateField = 'ClassificationCode';
+        params.Arguments.Title = TextCodeTranslator.Translate("Customs.Declaration.O.MultiClassificationCode");
+        params.Arguments.Validate = SupplierInvoiceItemLine.validateClassificationCode;
+        params.Arguments.ItemsWithNoValueTitle = TextCodeTranslator.Translate("Customs.Declaration.O.ItemsWithNoClassificationCode");
+        params.Arguments.IsItemsWithNoValue = true;
+        params.Arguments.SelectionCompletedMethod = (comp) => {
             this.SelectionOriginCompleted(comp);
-         }; 
-        params.Arguments.ObjectTableName ='Customs.SupplierInvoiceItem'; 
-        this.updateOptionsMap[UpdateOptions.ClassificationCode]= params;	
+        };
+        params.Arguments.ObjectTableName = 'Customs.SupplierInvoiceItem';
+        this.updateOptionsMap[UpdateOptions.ClassificationCode] = params;
     }
 
-    private buildProtocolCodeGeneralParams(){
-        let params= new UpdateGeneralParams();
-        params.Title=TextCodeTranslator.Translate("Customs.Declaration.O.UpdateProtocolCode");
-        params.Arguments=new UpdateGeneralArgsParams();
-        params.Arguments.UpdateField ='DutyRegimeProtocolCode';
-        params.Arguments.Title=TextCodeTranslator.Translate("Customs.Declaration.O.MultiProtocolCode");
-        params.Arguments.Validate=SupplierInvoiceItemLine.validateClassificationCode;
-        params.Arguments.ItemsWithNoValueTitle=TextCodeTranslator.Translate("Customs.Declaration.O.ItemsWithNoProtocolCode");
-        params.Arguments.IsItemsWithNoValue= true;
-        params.Arguments.LookUpTableName='Customs.TradeAgreementProtocol';
-        params.Arguments.SelectionCompletedMethod= (comp) => {
+    private buildProtocolCodeGeneralParams() {
+        let params = new UpdateGeneralParams();
+        params.Title = TextCodeTranslator.Translate("Customs.Declaration.O.UpdateProtocolCode");
+        params.Arguments = new UpdateGeneralArgsParams();
+        params.Arguments.UpdateField = 'DutyRegimeProtocolCode';
+        params.Arguments.Title = TextCodeTranslator.Translate("Customs.Declaration.O.MultiProtocolCode");
+        params.Arguments.Validate = SupplierInvoiceItemLine.validateClassificationCode;
+        params.Arguments.ItemsWithNoValueTitle = TextCodeTranslator.Translate("Customs.Declaration.O.ItemsWithNoProtocolCode");
+        params.Arguments.IsItemsWithNoValue = true;
+        params.Arguments.LookUpTableName = 'Customs.TradeAgreementProtocol';
+        params.Arguments.SelectionCompletedMethod = (comp) => {
             this.SelectionOriginCompleted(comp);
-         }; 
-        params.Arguments.ObjectTableName ='Customs.SupplierInvoiceItem';   
-        this.updateOptionsMap[UpdateOptions.ProtocolCode]= params;	
+        };
+        params.Arguments.ObjectTableName = 'Customs.SupplierInvoiceItem';
+        this.updateOptionsMap[UpdateOptions.ProtocolCode] = params;
     }
 
-    private buildTradeAgreementGeneralParams(){
-        let params= new UpdateGeneralParams();
-        params.Title=TextCodeTranslator.Translate("Customs.Declaration.O.UpdateTradeAgreement");
-        params.Arguments=new UpdateGeneralArgsParams();
-        params.Arguments.UpdateField ='TradeAgreementCode';
-        params.Arguments.Title=TextCodeTranslator.Translate("Customs.Declaration.O.MultiTradeAgreement");
-        params.Arguments.ItemsWithNoValueTitle=TextCodeTranslator.Translate("Customs.Declaration.O.ItemsWithNoTradeAgreement");
-        params.Arguments.IsItemsWithNoValue= true;
-        params.Arguments.LookUpTableName='Customs.TradeAgreement';
-        params.Arguments.SelectionCompletedMethod= (comp) => {
+    private buildTradeAgreementGeneralParams() {
+        let params = new UpdateGeneralParams();
+        params.Title = TextCodeTranslator.Translate("Customs.Declaration.O.UpdateTradeAgreement");
+        params.Arguments = new UpdateGeneralArgsParams();
+        params.Arguments.UpdateField = 'TradeAgreementCode';
+        params.Arguments.Title = TextCodeTranslator.Translate("Customs.Declaration.O.MultiTradeAgreement");
+        params.Arguments.ItemsWithNoValueTitle = TextCodeTranslator.Translate("Customs.Declaration.O.ItemsWithNoTradeAgreement");
+        params.Arguments.IsItemsWithNoValue = true;
+        params.Arguments.LookUpTableName = 'Customs.TradeAgreement';
+        params.Arguments.SelectionCompletedMethod = (comp) => {
             this.SelectionOriginCompleted(comp);
-         };    
-        params.Arguments.ObjectTableName ='Customs.SupplierInvoiceItem'; 
-        this.updateOptionsMap[UpdateOptions.TradeAgreement]= params;	
+        };
+        params.Arguments.ObjectTableName = 'Customs.SupplierInvoiceItem';
+        this.updateOptionsMap[UpdateOptions.TradeAgreement] = params;
     }
 
     ngOnInit() {
@@ -1561,8 +1561,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
         if (direction == 'E') {
             this.UpdateClicked(UpdateOptions.QuantityType);
         }
-        else
-        {
+        else {
             var confirm = new ConfirmWindow();
 
             confirm.YesButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.UpdateAndOverride");
@@ -1611,25 +1610,25 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
 
             }
         }
-    
+
     }
 
 
-    UpdateClicked(type:UpdateOptions){
-        let selectedOptionsSettings=this.updateOptionsMap[type];
+    UpdateClicked(type: UpdateOptions) {
+        let selectedOptionsSettings = this.updateOptionsMap[type];
         let title = selectedOptionsSettings.Title;
-        var args=selectedOptionsSettings.Arguments;
+        var args = selectedOptionsSettings.Arguments;
         this.UpdateSupplierInvoiceGeneralField(args, title);
     }
 
-    UpdateSupplierInvoiceGeneralField(args:UpdateGeneralArgsParams, title){
+    UpdateSupplierInvoiceGeneralField(args: UpdateGeneralArgsParams, title) {
         var windowArgs: any = {};
         var logWindow = new LogitudeWindow();
         logWindow.Width = 700;
         logWindow.Height = 500;
         logWindow.ShowCloseButton = true;
         windowArgs.SupplierInvoicePM = this.EntityPM;
-        windowArgs = Object.assign(windowArgs,args);
+        windowArgs = Object.assign(windowArgs, args);
         logWindow.WindowArgs = windowArgs;
         logWindow.Title = title;
         logWindow.ComponentLoaded.subscribe(comp => {
@@ -1662,7 +1661,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
                 } else {
                     if (args.ItemsSource) {
                         for (let item of this.EntityPM.SupplierInvoiceItems.filter(d => !d.IsParent)) {
-                            var number = args.ItemsSource.Collection.filter(d => d.Number == item.SequenceNumeric)[0];                            
+                            var number = args.ItemsSource.Collection.filter(d => d.Number == item.SequenceNumeric)[0];
                             if (number) {
                                 this.updateProcess(item, args);
                             }
@@ -1672,9 +1671,9 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
             }
         }
     }
-    updateProcess(item:SupplierInvoiceItemPM, args) {
-        var updateField=args.UpdateField;
-        var value= args[args.UpdateField];
+    updateProcess(item: SupplierInvoiceItemPM, args) {
+        var updateField = args.UpdateField;
+        var value = args[args.UpdateField];
         switch (updateField) {
             case 'OriginCountryCode': {
                 item.OriginCountryCode = args.FinalValue.Code;
@@ -3556,7 +3555,7 @@ class UpdateGeneralParams {
     public Arguments: UpdateGeneralArgsParams;
 }
 
- enum UpdateOptions {
+enum UpdateOptions {
     QuantityType,
     ProcessCode,
     CountryOfOrigin,
@@ -3873,9 +3872,6 @@ export class SupplierInvoiceItemLine extends BaseComponent {
     public get TradeAgreementCode() { return this.entityPM.TradeAgreementCode; }
     public set TradeAgreementCode(newValue: string) {
         this.entityPM.TradeAgreementCode = newValue;
-        if (this.Parent.declarationPM.Direction == "E") {
-            this.Parent.PreferenceDocumentTypeCode = newValue;
-        }
         this.CheckTariff();
     }
 
@@ -3885,9 +3881,6 @@ export class SupplierInvoiceItemLine extends BaseComponent {
     public get DutyRegimeProtocolCode() { return this.entityPM.DutyRegimeProtocolCode; }
     public set DutyRegimeProtocolCode(newValue: string) {
         this.entityPM.DutyRegimeProtocolCode = newValue;
-        if (this.Parent.declarationPM.Direction == "E") {
-            this.Parent.DutyRegimeProtocolCode = newValue;
-        }
         this.tradeAgreementProtocolListService.getSingle(newValue).subscribe((res) =>
             this.DutyRegimeProtocolLocalName = res?.Result?.LocalName);
     }
@@ -4542,10 +4535,10 @@ export class SupplierInvoiceItemLine extends BaseComponent {
                 if (AppTool.IsNullOrEmpty(this.entityPM.ClassificationCode) &&
                     !AppTool.IsNullOrEmpty(this.Parent.declarationPM.ExporterImporterCode) &&
                     (!AppTool.IsNullOrEmpty(this.ItemCode) || !AppTool.IsNullOrEmpty(this.ItemDescription))) {
-                    
+
                     const clientItemExtendedPMService = new ClientItemExtendedPMService();
                     let clientItemRequest: Observable<ServiceResponse>;
-            
+
                     if (!AppTool.IsNullOrEmpty(this.ItemCode)) {
                         clientItemRequest = clientItemExtendedPMService.GetClientItemPM(
                             this.ItemCode,
@@ -4559,7 +4552,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
                             SessionLocator.Tenant
                         );
                     }
-            
+
                     clientItemRequest.subscribe((response: ServiceResponse) => {
                         if (response?.Result) {
                             const clientItemPM: ClientItemPM = response.Result;
@@ -4568,7 +4561,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
                             this.entityPM.ItemCode = this.entityPM.ItemCode || clientItemPM?.ItemCode;
                             this.entityPM.OriginCountryCode = this.entityPM.OriginCountryCode || clientItemPM?.OriginCountryCode;
                             this.entityPM.OriginCountryName = this.entityPM.OriginCountryName || clientItemPM?.OriginCountryName;
-            
+
                             if (!AppTool.IsNullOrEmpty(this.entityPM.ClassificationCode)) {
                                 this.Parent.quantityTypeMessageService.GetQuantityType(
                                     this.entityPM.ClassificationCode,
@@ -4584,7 +4577,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
                     });
                 }
             }
-            
+
 
         }
 
