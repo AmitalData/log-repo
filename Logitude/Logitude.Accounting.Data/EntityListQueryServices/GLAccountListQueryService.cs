@@ -489,6 +489,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
                              InsuredCreditPercentage = (CardsDatas.CreditLimit == null || CardsDatas.CreditLimit == 0) ? 0 :
                              ((CardsDatas.InsuredcreditLimit ?? 0) / CardsDatas.CreditLimit * 100),
+                             ContactId = a.ContactId,
                              ContactName = a.ContactId != null ? (a.Contact.LocalName ?? a.Contact.EnglishName) : null,
 
 
