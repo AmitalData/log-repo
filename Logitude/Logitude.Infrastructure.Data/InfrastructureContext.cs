@@ -108,6 +108,8 @@ namespace Logitude.Infrastructure.Data
 	
             modelBuilder.Configurations.Add(new PriceStepMap());
 	
+            modelBuilder.Configurations.Add(new SatisfactionSurveyMap());
+	
             modelBuilder.Configurations.Add(new SharedLogisticsSettingMap());
 	
             modelBuilder.Configurations.Add(new TeamMap());
@@ -516,6 +518,12 @@ namespace Logitude.Infrastructure.Data
 	 }
 	
 	 public IDbSet<PriceStep> PriceSteps 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<SatisfactionSurvey> SatisfactionSurveys 
 	 {
 	      get; set;
 	 

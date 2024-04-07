@@ -4002,7 +4002,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         journalLine.ExchangeRate = (decimal)theEntityPm.InvoiceCurrencyExchangeRate;
                         journalLine.Reference1 = theEntityPm.CustomerRef != null ? theEntityPm.CustomerRef : theEntityPm.InvoiceNumber;
                         journalLine.Reference2 = theEntityPm.MainEntityReference;
-                        journalLine.Reference3 = !string.IsNullOrEmpty(theEntityPm.HouseNumber) ? theEntityPm.HouseNumber : theEntityPm.MasterNumber;
+                        journalLine.Reference3 = !string.IsNullOrEmpty(theEntityPm.MasterNumber) ? theEntityPm.MasterNumber : (!string.IsNullOrEmpty(theEntityPm.HouseNumber) ? theEntityPm.HouseNumber : theEntityPm.MasterNumber);
                         journalLine.Notes = theEntityPm.PrintNotes;
                         journalLine.DebitAccountId = glAccount == null ? "" : glAccount.Id;
                         journalLine.DebitControlAccountId = glAccount == null ? "" : glAccount.ControlAccountId;
@@ -4013,26 +4013,26 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     journalLine = new JournalLinePM();
                     int counter = 1;
                     List<JournalLinePM> journalLines = (from d in theEntityPm.InvoiceLines
-                                                        group d by new { d.GLAccountId, d.ForiegnCurrencyId, d.ForiegnExchangeRate, d.ValueDate } into g
+                                                                                                       
                                                         select new JournalLinePM()
                                                         {
                                                             Tenant = tenant,
                                                             ActionCode = "1",
                                                             ActionTypeCodeEnum = JournalActionTypeEnum.Credit,
                                                             JournalId = journal.Id,
-                                                            CreditAccountId = g.Key.GLAccountId,
+                                                            CreditAccountId =d.GLAccountId,
                                                             Line = ++counter,
                                                             DocumentDate = theEntityPm.InvoiceDate.Value,
                                                             AccountingDate = theEntityPm.InvoiceDate.Value,
-                                                            DueDate = g.Key.ValueDate == null ? theEntityPm.DueDate.Value : (DateTime)g.Key.ValueDate,
-                                                            LocalAmount = (decimal)g.Sum(a => a.LocalCurrencyAmount),
-                                                            CurrencyId = g.Key.ForiegnCurrencyId,
-                                                            ForeignAmount = (decimal)g.Sum(a => a.ForiegnCurrencyAmount),
-                                                            ExchangeRate = (decimal)g.Key.ForiegnExchangeRate,
+                                                            DueDate =d.ValueDate == null ? theEntityPm.DueDate.Value : (DateTime)d.ValueDate,
+                                                            LocalAmount = (decimal)d.LocalCurrencyAmount,
+                                                            CurrencyId =d.ForiegnCurrencyId,
+                                                            ForeignAmount = (decimal)d.ForiegnCurrencyAmount,
+                                                            ExchangeRate = (decimal)d.ForiegnExchangeRate,
                                                             Reference1 = theEntityPm.CustomerRef != null ? theEntityPm.CustomerRef : theEntityPm.InvoiceNumber,
                                                             Reference2 = theEntityPm.MainEntityReference,
-                                                            Reference3 = !string.IsNullOrEmpty(theEntityPm.HouseNumber) ? theEntityPm.HouseNumber : theEntityPm.MasterNumber,
-                                                            Notes = theEntityPm.PrintNotes,
+                                                            Reference3 = !string.IsNullOrEmpty(theEntityPm.MasterNumber) ? theEntityPm.MasterNumber : (!string.IsNullOrEmpty(theEntityPm.HouseNumber) ? theEntityPm.HouseNumber : theEntityPm.MasterNumber),
+                                                            Notes =d.Notes ,
                                                         }).ToList();
 
                     UpdateJournalLinesDebitAccounts(journalLines);
@@ -4066,7 +4066,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             ExchangeRate = (decimal)theEntityPm.InvoiceCurrencyExchangeRate,
                             Reference1 = theEntityPm.CustomerRef != null ? theEntityPm.CustomerRef : theEntityPm.InvoiceNumber,
                             Reference2 = theEntityPm.MainEntityReference,
-                            Reference3 = !string.IsNullOrEmpty(theEntityPm.HouseNumber) ? theEntityPm.HouseNumber : theEntityPm.MasterNumber,
+                            Reference3 = !string.IsNullOrEmpty(theEntityPm.MasterNumber) ? theEntityPm.MasterNumber : (!string.IsNullOrEmpty(theEntityPm.HouseNumber) ? theEntityPm.HouseNumber : theEntityPm.MasterNumber),
 
                         };
                         GLAccountPM debitGLAccount = getDebitGLAccount(entityPM.BillToId, entityPM.Tenant, entityPM.IsExternalEntity, entityPM.BillToGLAccountId);

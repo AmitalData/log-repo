@@ -1272,7 +1272,7 @@ namespace WebFreight.Web.Helpers
 
                 {
 
-                   
+					
                     var workbook = new XSSFWorkbook();
 
                     #region Styles
@@ -1354,13 +1354,17 @@ namespace WebFreight.Web.Helpers
 
                             text = column.DisplayText;
                         }
-                    
+                        else if (!string.IsNullOrEmpty(column.ObjectFieldFieldLableTextCodeDefaultText))
+                        {
+							text = column.ObjectFieldFieldLableTextCodeDefaultText;
+						}						
 
-                    text = text != null ? text : "";
+
+					text = text != null ? text : "";
                     text = text.Replace(":", "").Replace("/", "").Replace("\"", "").Replace("?", "").Replace("*", "").Replace("[", "").Replace("]", "").Replace("(", "").Replace(")", "");
 
 
-                    if (!FeatureToggleHelper.HasFeatureToggle("CXE", tenant))
+						if (!FeatureToggleHelper.HasFeatureToggle("CXE", tenant))
                         {
                             sheet.AutoSizeColumn(column.IndexOrder + 1);
                         }

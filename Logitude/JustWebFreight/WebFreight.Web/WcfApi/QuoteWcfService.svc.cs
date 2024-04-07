@@ -851,7 +851,11 @@ namespace WebFreight.Web.WcfApi
                             newDocumentFiling.HasCopies = true;
                             newDocumentFiling.SearchFields = newDocumentFiling.Code + "," + newDocumentFiling.DirectionCode;
                             
-                            newDocumentFiling.SecurityId = newDocumentFiling.Id + StringHelper.GetRandomString(10);
+                         // newDocumentFiling.SecurityId = newDocumentFiling.Id + StringHelper.GetRandomString(10);
+                            string com_id = newDocumentFiling.Id;        // Length = 30
+                            string com_md5 = CreateMD5(com_id); // Length = 32 
+                            string com_short = newDocumentFiling.Id.Substring(0, 8);
+                            newDocumentFiling.SecurityId = com_short + com_md5; // Length = 40
 
                             documentsFilingRepository.Add(newDocumentFiling);
 
@@ -1063,6 +1067,41 @@ namespace WebFreight.Web.WcfApi
                     response.ErrorMessage += Environment.NewLine + ex.StackTrace;
                 }
                 return response;
+            }
+
+        }
+
+
+        private static string CreateMD5(string input)
+
+        {
+
+            // Use input string to calculate MD5 hash
+
+            using (System.Security.Cryptography.MD5 md5 = System.Security.Cryptography.MD5.Create())
+
+            {
+
+                byte[] inputBytes = System.Text.Encoding.Unicode.GetBytes(input);
+
+                byte[] hashBytes = md5.ComputeHash(inputBytes);
+
+                //return Convert.ToHexString(hashBytes); // .NET 5 +
+
+                //Convert the byte array to hexadecimal string prior to.NET 5
+
+                StringBuilder sb = new System.Text.StringBuilder();
+
+                for (int i = 0; i < hashBytes.Length; i++)
+
+                {
+
+                    sb.Append(hashBytes[i].ToString("X2"));
+
+                }
+
+                return sb.ToString();
+
             }
 
         }

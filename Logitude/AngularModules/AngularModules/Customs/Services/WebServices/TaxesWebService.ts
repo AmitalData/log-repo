@@ -10,7 +10,7 @@ export class TaxesWebService {
 
     constructor() { }
 
-    getTokens(): Promise<string> {
+    getlinkLogin(): Promise<string> {
         return this.http.get(this.apiUrl + '/getlinkLogin', { headers: this.headers }).toPromise() as Promise<string>;
     }
 

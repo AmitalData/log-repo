@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class FullAccountingSettingUpdateClass
    {  		
-		public const string HashString = "045f125f4b1686d80d08320adf2243cb";
+		public const string HashString = "c899c955f65f9c6cecc9925e5b19c476";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -131,7 +131,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "הגדרות הנהלת חשבונות",
 			      				    DefaultText =  "Full Accounting Settings",
-			      				    Code =  "07c0",
+			      				    Code =  "9ef3",
 			      				    Name =  "FullAccountingSetting Query Group",
 			      				    GenerateDomainService =  true,
 			      				    ClientModuleName =  "Accounting",
@@ -4167,6 +4167,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode FullAccountingSettingTextCode_FullAccountingSettingOAgingDefinition = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "FullAccountingSetting.O.AgingDefinition", DefaultText = "Aging Definition",LocalDefaultText = @"הגדרות גיול", ObjectTableId = FullAccountingSettingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode FullAccountingSettingTextCode_FullAccountingSettingOCopyFromTenant0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "FullAccountingSetting.O.CopyFromTenant0", DefaultText = "Copying Data From Tenant0",LocalDefaultText = @"העתקת נתונים מדייר 0", ObjectTableId = FullAccountingSettingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode FullAccountingSettingTextCode_FullAccountingSettingOHSMTokenLong = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "FullAccountingSetting.O.HSMTokenLong", DefaultText = "HSM Token must be 36 characters long and should be format like 8X-4X-4X-4X-12X",LocalDefaultText = @"טוקן HSM חייב להכיל 36 תוים בפורמט 8X-4X-4X-4X-12X", ObjectTableId = FullAccountingSettingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode FullAccountingSettingTextCode_FullAccountingSettingOHSMTokenFormat = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "FullAccountingSetting.O.HSMTokenFormat", DefaultText = "HSM Token should be format like 8X-4X-4X-4X-12X",LocalDefaultText = @"טוקן HSM חייב להיות בפורמט 8X-4X-4X-4X-12X", ObjectTableId = FullAccountingSettingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode FullAccountingSettingTextCode_FullAccountingSettingOHSMAddressLong = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "FullAccountingSetting.O.HSMAddressLong", DefaultText = "HSM Address must be 50 characters long",LocalDefaultText = @"כתובת HSM חייבת להיות באורך 50 תוים", ObjectTableId = FullAccountingSettingObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

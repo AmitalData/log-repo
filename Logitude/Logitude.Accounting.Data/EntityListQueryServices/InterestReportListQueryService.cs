@@ -23,7 +23,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         {
 
 
-        IQueryable<InterestReportList> query = (from a in iQueryable.Include("GLAccount")
+        IQueryable<InterestReportList> query = (from a in iQueryable.Include("GLAccount").Include("ChartOfAccounts")
 												select new InterestReportList()
 											{
                      
@@ -93,8 +93,12 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 											 Category3Id = a.GLAccount.Category3Id,
 											 Category4Id = a.GLAccount.Category4Id,
 											 Category5Id = a.GLAccount.Category5Id,
+                                             ChartOfAccountsId = a.GLAccount != null ? a.GLAccount.ChartOfAccountsId : null,
+											 ChartOfAccountsName= a.GLAccount != null ? a.GLAccount.ChartOfAccount.LocalName : null,
+                                             ChartOfAccountsCode = a.GLAccount != null ? a.GLAccount.ChartOfAccount.Code : null,
 
-												});
+
+                                                });
             return query;
 		}
 

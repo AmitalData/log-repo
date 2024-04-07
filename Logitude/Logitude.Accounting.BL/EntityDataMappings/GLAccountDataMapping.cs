@@ -260,10 +260,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                     }
                     else
                     {
-
-                        var gLAccountPM = gLAccountQueryService.GetSingle(entityPOCO.ControlAccountId, false, true);
-                        entityPM.ControlAccountName = (showLocals ? gLAccountPM.LocalName : gLAccountPM.EnglishName);
-                        entityPM.ControlAccountNumber = gLAccountPM.DisplayNumber;
+                        var gLAccount = gLAccountQueryService.GetSingleByAccountId(entityPOCO.ControlAccountId, entityPOCO.Tenant);
+                        entityPM.ControlAccountName = (showLocals ? gLAccount.LocalName : gLAccount.EnglishName);
+                        entityPM.ControlAccountNumber = gLAccount.DisplayNumber;
                     }
 
                 }
@@ -338,12 +337,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 
                     if (true)
                     {
-                        var gLAccountPM = gLAccountQueryService.GetSingle(entityPOCO.CustomerGLAccountId, false, true);
-                        if (gLAccountPM != null)
-                        {
-                            entityPM.CustomerGLAccountName = (showLocals ? gLAccountPM.LocalName : gLAccountPM.EnglishName);
-                            entityPM.CustomerGLAccountNumber = gLAccountPM.DisplayNumber;
-                        }
+                        var gLAccount = gLAccountQueryService.GetSingleByAccountId(entityPOCO.CustomerGLAccountId, entityPOCO.Tenant);
+                        entityPM.CustomerGLAccountName = (showLocals ? gLAccount.LocalName : gLAccount.EnglishName);
+                        entityPM.CustomerGLAccountNumber = gLAccount.DisplayNumber;
                     }
                     else
                     {
@@ -362,9 +358,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 {
                     if (true)
                     {
-                        var gLAccountPM = gLAccountQueryService.GetSingle(entityPOCO.ParentAccountId, false, true);
-                        entityPM.ParentAccountName = (showLocals ? gLAccountPM.LocalName : gLAccountPM.EnglishName);
-                        entityPM.ParentAccountNumber = gLAccountPM.DisplayNumber;
+                        var gLAccount = gLAccountQueryService.GetSingleByAccountId(entityPOCO.ParentAccountId, entityPOCO.Tenant);
+                        entityPM.ParentAccountName = (showLocals ? gLAccount.LocalName : gLAccount.EnglishName);
+                        entityPM.ParentAccountNumber = gLAccount.DisplayNumber;
                     }
                     else
                     {

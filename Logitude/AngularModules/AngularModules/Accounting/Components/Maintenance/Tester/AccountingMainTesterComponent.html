@@ -28,9 +28,9 @@
     <div *ngIf="SelectedItem=='FIX'">
         <table>
             <tr>
-                <td style="width:200px"><button class="Button" (click)="_ButtonReverseTotalFIX_Click()">FIX TOTAL from  Ledger</button></td>
+                <td style="width:200px"><button class="Button" (click)="_ButtonReverseTotalFIX_Click()">FIX TOTAL from Ledger</button></td>
                 <td style="width:200px"><button class="Button" (click)="_ButtonReverseGLBalanceFIX_Click()">FIX ReverseGLBalance</button></td>
-                <td style="width:200px"><button class="Button" (click)="_ButtonReverseTotalFIXControl_Click()">FIX TOTAL from  Ledger ***control**"</button></td>
+                <td style="width:200px"><button class="Button" (click)="_ButtonReverseTotalFIXControl_Click()">FIX TOTAL from Ledger ***control**"</button></td>
                 <td style="width:200px"><button class="Button" (click)="_ButtonFixDueLocalBalance_Click()">FixDueLocalBalance</button></td>
                 <td style="width:200px"><button class="Button" (click)="RebuildFIXGLAccountAgingData_Click()">Rebuild FIX GLAccountAgingData</button></td>
                 <td style="width:200px"><button class="Button" (click)="BatchYearlyFIX_Click()">Batch Yearly FIX </button></td>
@@ -39,7 +39,7 @@
 
             <tr>
                 <td style="width:200px"><button class="Button" (click)="Change2MultiCurrency_Click()">GLAccount Change2MultiCurrency</button></td>
-                <td style="width:200px"></td>
+                <td style="width:200px"><button class="Button" (click)="_ButtonReverseAllMonthsFIX_Click()">FIX All Months from Ledger</button></td>
                 <td style="width:200px"></td>
                 <td style="width:200px"></td>
                 <td style="width:200px"></td>
@@ -228,6 +228,9 @@
             <tr>
                 <td style="width:200px">
                     <button class="Button" (click)="ButtonCardGLAccountConnect_Click()">CardGLAccountConnect</button>
+                </td>
+                <td style="width:200px">
+                    <button class="Button" (click)="ButtonAPInvoiceStatusUpdate_Click()">A/P Invoice Status Update</button>
                 </td>
                 <td style="width:200px"></td>
                 <td style="width:200px"></td>

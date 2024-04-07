@@ -246,7 +246,11 @@ export class   ContactItemClass extends BaseComponent{
         this.CheckPrimary();
         this.CheckContactForAccounting();
         if(fatherComponent != null) {
-            this.CheckEmailForSending(this.fatherComponent.EntityPM['EmailForSendingSingArinvoice'])
+            
+             this.CheckEmailForSending(this.fatherComponent.EntityPM['EmailForSendingSingArinvoice'])
+             if(this.fatherComponent.EntityPM['SendingInterestReport'])
+               this.CheckSendingInterestReport(this.fatherComponent.EntityPM['EmailForSendingSingArinvoice']);
+
         }
       
     }
@@ -280,7 +284,7 @@ export class   ContactItemClass extends BaseComponent{
     }    
     public IsPrimary: boolean = false;
     public EmailForSending : boolean = false;
-
+    public SendingInterestReport : boolean = false;
     CheckPrimary() {
 
         var isPrimary = false;
@@ -332,10 +336,20 @@ export class   ContactItemClass extends BaseComponent{
 
 
     SetEmailForSendingSingArinvoices() {
+        this.fatherComponent.EntityPM['SendingInterestReport'] = false;
         this.fatherComponent.EntityPM['EmailForSendingSingArinvoice'] = this.Id;
         var myCardContactId = this.Id;
         this.fatherComponent.ItemsSource.forEach(item => {
             item.CheckEmailForSending(myCardContactId);
+        });
+    }
+
+    SetSendingInterestReport() {
+        
+        this.fatherComponent.EntityPM['SendingInterestReport'] = true;
+        var myCardContactId = this.Id;
+        this.fatherComponent.ItemsSource.forEach(item => {
+           item.CheckSendingInterestReport(myCardContactId);
         });
     }
 
@@ -348,8 +362,20 @@ export class   ContactItemClass extends BaseComponent{
                 }
             }
         }
-     
+         
         this.EmailForSending = emailForSending;
+    }
+    CheckSendingInterestReport(myCardContactId: string=null) {
+        var sendingInterestReport = false; 
+        if (this.fatherComponent && this.fatherComponent.EntityPM) {
+            if (!AppTool.IsNullOrEmpty(myCardContactId)) {
+                if (myCardContactId == this.Id  ) {
+                    sendingInterestReport = true;
+                }
+            }
+        }
+        
+        this.SendingInterestReport = sendingInterestReport;
     }
 }
 

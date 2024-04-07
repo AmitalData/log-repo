@@ -1,5 +1,6 @@
 ﻿using Logitude.BL.DataContracts;
 using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.BL.Resolvers;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
@@ -637,7 +638,11 @@ namespace WebFreight.Web.Helpers.APIHelpers
                     {
                         if (!chargesType.IsReceivable)
                         {
-                            throw new ApplicationException("Charge type " + chargesType.Code + " used in receivables should be marked as Receivable");
+                            string chtxt = TextCodesTranslator.TranslateText("General.O.Billings.ChargeType", tenant, LoggedContactResolver.GetLoggedContactShowLocal(tenant));
+                            string rectxt = TextCodesTranslator.TranslateText("General.O.Billings.UsedRec", tenant, LoggedContactResolver.GetLoggedContactShowLocal(tenant));
+
+                        //  throw new ApplicationException("Charge type " + chargesType.Code + " used in receivables should be marked as Receivable");
+                            throw new ApplicationException(chtxt + " " + chargesType.Code + " " + rectxt);
                         }
                         break;
                     }
@@ -646,7 +651,11 @@ namespace WebFreight.Web.Helpers.APIHelpers
                     {
                         if (!chargesType.IsPayable)
                         {
-                            throw new ApplicationException("Charge type " + chargesType.Code + " used in payables should be marked as Payable");
+                            string chtxt = TextCodesTranslator.TranslateText("General.O.Billings.ChargeType", tenant, LoggedContactResolver.GetLoggedContactShowLocal(tenant));
+                            string paytxt = TextCodesTranslator.TranslateText("General.O.Billings.UsedPay", tenant, LoggedContactResolver.GetLoggedContactShowLocal(tenant));
+
+                        //  throw new ApplicationException("Charge type " + chargesType.Code + " used in payables should be marked as Payable");
+                            throw new ApplicationException(chtxt + " " + chargesType.Code + " " + paytxt);
                         }
                         break;
                     }

@@ -1,11 +1,14 @@
 ﻿using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Repositories;
+using Logitude.Server.Tools.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Logitude.Server.Tools.Helpers;
+using System.Reflection;
 
 namespace Logitude.Accounting.BL.CoreBL.Reports.Aging
 {
@@ -41,17 +44,18 @@ namespace Logitude.Accounting.BL.CoreBL.Reports.Aging
                          from currencyData in joinGroup.DefaultIfEmpty()
                          select  new {  myGLAccountAgingData , currencyData }
                         );
+
+            Logger.LogDebug("GetFromGLAccountAgingData Query \r\n {0} ", qjoin.ToTraceQuery());
+            DateTime start = DateTime.Now;
+
             var listAgingCurrency = qjoin.ToList();
 
+            Logger.LogDebug("GetFromGLAccountAgingData SUM duration {0} seconds ", (DateTime.Now - start).TotalSeconds);
 
+            
             listPeriods = listPeriods.OrderByDescending(r => r).ToList();
             foreach (var AgingCurrency in listAgingCurrency)
             {
-
-
-
-
-
                 int iDeltaFromFuture = 0;
                 foreach (var dateTime in listPeriods)
                 {

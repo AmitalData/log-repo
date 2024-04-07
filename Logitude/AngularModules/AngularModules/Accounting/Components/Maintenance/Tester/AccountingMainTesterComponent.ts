@@ -348,6 +348,13 @@ export class AccountingMainTesterComponent extends BaseComponent {
         this.StrandartOp(opr, obj, () => { });
 
     }
+
+    _ButtonReverseAllMonthsFIX_Click() {
+        let opr = "_ButtonReverseAllMonthsFIX_Click";
+        let obj = { MyTenant: SessionLocator.Tenant, MyGLAccId: "" };
+        this.StrandartOp(opr, obj, () => { });
+    }
+
     BatchYearlyFIX_Click() {
         let opr = "BatchYearlyFIX_Click";
         let obj = {
@@ -1076,6 +1083,42 @@ Line3
             );
     }
 
+
+
+
+
+
+
+
+    ButtonAPInvoiceStatusUpdate_Click() {
+        let defaultParam: any = {};
+        defaultParam.Tenant = 1;
+        defaultParam.InvoiceNumber = ""
+        defaultParam.FromInvoiceDate = "01.01.2023";
+        defaultParam.ToInvoiceDate = "31.01.2023";
+        defaultParam.Batch = 1;
+        defaultParam.Comment = "Enter InvoiceNumber, or leave it empty but enter the dates";
+        if (AppTool.IsNullOrEmpty(this._TextBoxParam)) {
+            this._TextBoxParam = JSON.stringify(defaultParam);
+            return;
+        }
+        let objToCheck1 = JSON.parse(this._TextBoxParam);
+        let _APInvoiceStatusUpdateUrl = ServiceHelper.GetLogitudeURL() + '/api/APInvoiceStatusUpdate';
+        let myUrl = _APInvoiceStatusUpdateUrl + "?tenant=" + objToCheck1.Tenant;
+        myUrl = myUrl + "&invoiceNumber=" + objToCheck1.InvoiceNumber;
+        myUrl = myUrl + "&fromInvoiceDate=" + objToCheck1.FromInvoiceDate;
+        myUrl = myUrl + "&toInvoiceDate=" + objToCheck1.ToInvoiceDate;
+        myUrl = myUrl + "&batch=" + objToCheck1.Batch;
+
+        this.CurrentSession.StartBusyIndicatorCreating();
+        let _http = ServiceHelper.HttpClient;
+        _http.get(myUrl, ServiceHelper.GetHttpFullHeaders())
+            .subscribe(
+                r => { this._LabelLog = JSON.stringify(r); },
+                e => { this._LabelLog = JSON.stringify(e); },
+                () => { this.CurrentSession.StopBusyIndicator(); }
+            );
+    }
 
 
 

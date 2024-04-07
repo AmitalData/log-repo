@@ -99,6 +99,7 @@
     <Compile Include="EntityKeys\LastRunDetailKeys.cs" />
     <Compile Include="EntityKeys\LBPTeamMemberKeys.cs" />
     <Compile Include="EntityKeys\PriceStepKeys.cs" />
+    <Compile Include="EntityKeys\SatisfactionSurveyKeys.cs" />
     <Compile Include="EntityKeys\SharedLogisticsSettingKeys.cs" />
     <Compile Include="EntityKeys\TeamKeys.cs" />
     <Compile Include="EntityKeys\TeamMemberBusinessRoleKeys.cs" />
@@ -142,6 +143,7 @@
     <Compile Include="EntityListQueryServices\Generated\LastRunDetailListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\LBPTeamMemberListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\PriceStepListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\SatisfactionSurveyListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SharedLogisticsSettingListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\TeamListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\TeamMemberBusinessRoleListQueryService.Generated.cs" />
@@ -149,6 +151,7 @@
     <Compile Include="EntityListQueryServices\LastRunDetailListQueryService.cs" />
     <Compile Include="EntityListQueryServices\LBPTeamMemberListQueryService.cs" />
     <Compile Include="EntityListQueryServices\PriceStepListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\SatisfactionSurveyListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SharedLogisticsSettingListQueryService.cs" />
     <Compile Include="EntityListQueryServices\TeamListQueryService.cs" />
     <Compile Include="EntityListQueryServices\TeamMemberBusinessRoleListQueryService.cs" />
@@ -174,6 +177,7 @@
     <Compile Include="EntityLists\Generated\LastRunDetailList.Generated.cs" />
     <Compile Include="EntityLists\Generated\LBPTeamMemberList.Generated.cs" />
     <Compile Include="EntityLists\Generated\PriceStepList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\SatisfactionSurveyList.Generated.cs" />
     <Compile Include="EntityLists\Generated\SharedLogisticsSettingList.Generated.cs" />
     <Compile Include="EntityLists\Generated\TeamList.Generated.cs" />
     <Compile Include="EntityLists\Generated\TeamMemberBusinessRoleList.Generated.cs" />
@@ -199,6 +203,7 @@
     <Compile Include="EntityMapping\LastRunDetailMap.cs" />
     <Compile Include="EntityMapping\LBPTeamMemberMap.cs" />
     <Compile Include="EntityMapping\PriceStepMap.cs" />
+    <Compile Include="EntityMapping\SatisfactionSurveyMap.cs" />
     <Compile Include="EntityMapping\SharedLogisticsSettingMap.cs" />
     <Compile Include="EntityMapping\TeamMap.cs" />
     <Compile Include="EntityMapping\TeamMemberBusinessRoleMap.cs" />
@@ -225,6 +230,7 @@
     <Compile Include="EntityPOCOs\LastRunDetail.cs" />
     <Compile Include="EntityPOCOs\LBPTeamMember.cs" />
     <Compile Include="EntityPOCOs\PriceStep.cs" />
+    <Compile Include="EntityPOCOs\SatisfactionSurvey.cs" />
     <Compile Include="EntityPOCOs\SharedLogisticsSetting.cs" />
     <Compile Include="EntityPOCOs\Team.cs" />
     <Compile Include="EntityPOCOs\TeamMemberBusinessRole.cs" />
@@ -274,6 +280,7 @@
     <Compile Include="Repsitories\Generated\LastRunDetailRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\LBPTeamMemberRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\PriceStepRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\SatisfactionSurveyRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SharedLogisticsSettingRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\TeamMemberBusinessRoleRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\TeamRepository.Generated.cs" />
@@ -281,6 +288,7 @@
     <Compile Include="Repsitories\LastRunDetailRepository.cs" />
     <Compile Include="Repsitories\LBPTeamMemberRepository.cs" />
     <Compile Include="Repsitories\PriceStepRepository.cs" />
+    <Compile Include="Repsitories\SatisfactionSurveyRepository.cs" />
     <Compile Include="Repsitories\SharedLogisticsSettingRepository.cs" />
     <Compile Include="Repsitories\TeamMemberBusinessRoleRepository.cs" />
     <Compile Include="Repsitories\TeamRepository.cs" />

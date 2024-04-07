@@ -31,7 +31,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL" />
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
@@ -120,6 +122,8 @@
     <None Include="Connected Services\OceanInsightsTestWcfServiceReference\OceanInsightsTestWcfService3.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="libman.json" />
+    <None Include="packages.config" />
     <None Include="Properties\DataSources\Logitude.Server.Tools.Response.datasource" />
   </ItemGroup>
   <ItemGroup>

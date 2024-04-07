@@ -624,7 +624,7 @@
                                     style="cursor: pointer;text-decoration: underline;font-size: 11px;">Show more</a>
                             </div>
                         </div>
-                        <div>
+                        <div *ngIf="!IsOrderShipment">
                             <div class="title">Chargeable Weight</div>
                             <div style="display:inline" class="description">{{cargoTrackingShipmentPM.ChargeableWeightInKG || 0 }}
                             </div><span style="display:inline"> KG</span>

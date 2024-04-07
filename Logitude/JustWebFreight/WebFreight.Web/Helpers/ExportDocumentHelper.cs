@@ -55,10 +55,19 @@ using Simplog.Data.Helpers;
 using Logitude.BL.DataContracts;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using WebFreight.Web.Helpers.StimulReportCustomizationDataProvider;
+using Simplog.Data.CommonDataModel;
+using Simplog.Data.InvoiceModel.Repositories;
+using Logitude.Accounting.Def.EntityPMs;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Logitude.Accounting.Def.EntityUpdateServicesExt;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Data.Repositories;
+using Logitude.BL.Helpers;
 
 namespace WebFreight.Web.Helpers
 {
-    public class ExportDocumentHelper
+    public class ExportDocumentHelper: IExportDocumentHelper
     {
 
         #region ExportDocument2Pdf
@@ -375,7 +384,9 @@ namespace WebFreight.Web.Helpers
             return report;
         }
 
+       
 
+       
         //private StiReport BuildReportViaWebService(BuildDocumentParameter buildDocumentParameter)
         //{
         //    try
@@ -2339,11 +2350,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
             return result;
         }
 
-
-
-
-
-
+        
     }
 
 

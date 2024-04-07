@@ -85,8 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class ChargesTypeUpdateClass
    {  		
- 		public const string HashString = "4e0b9f1b1eda0393f2716fad61e27c0e";
- 
+		public const string HashString = "6b0a58cbfb19356ed93329badf23c370";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2241,9 +2240,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsReceivable",
 					  						DefaultText =  "Is Receivable",
-					  						FullLocalDefaultText =  "הצגה בחשבונית לקוח",
+					  						FullLocalDefaultText =  "לשימוש בחשבוניות לקוח",
+					  						ListFieldLable =  "IsReceivableListLable",
+					  						ListLableDefaultText =  "Receivable",
+					  						ListLocalDefaultText =  "לשימוש בחשבוניות לקוח",
 					  						ShortFieldLable =  "IsReceivable",
-					  						ShortFieldLableDefaultText =  "Receivable",
+					  						ShortFieldLableDefaultText =  "לשימוש בחשבוניות לקוח",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2309,10 +2311,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsPayable",
 					  						DefaultText =  "Is Payable",
-
-					  						FullLocalDefaultText =  "הצגה בחשבונית ספק",
+					  						FullLocalDefaultText =  "לשימוש בחשבוניות ספק",
+					  						ListFieldLable =  "IsPayableListLable",
+					  						ListLableDefaultText =  "Payable",
+					  						ListLocalDefaultText =  "לשימוש בחשבוניות ספק",
 					  						ShortFieldLable =  "IsPayable",
-					  						ShortFieldLableDefaultText =  "Payable",
+					  						ShortFieldLableDefaultText =  "לשימוש בחשבוניות ספק",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,

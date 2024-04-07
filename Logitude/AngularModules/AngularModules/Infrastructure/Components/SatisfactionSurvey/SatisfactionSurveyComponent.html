@@ -1,0 +1,193 @@
+<style>
+    .background {
+        width: 100%;
+        background: url("./Images/LoginScreen/map.png") center center no-repeat;
+        background-size: cover;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+    }
+
+    .title {
+        display: flex;
+        justify-content: center;
+        font-weight: bold;
+        padding-bottom: 15px;
+    }
+
+    form {
+        direction: rtl;
+        max-width: 600px;
+        margin: auto;
+        background-color: #fff;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group {
+        margin-bottom: 10px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    input[type="text"],
+    textarea {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .button-container {
+        text-align: right;
+        height: 20px;
+    }
+
+    button[type="submit"] {
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        min-height: -webkit-fill-available;
+    }
+
+    button[type="submit"]:hover {
+        background-color: #45a049;
+    }
+
+    button.disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    .tabs {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 5px 0;
+        height: 60px;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .tabs li {
+        padding: 10px 20px;
+        border-top: 5px solid #b1b1b1;
+        background-color: #eee;
+        border-radius: 0px;
+        cursor: pointer;
+        margin: 1px;
+    }
+
+    .tabs li.active {
+        border-top: 5px solid #d35400;
+        background-color: #f7c8c6;
+    }
+
+    .content textarea {
+        width: 100%;
+        height: 100px;
+        margin-bottom: 20px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        resize: vertical;
+    }
+
+    .thank-you-message {
+        direction: rtl;
+        text-align: center;
+    }
+
+    .thank-you-message h2 {
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .form-container {
+        position: relative;
+    }
+
+    .blur {
+        filter: blur(5px);
+        pointer-events: none;
+    }
+
+    .submission-message {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 10;
+        background: rgba(255, 255, 255, 0.1);
+        padding: 20px;
+        border-radius: 5px;
+        text-align: center;
+        width: 80%;
+        max-width: 500px;
+    }
+
+    .submission-message p {
+        margin: 0;
+        font-size: 1.2em;
+        color: #333;
+    }
+
+    .logo-spacing {
+        margin-top: -20vh;
+    }
+
+    .container {
+        text-align: center;
+    }
+
+    .textlength {
+        margin-top: -2vh;
+        text-align: end;
+    }
+</style>
+
+<div class="background">
+    <div class="container">
+        <img class="logo logo-spacing" alt="logo" src="../../../Images/ApplicationLogo/UnifreightLogo.png" />
+        <div class="form-container" [class.blur]="formError">
+            <form [formGroup]="surveyForm" (ngSubmit)="onSubmit()" *ngIf="!formSubmitted">
+                <h5 class="title">{{ howSatisfiedAreYou }}</h5>
+                <ul class="tabs">
+                    <li *ngFor="let tab of tabs" [class.active]="activeTab === tab.content"
+                        (click)="setActiveTab(tab.content)">
+                        {{ tab.content }}
+                    </li>
+                </ul>
+                <div class="form-group">
+                    <div class="content">
+                        <textarea formControlName="Comments" placeholder="{{ moreDetailsTitle }}"
+                            maxlength="250"></textarea>
+                        <div class="textlength">{{surveyForm.value.Comments?.length}}/250</div>
+                    </div>
+                </div>
+                <div class="button-container">
+                    <button type="submit"
+                        [disabled]="!surveyForm.valid || formSubmitting || !surveyForm.value.Guid || !surveyForm.value.Hash"
+                        [ngClass]="{'disabled': !surveyForm.valid || formSubmitting || !surveyForm.value.Guid || !surveyForm.value.Hash}">
+                        <span *ngIf="!formSubmitting">שלח</span>
+                        <span *ngIf="formSubmitting"><i class="fa fa-spinner fa-spin"></i></span>
+                    </button>
+
+                </div>
+            </form>
+        </div>
+        <div class="submission-message" *ngIf="formAlreadySubmitted">
+            <p>{{ alreadySubmitted }}</p>
+        </div>
+        <div class="thank-you-message" *ngIf="formSubmitted">
+            <h2>{{ thanks }}</h2>
+            <br />
+            <p>{{ sentSuccessfully }}</p>
+        </div>
+    </div>
+</div>
