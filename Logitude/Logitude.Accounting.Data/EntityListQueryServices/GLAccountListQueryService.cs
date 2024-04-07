@@ -978,6 +978,11 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                               Category3Name = a.Category3.EnglishName,
                                                               Category4Name = a.Category4.EnglishName,
                                                               Category5Name = a.Category5.EnglishName,
+                                                              Category1LocalName = a.Category1.LocalName,
+                                                              Category2LocalName = a.Category2.LocalName,
+                                                              Category3LocalName = a.Category3.LocalName,
+                                                              Category4LocalName = a.Category4.LocalName,
+                                                              Category5LocalName = a.Category5.LocalName,
                                                               ChartOfAccountsLocalName = chartOfAccount != null ? chartOfAccount.LocalName : null,
                                                               ChartOfAccountsEnglishName = chartOfAccount != null ? chartOfAccount.EnglishName : null,
                                                               ChartOfAccountsTypeEnglishName = chartOfAccountsType != null ? chartOfAccountsType.EnglishName : null,
@@ -987,8 +992,9 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                               IsMultiCurrency = a.IsMultiCurrency,
                                                               EnglishName = a.EnglishName,
                                                               LocalName = a.LocalName,
-
-
+                                                              ContactPhone = a.Contact != null ? a.Contact.BusinessPhone : null,
+                                                              ContactEmail  = a.Contact != null ? a.Contact.Email : null,
+                                                              ContactName = a.ContactId != null ? (a.Contact.LocalName ?? a.Contact.EnglishName) : null,
                                                           });
             //var xxx = accountListQuery.ToList();
 
