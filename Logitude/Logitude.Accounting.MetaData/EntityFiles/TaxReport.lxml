@@ -3602,6 +3602,12 @@
       LocalDefaultText="&quot;פעולה זאת מאתרת פקודות יומן שנוצרו לאחר יצירת הדו&quot;ח( וצריכות להיכלל בדו&quot;ח לחודש זה )הפעולה מוסיפה את פקודות היומן לדו&quot;ח&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;TaxReport.O.DownloadPa&quot;"
+      DefaultText="&quot;Download PA file&quot;"
+      LocalDefaultText="&quot;הורדת קובץ רש&quot;פ&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
