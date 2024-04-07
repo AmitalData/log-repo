@@ -1925,6 +1925,9 @@ Period	Acc	Currency	Total
 
         public string AccountCollectorName { get; set; }
         public string AccountCollectorLocalName { get; set; }
+        public string AccountContactName { get; set; }
+        public string AccountContactEmail { get; set; }
+        public string AccountContactPhone { get; set; }
         public string Category1Name { get; set; }
         public string Category2Name { get; set; }
         public string Category3Name { get; set; }
