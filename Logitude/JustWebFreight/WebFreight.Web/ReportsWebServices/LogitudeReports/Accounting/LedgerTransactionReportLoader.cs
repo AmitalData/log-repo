@@ -492,7 +492,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 Category3Id = "",
                 Category4Id = "",
                 Category5Id = "",
-                CollectorId = GetFilterValue<string>("CollectorId"),
                 ChartOfAccountsId = GetFilterValue<string>("ChartOfAccountId"),
                 ChartOfAccountsTypeCode = GetFilterValue<string>("ChartOfAccountsTypeCode"),
                 AccountTypeCode = GetFilterValue<string>("AccountTypeCode"),

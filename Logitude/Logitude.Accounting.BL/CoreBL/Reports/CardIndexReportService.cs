@@ -121,7 +121,6 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
         public string SalesmanId { get; set; }
         public string CollectorId { get; set; }
         public bool UseSecurityLevel { get; set; }
-        public string CollectorId { get; set; }
 
         //public bool IncludeRelatedCurrenciesAccount { get; set; }
 
