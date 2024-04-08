@@ -22,6 +22,7 @@
         }
 
         LogTextBox,
+        LogDatePicker,
         div {
             width: 300px
         }
@@ -32,4 +33,17 @@
             box-shadow: inset 0 0 3px #AAAAAA;
         }
     }
+
+    .form-data-field-field .error {
+        border: 1px solid red !important;
+    }
+}
+
+.error-field {
+    border: 1px solid red !important;
+}
+
+.error-message {
+    color: red !important;
+    text-align: center;
 }
