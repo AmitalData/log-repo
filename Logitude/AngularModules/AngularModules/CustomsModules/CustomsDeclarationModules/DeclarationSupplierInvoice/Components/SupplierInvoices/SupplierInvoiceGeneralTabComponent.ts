@@ -1716,6 +1716,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
         logWindow.Height = 500;
         logWindow.ShowCloseButton = true;
         windowArgs.SupplierInvoicePM = this.EntityPM;
+        windowArgs.ExporterImporterCode = this.declarationPM?.ExporterImporterCode;
         windowArgs = Object.assign(windowArgs, args);
         logWindow.WindowArgs = windowArgs;
         logWindow.Title = title;
