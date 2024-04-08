@@ -424,19 +424,18 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                    ToggleCode = a.ToggleCode,
                                    FeatureUniqeCode = a.FeatureUniqeCode
                                }).ToList();
-                #endregion
+				#endregion
 
-                #region allRoleFeatures
+				#region allRoleFeatures
+				RoleFeatureQuery roleFeatureQuery = new RoleFeatureQuery();
 
-                IQueryable<RoleFeature> iQueryable =
-                    (from a in repository.context.RoleFeatures
-                     where a.Tenant == tenant || a.Tenant == 0
-                     select a);
                 if (myRole.IsCustomRole)
                 {
-                    allRoleFeatures = (from a in iQueryable where a.RoleId == myRole.ParentRoleId select a).ToList();
 
-                    List<RoleFeature> allChildFeatures = (from a in iQueryable where a.RoleId == myRole.Id select a).ToList();
+					allRoleFeatures = roleFeatureQuery.GetRoleFeaturesForRoleFromCache(myRole.ParentRoleId, tenant);
+
+					List<RoleFeature> allChildFeatures = roleFeatureQuery.GetRoleFeaturesForRoleFromCache(myRole.Id, tenant);
+
 
                     foreach (RoleFeature item in allChildFeatures)
                     {
@@ -462,8 +461,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                 else
                 {
-                    allRoleFeatures = (from a in iQueryable where a.RoleId == myRole.Id select a).ToList();
-                }
+                    allRoleFeatures = roleFeatureQuery.GetRoleFeaturesForRoleFromCache(myRole.Id, tenant);
+				}
                 #endregion
 
                 #region allPackageFeatures
