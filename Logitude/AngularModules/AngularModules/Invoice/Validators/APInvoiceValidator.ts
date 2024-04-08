@@ -73,9 +73,6 @@ export class APInvoiceValidator {
                     if (item.InvoiceCurrencyAmount == 0) {
                         this.Errors.push(TextCodeTranslator.Translate("APInvoice.M.InvoiceLineAmountNotZero"));
                     }
-                    if (item.InvoiceCurrencyAmount * item.VatPercentage < 0) {
-                        this.Errors.push(TextCodeTranslator.Translate("APInvoice.M.InvoiceDetailAmountVatNotMatched"));  
-                    }
 
                     if (!entityPM.TotalVATOnly) {
                         if (item.VatTypeId == null) {
