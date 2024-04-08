@@ -192,10 +192,13 @@ export class ShipmentDetailsComponent implements OnInit, AfterViewInit {
     }
 
     splitAddressAndPhone(addressString: string) {
+        if(!addressString)
+        return { address: null, phone: null };
+        
         const parts = addressString.split('Phone: ');
 
         if (parts.length === 1) {
-            return { address: parts[0], phone: '' }; // If "Phone: " was not found in the string, assume the whole string as the address.
+            return { address: parts[0], phone: null }; // If "Phone: " was not found in the string, assume the whole string as the address.
         }
         else {
             return { address: parts[0], phone: parts[1] };
