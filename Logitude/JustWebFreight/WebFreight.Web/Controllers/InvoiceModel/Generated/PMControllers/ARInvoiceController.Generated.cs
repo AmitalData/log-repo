@@ -130,8 +130,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.PMControllers
                 try
                 {
                     string logKey = PerformanceLogger.LogCurrentTime();
-                    using (TransactionScope scope = TransactionFactory.GetTransaction())
-                    {
+                    
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
@@ -164,11 +163,11 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.PMControllers
                         //}
 
 
-                        scope.Complete();
+                       
                         PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
                         return Request.CreateResponse(HttpStatusCode.OK, entityPM);
-                    }
+                   
                 }
 
                 catch (Exception ex)

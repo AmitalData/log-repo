@@ -310,14 +310,20 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.BuildSearchFields();
 
             // Full Accounting - Tax Fields Work 
-            this.CalculationOfTaxReportfields(entityPM, isApprovingInvoice);
-            CheckLinesVatExcempt(entityPM, isApprovingInvoice);
+           this.CalculationOfTaxReportfields(entityPM, isApprovingInvoice);
+            CheckLinesVatExcempt(entityPM, isApprovingInvoice); 
 
             ARInvoiceHelper helper = new ARInvoiceHelper(this.tenant, this.loggedContactId);
             helper.ARInvoiceQuickbooksValidating(invoice, entityPM, this.isApprovingInvoice, isNewEntity, this.objectContext, this.myCommonContext, isVoidingInvoice);
 
             SetSatStatus();
-            SetConfirmationNumberStatus();
+            if (entityPM.SetApproved)
+            {
+                if (entityPM.ConfirmationNumberStatus == null)
+                {
+                    SetConfirmationNumberStatus();
+                }
+            }
 
             EntityAutomationService entityAutomationService = new EntityAutomationService(new EntityAutomationArgs() { Poco = invoice, EntityPM = entityPM, OldEntityPM = new ARInvoicePM(), AutomationType = "OnCreate", ObjectTableName = "ARInvoice", Tenant = entityPM.Tenant, EntityId = entityPM.Id, EntityReference = entityPM.InvoiceNumber });
 
@@ -630,7 +636,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
 
             this.ValidateInvoiceConnected();
-
+            
             if (entityPM.SetApproved)
             {
                 if (invoice.StatusCode == "LL")
@@ -650,7 +656,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
 
             this.ValidateHigherStatus();
-
+        
             if (entityPM.SetCancelDraft)
             {
                 this.CancelDraftInvoice();
@@ -716,7 +722,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 this.UpdateInvoiceLines();
                 this.UpdateTotalVats();
                 this.BuildShipmentsNumbers();
-
+              
                 ARInvoiceHelper helper = new ARInvoiceHelper(this.tenant, this.loggedContactId);
                 if (entityPM.SetReSendQBO)
                 {
@@ -727,10 +733,16 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 {
                     helper.ARInvoiceQuickbooksValidating(invoice, entityPM, this.isApprovingInvoice, isNewEntity, this.objectContext, this.myCommonContext, isVoidingInvoice);
                 }
-
+              
                 // Full Accounting - Tax Fields Work 
                 this.CalculationOfTaxReportfields(entityPM, isApprovingInvoice);
-
+                if (entityPM.SetApproved)
+                {
+                    if (entityPM.ConfirmationNumberStatus == null)
+                    {
+                        SetConfirmationNumberStatus();
+                    }
+                }
                 EntityAutomationService entityAutomationService = new EntityAutomationService(new EntityAutomationArgs() { Poco = invoice, EntityPM = entityPM, OldEntityPM = new ARInvoicePM(), AutomationType = "OnUpdate", ObjectTableName = "ARInvoice", Tenant = entityPM.Tenant, EntityId = entityPM.Id, EntityReference = entityPM.InvoiceNumber });
 
                 ARInvoiceMapping.MapEntity(entityPM, invoice, isNewEntity, loggedContactId);
@@ -773,7 +785,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 new ARInvoiceAnalyticTableService(objectContext.GetActiveDbContext()).AddUpdate(invoice, tenant);
             }
 
-
+          
 
             ARPaymentReferencesService ARPaymentReferencesService = new ARPaymentReferencesService(this.objectContext);
             invoice.PaymentReferences = ARPaymentReferencesService.GetARInvoicePaymentRefreneces(invoice);
@@ -1293,7 +1305,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 entityPM.StatusCode = "AD";
                 entityPM.ApprovedDate = TenantServerConfigration.GetCurrentDateTime(tenant);
                 entityPM.ApprovedByUserId = loggedContactId;
-
+               
                 if (string.IsNullOrEmpty(this.entityPM.MasterNumber) || string.IsNullOrEmpty(this.entityPM.HouseNumber))
                 {
                     if (!string.IsNullOrEmpty(this.entityPM.MainEntityId))
@@ -4613,6 +4625,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 }
             }
         }
+
+       
         private void AfterServiceFinished()
         {
             if (this.isNewEntity)
