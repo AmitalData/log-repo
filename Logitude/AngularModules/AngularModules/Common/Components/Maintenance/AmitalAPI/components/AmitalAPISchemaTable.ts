@@ -1,18 +1,18 @@
-import { Component } from "@angular/core";
+import { Component, EventEmitter, Input, Output, SimpleChanges } from "@angular/core";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 import { AmitalAPISchemaWebService, AmitalApiSchema } from "Common/Services/AmitalAPISchemaWebService";
 import { ConfirmWindow } from "Controls/Windows/ConfirmWindow";
 import { TextCodeTranslator } from "Infrastructure/Utilities/TextCodeTranslator";
 import { FieldData } from "../amitalApiTypes";
 import { ObservableCollection } from "Infrastructure/Utilities/ObservableCollection";
-import { AmitalAPIAddSchemaWindowComponent } from "../AmitalAPIAddSchemaWindowComponent";
+import { AmitalAPIAddSchemaWindowComponent, AmitalAPIAddSchemaWindowParams } from "../WindowsComponent/AmitalAPIAddSchemaWindowComponent";
 
 @Component({
     selector: 'app-amitalapi-schema-table',
     template: `
         <h2 class='subTitle'>Schemas</h2>
 
-        <button class="Button RedButton margin-vertical" (click)="openAddPopup()">{{'General.B.Add' | TextCodeTranslationPipe}}</button>
+        <button class="Button RedButton margin-vertical" (click)="openEditPopup()">{{'General.B.Add' | TextCodeTranslationPipe}}</button>
 
         <div class='margin-vertical user-select' style='height: 330px; width: 100%; position: relative;' *ngIf='schemaTableReady'>
             <logitude-edit-grid GridHeight="100%" GridWidth="100%" [ItemSource]="schemaDataSource">
@@ -42,6 +42,9 @@ import { AmitalAPIAddSchemaWindowComponent } from "../AmitalAPIAddSchemaWindowCo
     styles: [``],
 })
 export class AmitalAPISchemaTable {
+    @Input() clientTenant: string = '';
+    @Input() schemasTable: AmitalApiSchema[] = [];
+    @Output() schemasTableChange = new EventEmitter<void>();
     amitalAPISchemaWebService = new AmitalAPISchemaWebService();
     schemaDataSource = new ObservableCollection([]);
     schemaTableReady: boolean = false;
@@ -63,13 +66,17 @@ export class AmitalAPISchemaTable {
         { name: 'tenants', label: 'Tenants', width: '60' },
     ];
 
-    async ngOnInit() {
-        SessionLocator.SelectedSession.StartBusyIndicator('');
-        const schemas: AmitalApiSchema[] = await this.amitalAPISchemaWebService.getAll();
-        this.initTable(schemas)
-        SessionLocator.SelectedSession.StopBusyIndicator();
+    // async ngOnInit() {
+    // SessionLocator.SelectedSession.StartBusyIndicator('');
+    // this.allSchemas= await this.amitalAPISchemaWebService.getAll();
+    // this.initTable()
+    // SessionLocator.SelectedSession.StopBusyIndicator();
+    // }
 
-        this.schemaTableReady = true;
+    ngOnChanges(changes: SimpleChanges): void {
+        if ((changes.clientTenant && !changes.clientTenant.firstChange) || (changes.schemasTable && !changes.schemasTable.firstChange)) {
+            this.initTable();
+        }
     }
 
     async openRemovePopup(id: string) {
@@ -82,36 +89,31 @@ export class AmitalAPISchemaTable {
         SessionLocator.SelectedSession.StartBusyIndicator('');
         try {
             await this.amitalAPISchemaWebService.delete(id);
-            await this.refreshTable();
+            this.schemasTableChange.emit();
         } catch (error) { }
         SessionLocator.SelectedSession.StopBusyIndicator();
     }
 
-    async refreshTable() {
-        const schemasData: AmitalApiSchema[] = await this.amitalAPISchemaWebService.getAll();
-        this.initTable(schemasData);
-    }
-
-    initTable(schemasData: AmitalApiSchema[]) {
-        schemasData.forEach(schema => {
+    initTable() {
+        const allSchemas = JSON.parse(JSON.stringify(this.schemasTable));
+        const schemas = this.clientTenant ? allSchemas.filter(schema => schema.Tenants?.includes(this.clientTenant)) : allSchemas;
+        schemas.forEach(schema => {
             schema['tenants'] = schema.Tenants?.join(', ')
             schema.UpdateDate = new Date(schema.UpdateDate).toLocaleString() as any;
             schema.CreateDate = new Date(schema.CreateDate).toLocaleString() as any;
         });
-
-        this.schemaDataSource.InsertCollection(schemasData);
+        this.schemaDataSource.Clear();
+        this.schemaDataSource.InsertCollection(schemas);
+        this.schemaTableReady = true;
     }
 
-    async openEditPopup(orginalRow: AmitalApiSchema) {
-        const row: AmitalApiSchema = JSON.parse(JSON.stringify(orginalRow))
-        const res: AmitalApiSchema | boolean = await AmitalAPIAddSchemaWindowComponent.openEditPopup(row, true);
-        if (res)
-            this.refreshTable();
-    }
+    async openEditPopup(orginalRow: AmitalApiSchema = null) {
+        const windowArgs: AmitalAPIAddSchemaWindowParams = orginalRow ?
+            { row: JSON.parse(JSON.stringify(orginalRow)), isUpdate: true } :
+            { isUpdate: false };
 
-    async openAddPopup() {
-        const res: AmitalApiSchema | boolean = await AmitalAPIAddSchemaWindowComponent.openEditPopup(null, false);
+        const res: AmitalApiSchema | boolean = await AmitalAPIAddSchemaWindowComponent.openWindow(windowArgs);
         if (res)
-            this.refreshTable();
+            this.schemasTableChange.emit();            
     }
 }

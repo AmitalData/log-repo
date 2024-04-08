@@ -1,0 +1,45 @@
+:host ::ng-deep .form-data-field div LogLabel {
+    width: 170px !important;
+}
+
+:host ::ng-deep .schema-section LogLabel td.TextTrimming {
+    text-align: center !important;
+}
+
+.schema-section {    
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.schema-section LogLabel {
+    height: 17px;
+    display: block;
+    margin-bottom: 7px;
+}
+
+.schema-list {
+    display: inline-block;
+    margin-bottom: 20px;
+}
+
+.schema-list.schema-table {
+    width: 450px;
+    height: 150px;
+    position: relative;
+}
+
+select.schema-list  {
+    width: 300px;
+    vertical-align: top;
+    margin-left: 20px;
+}
+
+.schema-list li {
+    display: flex;
+    margin: 2px 0;
+}
+
+.schema-list li IconButton {
+    display: inline-block;
+    margin-left: 7px;
+}
