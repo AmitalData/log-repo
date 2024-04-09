@@ -1,494 +1,494 @@
-::ng-deep {
-    .price-check-tooltip-icons {
-        div.p-tooltip-text {
-            background: rgb(0 0 0);
-            box-shadow: 0 0 15px -5px rgba(0, 0, 0.9);
-            border: 1px solid rgb(234 234 234);
-        }
-
-        .p-tooltip-arrow {
-            border-top-color: black !important;
-            bottom: 1px;
-        }
-    }
-
-    .price-check-tooltip-frequency, .price-check-tooltip-transit {
-        width: auto;
-        text-align: center;
-    }
-
-    .price-check {
-        background: #e5e5e5;
-
-        .p-dialog-content {
-            padding: 0;
-            background: #e5e5e5;
-        }
-    }
-}
-
-:host {
-    background: #e5e5e5;
-    display: block;
-    height: 100%;
-}
-
-.header {
-    padding: 21px 37px;
-    background: white;
-    border-radius: 0 0 14px 14px;
-    height: 111px;
-    display: table-cell;
-    vertical-align: middle;
-    width: 1440px;
-
-    h1 {
-        font-size: 24px !important;
-        display: inline-block;
-        color: black;
-        font-weight: bold;
-        margin-top: 13px;
-    }
-
-    .filter-wrapper {
-        float: right;
-        display: flex;
-        text-align: center;
-        top: 4px;
-        position: relative;
-        font-weight: 500;
-
-        .filter:first-child {
-            border-radius: 8px 0 0 8px;
-        }
-
-        .filter:last-child {
-            border-radius: 0 8px 8px 0;
-        }
-
-        .filter {
-            width: 136px;
-            padding: 12px 8px;
-            border: 1px solid #e3e4e4;
-            color: #1084dc;
-            font-size: 16.7px !important;
-            cursor: pointer;
-            position: relative;
-            font-weight: 500;
-        }
-
-        .filter.active,
-        .filter:hover {
-            border-color: #1084dc;
-            box-shadow: rgb(0 0 0 / 35%) 0px 5px 15px;
-        }
-
-        .filter.active {
-            background: #1084dc;
-            color: white;
-        }
-
-        .filter:hover::after,
-        .filter.active::after {
-            content: "";
-            position: absolute;
-            top: 100%;
-            left: 50%;
-            margin-left: -12px;
-            border-width: 9px;
-            border-style: solid;
-            border-color: #1084dc transparent transparent transparent;
-        }
-    }
-
-    button {
-        position: absolute;
-        right: 0;
-        top: 0;
-    }
-}
-
-.no-offer {
-    text-align: center;
-    margin-top: 70px;
-
-    img {
-        width: 78%;
-    }
-
-    h3 {
-        font-size: 26px !important;
-        color: #ababab;
-        margin-bottom: 0;
-        margin-top: 42px;
-        font-weight: bold;
-    }
-}
-
-.body {
-    height: calc(100% - 335px);
-    margin-top: 29px;
-
-    .offer-container:first-child {
-        .checkbox-wrapper {
-            margin-top: 0px;
-            border-radius: 12px 12px 0px 0px;
-
-            p-checkbox {
-                margin-top: 28px !important;
-            }
-        }
-
-        .price-wrapper {
-            margin-top: 0px;
-        }
-    }
-
-    .offer-container:last-child .checkbox-wrapper {
-        border-radius: 0px 0px 12px 12px;
-    }
-
-    .offer-container {
-        margin-left: 13px;
-        display: flex;
-
-        .checkbox-wrapper,
-        .price-wrapper {
-            background: white;
-        }
-
-        .checkbox-wrapper {
-            flex: 1;
-            text-align: center;
-
-            p-checkbox {
-                margin-top: 30px;
-
-                .p-checkbox {
-                    margin: 0;
-                }
-            }
-        }
-
-        .price-wrapper {
-            flex: 28;
-            border-radius: 19px;
-            width: calc(100% - 25px);
-            // height: 200px;
-            margin-top: 10px;
-            margin-left: 11px;
-
-            .header-price {
-                width: 100%;
-                height: 70px;
-                padding: 0 13px;
-                padding-top: 14px;
-                -webkit-box-shadow: 0 6px 5px -4px #e3e3e3;
-                box-shadow: 0 6px 5px -4px #e3e3e3;
-
-                .tags {
-                    margin-top: 3px;
-                }
-
-                .tag,
-                .icon,
-                .tags {
-                    display: inline-block;
-                }
-
-                .tag {
-                    background: #e2f0fb;
-                    color: #1084dc;
-                    padding: 8px 15px;
-                    border-radius: 20px;
-                    height: 37px;
-                    line-height: 23px;
-                    font-weight: 600;
-                    font-size: 20px !important;
-                    margin: 0 4px;
-
-                    img {
-                        height: 16px;
-                        vertical-align: baseline;
-                    }
-                }
-
-                .icons {
-                    float: right;
-
-                    .icon {
-                        margin: 0 12px;
-                        width: 32px;
-                    }
-
-                    .icon-wrapper {
-                        position: relative;
-                        display: inline-block;
-                        vertical-align: top;
-
-                        .icon-number-in {
-                            position: absolute;
-                            font-size: 15px !important;
-                            top: 9px;
-                            width: fit-content;
-                            width: -moz-fit-content;
-                            max-width: 19px;
-                            text-align: center;
-                            font-weight: bold;
-                            overflow: hidden;
-                            left: 0;
-                            right: 0;
-                            margin: auto;
-                        }
-                    }
-                }
-            }
-
-            .price-body {
-                display: flex;
-                height: 150px;
-                flex-direction: row;
-                flex-wrap: nowrap;
-                align-items: center;
-                margin: 32px 20px 5px;
-
-                .company-icon {
-                    flex: 1;
-                    font-size: 24px !important;
-                    font-weight: 500;
-                    text-align: center;
-
-                    img {
-                        width: 100%;
-                        object-fit: contain;
-                    }
-                }
-
-                .summary {
-                    display: inline-flex;
-                    border: 1px solid #f5f5f5;
-                    align-items: center;
-                    flex: 3;
-                    padding: 10px;
-                    margin: 0px;
-                    border-radius: 7px;
-                    padding-bottom: 2px;
-
-                    .summary-item {
-                        height: 99px;
-                        flex: 1;
-                        background: #f5f5f5;
-                        padding: 23px 24px;
-                        border-radius: 19px;
-                        margin: 10px;
-                        font-size: 18px;
-                        font-weight: 500;
-                        color: black;
-                        display: flex;
-                        align-items: center;
-
-                        > * {
-                            font-size: 24px !important;
-                            font-weight: 500;
-                        }
-
-                        .summary-text {
-                            flex: 1;
-                            align-self: center;
-                        }
-
-                        .summary-item-value {
-                            flex: 1;
-                            text-align: right;
-                            color: #1084dc;
-                            font-weight: 600;
-                            font-size: 26px !important;
-
-                            img {
-                                height: 19px;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-
-:host ::ng-deep {
-    * {
-        font-family: "Poppins", sans-serif !important;
-    }
-
-    .pi {
-        font-family: "primeicons" !important;
-    }
-
-    .body {
-        .p-scrollpanel-content {
-            overflow-y: scroll !important;
-        }
-
-        p-checkbox .p-checkbox {
-            margin-right: 0;
-            width: 25px !important;
-            height: 25px !important;
-        }
-
-        p-checkbox .p-checkbox,
-        .p-checkbox-box {
-            width: 25px !important;
-            height: 25px !important;
-        }
-
-        .accordion-container {
-            padding: 0px;
-
-            i {
-                color: #1084dc;
-                font-size: 23px !important;
-                margin-right: 18px !important;
-                margin-bottom: 8px !important;
-                font-family: "primeicons" !important;
-            }
-
-            .accordion-contect {
-                background: #e5e5e5;
-                padding-top: 0px;
-                margin: 0;
-                margin-top: 18px;
-
-                .expansion {
-                    width: 100%;
-                    display: flex;
-                    background: #e5e5e5;
-                    border: 1px solid #d6d6d6;
-                    border-radius: 7px;
-                    margin-top: 18px;
-                    position: relative;
-                    top: 18px;
-                    margin-bottom: 18px;
-
-                    .expansion-item {
-                        flex: 1;
-                        padding: 0 16px;
-                        border-right: 1px solid #d6d6d6;
-                        margin: 19px 0;
-
-                        h3 {
-                            margin: 0;
-                            font-size: 18px !important;
-                            font-weight: bold;
-                            font-weight: 600;
-                            color: #393737;
-                        }
-
-                        .expansion-headers,
-                        .expansion-row {
-                            width: 100%;
-                            display: flex;
-                            padding: 0 10px;
-
-                            > * {
-                                font-size: 12px !important;
-                                padding: 18px 1px;
-                            }
-                        }
-
-                        .expansion-headers {
-                            > * {
-                                font-weight: 600 !important;
-                                color: #393737;
-                            }
-                        }
-
-                        .expansion-row {
-                            background: white;
-                            border-radius: 10px;
-                            margin-bottom: 10px;
-                            border: 1px solid #d6d6d6;
-
-                            > * {
-                                color: #25213b;
-                                font-weight: 400;
-                            }
-
-                            .expansion-headers-sale {
-                                color: #1084dc;
-                            }
-                        }
-
-                        .expansion-row-highlight > * {
-                            color: red !important;
-                        }
-
-                        .expansion-headers-charges {
-                            flex: 3;
-                        }
-
-                        .expansion-headers-curr {
-                            flex: 1;
-                        }
-
-                        .expansion-headers-cost {
-                            flex: 3;
-                        }
-
-                        .expansion-headers-sale {
-                            flex: 4;
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    span.p-button-label {
-        font-size: 16px !important;
-        font-weight: 500;
-        // color: #45494a;
-    }
-}
-
-.footer {
-    padding: 47px 19px;
-    text-align: right;
-    height: 193px;
-
-    button {
-        margin-left: 20px;
-    }
-}
-
-:host ::ng-deep p-confirmdialog .p-dialog {
-    .p-dialog-content {
-        background: white;
-    }
-
-    .p-confirm-dialog-icon,
-    .p-dialog-title {
-        font-size: 1rem !important;
-    }
-
-    .p-dialog-header-icon {
-        width: 1rem;
-        height: 1rem;
-    }
-
-    .p-dialog-content {
-        justify-content: center;
-    }
-
-    .p-button .p-button-icon-left,
-    .p-dialog-footer button {
-        font-size: 10px !important;
-    }
-
-    .p-dialog-footer {
-        padding-top: 10px;
-
-        button {
-            padding: 6px 10px;
-        }
-    }
-}
+// ::ng-deep {
+//     .price-check-tooltip-icons {
+//         div.p-tooltip-text {
+//             background: rgb(0 0 0);
+//             box-shadow: 0 0 15px -5px rgba(0, 0, 0.9);
+//             border: 1px solid rgb(234 234 234);
+//         }
+
+//         .p-tooltip-arrow {
+//             border-top-color: black !important;
+//             bottom: 1px;
+//         }
+//     }
+
+//     .price-check-tooltip-frequency, .price-check-tooltip-transit {
+//         width: auto;
+//         text-align: center;
+//     }
+
+//     .price-check {
+//         background: #e5e5e5;
+
+//         .p-dialog-content {
+//             padding: 0;
+//             background: #e5e5e5;
+//         }
+//     }
+// }
+
+// :host {
+//     background: #e5e5e5;
+//     display: block;
+//     height: 100%;
+// }
+
+// .header {
+//     padding: 21px 37px;
+//     background: white;
+//     border-radius: 0 0 14px 14px;
+//     height: 111px;
+//     display: table-cell;
+//     vertical-align: middle;
+//     width: 1440px;
+
+//     h1 {
+//         font-size: 24px !important;
+//         display: inline-block;
+//         color: black;
+//         font-weight: bold;
+//         margin-top: 13px;
+//     }
+
+//     .filter-wrapper {
+//         float: right;
+//         display: flex;
+//         text-align: center;
+//         top: 4px;
+//         position: relative;
+//         font-weight: 500;
+
+//         .filter:first-child {
+//             border-radius: 8px 0 0 8px;
+//         }
+
+//         .filter:last-child {
+//             border-radius: 0 8px 8px 0;
+//         }
+
+//         .filter {
+//             width: 136px;
+//             padding: 12px 8px;
+//             border: 1px solid #e3e4e4;
+//             color: #1084dc;
+//             font-size: 16.7px !important;
+//             cursor: pointer;
+//             position: relative;
+//             font-weight: 500;
+//         }
+
+//         .filter.active,
+//         .filter:hover {
+//             border-color: #1084dc;
+//             box-shadow: rgb(0 0 0 / 35%) 0px 5px 15px;
+//         }
+
+//         .filter.active {
+//             background: #1084dc;
+//             color: white;
+//         }
+
+//         .filter:hover::after,
+//         .filter.active::after {
+//             content: "";
+//             position: absolute;
+//             top: 100%;
+//             left: 50%;
+//             margin-left: -12px;
+//             border-width: 9px;
+//             border-style: solid;
+//             border-color: #1084dc transparent transparent transparent;
+//         }
+//     }
+
+//     button {
+//         position: absolute;
+//         right: 0;
+//         top: 0;
+//     }
+// }
+
+// .no-offer {
+//     text-align: center;
+//     margin-top: 70px;
+
+//     img {
+//         width: 78%;
+//     }
+
+//     h3 {
+//         font-size: 26px !important;
+//         color: #ababab;
+//         margin-bottom: 0;
+//         margin-top: 42px;
+//         font-weight: bold;
+//     }
+// }
+
+// .body {
+//     height: calc(100% - 335px);
+//     margin-top: 29px;
+
+//     .offer-container:first-child {
+//         .checkbox-wrapper {
+//             margin-top: 0px;
+//             border-radius: 12px 12px 0px 0px;
+
+//             p-checkbox {
+//                 margin-top: 28px !important;
+//             }
+//         }
+
+//         .price-wrapper {
+//             margin-top: 0px;
+//         }
+//     }
+
+//     .offer-container:last-child .checkbox-wrapper {
+//         border-radius: 0px 0px 12px 12px;
+//     }
+
+//     .offer-container {
+//         margin-left: 13px;
+//         display: flex;
+
+//         .checkbox-wrapper,
+//         .price-wrapper {
+//             background: white;
+//         }
+
+//         .checkbox-wrapper {
+//             flex: 1;
+//             text-align: center;
+
+//             p-checkbox {
+//                 margin-top: 30px;
+
+//                 .p-checkbox {
+//                     margin: 0;
+//                 }
+//             }
+//         }
+
+//         .price-wrapper {
+//             flex: 28;
+//             border-radius: 19px;
+//             width: calc(100% - 25px);
+//             // height: 200px;
+//             margin-top: 10px;
+//             margin-left: 11px;
+
+//             .header-price {
+//                 width: 100%;
+//                 height: 70px;
+//                 padding: 0 13px;
+//                 padding-top: 14px;
+//                 -webkit-box-shadow: 0 6px 5px -4px #e3e3e3;
+//                 box-shadow: 0 6px 5px -4px #e3e3e3;
+
+//                 .tags {
+//                     margin-top: 3px;
+//                 }
+
+//                 .tag,
+//                 .icon,
+//                 .tags {
+//                     display: inline-block;
+//                 }
+
+//                 .tag {
+//                     background: #e2f0fb;
+//                     color: #1084dc;
+//                     padding: 8px 15px;
+//                     border-radius: 20px;
+//                     height: 37px;
+//                     line-height: 23px;
+//                     font-weight: 600;
+//                     font-size: 20px !important;
+//                     margin: 0 4px;
+
+//                     img {
+//                         height: 16px;
+//                         vertical-align: baseline;
+//                     }
+//                 }
+
+//                 .icons {
+//                     float: right;
+
+//                     .icon {
+//                         margin: 0 12px;
+//                         width: 32px;
+//                     }
+
+//                     .icon-wrapper {
+//                         position: relative;
+//                         display: inline-block;
+//                         vertical-align: top;
+
+//                         .icon-number-in {
+//                             position: absolute;
+//                             font-size: 15px !important;
+//                             top: 9px;
+//                             width: fit-content;
+//                             width: -moz-fit-content;
+//                             max-width: 19px;
+//                             text-align: center;
+//                             font-weight: bold;
+//                             overflow: hidden;
+//                             left: 0;
+//                             right: 0;
+//                             margin: auto;
+//                         }
+//                     }
+//                 }
+//             }
+
+//             .price-body {
+//                 display: flex;
+//                 height: 150px;
+//                 flex-direction: row;
+//                 flex-wrap: nowrap;
+//                 align-items: center;
+//                 margin: 32px 20px 5px;
+
+//                 .company-icon {
+//                     flex: 1;
+//                     font-size: 24px !important;
+//                     font-weight: 500;
+//                     text-align: center;
+
+//                     img {
+//                         width: 100%;
+//                         object-fit: contain;
+//                     }
+//                 }
+
+//                 .summary {
+//                     display: inline-flex;
+//                     border: 1px solid #f5f5f5;
+//                     align-items: center;
+//                     flex: 3;
+//                     padding: 10px;
+//                     margin: 0px;
+//                     border-radius: 7px;
+//                     padding-bottom: 2px;
+
+//                     .summary-item {
+//                         height: 99px;
+//                         flex: 1;
+//                         background: #f5f5f5;
+//                         padding: 23px 24px;
+//                         border-radius: 19px;
+//                         margin: 10px;
+//                         font-size: 18px;
+//                         font-weight: 500;
+//                         color: black;
+//                         display: flex;
+//                         align-items: center;
+
+//                         > * {
+//                             font-size: 24px !important;
+//                             font-weight: 500;
+//                         }
+
+//                         .summary-text {
+//                             flex: 1;
+//                             align-self: center;
+//                         }
+
+//                         .summary-item-value {
+//                             flex: 1;
+//                             text-align: right;
+//                             color: #1084dc;
+//                             font-weight: 600;
+//                             font-size: 26px !important;
+
+//                             img {
+//                                 height: 19px;
+//                             }
+//                         }
+//                     }
+//                 }
+//             }
+//         }
+//     }
+// }
+
+// :host ::ng-deep {
+//     * {
+//         font-family: "Poppins", sans-serif !important;
+//     }
+
+//     .pi {
+//         font-family: "primeicons" !important;
+//     }
+
+//     .body {
+//         .p-scrollpanel-content {
+//             overflow-y: scroll !important;
+//         }
+
+//         p-checkbox .p-checkbox {
+//             margin-right: 0;
+//             width: 25px !important;
+//             height: 25px !important;
+//         }
+
+//         p-checkbox .p-checkbox,
+//         .p-checkbox-box {
+//             width: 25px !important;
+//             height: 25px !important;
+//         }
+
+//         .accordion-container {
+//             padding: 0px;
+
+//             i {
+//                 color: #1084dc;
+//                 font-size: 23px !important;
+//                 margin-right: 18px !important;
+//                 margin-bottom: 8px !important;
+//                 font-family: "primeicons" !important;
+//             }
+
+//             .accordion-contect {
+//                 background: #e5e5e5;
+//                 padding-top: 0px;
+//                 margin: 0;
+//                 margin-top: 18px;
+
+//                 .expansion {
+//                     width: 100%;
+//                     display: flex;
+//                     background: #e5e5e5;
+//                     border: 1px solid #d6d6d6;
+//                     border-radius: 7px;
+//                     margin-top: 18px;
+//                     position: relative;
+//                     top: 18px;
+//                     margin-bottom: 18px;
+
+//                     .expansion-item {
+//                         flex: 1;
+//                         padding: 0 16px;
+//                         border-right: 1px solid #d6d6d6;
+//                         margin: 19px 0;
+
+//                         h3 {
+//                             margin: 0;
+//                             font-size: 18px !important;
+//                             font-weight: bold;
+//                             font-weight: 600;
+//                             color: #393737;
+//                         }
+
+//                         .expansion-headers,
+//                         .expansion-row {
+//                             width: 100%;
+//                             display: flex;
+//                             padding: 0 10px;
+
+//                             > * {
+//                                 font-size: 12px !important;
+//                                 padding: 18px 1px;
+//                             }
+//                         }
+
+//                         .expansion-headers {
+//                             > * {
+//                                 font-weight: 600 !important;
+//                                 color: #393737;
+//                             }
+//                         }
+
+//                         .expansion-row {
+//                             background: white;
+//                             border-radius: 10px;
+//                             margin-bottom: 10px;
+//                             border: 1px solid #d6d6d6;
+
+//                             > * {
+//                                 color: #25213b;
+//                                 font-weight: 400;
+//                             }
+
+//                             .expansion-headers-sale {
+//                                 color: #1084dc;
+//                             }
+//                         }
+
+//                         .expansion-row-highlight > * {
+//                             color: red !important;
+//                         }
+
+//                         .expansion-headers-charges {
+//                             flex: 3;
+//                         }
+
+//                         .expansion-headers-curr {
+//                             flex: 1;
+//                         }
+
+//                         .expansion-headers-cost {
+//                             flex: 3;
+//                         }
+
+//                         .expansion-headers-sale {
+//                             flex: 4;
+//                         }
+//                     }
+//                 }
+//             }
+//         }
+//     }
+
+//     span.p-button-label {
+//         font-size: 16px !important;
+//         font-weight: 500;
+//         // color: #45494a;
+//     }
+// }
+
+// .footer {
+//     padding: 47px 19px;
+//     text-align: right;
+//     height: 193px;
+
+//     button {
+//         margin-left: 20px;
+//     }
+// }
+
+// :host ::ng-deep p-confirmdialog .p-dialog {
+//     .p-dialog-content {
+//         background: white;
+//     }
+
+//     .p-confirm-dialog-icon,
+//     .p-dialog-title {
+//         font-size: 1rem !important;
+//     }
+
+//     .p-dialog-header-icon {
+//         width: 1rem;
+//         height: 1rem;
+//     }
+
+//     .p-dialog-content {
+//         justify-content: center;
+//     }
+
+//     .p-button .p-button-icon-left,
+//     .p-dialog-footer button {
+//         font-size: 10px !important;
+//     }
+
+//     .p-dialog-footer {
+//         padding-top: 10px;
+
+//         button {
+//             padding: 6px 10px;
+//         }
+//     }
+// }
