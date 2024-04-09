@@ -1548,8 +1548,15 @@ export class EditComponent implements OnDestroy {
                             
                             if(this.ObjectTableName == "ARInvoice" && myResponse.Result?.ConfirmationNumberStatus==5){
                                 const messageWindow = new MessageWindow();
-                                messageWindow.Title=TextCodeTranslator.Translate("ARInvoice.O.ConfirmationNumberFailed");
-                                messageWindow.Show(myResponse.Result?.APIResponseToConfirmation);
+                                messageWindow.Title=TextCodeTranslator.Translate("ARInvoice.O.ConfirmationNumberFailedTitle");
+                                messageWindow.RTL=true;
+                                messageWindow.Height=320;
+                                messageWindow.Width=420;
+                                messageWindow.IsMessageMultiLine=true
+                                messageWindow.LayoutDirection='rtl'
+                                var text=TextCodeTranslator.Translate("ARInvoice.O.ConfirmationNumberFailedText")+'\n'+TextCodeTranslator.Translate("ARInvoice.O.ConfirmationNumberErrorDetails")+
+                                 '\n'+ myResponse.Result?.APIResponseToConfirmation;
+                                messageWindow.Show(text);
                             } 
                             
                             this.EntityPM = myResponse.Result;
