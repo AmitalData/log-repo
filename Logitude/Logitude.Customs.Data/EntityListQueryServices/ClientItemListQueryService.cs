@@ -24,7 +24,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 		IQueryable<ClientItemList> query = (from a in iQueryable.Include("OriginCountry")
                                             select new ClientItemList()
 											{
-                     
+											  Id = a.Id,	
 					                          Tenant = a.Tenant,
 					                          ClientCode=a.ClientCode,
 					                          ClassificationCode=a.ClassificationCode,
