@@ -1590,7 +1590,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              PaymentTermId = entity.PaymentTermId,
                              PaymentTermName = entity.PaymentTerm != null ? entity.PaymentTerm.EnglishName : null,
                              ConfirmationNumberStatusName = entity.Confirmation != null ? entity.Confirmation.LocalName : null,
-
+                             ConfirmationNumber= entity.ConfirmationNumber,
                              IsInvoiceNumberManuallySet = entity.IsInvoiceNumberManuallySet,
                              AmountDue = entity.AmountDue,
                              ExpectedPaymentDate = entity.ExpectedPaymentDate,
@@ -1691,7 +1691,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                  - (double)(entity.TotalAmountForTaxReport ?? 0),
                              IsSigned= entity.IsSigned,
                              IsSignedName= entity.ARInvoicesSignedStatus == null ? null: entity.ARInvoicesSignedStatus.LocalName,
-                             ConfirmationNumberStatus = entity.ConfirmationNumberStatus,
                         
 
                          };

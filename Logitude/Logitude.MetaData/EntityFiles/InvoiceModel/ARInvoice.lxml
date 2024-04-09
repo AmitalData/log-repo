@@ -17633,7 +17633,7 @@
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="2"
-    DisplayInList="true"
+    DisplayInList="false"
     IsCustomFilter="false"
     IsListFilter="false"
     MultiLine="false"
@@ -17675,7 +17675,7 @@
     IsComposition="false"
     IsMaxLength="false"
     NoMetaDataField="false"
-    GenerateInList="true"
+    GenerateInList="false"
     IsFixedLength="false"
     EnableAutoFill="false"
     IncludeInSearchField="false"
@@ -21457,9 +21457,21 @@
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
-      Code="&quot;ARInvoice.O.ConfirmationNumberFailed&quot;"
+      Code="&quot;ARInvoice.O.ConfirmationNumberFailedTitle&quot;"
       DefaultText="&quot;Confirmation number failed&quot;"
       LocalDefaultText="&quot;כשלון בקבלת הקצאה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.O.ConfirmationNumberFailedText&quot;"
+      DefaultText="&quot;The invoice did not receive an coonfirmation number from the tax authority. Please handle manually.&quot;"
+      LocalDefaultText="&quot;החשבונית לא קיבלה מספר הקצאה מרשות המיסים. נא לטפל ידנית.&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ARInvoice.O.ConfirmationNumberErrorDetails&quot;"
+      DefaultText="&quot;Error details:&quot;"
+      LocalDefaultText="&quot;פירוט השגיאה:&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
