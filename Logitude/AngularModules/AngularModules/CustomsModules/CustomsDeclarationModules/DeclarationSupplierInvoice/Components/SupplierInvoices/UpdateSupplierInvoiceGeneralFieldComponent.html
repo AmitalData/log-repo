@@ -47,8 +47,7 @@
                             [LookUpTableName]="'Customs.ClientItem'" [HideColumns]="true"
                             [QueryFilterItems]="PreceduralFilterItems" [SelectedValuePath]="'ClassificationCode'">
                         </LogLov> -->
-                        <LogLov *ngIf="hasOcr" #ClassificationTextBox [DataContext]="DataContext"
-                            [ObjectFieldName]="UpdateField" [ObjectTableName]="ObjectTableName"
+                        <LogLov *ngIf="hasOcr" #ClassificationTextBox [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
                             [LookUpTableName]="'Customs.ClientItem'" [HideColumns]="true"
                             [QueryFilterItems]="PreceduralFilterItems">
                         </LogLov>
