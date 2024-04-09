@@ -39,17 +39,13 @@
                             [FocusOnMe]="true" [InputType]="'integertext'" [ObjectTableName]="ObjectTableName"
                             [HideColumns]="true" [DebounceTime]="1">
                         </LogTextBoxV2>
-                        <!-- <LogLov *ngIf="hasOcr" #ClassificationTextBox
+                        <LogLov *ngIf="hasOcr" #ClassificationTextBox
                             (LostFocus)="validateClassificationNumber(ClassificationTextBox)"
                             (KeyUp)="classificationKeyUp($event,ClassificationTextBox)"
                             (SelectedItemChanged)="FinalValue = $event" [DataContext]="DataContext"
                             [ObjectFieldName]="UpdateField" [ObjectTableName]="ObjectTableName"
                             [LookUpTableName]="'Customs.ClientItem'" [HideColumns]="true"
                             [QueryFilterItems]="PreceduralFilterItems" [SelectedValuePath]="'ClassificationCode'">
-                        </LogLov> -->
-                        <LogLov *ngIf="hasOcr" #ClassificationTextBox [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
-                            [LookUpTableName]="'Customs.ClientItem'" [HideColumns]="true"
-                            [QueryFilterItems]="PreceduralFilterItems">
                         </LogLov>
 
                     </td>
