@@ -4054,6 +4054,8 @@ export class SupplierInvoiceItemLine extends BaseComponent {
         ItemPriceTextBox.TextValue = this.oldvalue;
     }
 
+
+    
     GetQuantityType(isChangeInvoiceQuantityType: boolean = true, calcInvoiceQuantityType: boolean = false) {
 
         if (this.ClassificationCode != null) {
