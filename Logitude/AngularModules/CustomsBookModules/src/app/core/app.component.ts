@@ -5,6 +5,7 @@ import { AppFooterComponent } from '../shared/components/app-footer/app-footer.c
 import { MainPageComponent } from '../features/main-page/main-page.component';
 import { NgFor, NgForOf } from '@angular/common';
 import { CommonModule } from '@angular/common';
+import { SessionInfo } from './Infrastructure/Utilities/SessionInfo';
 
 @Component({
 	selector: 'app-root',
@@ -13,4 +14,20 @@ import { CommonModule } from '@angular/common';
 	templateUrl: './app.component.html',
 	styleUrl: './app.component.css',
 })
-export class AppComponent {}
+export class AppComponent {
+
+	constructor()
+    {
+        //RootContext.AppComponent = this;
+        this.SetSeSessionInfo();
+    }
+
+    private SetSeSessionInfo() {
+        SessionInfo.LoggedUserEmail = sessionStorage.getItem("LoggedUserEmail");
+        SessionInfo.LoggedUserId = sessionStorage.getItem("LoggedUserId");
+        SessionInfo.LoggedUserTenant = Number(sessionStorage.getItem("LoggedUserTenant"));
+        SessionInfo.Token = sessionStorage.getItem("Token");
+        SessionInfo.DocumentDownloadToken = sessionStorage.getItem("DocumentDownloadToken");
+    }
+
+}
