@@ -954,9 +954,8 @@ namespace Logitude.Customs.BL.BL
                 declarationPendingPM_907 = myDeclarationCourierStatusPM.DeclarationPendings.Where(r => r.DeclarationID == declarationPM.Id && r.CourierPendingReasonCode == courierReasonCode).FirstOrDefault();
             }
 
-
-
-            string defValue = GetDefault("ISRAEL", "CGO_PND_QTY_VAL", "NON", "NON");
+            DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(declarationPM.Tenant);
+            string defValue = defaultValueQueryService.GetDefault("ISRAEL", "CGO_PND_QTY_VAL", "NON", "NON", declarationPM.Tenant);
             decimal defaultAmount = 0;
             var boolvar = (decimal.TryParse(defValue, out defaultAmount));
 
@@ -1011,22 +1010,6 @@ namespace Logitude.Customs.BL.BL
 
         }
 
-        private string GetDefault(string DISTRID, string DEFID, string BRANCHID, string CARDID)
-        {
-            AmitalContext amitalContext = AmitalContext.GetContext(declarationPM.Tenant);
-            var myGDFDATAQueryService = new GDFDATAQueryService(amitalContext);
-
-            if (DISTRID == null || DEFID == null || BRANCHID == null || CARDID == null)
-            {
-                return ("");
-            }
-
-            GDFDATAPM myGDFDATAPM = myGDFDATAQueryService.GetSingle(DISTRID, DEFID, BRANCHID, CARDID, false, true);
-            if (myGDFDATAPM == null)
-            {
-                return ("");
-            }
-            return (myGDFDATAPM.DEFDATA);
-        }
+        
     }
 }
