@@ -592,9 +592,12 @@ export class HomeComponent implements OnDestroy{
     // AmitalBrowserInUse
     _AmitalBrowserInUse: boolean = false;
     CheckAmitalBrowserInUse() {
+        const allowMutltiTabs: string = new URLSearchParams(window.location.search).get('allowMutltiTabs');;        
+        
         if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
-            this.AddTab();//this.Tabs.push(new SessionTabItem());
-            this._AmitalBrowserInUse = AmitalGatewayUtil.Instance.AmitalBrowserInUse;
+            if(!allowMutltiTabs)
+                this.AddTab();//this.Tabs.push(new SessionTabItem());
+            this._AmitalBrowserInUse = !allowMutltiTabs;
             let myCA23EditTab: SessionTabItem = this.Tabs[1];
             this.SelectionChanged(myCA23EditTab);
             let timerToken = //setTimeout(() => this.RunComponent(), 1);
