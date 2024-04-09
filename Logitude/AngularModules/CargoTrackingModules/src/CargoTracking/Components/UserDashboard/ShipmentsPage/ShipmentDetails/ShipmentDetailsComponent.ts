@@ -186,9 +186,9 @@ export class ShipmentDetailsComponent implements OnInit, AfterViewInit {
     }
 
 
-    checkDescriptionShipping(description: string): string {
+    checkDescriptionShipping(description: string): string {     
         let mainCarniageLes = "MainCarniageLes";
-        return description.includes(mainCarniageLes.toLocaleLowerCase()) ? " " : description;
+        return description?.includes(mainCarniageLes.toLocaleLowerCase()) ? " " : description;
     }
 
     splitAddressAndPhone(addressString: string) {
