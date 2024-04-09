@@ -6,7 +6,8 @@ import { ConfirmWindow } from "Controls/Windows/ConfirmWindow";
 import { TextCodeTranslator } from "Infrastructure/Utilities/TextCodeTranslator";
 import { FieldData } from "./amitalApiTypes";
 import { ObservableCollection } from "Infrastructure/Utilities/ObservableCollection";
-import { AmitalAPIAddClientWindowComponent } from "./AmitalAPIAddClientWindowComponent";
+import { AmitalAPIAddClientWindowComponent, AmitalAPIAddClientWindowParams } from "./WindowsComponent/AmitalAPIAddClientWindowComponent";
+import { BehaviorSubject, Subject } from "rxjs";
 
 @Component({
     selector: 'appAmitalAPISettings',
@@ -16,7 +17,7 @@ import { AmitalAPIAddClientWindowComponent } from "./AmitalAPIAddClientWindowCom
         <button class="Button RedButton margin-vertical" (click)="openAddClientPopup()">{{'General.B.Add' | TextCodeTranslationPipe}}</button>
 
         <div class='margin-vertical user-select' style='height: 330px; width: 100%; position: relative;' *ngIf='clientTableReady'>
-            <logitude-edit-grid GridHeight="100%" GridWidth="100%" [ItemSource]="clientDataSource">
+            <logitude-edit-grid GridHeight="100%" GridWidth="100%" [ItemSource]="clientDataSource" (SelectedItemChanged)='clientTenantSelected = $event.Tenant'>
                 <log-column [header]="col.label" [width]="col.width" [Alignment]="'center'" [binding]="col.name" *ngFor='let col of clientColumns'>
                     <ng-template let-item>
                         <log-cell-template [IgnoreMods]="true" #logcelltemplate>
@@ -38,7 +39,7 @@ import { AmitalAPIAddClientWindowComponent } from "./AmitalAPIAddClientWindowCom
                 </log-column>
             </logitude-edit-grid>
         </div>
-        <app-amitalapi-schema-table></app-amitalapi-schema-table>
+        <app-amitalapi-schema-table [schemasTable]='$schemasTable | async' (schemasTableChange)='refreshSchemas()'  [clientTenant]='clientTenantSelected'></app-amitalapi-schema-table>
     `,
     styleUrls: ['./amitalApi.scss'],
     styles: [``],
@@ -50,6 +51,8 @@ export class AmitalAPISettingsComponent {
     settings: AmitalApiSettings = null;
     clientDataSource = new ObservableCollection([]);
     clientTableReady: boolean = false;
+    clientTenantSelected: string = '';
+    $schemasTable: BehaviorSubject<AmitalApiSchema[]> = new BehaviorSubject<AmitalApiSchema[]>(null);
 
     clientColumns: (FieldData & { width: string })[] = [
         { name: 'Name', label: 'Name', width: '100' },
@@ -65,30 +68,30 @@ export class AmitalAPISettingsComponent {
 
     async ngOnInit() {
         SessionLocator.SelectedSession.StartBusyIndicator('');
-        const [schemas, settings, clientData]: [AmitalApiSchema[], AmitalApiSettings, AmitalApiClient[]] = await this.getData();
-        await this.initClientTable(clientData, schemas, settings)
+        const [[settings, clientData],]: [[AmitalApiSettings, AmitalApiClient[]], void] = await Promise.all([
+            this.getData(),
+            this.refreshSchemas(),
+        ]);
+        this.initClientTable(clientData, settings);
         SessionLocator.SelectedSession.StopBusyIndicator();
 
-        this.schemas = schemas;
         this.settings = settings;
     }
 
-    async getData(): Promise<[AmitalApiSchema[], AmitalApiSettings, AmitalApiClient[]]> {
+    async getData(): Promise<[AmitalApiSettings, AmitalApiClient[]]> {
         return Promise.all([
-            this.amitalAPISchemaWebService.getAll(),
             this.amitalAPISchemaWebService.getSettings(),
             this.amitalAPIClientWebService.getAll(),
         ])
     }
 
-    async initClientTable(clientData: AmitalApiClient[], schemas: AmitalApiSchema[], settings: AmitalApiSettings) {
-
+    initClientTable(clientData: AmitalApiClient[], settings: AmitalApiSettings) {
         clientData.forEach(client => {
+            client.SecretExpired = new Date(client.SecretExpired).toLocaleString() as any;
             client['baseAddress'] = settings.baseAddress;
             client['authAddress'] = settings.authAddress;
         });
         this.clientDataSource.InsertCollection(clientData);
-        console.log(clientData)
 
         this.clientTableReady = true
     }
@@ -110,7 +113,7 @@ export class AmitalAPISettingsComponent {
 
     async refreshClientTable() {
         const clientData: AmitalApiClient[] = await this.amitalAPIClientWebService.getAll();
-        this.initClientTable(clientData, this.schemas, this.settings);
+        this.initClientTable(clientData, this.settings);
     }
 
     async openEditClientPopup(orginalRow: AmitalApiClient) {
@@ -119,14 +122,27 @@ export class AmitalAPISettingsComponent {
         delete row['baseAddress'];
         delete row['authAddress'];
 
-        const res: AmitalApiClient | boolean = await AmitalAPIAddClientWindowComponent.openEditPopup(row, true);
-        if (res)
+        const windowArgs: AmitalAPIAddClientWindowParams = { row: row, isUpdate: true, schemas: this.$schemasTable.value };
+        const res: AmitalApiClient | boolean = await AmitalAPIAddClientWindowComponent.openWindow(windowArgs);
+
+        if (res) {
+            this.refreshSchemas();
             this.refreshClientTable()
+        }
     }
 
     async openAddClientPopup() {
-        const res: AmitalApiClient | boolean = await AmitalAPIAddClientWindowComponent.openEditPopup(null, false);
-        if (res)
+        const windowArgs: AmitalAPIAddClientWindowParams = { isUpdate: false, schemas: this.$schemasTable.value };
+        const res: AmitalApiClient | boolean = await AmitalAPIAddClientWindowComponent.openWindow(windowArgs);
+
+        if (res) {
+            this.refreshSchemas();
             this.refreshClientTable()
+        }
+    }
+
+    async refreshSchemas() {
+        const schemas = await this.amitalAPISchemaWebService.getAll();
+        this.$schemasTable.next(schemas);
     }
 }

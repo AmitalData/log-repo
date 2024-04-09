@@ -10,15 +10,18 @@ import { UIProperties } from "Infrastructure/Components/LogitudeComponents/UIPro
             
             <div *ngFor='let field of fields' class='form-data-field-field'>
                 <LogLabel [DataContext]="DataContext" [Text]="field.label" [LayoutDirection]="dir"></LogLabel>
-                
-                <div *ngIf='field.type === "boolean"; else logTextBox' >
-                    <select #selectedData (change)='DataContext[field.name]= selectedData.value' [value]='DataContext[field.name]' >
+
+                <ng-container [ngSwitch]='field.type'>
+                    <div *ngSwitchCase='"boolean"'>
+                        <select #selectedData (change)='DataContext[field.name] = selectedData.value' [value]='DataContext[field.name]' [ngClass]='{"error": field.error}' >
                             <option *ngFor='let x of ["true", "false"]'>{{x}}</option>
-                    </select>
-                </div>
-                <ng-template #logTextBox>
-                    <LogTextBox [DataContext]="DataContext" [ObjectFieldName]='field.name' [dir]="dir"></LogTextBox>
-                </ng-template>
+                        </select>
+                    </div>
+                    
+                    <LogDatePicker *ngSwitchCase='"date"' [ObjectFieldName]="field.name" [DataContext]="DataContext" [SelectedDateValue]='DataContext[field.name]'></LogDatePicker>
+
+                    <LogTextBox *ngSwitchDefault [DataContext]="DataContext" [ObjectFieldName]='field.name' [dir]="dir"></LogTextBox>
+                </ng-container>
             </div>
         </div>
     `,
@@ -32,5 +35,6 @@ export class LogTexBoxFormComponent {
 }
 
 export type TextBoxField = FieldData & {
-    type?: 'boolean';
+    type?: 'boolean' | 'date';
+    error?: boolean;
 };

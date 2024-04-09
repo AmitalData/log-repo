@@ -42,7 +42,7 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;Client Items&quot;"
   DefaultText="&quot;Client Items&quot;"
-  Code="&quot;4fe6&quot;"
+  Code="&quot;bd8a&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"

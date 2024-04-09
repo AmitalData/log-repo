@@ -7,8 +7,9 @@ import { TextCodeTranslator } from "Infrastructure/Utilities/TextCodeTranslator"
 import { AmitalAPIClientWebService, AmitalApiClient } from "Common/Services/AmitalAPIClientWebService";
 import { AmitalAPIClientapiWebService, AmitalApiClientapi } from "Common/Services/AmitalAPIClientapiWebService";
 import { AmitalAPISchemaWebService, AmitalApiSchema, AmitalApiSettings } from "Common/Services/AmitalAPISchemaWebService";
-import { AmitalAPIAddApiWindowComponent } from "./AmitalAPIAddApiWindowComponent";
+import { AmitalAPIAddApiWindowComponent, AmitalAPIAddApiWindowPararms } from "./WindowsComponent/AmitalAPIAddApiWindowComponent";
 import { FieldData, MoreParam } from "./amitalApiTypes";
+import { AmitalAPIAddWindowService } from "./WindowsComponent/AmitalAPIAddWindowService";
 
 @Component({
     selector: 'appAPISettings',
@@ -26,7 +27,7 @@ import { FieldData, MoreParam } from "./amitalApiTypes";
 
         <div class='user-select' style='height: 600px; width: 100%; position: relative;' *ngIf='clientapiTableReady'>
             <logitude-edit-grid GridHeight="100%" GridWidth="100%" [ItemSource]="clientapiDataSource">
-                <log-column [header]="col.label" [width]="'140'" [Alignment]="'center'" [binding]="col.name" *ngFor='let col of clientapiColumns'>
+                <log-column [header]="col.label" [width]="col.width" [Alignment]="'center'" [binding]="col.name" *ngFor='let col of clientapiColumns'>
                     <ng-template let-item>
                         <log-cell-template [IgnoreMods]="true" #logcelltemplate>
                             <div *ngIf="logcelltemplate.IsDisplayMode" class="TextTrimming" style="text-align:center">
@@ -94,6 +95,7 @@ export class APISettingsComponent extends BaseComponent {
     clientapiTableReady: boolean = false;
     schemas: AmitalApiSchema[] = [];
     settings: AmitalApiSettings = null;
+    amitalAPIAddWindowService: AmitalAPIAddWindowService = new AmitalAPIAddWindowService();
     fields: FieldData[] = [
         { name: 'AzureClientId', label: 'Client Id' },
         { name: 'AzureApiRegisterName', label: 'Client Name' },
@@ -102,7 +104,7 @@ export class APISettingsComponent extends BaseComponent {
         { name: 'AzureManagedApplObjId', label: 'Caller Objectid' },
         { name: 'baseAddress', label: 'Base Addres' },
         { name: 'authAddress', label: 'Auth Address' },
-        { name: 'Tenant', label: 'Tenant' },
+        { name: 'ClientTenant', label: 'Client / Tenant' },
     ];
     clientapiDataSource = new ObservableCollection([]);
     moreParamsList: MoreParam[] = [
@@ -117,8 +119,8 @@ export class APISettingsComponent extends BaseComponent {
         { name: 'Schema', label: 'Schema', width: '100' },
         { name: 'ApiType', label: 'Api Type', width: '100' },
         { name: 'Address', label: 'Address', width: '100' },
-        { name: 'PartnerName', label: 'Partner', width: '100' },
-        { name: 'PartnerToken', label: 'Token', width: '100' },
+        { name: 'PartnerName', label: 'PARTNER', width: '100' },
+        { name: 'PartnerToken', label: 'Token', width: '240' },
     ].concat(this.moreParamsList.map(param => ({ name: param.name, label: param.label, width: '100' })));
 
     async ngOnInit() {
@@ -159,10 +161,12 @@ export class APISettingsComponent extends BaseComponent {
     }
 
     async initHeaderFields(settings: AmitalApiSettings, clientData: AmitalApiClient) {
+        clientData['ClientTenant'] = clientData.Name + ' / ' + clientData.Tenant;
+
         this.DataContext = { ...this.DataContext, ...clientData, ...settings };
 
         this.fields.forEach(field => this.UIProperties.SetEnabled(field.name, null, false))
-        this.DataContext.fields = this.fields
+        this.DataContext.fields = this.fields;
         this.headerDataFieldReady = true;
     }
 
@@ -187,7 +191,9 @@ export class APISettingsComponent extends BaseComponent {
     }
 
     async openAddPopup() {
-        const res: AmitalApiClientapi | boolean = await AmitalAPIAddApiWindowComponent.openEditPopup(null, this.schemas, this.moreParamsList, this.clientapiDataSource.Collection, false);
+        const windowArgs: AmitalAPIAddApiWindowPararms = { schemas: this.schemas, moreParams: this.moreParamsList, clientapis: this.clientapiDataSource.Collection, isUpdate: false };
+        const res: AmitalApiClientapi | boolean = await AmitalAPIAddApiWindowComponent.openWindow(windowArgs);
+
         if (res)
             this.refreshClientApiTable();
     }
@@ -198,7 +204,9 @@ export class APISettingsComponent extends BaseComponent {
         delete row['ApiType'];
         delete row['Address'];
 
-        const res: AmitalApiClientapi | boolean = await AmitalAPIAddApiWindowComponent.openEditPopup(row, this.schemas, this.moreParamsList, null, true);
+        const windowArgs: AmitalAPIAddApiWindowPararms = { row: row, schemas: this.schemas, moreParams: this.moreParamsList, isUpdate: true };
+        const res: AmitalApiClientapi | boolean = await AmitalAPIAddApiWindowComponent.openWindow(windowArgs);
+
         if (res)
             this.refreshClientApiTable();
     }
