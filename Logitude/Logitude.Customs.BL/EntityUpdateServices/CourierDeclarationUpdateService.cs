@@ -1,4 +1,5 @@
 ﻿using Devart.Data.Oracle;
+using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.Data;
 using Logitude.Customs.Data.EntityKeys;
 using Logitude.Customs.Data.EntityPOCOs;
@@ -72,7 +73,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
             if (addedCourierDeclarations != null && addedCourierDeclarations.Count() > 0)
             {
-                SqlBulkInsert.BulkInsert("CourierDeclarations", addedCourierDeclarations);
+                var tableName = "CourierDeclarations";
+                if(!CustomsSettingQueryService.GetSettingByTenant(Tenant).IsConnectedToUniFreight)
+                    tableName ="Customs." + tableName;
+                SqlBulkInsert.BulkInsert(tableName, addedCourierDeclarations);
             }
             /*
             if (dbms == "oracle")
