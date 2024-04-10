@@ -511,7 +511,7 @@ into groupBy_currency
 
                  ChartOfAccountsTypeEnglish = chart.ChartOfAccountsTypeEnglish,
                  ChartOfAccountsEnglish = chart.ChartOfAccountsEnglish,
-                 GLAccountEnglish = chart.GLAccountEnglish,
+                 GLAccountEnglish = aGL.EnglishName,
 
                  LeafId = chart.LeafId,
                 
