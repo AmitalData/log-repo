@@ -374,7 +374,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     
                     if (Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("SQL_P", tenant))
                     {
-                        string cmd = "Update Consignments set UnloadPortCode =:pu ";
+                        string cmd = "Update customs.Consignments set UnloadPortCode =:pu ";
                         cmd = cmd + " where UnloadPortCode is null and declarationid IN (";
                         
                         SqlCommand sqlCommand = new SqlCommand(cmd, cn);
@@ -397,7 +397,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     }
                     else
                     {
-                        string cmd = "Update Consignments set UnloadPortCode = " + unloadPortCode;
+                        string cmd = "Update customs.Consignments set UnloadPortCode = " + unloadPortCode;
                         cmd = cmd + " where UnloadPortCode is null and declarationid IN (" + whereIn + ")";
 
                         SqlCommand sqlCommand = new SqlCommand(cmd, cn);

@@ -235,7 +235,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                      using (SqlConnection cn = new SqlConnection(strConnString))
                      {
                          string inList = String.Join(",", list100.Select(decId => $"'{decId}'").ToArray());
-                         string cmd = "Update DeclarationCourierStatuses set COURIERPAYMENTSTATUSCODE='I'";
+                         string cmd = "Update Customs.DeclarationCourierStatuses set COURIERPAYMENTSTATUSCODE='I'";
                          cmd = cmd + "  where DECLARATIONID in ({inList}) ";
 
                          SqlCommand sqlCommand = new SqlCommand(cmd, cn);
