@@ -182,11 +182,16 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 				}
 
 				originDeclarationId = _AmitalCustomsFile.Id;
+				AppendLogLine("originDeclarationId = " + originDeclarationId );
 
 				if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.Id) && _AmitalCustomsFile.Direction == "E")
 				{
+					AppendLogLine("Direction=E , _AmitalCustomsFile.Id = " + _AmitalCustomsFile.Id);
+
 					DeclarationRepository declarationRepository = new DeclarationRepository(_context);
 					_AmitalCustomsFile.Id = declarationRepository.GetAcceptDeclarationIdAmendment(_AmitalCustomsFile.Id, ResolvedTenant());
+					AppendLogLine("AFTER Direction=E , _AmitalCustomsFile.Id = " + _AmitalCustomsFile.Id);
+
 				}
 
 				/// Exist
@@ -2232,8 +2237,9 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 				MyGenericResponseObj.Stage = "Upsert";
 				Upsert(suppressNewTrans, MoreParams);
 				MyGenericResponseObj.Stage = "Done";
+				AppendLogLine("originDeclarationId = " + originDeclarationId);
 
-                MyGenericResponseObj.ApplicationId = originDeclarationId;
+				MyGenericResponseObj.ApplicationId = originDeclarationId;
 
 
 			}
