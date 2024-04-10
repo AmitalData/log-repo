@@ -549,6 +549,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                   ServiceAgreementURL = a.ServiceAgreementURL,
 												  SearchAbsoluteValuePublic = a.SearchAbsoluteValuePublic,
 
+                                                  ExportLoginCredintial=a.ExportLoginCredintial,
+                                                  ExportTenant=a.ExportTenant,
 											  }).FirstOrDefault();
 
                 if (tenant1 != null)
