@@ -543,7 +543,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                   CargoTrackingPrivateShowEvents = a.CargoTrackingPrivateShowEvents,
                                                   LogoURL = a.LogoURL,
                                                   ServiceAgreementURL = a.ServiceAgreementURL,
-
+                                                  ExportLoginCredintial=a.ExportLoginCredintial,
+                                                  ExportTenant=a.ExportTenant,
                                               }).FirstOrDefault();
 
                 if (tenant1 != null)
