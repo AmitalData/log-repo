@@ -63,6 +63,9 @@ namespace Simplog.Data.InvoiceModel
         IDbSet<ControlForInvoiceLinesDataView> ControlForInvoiceLinesDataView { get; }
 
         IDbSet<ARInvoicesSignedStatus> ARInvoicesSignedStatuses { get; }
+        IDbSet<ConfirmationNumberStatus> ConfirmationNumberStatuses { get; }
+
+        IDbSet<ConfirmationNumberDefault> ConfirmationNumberDefaults { get; }
 
         void SetAsModified(object entity);
         void DetectChanges();

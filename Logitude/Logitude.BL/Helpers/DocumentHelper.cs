@@ -40,7 +40,7 @@ using System.Web;
 using WebFreight.Web;
 using User = Simplog.Data.CommonDataModel.EntityPOCOs.User;
 using WebFreight.Web;
-using Logitude.XSD.CW_API.ABM;
+//using Logitude.XSD.CW_API.ABM;
 using Logitude.BL.InvoiceModel.Tools;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Repositories;

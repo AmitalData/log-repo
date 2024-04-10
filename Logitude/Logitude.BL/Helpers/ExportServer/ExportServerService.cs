@@ -6,13 +6,16 @@ using System.Net.Http.Headers;
 using System.Net.Http;
 using System.Net;
 using System.Text;
+using Simplog.Server.Infrastructure.Helpers;
+using System.Transactions;
+using System.Windows.Interop;
 
-namespace WebFreight.Web.Helpers.ExportServer
+namespace Logitude.BL.Helpers.ExportServer
 {
     public class ExportServerService
     {
         private static TenantManagementQuery tenantManagementQuery = new TenantManagementQuery();
-        private static TenantManagementService tenantManagementService = new TenantManagementService(GlobalContext.GetContext());            
+        private static TenantManagementService tenantManagementService = new TenantManagementService(GlobalContext.GetContext());
 
         public static ExportServerSettings GetSettings(int tenant)
         {
@@ -32,7 +35,7 @@ namespace WebFreight.Web.Helpers.ExportServer
             tenantManagementService.Update(tenantManagementPM, true);
         }
 
-        public static HttpResponseMessage CreateConfirmationNumber(int tenant, string email, string body)
+        public static ApiResponse CreateConfirmationNumber(int tenant, string email, string body)
         {
             string exportToken = GetTokenForConfirmationNumber(tenant, email);
             string urlCreateConfirmationNumber = ExportServerLogin.exportUrl + "/api/ShaamWebService/createConfirmationNumber";
@@ -44,18 +47,28 @@ namespace WebFreight.Web.Helpers.ExportServer
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
             StringContent stringContent = new StringContent(body, Encoding.UTF8, "application/json");
             HttpResponseMessage res = client.PostAsync(urlCreateConfirmationNumber, stringContent).Result;
+            ApiResponse apiResponse = new ApiResponse()
+            {
+                Res = res,
+                Msg = res.Content.ReadAsStringAsync().Result
+            };
             client.Dispose();
-
-            return res;
+            return apiResponse;
         }
 
         public static string GetTokenForConfirmationNumber(int tenant, string email)
         {
+
             string exportToken = ExportServerLogin.GetToken(tenant, email);
-            if(exportToken == null)
-                exportToken = ExportServerLogin.GetToken(tenant, "ConfirmationNumber@amital.co.il");
-            
+
+            if (exportToken == null)
+            {
+                int? exportTenant = tenantManagementQuery.GetSinglePM(tenant).ExportTenant;
+                exportToken = ExportServerLogin.GetToken(tenant, $"system@tenant{exportTenant}.com");
+            }
+
             return exportToken;
+
         }
     }
 
@@ -63,5 +76,11 @@ namespace WebFreight.Web.Helpers.ExportServer
     {
         public string exportLoginCredential { get; set; }
         public int? exportTenant { get; set; }
+    }
+
+    public class ApiResponse
+    {
+        public HttpResponseMessage Res { get; set; }
+        public string Msg { get; set; }
     }
 }

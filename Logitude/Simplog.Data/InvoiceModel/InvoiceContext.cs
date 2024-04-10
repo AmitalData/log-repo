@@ -323,6 +323,8 @@ namespace Simplog.Data.InvoiceModel
             modelBuilder.Configurations.Add(new ARPaymentChequeStatusReplicaMap());
             modelBuilder.Configurations.Add(new DigitalInvoicesCounterDataViewMap());
             modelBuilder.Configurations.Add(new ControlForInvoiceLinesDataViewMap());
+            modelBuilder.Configurations.Add(new ConfirmationNumberStatusMap());
+            modelBuilder.Configurations.Add(new ConfirmationNumberDefaultMap());
 
             base.OnModelCreating(modelBuilder);
         }
@@ -475,6 +477,8 @@ namespace Simplog.Data.InvoiceModel
         public IDbSet<APInvoiceAnalytic> APInvoiceAnalytics { get; set; }
         public IDbSet<DigitalInvoicesCounterDataView> DigitalInvoicesCounterDataView { get; set; }
         public IDbSet<ControlForInvoiceLinesDataView> ControlForInvoiceLinesDataView { get; set; }
+        public IDbSet<ConfirmationNumberStatus> ConfirmationNumberStatuses { get; set; }
+        public IDbSet<ConfirmationNumberDefault> ConfirmationNumberDefaults { get; set; }
 
         public void DetectChanges()
         {

@@ -834,6 +834,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     {
                         isRestrictedByAirline = tenantManagement.IsRestrictedByAirline;
                     }
+                    scope.Complete();
                 }
 
                 if (isRestrictedByAirline)

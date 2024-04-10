@@ -472,7 +472,6 @@
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-
     <Reference Include="NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <HintPath>..\..\packages\NLog.5.2.4\lib\net46\NLog.dll</HintPath>
     </Reference>
@@ -937,6 +936,9 @@
     <Compile Include="Controllers\InfrastructureModel\Services\ImporterEntityStatusesExtendedService.cs" />
     <Compile Include="Controllers\InfrastructureModel\Services\ImporterEventTypesExtendedService.cs" />
     <Compile Include="Controllers\InvoiceModel\Generated\ListControllers\ARInvoicesSignedStatusViewsController.Generated.cs" />
+    <Compile Include="Controllers\InvoiceModel\Generated\ListControllers\ConfirmationNumberDefaultViewsController.Generated.cs" />
+    <Compile Include="Controllers\InvoiceModel\Generated\ListControllers\ConfirmationNumberStatusViewsController.Generated.cs" />
+    <Compile Include="Controllers\InvoiceModel\Generated\PMControllers\ConfirmationNumberDefaultController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\Extended\ContainersController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\AWBAdditionalHandlingInfoViewsController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\PMControllers\AWBAdditionalHandlingInfoController.Generated.cs" />
@@ -3176,9 +3178,6 @@
     <Compile Include="Helpers\ExcelReport\ExcelReportMrtBuilder.cs" />
     <Compile Include="Helpers\ExcelReport\ExcelReportService.cs" />
     <Compile Include="Helpers\ExcelReport\ExcelReportUpdateService.cs" />
-    <Compile Include="Helpers\ExportServer\ExportServerLogin.cs" />
-    <Compile Include="Helpers\ExportServer\ExportServerService.cs" />
-    <Compile Include="Helpers\ExportServer\LoginImportWcfStruct.cs" />
     <Compile Include="Helpers\ExternalAPITemplatesBuilder.cs" />
     <Compile Include="Helpers\ExternalAPIResponseParameters.cs" />
     <Compile Include="Helpers\APIHelpers\ApiExceptionFilter.cs" />
@@ -3374,6 +3373,7 @@
       <DependentUpon>DsvLoginUC.ascx</DependentUpon>
     </Compile>
     <Compile Include="MetaDataUpdate\DashboardAnalyticTablesUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\DetailClasses\ConfirmationNumberStatusDetails.cs" />
     <Compile Include="MetaDataUpdate\DetailClasses\MamanStatusDetails.cs" />
     <Compile Include="MetaDataUpdate\DetailClasses\AccountingCompanyTypeDetails.cs" />
     <Compile Include="MetaDataUpdate\DetailClasses\AccumalationStateDetails.cs" />
@@ -3984,6 +3984,8 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InvoiceModel\EntityUpdateClasses\ARPaymentTransferStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InvoiceModel\EntityUpdateClasses\ARPaymentUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InvoiceModel\EntityUpdateClasses\BankAccountLiteUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\InvoiceModel\EntityUpdateClasses\ConfirmationNumberDefaultUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\InvoiceModel\EntityUpdateClasses\ConfirmationNumberStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InvoiceModel\EntityUpdateClasses\CreditCardTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InvoiceModel\EntityUpdateClasses\ExternalSystemsTablesCodeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\InvoiceModel\EntityUpdateClasses\QBOGlobalTaxCalculationUpdateClass.cs" />

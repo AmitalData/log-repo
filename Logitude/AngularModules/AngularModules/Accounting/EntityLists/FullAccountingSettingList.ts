@@ -63,6 +63,7 @@ export class FullAccountingSettingList {
 	HSMaddress: string;
 	AllowEditingExchangeRate: boolean;
 	OppositeAccountNumber: boolean;
+	TenantForConfirmationNumberApi: string;
 	
 }
  

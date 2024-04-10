@@ -314,11 +314,6 @@ export class FullAccountingSettingPM {
     public set AllowEditingExchangeRate(newValue: boolean) { if (this.allowEditingExchangeRate != newValue) { this.allowEditingExchangeRate = newValue; this.MarkAsDirty("AllowEditingExchangeRate"); } }
        
 	 
-    private amountForConfirmationNumber: number;
-    public get AmountForConfirmationNumber() { return this.amountForConfirmationNumber; }
-    public set AmountForConfirmationNumber(newValue: number) { if (this.amountForConfirmationNumber != newValue) { this.amountForConfirmationNumber = newValue; this.MarkAsDirty("AmountForConfirmationNumber"); } }
-       
-	 
     private numberingByChartOfAccount: boolean;
     public get NumberingByChartOfAccount() { return this.numberingByChartOfAccount; }
     public set NumberingByChartOfAccount(newValue: boolean) { if (this.numberingByChartOfAccount != newValue) { this.numberingByChartOfAccount = newValue; this.MarkAsDirty("NumberingByChartOfAccount"); } }
@@ -327,6 +322,11 @@ export class FullAccountingSettingPM {
     private oppositeAccountNumber: boolean;
     public get OppositeAccountNumber() { return this.oppositeAccountNumber; }
     public set OppositeAccountNumber(newValue: boolean) { if (this.oppositeAccountNumber != newValue) { this.oppositeAccountNumber = newValue; this.MarkAsDirty("OppositeAccountNumber"); } }
+       
+	 
+    private tenantForConfirmationNumberApi: string;
+    public get TenantForConfirmationNumberApi() { return this.tenantForConfirmationNumberApi; }
+    public set TenantForConfirmationNumberApi(newValue: string) { if (this.tenantForConfirmationNumberApi != newValue) { this.tenantForConfirmationNumberApi = newValue; this.MarkAsDirty("TenantForConfirmationNumberApi"); } }
        
 	 
 
@@ -357,4 +357,4 @@ export class FullAccountingSettingPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

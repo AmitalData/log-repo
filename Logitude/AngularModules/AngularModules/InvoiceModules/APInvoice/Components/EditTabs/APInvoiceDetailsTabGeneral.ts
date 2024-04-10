@@ -238,6 +238,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         }
 
         this.UIProperties.SetEnabled("ConfirmationNumber", this.ObjectTableName, true);
+
         this.SetUIProperties_DueDate();
         this.SetUIProperties_VATNumber();
         this.SetUIProperties_ExchangeRate();
@@ -1106,7 +1107,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             this.EntityPM.ConfirmationNumber = newValue;
         }
     }
-
+   
     get AccountingDate() { return this.EntityPM.AccountingDate; }
     set AccountingDate(value: Date) {
         if (this.EntityPM.AccountingDate != value) {

@@ -863,6 +863,20 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ConfirmationNumberStatus"
+    Type="varchar"
+    Size="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="APIResponseToConfirmation"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreditedByARInvoiceId"
     ReferencedTable="ARInvoices"
@@ -1011,6 +1025,11 @@
   <Relation
     ForeignKeyColumn="IsSigned"
     ReferencedTable="ARInvoicesSignedStatuses"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ConfirmationNumberStatus"
+    ReferencedTable="ConfirmationNumberStatuses"
     ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
   <Index
