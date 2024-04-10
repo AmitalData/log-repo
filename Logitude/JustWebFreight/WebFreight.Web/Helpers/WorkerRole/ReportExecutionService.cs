@@ -52,7 +52,8 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
                     {
                         queueService.Complete();
                         if (reportExecutionLog != null && reportExecutionLog.RetryNumber >= 2 && (reportExecutionLog.StatusCode == "W" || reportExecutionLog.StatusCode == "P"))
-                            UpdateReportExecutionLog(new ReportExecutionLogArgs() { Exception = new Exception("Report Exc failed - Removed from queue and mark as failed the exc"), DoneDate = DateTime.Now, StartDate = startDate, StatusCode = "F" });
+                            UpdateReportExecutionLog(new ReportExecutionLogArgs() { Exception = new Exception(reportExecutionLog.ExceptionMessage + 
+                                " Report Exc failed - Removed from queue and mark as failed the exc"), DoneDate = DateTime.Now, StartDate = startDate, StatusCode = "F" });
                     }
                 }
             }
