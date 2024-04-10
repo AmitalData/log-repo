@@ -10,38 +10,42 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { defer, of } from 'rxjs';
-import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
-import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
-import {Guid} from '../../../Infrastructure/Utilities/Guid';
-import {InfraSettings} from '../../../Infrastructure/Utilities/InfraSettings';
-import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
-import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
-import {CustomFieldClass} from '../../../Infrastructure/DataContracts/CustomFieldClass'
-import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
-
-import {ARPaymentBankTranferPM} from '../../EntityPMs/ARPaymentBankTranferPM';
+import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
+import { ClassLevelValidator } from '../../../Infrastructure/Validators/ClassLevelValidator';
+import { Guid } from '../../../Infrastructure/Utilities/Guid';
+import { InfraSettings } from '../../../Infrastructure/Utilities/InfraSettings';
+import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
+import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
+import { CustomFieldClass } from '../../../Infrastructure/DataContracts/CustomFieldClass'
+import { PerformanceLogger } from '../../../Infrastructure/Utilities/PerformanceLogger';
+import { BankAccountPMService } from 'Accounting/Services/StandardPMs/BankAccountPMService';
+import { ARPaymentBankTranferPM } from '../../EntityPMs/ARPaymentBankTranferPM';
+import { AppTool } from 'Infrastructure/Tools';
 
 
 @Injectable()
 
 export class ARPaymentBankTranferPMService {
- private _http: HttpClient;
- private _apiUrl: string;
- constructor() {
-        this._http = ServiceHelper.HttpClient;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/arpaymentbanktranfers';      
-    }
+	private _http: HttpClient;
+	private _apiUrl: string;
+	bankAccountPMService: BankAccountPMService;
 
-	get(id: string) {       
+	constructor() {
+		this._http = ServiceHelper.HttpClient;
+		this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/arpaymentbanktranfers';
+		this.bankAccountPMService = new BankAccountPMService();
+	}
 
-		var callTime = new Date();		
+	get(id: string) {
+
+		var callTime = new Date();
 
 		return defer(() => {
 			return this._http.get(this._apiUrl + '/getsingle?' + 'id=' + id, ServiceHelper.GetHttpFullHeaders())
 				.pipe(
 					map((response: HttpResponse<any>) => {
 						var pm = response.body;
-				
+
 						var entity: ARPaymentBankTranferPM;
 						if (pm) {
 							entity = this.MapJsonToEntityPM(pm);
@@ -49,33 +53,33 @@ export class ARPaymentBankTranferPMService {
 
 						var serviceResponse: ServiceResponse = new ServiceResponse();
 						serviceResponse.Result = entity;
-              
+
 						var servertime = response.headers.get('ServerExecutionTime');
 						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ARPaymentBankTranfer", "GetSinglePM", 'id=' + id);
-				 
+
 						return serviceResponse;
 
 					}),
-					
+
 					catchError(ServiceHelper.HandleServiceError));
-		});                    
+		});
 	}
 
 	insert(entityPM: ARPaymentBankTranferPM) {
- 
-		var callTime = new Date();  
-		
+
+		var callTime = new Date();
+
 		return defer(() => {
 
 			var serviceResponse: ServiceResponse = new ServiceResponse();
-			var validator: ClassLevelValidator = new ClassLevelValidator();                
+			var validator: ClassLevelValidator = new ClassLevelValidator();
 			var errorsArray = validator.Validate("ARPaymentBankTranfer", entityPM);
 
 
 			if (errorsArray.length == 0) {
 
 				var mappedEntity: ARPaymentBankTranferPM = this.MapJsonToEntityPM(entityPM, false);
-				
+
 				return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
 					.pipe(
 						map((response: HttpResponse<any>) => {
@@ -84,11 +88,11 @@ export class ARPaymentBankTranferPMService {
 							if (pm) {
 								var mappedResult: ARPaymentBankTranferPM = this.MapJsonToEntityPM(pm, true, entityPM);
 								serviceResponse.Result = mappedResult;
-							}						
+							}
 
 							var servertime = response.headers.get('ServerExecutionTime');
-							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ARPaymentBankTranfer", "SaveChanges", "");                    
-												                             
+							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ARPaymentBankTranfer", "SaveChanges", "");
+
 							return serviceResponse;
 						}),
 
@@ -105,32 +109,32 @@ export class ARPaymentBankTranferPMService {
 
 	update(entityPM: ARPaymentBankTranferPM) {
 
-		var callTime = new Date();     
-		
+		var callTime = new Date();
+
 		return defer(() => {
 
 			var serviceResponse: ServiceResponse = new ServiceResponse();
-			var validator: ClassLevelValidator = new ClassLevelValidator();               
+			var validator: ClassLevelValidator = new ClassLevelValidator();
 			var errorsArray = validator.Validate("ARPaymentBankTranfer", entityPM);
 
 
 			if (errorsArray.length == 0) {
 
 				var mappedEntity: ARPaymentBankTranferPM = this.MapJsonToEntityPM(entityPM, false);
-				
+
 				return this._http.put(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
 					.pipe(
 						map((response: HttpResponse<any>) => {
-                 
+
 							var pm = response.body;
 							if (pm) {
 								var mappedResult: ARPaymentBankTranferPM = this.MapJsonToEntityPM(pm, true, entityPM);
 								serviceResponse.Result = mappedResult;
 							}
-							 
+
 							var servertime = response.headers.get('ServerExecutionTime');
-							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ARPaymentBankTranfer", "SaveChanges", "");                    
-					                           
+							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ARPaymentBankTranfer", "SaveChanges", "");
+
 							return serviceResponse;
 						}),
 
@@ -145,85 +149,87 @@ export class ARPaymentBankTranferPMService {
 		});
 	}
 
-   
 
-	  MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: ARPaymentBankTranferPM = null) {
 
-         
-        if (!entityPM) {
-            
-            entityPM = new ARPaymentBankTranferPM();
+	MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: ARPaymentBankTranferPM = null) {
+
+
+		if (!entityPM) {
+
+			entityPM = new ARPaymentBankTranferPM();
 			entityPM.DisableMarkAsDirty = true;
-        }
+		}
 
 		var customFields: Array<string> = [];
-        for (var i = 1; i < 11; i++) {
-            customFields.push("Field" + i);
-        }
-            var jsonPMKeys = Object.keys(jsonPM);
+		for (var i = 1; i < 11; i++) {
+			customFields.push("Field" + i);
+		}
+		var jsonPMKeys = Object.keys(jsonPM);
 
-            for (var key in jsonPMKeys) {
-			 if (jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "PropertyChanged") {
+		for (var key in jsonPMKeys) {
+			if (jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "PropertyChanged") {
 
-                continue;
-            }
-                var property = jsonPMKeys[key];
-				
-			  if(customFields.indexOf(property) > -1)
-                {
-                if (jsonPM[property]) {
-                    var customFieldClass: CustomFieldClass = new CustomFieldClass(jsonPM[property].Value, jsonPM[property].FieldName, jsonPM[property].TableName);
-                    entityPM[property] = customFieldClass;
-                }
-            }
-            else {
-                entityPM[property] = jsonPM[property];
-            }
-                 
-            }
-			
-			 
-            
+				continue;
+			}
+			var property = jsonPMKeys[key];
 
-		if (mapParent) {
-                entityPM.OldEntityPM = this.clone(entityPM);
+			if(customFields.indexOf(property) > -1)
+            {
+				if (jsonPM[property]) {
+					var customFieldClass: CustomFieldClass = new CustomFieldClass(jsonPM[property].Value, jsonPM[property].FieldName, jsonPM[property].TableName);
+					entityPM[property] = customFieldClass;
+				}
+			}
+			else {
+				entityPM[property] = jsonPM[property];
+			}
 
 		}
-        else {
 
-            entityPM.OldEntityPM = null;
-        }
+
+		if (!AppTool.IsNullOrUndefined(entityPM.BankAccount)) {
+			entityPM.BankAccount = this.bankAccountPMService.MapJsonToEntityPM(entityPM.BankAccount, false); // remove circular dependency from bank account
+		}
+
+		if (mapParent) {
+			entityPM.OldEntityPM = this.clone(entityPM);
+
+		}
+		else {
+
+			entityPM.OldEntityPM = null;
+		}
 		entityPM.IsDirty = false;
-	    entityPM.DisableMarkAsDirty = false;
+		entityPM.DisableMarkAsDirty = false;
 
-        return entityPM;
-    }
+		return entityPM;
+	}
 
 
-	  public clone(jsonPM: any) {
-        var entityPM: any;
-        entityPM = {};
+	public clone(jsonPM: any) {
+		var entityPM: any;
+		entityPM = {};
 
-        var jsonPMKeys = Object.keys(jsonPM);
-        for (var key in jsonPMKeys) {
-            
-            if ((jsonPMKeys[key] === "entityParentPM") || jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "OldEntityPM" || jsonPMKeys[key] === "PropertyChanged") {
-                continue;
-            }
+		var jsonPMKeys = Object.keys(jsonPM);
+		for (var key in jsonPMKeys) {
 
-            var property = jsonPMKeys[key];
-            entityPM[property] = jsonPM[property];
+			if ((jsonPMKeys[key] === "entityParentPM") || jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "OldEntityPM" || jsonPMKeys[key] === "PropertyChanged") {
+				continue;
+			}
 
-        }
-        return entityPM;
-    }
+			var property = jsonPMKeys[key];
+			entityPM[property] = jsonPM[property];
 
-	  public GetNewEntityPM() {		 
-		    var entityPM: ARPaymentBankTranferPM;
-			entityPM = new ARPaymentBankTranferPM();
-			entityPM.Tenant = InfraSettings.TenantPM.Id;
-			return entityPM;
-    }
-		 
+		}
+		return entityPM;
+	}
+
+	public GetNewEntityPM() {
+		var entityPM: ARPaymentBankTranferPM;
+		entityPM = new ARPaymentBankTranferPM();
+		entityPM.Tenant = InfraSettings.TenantPM.Id;
+		return entityPM;
+	}
+
 
 }

@@ -96,6 +96,8 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public string TotalOpenExternalTransactions { get; set; }
         [Column("TotalOpenPagesLines")]
 	    public string TotalOpenPagesLines { get; set; }
+        [Column("ChequeCounterSeriesID")]
+	    public int? ChequeCounterSeriesID { get; set; }
     }
 }
 	 

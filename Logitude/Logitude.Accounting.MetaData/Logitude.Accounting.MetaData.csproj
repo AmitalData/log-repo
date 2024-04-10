@@ -80,6 +80,7 @@
     <None Include="DBOthers\Views\AllARPaymentChequesViews.dxml" />
     <None Include="DBOthers\Views\TotalOpenTransInBankViews.dxml" />
     <None Include="DBScripts\202403031201_ChartOfAccountsEnglishName.sxml" />
+    <None Include="DBScripts\202403111553_ChequeCounterSerialAddLine.sxml" />
     <None Include="DBScripts\202308211244_UpdateInterestReportSearchFields.sxml" />
     <None Include="DBScripts\202308141215_UpdateInterestReportSearchFields.sxml" />
     <None Include="DBScripts\20221213_UpdateChartOfAccountTypesOrders.sxml" />
@@ -181,6 +182,7 @@
     <None Include="DBTables\Category5.dxml" />
     <None Include="DBTables\ChartOfAccount.dxml" />
     <None Include="DBTables\ChartOfAccountsType.dxml" />
+    <None Include="DBTables\ChequeCounterSerial.dxml" />
     <None Include="DBTables\CopyFromTenant0.dxml" />
     <None Include="DBTables\ExternalPageAdditionalData.dxml" />
     <None Include="DBTables\ExternalReconciliation.dxml" />
@@ -254,6 +256,7 @@
     <None Include="EntityFiles\CalculatedChartsOfAccount.lxml" />
     <None Include="EntityFiles\CalculatedChartsOfAccountsLine.lxml" />
     <None Include="EntityFiles\CalculatedChartsLineType.lxml" />
+    <None Include="EntityFiles\ChequeCounterSerial.lxml" />
     <None Include="EntityFiles\CopyFromTenant0.lxml" />
     <None Include="EntityFiles\GLAccountAgingData.lxml" />
     <None Include="EntityFiles\GLAccountCardsData.lxml" />
