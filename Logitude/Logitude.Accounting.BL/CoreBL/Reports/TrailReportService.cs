@@ -475,7 +475,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                   GLAccountId = groupTrailOnlyCurrency.Key.GLAccountId,
 
 
-                             ChartOfAcountName1English = groupTrailOnlyCurrency.Key.ChartOfAcountName1English,
+							 ChartOfAcountName1English = groupTrailOnlyCurrency.Key.ChartOfAcountName1English,
                              ChartOfAcountName2English = groupTrailOnlyCurrency.Key.ChartOfAcountName2English,
                              ChartOfAcountName3English = groupTrailOnlyCurrency.Key.ChartOfAcountName3English,
                              ChartOfAcountName4English = groupTrailOnlyCurrency.Key.ChartOfAcountName4English,
