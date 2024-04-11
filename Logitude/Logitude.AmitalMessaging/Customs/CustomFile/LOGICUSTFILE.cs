@@ -1450,91 +1450,6 @@ public class ExportInvoice
 [System.ComponentModel.DesignerCategoryAttribute("code")]
 [System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://tempuri.org/LOGICUSTFILE")]
 [System.Xml.Serialization.XmlRootAttribute(Namespace = "http://tempuri.org/LOGICUSTFILE", IsNullable = false)]
-public class ExportInvoices
-{
-    private ExportInvoice[] InvoiceField;
-
-    [System.Xml.Serialization.XmlElementAttribute("Invoice")]
-
-    public ExportInvoice[] Invoice
-    {
-        get
-        {
-            return this.InvoiceField;
-        }
-        set
-        {
-            this.InvoiceField = value;
-        }
-    }
-}
-
-
-[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.8.3928.0")]
-[System.SerializableAttribute()]
-[System.Diagnostics.DebuggerStepThroughAttribute()]
-[System.ComponentModel.DesignerCategoryAttribute("code")]
-[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://tempuri.org/LOGICUSTFILE")]
-[System.Xml.Serialization.XmlRootAttribute(Namespace = "http://tempuri.org/LOGICUSTFILE", IsNullable = false)]
-public class ExportInvoiceItemCertificats
-{
-    private string certificateTypeCodeField;
-    private string atachmentTypeCodeField;
-    private string certificateNumberField;
-    private string certificateexemptiontypecodeField;
-
-    public string CertificateTypeCode
-    {
-        get
-        {
-            return this.certificateTypeCodeField;
-        }
-        set
-        {
-            this.certificateTypeCodeField = value;
-        }
-    }
-    public string AtachmentTypeCode
-    {
-        get
-        {
-            return this.atachmentTypeCodeField;
-        }
-        set
-        {
-            this.atachmentTypeCodeField = value;
-        }
-    }
-    public string CertificateNumber
-    {
-        get
-        {
-            return this.certificateNumberField;
-        }
-        set
-        {
-            this.certificateNumberField = value;
-        }
-    }
-    public string Certificateexemptiontypecode
-    {
-        get
-        {
-            return this.certificateexemptiontypecodeField;
-        }
-        set
-        {
-            this.certificateexemptiontypecodeField = value;
-        }
-    }
-}
-
-[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.8.3928.0")]
-[System.SerializableAttribute()]
-[System.Diagnostics.DebuggerStepThroughAttribute()]
-[System.ComponentModel.DesignerCategoryAttribute("code")]
-[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://tempuri.org/LOGICUSTFILE")]
-[System.Xml.Serialization.XmlRootAttribute(Namespace = "http://tempuri.org/LOGICUSTFILE", IsNullable = false)]
 public class ExportInvoiceItem
 {
     private string itemNoField;
@@ -1674,6 +1589,92 @@ public class ExportInvoiceItem
         }
     }
 }
+
+
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.8.3928.0")]
+[System.SerializableAttribute()]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://tempuri.org/LOGICUSTFILE")]
+[System.Xml.Serialization.XmlRootAttribute(Namespace = "http://tempuri.org/LOGICUSTFILE", IsNullable = false)]
+public class ExportInvoiceItemCertificats
+{
+    private string certificateTypeCodeField;
+    private string atachmentTypeCodeField;
+    private string certificateNumberField;
+    private string certificateexemptiontypecodeField;
+
+    public string CertificateTypeCode
+    {
+        get
+        {
+            return this.certificateTypeCodeField;
+        }
+        set
+        {
+            this.certificateTypeCodeField = value;
+        }
+    }
+    public string AtachmentTypeCode
+    {
+        get
+        {
+            return this.atachmentTypeCodeField;
+        }
+        set
+        {
+            this.atachmentTypeCodeField = value;
+        }
+    }
+    public string CertificateNumber
+    {
+        get
+        {
+            return this.certificateNumberField;
+        }
+        set
+        {
+            this.certificateNumberField = value;
+        }
+    }
+    public string Certificateexemptiontypecode
+    {
+        get
+        {
+            return this.certificateexemptiontypecodeField;
+        }
+        set
+        {
+            this.certificateexemptiontypecodeField = value;
+        }
+    }
+}
+
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.8.3928.0")]
+[System.SerializableAttribute()]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://tempuri.org/LOGICUSTFILE")]
+[System.Xml.Serialization.XmlRootAttribute(Namespace = "http://tempuri.org/LOGICUSTFILE", IsNullable = false)]
+public class ExportInvoices
+{
+    private ExportInvoice[] InvoiceField;
+
+    [System.Xml.Serialization.XmlElementAttribute("Invoice")]
+
+    public ExportInvoice[] Invoice
+    {
+        get
+        {
+            return this.InvoiceField;
+        }
+        set
+        {
+            this.InvoiceField = value;
+        }
+    }
+}
+
 
 [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.8.3928.0")]
 [System.SerializableAttribute()]
