@@ -68,8 +68,7 @@
     Type="nvarchar"
     Size="131">
     <Constraints
-      PrimaryKey="true"
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Relation
     ForeignKeyColumn="OriginCountryCode"
