@@ -10952,6 +10952,84 @@ namespace Unifreight.Data.AmitalModel
         {
             DbModelBuilder modelBuilder = new DbModelBuilder(DbModelBuilderVersion.V4_1);
 
+            #region CCUACCSUP
+
+            modelBuilder.Entity<CCUACCSUP>()
+                .HasKey(p => new { p.FILENO, p.LINENO })
+                .ToTable("CCUACCSUP", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<CCUACCSUP>()
+                .Property(p => p.FILENO)
+                    .HasColumnName(@"FILE_NO")
+                    .IsRequired()
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("int64");
+            modelBuilder.Entity<CCUACCSUP>()
+                .Property(p => p.LINENO)
+                    .HasColumnName(@"LINE_NO")
+                    .IsRequired()
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("int");
+            modelBuilder.Entity<CCUACCSUP>()
+                .Property(p => p.ACCOUNTTYPE)
+                    .HasColumnName(@"ACCOUNT_TYPE")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUACCSUP>()
+                .Property(p => p.MAINACCOUNT)
+                    .HasColumnName(@"MAIN_ACCOUNT")
+                    .HasColumnType("bool");
+            modelBuilder.Entity<CCUACCSUP>()
+                .Property(p => p.SUPPLIERACCOUNT)
+                    .HasColumnName(@"SUPPLIER_ACCOUNT")
+                    .HasMaxLength(9)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUACCSUP>()
+                .Property(p => p.SUPPLIERID)
+                    .HasColumnName(@"SUPPLIER_ID")
+                    .HasMaxLength(10)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUACCSUP>()
+                .Property(p => p.COUNTRYID)
+                    .HasColumnName(@"COUNTRY_ID")
+                    .HasMaxLength(4)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUACCSUP>()
+                .Property(p => p.INCOTERMID)
+                    .HasColumnName(@"INCOTERM_ID")
+                    .HasMaxLength(3)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CCUACCSUP>()
+                .Property(p => p.CURRENCYID)
+                    .HasColumnName(@"CURRENCY_ID")
+                    .HasMaxLength(2)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUACCSUP>()
+                .Property(p => p.VALUE)
+                    .HasColumnType("double");
+            modelBuilder.Entity<CCUACCSUP>()
+                .Property(p => p.COMMISSION)
+                    .HasColumnType("double");
+            modelBuilder.Entity<CCUACCSUP>()
+                .Property(p => p.DECLARATIONNO)
+                    .HasColumnName(@"DECLARATION_NO")
+                    .HasMaxLength(9)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUACCSUP>()
+                .Property(p => p.CHANGINGVALUE)
+                    .HasColumnName(@"CHANGING_VALUE")
+                    .HasColumnType("double");
+            modelBuilder.Entity<CCUACCSUP>()
+                .Property(p => p.SUPPLIERACCOUNTN)
+                    .HasColumnName(@"SUPPLIER_ACCOUNT_N")
+                    .HasMaxLength(35)
+                    .HasColumnType("varchar2");
+            modelBuilder.Entity<CCUACCSUP>()
+                .Property(p => p.COMMISSIONPERCENT)
+                    .HasColumnName(@"COMMISSION_PERCENT")
+                    .HasColumnType("double");
+            #endregion
+
             #region GGGQ
 
             modelBuilder.Entity<GGGQ>()
