@@ -2249,6 +2249,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 				Upsert(suppressNewTrans, MoreParams);
 				MyGenericResponseObj.Stage = "Done";
 
+				if(!string.IsNullOrEmpty(originDeclarationId))
                 MyGenericResponseObj.ApplicationId = originDeclarationId;
 
 
