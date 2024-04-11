@@ -1271,6 +1271,8 @@ public partial class LogitudeCustomsFile
 public class ExportInvoice
 {
     private  bool isEmpty;
+    private string numberField;
+    private string dateField;
     private string invoiceNumField;
     private string invoiceDateField;
     private string invoiceTypeField;
@@ -1294,6 +1296,28 @@ public class ExportInvoice
         }
     }
 
+    public string Number
+    {
+        get
+        {
+            return this.numberField;
+        }
+        set
+        {
+            this.numberField = value;
+        }
+    }
+    public string Date
+    {
+        get
+        {
+            return this.dateField;
+        }
+        set
+        {
+            this.dateField = value;
+        }
+    }
 
     public string InvoiceNumber
     {
@@ -1317,18 +1341,6 @@ public class ExportInvoice
             this.invoiceDateField = value;
         }
     }
-
-    public string InvoiceType
-    {
-        get
-        {
-            return this.invoiceTypeField;
-        }
-        set
-        {
-            this.invoiceTypeField = value;
-        }
-    }
     public string InvoiceAmount
     {
         get
@@ -1349,6 +1361,17 @@ public class ExportInvoice
         set
         {
             this.invoiceCurrencyField = value;
+        }
+    }
+    public string InvoiceType
+    {
+        get
+        {
+            return this.invoiceTypeField;
+        }
+        set
+        {
+            this.invoiceTypeField = value;
         }
     }
     public string InvoiceIncoterms
