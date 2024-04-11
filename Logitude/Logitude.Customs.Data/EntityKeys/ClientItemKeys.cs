@@ -24,11 +24,15 @@ namespace Logitude.Customs.Data.EntityKeys
 	  
 				 
 	    			   
+	  public string ItemKey  { get; set; }
+	  
+				 
+	    			   
 	
 	 
 	  public override string GetFullKey()
       {
-                 return ItemCode+'_'+ClientCode+'_'+Id ;
+                 return ItemCode+'_'+ClientCode+'_'+Id+'_'+ItemKey ;
                  
       }
 

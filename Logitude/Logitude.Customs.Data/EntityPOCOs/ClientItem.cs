@@ -40,6 +40,7 @@ namespace Logitude.Customs.Data.EntityPOCOs
      [Key]
         [Column("Id")]
 	    public string Id { get; set; }
+     [Key]
         [Column("ItemKey")]
 	    public string ItemKey { get; set; }
     }

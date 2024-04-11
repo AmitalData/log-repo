@@ -232,7 +232,9 @@ namespace Logitude.Customs.Def.EntityPMs
 		 }
 	   }
 	  private string itemKey ;
-	  	  
+	  
+       [Key]
+	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]

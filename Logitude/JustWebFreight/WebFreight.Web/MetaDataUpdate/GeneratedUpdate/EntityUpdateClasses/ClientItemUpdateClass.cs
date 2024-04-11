@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ClientItemUpdateClass
    {  		
-		public const string HashString = "6d0a0e379c5ad79e8d7b0f4084b2dff1";
+		public const string HashString = "309b5988577dc81fe0e0047824ea3fe2";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -130,7 +130,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "Client Items",
 			      				    DefaultText =  "Client Items",
-			      				    Code =  "9430",
+			      				    Code =  "0c24",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",

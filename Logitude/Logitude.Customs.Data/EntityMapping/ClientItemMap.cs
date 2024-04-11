@@ -21,7 +21,7 @@ namespace Logitude.Customs.Data.EntityMapping
         { 
 			  this.ToTable("ClientItems", "Customs");
 		
-		    this.HasKey(t => new { t.ItemCode, t.ClientCode, t.Id });
+		    this.HasKey(t => new { t.ItemCode, t.ClientCode, t.Id, t.ItemKey });
 	 
             this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
 
