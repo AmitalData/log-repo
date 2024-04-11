@@ -207,8 +207,12 @@ public partial class LogitudeCustomsFile
 
     private ExportClosing closingField;
 
-	/// <remarks/>
-	public string CustomFileNo
+    private string receiverNameField;
+    private string receiverAddressField;
+    private string receiverCountryCodeField;
+
+    /// <remarks/>
+    public string CustomFileNo
     {
         get
         {
@@ -956,6 +960,42 @@ public partial class LogitudeCustomsFile
         }
     }
 
+    public string ReceiverName
+    {
+        get
+        {
+            return this.receiverNameField;
+        }
+        set
+        {
+            this.receiverNameField = value;
+        }
+    }
+
+    public string ReceiverAddress
+    {
+        get
+        {
+            return this.receiverAddressField;
+        }
+        set
+        {
+            this.receiverAddressField = value;
+        }
+    }
+
+    public string ReceiverCountryCode
+    {
+        get
+        {
+            return this.receiverCountryCodeField;
+        }
+        set
+        {
+            this.receiverCountryCodeField = value;
+        }
+    }
+
     /// <remarks/>
     public string EstimatedTimeOfArrival
     {
@@ -1231,17 +1271,26 @@ public partial class LogitudeCustomsFile
 public class ExportInvoice
 {
     private  bool isEmpty;
-  
-    private string numberField;
-
-    private string dateField;
+    private string invoiceNumField;
+    private string invoiceDateField;
+    private string invoiceTypeField;
+    private string invoiceAmountField;
+    private string invoiceCurrencyField;
+    private string invoiceIncotermsField;
+    private string invoiceBuyerNameField;
+    private string invoiceBuyerAddressField;
+    private string invoiceBuyerCountryCodeField;
+    private string invoiceBuyerRoleCodeField;
+    private string invoiceBuyerRelationField;
+    private string invoicePaymentTypeField;
+    private ExportInvoiceItems invoiceItemsField;
 
     [XmlIgnore]
     public bool IsEmpty
     {
         get
         {
-            return numberField == null;
+            return invoiceNumField == null;
         }
     }
 
@@ -1250,26 +1299,148 @@ public class ExportInvoice
     {
         get
         {
-            return this.numberField;
+            return this.invoiceNumField;
         }
         set
         {
-            this.numberField = value;
+            this.invoiceNumField = value;
         }
     }
     public string Date
     {
         get
         {
-            return this.dateField;
+            return this.invoiceDateField;
         }
         set
         {
-            this.dateField = value;
+            this.invoiceDateField = value;
         }
     }
 
-    
+    public string Type
+    {
+        get
+        {
+            return this.invoiceTypeField;
+        }
+        set
+        {
+            this.invoiceTypeField = value;
+        }
+    }
+    public string Amount
+    {
+        get
+        {
+            return this.invoiceAmountField;
+        }
+        set
+        {
+            this.invoiceAmountField = value;
+        }
+    }
+    public string Currency
+    {
+        get
+        {
+            return this.invoiceCurrencyField;
+        }
+        set
+        {
+            this.invoiceCurrencyField = value;
+        }
+    }
+    public string Incoterms
+    {
+        get
+        {
+            return this.invoiceIncotermsField;
+        }
+        set
+        {
+            this.invoiceIncotermsField = value;
+        }
+    }
+    public string BuyerName
+    {
+        get
+        {
+            return this.invoiceBuyerNameField;
+        }
+        set
+        {
+            this.invoiceBuyerNameField = value;
+        }
+    }
+    public string BuyerAddress
+    {
+        get
+        {
+            return this.invoiceBuyerAddressField;
+        }
+        set
+        {
+            this.invoiceBuyerAddressField = value;
+        }
+    }
+    public string BuyerCountryCode
+    {
+        get
+        {
+            return this.invoiceBuyerCountryCodeField;
+        }
+        set
+        {
+            this.invoiceBuyerCountryCodeField = value;
+        }
+    }
+    public string BuyerRoleCode
+    {
+        get
+        {
+            return this.invoiceBuyerRoleCodeField;
+        }
+        set
+        {
+            this.invoiceBuyerRoleCodeField = value;
+        }
+    }
+    public string BuyerRelation
+    {
+        get
+        {
+            return this.invoiceBuyerRelationField;
+        }
+        set
+        {
+            this.invoiceBuyerRelationField = value;
+        }
+    }
+    public string PaymentType
+    {
+        get
+        {
+            return this.invoicePaymentTypeField;
+        }
+        set
+        {
+            this.invoicePaymentTypeField = value;
+        }
+    }
+
+    [System.Xml.Serialization.XmlElementAttribute("InvoiceItems")]
+    public ExportInvoiceItems InvoiceItems
+    {
+        get
+        {
+            return this.invoiceItemsField;
+        }
+        set
+        {
+            this.invoiceItemsField = value;
+        }
+    }
 }
 
 
@@ -1299,6 +1470,235 @@ public class ExportInvoices
 }
 
 
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.8.3928.0")]
+[System.SerializableAttribute()]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://tempuri.org/LOGICUSTFILE")]
+[System.Xml.Serialization.XmlRootAttribute(Namespace = "http://tempuri.org/LOGICUSTFILE", IsNullable = false)]
+public class ExportInvoiceItemCertificats
+{
+    private string certificateTypeCodeField;
+    private string atachmentTypeCodeField;
+    private string certificateNumberField;
+    private string certificateexemptiontypecodeField;
+
+    public string CertificateTypeCode
+    {
+        get
+        {
+            return this.certificateTypeCodeField;
+        }
+        set
+        {
+            this.certificateTypeCodeField = value;
+        }
+    }
+    public string AtachmentTypeCode
+    {
+        get
+        {
+            return this.atachmentTypeCodeField;
+        }
+        set
+        {
+            this.atachmentTypeCodeField = value;
+        }
+    }
+    public string CertificateNumber
+    {
+        get
+        {
+            return this.certificateNumberField;
+        }
+        set
+        {
+            this.certificateNumberField = value;
+        }
+    }
+    public string Certificateexemptiontypecode
+    {
+        get
+        {
+            return this.certificateexemptiontypecodeField;
+        }
+        set
+        {
+            this.certificateexemptiontypecodeField = value;
+        }
+    }
+}
+
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.8.3928.0")]
+[System.SerializableAttribute()]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://tempuri.org/LOGICUSTFILE")]
+[System.Xml.Serialization.XmlRootAttribute(Namespace = "http://tempuri.org/LOGICUSTFILE", IsNullable = false)]
+public class ExportInvoiceItem
+{
+    private string itemNoField;
+    private string itemDescriptionField;
+    private string itemHScodeField;
+    private string itemQuantityField;
+    private string itemQuantityTypeField;
+    private string itemAmountField;
+    private string itemOriginCountryField;
+    private string classificationClaimField;
+    private string classificationDealTypeField;
+    private string processTypeField;
+    private ExportInvoiceItemCertificats certificatsField;
+
+    public string No
+    {
+        get
+        {
+            return this.itemNoField;
+        }
+        set
+        {
+            this.itemNoField = value;
+        }
+    }
+    public string Description
+    {
+        get
+        {
+            return this.itemDescriptionField;
+        }
+        set
+        {
+            this.itemDescriptionField = value;
+        }
+    }
+
+    public string HsCode
+    {
+        get
+        {
+            return this.itemHScodeField;
+        }
+        set
+        {
+            this.itemHScodeField = value;
+        }
+    }
+    public string Quantity
+    {
+        get
+        {
+            return this.itemQuantityField;
+        }
+        set
+        {
+            this.itemQuantityField = value;
+        }
+    }
+    public string QuantityType
+    {
+        get
+        {
+            return this.itemQuantityTypeField;
+        }
+        set
+        {
+            this.itemQuantityTypeField = value;
+        }
+    }
+    public string Amount
+    {
+        get
+        {
+            return this.itemAmountField;
+        }
+        set
+        {
+            this.itemAmountField = value;
+        }
+    }
+    public string OriginCountry
+    {
+        get
+        {
+            return this.itemOriginCountryField;
+        }
+        set
+        {
+            this.itemOriginCountryField = value;
+        }
+    }
+    public string ClassificationClaim
+    {
+        get
+        {
+            return this.classificationClaimField;
+        }
+        set
+        {
+            this.classificationClaimField = value;
+        }
+    }
+    public string ClassificationDealType
+    {
+        get
+        {
+            return this.classificationDealTypeField;
+        }
+        set
+        {
+            this.classificationDealTypeField = value;
+        }
+    }
+    public string ProcessType
+    {
+        get
+        {
+            return this.processTypeField;
+        }
+        set
+        {
+            this.processTypeField = value;
+        }
+    }
+
+    [System.Xml.Serialization.XmlElementAttribute("Certificats")]
+    public ExportInvoiceItemCertificats Certificats
+    {
+        get
+        {
+            return this.certificatsField;
+        }
+        set
+        {
+            this.certificatsField = value;
+        }
+    }
+}
+
+[System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.8.3928.0")]
+[System.SerializableAttribute()]
+[System.Diagnostics.DebuggerStepThroughAttribute()]
+[System.ComponentModel.DesignerCategoryAttribute("code")]
+[System.Xml.Serialization.XmlTypeAttribute(AnonymousType = true, Namespace = "http://tempuri.org/LOGICUSTFILE")]
+[System.Xml.Serialization.XmlRootAttribute(Namespace = "http://tempuri.org/LOGICUSTFILE", IsNullable = false)]
+public class ExportInvoiceItems
+{
+    private ExportInvoiceItem[] InvoiceItemField;
+
+    [System.Xml.Serialization.XmlElementAttribute("InvoiceItem")]
+
+    public ExportInvoiceItem[] InvoiceItem
+    {
+        get
+        {
+            return this.InvoiceItemField;
+        }
+        set
+        {
+            this.InvoiceItemField = value;
+        }
+    }
+}
 
 [System.CodeDom.Compiler.GeneratedCodeAttribute("xsd", "4.8.3928.0")]
 [System.SerializableAttribute()]
