@@ -173,6 +173,7 @@
     <None Include="DBScripts\InfrastructureModel\202303081102_UpdateAvailableInDocumentTypesForCustomObjects.sxml" />
     <None Include="DBScripts\InfrastructureModel\AddIdFieldToScreenSectionTable.sxml" />
     <None Include="DBScripts\InfrastructureModel\UpdateScreenSectionTable.sxml" />
+    <None Include="DBScripts\InvoiceModel\202404111640_SetConfirmationNumberDefaults.sxml" />
     <None Include="DBScripts\InvoiceModel\202201160900_UpdateAutomaticLastUpdateDateOnARInvoiceTransferStatus.sxml" />
     <None Include="DBScripts\InvoiceModel\202209061205_FillPaidStatusOfARInvoices.sxml" />
     <None Include="DBScripts\InvoiceModel\202212201040_FillTotalExamptFortaxReport.sxml" />
