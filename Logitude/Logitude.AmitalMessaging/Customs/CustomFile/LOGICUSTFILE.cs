@@ -1295,7 +1295,7 @@ public class ExportInvoice
     }
 
 
-    public string Number
+    public string InvoiceNumber
     {
         get
         {
@@ -1306,7 +1306,7 @@ public class ExportInvoice
             this.invoiceNumField = value;
         }
     }
-    public string Date
+    public string InvoiceDate
     {
         get
         {
@@ -1318,7 +1318,7 @@ public class ExportInvoice
         }
     }
 
-    public string Type
+    public string InvoiceType
     {
         get
         {
@@ -1329,7 +1329,7 @@ public class ExportInvoice
             this.invoiceTypeField = value;
         }
     }
-    public string Amount
+    public string InvoiceAmount
     {
         get
         {
@@ -1340,7 +1340,7 @@ public class ExportInvoice
             this.invoiceAmountField = value;
         }
     }
-    public string Currency
+    public string InvoiceCurrency
     {
         get
         {
@@ -1351,7 +1351,7 @@ public class ExportInvoice
             this.invoiceCurrencyField = value;
         }
     }
-    public string Incoterms
+    public string InvoiceIncoterms
     {
         get
         {
@@ -1362,7 +1362,7 @@ public class ExportInvoice
             this.invoiceIncotermsField = value;
         }
     }
-    public string BuyerName
+    public string InvoiceBuyerName
     {
         get
         {
@@ -1373,7 +1373,7 @@ public class ExportInvoice
             this.invoiceBuyerNameField = value;
         }
     }
-    public string BuyerAddress
+    public string InvoiceBuyerAddress
     {
         get
         {
@@ -1384,7 +1384,7 @@ public class ExportInvoice
             this.invoiceBuyerAddressField = value;
         }
     }
-    public string BuyerCountryCode
+    public string InvoiceBuyerCountryCode
     {
         get
         {
@@ -1395,7 +1395,7 @@ public class ExportInvoice
             this.invoiceBuyerCountryCodeField = value;
         }
     }
-    public string BuyerRoleCode
+    public string InvoiceBuyerRoleCode
     {
         get
         {
@@ -1406,7 +1406,7 @@ public class ExportInvoice
             this.invoiceBuyerRoleCodeField = value;
         }
     }
-    public string BuyerRelation
+    public string InvoiceBuyerRelation
     {
         get
         {
@@ -1417,7 +1417,7 @@ public class ExportInvoice
             this.invoiceBuyerRelationField = value;
         }
     }
-    public string PaymentType
+    public string InvoicePaymentType
     {
         get
         {
@@ -1549,7 +1549,7 @@ public class ExportInvoiceItem
     private string processTypeField;
     private ExportInvoiceItemCertificats certificatsField;
 
-    public string No
+    public string ItemNo
     {
         get
         {
@@ -1560,7 +1560,7 @@ public class ExportInvoiceItem
             this.itemNoField = value;
         }
     }
-    public string Description
+    public string ItemDescription
     {
         get
         {
@@ -1572,7 +1572,7 @@ public class ExportInvoiceItem
         }
     }
 
-    public string HsCode
+    public string ItemHsCode
     {
         get
         {
@@ -1583,7 +1583,7 @@ public class ExportInvoiceItem
             this.itemHScodeField = value;
         }
     }
-    public string Quantity
+    public string ItemQuantity
     {
         get
         {
@@ -1594,7 +1594,7 @@ public class ExportInvoiceItem
             this.itemQuantityField = value;
         }
     }
-    public string QuantityType
+    public string ItemQuantityType
     {
         get
         {
@@ -1605,7 +1605,7 @@ public class ExportInvoiceItem
             this.itemQuantityTypeField = value;
         }
     }
-    public string Amount
+    public string ItemAmount
     {
         get
         {
@@ -1616,7 +1616,7 @@ public class ExportInvoiceItem
             this.itemAmountField = value;
         }
     }
-    public string OriginCountry
+    public string ItemOriginCountry
     {
         get
         {
@@ -1627,7 +1627,7 @@ public class ExportInvoiceItem
             this.itemOriginCountryField = value;
         }
     }
-    public string ClassificationClaim
+    public string ItemClassificationClaim
     {
         get
         {
@@ -1638,7 +1638,7 @@ public class ExportInvoiceItem
             this.classificationClaimField = value;
         }
     }
-    public string ClassificationDealType
+    public string ItemClassificationDealType
     {
         get
         {
@@ -1649,7 +1649,7 @@ public class ExportInvoiceItem
             this.classificationDealTypeField = value;
         }
     }
-    public string ProcessType
+    public string ItemProcessType
     {
         get
         {
