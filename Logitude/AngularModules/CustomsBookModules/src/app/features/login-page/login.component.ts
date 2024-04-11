@@ -78,7 +78,7 @@ export class LoginComponent implements OnInit {
 
         this.ShowbusyIndicator = true;
         this.errorMessage = "";
-        const isCargoTrackingSite = false; // this.IsCargoTrackingDomain();
+        const isCustomsBookSite = this.IsCustomsBookDomain();
 
         let LoginParams = {
             Email: this.Email,
@@ -87,14 +87,15 @@ export class LoginComponent implements OnInit {
             CardId: "",
             CardType: "",
             IsMobileLogin: false,
-            IsUser: !isCargoTrackingSite,
+            IsUser: !isCustomsBookSite,
             GetToken: true,
             IsAngularLogin: true,
             MobileVersion: "",
             ClientType: "Web",
             CaptchaKey: this.CaptchaKey,
             CaptchaCode: this.CaptchaTextValue,
-            IsCargoTracking: isCargoTrackingSite,
+            IsCargoTracking: false,
+            IsCustomsBook: isCustomsBookSite,
         };
 
         this.loginExtendedService.PostUserValidation(LoginParams).subscribe((userData: any) => {
@@ -107,7 +108,7 @@ export class LoginComponent implements OnInit {
         });
     }
 
-    private IsCargoTrackingDomain() {
+    private IsCustomsBookDomain() {
         const cargoTrackingDomainKeyword = "customs-book";
         const domain = window.location.href;
         if (domain.indexOf(cargoTrackingDomainKeyword)>-1) {
