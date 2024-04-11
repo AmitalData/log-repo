@@ -10963,7 +10963,7 @@ namespace Unifreight.Data.AmitalModel
                     .HasColumnName(@"FILE_NO")
                     .IsRequired()
                     .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
-                    .HasColumnType("int64");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUACCSUP>()
                 .Property(p => p.LINENO)
                     .HasColumnName(@"LINE_NO")
@@ -10978,7 +10978,7 @@ namespace Unifreight.Data.AmitalModel
             modelBuilder.Entity<CCUACCSUP>()
                 .Property(p => p.MAINACCOUNT)
                     .HasColumnName(@"MAIN_ACCOUNT")
-                    .HasColumnType("bool");
+                    .HasColumnType("bit");
             modelBuilder.Entity<CCUACCSUP>()
                 .Property(p => p.SUPPLIERACCOUNT)
                     .HasColumnName(@"SUPPLIER_ACCOUNT")
@@ -10998,7 +10998,7 @@ namespace Unifreight.Data.AmitalModel
                 .Property(p => p.INCOTERMID)
                     .HasColumnName(@"INCOTERM_ID")
                     .HasMaxLength(3)
-                    .HasColumnType("varchar2");
+                    .HasColumnType("varchar");
             modelBuilder.Entity<CCUACCSUP>()
                 .Property(p => p.CURRENCYID)
                     .HasColumnName(@"CURRENCY_ID")
@@ -11006,10 +11006,10 @@ namespace Unifreight.Data.AmitalModel
                     .HasColumnType("char");
             modelBuilder.Entity<CCUACCSUP>()
                 .Property(p => p.VALUE)
-                    .HasColumnType("double");
+                    .HasColumnType("float");
             modelBuilder.Entity<CCUACCSUP>()
                 .Property(p => p.COMMISSION)
-                    .HasColumnType("double");
+                    .HasColumnType("float");
             modelBuilder.Entity<CCUACCSUP>()
                 .Property(p => p.DECLARATIONNO)
                     .HasColumnName(@"DECLARATION_NO")
@@ -11018,16 +11018,17 @@ namespace Unifreight.Data.AmitalModel
             modelBuilder.Entity<CCUACCSUP>()
                 .Property(p => p.CHANGINGVALUE)
                     .HasColumnName(@"CHANGING_VALUE")
-                    .HasColumnType("double");
+                    .HasColumnType("float");
             modelBuilder.Entity<CCUACCSUP>()
                 .Property(p => p.SUPPLIERACCOUNTN)
                     .HasColumnName(@"SUPPLIER_ACCOUNT_N")
                     .HasMaxLength(35)
-                    .HasColumnType("varchar2");
+                    .HasColumnType("varchar");
             modelBuilder.Entity<CCUACCSUP>()
                 .Property(p => p.COMMISSIONPERCENT)
                     .HasColumnName(@"COMMISSION_PERCENT")
-                    .HasColumnType("double");
+                    .HasColumnType("float");
+
             #endregion
 
             #region GGGQ
