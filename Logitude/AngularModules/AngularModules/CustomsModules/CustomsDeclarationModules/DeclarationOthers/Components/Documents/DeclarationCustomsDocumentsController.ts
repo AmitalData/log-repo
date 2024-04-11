@@ -636,7 +636,7 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
     }
 
     CreateTicketsToEachSupplierInvoice() {///39629  //CALL#309883 לא נפתח טיקט לכל ח-ן ספק +CALL#309868;310765, 311721
-debugger
+
         this.loadedSupplierInvoices.forEach((supplierInvoice) => {
             if (!AppTool.IsNullOrEmpty(supplierInvoice.AccountTypeCode) && supplierInvoice.AccountTypeCode != '325') {
                 let vm = this.FindCustomsDocumentTicketViewModel(supplierInvoice.InvoiceCounterKey + "");// this.originalCustomsDocumentTicketViewModel.filter(ticketViewmodel => ticketViewmodel.customsDocumentsTicketPM.CustomsDocumentPointers[0].Child1EntityId === supplierInvoice.InvoiceCounterKey + "")[0];

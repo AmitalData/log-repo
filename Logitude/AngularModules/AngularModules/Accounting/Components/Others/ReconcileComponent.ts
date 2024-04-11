@@ -768,7 +768,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
         }
     }
     OpenAmountTextChanged(searchtext, OperatorChanged: boolean = false) {
-        debugger
+        
         if (!AppTool.IsNullOrEmpty(searchtext) && !AppTool.IsNullOrEmpty(this.OpenAmountSelectedOperator)) {
            console.log(searchtext+"!!!!!!!!!!!!!!!!!!!!")
             this.timerToken = setTimeout(() => {

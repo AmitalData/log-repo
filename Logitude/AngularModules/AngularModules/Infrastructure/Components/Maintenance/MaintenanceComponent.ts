@@ -428,6 +428,7 @@ export class MaintenanceComponent {
                 this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
             }
             if (FeatureLocator.HasFeaturePermession("General", "General.Features.TenantManagement")) {
+              
                 var item = new MenusTablePM();
                 item.CategoryTypeCode = "CMS";
                 item.Icon = "List"

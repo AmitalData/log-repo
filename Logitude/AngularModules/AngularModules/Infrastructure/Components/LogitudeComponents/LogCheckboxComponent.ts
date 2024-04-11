@@ -15,24 +15,23 @@ import {CustomFieldClass} from '../../DataContracts/CustomFieldClass';
     template:
     `
     <table *ngIf="uiProperty.IsVisible">
-        <tr>
-            <td style="width: 16px;">
+    <tr>
+        <td style="width: 16px;">
+            <div [attr.data-cy]="DataCy" class="CheckBox">
+                <input [attr.data-cy]="DataCy+'_input'"  [checked]="BoolValue" (change)="OnChecked($event)" [attr.id]="ControlId" type="checkbox" [disabled]="IsDisabled" [(ngModel)]="BoolValue" (focus)="onFocus()" (blur)="onBlur()" />
+                <label [attr.for]="ControlId">{{Text}}</label>
+            </div>
+        </td>
 
-                <div [attr.data-cy]="DataCy" class="CheckBox">
-                    <input [attr.data-cy]="DataCy+'_input'" [attr.id]="ControlId" type="checkbox" [checked]="BoolValue"  [disabled]="IsDisabled" [(ngModel)]="BoolValue" (focus)="onFocus()" (blur)="onBlur() (change)="OnChecked($event)"" />
-                    <label [attr.for]="ControlId">{{Text}}</label>
-                </div>
-            </td>
+        <td style="width: 18px;" *ngIf="!HideColumns">                
+            <HelpIcon *ngIf="ShowHelp" [HideHeader]="true" [Text]="ObjectFieldHelp" [IconSize]="15"></HelpIcon>
+        </td>
 
-            <td style="width: 18px;" *ngIf="!HideColumns">                
-                <HelpIcon *ngIf="ShowHelp" [HideHeader]="true" [Text]="ObjectFieldHelp" [IconSize]="15"></HelpIcon>
-            </td>
-
-            <td>
-                <div></div>
-            </td>
-        </tr>
-    </table>
+        <td>
+            <div></div>
+        </td>
+    </tr>
+</table>
     `,
 
     inputs: ['ObjectFieldName', 'ObjectTableName', 'DataContext', 'HideColumns', 'IsDisabled', 'Text','DataCy'],

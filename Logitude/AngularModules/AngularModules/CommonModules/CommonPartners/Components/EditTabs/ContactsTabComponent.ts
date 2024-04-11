@@ -149,7 +149,7 @@ export class ContactsTabComponent extends BaseComponent implements OnDestroy {
     }
 
     SetContactForAccounting(items: ContactPM[]){
-        debugger;
+
         items.forEach(item => {
             if(item.ContactForAccounting == true){
                 this.EntityPM.ContactForAccounting=item.Id;
