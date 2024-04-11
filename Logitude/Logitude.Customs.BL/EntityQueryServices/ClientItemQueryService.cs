@@ -26,6 +26,16 @@ namespace Logitude.Customs.BL.EntityQueryServices
             var pm = this.GetEntityPM(poco);
             return pm;
         }
+        public ClientItemPM GetSingleWithTenantByItemKey(string itemKey, string exporterCode, int tenant)
+        {
+            var poco = repository.GetSingleWithTenantByItemKey(itemKey, exporterCode, tenant);
+            if (poco == null)
+            {
+                return null;
+            }
+            var pm = this.GetEntityPM(poco);
+            return pm;
+        }
 
         public ClientItemPM GetSingleWithTenantDescription(string itemDescription, string exporterCode, int tenant)
         {

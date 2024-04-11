@@ -608,7 +608,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                     if (entityPM.ChangeSetOp != ChangeSetOperation.None && !string.IsNullOrEmpty(ItemKey))
                     {
-                        ClientItemPM clientItem = clientItemQueryService.GetSingleWithTenant(ItemKey, exporterCode, entityPM.Tenant);
+                        ClientItemPM clientItem = clientItemQueryService.GetSingleWithTenantByItemKey(ItemKey, exporterCode, entityPM.Tenant);
                         if (clientItem == null)
                         {
                             clientItem = new ClientItemPM()
