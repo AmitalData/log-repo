@@ -3992,10 +3992,21 @@ export class SupplierInvoiceItemLine extends BaseComponent {
     doCalculate: boolean = false;
     public get ItemPrice() { return this.entityPM.ItemPrice; }
     public set ItemPrice(newValue: number) {
-
         if (newValue != this.entityPM.ItemPrice) {
             this.doCalculate = true;
             this.entityPM.ItemPrice = newValue;
+
+            let hasOcr = FeatureLocator.HasFeaturePermession("Customs.Declaration", "OCR");
+            if(this.entityPM.EntityParentPM.supplierInvoicePayments.length == 1 && this.entityPM.EntityParentPM.supplierInvoicePayments[0].paymentAmount != null && hasOcr && this.CurrentSession.CurrentEditComponent.EntityPM.Direction == "E"){
+                let sum = 0;
+                
+                sum = this.entityPM.EntityParentPM.supplierInvoiceItems
+                .filter(item => item.TransactionNatureCode === "2")
+                .reduce((acc, item) => acc + item.ItemPrice, 0);
+               
+                this.entityPM.EntityParentPM.supplierInvoicePayments[0].paymentAmount = sum;
+                this.entityPM.EntityParentPM.supplierInvoicePayments[0].changeSetOp = "Update"
+            }
         }
 
 
