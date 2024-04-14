@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Script DBType="Main" Module="Customs" Pre="true">
+	<Sql Version="1">
+
+		<![CDATA[
+			UPDATE customs.ClientItems SET SearchFields = ISNULL(ItemCode,'') +','+ isnull(ItemDescription ,'') +','+ isnull(ClassificationCode,'')
+        ]]>
+	</Sql>
+</Script>
