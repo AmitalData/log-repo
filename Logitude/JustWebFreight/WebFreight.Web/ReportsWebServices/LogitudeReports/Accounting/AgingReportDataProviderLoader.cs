@@ -797,7 +797,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             }
         }
 
-        private void SetOrderForPeriods(List<PeriodMExtended> resultedPeriods, AccountingAgingDataProvider dataProvider)
+        /*private void SetOrderForPeriods(List<PeriodMExtended> resultedPeriods, AccountingAgingDataProvider dataProvider)
         {
             int i = 0;
             decimal sum = 0;
@@ -811,6 +811,33 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     item.OrderIndex = i;
                 });
 
+            }
+        }*/
+        private void SetOrderForPeriods(List<PeriodMExtended> resultedPeriods, AccountingAgingDataProvider dataProvider)
+        {
+            // Group AgingPeriods by PeriodName using a dictionary
+            var periodNameToAgingPeriods = dataProvider.AgingPeriods
+                .GroupBy(a => a.PeriodName)
+                .ToDictionary(g => g.Key, g => g.ToList());
+
+            int i = 0;
+            decimal sum = 0;
+
+            // Sort resultedPeriods by OrderDate
+            foreach (var period in resultedPeriods.OrderBy(d => d.OrderDate))
+            {
+                i++;
+                sum += period.Total;
+
+                // Get the list of AgingPeriods corresponding to the current PeriodName
+                if (periodNameToAgingPeriods.TryGetValue(period.PeriodName, out List<AgingPeriod> items))
+                {
+                    // Update the OrderIndex for each AgingPeriod in the list
+                    foreach (var item in items)
+                    {
+                        item.OrderIndex = i;
+                    }
+                }
             }
         }
 
