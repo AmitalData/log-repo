@@ -61,6 +61,14 @@ import { CityNameListHeaderTemplate } from './Components/Templates/ListHeaderTem
 import { CodeListHeaderTemplate } from './Components/Templates/ListHeaderTemplates/CodeListHeaderTemplate';
 import { StartWorkingListHeaderTemplate } from './Components/Templates/ListHeaderTemplates/StartWorkingListHeaderTemplate';
 import { OcrDefaultsSettingsComponent } from './Components/Maintenance/OcrDefaultsSettingsComponent';
+import { APISettingsComponent } from './Components/Maintenance/AmitalAPI/APISettingsComponent';
+import { AmitalAPISettingsComponent } from './Components/Maintenance/AmitalAPI/AmitalAPISettingsComponent';
+import { AmitalAPIAddApiWindowComponent } from './Components/Maintenance/AmitalAPI/WindowsComponent/AmitalAPIAddApiWindowComponent';
+import { AmitalAPIAddClientWindowComponent } from './Components/Maintenance/AmitalAPI/WindowsComponent/AmitalAPIAddClientWindowComponent';
+import { AmitalAPIAddSchemaWindowComponent } from './Components/Maintenance/AmitalAPI/WindowsComponent/AmitalAPIAddSchemaWindowComponent';
+import { AmitalAPISchemaTable } from './Components/Maintenance/AmitalAPI/components/AmitalAPISchemaTable';
+import { LogTexBoxFormComponent } from './Components/Maintenance/AmitalAPI/components/LogTexBoxFormComponent';
+import { CloseSaveButtonsComponent } from './Components/Maintenance/AmitalAPI/components/CloseSaveButtonsComponent';
 
 export const Components =
     [
@@ -127,6 +135,14 @@ export const Components =
         CityNameListHeaderTemplate,
         EnglishNameListHeaderTemplate,
         StartWorkingListHeaderTemplate,
+        APISettingsComponent,
+        AmitalAPISettingsComponent,
+        AmitalAPIAddApiWindowComponent,
+        AmitalAPIAddClientWindowComponent,
+        AmitalAPIAddSchemaWindowComponent,
+        AmitalAPISchemaTable,
+        LogTexBoxFormComponent,
+        CloseSaveButtonsComponent,
     ];
 
 export class ModuleDeclarations {
@@ -201,8 +217,14 @@ export class ModuleDeclarations {
             case "CityNameListHeaderTemplate": { myResult = CityNameListHeaderTemplate; break; }
             case "EnglishNameListHeaderTemplate": { myResult = EnglishNameListHeaderTemplate; break; }
             case "StartWorkingListHeaderTemplate": { myResult = StartWorkingListHeaderTemplate; break; }
-
-
+            case "APISettingsComponent": { myResult = APISettingsComponent; break; }
+            case "AmitalAPISettingsComponent": { myResult = AmitalAPISettingsComponent; break; }
+            case "AmitalAPIAddApiWindowComponent": { myResult = AmitalAPIAddApiWindowComponent; break; }
+            case "AmitalAPIAddClientWindowComponent": { myResult = AmitalAPIAddClientWindowComponent; break; }
+            case "AmitalAPIAddSchemaWindowComponent": { myResult = AmitalAPIAddSchemaWindowComponent; break; }
+            case "AmitalAPISchemaTable": { myResult = AmitalAPISchemaTable; break; }
+            case "LogTexBoxFormComponent": { myResult = LogTexBoxFormComponent; break; }
+            case "CloseSaveButtonsComponent": { myResult = CloseSaveButtonsComponent; break; }
         }
 
         return myResult;

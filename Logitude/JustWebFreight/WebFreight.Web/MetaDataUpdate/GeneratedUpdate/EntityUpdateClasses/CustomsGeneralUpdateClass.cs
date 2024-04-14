@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsGeneralUpdateClass
    {  		
-		public const string HashString = "7bf7ba552155cb3d930f0803c27ce152";
+		public const string HashString = "85b005b8bb1451a84efa06b8b1d36b8a";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -125,7 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "CustomsGeneral",
-			      				    Code =  "5e14",
+			      				    Code =  "dc2c",
 			      				    Name =  "CustomsGeneral",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -309,6 +309,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   Feature CustomsGeneralFeature_DocumentsDefinition = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DocumentsDefinition", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsGeneral.Features.DocumentsDefinition", NameTextCodeDefaultText = @"Documents Definition" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomsGeneralObjectTable);
 
 		   Feature CustomsGeneralFeature_EXPORTTENANT0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EXPORTTENANT0", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsGeneral.Features.EXPORTTENANT0", NameTextCodeDefaultText = @"Export Tenant 0" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomsGeneralObjectTable);
+
+		   Feature CustomsGeneralFeature_AmitalAPI = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AmitalAPI", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "CustomsGeneral.Features.AmitalAPI", NameTextCodeDefaultText = @"Amital API" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomsGeneralObjectTable);
 
    
 	    
@@ -2193,6 +2195,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode CustomsGeneralTextCode_CustomsExportClosindDataOCheckingAttachmentCertificates = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ExportClosindData.O.CheckingAttachmentCertificates", DefaultText = "Checking the attachment of certificates of origin",LocalDefaultText = @"בדיקת צירוף תעודות מקור", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CustomsGeneralTextCode_CustomsSpecialActivityRequestFLoadingDateTimeMandatory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.SpecialActivityRequest.F.LoadingDateTimeMandatory", DefaultText = "Loading Date Time field is mandatory",LocalDefaultText = @"תאריך טעינה הוא שדה חובה", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsMCGeneralAmitalAPISettings = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.MC.General.AmitalAPISettings", DefaultText = "Amital API Settings",LocalDefaultText = null, ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CustomsGeneralTextCode_CustomsMCGeneralAPISettings = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.MC.General.APISettings", DefaultText = "API Settings",LocalDefaultText = @"", ObjectTableId = CustomsGeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
