@@ -165,7 +165,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 LogitudeSettings.HandleLogMe("ClassificationCode changed " + logData, false, "SupplierInvoiceItemUpdate.ClassificationCode", stopLogAt);                
             }
 
-            if (SecurityUtility.CheckFeature("Customs.Declaration", "OCR", entityPM.Tenant) && !string.IsNullOrEmpty(entityPM.ItemCode)) 
+            if (SecurityUtility.CheckFeature("Customs.Declaration", "OCR", entityPM.Tenant) && !string.IsNullOrEmpty(entityPM.ItemCode) || !string.IsNullOrEmpty(entityPM.ItemDescription)) 
             {
                 if(string.IsNullOrEmpty(entityPM.ClassificationCode))
                 {
@@ -202,7 +202,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     }
 
                 }
-                else
+                else 
                 {
                     if (entityPM.ClassificationCode != entityPOCO.ClassificationCode || entityPM.ItemCode != entityPOCO.ItemCode || entityPM.OriginCountryCode != entityPOCO.OriginCountryCode || entityPM.ItemDescription != entityPOCO.ItemDescription)
                     {
@@ -216,8 +216,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     }
                    
                 }
-          
-               
+
+
 
             }
 
