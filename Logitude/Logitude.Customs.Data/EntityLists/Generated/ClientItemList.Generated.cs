@@ -20,8 +20,6 @@ namespace Logitude.Customs.Data.EntityLists
        public string ItemDescription  { get; set; }
        [DataMember]
        public string ClassificationCode  { get; set; }
-
-       [Key]
        [DataMember]
        public string ItemCode  { get; set; }
        [DataMember]
