@@ -10,6 +10,9 @@
   HasCustomFilter="true"
   HasCustomFields="false"
   AvailableInCustomization="true"
+  SupportSubEntity="false"
+  ApplyGenericCustomFields="false"
+  AvailableInDocumentTypes="false"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -53,6 +56,7 @@
   HasApiHelper="false"
   AllowedForComputingPartners="false"
   IsBusinessUnitEnabled="false"
+  TenantZeroData="false"
   Code1="&quot;2e27&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -1580,6 +1584,107 @@
     </QueryColumns>
     <QueryFilters />
   </Query>
+  <Query
+    Code="&quot;Failed Report Execution Logs&quot;"
+    TextCode="&quot;Failed Report Execution Logs&quot;"
+    QueryGroupCode="&quot;4df5&quot;"
+    IndexOrder="2"
+    ObjectTableName="&quot;ReportExecutionLog&quot;"
+    QuerySection="&quot;ReportExecutionLog&quot;"
+    SystemLevel="true"
+    IsAddNewEntity="false"
+    IsPackagable="true"
+    DefaultSortName="&quot;CreateDate&quot;"
+    DefaultSortDirection="&quot;Desending&quot;"
+    IsSpellChecked="false">
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;Failed Report Execution Logs&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;Tenant&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;Failed Report Execution Logs&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;CreateDate&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;Failed Report Execution Logs&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;StatusCode&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;Failed Report Execution Logs&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;ExceptionMessage&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;Failed Report Execution Logs&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;DoneDate&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;Failed Report Execution Logs&quot;"
+        IndexOrder="5"
+        ObjectFieldName="&quot;ReportFilterXML&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;Failed Report Execution Logs&quot;"
+        IndexOrder="6"
+        ObjectFieldName="&quot;ReportId&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;Failed Report Execution Logs&quot;"
+        IndexOrder="7"
+        ObjectFieldName="&quot;ReportTemplateId&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;Failed Report Execution Logs&quot;"
+        IndexOrder="8"
+        ObjectFieldName="&quot;RetryNumber&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;Failed Report Execution Logs&quot;"
+        IndexOrder="9"
+        ObjectFieldName="&quot;StartDate&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;Failed Report Execution Logs&quot;"
+        IndexOrder="10"
+        ObjectFieldName="&quot;DisablePreview&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;Failed Report Execution Logs&quot;"
+        IndexOrder="11"
+        ObjectFieldName="&quot;ExecutedByServerName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;Failed Report Execution Logs&quot;"
+        IndexOrder="12"
+        ObjectFieldName="&quot;ReportName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;Failed Report Execution Logs&quot;"
+        IndexOrder="13"
+        ObjectFieldName="&quot;StatusName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;Failed Report Execution Logs&quot;"
+        IndexOrder="14"
+        ObjectFieldName="&quot;CreatedByUserName&quot;"
+        ColumnWidth="100" />
+    </QueryColumns>
+    <QueryFilters>
+      <QueryFilter
+        QueryCode="&quot;Failed Report Execution Logs&quot;"
+        PredefinedValue="&quot;F&quot;"
+        ObjectFieldName="&quot;StatusCode&quot;"
+        IsPredefined="true"
+        Operator="&quot;Equal&quot;"
+        IndexOrder="0"
+        CustomPredefined="false" />
+    </QueryFilters>
+  </Query>
   <Screen
     Name="&quot;Header Screen&quot;"
     ObjectTableName="&quot;ReportExecutionLog&quot;"
@@ -1715,6 +1820,17 @@
       IsFollowUp="false" />
   </EventTypes>
   <Records />
+  <MenuButtons
+    MenuButtonGroupType="&quot;ReportExecutionLogEdit&quot;"
+    MenuButtonGroupName="&quot;ReportExecutionLogEditButtonsGroup&quot;">
+    <MenuButton
+      EventCode="&quot;Cancel&quot;"
+      DefaultText="&quot;Cancel&quot;"
+      MenuButtonType="&quot;button&quot;"
+      IndexOrder="0"
+      LocalDefaultText="&quot;ביטול&quot;"
+      IsPackagable="false" />
+  </MenuButtons>
   <DataContracts />
   <AdditionalTextCodes />
   <AdditionalFeatures />
