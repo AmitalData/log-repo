@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class ReportExecutionLogUpdateClass
    {  		
-		public const string HashString = "45509e15e54ab03786cf525dea2c34dd";
+		public const string HashString = "9b08abe34a74e009dbe1b3d34a1c627e";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1507,7 +1507,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
 	    {  
 		   ObjectTable ReportExecutionLogObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ReportExecutionLog" && d.Tenant == 0).FirstOrDefault(); 
-   
+
+		   Feature ReportExecutionLogFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = ReportExecutionLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportExecutionLog.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ReportExecutionLogObjectTable);
+		   Feature ReportExecutionLogFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = ReportExecutionLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportExecutionLog.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ReportExecutionLogObjectTable);
+		   Feature ReportExecutionLogFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = ReportExecutionLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportExecutionLog.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ReportExecutionLogObjectTable);
+		   Feature ReportExecutionLogFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = ReportExecutionLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportExecutionLog.Features.PackageFeature", NameTextCodeDefaultText = "ReportExecutionLog Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ReportExecutionLogObjectTable);    
 	    
 		}
 
