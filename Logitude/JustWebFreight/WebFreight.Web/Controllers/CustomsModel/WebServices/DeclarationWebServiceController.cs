@@ -464,6 +464,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 if (requestParams.RequestName.StartsWith("Export"))
                 {
                     DF_NG_2751_MSG10000_ExportDeclarationRequestService _dF_MSG10000_ExportDeclarationRequestService = new DF_NG_2751_MSG10000_ExportDeclarationRequestService();
+                    _dF_MSG10000_ExportDeclarationRequestService.IsFromOpenNewAmendment = true;
                     var request = _dF_MSG10000_ExportDeclarationRequestService.GetRequest(requestParams);
                     string error = "";
                     DF_NG_2757_MSG10004_ExportAmendmentDeclarationResponseService dF_NG_2757_MSG10004_ExportFixedDeclarationResponseService = new DF_NG_2757_MSG10004_ExportAmendmentDeclarationResponseService();
