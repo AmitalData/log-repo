@@ -55,6 +55,8 @@ namespace Logitude.CustomsMessaging.RequestServices
         private Stopwatch _Stopwatch;
         private AmitalContext _AmitalContext;
         private DeclarationDMExtensionsRecipientDetails declarationDMExtensionsRecipientDetails1;
+        public bool IsFromOpenNewAmendment = false;
+
 
         public override void OnRequestFail(GenericRequestParams requestParams)
         {
@@ -904,7 +906,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             }
 
             //}
-            if (declarationPM.IsSubmitDeclaration == true)
+            if (declarationPM.IsSubmitDeclaration == true || IsFromOpenNewAmendment)
             {
                 DMExtensions.DeclarationClosingDetails = GetDeclarationDMExtensionsDeclarationClosingDetails(declarationPM);
             }
