@@ -1,0 +1,46 @@
+<div class="detailsSlide active" aria-hidden="false">
+    <div class="detailsSlideFrame">
+        <div class="detailsSlide_close"><a href="#" role="button" (click)="showDetails.emit(false)">
+                &#10005;</a></div>
+        <div class="detailsSlide_top">
+            <div class="detailsSlide_title">
+                <p class="rull_no">0101210000/2</p>
+                <p class="rull_text">חלק 1231239- עץ ופריטים מעץ; פחם עץ; שעם ופריטים משעם; מוצרים מקש, מאספרטו או
+                    מחומרי קליעה אחרים;
+                    מוצרי
+                    נצרים וקליעה חלק 9- עץ ופריטים מעץ; פחם עץ; שעם ופריטים משעם; מוצרים מקש, מאספרטו או מחומרי קליעה
+                    אחרים; מוצרי נצרים וקליעה</p>
+            </div>
+            <div class="detailsSlide_topActions">
+                <ul>
+                    <li>
+                        <div class="mainTable_itemDocument"><a class="icon"><i role="img" class="icon-document">
+                                </i></a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="mainTable_itemPopup"><a class="icon"><i role="img" class="icon-popup"></i> </a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="mainTable_itemComment" (click)="showComments =!showComments"><a class="icon">
+                                <i role="img" class="icon-comment_plus"></i></a>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="mainTable_itemStarred" (click)="checked = !checked"><a class="icon"><i role="img"
+                                    [class]="checked? ' icon-star_full' :'icon-star' ">
+                                </i></a>
+
+                        </div>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+        <div class="conetnt_container">
+            <app-comments [showComments]="showComments" />
+            <app-accordion></app-accordion>
+        </div>
+    </div>
+</div>

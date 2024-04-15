@@ -1,0 +1,73 @@
+<div class="searchResults_filter">
+	<div class="searchResults_filterToggle">
+		<a role="button" title="סינון תוצאות" aria-expanded="true"
+			><i role="img" (click)="openPopup = !openPopup" [ngClass]="openPopup ? 'icon-filter_full' : 'icon-filter'"></i
+			><span *ngIf="numberOfFilters > 0" class="numberOfFilters">{{ numberOfFilters }}</span>
+		</a>
+	</div>
+	<div id="searchResults_filterPop" class="searchResults_filterPop" [class.shown]="openPopup" aria-hidden="false">
+		<div class="searchResults_filterPop_title">
+			<strong>בחרו סננים</strong>
+			<a href="#" class="searchResults_filterPop_clear" (click)="clearFilter()" role="button">נקה הכל</a>
+		</div>
+		<div class="searchResults_filterPop_list">
+			<b>חפש ב:</b>
+			<ul>
+				<li>
+					<label
+						><input type="checkbox" id="0" (click)="pickFilter('parts')" [checked]="isMarked('parts')" /><span
+							>חלקים</span
+						></label
+					>
+				</li>
+				<li>
+					<label
+						><input type="checkbox" id="1" (click)="pickFilter('chapters')" [checked]="isMarked('chapters')" /><span
+							>פרקים</span
+						></label
+					>
+				</li>
+				<li>
+					<label
+						><input type="checkbox" id="2" (click)="pickFilter('details')" [checked]="isMarked('details')" /><span
+							>פרט</span
+						></label
+					>
+				</li>
+				<li>
+					<label
+						><input type="checkbox" id="3" (click)="pickFilter('sections')" [checked]="isMarked('sections')" /><span
+							>סעיף</span
+						></label
+					>
+				</li>
+				<li>
+					<label
+						><input
+							type="checkbox"
+							id="4"
+							(click)="pickFilter('customsDetails')"
+							[checked]="isMarked('customsDetails')"
+						/><span>פרטי מכס</span></label
+					>
+				</li>
+				<li>
+					<label
+						><input type="checkbox" id="5" (click)="pickFilter('rules')" [checked]="isMarked('rules')" /><span
+							>כללים</span
+						></label
+					>
+				</li>
+				<li>
+					<label
+						><input type="checkbox" id="6" (click)="pickFilter('comments')" [checked]="isMarked('comments')" /><span
+							>הערות</span
+						></label
+					>
+				</li>
+			</ul>
+		</div>
+		<div class="searchResults_filterPop_submit" (click)="filterClick.emit()"><button>סינון</button></div>
+		<div class="trapFocus"><a role="button">חזור להתחלת הפאנל</a></div>
+	</div>
+</div>
