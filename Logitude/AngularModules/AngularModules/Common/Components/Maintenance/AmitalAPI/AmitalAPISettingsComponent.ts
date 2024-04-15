@@ -60,9 +60,10 @@ export class AmitalAPISettingsComponent {
         { name: 'AzureApiRegisterName', label: 'Register Name', width: '224' },
         { name: 'SecretValue', label: 'Client Secret', width: '99' },
         { name: 'SecretExpired', label: 'Secret Expired', width: '250' },
-        { name: 'AzureManagedApplObjId', label: 'Caller Objectid', width: '253' },
-        { name: 'baseAddress', label: 'Base Addres', width: '220' },
-        { name: 'authAddress', label: 'Auth Address', width: '220' },
+        { name: 'Token', label: 'Token', width: '250' },
+        { name: 'AzureManagedApplObjId', label: 'Caller Objectid', width: '203' },
+        { name: 'baseAddress', label: 'Base Addres', width: '120' },
+        { name: 'authAddress', label: 'Auth Address', width: '120' },
         { name: 'Tenant', label: 'Tenant', width: '66' },
     ];
 
