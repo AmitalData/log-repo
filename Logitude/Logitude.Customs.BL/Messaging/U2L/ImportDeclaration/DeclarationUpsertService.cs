@@ -2139,7 +2139,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 				MyGenericResponseObj.Stage = "Done";
 				AppendLogLine("originDeclarationId = " + originDeclarationId);
 
-				if(!string.IsNullOrEmpty(originDeclarationId))
+
 				MyGenericResponseObj.ApplicationId = originDeclarationId;
 
 
