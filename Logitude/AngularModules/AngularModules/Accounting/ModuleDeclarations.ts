@@ -84,6 +84,7 @@ import { ReconciliationLineListTemplate } from './Components/ListTemplates/Recon
 import {InterestReportListTemplate} from './Components/ListTemplates/InterestReportListTemplate'
 import {InterestInvoiceListTemplate} from './Components/ListTemplates/InterestInvoiceListTemplate'
 import { InterestBasesTypeDetailsTabComponent } from './Components/EditTabs/Interest/DetailsTab/InterestBasesTypeDetailsTabComponent';
+import { ChequeCounterSerialComponent } from './Components/EditTabs/BankAccount/DetailsTab/ChequeCounterSerialComponent';
 import {PrintedListHeaderTemplate} from './Components/ListTemplates/PrintedListHeaderTemplate'
 import { GLAccountChequeListComponent } from './Components/EditTabs/GLAccount/GLAccountChequeListComponent';
 
@@ -246,6 +247,7 @@ export const Components =
         TaxDeductionReportGeneralTabComponent,
         BankPageEventsComponent,
         InterestBasesTypeDetailsTabComponent,
+        ChequeCounterSerialComponent,
         ManageExternalReconciliationTabComponent,
         ExternalPagesTabComponent,
         GLAccountInterestComponent,
@@ -423,6 +425,7 @@ export class ModuleDeclarations {
             case "TaxDeductionReportGeneralTabComponent": { myResult = TaxDeductionReportGeneralTabComponent; break; }
             case "BankPageEventsComponent": { myResult = BankPageEventsComponent; break; }
             case "InterestBasesTypeDetailsTabComponent": { myResult = InterestBasesTypeDetailsTabComponent; break;}
+            case "ChequeCounterSerialComponent": { myResult = ChequeCounterSerialComponent; break;}
             case "ExternalPagesTabComponent": { myResult = ExternalPagesTabComponent; break; }
             case "GLAccountInterestComponent": { myResult = GLAccountInterestComponent; break; }
             case "InterestReportGeneralTabComponent": { myResult = InterestReportGeneralTabComponent; break; }

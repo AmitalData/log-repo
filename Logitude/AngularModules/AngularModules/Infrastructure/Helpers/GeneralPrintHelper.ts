@@ -1,22 +1,22 @@
 
 declare var System: any;
 declare var window: any;
-import {ServiceResponse} from '../DataContracts/ServiceResponse';
-import {ApiQueryFilters} from '../DataContracts/ApiQueryFilters';
-import {SessionLocator} from '../Utilities/SessionLocator';
-import {SessionInfo} from '../Utilities/SessionInfo';
-import {LogitudeWindow} from '../../Controls/Windows/LogitudeWindow';
+import { ServiceResponse } from '../DataContracts/ServiceResponse';
+import { ApiQueryFilters } from '../DataContracts/ApiQueryFilters';
+import { SessionLocator } from '../Utilities/SessionLocator';
+import { SessionInfo } from '../Utilities/SessionInfo';
+import { LogitudeWindow } from '../../Controls/Windows/LogitudeWindow';
 
-import {DocumentTypePM} from '../../Common/EntityPMs/DocumentTypePM';
-import {DocumentOutPM} from '../../Common/EntityPMs/DocumentOutPM';
-import {MessageWindow} from '../../Controls/Windows/MessageWindow';
-import {DocumentTypeListService} from '../../Common/Services/StandardLists/DocumentTypeListService';
-import {DocumentTypePMExtendedService} from '../../Common/Services/ExtendedPMs/DocumentTypePMExtendedService';
+import { DocumentTypePM } from '../../Common/EntityPMs/DocumentTypePM';
+import { DocumentOutPM } from '../../Common/EntityPMs/DocumentOutPM';
+import { MessageWindow } from '../../Controls/Windows/MessageWindow';
+import { DocumentTypeListService } from '../../Common/Services/StandardLists/DocumentTypeListService';
+import { DocumentTypePMExtendedService } from '../../Common/Services/ExtendedPMs/DocumentTypePMExtendedService';
 
-import {DocumentTypeList} from '../../Common/EntityLists/DocumentTypeList';
-import {AppTool, DateTool} from '../../Infrastructure/Tools';
-import {DocumentOutPMService} from '../../Common/Services/ExtendedPMs/DocumentOutPMService';
-import {DocsOutDataViewModel} from '../../InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/DocsOut/ViewModel/DocsOutDataViewModel';
+import { DocumentTypeList } from '../../Common/EntityLists/DocumentTypeList';
+import { AppTool, DateTool } from '../../Infrastructure/Tools';
+import { DocumentOutPMService } from '../../Common/Services/ExtendedPMs/DocumentOutPMService';
+import { DocsOutDataViewModel } from '../../InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/DocsOut/ViewModel/DocsOutDataViewModel';
 import { ARInvoicePMService } from '../../Invoice/Services/StandardPMs/ARInvoicePMService';
 import { ARInvoicePM } from '../../Invoice/EntityPMs/ARInvoicePM';
 import { BuildDocumentHelper } from 'Accounting/Utilities/BuildDocumentHelper';
@@ -41,7 +41,7 @@ export class GeneralPrintHelper {
     public IsLoadPrintControl: boolean = true;
     public IsStartPrint: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(objecttablename: string, documentTypeCode: string, entityId: string, childEntityId: string, childReference:string ,childObjectTableId:string ) {
+    constructor(objecttablename: string, documentTypeCode: string, entityId: string, childEntityId: string, childReference: string, childObjectTableId: string) {
         this.ObjectTableName = objecttablename;
         if (!AppTool.IsNullOrEmpty(documentTypeCode)) {
             this.DocumentTypeCode = documentTypeCode.toUpperCase();
@@ -59,97 +59,115 @@ export class GeneralPrintHelper {
 
         this.documentTypePMService = new DocumentTypePMExtendedService();
         this.documentOutPMService = new DocumentOutPMService();
-       
+
 
     }
+
+
     IsHaveARInvoicePrintToogleFeature() {
         return SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "ARP")[0];
     }
 
-    ShowPrintControl(documentTypeTemplate: string = null,StatusCode:string = null,ApprovedDate:Date = null,ShowPrintWindow:Boolean = true) {
+    ShowPrintControl(documentTypeTemplate: string = null,StatusCode:string = null,ApprovedDate:Date = null,ShowPrintWindow:Boolean = true, showController: boolean = true) {
+
         if (this.IsStartPrint) return;
-            let apiQueryFilters: ApiQueryFilters = new ApiQueryFilters();
-            apiQueryFilters.GetAll = true;
-            apiQueryFilters.Tenant = SessionInfo.LoggedUserTenant;
-            let documentTypeListService = new DocumentTypeListService();
-            documentTypeListService.getAllFromCache(apiQueryFilters).subscribe((res: any) => {
-                var pmResponse: ServiceResponse = res;
-                if (!pmResponse.HasError) {
-                    var myResult = pmResponse.Result;
-                    this.documentTypeList = myResult.filter(d => d.Code.toUpperCase() == this.DocumentTypeCode)[0];
-                    if (this.documentTypeList) {
-                        if (this.documentTypeList.DocumentTypeDefaultReportTemplateId) {
-                            this.GetDocumentOut(documentTypeTemplate,StatusCode,ApprovedDate,ShowPrintWindow);
+        let apiQueryFilters: ApiQueryFilters = new ApiQueryFilters();
+        apiQueryFilters.GetAll = true;
+        apiQueryFilters.Tenant = SessionInfo.LoggedUserTenant;
+        let documentTypeListService = new DocumentTypeListService();
+        documentTypeListService.getAllFromCache(apiQueryFilters).subscribe((res: any) => {
+            var pmResponse: ServiceResponse = res;
+            if (!pmResponse.HasError) {
+                var myResult = pmResponse.Result;
+                this.documentTypeList = myResult.filter(d => d.Code.toUpperCase() == this.DocumentTypeCode)[0];
+                if (this.documentTypeList) {
+                    if (this.documentTypeList.DocumentTypeDefaultReportTemplateId) {
+                            this.GetDocumentOut(documentTypeTemplate,StatusCode,ApprovedDate,ShowPrintWindow, showController);
 
-                        }
-                        else this.ShowMessage("Document type of code " + this.DocumentTypeCode + " has no default template");
+
                     }
-
-                    else {
-                        if (this.ObjectTableName == "APPayment") {
-                            this.ShowMessage("There is no document type for A/P Payment please go to maintenance and add it!");
-                        }
-                        else if (this.ObjectTableName == "ARPayment") {
-                            this.ShowMessage("There is no document type for A/R Payment please go to maintenance and add it!");
-                        }
-
-                        else this.ShowMessage("Document type of code " + this.DocumentTypeCode + " not exists");
-                    }
-                }
-            });
-        
-    }
-
-    GetDocumentOut(documentTypeTemplate:string = null,StatusCode:string = null,ApprovedDate:Date = null,ShowPrintWindow:Boolean = true) {
-        if (this.IsStartPrint) return;
-            this.IsStartPrint = true;
-            this.CurrentSession.StartBusyIndicatorLoading();
-            this.documentOutPMService.getDocumentOutByDocumentTypeEntityAndChild(this.EntityId, SessionInfo.LoggedUserTenant, this.ChildEntityId, this.documentTypeList.Id).subscribe((res:any) => {
-                var pmResponse: ServiceResponse = res;
-                if (!pmResponse.HasError) {
-                    var myResult = pmResponse.Result;
-                    this.documentOutPM = myResult;
-
-                    if (!this.documentOutPM) {
-                        this.documentOutPMService.getCreateDocumentOut(this.documentTypeList.Id, this.EntityId, this.ChildEntityId, this.ChildReference, this.CurrentObjectTableId, SessionInfo.LoggedUserTenant, documentTypeTemplate).subscribe((res:any) => {
-                            var pmResponse: ServiceResponse = res;
-                            if (!pmResponse.HasError) {
-                                var myResult = pmResponse.Result;
-                                if (myResult) {
-                                    this.documentOutPM = myResult;
-                                    this.LoadDocumentTypePm(StatusCode,ApprovedDate,ShowPrintWindow);
-                                }
-                            }
-
-                            else {
-                                this.CurrentSession.StopBusyIndicator();
-                                this.IsStartPrint = false;
-                            }
-
-                        });
-                    }
-                    else {
-                        this.LoadDocumentTypePm(StatusCode,ApprovedDate,ShowPrintWindow);
-                    }
+                    else this.ShowMessage("Document type of code " + this.DocumentTypeCode + " has no default template");
                 }
 
                 else {
-                    this.IsStartPrint = false;
-                    this.CurrentSession.StopBusyIndicator();
+                    if (this.ObjectTableName == "APPayment") {
+                        this.ShowMessage("There is no document type for A/P Payment please go to maintenance and add it!");
+                    }
+                    else if (this.ObjectTableName == "ARPayment") {
+                        this.ShowMessage("There is no document type for A/R Payment please go to maintenance and add it!");
+                    }
+
+                    else this.ShowMessage("Document type of code " + this.DocumentTypeCode + " not exists");
                 }
-            });
-        
+            }
+        });
+
     }
 
-    LoadDocumentTypePm(StatusCode:string = null,ApprovedDate:Date = null,ShowPrintWindow:Boolean = true) {
+    GetDocumentOut(documentTypeTemplate:string = null,StatusCode:string = null,ApprovedDate:Date = null,ShowPrintWindow:Boolean = true, showController: boolean = true) {
+        
+        var signHSM=!showController
+        if (this.IsStartPrint) return;
+        this.IsStartPrint = true;
+        this.CurrentSession.StartBusyIndicatorLoading();
+        this.documentOutPMService.getDocumentOutByDocumentTypeEntityAndChild(this.EntityId, SessionInfo.LoggedUserTenant, this.ChildEntityId, this.documentTypeList.Id).subscribe((res: any) => {
+            var pmResponse: ServiceResponse = res;
+            
+            if (!pmResponse.HasError) {
+                var myResult = pmResponse.Result;
+                this.documentOutPM = myResult;
+
+                if (!this.documentOutPM) {
+                    this.documentOutPMService.getCreateDocumentOut(this.documentTypeList.Id, this.EntityId, this.ChildEntityId, this.ChildReference, this.CurrentObjectTableId, SessionInfo.LoggedUserTenant, documentTypeTemplate,signHSM).subscribe((res: any) => {
+                        var pmResponse: ServiceResponse = res;
+                        if (!pmResponse.HasError) {
+                            var myResult = pmResponse.Result;
+                            if (myResult) {
+                                this.documentOutPM = myResult;
+
+                                    this.LoadDocumentTypePm(StatusCode,ApprovedDate,ShowPrintWindow,showController);
+
+                            }
+                        }
+
+                        else {
+                            this.CurrentSession.StopBusyIndicator();
+                            this.IsStartPrint = false;
+                        }
+
+                    });
+                }
+                else {
+                        this.LoadDocumentTypePm(StatusCode,ApprovedDate,ShowPrintWindow,showController);
+
+                }
+            }
+
+            else {
+                this.IsStartPrint = false;
+                this.CurrentSession.StopBusyIndicator();
+            }
+        });
+
+    }
+
+    LoadDocumentTypePm(StatusCode:string = null,ApprovedDate:Date = null,ShowPrintWindow:Boolean = true, showController: boolean = true) {
         this.documentTypePMService.getSingleDocumentType(this.documentTypeList.Id, this.documentOutPM.Id, SessionInfo.LoggedUserTenant).subscribe((res:any) => {
+
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;
                 if (myResult) {
                     this.documentTypePM = myResult;
 
-                    this.LoadPrintControl(StatusCode,ApprovedDate,ShowPrintWindow);
+
+                    if (showController)
+                        this.LoadPrintControl(StatusCode, ApprovedDate,ShowPrintWindow);
+                    else {
+                        
+                        this.IsStartPrint = false;
+                        this.CurrentSession.StopBusyIndicator();
+                    }
                     
                     
                 }
@@ -159,11 +177,11 @@ export class GeneralPrintHelper {
                 this.CurrentSession.StopBusyIndicator();
                 this.IsStartPrint = false;
             }
-        });                            
+        });
     }
-
-    LoadPrintControl(StatusCode:string = null,ApprovedDate:Date = null,ShowPrintWindow:Boolean = true) {
-       
+ 
+    LoadPrintControl(StatusCode: string = null, ApprovedDate: Date = null,ShowPrintWindow:Boolean = true) {
+ 
         this.IsStartPrint = false;
         this.CurrentSession.StopBusyIndicator();
         var documentOutPmLists = new Array<DocumentOutPM>();

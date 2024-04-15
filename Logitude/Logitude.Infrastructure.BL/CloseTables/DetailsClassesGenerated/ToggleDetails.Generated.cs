@@ -935,6 +935,14 @@ namespace Logitude.Infrastructure.BL
 			 
             all.Add(new ToggleDetails()
             {    
+                SearchFields = "PSR, Payment Status based on Reco", 
+                Code = "PSR", 
+                Description = "Payment Status based on Reco", 
+                Name = " A/P Invoice Payment Status based on Reconciliation", 
+			});
+			 
+            all.Add(new ToggleDetails()
+            {    
                 Code = "RE2", 
                 Name = "Reports Execution WR Version 2", 
                 SearchFields = "RE2, Reports Execution WR Version 2", 
@@ -978,6 +986,13 @@ namespace Logitude.Infrastructure.BL
                 Name = "Invoice Status According To Ledger Open Amount", 
                 SearchFields = "ILO,Invoice Status According To Ledger Open Amount", 
                 Description = "Invoice Status According To Ledger Open Amount", 
+			});
+            all.Add(new ToggleDetails()
+            {    
+                Code = "MC1", 
+                Name = "IsMulti With ReconcileMethodCode Equal One", 
+                SearchFields = "MC1", 
+                Description = "לםפשר הגדרת כרטיס מולטי ככרטיס שמותםם במטז", 
 			});
 			
             return all;

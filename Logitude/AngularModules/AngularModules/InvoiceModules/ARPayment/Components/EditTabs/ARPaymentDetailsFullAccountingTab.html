@@ -189,7 +189,10 @@
                                                             [DisplayFieldsFromList]="DisplayFieldsFromList"
                                                             [DisplayLocalFieldsFromList]="DisplayLocalFieldsFromList"
                                                             [CustomizedWidth]="BillToLovSizeForFullAccounting"
-                                                            [QueryFilterItems]="BillToFilter">
+                                                            [QueryFilterItems]="BillToFilter"
+                                                            [CustomizedWidth]="BillToLovSizeForFullAccounting"
+                                                            [StartSearchFromChar]="3"
+                                            [StartSearchFromNumber]="5">
                                                     </LogLov>
 
                                                 </td>
@@ -343,7 +346,7 @@
                                                             <td style="width:36px;">
                                                                 <div [style.float]="isRTL ? 'left' : 'right'"
                                                                      style="display: block;"
-                                                                     *ngIf="IsEditExchangeRateVisible">
+                                                                     *ngIf="IsEditExchangeRateVisible && isFullAccounting ? false:true">
                                                                     <IconButton [Name]="'Edit'" [IsSmall]="true"
                                                                                 (click)="UpdateCurrencyRateMethod()"
                                                                                 [IsEnabled]="RateIsEnabled"></IconButton>
@@ -415,7 +418,7 @@
 
                                     <td [style.right]="isRTL ? 'initial' : '0'" [style.left]="isRTL ? '0' : 'initial'">
                                         <table>
-                                            <tr class="customtrclass">
+                                            <tr *ngIf="isFullAccounting ? false:true" class="customtrclass">
                                                 <td style="width: 5px;">
                                                     <div></div>
                                                 </td>
@@ -809,6 +812,16 @@
                                         </ng-template>
                                     </log-column>
 
+                                    <!-- Reference -->
+                                    <log-column [width]="'100'" [header]="'Journal.CH.AccountingEntityNameListLable' | TextCodeTranslationPipe"
+                                    [Alignment]="isRTL ? 'right' : 'left'">
+                                    <ng-template let-item>
+                                        <log-cell-template #logcelltemplate [TabIndex]="-1">
+                                            {{item.Reference3}}
+                                        </log-cell-template>
+                                    </ng-template>
+                                  </log-column>
+
                                     <!-- InvoiceAmount -->
                                     <log-column [width]="'130'" [header]="InvoiceAmountCurrency" [Alignment]="'right'">
                                         <ng-template let-item>
@@ -919,6 +932,7 @@
                                             </log-cell-template>
                                         </ng-template>
                                     </log-column>
+
                                 </logitude-edit-grid>
 
                                 <div *ngIf="TransactionsList?.Length == 0 && !_loading" id="{{'ARPaymentSpinner' | IdGeneratorAsyncPipe | async}}" class="NoDataText">

@@ -182,7 +182,7 @@ namespace LogitudeTransferData
         private List<CustomPickListPM> GetAllCustomPickLists(int tenant)
         {
             CustomPickListQuery customPickListQuery = new CustomPickListQuery(tenant);
-            List<CustomPickListPM> customPickListPMs = customPickListQuery.GetCustomPickListPMsByTenant(tenant).ToList();
+            List<CustomPickListPM> customPickListPMs = customPickListQuery.GetCustomPickListPMsByTenantCash(tenant);
             return customPickListPMs;
         }
 

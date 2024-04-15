@@ -85,8 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GLAccountUpdateClass
    {  		
-
-		public const string HashString = "60f2cd719406e3038d84b70865281721";
+		public const string HashString = "ffd770ddfd82ff60604566c23f2eeb91";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -11781,6 +11780,74 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "PaymentTerms",
+					  						ObjectTableName =  "GLAccount",
+					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "PaymentTerm",
+					  						MinLength =  0,
+					  						MaxLength =  15,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  15,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "PaymentTerms",
+					  						ListPropertyPath =  "PaymentTerms",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "GLAccount",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "PaymentTerms",
+					  						DefaultText =  "PaymentTerms",
+					  						FullLocalDefaultText =  "תנאי תשלום",
+					  						ListFieldLable =  "PaymentTermsListLable",
+					  						ListLableDefaultText =  "PaymentTerms",
+					  						ListLocalDefaultText =  "תנאי תשלום",
+					  						IsForeignKey =  true,
+					  						ForeignEntity =  "PaymentTerm",
+					  						NavigationPropertyName =  "PaymentTerm",
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
@@ -12379,7 +12446,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	          
              ScreenField GLAccountGLAccountHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = GLAccountHeaderScreenScreen0.Id,ScreenCode = GLAccountHeaderScreenScreen0.Code, ObjectFieldCode = "GLAccount.NextDueDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-              
+             ScreenField GLAccountGLAccountHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = GLAccountHeaderScreenScreen0.Id,ScreenCode = GLAccountHeaderScreenScreen0.Code, ObjectFieldCode = "GLAccount.BalanceInForeignCurrency", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
              ScreenField GLAccountGLAccountHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ScreenId = GLAccountHeaderScreenScreen0.Id,ScreenCode = GLAccountHeaderScreenScreen0.Code, ObjectFieldCode = "GLAccount.LocalBalanceInDue", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
              ScreenField GLAccountGLAccountHeaderScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = GLAccountHeaderScreenScreen0.Id,ScreenCode = GLAccountHeaderScreenScreen0.Code, ObjectFieldCode = "GLAccount.CurrencyCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
@@ -12503,6 +12571,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   Feature GLAccountFeature_RECV1000MENU = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "RECV1000MENU", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "YearTransfer.Features.Recv1000MENU", NameTextCodeDefaultText = @"Receiving file withholding tax system 1000" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GLAccountObjectTable);
 
 		   Feature GLAccountFeature_SalesmanAging = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SalesmanAging", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.SalesmanAging", NameTextCodeDefaultText = @"Aging Report Salesman Restrictions" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GLAccountObjectTable);
+
+		   Feature GLAccountFeature_CancelSelectedReco = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CancelSelectedReco", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.CancelSelectedReco", NameTextCodeDefaultText = @"Cancel Selected Reconcile" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GLAccountObjectTable);
 
    
 	    
@@ -13524,7 +13594,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode GLAccountTextCode_GLAccountsQInactive = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.Inactive", DefaultText = "Inactive",LocalDefaultText = @"חסום", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode GLAccountTextCode_GLAccountsODisplayNumberAlreadyExists = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.DisplayNumberAlreadyExists", DefaultText = "Existing number - choose another one",LocalDefaultText = @"מספר קיים - יש לבחור במספר אחר", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode GLAccountTextCode_GLAccountsODisplayNumberAlreadyExists = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.DisplayNumberAlreadyExists", DefaultText = "The card the system is trying to open ({0}) is already exists. It can be connected by clicking on the ''Connect'' button.",LocalDefaultText = "הכרטיס שהמערת מנסה לפתוח ({0}) כבר קיים. ניתן לחבר אותו ע''י לחיצה על כפתור ''חיבור כרטיס קיים''.", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GLAccountTextCode_GLAccountsOInternalNumberAlreadyExists = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.InternalNumberAlreadyExists", DefaultText = "The Internal Number exists with another GL Account",LocalDefaultText = @"המספר הפנימי קיים בחשבון אחר", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
@@ -14001,6 +14071,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode GLAccountTextCode_GLAccountsOFutureCheque = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.FutureCheque", DefaultText = "FutureCheque",LocalDefaultText = @"פירוט המחאות עתידיות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GLAccountTextCode_GLAccountOClosingBalanceAccordingToTheBalanceInDue = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.ClosingBalanceAccordingToTheBalanceInDue", DefaultText = "Closing balance according to the balance In Due",LocalDefaultText = @"יתרת סגירה לפי יתרה לגביה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountOCancelSelectedReco = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.CancelSelectedReco", DefaultText = "Cancel Selected Reconciles",LocalDefaultText = @"ביטול התאמות מסומנות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountOCancelSelectedRecoConfirm = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.CancelSelectedRecoConfirm", DefaultText = "The process of canceling the adjustments to the marked lines will be performed in the background and will last several minutes during which time it will not be possible to stop the process, do you approve?",LocalDefaultText = @"תהליך ביטול ההתאמות לשורות שסומנו יבוצע ברקע וימשך מספר דקות בזמן זה לא ניתן יהיה לעצור את התהליך, האם אתה מאשר?", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountONoSelectedItems = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.NoSelectedItems", DefaultText = "No Selected Items",LocalDefaultText = @"לא נבחרו התאמות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

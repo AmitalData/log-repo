@@ -80,7 +80,10 @@
                                                             [DisplayFieldsFromList]="DisplayFieldsFromList"
                                                             [DisplayLocalFieldsFromList]="DisplayLocalFieldsFromList"
                                                             [CustomizedWidth]="BillToLovSizeForFullAccounting"
-                                                            [QueryFilterItems]="BillToFilter">
+                                                            [QueryFilterItems]="BillToFilter"
+                                                            [CustomizedWidth]="BillToLovSizeForFullAccounting"
+                                                            [StartSearchFromChar]="3"
+                                            [StartSearchFromNumber]="5">
                                                     </LogLov>
                                                 </td>
                                             </tr>
@@ -169,8 +172,8 @@
                                                                 <LogTextBox [ObjectFieldName]="'InvoiceCurrencyExchangeRate'" [Text]="InvoiceCurrencyExchangeRate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true" [DigitsAfterPoint]="5"></LogTextBox>
                                                             </td>
 
-                                                            <td style="width: 36px;">
-                                                                <div [style.float]="isRTL ? 'left' : 'right'" style="display: block;" *ngIf="IsEditExchangeRateVisible">
+                                                            <td style="width: 36px;" >
+                                                                <div [style.float]="isRTL ? 'left' : 'right'" style="display: block;" *ngIf="IsEditExchangeRateVisible && CheckIsFullAccounting ? false:true">
                                                                     <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="UpdateCurrencyRateClicked()" [disabled]="!RateIsEnabled"></IconButton>
 
                                                                 </div>
@@ -267,9 +270,44 @@
                                         </table>
                                     </td>
 
+                                    <td style="width: 70px;">
+                                        <div></div>
+                                    </td>
+
+                                    <td style="width: 375px;">
+                                        <table>
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                            <!-- ConfirmationNumber -->
+                                            <tr class="FormFieldRow">
+                                                <td style="width: 135px;">
+                                                    <LogLabel [ObjectFieldName]="'ConfirmationNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogTextBox [ObjectFieldName]="'ConfirmationNumber'" [InputType]="'text'" [Text]="ConfirmationNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                </td>
+                                            </tr>
+                                            <!-- ConfirmationNumberStatus -->
+                                            <tr class="FormFieldRow">
+                                                <td style="width: 135px;">
+                                                    <LogLabel [ObjectFieldName]="'ConfirmationNumberStatusName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogTextBox [ObjectFieldName]="'ConfirmationNumberStatusName'" [InputType]="'text'" [Text]="ConfirmationNumberStatusName" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                </td>
+                                            </tr>
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </table>
+                                    </td>
+
                                     <td>
                                         <table>
-                                            <tr class="FormFieldRow">
+                                            <tr *ngIf="CheckIsFullAccounting ? false:true" class="FormFieldRow">
                                                 <td style="width: 5px;">
                                                     <div></div>
                                                 </td>
@@ -286,6 +324,16 @@
                                             </tr>
                                         </table>
                                     </td>
+                                    <td style="width: 500px;">
+    
+                                    </td>
+                               
+                            
+                                        <td *ngIf="IsSigned=='1' || IsSigned=='3'||IsSigned=='4' ">
+                                            <img  src="./Images/Icons/DigitalSignature.png" />
+                                        </td>
+                                   
+                                  
                                 </tr>
                             </table>
                         </td>
@@ -303,40 +351,6 @@
                                 <tr>
                                     <td float-start style="width: 57px">
                                         <IconButton [disabled]="!IsEditingEnabled" [Name]="'Add'" [IsSmall]="true" (click)="AddARInvoiceLineClicked()"></IconButton>
-                                    </td>
-
-
-                                    <td *ngIf="AllowVatTypes" style="width: 300px">
-                                        <table>
-                                            <tr>
-                                                <td>
-                                                    <div></div>
-                                                </td>
-                                                <td style="width: 1px;" class="Label">{{'ARInvoice.S.Details.VatType' | TextCodeTranslationPipe}}:</td>
-
-                                                <td style="width: 5px;">
-                                                    <div></div>
-                                                </td>
-
-                                                <td style="width: 150px">
-                                                    <LogLov [ObjectFieldName]="'VatTypeId'"
-                                                            [SelectedValue]="VatTypeId"
-                                                            [ObjectTableName]="ObjectTableName"
-                                                            [DataContext]="DataContext"
-                                                            [LookUpTableName]="'VatType'"
-                                                            [HideColumns]="true" [DependencyFilter2Value]="false">
-                                                    </LogLov>
-                                                </td>
-
-                                                <td style="width: 2px;">
-                                                    <div></div>
-                                                </td>
-
-                                                <td style="width: 80px;">
-                                                    <button class="Button" [disabled]="!VatTypeFilterIsEnabled" (click)="VatTypeFilterClicked()">{{'ARInvoice.B.Details.ApplyToAll' | TextCodeTranslationPipe}}</button>
-                                                </td>
-                                            </tr>
-                                        </table>
                                     </td>
                                 </tr>
                             </table>
@@ -362,12 +376,12 @@
                                                 </td>
 
                                                 <td style="min-width: 200px;">{{'ARInvoiceLine.CH.DescriptionListLable' | TextCodeTranslationPipe}}</td>
+                                                <td style="width: 85px; min-width: 85px; max-width: 85px; text-align: center;">{{'ARInvoiceLine.CH.ValueDateListLable' | TextCodeTranslationPipe}}</td> 
+
                                                 <td *ngIf="IsAccountingActivated" style="width: 140px; min-width: 140px; max-width: 140px; text-align: center;">{{'ARInvoiceLine.F.ReportedinTaxReport' | TextCodeTranslationPipe}}</td>
 
                                                 <td *ngIf="IsAccountingActivated" style="width: 200px; min-width: 200px; max-width: 200px; text-align: center;">{{'InterestReport.F.GLAccountLocalName' | TextCodeTranslationPipe}}</td>
                                                 <td *ngIf="IsAccountingActivated" style="width: 140px; min-width: 140px; max-width: 140px; text-align: center;">{{'InterestReport.F.GLAccountDisplayNumber' | TextCodeTranslationPipe}}</td>
-                                                <td style="width: 50px; min-width: 50px; max-width: 50px; text-align: center;">{{'ARInvoiceLine.CH.MeasurementIdListLable' | TextCodeTranslationPipe}}</td>
-                                                <td style="width: 35px; min-width: 35px; max-width: 35px; text-align: center;">{{'ARInvoiceLine.CH.PrepaidCollectIdListLable' | TextCodeTranslationPipe}}</td>
                                                 <td style="width: 90px; min-width: 90px; max-width: 90px;text-align: center;">{{'ARInvoiceLine.CH.QuantityListLable' | TextCodeTranslationPipe}}</td>
                                                 <td style="width: 90px; min-width: 90px; max-width: 90px;text-align: center;">{{'ARInvoiceLine.CH.UnitPriceListLable' | TextCodeTranslationPipe}}</td>
                                                 <td style="width: 110px; min-width: 110px; max-width: 110px; text-align: center;">{{'ARInvoiceLine.CH.AmountListLable' | TextCodeTranslationPipe}}</td>
@@ -402,6 +416,10 @@
                                                             <td class="GridViewCell" [ngStyle]="{background: item.CellBackground}" style="min-width: 200px;">
                                                                 {{ ShowLocal? item.LocalDescription: item.Description}}
                                                             </td>
+                                                             <!-- ValueDate -->
+                                                            <td class="GridViewCell" [ngStyle]="{background: item.CellBackground}" style="width: 85px; min-width: 85px; max-width: 85px; text-align:center;">
+                                                                {{item.ValueDate | date: 'dd/MM/yyyy'}}
+                                                            </td> 
                                                             <!-- ReportedinTaxReport -->
                                                             <td *ngIf="IsAccountingActivated" class="GridViewCell" [ngStyle]="{background: item.CellBackground}" style="width: 140px; min-width: 140px; max-width: 140px; text-align: center;">
                                                                 {{item.ReportedinTaxReport}}
@@ -417,18 +435,7 @@
                                                             <td *ngIf="IsAccountingActivated" class="GridViewCell" [ngStyle]="{background: item.CellBackground}" style="width: 140px; min-width: 140px; max-width: 140px; text-align: center;">
                                                                 {{item.GLAccountDisplayNumber}}
                                                             </td>
-
-                                                            <!-- MeasurementCode -->
-                                                            <td class="GridViewCell" [ngStyle]="{background: item.CellBackground}" style="width: 50px; min-width: 50px; max-width: 50px; text-align:center;">
-                                                                {{item.MeasurementCode}}
-                                                            </td>
-
-                                                            <!-- PrepaidCollectId -->
-                                                            <td class="GridViewCell" [ngStyle]="{background: item.CellBackground}" style="width: 35px; min-width: 35px; max-width: 35px; text-align:center;">
-                                                                <div style="width: 25px; height: 20px; line-height: 20px; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px;" [ngStyle]="{background: item.IsMatched ? 'transparent' : 'rgba(255, 171, 3, 0.6)', color: item.IsMatched ? '#282E30' : 'rgba(255, 94, 0, 1)'}">
-                                                                    {{item.PrepaidCollectId}}
-                                                                </div>
-                                                            </td>
+                                                           
 
                                                             <!-- Quantity -->
                                                             <td [style.text-align]="isRTL ? 'left' : 'right'" class="GridViewCell" [ngStyle]="{background: item.CellBackground}" style="width: 90px; min-width: 90px; max-width: 90px;">

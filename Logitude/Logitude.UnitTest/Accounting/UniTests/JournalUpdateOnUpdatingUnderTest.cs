@@ -471,7 +471,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 Tenant = Tenant,
                 UpdateDate = createdAt,
                 CreateDate = createdAt,
-                StatusCode = ((int)JournalStatusTypePM.StatusCodeEnum.Approved).ToString(),
+                StatusCode = ((int)JournalStatusTypePM.StatusCodeEnum.InProcessing).ToString(),
                  QueueId ="StreamedtoAcc"
 
             };
@@ -554,7 +554,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 Tenant = Tenant,
                 UpdateDate = createdAt,
                 CreateDate = createdAt,
-                StatusCode = ((int)JournalStatusTypePM.StatusCodeEnum.Approved).ToString(),
+                StatusCode = ((int)JournalStatusTypePM.StatusCodeEnum.InProcessing).ToString(),
                 QueueId = "StreamedtoAcc"
 
             };
@@ -622,7 +622,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 Tenant = Tenant,
                 UpdateDate = createdAt,
                 CreateDate = createdAt,
-                StatusCode = ((int)JournalStatusTypePM.StatusCodeEnum.Approved).ToString(),
+                StatusCode = ((int)JournalStatusTypePM.StatusCodeEnum.InProcessing).ToString(),
                 IsVoided = true,
                 QueueId = "StreamedtoAcc"
             };
@@ -692,7 +692,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 Tenant = Tenant,
                 UpdateDate = createdAt,
                 CreateDate = createdAt,
-                StatusCode = ((int)JournalStatusTypePM.StatusCodeEnum.Approved).ToString(),
+                StatusCode = ((int)JournalStatusTypePM.StatusCodeEnum.InProcessing).ToString(),
                 QueueId = "StreamedtoAcc"
             };
 
@@ -783,7 +783,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 Tenant = Tenant,
                 UpdateDate = createdAt,
                 CreateDate = createdAt,
-                StatusCode = ((int)JournalStatusTypePM.StatusCodeEnum.Approved).ToString(),
+                StatusCode = ((int)JournalStatusTypePM.StatusCodeEnum.InProcessing).ToString(),
                 QueueId = "StreamedtoAcc"
             };
 
@@ -900,7 +900,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 Tenant = Tenant,
                 UpdateDate = createdAt,
                 CreateDate = createdAt,
-                StatusCode = ((int)JournalStatusTypePM.StatusCodeEnum.Approved).ToString(),
+                StatusCode = ((int)JournalStatusTypePM.StatusCodeEnum.InProcessing).ToString(),
                 IsVoided = true,
 
 
@@ -953,7 +953,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 UpdateDate = createdAt,
                 CreateDate = createdAt,
                 JournalLines = new List<JournalLinePM>() { JournalLinePM },
-                StatusCode = ((int)JournalStatusTypePM.StatusCodeEnum.Approved).ToString(),
+                StatusCode = ((int)JournalStatusTypePM.StatusCodeEnum.InProcessing).ToString(),
                 //OriginalJournalId = "This is A strono"
             };
 
@@ -1043,7 +1043,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 UpdateDate = createdAt,
                 CreateDate = createdAt,
                 JournalLines = new List<JournalLinePM>() { JournalLinePM },
-                StatusCode = ((int)JournalStatusTypePM.StatusCodeEnum.Approved).ToString(),
+                StatusCode = ((int)JournalStatusTypePM.StatusCodeEnum.InProcessing).ToString(),
                 //OriginalJournalId = "This is A strono"
             };
 

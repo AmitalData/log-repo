@@ -27,129 +27,169 @@
                             <!-- TransmitStatusCode -->
                             <tr class="FormFieldRow">
                                 <td>
-                                    <LogLabel [ObjectFieldName]="'TransmitStatusCode'" [ObjectTableName]="ObjectTableName"
-                                              [DataContext]="DataContext"></LogLabel>
+                                    <LogLabel [ObjectFieldName]="'TransmitStatusCode'"
+                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
 
                                 <td>
-                                    <LogLov [ObjectFieldName]="'TransmitStatusCode'"
-                                            [ObjectTableName]="ObjectTableName"
-                                            [DataContext]="DataContext"
-                                            [LookUpTableName]="'TaxReportLineTransmitStatus'"
-                                            [HideColumns]="true">
+                                    <LogLov [ObjectFieldName]="'TransmitStatusCode'" [ObjectTableName]="ObjectTableName"
+                                        [DataContext]="DataContext" [LookUpTableName]="'TaxReportLineTransmitStatus'"
+                                        [HideColumns]="true">
                                     </LogLov>
                                 </td>
-                                <td><div></div></td>
+                                <td>
+                                    <div></div>
+                                </td>
                             </tr>
                             <!-- LineTypeCode -->
                             <tr class="FormFieldRow">
                                 <td>
                                     <LogLabel [ObjectFieldName]="'LineTypeCode'" [ObjectTableName]="ObjectTableName"
-                                              [DataContext]="DataContext"></LogLabel>
+                                        [DataContext]="DataContext"></LogLabel>
                                 </td>
 
                                 <td>
-                                    <LogLov [ObjectFieldName]="'LineTypeCode'"
-                                            [ObjectTableName]="ObjectTableName"
-                                            [DataContext]="DataContext"
-                                            [LookUpTableName]="'TaxReportLineType'"
-                                            [QueryFilterItems]="TypeFilterItems"
-                                            [HideColumns]="true">
+                                    <LogLov [ObjectFieldName]="'LineTypeCode'" [ObjectTableName]="ObjectTableName"
+                                        [DataContext]="DataContext" [LookUpTableName]="'TaxReportLineType'"
+                                        [QueryFilterItems]="TypeFilterItems" [HideColumns]="true">
                                     </LogLov>
                                 </td>
-                                <td><div></div></td>
+                                <td>
+                                    <div></div>
+                                </td>
                             </tr>
                             <!-- VatNumber -->
                             <tr class="FormFieldRow">
                                 <td>
                                     <LogLabel [ObjectFieldName]="'VatNumber'" [ObjectTableName]="ObjectTableName"
-                                              [DataContext]="DataContext"></LogLabel>
+                                        [DataContext]="DataContext"></LogLabel>
                                 </td>
                                 <td>
-                                    <LogTextBox [ObjectFieldName]="'VatNumber'" [InputType]="'text'" [DataContext]="DataContext"
-                                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                    <LogTextBox [ObjectFieldName]="'VatNumber'" [InputType]="'text'"
+                                        [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
+                                        [HideColumns]="true"></LogTextBox>
                                 </td>
-                                <td><div></div></td>
+                                <td>
+                                    <div></div>
+                                </td>
                             </tr>
 
                             <!-- Reference -->
                             <tr class="FormFieldRow">
                                 <td>
                                     <LogLabel [ObjectFieldName]="'Reference'" [ObjectTableName]="ObjectTableName"
-                                              [DataContext]="DataContext"></LogLabel>
+                                        [DataContext]="DataContext"></LogLabel>
                                 </td>
                                 <td>
-                                    <LogTextBox [ObjectFieldName]="'Reference'" [InputType]="'text'" [DataContext]="DataContext" [Text]="Reference"
-                                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                    <LogTextBox [ObjectFieldName]="'Reference'" [InputType]="'text'"
+                                        [DataContext]="DataContext" [Text]="Reference"
+                                        [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
                                 </td>
-                                <td><div></div></td>
+                                <td>
+                                    <div></div>
+                                </td>
                             </tr>
 
                             <!-- PreviousReference -->
                             <tr class="FormFieldRow">
                                 <td>
-                                    <LogLabel [ObjectFieldName]="'PreviousReference'" [ObjectTableName]="ObjectTableName"
-                                              [DataContext]="DataContext"></LogLabel>
+                                    <LogLabel [ObjectFieldName]="'PreviousReference'"
+                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
                                 <td>
-                                    <LogTextBox [ObjectFieldName]="'PreviousReference'" [InputType]="'text'" [DataContext]="DataContext" [Text]="PreviousReference"
-                                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                    <LogTextBox [ObjectFieldName]="'PreviousReference'" [InputType]="'text'"
+                                        [DataContext]="DataContext" [Text]="PreviousReference"
+                                        [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
                                 </td>
-                                <td><div></div></td>
+                                <td>
+                                    <div></div>
+                                </td>
                             </tr>
 
                             <!-- ReferecneGroup -->
                             <tr class="FormFieldRow">
                                 <td>
                                     <LogLabel [ObjectFieldName]="'ReferecneGroup'" [ObjectTableName]="ObjectTableName"
-                                              [DataContext]="DataContext"></LogLabel>
+                                        [DataContext]="DataContext"></LogLabel>
                                 </td>
                                 <td>
-                                    <LogTextBox [ObjectFieldName]="'ReferecneGroup'" [InputType]="'text'" [DataContext]="DataContext"
-                                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                    <LogTextBox [ObjectFieldName]="'ReferecneGroup'" [InputType]="'text'"
+                                        [DataContext]="DataContext" [ObjectTableName]="ObjectTableName"
+                                        [HideColumns]="true"></LogTextBox>
                                 </td>
-                                <td><div></div></td>
+                                <td>
+                                    <div></div>
+                                </td>
                             </tr>
 
                             <!-- ReferenceDate -->
                             <tr class="FormFieldRow">
                                 <td>
                                     <LogLabel [ObjectFieldName]="'ReferenceDate'" [ObjectTableName]="ObjectTableName"
-                                              [DataContext]="DataContext"></LogLabel>
+                                        [DataContext]="DataContext"></LogLabel>
                                 </td>
                                 <td>
-                                    <LogDatePicker [ObjectFieldName]="'ReferenceDate'" [ObjectTableName]="ObjectTableName"
-                                                   [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                    <LogDatePicker [ObjectFieldName]="'ReferenceDate'"
+                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
+                                        [HideColumns]="true"></LogDatePicker>
                                 </td>
-                                <td><div></div></td>
+                                <td>
+                                    <div></div>
+                                </td>
                             </tr>
-
+                            <!-- Confirmation Number -->
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'ConfirmationNumber'" [ObjectTableName]="ObjectTableName"
+                                        [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td>
+                                    <LogTextBox [ObjectFieldName]="'ConfirmationNumber'" [InputType]="'text'"
+                                        [DataContext]="DataContext" [Text]="ConfirmationNumber"
+                                        [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                                </td>
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
                             <!-- IsEquipment -->
                             <tr class="FormFieldRow">
                                 <td>
                                     <LogLabel [ObjectFieldName]="'IsEquipment'" [ObjectTableName]="ObjectTableName"
-                                              [DataContext]="DataContext"></LogLabel>
+                                        [DataContext]="DataContext"></LogLabel>
                                 </td>
                                 <td>
-                                    <CheckBox [IsChecked]="TaxReportLinePM.IsEquipment" (Checked)="TaxReportLinePM.IsEquipment = $event" [IsEnabled]="TaxReportLinePM.OutputOrInput=='I' ||TaxReportLinePM.IsExternalLine "></CheckBox>
+                                    <CheckBox [IsChecked]="TaxReportLinePM.IsEquipment"
+                                        (Checked)="TaxReportLinePM.IsEquipment = $event"
+                                        [IsEnabled]="TaxReportLinePM.OutputOrInput=='I' ||TaxReportLinePM.IsExternalLine ">
+                                    </CheckBox>
                                 </td>
-                                <td><div></div></td>
+                                <td>
+                                    <div></div>
+                                </td>
                             </tr>
 
-                            <tr><td><div></div></td></tr>
+                            <tr>
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
                         </table>
                     </td>
                 </tr>
             </table>
         </td>
 
-        <td><div></div></td>
+        <td>
+            <div></div>
+        </td>
 
 
     </tr>
-    <tr  style="height: 32px;" *ngIf="UpdateMessage">
+    <tr style="height: 32px;" *ngIf="UpdateMessage">
         <td colspan="4">
-            <div class="DisbleBox" style="margin: 0 auto 5px;position: absolute;width: 100%;text-align: center;left: 0;right: 0;">
+            <div class="DisbleBox"
+                style="margin: 0 auto 5px;position: absolute;width: 100%;text-align: center;left: 0;right: 0;">
                 {{UpdateMessage}}
             </div>
         </td>
@@ -164,7 +204,8 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="Button" (click)="CancelButtonClicked()">{{'Accounting.General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                        <button class="Button" (click)="CancelButtonClicked()">{{'Accounting.General.B.Cancel' |
+                            TextCodeTranslationPipe}}</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -172,7 +213,8 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="RedButton" (click)="OkButtonClicked()">{{'Accounting.General.B.OK' | TextCodeTranslationPipe}}</button>
+                        <button class="RedButton" (click)="OkButtonClicked()">{{'Accounting.General.B.OK' |
+                            TextCodeTranslationPipe}}</button>
                     </td>
                 </tr>
             </table>
@@ -180,4 +222,3 @@
     </tr>
 
 </table>
-

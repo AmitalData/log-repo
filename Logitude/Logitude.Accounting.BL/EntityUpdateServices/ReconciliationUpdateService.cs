@@ -46,6 +46,8 @@ using Logitude.BL.ShipmentsModel.APIDataContract;
 using Logitude.Customs.BL.EntityQueryServices;
 using Simplog.Data.InvoiceModel.Repositories;
 using Logitude.BL.Security;
+using Simplog.Data.CommonDataModel;
+using Logitude.Accounting.Data.EntityMapping;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -171,7 +173,81 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     }
 
                 }
+                if (FeatureToggleHelper.HasFeatureToggle("PSR", entityPM.Tenant))
+                {
+                    IInvoiceContext invoiceContext = InvoiceContext.GetContext(entityPM.Tenant);
+                    if (ledgerTransactions.Any(d => d.SourceTypeCode == CloseTables.AccountingEntityValues.APInvoice))
+                    {
+                        var aPInvoiceTransactions = ledgerTransactions.Where(d => d.SourceTypeCode == CloseTables.AccountingEntityValues.APInvoice);
+                        if (aPInvoiceTransactions == null) throw new ApplicationException("Cannot find A/P Invoice transaction on reco lines");
 
+                        JournalLineRepository journalLineRepository = new JournalLineRepository(entityPM.Tenant);
+                        var lt_query = from jl in journalLineRepository.GetAll(entityPM.Tenant).Where(rec => rec.ActionCode == "1")
+                                       join
+                                       trans in aPInvoiceTransactions
+                                       on new { jl.JournalId, jl.Line }
+                                       equals new { trans.JournalId, Line = trans.JournalLineNumber }
+                                       select trans;
+                        if (lt_query == null) throw new ApplicationException("Cannot find A/P Invoice transactions on reco lines");
+
+                        List<LedgerTransactionPM> aPInvoiceLTs = lt_query.ToList();
+                        if (aPInvoiceLTs.Count == 0) throw new ApplicationException("Cannot find A/P Invoice transaction on reco. lines");
+                        APInvoiceQuery aPInvoiceQuery = new APInvoiceQuery(entityPM.Tenant);
+                        foreach (LedgerTransactionPM lt in aPInvoiceLTs)
+                        {
+                            APInvoicePM aPInvoicePM = aPInvoiceQuery.GetSinglePM(lt.SourceId, entityPM.Tenant);
+                            if (aPInvoicePM == null) throw new ApplicationException("Cannot find A/P Invoice " + lt.SourceNumber);
+                            switch (aPInvoicePM.StatusCode)
+                            {
+                                case "WA":
+                                case "VD":
+                                case "AC":
+                                        break;
+                                case "AD":
+                                case "PD":
+                                case "PP":
+                                    {
+                                        string newStatus = "";
+                                        bool newIsClosed = false;
+                                        if ((lt.LocalAmountDebit != 0m && lt.OpenAmount == lt.LocalAmountDebit)
+                                            || (lt.LocalAmountDebit == 0m && lt.OpenAmount == lt.LocalAmountCredit * -1))
+                                        {
+                                            newStatus = "AD";
+                                        }
+                                        else if (lt.OpenAmount != 0m)
+                                        {
+                                            newStatus = "PP";
+                                        }
+                                        else if (lt.OpenAmount == 0m)
+                                        {
+                                            newStatus = "PD";
+                                            newIsClosed = true;
+                                        }
+                                        else
+                                        {
+                                            throw new ApplicationException("A/P Invoice " + lt.SourceNumber + " cannot compute status");
+                                        }
+                                        if (newStatus != aPInvoicePM.StatusCode && !String.IsNullOrEmpty(newStatus))
+                                        {
+                                            DateTime stopLogAt = new DateTime(2023, 06, 01);
+                                            string text = "ReconciliationUpdateService.OnUpdating(*1*) Set APInvoicePM.StatusCode: " + aPInvoicePM.Id + " old : " + aPInvoicePM.StatusCode + " new : " + newStatus;
+                                            ULog(text, stopLogAt);
+
+                                            aPInvoicePM.StatusCode = newStatus;
+                                            aPInvoicePM.IsClosed = newIsClosed;
+                                            APInvoiceService aPInvoiceService = new APInvoiceService(invoiceContext, entityPM.Tenant);
+                                            aPInvoiceService.Update(aPInvoicePM, true);
+                                        }
+                                    }
+                                    break;
+
+                                default:
+                                    break;
+                            }
+                        }
+
+                    }
+                }
 
                 //foreach (var transactionPM in LedgerTransactions)
                 //{
@@ -221,7 +297,14 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
 
         }
-
+        private static void ULog(string text, DateTime stopLogAt)
+        {
+            string log_text = text + System.Environment.NewLine;
+            log_text = log_text + String.Format("{0:HH:mm:ss.ffff}", DateTime.Now.ToString()) + System.Environment.NewLine;
+            System.Diagnostics.StackTrace t = new System.Diagnostics.StackTrace();
+            log_text = log_text + t.ToString();
+            LogitudeSettings.HandleLogMe(log_text, false, "ReconciliationUpdateService", new DateTime(2023, 6, 1));
+        }
         void PushSearchFieldText(ReconciliationPM entityPM, string text)
         {
             if (!string.IsNullOrWhiteSpace(text))
@@ -566,7 +649,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         {
             GLAccountQueryService query = new GLAccountQueryService(entityPM.Tenant);
             GLAccountPM account = query.GetSingle(entityPM.AccountId, false, false);
-            if (account != null)
+            if (account != null && !(account.IsMultiCurrency == true && account.ReconcileMethodCode == "1"))
             {
                 entityPM.AccountName = account.LocalName;
                 entityPM.AccountNumber = account.DisplayNumber;

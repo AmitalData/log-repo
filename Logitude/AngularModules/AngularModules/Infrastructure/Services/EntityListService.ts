@@ -37,7 +37,7 @@ export class EntityListService {
         });
     }
 
-    private GetServiceLink(table: any, methodName: string = null) {
+     GetServiceLink(table: any, methodName: string = null) {
         let objectTableName = table.Name;
         let type = table.ObjectTableTypeCode == "MD" ? "Reference" : "Data";
         if (table?.IsCustom) {

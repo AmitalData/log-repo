@@ -10,6 +10,9 @@
   HasCustomFilter="false"
   HasCustomFields="false"
   AvailableInCustomization="true"
+  SupportSubEntity="false"
+  ApplyGenericCustomFields="false"
+  AvailableInDocumentTypes="false"
   HasHelper="false"
   HasShortTitle="true"
   HasFiltersMenu="false"
@@ -40,7 +43,7 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;התאמה&quot;"
   DefaultText="&quot;Reconciliation&quot;"
-  Code="&quot;f801&quot;"
+  Code="&quot;c403&quot;"
   Name="&quot;Reconciliation Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Accounting&quot;"
@@ -1366,6 +1369,18 @@
       DefaultText="&quot; ledgerTransaction already Reconciled  ?? ? TransactionId=&quot;"
       LocalDefaultText="&quot; התנועות שהינך מנסה להתאים כבר מסומנות בבסיס הנתונים כתנועות מותאמות, מזהה תנועה=&quot;"
       TextCodeTypeCode="&quot;M&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Reconciliations.O.ErrorsInMultiWithRecOne&quot;"
+      DefaultText="&quot;With a multi-currency card that the adjustments are managed by MTZ, it is not possible to make an adjustment with the difference&quot;"
+      LocalDefaultText="&quot;בכרטיס רב מטבעי שההתאמות מנוהלות במט&quot;ז לא ניתן לבצע התאמה עם הפרש&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Reconciliation.O.WarningMultiRecoOne&quot;"
+      DefaultText="&quot;The adjustment method for this card is adjustment in MTZ, you must first select the type of currency you want to adjust&quot;"
+      LocalDefaultText="&quot;שיטת ההתאמה עבור כרטיס זה היא התאמה במט&quot;ז יש לבחור תחילה את סוג המטבע שברצונך להתאים&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>

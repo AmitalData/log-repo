@@ -8,6 +8,7 @@ import {OnInit, Output, EventEmitter, ComponentRef, QueryList} from '@angular/co
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {AppTool} from '../../../Infrastructure/Tools';
 import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
+import { AccountingEntityHelper } from 'Accounting/Utilities/AccountingEntityHelper';
 
 @Component({
     templateUrl: './CashBookLineListTemplate.html',
@@ -70,6 +71,9 @@ export class CashBookLineListTemplate {
         }
     }
 
-
-
+    OpenCardScreen(cardId:string,partnerTypeId:string)
+    { 
+        var partnerTypeName = AccountingEntityHelper.GetPartnerTypeObjectTableName(partnerTypeId);
+        AccountingEntityHelper.OpenCard(cardId,partnerTypeName,null)
+    }
 }

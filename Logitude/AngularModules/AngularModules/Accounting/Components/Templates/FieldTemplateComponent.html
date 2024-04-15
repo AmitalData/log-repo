@@ -60,14 +60,14 @@
                         </div>
                     </div>
 
-                    <div *ngIf="FieldName == 'BalanceInForeignCurrency'">
+                    <div *ngIf="FieldName == 'BalanceInForeignCurrency' && !Entity.IsMultiCurrency && Entity.CurrencyCode != 'NIS'">
                         <div [style.text-align]="isRTL ? 'right' : 'left'" style="text-align: left; padding-left: 3px;direction: ltr;"
                              [style.color]="FieldValue > 0 ? 'green' : 'red'" [class.black]="FieldValue == 0">
                             {{
                             FieldValue | NumbersPipe:'n2'
                             }} {{
  (IsHeaderScreenTemplate && Abs(FieldValue) > 0) ?
-                            TenantCurrencySign : ''
+                            Entity.CurrencySign : ''
                             }}
                         </div>
                     </div>
@@ -82,19 +82,7 @@
                             }}
                         </div>
                     </div>
-
-
-                    <div *ngIf="FieldName == 'BalanceInForeignCurrency'">
-                        <div [style.text-align]="isRTL ? 'right' : 'left'" style="text-align: left; padding-left: 3px;direction: ltr;"
-                             [style.color]="FieldValue > 0 ? 'green' : 'red'" [class.black]="FieldValue == 0">
-                            {{
-                            FieldValue | NumbersPipe:'n2'
-                            }} {{
- (IsHeaderScreenTemplate && Abs(FieldValue) > 0) ?
-                            TenantCurrencySign : ''
-                            }}
-                        </div>
-                    </div>
+                    
                     <div *ngIf="FieldName == 'ForeignBalanceInDue'">
                         <div [style.text-align]="isRTL ? 'right' : 'left'" style="text-align: left; padding-left: 3px;direction: ltr;"
                              [style.color]="FieldValue > 0 ? 'green' : 'red'" [class.black]="FieldValue == 0">
@@ -153,7 +141,7 @@
                             <LogToolTip [bottom]="5" [Scrollable]="true" [float]="'left'" *ngIf="Entity.GLAccountCurrencies && Entity.GLAccountCurrencies.length > 0 " [direction]="showLocal?'bottomleft':'bottomright'" [name]="'OpenShipments'"
                                         [mode]="'Info'">
                                 <div *ngFor="let item of Entity.GLAccountCurrencies">
-                                    {{item.CurrencyCode}} <a href="javascript:;" (click)="OpenGLAccount(item.GLAccountId)">{{item.GLAccountNumber}}</a>
+                                    {{item.CurrencyCode}} ({{item.GLAccountOpenTransactionsCount}}) <a href="javascript:;" (click)="OpenGLAccount(item.GLAccountId)">{{item.GLAccountNumber}}</a>
                                 </div>
                             </LogToolTip>
                         </div>
@@ -224,6 +212,12 @@
                             }}
                         </div>
                         <div *ngIf="FieldValue == 'Cancelled'" style="color: darkred;">
+                            {{
+ showLocal ?
+                            Entity.StatusLocalName : Entity.StatusName
+                            }}
+                        </div>
+                        <div *ngIf="FieldValue == 'In processing'" style="color: rgb(114, 19, 238);">
                             {{
  showLocal ?
                             Entity.StatusLocalName : Entity.StatusName

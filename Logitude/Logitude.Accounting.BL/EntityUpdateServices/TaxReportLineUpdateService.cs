@@ -9,6 +9,7 @@ using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.InvoiceModel.EntityLists;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.BL.InvoiceModel.Tools.EntityService;
@@ -21,12 +22,15 @@ using Simplog.Data.InvoiceModel;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.Repositories;
 using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Transactions;
+using System.Web.UI.WebControls;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -383,7 +387,25 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 CheckVATAmountInTheRecordIsHigherThanThePercentageOfVATAllowed(entityPM);
 
             }
+            
+            if (entityPM.StatusCode != "2" && entityPM.StatusCode != "1" && entityPM.StatusCode != "7")// these statuses are stronger than 11 
+            {
+                string[] validStatuses = { "C", "H", "K", "P", "R", "T","S" };
 
+                //var _FullAccountingSetting = FullAccountingSettingQueryService.Get(entityPM.Tenant);
+                using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+                {
+           
+                    ConfirmationNumberDefaultQuery confirmationNumberDefaultQuery = new ConfirmationNumberDefaultQuery(entityPM.Tenant);
+                    IQueryable<ConfirmationNumberDefaultList> iQueryableEntityList = confirmationNumberDefaultQuery.GetIQueryableEntityListByTenant(entityPM.Tenant);
+                    ConfirmationNumberDefaultList confirmationNumberDefaultList = iQueryableEntityList.Where(a => a.FromDate <= entityPM.TaxReportDate).FirstOrDefault();
+                     if (validStatuses.Contains(entityPM.LineTypeCode) && entityPM.TotalInvoiceAmount > confirmationNumberDefaultList?.AmountForConfirmationNumber && string.IsNullOrEmpty(entityPM.ConfirmationNumber))
+                    {
+                        entityPM.StatusCode = "11";
+                    }
+                    scope.Complete();
+                }
+            }
 
         }
 

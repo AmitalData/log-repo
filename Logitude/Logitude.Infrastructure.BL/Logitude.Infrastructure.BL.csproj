@@ -105,6 +105,7 @@
     <Compile Include="EntityDataMappings\Generated\LastRunDetailDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\LBPTeamMemberDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\PriceStepDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\SatisfactionSurveyDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\SharedLogisticsSettingDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TeamDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TeamMemberBusinessRoleDataMapping.Generated.cs" />
@@ -112,6 +113,7 @@
     <Compile Include="EntityDataMappings\LastRunDetailDataMapping.cs" />
     <Compile Include="EntityDataMappings\LBPTeamMemberDataMapping.cs" />
     <Compile Include="EntityDataMappings\PriceStepDataMapping.cs" />
+    <Compile Include="EntityDataMappings\SatisfactionSurveyDataMapping.cs" />
     <Compile Include="EntityDataMappings\SharedLogisticsSettingDataMapping.cs" />
     <Compile Include="EntityDataMappings\TeamDataMapping.cs" />
     <Compile Include="EntityDataMappings\TeamMemberBusinessRoleDataMapping.cs" />
@@ -137,6 +139,7 @@
     <Compile Include="EntityPMs\Generated\LastRunDetailPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\LBPTeamMemberPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\PriceStepPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\SatisfactionSurveyPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\SharedLogisticsSettingPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\TeamMemberBusinessRolePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\TeamPM.Generated.cs" />
@@ -172,6 +175,7 @@
     <Compile Include="EntityQueryServices\Generated\LastRunDetailQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\LBPTeamMemberQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\PriceStepQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\SatisfactionSurveyQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\SharedLogisticsSettingQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\TeamMemberBusinessRoleQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\TeamQueryService.Generated.cs" />
@@ -192,6 +196,7 @@
     <Compile Include="EntityUpdateServices\Generated\DigitalPreDefinedComponentUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\DigitalProfileUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\DigitalTextCodeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\SatisfactionSurveyUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\LastRunDetailUpdateService.cs" />
     <Compile Include="EntityUpdateServices\BIReportUpdateService.cs" />
     <Compile Include="EntityUpdateServices\BusinessRoleUpdateService.cs" />

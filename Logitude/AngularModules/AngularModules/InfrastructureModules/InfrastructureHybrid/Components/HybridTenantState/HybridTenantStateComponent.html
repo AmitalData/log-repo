@@ -1,8 +1,13 @@
 
             <table>
-
-                <tr>
-                    <td  class="CellStretch">
+                
+            <tr>
+                <td  class="CellStretch">
+                        <!-- Refresh Button -->
+                        <div>
+                            <span float-start style="padding: 0 15px;padding-top: 2px;"></span>
+                            <IconButton [Name]="'refresh'" (click)="RefreshButtonClicked()"></IconButton>
+                        </div>
                         <div class="SimpleGridView">
                             <div class="SimpleGridViewHeader">
                                 <table>

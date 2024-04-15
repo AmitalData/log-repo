@@ -1262,12 +1262,12 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-	  private int? hSM ;
+	  private string hSM ;
 	  	  
        
 	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
 	   [DataMember]
-       public int? HSM  
+       public string HSM  
 	   {
 	    
 	     get
@@ -1278,7 +1278,7 @@ namespace Logitude.Accounting.Def.EntityPMs
 		 {
 		   if(hSM != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HSM",OldValue=hSM,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HSM",OldValue=hSM,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   hSM=value;
 		   }
@@ -1350,6 +1350,75 @@ namespace Logitude.Accounting.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AllowEditingExchangeRate",OldValue=allowEditingExchangeRate,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
 		   allowEditingExchangeRate=value;
+		   }
+			
+		 }
+	   }
+	  private bool numberingByChartOfAccount ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool NumberingByChartOfAccount  
+	   {
+	    
+	     get
+		{
+		   return numberingByChartOfAccount;
+		 }
+		 set
+		 {
+		   if(numberingByChartOfAccount != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="NumberingByChartOfAccount",OldValue=numberingByChartOfAccount,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   numberingByChartOfAccount=value;
+		   }
+			
+		 }
+	   }
+	  private bool oppositeAccountNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool OppositeAccountNumber  
+	   {
+	    
+	     get
+		{
+		   return oppositeAccountNumber;
+		 }
+		 set
+		 {
+		   if(oppositeAccountNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OppositeAccountNumber",OldValue=oppositeAccountNumber,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   oppositeAccountNumber=value;
+		   }
+			
+		 }
+	   }
+	  private string tenantForConfirmationNumberApi ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TenantForConfirmationNumberApi  
+	   {
+	    
+	     get
+		{
+		   return tenantForConfirmationNumberApi;
+		 }
+		 set
+		 {
+		   if(tenantForConfirmationNumberApi != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TenantForConfirmationNumberApi",OldValue=tenantForConfirmationNumberApi,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   tenantForConfirmationNumberApi=value;
 		   }
 			
 		 }

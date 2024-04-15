@@ -13,6 +13,12 @@ export class CargoTrackingShipmentSearchInput extends MoreFilter
     public CustomersIds: string[] = [];
     public Customers: Customer[] = [];
     public MilestonesCodes: string[] = [];
+    public OpenDateGreaterThan: string = "";
+    public ClearanceDateGreaterThan: string = "";
+    public ATADateGreaterThan: string = "";
+    public OpenDateLessThan: string = "";
+    public ClearanceDateLessThan: string = "";
+    public ATADateLessThan: string = "";
     public TransportModeCodes: string[] = [];
     public DirectionCodes: string[] = [];
     public SortType: string;

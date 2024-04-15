@@ -81,9 +81,10 @@ export class LedgerTransactionList {
 	UpdateDateTime: Date;
 	UpdatedByUserName: string;
 	InternalNote: string;
+	SecurityLevelFiltering: number;
 	TaxReportId: string;
 	TaxReportNumber: string;
-	SecurityLevelFiltering: number;
+	AmountInNIS: number;
 	
 }
  

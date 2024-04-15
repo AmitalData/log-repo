@@ -419,7 +419,7 @@ namespace Simplog.Server.Infrastructure.Azure
                     break;
 
                 case "amitalstorage":
-                    result = "Endpoint=sb://amitalwe1.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=kYh5EX8few4tSQ2IJUWYz3NXMs+25X8282WwekJROiQ=";
+                    result = "Endpoint=sb://sb-amitalcloud-prod-il-01.servicebus.windows.net/;SharedAccessKeyName=RootManageSharedAccessKey;SharedAccessKey=srzCxGuZnOAjNkceq6mP1UGxDI6S2USz4+ASbI5qRXE=";
                     break;
 
                 case "Test2":

@@ -1,25 +1,26 @@
 declare var window: any;
-import {GLAccountPM} from '../../EntityPMs/GLAccountPM';
-import {MenuButtonPM} from '../../../Infrastructure/EntityPMs/MenuButtonPM'
-import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
-import {TenantPM} from '../../../Common/EntityPMs/TenantPM';
-import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
-import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
-import {GLAccountPMService} from '../../Services/StandardPMs/GLAccountPMService';
-import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
-import {AppTool} from '../../../Infrastructure/Tools';
-import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
-import {EntityPMService} from '../../../Infrastructure/Services/EntityPMService';
-import {Validator} from '../../../Infrastructure/Validators/Validator';
-import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
-import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
-import {GLAccountList} from '../../EntityLists/GLAccountList';
-import {GLAccountListService} from '../../Services/StandardLists/GLAccountListService';
-import {GLAccountExtendedListService} from '../../Services/ExtendedLists/GLAccountExtendedListService';
-import {LedgerTransactionExtendedListService} from '../../Services/ExtendedLists/LedgerTransactionExtendedListService';
-import {ReconcileEventManager} from '../../Utilities/ReconcileEventManager';
+import { GLAccountPM } from '../../EntityPMs/GLAccountPM';
+import { MenuButtonPM } from '../../../Infrastructure/EntityPMs/MenuButtonPM'
+import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
+import { TenantPM } from '../../../Common/EntityPMs/TenantPM';
+import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
+import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
+import { GLAccountPMService } from '../../Services/StandardPMs/GLAccountPMService';
+import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
+import { AppTool } from '../../../Infrastructure/Tools';
+import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
+import { EntityPMService } from '../../../Infrastructure/Services/EntityPMService';
+import { Validator } from '../../../Infrastructure/Validators/Validator';
+import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
+import { EntityArgs } from '../../../Infrastructure/DataContracts/EntityArgs';
+import { GLAccountList } from '../../EntityLists/GLAccountList';
+import { GLAccountListService } from '../../Services/StandardLists/GLAccountListService';
+import { GLAccountExtendedListService } from '../../Services/ExtendedLists/GLAccountExtendedListService';
+import { LedgerTransactionExtendedListService } from '../../Services/ExtendedLists/LedgerTransactionExtendedListService';
+import { ReconcileEventManager } from '../../Utilities/ReconcileEventManager';
 import { GLAccountExtendedPMService } from 'Accounting/Services/ExtendedPMs/GLAccountExtendedPMService';
 import { CardList } from 'Common/EntityLists/CardList';
+import { GLAccountSecurityLevelService } from 'Accounting/Utilities/GLAccountSecurityLevelService';
 
 export class GLAccountMenuButtonsHandler {
     public EntityPM: GLAccountPM;
@@ -109,37 +110,37 @@ export class GLAccountMenuButtonsHandler {
                                 }
                                 else {
                                     button.IsDisabled = false;
-                                      button.IsHidden = false;
+                                    button.IsHidden = false;
                                 }
                                 break;
                             }
 
-//                         case "GLAccountPrintCardIndex":
-//                             {
-// //                                if (this.EntityPM.Inactive == true) {
-// //                                    button.IsDisabled = true;
-// //                               }
+                        //                         case "GLAccountPrintCardIndex":
+                        //                             {
+                        // //                                if (this.EntityPM.Inactive == true) {
+                        // //                                    button.IsDisabled = true;
+                        // //                               }
 
-// //                                else {
-//                                     button.IsDisabled = false;
-// //                                }
-//                                     break;
-//                             }
+                        // //                                else {
+                        //                                     button.IsDisabled = false;
+                        // //                                }
+                        //                                     break;
+                        //                             }
 
                         case "Reconcile":
                             {
                                 this._GLAccountExtendedPMService.GetGLAReconcilationCount(this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
                                     this.reconcilationCount = myResponse.Result
-                                    const reconcileMenuButton = menuButtons.filter(x=>x.EventCode == 'Reconcile')[0];
+                                    const reconcileMenuButton = menuButtons.filter(x => x.EventCode == 'Reconcile')[0];
                                     reconcileMenuButton.DisplayText = TextCodeTranslator.Translate("GLAccount.B.Reconcile") + " (" + this.reconcilationCount + ")";
-                                       if (this.EntityPM.IsControlAccount == true || this.reconcilationCount==0 ) {
+                                    if (this.EntityPM.IsControlAccount == true || this.reconcilationCount == 0) {
                                         reconcileMenuButton.IsDisabled = true;
 
                                     }
-                        
+
                                 });
 
-                                
+
 
 
 
@@ -208,23 +209,27 @@ export class GLAccountMenuButtonsHandler {
         this.CurrentSession.StartBusyIndicator(message);
     }
 
-    private UpdateInactiveField(inactive:boolean) {
-       
+    private UpdateInactiveField(inactive: boolean) {
+
         var myGLAccountListService: GLAccountListService = new GLAccountListService();
         myGLAccountListService.getSingle(this.EntityPM.Id)
             .subscribe((response: ServiceResponse) => {
-                var gLAccount: GLAccountList = response.Result as GLAccountList;
+                
+                // var gLAccount: GLAccountList = response.Result as GLAccountList; //
 
-                if (!gLAccount.BalanceInLocalCurrency || gLAccount.BalanceInLocalCurrency == 0) {
+                // if (!gLAccount.BalanceInLocalCurrency || gLAccount.BalanceInLocalCurrency == 0) { // check if the balance is 0 
                     this.EntityPM.Inactive = inactive;
                     if (inactive) {
                         this.EntityPM.ActiveStatusName = TextCodeTranslator.Translate("GLAccounts.Q.Inactive");
+                    }else{
+                        this.EntityPM.ActiveStatusName = TextCodeTranslator.Translate("GLAccounts.Q.Active");
                     }
                     this.SaveChenges();
-                } else {
-                    this.entityArgs.EditComponent.ValidationErrorsList = [];
-                    this.entityArgs.EditComponent.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.GLABalanceNotEqual0"));
-                }
+
+                // } else { // if the balance is not 0
+                //     this.entityArgs.EditComponent.ValidationErrorsList = [];
+                //     this.entityArgs.EditComponent.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.GLABalanceNotEqual0"));
+                // }
             });
     }
     private StopBusyIndicator() {
@@ -235,7 +240,7 @@ export class GLAccountMenuButtonsHandler {
         var screenWidth = this.getScreenWidth();
         var screenHeight = this.getScreenHeight();
         this._LedgerTransactionExtendedListService.GetFirstLedgerTransaction(this.EntityPM.Id).subscribe((serviceResponse: ServiceResponse) => {
-            if (serviceResponse.Result) {
+            if (serviceResponse.Result) { 
                 var result = serviceResponse.Result;
                 var transaction = result; // get the data
                 var openAmountCurrency = transaction.OpenAmountCurrencySign;
@@ -245,7 +250,6 @@ export class GLAccountMenuButtonsHandler {
                 if (this.EntityPM.ReconcileMethodCode == "0") originalAmountCurrency = SessionLocator.TenantPM.CurrencySign;
                 else if (this.EntityPM.ReconcileMethodCode == "1") originalAmountCurrency = transaction.CurrencySign;
 
-
                 var windowArgs: any = {};
                 windowArgs.GLAccountPM = this.EntityPM;
                 windowArgs.openAmountCurrency = openAmountCurrency;
@@ -253,12 +257,14 @@ export class GLAccountMenuButtonsHandler {
                 var logitudeWindow = new LogitudeWindow();
                 logitudeWindow.Width = (screenWidth > 1024) ? (screenWidth > 1200 ? 1500 : screenWidth - 20) : 900;
                 logitudeWindow.Height = (screenHeight > 768) ? (screenHeight > 800 ? 700 : screenHeight - 70) : screenHeight - 70;
-                logitudeWindow.IsHideHeader= true;
-            //    logitudeWindow.Title = TextCodeTranslator.Translate("Accounting.General.O.Reconcile"); //"Reconcile";
-              //  !IsEditComponent && !IsFullScreen && !IsHideWindowMargin
-                 logitudeWindow.IsFullScreen= true;
-
-                this.FillPaymentTermName(windowArgs);
+                logitudeWindow.IsHideHeader = true;
+                //    logitudeWindow.Title = TextCodeTranslator.Translate("Accounting.General.O.Reconcile"); //"Reconcile";
+                //  !IsEditComponent && !IsFullScreen && !IsHideWindowMargin
+                logitudeWindow.IsFullScreen = true;
+                if (this.EntityPM?.IsMultiCurrency && this.EntityPM?.ReconcileMethodCode == "1" && SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "MC1")[0]){
+                    windowArgs.IsMultiWithReconcileMethodCodeEqualOne = true;
+                }
+                this.FillPaymentTermName(windowArgs); 
 
 
                 logitudeWindow.WindowArgs = windowArgs;
@@ -286,14 +292,13 @@ export class GLAccountMenuButtonsHandler {
         });
     }
 
-    
-    private FillPaymentTermName(windowArgs: any)
-    {
+
+    private FillPaymentTermName(windowArgs: any) {
         let firstAccount = this.accountCardlist.length > 0 ? this.accountCardlist[0] : null;
         let paymentTermName = '';
         if (firstAccount) {
             const showLocals = !SessionLocator.LoggedUserPM.DontShowLocalLabels;
-            paymentTermName = showLocals ? (firstAccount.PaymentTermLocalName || firstAccount.PaymentTermEnglishName): (firstAccount.PaymentTermEnglishName || firstAccount.PaymentTermLocalName);
+            paymentTermName = showLocals ? (firstAccount.PaymentTermLocalName || firstAccount.PaymentTermEnglishName) : (firstAccount.PaymentTermEnglishName || firstAccount.PaymentTermLocalName);
         }
         windowArgs.PaymentTermName = paymentTermName;
     }
@@ -327,7 +332,7 @@ export class GLAccountMenuButtonsHandler {
 
 
     GetNonReconciledTransactionsCount() {
-        this.glAccountExtendedListService.GetAccountReconcilesCount(this.EntityPM.Id).subscribe((myResult:number) => {
+        this.glAccountExtendedListService.GetAccountReconcilesCount(this.EntityPM.Id).subscribe((myResult: number) => {
 
 
             if (!AppTool.IsNullOrEmpty(myResult)) {

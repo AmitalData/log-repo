@@ -16,6 +16,7 @@ using Logitude.Accounting.BL.CloseTables;
 using Logitude.Accounting.Def.BLExt;
 using Microsoft.Practices.Unity;
 using Logitude.Accounting.BL.CoreBL.ExternalReconcile;
+using Logitude.Server.Tools.Utils;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -182,8 +183,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 var isDebitTransaction = (transactionPM.ForeignAmountDebit + transactionPM.LocalAmountDebit) != 0;
                 
                 if (isDebitTransaction && transactionComesFromDeferedAccountChequesMovingService)
-                    return GetChequeOfDepositTransactionBySourceAndReference(transactionPM.Reference1, transactionPM.SourceId, transactionPM.Tenant);
-                else if(isDebitTransaction && !transactionHasOnlyOneCheque) 
+                 //   return GetChequeOfDepositTransactionBySourceAndReference(transactionPM.Reference1, transactionPM.SourceId, transactionPM.Tenant);
+                    return GetChequeOfDepositTransactionBySourceReferenceAmount(transactionPM.Reference1, transactionPM.SourceId, transactionPM.Tenant, transactionPM.ForeignAmountDebit);
+                else if (isDebitTransaction && !transactionHasOnlyOneCheque) 
 
                     return GetChequeOfDepositTransactionBySource(transactionPM.SourceId, transactionPM.Tenant);
                 else
@@ -207,6 +209,46 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             arpaymentCheques = arpaymentCheques.Where(a => a.ChequeNumber == transactionReference).ToList();
             return arpaymentCheques;
         }
+
+
+        private List<ARPaymentChequePM> GetChequeOfDepositTransactionBySourceReferenceAmount(string transactionReference, string depositId, int tenant, decimal foreignAmount)
+        {
+            List<ARPaymentChequePM> resultingCheques = null;
+            List<ARPaymentChequePM> arpaymentCheques = GetChequesOfDeposit(tenant, depositId);
+            arpaymentCheques = arpaymentCheques.Where(a => a.ChequeNumber == transactionReference).ToList();
+            if (arpaymentCheques == null || arpaymentCheques.Count == 0)
+                resultingCheques = arpaymentCheques;
+            else
+            {
+
+                ARPaymentChequePM chequePM = arpaymentCheques.Where(a => a.ForeignAmount == foreignAmount).FirstOrDefault();
+                if (chequePM != null)
+                {
+                    resultingCheques = new List<ARPaymentChequePM>
+                    {
+                        chequePM
+                    };
+                }
+                else
+                {
+                    decimal total = arpaymentCheques.Select(c => c.ForeignAmount).Sum();
+                    if (total == foreignAmount)
+                        resultingCheques = arpaymentCheques;
+                    else
+                    {
+                        resultingCheques = new List<ARPaymentChequePM>();
+                        string foreignAmountStr = foreignAmount.ToString(); 
+                        string logtext = string.Format("Cheque {0} cannot be redeemed by amount {1}", transactionReference, foreignAmountStr);
+                        Logger.LogMe(logtext, true, "CQH_AMT");
+                    }
+                }
+
+            }
+            //return arpaymentCheques;
+            return resultingCheques;
+        }
+
+
         private List<ARPaymentChequePM> GetChequeOfDepositTransactionBySource(string depositId, int tenant)
         {
             List<ARPaymentChequePM> arpaymentCheques = GetChequesOfDeposit(tenant, depositId);

@@ -91,14 +91,21 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        Id = a.Id,
                                        Tenant = a.Tenant,
                                        EnglishName = a.Card.EnglishName,
+                                       CityName = a.Card.CityName,
+                                       CountryId = a.Card.CountryId,
+                                       CountryName = a.Card.CountryName,
                                        PrimaryContactId = a.Card.PrimaryContactId,
+                                       ReceivablesAccountingCard = a.Card.ReceivablesAccountingCard,
+                                       PayablesAccountingCard = a.Card.PayablesAccountingCard,
+                                       AccountingVATSplit = a.Card.AccountingVATSplit,
+                                       GLAccountId = a.Card.GLAccountId,
                                        PartnerTypeId = a.Card.PartnerTypeId,
                                        Code = a.Card.Code,
                                        GLAccountDisplayNumber = a.Card.GLAccountDisplayNumber,
                                        SingleInvoiceTemplateId = a.Card.SingleInvoiceTemplateId,
                                        CustomsInvoiceTemplateId = a.Card.CustomsInvoiceTemplateId,
                                        ConsolidationInvoiceTemplateId = a.Card.ConsolidationInvoiceTemplateId,
-                                       ManifestInvoiceTemplateId = a.Card.ManifestInvoiceTemplateId,
+                                       ManifestInvoiceTemplateId = a.Card.ManifestInvoiceTemplateId
                                    },
                                }).FirstOrDefault();
 

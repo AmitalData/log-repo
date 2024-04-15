@@ -78,6 +78,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public string LedgerTransactionId  { get; set; }
        [DataMember]
        public double? SubTotalInLocalCurrency  { get; set; }
+       [DataMember]
+       public string ConfirmationNumber  { get; set; }
    }
 
 }

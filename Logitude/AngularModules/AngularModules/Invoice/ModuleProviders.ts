@@ -43,6 +43,9 @@ import { ARPaymentMenuButtonsHandler } from './Components/MenuButtons/ARPaymentM
 import { ARInvoiceStockMenuButtonsHandler } from './Components/MenuButtons/ARInvoiceStockMenuButtonsHandler';
 import { ARInvoiceExtendedService } from './Services/ExtendedPMs/ARInvoiceExtendedService';
 import { QBOGlobalTaxCalculationListService } from './Services/StandardLists/QBOGlobalTaxCalculationListService';
+import { ConfirmationNumberDefaultListService } from './Services/StandardLists/ConfirmationNumberDefaultListService';
+import { ConfirmationNumberDefaultPMService } from './Services/StandardPMs/ConfirmationNumberDefaultPMService';
+import { ConfirmationNumberStatusListService } from './Services/StandardLists/ConfirmationNumberStatusListService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -85,6 +88,10 @@ export class ModuleProviders {
             case "SATInvoiceStatusListService": { myResult = new SATInvoiceStatusListService(); break; }
             case "AccountingPaymentMethodPMService": { myResult = new AccountingPaymentMethodPMService(); break; }
             case "AccountingPaymentMethodListService": { myResult = new AccountingPaymentMethodListService(); break; }
+            case "ConfirmationNumberDefaultListService": { myResult = new ConfirmationNumberDefaultListService(); break; }
+            case "ConfirmationNumberDefaultPMService": { myResult = new ConfirmationNumberDefaultPMService(); break; }
+            case "ConfirmationNumberStatusListService": { myResult = new ConfirmationNumberStatusListService(); break; }
+
             case "APPaymentTransferStatusListService": { myResult = new APPaymentTransferStatusListService(); break; }
             case "ARInvoiceStockPMService": { myResult = new ARInvoiceStockPMService(); break; }
             case "ARInvoiceExtendedService": { myResult = new ARInvoiceExtendedService(); break; }

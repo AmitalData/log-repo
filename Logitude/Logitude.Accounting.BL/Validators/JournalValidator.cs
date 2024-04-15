@@ -65,7 +65,7 @@ namespace Logitude.Accounting.BL.Validators
 
         public const string M_PaymentBankAccountCurrencyDifferent =
         "Accounting.General.O.PaymentBankAccountCurrencyDifferent";
-
+        //ohad
         public const string M_JLAccountingDateMustWithinJournalMonth = "Journal.M.JLAccountingDateMustWithinJournalMonth";
 
         public const string M_AccountingFutureDateForbidden = "Journal.M.FutureDateForbidden";
@@ -113,23 +113,205 @@ namespace Logitude.Accounting.BL.Validators
         
         bool IsFutureDateErrorsExist = false;
         string FutureDateErrorsMessage = "";
-        public  ValidationResult IsJournalValid(
+
+        public ValidationResult IsJournalValidThin(
+      JournalPM myJournalPM,
+      System.ComponentModel.DataAnnotations.ValidationContext accountingValidationContextServiceProvider)
+        {
+ 
+            decimal creditTotal = 0;
+            decimal debitTotal = 0;
+
+   
+            var errorsList = new MyList<string>();
+
+
+            bool valid = true;
+
+            var myDataProvider = accountingValidationContextServiceProvider.GetService(typeof(IJournalValidatorContextDataProvider)) as IJournalValidatorContextDataProvider;
+
+            if (!String.IsNullOrWhiteSpace(myJournalPM.ExternalNo) && !String.IsNullOrWhiteSpace(myJournalPM.ExternalSystem))
+            {
+                string journalNumber = "";
+                bool clientExists = false;
+                if (myDataProvider != null)
+                {
+                    journalNumber = myDataProvider.CheckExternalNoAndSystemReturnJournalNumber(myJournalPM.ExternalNo, myJournalPM.ExternalSystem, myJournalPM.Tenant);
+                    clientExists = 
+                        (!String.IsNullOrWhiteSpace(journalNumber) && myJournalPM.JournalNumber != journalNumber);
+                }
+                //OHAD
+                if (clientExists == true)
+                {
+                    string basic_text_ExternalExist =
+                        JournalValidator.M_ExternalNoAlreadyExists_1 + journalNumber + JournalValidator.M_ExternalNoAlreadyExists_2;
+                    errorsList.AddNew(basic_text_ExternalExist);
+                }
+            }
+            DateTime? currDateTimeUtcNow = null;
+
+            if (accountingValidationContextServiceProvider.Items.ContainsKey(JournalValidator.K_DateTimeUtcNow))
+            {
+                currDateTimeUtcNow = (DateTime)accountingValidationContextServiceProvider.Items[JournalValidator.K_DateTimeUtcNow];
+            }
+            currDateTimeUtcNow = currDateTimeUtcNow ?? TenantServerConfigration.GetCurrentDateTime(myJournalPM.Tenant); //DateTime.UtcNow;
+
+            //ohad
+            if (currDateTimeUtcNow.GetValueOrDefault().Date < myJournalPM.AccountingDate.Date)
+            {
+                errorsList.AddNew(TranslateMyTextCode(JournalValidator.M_AccountingFutureDateForbidden, myJournalPM.Tenant));
+                valid = false;
+            }
+            //ohad
+
+            if (myJournalPM.DocumentDate != null && (currDateTimeUtcNow.GetValueOrDefault().Date < myJournalPM.DocumentDate.Value.Date))
+            {
+                errorsList.AddNew(TranslateMyTextCode(JournalValidator.M_AccountingFutureDateForbidden, myJournalPM.Tenant));
+                valid = false;
+            }
+
+            if (myJournalPM.JournalLines.Any(l => currDateTimeUtcNow.GetValueOrDefault().Date < l.AccountingDate.Date))
+            {
+
+                valid = false;
+            }
+            //OHAD
+            if (myJournalPM.JournalLines.Any(l =>
+                l.AccountingDate.Date.Year != myJournalPM.AccountingDate.Date.Year ||
+                l.AccountingDate.Date.Month != myJournalPM.AccountingDate.Date.Month
+                ))
+            {
+                errorsList.AddNew(TranslateMyTextCode(JournalValidator.M_JLAccountingDateMustWithinJournalMonth, myJournalPM.Tenant));
+            }
+
+            //ohad
+            if (myJournalPM.JournalLines.Any(l => l.AccountingDate == DateTime.MinValue))
+            {
+                errorsList.AddNew(TranslateMyTextCode(JournalValidator.M_AllDateMustInit, myJournalPM.Tenant));
+            }
+            if (myJournalPM.JournalLines.Any(l => l.DueDate == DateTime.MinValue))
+            {
+                errorsList.AddNew(TranslateMyTextCode(JournalValidator.M_AllDateMustInit, myJournalPM.Tenant));
+            }
+            if (myJournalPM.JournalLines.Any(l => l.DocumentDate == DateTime.MinValue))
+            {
+                errorsList.AddNew(TranslateMyTextCode(JournalValidator.M_AllDateMustInit, myJournalPM.Tenant));
+            }
+            int seq = 0;
+            foreach (JournalLinePM currJournalLinePM in myJournalPM.JournalLines
+                .Where(jl => jl.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete)
+                // i don't know how HTML5 Work But I Soppsed that I Get (postback) All  JournalLines All the Time 
+                .OrderBy(r => r.Line))
+            {
+                this._JLineNumberTExt = ToUseLocalText(myJournalPM.Tenant) ? $"(שורת פקודה {currJournalLinePM.Line})" : $"(Journal Line {currJournalLinePM.Line})";
+                try
+                {
+
+                    CalculateTotals(currJournalLinePM, ref creditTotal, ref debitTotal);
+
+                    if (myDataProvider != null)
+                    {
+                     
+                        var glCreditAccId = currJournalLinePM.CreditAccountId;
+
+
+                        var debitAccountId = currJournalLinePM.DebitAccountId;
+
+
+
+                        bool? SuppressCheckGLAccountIsMultiCurrencyWI40640 = false;
+                        if (true)
+                        {
+                            SuppressCheckGLAccountIsMultiCurrencyWI40640 = true;//im+yaron - all the time !!
+                        }
+                        else
+                        {
+                            if (accountingValidationContextServiceProvider.Items.ContainsKey(JournalValidator.K_SuppressCheckGLAccountIsMultiCurrencyWI40640))
+                            {
+                                SuppressCheckGLAccountIsMultiCurrencyWI40640 = accountingValidationContextServiceProvider.Items[JournalValidator.K_SuppressCheckGLAccountIsMultiCurrencyWI40640] as bool?;
+                            }
+                            else
+                            {
+                                throw new ApplicationException("Dear Programmer U must initialize in context SuppressCheckGLAccountIsMultiCurrencyWI40640");
+                            }
+                        }
+
+                        bool suppressInactiveCheck = myJournalPM.AccountingEntityCode == "11";//  העברת שנה   Year Transfer
+                        var jlCurrencyId = currJournalLinePM.CurrencyId;
+                        currJournalLinePM.ActionTypeCode = currJournalLinePM.ActionTypeCode ?? string.Empty;
+                        FullAccountingSettingPM tenantFullAccountingSettingPM = null;
+                        TenantCurrency = GetTenantCurrency(myJournalPM, accountingValidationContextServiceProvider);
+                        //IWebFreightContext webFreightContext = WebFreightContext.GetContext(myJournalPM.Tenant);
+                        //ratesTableRepository = new RatesTableRepository(webFreightContext);
+
+                        if (accountingValidationContextServiceProvider.Items.ContainsKey(JournalValidator.K_FullAccountingSettingPM))
+                        {
+                            tenantFullAccountingSettingPM = accountingValidationContextServiceProvider.Items[JournalValidator.K_FullAccountingSettingPM] as FullAccountingSettingPM;
+                        }
+
+                        switch (currJournalLinePM.ActionTypeCode.ToString())//will be valid on server side only
+                        {
+                            case "1"://MyJournalActionTypeEnum.Credit:
+                                CheckGLAccountThin(true, errorsList, myDataProvider, glCreditAccId, jlCurrencyId, tenantFullAccountingSettingPM, myJournalPM, currJournalLinePM
+                                    , SuppressCheckGLAccountIsMultiCurrencyWI40640,
+                                    suppressInactiveCheck);
+                                break;
+                            case "2": //MyJournalActionTypeEnum.Debit:
+                                CheckGLAccountThin(false, errorsList, myDataProvider, debitAccountId, jlCurrencyId, tenantFullAccountingSettingPM, myJournalPM, currJournalLinePM
+                                    , SuppressCheckGLAccountIsMultiCurrencyWI40640,
+                                    suppressInactiveCheck);
+                                break;
+                            case "3"://MyJournalActionTypeEnum.DebitAndCredit:
+                            case "4"://MyJournalActionTypeEnum.DebitCreditAndVatdeduction:
+                                CheckGLAccountThin(true, errorsList, myDataProvider, glCreditAccId, jlCurrencyId, tenantFullAccountingSettingPM, myJournalPM, currJournalLinePM
+                                    , SuppressCheckGLAccountIsMultiCurrencyWI40640,
+                                    suppressInactiveCheck);
+                                CheckGLAccountThin(false, errorsList, myDataProvider, debitAccountId, jlCurrencyId, tenantFullAccountingSettingPM, myJournalPM, currJournalLinePM
+                                    , SuppressCheckGLAccountIsMultiCurrencyWI40640,
+                                    suppressInactiveCheck);
+                                break;
+                            default:
+                                break;
+                        }
+
+                    }
+ 
+                }
+                finally
+                {
+                    this._JLineNumberTExt = null;
+                }
+            }
+
+
+
+            var myIExternalReconcileDataProvider = accountingValidationContextServiceProvider.GetService(typeof(IExternalReconcileDataProvider)) as IExternalReconcileDataProvider;
+
+            if (errorsList.Count == 0)
+            {
+                return ValidationResult.Success;
+            }
+
+            else
+            {
+                string errorString = String.Empty;
+                foreach (string error in errorsList)
+                {
+                    errorString = errorString + error + ";";
+                }
+
+                errorString = errorString.Remove(errorString.Length - 1);
+                return new ValidationResult(TranslateMyTextCode("Accounting.General.O.JournalNotValid", 0) + ": " + errorString, errorsList);
+            }
+
+
+
+        }
+
+        public ValidationResult IsJournalValid(
           JournalPM myJournalPM,
           System.ComponentModel.DataAnnotations.ValidationContext accountingValidationContextServiceProvider)
         {
-#if true
-
-
-            if (myJournalPM.ChangeSetOp== Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
-            {
-                if (myJournalPM.ExternalSystem=="AMITAL"  && !String.IsNullOrWhiteSpace(myJournalPM.ExternalNo))
-                {
-                    return ValidationResult.Success;
-                }
-    
-            }
-#endif
-
             decimal creditTotal = 0;
             decimal debitTotal = 0;
 
@@ -230,7 +412,7 @@ namespace Logitude.Accounting.BL.Validators
                     clientExists = //!string.IsNullOrWhiteSpace(journalNumber);
                         (!String.IsNullOrWhiteSpace(journalNumber) && myJournalPM.JournalNumber != journalNumber);
                 }
-
+                //OHAD
                 if (clientExists == true)
                 {
                     string basic_text_ExternalExist =
@@ -275,11 +457,14 @@ namespace Logitude.Accounting.BL.Validators
 
             
 #endif
+            //ohad
             if (currDateTimeUtcNow.GetValueOrDefault().Date < myJournalPM.AccountingDate.Date)
             {
                 errorsList.AddNew(TranslateMyTextCode(JournalValidator.M_AccountingFutureDateForbidden, myJournalPM.Tenant));
                 valid = false;
             }
+            //ohad
+
             if (myJournalPM.DocumentDate != null && (currDateTimeUtcNow.GetValueOrDefault().Date < myJournalPM.DocumentDate.Value.Date))
             {
                 errorsList.AddNew(TranslateMyTextCode(JournalValidator.M_AccountingFutureDateForbidden, myJournalPM.Tenant));
@@ -300,7 +485,7 @@ namespace Logitude.Accounting.BL.Validators
             }
 
             //47045 onRegilarJournalAvoidTheSameReference4DebitOrCredit_DochMaaam(errorsList,myJournalPM);
-
+            //ohad
             if (myJournalPM.JournalLines.Any(l => l.AccountingDate == DateTime.MinValue))
             {
                 errorsList.AddNew(TranslateMyTextCode(JournalValidator.M_AllDateMustInit, myJournalPM.Tenant));
@@ -553,7 +738,7 @@ namespace Logitude.Accounting.BL.Validators
 
             if (debitTotal != creditTotal)
             {
-                if ((myJournalPM.StatusCode == "1") || (myJournalPM.StatusCode == "2"))//Draft = 0,//WaitingforApprove = 1,//Approved = 2,//Voided = 3
+                if ((myJournalPM.StatusCode == "1")  || (myJournalPM.StatusCode == "6"))//Draft = 0,//WaitingforApprove = 1,//Approved = 2,//Voided = 3
                 {
                    errorsList.AddNew(TranslateMyTextCode(JournalValidator.M_JournalAmountNotMatched, myJournalPM.Tenant)+ " " + Math.Abs(debitTotal - creditTotal));
                 }
@@ -648,10 +833,10 @@ namespace Logitude.Accounting.BL.Validators
    
         private bool CheckIfFutureDateErrorsExist(JournalPM myJournalPM)
         {
-            const string statusCode_JournalApproved = "2";
+            const string statusCode_JournalProgress = "6";
             const string AccountingEntityCode_Journal = "1";
             var isJournalManuallyCreated = myJournalPM.AccountingEntityCode == AccountingEntityCode_Journal;
-            var isIsFutureDateErrorsExistAndJournalApproved = IsFutureDateErrorsExist && myJournalPM.StatusCode == statusCode_JournalApproved;
+            var isIsFutureDateErrorsExistAndJournalApproved = IsFutureDateErrorsExist && myJournalPM.StatusCode == statusCode_JournalProgress;
             if (isIsFutureDateErrorsExistAndJournalApproved && isJournalManuallyCreated)
                 return true;
             else
@@ -1066,7 +1251,7 @@ accountingValidationContextServiceProvider
                     
 
 
-                    var isApproved=myJournalPM.StatusCode=="2";
+                    var isApproved=myJournalPM.StatusCode=="6";
                     if (isApproved)
                     {
                         var debitDebitControlId = myJournalLinePM.DebitControlAccountId;
@@ -1097,7 +1282,7 @@ accountingValidationContextServiceProvider
             }
 
 
-
+            //ohad
             if (!String.IsNullOrWhiteSpace(pmAcc.CurrencyId) && jlCurrencyId != pmAcc.CurrencyId)
             {
                 //errorsList.Add(
@@ -1137,8 +1322,49 @@ accountingValidationContextServiceProvider
 
 
         }
+        private void CheckGLAccountThin(
+    bool isCreditSide,
+    MyList<string> errorsList,
+    IJournalValidatorContextDataProvider myGLAccountDataProvider,
+    string glAccId, string jlCurrencyId
+    , FullAccountingSettingPM tenantFullAccountingSettingPM,
+    JournalPM myJournalPM, JournalLinePM myJournalLinePM,
+    bool? SuppressCheckGLAccountIsMultiCurrencyWI40640,
+    bool SuppressInactiveCheck
+    )
+        {
 
-        private  string GetAccountName(IJournalValidatorContextDataProvider myGLAccountDataProvider, string accId, int tenant, bool showLocal = true)
+            ContactPM loggedUser = GetLoggedContact(myJournalPM.Tenant);
+            bool showLocal = !((bool)loggedUser?.DontShowLocal);
+
+            var tenant = myJournalPM.Tenant;
+            if (String.IsNullOrWhiteSpace(glAccId))
+            {
+                return;
+            }
+            if (tenantFullAccountingSettingPM != null)
+            {
+
+                var pmAcc = myGLAccountDataProvider.GetGLAccount(glAccId, myJournalPM.Tenant);
+                if (pmAcc == null)
+                {
+                    errorsList.Add(TranslateMyTextCode(JournalValidator.M_GetGLAccountReturnNull, tenant) +
+                        //glAccId
+                        GetAccountName(myGLAccountDataProvider, glAccId, myJournalPM.Tenant)
+                        );
+                    return;
+                }
+                //ohad
+                if (!String.IsNullOrWhiteSpace(pmAcc.CurrencyId) && jlCurrencyId != pmAcc.CurrencyId)
+            {
+                errorsList.Add(TranslateMyTextCode("Accounting.General.O.PaymentBankAccountCurrencyDifferent", myJournalPM.Tenant));
+            }
+   
+
+            }
+          }
+
+        private string GetAccountName(IJournalValidatorContextDataProvider myGLAccountDataProvider, string accId, int tenant, bool showLocal = true)
         {
             if (myGLAccountDataProvider == null) return accId;
             var pm = myGLAccountDataProvider.GetGLAccount(accId, tenant);

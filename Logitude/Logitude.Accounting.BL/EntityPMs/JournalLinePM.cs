@@ -18,8 +18,8 @@ namespace Logitude.Accounting.BL
                     {
                         var journalActionTypeQueryService = new JournalActionTypeQueryService(@this.Tenant);
                         JournalActionTypePM action = journalActionTypeQueryService.GetSingle(@this.ActionCode, false, true);
-                        @this.ActionName = action.EnglishName;
-                        @this.ActionTypeCode = action.Code;
+                        @this.ActionName = action?.EnglishName;
+                        @this.ActionTypeCode = action?.Code;
                     }
                 }
                 var codeEnum = JournalActionTypeEnum.NotValid;

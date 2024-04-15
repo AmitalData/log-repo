@@ -294,9 +294,9 @@ export class FullAccountingSettingPM {
     public set TaxInstitutionGLAccountId(newValue: string) { if (this.taxInstitutionGLAccountId != newValue) { this.taxInstitutionGLAccountId = newValue; this.MarkAsDirty("TaxInstitutionGLAccountId"); } }
        
 	 
-    private hSM: number;
+    private hSM: string;
     public get HSM() { return this.hSM; }
-    public set HSM(newValue: number) { if (this.hSM != newValue) { this.hSM = newValue; this.MarkAsDirty("HSM"); } }
+    public set HSM(newValue: string) { if (this.hSM != newValue) { this.hSM = newValue; this.MarkAsDirty("HSM"); } }
        
 	 
     private hSMtoken: string;
@@ -312,6 +312,21 @@ export class FullAccountingSettingPM {
     private allowEditingExchangeRate: boolean;
     public get AllowEditingExchangeRate() { return this.allowEditingExchangeRate; }
     public set AllowEditingExchangeRate(newValue: boolean) { if (this.allowEditingExchangeRate != newValue) { this.allowEditingExchangeRate = newValue; this.MarkAsDirty("AllowEditingExchangeRate"); } }
+       
+	 
+    private numberingByChartOfAccount: boolean;
+    public get NumberingByChartOfAccount() { return this.numberingByChartOfAccount; }
+    public set NumberingByChartOfAccount(newValue: boolean) { if (this.numberingByChartOfAccount != newValue) { this.numberingByChartOfAccount = newValue; this.MarkAsDirty("NumberingByChartOfAccount"); } }
+       
+	 
+    private oppositeAccountNumber: boolean;
+    public get OppositeAccountNumber() { return this.oppositeAccountNumber; }
+    public set OppositeAccountNumber(newValue: boolean) { if (this.oppositeAccountNumber != newValue) { this.oppositeAccountNumber = newValue; this.MarkAsDirty("OppositeAccountNumber"); } }
+       
+	 
+    private tenantForConfirmationNumberApi: string;
+    public get TenantForConfirmationNumberApi() { return this.tenantForConfirmationNumberApi; }
+    public set TenantForConfirmationNumberApi(newValue: string) { if (this.tenantForConfirmationNumberApi != newValue) { this.tenantForConfirmationNumberApi = newValue; this.MarkAsDirty("TenantForConfirmationNumberApi"); } }
        
 	 
 

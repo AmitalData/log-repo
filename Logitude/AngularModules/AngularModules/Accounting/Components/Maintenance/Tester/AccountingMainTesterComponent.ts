@@ -310,6 +310,11 @@ export class AccountingMainTesterComponent extends BaseComponent {
         };
         this.StrandartOp(opr, obj, () => { });
     }
+    JournalApproveReturnToQueue_Click() {
+        let opr = "JournalApproveReturnToQueue_Click";
+        let obj = { Tenant: 1 , AllTenants:false};
+        this.StrandartOp(opr, obj, () => { });
+    }
     WorkWithoutQueue_Click() {
         let opr = "WorkWithoutQueue_Click";
         let obj = { Tenant: 1, JournalId: "1-55235" };
@@ -326,34 +331,41 @@ export class AccountingMainTesterComponent extends BaseComponent {
 
     _ButtonReverseTrans_Click() {
         let opr = "_ButtonReverseTrans_Click";
-        let obj = { MyTenant: 1, MyDate: DateTool.AddDays(new Date(), -31), MyGLAccId: "1-131321" };
+        let obj = { MyTenant: SessionLocator.Tenant, MyDate: DateTool.AddDays(new Date(), 0), MyGLAccId: "" };
         this.StrandartOp(opr, obj, () => { });
       
     }
    
     _ButtonReverseTotal_Click() {
         let opr = "_ButtonReverseTotal_Click";
-        let obj = { MyTenant: 1, MyDate: DateTool.AddDays(new Date(), -31), MyGLAccId: "1-131321" };
+        let obj = { MyTenant: SessionLocator.Tenant, MyDate: DateTool.AddDays(new Date(), 0), MyGLAccId: "" };
         this.StrandartOp(opr, obj, () => { });
     }
 
     _ButtonReverseTotalFIX_Click() {
         let opr = "_ButtonReverseTotalFIX_Click";
-        let obj = { MyTenant: SessionLocator.Tenant, MyDate: DateTool.AddDays(new Date(), -31), MyGLAccId: "1-131321" };
+        let obj = { MyTenant: SessionLocator.Tenant, MyDate: DateTool.AddDays(new Date(), -0), MyGLAccId: "" };
         this.StrandartOp(opr, obj, () => { });
 
     }
+
+    _ButtonReverseAllMonthsFIX_Click() {
+        let opr = "_ButtonReverseAllMonthsFIX_Click";
+        let obj = { MyTenant: SessionLocator.Tenant, MyGLAccId: "" };
+        this.StrandartOp(opr, obj, () => { });
+    }
+
     BatchYearlyFIX_Click() {
         let opr = "BatchYearlyFIX_Click";
         let obj = {
-            MyTenant: SessionLocator.Tenant, MyDate: DateTool.AddDays(new Date(), -31),
+            MyTenant: SessionLocator.Tenant, MyDate: DateTool.AddDays(new Date(), 0),
             MyFixType: "ReverseEngineerTotalByMonthService", MyFixTypeOption: "ReverseEngineerTotalByMonthService,ReverseEngineerTotalByMonthServiceControl,TODOMORE"
         };
         this.StrandartOp(opr, obj, () => { });
     }
     _ButtonReverseGLBalanceFIX_Click() {
         let opr = "_ButtonReverseGLBalanceFIX_Click";
-        let obj = { MyTenant: SessionLocator.Tenant, MyDate: DateTool.AddDays(new Date(), -31), MyGLAccId: "1-131321" };
+        let obj = { MyTenant: SessionLocator.Tenant, MyDate: DateTool.AddDays(new Date(), 0), MyGLAccId: "" };
         this.StrandartOp(opr, obj, () => { });
 
     }
@@ -367,7 +379,7 @@ export class AccountingMainTesterComponent extends BaseComponent {
     
     _ButtonReverseDueDate_Click() {
         let opr = "_ButtonReverseDueDate_Click";
-        let obj = { MyTenant: SessionLocator.Tenant, MyGLAccId: "1-131321" };
+        let obj = { MyTenant: SessionLocator.Tenant, MyGLAccId: "" };
         this.StrandartOp(opr, obj, () => { });
 
     }
@@ -382,14 +394,14 @@ Line3
     }
     _ButtonFixDueLocalBalance_Click() {
         let opr = "_ButtonFixDueLocalBalance_Click";
-        let obj = { MyTenant: SessionLocator.Tenant, /*MyDate: DateTool.AddDays(new Date(), -31), MyGLAccId: "1-131321"*/ };
+        let obj = { MyTenant: SessionLocator.Tenant, /*MyDate: DateTool.AddDays(new Date(), 0), MyGLAccId: ""*/ };
         this.StrandartOp(opr, obj, () => { });
 
     }
 
     _ButtonReverseTotalFIXControl_Click() {
         let opr = "_ButtonReverseTotalFIXControl_Click";
-        let obj = { MyTenant: SessionLocator.Tenant, MyDate: DateTool.AddDays(new Date(), -31), ChangeSupplier2Customer : false, };
+        let obj = { MyTenant: SessionLocator.Tenant, MyDate: DateTool.AddDays(new Date(), 0), ChangeSupplier2Customer : false, };
         this.StrandartOp(opr, obj, () => { });
     }
     //type myCallback = () => any;
@@ -546,7 +558,7 @@ Line3
             Immediate: false
         };
         let opr = "YearTransfer_Click";
-        //let obj = { MyTenant: 1, MyDate: DateTool.AddDays(new Date(), -31), MyGLAccId: "1-131321" };
+        //let obj = { MyTenant: 1, MyDate: DateTool.AddDays(new Date(), 0), MyGLAccId: "" };
         this.StrandartOp(opr, paramDefault, () => { });
     }
     YearTransferCancel_Click() {
@@ -557,7 +569,7 @@ Line3
            
         };
         let opr = "YearTransferCancel_Click";
-        //let obj = { MyTenant: 1, MyDate: DateTool.AddDays(new Date(), -31), MyGLAccId: "1-131321" };
+        //let obj = { MyTenant: 1, MyDate: DateTool.AddDays(new Date(), 0), MyGLAccId: "" };
         this.StrandartOp(opr, paramDefault, () => { });
     }
 
@@ -1009,6 +1021,37 @@ Line3
     }
 
 
+    ButtonBanksCCExternalReco_Click() {
+        let defaultParam: any = {};
+        defaultParam.Tenant = 1;
+        defaultParam.AccountId = "1-1234";
+        defaultParam.AccountDisplayNumber = "12345678";
+        defaultParam.ToAccountingDate = "30.04.2023";
+        defaultParam.Batch = 0;
+        //  defaultParam.Comment = "Enter InvoiceNumber, or leave it empty but enter the dates";
+        if (AppTool.IsNullOrEmpty(this._TextBoxParam)) {
+            this._TextBoxParam = JSON.stringify(defaultParam);
+            return;
+        }
+        let objToCheck1 = JSON.parse(this._TextBoxParam);
+        let _BanksCCExternalRecoUrl = ServiceHelper.GetLogitudeURL() + '/api/BanksCCExternalReco';
+        let myUrl = _BanksCCExternalRecoUrl + "?tenant=" + objToCheck1.Tenant;
+        myUrl = myUrl + "&accountId=" + objToCheck1.AccountId;
+        myUrl = myUrl + "&accountDisplayNumber=" + objToCheck1.AccountDisplayNumber;
+        myUrl = myUrl + "&toAccountingDate=" + objToCheck1.ToAccountingDate;
+        myUrl = myUrl + "&batch=" + objToCheck1.Batch;
+
+        this.CurrentSession.StartBusyIndicatorCreating();
+        let _http = ServiceHelper.HttpClient;
+        _http.get(myUrl, ServiceHelper.GetHttpFullHeaders())
+            .subscribe(
+                r => { this._LabelLog = JSON.stringify(r); this.CurrentSession.StopBusyIndicator(); },
+                e => { this._LabelLog = JSON.stringify(e); this.CurrentSession.StopBusyIndicator(); },
+                () => { this.CurrentSession.StopBusyIndicator(); }
+            );
+    }
+
+
     ButtonGLAccountMultiToCurrency_Click() {
         let defaultParam: any = {};
         defaultParam.Tenant = 1;
@@ -1040,6 +1083,42 @@ Line3
             );
     }
 
+
+
+
+
+
+
+
+    ButtonAPInvoiceStatusUpdate_Click() {
+        let defaultParam: any = {};
+        defaultParam.Tenant = 1;
+        defaultParam.InvoiceNumber = ""
+        defaultParam.FromInvoiceDate = "01.01.2023";
+        defaultParam.ToInvoiceDate = "31.01.2023";
+        defaultParam.Batch = 1;
+        defaultParam.Comment = "Enter InvoiceNumber, or leave it empty but enter the dates";
+        if (AppTool.IsNullOrEmpty(this._TextBoxParam)) {
+            this._TextBoxParam = JSON.stringify(defaultParam);
+            return;
+        }
+        let objToCheck1 = JSON.parse(this._TextBoxParam);
+        let _APInvoiceStatusUpdateUrl = ServiceHelper.GetLogitudeURL() + '/api/APInvoiceStatusUpdate';
+        let myUrl = _APInvoiceStatusUpdateUrl + "?tenant=" + objToCheck1.Tenant;
+        myUrl = myUrl + "&invoiceNumber=" + objToCheck1.InvoiceNumber;
+        myUrl = myUrl + "&fromInvoiceDate=" + objToCheck1.FromInvoiceDate;
+        myUrl = myUrl + "&toInvoiceDate=" + objToCheck1.ToInvoiceDate;
+        myUrl = myUrl + "&batch=" + objToCheck1.Batch;
+
+        this.CurrentSession.StartBusyIndicatorCreating();
+        let _http = ServiceHelper.HttpClient;
+        _http.get(myUrl, ServiceHelper.GetHttpFullHeaders())
+            .subscribe(
+                r => { this._LabelLog = JSON.stringify(r); },
+                e => { this._LabelLog = JSON.stringify(e); },
+                () => { this.CurrentSession.StopBusyIndicator(); }
+            );
+    }
 
 
 
@@ -1183,7 +1262,8 @@ Line4
             "VoidedByUserName": null,
             "IsVoided": null,
             "VoidedBy": null,
-            "ExternalSystem": "AMITAL"
+            "ExternalSystem": "AMITAL",
+            "AllTenants":"False"
         };
         this._TextBoxParam = JSON.stringify(journal);
 

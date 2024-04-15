@@ -106,8 +106,8 @@ namespace Simplog.Data.InvoiceModel
             modelBuilder.Configurations.Add(new APPaymentTransferStatusMap());
             modelBuilder.Configurations.Add(new ARInvoiceStockMap());
             modelBuilder.Configurations.Add(new ARInvoiceStockLineMap());
+            modelBuilder.Configurations.Add(new ARInvoicesSignedStatusMap());
             modelBuilder.Configurations.Add(new ARPaymentBankTranferMap());
-
             modelBuilder.Configurations.Add(new AWBChargesCodeMap());
             modelBuilder.Configurations.Add(new AWBSpecialHandlingCodeMap());
             modelBuilder.Configurations.Add(new AWBStatuMap());
@@ -323,6 +323,8 @@ namespace Simplog.Data.InvoiceModel
             modelBuilder.Configurations.Add(new ARPaymentChequeStatusReplicaMap());
             modelBuilder.Configurations.Add(new DigitalInvoicesCounterDataViewMap());
             modelBuilder.Configurations.Add(new ControlForInvoiceLinesDataViewMap());
+            modelBuilder.Configurations.Add(new ConfirmationNumberStatusMap());
+            modelBuilder.Configurations.Add(new ConfirmationNumberDefaultMap());
 
             base.OnModelCreating(modelBuilder);
         }
@@ -386,7 +388,10 @@ namespace Simplog.Data.InvoiceModel
             get; set;
         }
 
-
+        public IDbSet<ARInvoicesSignedStatus> ARInvoicesSignedStatuses
+        {
+            get; set;
+        }
 
         public IDbSet<APInvoice> APInvoices
         {
@@ -472,6 +477,8 @@ namespace Simplog.Data.InvoiceModel
         public IDbSet<APInvoiceAnalytic> APInvoiceAnalytics { get; set; }
         public IDbSet<DigitalInvoicesCounterDataView> DigitalInvoicesCounterDataView { get; set; }
         public IDbSet<ControlForInvoiceLinesDataView> ControlForInvoiceLinesDataView { get; set; }
+        public IDbSet<ConfirmationNumberStatus> ConfirmationNumberStatuses { get; set; }
+        public IDbSet<ConfirmationNumberDefault> ConfirmationNumberDefaults { get; set; }
 
         public void DetectChanges()
         {

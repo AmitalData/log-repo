@@ -1455,6 +1455,45 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return myResult;
         }
 
+
+
+        public IQueryable<CardList> GetIQueryableEntityListShort(IQueryable<Card> iQueryable)
+        {
+            IQueryable<CardList> myResult = from card in iQueryable
+
+                                            select new CardList()
+                                            {
+                                                Code = card.Code,
+                                                CreateDate = card.CreateDate,
+                                                 InActive = card.InActive,
+                                                Id = card.Id,
+                                                Tenant = card.Tenant,
+                                                EnglishName = card.EnglishName,
+                                                LocalName = card.LocalName,
+                                                VatNumber = card.VatNumber,
+                                                PartnerTypeName = card.PartnerType == null ? null : (card.PartnerType.Id == "CS" && card.Customer != null && card.Customer.IsCustomer == false ? "Shipper/Consignee" : card.PartnerType.Name),
+                                                CityName = card.CityName,
+                                                 CountryCode = card.CountryCode,
+                                                PartnerTypeId = card.PartnerTypeId,
+                                                CalculatedEnglishName = string.IsNullOrEmpty(card.EnglishName) ? card.LocalName : card.EnglishName,
+                                                CalculatedLocalName = string.IsNullOrEmpty(card.LocalName) ? card.EnglishName : card.LocalName,
+                                                GLAccountDisplayNumber = card.GLAccountDisplayNumber,
+                                                GLAccountId = card.GLAccountId,
+
+
+                                            };
+
+            if (myResult.Count() > 0)
+            {
+                int tenant = myResult.FirstOrDefault().Tenant;
+
+                CustomerBusinessUnitFilter myFilter = new CustomerBusinessUnitFilter(tenant);
+                myResult = myFilter.RunFilter(myResult);
+            }
+
+            return myResult;
+        }
+
         public IQueryable<CardList> GetCustomerCardListByTenantVatNumber(int tenant, string VatNumber)
         {
             IQueryable<CardList> cards = (from a in repository.context.Cards.Include("Customer").Include("Customer.SalesmanUser").Include("PartnerType").Include("SharedLogisticsInvitationStatus")

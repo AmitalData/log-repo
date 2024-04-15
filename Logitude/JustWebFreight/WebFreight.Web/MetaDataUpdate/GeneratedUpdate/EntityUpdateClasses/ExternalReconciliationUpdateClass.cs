@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ExternalReconciliationUpdateClass
    {  		
-		public const string HashString = "d414e817738ee9379ba50f49175b8a12";
+		public const string HashString = "2d656be76c27ee44b0dad66826bea176";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -132,7 +132,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "התאמה",
 			      				    DefaultText =  "External Reconciliation",
-			      				    Code =  "c7b9",
+			      				    Code =  "8f4b",
 			      				    Name =  "ExternalReconciliation Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",
@@ -1365,7 +1365,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode ExternalReconciliationTextCode_ExternalReconciliationOSelectOneAutoRecoMethod = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExternalReconciliation.O.SelectOneAutoRecoMethod", DefaultText = "At least one Automatic Reconcile method should be selected",LocalDefaultText = @"יש לסמן לפחות שיטת התאמה אחת", ObjectTableId = ExternalReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ExternalReconciliationTextCode_ExternalReconciliationOCantAutoRecoByRefDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExternalReconciliation.O.CantAutoRecoByRefDate", DefaultText = "You cannot automatically reconcile only by reference date. It must be paired with another option",LocalDefaultText = @"לא ניתן לבצע התאמה אוטומטית לפי תאריך אסמכתא בלבד", ObjectTableId = ExternalReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ExternalReconciliationTextCode_ExternalReconciliationOCantAutoRecoByRefDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExternalReconciliation.O.CantAutoRecoByRefDate", DefaultText = "You cannot automatically reconcile only by reference date. It must be paired with another option",LocalDefaultText = @"לא ניתן לבצע התאמה אוטומטית לפי תאריך אסמכתא ו/או תאריך חשבונאי בלבד", ObjectTableId = ExternalReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ExternalReconciliationTextCode_ExternalReconciliationOCantAdjustLedgersOnly = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExternalReconciliation.O.CantAdjustLedgersOnly", DefaultText = "Cant adjust only transaction lines",LocalDefaultText = @"לא ניתן לבצע התאמה עם שורות מהכרטיס בלבד", ObjectTableId = ExternalReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
@@ -1400,6 +1400,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode ExternalReconciliationTextCode_ExternalReconciliationOAccoountFilterlabel = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExternalReconciliation.O.AccoountFilter.label", DefaultText = "Display transactions from",LocalDefaultText = @"הצג תנועות מ", ObjectTableId = ExternalReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ExternalReconciliationTextCode_ExternalReconciliationOAccoountFilterTransferTransaction = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExternalReconciliation.O.AccoountFilter.TransferTransaction", DefaultText = "Transfer Transaction",LocalDefaultText = @"תנועה מחשבון דחויים", ObjectTableId = ExternalReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ExternalReconciliationTextCode_ExternalReconciliationOSelectOnePage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExternalReconciliation.O.SelectOnePage", DefaultText = "to adjust bank fees with Transaction select only one page line",LocalDefaultText = @"לא ניתן לפרוע מספר קבלות בו זמנית , יש לבצע פרעון של כל שורת קבלה בנפרד.", ObjectTableId = ExternalReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ExternalReconciliationTextCode_ExternalReconciliationOSelectOneOrMore = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ExternalReconciliation.O.SelectOneOrMore", DefaultText = "to adjust bank fees, select one or more row External page line",LocalDefaultText = @"כדי ליצור פקודה בגין עמלות יש לבחור בשורת בנק אחת בכל פעם", ObjectTableId = ExternalReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

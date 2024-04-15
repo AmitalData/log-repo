@@ -38,6 +38,7 @@ namespace Logitude.Infrastructure.Data
 		 IDbSet<LastRunDetail> LastRunDetails { get; }
 		 IDbSet<LBPTeamMember> LBPTeamMembers { get; }
 		 IDbSet<PriceStep> PriceSteps { get; }
+		 IDbSet<SatisfactionSurvey> SatisfactionSurveys { get; }
 		 IDbSet<SharedLogisticsSetting> SharedLogisticsSettings { get; }
 		 IDbSet<Team> Teams { get; }
 		 IDbSet<TeamMemberBusinessRole> TeamMemberBusinessRoles { get; }

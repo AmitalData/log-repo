@@ -1722,6 +1722,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private decimal amountInNIS ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal AmountInNIS  
+	   {
+	    
+	     get
+		{
+		   return amountInNIS;
+		 }
+		 set
+		 {
+		   if(amountInNIS != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AmountInNIS",OldValue=amountInNIS,NewValue=value,PropertyType="decimal"};
+		    NotifyPropertyChanged(values);
+		   amountInNIS=value;
+		   }
+			
+		 }
+	   }
 	    }
    
 }

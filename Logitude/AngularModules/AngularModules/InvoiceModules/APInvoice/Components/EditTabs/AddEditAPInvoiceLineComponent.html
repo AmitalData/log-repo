@@ -24,7 +24,8 @@
                                             [ObjectTableName]="ObjectTableName"
                                             [DataContext]="DataContext"
                                             [SelectedValue]="DataContext.ChargesTypeId"
-                                            [LookUpTableName]="'ChargesType'">
+                                            [LookUpTableName]="'ChargesType'"
+                                            [QueryFilterItems]="ChargeTypesQueryFilters">
                                     </LogLov>
                                 </td>
 
@@ -87,7 +88,9 @@
                                             [ObjectTableName]="ObjectTableName"
                                             [DataContext]="DataContext"
                                             [SelectedValue]="DataContext.VendorId"
-                                            [LookUpTableName]="'Card'">
+                                            [LookUpTableName]="'Card'"
+                                            [StartSearchFromChar]="3"
+                                            [StartSearchFromNumber]="5">
                                     </LogLov>
                                 </td>
 

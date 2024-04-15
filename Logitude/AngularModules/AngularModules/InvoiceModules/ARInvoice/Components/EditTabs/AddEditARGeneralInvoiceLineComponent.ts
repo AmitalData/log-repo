@@ -64,8 +64,9 @@ export class AddEditARGeneralInvoiceLineComponent implements OnInit{
     public ChargeTypesQueryFilters: ApiQueryFilters;
     private BuildQueryFilters() {
         this.ChargeTypesQueryFilters = new ApiQueryFilters();
-        this.ChargeTypesQueryFilters.addAdditionalFilter("InActive", false, null, null, "Equals", false, false, false, "Boolean");
-        this.ChargeTypesQueryFilters.addAdditionalFilter("IsReceivable", true, null, null, "Equals", false, false, false, "Boolean");
+        this.ChargeTypesQueryFilters.addAdditionalFilter("InActive", false, null, null, "Equals", false, false, false, "boolean");
+        this.ChargeTypesQueryFilters.addAdditionalFilter("IsReceivable", true, null, null, "Equals", false, false, false, "boolean");
+        this.ChargeTypesQueryFilters.addAdditionalFilter("ReceivableCreditGLAccountId", true, null, null, "IsNotNull", false, false, false, "Text");
     }
 
   //  public AmountForiegnLabel: string = null;
@@ -124,7 +125,6 @@ export class AddEditARGeneralInvoiceLineComponent implements OnInit{
         if (this.DataContext.chargesTypeList != null && AppTool.IsNullOrEmpty(this.DataContext.chargesTypeList.ReceivableCreditGLAccountId)) {
             errors.push(TextCodeTranslator.Translate("ARInvoice.M.NoGLAccount"));
         }
-        debugger;
 
         if (this.DataContext.fatherComponent.glaccount != null && this.DataContext.fatherComponent.glaccount.IsVATExempt == true && this.DataContext.VatPercentage > 0) {
             errors.push("The partner is VAT exempt");

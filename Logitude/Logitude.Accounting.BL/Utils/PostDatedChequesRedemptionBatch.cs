@@ -313,7 +313,7 @@ namespace Logitude.Accounting.BL.Utils
             newJournal.CreateDate = DateTime.Now;
             newJournal.AccountingDate = DateTime.Now.Date; //lineList.First().AccountingDate;
             newJournal.TypeCode = "0"; //Regular
-            newJournal.StatusCode = "2"; // Approved
+            newJournal.StatusCode = "6"; // Approved
             ARPaymentQuery aRPaymentQuery = new ARPaymentQuery(aRPaymentCheque.Tenant);
             if (!String.IsNullOrEmpty(aRPaymentCheque.PaymentId))
             {

@@ -41,7 +41,7 @@ namespace Logitude.Accounting.BL.CoreBL
             this._JournalValidatorContext = journalValidatorContext;
             LedgerTransactions = new List<LedgerTransactionPM>();
             if (_JournalPM.StatusCode == "4") {
-                _JournalPM.StatusCode = "2";
+                _JournalPM.StatusCode = "6";
             }
             //_PRIVATEOLD_GLAccountTotalByMonths = new List<GLAccountTotalByMonthPM>();
 
@@ -49,7 +49,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
         public virtual void OnApproveUpdatingFillArrangeJournalPMResetControlAccount()
         {
-            if (_JournalPM.StatusCode != "2")
+            if (_JournalPM.StatusCode != "6" )
             {
                 throw new ApplicationException("occure only OnApproveUpdating");
             }
@@ -161,7 +161,7 @@ namespace Logitude.Accounting.BL.CoreBL
             try
             {
 
-                if (_JournalPM.StatusCode == "2")
+                if (_JournalPM.StatusCode == "6" )
                 {
                     OnApproveUpdatingFillArrangeJournalPMResetControlAccount();
                 }
@@ -191,7 +191,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 CreateGLAccountTotalByMonthFromLedger();
                 CheckGLAccountTotalByMonth();
-                if (_JournalPM.StatusCode == "2")
+                if (_JournalPM.StatusCode == "6" )
                 {
                     CreateControlGLAccountTotalByMonthFromLedger();
                     CheckControlGLAccountTotalByMonths();

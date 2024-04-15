@@ -54,9 +54,9 @@ namespace Logitude.Accounting.BL.Validators
             {
                 return new ValidationResult(TextCodesTranslator.TranslateText("GLAccounts.O.SettingOfCurrency", myGLAccountPM.Tenant, showLocals) + " " + myGLAccountPM.DisplayNumber + " " + TextCodesTranslator.TranslateText("GLAccounts.O.InCorrectCorrect", myGLAccountPM.Tenant, showLocals));
             }
+
             Boolean isEnableMultiCurrencyWithReconcileMethodCodeEqualOne = FeatureToggleHelper.HasFeatureToggle(toggleCode: "MC1", myGLAccountPM.Tenant);
-            
-            if (myGLAccountPM.IsMultiCurrency == true && !String.IsNullOrWhiteSpace(myGLAccountPM.CurrencyId) && !isEnableMultiCurrencyWithReconcileMethodCodeEqualOne)
+            if (myGLAccountPM.IsMultiCurrency == true && !String.IsNullOrWhiteSpace(myGLAccountPM.CurrencyId))
             {
                 return new ValidationResult(TextCodesTranslator.TranslateText("GLAccounts.O.AccountIsaMulti", myGLAccountPM.Tenant, showLocals));
             }
@@ -64,7 +64,7 @@ namespace Logitude.Accounting.BL.Validators
             bool exists = CheckDisplayNumber(myGLAccountPM.DisplayNumber, myGLAccountPM.InternalNumber, myGLAccountPM.Tenant);
             if (exists == true)
             {
-                return new ValidationResult(TextCodesTranslator.TranslateText("GLAccounts.O.DisplayNumberAlreadyExists", myGLAccountPM.Tenant, showLocals));
+                return new ValidationResult(String.Format(TextCodesTranslator.TranslateText("GLAccounts.O.DisplayNumberAlreadyExists", myGLAccountPM.Tenant, showLocals), myGLAccountPM.DisplayNumber));
             }
 
             bool internalExists = CheckInternalNumber(myGLAccountPM.InternalNumber, myGLAccountPM.Id, myGLAccountPM.Tenant);

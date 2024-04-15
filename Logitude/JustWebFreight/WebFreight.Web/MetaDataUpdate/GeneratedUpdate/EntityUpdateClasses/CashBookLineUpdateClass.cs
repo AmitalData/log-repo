@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CashBookLineUpdateClass
    {  		
-		public const string HashString = "aa88bcdc2cd50712e0a51e9483fbb447";
+		public const string HashString = "6f53f34ae4c04374b2ce7fc2416d9813";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -101,6 +101,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    AvailableInCustomization =  true,
+			      				    SupportSubEntity =  false,
+			      				    ApplyGenericCustomFields =  false,
+			      				    AvailableInDocumentTypes =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasFiltersMenu =  false,
@@ -128,7 +131,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Cash Book Line",
-			      				    Code =  "db48",
+			      				    Code =  "8712",
 			      				    Name =  "CashBookLine Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",
@@ -1384,6 +1387,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   ObjectTable CashBookLineObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "CashBookLine" && d.Tenant == 0).FirstOrDefault(); 
 
  		   TextCode CashBookLineTextCode_CashbookLineONoDataFound = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CashbookLine.O.NoDataFound", DefaultText = "No Data Found",LocalDefaultText = @"לא נמצא מידע לתצוגה", ObjectTableId = CashBookLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CashBookLineTextCode_CashbookLineOLocalName = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CashbookLine.O.LocalName", DefaultText = "Local Name",LocalDefaultText = @"שם הלקוח", ObjectTableId = CashBookLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

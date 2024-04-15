@@ -11,6 +11,8 @@ import { CargoTrackingMilestones } from 'src/CargoTracking/DataContracts/CargoTr
 import { MilestoneCodes } from 'src/CargoTracking/Constants/MilestoneCodes';
 import { MatDialog } from '@angular/material/dialog';
 import { MessageWindowComponent } from 'src/Infrastructure/Components/MessageWindow/MessageWindowComponent';
+import { TenantManagementPM } from 'src/CargoTracking/Services/Others/TenantManagementPM';
+import { TenantManagementService } from 'src/CargoTracking/Services/Others/TenantManagementService';
 
 const shipmentOrderEntityType = 'O';
 @Component({
@@ -37,15 +39,17 @@ export class PublicShipmentDetailsComponent implements OnInit
 
         private location: Location,
         private searchService: CargoTrackingSearchService,
-        private milestonesService: CargoTrackingMilestoneService)
+        private milestonesService: CargoTrackingMilestoneService,
+        private tenantManagementService: TenantManagementService,)
     {
+        this.getTenantMangment()
         this.GetIdFromURI();
         this.mainColor = CargoTrackingBrandingData.MainColor;
-        this.LoadShipment();
+        
         console.log("[referrer]", document.referrer);
 
         this.listenToRouterEvents();
-
+        
         this.GetMilstones();
 
 
@@ -225,8 +229,9 @@ export class PublicShipmentDetailsComponent implements OnInit
     public MilstonesExist: boolean = false;
     public Date: Date;
     private GetShipment()
-    {
+    {   
         this.isLoading = true;
+        
         this.searchService.getShipment(this.SecurityKey, this.tenant).subscribe((result: any) =>
         {
             this.isLoading = false;
@@ -312,6 +317,15 @@ export class PublicShipmentDetailsComponent implements OnInit
     public ShipmentLabel: string;
     public ShipmentReference: string;
 
+    getTenantMangment(){
+        this.tenantManagementService.get(this.tenant).subscribe((tenantMangment: any)=>{
+            this.LoadShipment();
+            if(tenantMangment){
+                  this.TenantMangment=tenantMangment;
+            }
+        });
+    }
+
     SetShipmentDetails() {
         if (this.Shipment.ShipmentLevelCode == ShipmentLevels.Direct.toString()) {
             this.ShipmentLabel = "Master";
@@ -387,7 +401,7 @@ export class PublicShipmentDetailsComponent implements OnInit
     public CurrentMilestoneField: Milestone = new Milestone();
     public Events: Events [] = [];
 
-
+    TenantMangment:TenantManagementPM
     ShipmentReferences: string[] = [];
     IsLoadingReferences = false;
     showMoreReferences: boolean  = false;

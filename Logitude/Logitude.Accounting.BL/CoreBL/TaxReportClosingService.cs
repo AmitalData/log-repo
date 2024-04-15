@@ -275,7 +275,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 AccountingDate = TenantServerConfigration.GetLastOfMonthDate(taxReportPM.TaxReportMonth),
                 TypeCode = JournalTypeValues.Regular,
-                StatusCode = JournalStatusTypeValues.Approved,
+                StatusCode = "6",
                 AccountingEntityCode = AccountingEntityValues.TaxReport,
                 AccountingEntityId = taxReportId,
                 AccountingEntityReference = taxReportPM.TaxReportNumber,
@@ -472,6 +472,17 @@ namespace Logitude.Accounting.BL.CoreBL
             var journalIds = taxReportLines.Select(x => x.JournalId).ToList();
             List<LedgerTransaction> ltList = ledgerTransactionRepository.GetLedgerTransactionsByJournalIdsAndAccountId(journalIds, fullAccountingSettings.VATOutputGLAccountId, tenant);
             List<LedgerTransaction> rv = ltList.Where(lt => lt.IsReconciled != true && lt.InReconcileProgress != true).ToList();
+            if (ltList.Count > rv.Count) {
+                var ErrorsInltList = ltList.Where(lt => lt.IsReconciled != false || lt.InReconcileProgress != false).ToList();
+                var reconiledLines = taxReportLines.Where(taxReportLine => ErrorsInltList.Any(error => taxReportLine.JournalId == error.JournalId)).ToList();
+                string errorText = "";
+                foreach (var item in reconiledLines)
+                {
+                    errorText += $" ישנה התאמה בשורה {item.Line} בסכום {item.TotalInvoiceAmount} אסמכתא {item.Reference} לא ניתן לבצע את פקודה הסגירה.\n\n";
+
+                }
+                throw new ApplicationException(errorText);
+            }
             return rv;
         }
 

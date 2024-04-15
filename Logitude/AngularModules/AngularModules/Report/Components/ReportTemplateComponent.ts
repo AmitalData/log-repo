@@ -49,7 +49,7 @@ export class ReportTemplateComponent implements OnInit {
     ReportsTemplatePMLists: ReportsTemplatePM[] = [];
     CurrentReportsTemplatePM: ReportsTemplatePM;
 
-
+    public ValidationErrorsList: string[];
 
     MessageReportsTemplatePMLists: ReportsTemplatePM[] = [];
     CurrentMessageReportsTemplatePM: ReportsTemplatePM;
@@ -60,9 +60,11 @@ export class ReportTemplateComponent implements OnInit {
 
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, public _elementRef: ElementRef) {
+        this.ValidationErrorsList = [];
         this.reportsTemplatePMExtendedService = new ReportsTemplatePMExtendedService();
         this.reportsTemplatePMService = new ReportsTemplatePMService();
         this.ReportsTemplatePMLists = [];
+
 
 
     }
@@ -167,8 +169,19 @@ export class ReportTemplateComponent implements OnInit {
 
     //Description
     DescriptionKeyUpMethod(item: ReportsTemplatePM) {
+        const regex = new RegExp('^[^<+>#%&\\/\'"*?!:@=|]+$');
+        var isfailed: boolean = false;
+        this.ValidationErrorsList.forEach(s => s.includes(`Forbidden character in the Description`) ? isfailed = true : null);
+
+        if (isfailed) this.ValidationErrorsList.pop();
+
         if (item != null && item.IsDirty) {
-            this.UpdateReportsTemplatePM(item);
+            var valid: boolean = regex.test(item.Description);
+            if (item.Description && item.Description.trim() && !valid) {
+                this.ValidationErrorsList.push(`Forbidden character in the Description: ${item.Description}`);
+            } else {
+                this.UpdateReportsTemplatePM(item);
+            }
         }
     }
 

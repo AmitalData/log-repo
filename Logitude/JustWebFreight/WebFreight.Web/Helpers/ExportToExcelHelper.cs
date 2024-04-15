@@ -312,7 +312,17 @@ namespace WebFreight.Web.Helpers
                         stop = true;
                     }
                 }
-
+                if (stop == false)
+                {
+                    MethodsInfo = getMethodsInfo("WebFreight.Web.AccountingModel.DomainServices.ARPaymentChequeDomainService", query);
+                    if (MethodsInfo != null)
+                    {
+                        getListMethodInfo = MethodsInfo.ListMethodInfo;
+                        getCountMethodInfo = MethodsInfo.CountMethodInfo;
+                        context = MethodsInfo.context;
+                        stop = true;
+                    }
+                }
                 if (stop == false)
                 {
                     MethodsInfo = getMethodsInfo("WebFreight.Web.WarehouseModel.DomainServices.WarehousesDomainService", query);
@@ -420,8 +430,7 @@ namespace WebFreight.Web.Helpers
 
                 object[] parameters = new object[] { xmlFilters, tenant };
                 int count = 0;
-                if (!Logitude.Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("NXL", tenant) || (Logitude.Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("NXL", tenant)) && !exportToExcelArgs.IsXslxFormat)
-                     count = (int)getCountMethodInfo.Invoke(context, parameters);
+                count = (int)getCountMethodInfo.Invoke(context, parameters);
 
                 LogMessagingUtil.Instance.AppendLine(Environment.NewLine + "1 Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
                 if (count > 0 || Logitude.Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("NXL", tenant))
@@ -479,7 +488,7 @@ namespace WebFreight.Web.Helpers
                         //IEnumerator datalist = querableEntities.GetEnumerator();
 
 
-                        if (Logitude.Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("NXL", tenant) && exportToExcelArgs.IsXslxFormat)
+                        if (exportToExcelArgs.IsXslxFormat)
                         {
                             return this.NpoiExcelGenerator(datalist, query, queryColumns, tenant);
                         }
@@ -1018,15 +1027,7 @@ namespace WebFreight.Web.Helpers
             TextCodeRepository textCodeRepoitory = new TextCodeRepository(tenant);
             TenantRepository tenantRepoitory = new TenantRepository(tenant);
             var CurTenant = tenantRepoitory.GetSingleByTenant(tenant);
-            string queryName = !string.IsNullOrEmpty(query.DisplayText) ? query.DisplayText : TranslateTextsClass.Translate(query.NameTextCodeCode, tenant).Replace(" ", "_") + "_" + query.ObjectTableName + "s";
-
-            queryName = ExportToExcelHelper.GetValidFileName(queryName);//queryName.Replace(":", "").Replace("/", "").Replace("\"", "").Replace("?", "").Replace("*", "").Replace("[", "").Replace("]", "").Replace("(", "").Replace(")", "").Replace("'", "");
-            queryName = queryName.Replace(":", "").Replace("/", "").Replace("\"", "").Replace("?", "").Replace("*", "").Replace("[", "").Replace("]", "").Replace("(", "").Replace(")", "").Replace("'", "");
-
-            //if (queryName.Length > 31)
-            //    queryName = queryName.Substring(0, 31);
-
-            System.Xml.Linq.XElement entities = new System.Xml.Linq.XElement(queryName);
+            System.Xml.Linq.XElement entities = new System.Xml.Linq.XElement(query.ObjectTableName+ "s");
             try
             {
                 int datacount = 0;
@@ -1170,8 +1171,8 @@ namespace WebFreight.Web.Helpers
 
         private static string GetValidFileName(string fileName)
         {
-            // remove any invalid character from the filename.
-            String ret = Regex.Replace(fileName.Trim(), "[^A-Za-z0-9_. ]+", "");
+            // remove any invalid character from the filename.  
+            String ret = Regex.Replace(fileName.Trim(), "[^א-תA-Za-z0-9_. ]+", "");
             return ret.Replace(" ", String.Empty);
         }
         Lazy<Regex> ControlChars = new Lazy<Regex>(() => new Regex("[\x00-\x1f]", RegexOptions.Compiled));
@@ -1271,7 +1272,7 @@ namespace WebFreight.Web.Helpers
 
                 {
 
-                   
+					
                     var workbook = new XSSFWorkbook();
 
                     #region Styles
@@ -1353,13 +1354,17 @@ namespace WebFreight.Web.Helpers
 
                             text = column.DisplayText;
                         }
-                    
+                        else if (!string.IsNullOrEmpty(column.ObjectFieldFieldLableTextCodeDefaultText))
+                        {
+							text = column.ObjectFieldFieldLableTextCodeDefaultText;
+						}						
 
-                    text = text != null ? text : "";
+
+					text = text != null ? text : "";
                     text = text.Replace(":", "").Replace("/", "").Replace("\"", "").Replace("?", "").Replace("*", "").Replace("[", "").Replace("]", "").Replace("(", "").Replace(")", "");
 
 
-                    if (!FeatureToggleHelper.HasFeatureToggle("CXE", tenant))
+						if (!FeatureToggleHelper.HasFeatureToggle("CXE", tenant))
                         {
                             sheet.AutoSizeColumn(column.IndexOrder + 1);
                         }
@@ -1387,7 +1392,7 @@ namespace WebFreight.Web.Helpers
 
                         foreach(QueryColumnPM column in queryColumns)
                         {
-                            dynamic value = null;
+                            object value = null;
 
 
                             cell = row.CreateCell(i);
@@ -1401,24 +1406,43 @@ namespace WebFreight.Web.Helpers
                             {
                                 value = info.GetValue(a, null) != null ? info.GetValue(a, null) : null ;
                             }
-                            
-                            if(column.ObjectFieldDataTypeCode == "DateTime")
+
+                            if (column.ObjectFieldDataTypeCode == "DateTime" && value != null)
                             {
-                                value = value.ToString("dd/MM/yyyy");
-                                    
-                             }
-                            
+                                
+                                value = ((DateTime)value).ToString("dd/MM/yyyy");
+
+                            }
+
                             cell.SetCellType(GetCellType(column.ObjectFieldDataTypeCode));
 
-                            value = value != null ? value : "";
+                            //value = value != null ? value : "";
+                            //if (value != null)
+                            //    value = value.ToString();
+                            if (value != null)
+                            {
+                                if (GetCellType(column.ObjectFieldDataTypeCode) == CellType.Numeric)
+                                {
 
+                                    if (value is double || value is int || value is float || value is decimal || value is long ||
+                                        value is double? || value is int? || value is float? || value is decimal? || value is long?)
+                                    {
+                                        cell.SetCellValue(Convert.ToDouble(value));
+                                    }
 
-                            if (GetCellType(column.ObjectFieldDataTypeCode) == CellType.Numeric)
-                                cell.SetCellValue((double)value);
-                            else if (GetCellType(column.ObjectFieldDataTypeCode) == CellType.Boolean)
-                                cell.SetCellValue(bool.Parse(value));
+                                    else
+                                    {
+                                        cell.SetCellValue(value.ToString()); // Set a default value or handle accordingly
+                                    }
+
+                                }
+                                else
+                                    cell.SetCellValue(value.ToString());
+                            }
                             else
-                                cell.SetCellValue(value.ToString());
+                            {
+
+                            }
                             i++;
                         }
                         

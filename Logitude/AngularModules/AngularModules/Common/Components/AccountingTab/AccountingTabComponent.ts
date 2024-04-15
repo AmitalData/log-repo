@@ -39,6 +39,7 @@ export class AccountingTabComponent implements OnInit, AfterViewInit {
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     // @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
+    private CurrentSession = SessionLocator.SelectedSession; 
     constructor(private entityArgs: EntityArgs) {
         this.EntityPM = entityArgs.EntityPM;
         this.ObjectTableName = entityArgs.ObjectTableName;
@@ -143,25 +144,25 @@ export class AccountingTabComponent implements OnInit, AfterViewInit {
         if (this.IsExternalCodesFromAPI && this.isQuickBooksOnlineEntity) {
             this.isQuickBooksOnline = true;
         }
-        this.GetAccountInfo();     
+        this.GetAccountInfo();
 
-var myService: GLAccountExtendedPMService = new GLAccountExtendedPMService();
-//myService.GetByGLAccountsDisplayNumber(this.EntityPM.gLAccountNumber, this.EntityPM.tenant).subscribe((myResponse: ServiceResponse) => {
-//    if (!myResponse.HasError && myResponse != null) {
-//        var result = myResponse.Result;
-//        if (result != null) {
-//            if (result.CurrencySign != null ){
-//            this.AccountInfo = result.LocalName + ',' + result.DisplayNumber + ',' + result.CurrencySign;
-//            }
-//            else{
-//                this.AccountInfo = result.LocalName + ',' + result.DisplayNumber;
-//            }
-//        }
-//    }
-//});
+        var myService: GLAccountExtendedPMService = new GLAccountExtendedPMService();
+        //myService.GetByGLAccountsDisplayNumber(this.EntityPM.gLAccountNumber, this.EntityPM.tenant).subscribe((myResponse: ServiceResponse) => {
+        //    if (!myResponse.HasError && myResponse != null) {
+        //        var result = myResponse.Result;
+        //        if (result != null) {
+        //            if (result.CurrencySign != null ){
+        //            this.AccountInfo = result.LocalName + ',' + result.DisplayNumber + ',' + result.CurrencySign;
+        //            }
+        //            else{
+        //                this.AccountInfo = result.LocalName + ',' + result.DisplayNumber;
+        //            }
+        //        }
+        //    }
+        //});
 
     }
-    private GetAccountInfo(){
+    private GetAccountInfo() {
         var myService: GLAccountPMService = new GLAccountPMService();
         if (this.EntityPM?.card?.GLAccountId) {
             myService.get(this.EntityPM?.card?.GLAccountId).subscribe((myResponse: ServiceResponse) => {
@@ -188,14 +189,17 @@ var myService: GLAccountExtendedPMService = new GLAccountExtendedPMService();
             this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
-                    this.GetAccountInfo();     
+                    this.GetAccountInfo();
                 }
             });
         }
         AccountingEventManager.CustomerChangedEvent.subscribe(($event) => {
-            SessionLocator.SelectedSession.CurrentEditComponent.ReloadEntityPM();
-            this.GetAccountInfo();
-            
+            if (!AppTool.IsNullOrEmpty($event)) {
+                if ($event.SendSessionIndex != this.CurrentSession.SessionIndex)
+                    return;
+                SessionLocator.SelectedSession.CurrentEditComponent.ReloadEntityPM();
+                this.GetAccountInfo();
+            }
         });
     }
 

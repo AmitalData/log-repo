@@ -84,7 +84,7 @@
     Type="varchar"
     Size="20">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="UsingAzure"
@@ -583,6 +583,19 @@
    Size="1000">
     <Constraints
       Nullable="true" />
+  </Column>  
+  <Column
+   Name="ExportUrl"
+   Type="varchar"
+   Size="100">
+    <Constraints
+      Nullable="true" />
   </Column>
-  
+  <Column
+   Name="LogitudeIISURL"
+   Type="varchar"
+   Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
 </Table>

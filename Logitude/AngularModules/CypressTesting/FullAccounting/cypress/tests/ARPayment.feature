@@ -6,7 +6,7 @@ Feature: AR Payment
         Given the user logged in and navigates to Full Accounting workspace
         And an AR Payment with the following details
             | Partner         | HadiNewCustomer2023 |
-            | RegisterDate    | 15/05/2023  |
+            | RegisterDate    | 15/11/2023  |
             | PaymentCurrency | NIS         |
             | PaymentMethod   | Cash        |
             | PaymentAmount   | 1000        |
@@ -14,7 +14,12 @@ Feature: AR Payment
         When create AR Payment
         Then the AR Payment should get successfully
 
-    Scenario: Edit print notes and Approve the AR Payment
+    
+        Scenario: Edit print notes and void the AR Payment
         Given add "new notes" as print notes
-        When Approve the AR Payment
-        Then the AR Payment should approve successfully
+        When void AR Payment
+        Then the AR Payment should void successfully  
+        
+           
+
+        

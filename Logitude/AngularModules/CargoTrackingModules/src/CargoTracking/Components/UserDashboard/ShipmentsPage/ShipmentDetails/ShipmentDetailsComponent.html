@@ -341,7 +341,7 @@
                     </button>
 
                     <!-- CustomsDataPanel -->
-                    <button *ngIf="!IsOrderShipment" [class.active]="selectedNavButton=='CustomsDataPanel'"
+                    <button *ngIf="!IsOrderShipment && !IsExport" [class.active]="selectedNavButton=='CustomsDataPanel'"
                         (click)="PanelsNavigatorClicked('CustomsDataPanel')">
                         Customs
                     </button>
@@ -518,17 +518,17 @@
                                 <span *ngIf="!cargoTrackingShipmentPM.GrossWeightUnitCode"> KG</span>
                             </div>
                         </div>
-                        <div *ngIf="!IsOrderShipment">
+                        <div *ngIf="!IsOrderShipment && !IsExport">
                             <div class="title">total value nis</div>
                             <div class="description" *ngIf="this.cargoTrackingShipmentPM.CustomsData">
                                 {{this.cargoTrackingShipmentPM?.CustomsData.TotalValueInNIS||0 | number}} ₪</div>
                         </div>
-                        <div *ngIf="!IsOrderShipment">
+                        <div *ngIf="!IsOrderShipment && !IsExport">
                             <div class="title">total taxes nis</div>
                             <div class="description" *ngIf="this.cargoTrackingShipmentPM.CustomsData">
                                 {{cargoTrackingShipmentPM?.CustomsData.TotalTax||0 | number}} ₪</div>
                         </div>
-                        <div *ngIf="!IsOrderShipment">
+                        <div *ngIf="!IsOrderShipment && !IsExport">
                             <div class="title">declaration status</div>
                             <div class="description" *ngIf="cargoTrackingShipmentPM.CustomsData?.DeclarationStatus">
                                 <span>
@@ -624,7 +624,7 @@
                                     style="cursor: pointer;text-decoration: underline;font-size: 11px;">Show more</a>
                             </div>
                         </div>
-                        <div>
+                        <div *ngIf="!IsOrderShipment">
                             <div class="title">Chargeable Weight</div>
                             <div style="display:inline" class="description">{{cargoTrackingShipmentPM.ChargeableWeightInKG || 0 }}
                             </div><span style="display:inline"> KG</span>
@@ -722,7 +722,7 @@
             </panel>
 
             <!-- Customs Data -->
-            <panel *ngIf="!IsOrderShipment" style="order: 5;" [Title]="'Customs Data'" [Name]="'CustomsDataPanel'"
+            <panel *ngIf="!IsOrderShipment && !IsExport" style="order: 5;" [Title]="'Customs Data'" [Name]="'CustomsDataPanel'"
                 [HaveDetailsSection]="true" [AlwaysExpanded]="true" [ShowWhitePanelOnMobile]="true"
                 [DetailsTitle]="'Tax Details'">
 
@@ -1273,7 +1273,7 @@
                                     <div class="partner-address" style="display: flex;">
                                         <label class="partner-address" > Phone:&nbsp;  </label>
                                         <custom-label [width]="139"  class="partner-address">
-                                           {{splitAddressAndPhone(partnerCard.Address).phone ||'No address'}}</custom-label> 
+                                           {{splitAddressAndPhone(partnerCard.Address).phone ||'No phone'}}</custom-label> 
                                     </div>
     
 
@@ -1313,7 +1313,7 @@
                  </div>
                  <div *ngIf="cargoTrackingShipmentPM.Events?.length > 0 " class="hide-mobile hide-tablet" style="min-width: 720px;width: calc(100% - 10px);">
                     <table class="row-hover" style="width: 100%;">
-                        <tr *ngFor="let item of cargoTrackingShipmentPM.Events">
+                        <tr *ngFor="let item of cargoTrackingShipmentPM.Events| StopLoopPipe: showMoreEvents:3">
                             <td style="width: 30px;"><img src="./assets/images/icons/tick.png" alt=""></td>
                             <td style="width: 300px;">{{item.LocalName}} <span *ngIf="item.EntityType"> ({{item.EntityType}})</span></td>
                             <td style="width: 300px;">{{item.EventDatetime | date: 'dd/MM/yyyy, HH:mm' | dateTimeFormat}}</td>                               
@@ -1325,11 +1325,8 @@
                     </table>
                 </div>
                 <div class="hide-mobile hide-tablet" style="clear: both;"></div>
-
-               
-           
                 <div class="mobile-only tablet-only card document-mobile-card"
-                    *ngFor="let item of cargoTrackingShipmentPM.Events">
+                    *ngFor="let item of cargoTrackingShipmentPM.Events| StopLoopPipe: showMoreEvents:3">
                     <div class="details-section">
                        
                         <div class="row">
@@ -1352,6 +1349,12 @@
                         </div>
                     </div>
  
+                </div>
+                <div *ngIf="cargoTrackingShipmentPM.Events?.length > 3">
+                    <button class="buttonShowMore"
+                            (click)="showMoreEvents=!showMoreEvents">
+                        {{showMoreEvents?'Show Less':'Show More'}}
+                    </button>
                 </div>
             </div>
             </panel>

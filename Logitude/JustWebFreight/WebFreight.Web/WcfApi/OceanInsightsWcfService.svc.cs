@@ -362,6 +362,8 @@ namespace WebFreight.Web.WcfApi
 							if (Type == "c_id")
 							{
 								OceanInsightsRequestPm.ContainerNumber = ReferenceNo;
+								OceanInsightsRequestPm.BLNumber = !string.IsNullOrEmpty(Bol) ? Bol : null;
+
 							}
 							else
 							{

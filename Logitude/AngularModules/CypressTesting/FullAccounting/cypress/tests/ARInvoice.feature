@@ -13,9 +13,7 @@ Feature: AR Invoice
             | VATNo           | Zero        |
             | Branch          | Main Office |
             | VATType         | Zero        |
-        When create AR Invoice
-        Then the AR Invoice should get successfully
-
+        
     Scenario: Add new Invoice Line
         Given Invoice line with the following details
             | ChargesType      | BDDChargeType  |

@@ -123,7 +123,9 @@
                                             [QueryFilterItems]="GLAccountsFilterItems"
                                             (SelectedItemChanged)="GLAccount = $event"
                                             [ForceShowAddLink]="true"
-                                            [HideColumns]="false">
+                                            [HideColumns]="false"
+                                            [StartSearchFromChar]="3"
+                                            [StartSearchFromNumber]="5">
                                     </LogLov>
                                 </td>
                                 <td><div></div></td>
@@ -146,7 +148,9 @@
                                             [SelectedValue]="DeferredGLAccountId"
                                             (SelectedItemChanged)="DeferredGLAccount = $event"
                                             [ForceShowAddLink]="true"
-                                            [HideColumns]="false">
+                                            [HideColumns]="false"
+                                            [StartSearchFromChar]="3"
+                                            [StartSearchFromNumber]="5">
                                     </LogLov>
                                 </td>
                                 <td><div></div></td>
@@ -169,7 +173,9 @@
                                             [SelectedValue]="TransferGLAcccountId"
                                             (SelectedItemChanged)="TransferGLAcccount = $event"
                                             [ForceShowAddLink]="true"
-                                            [HideColumns]="false">
+                                            [HideColumns]="false"
+                                            [StartSearchFromChar]="3"
+                                            [StartSearchFromNumber]="5">
                                     </LogLov>
                                 </td>
                                 <td><div></div></td>

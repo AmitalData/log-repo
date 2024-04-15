@@ -91,6 +91,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="DBScripts\20231501_CreateIndexCargoTrackingCards.sxml" />
+    <None Include="DBScripts\20231501_CreateIndexCargoTrackingShipments_CustomerId.sxml" />
+    <None Include="DBScripts\20231501_CreateIndexCargoTrackingShipments_CurrentMilestoneDate.sxml" />
+    <None Include="DBScripts\20232012_CreateIndexCargoTrackingShipmentSearches.sxml" />
     <None Include="DBTables\CargoDisconnectQueue.dxml" />
     <None Include="DBTables\CargoReferencesSyncQueue.dxml" />
     <None Include="DBTables\CargoTrackingCard.dxml" />
@@ -125,9 +129,7 @@
     </None>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DBScripts\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

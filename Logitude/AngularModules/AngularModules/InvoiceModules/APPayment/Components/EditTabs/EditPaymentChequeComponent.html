@@ -42,7 +42,9 @@
                                             [LookUpTableName]="'GLAccount'"
                                             (SelectedItemChanged)="Account = $event"
                                             [QueryFilterItems]="filterAgrs"
-                                            [HideColumns]="true">
+                                            [HideColumns]="true"
+                                            [StartSearchFromChar]="3"
+                                            [StartSearchFromNumber]="5">
                                     </LogLov>
                                 </td>
                                 <td style="width:100px"><div></div></td>

@@ -1838,16 +1838,19 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     {
                         entityPM.AmountDue = MethodHelper.Round((entityPM.AmountInInvoiceCurrency.Value - conntectedPaymentAmount), 2);
 
-                        if (conntectedPaymentAmount < entityPM.AmountInInvoiceCurrency)
+                        if (!FeatureToggleHelper.HasFeatureToggle("PSR", entityPM.Tenant))
                         {
-                            entityPM.StatusCode = "PP";
-                            entityPM.IsClosed = false;
-                        }
+                            if (conntectedPaymentAmount < entityPM.AmountInInvoiceCurrency)
+                            {
+                                entityPM.StatusCode = "PP";
+                                entityPM.IsClosed = false;
+                            }
 
-                        else
-                        {
-                            entityPM.StatusCode = "PD";
-                            entityPM.IsClosed = true;
+                            else
+                            {
+                                entityPM.StatusCode = "PD";
+                                entityPM.IsClosed = true;
+                            }
                         }
                     }
                     else
@@ -2098,7 +2101,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     journal.CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
                     journal.AccountingDate = theEntityPm.AccountingDate != null ? theEntityPm.AccountingDate.Value : TenantServerConfigration.GetCurrentDateTime(tenant);
                     journal.TypeCode = "0";
-                    journal.StatusCode = "2";
+                    journal.StatusCode = "6";
                     journal.CreatedByUserId = theEntityPm.CreatedByUserId;
                     journal.AccountingEntityCode = "4";
                     journal.AccountingEntityId = theEntityPm.Id;
@@ -2145,31 +2148,26 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
 
                     List<JournalLinePM> journalLines = (from d in theEntityPm.InvoiceLines
-                                                        group d by new { d.ChargeTypeGLAccountId, d.ForiegnCurrencyId, d.ForiegnExchangeRate } into g
                                                         select new JournalLinePM()
                                                         {
                                                             Tenant = tenant,
                                                             ActionCode = "2",
                                                             ActionTypeCodeEnum = JournalActionTypeEnum.Debit,
                                                             JournalId = journal.Id,
-                                                            DebitAccountId = g.Key.ChargeTypeGLAccountId,
+                                                            DebitAccountId = d.ChargeTypeGLAccountId,
                                                             CreditAccountId = theEntityPm.VendorGLAccountId,
                                                             Line = ++counter,
                                                             DocumentDate = theEntityPm.InvoiceDate.Value,
                                                             AccountingDate = theEntityPm.AccountingDate != null ? theEntityPm.AccountingDate.Value : TenantServerConfigration.GetCurrentDateTime(tenant),
                                                             DueDate = theEntityPm.DueDate.Value,
-
-                                                            LocalAmount = Math.Round((decimal)g.Sum(a =>
-                                                             (a.VatRecognizedPercentage == null) ? a.LocalCurrencyAmount :
-                                                               (a.LocalAmountWithVatRecognized)), 2),
-
-                                                            CurrencyId = g.Key.ForiegnCurrencyId,
-                                                            ForeignAmount = Math.Round((decimal)g.Sum(a => a.ForiegnAmountWithRecognizedVat), 2),
-                                                            ExchangeRate = (decimal)g.Key.ForiegnExchangeRate,
+                                                            LocalAmount = Math.Round(d.VatRecognizedPercentage == null ? (decimal)d.LocalCurrencyAmount.Value : (decimal)d.LocalAmountWithVatRecognized.Value, 2),
+                                                            CurrencyId = d.ForiegnCurrencyId,
+                                                            ForeignAmount = Math.Round((decimal)d.ForiegnAmountWithRecognizedVat, 2),
+                                                            ExchangeRate = (decimal)d.ForiegnExchangeRate,
                                                             Reference1 = theEntityPm.InvoiceNumber,
                                                             Reference2 = theEntityPm.MainEntityReference,
                                                             Reference3 = !string.IsNullOrEmpty(theEntityPm.HouseNumber) ? theEntityPm.HouseNumber : theEntityPm.MasterNumber,
-                                                            Notes = theEntityPm.InternalNotes,
+                                                            Notes = d.Notes,
                                                         }).ToList();
 
                     journalDebitLines.AddRange(journalLines);

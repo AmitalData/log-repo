@@ -102,17 +102,57 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 select a.Id);
             return q;
         }
+        
+        public GLAccountPM GetGlaAccountByJouranlIdAndJournalLineNumber(int tenant, string JournalId, int JournalLineNumber)
+        {
+            var glAccountPM = (
+                from a in this.repository.GetGlaAccountByJouranlIdAndJournalLineNumber(tenant, JournalId, JournalLineNumber)
+                select new GLAccountPM()
+                {
+                    Id = a.Id,
+                    CurrencyId = a.CurrencyId,
+                    DisplayNumber = a.DisplayNumber,
+                    Inactive = a.Inactive,
+                    CurrencyCode = a.Currency != null ? a.Currency.Code : null,
+                    ChartOfAccountsId = a.ChartOfAccountsId,
+                    ChartOfAccountsTypeCode = a.ChartOfAccountsTypeCode,
+                    LocalName = a.LocalName,
+                    ReconcileMethodCode = a.ReconcileMethodCode,
+                    RevenueExpenseType = a.RevenueExpenseType,
+                    Tenant = tenant,
+                    AccountTypeCode = a.AccountTypeCode,
+                    AutomaticReconcileId = a.AutomaticReconcileId,
+                    ControlAccountId = a.ControlAccountId,
+                    CustomerGLAccountId = a.CustomerGLAccountId,
+                    InternalNumber = a.InternalNumber
+
+                }).FirstOrDefault();
+            return glAccountPM;
+        }
         public IQueryable<string> GetQGLAccIdBySalesmanId(int tenant, string SalesmanId, string AccountTypeCode)
         {
-            var q = (
-                from a in this.repository.GetQAllByAccountTypeCode(tenant, AccountTypeCode)
-                join card in (this.context as AccountingContext).Cards.Where(r => r.Tenant == tenant)
-                on a.Id equals card.GLAccountId
-                join cust in (this.context as AccountingContext).Customers
-                .Where(r => r.SalesmanUserId == SalesmanId && r.Tenant == tenant)
-                on card.Id equals cust.Id
-                select a.Id);
-            return q;
+            IQueryable<string> q = (
+               from a in this.repository.GetQAllByAccountTypeCode(tenant, AccountTypeCode)
+               join card in (this.context as AccountingContext).Cards.Where(r => r.Tenant == tenant)
+               on a.Id equals card.GLAccountId
+
+               join cust in (this.context as AccountingContext).Customers
+               .Where(r => r.SalesmanUserId == SalesmanId && r.Tenant == tenant)
+               on card.Id equals cust.Id
+
+               select a.Id);
+
+            IQueryable<string> qChild = (from b in q
+                                         join glaccountChild in this.context.GLAccountCurrencies.Where(r => r.Tenant == tenant)
+                                         on b equals glaccountChild.MainGLAccountId
+                                         select glaccountChild.GLAccountId);
+
+            IQueryable<string> combinedQuery = q.Concat(qChild);
+
+
+
+
+            return combinedQuery;
         }
         public bool CheckIfDisplayNumberExists(string displayNo, string internalNumber, int tenant)
         {
@@ -1513,79 +1553,10 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
             ChartOfAccountRepository ChartOfAccountRepository = new ChartOfAccountRepository(context);
             List<ChartOfAccount> chartOfAccount = ChartOfAccountRepository.GetAll(tenatToCopy).Where(t => t.Inactive == false).ToList();
-            List<GLAccount> pocosIsControlAccount = repository.GetAll(tenant).Where(t => t.Inactive == false && t.IsControlAccount==true).ToList();
+            //List<GLAccount> pocosIsControlAccount = repository.GetAll(tenant).Where(t => t.Inactive == false && t.IsControlAccount==true).ToList();
             List<GLAccount> pocosNotIsControlAccount = repository.GetAll(tenant).Where(t => t.Inactive == false && t.IsControlAccount == false).ToList();
            
-            foreach (var item in pocosIsControlAccount)
-            {
-                GLAccountPM glAccountPM = new GLAccountPM()
-                {
-                    Tenant = tenatToCopy,
-                    AccountTypeCode = item.AccountTypeCode,
-                    DisplayNumber = item.DisplayNumber,
-                    LocalName = item.LocalName,
-                    EnglishName = item.EnglishName,
-                    SearchFields = item.SearchFields,
-                    IsMultiCurrency = item.IsMultiCurrency,
-                    CurrencyId = item.CurrencyId,
-                    RevenueExpenseType = item.RevenueExpenseType,
-                    IsControlAccount = item.IsControlAccount,
-                   ChartOfAccountsId = chartOfAccount?.Where(c=>c.TypeCode== item.ChartOfAccountsTypeCode).FirstOrDefault().Id,
-                    Inactive = item.Inactive,
-                   ChartOfAccountsTypeCode = item.ChartOfAccountsTypeCode,
-                    ReconcileMethodCode = item.ReconcileMethodCode,
-                    ControlAccountId =null,
-                    AutomaticReconcileId = item.AutomaticReconcileId,
-                    PreviousEnglishName = item.PreviousEnglishName,
-                    PreviousLocalName = item.PreviousLocalName,
-                    PreviousNumber = item.PreviousNumber,
-                    PreviousChartOfAccountsId = item.PreviousChartOfAccountsId,
-                    CustomerGLAccountId = item.CustomerGLAccountId,
-                    RevaluationEnabled = item.RevaluationEnabled,
-                    ParentAccountId = item.ParentAccountId,
-                    Category1Id = item.Category1Id,
-                    Category2Id = item.Category2Id,
-                    Category3Id = item.Category3Id,
-                    Category4Id = item.Category4Id,
-                    Category5Id = item.Category5Id,
-                    IsVATExempt = item.IsVATExempt,
-                    DeductionFileTypeId = item.DeductionFileTypeId,
-                    DeductionFileNumber = item.DeductionFileNumber,
-                    AssessingOfficeCode = item.AssessingOfficeCode,
-                    Occupation = item.Occupation,
-                    DeductionTypeId = item.DeductionTypeId,
-                    ConsolidationVat = item.ConsolidationVat,
-                    IsEquipmentVendor = item.IsEquipmentVendor,
-                    ExcludeFromDeductionReport = item.ExcludeFromDeductionReport,
-                  
-                    AllowEditChequePayToName = item.AllowEditChequePayToName,
-                    ActiveForInterest = item.ActiveForInterest,
-                    InterestCalculationStartDate = item.InterestCalculationStartDate,
-                    ActiveForInterestCreditInvoice = item.ActiveForInterestCreditInvoice,
-                    InterestCreditLimit = item.InterestCreditLimit,
-                    NameForPrintingCheques = item.NameForPrintingCheques,
-                    Smallcashbook = item.Smallcashbook,
-                    MinimumInterestInvoiceBilling = item.MinimumInterestInvoiceBilling,
-                    ReportingAsAnotherDocument = item.ReportingAsAnotherDocument,
-                    CreditAllotmentPercentage = item.CreditAllotmentPercentage,
-                    CardsDataId = item.CardsDataId,
-                    PostponedChequesCommission = item.PostponedChequesCommission,
-                    InterestOpenBalance = item.InterestOpenBalance
-
-
-
-
-                };
-
-
-
-
-
-                glAccountPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
-                service.Update(glAccountPM, true);
-                context.SaveChanges();
-            }
-             pocosIsControlAccount = repository.GetAll(tenatToCopy).Where(t => t.Inactive == false && t.IsControlAccount == true).ToList();
+          
 
 
             foreach (var item in pocosNotIsControlAccount)
@@ -1606,7 +1577,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                     Inactive = item.Inactive,
                     ChartOfAccountsTypeCode = item.ChartOfAccountsTypeCode,
                     ReconcileMethodCode = item.ReconcileMethodCode,
-                    ControlAccountId = item.ChartOfAccountsTypeCode == "3" ? pocosIsControlAccount?.Where(t => t?.ChartOfAccountsTypeCode == "3").FirstOrDefault().Id : item.ChartOfAccountsTypeCode == "4" ? pocosIsControlAccount?.Where(t => t?.ChartOfAccountsTypeCode == "4").FirstOrDefault().Id : null,
+                    ControlAccountId = item.ChartOfAccountsTypeCode == "3" ? pocosNotIsControlAccount?.Where(t => t?.ChartOfAccountsTypeCode == "3").FirstOrDefault().Id : item.ChartOfAccountsTypeCode == "4" ? pocosNotIsControlAccount?.Where(t => t?.ChartOfAccountsTypeCode == "4").FirstOrDefault().Id : null,
                     AutomaticReconcileId = item.AutomaticReconcileId,
                     PreviousEnglishName = item.PreviousEnglishName,
                     PreviousLocalName = item.PreviousLocalName,
@@ -1662,10 +1633,12 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             List<GLAccountMoreData> GLAccountMoreData0 = glAccountMoreDataRepository.GetAll(tenant).ToList();
             List<GLAccount> GLAccountTenant0 = repository.GetAll(tenant).Where(t => t.Inactive == false && t.IsControlAccount == false).ToList();
             List<GLAccount> GLAccount= repository.GetAll(tenatToCopy).Where(t => t.Inactive == false && t.IsControlAccount == false).ToList();
+            GLAccountMoreData0 = GLAccountMoreData0.Where(data => GLAccountTenant0.Any(account => account.Id == data.AccountId)).ToList();
+
             foreach (var item in GLAccountMoreData0)
             {
-                var interNumber=GLAccountTenant0.Find(c => c.Id == item.AccountId).InternalNumber;
-                var AccountId=GLAccount.Find(c => c.InternalNumber == interNumber).Id;
+                var interNumber= GLAccountTenant0.Find(c => c.Id == item.AccountId)?.InternalNumber;
+                var AccountId=GLAccount.Find(c => c.InternalNumber == interNumber)?.Id;
                 GLAccountMoreDataPM glAccountMoreDataPM = new GLAccountMoreDataPM()
                 {
                     AccountId= AccountId,

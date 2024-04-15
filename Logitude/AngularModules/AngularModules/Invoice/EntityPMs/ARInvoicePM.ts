@@ -183,6 +183,7 @@ export class ARInvoicePM {
     public set IsFromInterestBatchInvoice(newValue: boolean) { if (this.isFromInterestBatchInvoice != newValue) { this.isFromInterestBatchInvoice = newValue; this.MarkAsDirty("IsFromInterestBatchInvoice"); } }
        
 	 
+    
     private billToAddressId: string;
     public get BillToAddressId() { return this.billToAddressId; }
     public set BillToAddressId(newValue: string) { if (this.billToAddressId != newValue) { this.billToAddressId = newValue; this.MarkAsDirty("BillToAddressId"); } }
@@ -221,6 +222,11 @@ export class ARInvoicePM {
     private issuedByUserId: string;
     public get IssuedByUserId() { return this.issuedByUserId; }
     public set IssuedByUserId(newValue: string) { if (this.issuedByUserId != newValue) { this.issuedByUserId = newValue; this.MarkAsDirty("IssuedByUserId"); } }
+       
+	 
+    private isSigned: string;
+    public get IsSigned() { return this.isSigned; }
+    public set IsSigned(newValue: string) { if (this.isSigned != newValue) { this.isSigned = newValue; this.MarkAsDirty("IsSigned"); } }
        
 	 
     private invoiceCurrencyId: string;
@@ -1182,10 +1188,29 @@ export class ARInvoicePM {
     public set DocumentTemplateId(newValue: string) { if (this.documentTemplateId != newValue) { this.documentTemplateId = newValue; this.MarkAsDirty("DocumentTemplateId"); } }
        
 	 
+   
+	 
     private vatsAmountsManulAdjuested: boolean;
     public get VatsAmountsManulAdjuested() { return this.vatsAmountsManulAdjuested; }
     public set VatsAmountsManulAdjuested(newValue: boolean) { if (this.vatsAmountsManulAdjuested != newValue) { this.vatsAmountsManulAdjuested = newValue; this.MarkAsDirty("VatsAmountsManulAdjuested"); } }
-
+       
+	 
+    private confirmationNumber: string;
+    public get ConfirmationNumber() { return this.confirmationNumber; }
+    public set ConfirmationNumber(newValue: string) { if (this.confirmationNumber != newValue) { this.confirmationNumber = newValue; this.MarkAsDirty("ConfirmationNumber"); } }
+       
+	 
+    private confirmationNumberStatus: string;
+    public get ConfirmationNumberStatus() { return this.confirmationNumberStatus; }
+    public set ConfirmationNumberStatus(newValue: string) { if (this.confirmationNumberStatus != newValue) { this.confirmationNumberStatus = newValue; this.MarkAsDirty("ConfirmationNumberStatus"); } }
+    private confirmationNumberStatusName: string;
+    public get ConfirmationNumberStatusName() { return this.confirmationNumberStatusName; }
+    public set ConfirmationNumberStatusName(newValue: string) { if (this.confirmationNumberStatusName != newValue) { this.confirmationNumberStatusName = newValue; this.MarkAsDirty("ConfirmationNumberStatusName"); } }
+       
+	  private aPIResponseToConfirmation: string;
+    public get APIResponseToConfirmation() { return this.aPIResponseToConfirmation; }
+    public set APIResponseToConfirmation(newValue: string) { if (this.aPIResponseToConfirmation != newValue) { this.aPIResponseToConfirmation = newValue; this.MarkAsDirty("APIResponseToConfirmation"); } }
+       
 
     public OldEntityPM: ARInvoicePM;
 		
@@ -1214,4 +1239,4 @@ export class ARInvoicePM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

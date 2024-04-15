@@ -1,4 +1,5 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
+using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,14 +19,18 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
                 if (!string.IsNullOrEmpty(MyEntity.ExternalId))
                 {
                     temp = query.GetAddressByExternalId(MyEntity.ExternalId, Tenant);
+                    
+                    if(temp == null) 
+                    {
+                        CardRepository cardRepository = new CardRepository(Tenant);
+                        string cardId = cardRepository.GetActiveCardIdByCode(MyEntity.ExternalId, Tenant);
+                        if(cardId != null )
+                            temp = query.GetAddressByCardId(cardId, Tenant);
+
+                    }
                 }
 
-                else
-                {
-                  //  temp = query.(MyEntity.Code, Tenant);
-                }
-
-
+               
                 if (temp == null)
                 {
                     throw new ApplicationException("Address with ExternalId " + MyEntity.ExternalId + " doesn't exist");

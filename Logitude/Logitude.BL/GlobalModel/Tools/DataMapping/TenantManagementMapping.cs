@@ -185,8 +185,11 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
             entityPOCO.CargoTrackingPrivateShowEvents = entityPM.CargoTrackingPrivateShowEvents;
             entityPOCO.LogoURL = entityPM.LogoURL;
             entityPOCO.ServiceAgreementURL = entityPM.ServiceAgreementURL;
+            entityPOCO.ExportTenant = entityPM.ExportTenant;
+            entityPOCO.ExportLoginCredintial = entityPM.ExportLoginCredintial;
+			entityPOCO.SearchAbsoluteValuePublic = entityPM.SearchAbsoluteValuePublic;
 
-            string packageName = null;
+			string packageName = null;
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
                 TenantRepository tenantRepository = new TenantRepository(entityPM.Id);
@@ -217,6 +220,7 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
                     tenant.IsTestTenant = entityPM.IsTestTenant;
                     tenant.IsHybrid = entityPM.IsHybrid;
                     tenant.EcommerceSupportEmail = entityPM.EcommerceSupportEmail;
+                    tenant.EcommerceTenant = entityPM.EcommerceTenant;
 
 
                     tenantRepository.Update(tenant);

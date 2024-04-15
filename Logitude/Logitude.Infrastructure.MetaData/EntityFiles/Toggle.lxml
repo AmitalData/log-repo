@@ -972,6 +972,11 @@
       SearchFields="&quot;CPI,Centralized POD images when convert to PDF files&quot;"
       Description="&quot;Centralized POD images when convert to PDF files&quot;" />
     <Record
+      SearchFields="&quot;PSR, Payment Status based on Reco&quot;"
+      Code="&quot;PSR&quot;"
+      Description="&quot;Payment Status based on Reco&quot;"
+      Name="&quot; A/P Invoice Payment Status based on Reconciliation&quot;" />
+    <Record
       Code="&quot;RE2&quot;"
       Name="&quot;Reports Execution WR Version 2&quot;"
       SearchFields="&quot;RE2, Reports Execution WR Version 2&quot;"
@@ -1001,6 +1006,11 @@
       Name="&quot;Invoice Status According To Ledger Open Amount&quot;"
       SearchFields="&quot;ILO,Invoice Status According To Ledger Open Amount&quot;"
       Description="&quot;Invoice Status According To Ledger Open Amount&quot;" />
+    <Record
+      Code="&quot;MC1&quot;"
+      Name="&quot;IsMulti With ReconcileMethodCode Equal One&quot;"
+      SearchFields="&quot;MC1&quot;"
+      Description="&quot;לאפשר הגדרת כרטיס מולטי ככרטיס שמותאם במטז&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

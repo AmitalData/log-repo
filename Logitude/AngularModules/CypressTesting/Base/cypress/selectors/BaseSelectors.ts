@@ -66,7 +66,7 @@ export class BaseSelectors extends RegexSelectors {
 
     //#region Contains
     public static readonly ContainsApplytoall = 'Apply to all';
-    public static readonly ContainsOK = 'OK';
+    public static readonly ContainsOK = 'אישור';
     public static readonly ContainsConfirm = 'Confirm';
     public static readonly ContainsShipment = "Shipment: "
     public static readonly ContainsOperations = "Operations"

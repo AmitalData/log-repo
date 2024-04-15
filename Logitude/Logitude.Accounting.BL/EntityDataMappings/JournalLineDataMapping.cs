@@ -48,7 +48,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
         }
 
         public void CustomPOCOToPM(JournalLinePM entityPM, JournalLine entityPOCO)
-        {
+        {   if (entityPOCO.Reference3=="Amital") return;
             CustomMappedPOCOProperties.Add(POCOPropertyNames.ActionCode);
 
             CustomMappedPOCOProperties.Add(POCOPropertyNames.CurrencyId);

@@ -474,6 +474,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="SendingInterestReport"
+    Type="bit"
+    DefaultValue="0">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="Id"
     ReferencedTable="Cards"

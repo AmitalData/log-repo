@@ -5,6 +5,7 @@ import { RequestAliases } from "../../../Base/cypress/constants/RequestAliases";
 import * as BaseAssertion from '../../../Base/cypress/actions/Assertion';
 import { URLs } from '../constants/URLs';
 import { RestAPI } from '../../../Base/cypress/constants/RestAPI'
+import { FillChequeDepositDetails } from "./ChequeDepositActions";
 
 export function NavigatesARPaymentWorkspace() {
     cy.Click(ARPaymentSelectors.NewARPaymentButton, null)
@@ -19,7 +20,16 @@ export function FillARPayment(aRPaymentDetails: ARPaymentDetails) {
     cy.FillLogLov(ARPaymentSelectors.PaymentCurrency, aRPaymentDetails.PaymentCurrency, true)
 }
 
+export function FillChequeARPayment(aRPaymentDetails: ARPaymentDetails) {
+    cy.FillLogLov(ARPaymentSelectors.Partner, aRPaymentDetails.Partner, true)
+    cy.FillLogTextBox(ARPaymentSelectors.RegisterDate, aRPaymentDetails.RegisterDate)
+    cy.FillLogLov(ARPaymentSelectors.PaymentMethod, aRPaymentDetails.PaymentMethod, true)
+    cy.FillLogLov(ARPaymentSelectors.PaymentBranch, aRPaymentDetails.PaymentBranch, true)
+    cy.FillLogLov(ARPaymentSelectors.PaymentCurrency, aRPaymentDetails.PaymentCurrency, true)
+}
+
 export function FillChequeDetails(aRPaymentDetails: ARPaymentDetails) {
+    PressOnTitleAfterFillLogTextBox(ARPaymentSelectors.ChequeAmount,aRPaymentDetails.ChequeAmount)
     PressOnTitleAfterFillLogTextBox(ARPaymentSelectors.ChequeValueDate, aRPaymentDetails.ChequeValueDate)
     PressOnTitleAfterFillLogTextBox(ARPaymentSelectors.ChequeRef, aRPaymentDetails.ChequeRef)
     PressOnTitleAfterFillLogTextBox(ARPaymentSelectors.ChequeBank, aRPaymentDetails.ChequeBank)
@@ -53,6 +63,7 @@ export function AssertApproveARPayment() {
 
 export function VoidARPayment() {
     cy.DefineRequestWait(RestAPI.PUT, URLs.ARPayments, RequestAliases.ARPayments)
+    cy.wait(2000);
     cy.Click(BaseSelectors.MenuButtons, null)
     cy.Click(ARPaymentSelectors.VoidButton, null)
     cy.FillLogTextBox(ARPaymentSelectors.CancelationNotes, BaseSelectors.ContainsCancel)

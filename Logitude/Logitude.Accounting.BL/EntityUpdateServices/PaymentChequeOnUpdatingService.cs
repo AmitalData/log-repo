@@ -109,7 +109,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             {
                 CreateDate = entityPM.CreateDate,
                 TypeCode = "0",
-                StatusCode = "2",
+                StatusCode = "6",
                 CreatedByUserId = entityPM.CreatedByUserId,
                 AccountingEntityCode = "9",
                 AccountingEntityId = entityPM.Id,

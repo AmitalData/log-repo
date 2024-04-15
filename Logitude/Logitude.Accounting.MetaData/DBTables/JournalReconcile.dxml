@@ -13,7 +13,7 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="Line"
+    Name="Tenant"
     Type="int">
     <Constraints
       Nullable="false" />
@@ -27,7 +27,7 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="Tenant"
+    Name="Line"
     Type="int">
     <Constraints
       Nullable="false" />

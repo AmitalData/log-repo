@@ -8,6 +8,7 @@ using WWApi.Models;
 using System;
 using System.Linq;
 using System.Globalization;
+using System.IO;
 
 namespace TrackedShipmentsAPI.Services
 {
@@ -48,25 +49,33 @@ namespace TrackedShipmentsAPI.Services
 
         public void MergeToMainJson(JObject mainJson, JObject jsonToMerge)
         {
-            JObject parsedJson = JObject.Parse($@"
+			dynamic parsedJson = JsonConvert.DeserializeObject<JObject>($@"
             {{
                 ""Root"": {{
                     ""container"": {{
                         ""shipment"": {jsonToMerge.ToString()}
                     }}
                 }}
-            }}");
+             }}", new JsonSerializerSettings
+			{
+				DateParseHandling = DateParseHandling.None
+			});
 
-            mainJson.Merge(parsedJson);
+			mainJson.Merge(parsedJson);
         }
 
-        // Converts json object to XML
-        public XmlDocument JsonToXML(string jsonData)
-        {
-            XmlDocument doc = JsonConvert.DeserializeXmlNode(jsonData);
 
-            return doc;
-        }
+		public XmlDocument JsonToXML(string jsonData)
+		{
+			var settings = new JsonSerializerSettings
+			{
+				Converters = { new Newtonsoft.Json.Converters.XmlNodeConverter() },
+				DateParseHandling = DateParseHandling.None,
+			};
+
+			return  JsonConvert.DeserializeObject<XmlDocument>(jsonData, settings);
+			
+		}
 
         public Dictionary<string, T> CreateDictionaryFromJson<T>(dynamic arrayElement, string keyName)
         {
@@ -183,10 +192,10 @@ namespace TrackedShipmentsAPI.Services
             bool isActual = timestamps?.code == ACTUAL_CODE;
 
             if (actualField) {
-                return isActual ? (datetime != null ? DateTime.ParseExact(datetime, "MM/dd/yyyy HH:mm:ss", CultureInfo.InvariantCulture).ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss") : datetime) : "";
+                return isActual ? (datetime != null ? DateTime.ParseExact(datetime, "yyyy-MM-ddTHH:mm:sszzz", CultureInfo.InvariantCulture).ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss") : datetime) : "";
             }
 
-            return isActual ? "" : (datetime != null ? DateTime.ParseExact(datetime, "MM/dd/yyyy HH:mm:ss", CultureInfo.InvariantCulture).ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss") : datetime);
+            return isActual ? "" : (datetime != null ? DateTime.ParseExact(datetime, "yyyy-MM-ddTHH:mm:sszzz", CultureInfo.InvariantCulture).ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss") : datetime);
 			;
 		}
 
@@ -251,17 +260,52 @@ namespace TrackedShipmentsAPI.Services
 
             MergeToMainJson(json, aggregatedTransshipmentsJson);
         }
+		public static string ExtractDateTimeFromObjectId(string objectId)
+		{
+			if (objectId.Length == 24)
+			{
+				try
+				{
+					string timestampHex = objectId.Substring(0, 8);
+					int timestampInt = Convert.ToInt32(timestampHex, 16);
+					DateTime timestamp = DateTimeOffset.FromUnixTimeSeconds(timestampInt).UtcDateTime;
 
-        // Aggregates the relevant data from all functions to the JSON
-        public string AddDataToJSON(dynamic data, string sentAt)
+					return timestamp.ToString("yyyy-MM-dd HH:mm:ss");
+				}
+				catch (Exception ex)
+				{
+					throw new ArgumentException("Invalid ObjectId format.", ex);
+				}
+			}
+			else
+			{
+				throw new ArgumentException("Invalid ObjectId format.");
+			}
+		}
+		public static Port GetNextPort(Vessel currentVessel, Milestone nextMilestone, Dictionary<string, Port> portsDict)
+		{
+			if (currentVessel != null && nextMilestone?.arrival?.vesselId == currentVessel?.vesselId && nextMilestone?.portId != null)
+			{
+				if (portsDict.ContainsKey(nextMilestone.portId))
+				{
+					return portsDict[nextMilestone.portId];
+				}
+			}
+
+			return new Port();
+		}
+
+		// Aggregates the relevant data from all functions to the JSON
+		public string AddDataToJSON(dynamic data, string sentAt)
         {
             Event[] events = data?.shipment?.events?.ToObject<Event[]>() ?? new Event[1];
             Milestone[] milestones = data?.shipment?.milestones?.ToObject<Milestone[]>() ?? new Milestone[1];
 
             Dictionary<string, Port> portsDict = CreateDictionaryFromJson<Port>(data?.shipment?.ports, "portId");
             Dictionary<string, Vessel> vesselsDict = CreateDictionaryFromJson<Vessel>(data?.shipment?.vessels, "vesselId");
-
-            string shipmentId = data?.shipment?.identifiers?.shipmentId;
+			
+            string trackedShipmentId = data?.shipment?.identifiers?.trackedShipmentId;
+			string shipmentId = data?.shipment?.identifiers?.shipmentId;
 
             string podVesselArrivalDetected = data?.shipments?.predicted?.code == ACTUAL_CODE ? data?.shipments?.predicted?.datetime : "";
 
@@ -272,14 +316,17 @@ namespace TrackedShipmentsAPI.Services
             Vessel currentVessel = carrierLatestStatus?.vesselId != null ? vesselsDict[carrierLatestStatus?.vesselId ?? ""] : new Vessel();
 
 			Milestone nextMilestone = milestones.FirstOrDefault((Milestone milestone) => milestone?.arrival?.timestamps?.carrier?.datetime != null && milestone?.arrival?.timestamps?.carrier?.code == PLANNED_CODE);
-			Port nextPort = currentVessel != null & nextMilestone?.arrival?.vesselId == currentVessel?.vesselId ? portsDict[nextMilestone?.portId ?? ""] : new Port();
+			Port nextPort = GetNextPort(currentVessel, nextMilestone, portsDict);
+			Milestone lastMilestone = milestones.Last();
 
 
 			string podVesselArrivalPlannedLast = GetDateByActual(podLocMilestone?.arrival?.timestamps?.carrier, false);
             string podVesselArrivalActual = GetDateByActual(podLocMilestone?.arrival?.timestamps?.carrier, true);
 
-            // Parse the JSON structure
-            JObject json = JObject.Parse($@"
+			string idDate = ExtractDateTimeFromObjectId(trackedShipmentId);
+
+			// Parse the JSON structure
+			JObject json = JObject.Parse($@"
             {{
                 ""Root"": {{
                     ""container"": {{
@@ -297,7 +344,7 @@ namespace TrackedShipmentsAPI.Services
                             ""code"": """",
                             ""severity"": """",
                             ""walltime"": """",
-                            ""created"": ""{DateTime.ParseExact(sentAt, "MM/dd/yyyy HH:mm:ss", CultureInfo.InvariantCulture).ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss")}""
+                            ""created"": ""{DateTime.ParseExact(sentAt, "yyyy-MM-ddTHH:mm:sszzz", CultureInfo.InvariantCulture).ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss")}""
                         }},
                         ""shipment"": {{
                             ""id"": ""{shipmentId ?? ""}"",
@@ -306,7 +353,8 @@ namespace TrackedShipmentsAPI.Services
                            ""current_vessel_nextport"": {{
                                  ""name"": ""{nextPort?.name}"",
                                  ""locode"": ""{nextPort?.locode}"",
-                                 ""eta"": ""{GetDateByActual(nextMilestone?.arrival?.timestamps?.predicted, false) ?? GetDateByActual(nextMilestone?.arrival?.timestamps?.carrier, false)}"",
+                                 ""eta"": ""{GetDateByActual(nextMilestone?.arrival?.timestamps?.predicted, false) ?? GetDateByActual(nextMilestone?.arrival?.timestamps?.carrier, false) 
+                                 ?? GetDateByActual(lastMilestone?.arrival?.timestamps?.predicted, true) ?? GetDateByActual(lastMilestone?.arrival?.timestamps?.carrier, true)}"",
                             }},
                             ""current_vessel_position"": {{
                                 ""latitude"": ""{currentVessel?.lastPosition?.coordinates?[1]}"",
@@ -344,14 +392,14 @@ namespace TrackedShipmentsAPI.Services
                             ""weight"": """",
                             ""status"": """",
                             ""lifecycle_status"": """",
-                            ""id_date"": ""{(carrierLatestStatus?.timestamps?.datetime != null ? DateTime.ParseExact(carrierLatestStatus?.timestamps?.datetime, "MM/dd/yyyy HH:mm:ss", CultureInfo.InvariantCulture).ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss") : "")}"",
+                            ""id_date"": ""{idDate}"",
                             ""origin_planned_initial"": """",
                             ""origin_actual"": """",
                             ""origin_planned_last"": """",
                             ""pol_vsldeparture_planned_initial"": ""{data?.shipment?.initialCarrierETD?.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss")}"",
                             ""pol_vsldeparture_planned_last"": ""{GetEventData(events, ARRIVAL_AT_POL, false)}"",
-                            ""pol_vsldeparture_actual"": ""{(polLocMilestone?.departure?.timestamps?.carrier?.datetime != null ? DateTime.ParseExact(polLocMilestone?.departure?.timestamps?.carrier?.datetime, "MM/dd/yyyy HH:mm:ss", CultureInfo.InvariantCulture).ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss") : "")}"",
-                            ""pol_vsldeparture_detected"": ""{(polLocMilestone?.departure?.timestamps?.predicted?.datetime != null ? DateTime.ParseExact(polLocMilestone?.departure?.timestamps?.predicted?.datetime, "MM/dd/yyyy HH:mm:ss", CultureInfo.InvariantCulture).ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss") : "")}"",
+                            ""pol_vsldeparture_actual"": ""{(polLocMilestone?.departure?.timestamps?.carrier?.datetime != null ? DateTime.ParseExact(polLocMilestone?.departure?.timestamps?.carrier?.datetime, "yyyy-MM-ddTHH:mm:sszzz", CultureInfo.InvariantCulture).ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss") : "")}"",
+                            ""pol_vsldeparture_detected"": ""{(polLocMilestone?.departure?.timestamps?.predicted?.datetime != null ? DateTime.ParseExact(polLocMilestone?.departure?.timestamps?.predicted?.datetime, "yyyy-MM-ddTHH:mm:sszzz", CultureInfo.InvariantCulture).ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss") : "")}"",
                             ""pod_vslarrival_planned_initial"": ""{data?.shipment?.initialCarrierETA?.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss")}"",
                             ""pod_vslarrival_planned_last"": ""{podVesselArrivalPlannedLast}"",
                             ""pod_vslarrival_actual"": ""{podVesselArrivalActual}"",
@@ -396,7 +444,6 @@ namespace TrackedShipmentsAPI.Services
             // Convert the updated JSON structure back to a string
             string updatedJson = json.ToString();
 
-            // return updatedJson;
             return updatedJson;
         }
     }

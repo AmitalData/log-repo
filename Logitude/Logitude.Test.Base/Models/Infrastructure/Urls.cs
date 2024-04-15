@@ -42,6 +42,7 @@ namespace Logitude.Base.Models.Shared
         public static string GlaccountviewsByFilters = "GLAccountViews/GetByFilters";
         public static string ChartOfAccountViewsByFilters = "ChartOfAccountViews/GetByFilters";
         public static string ShipmentContainersWebServiceController = "ShipmentContainersWebService";
+        public static string SatisfactionSurveysWebServiceController = "SatisfactionSurveysWebService";
         public static string ChartOfAccountsController = "ChartOfAccounts";
         public static string FullAccountingSettingsController = "FullAccountingSettings";
         public static string AccountingPeriodsController = "AccountingPeriods";

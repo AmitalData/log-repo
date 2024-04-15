@@ -27,6 +27,7 @@ using CommunicationWorkerRole.Services.Logbox;
 using System.Net.Http;
 using Newtonsoft.Json;
 using CommunicationWorkerRole.Services.SignUp;
+using System.Drawing;
 
 namespace CommunicationWorkerRole
 {
@@ -168,8 +169,8 @@ namespace CommunicationWorkerRole
                 emailParams = new EmailCommunicationParams()
                 {
                     From = "admin@fnarsoft.com",
-                    To = "Perla@logitudeworld.com",
-                    CC = "fajr@logitudeworld.com;eman@logitudeworld.com;maryam@logitudeworld.com;mujahed@logitudeworld.com;balqees@logitudeworld.com;a.khanfar@logitudeworld.com;a.hamamreh@logitudeworld.com;dana@logitudeworld.com;mohammadj@logitudeworld.com;ahmedm@logitudeworld.com;dalia@logitudeworld.com;Mohammada@logitudeworld.com",
+                    To = "anatl@AMITAL.CO.IL",
+                    CC = "Simon@amital.co.il;ohad@AMITAL.CO.IL;chana@amital.co.il;badir@AMITAL.CO.IL;sana@AMITAL.CO.IL;elisheva@AMITAL.CO.IL",
                     BCC = "",
                     Subject = "SignUp complete successfully for " + signUpInfo.Company,
                     EmailBody = emailbody,
@@ -207,8 +208,8 @@ namespace CommunicationWorkerRole
                 emailParams = new EmailCommunicationParams()
                 {
                     From = "admin@fnarsoft.com",
-                    To = "jalal@logitudeworld.com",//;itzik@amital.co.il;YaronC@AMITAL.CO.IL",
-                    CC = "ahmada@logitudeworld.com;ahmadb@logitudeworld.com;Eric@AMITAL.CO.IL;razan@logitudeworld.com;lana@logitudeworld.com",
+                    To = "anatl@AMITAL.CO.IL",//;itzik@amital.co.il;YaronC@AMITAL.CO.IL",
+                    CC = "Simon@amital.co.il;ohad@AMITAL.CO.IL;chana@amital.co.il;badir@AMITAL.CO.IL;sana@AMITAL.CO.IL;elisheva@AMITAL.CO.IL",
                     BCC = "",
                     Subject = LogitudeSettings.DeploymentStage + " - SignUp complete successfully for " + signUpInfo.Company,
                     EmailBody = emailbody,
@@ -218,7 +219,7 @@ namespace CommunicationWorkerRole
 
                 if (LogitudeSettings.IsCostomsDeploy)
                 {
-                    emailParams.To += "eldad@amital.co.il;itzik@amital.co.il;Eric@AMITAL.CO.IL";
+                    emailParams.To += "anatl@AMITAL.CO.IL";
                 }
             }
 
@@ -229,13 +230,13 @@ namespace CommunicationWorkerRole
         private static EmailCommunicationParams GetLogboxEmailCommunicationParams(SignUpInfoClass signUpInfo, string emailbody)
         {
             string additionalCCEmails = signUpInfo.IsCreateLogboxTenantFromCloud ? signUpInfo.AdditionalEmail : "";
-            string additionalBCCEmails = signUpInfo.IsCreateLogboxTenantFromCloud ? "" : ";boazelkana@gmail.com";
+            //string additionalBCCEmails = signUpInfo.IsCreateLogboxTenantFromCloud ? "" : "boazelkana@gmail.com";
             return new EmailCommunicationParams()
             {
                 From = "admin@fnarsoft.com",
-                To = "Eric@AMITAL.CO.IL",
-                CC = additionalCCEmails,
-                BCC = "ahmada@logitudeworld.com" + additionalBCCEmails,
+                To = "anatl@AMITAL.CO.IL",
+                CC = "Simon@amital.co.il; ohad@AMITAL.CO.IL; chana@amital.co.il; badir@AMITAL.CO.IL; sana@AMITAL.CO.IL; elisheva@AMITAL.CO.IL",
+                BCC = "",
                 Subject = LogitudeSettings.DeploymentStage + " - SignUp complete successfully for " + signUpInfo.Company,
                 EmailBody = emailbody,
                 Tenant = 0,

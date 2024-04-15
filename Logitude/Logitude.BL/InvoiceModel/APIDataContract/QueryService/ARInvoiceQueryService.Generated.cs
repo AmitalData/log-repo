@@ -148,7 +148,7 @@ using Simplog.Data.InvoiceModel;
 				   temp.IsDraft = MyEntityPM.IsDraft;
 				   temp.ProfitCurrencyExchangeRate = MyEntityPM.ProfitCurrencyExchangeRate;
 				   temp.AmountInProfitCurrency = MyEntityPM.AmountInProfitCurrency; 
-
+				   temp.ConfirmationNumber = MyEntityPM.ConfirmationNumber;
 			  
 				   if(MyEntityPM.TransferStatusCode != null)
 				   {
@@ -179,7 +179,8 @@ using Simplog.Data.InvoiceModel;
 				   temp.IsMultiCurrency = MyEntityPM.IsMultiCurrency;
 				   temp.CreditARInvoice = MyEntityPM.CreditARInvoice;
 				   temp.ExternalAccountingEntityId = MyEntityPM.ExternalAccountingEntityId;
-				   temp.BillToGLAccount = MyEntityPM.BillToGLAccountId; 
+				   temp.BillToGLAccount = MyEntityPM.BillToGLAccountId;
+                   temp.ConfirmationNumber = MyEntityPM.ConfirmationNumber;
 
 			  
 				   if(MyEntityPM.StatusCode != null)
@@ -528,10 +529,25 @@ using Simplog.Data.InvoiceModel;
 					{							
 						temp.AmountInProfitCurrency = MyEntity.AmountInProfitCurrency;
 
-										}  
+										}
 
-					
-					ARInvoiceTransferStatusQueryService TransferStatusARInvoiceTransferStatusService = new ARInvoiceTransferStatusQueryService(Tenant);
+
+				    if (!IsUpdate)
+				    {
+					    temp.ConfirmationNumber = MyEntity.ConfirmationNumber;
+
+				                        }
+
+
+                    if (!IsUpdate)
+                    {
+                        temp.MasterNumber = MyEntity.MasterNumber;
+
+                                        }
+
+
+
+                ARInvoiceTransferStatusQueryService TransferStatusARInvoiceTransferStatusService = new ARInvoiceTransferStatusQueryService(Tenant);
 					if(MyEntity.TransferStatus != null)
 					{
 						var myTransferStatusPM = TransferStatusARInvoiceTransferStatusService.ARInvoiceTransferStatusDataMappingAndValidatin(MyEntity.TransferStatus,Tenant,ComputingPartnerName,IsUpdate);
@@ -607,19 +623,27 @@ using Simplog.Data.InvoiceModel;
 					{							
 						temp.IsMultiCurrency = MyEntity.IsMultiCurrency;
 
-										}  
+										}
 
-					
-                    
-					if(!IsUpdate)
-					{							
-						temp.CreditARInvoice = MyEntity.CreditARInvoice;
 
-										}  
 
-					
-                    
-					if(!IsUpdate)
+                if (!IsUpdate)
+                {
+                    temp.CreditARInvoice = MyEntity.CreditARInvoice;
+
+                }
+
+
+                if (!IsUpdate)
+                {
+                    temp.ConfirmationNumber = MyEntity.ConfirmationNumber;
+
+                }
+
+
+
+
+                if (!IsUpdate)
 					{							
 						temp.ExternalAccountingEntityId = MyEntity.ExternalAccountingEntityId;
 

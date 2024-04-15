@@ -282,7 +282,7 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
             this.Opacity = "1";
             this.Voided = true;
         }
-        else if (this.EntityPM.StatusCode == "2") { // 3-Voided and 2-Approved
+        else if (this.EntityPM.StatusCode == "2" || this.EntityPM.StatusCode == "6") { // 3-Voided and 2-Approved
             //disable controls
             this.journalDisabled = true;
             this.PointerEvents = 'none';

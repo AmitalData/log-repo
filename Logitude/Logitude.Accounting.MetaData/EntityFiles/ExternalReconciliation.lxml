@@ -43,7 +43,7 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;התאמה&quot;"
   DefaultText="&quot;External Reconciliation&quot;"
-  Code="&quot;c7b9&quot;"
+  Code="&quot;8f4b&quot;"
   Name="&quot;ExternalReconciliation Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Accounting&quot;"
@@ -1419,7 +1419,7 @@
     <TextCode
       Code="&quot;ExternalReconciliation.O.CantAutoRecoByRefDate&quot;"
       DefaultText="&quot;You cannot automatically reconcile only by reference date. It must be paired with another option&quot;"
-      LocalDefaultText="&quot;לא ניתן לבצע התאמה אוטומטית לפי תאריך אסמכתא בלבד&quot;"
+      LocalDefaultText="&quot;לא ניתן לבצע התאמה אוטומטית לפי תאריך אסמכתא ו/או תאריך חשבונאי בלבד&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
@@ -1522,6 +1522,18 @@
       Code="&quot;ExternalReconciliation.O.AccoountFilter.TransferTransaction&quot;"
       DefaultText="&quot;Transfer Transaction&quot;"
       LocalDefaultText="&quot;תנועה מחשבון דחויים&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ExternalReconciliation.O.SelectOnePage&quot;"
+      DefaultText="&quot;to adjust bank fees with Transaction select only one page line&quot;"
+      LocalDefaultText="&quot;לא ניתן לפרוע מספר קבלות בו זמנית , יש לבצע פרעון של כל שורת קבלה בנפרד.&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ExternalReconciliation.O.SelectOneOrMore&quot;"
+      DefaultText="&quot;to adjust bank fees, select one or more row External page line&quot;"
+      LocalDefaultText="&quot;כדי ליצור פקודה בגין עמלות יש לבחור בשורת בנק אחת בכל פעם&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

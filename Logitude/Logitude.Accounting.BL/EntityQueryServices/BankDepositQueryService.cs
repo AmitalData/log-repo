@@ -236,7 +236,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
                 AccountingDate = depositPM.AccountingDate,
                 TypeCode = "0",                     // 0- Manual
-                StatusCode = "2",                   // 2- Approved
+                StatusCode = "6",                   // 2- Approved
                 AccountingEntityCode = "6",         // 6- Deposit
                 AccountingEntityId = depositPM.Id,
                 AccountingEntityReference = depositPM.DepositNumber.ToString(),
@@ -555,7 +555,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
                 AccountingDate = depositPM.AccountingDate,
                 TypeCode = "0",                     // 0- Manual
-                StatusCode = "2",                   // 2- Approved
+                StatusCode = "6",                   // 2- Approved
                 AccountingEntityCode = "6",         // 6- Deposit
                 AccountingEntityId = depositPM.Id,
                 AccountingEntityReference = depositPM.DepositNumber.ToString(),

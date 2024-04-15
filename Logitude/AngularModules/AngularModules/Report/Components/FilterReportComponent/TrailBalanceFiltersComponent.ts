@@ -118,8 +118,8 @@ export class TrailBalanceFiltersComponent extends BaseComponent
         this.chartOfAccountListService.getByFilters(apiQueryFilters)
             .subscribe((arg: any) =>
             {
-                this.chartOfAccounts = arg.Result;
-                this.chartOfAccounts = this.chartOfAccounts.map(item=> {return {...item,Name: item.LocalName||item.EnglishName}});
+                this.chartOfAccounts = arg.Result;                
+                this.chartOfAccounts = this.chartOfAccounts.map(item=> {return {...item,Name: `(${ item.Code }) ${ item.LocalName || item.EnglishName }`}}).sort((a, b) => a.Code - b.Code);
             });
     }
     private getChartOfAccountsTypes()
@@ -187,6 +187,9 @@ export class TrailBalanceFiltersComponent extends BaseComponent
         }
     }
 
+    handleSetStyle(idName: string) {
+        document.getElementById(idName).style.width = "250px";
+    }
 
 
     private chartOfAccountsTypeComboboxValue: string;

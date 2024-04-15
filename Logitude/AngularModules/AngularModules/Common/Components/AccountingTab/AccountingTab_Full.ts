@@ -14,6 +14,7 @@ import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
 import { AccountingPartners } from 'Accounting/DataContracts/AccountingPartners';
 import { AccountingEventManager } from 'Accounting/Utilities/AccountingEventManager';
+import { EventParams } from 'Accounting/Utilities/ReconcileEventManager';
 
 @Component({
 
@@ -183,7 +184,7 @@ export class AccountingTab_Full extends BaseComponent implements OnDestroy, OnIn
         logWindow.WindowClosed.subscribe(s => {
             if (s) {
                 this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-                AccountingEventManager.CustomerChangedEvent.emit({});
+                AccountingEventManager.CustomerChangedEvent.emit(new EventParams());
             }
         });
     }

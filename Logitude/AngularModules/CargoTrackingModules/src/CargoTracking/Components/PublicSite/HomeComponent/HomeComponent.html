@@ -57,7 +57,7 @@ flex-direction: column;">
 
     <!-- <div style="width: 100%;height: 55px;"></div> -->
 
-    <div style="min-height: calc(82vh - 110px);" style="background-size: cover;background-repeat: no-repeat;background-size: 100% 100%;flex: 1;" [ngStyle]="{ 'background-image': BackGroundImg}">
+    <div class="main-content" [ngStyle]="{ 'background-image': BackGroundImg}">
         <router-outlet *ngIf="IsBrandingDataLoaded"></router-outlet>
         <footer>
             <span style="color: black;">Powered By</span> &nbsp;

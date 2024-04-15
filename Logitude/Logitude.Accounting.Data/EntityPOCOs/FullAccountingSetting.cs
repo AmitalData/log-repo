@@ -151,13 +151,19 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	      
         public virtual GLAccount TaxInstitutionGLAccount { get; set; }
         [Column("HSM")]
-	    public int? HSM { get; set; }
+	    public string HSM { get; set; }
         [Column("HSMtoken")]
 	    public string HSMtoken { get; set; }
         [Column("HSMaddress")]
 	    public string HSMaddress { get; set; }
         [Column("AllowEditingExchangeRate")]
 	    public bool AllowEditingExchangeRate { get; set; }
+        [Column("NumberingByChartOfAccount")]
+	    public bool NumberingByChartOfAccount { get; set; }
+        [Column("OppositeAccountNumber")]
+	    public bool OppositeAccountNumber { get; set; }
+        [Column("TenantForConfirmationNumberApi")]
+	    public string TenantForConfirmationNumberApi { get; set; }
     }
 }
 	 

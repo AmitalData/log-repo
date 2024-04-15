@@ -64,6 +64,12 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string PrintByUserId { get; set; }
         public string PrintByUserName { get; set; }
         public string IssuedByUserId { get; set; }
+        public string ConfirmationNumberStatus { get; set; }
+        public string ConfirmationNumberStatusName { get; set; }
+        public string APIResponseToConfirmation { get; set; }
+
+        public string IsSigned { get; set; }
+
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string InvoiceCurrencyId { get; set; }
@@ -444,5 +450,6 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public bool IsTransferStarted_Original { get; set; }
         public string TransferError_Original { get; set; }
         public bool VatsAmountsManulAdjuested { get; set; }
+        public string ConfirmationNumber { get; set; }
     }
 }

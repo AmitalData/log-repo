@@ -58,10 +58,12 @@ export class FullAccountingSettingList {
 	IsSecurityLevelActivated: boolean;
 	CreateRevaluationJournal: boolean;
 	TaxInstitutionGLAccountId: string;
-	HSM: number;
+	HSM: string;
 	HSMtoken: string;
 	HSMaddress: string;
 	AllowEditingExchangeRate: boolean;
+	OppositeAccountNumber: boolean;
+	TenantForConfirmationNumberApi: string;
 	
 }
  

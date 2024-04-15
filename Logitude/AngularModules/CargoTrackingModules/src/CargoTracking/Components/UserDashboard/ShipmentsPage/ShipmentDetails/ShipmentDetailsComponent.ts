@@ -100,7 +100,7 @@ export class ShipmentDetailsComponent implements OnInit, AfterViewInit {
     RoutingMobilePagersWidth: number = 60;
     MaxWidthForMobileScreenForRouting: number = 470;
     RoutingMobileMarginLeft: number = 55;
-
+    showMoreEvents: boolean  = false;
     NoTaxDetails: boolean = false;
     public OverviewPanelTitle: string;
     public TypeTitle: string;
@@ -179,7 +179,6 @@ export class ShipmentDetailsComponent implements OnInit, AfterViewInit {
     }
 
     ngOnInit(): void {
-
     }
 
     ngAfterViewInit(): void {
@@ -187,20 +186,28 @@ export class ShipmentDetailsComponent implements OnInit, AfterViewInit {
     }
 
 
-    checkDescriptionShipping(description: string): string {
+    checkDescriptionShipping(description: string): string {     
         let mainCarniageLes = "MainCarniageLes";
-        return description.includes(mainCarniageLes.toLocaleLowerCase()) ? " " : description;
+        return description?.includes(mainCarniageLes.toLocaleLowerCase()) ? " " : description;
     }
 
     splitAddressAndPhone(addressString: string) {
+        if(!addressString)
+        return { address: null, phone: null };
+        
         const parts = addressString.split('Phone: ');
 
         if (parts.length === 1) {
-            return { address: parts[0], phone: '' }; // If "Phone: " was not found in the string, assume the whole string as the address.
+            return { address: parts[0], phone: null }; // If "Phone: " was not found in the string, assume the whole string as the address.
         }
         else {
             return { address: parts[0], phone: parts[1] };
         }
+    }
+
+    IsExport:boolean = false;
+    CheckIsExport() {
+        this.IsExport =  this.cargoTrackingShipmentPM.DirectionId === ShipmentDirections.Export;
     }
 
     private GetIdFromURI() {
@@ -270,6 +277,8 @@ export class ShipmentDetailsComponent implements OnInit, AfterViewInit {
 
     private InitializeComponent(result: any) {
         this.cargoTrackingShipmentPM = result;
+        this.CheckIsExport();
+
         this.BuildShipmentReferences();
 
         this.SetCustomsOrForwarderFields();

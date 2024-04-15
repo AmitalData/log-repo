@@ -39,6 +39,7 @@
         opacity: 0.7;
         cursor: default;
     }
+
     /*.coloPicker input {
         position: relative;
         display: inline-block;
@@ -170,7 +171,7 @@
         color: #37adbf;
     }
 
-     ::-webkit-color-swatch {
+    ::-webkit-color-swatch {
         border: none !important;
         margin: -4px -2px;
         height: 19px;
@@ -186,7 +187,8 @@
         <tr style="height:20px;">
             <td>
                 <div style="height:5px">
-                    <span style="vertical-align:central;text-align:left;margin-left:10px;font-size:16px;color:#1B90CB">{{ECommerceBrandingTabName}}</span>
+                    <span
+                        style="vertical-align:central;text-align:left;margin-left:10px;font-size:16px;color:#1B90CB">{{ECommerceBrandingTabName}}</span>
 
                 </div>
             </td>
@@ -206,47 +208,55 @@
         <tr style="height:100%;vertical-align:top;">
             <td>
                 <table>
-                    
-                    <!-- Comapny Logo -->
-           
 
-                  
+                    <!-- Comapny Logo -->
+
+
+
 
 
                     <tr>
-                        
+
                         <td style="width:8px">
                             <div></div>
                         </td>
                         <td style="width:180px;height:22px; vertical-align:top">
-                            <LogLabel [ObjectFieldName]="'ComapnylogoId'" [ObjectTableName]="'TenantManagement'" [DataContext]="DataContext"></LogLabel>
+                            <LogLabel [ObjectFieldName]="'ComapnylogoId'" [ObjectTableName]="'TenantManagement'"
+                                [DataContext]="DataContext"></LogLabel>
                         </td>
 
-                    
+
                         <td style="vertical-align:top">
-    
+
                             <div style="width:160px;height:100px">
-    
-    
-    
-                                <img style="width:90px; top: 0; left: 0; right: 0;bottom: 0; margin: auto;vertical-align:central;height:90px;background-color:white;max-width: 100%;max-height: 100%;position: absolute;border:0px solid #ffffff" [attr.id]="SmalllogoHtmlId" src="#" />
-                                <span [attr.id]="ProgressDownloadId" style="position:absolute;top:0;bottom:0;left:0;right:0;width:100%;height:100%;display:none"><img class="CenterCenter" src="Images/progressDownload.gif" /></span>
+
+
+
+                                <img style="width:90px; top: 0; left: 0; right: 0;bottom: 0; margin: auto;vertical-align:central;height:90px;background-color:white;max-width: 100%;max-height: 100%;position: absolute;border:0px solid #ffffff"
+                                    [attr.id]="SmalllogoHtmlId" src="#" />
+                                <span [attr.id]="ProgressDownloadId"
+                                    style="position:absolute;top:0;bottom:0;left:0;right:0;width:100%;height:100%;display:none"><img
+                                        class="CenterCenter" src="Images/progressDownload.gif" /></span>
 
                             </div>
 
-                            <a [class.HyperlinkDisabled]="DemoMessageVisibility" style="width: 57px;"  (click)="OpenUpLoadLogo()">Upload</a>
-                            <input [attr.id]="LogoFileHtmlId" accept=".jpg,.jpeg,.JPG,.JPEG" type="file"  (change)="UploadogoFile($event)" style="display:none" class="upload" />
+                            <a [class.HyperlinkDisabled]="DemoMessageVisibility" style="width: 57px;"
+                                (click)="OpenUpLoadLogo()">Upload</a>
+                            <input [attr.id]="LogoFileHtmlId" accept=".jpg,.jpeg,.JPG,.JPEG" type="file"
+                                (change)="UploadogoFile($event)" style="display:none" class="upload" />
 
                         </td>
                         <td style="width:30px">
                             <div></div>
                         </td>
                         <td style="width:110px;">
-                            <LogLabel [ObjectFieldName]="'LogoURL'" [ObjectTableName]="'TenantManagement'" [DataContext]="EntityPM"></LogLabel>
+                            <LogLabel [ObjectFieldName]="'LogoURL'" [ObjectTableName]="'TenantManagement'"
+                                [DataContext]="EntityPM"></LogLabel>
                         </td>
                         <td style="width:160px">
-                            <LogTextBox style="width:160px" [HideColumns]="true" [ObjectFieldName]="'LogoURL'" [ObjectTableName]="'TenantManagement'" [DataContext]="DataContext"></LogTextBox>
-                        </td> 
+                            <LogTextBox style="width:160px" [HideColumns]="true" [ObjectFieldName]="'LogoURL'"
+                                [ObjectTableName]="'TenantManagement'" [DataContext]="DataContext"></LogTextBox>
+                        </td>
                         <td>
                             <div></div>
                         </td>
@@ -257,27 +267,34 @@
                             <div></div>
                         </td>
                         <td style="width:200px;">
-                            <LogLabel [ObjectFieldName]="'EcommerceSupportEmail'" [ObjectTableName]="'TenantManagement'" [DataContext]="EntityPM"></LogLabel>
+                            <LogLabel [ObjectFieldName]="'EcommerceSupportEmail'" [ObjectTableName]="'TenantManagement'"
+                                [DataContext]="EntityPM"></LogLabel>
                         </td>
                         <td style="width:160px">
-                            <LogTextBox style="width:160px" [HideColumns]="true" [ObjectFieldName]="'EcommerceSupportEmail'" [ObjectTableName]="'TenantManagement'" [DataContext]="DataContext"></LogTextBox>
+                            <LogTextBox style="width:160px" [HideColumns]="true"
+                                [ObjectFieldName]="'EcommerceSupportEmail'" [ObjectTableName]="'TenantManagement'"
+                                [DataContext]="DataContext"></LogTextBox>
                         </td>
                         <td>
                             <div></div>
                         </td>
                     </tr>
-                  
+
+
                     <!-- WhatsApp Messaging Phone Number -->
-                  
+
                     <tr style="vertical-align:top;height:33px">
                         <td style="width:8px">
                             <div></div>
                         </td>
                         <td style="width:200px;">
-                            <LogLabel [ObjectFieldName]="'WhatsAppMessagingPhoneNumber'" [ObjectTableName]="'TenantManagement'" [DataContext]="EntityPM"></LogLabel>
+                            <LogLabel [ObjectFieldName]="'WhatsAppMessagingPhoneNumber'"
+                                [ObjectTableName]="'TenantManagement'" [DataContext]="EntityPM"></LogLabel>
                         </td>
                         <td style="width:160px">
-                            <LogTextBox style="width:160px" [HideColumns]="true" [ObjectFieldName]="'WhatsAppMessagingPhoneNumber'" [ObjectTableName]="'TenantManagement'" [DataContext]="DataContext"></LogTextBox>
+                            <LogTextBox style="width:160px" [HideColumns]="true"
+                                [ObjectFieldName]="'WhatsAppMessagingPhoneNumber'"
+                                [ObjectTableName]="'TenantManagement'" [DataContext]="DataContext"></LogTextBox>
                         </td>
                         <td>
                             <div></div>
@@ -289,10 +306,32 @@
                             <div></div>
                         </td>
                         <td style="width:200px;">
-                            <LogLabel [ObjectFieldName]="'ServiceAgreementURL'" [ObjectTableName]="'TenantManagement'" [DataContext]="EntityPM"></LogLabel>
+                            <LogLabel [ObjectFieldName]="'ServiceAgreementURL'" [ObjectTableName]="'TenantManagement'"
+                                [DataContext]="EntityPM"></LogLabel>
                         </td>
                         <td style="width:160px">
-                            <LogTextBox style="width:160px" [HideColumns]="true" [ObjectFieldName]="'ServiceAgreementURL'" [ObjectTableName]="'TenantManagement'" [DataContext]="DataContext"></LogTextBox>
+                            <LogTextBox style="width:160px" [HideColumns]="true"
+                                [ObjectFieldName]="'ServiceAgreementURL'" [ObjectTableName]="'TenantManagement'"
+                                [DataContext]="DataContext"></LogTextBox>
+                        </td>
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                    <!-- EcommerceTenant -->
+                    <tr style="vertical-align:top;height:33px">
+                        <td style="width:8px">
+                            <div></div>
+                        </td>
+                        <td style="width:200px;">
+                            <LogLabel [ObjectFieldName]="'EcommerceTenant'" [ObjectTableName]="'TenantManagement'"
+                                [DataContext]="EntityPM"></LogLabel>
+                        </td>
+                        <td style="width:160px">
+
+                            <LogCheckBox [ObjectFieldName]="'EcommerceTenant'" [Checked]="EcommerceTenant"
+                                [ObjectTableName]="'TenantManagement'" [DataContext]="EntityPM"></LogCheckBox>
                         </td>
                         <td>
                             <div></div>
@@ -301,8 +340,6 @@
 
 
 
-                 
-
                     <tr>
                         <td colspan="4"></td>
                     </tr>
@@ -310,7 +347,7 @@
 
             </td>
 
-            </tr>
+        </tr>
 
 
 

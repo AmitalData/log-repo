@@ -11,6 +11,7 @@ using Logitude.SystemLogs.Repositories;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
@@ -331,6 +332,27 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 IGlobalContext context = new GlobalContext();
                 GlobalDomainService globalDomainService = new GlobalDomainService(context);
                 IQueryable<HelpResource> result = globalDomainService.GetAllHelpResources(tenant);
+                result = result.Where(d => !d.Inactive);
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetReleaseHelpResources()
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                IGlobalContext context = new GlobalContext();
+                GlobalDomainService globalDomainService = new GlobalDomainService(context);
+                IQueryable<HelpResource> result = globalDomainService.GetReleaseHelpResources(tenant);
                 result = result.Where(d => !d.Inactive);
                 return Request.CreateResponse(HttpStatusCode.OK, result);
             }
@@ -840,6 +862,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 isLogboxSystem = true;
             return isLogboxSystem;
         }
+
+       
     }
 
     public class JSGlobalSettings

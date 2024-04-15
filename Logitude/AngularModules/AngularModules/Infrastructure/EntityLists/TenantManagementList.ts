@@ -179,5 +179,7 @@ export class TenantManagementList {
 		LogoURL: string;
 		ServiceAgreementURL: string;
 		EcommerceSupportEmail: string;
+		EcommerceTenant: boolean;
+		SearchAbsoluteValuePublic:boolean;
 	
 }

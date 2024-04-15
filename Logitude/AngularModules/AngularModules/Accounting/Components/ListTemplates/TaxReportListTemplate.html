@@ -106,6 +106,9 @@
             {{ rowData['JournalNumber'] }}
         </a>
     </div>
+    <div [style.text-align]="isRTL ? 'right' : 'left'" class="TextTrimming" *ngIf="fieldName == 'ConfirmationNumber'">
+            {{ rowData['ConfirmationNumber'] }}
+    </div>
     <!-- IsExternal -->
     <div *ngIf="fieldName == 'IsExternalLine'">
         <div style="text-align: center;" *ngIf="rowData['IsExternalLine']" title="{{'TaxReportLine.O.ExternalTooltip' | TextCodeTranslationPipe}}">

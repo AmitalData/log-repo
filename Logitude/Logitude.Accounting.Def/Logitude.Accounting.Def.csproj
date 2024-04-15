@@ -98,6 +98,7 @@
     <Compile Include="EntityPMs\Generated\Category5PM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ChartOfAccountPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ChartOfAccountsTypePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ChequeCounterSerialPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CopyFromTenant0PM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ExternalPageAdditionalDataPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ExternalReconciliationLinePM.Generated.cs" />
@@ -197,6 +198,8 @@
     <Compile Include="EntityUpdateServicesExt\IAPPaymentInvoicesTransactionFetcherExt.cs" />
     <Compile Include="EntityUpdateServicesExt\IARPaymentChequeUpdateServiceExt.cs" />
     <Compile Include="EntityUpdateServicesExt\GLAccountCardsDataUpdateServiceExt.cs" />
+    <Compile Include="EntityUpdateServicesExt\IExportDocumentHelper.cs" />
+    <Compile Include="EntityUpdateServicesExt\IHSMSignFileService.cs" />
     <Compile Include="EntityUpdateServicesExt\IInterestReportsConnectedInvoiceUpdateServiceExt.cs" />
     <Compile Include="EntityUpdateServicesExt\IInterestReportUpdateServiceExt.cs" />
     <Compile Include="EntityUpdateServicesExt\IBankCodeUpdateServiceExt.cs" />

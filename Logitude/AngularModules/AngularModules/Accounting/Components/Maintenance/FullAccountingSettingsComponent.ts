@@ -203,6 +203,7 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
         SessionLocator.TenantPM.AccountingActivated = this.AccountingActivated;
 
     }
+
     public activateSecurityLevel: boolean = false;
     public enableAllFields: boolean = false;
     SetUIProperties() {
@@ -232,6 +233,7 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
         var UsingSecurityLevelFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "SAL")[0];
         if (UsingSecurityLevelFeatureToggle) this.activateSecurityLevel = true;
         this.UIProperties.SetEnabled("IsSecurityLevelActivated", this.ObjectTableName, (this.enableAllFields && this.activateSecurityLevel));
+        this.UIProperties.SetEnabled("OppositeAccountNumber", this.ObjectTableName, this.enableAllFields);
 
     }
 
@@ -302,6 +304,15 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
     set IsPaymentChequesActivated(value: boolean) {
         if (this.EntityPM.IsPaymentChequesActivated != value) {
             this.EntityPM.IsPaymentChequesActivated = value;
+
+            this.SetUIProperties();
+        }
+    }
+
+    get NumberingByChartOfAccount() { return this.EntityPM.NumberingByChartOfAccount; }
+    set NumberingByChartOfAccount(value: boolean) {
+        if (this.EntityPM.NumberingByChartOfAccount != value) {
+            this.EntityPM.NumberingByChartOfAccount = value;
 
             this.SetUIProperties();
         }
@@ -513,6 +524,12 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
         }
     }
 
+    get TenantForConfirmationNumberApi() { return this.EntityPM.TenantForConfirmationNumberApi; }
+    set TenantForConfirmationNumberApi(value: string) {
+        if (this.EntityPM.TenantForConfirmationNumberApi != value) {
+            this.EntityPM.TenantForConfirmationNumberApi = value;
+        }
+    }
     //automaticExternalRconcilMthods: AutomaticExternalRconcilMthodsPM;
     //get AutomaticExternalRconcilMthods() { return this.taxWithholdingGLAccount; }
     //set AutomaticExternalRconcilMthods(value: GLAccountPM) {
@@ -555,6 +572,13 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
     set IsSecurityLevelActivated(value: boolean) {
         if (this.EntityPM.IsSecurityLevelActivated != value) {
             this.EntityPM.IsSecurityLevelActivated = value;
+            this.SetUIProperties();
+        }
+    }
+    get OppositeAccountNumber() { return this.EntityPM.OppositeAccountNumber; }
+    set OppositeAccountNumber(value: boolean) {
+        if (this.EntityPM.OppositeAccountNumber != value) {
+            this.EntityPM.OppositeAccountNumber = value;
             this.SetUIProperties();
         }
     }
@@ -601,22 +625,13 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
     // Signed 
 
     get HSM(){return this.EntityPM.HSM;}
-    set HSM(hsm:number){
+    set HSM(hsm:string){
+        var validateHsmResult=this.ValidateHsm(hsm);
+        this.UIProperties.SetValidity("HSM", this.ObjectTableName, validateHsmResult.valid, validateHsmResult.errorMsg);
 
-        if(hsm != null) {
-        if (hsm.toString().length != 3) {
-            this.UIProperties.SetValidity("HSM", this.ObjectTableName, false, "HSM must be 3 digits");
-           
-        } else {
-            this.UIProperties.SetValidity("HSM", this.ObjectTableName, true, "");
-        }
-    }
         if(this.EntityPM.HSM != hsm) {
-            
             this.EntityPM.HSM = hsm;
-          
         }
-      
     }
 
 
@@ -636,9 +651,9 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
         if(hsmToken.toString().length != 36 )
         
         {
-            this.UIProperties.SetValidity("HSMtoken", this.ObjectTableName, false, "HSM Token must be 36 characters long and should be format like 8X-4X-4X-4X-12X");
+            this.UIProperties.SetValidity("HSMtoken", this.ObjectTableName, false, TextCodeTranslator.Translate("FullAccountingSetting.O.HSMTokenLong"));
         } else if(!this.ValidateFormatHSMToken(hsmToken)) {
-            this.UIProperties.SetValidity("HSMtoken", this.ObjectTableName, false, "HSM Token should be format like 8X-4X-4X-4X-12X");
+            this.UIProperties.SetValidity("HSMtoken", this.ObjectTableName, false,TextCodeTranslator.Translate("FullAccountingSetting.O.HSMTokenFormat"));
 
         } else {
             this.UIProperties.SetValidity("HSMtoken", this.ObjectTableName, true, "");
@@ -668,7 +683,7 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
         
         if(hsmAddress != null) {
         if(hsmAddress.toString().length >= 50) {
-            this.UIProperties.SetValidity("HSMaddress", this.ObjectTableName, false, "HSM Address must be 50 characters long");
+            this.UIProperties.SetValidity("HSMaddress", this.ObjectTableName, false, TextCodeTranslator.Translate("FullAccountingSetting.O.HSMAddressLong"));
         } else {
             this.UIProperties.SetValidity("HSMaddress", this.ObjectTableName, true, "");
         }
@@ -680,6 +695,20 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
         }
     }
 
+    ValidateHsm(hsm){
+        var res={
+            valid:true,
+            errorMsg:''
+        };
+        if(hsm != null) {
+            if (hsm.length >15) {
+                res.valid=false;
+                res.errorMsg="HSM maximum size can be 15 digits";
+            }
+        }
+        return res;
+    }
+
 
     ValidateSigned() {
        
@@ -689,25 +718,25 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
         this.UIProperties.SetValidity("HSMtoken", this.ObjectTableName, true, "");
         this.UIProperties.SetValidity("HSMaddress", this.ObjectTableName, true, "");
 
-        if(this.HSM != null) {
-            if (this.HSM.toString().length != 3) {
-                this.ValidationErrorsList.push("HSM must be 3 digits");
-                this.UIProperties.SetValidity("HSM", this.ObjectTableName, false, "HSM must be 3 digits");
-            }
+        var validateHsmResult=this.ValidateHsm(this.HSM);
+        if (!validateHsmResult.valid) {
+            this.ValidationErrorsList.push(validateHsmResult.errorMsg);
         }
+        this.UIProperties.SetValidity("HSM", this.ObjectTableName, validateHsmResult.valid, validateHsmResult.errorMsg);
+        
         
 
         if(this.HSMtoken != null ){
 
             if(this.HSMtoken.toString().length != 36 ){
-                this.ValidationErrorsList.push("HSM Token must be 36 characters long and should be format like 8X-4X-4X-4X-12X");
-                this.UIProperties.SetValidity("HSMtoken", this.ObjectTableName, false, "HSM Token must be 36 characters long and should be format like 8X-4X-4X-4X-12X");
+                this.ValidationErrorsList.push( TextCodeTranslator.Translate("FullAccountingSetting.O.HSMTokenLong"));
+                this.UIProperties.SetValidity("HSMtoken", this.ObjectTableName, false, TextCodeTranslator.Translate("FullAccountingSetting.O.HSMTokenLong"));
     
             }
     
             if(!this.ValidateFormatHSMToken(this.HSMtoken)) {
-                this.ValidationErrorsList.push("HSM Token should be format like 8X-4X-4X-4X-12X");
-                this.UIProperties.SetValidity("HSMtoken", this.ObjectTableName, false, "HSM Token should be format like 8X-4X-4X-4X-12X");
+                this.ValidationErrorsList.push(TextCodeTranslator.Translate("FullAccountingSetting.O.HSMTokenFormat"));
+                this.UIProperties.SetValidity("HSMtoken", this.ObjectTableName, false, TextCodeTranslator.Translate("FullAccountingSetting.O.HSMTokenFormat"));
     
             }
 
@@ -717,8 +746,8 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
 
         if(this.HSMaddress != null) {
             if(this.HSMaddress.toString().length >= 50) {
-                this.ValidationErrorsList.push("HSM Address must be 50 characters long");
-                this.UIProperties.SetValidity("HSMaddress", this.ObjectTableName, false, "HSM Address must be 50 characters long");
+                this.ValidationErrorsList.push(TextCodeTranslator.Translate("FullAccountingSetting.O.HSMAddressLong"));
+                this.UIProperties.SetValidity("HSMaddress", this.ObjectTableName, false, TextCodeTranslator.Translate("FullAccountingSetting.O.HSMAddressLong"));
             }
         }
 

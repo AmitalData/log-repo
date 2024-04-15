@@ -194,7 +194,10 @@
                                                             [DependencyFilter1IsList]="true"
                                                             [DisplayFieldsFromList]="DisplayFieldsFromList"
                                                             [DisplayLocalFieldsFromList]="DisplayLocalFieldsFromList"
-                                                            [CustomizedWidth]="VendorLovSizeForFullAccounting">
+                                                            [CustomizedWidth]="VendorLovSizeForFullAccounting"
+                                                            [StartSearchFromChar]="3"
+                                            [StartSearchFromNumber]="5"
+                                                            >
                                                     </LogLov>
 
                                                 </td>
@@ -360,7 +363,7 @@
                                                             </td>
 
                                                             <td style="width: 36px;">
-                                                                <div [style.float]="isRTL ? 'left' : 'right'" style="display: block;" *ngIf="IsEditExchangeRateVisible">
+                                                                <div [style.float]="isRTL ? 'left' : 'right'" style="display: block;" *ngIf="IsEditExchangeRateVisible && IsFullAccounting ? false: true">
                                                                     <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="UpdateCurrencyRateMethod()" [IsEnabled]="RateIsEnabled"></IconButton>
                                                                 </div>
                                                             </td>
@@ -462,7 +465,7 @@
                                                     <div></div>
                                                 </td>
                                             </tr>
-                                            <tr class="customtrclass">
+                                            <tr *ngIf="IsFullAccounting ? false: true" class="customtrclass">
                                                 <td style="width: 5px;">
                                                     <div></div>
                                                 </td>
@@ -692,6 +695,7 @@
                     <!-- Search -->
                     <tr class="TabTitleRow">
                         <td>
+                            <div *ngIf="EntityPM.DontDisplayAPInvoices != true" >
                             <table>
                                 <tr>
                                     <td style="width: 1px;">
@@ -715,13 +719,14 @@
                                     </td>
                                 </tr>
                             </table>
+                        </div>
                         </td>
                     </tr>
 
                     <!-- A/P Payment Grid -->
                     <tr>
                         <td>
-                            <div class="MediaFill">
+                            <div *ngIf="EntityPM.DontDisplayAPInvoices != true" class="MediaFill" >
 
                                 <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="ItemsSource"
                                 [UseVirtuallization]="true">

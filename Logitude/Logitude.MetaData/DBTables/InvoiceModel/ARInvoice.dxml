@@ -851,7 +851,29 @@
   <Column
     Name="IsSigned"
     OldNames="is_signed"
-    Type="bit">
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ConfirmationNumber"
+    Type="nvarchar"
+    Size="30">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ConfirmationNumberStatus"
+    Type="varchar"
+    Size="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="APIResponseToConfirmation"
+    Type="nvarchar"
+    Size="1000">
     <Constraints
       Nullable="true" />
   </Column>
@@ -999,6 +1021,16 @@
     ForeignKeyColumn="DocumentTemplateId"
     ReferencedTable="DocumentTypeTemplates"
     ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="IsSigned"
+    ReferencedTable="ARInvoicesSignedStatuses"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ConfirmationNumberStatus"
+    ReferencedTable="ConfirmationNumberStatuses"
+    ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
   <Index
     Columns="Tenant,InvoiceDate" />

@@ -52,7 +52,8 @@
         </td>
         <td>
             <div style="width: 150px" [style.float]="isRTL ? 'left' : 'right'">
-                <button class="Button" (click)="AutomaticReconcileButton()">{{'Accounting.General.O.AutomaticReconcile' | TextCodeTranslationPipe}}</button>
+                <button class="Button" [disabled]="IsMultiWithReconcileMethodCodeEqualOne && CurrencyId == null"
+                (click)="AutomaticReconcileButton()">{{'Accounting.General.O.AutomaticReconcile' | TextCodeTranslationPipe}}</button>
             </div>
         </td>
 
@@ -90,15 +91,15 @@
                 <ul class="horizontal-list fixed">
 
                     <li style="width: 80px; padding: 0 35px;"><CheckBox title="Select All" style="position: absolute; top: 12px;" [IsChecked]="isAllSelected"
-                        (Checked)="isAllSelected = $event"></CheckBox></li>
+                        [IsEnabled]="IsCheckBoxEnabled" (Checked)="isAllSelected = $event"></CheckBox></li>
 
                     <li style="width: 70px;"><LogLabel [ObjectFieldName]="'CurrencyId'" [ObjectTableName]="ObjectTableName"
                         [DataContext]="DataContext"></LogLabel></li>
 
                     <li style="width: 150px; " [style.padding-right]="isRTL ? 'initial' : '10px'"
                     [style.padding-left]="isRTL ? '10px' : 'initial'"><LogLov [ObjectFieldName]="'CurrencyId'" [ObjectTableName]="ObjectTableName"
-                        [DataContext]="DataContext" [LookUpTableName]="'Currency'" [SelectedValue]="CurrencyId"
-                        [HideColumns]="true">
+                        [DataContext]="DataContext" [LookUpTableName]="'Currency'" [SelectedValue]="CurrencyId" 
+                        [HideColumns]="true" [QueryFilterItems]="CurrencyFilters">
                     </LogLov></li>
 
                     <li class="seperator" ></li>
@@ -277,7 +278,6 @@
         <!--*ngIf="IsLinesSelection && !this.EntityPM.IsCashDeposit"-->
         <td style="width :10px"></td>
         <td style=" vertical-align: top;height: 100%;" colspan="4">
-
             <div class="GeneratedGridContainer" style="height: calc(100% - 10px)">
                 <logitude-grid GridWidth="100%" GridHeight="100%"
                                [ObjectTable]="ObjectTableName"

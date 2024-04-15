@@ -69,7 +69,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                                GLAccounterCounterLength = a.GLAccounterCounterLength,
                                                                IsSecurityLevelActivated = a.IsSecurityLevelActivated,
                                                                VATOutputGLAccountId = a.VATOutputGLAccountId,
-                                                               TaxInstitutionGLAccountId = a.TaxInstitutionGLAccountId
+                                                               TaxInstitutionGLAccountId = a.TaxInstitutionGLAccountId,
+                                                               OppositeAccountNumber = a.OppositeAccountNumber,
                                                            });
             return query;
         }

@@ -13686,6 +13686,85 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <field
+    Id="&quot;bac8e948-c606-474d-a4a7-270e791747f4&quot;"
+    FieldName="&quot;PaymentTerms&quot;"
+    OldNames="PaymentTerms"
+    IsNew="true"
+    IsChecked="true"
+    IsDeleted="false"
+    ObjectTableName="&quot;GLAccount&quot;"
+    FieldsDataType="&quot;LookUp&quot;"
+    LookUpTableName="&quot;PaymentTerm&quot;"
+    MinLength="0"
+    MaxLength="15"
+    IsRequired="false"
+    CopyToDW="false"
+    DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
+    CanFilter="true"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="15"
+    DisplayInList="true"
+    IsCustomFilter="false"
+    IsListFilter="false"
+    Operator="&quot;Equals&quot;"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;PaymentTerms&quot;"
+    ListPropertyPath="&quot;PaymentTerms&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;GLAccount&quot;"
+    IsRestrictable="false"
+    DisplayInEntityVariables="false"
+    AllowedInCustomerFieldsSettings="false"
+    DisplayInSearchWindowFilters="false"
+    DisplayInSearchWindowFiltersIndex="0"
+    DisplayInDocumentReferences="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;PaymentTerms&quot;"
+    DefaultText="&quot;PaymentTerms&quot;"
+    FullLocalDefaultText="&quot;תנאי תשלום&quot;"
+    ListFieldLable="&quot;PaymentTermsListLable&quot;"
+    ListLableDefaultText="&quot;PaymentTerms&quot;"
+    ListLocalDefaultText="&quot;תנאי תשלום&quot;"
+    IsNullable="true"
+    IsForeignKey="true"
+    ForeignEntity="&quot;PaymentTerm&quot;"
+    DontBuildRelationOnDB="false"
+    NavigationPropertyName="&quot;PaymentTerm&quot;"
+    IsPrimaryKey="false"
+    HasDataBaseField="true"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="true"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
+    HasTemplate="false"
+    IsCustom="false"
+    IsSpellCheckedFullFieldLable="false"
+    IsSpellCheckedHelpLocalDefaultText="false"
+    IsSpellCheckedShortLocalDefaultText="false"
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <Query
     Code="&quot;General Ledger Accounts&quot;"
     TextCode="&quot;General Ledger Accounts&quot;"
@@ -15125,7 +15204,7 @@
       <ScreenField
         Column="1"
         Row="1"
-        ObjectFieldName="&quot;Empty_Field&quot;"
+        ObjectFieldName="&quot;BalanceInForeignCurrency&quot;"
         ScreenName="Header Screen" />
       <ScreenField
         Column="1"
@@ -17146,6 +17225,21 @@
         IsCloseField="false"
         IsCompositKey="false"
         IsUpdateAllowed="false" />
+      <DCField
+        DCFieldName="&quot;PaymentTerms&quot;"
+        FieldName="&quot;PaymentTerms&quot;"
+        IsKey="true"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;LookUp&quot;"
+        IsNullable="true"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
     </DataContract>
     <DataContract
       Name="&quot;GLAccountChequeDetails&quot;"
@@ -17241,6 +17335,21 @@
         IsCloseField="false"
         IsCompositKey="false"
         IsUpdateAllowed="false" />
+      <DCField
+        DCFieldName="&quot;PaymentTerms&quot;"
+        FieldName="&quot;PaymentTerms&quot;"
+        IsKey="true"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;LookUp&quot;"
+        IsNullable="true"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
     </DataContract>
   </DataContracts>
   <AdditionalTextCodes>
@@ -17288,8 +17397,8 @@
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;GLAccounts.O.DisplayNumberAlreadyExists&quot;"
-      DefaultText="&quot;Existing number - choose another one&quot;"
-      LocalDefaultText="&quot;מספר קיים - יש לבחור במספר אחר&quot;"
+      DefaultText="&quot;The card the system is trying to open ({0}) is already exists. It can be connected by clicking on the &quot;Connect&quot; button.&quot;"
+      LocalDefaultText="&quot;הכרטיס שהמערת מנסה לפתוח ({0}) כבר קיים. ניתן לחבר אותו ע&quot;י לחיצה על כפתור &quot;חיבור כרטיס קיים&quot;.&quot;"
       TextCodeTypeCode="&quot;MC&quot;"
       IsSpellChecked="false" />
     <TextCode
@@ -18716,6 +18825,24 @@
       LocalDefaultText="&quot;יתרת סגירה לפי יתרה לגביה&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccount.O.CancelSelectedReco&quot;"
+      DefaultText="&quot;Cancel Selected Reconciles&quot;"
+      LocalDefaultText="&quot;ביטול התאמות מסומנות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccount.O.CancelSelectedRecoConfirm&quot;"
+      DefaultText="&quot;The process of canceling the adjustments to the marked lines will be performed in the background and will last several minutes during which time it will not be possible to stop the process, do you approve?&quot;"
+      LocalDefaultText="&quot;תהליך ביטול ההתאמות לשורות שסומנו יבוצע ברקע וימשך מספר דקות בזמן זה לא ניתן יהיה לעצור את התהליך, האם אתה מאשר?&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;GLAccount.O.NoSelectedItems&quot;"
+      DefaultText="&quot;No Selected Items&quot;"
+      LocalDefaultText="&quot;לא נבחרו התאמות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
@@ -18759,6 +18886,15 @@
       FeatureTypeCode="&quot;OTH&quot;"
       FeatureTextCodeCode="&quot;GLAccount.Features.SalesmanAging&quot;"
       FeatureDefaultText="&quot;Aging Report Salesman Restrictions&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;CancelSelectedReco&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      FeatureTextCodeCode="&quot;GLAccount.Features.CancelSelectedReco&quot;"
+      FeatureDefaultText="&quot;Cancel Selected Reconcile&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"

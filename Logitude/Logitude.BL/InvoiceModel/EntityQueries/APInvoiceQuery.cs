@@ -22,6 +22,12 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.Accounting.Data.Repositories;
 using Simplog.Data.ShipmentsModel;
+using Logitude.Accounting.Data.EntityListQueryServices;
+using Logitude.Accounting.Data.EntityPOCOs;
+using System.Windows;
+using Logitude.Accounting.Data;
+using Logitude.Server.Tools;
+using System.Linq.Dynamic.Core;
 
 namespace Logitude.BL.InvoiceModel.EntityQueries
 {
@@ -233,6 +239,9 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              IsEquipment = a.IsEquipment,
                              ConnectedPaymentsNumbers = a.ConnectedPaymentsNumbers,
                              TotalEquation = a.TotalEquation,
+                             ConfirmationNumber = a.ConfirmationNumber,
+                          
+
                          });          
 
             return query;
@@ -1406,7 +1415,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                             {
                                                 Id = a.Id,
                                                 IsEquipment = a.IsEquipment,
-                                                InvoiceNumber = a.InvoiceNumber
+                                                InvoiceNumber = a.InvoiceNumber,
+                                                ConfirmationNumber = a.ConfirmationNumber,
                                             }).ToList();
 
             return invoicePMs;
@@ -1501,8 +1511,229 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                 PaidDate = a.PaidDate,
                                                 ConnectedPaymentsNumbers = a.ConnectedPaymentsNumbers,
                                                 TotalEquation = a.TotalEquation,
+                                                ConfirmationNumber=a.ConfirmationNumber,
                                             }).ToList();
             return invoicePMs;
         }
+
+        public List<APInvoice_LT_DTO> GetAPInvoicesForStatusUpdate(IAccountingContext accContext, ref GetNextAPInvoicesArgs args)
+        {
+            int tenant = args.Tenant;
+            string invoiceNumber = args.InvoiceNumber;
+            string lastCheckedId = args.LastCheckedId;
+            DateTime fromInvoiceDate = args.FromInvoiceDate;
+            DateTime toInvoiceDate = args.ToInvoiceDate;
+
+            IEnumerable<APInvoice_LT_DTO> query = null;
+
+            IQueryable<APInvoice> dbQuery = null;
+
+            // Invoices 
+
+            if (!string.IsNullOrWhiteSpace(invoiceNumber))
+            {
+                dbQuery = repository.GetAPInvoices(args.Tenant).Where(rec => rec.InvoiceNumber == invoiceNumber
+                     && (rec.StatusCode == "AD" || rec.StatusCode == "PD" || rec.StatusCode == "PP")); 
+            }
+
+            else if (!string.IsNullOrWhiteSpace(lastCheckedId))
+            {
+                dbQuery = repository.GetAPInvoices(args.Tenant).Where(rec => rec.InvoiceDate >= fromInvoiceDate && rec.InvoiceDate <= toInvoiceDate
+                     && String.Compare(rec.Id, lastCheckedId) > 0
+                     && (rec.StatusCode == "AD" || rec.StatusCode == "PD" || rec.StatusCode == "PP")).OrderBy(r => r.Id);
+            }
+
+            else 
+            {
+                dbQuery = repository.GetAPInvoices(args.Tenant).Where(rec => rec.InvoiceDate >= fromInvoiceDate && rec.InvoiceDate <= toInvoiceDate
+                     && (rec.StatusCode == "AD" || rec.StatusCode == "PD" || rec.StatusCode == "PP")).OrderBy(r => r.Id);
+            }
+
+            var invQuery = dbQuery.Select(dbInv =>
+                new APInvoice_DTO
+                {
+                    Id = dbInv.Id,
+                    Tenant = dbInv.Tenant,
+                    InvoiceNumber = dbInv.InvoiceNumber,
+                    StatusCode = dbInv.StatusCode,
+                    IsClosed = dbInv.IsClosed,
+                }).ToArray();
+
+                    
+            string long_text = "";
+            bool isInDebuggingMode = false;
+            bool isOk = true;
+
+            if (!string.IsNullOrWhiteSpace(invoiceNumber))
+            {
+                var oneInvList = dbQuery.ToList();
+                if (oneInvList != null && oneInvList.Count == 1)
+                {
+                    fromInvoiceDate = oneInvList.FirstOrDefault().InvoiceDate.Value;
+                    toInvoiceDate = fromInvoiceDate;
+                }
+                else
+                {
+                    isOk = false;
+                }
+            }
+
+
+            if (invQuery != null && invQuery.Length > 0 && isOk)
+            {
+                JournalRepository journalRepository = new JournalRepository(accContext);
+                JournalLineRepository journalLineRepository = new JournalLineRepository(accContext);
+                LedgerTransactionRepository ledgerTransactionRepository = new LedgerTransactionRepository(accContext);
+
+                // Journals and Journal Lines
+                var j_l_prequery = from jl in journalLineRepository.GetAll(tenant).Where(rec => rec.ActionCode == "1").Where(rec => rec.AccountingDate >= fromInvoiceDate && rec.AccountingDate <= toInvoiceDate)
+                                    join
+                                    j in journalRepository.GetAll(tenant).Where(rec => rec.AccountingEntityCode == CloseTables.AccountingEntityValues.APInvoice && rec.StatusCode == "2" 
+                                                                                    && rec.AccountingDate >= fromInvoiceDate && rec.AccountingDate <= toInvoiceDate)
+                                    on jl.JournalId equals j.Id
+                                    select new J_L_DTO()
+                                    {
+                                        JournalId = j.Id,
+                                        JournalLineNumber = jl.Line,
+                                        AccountingEntityId = j.AccountingEntityId,
+                                    };
+
+                // Journals and Journal Lines and Transactions 
+                var j_lt_query = from jl in j_l_prequery
+                                 join lt in ledgerTransactionRepository.GetAll(tenant)
+                                 on jl.JournalId equals lt.JournalId
+                                 where lt.JournalLineNumber == jl.JournalLineNumber
+                                 select new J_LT_DTO()
+                                 {
+                                     AccountingEntityId = jl.AccountingEntityId,
+                                     JournalId = jl.JournalId,
+                                     JournalLineNumber = jl.JournalLineNumber,
+                                     LT_Id = lt.Id,
+                                     LT_LocalAmountCredit = lt.LocalAmountCredit,
+                                     LT_LocalAmountDebit = lt.LocalAmountDebit,
+                                     LT_OpenAmount = lt.OpenAmount,
+                                 };
+
+
+                J_LT_DTO[] j_l_query_arry = j_lt_query.ToArray();
+
+                // All together, without additional conditions 
+                var j_inv_l_query = j_l_query_arry 
+                               .Join(invQuery, jrn => jrn.AccountingEntityId, inv => inv.Id, (jrn, inv) =>
+                               new APInvoice_LT_DTO()
+                               {
+                                   APInvoiceId = inv.Id,
+                                   APInvoiceStatusCode = inv.StatusCode,
+                                   APInvoiceIsClosed = inv.IsClosed,
+                                   JournalId = jrn.JournalId,
+                                   JournalLineNumber = jrn.JournalLineNumber,
+                                   LT_LocalAmountCredit = jrn.LT_LocalAmountCredit,
+                                   LT_LocalAmountDebit = jrn.LT_LocalAmountDebit,
+                                   LT_OpenAmount = jrn.LT_OpenAmount,
+                                   LT_Id = jrn.LT_Id,
+                               });
+
+
+
+                // All together, with additional conditions 
+                query = j_inv_l_query.Where(rec => (rec.APInvoiceStatusCode != "AD" && ((rec.LT_LocalAmountDebit != 0m && rec.LT_OpenAmount == rec.LT_LocalAmountDebit)
+                            || (rec.LT_LocalAmountDebit == 0m && rec.LT_OpenAmount == rec.LT_LocalAmountCredit * -1)))
+                            || (rec.APInvoiceStatusCode != "PP" && rec.LT_OpenAmount != 0m)
+                            || (rec.APInvoiceStatusCode != "PD" && rec.LT_OpenAmount == 0m)).ToList();
+
+
+            }
+            else
+            {
+                args.Stop = true;
+            }
+
+            List<APInvoice_LT_DTO> ret_list = null;
+            if (query != null)
+                ret_list = query.ToList();
+            else
+                ret_list = new List<APInvoice_LT_DTO>();
+            long_text = "";
+            isInDebuggingMode = false;
+            if (isInDebuggingMode)
+            {
+                int ctr = 1;
+                ret_list.ForEach(item => long_text += "#" + ctr++ + "," + item.APInvoiceId + "," + item.APInvoiceIsClosed + "," + item.JournalId + "," + item.JournalLineNumber + "," + item.LT_Id + "," + item.LT_LocalAmountCredit + "," + item.LT_LocalAmountDebit + "," + item.LT_OpenAmount + "\n");
+            }
+
+            return ret_list;
+        }
+
+
+
+
+
+
+
+
+        private class APInvoice_DTO
+        {
+            public string Id { get; set; }
+            public int Tenant { get; set; }
+            public string InvoiceNumber { get; set; }
+            public string StatusCode { get; set; }
+            public bool IsClosed { get; set; }
+        }
+
+        private class J_L_DTO
+        {
+            public J_L_DTO()
+            {
+            }
+
+            public string JournalId { get; set; }
+            public int JournalLineNumber { get; set; }
+            public string AccountingEntityId { get; set; }
+        }
+
+
+        private class J_LT_DTO
+        {
+            public J_LT_DTO()
+            {
+            }
+
+            public string AccountingEntityId { get; set; }
+            public string JournalId { get; set; }
+            public int JournalLineNumber { get; set; }
+            public string LT_Id { get; set; }
+            public decimal LT_LocalAmountCredit { get; set; }
+            public decimal LT_LocalAmountDebit { get; set; }
+            public decimal LT_OpenAmount { get; set; }
+        }
     }
+
+    public class GetNextAPInvoicesArgs
+    {
+        public int Tenant { get; set; }
+        public string InvoiceNumber { get; set; }
+        public string LastCheckedId { get; set; }
+        public DateTime FromInvoiceDate { get; set; }
+        public DateTime ToInvoiceDate { get; set; }
+        public int ThisTimeMadeCount { get; set; }
+        public bool Stop { get; set; }
+
+
+    }
+
+    public class APInvoice_LT_DTO
+    {
+        public string APInvoiceId { get; set; }
+        public string APInvoiceStatusCode { get; set; }
+        public bool APInvoiceIsClosed { get; set; }
+        public string JournalId { get; set; }
+        public int JournalLineNumber { get; set; }
+        public string LT_Id { get; set; }
+        public decimal LT_LocalAmountDebit { get; set; }
+        public decimal LT_LocalAmountCredit { get; set; }
+        public decimal LT_OpenAmount { get; set; }
+    }
+
+
+
 }

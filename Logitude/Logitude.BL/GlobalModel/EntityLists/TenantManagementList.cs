@@ -189,6 +189,9 @@ namespace Logitude.BL.GlobalModel.EntityLists
         public string LogoURL { get; set; }
         public string ServiceAgreementURL { get; set; }
         public string EcommerceSupportEmail { get; set; }
+        public bool EcommerceTenant { get; set; }
+		public bool SearchAbsoluteValuePublic { get; set; }
 
-    }
+
+	}
 }

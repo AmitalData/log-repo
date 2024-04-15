@@ -212,13 +212,23 @@ export class JournalDebugTabComponent extends BaseComponent implements OnInit {
                 });
             this.LedgerTransactiongetGetRows();
             this.InterestTransactionGetRows()
-            //this.JournalAdditionalDataGetRows();
+            //this.JournalAdditionalDataGetRows();            
             this.JournalReconciles.InsertCollection(this.EntityPM.JournalReconciles);
             this.JournalExternalReconciles.InsertCollection(this.EntityPM.JournalExternalReconciles);
         }
 
     }
-
+    OpenJournal(id: string) {
+        if (!AppTool.IsNullOrEmpty(id)) {
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+                .then(cmpRef => {
+                    cmpRef.instance.ComponentRef = cmpRef;
+                    cmpRef.instance.Run({ EntityId: id, ObjectTableName: 'Journal' });
+                    cmpRef.instance.BackCompleted.subscribe(bk => {
+                    });
+                });
+        }
+    }
 
     ngOnInit() {
         this.CurrentSession.LostFocusEvent.subscribe((res) => {
@@ -459,9 +469,10 @@ export class JournalDebugTabComponent extends BaseComponent implements OnInit {
     IsExternalBankTransaction(ledger: LedgerTransactionList){
         const isFromAmital = this.EntityPM.ExternalSystem?.toLowerCase() == amitalExternalSystemCode;
         const journalLine = this.EntityPM.JournalLines.find(line=>line.Line == ledger.JournalLineNumber);
-        const isConnectedToBankGLAccount = (journalLine.DebitAccountCOACode || journalLine.CreditAccountCOACode) == BanksChartOfAccountsTypeCode;
+        const isConnectedToBankGLAccount = ((ledger.AccountId == journalLine.DebitAccountId && journalLine.DebitAccountCOACode == BanksChartOfAccountsTypeCode)
+            || (ledger.AccountId == journalLine.CreditAccountId && journalLine.CreditAccountCOACode == BanksChartOfAccountsTypeCode));
 
-        return isFromAmital && isConnectedToBankGLAccount;
+        return ((isFromAmital || SessionLocator.LoggedUserPM.IsCustomerCare) && isConnectedToBankGLAccount);
     }
 }
 

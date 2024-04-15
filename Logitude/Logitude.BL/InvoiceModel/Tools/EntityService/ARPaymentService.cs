@@ -246,8 +246,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         }
         private void ReturnExceptionForNumericFields(string field, string fieldTextCode, int tenant)
         {
-            int n;
-            var isNumeric = int.TryParse(field, out n);
+            long n;
+            var isNumeric = long.TryParse(field, out n);
             if (!isNumeric)
             {
 

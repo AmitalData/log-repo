@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using Logitude.Accounting.BL.DataContract;
 using Logitude.Accounting.BL.CloseTables;
 using System.Data.Entity;
+using Microsoft.Practices.ObjectBuilder2;
 
 namespace Logitude.Accounting.BL.EntityQueryServices
 {
@@ -34,6 +35,11 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         {
             return this.repository.GetAnyLedgerTransactionByJournalId(journalId, tenant);
         }
+        public LedgerTransactionPM GetLedgerTransactionPMByJournalId(string journalId, int tenant)
+        {
+            LedgerTransaction MyPoco = repository.GetByJournalId(journalId, tenant).FirstOrDefault();
+            return this.GetEntityPM(MyPoco);
+        }
 
         public string GetCurrencyWhenMultiOff(string gLAccointId, int tenant)
         {
@@ -48,6 +54,43 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             }
             return anyCurrencyId;
         }
+
+        public DateTime GetFirstDateByDateType(string dateTypeValue, string gLAccointId, int tenant)
+        {
+
+            DateTime firstDate = DateTime.Today;
+            if (!String.IsNullOrEmpty(gLAccointId)) gLAccointId = gLAccointId.Trim();
+
+            var query = this.repository.GetAll(tenant);
+            
+            if (!String.IsNullOrEmpty(gLAccointId))
+                query = query.Where(rec => rec.AccountId == gLAccointId);
+
+            if (query.Any())
+            {
+                switch (dateTypeValue)
+                {
+                    case GLAccountTotalDateTypeValues.Accountingdate:
+                        firstDate = query.Select(rec => rec.AccountingDate).Min(); // AccountingDate is not nullable
+                        break;
+                    case GLAccountTotalDateTypeValues.DueDate:
+                        firstDate = query.Select(rec => rec.DueDate).Min();        // DueDate is not nullable
+                        break;
+                    case GLAccountTotalDateTypeValues.DocumentDate:
+                        firstDate = query.Select(rec => rec.DocumentDate).Min();   // DocumentDate is not nullable
+                        break;
+                    default:
+                        firstDate = DateTime.Today;
+                        break;
+                }
+            }
+            else
+            {
+                firstDate = DateTime.Today;
+            }
+            return firstDate;
+        }
+
 
         public List<JournalLineLedgerDTO> GetReportCompareToJournalLine(DateTime fromDate, DateTime toDate, int tenant
              , string JournalId = null, int? JournalLine = null

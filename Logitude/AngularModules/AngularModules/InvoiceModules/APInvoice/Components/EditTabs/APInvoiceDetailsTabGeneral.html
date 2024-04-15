@@ -33,7 +33,9 @@
                                                             [DisplayLocalFieldsFromList]="DisplayLocalFieldsFromList"
                                                             [ForceShowLocalAndEnglishColumns]="forceShowLocalAndEnglishColumns"
                                                             [CustomizedWidth]="VendorLovSizeForFullAccounting"
-                                                            [ColumnsWidths]="ColumnsWidths">
+                                                            [ColumnsWidths]="ColumnsWidths"
+                                                            [StartSearchFromChar]="3"
+                                            [StartSearchFromNumber]="5">
                                                     </LogLov>
                                                 </td>
                                             </tr>
@@ -144,7 +146,7 @@
                                                             </td>
 
                                                             <td style="width: 36px;">
-                                                                <div [style.float]="isRTL ? 'left' : 'right'" style="display: block;" *ngIf="IsEditExchangeRateVisible">
+                                                                <div [style.float]="isRTL ? 'left' : 'right'" style="display: block;" *ngIf="IsEditExchangeRateVisible && IsFullAccounting ? false:true">
                                                                     <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="UpdateCurrencyRateClicked()" [IsEnabled]="RateIsEnabled"></IconButton>
                                                                 </div>
                                                             </td>
@@ -198,6 +200,32 @@
 
                                         </table>
                                     </td>
+                                    
+                                    <td style="width: 70px;">
+                                        <div></div>
+                                    </td>
+
+                                    <td style="width: 375px;">
+                                        <table>
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                            <!-- ConfirmationNumber -->
+                                            <tr class="FormFieldRow">
+                                                <td style="width: 135px;">
+                                                    <LogLabel [ObjectFieldName]="'ConfirmationNumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogTextBox [ObjectFieldName]="'ConfirmationNumber'" [InputType]="'text'" [Text]="ConfirmationNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                </td>
+                                            </tr>
+                                            
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </table>
+                                    </td>
 
                                     <td [style.right]="isRTL ? 'initial' : '0'" [style.left]="isRTL ? '0' : 'initial'">
                                         <table>
@@ -206,7 +234,7 @@
                                                     <div></div>
                                                 </td>
                                             </tr>
-                                            <tr class="FormFieldRow">
+                                            <tr *ngIf="IsFullAccounting ? false:true" class="FormFieldRow">
                                                 <td [style.text-align]="isRTL ? 'right' : 'left'" style="font-size:10px; color:#1B90CB;">
                                                     {{RelativeRateDate}}
                                                 </td>
@@ -237,10 +265,12 @@
                         <td>
                             <table>
                                 <tr>
-                                    <td style="width: 1px;">
-                                        <button id="{{'AddInvoiceLine' | IdGeneratorAsyncPipe | async}}" [disabled]="!IsScreenEnabled" class="Button" (click)="AddButtonClicked()">{{'APInvoice.B.AddLine' | TextCodeTranslationPipe}}</button>
+                                    <td  float-start style="width: 57px; float: right;" >
+                                        <IconButton
+                                        id="{{'AddInvoiceLine' | IdGeneratorAsyncPipe | async}}"
+                                        [disabled]="!IsScreenEnabled" 
+                                        [Name]="'Add'" (click)="AddButtonClicked()"></IconButton>
                                     </td>
-
 
                                                 <td>
                                                     <div></div>

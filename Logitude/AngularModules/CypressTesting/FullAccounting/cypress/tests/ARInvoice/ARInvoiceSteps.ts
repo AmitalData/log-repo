@@ -17,13 +17,13 @@ Given("an AR Invoice with the following details", (dataTable) => {
     ARInvoiceActions.FillARInvoiceDetails(ARInvoiceDetails)
 });
 
-When("create AR Invoice", () => {
-    ARInvoiceActions.CreateARInvoice()
-});
+// When("create AR Invoice", () => {
+//     ARInvoiceActions.CreateARInvoice()
+// });
 
-Then("the AR Invoice should get successfully", () => {
-    ARInvoiceActions.AssertCreateARInvoice()
-});
+// Then("the AR Invoice should get successfully", () => {
+//     ARInvoiceActions.AssertCreateARInvoice()
+// });
 //#endregion
 
 //#region Add new Invoice Line

@@ -18,11 +18,12 @@ Given("an AR Payment with the following details", (dataTable) => {
 });
 
 When("create AR Payment", () => {
-    ARPaymentActions.CreateARPayment()
+    //ARPaymentActions.CreateARPayment()
+    ARPaymentActions.ApproveARPayment()
 });
 
 Then("the AR Payment should get successfully", () => {
-    ARPaymentActions.AssertCreateARPayment()
+    ARPaymentActions.AssertApproveARPayment()
 });
 //#endregion
 

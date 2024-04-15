@@ -75,7 +75,14 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
 
                 GLAccountBalanceCheck(accountingIntegrityInParam, myAccountingIntegrityResult);
 
+                Logger.LogTrace(String.Format("AccountingIntegrityService, Point 1, tenant {0}", accountingIntegrityInParam.Tenant));
+                var myDueLocalBalanceService = new DueLocalBalanceService();
+                myDueLocalBalanceService.ReBuild(accountingIntegrityInParam.Tenant, null, false); // fastRun=false 
+                Logger.LogTrace(String.Format("AccountingIntegrityService, Point 2, tenant {0}", accountingIntegrityInParam.Tenant));
+
+
                 DueLocalBalanceCheck(accountingIntegrityInParam, myAccountingIntegrityResult);
+
                 LedgerOpenAmountDiffCheck(accountingIntegrityInParam, myAccountingIntegrityResult);
                 InterestReportDiffCheck(accountingIntegrityInParam, myAccountingIntegrityResult);
                 RebuildAgingData(accountingIntegrityInParam, myAccountingIntegrityResult);

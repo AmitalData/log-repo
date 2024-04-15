@@ -2,7 +2,7 @@
 using Logitude.BL.InfrastructureModel.APIDataContract.Messages;
 using System;
 using System.Collections.Generic;
-
+using System.Net;
 using System.Xml;
 
 namespace Logitude.Accounting.BL.CoreBL
@@ -18,7 +18,8 @@ namespace Logitude.Accounting.BL.CoreBL
         }
         public void UpdateRatesByExternalXml()
         {
-            XmlDocument document = GetExchangeRatesXmlFromExternalLink();
+			ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+			XmlDocument document = GetExchangeRatesXmlFromExternalLink();
             List<RateUpdate> rates = GetRatesFromXml(document);
             RatesUpdate ratesUpdate = GetRatesUpdate(rates);
             UpdateRatesByService(ratesUpdate);

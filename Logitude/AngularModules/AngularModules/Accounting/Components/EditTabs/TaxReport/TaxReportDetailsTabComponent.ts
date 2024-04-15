@@ -139,14 +139,17 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
     }
 
     ReloadScreen(){
+        
         this.BuildColumns();
         this.buildQueryColumns();
         this.GetStatuses();
         this.GetTransmitStatuses();
+        
         this.CD.detectChanges();
         // this.FillGrids();
         this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() });
         this.GetReportCounter();
+        
     }
 
     public Export2ExcelClicked(){
@@ -312,6 +315,7 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
 
         //filter statuses
         if (this.SelectedStatusItems.length > 0) {
+            
             var statusesListString = "";
 
             this.SelectedStatusItems.forEach(item => { statusesListString += item + ","; });
@@ -394,6 +398,10 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
     public SelectedTransmitStatusItems = [];
     StatusItems = [];
     SelectedStatusItems = [];
+    CheckSelectedStatusItems(status){
+        
+        return this.SelectedStatusItems?.some(a => a == status.Code) ?? false
+    }
     GetStatuses() {
         this._TaxReportLineStatusListService.getAll().subscribe((myResult:any) => {
             this.StatusItems = myResult.Result;
@@ -423,10 +431,12 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
         });
     }
     PushTransmitStatus(status) {
+        
         this.SelectedTransmitStatusItems.push(status.Code);
         this.FilterLines();
     }
     PopTransmitStatus(status) {
+        
         var itemIndex = this.SelectedTransmitStatusItems.indexOf(status.Code);
         if (itemIndex > -1)
             this.SelectedTransmitStatusItems.splice(itemIndex, 1);
@@ -580,7 +590,16 @@ export class TaxReportDetailsTabComponent extends BaseComponent implements OnIni
             IsCustomTemplate: true,
             ServerSideSortable: true
         });
-
+        this.columns.push({
+            FieldName: 'ConfirmationNumber',
+            DataTypeCode: 'String',
+            Display: TextCodeTranslator.Translate("TaxReportLine.F.ConfirmationNumber"),
+            Styles: { width: '85px' },
+            HtmlListComponentName: 'TaxReportListTemplate',
+            HtmlListComponentUrl: './Accounting/Components/ListTemplates/TaxReportListTemplate',
+            IsCustomTemplate: true,
+            ServerSideSortable: true
+        });
         this.columns.push({
             FieldName: 'Buttons;' + this.EntityPM.StatusCode,
             DataTypeCode: 'String',

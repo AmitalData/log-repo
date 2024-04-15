@@ -110,6 +110,12 @@ namespace Logitude.Accounting.Data.EntityLists
        public string Category4Id  { get; set; }
        [DataMember]
        public string Category5Id  { get; set; }
+       [DataMember]
+       public string ChartOfAccountsId  { get; set; }
+       [DataMember]
+       public string ChartOfAccountsName  { get; set; }
+       [DataMember]
+       public string ChartOfAccountsCode  { get; set; }
    }
 
 }

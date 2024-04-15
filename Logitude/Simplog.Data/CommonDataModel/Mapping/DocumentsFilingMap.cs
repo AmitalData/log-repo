@@ -183,6 +183,10 @@ namespace Simplog.Data.CommonDataModel.Mapping
            .HasMaxLength(25)
            .IsUnicode(false);
 
+            this.Property(t => t.BillToId)
+          .HasMaxLength(60)
+          .IsUnicode(false);
+
             // Table & Column Mappings
             this.ToTable("DocumentsFilings");
             this.Property(t => t.Id).HasColumnName("Id");
