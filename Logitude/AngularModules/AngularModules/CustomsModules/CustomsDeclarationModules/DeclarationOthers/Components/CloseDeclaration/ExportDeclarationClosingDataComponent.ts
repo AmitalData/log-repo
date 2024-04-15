@@ -44,7 +44,7 @@ import { MessageWindow } from '../../../../../Controls/Windows/MessageWindow';
 import { SupplierInvoiceExtendedPMService } from '../../../../../Customs/Services/ExtendedPMs/SupplierInvoiceExtendedPMService';
 import { ApiQueryFilters } from '../../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { IncotemrsFileValidationList } from '../../../../../Customs/EntityLists/IncotemrsFileValidationList';
-import { LogtuideTableDataService } from '../../../../../QuoteOPM/Components/NewEntity/components/autocomplate-table/logtuide-table-data.service';
+// import { LogtuideTableDataService } from '../../../../../QuoteOPM/Components/NewEntity/components/autocomplate-table/logtuide-table-data.service';
 import { IncotemrsFileValidationListService } from '../../../../../Customs/Services/StandardLists/IncotemrsFileValidationListService';
 import { ConfirmWindow } from '../../../../../Controls/Windows/ConfirmWindow';
 
@@ -86,7 +86,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
     constructor(
         private EntityResourceService: EntityResourceService,
         private readonly cdr: ChangeDetectorRef, public entityArgs: EntityArgs,
-        private logtuideTableDataService: LogtuideTableDataService,
+        // private logtuideTableDataService: LogtuideTableDataService,
     ) {
         super();
         this.ModificationsList = new ObservableCollection([]);
@@ -846,7 +846,7 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
             filters.PageSize = 50;
             filters.addAdditionalFilter("ENGLISHNAME", incotermCode, null, null, "Contains", false, false, false, "Text", false, false);
             filters.addAdditionalFilter("LeadDocumentTypeID", '2', null, null, "Contains", false, false, false, "Text", false, false);
-            const incotemrsFileValidationList: IncotemrsFileValidationList[] = await this.logtuideTableDataService.getDataFromService(this.incotemrsFileValidationListService.getByFilters(filters))
+            const incotemrsFileValidationList: IncotemrsFileValidationList[] =null;// await this.logtuideTableDataService.getDataFromService(this.incotemrsFileValidationListService.getByFilters(filters))
 
             var isFreightCharge = incotemrsFileValidationList.some(x => x.IsFreightCharge);
             return isFreightCharge;

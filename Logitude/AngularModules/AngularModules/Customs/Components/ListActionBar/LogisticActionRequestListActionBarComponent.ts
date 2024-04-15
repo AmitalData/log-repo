@@ -5,7 +5,7 @@ import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { LogisticActionRequestsCloseSharedDataService } from 'Customs/Services/DataChange/LogisticActionRequestCloseSharedDataService';
 import { LogisticActionRequestWebService } from 'Customs/Services/WebServices/LogisticActionRequestWebService';
-import { LogtuideTableDataService } from 'QuoteOPM/Components/NewEntity/components/autocomplate-table/logtuide-table-data.service';
+// import { LogtuideTableDataService } from 'QuoteOPM/Components/NewEntity/components/autocomplate-table/logtuide-table-data.service';
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 
 
@@ -20,7 +20,7 @@ export class LogisticActionRequestListActionBarComponent
     private CurrentSession = SessionLocator.SelectedSession;
     public DataContext: LogisticActionRequestListActionBarComponent = this;
     public ObjectTableName: string = "Customs.LogisticActionRequest";
-    private _LogisticActionRequestWebService: LogisticActionRequestWebService = new LogisticActionRequestWebService(LogtuideTableDataService.createInstance());
+    private _LogisticActionRequestWebService: LogisticActionRequestWebService = new LogisticActionRequestWebService();//(LogtuideTableDataService.createInstance());
 
     constructor(
         public _LogisticActionRequestsCloseSharedDataService: LogisticActionRequestsCloseSharedDataService,

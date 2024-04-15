@@ -31,7 +31,7 @@ import { ObjectsLocator } from '../../../../../../Infrastructure/Locators/Object
 import { SupplierInvoiceItemsPricePM } from '../../../../../../Customs/EntityPMs/SupplierInvoiceItemsPricePM';
 import { SuppInvoiceItemsAbachStatementPM } from '../../../../../../Customs/EntityPMs/SuppInvoiceItemsAbachStatementPM';
 import { CustomsRequiredFieldExtendedListService } from '../../../../../../Customs/Services/ExtendedLists/CustomsRequiredFieldExtendedListService';
-import { customsItemsService } from 'QuoteOPM/Utilities/customsItems.service';
+// import { customsItemsService } from 'QuoteOPM/Utilities/customsItems.service';
 import { SupplierInvoiceSharedService } from '../Services/SupplierInvoiceSharedService';
 
 
@@ -106,7 +106,7 @@ export class EditSupplierInvoiceItem extends BaseComponent {
             this.CustomsItem = this.OriginalItemPM.TaxExemptCode;
 
             this.FillGridsData(); // copy  grids data from entity PM to ItemSource arrays
-            this.taxExemptCodeTypesFilter = customsItemsService.initTaxExemptCodeTypesFilter(args.allowExport);
+            this.taxExemptCodeTypesFilter = null;// customsItemsService.initTaxExemptCodeTypesFilter(args.allowExport);
 
             if (this.IsDisplayOnly) {
                 this.SetScreenFieldsEditability();

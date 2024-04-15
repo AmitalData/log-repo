@@ -16,7 +16,7 @@ import { SendUnCorrectDocumentsRequestParams } from '../../DataContract/RequestP
 import { AppTool } from '../../../Infrastructure/Tools';
 import { PendingRequestParams } from 'Customs/DataContract/RequestParams/PendingRequestParams';
 import { SendALLDelayFormParams } from '../../DataContract/RequestParams/SendALLDelayFormParams';
-import { LogtuideTableDataService } from 'QuoteOPM/Components/NewEntity/components/autocomplate-table/logtuide-table-data.service';
+// import { LogtuideTableDataService } from 'QuoteOPM/Components/NewEntity/components/autocomplate-table/logtuide-table-data.service';
 import { ObservableCollection } from 'Infrastructure/Utilities/ObservableCollection';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { GenericRequestParams } from 'Customs/DataContract/RequestParams/GenericRequestParams';
@@ -734,7 +734,7 @@ export class CourierMasterService {
             { headers: ServiceHelper.GetHttpHeaders().headers }
         );
 
-        return LogtuideTableDataService.createInstance().sendAjaxAndGetDataStandart(ajax);
+        return null;// LogtuideTableDataService.createInstance().sendAjaxAndGetDataStandart(ajax);
     }
     PostApprovePending(requestParams: PendingRequestParams) {
 

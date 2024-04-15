@@ -18,7 +18,7 @@ import { Guid } from '../../../../Infrastructure/Utilities/Guid';
 import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { FilterClass } from '../../../../Shipment/Components/NewEntity/NewShipmentComponent';
-import { ShipmentSubTypeList } from '../../../../shipment/EntityLists/ShipmentSubTypeList';
+import { ShipmentSubTypeList } from '../../../../Shipment/EntityLists/ShipmentSubTypeList';
 import { ShipmentOrderPackagePM } from '../../../../Shipment/EntityPMs/ShipmentOrderPackagePM';
 import { ShipmentPackagePM } from '../../../../Shipment/EntityPMs/ShipmentPackagePM';
 import { ShipmentPM } from '../../../../Shipment/EntityPMs/ShipmentPM';

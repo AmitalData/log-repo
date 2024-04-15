@@ -55,7 +55,6 @@ import { VendorEditComponent } from 'CustomsModules/CustomsVendor/Components/Edi
 import { CustomsCollateralComponent } from 'CustomsModules/CustomsCollateral/Components/CustomsCollateralComponent';
 import { ProceduralFaultsGeneralTabComponent } from 'CustomsModules/CustomsProceduralFault/Components/EditTabs/General/ProceduralFaultsGeneralTabComponent';
 import { SharedManifestComponent } from 'ShipmentModules/ShipmentSharedManifest/Components/SharedManifestComponent';
-import { EditQuoteTemplateComponent } from 'QuoteOPModules/QuoteTemplates/Components/EditQuoteTemplateComponent';
 import { CargoSplitGeneralTabComponent } from 'CustomsModules/CustomsDeclarationCargoSplit/Components/EditTabs/General/CargoSplitGeneralTabComponent';
 import { LogisticActionRequestGeneralTabComponent } from 'CustomsModules/CustomsLogisticActionRequest/Components/EditTabs/General/LogisticActionRequestGeneralTabComponent';
  import { GLAccountSecurityLevelService } from 'Accounting/Utilities/GLAccountSecurityLevelService';
@@ -2432,28 +2431,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                                     
                                     break;
                                 }
-                                case "QuoteTemplate": {
-                                    var windowArgs: any = {};
-                                    var logWindow = new LogitudeWindow();
-                                    windowArgs.IsNewEntityCall = false;
-                                    windowArgs.CurrentEntity = entityList;
-                                    var logWindow = new LogitudeWindow();
-                                    logWindow.WindowArgs = windowArgs;
-                                    logWindow.Title = entityList.Name;
-                                    logWindow.Width = window.innerWidth - 150;
-                                    logWindow.Height = window.innerHeight - 150;
-                                    logWindow.IsShowCloseButton = true;
-                                    logWindow.DataContext = this;
-                                    logWindow.Show("./QuoteModules/QuoteTemplates/Components/EditQuoteTemplateComponent");
-                                    
-                                    logWindow.WindowClosed.subscribe(($event1: any) => {
-                                        $event.isEntityChange =  (logWindow.InstanceComponent.ComponentInstance as EditQuoteTemplateComponent).isEntityChange;
-                                        this.isEditControlOpened = false;
-                                        this.OnBackFromEdit(selectedEntityId, $event);
-                                    });
-
-                                    break;
-                                }
+                                
                                 case 'Customs.DeclarationCargoSplit': {
 
                                     var windowArgs: any = {};

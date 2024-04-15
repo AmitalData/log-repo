@@ -33,7 +33,7 @@ import {CustomsCollateralsAnswerPM} from '../../EntityPMs/CustomsCollateralsAnsw
 import {CustomsCollateralsConditionPM} from '../../EntityPMs/CustomsCollateralsConditionPM';
 import { AppTool } from '../../../Infrastructure/Tools';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
-import { LogtuideTableDataService } from 'QuoteOPM/Components/NewEntity/components/autocomplate-table/logtuide-table-data.service';
+// import { LogtuideTableDataService } from 'QuoteOPM/Components/NewEntity/components/autocomplate-table/logtuide-table-data.service';
 import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
 import { EntityListService } from 'Infrastructure/Services/EntityListService';
 import { ConsignmentPM } from 'Customs/EntityPMs/ConsignmentPM';
@@ -49,7 +49,7 @@ export class DeclarationWebService {
 
     _SupplierInvoicePMService: SupplierInvoicePMService = new SupplierInvoicePMService();
     _DeclarationPaymentPMService: DeclarationPaymentPMService = new DeclarationPaymentPMService();
-    private logtuideTableDataService: LogtuideTableDataService = new LogtuideTableDataService(new EntityListService(), new EntityResourceService());
+    // private logtuideTableDataService: LogtuideTableDataService = new LogtuideTableDataService(new EntityListService(), new EntityResourceService());
     
     constructor() {
         this._http = ServiceHelper.HttpClient;
@@ -2144,7 +2144,7 @@ export class DeclarationWebService {
         );
 
         // return this.logtuideTableDataService.sendAjaxAndGetDataStandart(ajax);
-        return this.logtuideTableDataService.sendAjaxAndGetDataStandart(ajax);
+        return null;// this.logtuideTableDataService.sendAjaxAndGetDataStandart(ajax);
     }
 
 
@@ -2158,7 +2158,7 @@ export class DeclarationWebService {
         );
 
         // return this.logtuideTableDataService.sendAjaxAndGetDataStandart(ajax);
-        return this.logtuideTableDataService.sendAjaxAndGetDataStandart(ajax);
+        return null;// this.logtuideTableDataService.sendAjaxAndGetDataStandart(ajax);
     }
 
 
@@ -2173,7 +2173,7 @@ export class DeclarationWebService {
         );
 
         // return this.logtuideTableDataService.sendAjaxAndGetDataStandart(ajax);
-        return this.logtuideTableDataService.sendAjaxAndGetDataStandart(ajax);
+        return null;// this.logtuideTableDataService.sendAjaxAndGetDataStandart(ajax);
     }
 }
 

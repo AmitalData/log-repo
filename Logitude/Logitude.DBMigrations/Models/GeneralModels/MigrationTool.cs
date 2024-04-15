@@ -1461,7 +1461,7 @@ namespace Logitude.DBMigrations.Models
                     string scriptBody;
                     if (ToolConfigurations.DatabaseType.ToLower() == "oracle")
                     {
-                        string sxmlScript = GetScriptFromCDataSection(scriptDefinition.Oracle.Script);
+                        string sxmlScript = GetScriptFromCDataSection(scriptDefinition.Oracle?.Script);
                         string saveScriptHistoryQuery = GetOracleSaveScriptHistoryQuery(scriptDefinition.ScriptHistoryAction, scriptDefinition.SxmlFileName, scriptDefinition);
 
                         if (!String.IsNullOrEmpty(sxmlScript))
@@ -1548,7 +1548,7 @@ namespace Logitude.DBMigrations.Models
                 string scriptBody;
                 if (ToolConfigurations.DatabaseType.ToLower() == "oracle")
                 {
-                    string sxmlScript = GetScriptFromCDataSection(scriptDefinition.Oracle.Script);
+                    string sxmlScript = GetScriptFromCDataSection(scriptDefinition.Oracle?.Script);
                     string saveScriptHistoryQuery = GetOracleSaveScriptHistoryQuery(scriptDefinition.ScriptHistoryAction, scriptDefinition.SxmlFileName, scriptDefinition);
 
                     if (!String.IsNullOrEmpty(sxmlScript))
@@ -1913,7 +1913,7 @@ namespace Logitude.DBMigrations.Models
         {
             if (ToolConfigurations.DatabaseType.ToLower() == "oracle")
             {
-                return GenerateHashString(scriptDefinition.Oracle.Script);
+                return GenerateHashString(scriptDefinition.Oracle?.Script);
             }
             else
             {
@@ -1925,7 +1925,7 @@ namespace Logitude.DBMigrations.Models
         {
             if (ToolConfigurations.DatabaseType.ToLower() == "oracle")
             {
-                return scriptDefinition.Oracle.Version;
+                return scriptDefinition.Oracle !=null? scriptDefinition.Oracle.Version:0;
             }
             else
             {

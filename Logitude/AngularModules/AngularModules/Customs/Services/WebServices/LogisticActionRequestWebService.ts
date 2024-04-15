@@ -2,7 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { LogisticActionRequestRequestParams } from "Customs/DataContract/RequestParams/LogisticActionRequestRequestParams";
 import { ServiceHelper } from "Infrastructure/Utilities/ServiceHelper";
-import { LogtuideTableDataService } from "QuoteOPM/Components/NewEntity/components/autocomplate-table/logtuide-table-data.service";
+// import { LogtuideTableDataService } from "QuoteOPM/Components/NewEntity/components/autocomplate-table/logtuide-table-data.service";
 import { Observable } from "rxjs";
 
 
@@ -13,7 +13,7 @@ export class LogisticActionRequestWebService {
 
 
     constructor(
-        private logtuideTableDataService: LogtuideTableDataService,
+        // private logtuideTableDataService: LogtuideTableDataService,
     ) {
         this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/LogisticActionRequestWebService';
@@ -27,7 +27,7 @@ export class LogisticActionRequestWebService {
             { headers: ServiceHelper.GetHttpHeaders().headers }
         );
 
-        return this.logtuideTableDataService.sendAjaxAndGetDataStandart(ajax);
+        return null;// this.logtuideTableDataService.sendAjaxAndGetDataStandart(ajax);
     }
 
 
@@ -38,6 +38,6 @@ export class LogisticActionRequestWebService {
             { headers: ServiceHelper.GetHttpHeaders().headers }
         );
 
-        return this.logtuideTableDataService.standartSendAjax(ajax);
+        return null;// this.logtuideTableDataService.standartSendAjax(ajax);
     }
 }

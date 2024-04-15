@@ -10,7 +10,7 @@ import { ConfirmWindow } from "../../../../../Controls/Windows/ConfirmWindow";
 import { SendMultiUpdateRequestParams } from "../../../../../Customs/DataContract/RequestParams/SendMultiUpdateRequestParams";
 import { SupplierInvoiceService } from "../../../../../Customs/Services/Others/SupplierInvoiceService";
 import { MessageWindow } from "../../../../../Controls/Windows/MessageWindow";
-import { customsItemsService } from "QuoteOPM/Utilities/customsItems.service";
+// import { customsItemsService } from "QuoteOPM/Utilities/customsItems.service";
 import { ApiQueryFilters } from "Infrastructure/DataContracts/ApiQueryFilters";
 
 @Component({
@@ -46,7 +46,7 @@ export class MultiUpdateComponent extends BaseComponent {
     }
 
     SetWindowArgs(args: any) {
-        this.taxExemptCodeTypesFilter = customsItemsService.initTaxExemptCodeTypesFilter(this.CurrentSession.CurrentEditComponent.EntityPM.Direction === 'E');
+        this.taxExemptCodeTypesFilter = null;//customsItemsService.initTaxExemptCodeTypesFilter(this.CurrentSession.CurrentEditComponent.EntityPM.Direction === 'E');
     }
 
     customsItem: string;

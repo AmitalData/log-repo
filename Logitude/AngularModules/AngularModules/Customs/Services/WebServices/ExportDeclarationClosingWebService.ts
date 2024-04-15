@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import { EntityListService } from "Infrastructure/Services/EntityListService";
 import { EntityResourceService } from "Infrastructure/Services/EntityResourceService";
 import { ServiceHelper } from "Infrastructure/Utilities/ServiceHelper";
-import { LogtuideTableDataService } from "QuoteOPM/Components/NewEntity/components/autocomplate-table/logtuide-table-data.service";
+// import { LogtuideTableDataService } from "QuoteOPM/Components/NewEntity/components/autocomplate-table/logtuide-table-data.service";
 import { Observable } from "rxjs";
 
 
@@ -11,7 +11,7 @@ import { Observable } from "rxjs";
 export class ExportDeclarationClosingWebService {
     private _http: HttpClient;
     private _apiUrl: string;
-    private logtuideTableDataService: LogtuideTableDataService = new LogtuideTableDataService(new EntityListService(), new EntityResourceService());
+   // private logtuideTableDataService: LogtuideTableDataService = new LogtuideTableDataService(new EntityListService(), new EntityResourceService());
 
 
     constructor(
@@ -30,7 +30,7 @@ export class ExportDeclarationClosingWebService {
             }
         );
 
-        return this.logtuideTableDataService.sendAjaxAndGetDataStandart(ajax);
+        return null;// this.logtuideTableDataService.sendAjaxAndGetDataStandart(ajax);
     }
 }
 

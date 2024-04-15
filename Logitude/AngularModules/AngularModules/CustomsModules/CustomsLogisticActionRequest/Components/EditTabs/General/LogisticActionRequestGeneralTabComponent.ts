@@ -4,7 +4,7 @@ import { BaseComponent } from '../../../../../Infrastructure/Components/Logitude
 import { EntityResourceService } from '../../../../../Infrastructure/Services/EntityResourceService';
 import { ClientList } from 'Customs/EntityLists/ClientList';
 import { LogitudeWindow } from 'Controls/Windows/LogitudeWindow';
-import { LogtuideTableDataService } from 'QuoteOPM/Components/NewEntity/components/autocomplate-table/logtuide-table-data.service';
+// import { LogtuideTableDataService } from 'QuoteOPM/Components/NewEntity/components/autocomplate-table/logtuide-table-data.service';
 import { CargoIdentifireTypeList } from 'Customs/EntityLists/CargoIdentifireTypeList';
 import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
 import { Subscription } from 'rxjs';
@@ -165,7 +165,7 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
     constructor(
         private logisticActionRequestPMService: LogisticActionRequestPMService,
         private EntityResourceService: EntityResourceService,
-        private logtuideTableDataService: LogtuideTableDataService,
+        // private logtuideTableDataService: LogtuideTableDataService,
         private cdr: ChangeDetectorRef,
         public entityArgs: EntityArgs,
         public logisticActionRequestWebService: LogisticActionRequestWebService,
@@ -212,7 +212,7 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
 
 
     async setRequiredCargoKey() {
-        const cargoIdentifireTypeTable: CargoIdentifireTypeList[] = await this.logtuideTableDataService.getTable("Customs.CargoIdentifireType")
+        const cargoIdentifireTypeTable: CargoIdentifireTypeList[] = null;// await this.logtuideTableDataService.getTable("Customs.CargoIdentifireType")
         const cargoIdentifireType: CargoIdentifireTypeList = cargoIdentifireTypeTable.find(x => x.Code == this.entityPM.CargoIdentifierType);
         this.setRequiredField('CargoIdentifierKey2', !this.entityPM.CargoIdentifierKey2 && cargoIdentifireType.IsKey2Mandatory)
         this.setRequiredField('CargoIdentifierKey3', !this.entityPM.CargoIdentifierKey3 && cargoIdentifireType.IsKey3Mandatory)
@@ -477,8 +477,9 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
             SessionLocator.SelectedSession.StopBusyIndicator();
             return;
         }
-        const res = await this.logtuideTableDataService.getDataFromService(
-            (isInsert ? this.logisticActionRequestPMService.insert(this.entityPM) : this.logisticActionRequestPMService.update(this.entityPM)))
+        const res =null;
+        // await this.logtuideTableDataService.getDataFromService(
+         //   (isInsert ? this.logisticActionRequestPMService.insert(this.entityPM) : this.logisticActionRequestPMService.update(this.entityPM)))
 
         this.isEntityChange = true;
             
@@ -649,7 +650,7 @@ export class LogisticActionRequestGeneralTabComponent extends BaseComponent {
 
 
     private async setPlaceholderForCargoKey() {
-        const res: CargoIdentifireTypePM = await this.logtuideTableDataService.getDataFromService(this._CargoIdentifireTypeListService.getSingleFromCache(this.entityPM.CargoIdentifierType))
+        const res: CargoIdentifireTypePM = new CargoIdentifireTypePM();//  await this.logtuideTableDataService.getDataFromService(this._CargoIdentifireTypeListService.getSingleFromCache(this.entityPM.CargoIdentifierType))
 
         this.ManifestNumberPlaceholder = res.CargoIdentifierKey1Name;
         this.SecondCargoIDPlaceholder = res.CargoIdentifierKey2Name ?? '';

@@ -22,7 +22,7 @@ import { EntityResourceService } from '../../../Infrastructure/Services/EntityRe
 import { PhysicalChecksCloseSharedDataService } from '../../Services/DataChange/PhysicalChecksCloseSharedDataService';
 import { CourierMasterService } from 'Customs/Services/Others/CourierMasterService';
 import { DeclarationPMService } from 'Customs/Services/StandardPMs/DeclarationPMService';
-import { LogtuideTableDataService } from 'QuoteOPM/Components/NewEntity/components/autocomplate-table/logtuide-table-data.service';
+// import { LogtuideTableDataService } from 'QuoteOPM/Components/NewEntity/components/autocomplate-table/logtuide-table-data.service';
 import { PendingByKeywordWebService } from 'Customs/Services/ExtendedPMs/PendingByKeywordWebService';
 import { LogisticActionRequestsCloseSharedDataService } from 'Customs/Services/DataChange/LogisticActionRequestCloseSharedDataService';
 import { ServersNameExtendedPMService } from 'Customs/Services/ExtendedPMs/ServersNameExtendedPMService';
@@ -61,7 +61,7 @@ export class FieldTemplateComponent {
         private entityResourceService: EntityResourceService,
         private _physicalChecksCloseSharedDataService: PhysicalChecksCloseSharedDataService,
         private _logisticActionRequestsCloseSharedDataService: LogisticActionRequestsCloseSharedDataService,
-        private logtuideTableDataService: LogtuideTableDataService,
+        //private logtuideTableDataService: LogtuideTableDataService,
         private pendingByKeywordWebService: PendingByKeywordWebService,
     ) {
         if (SessionLocator.SelectedSession.CurrentListComponent != null) {
@@ -892,9 +892,9 @@ export class FieldTemplateComponent {
         
         SessionLocator.SelectedSession.StartBusyIndicator('')
 
-        const declarationPM = await this.logtuideTableDataService.getDataFromService(this.declarationPMService.get(this.Entity.DeclarationId));
-        declarationPM.RequestedCustomsDocId = 0;
-        await this.logtuideTableDataService.getDataFromService(this.declarationPMService.update(declarationPM));
+        // const declarationPM = await this.logtuideTableDataService.getDataFromService(this.declarationPMService.get(this.Entity.DeclarationId));
+        // declarationPM.RequestedCustomsDocId = 0;
+        // await this.logtuideTableDataService.getDataFromService(this.declarationPMService.update(declarationPM));
 
         SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
         

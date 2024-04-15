@@ -2,7 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { ApiQueryFilters } from "Infrastructure/DataContracts/ApiQueryFilters";
 import { ServiceHelper } from "Infrastructure/Utilities/ServiceHelper";
-import { LogtuideTableDataService } from "QuoteOPM/Components/NewEntity/components/autocomplate-table/logtuide-table-data.service";
+// import { LogtuideTableDataService } from "QuoteOPM/Components/NewEntity/components/autocomplate-table/logtuide-table-data.service";
 import { defer, Observable } from "rxjs";
 import { catchError, map } from "rxjs/operators";
 import { ServiceResponse } from "../../../Infrastructure/DataContracts/ServiceResponse";
@@ -17,7 +17,7 @@ export class PendingWebService {
 
 
     constructor(
-        private logtuideTableDataService: LogtuideTableDataService,
+        // private logtuideTableDataService: LogtuideTableDataService,
     ) {
         this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/PendingWebService';
@@ -46,7 +46,7 @@ export class PendingWebService {
         );
 
         // return this.logtuideTableDataService.sendAjaxAndGetDataStandart(ajax);
-        return this.logtuideTableDataService.standartSendAjax(ajax);
+        return null;// this.logtuideTableDataService.standartSendAjax(ajax);
     }
 
 
@@ -61,7 +61,7 @@ export class PendingWebService {
         isCreateInvoiceDocument: boolean) {
 
         const ajax: Observable<any> = this._http.post(
-            this._apiUrl + "/BulkFeeding?" + this.logtuideTableDataService.apiQueryFilterToQueryString(customFilter),
+            this._apiUrl + "/BulkFeeding?" +'',// this.logtuideTableDataService.apiQueryFilterToQueryString(customFilter),
             {
                 listPending: listPending,
                 listPendingRemark: listPendingRemark,
@@ -76,7 +76,7 @@ export class PendingWebService {
             }
         );
 
-        return this.logtuideTableDataService.sendAjaxAndGetDataStandart(ajax) as Promise<any>;
+        return null;// this.logtuideTableDataService.sendAjaxAndGetDataStandart(ajax) as Promise<any>;
     }
 
     PostSendMultiUpdate(
@@ -104,7 +104,7 @@ export class PendingWebService {
             serviceResponse = new ServiceResponse();
 
             return this._http.post(
-                this._apiUrl + "/PostSendMultiUpdate?" + this.logtuideTableDataService.apiQueryFilterToQueryString(customFilter),
+                this._apiUrl + "/PostSendMultiUpdate?" + '', // this.logtuideTableDataService.apiQueryFilterToQueryString(customFilter),
                 JSON.stringify(requestParams), ServiceHelper.GetHttpHeaders()).pipe(map((response) => {
                     var res:any=response;
                     var serviceResponse: DataResult=new DataResult();
