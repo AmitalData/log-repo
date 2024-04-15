@@ -1674,7 +1674,7 @@ xmlns:soap=""http://www.w3.org/2003/05/soap-envelope"">
                     }
                     ip = currentIP;
                 }
-                ExceptionHandler.HandleException(e, DateTime.Now, tenant, HttpContext.Current.User != null ? HttpContext.Current.User.Identity.Name : "", HttpContext.Current.User != null ? HttpContext.Current.User.Identity.Name : "", "ExportDocument : GetDllFromStorage Method", ip);
+                ExceptionHandler.HandleException(e, DateTime.Now, tenant, HttpContext.Current?.User != null ? HttpContext.Current?.User?.Identity?.Name : "", HttpContext.Current?.User != null ? HttpContext.Current?.User?.Identity?.Name : "", "ExportDocument : GetDllFromStorage Method", ip);
             }
             return result;
         }
