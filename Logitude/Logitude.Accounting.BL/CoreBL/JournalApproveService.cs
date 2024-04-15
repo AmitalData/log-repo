@@ -1051,10 +1051,59 @@ namespace Logitude.Accounting.BL.CoreBL
                         if (status != 1)
                             continue;
                     }
-                    if (FeatureToggleHelper.HasFeatureToggle("JAM", journal.Tenant))
-                        JournalApproveService.EnqueueMultiThreadedDB(journal);
-                    else
-                        JournalApproveService.EnqueueDB(journal);
+
+
+                    JournalPM pm = null;
+                    JournalApproveService.MyActions actions =
+    JournalApproveService.MyActions.BuildLedgerTransaction | JournalApproveService.MyActions.BuildGLAccountTotalByMonths
+    | JournalApproveService.MyActions.DueBugReStreamAllJournalAgain2Accounting;
+                    string journalId = journal.Id;
+
+                    using (var scope2 = TransactionFactory.GetNewTransaction())
+                    {
+                        IAccountingContext MyContext = AccountingContext.GetContext(SeedTenant);
+                        var jqs = new JournalQueryService(MyContext);
+                        pm = jqs.GetSingle(journalId, true, false);
+                        var jus = new JournalUpdateService(MyContext, new Dictionary<string, IContext>(), SeedTenant);
+
+                        try
+                        {
+                            if (pm.StatusCode != "6")
+                            {
+                                pm.StatusCode = "6";
+                                pm.ChangeSetOp = ChangeSetOperation.Update;
+                                jus.Update(pm, true);
+                            }
+
+
+                            if (FeatureToggleHelper.HasFeatureToggle("JAM", pm.Tenant))
+                                JournalApproveService.EnqueueMultiThreadedDB(pm);
+                            else
+                                JournalApproveService.EnqueueDB(pm);
+                            if (scope2 != null) 
+                                scope2.Complete();
+                        }
+                        catch (Exception eee2)
+                        {
+
+                            //OnException(null, null, journalId, SeedTenant, eee);
+                            Logger.LogError(journalId.ToString() + " " + eee2.Message);
+                            //ExceptionHandler.HandleException(eee, DateTime.Now, 0, "", "JournalApproveWorkerRole", "approveJournalService.SubmitApprove", null);
+                            Logitude.SystemLogs.ExceptionHandler.HandleException(eee2, DateTime.Now, 0, "", "", "JournalApproveService.ReturnToQueue()" + eee2.Message, null);
+
+                            Thread.Sleep(100);
+
+                            //throw;
+                            //}
+                        }
+                        finally
+                        {
+                            if (scope2 != null)
+                                scope2.Dispose();
+                        }
+                        //}
+
+                    }
                 }
                 catch (Exception eee)
                 {
@@ -1375,102 +1424,101 @@ namespace Logitude.Accounting.BL.CoreBL
                         messageIdPar.Direction = ParameterDirection.Input;
                         messageIdPar.Value = _QMessageId;
 
-                        var DBTypeLedgerTransactionsWithCounters = myLedgerTransactionsWithCounters
-                            .Select(r =>
-                          new DBTypeLedgerTransaction()
-                          {
-                              //Id = r.JournalId,
+                            var DBTypeLedgerTransactionsWithCounters = myLedgerTransactionsWithCounters
+                                .Select(r =>
+                              new DBTypeLedgerTransaction()
+                              {
+                                  //Id = r.JournalId,
 
-                              Tenant = r.Tenant,
-                              JournalId = r.JournalId,
+                                  Tenant = r.Tenant,
+                                  JournalId = r.JournalId,
 
-                              JournalLineNumber = r.JournalLineNumber,
-                              Id = r.Id,
+                                  JournalLineNumber = r.JournalLineNumber,
+                                  Id = r.Id,
 
-                              CreateDate = r.CreateDate,
-                              ControlAccountId = r.ControlAccountId,
-                              AccountId = r.AccountId,
+                                  CreateDate = r.CreateDate,
+                                  ControlAccountId = r.ControlAccountId,
+                                  AccountId = r.AccountId,
 
-                              DocumentDate = r.DocumentDate,
-                              DueDate = r.DueDate,
-                              AccountingDate = r.AccountingDate,
-                              LocalAmountDebit = r.LocalAmountDebit,
-                              LocalAmountCredit = r.LocalAmountCredit,
-                              CurrencyId = r.CurrencyId,
-                              ForeignAmountDebit = r.ForeignAmountDebit,
-                              ForeignAmountCredit = r.ForeignAmountCredit,
-                              ExchangeRate = r.ExchangeRate,
-                              Reference1 = r.Reference1,
-                              Reference2 = r.Reference2,
-                              Reference3 = r.Reference3,
-                              OpenAmount = r.OpenAmount,
+                                  DocumentDate = r.DocumentDate,
+                                  DueDate = r.DueDate,
+                                  AccountingDate = r.AccountingDate,
+                                  LocalAmountDebit = r.LocalAmountDebit,
+                                  LocalAmountCredit = r.LocalAmountCredit,
+                                  CurrencyId = r.CurrencyId,
+                                  ForeignAmountDebit = r.ForeignAmountDebit,
+                                  ForeignAmountCredit = r.ForeignAmountCredit,
+                                  ExchangeRate = r.ExchangeRate,
+                                  Reference1 = r.Reference1,
+                                  Reference2 = r.Reference2,
+                                  Reference3 = r.Reference3,
+                                  OpenAmount = r.OpenAmount,
 
-                              OppositeAccountId = r.OppositeAccountId,
-                              SearchFields = r.SearchFields,
-                              OpenAmountCurrencyId = r.OpenAmountCurrencyId,
-                              Notes = r.Notes,
-                              AmountToReconcile = r.AmountToReconcile,
+                                  OppositeAccountId = r.OppositeAccountId,
+                                  SearchFields = r.SearchFields,
+                                  OpenAmountCurrencyId = r.OpenAmountCurrencyId,
+                                  Notes = r.Notes,
+                                  AmountToReconcile = r.AmountToReconcile,
 
-                              Mark = r.Mark,
-                              //IsReconciled = 
-                              //(this._SelectedQueue == K_AccountingJournalApproveWR && r.OpenAmount == 0) 
-                              //? true : r.IsReconciled,
-                              IsReconciled = r.IsReconciled,
-                              IsExternalReconcile = r.IsExternalReconcile
-                          }
-                    ).ToList();
+                                  Mark = r.Mark,
+                                  //IsReconciled = 
+                                  //(this._SelectedQueue == K_AccountingJournalApproveWR && r.OpenAmount == 0) 
+                                  //? true : r.IsReconciled,
+                                  IsReconciled = r.IsReconciled,
+                                  IsExternalReconcile = r.IsExternalReconcile
+                              }
+                        ).ToList();
 
-                        var tableLTRans = DBTypeLedgerTransactionsWithCounters.ToDataTable();
+                            var tableLTRans = DBTypeLedgerTransactionsWithCounters.ToDataTable();
 
-                        SqlParameter tLedgerTransactionsTypePar = new SqlParameter("@tLedgerTransactionsType", SqlDbType.Structured);
-                        tLedgerTransactionsTypePar.Direction = ParameterDirection.Input;
-                        tLedgerTransactionsTypePar.Value = tableLTRans;
+                            SqlParameter tLedgerTransactionsTypePar = new SqlParameter("@tLedgerTransactionsType", SqlDbType.Structured);
+                            tLedgerTransactionsTypePar.Direction = ParameterDirection.Input;
+                            tLedgerTransactionsTypePar.Value = tableLTRans;
 
-                        var listGLAccountTotalByMonth =
-                            allGLAccountTotalByMonths.Select(r => new DBTypeAccountTotalByMonth()
-                            {
-                                AccountId = r.AccountId,
-                                DateTypeCode = r.DateTypeCode,
-                                Year = r.Year,
-                                Month = r.Month,
-                                CurrencyId = r.CurrencyId,
-                                Tenant = r.Tenant,
-                                LocalAmountCredit = r.LocalAmountCredit,
-                                LocalAmountDebit = r.LocalAmountDebit,
-                                ForeignAmountCredit = r.ForeignAmountCredit,
-                                ForeignAmountDebit = r.ForeignAmountDebit,
-
-
-                            }).ToList();
-                        var tableGLAccountTotalByMonths = listGLAccountTotalByMonth.ToDataTable();
-
-                        SqlParameter tGLAccountTotalByMonthsTypePar = new SqlParameter("@tGLAccountTotalByMonthsType", SqlDbType.Structured);
-                        tGLAccountTotalByMonthsTypePar.Direction = ParameterDirection.Input;
-                        tGLAccountTotalByMonthsTypePar.Value = tableGLAccountTotalByMonths;
-                        //tLedgerTransactionsTypePar.
+                            var listGLAccountTotalByMonth =
+                                allGLAccountTotalByMonths.Select(r => new DBTypeAccountTotalByMonth()
+                                {
+                                    AccountId = r.AccountId,
+                                    DateTypeCode = r.DateTypeCode,
+                                    Year = r.Year,
+                                    Month = r.Month,
+                                    CurrencyId = r.CurrencyId,
+                                    Tenant = r.Tenant,
+                                    LocalAmountCredit = r.LocalAmountCredit,
+                                    LocalAmountDebit = r.LocalAmountDebit,
+                                    ForeignAmountCredit = r.ForeignAmountCredit,
+                                    ForeignAmountDebit = r.ForeignAmountDebit,
 
 
+                                }).ToList();
+                            var tableGLAccountTotalByMonths = listGLAccountTotalByMonth.ToDataTable();
 
-
-                        SqlParameter tGLAccountAgingDataType = GettGLAccountAgingDataType(gLAccountAgingDataPMs);
-
-                        cmd.Parameters.Add(journalIdPar);
-                        cmd.Parameters.Add(pTenantPar);
-
-                        cmd.Parameters.Add(messageIdPar);
-                        cmd.Parameters.Add(tGLAccountTotalByMonthsTypePar);
-                        cmd.Parameters.Add(tLedgerTransactionsTypePar);
-                        cmd.Parameters.Add(tGLAccountAgingDataType);
+                            SqlParameter tGLAccountTotalByMonthsTypePar = new SqlParameter("@tGLAccountTotalByMonthsType", SqlDbType.Structured);
+                            tGLAccountTotalByMonthsTypePar.Direction = ParameterDirection.Input;
+                            tGLAccountTotalByMonthsTypePar.Value = tableGLAccountTotalByMonths;
+                            //tLedgerTransactionsTypePar.
 
 
 
 
+                            SqlParameter tGLAccountAgingDataType = GettGLAccountAgingDataType(gLAccountAgingDataPMs);
+
+                            cmd.Parameters.Add(journalIdPar);
+                            cmd.Parameters.Add(pTenantPar);
+
+                            cmd.Parameters.Add(messageIdPar);
+                            cmd.Parameters.Add(tGLAccountTotalByMonthsTypePar);
+                            cmd.Parameters.Add(tLedgerTransactionsTypePar);
+                            cmd.Parameters.Add(tGLAccountAgingDataType);
 
 
-                        myConnection.Open();
-                        var output = cmd.ExecuteNonQuery();
-                        myConnection.Close();
 
+
+
+
+                            myConnection.Open();
+                            var output = cmd.ExecuteNonQuery();
+                            myConnection.Close();
 
 
                     }
