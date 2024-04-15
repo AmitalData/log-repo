@@ -18,7 +18,8 @@ namespace WebFreight.Web.Helpers.AmitalAPI
 
         public AmitalApiClient Get(string token, int tenant)
         {
-            HttpClienResponse res = AmitalAPIHelper.SendRequest(token, $"{baseUrl}/query?Tenant={tenant}", HttpMethod.Get);
+            TenantManagementPM tenantManagementPM = tenantManagementQuery.GetSinglePM(tenant);
+            HttpClienResponse res = AmitalAPIHelper.SendRequest(token, $"{baseUrl}/query?Tenant={tenantManagementPM.ExportTenant}", HttpMethod.Get);
             if (!res.Res.IsSuccessStatusCode)
                 return null;
 

@@ -116,7 +116,7 @@ export class APISettingsComponent extends BaseComponent {
     ];
     clientapiColumns: (FieldData & { width: string })[] = [
         { name: 'Id', label: 'Id', width: '100' },
-        { name: 'Schema', label: 'Schema', width: '100' },
+        { name: 'Schema', label: 'Schema', width: '150' },
         { name: 'ApiType', label: 'Api Type', width: '100' },
         { name: 'Address', label: 'Address', width: '100' },
         { name: 'PartnerName', label: 'PARTNER', width: '100' },
