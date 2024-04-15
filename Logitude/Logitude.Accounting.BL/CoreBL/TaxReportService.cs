@@ -119,7 +119,7 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 string vatNumber = null;
                 transmitStatus = "1";
-                var exist = reportLinesList.Where(d => d.JournalId == taxData.Id).Any();
+                var exist = reportLinesList.Where(d => d.JournalId == taxData.Id && d.LedgerTransactionId == taxData.LedgerTransactionId).Any();
                 if (!exist)
                 {
                     string outputreference = null;
@@ -230,7 +230,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 VatNumber = null;
                 InputVatAmount = 0;
                 InputInvoiceAmount = 0;
-                var exist = reportLinesList.Where(d => d.JournalId == transaction.JournalId).Any();
+                var exist = reportLinesList.Where(d => d.JournalId == transaction.JournalId && d.LedgerTransactionId == transaction.LedgerTransactionId).Any();
                 if (!exist)
                 {
 
