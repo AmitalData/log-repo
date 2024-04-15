@@ -3,7 +3,7 @@
 	<Sql Version="1">
 
 		<![CDATA[
-			UPDATE customs.ClientItems SET SearchFields = ISNULL(ItemCode,'') +','+ isnull(ItemDescription ,'') +','+ isnull(ClassificationCode,'')
+			--UPDATE customs.ClientItems SET SearchFields = ISNULL(ItemCode,'') +','+ isnull(ItemDescription ,'') +','+ isnull(ClassificationCode,'')
         ]]>
 	</Sql>
 </Script>
