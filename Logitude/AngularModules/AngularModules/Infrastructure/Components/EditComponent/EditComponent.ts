@@ -1550,7 +1550,7 @@ export class EditComponent implements OnDestroy {
                                 const messageWindow = new MessageWindow();
                                 messageWindow.Title=TextCodeTranslator.Translate("ARInvoice.O.ConfirmationNumberFailedTitle");
                                 messageWindow.RTL=true;
-                                messageWindow.Height=320;
+                                messageWindow.Height=250;
                                 messageWindow.Width=420;
                                 messageWindow.IsMessageMultiLine=true
                                 messageWindow.LayoutDirection='rtl'
