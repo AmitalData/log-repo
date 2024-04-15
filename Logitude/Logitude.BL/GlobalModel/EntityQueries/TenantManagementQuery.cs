@@ -249,6 +249,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                      LastMonthCreatedTariffs = a.LastMonthCreatedTariffs,
                                                      ScheduledTasksLimitPerReport = a.ScheduledTasksLimitPerReport,
                                                      AmitalApiToken = a.AmitalApiToken,
+                                                     ExportTenant = a.ExportTenant,
                                                  }).FirstOrDefault();
                     if (tenant != null)
                     {
@@ -446,7 +447,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                   LastWeekCreatedTariffs = a.LastWeekCreatedTariffs,
                                                   LastMonthCreatedTariffs = a.LastMonthCreatedTariffs,
                                                   ScheduledTasksLimitPerReport = a.ScheduledTasksLimitPerReport,
-
+                                                  ExportTenant = a.ExportTenant,
                                               }).FirstOrDefault();
 
                 if (tenant1 != null)

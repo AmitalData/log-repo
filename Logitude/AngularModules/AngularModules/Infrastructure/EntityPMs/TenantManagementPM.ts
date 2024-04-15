@@ -915,9 +915,14 @@ export class TenantManagementPM {
     public set IsHybrid(newValue: boolean) { if (this.isHybrid != newValue) { this.isHybrid = newValue; this.MarkAsDirty("IsHybrid"); } }
        
 	 
-    private amitalApiAddress: string;
-    public get AmitalApiAddress() { return this.amitalApiAddress; }
-    public set AmitalApiAddress(newValue: string) { if (this.amitalApiAddress != newValue) { this.amitalApiAddress = newValue; this.MarkAsDirty("AmitalApiAddress"); } }
+    private amitalApiToken: string;
+    public get AmitalApiToken() { return this.amitalApiToken; }
+    public set AmitalApiToken(newValue: string) { if (this.amitalApiToken != newValue) { this.amitalApiToken = newValue; this.MarkAsDirty("AmitalApiToken"); } }
+       
+	 
+    private exportTenant: number;
+    public get ExportTenant() { return this.exportTenant; }
+    public set ExportTenant(newValue: number) { if (this.exportTenant != newValue) { this.exportTenant = newValue; this.MarkAsDirty("ExportTenant"); } }
        
 	 
 
