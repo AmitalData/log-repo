@@ -119,8 +119,8 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 string vatNumber = null;
                 transmitStatus = "1";
-               // var exist = reportLinesList.Where(d => d.JournalId == taxData.Id).Any();
-                if (true)
+                var exist = reportLinesList.Where(d => d.JournalId == taxData.Id && d.LedgerTransactionId == taxData.LedgerTransactionId).Any();
+                if (!exist)
                 {
                     string outputreference = null;
                     ARInvoice invoice = invoices.Where(d => d.Id == taxData.AccountingEntityId).FirstOrDefault();
@@ -230,8 +230,8 @@ namespace Logitude.Accounting.BL.CoreBL
                 VatNumber = null;
                 InputVatAmount = 0;
                 InputInvoiceAmount = 0;
-                //var exist = reportLinesList.Where(d => d.JournalId == transaction.JournalId).Any();
-                if (true)
+                var exist = reportLinesList.Where(d => d.JournalId == transaction.JournalId && d.LedgerTransactionId == transaction.LedgerTransactionId).Any();
+                if (!exist)
                 {
 
                     bool voidedAPInvoiceTaxMonthTransaction = CheckIfAPInvoiceTaxMonthTransactionIsVoided(taxReport, voidedAPInvoices, transaction);
@@ -616,7 +616,7 @@ namespace Logitude.Accounting.BL.CoreBL
         }
         private static List<TaxReportLinePM> InsertTaxReportLines(TaxReportPM taxReport, List<TaxReportLinePM> taxReportLines, int startIndex)
         {
-            using (TransactionScope scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(60)))
+           using (TransactionScope scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(60)))
             {
                 int count = startIndex;
                 foreach (TaxReportLinePM linePM in taxReportLines)
