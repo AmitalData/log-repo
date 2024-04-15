@@ -4542,19 +4542,12 @@ export class SupplierInvoiceItemLine extends BaseComponent {
                     const clientItemExtendedPMService = new ClientItemExtendedPMService();
                     let clientItemRequest: Observable<ServiceResponse>;
 
-                    if (!AppTool.IsNullOrEmpty(this.ItemCode)) {
-                        clientItemRequest = clientItemExtendedPMService.GetClientItemPM(
-                            this.ItemCode,
-                            this.Parent.declarationPM.ExporterImporterCode,
-                            SessionLocator.Tenant
-                        );
-                    } else {
-                        clientItemRequest = clientItemExtendedPMService.GetClientItemDescriptionPM(
-                            this.ItemDescription,
-                            this.Parent.declarationPM.ExporterImporterCode,
-                            SessionLocator.Tenant
-                        );
-                    }
+                    clientItemRequest = clientItemExtendedPMService.GetClientItemByItemKeyPM(
+                        this.ItemDescription,
+                        this.ItemCode,
+                        this.Parent.declarationPM.ExporterImporterCode,
+                        SessionLocator.Tenant
+                    );
 
                     clientItemRequest.subscribe((response: ServiceResponse) => {
                         if (response?.Result) {
