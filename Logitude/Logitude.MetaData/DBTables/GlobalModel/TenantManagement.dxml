@@ -963,6 +963,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ExportTenant"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="Id"
     ReferencedTable="GlobalTenants"

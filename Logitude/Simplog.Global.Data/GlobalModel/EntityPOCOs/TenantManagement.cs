@@ -210,5 +210,6 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
         public int LastMonthCreatedTariffs { get; set; }
         public int ScheduledTasksLimitPerReport { get; set; }
         public string AmitalApiToken { get; set; }
+        public int? ExportTenant { get; set; }
     }
 }
