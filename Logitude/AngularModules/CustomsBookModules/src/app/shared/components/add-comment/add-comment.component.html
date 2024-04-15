@@ -1,0 +1,24 @@
+<div class="sidePanel" id="commentPanel" [class.active]="showAddComment">
+    <div class="sidePanel_frame active">
+        <div class="sidePanel_close"><a href="#" role="button" (click)="showAddComment =!showAddComment"
+                aria-controls="commentPanel" class="icon-close"></a></div>
+        <div class="sidePanel_title">
+            <h3>כתיבת הערה חדשה ל:</h3>
+            <div class="commentWritesTo">
+                <div class="commentWritesTo_read">
+                    <div><span>0101210000/2</span><span>גזעיים לרביה</span></div>
+                </div>
+            </div>
+        </div>
+        <div class="sidePanel_body">
+            <div class="sidePanel_addComment">
+                <label>תוכן ההערה</label>
+                <textarea [(value)]="commentText" (input)="updateCommentText($event)"
+                    placeholder="הקלידו תיאור/ שמות פריטים/ מידע עבור פרט מכס זה..."></textarea>
+            </div>
+            <div class="addComment_submit"><button [class.disabled]="commentText.length < 1 ">שמירת הערה</button>
+            </div>
+        </div>
+        <div class="sidePanel_trapFocus"><a href="#" role="button">חזור לתחילת הפאנל</a></div>
+    </div>
+</div>
