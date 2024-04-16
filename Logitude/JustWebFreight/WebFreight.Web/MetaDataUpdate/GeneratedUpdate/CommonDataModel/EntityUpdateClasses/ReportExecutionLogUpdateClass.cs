@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class ReportExecutionLogUpdateClass
    {  		
-		public const string HashString = "9b08abe34a74e009dbe1b3d34a1c627e";
+		public const string HashString = "6851400dffb0cc44cb71404cd24ab3cd";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -134,7 +134,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",
 			      				    NoTS =  false,
-			      				    HasMenuButtons =  false,
+			      				    HasMenuButtons =  true,
 			      				    AllowedForComputingPartners =  false,
 			      				    CustomFieldsCount =  0,
 			      				    DisableSearchBox =  false,
@@ -1321,6 +1321,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 
 			   TextCode ReportExecutionLogTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ReportExecutionLog.Q.FailedReportExecutionLogs", DefaultText = @"Failed Report Execution Logs",LocalDefaultText = null, ObjectTableId = ReportExecutionLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature ReportExecutionLogFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ReportExecutionLog.Q.FailedReportExecutionLogs", ObjectTableId = ReportExecutionLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportExecutionLogFeatures.FailedReportExecutionLogs", NameTextCodeDefaultText = "Failed Report Execution Logs", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ReportExecutionLogObjectTable, addedFeatures, addedTextCodes);
+ 
+
+			   TextCode ReportExecutionLogTextCode_3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ReportExecutionLog.Q.InProcessReportExecutionLogs", DefaultText = @"In Process Report Execution Logs",LocalDefaultText = null, ObjectTableId = ReportExecutionLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ReportExecutionLogFeature_3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ReportExecutionLog.Q.InProcessReportExecutionLogs", ObjectTableId = ReportExecutionLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportExecutionLogFeatures.InProcessReportExecutionLogs", NameTextCodeDefaultText = "In Process Report Execution Logs", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ReportExecutionLogObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();
 	        //FeaturesRepository.SubmitChanges();    
@@ -1426,6 +1430,43 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			 QueryColumn FailedReportExecutionLogsQueryColumn_14 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FailedReportExecutionLogsQuery.Id,QueryCode = FailedReportExecutionLogsQuery.UniqueCode, IndexOrder = 14, ObjectFieldCode = "ReportExecutionLog.CreatedByUserName" , ColumnWidth = 100 }, addedQueryColumns);
 
              AdvancedQueryFilter FailedReportExecutionLogsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "ReportExecutionLog.StatusCode", PredefinedValue = "F",PredefinedValue2 = null, CustomPredefined = false, QueryId = FailedReportExecutionLogsQuery.Id,QueryCode = FailedReportExecutionLogsQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+
+  
+	      
+
+			  Query InProcessReportExecutionLogsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ReportExecutionLogTextCode_3.Id, NameTextCodeCode = ReportExecutionLogTextCode_3.Code, ObjectTableName = "ReportExecutionLog", Code = "In Process Report Execution Logs",  QueryGroupCode = "4df5", IndexOrder = 3, Tenant = 0, ObjectTableId = ReportExecutionLogObjectTable.Id, QuerySection = "ReportExecutionLog", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ReportExecutionLogFeature_3.Id,FeatureUniqeCode= ReportExecutionLogFeature_3.FeatureUniqeCode, DefaultSortName = "StatusCode", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+	
+			 QueryColumn InProcessReportExecutionLogsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InProcessReportExecutionLogsQuery.Id,QueryCode = InProcessReportExecutionLogsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ReportExecutionLog.Tenant" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn InProcessReportExecutionLogsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InProcessReportExecutionLogsQuery.Id,QueryCode = InProcessReportExecutionLogsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ReportExecutionLog.CreateDate" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn InProcessReportExecutionLogsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InProcessReportExecutionLogsQuery.Id,QueryCode = InProcessReportExecutionLogsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ReportExecutionLog.StatusCode" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn InProcessReportExecutionLogsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InProcessReportExecutionLogsQuery.Id,QueryCode = InProcessReportExecutionLogsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "ReportExecutionLog.ExceptionMessage" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn InProcessReportExecutionLogsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InProcessReportExecutionLogsQuery.Id,QueryCode = InProcessReportExecutionLogsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "ReportExecutionLog.DoneDate" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn InProcessReportExecutionLogsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InProcessReportExecutionLogsQuery.Id,QueryCode = InProcessReportExecutionLogsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "ReportExecutionLog.ReportFilterXML" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn InProcessReportExecutionLogsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InProcessReportExecutionLogsQuery.Id,QueryCode = InProcessReportExecutionLogsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "ReportExecutionLog.ReportId" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn InProcessReportExecutionLogsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InProcessReportExecutionLogsQuery.Id,QueryCode = InProcessReportExecutionLogsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "ReportExecutionLog.ReportTemplateId" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn InProcessReportExecutionLogsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InProcessReportExecutionLogsQuery.Id,QueryCode = InProcessReportExecutionLogsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "ReportExecutionLog.RetryNumber" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn InProcessReportExecutionLogsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InProcessReportExecutionLogsQuery.Id,QueryCode = InProcessReportExecutionLogsQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "ReportExecutionLog.StartDate" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn InProcessReportExecutionLogsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InProcessReportExecutionLogsQuery.Id,QueryCode = InProcessReportExecutionLogsQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "ReportExecutionLog.DisablePreview" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn InProcessReportExecutionLogsQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InProcessReportExecutionLogsQuery.Id,QueryCode = InProcessReportExecutionLogsQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "ReportExecutionLog.ExecutedByServerName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn InProcessReportExecutionLogsQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InProcessReportExecutionLogsQuery.Id,QueryCode = InProcessReportExecutionLogsQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "ReportExecutionLog.ReportName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn InProcessReportExecutionLogsQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InProcessReportExecutionLogsQuery.Id,QueryCode = InProcessReportExecutionLogsQuery.UniqueCode, IndexOrder = 13, ObjectFieldCode = "ReportExecutionLog.StatusName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn InProcessReportExecutionLogsQueryColumn_14 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InProcessReportExecutionLogsQuery.Id,QueryCode = InProcessReportExecutionLogsQuery.UniqueCode, IndexOrder = 14, ObjectFieldCode = "ReportExecutionLog.CreatedByUserName" , ColumnWidth = 100 }, addedQueryColumns);
+
+             AdvancedQueryFilter InProcessReportExecutionLogsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "ReportExecutionLog.StatusCode", PredefinedValue = "P",PredefinedValue2 = null, CustomPredefined = false, QueryId = InProcessReportExecutionLogsQuery.Id,QueryCode = InProcessReportExecutionLogsQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);

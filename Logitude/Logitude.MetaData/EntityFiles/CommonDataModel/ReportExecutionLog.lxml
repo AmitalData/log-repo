@@ -51,7 +51,7 @@
   NoDefaultFeatures="false"
   HasCompactSearch="false"
   ApplyDefaultValues="false"
-  HasMenuButtons="false"
+  HasMenuButtons="true"
   ApplyOnPropertyChangedCode="false"
   HasApiHelper="false"
   AllowedForComputingPartners="false"
@@ -1678,6 +1678,107 @@
       <QueryFilter
         QueryCode="&quot;Failed Report Execution Logs&quot;"
         PredefinedValue="&quot;F&quot;"
+        ObjectFieldName="&quot;StatusCode&quot;"
+        IsPredefined="true"
+        Operator="&quot;Equal&quot;"
+        IndexOrder="0"
+        CustomPredefined="false" />
+    </QueryFilters>
+  </Query>
+  <Query
+    Code="&quot;In Process Report Execution Logs&quot;"
+    TextCode="&quot;In Process Report Execution Logs&quot;"
+    QueryGroupCode="&quot;4df5&quot;"
+    IndexOrder="3"
+    ObjectTableName="&quot;ReportExecutionLog&quot;"
+    QuerySection="&quot;ReportExecutionLog&quot;"
+    SystemLevel="true"
+    IsAddNewEntity="false"
+    IsPackagable="true"
+    DefaultSortName="&quot;StatusCode&quot;"
+    DefaultSortDirection="&quot;Desending&quot;"
+    IsSpellChecked="false">
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;In Process Report Execution Logs&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;Tenant&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;In Process Report Execution Logs&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;CreateDate&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;In Process Report Execution Logs&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;StatusCode&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;In Process Report Execution Logs&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;ExceptionMessage&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;In Process Report Execution Logs&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;DoneDate&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;In Process Report Execution Logs&quot;"
+        IndexOrder="5"
+        ObjectFieldName="&quot;ReportFilterXML&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;In Process Report Execution Logs&quot;"
+        IndexOrder="6"
+        ObjectFieldName="&quot;ReportId&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;In Process Report Execution Logs&quot;"
+        IndexOrder="7"
+        ObjectFieldName="&quot;ReportTemplateId&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;In Process Report Execution Logs&quot;"
+        IndexOrder="8"
+        ObjectFieldName="&quot;RetryNumber&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;In Process Report Execution Logs&quot;"
+        IndexOrder="9"
+        ObjectFieldName="&quot;StartDate&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;In Process Report Execution Logs&quot;"
+        IndexOrder="10"
+        ObjectFieldName="&quot;DisablePreview&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;In Process Report Execution Logs&quot;"
+        IndexOrder="11"
+        ObjectFieldName="&quot;ExecutedByServerName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;In Process Report Execution Logs&quot;"
+        IndexOrder="12"
+        ObjectFieldName="&quot;ReportName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;In Process Report Execution Logs&quot;"
+        IndexOrder="13"
+        ObjectFieldName="&quot;StatusName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;In Process Report Execution Logs&quot;"
+        IndexOrder="14"
+        ObjectFieldName="&quot;CreatedByUserName&quot;"
+        ColumnWidth="100" />
+    </QueryColumns>
+    <QueryFilters>
+      <QueryFilter
+        QueryCode="&quot;In Process Report Execution Logs&quot;"
+        PredefinedValue="&quot;P&quot;"
         ObjectFieldName="&quot;StatusCode&quot;"
         IsPredefined="true"
         Operator="&quot;Equal&quot;"
