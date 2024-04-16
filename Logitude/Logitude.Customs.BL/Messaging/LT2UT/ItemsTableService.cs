@@ -127,54 +127,41 @@ namespace Logitude.Customs.BL.Messaging.LT2UT
                     //LOGTIME = (new DualQueryService(MainContext as AmitalContext)).GetServerDateTime() ?? DateTime.Now,
                 };
                 //myYCULTASKPM.TASKID = CommCounterUtil.GetUnique30(myYCULTASKPM.LOGTIME);
-                if (isConnectedToUniFreight)
+                if (!isConnectedToUniFreight)
                 {
-                    AmitalContext MyContext = AmitalContext.GetContext(_Tenant);
-
-                    var myGGGQUpdateService = new GGGQUpdateService(MyContext);
-                    myGGGQUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
-                    var myYCULTASKUpdateService = new YCULTASKUpdateService(MyContext);
-                    myYCULTASKUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
-                    myYCULTASKUpdateService.Update(myYCULTASKPM, true);
-
-                    var myGGGQPM = new GGGQPM()
-                    {
-                        ChangeSetOp = ChangeSetOperation.Insert,
-                        ORIGINQUE = "LGT", //LugitudeRequest
-                        STATUS = "1",
-                        EXPTASKTIME = 5,
-                        EXECDATE = DateTime.Now,
-                        TRY = 9,
-                        PRIORITY = 8,
-                        ENTNAME = "GITITEM",
-                        PRIMARYNUM = _ListGITITEMPM.First().COUNTER.ToString(),//EITAN SEE ITS ZERO
-                        FORMID = "LGT_UPDATE_FCI",
-                        DEBUG = "F",
-                        DONEOPERATION = "D",
-                        GSTRING1 = "NO_LOCK",
-                        //GSTRING1 = myYCULTASKPM.TASKID,
-                    };
-                    myGGGQUpdateService.Update(myGGGQPM, true);
+                    myYCULTASKPM.Tenant = _Tenant;
                 }
-                else
+                AmitalContext MyContext = AmitalContext.GetContext(_Tenant);
+
+                var myGGGQUpdateService = new GGGQUpdateService(MyContext);
+                myGGGQUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
+                var myYCULTASKUpdateService = new YCULTASKUpdateService(MyContext);
+                myYCULTASKUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
+                myYCULTASKUpdateService.Update(myYCULTASKPM, true);
+
+                var myGGGQPM = new GGGQPM()
                 {
-                    var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
-                    {
-
-                        Tenant = _Tenant,
-                        objectTableName = "Customs.Declaration",
-                        EventCode = null,
-                        notes = "missing id",
-                        CommunicationLoggingEntityReference = null,
-                        EntityId = "missing id ,ItemsTableService",
-                        UserId = unifreightUser,
-
-                        CommunicationSubject = "IIG_TASK",
-
-                    };
-                    var amitalInsertToQueueService = new AmitalInsertToQueueService<YCULTASKPM>(myYCULTASKPM);
-                    amitalInsertToQueueService.InsertToQueue(myAmitalEventTracerModel, "IIG_TASK");
+                    ChangeSetOp = ChangeSetOperation.Insert,
+                    ORIGINQUE = "LGT", //LugitudeRequest
+                    STATUS = "1",
+                    EXPTASKTIME = 5,
+                    EXECDATE = DateTime.Now,
+                    TRY = 9,
+                    PRIORITY = 8,
+                    ENTNAME = "GITITEM",
+                    PRIMARYNUM = _ListGITITEMPM.First().COUNTER.ToString(),//EITAN SEE ITS ZERO
+                    FORMID = "LGT_UPDATE_FCI",
+                    DEBUG = "F",
+                    DONEOPERATION = "D",
+                    GSTRING1 = "NO_LOCK",
+                    //GSTRING1 = myYCULTASKPM.TASKID,
+                };
+                if(!isConnectedToUniFreight)
+                {
+                    myGGGQPM.Tenant = _Tenant;
                 }
+                myGGGQUpdateService.Update(myGGGQPM, true);
+                
                 if (scope != null)
                 {
                     scope.Complete();

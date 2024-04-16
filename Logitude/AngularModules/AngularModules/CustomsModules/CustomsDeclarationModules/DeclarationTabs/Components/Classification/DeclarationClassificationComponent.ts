@@ -146,9 +146,9 @@ export class DeclarationClassificationComponent extends BaseComponent implements
                         //        (tab.Parent.AddEditSupplierInvoiceDUMMYManager as AddEditSupplierInvoiceDUMMY).
                         //            SaveItemCodeLocalCache();
                         //    });
-
-                      GITITEMCacheService.Instance.SaveItemCodeLocalCache();
-                        this.BuildScreen();                                 
+                      if(this.EntityPM?.Direction != "E")  
+                        GITITEMCacheService.Instance.SaveItemCodeLocalCache();
+                    this.BuildScreen();                                 
                     }
                 })
             );

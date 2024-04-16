@@ -1241,7 +1241,8 @@ export class AddEditSupplierInvoiceComponent extends BaseComponent {
         }
 
       //this.SaveItemCodeLocalCache();
-      GITITEMCacheService.Instance.SaveItemCodeLocalCache();
+      if(this.declarationPM.Direction != "E")
+        GITITEMCacheService.Instance.SaveItemCodeLocalCache();
 
         if (!AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
             if (this.EntityPM.IsDirty || this.ForceSave) {

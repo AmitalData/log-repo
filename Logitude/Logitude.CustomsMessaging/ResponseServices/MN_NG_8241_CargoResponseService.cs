@@ -917,53 +917,40 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             //LOGTIME = (new DualQueryService(MainContext as AmitalContext)).GetServerDateTime() ?? DateTime.Now,
                         };
                         //myYCULTASKPM.TASKID = CommCounterUtil.GetUnique30(myYCULTASKPM.LOGTIME);
-                        if (isConnectedToUniFreight) {
-                            var myYCULTASKUpdateService = new YCULTASKUpdateService(_AmitalContext);
-                            myYCULTASKUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
-                            myYCULTASKUpdateService.Update(myYCULTASKPM_Packs, true);
-                        }
-                        else
+                        if (!isConnectedToUniFreight) 
                         {
-                            var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
-                            {
-
-                                Tenant = _MyDeclarationPM.Tenant,
-                                objectTableName = "Customs.Declaration",
-                                EventCode = null,
-                                notes = "",
-                                CommunicationLoggingEntityReference = _MyDeclarationPM.DeclarationNumber,
-                                EntityId = _MyDeclarationPM.Id,
-                                UserId = _MyDeclarationPM.CreatedByUserId,
-
-                                CommunicationSubject = "IIG_TASK",
-
-                            };
-                            var amitalInsertToQueueService = new AmitalInsertToQueueService<YCULTASKPM>(myYCULTASKPM_Packs);
-                            amitalInsertToQueueService.InsertToQueue(myAmitalEventTracerModel, "IIG_TASK");
+                            myYCULTASKPM_Packs.Tenant = _MyDeclarationPM.Tenant;
                         }
+                        var myYCULTASKUpdateService = new YCULTASKUpdateService(_AmitalContext);
+                        myYCULTASKUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
+                        myYCULTASKUpdateService.Update(myYCULTASKPM_Packs, true);
+                        
 
-                        if (isConnectedToUniFreight)
+                        
+                        var myGGGQPM_Packs = new GGGQPM()
                         {
-                            var myGGGQPM_Packs = new GGGQPM()
-                            {
-                                ChangeSetOp = ChangeSetOperation.Insert,
-                                ORIGINQUE = "LGT", //LugitudeRequest
-                                STATUS = "1",
-                                EXPTASKTIME = 5,
-                                EXECDATE = DateTime.Now,
-                                TRY = 9,
-                                PRIORITY = 8,
-                                ENTNAME = "CFIFILEM",
-                                PRIMARYNUM = myCustomFileNo,
-                                FORMID = "LGT_UPDATE_FCI",
-                                DEBUG = "F",
-                                DONEOPERATION = "D",
-                                //GSTRING1 = myYCULTASKPM.TASKID,
-                            };
-                            var myGGGQUpdateService = new GGGQUpdateService(_AmitalContext);
-                            myGGGQUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
-                            myGGGQUpdateService.Update(myGGGQPM_Packs, true);
+                            ChangeSetOp = ChangeSetOperation.Insert,
+                            ORIGINQUE = "LGT", //LugitudeRequest
+                            STATUS = "1",
+                            EXPTASKTIME = 5,
+                            EXECDATE = DateTime.Now,
+                            TRY = 9,
+                            PRIORITY = 8,
+                            ENTNAME = "CFIFILEM",
+                            PRIMARYNUM = myCustomFileNo,
+                            FORMID = "LGT_UPDATE_FCI",
+                            DEBUG = "F",
+                            DONEOPERATION = "D",
+                            //GSTRING1 = myYCULTASKPM.TASKID,
+                        };
+                        if(!isConnectedToUniFreight)
+                        {
+                            myGGGQPM_Packs.Tenant = _MyDeclarationPM.Tenant;
                         }
+                        var myGGGQUpdateService = new GGGQUpdateService(_AmitalContext);
+                        myGGGQUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
+                        myGGGQUpdateService.Update(myGGGQPM_Packs, true);
+                        
                     }
                 }
             }

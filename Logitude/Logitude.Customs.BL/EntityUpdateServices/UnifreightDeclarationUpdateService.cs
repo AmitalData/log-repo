@@ -858,53 +858,39 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         //LOGTIME = (new DualQueryService(MainContext as AmitalContext)).GetServerDateTime() ?? DateTime.Now,
                     };
                     //myYCULTASKPM.TASKID = CommCounterUtil.GetUnique30(myYCULTASKPM.LOGTIME);
-                    if (setting.IsConnectedToUniFreight) {
-                        var myYCULTASKUpdateService = new YCULTASKUpdateService(_AmitalContext);
-                        myYCULTASKUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
-                        myYCULTASKUpdateService.Update(myYCULTASKPM_Packs, true);
-                    }
-                    else
+                    if (!setting.IsConnectedToUniFreight) 
                     {
-                        var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
-                        {
-
-                            Tenant = setting.Tenant,
-                            objectTableName = "Customs.Declaration",
-                            EventCode = null,
-                            notes = "",
-                            CommunicationLoggingEntityReference = this._DirtyDeclarationPM?.DeclarationNumber,
-                            EntityId = this._DirtyDeclarationPM?.Id,
-                            UserId = unifreightUser,
-
-                            CommunicationSubject = "IIG_TASK",
-
-                        };
-                        var amitalInsertToQueueService = new AmitalInsertToQueueService<YCULTASKPM>(myYCULTASKPM_Packs);
-                        amitalInsertToQueueService.InsertToQueue(myAmitalEventTracerModel, "IIG_TASK");
+                        myYCULTASKPM_Packs.Tenant = _DirtyDeclarationPM.Tenant;
                     }
-                    if (setting.IsConnectedToUniFreight)
+                    var myYCULTASKUpdateService = new YCULTASKUpdateService(_AmitalContext);
+                    myYCULTASKUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
+                    myYCULTASKUpdateService.Update(myYCULTASKPM_Packs, true);
+                   
+                    var myGGGQPM_Packs = new GGGQPM()
                     {
-                        var myGGGQPM_Packs = new GGGQPM()
-                        {
-                            ChangeSetOp = ChangeSetOperation.Insert,
-                            ORIGINQUE = "LGT", //LugitudeRequest
-                            STATUS = "1",
-                            EXPTASKTIME = 5,
-                            EXECDATE = DateTime.Now,
-                            TRY = 9,
-                            PRIORITY = 8,
-                            ENTNAME = "CFIFILEM",
-                            PRIMARYNUM = myCustomFileNo,
-                            FORMID = "LGT_UPDATE_FCI",
-                            DEBUG = "F",
-                            DONEOPERATION = "D",
-                            //GSTRING1 = myYCULTASKPM.TASKID,
-                        };
-                        var myGGGQUpdateService = new GGGQUpdateService(_AmitalContext);
+                         ChangeSetOp = ChangeSetOperation.Insert,
+                         ORIGINQUE = "LGT", //LugitudeRequest
+                         STATUS = "1",
+                         EXPTASKTIME = 5,
+                         EXECDATE = DateTime.Now,
+                         TRY = 9,
+                         PRIORITY = 8,
+                         ENTNAME = "CFIFILEM",
+                         PRIMARYNUM = myCustomFileNo,
+                         FORMID = "LGT_UPDATE_FCI",
+                         DEBUG = "F",
+                         DONEOPERATION = "D",
+                         //GSTRING1 = myYCULTASKPM.TASKID,
+                    };
+                    var myGGGQUpdateService = new GGGQUpdateService(_AmitalContext);
 
-                        myGGGQUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
-                        myGGGQUpdateService.Update(myGGGQPM_Packs, true);
+                    myGGGQUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
+                    if (!setting.IsConnectedToUniFreight)
+                    {
+                        myGGGQPM_Packs.Tenant = _DirtyDeclarationPM.Tenant;
                     }
+                    myGGGQUpdateService.Update(myGGGQPM_Packs, true);
+                   
                    
                 }
             }
@@ -996,60 +982,46 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     ARCHIVE = "F", // moran 28.6.16 - AMI-57170
                     //LOGTIME = (new DualQueryService(MainContext as AmitalContext)).GetServerDateTime() ?? DateTime.Now,
                 };
-                if (setting.IsConnectedToUniFreight)
+                if (!setting.IsConnectedToUniFreight)
                 {
-                    var myYCULTASKUpdateService = new YCULTASKUpdateService(_AmitalContext);
+                    myYCULTASKPM.Tenant = _DirtyDeclarationPM.Tenant;
+                }
+                var myYCULTASKUpdateService = new YCULTASKUpdateService(_AmitalContext);
 
-                    myYCULTASKUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
-                    myYCULTASKUpdateService.Update(myYCULTASKPM, true);
+                myYCULTASKUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
+                myYCULTASKUpdateService.Update(myYCULTASKPM, true);
 
 
 
-                    var myGGGQPM = new GGGQPM()
-                    {
-                        ChangeSetOp = ChangeSetOperation.Insert,
-                        ORIGINQUE = "LGT", //LugitudeRequest
-                        STATUS = "1",
-                        EXPTASKTIME = 5,
-                        EXECDATE = DateTime.Now,
-                        TRY = 9,
-                        PRIORITY = 8,
-                        ENTNAME = "CFIFILEM",
-                        PRIMARYNUM = customFile.ToString(),
-                        FORMID = "LGT_UPDATE_FCI",
-                        DEBUG = "F",
-                        DONEOPERATION = "D",
-                        //GSTRING1 = myYCULTASKPM.TASKID,
-                    };
-                    var myGGGQUpdateService = new GGGQUpdateService(_AmitalContext);
+                var myGGGQPM = new GGGQPM()
+                {
+                    ChangeSetOp = ChangeSetOperation.Insert,
+                    ORIGINQUE = "LGT", //LugitudeRequest
+                    STATUS = "1",
+                    EXPTASKTIME = 5,
+                    EXECDATE = DateTime.Now,
+                    TRY = 9,
+                    PRIORITY = 8,
+                    ENTNAME = "CFIFILEM",
+                    PRIMARYNUM = customFile.ToString(),
+                    FORMID = "LGT_UPDATE_FCI",
+                    DEBUG = "F",
+                    DONEOPERATION = "D",
+                    //GSTRING1 = myYCULTASKPM.TASKID,
+                };
+                if (!setting.IsConnectedToUniFreight)
+                {
+                    myGGGQPM.Tenant = _DirtyDeclarationPM.Tenant;
+                }
+                var myGGGQUpdateService = new GGGQUpdateService(_AmitalContext);
 
-                    myGGGQUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
+                myGGGQUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
 
-                    //AmitalContext.DisableQuoting(false);
+                //AmitalContext.DisableQuoting(false);
 
-                    myGGGQUpdateService.Update(myGGGQPM, true);
+                myGGGQUpdateService.Update(myGGGQPM, true);
                     //AmitalContext.DisableQuoting(true);
-                }
-                else
-                {
-                    var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
-                    {
-
-                        Tenant = setting.Tenant,
-                        objectTableName = "Customs.Declaration",
-                        EventCode = null,
-                        notes = "",
-                        CommunicationLoggingEntityReference = this._DirtyDeclarationPM?.DeclarationNumber,
-                        EntityId = this._DirtyDeclarationPM?.Id,
-                        UserId = unifreightUser,
-
-                        CommunicationSubject = "IIG_TASK",
-
-                    };
-                    var amitalInsertToQueueService = new AmitalInsertToQueueService<YCULTASKPM>(myYCULTASKPM);
-                    amitalInsertToQueueService.InsertToQueue(myAmitalEventTracerModel, "IIG_TASK");
-
-                }
+                
             }
             //Yuval Chalup 23.10.2014 TASK-6711 --->
         }

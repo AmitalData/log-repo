@@ -13132,8 +13132,75 @@ namespace Unifreight.Data.AmitalModel
                     .HasColumnType("varchar");
 
             #endregion
+            #region YCULTASK
 
-           
+            modelBuilder.Entity<YCULTASK>()
+                .HasKey(p => new { p.TASKID })
+                .ToTable("YCULTASK", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<YCULTASK>()
+                .Property(p => p.TASKID)
+                    .HasColumnName(@"TASK_ID")
+                    .IsRequired()
+                    .HasMaxLength(30)
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("char");
+            modelBuilder.Entity<YCULTASK>()
+                .Property(p => p.ENTNAME)
+                    .HasMaxLength(32)
+                    .HasColumnType("varchar");
+            modelBuilder.Entity<YCULTASK>()
+                .Property(p => p.PRIMARYNUM)
+                    .HasColumnName(@"PRIMARY_NUM")
+                    .HasMaxLength(12)
+                    .HasColumnType("char");
+            modelBuilder.Entity<YCULTASK>()
+                .Property(p => p.TYPE)
+                    .HasMaxLength(10)
+                    .HasColumnType("varchar");
+            modelBuilder.Entity<YCULTASK>()
+                .Property(p => p.LOGTIME)
+                    .HasColumnName(@"LOG_TIME")
+                    .HasColumnType("date");
+            modelBuilder.Entity<YCULTASK>()
+                .Property(p => p.PRIORITY)
+                    .HasColumnType("SMALLINT");
+            modelBuilder.Entity<YCULTASK>()
+                .Property(p => p.PROCESSSTARTTIME)
+                    .HasColumnName(@"PROCESS_START_TIME")
+                    .HasColumnType("date");
+            modelBuilder.Entity<YCULTASK>()
+                .Property(p => p.PROCESSENDTIME)
+                    .HasColumnName(@"PROCESS_END_TIME")
+                    .HasColumnType("date");
+            modelBuilder.Entity<YCULTASK>()
+                .Property(p => p.ARCHIVE)
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<YCULTASK>()
+                .Property(p => p.STATUS)
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<YCULTASK>()
+                .Property(p => p.REQUESTDATA)
+                    .HasColumnName(@"REQUEST_DATA")
+                    .HasColumnType("varchar(max)");
+            modelBuilder.Entity<YCULTASK>()
+                .Property(p => p.RESPONSE)
+                    .HasColumnType("varchar(max)");
+            modelBuilder.Entity<YCULTASK>()
+                .Property(p => p.CLIENTID)
+                    .HasColumnName(@"CLIENT_ID")
+                    .HasMaxLength(15)
+                    .HasColumnType("char");
+            modelBuilder.Entity<YCULTASK>()
+                .Property(p => p.USRCODE)
+                    .HasColumnName(@"USR_CODE")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar");
+
+            #endregion
+
             #region Disabled conventions
 
 

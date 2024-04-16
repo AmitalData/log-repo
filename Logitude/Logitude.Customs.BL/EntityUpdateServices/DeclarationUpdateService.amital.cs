@@ -194,7 +194,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
             }
 
-            if (dirtyDeclarationPM.DepositionStatusCode == "L" && dbOccDeclarationPM.DepositionStatusCode != "L" )
+            if (dirtyDeclarationPM.Direction != "E" && dirtyDeclarationPM.DepositionStatusCode == "L" && dbOccDeclarationPM.DepositionStatusCode != "L" )
             {
                 OpenLogBoxUnifreighTask(dirtyDeclarationPM, "LDR2C", "", false, "");
                 return;
@@ -516,52 +516,40 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     USRCODE = unifreightUser,
                     ARCHIVE = "F",
                 };
-                if (isConnectedToUniFreight)
+                if (!isConnectedToUniFreight)
                 {
-                    _AmitalContext = AmitalContext.GetContext(dirtyDeclarationPM.Tenant);
-                    var myGGGQUpdateService = new GGGQUpdateService(_AmitalContext);
-                    myGGGQUpdateService.DontAddTransaction = true;
-                    var myYCULTASKUpdateService = new YCULTASKUpdateService(_AmitalContext);
-                    myYCULTASKUpdateService.DontAddTransaction = true;
-                    myYCULTASKUpdateService.Update(myYCULTASKPM, true);
-
-                    var myGGGQPM = new GGGQPM()
-                    {
-                        ChangeSetOp = ChangeSetOperation.Insert,
-                        ORIGINQUE = "LGT",
-                        STATUS = "1",
-                        EXPTASKTIME = 5,
-                        EXECDATE = DateTime.Now,
-                        TRY = 9,
-                        PRIORITY = 8,
-                        ENTNAME = "DEPOSITION",
-                        PRIMARYNUM = "0",
-                        FORMID = "LGT_UPDATE_FCI",
-                        DEBUG = "F",
-                        DONEOPERATION = "D",
-                        //GSTRING1 = myYCULTASKPM.TASKID,
-                    };
-                    myGGGQUpdateService.Update(myGGGQPM, true);
+                    myYCULTASKPM.Tenant = dirtyDeclarationPM.Tenant;
                 }
-                else
+                _AmitalContext = AmitalContext.GetContext(dirtyDeclarationPM.Tenant);
+                var myGGGQUpdateService = new GGGQUpdateService(_AmitalContext);
+                myGGGQUpdateService.DontAddTransaction = true;
+                var myYCULTASKUpdateService = new YCULTASKUpdateService(_AmitalContext);
+                myYCULTASKUpdateService.DontAddTransaction = true;
+                myYCULTASKUpdateService.Update(myYCULTASKPM, true);
+
+                var myGGGQPM = new GGGQPM()
                 {
-                    var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
-                    {
-
-                        Tenant = dirtyDeclarationPM.Tenant,
-                        objectTableName = "Customs.Declaration",
-                        EventCode = null,
-                        notes = "",
-                        CommunicationLoggingEntityReference = dirtyDeclarationPM.DeclarationNumber,
-                        EntityId = dirtyDeclarationPM.Id,
-                        UserId = dirtyDeclarationPM.CreatedByUserId,
-
-                        CommunicationSubject = "IIG_TASK",
-
-                    };
-                    var amitalInsertToQueueService = new AmitalInsertToQueueService<YCULTASKPM>(myYCULTASKPM);
-                    amitalInsertToQueueService.InsertToQueue(myAmitalEventTracerModel, "IIG_TASK");
+                    ChangeSetOp = ChangeSetOperation.Insert,
+                    ORIGINQUE = "LGT",
+                    STATUS = "1",
+                    EXPTASKTIME = 5,
+                    EXECDATE = DateTime.Now,
+                    TRY = 9,
+                    PRIORITY = 8,
+                    ENTNAME = "DEPOSITION",
+                    PRIMARYNUM = "0",
+                    FORMID = "LGT_UPDATE_FCI",
+                    DEBUG = "F",
+                    DONEOPERATION = "D",
+                    //GSTRING1 = myYCULTASKPM.TASKID,
+                };
+                if(!isConnectedToUniFreight) 
+                { 
+                    myGGGQPM.Tenant = dirtyDeclarationPM.Tenant;
                 }
+                myGGGQUpdateService.Update(myGGGQPM, true);
+                
+                
 
 
                 if (scope != null)
@@ -738,6 +726,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         private void OpenUnifreighTask(DeclarationPM dirtyDeclarationPM, string taskType, string status, bool raiseStatus, string xmlStatus, DateTime statusDateTime)
         {
+            if (dirtyDeclarationPM.Direction == "E")
+                return;
             bool isConnectedToUniFreight = CustomsSettingQueryService.GetSettingByTenant(dirtyDeclarationPM.Tenant).IsConnectedToUniFreight;
             AmitalContext _AmitalContext = null;
             var sw = Stopwatch.StartNew();
@@ -904,69 +894,54 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         //<--eitan h 12/3/15 moved to static
 
                         var myYCULTASKPM = new YCULTASKPM()
-                    {
-                        ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
-                        STATUS = "W",
-                        REQUESTDATA = requestData,
-                        ENTNAME = "CFIFILEM",
-                        PRIMARYNUM = dirtyDeclarationPM.CustomFileNo,
-                        PRIORITY = YCULTASKPM.calcPriority(taskType),//eitan h 12/3/15 new static operation
-                        //PRIORITY = priority,
-                        TYPE = taskType,
-                        USRCODE = unifreightUser,
-                        ARCHIVE = "F", // moran 28.6.16 - AMI-57170
-                        //LOGTIME = (new DualQueryService(MainContext as AmitalContext)).GetServerDateTime() ?? DateTime.Now,
-                    };
+                        {
+                            ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
+                            STATUS = "W",
+                            REQUESTDATA = requestData,
+                            ENTNAME = "CFIFILEM",
+                            PRIMARYNUM = dirtyDeclarationPM.CustomFileNo,
+                            PRIORITY = YCULTASKPM.calcPriority(taskType),//eitan h 12/3/15 new static operation
+                            //PRIORITY = priority,
+                            TYPE = taskType,
+                            USRCODE = unifreightUser,
+                            ARCHIVE = "F", // moran 28.6.16 - AMI-57170
+                                       //LOGTIME = (new DualQueryService(MainContext as AmitalContext)).GetServerDateTime() ?? DateTime.Now,
+
+                        };
                 //myYCULTASKPM.TASKID = CommCounterUtil.GetUnique30(myYCULTASKPM.LOGTIME);
-                if (!isConnectedToUniFreight)
-                {
-                    var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
-                    {
+                        if (!isConnectedToUniFreight)
+                        {
+                            myYCULTASKPM.Tenant = dirtyDeclarationPM.Tenant;
+                        }
+                        var myYCULTASKUpdateService = new YCULTASKUpdateService(_AmitalContext);
+                        myYCULTASKUpdateService.DontAddTransaction = true;
+                        myYCULTASKUpdateService.Update(myYCULTASKPM, true);
 
-                        Tenant = dirtyDeclarationPM.Tenant,
-                        objectTableName = "Customs.Declaration",
-                        EventCode = null,
-                        notes = "",
-                        CommunicationLoggingEntityReference = dirtyDeclarationPM.DeclarationNumber,
-                        EntityId = dirtyDeclarationPM.Id,
-                        UserId = dirtyDeclarationPM.CreatedByUserId,
+                
+                        var myGGGQUpdateService = new GGGQUpdateService(_AmitalContext);
+                        myGGGQUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
 
-                        CommunicationSubject = "IIG_TASK",
-
-                    };
-                    var amitalInsertToQueueService = new AmitalInsertToQueueService<YCULTASKPM>(myYCULTASKPM);
-                    amitalInsertToQueueService.InsertToQueue(myAmitalEventTracerModel, "IIG_TASK");
-                }
-                else
-                {
-                    var myYCULTASKUpdateService = new YCULTASKUpdateService(_AmitalContext);
-                    myYCULTASKUpdateService.DontAddTransaction = true;
-                    myYCULTASKUpdateService.Update(myYCULTASKPM, true);
-
-                }
-                if (isConnectedToUniFreight) {
-                    var myGGGQUpdateService = new GGGQUpdateService(_AmitalContext);
-                    myGGGQUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
-
-                    var myGGGQPM = new GGGQPM()
-                    {
-                        ChangeSetOp = ChangeSetOperation.Insert,
-                        ORIGINQUE = "LGT", //LugitudeRequest
-                        STATUS = "1",
-                        EXPTASKTIME = 5,
-                        EXECDATE = DateTime.Now,
-                        TRY = 9,
-                        PRIORITY = 8,
-                        ENTNAME = "CFIFILEM",
-                        PRIMARYNUM = dirtyDeclarationPM.CustomFileNo,
-                        FORMID = "LGT_UPDATE_FCI",
-                        DEBUG = "F",
-                        DONEOPERATION = "D",
-                        //GSTRING1 = myYCULTASKPM.TASKID,
-                    };
-
-                    myGGGQUpdateService.Update(myGGGQPM, true);
-                }
+                        var myGGGQPM = new GGGQPM()
+                        {
+                            ChangeSetOp = ChangeSetOperation.Insert,
+                            ORIGINQUE = "LGT", //LugitudeRequest
+                            STATUS = "1",
+                            EXPTASKTIME = 5,
+                            EXECDATE = DateTime.Now,
+                            TRY = 9,
+                            PRIORITY = 8,
+                            ENTNAME = "CFIFILEM",
+                            PRIMARYNUM = dirtyDeclarationPM.CustomFileNo,
+                            FORMID = "LGT_UPDATE_FCI",
+                            DEBUG = "F",
+                            DONEOPERATION = "D",
+                            //GSTRING1 = myYCULTASKPM.TASKID,
+                        };
+                        if(!isConnectedToUniFreight)
+                        {
+                            myGGGQPM.Tenant = dirtyDeclarationPM.Tenant;
+                        }
+                        myGGGQUpdateService.Update(myGGGQPM, true);
                    
 
                     if (scope != null)
