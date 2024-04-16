@@ -295,8 +295,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                         myCCUQUELOCKUpdateService.Update(myCCUQUELOCKPM, true);
                     }
 
-                if (isConnectedToUnifreight)
-                {
+                
                     var myGGGQUpdateService = new Unifreight.BL.EntityUpdateServices.GGGQUpdateService(_AmitalContext);
                     myGGGQUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
 
@@ -315,8 +314,12 @@ namespace Logitude.CustomsMessaging.RequestServices
                         DEBUG = "F",
                         DONEOPERATION = "D"
                     };
+                    if (!isConnectedToUnifreight)
+                    {
+                        myGGGQPM.Tenant = dirtyDeclarationPM.Tenant;
+                    }
                     myGGGQUpdateService.Update(myGGGQPM, true);
-                }
+                
                  
 
                     //var unifreightUser = AuthenticationUtil.ResolveUnifreightUserId(dirtyDeclarationPM.Tenant);
@@ -375,32 +378,16 @@ namespace Logitude.CustomsMessaging.RequestServices
                         USRCODE = unifreightUser,
                         ARCHIVE = "F"
                     };
-                if (isConnectedToUnifreight)
+                if (!isConnectedToUnifreight)
                 {
-                    var myYCULTASKUpdateService = new Unifreight.BL.EntityUpdateServices.YCULTASKUpdateService(_AmitalContext);
-                    myYCULTASKUpdateService.DontAddTransaction = true;
-                    myYCULTASKUpdateService.Update(myYCULTASKPM, true);
-
+                    myYCULTASKPM.Tenant = dirtyDeclarationPM.Tenant;
                 }
-                else
-                {
-                    var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
-                    {
+                var myYCULTASKUpdateService = new Unifreight.BL.EntityUpdateServices.YCULTASKUpdateService(_AmitalContext);
+                myYCULTASKUpdateService.DontAddTransaction = true;
+                myYCULTASKUpdateService.Update(myYCULTASKPM, true);
 
-                        Tenant = dirtyDeclarationPM.Tenant,
-                        objectTableName = "Customs.Declaration",
-                        EventCode = null,
-                        notes = "",
-                        CommunicationLoggingEntityReference = dirtyDeclarationPM.DeclarationNumber,
-                        EntityId = dirtyDeclarationPM.Id,
-                        UserId = dirtyDeclarationPM.CreatedByUserId,
-
-                        CommunicationSubject = "IIG_TASK",
-
-                    };
-                    var amitalInsertToQueueService = new AmitalInsertToQueueService< Unifreight.BL.EntityPMs.YCULTASKPM> (myYCULTASKPM);
-                    amitalInsertToQueueService.InsertToQueue(myAmitalEventTracerModel, "IIG_TASK");
-                }
+                
+                
 
 
 

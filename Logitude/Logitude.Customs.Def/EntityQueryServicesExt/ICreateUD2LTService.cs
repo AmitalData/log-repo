@@ -29,3 +29,4 @@ namespace Logitude.Customs.Def.EntityQueryServicesExt
         void OpenUnifreighTaskGen(DeclarationPM dirtyDeclarationPM, string entname, string primary, string taskType, string status, bool raiseStatus, string xmlStatus, bool toLock);
     }
 }
+               

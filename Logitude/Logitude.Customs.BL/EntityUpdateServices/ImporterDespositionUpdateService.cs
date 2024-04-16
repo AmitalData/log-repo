@@ -242,52 +242,40 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     USRCODE = unifreightUser,
                     ARCHIVE = "F",
                 };
-                if (isConnectedToUniFreight)
+                if (!isConnectedToUniFreight)
                 {
-                    _AmitalContext = AmitalContext.GetContext(dirtyImporterDespositionPM.Tenant);
-                    var myGGGQUpdateService = new GGGQUpdateService(_AmitalContext);
-                    myGGGQUpdateService.DontAddTransaction = true;
-                    var myYCULTASKUpdateService = new YCULTASKUpdateService(_AmitalContext);
-                    myYCULTASKUpdateService.DontAddTransaction = true;
-                    myYCULTASKUpdateService.Update(myYCULTASKPM, true);
-
-                    var myGGGQPM = new GGGQPM()
-                    {
-                        ChangeSetOp = ChangeSetOperation.Insert,
-                        ORIGINQUE = "LGT",
-                        STATUS = "1",
-                        EXPTASKTIME = 5,
-                        EXECDATE = DateTime.Now,
-                        TRY = 9,
-                        PRIORITY = 8,
-                        ENTNAME = "DEPOSITION",
-                        PRIMARYNUM = "0",
-                        FORMID = "LGT_UPDATE_FCI",
-                        DEBUG = "F",
-                        DONEOPERATION = "D",
-                        //GSTRING1 = myYCULTASKPM.TASKID,
-                    };
-                    myGGGQUpdateService.Update(myGGGQPM, true);
+                    myYCULTASKPM.Tenant = dirtyImporterDespositionPM.Tenant;
                 }
-                else
+                _AmitalContext = AmitalContext.GetContext(dirtyImporterDespositionPM.Tenant);
+                var myGGGQUpdateService = new GGGQUpdateService(_AmitalContext);
+                myGGGQUpdateService.DontAddTransaction = true;
+                var myYCULTASKUpdateService = new YCULTASKUpdateService(_AmitalContext);
+                myYCULTASKUpdateService.DontAddTransaction = true;
+                myYCULTASKUpdateService.Update(myYCULTASKPM, true);
+
+                var myGGGQPM = new GGGQPM()
                 {
-                    var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
-                    {
-
-                        Tenant = dirtyImporterDespositionPM.Tenant,
-                        objectTableName = "Customs.ImporterDesposition",
-                        EventCode = null,
-                        notes = "",
-                        CommunicationLoggingEntityReference = null,
-                        EntityId = dirtyImporterDespositionPM.Id,
-                        UserId = unifreightUser,
-
-                        CommunicationSubject = "IIG_TASK",
-
-                    };
-                    var amitalInsertToQueueService = new AmitalInsertToQueueService<YCULTASKPM>(myYCULTASKPM);
-                    amitalInsertToQueueService.InsertToQueue(myAmitalEventTracerModel, "IIG_TASK");
+                    ChangeSetOp = ChangeSetOperation.Insert,
+                    ORIGINQUE = "LGT",
+                    STATUS = "1",
+                    EXPTASKTIME = 5,
+                    EXECDATE = DateTime.Now,
+                    TRY = 9,
+                    PRIORITY = 8,
+                    ENTNAME = "DEPOSITION",
+                    PRIMARYNUM = "0",
+                    FORMID = "LGT_UPDATE_FCI",
+                    DEBUG = "F",
+                    DONEOPERATION = "D",
+                    //GSTRING1 = myYCULTASKPM.TASKID,
+                };
+                if (!isConnectedToUniFreight)
+                {
+                    myGGGQPM.Tenant = dirtyImporterDespositionPM.Tenant;
                 }
+                myGGGQUpdateService.Update(myGGGQPM, true);
+                
+                
                 if (scope != null)
                 {
                     scope.Complete();

@@ -743,51 +743,41 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     USRCODE = unifreightUser,
                     ARCHIVE = "F",
                 };
-                if (isConnectedToUniFreight)
+                if (!isConnectedToUniFreight)
                 {
-                    _AmitalContext = AmitalContext.GetContext(dirtyCourierMasterPM.Tenant);
-                    var myGGGQUpdateService = new GGGQUpdateService(_AmitalContext);
-                    myGGGQUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
-                    var myYCULTASKUpdateService = new YCULTASKUpdateService(_AmitalContext);
-                    myYCULTASKUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
-
-                    myYCULTASKUpdateService.Update(myYCULTASKPM, true);
-
-                    var myGGGQPM = new GGGQPM()
-                    {
-                        ChangeSetOp = ChangeSetOperation.Insert,
-                        ORIGINQUE = "LGT", //LugitudeRequest
-                        STATUS = "1",
-                        EXPTASKTIME = 5,
-                        EXECDATE = DateTime.Now,
-                        TRY = 9,
-                        PRIORITY = 8,
-                        ENTNAME = "MASTER",
-                        PRIMARYNUM = dirtyCourierMasterPM.Id,
-                        FORMID = "LGT_UPDATE_FCI",
-                        DEBUG = "F",
-                        DONEOPERATION = "D",
-                        //GSTRING1 = myYCULTASKPM.TASKID,
-                    };
-                    myGGGQUpdateService.Update(myGGGQPM, true);
+                    myYCULTASKPM.Tenant = dirtyCourierMasterPM.Tenant;
                 }
-                else
+                
+                _AmitalContext = AmitalContext.GetContext(dirtyCourierMasterPM.Tenant);
+                var myGGGQUpdateService = new GGGQUpdateService(_AmitalContext);
+                myGGGQUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
+                var myYCULTASKUpdateService = new YCULTASKUpdateService(_AmitalContext);
+                myYCULTASKUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
+
+                myYCULTASKUpdateService.Update(myYCULTASKPM, true);
+
+                var myGGGQPM = new GGGQPM()
                 {
-                    var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
-                    {
-                        Tenant = dirtyCourierMasterPM.Tenant,
-                        objectTableName = "Customs.CourierMaster",
-                        EventCode = null,
-                        notes = "",
-                        CommunicationLoggingEntityReference = dirtyCourierMasterPM.MAWB,
-                        EntityId = dirtyCourierMasterPM.Id,
-                        UserId = dirtyCourierMasterPM.CreatedByUserId,
-                        CommunicationSubject = "IIG_TASK",
-
-                    };
-                    var amitalInsertToQueueService = new AmitalInsertToQueueService<YCULTASKPM>(myYCULTASKPM);
-                    amitalInsertToQueueService.InsertToQueue(myAmitalEventTracerModel, "IIG_TASK");
+                    ChangeSetOp = ChangeSetOperation.Insert,
+                    ORIGINQUE = "LGT", //LugitudeRequest
+                    STATUS = "1",
+                    EXPTASKTIME = 5,
+                    EXECDATE = DateTime.Now,
+                    TRY = 9,
+                    PRIORITY = 8,
+                    ENTNAME = "MASTER",
+                    PRIMARYNUM = dirtyCourierMasterPM.Id,
+                    FORMID = "LGT_UPDATE_FCI",
+                    DEBUG = "F",
+                    DONEOPERATION = "D",
+                    //GSTRING1 = myYCULTASKPM.TASKID,
+                };
+                if (!isConnectedToUniFreight)
+                {
+                    myGGGQPM.Tenant = dirtyCourierMasterPM.Tenant;
                 }
+                myGGGQUpdateService.Update(myGGGQPM, true);
+                
                 if (scope != null)
                 {
                     scope.Complete();

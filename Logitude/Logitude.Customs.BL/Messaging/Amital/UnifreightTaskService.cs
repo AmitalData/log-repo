@@ -21,6 +21,7 @@ using Unifreight.BL.EntityUpdateServices;
 using Unifreight.Data.AmitalModel;
 using Logitude.Customs.Def.Messaging.Customs;
 using Logitude.Customs.Def.EntityQueryServicesExt;
+using Logitude.Customs.BL.EntityQueryServices;
 
 namespace Logitude.Customs.BL.Messaging.Amital
 {
@@ -202,6 +203,9 @@ namespace Logitude.Customs.BL.Messaging.Amital
 
         public void OpenUnifreighTaskGen(DeclarationPM dirtyDeclarationPM, string entname, string primary, string taskType, string status, bool raiseStatus, string xmlStatus, bool toLock)
         {
+            if (dirtyDeclarationPM?.Direction == "E") return;
+            bool isConnectedToUniFreight = CustomsSettingQueryService.GetSettingByTenant(dirtyDeclarationPM.Tenant).IsConnectedToUniFreight;
+
             var sw = Stopwatch.StartNew();
             TransactionScope scope = null;
             if (!DbContextBaseUtil.UnifreightDataIncludedInMain_FeatureOn)
@@ -314,6 +318,10 @@ namespace Logitude.Customs.BL.Messaging.Amital
                         USRCODE = unifreightUser,
                         ARCHIVE = "F",
                     };
+                    if (!isConnectedToUniFreight)
+                    {
+                        myYCULTASKPM.Tenant = dirtyDeclarationPM.Tenant;
+                    }
                     myYCULTASKUpdateService.Update(myYCULTASKPM, true);
 
                     var myGGGQPM = new GGGQPM()
@@ -331,6 +339,10 @@ namespace Logitude.Customs.BL.Messaging.Amital
                         DEBUG = "F",
                         DONEOPERATION = "D",
                     };
+                    if (!isConnectedToUniFreight)
+                    {
+                        myGGGQPM.Tenant = dirtyDeclarationPM.Tenant;
+                    }
                     myGGGQUpdateService.Update(myGGGQPM, true);
 
                     if (scope != null)
