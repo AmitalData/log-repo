@@ -15,7 +15,7 @@ import { StatusCellDisplayListTemplate } from './Components/ListTemplates/Status
 import { TaskCellDisplayListTemplate } from './Components/ListTemplates/TaskCellDisplayListTemplate';
 import {DateCellDisplayListTemplate} from './Components/ListTemplates/DateCellDisplayListTemplate';
 import {ApprovePaymentButtonListTemplate} from './Components/ListTemplates/ApprovePaymentButtonListTemplate';
-// import {NewShipmentComponent} from './Components/NewEntity/NewShipmentComponent';
+import {NewShipmentComponent} from './Components/NewEntity/NewShipmentComponent';
 import {NewMasterComponent} from './Components/NewEntity/NewMasterComponent';
 import {WizardDimensionsComponent} from './Components/NewEntity/WizardDimensionsComponent';
 import {WizardAddEditDimensionsComponent} from './Components/NewEntity/WizardAddEditDimensionsComponent';
@@ -61,7 +61,7 @@ export const Components =
         ReferenceNumberCellDisplayListTemplate,
         StatusCellDisplayListTemplate,
         TaskCellDisplayListTemplate,
-        // NewShipmentComponent,
+        NewShipmentComponent,
         NewMasterComponent,
         WizardDimensionsComponent,
         WizardAddEditDimensionsComponent,
@@ -115,7 +115,7 @@ export class ModuleDeclarations {
             case "DirectionListHeaderTemplate": { myResult = DirectionListHeaderTemplate; break; }
             case "ReactivateShipmentComponent": { myResult = ReactivateShipmentComponent; break; }
             case "ReferenceNumberCellDisplayListTemplate": { myResult = ReferenceNumberCellDisplayListTemplate; break; }
-            // case "NewShipmentComponent": { myResult = NewShipmentComponent; break; }
+            case "NewShipmentComponent": { myResult = NewShipmentComponent; break; }
             case "NewMasterComponent": { myResult = NewMasterComponent; break; }
             case "WizardDimensionsComponent": { myResult = WizardDimensionsComponent; break; }
             case "WizardAddEditDimensionsComponent": { myResult = WizardAddEditDimensionsComponent; break; }

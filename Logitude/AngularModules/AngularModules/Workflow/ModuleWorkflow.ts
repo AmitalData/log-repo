@@ -6,7 +6,7 @@ import { ModuleProviders } from './ModuleProviders';
 import { NzTreeSelectModule } from 'ng-zorro-antd/tree-select';
 
 import { FormsModule } from '@angular/forms';
-import { MentionModule } from 'angular-mentions';
+// import { MentionModule } from 'angular-mentions';
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { IPublicClientApplication, PublicClientApplication, InteractionType, BrowserCacheLocation, LogLevel } from '@azure/msal-browser';
@@ -49,9 +49,9 @@ export function MSALInterceptorConfigFactory(): MsalInterceptorConfiguration {
 export function MSALGuardConfigFactory(): MsalGuardConfiguration {
     return { interactionType: InteractionType.Redirect };
 }
-
+//MentionModule,
 @NgModule({
-    imports: [InfrastructureModule, NzTreeSelectModule, FormsModule, MentionModule, MsalModule],
+    imports: [InfrastructureModule, NzTreeSelectModule, FormsModule,  MsalModule],
     providers: [
         {
             provide: HTTP_INTERCEPTORS,
