@@ -49,5 +49,12 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             });
             return val;
         }
+
+        public  FullAccountingSetting GetFullAccountingSettingByTenantShort(int tenant)
+        {
+            return this.repository.GetSingleFullAccountingSetting(tenant);
+        }
+
+
     }
 }
