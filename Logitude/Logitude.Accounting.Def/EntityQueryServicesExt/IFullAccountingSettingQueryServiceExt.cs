@@ -1,4 +1,5 @@
-﻿using Logitude.Accounting.Def.EntityPMs;
+﻿using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Def.EntityPMs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,6 @@ namespace Logitude.Accounting.Def.EntityQueryServicesExt
     public interface IFullAccountingSettingQueryServiceExt
     {
         FullAccountingSettingPM GetFullAccountingSettingByTenant(int tenant);
+        FullAccountingSetting GetFullAccountingSettingByTenantShort(int tenant);
     }
 }
