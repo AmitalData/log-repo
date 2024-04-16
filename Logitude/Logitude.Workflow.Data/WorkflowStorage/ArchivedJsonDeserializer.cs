@@ -21,19 +21,24 @@ namespace Logitude.Workflow.Data.WorkflowStorage
         
         public T Deserialize<T>(string jsonPath = null)
         {
-            try
-            {
-                string json = GetJson(jsonPath);
-                if (!string.IsNullOrEmpty(json))
-                {
-                    return Settings == null ? JsonConvert.DeserializeObject<T>(json) : JsonConvert.DeserializeObject<T>(json, Settings);
-                }
-                return default;
-            }
-            catch (Exception)
-            {
-                return default;
-            }
+            string json = GetJson(jsonPath);
+            return Settings == null ? JsonConvert.DeserializeObject<T>(json) : JsonConvert.DeserializeObject<T>(json, Settings);
+
+
+            //try
+            //{
+
+            //    if (!string.IsNullOrEmpty(json))
+            //    {
+            //        return Settings == null ? JsonConvert.DeserializeObject<T>(json) : JsonConvert.DeserializeObject<T>(json, Settings);
+
+            //    }
+            //    return default ;
+            //}
+            //catch (Exception)
+            //{
+            //    return default ;
+            //}
         }
 
         private string GetArchivedJson(byte[] zipFileBytes, string entryFileName)
