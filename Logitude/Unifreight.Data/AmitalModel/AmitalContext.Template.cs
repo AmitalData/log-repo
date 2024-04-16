@@ -12182,13 +12182,13 @@ namespace Unifreight.Data.AmitalModel
                     .HasColumnName(@"FILE_NO")
                     .IsRequired()
                     .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
-                    .HasColumnType("int");
+                    .HasColumnType("bigint");
             modelBuilder.Entity<CCUTAX>()
                 .Property(p => p.LINENO)
                     .HasColumnName(@"LINE_NO")
                     .IsRequired()
                     .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
-                    .HasColumnType("int");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUTAX>()
                 .Property(p => p.PRATMEHES)
                     .HasColumnName(@"PRAT_MEHES")
@@ -12197,7 +12197,7 @@ namespace Unifreight.Data.AmitalModel
             modelBuilder.Entity<CCUTAX>()
                 .Property(p => p.GOODSNO)
                     .HasColumnName(@"GOODS_NO")
-                    .HasColumnType("int");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUTAX>()
                 .Property(p => p.TAXTYPE)
                     .HasColumnName(@"TAX_TYPE")
@@ -12242,7 +12242,7 @@ namespace Unifreight.Data.AmitalModel
             modelBuilder.Entity<CCUTAX>()
                 .Property(p => p.ADDIMPORT)
                     .HasColumnName(@"ADD_IMPORT")
-                    .HasColumnType("float");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUTAX>()
                 .Property(p => p.PRATMEHESN)
                     .HasColumnName(@"PRAT_MEHES_N")
