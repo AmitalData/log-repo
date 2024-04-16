@@ -139,8 +139,8 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                         };
                         MyGenericResponseObj.ApplicationId = newDeclarationCounter.DeclarationId;
                         MyCommunicationsParams.LoggingEntityId = MyGenericResponseObj.ApplicationId;
-
-                        DeclarationCounterUpdateService decCounter = new DeclarationCounterUpdateService(_tenant);
+                        _context = CustomContext.GetContext(_tenant);
+                        DeclarationCounterUpdateService decCounter = new DeclarationCounterUpdateService(_context, new Dictionary<string, IContext>(), _tenant); 
                         decCounter.Update(newDeclarationCounter, true);
                     }
                   
