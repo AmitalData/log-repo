@@ -153,7 +153,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 courierDeclaration = courierDeclarationDelQuery.GetSingle(item.Id, courierMasterId, false, true);
                 courierDeclaration.ChangeSetOp = ChangeSetOperation.Delete;
                 courierDeclarationUpdateService.Update(courierDeclaration, true);
-                DeclarationCourierStatus decCourier = rep.GetDeclarationsById(item.Id, item.Tenant);
+                DeclarationCourierStatus decCourier = rep.GetSingle(item.Id, item.Tenant);
                 if (decCourier != null && !decCourier.IsClosedForFollowUp)
                     entityPM.OpenDeclarations -= 1;
             }

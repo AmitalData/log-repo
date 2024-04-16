@@ -75,6 +75,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             CourierDeclarationUpdateService courierDeclarationUpdateService = new CourierDeclarationUpdateService(context, new Dictionary<string, IContext>(), entityPOCO.Tenant);
             DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), entityPOCO.Tenant);
             DeclarationRepository declarationRepository1 = new DeclarationRepository(context);
+            bool updateCalculatedFields = false;
 
             if (entityPM.ConnectedDeclarations != null && entityPM.ConnectedDeclarations.Length > 0)
             {
@@ -105,7 +106,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                             Send2MasofDueMasterChanged(courierDeclaration, entityPM);
 
-                            DeclarationCourierStatus decCourier = rep.GetDeclarationsById(item, entityPOCO.Tenant);
+                            DeclarationCourierStatus decCourier = rep.GetSingle(item, entityPOCO.Tenant);
                             if (decCourier != null)
                             {
                                 if (!decCourier.IsClosedForFollowUp)
@@ -114,6 +115,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                 }
                             }
                         }
+                        updateCalculatedFields = true;
                     }
                 }
             }
@@ -141,7 +143,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             courierDeclaration = courierDeclarationDelQuery.GetSingle(item, entityPOCO.Id, false, true);
                             courierDeclaration.ChangeSetOp = ChangeSetOperation.Delete;
                             courierDeclarationUpdateService.Update(courierDeclaration, true);
-                            DeclarationCourierStatus decCourier = rep.GetDeclarationsById(item, entityPOCO.Tenant);
+                            DeclarationCourierStatus decCourier = rep.GetSingle(item, entityPOCO.Tenant);
                             if (decCourier != null)
                             {
                                 if (!decCourier.IsClosedForFollowUp)
@@ -150,8 +152,15 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                 }
                             }
                         }
+                        updateCalculatedFields = true;
                     }
                 }
+            }
+
+            if (updateCalculatedFields)
+            {
+                entityPM.NoOfCourierHawbWithoutDelivery = courierDeclarationQuery.CountNoOfCourierHawbWithoutDelivery(entityPM.Id, entityPM.Tenant).ToString();
+                entityPM.NoOfCourierHawbwWithoutHatara = courierDeclarationQuery.CountNoOfCourierHawbwWithoutHatara(entityPM.Id, entityPM.Tenant).ToString();
             }
 
             //Task 44476 remove if in order to always create task - in case another field was changed but cfi don't has updated value
@@ -180,21 +189,19 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
             //            }
 
-            string declarations = "";
-            var declarationRepository = new DeclarationRepository(context);
-
-            var decs = declarationRepository.GetCourierConnectedDeclaratins(entityPM.Id, entityPM.Tenant);
-
-            if (decs.Count() > 0)
-            {
-                declarations = string.Join("','", decs.Select(x => x.Id));
-                declarations = "'" + declarations + "'";
-            }
-
 
             if (!this.CloseCourierMaster)
             {
+                string declarations = "";
+                var declarationRepository = new DeclarationRepository(context);
 
+                var decs = declarationRepository.GetCourierConnectedDeclaratins(entityPM.Id, entityPM.Tenant);
+
+                if (decs.Count() > 0)
+                {
+                    declarations = string.Join("','", decs.Select(x => x.Id));
+                    declarations = "'" + declarations + "'";
+                }
 
                 if (entityPM.IsCancelled == true && entityPOCO.IsCancelled != true)
                 {
