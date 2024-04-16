@@ -265,7 +265,7 @@ export class TaxReportMenuButtonsHandler {
                 //this.entityArgs.EditComponent.SaveChanges();
 
                 //this.EntityPMService.update(this.ObjectTableName, this.EntityPM).then((res: any) => {
-                
+
                 this.TaxReportPMService.update(this.EntityPM).subscribe((myResult: any) => {
                     var mm: ServiceResponse = myResult;
                     if (!mm.HasError) {
@@ -305,16 +305,19 @@ export class TaxReportMenuButtonsHandler {
 
                     this.CurrentSession.StopBusyIndicator();
                     this.CurrentSession.CloseCurrentWindowEmit("ok");
-
-                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent',
-                        this.CurrentSession.SessionLocation.viewContainerRef)
-                        .then(cmpRef => {
-                            cmpRef.instance.ComponentRef = cmpRef;
-                            cmpRef.instance.Run({ EntityId: this.EntityPM.Id, ObjectTableName: this.ObjectTableName });
-                            cmpRef.instance.BackCompleted.subscribe(($event: any) => {
-                                //this.CancelButtonClicked();
+                    if (!this.EntityPM.RecalculateData) {
+                        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent',
+                            this.CurrentSession.SessionLocation.viewContainerRef)
+                            .then(cmpRef => {
+                                cmpRef.instance.ComponentRef = cmpRef;
+                                cmpRef.instance.Run({ EntityId: this.EntityPM.Id, ObjectTableName: this.ObjectTableName });
+                                cmpRef.instance.BackCompleted.subscribe(($event: any) => {
+                                    //this.CancelButtonClicked();
+                                });
                             });
-                        });
+                    }else{
+                        this.entityArgs.EditComponent.ReloadEntityPM();
+                    }
                     this.CurrentSession.StopBusyIndicator();
                     //stop timer
                     if (this.timer) {
