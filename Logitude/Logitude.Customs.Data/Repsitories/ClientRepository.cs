@@ -26,8 +26,12 @@ namespace Logitude.Customs.Data.Repsitories
         public string GetIdByCode(int tenant, string code)
         {
             if (String.IsNullOrWhiteSpace(code)) return "";
+
+            // fix the teudat zeut length
+            code = code.PadLeft(9, '0');
+
             return
-                  (
+                   (
                   from rec in context.Clients
                   where rec.Code== code && rec.Tenant == tenant
                   select rec.Id
