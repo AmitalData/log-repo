@@ -10,6 +10,7 @@ using Logitude.Server.Tools;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Def.EntityPMs; 
 using Logitude.Customs.Data;
+using Simplog.Server.Infrastructure;
 
 namespace Logitude.Customs.BL.EntityDataMappings
 {
@@ -19,7 +20,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
         public void CustomPMToPOCO(DeclarationCounterPM entityPM, DeclarationCounter entityPOCO)
         {
-            //throw new NotImplementedException();
+            CustomMappedPOCOProperties.Add(POCOPropertyNames.DeclarationId);
+            if (entityPM.ChangeSetOp == ChangeSetOperation.Insert)
+            {
+                entityPOCO.DeclarationId = entityPM.DeclarationId;
+            }
         }
 
         public void CustomPOCOToPM(DeclarationCounterPM entityPM, DeclarationCounter entityPOCO)

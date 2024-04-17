@@ -130,7 +130,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                     var declarationCounter =  declarationCounterQueryService.GetSingleByCustomFileNo(_LogitudeCommDecFile.CustomFileNo, _tenant);
                     if(declarationCounter == null)
                     {
-                        DeclarationCounterPM newDeclarationCounter = new DeclarationCounterPM
+                        DeclarationCounterPM newDeclarationCounter = new DeclarationCounterPM()
                         {
                             Tenant = _tenant,
                             CustomFileNo = _LogitudeCommDecFile.CustomFileNo,
