@@ -99,10 +99,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             newClientPM.IsActive = true;
 
             this.Update(newClientPM, commit);
+
+            entityPM.Id = newClientPM.Id;
         }
 
         private string GetExternalID(string ExternalId)
-        {
+            {
             while (ExternalId.Length < 9)
             {
                 ExternalId = ExternalId.Insert(0, "0");
