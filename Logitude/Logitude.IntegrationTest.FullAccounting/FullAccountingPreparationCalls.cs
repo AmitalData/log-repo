@@ -1055,7 +1055,7 @@ namespace Logitude.IntegrationTest.FullAccounting
             APInvoicePM.CreateDate = DateTime.UtcNow;
             APInvoicePM.SearchFields = "12205,test";
             APInvoicePM.IsGeneralInvoice = true;
-            APInvoicePM.ProfitCurrencyId = FullAccountingVariables.AccountingCurrencyTenantId;
+            if (!String.IsNullOrEmpty(FullAccountingVariables.AccountingCurrencyTenantId)) APInvoicePM.ProfitCurrencyId = FullAccountingVariables.AccountingCurrencyTenantId;
             APInvoicePM.ProfitCurrencyExchangeRate = 2;
             APInvoicePM.AmountDueInLocalCurrency = 1200;
             APInvoicePM.AmountDueInProfitCurrency = 600;

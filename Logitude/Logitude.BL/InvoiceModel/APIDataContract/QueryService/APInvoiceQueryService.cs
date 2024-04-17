@@ -357,7 +357,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                     this.aPInvoicePM.MainEntityId = shipment.Id;
                     this.aPInvoicePM.HouseNumber = shipment.House;
                     this.aPInvoicePM.MasterNumber = shipment.LongMaster;
-                    this.aPInvoicePM.ProfitCurrencyId = shipment.ProfitCurrencyId;                    
+                    if (!String.IsNullOrEmpty(shipment.ProfitCurrencyId)) this.aPInvoicePM.ProfitCurrencyId = shipment.ProfitCurrencyId;                    
                     this.aPInvoicePM.OperationalDate = shipment.OperationalDate;
 
                     if (this.aPInvoicePM.ProfitCurrencyId == this.aPInvoicePM.LocalCurrencyId)
