@@ -744,6 +744,11 @@ Please instance and set MyResponseData ");
             foreach (var curException in exceptionList)
             {
                 errMessage += Environment.NewLine + curException.ExeptionDescription;//In Hebrew  
+
+                if (curException.ExeptionDescription.Contains("Please Contact ESB Administrator"))
+                {
+                    errMessage += "\n יש לפנות למוקד מלמ - שער עולמי טלפון 03-5312222 שלוחה 1";
+                }
             }
             throw new FaultException<UnifreightIIGFault>(
                     new UnifreightIIGFault(UnifreightIIGFault.PlaceFaultEnum.IIGBusinessError, errMessage));
