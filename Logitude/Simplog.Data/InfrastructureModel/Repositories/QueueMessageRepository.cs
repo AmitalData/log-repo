@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Simplog.Data.InfrastructureModel.Repositories
 {
-    public class QueueMessageRepository:IRepository<QueueMessage>
+    public class QueueMessageRepository : IRepository<QueueMessage>
     {
 
         IWebFreightContext webFreightContext;
@@ -36,7 +36,14 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                     where a.Id == id
                     select a).FirstOrDefault();
         }
-
+        public QueueMessage GetSingleQueueMessageByReportId(string reportId, int tenant)
+        {
+            return (from a in context.QueueMessages
+                    where a.Tenant == tenant &&
+                    a.MessageBody.Contains(reportId) &&
+                    a.QueueDefinitionCode == "ReportExecutionLogQueue"
+                    select a).FirstOrDefault();
+        }
         public void Add(QueueMessage entity)
         {
             context.QueueMessages.Add(entity);
