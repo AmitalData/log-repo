@@ -90,9 +90,9 @@
     <Constraints
       Nullable="true" />
   </Column>
+  
   <Column
     Name="EndOfMonth"
-    OldNames="CurrentMonth"
     Type="bit">
     <Constraints
       Nullable="false" />
