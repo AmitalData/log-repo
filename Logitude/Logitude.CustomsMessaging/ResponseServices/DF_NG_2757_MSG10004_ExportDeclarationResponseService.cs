@@ -1221,8 +1221,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
             submitRequestParams.Tenant = requestParams.Tenant;
             submitRequestParams.RequestVIA = SendRequestVIA.WebServiceBatch;
             submitRequestParams.LoggingUserId = requestParams.LoggingUserId;
-            submitRequestParams.ForcePersonalSign =true;
-           
+            submitRequestParams.ForcePersonalSign = false;
+            submitRequestParams.ForceCompanySign = true;
             submitRequestParams.LoggingEntityId = requestParams.LoggingEntityId;
             submitRequestParams.LoggingEntityId2 = requestParams.LoggingEntityId2;
             submitRequestParams.LoggingObjectTableId = requestParams.LoggingObjectTableId;
