@@ -825,7 +825,7 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
- 	  private int? maxItemsSendInteractive ;
+	  private int? maxItemsSendInteractive ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
@@ -871,7 +871,7 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-   }
-    
+	    }
+   
 }
 	 

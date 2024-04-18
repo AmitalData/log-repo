@@ -1448,7 +1448,7 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
- 	  private string customFileNo ;
+	  private string customFileNo ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
@@ -1471,8 +1471,7 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-   }
- 
+	    }
    
 }
 	 

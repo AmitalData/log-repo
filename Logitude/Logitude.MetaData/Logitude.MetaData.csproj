@@ -172,6 +172,7 @@
     <None Include="DBScripts\GlobalModel\AddOpportunityStageChangingBatchService.sxml" />
     <None Include="DBScripts\InfrastructureModel\202209260235_UpdateEntityStatusDelivery.sxml" />
     <None Include="DBScripts\InfrastructureModel\202303081102_UpdateAvailableInDocumentTypesForCustomObjects.sxml" />
+    <None Include="DBScripts\InfrastructureModel\ChangeTypeOfSPLITCOMPONENTPATH.sxml" />
     <None Include="DBScripts\InfrastructureModel\UpdateScreenSectionTable.sxml" />
     <None Include="DBScripts\InvoiceModel\202201160900_UpdateAutomaticLastUpdateDateOnARInvoiceTransferStatus.sxml" />
     <None Include="DBScripts\InvoiceModel\202209061205_FillPaidStatusOfARInvoices.sxml" />
@@ -308,6 +309,7 @@
     <None Include="DBTables\InfrastructureModel\DataCustomObject.dxml" />
     <None Include="DBTables\InfrastructureModel\EventRemark.dxml" />
     <None Include="DBTables\InfrastructureModel\ReferenceCustomObject.dxml" />
+    <None Include="DBTables\InfrastructureModel\TabModification.dxml" />
     <None Include="DBTables\InvoiceModel\ARInvoicesSignedStatus.dxml" />
     <None Include="DBTables\InvoiceModel\ConfirmationNumberDefault.dxml" />
     <None Include="DBTables\InvoiceModel\ConfirmationNumberStatus.dxml" />
@@ -334,6 +336,7 @@
     <None Include="EntityFiles\InfrastructureModel\ImageLibrary.lxml" />
     <None Include="EntityFiles\InfrastructureModel\ReferenceCustomObject.lxml" />
     <None Include="EntityFiles\InfrastructureModel\ScreenSection.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\TabModification.lxml" />
     <None Include="EntityFiles\InvoiceModel\ARInvoicesSignedStatus.lxml" />
     <None Include="EntityFiles\InvoiceModel\ConfirmationNumberDefault.lxml" />
     <None Include="EntityFiles\InvoiceModel\ConfirmationNumberStatus.lxml" />

@@ -11,7 +11,7 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public string TabId { get; set; }
         public string TabCode { get; set; }
         public string Name { get; set; }
-        public int Order { get; set; }
+        public int IndexOrder { get; set; }
 
         public ObjectTableTab Tab { get; set; }
 

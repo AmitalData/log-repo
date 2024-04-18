@@ -9,5 +9,16 @@
       
     ]]>
 	</Sql>
+  <Oracle Version="1">
+    <![CDATA[
+    
+ insert into FieldDataTypes(Code, Name, SearchFields)
+ SELECT 'Binary', 'Binary', 'Binary,Binary'
+FROM dual
+WHERE NOT EXISTS (
+select Code from FieldDataTypes where Code = 'Binary'
+);
+    ]]>
+  </Oracle>
 </Script>
 

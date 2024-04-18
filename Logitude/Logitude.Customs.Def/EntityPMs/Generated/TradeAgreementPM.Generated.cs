@@ -158,7 +158,7 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
- 	  private int? countryGroupID ;
+	  private int? countryGroupID ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
@@ -181,7 +181,7 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-   }
-    
+	    }
+   
 }
 	 

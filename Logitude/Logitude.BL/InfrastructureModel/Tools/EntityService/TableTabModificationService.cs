@@ -34,7 +34,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                  CreateTabModification(objectTableTab);
                 return;
             }
-            tabModification.Order = objectTableTab.IndexOrder;
+            tabModification.IndexOrder = objectTableTab.IndexOrder;
             tabModification.Name = objectTableTab.Name;
             tabModificationRepository.Update(tabModification);
         }
@@ -46,7 +46,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                 Id = IdCounter.GetNumber("TabModification", tenant),
                 Tenant = tenant,
                 TabCode = objectTableTab.Code,
-                Order = objectTableTab.IndexOrder,
+                IndexOrder = objectTableTab.IndexOrder,
                 Name = objectTableTab.Name,
             };
            tabModificationRepository.Add(tabModification);

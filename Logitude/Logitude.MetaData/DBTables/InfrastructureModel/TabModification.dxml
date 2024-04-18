@@ -41,7 +41,7 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="Order"
+    Name="IndexOrder"
     Type="int">
     <Constraints
       Nullable="false" />

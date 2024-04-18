@@ -1569,9 +1569,7 @@ export class DeclarationPM {
         }
     }
     //public DeclarationPayments: Array<DeclarationPaymentPM>= [];
-       
-	 
-    private autoSending: boolean;
+     private autoSending: boolean;
     public get AutoSending() { return this.autoSending; }
     public set AutoSending(newValue: boolean) { if (this.autoSending != newValue) { this.autoSending = newValue; this.MarkAsDirty("AutoSending"); } }
        
@@ -1580,6 +1578,8 @@ export class DeclarationPM {
     public get DiamondsDeclarationFilter() { return this.diamondsDeclarationFilter; }
     public set DiamondsDeclarationFilter(newValue: string) { if (this.diamondsDeclarationFilter != newValue) { this.diamondsDeclarationFilter = newValue; this.MarkAsDirty("DiamondsDeclarationFilter"); } }
        
+	 
+
     public OldEntityPM: DeclarationPM;
 		
     public IsDirty: boolean;
@@ -1607,4 +1607,4 @@ export class DeclarationPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

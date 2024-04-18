@@ -609,7 +609,7 @@
       Size="100"
       DefaultValue="''">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
 
   <Column
@@ -618,7 +618,7 @@
     Size="1000"
     DefaultValue="''">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
    Name="WindWardSettings"

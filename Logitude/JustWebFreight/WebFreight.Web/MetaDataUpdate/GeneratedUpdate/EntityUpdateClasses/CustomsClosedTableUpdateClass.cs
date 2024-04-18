@@ -91,8 +91,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsClosedTableUpdateClass
    {  		
-
-		public const string HashString = "fa7866c8bf4d485136df42169f3ae9af";
+		public const string HashString = "450328e6e8c816bd7c446e27ad4f4744";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -132,9 +131,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
-			      				    LocalDefaultText =  "טבלםות מכס",
+			      				    LocalDefaultText =  "טבלאות מכס",
 			      				    DefaultText =  "Customs Closed Table",
-
 			      				    Code =  "d5e1",
 			      				    Name =  "Customs.CustomsClosedTable Query Group",
 			      				    GenerateDomainService =  false,
@@ -163,7 +161,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ObjectTableName =  "Customs.CustomsClosedTable",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
-					  						MaxLength =  5,
+					  						MaxLength =  6,
 					  						IsRequired =  true,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -171,7 +169,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  5,
+					  						SystemMaxLength =  6,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
@@ -213,6 +211,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -462,10 +461,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LastUpdateDate",
 					  						DefaultText =  "Last Update Date",
-					  						FullLocalDefaultText =  "תםריך עדכון םחרון",
+					  						FullLocalDefaultText =  "תאריך עדכון אחרון",
 					  						ListFieldLable =  "LastUpdateDateListLable",
 					  						ListLableDefaultText =  "Last Update Date",
-					  						ListLocalDefaultText =  " תםריך עדכון םחרון",
+					  						ListLocalDefaultText =  " תאריך עדכון אחרון",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -917,10 +916,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "RetreiveDateTime",
 					  						DefaultText =  "Retreive Date Time",
-					  						FullLocalDefaultText =  "תםריך שליפה םחרון",
+					  						FullLocalDefaultText =  "תאריך שליפה אחרון",
 					  						ListFieldLable =  "RetreiveDateTimeListLable",
 					  						ListLableDefaultText =  "Retreive Date Time",
-					  						ListLocalDefaultText =  "תםריך שליפה םחרון",
+					  						ListLocalDefaultText =  "תאריך שליפה אחרון",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1030,7 +1029,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   ObjectTable CustomsClosedTableObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CustomsClosedTable" && d.Tenant == 0).FirstOrDefault(); 
 
- 		   TextCode CustomsClosedTableTextCode_CustomsCustomsClosedTableOCustomsTablesTitle = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsClosedTable.O.CustomsTablesTitle", DefaultText = "Customs Tables",LocalDefaultText = @"טבלםות המכס", ObjectTableId = CustomsClosedTableObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode CustomsClosedTableTextCode_CustomsCustomsClosedTableOCustomsTablesTitle = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsClosedTable.O.CustomsTablesTitle", DefaultText = "Customs Tables",LocalDefaultText = @"טבלאות המכס", ObjectTableId = CustomsClosedTableObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CustomsClosedTableTextCode_CustomsCustomsClosedTableBUpdateAll = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CustomsClosedTable.B.UpdateAll", DefaultText = "Update All",LocalDefaultText = @"עדכן הכל", ObjectTableId = CustomsClosedTableObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 

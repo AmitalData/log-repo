@@ -275,7 +275,7 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
- 	  private string updateDocOcrServiceUrl ;
+	  private string updateDocOcrServiceUrl ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
@@ -298,7 +298,7 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-   }
-    
+	    }
+   
 }
 	 

@@ -883,7 +883,7 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
- 	  private string ocrId ;
+	  private string ocrId ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
@@ -906,7 +906,7 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-   }
-    
+	    }
+   
 }
 	 

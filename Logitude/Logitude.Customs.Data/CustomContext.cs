@@ -1015,7 +1015,6 @@ namespace Logitude.Customs.Data
 				
 			modelBuilder.Entity<CertificateOfOriginItem>().Property(x => x.Weight).HasPrecision(18, 2);
 				
-				
 			modelBuilder.Entity<ClaimImporterDeclarsPage3B>().Property(x => x.SaleAmountAfter).HasPrecision(16, 2);
 				
 			modelBuilder.Entity<ClaimImporterDeclarsPage3B>().Property(x => x.SaleAmountClaim).HasPrecision(16, 2);
@@ -4313,4 +4312,4 @@ namespace Logitude.Customs.Data
  }
 
 
-}
+}

@@ -48,7 +48,7 @@ namespace Logitude.Customs.Data.Repsitories
                     where a.CB_ID == keys.CB_ID
                     select a).FirstOrDefault();
         }
-		         
+		 		                 
         partial void onAdd();//Partial Methods Definition in Generated
         public void Add(CB_PropertiesDetailsHistory entity)
         {

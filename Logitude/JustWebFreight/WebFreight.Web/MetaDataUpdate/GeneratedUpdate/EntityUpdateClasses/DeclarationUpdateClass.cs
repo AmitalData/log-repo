@@ -91,10 +91,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-
-
-
-		public const string HashString = "ec89875bd4a18e905eaa5e7873f7015c";
+		public const string HashString = "8e83270239ec7e400bc90c322a98e5f2";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -18614,7 +18611,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FullFieldLable =  "AutoSending",
 					  						DefaultText =  "Auto Sending",
 					  						FullLocalDefaultText =  "שליחה אוטומטית",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -18671,7 +18670,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DiamondsDeclarationFilter",
 					  						DefaultText =  "Diamonds Declaration Filter",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -19490,19 +19491,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn DiamondsDeclarationsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DiamondsDeclarationsQuery.Id,QueryCode = DiamondsDeclarationsQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Customs.Declaration.PhysicalCheck" , ColumnWidth = 100 }, addedQueryColumns);
 
-             AdvancedQueryFilter DiamondsDeclarationsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.Direction", PredefinedValue = "E",PredefinedValue2 = null, QueryId = DiamondsDeclarationsQuery.Id,QueryCode = DiamondsDeclarationsQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+             AdvancedQueryFilter DiamondsDeclarationsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.Direction", PredefinedValue = "E",PredefinedValue2 = null, CustomPredefined = false, QueryId = DiamondsDeclarationsQuery.Id,QueryCode = DiamondsDeclarationsQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
 
-             AdvancedQueryFilter DiamondsDeclarationsQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsCancelled", PredefinedValue = "false",PredefinedValue2 = null, QueryId = DiamondsDeclarationsQuery.Id,QueryCode = DiamondsDeclarationsQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+             AdvancedQueryFilter DiamondsDeclarationsQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsCancelled", PredefinedValue = "false",PredefinedValue2 = null, CustomPredefined = false, QueryId = DiamondsDeclarationsQuery.Id,QueryCode = DiamondsDeclarationsQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
 
-             AdvancedQueryFilter DiamondsDeclarationsQueryFilter_2 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.ExportDecWithoutRelease", PredefinedValue = "1",PredefinedValue2 = null, QueryId = DiamondsDeclarationsQuery.Id,QueryCode = DiamondsDeclarationsQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+             AdvancedQueryFilter DiamondsDeclarationsQueryFilter_2 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.ExportDecWithoutRelease", PredefinedValue = "1",PredefinedValue2 = null, CustomPredefined = false, QueryId = DiamondsDeclarationsQuery.Id,QueryCode = DiamondsDeclarationsQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
 
-             AdvancedQueryFilter DiamondsDeclarationsQueryFilter_3 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.AmendmentDontDisplayInList", PredefinedValue = "false",PredefinedValue2 = null, QueryId = DiamondsDeclarationsQuery.Id,QueryCode = DiamondsDeclarationsQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+             AdvancedQueryFilter DiamondsDeclarationsQueryFilter_3 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.AmendmentDontDisplayInList", PredefinedValue = "false",PredefinedValue2 = null, CustomPredefined = false, QueryId = DiamondsDeclarationsQuery.Id,QueryCode = DiamondsDeclarationsQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
 
-             AdvancedQueryFilter DiamondsDeclarationsQueryFilter_4 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsDiamondDeclaration", PredefinedValue = "true",PredefinedValue2 = null, QueryId = DiamondsDeclarationsQuery.Id,QueryCode = DiamondsDeclarationsQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+             AdvancedQueryFilter DiamondsDeclarationsQueryFilter_4 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsDiamondDeclaration", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = DiamondsDeclarationsQuery.Id,QueryCode = DiamondsDeclarationsQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
@@ -19822,15 +19823,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 		   Feature DeclarationFeature_CancelPaymentFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CancelPaymentFeature", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.CancelPaymentFeature", NameTextCodeDefaultText = @"Cancel Payment Feature" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
 
- 
 		   Feature DeclarationFeature_IsExportSign = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "IsExportSign", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.IsExportSign", NameTextCodeDefaultText = @"Is Export Sign" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
 
 		   Feature DeclarationFeature_ViewDocumentAsPdf = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ViewDocumentAsPdf", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.ViewDocumentAsPdf", NameTextCodeDefaultText = @"להציג את המסמך כ-PDF" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
 
 		   Feature DeclarationFeature_ExportDiamonds = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExportDiamonds", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.ExportDiamonds", NameTextCodeDefaultText = @"הצהרת יהלומים - יצוא" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
 
-
    
+	    
 		}
 
 	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
@@ -22879,7 +22879,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode DeclarationTextCode_CustomsDeclarationTHCertificateOfOrigin = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.CertificateOfOrigin", DefaultText = "Certificate Of Origin",LocalDefaultText = @"תעודת מקור", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DeclarationTextCode_CustomsDeclarationODeclarationReconstructionRequired = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DeclarationReconstructionRequired", DefaultText = "Please send a request for declaration reconstruction",LocalDefaultText = @"יש לבצע בקשה לשחזור נתוני הצהרה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
  		   TextCode DeclarationTextCode_CustomsDeclarationOtest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.test", DefaultText = "test",LocalDefaultText = @" אנאנאנ אני רוצה לבדוק האם הא והם מתחלפות", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
  		   TextCode DeclarationTextCode_CustomsDeclarationOGroupingAccountLines = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.GroupingAccountLines", DefaultText = "Grouping Account Lines",LocalDefaultText = @"קיבוץ שורות חשבון", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DeclarationTextCode_CustomsDeclarationOGroupedAccountLinesResult = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.GroupedAccountLinesResult", DefaultText = "Grouped account lines Result",LocalDefaultText = @"שורות חשבון שקובצו לקבוצות", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);

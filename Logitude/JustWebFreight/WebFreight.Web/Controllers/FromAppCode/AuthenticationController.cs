@@ -2275,7 +2275,7 @@ namespace WebFreight.Web
                             {
                                 userLog.Browser = userLog.Browser.ToUpper();
                             }
-                            using (var scope = commonDataContext.Database.BeginTransaction(IsolationLevel.Snapshot))
+                            using (var scope = commonDataContext.Database.BeginTransaction())
                             {
                                 
                                 UserLastLogin lastLogin = (from a in commonDataContext.UserLastLogins

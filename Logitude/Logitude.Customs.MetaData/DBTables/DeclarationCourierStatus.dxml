@@ -238,7 +238,7 @@
   <Relation
     ForeignKeyColumn="CourierPendingReasonCode"
     ReferencedTable="CourierPendingReasons"
-    ReferencedColumn="Code"
+    ReferencedColumn="Id"
     ReferencedTableSchema="Customs" />
   <Relation
     ForeignKeyColumn="StorageSiteStatusCode"

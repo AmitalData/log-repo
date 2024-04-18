@@ -436,7 +436,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "Order",
+					 						FieldName =  "IndexOrder",
 					  						ObjectTableName =  "TabModification",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -454,8 +454,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "Order",
-					  						ListPropertyPath =  "Order",
+					  						PMPropertyPath = "IndexOrder",
+					  						ListPropertyPath = "IndexOrder",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -472,8 +472,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "Order",
-					  						DefaultText =  "Order",
+					  						FullFieldLable = "IndexOrder",
+					  						DefaultText = "IndexOrder",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,

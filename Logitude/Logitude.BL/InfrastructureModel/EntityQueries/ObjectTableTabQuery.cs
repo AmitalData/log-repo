@@ -67,6 +67,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
         private void GetEntityChangesFromModification(int tenant, List<ObjectTableTabPM> tabs)
         {
+         
             Dictionary<string, TabModification> tabsModsDictionary
                             = repository.context.TabsModifications
                             .Where(te => te.Tenant == tenant).Distinct()
@@ -87,7 +88,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                 return;
 
             tab.Name = mod.Name;
-            tab.IndexOrder = mod.Order;
+            tab.IndexOrder = mod.IndexOrder;
         }
 
         public IQueryable<ObjectTableTabPM> GetObjectTableTabsByTenantAndObjectTable(string objectTableId, int tenant)
