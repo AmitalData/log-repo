@@ -433,7 +433,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     {
                         AppicationId = declaration.Id,
                         Tenant = declaration.Tenant,
-                        RequestVIA = SendRequestVIA.Default,
+                        RequestVIA = SendRequestVIA.WebServiceBatch,
                         ForcePersonalSign = true,
                         LoggingEnabled = true,
                         LoggingEntityId = declaration.Id,
