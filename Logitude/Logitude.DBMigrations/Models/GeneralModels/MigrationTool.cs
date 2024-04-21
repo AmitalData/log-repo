@@ -1500,7 +1500,7 @@ namespace Logitude.DBMigrations.Models
                     }
                     else
                     {
-                        string sxmlScript = GetScriptFromCDataSection(scriptDefinition.Sql.Script);
+                        string sxmlScript = GetScriptFromCDataSection(scriptDefinition.Sql?.Script);
                         scriptBody = "BEGIN TRAN\n" +
                             "BEGIN TRY\n" +
                             "DECLARE @StartTime datetime\n" +
@@ -1582,7 +1582,7 @@ namespace Logitude.DBMigrations.Models
                 }
                 else
                 {
-                    string sxmlScript = GetScriptFromCDataSection(scriptDefinition.Sql.Script);
+                    string sxmlScript = GetScriptFromCDataSection(scriptDefinition.Sql?.Script);
 
                     scriptBody = "DECLARE @StartTime datetime\n" +
                         "DECLARE @EndTime datetime\n" +
@@ -1917,7 +1917,7 @@ namespace Logitude.DBMigrations.Models
             }
             else
             {
-                return GenerateHashString(scriptDefinition.Sql.Script);
+                return GenerateHashString(scriptDefinition.Sql?.Script);
             }
         }
 
@@ -1929,7 +1929,7 @@ namespace Logitude.DBMigrations.Models
             }
             else
             {
-                return scriptDefinition.Sql.Version;
+                return scriptDefinition.Sql != null ? scriptDefinition.Sql.Version : 0;
             }
         }
 
@@ -1999,14 +1999,14 @@ namespace Logitude.DBMigrations.Models
                         reader.Close();
                         connection.Close();
                     }
-                    catch (Exception)
+                    catch (Exception ex )
                     {
                         if (reader != null)
                         {
                             reader.Close();
                         }
                         connection.Close();
-                        ExitTool("Error: Cannot Get Database Migration Settings");
+                        ExitTool("Error: Cannot Get Database Migration Settings" + ex.Message);
                     }
 
                     IncludedModules = includedModules;
@@ -2040,14 +2040,14 @@ namespace Logitude.DBMigrations.Models
                         reader.Close();
                         connection.Close();
                     }
-                    catch (Exception)
+                    catch (Exception ex )
                     {
                         if (reader != null)
                         {
                             reader.Close();
                         }
                         connection.Close();
-                        ExitTool("Error: Cannot Get Database Migration Settings");
+                        ExitTool("Error: Cannot Get Database Migration Settings -"  + ex.Message );
                     }
 
                     IncludedModules = includedModules;

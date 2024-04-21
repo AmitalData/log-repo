@@ -1504,7 +1504,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 CalculatedLocalName = string.IsNullOrEmpty(card.LocalName) ? card.EnglishName : card.LocalName,
                                                 GLAccountDisplayNumber = card.GLAccountDisplayNumber,
                                                 GLAccountId = card.GLAccountId,
-
+                                                SearchFields = card.SearchFields
 
                                             };
 
