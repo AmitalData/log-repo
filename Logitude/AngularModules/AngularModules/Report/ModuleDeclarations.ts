@@ -92,6 +92,9 @@ import { ShipmentDetailsFilterComponent } from './Components/FilterReportCompone
 import { VDKFilterComponent } from './Components/FilterReportComponent/VDKFilterComponent';
 import { UserDefinedReportFilterControl } from './Components/FilterReportComponent/UserDefinedReportFilterControl';
 
+//Export Customs
+import { ExportDeclarationReportFilterComponent } from './Components/FiltersComponent/ExportCustoms/ExportDeclarationReportFilterComponent';
+
 export const Components =
     [
         MainReportsWorkspace,
@@ -168,7 +171,8 @@ export const Components =
         RacingQuotesComponent,
         BluesnapPaymentsReportFilterComponent,
         ExternalReconciliationLinesReportFilterControl,
-        UserDefinedReportFilterControl
+        UserDefinedReportFilterControl,
+        ExportDeclarationReportFilterComponent
     ];
 
 export class ModuleDeclarations {
@@ -252,6 +256,7 @@ export class ModuleDeclarations {
             case "BluesnapPaymentsReportFilterComponent": { myResult = BluesnapPaymentsReportFilterComponent; break; }
             case "ExternalReconciliationLinesReportFilterControl": { myResult = ExternalReconciliationLinesReportFilterControl; break; }
             case "UserDefinedReportFilterControl": { myResult = UserDefinedReportFilterControl; break; }
+            case "ExportDeclarationReportFilterComponent": { myResult = ExportDeclarationReportFilterComponent; break; }
 
         }
 
