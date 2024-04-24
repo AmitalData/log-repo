@@ -477,7 +477,7 @@
   <Column
     Name="SendingInterestReport"
     Type="bit"
-     DefaultValue="0">
+    DefaultValue="0">
     <Constraints
       Nullable="false" />
   </Column>
@@ -582,7 +582,7 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Index
-    Columns="Tenant" /> 
+    Columns="Tenant" />
   <Index
     Columns="Tenant,LastShipmentDate" />
   <Index
