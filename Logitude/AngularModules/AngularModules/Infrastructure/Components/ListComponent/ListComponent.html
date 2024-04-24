@@ -189,12 +189,12 @@
 
                        
 
-                        <td *ngIf="!HasCustomsFilterMenu" style="max-width:600px;">
+                          <td *ngIf="!HasCustomsFilterMenu" style="max-width:600px;">
                             <div LocationDirective Code="MNH"></div>
                         </td>
                         <td *ngIf="HasCustomsFilterMenu" style="max-width:600px;">
                             <div></div>
-                        </td>
+                        </td>  
                         <td *ngIf="HasActionBar()" style="width: 10px;"></td>
                         <td *ngIf="HasActionBar()" style="width: 80px;">
                             <div *ngIf="HasActionBar()" style="width: 5px;"></div>
@@ -202,9 +202,9 @@
                             <div *ngIf="!HasActionBar()"></div>
                         </td>
  
-                        <td style="width: 920px;">
+                      <td  *ngIf="!HasCustomsFilterMenu" style="width: 920px;">
                             <div LocationDirective Code="MNH"></div>
-                        </td>
+                        </td> 
                      </tr>
                 </table>
             </td>
