@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class ReportExecutionLogUpdateClass
    {  		
-		public const string HashString = "55d1ab9fbaf35a6834d05de84bb028d8";
+		public const string HashString = "adac4ca8ab37f134f774757f5c2baf3d";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1311,162 +1311,162 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
    
 
-			   TextCode ReportExecutionLogTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ReportExecutionLog.Q.TREL", DefaultText = @"Today",LocalDefaultText = null, ObjectTableId = ReportExecutionLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
-			   Feature ReportExecutionLogFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ReportExecutionLog.Q.TREL", ObjectTableId = ReportExecutionLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportExecutionLogFeatures.TREL", NameTextCodeDefaultText = "TREL", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ReportExecutionLogObjectTable, addedFeatures, addedTextCodes);
+			   TextCode ReportExecutionLogTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ReportExecutionLog.Q.Today", DefaultText = @"Today",LocalDefaultText = null, ObjectTableId = ReportExecutionLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ReportExecutionLogFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ReportExecutionLog.Q.Today", ObjectTableId = ReportExecutionLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportExecutionLogFeatures.Today", NameTextCodeDefaultText = "Today", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ReportExecutionLogObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode ReportExecutionLogTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ReportExecutionLog.Q.AREL", DefaultText = @"All Report Execution Logs",LocalDefaultText = null, ObjectTableId = ReportExecutionLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
-			   Feature ReportExecutionLogFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ReportExecutionLog.Q.AREL", ObjectTableId = ReportExecutionLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportExecutionLogFeatures.AREL", NameTextCodeDefaultText = "AREL", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ReportExecutionLogObjectTable, addedFeatures, addedTextCodes);
+			   TextCode ReportExecutionLogTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ReportExecutionLog.Q.All", DefaultText = @"All",LocalDefaultText = null, ObjectTableId = ReportExecutionLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ReportExecutionLogFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ReportExecutionLog.Q.All", ObjectTableId = ReportExecutionLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportExecutionLogFeatures.All", NameTextCodeDefaultText = "All", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ReportExecutionLogObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode ReportExecutionLogTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ReportExecutionLog.Q.FREL", DefaultText = @"Failed Report Execution Logs",LocalDefaultText = null, ObjectTableId = ReportExecutionLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
-			   Feature ReportExecutionLogFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ReportExecutionLog.Q.FREL", ObjectTableId = ReportExecutionLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportExecutionLogFeatures.FREL", NameTextCodeDefaultText = "FREL", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ReportExecutionLogObjectTable, addedFeatures, addedTextCodes);
+			   TextCode ReportExecutionLogTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ReportExecutionLog.Q.Failed", DefaultText = @"Failed",LocalDefaultText = null, ObjectTableId = ReportExecutionLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ReportExecutionLogFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ReportExecutionLog.Q.Failed", ObjectTableId = ReportExecutionLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportExecutionLogFeatures.Failed", NameTextCodeDefaultText = "Failed", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ReportExecutionLogObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode ReportExecutionLogTextCode_3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ReportExecutionLog.Q.IPREL", DefaultText = @"In Process Report Execution Logs",LocalDefaultText = null, ObjectTableId = ReportExecutionLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
-			   Feature ReportExecutionLogFeature_3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ReportExecutionLog.Q.IPREL", ObjectTableId = ReportExecutionLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportExecutionLogFeatures.IPREL", NameTextCodeDefaultText = "IPREL", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ReportExecutionLogObjectTable, addedFeatures, addedTextCodes);
+			   TextCode ReportExecutionLogTextCode_3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ReportExecutionLog.Q.InProcess", DefaultText = @"In Process",LocalDefaultText = null, ObjectTableId = ReportExecutionLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ReportExecutionLogFeature_3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ReportExecutionLog.Q.InProcess", ObjectTableId = ReportExecutionLogObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReportExecutionLogFeatures.InProcess", NameTextCodeDefaultText = "InProcess", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ReportExecutionLogObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();
 	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query TRELQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ReportExecutionLogTextCode_0.Id, NameTextCodeCode = ReportExecutionLogTextCode_0.Code, ObjectTableName = "ReportExecutionLog", Code = "TREL",  QueryGroupCode = "4df5", IndexOrder = 0, Tenant = 0, ObjectTableId = ReportExecutionLogObjectTable.Id, QuerySection = "ReportExecutionLog", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ReportExecutionLogFeature_0.Id,FeatureUniqeCode= ReportExecutionLogFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+			  Query TodayQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ReportExecutionLogTextCode_0.Id, NameTextCodeCode = ReportExecutionLogTextCode_0.Code, ObjectTableName = "ReportExecutionLog", Code = "Today",  QueryGroupCode = "4df5", IndexOrder = 0, Tenant = 0, ObjectTableId = ReportExecutionLogObjectTable.Id, QuerySection = "ReportExecutionLog", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ReportExecutionLogFeature_0.Id,FeatureUniqeCode= ReportExecutionLogFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn TRELQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TRELQuery.Id,QueryCode = TRELQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ReportExecutionLog.Tenant" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn TodayQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayQuery.Id,QueryCode = TodayQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ReportExecutionLog.Tenant" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn TRELQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TRELQuery.Id,QueryCode = TRELQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ReportExecutionLog.CreateDate" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn TodayQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayQuery.Id,QueryCode = TodayQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ReportExecutionLog.CreateDate" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn TRELQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TRELQuery.Id,QueryCode = TRELQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ReportExecutionLog.ReportName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn TodayQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayQuery.Id,QueryCode = TodayQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ReportExecutionLog.ReportName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn TRELQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TRELQuery.Id,QueryCode = TRELQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "ReportExecutionLog.CreatedByUserName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn TodayQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayQuery.Id,QueryCode = TodayQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "ReportExecutionLog.CreatedByUserName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn TRELQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TRELQuery.Id,QueryCode = TRELQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "ReportExecutionLog.ExecutedByServerName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn TodayQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayQuery.Id,QueryCode = TodayQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "ReportExecutionLog.ExecutedByServerName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn TRELQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TRELQuery.Id,QueryCode = TRELQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "ReportExecutionLog.StatusName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn TodayQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayQuery.Id,QueryCode = TodayQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "ReportExecutionLog.StatusName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn TRELQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TRELQuery.Id,QueryCode = TRELQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "ReportExecutionLog.ExceptionMessage" , ColumnWidth = 150 }, addedQueryColumns);
+			 QueryColumn TodayQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayQuery.Id,QueryCode = TodayQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "ReportExecutionLog.ExceptionMessage" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn TRELQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TRELQuery.Id,QueryCode = TRELQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "ReportExecutionLog.DoneDate" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn TodayQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayQuery.Id,QueryCode = TodayQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "ReportExecutionLog.DoneDate" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn TRELQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TRELQuery.Id,QueryCode = TRELQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "ReportExecutionLog.ReportFilterXML" , ColumnWidth = 150 }, addedQueryColumns);
+			 QueryColumn TodayQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayQuery.Id,QueryCode = TodayQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "ReportExecutionLog.ReportFilterXML" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn TRELQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TRELQuery.Id,QueryCode = TRELQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "ReportExecutionLog.ReportId" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn TodayQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayQuery.Id,QueryCode = TodayQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "ReportExecutionLog.ReportId" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn TRELQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TRELQuery.Id,QueryCode = TRELQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "ReportExecutionLog.ReportTemplateId" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn TodayQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayQuery.Id,QueryCode = TodayQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "ReportExecutionLog.ReportTemplateId" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn TRELQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TRELQuery.Id,QueryCode = TRELQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "ReportExecutionLog.RetryNumber" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn TodayQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayQuery.Id,QueryCode = TodayQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "ReportExecutionLog.RetryNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn TRELQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TRELQuery.Id,QueryCode = TRELQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "ReportExecutionLog.DisablePreview" , ColumnWidth = 50 }, addedQueryColumns);
+			 QueryColumn TodayQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayQuery.Id,QueryCode = TodayQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "ReportExecutionLog.DisablePreview" , ColumnWidth = 50 }, addedQueryColumns);
 
-			 QueryColumn TRELQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TRELQuery.Id,QueryCode = TRELQuery.UniqueCode, IndexOrder = 13, ObjectFieldCode = "ReportExecutionLog.StartDate" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn TodayQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = TodayQuery.Id,QueryCode = TodayQuery.UniqueCode, IndexOrder = 13, ObjectFieldCode = "ReportExecutionLog.StartDate" , ColumnWidth = 130 }, addedQueryColumns);
 
-             AdvancedQueryFilter TRELQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "ReportExecutionLog.CreateDate", PredefinedValue = "Today",PredefinedValue2 = null, CustomPredefined = false, QueryId = TRELQuery.Id,QueryCode = TRELQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter TodayQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "ReportExecutionLog.CreateDate", PredefinedValue = "Today",PredefinedValue2 = null, CustomPredefined = false, QueryId = TodayQuery.Id,QueryCode = TodayQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
 
-			  Query ARELQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ReportExecutionLogTextCode_1.Id, NameTextCodeCode = ReportExecutionLogTextCode_1.Code, ObjectTableName = "ReportExecutionLog", Code = "AREL",  QueryGroupCode = "4df5", IndexOrder = 1, Tenant = 0, ObjectTableId = ReportExecutionLogObjectTable.Id, QuerySection = "ReportExecutionLog", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ReportExecutionLogFeature_1.Id,FeatureUniqeCode= ReportExecutionLogFeature_1.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+			  Query AllQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ReportExecutionLogTextCode_1.Id, NameTextCodeCode = ReportExecutionLogTextCode_1.Code, ObjectTableName = "ReportExecutionLog", Code = "All",  QueryGroupCode = "4df5", IndexOrder = 1, Tenant = 0, ObjectTableId = ReportExecutionLogObjectTable.Id, QuerySection = "ReportExecutionLog", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ReportExecutionLogFeature_1.Id,FeatureUniqeCode= ReportExecutionLogFeature_1.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn ARELQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ARELQuery.Id,QueryCode = ARELQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ReportExecutionLog.Tenant" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn AllQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllQuery.Id,QueryCode = AllQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ReportExecutionLog.Tenant" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ARELQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ARELQuery.Id,QueryCode = ARELQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ReportExecutionLog.CreateDate" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AllQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllQuery.Id,QueryCode = AllQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ReportExecutionLog.CreateDate" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ARELQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ARELQuery.Id,QueryCode = ARELQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ReportExecutionLog.ReportName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AllQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllQuery.Id,QueryCode = AllQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ReportExecutionLog.ReportName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ARELQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ARELQuery.Id,QueryCode = ARELQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "ReportExecutionLog.CreatedByUserName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AllQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllQuery.Id,QueryCode = AllQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "ReportExecutionLog.CreatedByUserName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ARELQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ARELQuery.Id,QueryCode = ARELQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "ReportExecutionLog.ExecutedByServerName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AllQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllQuery.Id,QueryCode = AllQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "ReportExecutionLog.ExecutedByServerName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ARELQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ARELQuery.Id,QueryCode = ARELQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "ReportExecutionLog.StatusName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn AllQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllQuery.Id,QueryCode = AllQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "ReportExecutionLog.StatusName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ARELQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ARELQuery.Id,QueryCode = ARELQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "ReportExecutionLog.ExceptionMessage" , ColumnWidth = 150 }, addedQueryColumns);
+			 QueryColumn AllQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllQuery.Id,QueryCode = AllQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "ReportExecutionLog.ExceptionMessage" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn ARELQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ARELQuery.Id,QueryCode = ARELQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "ReportExecutionLog.DoneDate" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AllQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllQuery.Id,QueryCode = AllQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "ReportExecutionLog.DoneDate" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ARELQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ARELQuery.Id,QueryCode = ARELQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "ReportExecutionLog.ReportFilterXML" , ColumnWidth = 150 }, addedQueryColumns);
+			 QueryColumn AllQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllQuery.Id,QueryCode = AllQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "ReportExecutionLog.ReportFilterXML" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn ARELQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ARELQuery.Id,QueryCode = ARELQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "ReportExecutionLog.ReportId" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn AllQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllQuery.Id,QueryCode = AllQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "ReportExecutionLog.ReportId" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ARELQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ARELQuery.Id,QueryCode = ARELQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "ReportExecutionLog.ReportTemplateId" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn AllQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllQuery.Id,QueryCode = AllQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "ReportExecutionLog.ReportTemplateId" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ARELQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ARELQuery.Id,QueryCode = ARELQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "ReportExecutionLog.RetryNumber" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn AllQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllQuery.Id,QueryCode = AllQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "ReportExecutionLog.RetryNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ARELQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ARELQuery.Id,QueryCode = ARELQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "ReportExecutionLog.DisablePreview" , ColumnWidth = 50 }, addedQueryColumns);
+			 QueryColumn AllQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllQuery.Id,QueryCode = AllQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "ReportExecutionLog.DisablePreview" , ColumnWidth = 50 }, addedQueryColumns);
 
-			 QueryColumn ARELQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ARELQuery.Id,QueryCode = ARELQuery.UniqueCode, IndexOrder = 13, ObjectFieldCode = "ReportExecutionLog.StartDate" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AllQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllQuery.Id,QueryCode = AllQuery.UniqueCode, IndexOrder = 13, ObjectFieldCode = "ReportExecutionLog.StartDate" , ColumnWidth = 130 }, addedQueryColumns);
   
 	      
 
-			  Query FRELQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ReportExecutionLogTextCode_2.Id, NameTextCodeCode = ReportExecutionLogTextCode_2.Code, ObjectTableName = "ReportExecutionLog", Code = "FREL",  QueryGroupCode = "4df5", IndexOrder = 2, Tenant = 0, ObjectTableId = ReportExecutionLogObjectTable.Id, QuerySection = "ReportExecutionLog", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ReportExecutionLogFeature_2.Id,FeatureUniqeCode= ReportExecutionLogFeature_2.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+			  Query FailedQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ReportExecutionLogTextCode_2.Id, NameTextCodeCode = ReportExecutionLogTextCode_2.Code, ObjectTableName = "ReportExecutionLog", Code = "Failed",  QueryGroupCode = "4df5", IndexOrder = 2, Tenant = 0, ObjectTableId = ReportExecutionLogObjectTable.Id, QuerySection = "ReportExecutionLog", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ReportExecutionLogFeature_2.Id,FeatureUniqeCode= ReportExecutionLogFeature_2.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn FRELQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FRELQuery.Id,QueryCode = FRELQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ReportExecutionLog.Tenant" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn FailedQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FailedQuery.Id,QueryCode = FailedQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ReportExecutionLog.Tenant" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn FRELQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FRELQuery.Id,QueryCode = FRELQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ReportExecutionLog.CreateDate" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn FailedQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FailedQuery.Id,QueryCode = FailedQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ReportExecutionLog.CreateDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn FRELQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FRELQuery.Id,QueryCode = FRELQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ReportExecutionLog.StatusCode" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn FailedQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FailedQuery.Id,QueryCode = FailedQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ReportExecutionLog.StatusCode" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn FRELQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FRELQuery.Id,QueryCode = FRELQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "ReportExecutionLog.ExceptionMessage" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn FailedQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FailedQuery.Id,QueryCode = FailedQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "ReportExecutionLog.ExceptionMessage" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn FRELQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FRELQuery.Id,QueryCode = FRELQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "ReportExecutionLog.DoneDate" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn FailedQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FailedQuery.Id,QueryCode = FailedQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "ReportExecutionLog.DoneDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn FRELQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FRELQuery.Id,QueryCode = FRELQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "ReportExecutionLog.ReportFilterXML" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn FailedQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FailedQuery.Id,QueryCode = FailedQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "ReportExecutionLog.ReportFilterXML" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn FRELQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FRELQuery.Id,QueryCode = FRELQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "ReportExecutionLog.ReportId" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn FailedQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FailedQuery.Id,QueryCode = FailedQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "ReportExecutionLog.ReportId" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn FRELQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FRELQuery.Id,QueryCode = FRELQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "ReportExecutionLog.ReportTemplateId" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn FailedQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FailedQuery.Id,QueryCode = FailedQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "ReportExecutionLog.ReportTemplateId" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn FRELQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FRELQuery.Id,QueryCode = FRELQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "ReportExecutionLog.RetryNumber" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn FailedQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FailedQuery.Id,QueryCode = FailedQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "ReportExecutionLog.RetryNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn FRELQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FRELQuery.Id,QueryCode = FRELQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "ReportExecutionLog.StartDate" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn FailedQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FailedQuery.Id,QueryCode = FailedQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "ReportExecutionLog.StartDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn FRELQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FRELQuery.Id,QueryCode = FRELQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "ReportExecutionLog.DisablePreview" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn FailedQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FailedQuery.Id,QueryCode = FailedQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "ReportExecutionLog.DisablePreview" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn FRELQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FRELQuery.Id,QueryCode = FRELQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "ReportExecutionLog.ExecutedByServerName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn FailedQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FailedQuery.Id,QueryCode = FailedQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "ReportExecutionLog.ExecutedByServerName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn FRELQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FRELQuery.Id,QueryCode = FRELQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "ReportExecutionLog.ReportName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn FailedQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FailedQuery.Id,QueryCode = FailedQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "ReportExecutionLog.ReportName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn FRELQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FRELQuery.Id,QueryCode = FRELQuery.UniqueCode, IndexOrder = 13, ObjectFieldCode = "ReportExecutionLog.StatusName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn FailedQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FailedQuery.Id,QueryCode = FailedQuery.UniqueCode, IndexOrder = 13, ObjectFieldCode = "ReportExecutionLog.StatusName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn FRELQueryColumn_14 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FRELQuery.Id,QueryCode = FRELQuery.UniqueCode, IndexOrder = 14, ObjectFieldCode = "ReportExecutionLog.CreatedByUserName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn FailedQueryColumn_14 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = FailedQuery.Id,QueryCode = FailedQuery.UniqueCode, IndexOrder = 14, ObjectFieldCode = "ReportExecutionLog.CreatedByUserName" , ColumnWidth = 100 }, addedQueryColumns);
 
-             AdvancedQueryFilter FRELQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "ReportExecutionLog.StatusCode", PredefinedValue = "F",PredefinedValue2 = null, CustomPredefined = false, QueryId = FRELQuery.Id,QueryCode = FRELQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+             AdvancedQueryFilter FailedQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "ReportExecutionLog.StatusCode", PredefinedValue = "F",PredefinedValue2 = null, CustomPredefined = false, QueryId = FailedQuery.Id,QueryCode = FailedQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
   
 	      
 
-			  Query IPRELQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ReportExecutionLogTextCode_3.Id, NameTextCodeCode = ReportExecutionLogTextCode_3.Code, ObjectTableName = "ReportExecutionLog", Code = "IPREL",  QueryGroupCode = "4df5", IndexOrder = 3, Tenant = 0, ObjectTableId = ReportExecutionLogObjectTable.Id, QuerySection = "ReportExecutionLog", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ReportExecutionLogFeature_3.Id,FeatureUniqeCode= ReportExecutionLogFeature_3.FeatureUniqeCode, DefaultSortName = "StatusCode", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+			  Query InProcessQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ReportExecutionLogTextCode_3.Id, NameTextCodeCode = ReportExecutionLogTextCode_3.Code, ObjectTableName = "ReportExecutionLog", Code = "InProcess",  QueryGroupCode = "4df5", IndexOrder = 3, Tenant = 0, ObjectTableId = ReportExecutionLogObjectTable.Id, QuerySection = "ReportExecutionLog", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ReportExecutionLogFeature_3.Id,FeatureUniqeCode= ReportExecutionLogFeature_3.FeatureUniqeCode, DefaultSortName = "StatusCode", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn IPRELQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = IPRELQuery.Id,QueryCode = IPRELQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ReportExecutionLog.Tenant" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn InProcessQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InProcessQuery.Id,QueryCode = InProcessQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ReportExecutionLog.Tenant" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn IPRELQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = IPRELQuery.Id,QueryCode = IPRELQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ReportExecutionLog.CreateDate" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn InProcessQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InProcessQuery.Id,QueryCode = InProcessQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ReportExecutionLog.CreateDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn IPRELQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = IPRELQuery.Id,QueryCode = IPRELQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ReportExecutionLog.StatusCode" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn InProcessQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InProcessQuery.Id,QueryCode = InProcessQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ReportExecutionLog.StatusCode" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn IPRELQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = IPRELQuery.Id,QueryCode = IPRELQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "ReportExecutionLog.ExceptionMessage" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn InProcessQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InProcessQuery.Id,QueryCode = InProcessQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "ReportExecutionLog.ExceptionMessage" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn IPRELQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = IPRELQuery.Id,QueryCode = IPRELQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "ReportExecutionLog.DoneDate" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn InProcessQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InProcessQuery.Id,QueryCode = InProcessQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "ReportExecutionLog.DoneDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn IPRELQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = IPRELQuery.Id,QueryCode = IPRELQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "ReportExecutionLog.ReportFilterXML" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn InProcessQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InProcessQuery.Id,QueryCode = InProcessQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "ReportExecutionLog.ReportFilterXML" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn IPRELQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = IPRELQuery.Id,QueryCode = IPRELQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "ReportExecutionLog.ReportId" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn InProcessQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InProcessQuery.Id,QueryCode = InProcessQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "ReportExecutionLog.ReportId" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn IPRELQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = IPRELQuery.Id,QueryCode = IPRELQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "ReportExecutionLog.ReportTemplateId" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn InProcessQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InProcessQuery.Id,QueryCode = InProcessQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "ReportExecutionLog.ReportTemplateId" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn IPRELQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = IPRELQuery.Id,QueryCode = IPRELQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "ReportExecutionLog.RetryNumber" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn InProcessQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InProcessQuery.Id,QueryCode = InProcessQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "ReportExecutionLog.RetryNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn IPRELQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = IPRELQuery.Id,QueryCode = IPRELQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "ReportExecutionLog.StartDate" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn InProcessQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InProcessQuery.Id,QueryCode = InProcessQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "ReportExecutionLog.StartDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn IPRELQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = IPRELQuery.Id,QueryCode = IPRELQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "ReportExecutionLog.DisablePreview" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn InProcessQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InProcessQuery.Id,QueryCode = InProcessQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "ReportExecutionLog.DisablePreview" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn IPRELQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = IPRELQuery.Id,QueryCode = IPRELQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "ReportExecutionLog.ExecutedByServerName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn InProcessQueryColumn_11 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InProcessQuery.Id,QueryCode = InProcessQuery.UniqueCode, IndexOrder = 11, ObjectFieldCode = "ReportExecutionLog.ExecutedByServerName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn IPRELQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = IPRELQuery.Id,QueryCode = IPRELQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "ReportExecutionLog.ReportName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn InProcessQueryColumn_12 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InProcessQuery.Id,QueryCode = InProcessQuery.UniqueCode, IndexOrder = 12, ObjectFieldCode = "ReportExecutionLog.ReportName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn IPRELQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = IPRELQuery.Id,QueryCode = IPRELQuery.UniqueCode, IndexOrder = 13, ObjectFieldCode = "ReportExecutionLog.StatusName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn InProcessQueryColumn_13 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InProcessQuery.Id,QueryCode = InProcessQuery.UniqueCode, IndexOrder = 13, ObjectFieldCode = "ReportExecutionLog.StatusName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn IPRELQueryColumn_14 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = IPRELQuery.Id,QueryCode = IPRELQuery.UniqueCode, IndexOrder = 14, ObjectFieldCode = "ReportExecutionLog.CreatedByUserName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn InProcessQueryColumn_14 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InProcessQuery.Id,QueryCode = InProcessQuery.UniqueCode, IndexOrder = 14, ObjectFieldCode = "ReportExecutionLog.CreatedByUserName" , ColumnWidth = 100 }, addedQueryColumns);
 
-             AdvancedQueryFilter IPRELQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "ReportExecutionLog.StatusCode", PredefinedValue = "P",PredefinedValue2 = null, CustomPredefined = false, QueryId = IPRELQuery.Id,QueryCode = IPRELQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+             AdvancedQueryFilter InProcessQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "ReportExecutionLog.StatusCode", PredefinedValue = "P",PredefinedValue2 = null, CustomPredefined = false, QueryId = InProcessQuery.Id,QueryCode = InProcessQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);

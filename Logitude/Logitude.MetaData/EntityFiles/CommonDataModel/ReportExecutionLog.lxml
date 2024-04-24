@@ -1403,7 +1403,7 @@
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
   <Query
-    Code="&quot;TREL&quot;"
+    Code="&quot;Today&quot;"
     TextCode="&quot;Today&quot;"
     QueryGroupCode="&quot;4df5&quot;"
     IndexOrder="0"
@@ -1417,79 +1417,79 @@
     IsSpellChecked="false">
     <QueryColumns>
       <QueryColumn
-        QueryCode="&quot;TREL&quot;"
+        QueryCode="&quot;Today&quot;"
         IndexOrder="0"
         ObjectFieldName="&quot;Tenant&quot;"
         ColumnWidth="100" />
       <QueryColumn
-        QueryCode="&quot;TREL&quot;"
+        QueryCode="&quot;Today&quot;"
         IndexOrder="1"
         ObjectFieldName="&quot;CreateDate&quot;"
         ColumnWidth="130" />
       <QueryColumn
-        QueryCode="&quot;TREL&quot;"
+        QueryCode="&quot;Today&quot;"
         IndexOrder="2"
         ObjectFieldName="&quot;ReportName&quot;"
         ColumnWidth="130" />
       <QueryColumn
-        QueryCode="&quot;TREL&quot;"
+        QueryCode="&quot;Today&quot;"
         IndexOrder="3"
         ObjectFieldName="&quot;CreatedByUserName&quot;"
         ColumnWidth="130" />
       <QueryColumn
-        QueryCode="&quot;TREL&quot;"
+        QueryCode="&quot;Today&quot;"
         IndexOrder="4"
         ObjectFieldName="&quot;ExecutedByServerName&quot;"
         ColumnWidth="130" />
       <QueryColumn
-        QueryCode="&quot;TREL&quot;"
+        QueryCode="&quot;Today&quot;"
         IndexOrder="5"
         ObjectFieldName="&quot;StatusName&quot;"
         ColumnWidth="100" />
       <QueryColumn
-        QueryCode="&quot;TREL&quot;"
+        QueryCode="&quot;Today&quot;"
         IndexOrder="6"
         ObjectFieldName="&quot;ExceptionMessage&quot;"
         ColumnWidth="150" />
       <QueryColumn
-        QueryCode="&quot;TREL&quot;"
+        QueryCode="&quot;Today&quot;"
         IndexOrder="7"
         ObjectFieldName="&quot;DoneDate&quot;"
         ColumnWidth="130" />
       <QueryColumn
-        QueryCode="&quot;TREL&quot;"
+        QueryCode="&quot;Today&quot;"
         IndexOrder="8"
         ObjectFieldName="&quot;ReportFilterXML&quot;"
         ColumnWidth="150" />
       <QueryColumn
-        QueryCode="&quot;TREL&quot;"
+        QueryCode="&quot;Today&quot;"
         IndexOrder="9"
         ObjectFieldName="&quot;ReportId&quot;"
         ColumnWidth="100" />
       <QueryColumn
-        QueryCode="&quot;TREL&quot;"
+        QueryCode="&quot;Today&quot;"
         IndexOrder="10"
         ObjectFieldName="&quot;ReportTemplateId&quot;"
         ColumnWidth="100" />
       <QueryColumn
-        QueryCode="&quot;TREL&quot;"
+        QueryCode="&quot;Today&quot;"
         IndexOrder="11"
         ObjectFieldName="&quot;RetryNumber&quot;"
         ColumnWidth="100" />
       <QueryColumn
-        QueryCode="&quot;TREL&quot;"
+        QueryCode="&quot;Today&quot;"
         IndexOrder="12"
         ObjectFieldName="&quot;DisablePreview&quot;"
         ColumnWidth="50" />
       <QueryColumn
-        QueryCode="&quot;TREL&quot;"
+        QueryCode="&quot;Today&quot;"
         IndexOrder="13"
         ObjectFieldName="&quot;StartDate&quot;"
         ColumnWidth="130" />
     </QueryColumns>
     <QueryFilters>
       <QueryFilter
-        QueryCode="&quot;TREL&quot;"
+        QueryCode="&quot;Today&quot;"
         PredefinedValue="&quot;Today&quot;"
         ObjectFieldName="&quot;CreateDate&quot;"
         IsPredefined="true"
@@ -1498,8 +1498,8 @@
     </QueryFilters>
   </Query>
   <Query
-    Code="&quot;AREL&quot;"
-    TextCode="&quot;All Report Execution Logs&quot;"
+    Code="&quot;All&quot;"
+    TextCode="&quot;All&quot;"
     QueryGroupCode="&quot;4df5&quot;"
     IndexOrder="1"
     ObjectTableName="&quot;ReportExecutionLog&quot;"
@@ -1512,72 +1512,72 @@
     IsSpellChecked="false">
     <QueryColumns>
       <QueryColumn
-        QueryCode="&quot;AREL&quot;"
+        QueryCode="&quot;All&quot;"
         IndexOrder="0"
         ObjectFieldName="&quot;Tenant&quot;"
         ColumnWidth="100" />
       <QueryColumn
-        QueryCode="&quot;AREL&quot;"
+        QueryCode="&quot;All&quot;"
         IndexOrder="1"
         ObjectFieldName="&quot;CreateDate&quot;"
         ColumnWidth="130" />
       <QueryColumn
-        QueryCode="&quot;AREL&quot;"
+        QueryCode="&quot;All&quot;"
         IndexOrder="2"
         ObjectFieldName="&quot;ReportName&quot;"
         ColumnWidth="130" />
       <QueryColumn
-        QueryCode="&quot;AREL&quot;"
+        QueryCode="&quot;All&quot;"
         IndexOrder="3"
         ObjectFieldName="&quot;CreatedByUserName&quot;"
         ColumnWidth="130" />
       <QueryColumn
-        QueryCode="&quot;AREL&quot;"
+        QueryCode="&quot;All&quot;"
         IndexOrder="4"
         ObjectFieldName="&quot;ExecutedByServerName&quot;"
         ColumnWidth="130" />
       <QueryColumn
-        QueryCode="&quot;AREL&quot;"
+        QueryCode="&quot;All&quot;"
         IndexOrder="5"
         ObjectFieldName="&quot;StatusName&quot;"
         ColumnWidth="100" />
       <QueryColumn
-        QueryCode="&quot;AREL&quot;"
+        QueryCode="&quot;All&quot;"
         IndexOrder="6"
         ObjectFieldName="&quot;ExceptionMessage&quot;"
         ColumnWidth="150" />
       <QueryColumn
-        QueryCode="&quot;AREL&quot;"
+        QueryCode="&quot;All&quot;"
         IndexOrder="7"
         ObjectFieldName="&quot;DoneDate&quot;"
         ColumnWidth="130" />
       <QueryColumn
-        QueryCode="&quot;AREL&quot;"
+        QueryCode="&quot;All&quot;"
         IndexOrder="8"
         ObjectFieldName="&quot;ReportFilterXML&quot;"
         ColumnWidth="150" />
       <QueryColumn
-        QueryCode="&quot;AREL&quot;"
+        QueryCode="&quot;All&quot;"
         IndexOrder="9"
         ObjectFieldName="&quot;ReportId&quot;"
         ColumnWidth="100" />
       <QueryColumn
-        QueryCode="&quot;AREL&quot;"
+        QueryCode="&quot;All&quot;"
         IndexOrder="10"
         ObjectFieldName="&quot;ReportTemplateId&quot;"
         ColumnWidth="100" />
       <QueryColumn
-        QueryCode="&quot;AREL&quot;"
+        QueryCode="&quot;All&quot;"
         IndexOrder="11"
         ObjectFieldName="&quot;RetryNumber&quot;"
         ColumnWidth="100" />
       <QueryColumn
-        QueryCode="&quot;AREL&quot;"
+        QueryCode="&quot;All&quot;"
         IndexOrder="12"
         ObjectFieldName="&quot;DisablePreview&quot;"
         ColumnWidth="50" />
       <QueryColumn
-        QueryCode="&quot;AREL&quot;"
+        QueryCode="&quot;All&quot;"
         IndexOrder="13"
         ObjectFieldName="&quot;StartDate&quot;"
         ColumnWidth="130" />
@@ -1585,8 +1585,8 @@
     <QueryFilters />
   </Query>
   <Query
-    Code="&quot;FREL&quot;"
-    TextCode="&quot;Failed Report Execution Logs&quot;"
+    Code="&quot;Failed&quot;"
+    TextCode="&quot;Failed&quot;"
     QueryGroupCode="&quot;4df5&quot;"
     IndexOrder="2"
     ObjectTableName="&quot;ReportExecutionLog&quot;"
@@ -1599,84 +1599,84 @@
     IsSpellChecked="false">
     <QueryColumns>
       <QueryColumn
-        QueryCode="&quot;FREL&quot;"
+        QueryCode="&quot;Failed&quot;"
         IndexOrder="0"
         ObjectFieldName="&quot;Tenant&quot;"
         ColumnWidth="100" />
       <QueryColumn
-        QueryCode="&quot;FREL&quot;"
+        QueryCode="&quot;Failed&quot;"
         IndexOrder="1"
         ObjectFieldName="&quot;CreateDate&quot;"
         ColumnWidth="100" />
       <QueryColumn
-        QueryCode="&quot;FREL&quot;"
+        QueryCode="&quot;Failed&quot;"
         IndexOrder="2"
         ObjectFieldName="&quot;StatusCode&quot;"
         ColumnWidth="100" />
       <QueryColumn
-        QueryCode="&quot;FREL&quot;"
+        QueryCode="&quot;Failed&quot;"
         IndexOrder="3"
         ObjectFieldName="&quot;ExceptionMessage&quot;"
         ColumnWidth="100" />
       <QueryColumn
-        QueryCode="&quot;FREL&quot;"
+        QueryCode="&quot;Failed&quot;"
         IndexOrder="4"
         ObjectFieldName="&quot;DoneDate&quot;"
         ColumnWidth="100" />
       <QueryColumn
-        QueryCode="&quot;FREL&quot;"
+        QueryCode="&quot;Failed&quot;"
         IndexOrder="5"
         ObjectFieldName="&quot;ReportFilterXML&quot;"
         ColumnWidth="100" />
       <QueryColumn
-        QueryCode="&quot;FREL&quot;"
+        QueryCode="&quot;Failed&quot;"
         IndexOrder="6"
         ObjectFieldName="&quot;ReportId&quot;"
         ColumnWidth="100" />
       <QueryColumn
-        QueryCode="&quot;FREL&quot;"
+        QueryCode="&quot;Failed&quot;"
         IndexOrder="7"
         ObjectFieldName="&quot;ReportTemplateId&quot;"
         ColumnWidth="100" />
       <QueryColumn
-        QueryCode="&quot;FREL&quot;"
+        QueryCode="&quot;Failed&quot;"
         IndexOrder="8"
         ObjectFieldName="&quot;RetryNumber&quot;"
         ColumnWidth="100" />
       <QueryColumn
-        QueryCode="&quot;FREL&quot;"
+        QueryCode="&quot;Failed&quot;"
         IndexOrder="9"
         ObjectFieldName="&quot;StartDate&quot;"
         ColumnWidth="100" />
       <QueryColumn
-        QueryCode="&quot;FREL&quot;"
+        QueryCode="&quot;Failed&quot;"
         IndexOrder="10"
         ObjectFieldName="&quot;DisablePreview&quot;"
         ColumnWidth="100" />
       <QueryColumn
-        QueryCode="&quot;FREL&quot;"
+        QueryCode="&quot;Failed&quot;"
         IndexOrder="11"
         ObjectFieldName="&quot;ExecutedByServerName&quot;"
         ColumnWidth="100" />
       <QueryColumn
-        QueryCode="&quot;FREL&quot;"
+        QueryCode="&quot;Failed&quot;"
         IndexOrder="12"
         ObjectFieldName="&quot;ReportName&quot;"
         ColumnWidth="100" />
       <QueryColumn
-        QueryCode="&quot;FREL&quot;"
+        QueryCode="&quot;Failed&quot;"
         IndexOrder="13"
         ObjectFieldName="&quot;StatusName&quot;"
         ColumnWidth="100" />
       <QueryColumn
-        QueryCode="&quot;FREL&quot;"
+        QueryCode="&quot;Failed&quot;"
         IndexOrder="14"
         ObjectFieldName="&quot;CreatedByUserName&quot;"
         ColumnWidth="100" />
     </QueryColumns>
     <QueryFilters>
       <QueryFilter
-        QueryCode="&quot;FREL&quot;"
+        QueryCode="&quot;Failed&quot;"
         PredefinedValue="&quot;F&quot;"
         ObjectFieldName="&quot;StatusCode&quot;"
         IsPredefined="true"
@@ -1686,8 +1686,8 @@
     </QueryFilters>
   </Query>
   <Query
-    Code="&quot;IPREL&quot;"
-    TextCode="&quot;In Process Report Execution Logs&quot;"
+    Code="&quot;InProcess&quot;"
+    TextCode="&quot;In Process&quot;"
     QueryGroupCode="&quot;4df5&quot;"
     IndexOrder="3"
     ObjectTableName="&quot;ReportExecutionLog&quot;"
@@ -1700,84 +1700,84 @@
     IsSpellChecked="false">
     <QueryColumns>
       <QueryColumn
-        QueryCode="&quot;IPREL&quot;"
+        QueryCode="&quot;InProcess&quot;"
         IndexOrder="0"
         ObjectFieldName="&quot;Tenant&quot;"
         ColumnWidth="100" />
       <QueryColumn
-        QueryCode="&quot;IPREL&quot;"
+        QueryCode="&quot;InProcess&quot;"
         IndexOrder="1"
         ObjectFieldName="&quot;CreateDate&quot;"
         ColumnWidth="100" />
       <QueryColumn
-        QueryCode="&quot;IPREL&quot;"
+        QueryCode="&quot;InProcess&quot;"
         IndexOrder="2"
         ObjectFieldName="&quot;StatusCode&quot;"
         ColumnWidth="100" />
       <QueryColumn
-        QueryCode="&quot;IPREL&quot;"
+        QueryCode="&quot;InProcess&quot;"
         IndexOrder="3"
         ObjectFieldName="&quot;ExceptionMessage&quot;"
         ColumnWidth="100" />
       <QueryColumn
-        QueryCode="&quot;IPREL&quot;"
+        QueryCode="&quot;InProcess&quot;"
         IndexOrder="4"
         ObjectFieldName="&quot;DoneDate&quot;"
         ColumnWidth="100" />
       <QueryColumn
-        QueryCode="&quot;IPREL&quot;"
+        QueryCode="&quot;InProcess&quot;"
         IndexOrder="5"
         ObjectFieldName="&quot;ReportFilterXML&quot;"
         ColumnWidth="100" />
       <QueryColumn
-        QueryCode="&quot;IPREL&quot;"
+        QueryCode="&quot;InProcess&quot;"
         IndexOrder="6"
         ObjectFieldName="&quot;ReportId&quot;"
         ColumnWidth="100" />
       <QueryColumn
-        QueryCode="&quot;IPREL&quot;"
+        QueryCode="&quot;InProcess&quot;"
         IndexOrder="7"
         ObjectFieldName="&quot;ReportTemplateId&quot;"
         ColumnWidth="100" />
       <QueryColumn
-        QueryCode="&quot;IPREL&quot;"
+        QueryCode="&quot;InProcess&quot;"
         IndexOrder="8"
         ObjectFieldName="&quot;RetryNumber&quot;"
         ColumnWidth="100" />
       <QueryColumn
-        QueryCode="&quot;IPREL&quot;"
+        QueryCode="&quot;InProcess&quot;"
         IndexOrder="9"
         ObjectFieldName="&quot;StartDate&quot;"
         ColumnWidth="100" />
       <QueryColumn
-        QueryCode="&quot;IPREL&quot;"
+        QueryCode="&quot;InProcess&quot;"
         IndexOrder="10"
         ObjectFieldName="&quot;DisablePreview&quot;"
         ColumnWidth="100" />
       <QueryColumn
-        QueryCode="&quot;IPREL&quot;"
+        QueryCode="&quot;InProcess&quot;"
         IndexOrder="11"
         ObjectFieldName="&quot;ExecutedByServerName&quot;"
         ColumnWidth="100" />
       <QueryColumn
-        QueryCode="&quot;IPREL&quot;"
+        QueryCode="&quot;InProcess&quot;"
         IndexOrder="12"
         ObjectFieldName="&quot;ReportName&quot;"
         ColumnWidth="100" />
       <QueryColumn
-        QueryCode="&quot;IPREL&quot;"
+        QueryCode="&quot;InProcess&quot;"
         IndexOrder="13"
         ObjectFieldName="&quot;StatusName&quot;"
         ColumnWidth="100" />
       <QueryColumn
-        QueryCode="&quot;IPREL&quot;"
+        QueryCode="&quot;InProcess&quot;"
         IndexOrder="14"
         ObjectFieldName="&quot;CreatedByUserName&quot;"
         ColumnWidth="100" />
     </QueryColumns>
     <QueryFilters>
       <QueryFilter
-        QueryCode="&quot;IPREL&quot;"
+        QueryCode="&quot;InProcess&quot;"
         PredefinedValue="&quot;P&quot;"
         ObjectFieldName="&quot;StatusCode&quot;"
         IsPredefined="true"
