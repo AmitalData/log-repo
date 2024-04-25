@@ -11151,10 +11151,10 @@ namespace WebFreight.Web.ReportsWebServices
             if (level == "GLAccount" || level == "ChartOfAccount" || level == "ChartOfAccountType")
             {
 
-                trailReportParam.DetailedControlVendors = false;
-                trailReportParam.DetailedControlClients = false;
-                trailReportParam.DetailedControlJob = false;
-                trailReportParam.DetailedControlFile = false;
+                trailReportParam.DetailedControlVendors = true;
+                trailReportParam.DetailedControlClients = true;
+                trailReportParam.DetailedControlJob = true;
+                trailReportParam.DetailedControlFile = true;
                 trailReportParam.CurrenciesDetailed = false;
                 trailReportParam.Suppress_DoNotShowCardWithoutActivity = false;
                 trailReportParam.DoNotShowCardWithLocalCloseBalanceEqualZero = false;
@@ -11243,10 +11243,10 @@ namespace WebFreight.Web.ReportsWebServices
             {
 
 
-                trailReportParam.DetailedControlVendors = false;
-                trailReportParam.DetailedControlClients = false;
-                trailReportParam.DetailedControlJob = false;
-                trailReportParam.DetailedControlFile = false;
+                trailReportParam.DetailedControlVendors = true;
+                trailReportParam.DetailedControlClients = true;
+                trailReportParam.DetailedControlJob = true;
+                trailReportParam.DetailedControlFile = true;
                 trailReportParam.CurrenciesDetailed = false;
                 trailReportParam.Suppress_DoNotShowCardWithoutActivity = false;
                 trailReportParam.DoNotShowCardWithLocalCloseBalanceEqualZero = false;
