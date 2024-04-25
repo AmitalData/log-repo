@@ -5,13 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Simplog.Data.InfrastructureModel.EntityPOCOs
+namespace Logitude.BL.InfrastructureModel.EntityLists
 {
-    public class QueueMessage
+    public class QueueMessageList
     {
         [Key]
         public long Id { get; set; }
-        public int Tenant { get; set; }
         public string QueueDefinitionCode { get; set; }
         public DateTime CreateDateTime { get; set; }
         public int Status { get; set; }
@@ -20,11 +19,8 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public DateTime? ProcessingDateTime { get; set; }
         public DateTime? CompleteDateTime { get; set; }
         public int RetryNumber { get; set; }
+        public int Tenant { get; set; }
         public string HashCode { get; set; }
-
-        public virtual QueueDefinition QueueDefinition { get; set; }
-        //public QueueMessageMoreDetails QueueMessageMoreDetails { get; set; }
-
 
     }
 }

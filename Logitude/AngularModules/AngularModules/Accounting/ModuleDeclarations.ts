@@ -142,6 +142,9 @@ import { CargoTrackingBuildShipmentComponent } from './Components/Others/CargoTr
 import { CargoTrackingIncrementalStatistics } from './Components/Others/CargoTrackingService/CargoTrackingIncrementalStatistics';
 import { CargoTrackingIncrementalStatListTemplate } from './Components/ListTemplates/CargoTrackingIncrementalStatListTemplate';
 
+import { QueueMessagesStatistics } from './Components/Others/QueueMessagesServices/QueueMessagesStatistics';
+import { QueueMessageMoreDetails } from './Components/Others/QueueMessagesServices/QueueMessageMoreDetails';
+
 import { InterestReportEditCalculationDateComponent } from './Components/EditTabs/InterestReport/GeneralTab/InterestReportEditCalculationDate/InterestReportEditCalculationDateComponent';
 import { UserDefinedReportGeneralTabComponent } from './Components/EditTabs/UserDefinedReport/UserDefinedReportGeneralTabComponent';
 import { AccountingMainTesterComponent } from './Components/Maintenance/Tester/AccountingMainTesterComponent';
@@ -313,6 +316,8 @@ export const Components =
         InterestReportEditOpenBalanceComponent,
         CargoTrackingBuildShipmentComponent,
         CargoTrackingIncrementalStatistics,
+        QueueMessagesStatistics,
+        QueueMessageMoreDetails,
         CreateInterestReportsForCustomersComponent,
 
 
@@ -457,6 +462,8 @@ export class ModuleDeclarations {
             case "UserDefinedReportShortTitleComponent" :{myResult =UserDefinedReportShortTitleComponent; break;}
             case "CargoTrackingBuildShipmentComponent" :{myResult =CargoTrackingBuildShipmentComponent; break;}
             case "CargoTrackingIncrementalStatistics" :{myResult =CargoTrackingIncrementalStatistics; break;}
+            case "QueueMessagesStatistics" :{myResult =QueueMessagesStatistics; break;}
+            case "QueueMessageMoreDetails" :{myResult =QueueMessageMoreDetails; break;}
             case "CargoTrackingServiceComponent": { myResult = CargoTrackingServiceComponent; break; }
             case "BtatchPrintConfirmComponent": { myResult = BtatchPrintConfirmComponent; break; }
             case "ReconcileComponent": { myResult = ReconcileComponent; break; }

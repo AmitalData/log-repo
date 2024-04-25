@@ -767,6 +767,14 @@ export class MaintenanceComponent {
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
         }
       
+        if (FeatureLocator.HasFeaturePermession("General", "CARGOTRACKING")) {
+            var item = new MenusTablePM();
+            item.CategoryTypeCode = "OTH";
+            item.Icon = "List"
+            item.Code = "QUEUEMSG";
+            item.ObjectTableName = "Queue Messages";
+            this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+        }
 
         if (SessionLocator.Tenant == 0) {
             var item = new MenusTablePM();
@@ -1013,6 +1021,18 @@ export class MaintenanceComponent {
                         logWindow.IsShowCloseButton = true;
                         logWindow.Show('./Accounting/Components/Others/CargoTrackingService/CargoTrackingServiceComponent');
                    
+                    break;
+                }
+                case "QUEUEMSG": {
+
+                    var windowTitle = "Queue Messages";
+                    var logWindow = new LogitudeWindow();
+                    logWindow.Width = 1100;
+                    logWindow.Height = 500;
+                    logWindow.Title = windowTitle;
+                    logWindow.IsShowCloseButton = true;
+                    logWindow.Show('./Accounting/Components/Others/QueueMessagesServices/QueueMessagesStatistics');
+
                     break;
                 }
                 case "MTCE": {
@@ -2168,6 +2188,7 @@ class MaintenanceMenuItem {
                 case "SIGN": { myResult = "Set Signature Settings"; break; }
                 case "CHPA": { myResult = "Change Password"; break; }
                 case "CARGO": { myResult = "Cargo Tracking"; break; }
+                case "QUEUEMSG": { myResult = "Queue Messages"; break; }
                 case "COAD": { myResult = "Company Address Settings"; break; }
                 case "PAGD": { myResult = "Payment Gateway Definition"; break; }
                 case "CODE": { myResult = "System Defaults"; break; }

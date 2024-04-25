@@ -122,6 +122,8 @@
     <Content Include="Accounting\Components\Others\CancelChequeComponent.html" />
     <Content Include="Accounting\Components\Others\CargoTrackingService\CargoTrackingBuildShipmentComponent.html" />
     <Content Include="Accounting\Components\Others\CargoTrackingService\CargoTrackingIncrementalStatistics.html" />
+    <Content Include="Accounting\Components\Others\QueueMessagesServices\QueueMessagesStatistics.html" />
+    <Content Include="Accounting\Components\Others\QueueMessagesServices\QueueMessageMoreDetails.html" />
     <Content Include="Accounting\Components\Others\CopyInvoiceComponent.html" />
     <Content Include="Accounting\Components\Others\CopyJournalComponent.html" />
     <Content Include="Accounting\Components\Others\DropdownButtonComponent.html" />
@@ -678,6 +680,8 @@
     <Content Include="CustomsModules\CustomsListTemplates\Components\CourierDeclarationWorkspaceListTemplate.html" />
     <TypeScriptCompile Include="Accounting\Components\Others\CargoTrackingService\CargoTrackingBuildShipmentComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\Others\CargoTrackingService\CargoTrackingIncrementalStatistics.ts" />
+    <TypeScriptCompile Include="Accounting\Components\Others\QueueMessagesServices\QueueMessagesStatistics.ts" />
+    <TypeScriptCompile Include="Accounting\Components\Others\QueueMessagesServices\QueueMessageMoreDetails.ts" />
     <TypeScriptCompile Include="Accounting\Components\Others\InterestInvoiceAutoCreditComponent.ts" />
     <TypeScriptCompile Include="Accounting\Services\ExtendedPMs\BankCodeExtendedPMService.ts" />
     <TypeScriptCompile Include="App\DynamicLoader\LazyWidgetsCustoms.ts" />

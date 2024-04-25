@@ -1,0 +1,79 @@
+ <style>
+     .Desc_Style{
+         color: grey;
+     }
+     .Resp_Style{
+         color:black;
+     }
+ </style>
+<div class="TabHolder">
+    <table>
+        <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+            <td>
+                <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
+            </td>
+        </tr>
+        <tr style="height: 20px;vertical-align:top">
+            <td  >
+                <div></div>
+            </td>
+        </tr>
+        <tr class="TabTitleRow">
+            <td aria-colcount="6">
+                {{GridHeaderText}}
+            </td>
+        </tr>
+        <tr style="height: 1px;vertical-align:top">
+            <td  >
+                <div></div>
+            </td>
+        </tr>
+        <tr style="height: 32px;">
+            <td>
+                <table>
+                    <tr>
+                        <td style="width: 75px;">
+                            {{FromDateText}}
+                       </td>
+                       <td style="width:120px;">
+                           <LogDatePicker [ObjectFieldName]="'FromDate'" [ObjectTableName]="ObjectTableName"
+                                                                       [NoObjectField]="true" [ForceSubscribe]="true" [DataContext]="DataContext"
+                                                                       [HideColumns]="true" [SelectedDateValue]="FromDate"></LogDatePicker>
+                       </td>
+                       <td style="width:30px"></td>
+                       <td style="width: 25px;">
+                            {{ToDateText}}
+                       </td>
+               
+                       <td style="width:120px;">
+                           <LogDatePicker [ObjectFieldName]="'ToDate'" [ObjectTableName]="ObjectTableName"
+                                                                       [NoObjectField]="true" [ForceSubscribe]="true" [DataContext]="DataContext"
+                                                                       [HideColumns]="true" [SelectedDateValue]="ToDate"></LogDatePicker>
+                       </td>
+               
+                       <td><div></div></td>
+                    </tr>
+                </table>
+            </td>
+ 
+        </tr>
+        
+        <tr>
+            <td   style="height: 100%;">
+                <div class="GeneratedGridContainer">
+                    <logitude-grid GridWidth="100%" GridHeight="100%"
+                                   [ObjectTable]="'CargoTrackingIncrementalStat'"
+                                   [dataSource]="DataSource"
+                                   [columns]="columns"
+                                   [autoLoad]="true"
+                                   [IsCustomTemplate]="true"
+                                   [QueryChangeEvent]="onQueryChangeEvent"
+                                   >
+                    </logitude-grid>
+                </div>
+            </td>
+        </tr>
+
+        
+    </table>
+    </div>
