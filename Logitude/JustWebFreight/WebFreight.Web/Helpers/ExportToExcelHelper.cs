@@ -48,7 +48,7 @@ namespace WebFreight.Web.Helpers
             int tenant = exportToExcelArgs.Tenant;
             byte[] xmlFilters = exportToExcelArgs.XmlFilters;
             string typename = exportToExcelArgs.TypeName;
-            bool isNewExcel = Logitude.Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("NXL", tenant);
+            bool isNewExcel = true; // Logitude.Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("NXL", tenant);
 
             FilterSerializer filterSerializer = new FilterSerializer();
             QueryRepository queryRep = new QueryRepository(tenant);
