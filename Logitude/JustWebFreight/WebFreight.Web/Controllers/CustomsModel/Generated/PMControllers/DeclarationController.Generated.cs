@@ -135,7 +135,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             {
                 try
                 {
-
+                    //#105747- for test 
                     string dbms = "oracle";
                     string strConnString = "User Id=v5113;Password=v5113;Direct=True;Data Source=oracle19.amital.co.il;port=1521;sid=amital";
 
