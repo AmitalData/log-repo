@@ -23,6 +23,7 @@ namespace WebFreight.Web.MetaDataUpdate
             ReportGroup CRMGroup = AddReports.AddReportGroup(new ReportGroupDetails() { Code = "RQCR", EnglishName = "CRM", LocalName = "CRM", Tenant = 0, OrderNumber = 5 }, reportGroupRepository, TenantReportGroups);
             ReportGroup TFSGroup = AddReports.AddReportGroup(new ReportGroupDetails() { Code = "RTFS", EnglishName = "TFS", LocalName = "TFS", Tenant = 0, OrderNumber = 6 }, reportGroupRepository, TenantReportGroups);
             ReportGroup AdminGroup = AddReports.AddReportGroup(new ReportGroupDetails() { Code = "ADMN", EnglishName = "Administrative ", LocalName = "Administrative", Tenant = 0, OrderNumber = 4 }, reportGroupRepository, TenantReportGroups);
+            ReportGroup ExportCustomGroup = AddReports.AddReportGroup(new ReportGroupDetails() { Code = "EXCR", EnglishName = "ExportCustoms", LocalName = "דוחות - יצוא", Tenant = 0, OrderNumber = 7 }, reportGroupRepository, TenantReportGroups);
 
             reportGroupRepository.SubmitChanges();
 
@@ -40,6 +41,8 @@ namespace WebFreight.Web.MetaDataUpdate
             this.LoadReports_CRM(CRMGroup, tenantFeatures, reportRepository, TenantReports);
             this.LoadReports_TFS(TFSGroup, tenantFeatures, reportRepository, TenantReports);
             this.LoadReports_Administrative(AdminGroup, tenantFeatures, reportRepository, TenantReports);
+            this.LoadReports_ExportCustoms(ExportCustomGroup, tenantFeatures, reportRepository, TenantReports);
+
 
             reportRepository.SubmitChanges();
         }
@@ -223,5 +226,12 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature licenseManagementFeature = tenantFeatures.Where(d => d.Code == "LICENSEMANAGEMENTREPORT" && d.FeatureTypeCode == "AREA").FirstOrDefault();
             AddReports.AddReport(new ReportDetails() { Code = "LICM", Description = "License Management", Name = "License Managements", FilterControlName = "LicenseManagementFilterControl", Tenant = 0, ReportGroupId = adminGroup.Id, FeatureId = licenseManagementFeature.Id, FeatureUniqeCode = licenseManagementFeature.FeatureUniqeCode, FilterHtmlComponentUrl = "./Report/Components/FiltersComponent/Operational/LicenseManagementFilterComponent" }, reportRepository, tenantReports);
         }
+
+        private void LoadReports_ExportCustoms(ReportGroup ExportCustomGroup, List<Feature> tenantFeatures, ReportRepository reportRepository, Dictionary<string, Report> tenantReports)
+        {
+            Feature licenseManagementFeature = tenantFeatures.Where(d => d.Code == "ExportDeclarationReport" && d.FeatureTypeCode == "AREA").FirstOrDefault();
+            AddReports.AddReport(new ReportDetails() { Code = "EXDE", Description = "Export Declaration", Name = "Export Declaration", FilterControlName = "ExportDeclarationReportFilterComponent", Tenant = 0, ReportGroupId = ExportCustomGroup.Id, FeatureId = licenseManagementFeature.Id, FeatureUniqeCode = licenseManagementFeature.FeatureUniqeCode, FilterHtmlComponentUrl = "./Report/Components/FiltersComponent/ExportCustoms/ExportDeclarationReportFilterComponent" }, reportRepository, tenantReports);
+        }
+
     }
 }

@@ -166,7 +166,24 @@
 
                 </div>
             </div>
-
+            
+            <!-- CustomsAutonomyKeyword -->
+            <div *ngIf="ObjectTableName == 'Customs.CustomsAutonomyKeyword'">
+                <div *ngIf="FieldName == 'KeywordtypeLocalName'" style="position:relative;width:100%; height: 100%;">
+                    <div *ngIf="!IsHeaderScreenTemplate">
+                        <div *ngIf="Entity['KeywordtypeCode']=='1'">
+                            <span style="display: flex; justify-content: flex-start;">{{'Customs.CustomsAutonomyKeyword.O.CIty' | TextCodeTranslationPipe}}</span>
+                        </div>
+                        <div *ngIf="Entity['KeywordtypeCode']=='2'">
+                            <span style="display: flex; justify-content: flex-start;">{{'Customs.CustomsAutonomyKeyword.O.Phone' | TextCodeTranslationPipe}}</span>
+                        </div>
+                        <div *ngIf="Entity['KeywordtypeCode']=='3'">
+                            <span style="display: flex; justify-content: flex-start;">{{'Customs.CustomsAutonomyKeyword.O.CodeId' | TextCodeTranslationPipe}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
             <div *ngIf="ObjectTableName == 'Customs.Containerization'">
                 <div *ngIf="FieldName == 'TransportModeForExport'" style="position:relative;width:100%; height: 100%;">
                     <div *ngIf="!IsHeaderScreenTemplate">

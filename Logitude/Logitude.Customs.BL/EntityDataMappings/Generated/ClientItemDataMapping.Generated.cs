@@ -75,6 +75,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 				entityPOCO.ClassificationCode = entityPM.ClassificationCode;
 			}
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ItemCode))
+            {
+				entityPOCO.ItemCode = entityPM.ItemCode;
+			}
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OriginCountryCode))
             {
 				entityPOCO.OriginCountryCode = entityPM.OriginCountryCode;
@@ -160,6 +165,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ClassificationCode))
             {
                 oldEntityPM.ClassificationCode = entityPM.ClassificationCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ItemCode))
+            {
+                oldEntityPM.ItemCode = entityPM.ItemCode;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OriginCountryCode))

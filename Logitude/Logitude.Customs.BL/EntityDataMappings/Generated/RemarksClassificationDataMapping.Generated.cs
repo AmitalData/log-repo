@@ -1,0 +1,136 @@
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Server.Tools;  
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Server.Infrastructure.DataContracts;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Def.EntityPMs; 
+using Logitude.Customs.Data;
+
+namespace Logitude.Customs.BL.EntityDataMappings
+{
+   
+   public partial class RemarksClassificationDataMapping: IMapping<RemarksClassificationPM, RemarksClassification>,IMappingEncodeBase64NVARCHARFields<RemarksClassificationPM>
+   {
+          public enum POCOPropertyNames
+          { 
+		     None,  
+	         Id, 
+	         Tenant, 
+	         CustomsItemsID, 
+	         RemarkDescription,
+	      }
+
+
+	      public enum PMPropertyNames
+          { 
+		     None,  
+	         Id, 
+	         Tenant, 
+	         CustomsItemsID, 
+	         RemarkDescription,
+	      }
+
+		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
+        List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
+    
+	    public void PMToPOCO(RemarksClassificationPM entityPM, RemarksClassification entityPOCO)
+        {
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+				entityPOCO.Tenant = entityPM.Tenant;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsItemsID))
+            {
+				entityPOCO.CustomsItemsID = entityPM.CustomsItemsID;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RemarkDescription))
+            {
+				entityPOCO.RemarkDescription = entityPM.RemarkDescription;
+			}
+			}
+
+		public void POCOToPM(RemarksClassificationPM entityPM, RemarksClassification entityPOCO)
+        {
+			 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Id))
+            {
+					entityPM.Id = entityPOCO.Id;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Tenant))
+            {
+					entityPM.Tenant = entityPOCO.Tenant;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CustomsItemsID))
+            {
+					entityPM.CustomsItemsID = entityPOCO.CustomsItemsID;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.RemarkDescription))
+            {
+					entityPM.RemarkDescription = entityPOCO.RemarkDescription;
+            }
+
+		}
+
+		public void PMToOldPM(RemarksClassificationPM entityPM, RemarksClassificationPM oldEntityPM)
+        {
+		     oldEntityPM.ChangedProperties.Clear();
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+                oldEntityPM.Tenant = entityPM.Tenant;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsItemsID))
+            {
+                oldEntityPM.CustomsItemsID = entityPM.CustomsItemsID;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RemarkDescription))
+            {
+                oldEntityPM.RemarkDescription = entityPM.RemarkDescription;
+            }
+			
+		}
+
+	    public void EncodeBase64NVARCHARFields(RemarksClassificationPM entityPM)
+        {
+            if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 
+            {
+                return;
+
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.RemarkDescription)) //T4 find type == nText 
+            {
+                entityPM.RemarkDescription = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.RemarkDescription));
+            }
+            entityPM.EncodeBase64NVARCHARFieldsBy=null;
+		}
+
+
+	    public void AddPOCOPropertyName(POCOPropertyNames pocoPropertyName)
+        {
+            CustomMappedPOCOProperties.Add(pocoPropertyName);
+        }
+
+        public void AddPMPropertyName(PMPropertyNames pocoPropertyName)
+        {
+            CustomMappedPMProperties.Add(pocoPropertyName);
+        }
+			  
+   }
+}
+	 

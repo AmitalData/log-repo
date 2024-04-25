@@ -1,0 +1,102 @@
+﻿
+<style>
+    .FlipImgHoriz {
+        -moz-transform: scaleX(-1);
+        -o-transform: scaleX(-1);
+        -webkit-transform: scaleX(-1);
+        transform: scaleX(-1);
+        filter: FlipH;
+        -ms-filter: "FlipH";
+    }
+</style>
+
+<table>
+    <tr style="height: 5px;">
+        <td></td>
+    </tr>
+
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <table>
+                <tr>
+                    <td>
+                        <div class="FillParent CurvedArea">
+                            <table>
+                                <tr>
+                                    <td style="width: 130px">
+                                        <div [className]="LayoutDirection == 'rtl' ? 'FillParent AppLeftMenuBackgroundRTL' : 'FillParent AppLeftMenuBackground'">
+                                            <table>
+
+                                                <tr>
+                                                    <td style="vertical-align: top;">
+                                                        <ul>
+                                                            <li class="DefaultMenuItem" *ngFor="let item of TabsItemsSource" (click)="SelectionChanged(item)" [class.SelectedMenuItem]="item === SelectedTab" [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'">
+                                                                <div class="TextTrimming">{{item.TextCode | TextCodeTranslationPipe}}</div>
+                                                                <img [className]="LayoutDirection == 'rtl' ? 'LeftCenter' : 'RightCenter'" [class.FlipImgHoriz]="LayoutDirection == 'rtl'" *ngIf="item == SelectedTab" src="./Images/SelectedMenuArrow.png" style="margin-right: -1px;" />
+                                                            </li>
+                                                        </ul>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <div class="FillParent">
+                                            <div class="ScrollViewer">
+                                                <div class="ScrollContent">
+                                                    <div class="FillParent">
+                                                        <table *ngFor="let item of TabsItemsSource" [hidden]="item != SelectedTab">
+                                                            <tr>
+                                                                <td class="CellStretch">
+                                                                    <div class="TabHolder">
+                                                                        <div class="LocationDirectiveHolder">
+                                                                            <div class="LocationDirective" LocationDirective Code="NewTabLocation" ItemCode="{{item.Code}}"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

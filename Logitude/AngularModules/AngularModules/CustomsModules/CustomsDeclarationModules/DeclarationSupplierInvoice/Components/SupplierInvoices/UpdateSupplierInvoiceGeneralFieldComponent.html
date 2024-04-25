@@ -45,7 +45,7 @@
                             (SelectedItemChanged)="FinalValue = $event" [DataContext]="DataContext"
                             [ObjectFieldName]="UpdateField" [ObjectTableName]="ObjectTableName"
                             [LookUpTableName]="'Customs.ClientItem'" [HideColumns]="true"
-                            [SelectedValuePath]="'ClassificationCode'">
+                            [QueryFilterItems]="PreceduralFilterItems" [SelectedValuePath]="'ClassificationCode'">
                         </LogLov>
 
                     </td>

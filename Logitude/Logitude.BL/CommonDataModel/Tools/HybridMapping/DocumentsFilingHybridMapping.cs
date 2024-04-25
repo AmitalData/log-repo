@@ -393,6 +393,8 @@ namespace Logitude.BL.CommonDataModel.Tools.HybridMapping
 
                     if (type != null)
                     {
+                        metadatavalue.DocumentsMetaDataTypeCode= metadatavalue.DocumentsMetaDataTypeId;
+
                         metadatavalue.DocumentsMetaDataTypeId = type.Id;
                     }
                     else

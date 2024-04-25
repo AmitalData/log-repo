@@ -243,4 +243,5 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
 
 
       }
+
  }

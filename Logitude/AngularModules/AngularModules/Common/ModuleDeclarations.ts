@@ -64,10 +64,12 @@ import { StartWorkingListHeaderTemplate } from './Components/Templates/ListHeade
 import { OcrDefaultsSettingsComponent } from './Components/Maintenance/OcrDefaultsSettingsComponent';
  import { APISettingsComponent } from './Components/Maintenance/AmitalAPI/APISettingsComponent';
 import { AmitalAPISettingsComponent } from './Components/Maintenance/AmitalAPI/AmitalAPISettingsComponent';
-import { AmitalAPIAddApiWindowComponent } from './Components/Maintenance/AmitalAPI/AmitalAPIAddApiWindowComponent';
-import { AmitalAPIAddClientWindowComponent } from './Components/Maintenance/AmitalAPI/AmitalAPIAddClientWindowComponent';
-import { AmitalAPIAddSchemaWindowComponent } from './Components/Maintenance/AmitalAPI/AmitalAPIAddSchemaWindowComponent';
-import { AmitalAPISchemaTable } from './Components/Maintenance/AmitalAPI/AmitalAPISchemaTable';
+import { AmitalAPIAddApiWindowComponent } from './Components/Maintenance/AmitalAPI/WindowsComponent/AmitalAPIAddApiWindowComponent';
+import { AmitalAPIAddClientWindowComponent } from './Components/Maintenance/AmitalAPI/WindowsComponent/AmitalAPIAddClientWindowComponent';
+import { AmitalAPIAddSchemaWindowComponent } from './Components/Maintenance/AmitalAPI/WindowsComponent/AmitalAPIAddSchemaWindowComponent';
+import { AmitalAPISchemaTable } from './Components/Maintenance/AmitalAPI/components/AmitalAPISchemaTable';
+import { LogTexBoxFormComponent } from './Components/Maintenance/AmitalAPI/components/LogTexBoxFormComponent';
+import { CloseSaveButtonsComponent } from './Components/Maintenance/AmitalAPI/components/CloseSaveButtonsComponent';
 
   import { TariffsTabComponent } from './Components/TariffsTab/TariffsTabComponent';
  import { HostScreenComponent } from './Components/HostScreen/HostScreenComponent';
@@ -146,6 +148,8 @@ import { AmitalAPISchemaTable } from './Components/Maintenance/AmitalAPI/AmitalA
         AmitalAPISchemaTable,
          TariffsTabComponent,
          HostScreenComponent,
+        LogTexBoxFormComponent,
+        CloseSaveButtonsComponent,
     ];
   
 export class ModuleDeclarations {
@@ -231,6 +235,8 @@ export class ModuleDeclarations {
 
              case "TariffsTabComponent": { myResult = TariffsTabComponent; break; }
              case "HostScreenComponent": { myResult = HostScreenComponent; break; }
+            case "LogTexBoxFormComponent": { myResult = LogTexBoxFormComponent; break; }
+            case "CloseSaveButtonsComponent": { myResult = CloseSaveButtonsComponent; break; }
         }
  
         return myResult;

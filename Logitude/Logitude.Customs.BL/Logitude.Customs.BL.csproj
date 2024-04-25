@@ -117,17 +117,17 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="UnifreightIIG.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\UnifreightIIG.3.1803.69\lib\Net40\UnifreightIIG.Common.dll</HintPath>
+      <HintPath>..\packages\UnifreightIIG.4.0.1\lib\Net40\UnifreightIIG.Common.dll</HintPath>
     </Reference>
     <Reference Include="UnifreightIIG.DCA, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\UnifreightIIG.3.1803.69\lib\Net40\UnifreightIIG.DCA.dll</HintPath>
+      <HintPath>..\packages\UnifreightIIG.4.0.1\lib\Net40\UnifreightIIG.DCA.dll</HintPath>
     </Reference>
     <Reference Include="UnifreightIIG.Resources, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\UnifreightIIGResources.1.0.6\lib\Net40\UnifreightIIG.Resources.dll</HintPath>
     </Reference>
     <Reference Include="UnifreightIIG.UServer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\UnifreightIIG.3.1803.69\lib\Net40\UnifreightIIG.UServer.dll</HintPath>
+      <HintPath>..\packages\UnifreightIIG.4.0.1\lib\Net40\UnifreightIIG.UServer.dll</HintPath>
     </Reference>
     <Reference Include="WindowsAzureEventSource, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.WindowsAzure.SDK.2.9.0\lib\WindowsAzureEventSource.dll</HintPath>
@@ -1004,6 +1004,7 @@
     <Compile Include="EntityDataMappings\Generated\RegularityRequirementWarningDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\RegularitySourceDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ReleaseMessageTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\RemarksClassificationDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\RenewalMethodDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\RequestReasonCodeEnumDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\RequestStatusDataMapping.Generated.cs" />
@@ -1208,6 +1209,7 @@
     <Compile Include="EntityDataMappings\RegularityRequirementWarningDataMapping.cs" />
     <Compile Include="EntityDataMappings\RegularitySourceDataMapping.cs" />
     <Compile Include="EntityDataMappings\ReleaseMessageTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\RemarksClassificationDataMapping.cs" />
     <Compile Include="EntityDataMappings\RenewalMethodDataMapping.cs" />
     <Compile Include="EntityDataMappings\RequestReasonCodeEnumDataMapping.cs" />
     <Compile Include="EntityDataMappings\RequestStatusDataMapping.cs" />
@@ -1305,10 +1307,12 @@
     <Compile Include="EntityDataMappings\VendorTypeDataMapping.cs" />
     <Compile Include="EntityQueryServiceExt\CustomsDocumentQueryServiceExt.cs" />
     <Compile Include="EntityQueryServices\CargoIdentifireTypeQueryService.cs" />
+    <Compile Include="EntityQueryServices\CB_TariffQueryService.cs" />
     <Compile Include="EntityQueryServices\CertificateOfOriginInvoiceQueryService.cs" />
     <Compile Include="EntityQueryServices\CertificateOfOriginItemQueryService.cs" />
     <Compile Include="EntityQueryServices\CertificateOfOriginMandatoryFieldsQueryService.cs" />
     <Compile Include="EntityQueryServices\CertificateOfOriginStatusCodeEnumQueryService.cs" />
+    <Compile Include="EntityQueryServices\CB_CustomsItemQueryService.cs" />
     <Compile Include="EntityQueryServices\ClientItemQueryService.cs" />
     <Compile Include="EntityQueryServices\ConfirmationTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\CurrencyTypeQueryService.cs" />
@@ -1374,6 +1378,7 @@
     <Compile Include="EntityQueryServices\Generated\RegularityPublicationQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\RegularityRequirementWarningQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\RegularitySourceQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\RemarksClassificationQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\RenewalMethodQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\RequestToAdvanceAQueueQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\OriginCriterionQueryService.Generated.cs" />
@@ -1973,6 +1978,7 @@
     <Compile Include="EntityUpdateServices\Generated\RegularityPublicationUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\RegularityRequirementWarningUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\RegularitySourceUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\RemarksClassificationUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\RenewalMethodUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\RequestToAdvanceAQueueUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\CertificateOfOriginUpdateService.cs" />

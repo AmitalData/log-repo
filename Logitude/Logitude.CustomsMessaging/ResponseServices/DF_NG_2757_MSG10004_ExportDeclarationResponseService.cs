@@ -487,7 +487,17 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                             if (featureExportDiamonds != null)
                             {
-                                RaiseEvent(this._MyDeclarationPM, user?.Id, status_id: "SOY", versionId: customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value, status_DateTime: _DateTime);
+                                // get the declaration status label
+                                DeclarationStatusTypeQueryService declarationStatusTypeQueryService = new DeclarationStatusTypeQueryService(_MyDeclarationPM.Tenant);
+                                DeclarationStatusTypePM declarationStatusType = declarationStatusTypeQueryService.GetSingle(customResponse.Response.Status[0].NameCode.Value, false, true);
+                                string declarationStatusLabel = declarationStatusType?.LocalName ?? "";
+                                string declarationNumber = this._MyDeclarationPM.DeclarationNumber ?? "";
+
+                                RaiseEvent(this._MyDeclarationPM, user?.Id, 
+                                    status_id: "SOY", 
+                                    versionId: customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value, 
+                                    status_DateTime: _DateTime, 
+                                    comments: $"CODE-{customResponse.Response.Status[0].NameCode.Value}-{declarationStatusLabel}-{declarationNumber}");
                             }
                         }
                     }
@@ -1211,8 +1221,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
             submitRequestParams.Tenant = requestParams.Tenant;
             submitRequestParams.RequestVIA = SendRequestVIA.WebServiceBatch;
             submitRequestParams.LoggingUserId = requestParams.LoggingUserId;
-            submitRequestParams.ForcePersonalSign =true;
-           
+            submitRequestParams.ForcePersonalSign = false;
+            submitRequestParams.ForceCompanySign = true;
             submitRequestParams.LoggingEntityId = requestParams.LoggingEntityId;
             submitRequestParams.LoggingEntityId2 = requestParams.LoggingEntityId2;
             submitRequestParams.LoggingObjectTableId = requestParams.LoggingObjectTableId;
@@ -2412,7 +2422,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             return res;
         }
 
-        private static void RaiseEvent(DeclarationPM dirtyDeclarationPM, string loggingUserId, string status_id, string versionId, DateTime? status_DateTime)
+        private static void RaiseEvent(DeclarationPM dirtyDeclarationPM, string loggingUserId, string status_id, string versionId, DateTime? status_DateTime, string comments = null)
         {
             //primary_number = $"{dirtyDeclarationPM.CustomFileNo},{dirtyDeclarationPM.TransportModeId == "A" ? "EFIFILEM" : "MFIFILEM" }",
             string primary_number = $"{dirtyDeclarationPM.CustomFileNo},EFIFILEM";
@@ -2440,12 +2450,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     xml_status = "new",
                     status_id = status_id,
                     status_DateTime = status_DateTime ?? DateTime.Now,
-                    comments = dirtyDeclarationPM.DeclarationNumber+", גירסה" + versionId,
-
-
-
-
-
+                    comments = !string.IsNullOrEmpty(comments) ? comments: dirtyDeclarationPM.DeclarationNumber+", גירסה" + versionId,
                 }
             };
 

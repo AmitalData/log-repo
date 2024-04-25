@@ -399,17 +399,6 @@ namespace Logitude.Customs.Data.Repsitories
             return declarations;
 
         }
-        public DeclarationCourierStatus GetDeclarationsById(string declarationIds, int tenant)
-        {
-
-            DeclarationCourierStatus declarations = (from a in context.DeclarationCourierStatuses
-                                                     where declarationIds.Contains(a.DeclarationId)
-                                                     where a.Tenant == tenant
-                                                     select a).FirstOrDefault();
-
-            return declarations;
-
-        }
 
         public List<DeclarationCourierStatus> GetDeclarationsByPendings(List<string> declarationIds, int tenant, string pending)
         {

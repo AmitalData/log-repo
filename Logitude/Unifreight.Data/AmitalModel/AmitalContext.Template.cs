@@ -10952,6 +10952,85 @@ namespace Unifreight.Data.AmitalModel
         {
             DbModelBuilder modelBuilder = new DbModelBuilder(DbModelBuilderVersion.V4_1);
 
+            #region CCUACCSUP
+
+            modelBuilder.Entity<CCUACCSUP>()
+                .HasKey(p => new { p.FILENO, p.LINENO })
+                .ToTable("CCUACCSUP", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<CCUACCSUP>()
+                .Property(p => p.FILENO)
+                    .HasColumnName(@"FILE_NO")
+                    .IsRequired()
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUACCSUP>()
+                .Property(p => p.LINENO)
+                    .HasColumnName(@"LINE_NO")
+                    .IsRequired()
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("int");
+            modelBuilder.Entity<CCUACCSUP>()
+                .Property(p => p.ACCOUNTTYPE)
+                    .HasColumnName(@"ACCOUNT_TYPE")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUACCSUP>()
+                .Property(p => p.MAINACCOUNT)
+                    .HasColumnName(@"MAIN_ACCOUNT")
+                    .HasColumnType("bit");
+            modelBuilder.Entity<CCUACCSUP>()
+                .Property(p => p.SUPPLIERACCOUNT)
+                    .HasColumnName(@"SUPPLIER_ACCOUNT")
+                    .HasMaxLength(9)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUACCSUP>()
+                .Property(p => p.SUPPLIERID)
+                    .HasColumnName(@"SUPPLIER_ID")
+                    .HasMaxLength(10)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUACCSUP>()
+                .Property(p => p.COUNTRYID)
+                    .HasColumnName(@"COUNTRY_ID")
+                    .HasMaxLength(4)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUACCSUP>()
+                .Property(p => p.INCOTERMID)
+                    .HasColumnName(@"INCOTERM_ID")
+                    .HasMaxLength(3)
+                    .HasColumnType("varchar");
+            modelBuilder.Entity<CCUACCSUP>()
+                .Property(p => p.CURRENCYID)
+                    .HasColumnName(@"CURRENCY_ID")
+                    .HasMaxLength(2)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUACCSUP>()
+                .Property(p => p.VALUE)
+                    .HasColumnType("float");
+            modelBuilder.Entity<CCUACCSUP>()
+                .Property(p => p.COMMISSION)
+                    .HasColumnType("float");
+            modelBuilder.Entity<CCUACCSUP>()
+                .Property(p => p.DECLARATIONNO)
+                    .HasColumnName(@"DECLARATION_NO")
+                    .HasMaxLength(9)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUACCSUP>()
+                .Property(p => p.CHANGINGVALUE)
+                    .HasColumnName(@"CHANGING_VALUE")
+                    .HasColumnType("float");
+            modelBuilder.Entity<CCUACCSUP>()
+                .Property(p => p.SUPPLIERACCOUNTN)
+                    .HasColumnName(@"SUPPLIER_ACCOUNT_N")
+                    .HasMaxLength(35)
+                    .HasColumnType("varchar");
+            modelBuilder.Entity<CCUACCSUP>()
+                .Property(p => p.COMMISSIONPERCENT)
+                    .HasColumnName(@"COMMISSION_PERCENT")
+                    .HasColumnType("float");
+
+            #endregion
+
             #region GGGQ
 
             modelBuilder.Entity<GGGQ>()
@@ -12154,13 +12233,13 @@ namespace Unifreight.Data.AmitalModel
                     .HasColumnName(@"FILE_NO")
                     .IsRequired()
                     .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
-                    .HasColumnType("int");
+                    .HasColumnType("bigint");
             modelBuilder.Entity<CCUTAX>()
                 .Property(p => p.LINENO)
                     .HasColumnName(@"LINE_NO")
                     .IsRequired()
                     .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
-                    .HasColumnType("int");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUTAX>()
                 .Property(p => p.PRATMEHES)
                     .HasColumnName(@"PRAT_MEHES")
@@ -12169,7 +12248,7 @@ namespace Unifreight.Data.AmitalModel
             modelBuilder.Entity<CCUTAX>()
                 .Property(p => p.GOODSNO)
                     .HasColumnName(@"GOODS_NO")
-                    .HasColumnType("int");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUTAX>()
                 .Property(p => p.TAXTYPE)
                     .HasColumnName(@"TAX_TYPE")
@@ -12214,7 +12293,7 @@ namespace Unifreight.Data.AmitalModel
             modelBuilder.Entity<CCUTAX>()
                 .Property(p => p.ADDIMPORT)
                     .HasColumnName(@"ADD_IMPORT")
-                    .HasColumnType("float");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUTAX>()
                 .Property(p => p.PRATMEHESN)
                     .HasColumnName(@"PRAT_MEHES_N")
@@ -13053,8 +13132,75 @@ namespace Unifreight.Data.AmitalModel
                     .HasColumnType("varchar");
 
             #endregion
+            #region YCULTASK
 
-           
+            modelBuilder.Entity<YCULTASK>()
+                .HasKey(p => new { p.TASKID })
+                .ToTable("YCULTASK", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<YCULTASK>()
+                .Property(p => p.TASKID)
+                    .HasColumnName(@"TASK_ID")
+                    .IsRequired()
+                    .HasMaxLength(30)
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("char");
+            modelBuilder.Entity<YCULTASK>()
+                .Property(p => p.ENTNAME)
+                    .HasMaxLength(32)
+                    .HasColumnType("varchar");
+            modelBuilder.Entity<YCULTASK>()
+                .Property(p => p.PRIMARYNUM)
+                    .HasColumnName(@"PRIMARY_NUM")
+                    .HasMaxLength(12)
+                    .HasColumnType("char");
+            modelBuilder.Entity<YCULTASK>()
+                .Property(p => p.TYPE)
+                    .HasMaxLength(10)
+                    .HasColumnType("varchar");
+            modelBuilder.Entity<YCULTASK>()
+                .Property(p => p.LOGTIME)
+                    .HasColumnName(@"LOG_TIME")
+                    .HasColumnType("date");
+            modelBuilder.Entity<YCULTASK>()
+                .Property(p => p.PRIORITY)
+                    .HasColumnType("SMALLINT");
+            modelBuilder.Entity<YCULTASK>()
+                .Property(p => p.PROCESSSTARTTIME)
+                    .HasColumnName(@"PROCESS_START_TIME")
+                    .HasColumnType("date");
+            modelBuilder.Entity<YCULTASK>()
+                .Property(p => p.PROCESSENDTIME)
+                    .HasColumnName(@"PROCESS_END_TIME")
+                    .HasColumnType("date");
+            modelBuilder.Entity<YCULTASK>()
+                .Property(p => p.ARCHIVE)
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<YCULTASK>()
+                .Property(p => p.STATUS)
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<YCULTASK>()
+                .Property(p => p.REQUESTDATA)
+                    .HasColumnName(@"REQUEST_DATA")
+                    .HasColumnType("varchar(max)");
+            modelBuilder.Entity<YCULTASK>()
+                .Property(p => p.RESPONSE)
+                    .HasColumnType("varchar(max)");
+            modelBuilder.Entity<YCULTASK>()
+                .Property(p => p.CLIENTID)
+                    .HasColumnName(@"CLIENT_ID")
+                    .HasMaxLength(15)
+                    .HasColumnType("char");
+            modelBuilder.Entity<YCULTASK>()
+                .Property(p => p.USRCODE)
+                    .HasColumnName(@"USR_CODE")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar");
+
+            #endregion
+
             #region Disabled conventions
 
 

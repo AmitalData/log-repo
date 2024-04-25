@@ -36,6 +36,14 @@ namespace Logitude.Customs.Data.Repsitories
             return values;
         }
 
+        public CustomsDocumentMetaDataValue GetCustomsDocumentMetaDataValuesByCustomDocumentAndMetaDateValue(string customDocumentId, int tenant,string MetaDataTypeCode)
+        {
+            CustomsDocumentMetaDataValue value = (from a in context.CustomsDocumentMetaDataValues
+                                                         where a.CustomsDocumentId == customDocumentId && a.Tenant == tenant && a.MetaDataTypeCode== MetaDataTypeCode
+                                                         select a).FirstOrDefault();
+            return value;
+        }
+
         public List<CustomsDocumentMetaDataValue> GetCustomsDocumentMetaDataValuesByEntity_BADBAD(string entityId, int tenant)
         {
             List<CustomsDocumentMetaDataValue> values = (from a in context.CustomsDocumentMetaDataValues.Include("CustomsDocument.DocumentsFiling")

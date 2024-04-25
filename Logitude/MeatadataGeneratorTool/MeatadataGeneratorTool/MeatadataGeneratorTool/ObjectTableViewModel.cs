@@ -1987,11 +1987,22 @@ namespace MeatadataGeneratorTool
             {
                 CloseTablesDataViewModel model = new CloseTablesDataViewModel(this, true);
                 var rowData =  (CLoseTableDataGrid.SelectedItem as Row)._data;
-                foreach(var k in rowData.Keys)
+
+                Dictionary<string, string> FieldsDictionaryTemp = new Dictionary<string, string>();
+
+                foreach (var k in rowData.Keys)
                 {
                     if (!this.FieldsDictionary.ContainsKey(k))
                         this.FieldsDictionary.Add(k, rowData[k] != null ? rowData[k].ToString() : null);
+                    else 
+                        FieldsDictionaryTemp.Add(k, rowData[k] != null ? rowData[k].ToString() : null);
                 }
+
+                if(FieldsDictionaryTemp.Count > 0 )
+                {
+                    this.FieldsDictionary = FieldsDictionaryTemp;
+                }
+
                 TablesDataUserControl = new TablesDataUserControl();
                 TablesDataUserControl.DataContext = model;
 

@@ -226,8 +226,14 @@ namespace Logitude.Customs.BL.EntityQueryServices
             int DecWithoutHaTra = 0;
             int NotApproved = 0;
 
+            var result = q.Select(a => new { 
+                a.DocumentStatusCode, a.CourierManifestStatusCode, a.IsCourierMissingClassification, a.CourierDeclarationStatusCode, 
+                a.CourierPaymentStatusCode, a.CourierPendingReasonList, a.StorageSiteStatusCode, a.SpecialActionStatus, a.FastIndividualProcessCode,
+                a.NotApprovedPendingList
+            }).ToList();
+
             var totQ =
-            (from dStatus in q
+            (from dStatus in result
              group dStatus by 1 into g
              select new
              {

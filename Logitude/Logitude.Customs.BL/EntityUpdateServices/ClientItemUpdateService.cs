@@ -28,7 +28,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         {
             if (entityPM != null && entityPM.ChangeSetOp != ChangeSetOperation.None)
             {
-                if(entityPM.ItemDescription != entityPOCO.ItemDescription || entityPM.OriginCountryCode != entityPOCO.OriginCountryCode || entityPM.ClassificationCode != entityPOCO.ClassificationCode) {
+                if(entityPM.ItemDescription != entityPOCO.ItemDescription || entityPM.OriginCountryCode != entityPOCO.OriginCountryCode || entityPM.ClassificationCode != entityPOCO.ClassificationCode|| entityPM.ItemKey != entityPOCO.ItemKey) {
                     ClientQueryService ClientQueryService = new ClientQueryService(entityPM.Tenant);
                     var clientId = ClientQueryService.GetIdByCode(entityPM?.ClientCode, entityPM.Tenant);
                     if (clientId != null)

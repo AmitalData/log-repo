@@ -75,6 +75,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             CourierDeclarationUpdateService courierDeclarationUpdateService = new CourierDeclarationUpdateService(context, new Dictionary<string, IContext>(), entityPOCO.Tenant);
             DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(context, new Dictionary<string, IContext>(), entityPOCO.Tenant);
             DeclarationRepository declarationRepository1 = new DeclarationRepository(context);
+            bool updateCalculatedFields = false;
 
             if (entityPM.ConnectedDeclarations != null && entityPM.ConnectedDeclarations.Length > 0)
             {
@@ -105,7 +106,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                             Send2MasofDueMasterChanged(courierDeclaration, entityPM);
 
-                            DeclarationCourierStatus decCourier = rep.GetDeclarationsById(item, entityPOCO.Tenant);
+                            DeclarationCourierStatus decCourier = rep.GetSingle(item, entityPOCO.Tenant);
                             if (decCourier != null)
                             {
                                 if (!decCourier.IsClosedForFollowUp)
@@ -114,6 +115,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                 }
                             }
                         }
+                        updateCalculatedFields = true;
                     }
                 }
             }
@@ -141,7 +143,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             courierDeclaration = courierDeclarationDelQuery.GetSingle(item, entityPOCO.Id, false, true);
                             courierDeclaration.ChangeSetOp = ChangeSetOperation.Delete;
                             courierDeclarationUpdateService.Update(courierDeclaration, true);
-                            DeclarationCourierStatus decCourier = rep.GetDeclarationsById(item, entityPOCO.Tenant);
+                            DeclarationCourierStatus decCourier = rep.GetSingle(item, entityPOCO.Tenant);
                             if (decCourier != null)
                             {
                                 if (!decCourier.IsClosedForFollowUp)
@@ -150,8 +152,15 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                 }
                             }
                         }
+                        updateCalculatedFields = true;
                     }
                 }
+            }
+
+            if (updateCalculatedFields)
+            {
+                entityPM.NoOfCourierHawbWithoutDelivery = courierDeclarationQuery.CountNoOfCourierHawbWithoutDelivery(entityPM.Id, entityPM.Tenant).ToString();
+                entityPM.NoOfCourierHawbwWithoutHatara = courierDeclarationQuery.CountNoOfCourierHawbwWithoutHatara(entityPM.Id, entityPM.Tenant).ToString();
             }
 
             //Task 44476 remove if in order to always create task - in case another field was changed but cfi don't has updated value
@@ -180,21 +189,19 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
             //            }
 
-            string declarations = "";
-            var declarationRepository = new DeclarationRepository(context);
-
-            var decs = declarationRepository.GetCourierConnectedDeclaratins(entityPM.Id, entityPM.Tenant);
-
-            if (decs.Count() > 0)
-            {
-                declarations = string.Join("','", decs.Select(x => x.Id));
-                declarations = "'" + declarations + "'";
-            }
-
 
             if (!this.CloseCourierMaster)
             {
+                string declarations = "";
+                var declarationRepository = new DeclarationRepository(context);
 
+                var decs = declarationRepository.GetCourierConnectedDeclaratins(entityPM.Id, entityPM.Tenant);
+
+                if (decs.Count() > 0)
+                {
+                    declarations = string.Join("','", decs.Select(x => x.Id));
+                    declarations = "'" + declarations + "'";
+                }
 
                 if (entityPM.IsCancelled == true && entityPOCO.IsCancelled != true)
                 {
@@ -743,51 +750,41 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     USRCODE = unifreightUser,
                     ARCHIVE = "F",
                 };
-                if (isConnectedToUniFreight)
+                if (!isConnectedToUniFreight)
                 {
-                    _AmitalContext = AmitalContext.GetContext(dirtyCourierMasterPM.Tenant);
-                    var myGGGQUpdateService = new GGGQUpdateService(_AmitalContext);
-                    myGGGQUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
-                    var myYCULTASKUpdateService = new YCULTASKUpdateService(_AmitalContext);
-                    myYCULTASKUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
-
-                    myYCULTASKUpdateService.Update(myYCULTASKPM, true);
-
-                    var myGGGQPM = new GGGQPM()
-                    {
-                        ChangeSetOp = ChangeSetOperation.Insert,
-                        ORIGINQUE = "LGT", //LugitudeRequest
-                        STATUS = "1",
-                        EXPTASKTIME = 5,
-                        EXECDATE = DateTime.Now,
-                        TRY = 9,
-                        PRIORITY = 8,
-                        ENTNAME = "MASTER",
-                        PRIMARYNUM = dirtyCourierMasterPM.Id,
-                        FORMID = "LGT_UPDATE_FCI",
-                        DEBUG = "F",
-                        DONEOPERATION = "D",
-                        //GSTRING1 = myYCULTASKPM.TASKID,
-                    };
-                    myGGGQUpdateService.Update(myGGGQPM, true);
+                    myYCULTASKPM.Tenant = dirtyCourierMasterPM.Tenant;
                 }
-                else
+                
+                _AmitalContext = AmitalContext.GetContext(dirtyCourierMasterPM.Tenant);
+                var myGGGQUpdateService = new GGGQUpdateService(_AmitalContext);
+                myGGGQUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
+                var myYCULTASKUpdateService = new YCULTASKUpdateService(_AmitalContext);
+                myYCULTASKUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
+
+                myYCULTASKUpdateService.Update(myYCULTASKPM, true);
+
+                var myGGGQPM = new GGGQPM()
                 {
-                    var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
-                    {
-                        Tenant = dirtyCourierMasterPM.Tenant,
-                        objectTableName = "Customs.CourierMaster",
-                        EventCode = null,
-                        notes = "",
-                        CommunicationLoggingEntityReference = dirtyCourierMasterPM.MAWB,
-                        EntityId = dirtyCourierMasterPM.Id,
-                        UserId = dirtyCourierMasterPM.CreatedByUserId,
-                        CommunicationSubject = "IIG_TASK",
-
-                    };
-                    var amitalInsertToQueueService = new AmitalInsertToQueueService<YCULTASKPM>(myYCULTASKPM);
-                    amitalInsertToQueueService.InsertToQueue(myAmitalEventTracerModel, "IIG_TASK");
+                    ChangeSetOp = ChangeSetOperation.Insert,
+                    ORIGINQUE = "LGT", //LugitudeRequest
+                    STATUS = "1",
+                    EXPTASKTIME = 5,
+                    EXECDATE = DateTime.Now,
+                    TRY = 9,
+                    PRIORITY = 8,
+                    ENTNAME = "MASTER",
+                    PRIMARYNUM = dirtyCourierMasterPM.Id,
+                    FORMID = "LGT_UPDATE_FCI",
+                    DEBUG = "F",
+                    DONEOPERATION = "D",
+                    //GSTRING1 = myYCULTASKPM.TASKID,
+                };
+                if (!isConnectedToUniFreight)
+                {
+                    myGGGQPM.Tenant = dirtyCourierMasterPM.Tenant;
                 }
+                myGGGQUpdateService.Update(myGGGQPM, true);
+                
                 if (scope != null)
                 {
                     scope.Complete();

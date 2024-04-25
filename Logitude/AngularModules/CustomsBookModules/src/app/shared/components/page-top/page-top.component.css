@@ -1,0 +1,211 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	-webkit-tap-highlight-color: transparent;
+}
+
+ul {
+	display: block;
+	list-style-type: disc;
+	margin: 0;
+	padding: 0;
+}
+
+.pageTop {
+	display: flex;
+	align-items: start;
+	justify-content: space-between;
+	flex-direction: column;
+	height: 152px;
+	background-color: white;
+	border-bottom: 1px solid var(--greyRO);
+	padding-top: 35px;
+	direction: rtl;
+}
+
+.pageSearch {
+	display: flex;
+	justify-content: end;
+	align-items: center;
+	flex-direction: row;
+	padding-top: 20px;
+	gap: 15px;
+}
+
+h1 {
+	text-align: right;
+	color: var(--blue);
+}
+
+.centeredContent {
+	display: flex;
+	justify-content: end;
+	flex-direction: column;
+	padding: 0 100px;
+}
+
+.pageSearch_toggle {
+	width: 260px;
+	height: 30px;
+	margin-left: 15px;
+	background-color: white;
+	border-radius: 15px;
+	box-shadow: 0px 0px 14px 0px rgba(0, 0, 0, 0.1);
+}
+
+.pageSearch_toggle ul {
+	display: flex;
+	width: 100%;
+	height: 100%;
+	border-radius: 15px;
+}
+
+ul,
+li {
+	list-style: none;
+}
+
+.pageSearch_toggle li {
+	width: 50%;
+	outline: none !important;
+}
+
+.pageSearch_toggle li label {
+	position: relative;
+	display: block;
+	width: 100%;
+	height: 100%;
+	cursor: pointer;
+	outline: none !important;
+}
+
+.pageSearch_toggle li label input {
+	position: absolute;
+	opacity: 0;
+	outline: none !important;
+}
+
+.pageSearch_toggle li label input:checked + span {
+	background-color: var(--blue);
+	color: white;
+	font-weight: 700;
+}
+
+.pageSearch_toggle li label span {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	height: 100%;
+	font-size: 14px;
+	outline: none !important;
+	transition: all 0.2s ease-in-out;
+}
+
+.pageSearch_toggle li label span.fst-btn {
+	border-radius: 0 15px 15px 0;
+}
+
+.pageSearch_toggle li label span.lst-btn {
+	border-radius: 15px 0 0 15px;
+}
+
+.pageSearch_toggle li label span:hover {
+	cursor: pointer;
+	box-shadow: 0px 0px 14px 5px rgba(0, 0, 0, 0.1);
+}
+
+.pageSearch_form {
+	width: 450px;
+	height: 30px;
+	background-color: white;
+	border-radius: 15px;
+	box-shadow: 0px 0px 14px 0px rgba(0, 0, 0, 0.1);
+}
+
+.pageSearch_form fieldset {
+	padding-left: 76px;
+	position: relative;
+	border-radius: 15px;
+}
+
+.pageSearch_form fieldset > div.pageSearch_formField.shown {
+	opacity: 1;
+}
+
+.pageSearch_form fieldset > div.pageSearch_formField {
+	transition: opacity 0.4s ease-in-out;
+	opacity: 0;
+}
+
+.pageSearch_form fieldset > div.pageSearch_formField input {
+	border: 1px solid transparent;
+	width: 100%;
+	height: 30px;
+	border-radius: 0 15px 15px 0;
+	padding-top: 2px;
+	font-size: 14px;
+	text-indent: 15px;
+}
+
+.pageSearch_form fieldset > button {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 76px;
+	height: 30px;
+	border: 0;
+	padding-top: 2px;
+	border-radius: 15px 0 0 15px;
+	background-color: var(--blue);
+	color: white;
+	font-weight: 700;
+	font-size: 14px;
+	transition: all 0.2s ease-in-out;
+
+	&:hover {
+		cursor: pointer;
+		box-shadow: 0px 0px 14px 5px rgba(0, 0, 0, 0.1);
+	}
+}
+
+button {
+	cursor: pointer;
+	font-family: 'Rubik', sans-serif;
+}
+
+fieldset {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	display: block;
+	width: 100%;
+}
+
+[type='checkbox'],
+[type='radio'] {
+	box-sizing: border-box;
+	padding: 0;
+}
+
+a,
+label,
+span,
+img,
+div,
+input,
+button,
+select,
+textarea,
+li {
+	outline: none !important;
+}
+
+.pageSearch_toggle li label {
+	position: relative;
+	display: block;
+	width: 100%;
+	height: 100%;
+	cursor: pointer;
+}

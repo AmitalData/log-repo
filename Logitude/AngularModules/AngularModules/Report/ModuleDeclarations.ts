@@ -99,6 +99,9 @@ import { ExcelReportTemplateComponent } from './Components/ExcelReportTemplateCo
 import { SpotRateQuoteReportFilterComponent } from './Components/FiltersComponent/Quote/SpotRate/SpotRateQuoteReportFilterComponent';
 import { ReportVariablesComponent } from './Components/ReportVariablesComponent';
 
+//Export Customs
+import { ExportDeclarationReportFilterComponent } from './Components/FiltersComponent/ExportCustoms/ExportDeclarationReportFilterComponent';
+
 export const Components =
     [
         MainReportsWorkspace,
@@ -183,6 +186,7 @@ export const Components =
         ARinvoiceSequencesReportFilterComponent,
         SpotRateQuoteReportFilterComponent,
         ControlInvoiceLinesReportFilterComponent
+        ExportDeclarationReportFilterComponent
 
     ];
 
@@ -274,6 +278,7 @@ export class ModuleDeclarations {
             case "ARinvoiceSequencesReportFilterComponent": { myResult = ARinvoiceSequencesReportFilterComponent; break; }
             case "SpotRateQuoteReportFilterComponent": { myResult = SpotRateQuoteReportFilterComponent; break; }
             case "ControlInvoiceLinesReportFilterComponent": { myResult = ControlInvoiceLinesReportFilterComponent; break; }
+            case "ExportDeclarationReportFilterComponent": { myResult = ExportDeclarationReportFilterComponent; break; }
 
         }
 

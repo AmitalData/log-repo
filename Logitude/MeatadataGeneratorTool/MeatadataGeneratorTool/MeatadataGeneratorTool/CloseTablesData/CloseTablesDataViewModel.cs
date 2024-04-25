@@ -188,7 +188,15 @@ namespace MeatadataGeneratorTool.CloseTablesData
                 }
 
                 Row newDataRow = new Row();
-                if (ViewModel.FieldsDictionary.Count < ViewModel.CLoseTableDataGrid.Columns.Count)
+
+
+                bool codeExists = ViewModel.rows.Any(row => row._data.TryGetValue("Code", out object codeValue) && codeValue?.ToString() == ViewModel.FieldsDictionary["Code"].ToString());
+                if (codeExists)
+                {
+                    ErrorMessages = "Code Already Exist";
+                }
+
+                else if (ViewModel.FieldsDictionary.Count < ViewModel.CLoseTableDataGrid.Columns.Count)
                 {
                     ErrorMessages = "All Fields Are Required";
                 }

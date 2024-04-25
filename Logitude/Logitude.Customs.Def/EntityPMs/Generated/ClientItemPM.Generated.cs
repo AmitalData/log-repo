@@ -111,9 +111,7 @@ namespace Logitude.Customs.Def.EntityPMs
 		 }
 	   }
 	  private string itemCode ;
-	  
-       [Key]
-	  
+	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]

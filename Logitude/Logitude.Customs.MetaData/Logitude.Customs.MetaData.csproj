@@ -126,6 +126,7 @@
     <None Include="DBScripts\Post\202310101100_AddCustomsEnvSettings.sxml" />
     <None Include="DBScripts\Post\202310031714_DeleteDeclarationStatusFieldC.sxml" />
     <None Include="DBScripts\Post\202308060942_AddINTERFACETENANTDEFINITIONS.sxml" />
+    <None Include="DBScripts\Post\202414041313_AddClientItemsSearchFields.sxml" />
     <None Include="DBScripts\Post\202208281500_UpdateLoadingOfDeclaration.sxml" />
     <None Include="DBOthers\Procedures\ReconnectObjectMetaDataProcedure.dxml" />
     <None Include="DBScripts\Post\202005210123_DeleteMetadataBadRecords.sxml" />
@@ -579,6 +580,7 @@
     <None Include="DBTables\RegularityRequirementWarning.dxml" />
     <None Include="DBTables\RegularitySource.dxml" />
     <None Include="DBTables\ReleaseMessageType.dxml" />
+    <None Include="DBTables\RemarksClassification.dxml" />
     <None Include="DBTables\RenewalMethod.dxml" />
     <None Include="DBTables\RequestReasonCodeEnum.dxml" />
     <None Include="DBTables\RequestStatus.dxml" />
@@ -707,6 +709,7 @@
     <None Include="EntityFiles\ChangeType.lxml" />
     <None Include="EntityFiles\EntryExitType.lxml" />
     <None Include="EntityFiles\CB_RuleDetailsHistory.lxml" />
+    <None Include="EntityFiles\RemarksClassification.lxml" />
     <None Include="EntityFiles\TradeAgreementDetailsHistory_777.lxml" />
     <None Include="EntityFiles\TradeLevyStatus.lxml" />
     <None Include="EntityFiles\RegularityPublication.lxml" />

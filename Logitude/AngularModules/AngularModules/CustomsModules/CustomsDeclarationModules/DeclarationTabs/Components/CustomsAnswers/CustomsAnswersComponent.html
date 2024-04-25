@@ -394,7 +394,7 @@
 
                                 <ul class="ConstraintList">
                                     
-                                    <li *ngFor="let constraint of ConstraintsList" [class.Selected]="SelectedConstraint?.ConstraintId == constraint.ConstraintId">
+                                    <li *ngFor="let constraint of ConstraintsList" [class.Selected]="SelectedConstraint?.ConstraintId == constraint.ConstraintId && constraint.ConstraintId">
                                         <!-- Status-->
                                         <div class="ListItem-right">
                                             <a (click)="constraint.ViewConstraintDetails()" *ngIf="constraint.IsStatusHyperlinkVisibile" style="display: block;" href="#">{{constraint.ConstraintStatus}}</a>

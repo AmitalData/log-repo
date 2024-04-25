@@ -641,17 +641,18 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             bool toUpdateClassification = false;
             string defaultClassificationCode = null;
             string defaultClassificationCodeUnit = null;
+            bool isInvoiceItemInsertNullClassification = (from a in entityPM.SupplierInvoiceItems
+                                                          where a.ChangeSetOp == ChangeSetOperation.Insert && a.ClassificationCode is null
+                                                          select a).Any();
             //if ((entityPM.ChangeSetOp == ChangeSetOperation.Insert || (entityPM.ChangeSetOp == ChangeSetOperation.Update && IsProcedureCurrentCodeChanged)) && declarationPM.IsCourierDeclaration && entityPM.InvoiceAmountInUSD <= 1000 && (declarationPM.ProcedureCurrentCode == "4000512" || declarationPM.ProcedureCurrentCode == "4000507"))
             LogMessagingUtil.Instance.AppendLine($"ChangeSetOp{entityPM.ChangeSetOp} IsProcedureCurrentCodeChanged{IsProcedureCurrentCodeChanged} ProcedureCurrentCode{defaultDeclarationPM.ProcedureCurrentCode}");
-            if ((entityPM.ChangeSetOp == ChangeSetOperation.Insert || (entityPM.ChangeSetOp == ChangeSetOperation.Update && IsProcedureCurrentCodeChanged)) && defaultDeclarationPM.IsCourierDeclaration && entityPM.InvoiceAmountInUSD <= 1000 && (defaultDeclarationPM.ProcedureCurrentCode == "4000512" || defaultDeclarationPM.ProcedureCurrentCode == "4000507"))
+            if ((entityPM.ChangeSetOp == ChangeSetOperation.Insert || (entityPM.ChangeSetOp == ChangeSetOperation.Update && isInvoiceItemInsertNullClassification || IsProcedureCurrentCodeChanged)) && defaultDeclarationPM.IsCourierDeclaration && entityPM.InvoiceAmountInUSD <= 1000 && (defaultDeclarationPM.ProcedureCurrentCode == "4000512" || defaultDeclarationPM.ProcedureCurrentCode == "4000507"))
              {
                 try
                 {
                     using (_AmitalContext = AmitalContext.GetContext(entityPM.Tenant))
                     {
-                        bool isInvoiceItemInsertNullClassification = (from a in entityPM.SupplierInvoiceItems
-                                                                      where a.ChangeSetOp == ChangeSetOperation.Insert && a.ClassificationCode is null
-                                                                      select a).Any();
+                        
                         if (isInvoiceItemInsertNullClassification || IsProcedureCurrentCodeChanged)
                         {
                             string IntegratorCode = null;
@@ -1501,8 +1502,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         myCCUQUELOCKUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
                         myCCUQUELOCKUpdateService.Update(myCCUQUELOCKPM, true);
                     }
-                if (isConnectedToUnifreight)
-                {
+                
                     transmission mytransmission = GetTransmission(entityPM.GTBITEMsToUpdate, "AMITAL", "GTBITEMs from logitude");
                     var xmltransmission = XmlGenericUtil<transmission>.SerializeObject(mytransmission, true);
                     requestData = xmltransmission;
@@ -1525,47 +1525,34 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     };
 
                     myGGGQUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
-
+                    if (!isConnectedToUnifreight)
+                    {
+                        myGGGQPM.Tenant = myDeclarationPM.Tenant;
+                    }
                     myGGGQUpdateService.Update(myGGGQPM, true);
-                }
+                
 
-                var myYCULTASKPM = new Unifreight.BL.EntityPMs.YCULTASKPM()
-                {
-                    ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
-                    STATUS = "W",
-                    REQUESTDATA = requestData,
-                    ENTNAME = "CFIFILEM",
-                    PRIMARYNUM = myDeclarationPM.CustomFileNo,
-                    PRIORITY = Unifreight.BL.EntityPMs.YCULTASKPM.calcPriority("L2U"),
-                    TYPE = "LI2U",
-                    USRCODE = unifreightUser,
-                    ARCHIVE = "F"
-                };
-                if (isConnectedToUnifreight)
-                {
+                    var myYCULTASKPM = new Unifreight.BL.EntityPMs.YCULTASKPM()
+                    {
+                        ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
+                        STATUS = "W",
+                        REQUESTDATA = requestData,
+                        ENTNAME = "CFIFILEM",
+                        PRIMARYNUM = myDeclarationPM.CustomFileNo,
+                        PRIORITY = Unifreight.BL.EntityPMs.YCULTASKPM.calcPriority("L2U"),
+                        TYPE = "LI2U",
+                        USRCODE = unifreightUser,
+                        ARCHIVE = "F"
+                    };
+                    if (!isConnectedToUnifreight)
+                    {
+                        myYCULTASKPM.Tenant = myDeclarationPM.Tenant;
+                    }
                     var myYCULTASKUpdateService = new Unifreight.BL.EntityUpdateServices.YCULTASKUpdateService(_AmitalContext);
                     myYCULTASKUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
                     myYCULTASKUpdateService.Update(myYCULTASKPM, true);
-                }
-                else {
-
-                    var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
-                    {
-
-                        Tenant = entityPM.Tenant,
-                        objectTableName = "Customs.Declaration",
-                        EventCode = null,
-                        notes = "",
-                        CommunicationLoggingEntityReference = null,
-                        EntityId = entityPM.DeclarationId,
-                        UserId = unifreightUser,
-
-                        CommunicationSubject = "IIG_TASK",
-
-                    };
-                    var amitalInsertToQueueService = new AmitalInsertToQueueService<Unifreight.BL.EntityPMs.YCULTASKPM>(myYCULTASKPM);
-                    amitalInsertToQueueService.InsertToQueue(myAmitalEventTracerModel, "IIG_TASK");
-                }
+                    
+                
 
                 if (scope != null)
                 {

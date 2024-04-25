@@ -1080,6 +1080,13 @@ export class TenantManagementPM {
     public get AmitalApiAddress() { return this.amitalApiAddress; }
     public set AmitalApiAddress(newValue: string) { if (this.amitalApiAddress != newValue) { this.amitalApiAddress = newValue; this.MarkAsDirty("AmitalApiAddress"); } }
        
+	 
+    private amitalApiToken: string;
+    public get AmitalApiToken() { return this.amitalApiToken; }
+    public set AmitalApiToken(newValue: string) { if (this.amitalApiToken != newValue) { this.amitalApiToken = newValue; this.MarkAsDirty("AmitalApiToken"); } }
+       
+
+       
 
     public OldEntityPM: TenantManagementPM;
 		

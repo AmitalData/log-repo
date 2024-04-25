@@ -41,6 +41,10 @@ namespace Logitude.Customs.BL.EntityQueryServices
             {
                 return null;
             }
+
+            // fix the teudat zeut length
+            code = code.PadLeft(9, '0');
+
             string id = repository.GetIdByCode(tenant, code);
 
             if (string.IsNullOrWhiteSpace(id) && insertIfNotFount == true)

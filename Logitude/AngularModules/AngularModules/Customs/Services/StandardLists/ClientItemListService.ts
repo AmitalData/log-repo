@@ -32,12 +32,12 @@ export class ClientItemListService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/clientitemviews';  
     }
 
-	getSingle(itemcode: string, clientcode: string, id: string) {
+	getSingle(clientcode: string, id: string) {
 	   
 		var callTime = new Date();
 
 		return defer(() => {
-			return this._http.get(this._apiUrl + '/getsingle/?' + 'itemcode=' + itemcode+'&'+'clientcode=' + clientcode+'&'+'id=' + id, ServiceHelper.GetHttpFullHeaders())
+			return this._http.get(this._apiUrl + '/getsingle/?' + 'clientcode=' + clientcode+'&'+'id=' + id, ServiceHelper.GetHttpFullHeaders())
 				.pipe(			
 					map((response: HttpResponse<any>) => {
 
@@ -52,7 +52,7 @@ export class ClientItemListService {
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ClientItem", "GetSingleList", 'itemcode=' + itemcode+'&'+'clientcode=' + clientcode+'&'+'id=' + id); 
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ClientItem", "GetSingleList", 'clientcode=' + clientcode+'&'+'id=' + id); 
 
 						return serviceResponse;
 					}),

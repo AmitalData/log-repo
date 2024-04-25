@@ -237,60 +237,37 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         USRCODE = unifreightUser,
                         ARCHIVE = "F",
                     };
-                    if (isConnectedToUniFreight)
+                    if (!isConnectedToUniFreight)
                     {
-
-
-                        var myYCULTASKUpdateService = new Unifreight.BL.EntityUpdateServices.YCULTASKUpdateService(_AmitalContext);
-                        myYCULTASKUpdateService.DontAddTransaction = true;
-                        myYCULTASKUpdateService.Update(myYCULTASKPM, true);
-
-
+                        myYCULTASKPM.Tenant = dirtyDeclarationPM.Tenant;
                     }
-                    else
+                    var myYCULTASKUpdateService = new Unifreight.BL.EntityUpdateServices.YCULTASKUpdateService(_AmitalContext);
+                    myYCULTASKUpdateService.DontAddTransaction = true;
+                    myYCULTASKUpdateService.Update(myYCULTASKPM, true);
+
+                    var myGGGQPM = new GGGQPM()
                     {
-                        var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
-                        {
-
-                            Tenant = dirtyDeclarationPM.Tenant,
-                            objectTableName = "Customs.Declaration",
-                            EventCode = null,
-                            notes = "",
-                            CommunicationLoggingEntityReference = dirtyDeclarationPM.DeclarationNumber,
-                            EntityId = dirtyDeclarationPM.Id,
-                            UserId = dirtyDeclarationPM.CreatedByUserId,
-
-                            CommunicationSubject = "IIG_TASK",
-
-                        };
-                        var amitalInsertToQueueService = new AmitalInsertToQueueService<YCULTASKPM>(myYCULTASKPM);
-                        amitalInsertToQueueService.InsertToQueue(myAmitalEventTracerModel, "IIG_TASK");
-                    }
-
-
-                    if (isConnectedToUniFreight)
+                         ChangeSetOp = ChangeSetOperation.Insert,
+                         ORIGINQUE = "LGT",
+                         STATUS = "1",
+                         EXPTASKTIME = 5,
+                         EXECDATE = DateTime.Now,
+                         TRY = 9,
+                         PRIORITY = 8,
+                         ENTNAME = "CFIFILEM",
+                         PRIMARYNUM = dirtyDeclarationPM.CustomFileNo,
+                         FORMID = "LGT_UPDATE_FCI",
+                         DEBUG = "F",
+                         DONEOPERATION = "D",
+                    };
+                    if (!isConnectedToUniFreight)
                     {
-
-                        var myGGGQPM = new GGGQPM()
-                        {
-                            ChangeSetOp = ChangeSetOperation.Insert,
-                            ORIGINQUE = "LGT",
-                            STATUS = "1",
-                            EXPTASKTIME = 5,
-                        EXECDATE = DateTime.Now,
-                            TRY = 9,
-                            PRIORITY = 8,
-                            ENTNAME = "CFIFILEM",
-                            PRIMARYNUM = dirtyDeclarationPM.CustomFileNo,
-                            FORMID = "LGT_UPDATE_FCI",
-                            DEBUG = "F",
-                            DONEOPERATION = "D",
-                        };
-                        var myGGGQUpdateService = new Unifreight.BL.EntityUpdateServices.GGGQUpdateService(_AmitalContext);
-                        myGGGQUpdateService.DontAddTransaction = true;
-                        myGGGQUpdateService.Update(myGGGQPM, true);
-
+                        myGGGQPM.Tenant = dirtyDeclarationPM.Tenant;
                     }
+                    var myGGGQUpdateService = new Unifreight.BL.EntityUpdateServices.GGGQUpdateService(_AmitalContext);
+                    myGGGQUpdateService.DontAddTransaction = true;
+                    myGGGQUpdateService.Update(myGGGQPM, true);
+
 
                     if (scope != null)
                     {

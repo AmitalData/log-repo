@@ -1,26 +1,49 @@
-.client-data-field {
-    display: flex; 
-    flex-wrap: wrap; 
+.form-data-field {
+    display: flex;
+    flex-wrap: wrap;
     justify-content: space-evenly;
     justify-content: flex-end;
+    margin: 15px 0;
 
+    .form-data-field-field {
+        flex: 0 0 390px;
+        height: 40px;
+        line-height: 2;
+        direction: ltr;
+        display: flex;
+
+        >* {
+            display: inline-block;
+            align-content: center;
+        }
+
+        LogLabel {
+            width: 90px;
+        }
+
+        LogTextBox,
+        LogDatePicker,
+        div {
+            width: 300px
+        }
+
+        select {
+            width: 262px;
+            height: 22px;
+            box-shadow: inset 0 0 3px #AAAAAA;
+        }
+    }
+
+    .form-data-field-field .error {
+        border: 1px solid red !important;
+    }
 }
 
-.client-data-field div {
-    flex: 0 0 240px; 
-    height: 40px; 
-    line-height: 2;
-    direction: ltr;
+.error-field {
+    border: 1px solid red !important;
 }
 
-.client-data-field div > * {
-    display: inline-block;
-}
-
-.client-data-field div LogLabel {
-    width:90px;
-}
-
-.client-data-field div LogTextBox {
-    width:300px
+.error-message {
+    color: red !important;
+    text-align: center;
 }

@@ -130,7 +130,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                     var declarationCounter =  declarationCounterQueryService.GetSingleByCustomFileNo(_LogitudeCommDecFile.CustomFileNo, _tenant);
                     if(declarationCounter == null)
                     {
-                        DeclarationCounterPM newDeclarationCounter = new DeclarationCounterPM
+                        DeclarationCounterPM newDeclarationCounter = new DeclarationCounterPM()
                         {
                             Tenant = _tenant,
                             CustomFileNo = _LogitudeCommDecFile.CustomFileNo,
@@ -139,8 +139,8 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                         };
                         MyGenericResponseObj.ApplicationId = newDeclarationCounter.DeclarationId;
                         MyCommunicationsParams.LoggingEntityId = MyGenericResponseObj.ApplicationId;
-
-                        DeclarationCounterUpdateService decCounter = new DeclarationCounterUpdateService(_tenant);
+                        _context = CustomContext.GetContext(_tenant);
+                        DeclarationCounterUpdateService decCounter = new DeclarationCounterUpdateService(_context, new Dictionary<string, IContext>(), _tenant); 
                         decCounter.Update(newDeclarationCounter, true);
                     }
                   

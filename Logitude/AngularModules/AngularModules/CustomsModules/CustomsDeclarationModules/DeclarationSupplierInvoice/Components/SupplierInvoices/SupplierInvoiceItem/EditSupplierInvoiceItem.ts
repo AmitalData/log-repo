@@ -430,9 +430,25 @@ export class EditSupplierInvoiceItem extends BaseComponent {
 
     public get TransactionNatureCode() { return this.OriginalItemPM ? this.OriginalItemPM.TransactionNatureCode : null; }
     public set TransactionNatureCode(newValue: string) {
+        
+        if (this.OriginalItemPM.TransactionNatureCode != newValue) {
 
-        this.OriginalItemPM.TransactionNatureCode = newValue;
-    }
+            this.OriginalItemPM.TransactionNatureCode = newValue;
+            let hasOcr = FeatureLocator.HasFeaturePermession("Customs.Declaration", "OCR");
+            if(this.OriginalItemPM.EntityParentPM.supplierInvoicePayments.length == 1 && this.OriginalItemPM.EntityParentPM.supplierInvoicePayments[0].paymentAmount != null && hasOcr && this.CurrentSession.CurrentEditComponent.EntityPM.Direction == "E"){
+                let sum = 0;
+                
+                sum = this.OriginalItemPM.EntityParentPM.supplierInvoiceItems
+                .filter(item => item.TransactionNatureCode === "2")
+                .reduce((acc, item) => acc + item.ItemPrice, 0);
+               
+                this.OriginalItemPM.EntityParentPM.supplierInvoicePayments[0].paymentAmount = sum;
+                this.OriginalItemPM.EntityParentPM.supplierInvoicePayments[0].changeSetOp = "Update"
+            }
+            
+        }
+   }
+
 
     public get ClaimReasonCode() { return this.OriginalItemPM ? this.OriginalItemPM.ClaimReasonCode : null; }
     public set ClaimReasonCode(newValue: string) {
