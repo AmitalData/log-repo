@@ -185,7 +185,7 @@ export const Components =
         PerVendorReportFilterComponent,
         ARinvoiceSequencesReportFilterComponent,
         SpotRateQuoteReportFilterComponent,
-        ControlInvoiceLinesReportFilterComponent
+        ControlInvoiceLinesReportFilterComponent,
         ExportDeclarationReportFilterComponent
 
     ];
