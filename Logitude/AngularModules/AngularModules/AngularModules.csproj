@@ -4929,6 +4929,7 @@
     <TypeScriptCompile Include="Common\Components\Maintenance\VatType\VatTypePercentagesTabComponent.ts" />
     <TypeScriptCompile Include="Common\Components\Maintenance\Vessel\VesselGeneralTabComponent.ts" />
     <TypeScriptCompile Include="Common\Components\MenuButtons\CustomerTenantAccessMenuButtonsHandler.ts" />
+    <TypeScriptCompile Include="Common\Components\MenuButtons\Components\MenuButtons\ReportExecutionLogMenuButtonsHandler.ts" />;
     <TypeScriptCompile Include="InfrastructureModules\InfrastructureOthers\Components\MoveType\NewMoveTypeComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonAirline\Components\AddEdit\AddEditAirlineAdaptationItemComponent.ts" />
     <TypeScriptCompile Include="CommonModules\CommonAirline\Components\AddEdit\AddEditAirlineMessagingRuleComponent.ts" />

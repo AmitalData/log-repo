@@ -1,12 +1,12 @@
-import {ReportExecutionLogPM} from '../../EntityPMs/ReportExecutionLogPM'
-import {MenuButtonPM} from '../../../Infrastructure/EntityPMs/MenuButtonPM'
-import {ConfirmWindow} from '../../../Controls/Windows/ConfirmWindow'
-import {MessageWindow} from '../../../Controls/Windows/MessageWindow'
-import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
-import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
-import {PasswordChangeService} from '../../Services/Others/PasswordChangeService';
-import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
-import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
+import { ReportExecutionLogPM } from '../../EntityPMs/ReportExecutionLogPM'
+import { MenuButtonPM } from '../../../Infrastructure/EntityPMs/MenuButtonPM'
+import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow'
+import { MessageWindow } from '../../../Controls/Windows/MessageWindow'
+import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
+import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
+import { PasswordChangeService } from '../../Services/Others/PasswordChangeService';
+import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
+import { EntityArgs } from '../../../Infrastructure/DataContracts/EntityArgs';
 import { ReportExecutionLogPMService } from 'Common/Services/StandardPMs/ReportExecutionLogPMService';
 
 export class ReportExecutionLogMenuButtonsHandler {
@@ -25,7 +25,7 @@ export class ReportExecutionLogMenuButtonsHandler {
                 menuButtons.forEach(menuButton => {
                     switch (menuButton.EventCode) {
                         case "Cancel": {
-                            if (this.EntityPM.StatusCode != "P" && this.EntityPM.StatusCode != "W" ) {
+                            if (this.EntityPM.StatusCode != "P" && this.EntityPM.StatusCode != "W") {
                                 menuButton.IsDisabled = true;
                             }
                             break;
@@ -53,8 +53,15 @@ export class ReportExecutionLogMenuButtonsHandler {
 
     CancelButtonClcik() {
         this.CurrentSession.StartBusyIndicator("Canceling...");
-        this.ReportExecutionLogPMService.Cancel(this.EntityPM.Id).subscribe((res:any) => {
-            this.CurrentSession.StopBusyIndicator();
+        this.ReportExecutionLogPMService.Cancel(this.EntityPM.Id).subscribe((res: any) => {
+            if (!res.HasError) {
+                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                this.CurrentSession.StopBusyIndicator();
+            }
+            else {
+                this.CurrentSession.StopBusyIndicator();
+                this.CurrentSession.CurrentEditComponent.ValidationErrorsList = res.ErrorsArray;
+            }
         });
     }
 }
