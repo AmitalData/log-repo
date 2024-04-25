@@ -19097,7 +19097,7 @@
     <TextCode
       Code="&quot;GLAccount.O.BalanceInHebrew&quot;"
       DefaultText="&quot;Balance&quot;"
-      LocalDefaultText="&quot;יתרה לפי&quot;"
+      LocalDefaultText="&quot;יתרה לפי יתרה לגביה בשח&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
