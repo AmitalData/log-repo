@@ -22,6 +22,7 @@ import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator
 import { GenericRequestParams } from 'Customs/DataContract/RequestParams/GenericRequestParams';
 import { List } from 'cypress/types/lodash';
 import { CustomsRequestsSheetPM } from 'Customs/EntityPMs/CustomsRequestsSheetPM';
+import { LogtuideTableDataService } from 'Infrastructure/Services/logtuide-table-data.service';
 
 
 @Injectable()
@@ -734,7 +735,7 @@ export class CourierMasterService {
             { headers: ServiceHelper.GetHttpHeaders().headers }
         );
 
-        return null;// LogtuideTableDataService.createInstance().sendAjaxAndGetDataStandart(ajax);
+        return  LogtuideTableDataService.createInstance().sendAjaxAndGetDataStandart(ajax);
     }
     PostApprovePending(requestParams: PendingRequestParams) {
 

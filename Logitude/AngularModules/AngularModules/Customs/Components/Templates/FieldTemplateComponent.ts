@@ -29,6 +29,7 @@ import { ServersNameExtendedPMService } from 'Customs/Services/ExtendedPMs/Serve
 import { CustomsRequestsSheetList } from 'Customs/EntityLists/CustomsRequestsSheetList';
 import { CommunicationLogList } from 'Common/EntityLists/CommunicationLogList';
 import { ConfirmationNumberTokenLogList } from 'Customs/EntityLists/ConfirmationNumberTokenLogList';
+import { LogtuideTableDataService } from 'Infrastructure/Services/logtuide-table-data.service';
 @Component({
 
     templateUrl: './FieldTemplateComponent.html',
@@ -61,7 +62,7 @@ export class FieldTemplateComponent {
         private entityResourceService: EntityResourceService,
         private _physicalChecksCloseSharedDataService: PhysicalChecksCloseSharedDataService,
         private _logisticActionRequestsCloseSharedDataService: LogisticActionRequestsCloseSharedDataService,
-        //private logtuideTableDataService: LogtuideTableDataService,
+        private logtuideTableDataService: LogtuideTableDataService,
         private pendingByKeywordWebService: PendingByKeywordWebService,
     ) {
         if (SessionLocator.SelectedSession.CurrentListComponent != null) {
@@ -892,9 +893,9 @@ export class FieldTemplateComponent {
         
         SessionLocator.SelectedSession.StartBusyIndicator('')
 
-        // const declarationPM = await this.logtuideTableDataService.getDataFromService(this.declarationPMService.get(this.Entity.DeclarationId));
-        // declarationPM.RequestedCustomsDocId = 0;
-        // await this.logtuideTableDataService.getDataFromService(this.declarationPMService.update(declarationPM));
+        const declarationPM = await this.logtuideTableDataService.getDataFromService(this.declarationPMService.get(this.Entity.DeclarationId));
+        declarationPM.RequestedCustomsDocId = 0;
+        await this.logtuideTableDataService.getDataFromService(this.declarationPMService.update(declarationPM));
 
         SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
         

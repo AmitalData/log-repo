@@ -2,6 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { CustomsCollateralPM } from "Customs/EntityPMs/CustomsCollateralPM";
 import { CustomsCollateralsAnswerPM } from "Customs/EntityPMs/CustomsCollateralsAnswerPM";
+import { LogtuideTableDataService } from "Infrastructure/Services/logtuide-table-data.service";
 import { ServiceHelper } from "Infrastructure/Utilities/ServiceHelper";
 //import { LogtuideTableDataService } from "QuoteOPM/Components/NewEntity/components/autocomplate-table/logtuide-table-data.service";
 import { Observable } from "rxjs";
@@ -10,7 +11,7 @@ import { Observable } from "rxjs";
 export class CustomsCollateralWebService {
     private _http: HttpClient;
     private _apiUrl: string;
-   // private logtuideTableDataService: LogtuideTableDataService = LogtuideTableDataService.createInstance();
+    private logtuideTableDataService: LogtuideTableDataService = LogtuideTableDataService.createInstance();
 
     constructor() {
         this._http = ServiceHelper.HttpClient;
@@ -32,7 +33,7 @@ export class CustomsCollateralWebService {
             }
         );
 
-        return null;// this.logtuideTableDataService.sendAjaxAndGetDataStandart(ajax) as Promise<CustomsCollateralPM[]>;
+        return  this.logtuideTableDataService.sendAjaxAndGetDataStandart(ajax) as Promise<CustomsCollateralPM[]>;
     }
 }
 

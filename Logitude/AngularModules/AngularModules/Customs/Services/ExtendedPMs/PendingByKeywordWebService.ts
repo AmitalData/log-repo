@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { LogtuideTableDataService } from "Infrastructure/Services/logtuide-table-data.service";
 import { ServiceHelper } from "Infrastructure/Utilities/ServiceHelper";
 // import { LogtuideTableDataService } from "QuoteOPM/Components/NewEntity/components/autocomplate-table/logtuide-table-data.service";
 import { Observable } from "rxjs";
@@ -12,7 +13,7 @@ export class PendingByKeywordWebService {
 
 
     constructor(
-       // private logtuideTableDataService: LogtuideTableDataService,
+        private logtuideTableDataService: LogtuideTableDataService,
     ) { }
 
 
@@ -25,6 +26,6 @@ export class PendingByKeywordWebService {
             }
         )
 
-        return null;// this.logtuideTableDataService.sendAjaxAndGetDataStandart(ajax);
+        return this.logtuideTableDataService.sendAjaxAndGetDataStandart(ajax);
     }
 }

@@ -33,6 +33,7 @@ import { SuppInvoiceItemsAbachStatementPM } from '../../../../../../Customs/Enti
 import { CustomsRequiredFieldExtendedListService } from '../../../../../../Customs/Services/ExtendedLists/CustomsRequiredFieldExtendedListService';
 // import { customsItemsService } from 'QuoteOPM/Utilities/customsItems.service';
 import { SupplierInvoiceSharedService } from '../Services/SupplierInvoiceSharedService';
+import { customsItemsService } from 'Customs/Services/WebServices/customsItems.service';
 
 
 @Component({
@@ -106,7 +107,7 @@ export class EditSupplierInvoiceItem extends BaseComponent {
             this.CustomsItem = this.OriginalItemPM.TaxExemptCode;
 
             this.FillGridsData(); // copy  grids data from entity PM to ItemSource arrays
-            this.taxExemptCodeTypesFilter = null;// customsItemsService.initTaxExemptCodeTypesFilter(args.allowExport);
+            this.taxExemptCodeTypesFilter =   customsItemsService.initTaxExemptCodeTypesFilter(args.allowExport);
 
             if (this.IsDisplayOnly) {
                 this.SetScreenFieldsEditability();

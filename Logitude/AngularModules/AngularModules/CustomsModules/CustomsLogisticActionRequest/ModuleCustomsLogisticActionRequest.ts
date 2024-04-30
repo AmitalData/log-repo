@@ -7,12 +7,13 @@ import { ModuleCustomsControls } from '../CustomsControls/ModuleCustomsControls'
 import { LogisticActionRequestPMService } from 'Customs/Services/StandardPMs/LogisticActionRequestPMService';
 import { LogisticActionRequestWebService } from 'Customs/Services/WebServices/LogisticActionRequestWebService';
 import { loggerService } from 'Infrastructure/Utilities/logger.service';
+import { LogtuideTableDataService } from 'Infrastructure/Services/logtuide-table-data.service';
 @NgModule({
   imports: [InfrastructureModule, ModuleCustomsControls],
   exports: [...Components, ModuleCustomsControls],
   declarations: [...Components],
   providers: [
-    // LogtuideTableDataService,
+   LogtuideTableDataService,
     LogisticActionRequestPMService,
     LogisticActionRequestWebService,
     loggerService,

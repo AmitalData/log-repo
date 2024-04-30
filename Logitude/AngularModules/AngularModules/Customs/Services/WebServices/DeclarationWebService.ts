@@ -39,6 +39,7 @@ import { EntityListService } from 'Infrastructure/Services/EntityListService';
 import { ConsignmentPM } from 'Customs/EntityPMs/ConsignmentPM';
 import { DeclarationPM } from 'Customs/EntityPMs/DeclarationPM';
 import { ContainerizationPM } from 'Customs/EntityPMs/ContainerizationPM';
+import { LogtuideTableDataService } from 'Infrastructure/Services/logtuide-table-data.service';
 declare var window: any;
 
 @Injectable()
@@ -49,7 +50,7 @@ export class DeclarationWebService {
 
     _SupplierInvoicePMService: SupplierInvoicePMService = new SupplierInvoicePMService();
     _DeclarationPaymentPMService: DeclarationPaymentPMService = new DeclarationPaymentPMService();
-    // private logtuideTableDataService: LogtuideTableDataService = new LogtuideTableDataService(new EntityListService(), new EntityResourceService());
+     private logtuideTableDataService: LogtuideTableDataService = new LogtuideTableDataService(new EntityListService(), new EntityResourceService());
     
     constructor() {
         this._http = ServiceHelper.HttpClient;
@@ -2144,7 +2145,7 @@ export class DeclarationWebService {
         );
 
         // return this.logtuideTableDataService.sendAjaxAndGetDataStandart(ajax);
-        return null;// this.logtuideTableDataService.sendAjaxAndGetDataStandart(ajax);
+        return  this.logtuideTableDataService.sendAjaxAndGetDataStandart(ajax);
     }
 
 
@@ -2158,7 +2159,7 @@ export class DeclarationWebService {
         );
 
         // return this.logtuideTableDataService.sendAjaxAndGetDataStandart(ajax);
-        return null;// this.logtuideTableDataService.sendAjaxAndGetDataStandart(ajax);
+        return   this.logtuideTableDataService.sendAjaxAndGetDataStandart(ajax);
     }
 
 
@@ -2172,8 +2173,8 @@ export class DeclarationWebService {
             }
         );
 
-        // return this.logtuideTableDataService.sendAjaxAndGetDataStandart(ajax);
-        return null;// this.logtuideTableDataService.sendAjaxAndGetDataStandart(ajax);
+         return this.logtuideTableDataService.sendAjaxAndGetDataStandart(ajax);
+        
     }
 }
 

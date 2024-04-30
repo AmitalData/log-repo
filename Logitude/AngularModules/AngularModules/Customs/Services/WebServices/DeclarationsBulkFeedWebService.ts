@@ -7,6 +7,7 @@ import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceRe
 import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
 import { DeclarationList } from '../../EntityLists/DeclarationList';
 import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
+import { LogtuideTableDataService } from 'Infrastructure/Services/logtuide-table-data.service';
 // import { LogtuideTableDataService } from 'QuoteOPM/Components/NewEntity/components/autocomplate-table/logtuide-table-data.service';
 
 
@@ -14,13 +15,13 @@ import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
 export class DeclarationsBulkFeedWebService {
     private _http: HttpClient = ServiceHelper.HttpClient;
     private _apiUrl: string = ServiceHelper.GetLogitudeURL() + 'api/DeclarationsBulkFeedWebService/';
-   // private logtuideTableDataService: LogtuideTableDataService = LogtuideTableDataService.createInstance();
+     private logtuideTableDataService: LogtuideTableDataService = LogtuideTableDataService.createInstance();
 
     constructor() {}
 
     checkDeclarationsInDisplayOnly(declarationIdsList: string [], allWithoutdeclarationIdsList: string[], checkboxAll: boolean, filter: ApiQueryFilters) : Promise<any[]> {
         const ajax: Observable<any> = this._http.post(
-            this._apiUrl + "checkDeclarationsInDisplayOnly?" + '',//this.logtuideTableDataService.apiQueryFilterToQueryString(filter),
+            this._apiUrl + "checkDeclarationsInDisplayOnly?" + this.logtuideTableDataService.apiQueryFilterToQueryString(filter),
             {
                 declarationIdsList: declarationIdsList, 
                 allWithoutdeclarationIdsList: allWithoutdeclarationIdsList, 
@@ -31,6 +32,6 @@ export class DeclarationsBulkFeedWebService {
             }
         );
 
-        return  null ;//this.logtuideTableDataService.sendAjaxAndGetDataStandart(ajax) as Promise<any[]>;
+        return   this.logtuideTableDataService.sendAjaxAndGetDataStandart(ajax) as Promise<any[]>;
     }
 }

@@ -9,6 +9,7 @@ import { ServiceResponse } from "../../../Infrastructure/DataContracts/ServiceRe
 import { SessionInfo } from "../../../Infrastructure/Utilities/SessionInfo";
 import { SendMultiUpdateRequestParams } from "../../DataContract/RequestParams/SendMultiUpdateRequestParams";
 import { DataResult } from "../Others/CourierMasterService";
+import { LogtuideTableDataService } from "Infrastructure/Services/logtuide-table-data.service";
 
 @Injectable()
 export class PendingWebService {
@@ -17,7 +18,7 @@ export class PendingWebService {
 
 
     constructor(
-        // private logtuideTableDataService: LogtuideTableDataService,
+         private logtuideTableDataService: LogtuideTableDataService,
     ) {
         this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/PendingWebService';
@@ -46,7 +47,7 @@ export class PendingWebService {
         );
 
         // return this.logtuideTableDataService.sendAjaxAndGetDataStandart(ajax);
-        return null;// this.logtuideTableDataService.standartSendAjax(ajax);
+        return null; this.logtuideTableDataService.standartSendAjax(ajax);
     }
 
 
@@ -61,7 +62,7 @@ export class PendingWebService {
         isCreateInvoiceDocument: boolean) {
 
         const ajax: Observable<any> = this._http.post(
-            this._apiUrl + "/BulkFeeding?" +'',// this.logtuideTableDataService.apiQueryFilterToQueryString(customFilter),
+            this._apiUrl + "/BulkFeeding?" + this.logtuideTableDataService.apiQueryFilterToQueryString(customFilter),
             {
                 listPending: listPending,
                 listPendingRemark: listPendingRemark,
@@ -76,7 +77,7 @@ export class PendingWebService {
             }
         );
 
-        return null;// this.logtuideTableDataService.sendAjaxAndGetDataStandart(ajax) as Promise<any>;
+        return  this.logtuideTableDataService.sendAjaxAndGetDataStandart(ajax) as Promise<any>;
     }
 
     PostSendMultiUpdate(

@@ -4,6 +4,7 @@ import { Components, ModuleDeclarations } from './ModuleDeclarations';
 import { ModuleCustomsControls } from '../../CustomsControls/ModuleCustomsControls';
 // import { LogtuideTableDataService } from 'QuoteOPM/Components/NewEntity/components/autocomplate-table/logtuide-table-data.service';
 import { SupplierInvoiceSharedService } from './Components/SupplierInvoices/Services/SupplierInvoiceSharedService';
+import { LogtuideTableDataService } from 'Infrastructure/Services/logtuide-table-data.service';
 
 
 @NgModule({
@@ -12,7 +13,7 @@ import { SupplierInvoiceSharedService } from './Components/SupplierInvoices/Serv
   declarations: [...Components],
   entryComponents: [...Components],
   providers: [
-    // LogtuideTableDataService,
+     LogtuideTableDataService,
     SupplierInvoiceSharedService
   ]
 })

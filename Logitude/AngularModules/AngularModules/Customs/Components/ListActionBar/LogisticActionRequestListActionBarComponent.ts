@@ -7,6 +7,7 @@ import { LogisticActionRequestsCloseSharedDataService } from 'Customs/Services/D
 import { LogisticActionRequestWebService } from 'Customs/Services/WebServices/LogisticActionRequestWebService';
 // import { LogtuideTableDataService } from 'QuoteOPM/Components/NewEntity/components/autocomplate-table/logtuide-table-data.service';
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
+import { LogtuideTableDataService } from 'Infrastructure/Services/logtuide-table-data.service';
 
 
 @Component({
@@ -20,7 +21,7 @@ export class LogisticActionRequestListActionBarComponent
     private CurrentSession = SessionLocator.SelectedSession;
     public DataContext: LogisticActionRequestListActionBarComponent = this;
     public ObjectTableName: string = "Customs.LogisticActionRequest";
-    private _LogisticActionRequestWebService: LogisticActionRequestWebService = new LogisticActionRequestWebService();//(LogtuideTableDataService.createInstance());
+    private _LogisticActionRequestWebService: LogisticActionRequestWebService = new LogisticActionRequestWebService(LogtuideTableDataService.createInstance());
 
     constructor(
         public _LogisticActionRequestsCloseSharedDataService: LogisticActionRequestsCloseSharedDataService,

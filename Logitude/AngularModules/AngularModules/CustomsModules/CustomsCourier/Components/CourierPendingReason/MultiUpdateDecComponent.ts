@@ -17,6 +17,7 @@ import { combineLatest, forkJoin } from "rxjs";
 import { DeclarationsBulkFeedWebService } from "Customs/Services/WebServices/DeclarationsBulkFeedWebService";
 import { EntityArgs } from "Infrastructure/DataContracts/EntityArgs";
 import { LogitudeWindow } from "Controls/Windows/LogitudeWindow";
+import { customsItemsService } from "Customs/Services/WebServices/customsItems.service";
 
 @Component({
 
@@ -38,7 +39,7 @@ export class MultiUpdateDecComponent extends BaseComponent {
     CustomItemErrorMessage: string;
     private CurrentSession = SessionLocator.SelectedSession;
     _SupplierInvoiceService: SupplierInvoiceService = new SupplierInvoiceService();
-    taxExemptCodeTypesFilter: ApiQueryFilters = null;//  customsItemsService.initTaxExemptCodeTypesFilter(false);
+    taxExemptCodeTypesFilter: ApiQueryFilters =   customsItemsService.initTaxExemptCodeTypesFilter(false);
     
     constructor(private EntityResourceService: EntityResourceService, private cd: ChangeDetectorRef, private pendingWebService: PendingWebService) {
         super();

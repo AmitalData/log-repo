@@ -7,6 +7,7 @@ import { InfrastructureModule } from 'Infrastructure/Module_INFR';
 import { ModuleCustomsControls } from 'CustomsModules/CustomsControls/ModuleCustomsControls';
 import { FeedbackToStorageTabComponent } from './components/edit/FeedbackToStorageTabComponent/FeedbackToStorageTabComponent.component';
 import { Xml2jsonService } from 'Infrastructure/Services/xml2json/xml2json.service';
+import { LogtuideTableDataService } from 'Infrastructure/Services/logtuide-table-data.service';
 
 
 
@@ -31,7 +32,7 @@ import { Xml2jsonService } from 'Infrastructure/Services/xml2json/xml2json.servi
   ],
   providers: [
     ExportStoragePMService,
-    // LogtuideTableDataService,
+     LogtuideTableDataService,
     Xml2jsonService,
   ]
 })
