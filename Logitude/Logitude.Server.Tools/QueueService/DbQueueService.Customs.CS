@@ -454,7 +454,6 @@ namespace Logitude.Server.Tools.QueueService
                     {
                         using (OracleConnection DBConnection = new OracleConnection(context.Database.Connection.ConnectionString))
                         {
-                        LogTime("start ReceiveCustoms_new at : ");
 
                         OracleCommand cmd = new OracleCommand(DbContextBaseUtil.GetStoredProcedureName("Queue_Peek_List", LogitudeDBSchema.LOGITUDE_MAIN, DBConnection.ConnectionString), DBConnection);
                             try
@@ -492,14 +491,15 @@ namespace Logitude.Server.Tools.QueueService
                                 cmd.Parameters.Add(watingStatusPar);
                                 cmd.Parameters.Add(selectCountPar);
 
-                            LogTime("start Execute proc at : ");
+                            LogTime($"{QueueCode} start Execute proc at : ");
 
                             var ou = cmd.ExecuteNonQuery();
-                            LogTime("end Execute proc at : ");
-                            LogTime("start extract data returnd from proc at : ");
+                            LogTime($"{QueueCode} end Execute proc at : ");
 
                             if (vQueueMessages.Value != DBNull.Value)
                                 {
+                                    LogTime($"{QueueCode} start extract data returnd from proc at : ");
+
                                     OracleDataReader reader = ((OracleCursor)vQueueMessages.Value).GetDataReader();
                                     while (reader.Read())
                                     {
@@ -516,8 +516,8 @@ namespace Logitude.Server.Tools.QueueService
                                         }
                                         responseList.Add(response);
                                     }
-                                }
-                            LogTime("end extract data returnd from proc at : ");
+                                    LogTime($"{QueueCode} end extract data returnd: {responseList.Count} messages from proc at : ");
+                            }
                         }
                         catch (Exception ex)
                             {

@@ -226,7 +226,7 @@ namespace CustomsWorkerRole
                     case WorkerQueueType.DB:
                     default:
                         {
-                            if (Logitude.Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("DQN", 0)) 
+                            if (Logitude.Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("DQN", 0))
                             {
                                 WorkUntilQEmpty_Db_new();
                             }
@@ -612,7 +612,20 @@ namespace CustomsWorkerRole
         // islam db queue service
         void WorkUntilQEmpty_Db_new()
         {
-            LogTime("start all at : ");
+            LogTime(className + " start all at : ");
+
+            int number = Process.GetCurrentProcess().Threads.Count;
+            int workerThreads;
+            int portThreads;
+            LogTime($"Max threads: {number}");
+
+            ThreadPool.GetMaxThreads(out workerThreads, out portThreads);
+            LogTime($"Maximum worker threads: \t{workerThreads}\nMaximum completion port threads: {portThreads}");
+
+            ThreadPool.GetAvailableThreads(out workerThreads, out portThreads);
+            LogTime($"Available worker threads: \t{workerThreads}\nAvailable completion port threads: {portThreads}");
+
+
             List<CustomDBQueueMessage> responseList=null;
             List<long> deferredSequenceNumbers = new List<long>();
             bool proccesDone = false;
@@ -639,17 +652,18 @@ namespace CustomsWorkerRole
                                 {
 
                                     LogMessagingUtilWR.Instance.AppendLine("QRecive");
-                                    LogTime("start get data from DB at : ");
+                                    LogTime(className + " start get data from DB at : ");
                                     responseList = _CustomDbQueueService.Receive_new(CustomsWorkerRole.Utils.GenUtil.GetQueueTimeOutInMin() * 60);
-                                    LogTime("end get data from DB at : ");
+                                    LogTime(className + " end get data from DB at : ");
                                     LogMessagingUtilWR.Instance.AppendLine("QRecive:after");
 
                                     scopeRecive.Complete();
 
                                     // receivedMessage = _QueueClient.Receive(TimeSpan.FromSeconds(5)); //islam
                                 }
-                                catch (Exception)
+                                catch (Exception ex)
                                 {
+                                    LogTime(className + " exception: " + ex.Message);
                                     scopeRecive.Dispose();
                                     throw;
                                 }
@@ -657,6 +671,7 @@ namespace CustomsWorkerRole
 
                             if (responseList == null || (responseList != null && responseList.Count == 0))
                             {
+                                LogTime(className + " responseList empty, sleep and break : ");
                                 QueueThreadStateService.Upsert(QueueThreadStateService.GetWRKey(this.GetType().Name), "No Work");
                                 Thread.Sleep(TimeSpan.FromSeconds(CustomsWorkerRole.Utils.GenUtil.IfNoQueue_ServerWaitTimeInSec()));
 
@@ -670,24 +685,26 @@ namespace CustomsWorkerRole
                             LastActivity = DateTime.UtcNow;
                             proccesDone = true;
                             var taskLIst = new List<Task>();
-                            LogTime("start open tasks for returnd rows from Db at : ");
+                            LogTime(className + " start open tasks for returnd rows from Db at : ");
                             foreach (var item in responseList)
                             {
+                                LogTime(className + " create new task for msg id: " + item.MessageId + " at : ");
                                 var t =
                                 Task.Factory.StartNew(() =>
                                 {
-                                    LogTime("start task for row MessageId:" + item.MessageId + " at : ");
+                                    LogTime(className + " start task for row MessageId:" + item.MessageId + " at : ");
                                     CustomsCommandBaseHelper helper = new CustomsCommandBaseHelper();
                                     helper.RunTask(item, className);
                                     LogMessagingUtilWR.Instance.AppendLine("LogDoneItemInMemory();");
                                     LogDoneItemInMemory();
                                     LogMessagingUtilWR.Instance.AppendLine("LogDoneItemInMemory();AFTER");
-                                    LogTime("end task for row MessageId:" + item.MessageId + " at : ");
+                                    LogTime(className + " end task for row MessageId:" + item.MessageId + " at : ");
                                 });
                                 taskLIst.Add(t);
                             }
-                            LogTime("end open tasks for returnd rows from Db at : ");
+                            LogTime(className + " end open tasks for returnd rows from Db at : ");
                             Task.WaitAll(taskLIst.ToArray());
+                            LogTime(className + " end waiting for all of them at : ");
                             Queue_scope.Complete();
                         }
                     }
@@ -697,7 +714,7 @@ namespace CustomsWorkerRole
                     }
                 }
             }
-            LogTime("end all at : ");
+            LogTime(className + " end all at : ");
         }
         private void LogTime(string msg)
         {
