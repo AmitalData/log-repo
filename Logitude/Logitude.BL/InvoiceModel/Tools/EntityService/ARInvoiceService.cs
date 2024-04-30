@@ -513,6 +513,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 Invoice_Type = 305,
                 Vat_Number = int.Parse(entityPM.VatNumber),
                 Union_Vat_Number = ConsolidationVAT,
+                Invoice_Reference_Number = entityPM.InvoiceNumber,
                 Customer_VAT_Number = int.Parse(entityPM.VatNumber),
                 Customer_Name = entityPM.BillToLocalName,
                 Invoice_Date = entityPM.InvoiceDate?.ToString("yyyy-MM-dd"),
