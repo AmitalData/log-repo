@@ -491,7 +491,7 @@ namespace Logitude.Server.Tools.QueueService
                                 cmd.Parameters.Add(watingStatusPar);
                                 cmd.Parameters.Add(selectCountPar);
 
-                            LogTime($"{QueueCode} start Execute proc at : ");
+                            LogTime($"{QueueCode} start Execute proc ({watingStatusPar.Value}, {selectCountPar.Value}) at : ");
 
                             var ou = cmd.ExecuteNonQuery();
                             LogTime($"{QueueCode} end Execute proc at : ");

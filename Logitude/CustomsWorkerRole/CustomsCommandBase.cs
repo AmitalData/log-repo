@@ -617,13 +617,13 @@ namespace CustomsWorkerRole
             int number = Process.GetCurrentProcess().Threads.Count;
             int workerThreads;
             int portThreads;
-            LogTime($"Max threads: {number}");
+            LogTime($"Current threads: {number} at ");
 
             ThreadPool.GetMaxThreads(out workerThreads, out portThreads);
-            LogTime($"Maximum worker threads: \t{workerThreads}\nMaximum completion port threads: {portThreads}");
+            LogTime($"Maximum worker threads: \t{workerThreads} Maximum completion port threads: {portThreads} at ");
 
             ThreadPool.GetAvailableThreads(out workerThreads, out portThreads);
-            LogTime($"Available worker threads: \t{workerThreads}\nAvailable completion port threads: {portThreads}");
+            LogTime($"Available worker threads: \t{workerThreads} Available completion port threads: {portThreads} at ");
 
 
             List<CustomDBQueueMessage> responseList=null;
