@@ -399,23 +399,17 @@ export class APPaymentMenuButtonsHandler {
     private ApprovingLogic() {
         var message = "";
         var isValid = true;
-
+        this.entityArgs.EditComponent.ValidationErrorsList = [];
         var errors = this.customValidator.Validate(this.EntityPM);
         if (errors != null && errors.length > 0) {
             isValid = false;
         }
 
         if (isValid) {
-            this.entityArgs.EditComponent.ValidationErrorsList = [];
-
             this.GetFullAccountingSettingsAndApprove();
         }
 
         else {
-            if (this.entityArgs.EditComponent.ValidationErrorsList == null) {
-                this.entityArgs.EditComponent.ValidationErrorsList = [];
-            }
-
             errors.forEach(item => {
                 this.entityArgs.EditComponent.ValidationErrorsList.push(item);
             });

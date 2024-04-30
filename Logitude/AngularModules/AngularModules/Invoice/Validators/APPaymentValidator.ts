@@ -1,8 +1,8 @@
-import {TextCodeTranslator} from '../../Infrastructure/Utilities/TextCodeTranslator';
-import {AppTool, DateTool} from '../../Infrastructure/Tools';
-import {Validator} from '../../Infrastructure/Validators/Validator';
-import {APPaymentPM} from '../EntityPMs/APPaymentPM';
-import {ObjectsLocator} from '../../Infrastructure/Locators/ObjectsLocator';
+import { TextCodeTranslator } from '../../Infrastructure/Utilities/TextCodeTranslator';
+import { AppTool, DateTool } from '../../Infrastructure/Tools';
+import { Validator } from '../../Infrastructure/Validators/Validator';
+import { APPaymentPM } from '../EntityPMs/APPaymentPM';
+import { ObjectsLocator } from '../../Infrastructure/Locators/ObjectsLocator';
 import { SessionLocator } from '../../Infrastructure/Utilities/SessionLocator';
 
 export class APPaymentValidator {
@@ -19,9 +19,15 @@ export class APPaymentValidator {
             validationResults.push(msg.replace("%FieldName", "Register Date"));
         }
 
-        else if (DateTool.GetDateParts(entityPm.RegisterDate).DateTicks > DateTool.GetCurrentDateAsUtcForAccountingValidation(SessionLocator.TenantPM.TimeZoneOffset).valueOf()) {
-            validationResults.push(TextCodeTranslator.Translate("APPayment.M.CantSetFutureDatePayment"));
+        else {
+            if (DateTool.GetDateParts(entityPm.RegisterDate).DateTicks > DateTool.GetCurrentDateAsUtcForAccountingValidation(SessionLocator.TenantPM.TimeZoneOffset).valueOf()) {
+                validationResults.push(TextCodeTranslator.Translate("APPayment.M.CantSetFutureDatePayment"));
+            }
+            if (DateTool.GetDateFromDate(entityPm.RegisterDate) > DateTool.GetDateFromDate(entityPm.ValueDate) && entityPm.PaymentMethodCode == "BT") { 
+                validationResults.push(TextCodeTranslator.Translate("APPayment.M.ValueDateBiggerOrEqualRegisterDate"));
+            }
         }
+
 
         if (entityPm.AmountInPaymentCurrency == 0) {
             var isAllowed = false;

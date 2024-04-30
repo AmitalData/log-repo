@@ -86,7 +86,7 @@ export class NewAPPaymentComponent extends BaseComponent implements OnInit {
         if (this.IsCreatedFromInvoiceSide) {
             this.newAPPaymentPM.VendorId = this.invoicePm.VendorId;
             this.newAPPaymentPM.VendorAddressId = this.vendorAddressId;
-            this.newAPPaymentPM.VendorName = this.invoicePm.VendorName;           
+            this.newAPPaymentPM.VendorName = this.invoicePm.VendorName;
             this.newAPPaymentPM.VendorPartnerTypeId = this.invoicePm.VendorPartnerTypeId;
             this.newAPPaymentPM.PaymentCurrencyId = this.invoicePm.InvoiceCurrencyId;
             this.newAPPaymentPM.PaymentCurrencyCode = this.invoicePm.InvoiceCurrencyCode;
@@ -95,7 +95,7 @@ export class NewAPPaymentComponent extends BaseComponent implements OnInit {
         }
 
         else {
-           this.PaymentCurrencyId = SessionLocator.TenantPM.CurrencyId;
+            this.PaymentCurrencyId = SessionLocator.TenantPM.CurrencyId;
             this.newAPPaymentPM.PaymentCurrencyExchangeRate = 1;
         }
 
@@ -597,8 +597,13 @@ export class NewAPPaymentComponent extends BaseComponent implements OnInit {
             errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("APPayment.F.RegisterDate")));
         }
 
-        else if (DateTool.GetDateParts(this.RegisterDate).DateTicks > DateTool.GetCurrentDateAsUtcForAccountingValidation(SessionLocator.TenantPM.TimeZoneOffset).valueOf()) {
-            errors.push(TextCodeTranslator.Translate("APPayment.M.CantSetFutureDatePayment"));
+        else {
+            if (DateTool.GetDateParts(this.RegisterDate).DateTicks > DateTool.GetCurrentDateAsUtcForAccountingValidation(SessionLocator.TenantPM.TimeZoneOffset).valueOf()) {
+                errors.push(TextCodeTranslator.Translate("APPayment.M.CantSetFutureDatePayment"));
+            }
+            if (DateTool.GetDateFromDate(this.RegisterDate) > DateTool.GetDateFromDate(this.newAPPaymentPM.ValueDate) && this.PaymentMethodCode == "BT") {
+                errors.push(TextCodeTranslator.Translate("APPayment.M.ValueDateBiggerOrEqualRegisterDate"));
+            }
         }
 
         if (AppTool.IsNullOrEmpty(this.newAPPaymentPM.AccountingPaymentMethodId)) {
