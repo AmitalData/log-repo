@@ -1027,7 +1027,7 @@ export class MaintenanceComponent {
 
                     var windowTitle = "Queue Messages";
                     var logWindow = new LogitudeWindow();
-                    logWindow.Width = 1100;
+                    logWindow.Width = 1500;
                     logWindow.Height = 500;
                     logWindow.Title = windowTitle;
                     logWindow.IsShowCloseButton = true;

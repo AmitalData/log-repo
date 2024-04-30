@@ -28,12 +28,13 @@ using Logitude.BL.InfrastructureModel.EntityLists;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Server.Infrastructure.Helpers;
+using WebFreight.Web.Services;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 {
 
 
-    public partial class QueueMessagesIncrementalStatViewsController : ApiController
+    public partial class QueueMessagesViewsController : ApiController
     {
 
 
@@ -129,7 +130,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                     GetAll = filters.GetAll,
                 };
 
-                List<ObjectField> QueueMessageObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("QueueMessage", tenant);
+                List<ObjectField> QueueMessageObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("QueueMessages", tenant);
                 List<PropertyInfo> filterProperties = filters.GetType().GetProperties().ToList();
                 for (int i = 1; i <= 10; i++)
                 {

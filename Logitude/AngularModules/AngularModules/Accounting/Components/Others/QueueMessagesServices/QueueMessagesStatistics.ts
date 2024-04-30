@@ -72,7 +72,7 @@ export class QueueMessagesStatistics extends BaseComponent implements OnInit {
         filters.PageIndex = skip;
         filters.GetAll = false;
         filters.GetCount = true;
-        filters.addAdditionalFilter("Start_End_Date", this.FromDate, this.ToDate, null, "Between", true, false, false, "DateTime");
+        filters.addAdditionalFilter("CreateDateTime", this.FromDate, this.ToDate, null, "Between", true, false, false, "DateTime");
         return filters;
     }
     public columns: any[] = null;
@@ -216,7 +216,7 @@ export class QueueMessagesStatistics extends BaseComponent implements OnInit {
     public MoreDetails() {
         var windowTitle = "Queue Messages More Details";
         var logWindow = new LogitudeWindow();
-        logWindow.Width = 1100;
+        logWindow.Width = 1500;
         logWindow.Height = 500;
         logWindow.Title = windowTitle;
         logWindow.IsShowCloseButton = true;
