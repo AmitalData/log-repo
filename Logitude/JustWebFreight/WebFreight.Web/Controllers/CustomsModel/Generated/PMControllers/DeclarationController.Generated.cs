@@ -42,7 +42,6 @@ using Logitude.Customs.Data.EntityLists;
 using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.Customs.Data.EntityListQueryServices;
 using Logitude.Customs.BL.EntityQueryServices;
-using Devart.Data.Oracle;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 { 
@@ -135,25 +134,6 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             {
                 try
                 {
-                    //#105747- for test 
-                    string dbms = "oracle";
-                    string strConnString = "User Id=v5113;Password=v5113;Direct=True;Data Source=oracle19.amital.co.il;port=1521;sid=amital";
-
-                    if (dbms == "oracle")
-                    {
-
-                        using (OracleConnection con = new OracleConnection(strConnString))
-                        {
-
-                            //string cmd = "SELECT TENANT FROM CCUFILEM WHERE FILE_NO = '10'";
-                            string cmd = "Update CCUFILEM set TENANT=102 where FILE_NO='10'";
-                            OracleCommand oracleCommand = new OracleCommand(cmd, con);
-                            con.Open();
-                            oracleCommand.ExecuteNonQuery();
-                            con.Close();
-                        }
-
-                    }
 
                     using (TransactionScope scope = TransactionFactory.GetTransaction())
                     {
