@@ -491,22 +491,15 @@ namespace Logitude.Server.Tools.QueueService
                             cmd.Parameters.Add(watingStatusPar);
                             cmd.Parameters.Add(selectCountPar);
 
-                            LogTime($"{QueueCode} start Execute proc");
+                            //LogTime($"{QueueCode} start Execute proc");
 
                             var ou = cmd.ExecuteNonQuery();
-                            LogTime($"{QueueCode} end Execute proc");
+                            //LogTime($"{QueueCode} end Execute proc");
 
                             if (vQueueMessages.Value != DBNull.Value)
                             {
                                 // LogTime($"{QueueCode} start extract data returnd from proc");
-
                                 OracleDataReader reader = ((OracleCursor)vQueueMessages.Value).GetDataReader();
-
-                                Dictionary<string, int> tableFields = new Dictionary<string, int>();
-                                for (int i = 0; i < reader.FieldCount - 1; i++)
-                                {
-                                    tableFields[reader.GetName(i).ToLower()] = i;
-                                }
 
                                 while (reader.Read())
                                 {
@@ -516,11 +509,11 @@ namespace Logitude.Server.Tools.QueueService
                                     }
 
                                     var response = new QueueResponse();
-                                    response.MessageId = reader.GetString(tableFields["id"]);
-                                    response.RetryNumber = reader.GetInt32(tableFields["retrynumber"]);
-                                    response.MessageCreatedServerTime = reader.GetDateTime(tableFields["createdatetime"]);
+                                    response.MessageId = reader["id"].ToString();
+                                    response.RetryNumber = Convert.ToInt32(reader["retrynumber"]);
+                                    response.MessageCreatedServerTime = Convert.ToDateTime(reader["createdatetime"]);
 
-                                    var messageBody = reader.GetString(tableFields["messagebody"]);
+                                    var messageBody = reader["messagebody"].ToString();
 
                                     if (!string.IsNullOrEmpty(messageBody))
                                     {
