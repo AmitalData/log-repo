@@ -64,7 +64,11 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 string msg = TranslateTextsClass.Translate("APPayment.M.CantSetFutureDatePayment", tenant);
                 throw new ApplicationException(msg);
             }
-
+            if (entityPM.RegisterDate > entityPM.ValueDate && entityPM.PaymentMethodCode == "BT")
+            {
+                string msg = TranslateTextsClass.Translate("APPayment.M.ValueDateBiggerOrEqualRegisterDate", tenant);
+                throw new ApplicationException(msg);
+            }
             if (entityPM.AmountInPaymentCurrency == 0)
             {
                 bool isAllowed = false;

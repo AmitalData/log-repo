@@ -9646,6 +9646,12 @@
       LocalDefaultText="&quot;סינון חשבוניות ספק לפי מטבע&quot;"
       TextCodeTypeCode="&quot;M&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;APPayment.M.ValueDateBiggerOrEqualRegisterDate&quot;"
+      DefaultText="&quot;Value Date should be greater than or equal to Register date&quot;"
+      LocalDefaultText="&quot;תאריך פרעון צריך להיות גדול או שווה לתאריך חשבונאי&quot;"
+      TextCodeTypeCode="&quot;M&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature

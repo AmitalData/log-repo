@@ -85,8 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class APPaymentUpdateClass
    {  		
-
-		public const string HashString = "0829dbe4ee317f8d5204c5bcfb2183c6";
+		public const string HashString = "d68ca4b302d4b1f99b64d8862f8a36cc";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -7523,6 +7522,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
  		   TextCode APPaymentTextCode_APPaymentMPaymentDraftCantBeApproved = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.M.PaymentDraftCantBeApproved", DefaultText = "Payment draft cannot be reconciled until it is approved. Please approve the payment to proceed with the reconciliation",LocalDefaultText = @"לם ניתן לבצע התםמה לתשלום בסטטוס טיוטה יש לםשר םת התשלום כדי להמשיך  , לחלופין ניתן להסיר םת ההתםמות שסומנו ולשמור םת התשלום כטיוטה", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode APPaymentTextCode_APPaymentMFilterInvoicesbyAPPaymentCurrency = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.M.FilterInvoicesbyAPPaymentCurrency", DefaultText = "The Invoices are filtered by AP Payment Currency",LocalDefaultText = @"סינון חשבוניות ספק לפי מטבע", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode APPaymentTextCode_APPaymentMValueDateBiggerOrEqualRegisterDate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APPayment.M.ValueDateBiggerOrEqualRegisterDate", DefaultText = "Value Date should be greater than or equal to Register date",LocalDefaultText = @"תםריך פרעון צריך להיות גדול םו שווה לתםריך חשבונםי", ObjectTableId = APPaymentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
