@@ -498,7 +498,7 @@ namespace Logitude.Server.Tools.QueueService
 
                             if (vQueueMessages.Value != DBNull.Value)
                             {
-                                LogTime($"{QueueCode} start extract data returnd from proc");
+                                // LogTime($"{QueueCode} start extract data returnd from proc");
 
                                 OracleDataReader reader = ((OracleCursor)vQueueMessages.Value).GetDataReader();
 
@@ -510,6 +510,10 @@ namespace Logitude.Server.Tools.QueueService
 
                                 while (reader.Read())
                                 {
+                                    if (reader["id"].ToString() == "0")
+                                    {
+                                        continue;
+                                    }
 
                                     var response = new QueueResponse();
                                     response.MessageId = reader.GetString(tableFields["id"]);
@@ -525,7 +529,6 @@ namespace Logitude.Server.Tools.QueueService
                                     }
                                     responseList.Add(response);
                                 }
-                                LogTime($"{QueueCode} end extract data returnd: {responseList.Count} messages from proc");
                             }
                         }
                         catch (Exception ex)

@@ -641,7 +641,7 @@ namespace CustomsWorkerRole
                                     LogMessagingUtilWR.Instance.AppendLine("QRecive");
                                     LogTime(className + " start get data from DB");
                                     responseList = _CustomDbQueueService.Receive_new(CustomsWorkerRole.Utils.GenUtil.GetQueueTimeOutInMin() * 60);
-                                    LogTime(className + " end get data from DB");
+                                    //LogTime(className + " end get data from DB");
                                     LogMessagingUtilWR.Instance.AppendLine("QRecive:after");
 
                                     scopeRecive.Complete();
@@ -672,10 +672,10 @@ namespace CustomsWorkerRole
                             LastActivity = DateTime.UtcNow;
                             proccesDone = true;
                             var taskLIst = new List<Task>();
-                            LogTime(className + " start open tasks for returnd rows from Db");
+                            LogTime($"{className} start open tasks for {responseList.Count} returnd rows from Db");
                             foreach (var item in responseList)
                             {
-                                LogTime(className + " create new task for msg id: " + item.MessageId);
+                                //LogTime(className + " create new task for msg id: " + item.MessageId);
                                 var t =
                                 Task.Factory.StartNew(() =>
                                 {
