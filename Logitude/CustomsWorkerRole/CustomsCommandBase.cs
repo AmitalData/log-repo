@@ -612,20 +612,7 @@ namespace CustomsWorkerRole
         // islam db queue service
         void WorkUntilQEmpty_Db_new()
         {
-            LogTime(className + " start all at : ");
-
-            int number = Process.GetCurrentProcess().Threads.Count;
-            int workerThreads;
-            int portThreads;
-            LogTime($"Current threads: {number} at ");
-
-            ThreadPool.GetMaxThreads(out workerThreads, out portThreads);
-            LogTime($"Maximum worker threads: \t{workerThreads} Maximum completion port threads: {portThreads} at ");
-
-            ThreadPool.GetAvailableThreads(out workerThreads, out portThreads);
-            LogTime($"Available worker threads: \t{workerThreads} Available completion port threads: {portThreads} at ");
-
-
+            LogTime(className + " start all");
             List<CustomDBQueueMessage> responseList=null;
             List<long> deferredSequenceNumbers = new List<long>();
             bool proccesDone = false;
@@ -652,9 +639,9 @@ namespace CustomsWorkerRole
                                 {
 
                                     LogMessagingUtilWR.Instance.AppendLine("QRecive");
-                                    LogTime(className + " start get data from DB at : ");
+                                    LogTime(className + " start get data from DB");
                                     responseList = _CustomDbQueueService.Receive_new(CustomsWorkerRole.Utils.GenUtil.GetQueueTimeOutInMin() * 60);
-                                    LogTime(className + " end get data from DB at : ");
+                                    LogTime(className + " end get data from DB");
                                     LogMessagingUtilWR.Instance.AppendLine("QRecive:after");
 
                                     scopeRecive.Complete();
@@ -671,7 +658,7 @@ namespace CustomsWorkerRole
 
                             if (responseList == null || (responseList != null && responseList.Count == 0))
                             {
-                                LogTime(className + " responseList empty, sleep and break : ");
+                                LogTime(className + " not found messages, sleep and break");
                                 QueueThreadStateService.Upsert(QueueThreadStateService.GetWRKey(this.GetType().Name), "No Work");
                                 Thread.Sleep(TimeSpan.FromSeconds(CustomsWorkerRole.Utils.GenUtil.IfNoQueue_ServerWaitTimeInSec()));
 
@@ -685,26 +672,26 @@ namespace CustomsWorkerRole
                             LastActivity = DateTime.UtcNow;
                             proccesDone = true;
                             var taskLIst = new List<Task>();
-                            LogTime(className + " start open tasks for returnd rows from Db at : ");
+                            LogTime(className + " start open tasks for returnd rows from Db");
                             foreach (var item in responseList)
                             {
-                                LogTime(className + " create new task for msg id: " + item.MessageId + " at : ");
+                                LogTime(className + " create new task for msg id: " + item.MessageId);
                                 var t =
                                 Task.Factory.StartNew(() =>
                                 {
-                                    LogTime(className + " start task for row MessageId:" + item.MessageId + " at : ");
+                                    LogTime(className + " start task for row MessageId:" + item.MessageId);
                                     CustomsCommandBaseHelper helper = new CustomsCommandBaseHelper();
                                     helper.RunTask(item, className);
                                     LogMessagingUtilWR.Instance.AppendLine("LogDoneItemInMemory();");
                                     LogDoneItemInMemory();
                                     LogMessagingUtilWR.Instance.AppendLine("LogDoneItemInMemory();AFTER");
-                                    LogTime(className + " end task for row MessageId:" + item.MessageId + " at : ");
+                                    LogTime(className + " end task for row MessageId:" + item.MessageId);
                                 });
                                 taskLIst.Add(t);
                             }
-                            LogTime(className + " end open tasks for returnd rows from Db at : ");
+                            LogTime(className + " end open tasks for returnd rows from Db");
                             Task.WaitAll(taskLIst.ToArray());
-                            LogTime(className + " end waiting for all of them at : ");
+                            LogTime(className + " end waiting for all of them");
                             Queue_scope.Complete();
                         }
                     }
@@ -714,7 +701,7 @@ namespace CustomsWorkerRole
                     }
                 }
             }
-            LogTime(className + " end all at : ");
+            LogTime(className + " end all");
         }
         private void LogTime(string msg)
         {
@@ -722,7 +709,7 @@ namespace CustomsWorkerRole
             string UntilDateyyyyMMdd = ConfigurationManager.AppSettings["20230601T000000.LogUntilDateyyyyMMdd"];
             if (!string.IsNullOrWhiteSpace(UntilDateyyyyMMdd))
                 stopLogAt = DateTime.ParseExact(UntilDateyyyyMMdd, "yyyyMMdd", CultureInfo.InvariantCulture, DateTimeStyles.None);
-            msg += DateTime.Now.ToString();
+            // msg += DateTime.Now.ToString();
             
             LogitudeSettings.HandleLogMe(msg, false, "WorkUntilQEmpty_Db_new", stopLogAt);
         }
