@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class CardUpdateClass
    {  		
-		public const string HashString = "5c19ab40acc04941e064efaf6b4f4b38";
+		public const string HashString = "dca66a6652d17135cfcc8aa60ca69eca";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -994,8 +994,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MaxLength =  2,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
+					  						DisplayOnLookUp =  true,
+					  						DisplayOnLookUpLocal =  true,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
@@ -1005,13 +1005,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
+					  						DisplayInSearchWindowList =  true,
 					  						PMPropertyPath =  "CountryCode",
 					  						ListPropertyPath =  "CountryCode",
-					  						DisplayInLookUpIndex =  0,
+					  						DisplayInLookUpIndex =  6,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
+					  						DisplayInSearchWindowListIndex =  6,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
