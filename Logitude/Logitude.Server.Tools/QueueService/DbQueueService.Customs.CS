@@ -491,10 +491,10 @@ namespace Logitude.Server.Tools.QueueService
                             cmd.Parameters.Add(watingStatusPar);
                             cmd.Parameters.Add(selectCountPar);
 
-                            LogTime($"{QueueCode} start Execute proc");
+                            //LogTime($"{QueueCode} start Execute proc");
 
                             var ou = cmd.ExecuteNonQuery();
-                            LogTime($"{QueueCode} end Execute proc");
+                            //LogTime($"{QueueCode} end Execute proc");
 
                             if (vQueueMessages.Value != DBNull.Value)
                             {

@@ -658,7 +658,7 @@ namespace CustomsWorkerRole
 
                             if (responseList == null || (responseList != null && responseList.Count == 0))
                             {
-                                LogTime(className + " not found messages, sleep and break");
+                                LogTime(className + " queue is empty");
                                 QueueThreadStateService.Upsert(QueueThreadStateService.GetWRKey(this.GetType().Name), "No Work");
                                 Thread.Sleep(TimeSpan.FromSeconds(CustomsWorkerRole.Utils.GenUtil.IfNoQueue_ServerWaitTimeInSec()));
 
@@ -689,7 +689,6 @@ namespace CustomsWorkerRole
                                 });
                                 taskLIst.Add(t);
                             }
-                            LogTime(className + " end open tasks for returnd rows from Db");
                             Task.WaitAll(taskLIst.ToArray());
                             LogTime(className + " end waiting for all of them");
                             Queue_scope.Complete();
@@ -701,7 +700,7 @@ namespace CustomsWorkerRole
                     }
                 }
             }
-            LogTime(className + " end all");
+            //LogTime(className + " end all");
         }
         private void LogTime(string msg)
         {
