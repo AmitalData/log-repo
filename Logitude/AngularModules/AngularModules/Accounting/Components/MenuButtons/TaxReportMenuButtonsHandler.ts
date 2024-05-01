@@ -261,7 +261,7 @@ export class TaxReportMenuButtonsHandler {
             if (confirmWindow.Yes) {
                 this.CurrentSession.StartBusyIndicator("Refreshing ...");
                 this.EntityPM.RecalculateData = true;
-                //debugger;
+                //
                 //this.entityArgs.EditComponent.SaveChanges();
 
                 //this.EntityPMService.update(this.ObjectTableName, this.EntityPM).then((res: any) => {

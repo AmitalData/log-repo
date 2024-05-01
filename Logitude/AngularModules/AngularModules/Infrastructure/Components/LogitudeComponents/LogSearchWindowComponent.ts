@@ -145,7 +145,7 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
     }
 
     SetWindowArgs(args: CustomEntityArgs) {
-        debugger
+        
         this.ObjectTableName = args.ObjectTableName; // lookup table
         this.ObjectField = args.ObjectField;
         this.ObjectTableId = args.ObjectTableId;

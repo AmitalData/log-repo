@@ -162,7 +162,7 @@ export class ExchangeRatesQueryComponent
         CustomMessageProgressComponent
             .ShowProgressBar(this.CurrentSession,currRequestParams.PBId, "שליחת שאילתא לשערי מטבע", true)
             .then((res) => {
-                debugger
+                
                 this.ResponseData = res;
                 this.MyLastCustomsRequestSheetId = currRequestParams.PBId;
                 this.OnMassageDisplayMethod();

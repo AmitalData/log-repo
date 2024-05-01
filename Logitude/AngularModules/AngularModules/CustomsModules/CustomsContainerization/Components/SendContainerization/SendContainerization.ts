@@ -202,7 +202,7 @@ export class SendContainerizationService implements OnDestroy {
 
     OnCustomSendOptionsButtonClick(event) {
 
-        debugger
+        
         this.EntityPM.OperationMode="2";
         this.EntityPM.IsChange = false;
         this.CurrentSession.StartBusyIndicator("");

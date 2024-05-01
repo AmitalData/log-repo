@@ -221,7 +221,7 @@ export class ExportDeclarationClosureComponent extends BaseComponent {
         this.declarationWebService.GetDeclarationCorrection(this.EntityPM.Id,true).subscribe((myServiceResponse: ServiceResponse) => {
             console.log("[Response] GetDeclarationConstraints : ", myServiceResponse.Result);
             var res: DeclarationCorrectionView = myServiceResponse.Result;
-            debugger;
+            
             if (!AppTool.IsNullOrEmpty(res)) {
 
                 this.GeneralData = [];

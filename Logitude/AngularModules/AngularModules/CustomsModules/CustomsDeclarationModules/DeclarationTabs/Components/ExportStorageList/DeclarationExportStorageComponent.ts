@@ -48,12 +48,12 @@ export class DeclarationExportStorageComponent extends BaseComponent implements 
 
     constructor(private entityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
         super();
-        debugger;
+        
         this.DeclarationExportStorageList = new ObservableCollection([]);
         this._EntityPMService = new EntityPMService();
         this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response: any) => {
             this.EntityResourceService.getEntityResourceByTableName("Customs.ExportStorage").subscribe((response: any) => {
-                debugger
+                
                 this.EntityPM = this.entityArgs.EntityPM;
                 this.ObjectTableName = this.entityArgs.ObjectTableName;
                 this.LoadDeclarationExportStorages();
@@ -92,7 +92,7 @@ export class DeclarationExportStorageComponent extends BaseComponent implements 
 
             SessionLocator.SelectedSession.CurrentEditComponent.SubscriptionAdd(
                 SessionLocator.SelectedSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) => {
-                    debugger
+                    
                     if (this.CurrentEditComponentId == SessionLocator.SelectedSession.CurrentEditComponent.ComponentId) {
                         if (tabCode == "DESL") {
                             this.LoadDeclarationExportStorages();

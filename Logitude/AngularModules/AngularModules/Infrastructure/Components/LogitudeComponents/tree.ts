@@ -68,7 +68,7 @@ export class Tree implements ISlvTree {
 
   // ISlvTree's field
   get items() {
-    debugger;
+    
     return this.treeData;
   }
 

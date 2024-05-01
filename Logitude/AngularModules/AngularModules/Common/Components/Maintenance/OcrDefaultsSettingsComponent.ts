@@ -93,7 +93,7 @@ export class OcrDefaultsSettingsComponent extends BaseComponent {
         this.FIELD_IS_REQUIERD = TextCodeTranslator.Translate("General.M.FieldIsRequired");
 
         this.CurrentSession.StartBusyIndicator('Loading...');
-        debugger
+        
         this.ProcessTypeCodeFilterItems = new ApiQueryFilters();
        
         this.LoadDefaults();

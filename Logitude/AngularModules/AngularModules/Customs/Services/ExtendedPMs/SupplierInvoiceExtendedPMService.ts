@@ -2647,7 +2647,7 @@ export class SupplierInvoiceExtendedPMService {
             return this._http.delete(this._apiUrl + '/DeletedSupplierInvoiceItemsConDeclars/?' + 'declarationId=' + declarationId , ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var pm = response;
                 if (pm) {
-                    debugger;
+                    
                     //   mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
                     serviceResponse.Result;
                 }
