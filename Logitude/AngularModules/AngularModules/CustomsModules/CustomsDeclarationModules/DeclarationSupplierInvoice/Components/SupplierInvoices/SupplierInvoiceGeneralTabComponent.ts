@@ -1625,7 +1625,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
                 if(filterItems && filterItems.length > 1){
                     let GroupedItem:SupplierInvoiceItemPM = item.entityPM;
                     if (!AppTool.IsNullOrEmpty(GroupedItem.ClassificationCode) && !AppTool.IsNullOrEmpty(GroupedItem.OriginCountryCode)) {
-                        GroupedResult += `${filterItems.length}- ${GroupedItem.ClassificationCode} / ${GroupedItem.OriginCountryName} \n`;
+                        GroupedResult += `${filterItems.length} ${TextCodeTranslator.Translate("Customs.Declaration.O.Lines")} - ${GroupedItem.ClassificationCode} - ${GroupedItem.OriginCountryName} \n`;
                     }
                     else if (!AppTool.IsNullOrEmpty(GroupedItem.ClassificationCode)) {
                         GroupedResult += `${filterItems.length}- ${GroupedItem.ClassificationCode} \n`;
@@ -1643,7 +1643,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
         });
 
         if(GroupedItemsSource.Collection.length == 0) 
-            GroupedResult = `${TextCodeTranslator.Translate("General.B.No")} קובצו ${TextCodeTranslator.Translate("Customs.Declaration.O.GroupedAccountLinesResult")}`;
+            GroupedResult = `${TextCodeTranslator.Translate("Customs.Declaration.O.GroupedNotFoundLines")}`;
         this.openConfirmWindowGroupingAccountLines(GroupedResult); 
     }
 
