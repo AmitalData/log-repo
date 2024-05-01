@@ -60,6 +60,7 @@ export class OcrDefaultsSettingsComponent extends BaseComponent {
     private partyRelationshipCodeChecked: boolean = true;
     private accountTypeCodeChecked: boolean = true;
     public IsChecked: boolean = true;
+    private disableSubmit: boolean = false
     FIELD_IS_REQUIERD: string;
     public ProcessTypeCodeFilterItems: ApiQueryFilters;
 
@@ -454,5 +455,13 @@ export class OcrDefaultsSettingsComponent extends BaseComponent {
             });
         }
 
+    }
+
+    ngDoCheck() {
+        if (!this.accountTypeCodeChecked && !this.partyRelationshipCodeChecked && !this.buyerRoleCodeChecked && !this.processTypeCodeChecked && !this.transactionNatureCodeChecked && !this.claimReasonCodeChecked) {
+            this.disableSubmit=true
+        }else{
+            this.disableSubmit=false
+        }
     }
 }
