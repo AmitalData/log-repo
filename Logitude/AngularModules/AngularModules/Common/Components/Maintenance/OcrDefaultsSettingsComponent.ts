@@ -60,7 +60,7 @@ export class OcrDefaultsSettingsComponent extends BaseComponent {
     private partyRelationshipCodeChecked: boolean = true;
     private accountTypeCodeChecked: boolean = true;
     public IsChecked: boolean = true;
-    private disableSubmit: boolean = false
+    public disableSubmit: boolean = false
     FIELD_IS_REQUIERD: string;
     public ProcessTypeCodeFilterItems: ApiQueryFilters;
 
