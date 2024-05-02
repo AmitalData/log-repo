@@ -1760,7 +1760,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
             }
         }
     }
-    updateProcess(item: SupplierInvoiceItemPM, args) {
+     updateProcess(item: SupplierInvoiceItemPM, args) {
         var updateField = args.UpdateField;
         var value = args[args.UpdateField];
         switch (updateField) {
@@ -1785,7 +1785,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
             case 'DutyRegimeProtocolCode': {
                 item.DutyRegimeProtocolCode = args.FinalValue.Code;
                 item.DutyRegimeProtocolLocalName = args.FinalValue.LocalName;
-                if (this.Parent.declarationPM.Direction == "E") {
+                if (this.Parent.declarationPM.Direction == "E" && (args.UpdateAll || (args.UpdateItemsWithNoValue && !this.EntityPM.SupplierInvoiceItems.filter(d => !d.IsParent).some(t=>t?.DutyRegimeProtocolCode!=null)))) {
                     this.DutyRegimeProtocolCode = item.DutyRegimeProtocolCode;
                 }
                 break;
