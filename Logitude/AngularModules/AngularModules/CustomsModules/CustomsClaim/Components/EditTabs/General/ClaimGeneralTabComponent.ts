@@ -624,7 +624,7 @@ export class ClaimGeneralTabComponent extends BaseComponent {
 
 
     NavigateToDeclarationButtonClicked(item: ClaimsRelatedEntityLineComponent) {
-        debugger;
+        
         this._declarationExtendedListService.GetSingleDeclarationByNumber(item.ClaimEntityNumber?.trim(), SessionLocator.Tenant).subscribe((myResult: any) => {
 
             var mm: ServiceResponse = myResult;

@@ -1369,6 +1369,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                         });
                     }
                 }
+                this.CD.detectChanges();
                 this.ColumnsReady.emit("ColumnsReady");
             });
     }

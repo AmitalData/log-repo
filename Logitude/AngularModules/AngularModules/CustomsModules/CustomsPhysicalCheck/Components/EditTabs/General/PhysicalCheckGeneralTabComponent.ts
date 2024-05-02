@@ -266,7 +266,7 @@ export class PhysicalCheckGeneralTabComponent
         this.UIProperties.SetEnabled("ByAvailableTimeChecked", this.ObjectTableName, enable);
 
         this.SetDateEnable(enable);
-        debugger;
+        
     }
     
     SetDateEnable(enable: boolean) {
@@ -337,7 +337,7 @@ export class PhysicalCheckGeneralTabComponent
         }
         
         if(this.AskForAnEarlierDate){
-            debugger
+            
         
             //todo: after update iig:    
             // checkParams.RequestToAdvanceAQueue = this.EntityPM.RequestToAdvanceAQueue;
@@ -395,7 +395,7 @@ export class PhysicalCheckGeneralTabComponent
 
             });
 
-        debugger
+        
         this._IIGGeneralMessagesService.PostChangingTimeRequestParams(checkParams)
             .subscribe((myServiceResponse: ServiceResponse) => {
                 if (!myServiceResponse.HasError && myServiceResponse.Result != null && myServiceResponse.Result.HasException != true) {

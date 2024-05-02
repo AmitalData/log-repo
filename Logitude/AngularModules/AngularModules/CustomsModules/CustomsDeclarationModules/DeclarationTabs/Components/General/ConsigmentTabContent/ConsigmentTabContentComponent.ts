@@ -1315,7 +1315,7 @@ export class ConsignmentInternalTransitionModel extends BaseComponent {
 
         MyInternalBorderSiteTypeListService.getSingleFromCache(this.EntityPM.SiteCode).subscribe((myResponse: ServiceResponse) => {
            
-            debugger
+            
         });
     }
     public get SiteCode() { return this.EntityPM.SiteCode; }

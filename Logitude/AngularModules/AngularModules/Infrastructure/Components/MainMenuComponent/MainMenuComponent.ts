@@ -60,7 +60,7 @@ export class MainMenuComponent {
     }
 
     private GetMainMenuItemsFromWindow() {
-debugger;
+
         var myResult: MainMenuItem[] = [];
 
         window.MenusTables.filter(f => f.MenuTypeCode.toUpperCase() == "MAIN").forEach((item) => {
