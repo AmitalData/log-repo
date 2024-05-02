@@ -106,7 +106,7 @@ export class CustomsRequestsSheetsListTemplate {
     }
     IsCancelled: boolean = false;
     public CancleRequestMethod(id: string) {
-        debugger;
+        
         //CancleButtonVisibility = Visibility.Collapsed;
         //FirePropertyChanged("CancleButtonVisibility");
         this.IsCancelled = true;

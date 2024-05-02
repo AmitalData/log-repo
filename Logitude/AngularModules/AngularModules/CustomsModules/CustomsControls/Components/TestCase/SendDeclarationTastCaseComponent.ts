@@ -45,7 +45,7 @@ export class SendDeclarationTastCaseComponent extends BaseComponent{
         //CurrentSession.StartBusyIndicator("");
     }
     SetWindowArgs(windowArgs) {
-        debugger;
+        
         var myCustomsSettingExtendedListService = new CustomsSettingExtendedListService();
         if(windowArgs.ObjectTableName != null){
             this.ObjectTableName=windowArgs.ObjectTableName ;

@@ -109,7 +109,7 @@ export class HybridTenantThresholdComponent extends BaseComponent {
 
     CloseButtonClicked() { this.CurrentSession.CloseCurrentWindow(); }
     SaveButtonClicked() {
-         debugger
+         
         if (!this.Isupdate) {
             this.service.insert(this.EntityPM).subscribe((res:any) => {
                 this.CurrentSession.CloseCurrentWindow();

@@ -820,7 +820,7 @@ export class CustomsDocumentTicketViewModel {
     }
 
     GeneratecustomsDocumentMetaDataValues() {
-        debugger
+        
         if (this.customsDocumentsTicketPM.DocumentTypeCode == "IL_140") {
             var GenerateMetaData18 = true;
             for (var document of this.customsDocumentMetaDataValuePMs) {

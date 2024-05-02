@@ -115,7 +115,7 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
     private _entityResourceService: EntityResourceService = new EntityResourceService();
 
     SetComponentArgs(args: any) {
-        debugger;
+        
         if (!AppTool.IsNullOrEmpty(args)) {
             this.DeclarationPM = args.EntityPM;
 
