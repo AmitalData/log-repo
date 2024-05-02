@@ -113,7 +113,7 @@ export class SendClaimComponent {
     }
     UpdateEntityWithSendClaimsRelatedEntity() {
         var isDirty = false;
-        if (this.sendList != null && this.sendList.length > 0) {
+        if (this.sendList != null) {
             this.EntityPM.ClaimsRelatedEntities.forEach((item) => {
                 if (this.sendList.includes(item.EntityCounterKey.toString())) {
                     item.IsSendClaimsRelatedEntity = true;
