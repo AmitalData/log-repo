@@ -120,7 +120,7 @@ namespace CustomsWorkerRole
             LogMessagingUtilWR.Instance.AppendLine("ProcessMessage_Db");
             try
             {
-                LogTime("start ProcessMessage_Db MessageId:" + msgResponse.MessageId + " at : ");
+                //LogTime("start ProcessMessage_Db MessageId:" + msgResponse.MessageId + " at : ");
 
                 int tenant = -1;
                 string analyzeClass = msgResponse.Properties["InterfaceTypeCode"].ToString();
@@ -188,7 +188,7 @@ namespace CustomsWorkerRole
 
                 MessagingServiceFactoryHelper.ResolveAndExecute(analyzeClass, tenant, correlationId, myCustomsCommandEnum);
 
-                LogTime("end ProcessMessage_Db MessageId:" + msgResponse.MessageId + " at : ");
+                //LogTime("end ProcessMessage_Db MessageId:" + msgResponse.MessageId + " at : ");
 
 
                 //_CustomDbQueueService.SafeComplete();
