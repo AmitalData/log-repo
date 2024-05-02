@@ -167,7 +167,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
 
             User loggedUser = GetLoggedUser(tenant);
-            GLAccountListQuery = MapListFields(GLAccountListQuery, loggedUser);
+            //GLAccountListQuery = MapListFields(GLAccountListQuery, loggedUser);
 
             GLAccountList GLAccountList = GLAccountListQuery.FirstOrDefault();
             return GLAccountList;

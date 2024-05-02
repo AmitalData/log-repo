@@ -26,12 +26,12 @@ namespace Logitude.Accounting.Data.Repositories
             currentContext = context;
         }
 
-
-
-        public TenantIdleStatus GetSingle(int tenant)
+		 
+		
+		public  TenantIdleStatus GetSingle(string id, int tenant)
         {
             return (from a in context.TenantIdleStatuses
-                    where a.Tenant == tenant
+                    where a.Id == id && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
 

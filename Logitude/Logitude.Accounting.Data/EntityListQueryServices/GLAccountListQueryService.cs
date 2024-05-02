@@ -443,6 +443,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
                              IsSecurityLevelsEnabled = fullAccountingSettings.IsSecurityLevelActivated,
                              Access = !fullAccountingSettings.IsSecurityLevelActivated,
+                             ContactId= a.ContactId,
+                             ContactName = a.Contact != null ? a.Contact.LocalName : null,
 
                              Period0 = AgingDatas.Period0,
                              Period1 = AgingDatas.Period1,

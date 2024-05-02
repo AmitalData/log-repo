@@ -5,12 +5,13 @@ import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevel
 import {Guid} from '../../../Infrastructure/Utilities/Guid';
 import {InfraSettings} from '../../../Infrastructure/Utilities/InfraSettings';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { HttpHeaders, HttpClient, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators'
 import { AccountingIntegrityCheckPM } from '../../EntityPMs/AccountingIntegrityCheckPM';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import { CustomFieldClass } from '../../../Infrastructure/DataContracts/CustomFieldClass'
- 
+import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
+
 
 @Injectable()
 
@@ -109,5 +110,22 @@ export class AccountingEntegrityCheckExtendedPMService {
         }
         return entityPM;
     }
+
+    getAccountingIntegrityResultByIdAndTenant(id: string, tenant: number) {
+		var callTime = new Date();
+		return defer(() => {
+			return this.httpClient.get(ServiceHelper.GetLogitudeURL() + 'api/AccountingEntegrityCheck' + '/getAccountingIntegrityResultByIdAndTenant?' + 'id=' + id + '&tenant=' + tenant, ServiceHelper.GetHttpFullHeaders())
+				.pipe(
+					map((response: HttpResponse<any>) => {
+						var pm = response.body;
+						var serviceResponse: ServiceResponse = new ServiceResponse();
+						serviceResponse.Result = pm;
+						var servertime = response.headers.get('ServerExecutionTime');
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "AccountingIntegrityCheck", "getAccountingIntegrityResultByIdAndTenant", 'id=' + id + ' tenant=' + tenant);
+						return serviceResponse;
+					}),
+					catchError(ServiceHelper.HandleServiceError));
+		});
+	}
 
 }

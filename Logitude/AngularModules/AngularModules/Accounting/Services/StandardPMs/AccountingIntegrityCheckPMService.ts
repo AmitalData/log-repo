@@ -32,23 +32,6 @@ export class AccountingIntegrityCheckPMService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/accountingintegritychecks';      
     }
 
-	getAccountingIntegrityResultByIdAndTenant(id: string, tenant: number) {
-		var callTime = new Date();
-		return defer(() => {
-			return this._http.get(ServiceHelper.GetLogitudeURL() + 'api/AccountingEntegrityCheck' + '/getAccountingIntegrityResultByIdAndTenant?' + 'id=' + id + '&tenant=' + tenant, ServiceHelper.GetHttpFullHeaders())
-				.pipe(
-					map((response: HttpResponse<any>) => {
-						var pm = response.body;
-						var serviceResponse: ServiceResponse = new ServiceResponse();
-						serviceResponse.Result = pm;
-						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "AccountingIntegrityCheck", "getAccountingIntegrityResultByIdAndTenant", 'id=' + id + ' tenant=' + tenant);
-						return serviceResponse;
-					}),
-					catchError(ServiceHelper.HandleServiceError));
-		});
-	}
-
 	get(id: string) {       
 
 		var callTime = new Date();		

@@ -405,11 +405,6 @@
       Nullable="true" />
   </Column>
   <Relation
-    ForeignKeyColumn="DocumentId"
-    ReferencedTable="Documents"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
     ForeignKeyColumn="ChildObjectTableId"
     ReferencedTable="ObjectTables"
     ReferencedColumn="Id"

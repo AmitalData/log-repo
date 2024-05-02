@@ -1730,14 +1730,14 @@ namespace Logitude.DBMigrations.Models
                         reader.Close();
                         connection.Close();
                     }
-                    catch (Exception)
+                    catch (Exception ex )
                     {
                         if (reader != null)
                         {
                             reader.Close();
                         }
                         connection.Close();
-                        ExitTool("Error: Cannot Get Executed SXML Files From Database " + dbType);
+                        ExitTool("Error: Cannot Get Executed SXML Files From Database " + dbType + ex.Message);
                     }
                 }
                 else
@@ -1768,14 +1768,14 @@ namespace Logitude.DBMigrations.Models
                         reader.Close();
                         connection.Close();
                     }
-                    catch (Exception)
+                    catch (Exception ex)
                     {
                         if (reader != null)
                         {
                             reader.Close();
                         }
                         connection.Close();
-                        ExitTool("Error: Cannot Get Executed SXML Files From Database " + dbType);
+                        ExitTool("Error: Cannot Get Executed SXML Files From Database " + dbType + ex.Message);
                     }
                 }
             }

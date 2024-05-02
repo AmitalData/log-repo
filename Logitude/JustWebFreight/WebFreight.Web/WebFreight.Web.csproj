@@ -1826,7 +1826,6 @@
     <Compile Include="Controllers\Test\HybridTestController.cs" />
     <Compile Include="Controllers\FromAppCode\TestController.cs" />
     <Compile Include="Controllers\WebDomainControllers\PotentialAddressController.cs" />
-    <Compile Include="Controllers\WebDomainControllers\QuoteOPDomainController.cs" />
     <Compile Include="Controllers\WebServices\AmitalAPIControllerBase.cs" />
     <Compile Include="Controllers\WebServices\AmitalAPISchemaController.cs" />
     <Compile Include="Controllers\WebServices\AmitalAPIClientController.cs" />
@@ -4206,7 +4205,6 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\MamanSpecialActionUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\MamanStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ManifestCargoStatusUpdateClass.cs" />
-    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\MarkUpOPTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\MAWBTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\NDMessageActionCodeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\MeasureTypeUpdateClass.cs" />
@@ -4245,12 +4243,10 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\QuoteOPClosingReasonUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\QuoteOPComputedFieldUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\QuoteOPCostChargeUpdateClass.cs" />
-    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\QuoteOPCustomerTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\QuoteOPDocumentVersionUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\QuoteOPPackageUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\QuoteOPPriceStepsUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\QuoteOPPropertiesUpdateClass.cs" />
-    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\QuoteOPRatingUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\QuoteOPSaleChargeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\QuoteOPSalesTotalUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\QuoteOPSettingUpdateClass.cs" />
@@ -4263,7 +4259,6 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\QuoteOPTemplateTextDesignUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\QuoteOPTemplateUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\QuoteOPTotalVatUpdateClass.cs" />
-    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\QuoteOPTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\QuoteOPUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\QuoteOPVATsTotalUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ReconcileExternalPageLineUpdateClass.cs" />
@@ -7205,9 +7200,6 @@
     <Compile Include="QuoteModel\DomainServices\QuotesDomainService.QuoteTemplateTextDesign.cs" />
     <Compile Include="QuoteModel\DomainServices\QuotesDomainService.ValidByType.cs" />
     <Compile Include="QuoteModel\QuoteModelProcedureClass.cs" />
-    <Compile Include="QuoteOPMModel\DomainServices\QuoteOPMDomainService.cs" />
-    <Compile Include="QuoteOPMModel\DomainServices\QuoteOPMDomainService.QuoteOPCustomerType.cs" />
-    <Compile Include="QuoteOPMModel\DomainServices\QuoteOPMDomainService.MarkOPUpType.cs" />
     <Compile Include="ReportsWebServices\APInvoiceWebService.asmx.cs">
       <DependentUpon>APInvoiceWebService.asmx</DependentUpon>
       <SubType>Component</SubType>
@@ -8586,18 +8578,6 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Amital.QuoteOPM.BL\Amital.QuoteOPM.BL.csproj">
-      <Project>{8ff2bd5f-45c0-4077-b25f-8b90154510d0}</Project>
-      <Name>Amital.QuoteOPM.BL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Amital.QuoteOPM.Data\Amital.QuoteOPM.Data.csproj">
-      <Project>{bf906c23-b5a0-4e33-a2f4-6728778395f3}</Project>
-      <Name>Amital.QuoteOPM.Data</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Amital.QuoteOPM.Def\Amital.QuoteOPM.Def.csproj">
-      <Project>{97ebbd11-f7e1-4d22-a236-3d1f5261cddc}</Project>
-      <Name>Amital.QuoteOPM.Def</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\ContainerMonitoring\ContainerMonitoring.csproj">
       <Project>{1758a10f-0068-45c1-8e60-06022bbfb8b8}</Project>
       <Name>ContainerMonitoring</Name>

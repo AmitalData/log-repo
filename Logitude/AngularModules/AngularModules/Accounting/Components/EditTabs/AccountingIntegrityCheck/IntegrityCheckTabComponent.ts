@@ -104,7 +104,7 @@ export class IntegrityCheckTabComponent extends BaseComponent implements OnInit 
     }
 
     public Export2ExcelClicked() {
-        this.AccountingIntegrityCheckPMService.getAccountingIntegrityResultByIdAndTenant(this.entityPM.Id, this.entityPM.Tenant).subscribe((myResponse: ServiceResponse) => {
+        this.AccountingEntegrityCheckExtendedPMService.getAccountingIntegrityResultByIdAndTenant(this.entityPM.Id, this.entityPM.Tenant).subscribe((myResponse: ServiceResponse) => {
             let resArr = [];
             let journalLineToLedgerResult = this.getFinalObjectForExcelArray(myResponse.Result.JournalLineToLedgerResult, 'JournalLineToLedgerResult', ['$id']);
             if (journalLineToLedgerResult != null) {

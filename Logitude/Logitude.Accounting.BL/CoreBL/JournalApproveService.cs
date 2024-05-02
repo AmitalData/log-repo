@@ -1245,7 +1245,7 @@ namespace Logitude.Accounting.BL.CoreBL
         private static void SetTenantIdle(int tenant)
         {
             TenantIdleStatusRepository tenantRepository = new TenantIdleStatusRepository(tenant);
-            TenantIdleStatus tenantObj = tenantRepository.GetSingle(tenant);
+            TenantIdleStatus tenantObj = tenantRepository.GetAll(tenant).FirstOrDefault();
             tenantObj.Idle = false;
             tenantObj.UpdateDate = DateTime.Now;
             tenantRepository.Update(tenantObj);

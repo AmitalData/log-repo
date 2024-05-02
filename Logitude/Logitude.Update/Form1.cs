@@ -1901,7 +1901,7 @@ User/Pass",
             timer1.Enabled = true;
             timer1.Start();
 
-            TenantsUpdateClass.BuildObjectTablesZipFilesData(checkBox1.Checked, buildCustomsZipFiles, buildQuoteOPMZIPFiles);
+            TenantsUpdateClass.BuildObjectTablesZipFilesData(checkBox1.Checked, buildCustomsZipFiles);
 
             // timer
             globalStopwatch = null;

@@ -1,4 +1,4 @@
-﻿using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Helpers;
 using Simplog.Server.Infrastructure;
 using System;
@@ -129,6 +129,7 @@ namespace Logitude.Accounting.Data
             modelBuilder.Configurations.Add(new ChartOfAccountsTypeMap());
 	
             modelBuilder.Configurations.Add(new ChequeCounterSerialMap());
+	
             modelBuilder.Configurations.Add(new CopyFromTenant0Map());
 	
             modelBuilder.Configurations.Add(new ExternalPageAdditionalDataMap());
@@ -914,7 +915,6 @@ namespace Logitude.Accounting.Data
 	 
 	 }
 	
-	
 	 public IDbSet<CopyFromTenant0> CopyFromTenant0 
 	 {
 	      get; set;
@@ -1326,4 +1326,4 @@ namespace Logitude.Accounting.Data
  }
 
 
-}
+}

@@ -1,0 +1,9 @@
+﻿<Script DBType="Main" Pre="true" Module="Accounting">
+  <Sql Version="1">
+    <![CDATA[
+    
+update ObjectFields set DisplayInRequiredFields=0 where DisplayInRequiredFields is null
+
+    ]]>
+  </Sql>
+</Script>

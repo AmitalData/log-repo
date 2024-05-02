@@ -148,6 +148,7 @@
     <None Include="DBScripts\20230619_QueuePeekJouranlApprovalSetUpdateDate.dxml" />
     <None Include="DBScripts\20230619_SetTenantIdleProcedure.dxml" />
     <None Include="DBScripts\202404011909_AddTableGLAccountCardsData.sxml" />
+    <None Include="DBScripts\202405021130_UpdateObjectField_DisplayInRequiredFields.sxml" />
     <None Include="DBScripts\27092023_FillDefaultHeaderColor.sxml" />
     <None Include="DBScripts\Post\202103160820_ RebuildGLAccountRecocileDatas.sxml" />
     <None Include="DBScripts\202103180820_ InsertGLAccountAgingDatas.sxml" />
