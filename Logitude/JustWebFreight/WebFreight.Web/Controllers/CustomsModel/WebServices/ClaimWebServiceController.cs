@@ -20,6 +20,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 {
     public class ClaimWebServiceController : ApiController
     {
+        [HttpGet]
         public HttpResponseMessage CheckIfCorporationNameExists(int tenant)
         {
             try
