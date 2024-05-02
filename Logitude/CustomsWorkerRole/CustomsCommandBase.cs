@@ -612,7 +612,7 @@ namespace CustomsWorkerRole
         // islam db queue service
         void WorkUntilQEmpty_Db_new()
         {
-            LogTime(className + " start all");
+            //LogTime(className + " start all");
             List<CustomDBQueueMessage> responseList=null;
             List<long> deferredSequenceNumbers = new List<long>();
             bool proccesDone = false;
@@ -658,7 +658,7 @@ namespace CustomsWorkerRole
 
                             if (responseList == null || (responseList != null && responseList.Count == 0))
                             {
-                                LogTime(className + " queue is empty");
+                                //LogTime(className + " queue is empty");
                                 QueueThreadStateService.Upsert(QueueThreadStateService.GetWRKey(this.GetType().Name), "No Work");
                                 Thread.Sleep(TimeSpan.FromSeconds(CustomsWorkerRole.Utils.GenUtil.IfNoQueue_ServerWaitTimeInSec()));
 
@@ -672,25 +672,32 @@ namespace CustomsWorkerRole
                             LastActivity = DateTime.UtcNow;
                             proccesDone = true;
                             var taskLIst = new List<Task>();
-                            LogTime($"{className} start open tasks for {responseList.Count} returnd rows from Db");
+
+                            int currentThreadsCount = Process.GetCurrentProcess().Threads.Count;
+                            LogTime($"{className} start open tasks for {responseList.Count} returned rows from Db (current threads count: " + currentThreadsCount);
+                            var totalStopwatch = Stopwatch.StartNew();
+
                             foreach (var item in responseList)
                             {
+                                var stopwatch = Stopwatch.StartNew();
                                 //LogTime(className + " create new task for msg id: " + item.MessageId);
                                 var t =
                                 Task.Factory.StartNew(() =>
                                 {
-                                    LogTime(className + " start task for row MessageId:" + item.MessageId);
+                                    LogTime(className + " start task (created " + stopwatch.Elapsed.TotalSeconds + " seconds ago) for row MessageId: " + item.MessageId);
+                                    var taskstopwatch = Stopwatch.StartNew();
+
                                     CustomsCommandBaseHelper helper = new CustomsCommandBaseHelper();
                                     helper.RunTask(item, className);
                                     LogMessagingUtilWR.Instance.AppendLine("LogDoneItemInMemory();");
                                     LogDoneItemInMemory();
                                     LogMessagingUtilWR.Instance.AppendLine("LogDoneItemInMemory();AFTER");
-                                    LogTime(className + " end task for row MessageId:" + item.MessageId);
+                                    LogTime(className + " end task (elapsed: " + taskstopwatch.Elapsed.TotalSeconds + " seconds) for row MessageId: " + item.MessageId);
                                 });
                                 taskLIst.Add(t);
                             }
                             Task.WaitAll(taskLIst.ToArray());
-                            LogTime(className + " end waiting for all of them");
+                            LogTime(className + " end waiting for all of them (total elapsed: " + totalStopwatch.Elapsed.TotalSeconds + " seconds)");
                             Queue_scope.Complete();
                         }
                     }
