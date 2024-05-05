@@ -281,7 +281,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             SendSheetSignModel mySendSheetSignModel = null)
         {
 
-            Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("SendSheet::" + Environment.StackTrace);
+            //Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("SendSheet::" + Environment.StackTrace);
 
             //CustomsRequestsSheetService<TRequestParams> customsRequestsSheetService;
             try
@@ -347,7 +347,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
         private TResponseData SendSheet()
         {
-            Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("SendSheet22::" + Environment.StackTrace);
+            // Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("SendSheet22::" + Environment.StackTrace);
 
             if (_CustomsRequestsSheetService == null)
             {
