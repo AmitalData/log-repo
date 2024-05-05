@@ -88,7 +88,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 return;
             }
 
-            _MyDeclarationPM = myDeclarationQueryService.GetSingle(requestParams.DeclarationId, true, false);
+            var stopwatch = Stopwatch.StartNew();
+            _MyDeclarationPM = myDeclarationQueryService.GetSingle(requestParams.DeclarationId, false, false);
+            LogMessagingUtil.Instance.AppendLine("getsingle:Took:" + stopwatch.ElapsedMilliseconds);
 
             if (this._MyDeclarationPM == null)
             {
