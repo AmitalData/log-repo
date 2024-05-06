@@ -230,9 +230,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 VatNumber = null;
                 InputVatAmount = 0;
                 InputInvoiceAmount = 0;
-                var exist = reportLinesList.Where(d => d.JournalId == transaction.JournalId).Any();
-                if (!exist)
-                {
+                
 
                     bool voidedAPInvoiceTaxMonthTransaction = CheckIfAPInvoiceTaxMonthTransactionIsVoided(taxReport, voidedAPInvoices, transaction);
 
@@ -331,7 +329,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 reportLinesList.Add(inputReportLine);
                 //     UpdateJournalAdditionalDataRecord(inputReportLine, transaction);
 
-                }
+               
             }
 
 
