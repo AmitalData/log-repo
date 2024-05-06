@@ -1320,7 +1320,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 				ForiegnKeyCheck.Check<SupplierInvoice>(x, tenant);
 			});
 
-			declarationPm.DeclarationTaxes.ForEach(x =>
+            declarationPm.DeclarationTaxes.ForEach(x =>
 			{
 				ForiegnKeyCheck.CheckClosedTable(x, tenant);
 				ForiegnKeyCheck.Check<DeclarationTax>(x, tenant);
@@ -1331,6 +1331,12 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 				ForiegnKeyCheck.CheckClosedTable(x, tenant);
 				ForiegnKeyCheck.Check<DeclarationConstraint>(x, tenant);
 			});
+
+            declarationPm.DeclarationExportRecipients.ForEach(x =>
+            {
+                ForiegnKeyCheck.CheckClosedTable(x, tenant);
+                ForiegnKeyCheck.Check<DeclarationExportRecipient>(x, tenant);
+            });
 
 			declarationPm.DeclarationConsAcceptances.ForEach(x =>
 			{
@@ -1584,7 +1590,16 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 supplierInvoice.BuyerName = invoice.InvoiceBuyerName;
                 supplierInvoice.BuyerAddress = invoice.InvoiceBuyerAddress;
                 supplierInvoice.BuyerCountryCode = invoice.InvoiceBuyerCountryCode;
+
+				if (!string.IsNullOrEmpty(invoice.InvoicePaymentType))
+				{
+                    PaymentTypeListQueryService paymentTypeListQueryService = new PaymentTypeListQueryService(_context);
+                    var paymentTypeList = paymentTypeListQueryService.GetSingle(invoice.InvoicePaymentType);
+					if (paymentTypeList != null)
+					{
                 supplierInvoice.PaymentTypeCode = invoice.InvoicePaymentType;
+                    }
+                }
                 supplierInvoice.BuyerRoleCode = invoice.InvoiceBuyerRoleCode;
                 supplierInvoice.PartyRelationshipCode = invoice.InvoiceBuyerRelation;
 
@@ -1627,33 +1642,92 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 
             if (!string.IsNullOrEmpty(invoiceItem.ItemProcessType))
             {
-                supplierInvoiceItem.SupplierInvoiceItemProcesTypes = new List<SupplierInvoiceItemProcesTypePM>
-                    {
-                        new SupplierInvoiceItemProcesTypePM()
-                        {
-                            ChangeSetOp = ChangeSetOperation.Insert,
-                            Tenant = ResolvedTenant(),
-                            ProcessTypeCode = invoiceItem.ItemProcessType,
-                        }
-                    };
+                // validate item process type code
+                AppendLogLine("ItemProcessType: " + invoiceItem.ItemProcessType);
+                ItemGovernmentProcedureTypeListQueryService itemGovernmentProcedureTypeListQueryService = new ItemGovernmentProcedureTypeListQueryService(_context);
+                var certificateExemptionTypeList = itemGovernmentProcedureTypeListQueryService.GetSingle(invoiceItem.ItemProcessType);
+				if (certificateExemptionTypeList != null)
+				{
+					supplierInvoiceItem.SupplierInvoiceItemProcesTypes = new List<SupplierInvoiceItemProcesTypePM>
+					{
+						new SupplierInvoiceItemProcesTypePM()
+						{
+							ChangeSetOp = ChangeSetOperation.Insert,
+							Tenant = ResolvedTenant(),
+							ProcessTypeCode = invoiceItem.ItemProcessType,
+						}
+					};
+				}
             }
 
             if (invoiceItem.Certificats != null)
             {
-                supplierInvoiceItem.SupplierInvioceItemCertificats = new List<SupplierInvioceItemCertificatPM>() {
-                    new SupplierInvioceItemCertificatPM()
-                    {
-                        ChangeSetOp = ChangeSetOperation.Insert,
-                        Tenant = ResolvedTenant(),
-                        ReqConfirmationTypeCode = invoiceItem.Certificats.CertificateTypeCode,
-                        AttachmentTypeCode = invoiceItem.Certificats.AtachmentTypeCode,
-                        CertificateNumber = invoiceItem.Certificats.CertificateNumber,
-                        CertificateExemptionTypeCode = invoiceItem.Certificats?.Certificateexemptiontypecode,
-                    }
-                };
+                SupplierInvioceItemCertificatPM supplierInvioceItemCertificatPM = InitSupplierInvoiceItemCertificate(invoiceItem.Certificats);
+				if (supplierInvioceItemCertificatPM != null)
+                {
+                    AppendLogLine("add SupplierInvioceItemCertificats");
+                    supplierInvoiceItem.SupplierInvioceItemCertificats = new List<SupplierInvioceItemCertificatPM>() { supplierInvioceItemCertificatPM };
+                }
             }
 
-			return supplierInvoiceItem;
+            return supplierInvoiceItem;
+        }
+
+		private SupplierInvioceItemCertificatPM InitSupplierInvoiceItemCertificate(ExportInvoiceItemCertificats invoiceItemCertificate)
+		{
+			if (string.IsNullOrEmpty(invoiceItemCertificate.CertificateTypeCode) || string.IsNullOrEmpty(invoiceItemCertificate.AtachmentTypeCode) ||
+				(string.IsNullOrEmpty(invoiceItemCertificate.CertificateNumber) && string.IsNullOrEmpty(invoiceItemCertificate.Certificateexemptiontypecode)))
+			{
+				return null;
+			}
+
+			AppendLogLine("CertificateTypeCode: " + invoiceItemCertificate.CertificateTypeCode);
+			AppendLogLine("AtachmentTypeCode: " + invoiceItemCertificate.AtachmentTypeCode);
+
+			var supplierInvioceItemCertificatPM = new SupplierInvioceItemCertificatPM()
+			{
+				ChangeSetOp = ChangeSetOperation.Insert,
+				Tenant = ResolvedTenant()
+			};
+
+			// validate certificate type code
+			ConfirmationTypeListQueryService confirmationTypeListQueryService = new ConfirmationTypeListQueryService(_context);
+			var confirmationType = confirmationTypeListQueryService.GetSingle(invoiceItemCertificate.CertificateTypeCode);
+			if (confirmationType == null)
+			{
+				return null;
+			}
+			supplierInvioceItemCertificatPM.ReqConfirmationTypeCode = invoiceItemCertificate.CertificateTypeCode;
+			supplierInvioceItemCertificatPM.ResConfirmationTypeCode = invoiceItemCertificate.CertificateTypeCode;
+
+			// validate attachment type code
+			AttachmentTypeListQueryService attachmentTypeListQueryService = new AttachmentTypeListQueryService(_context);
+			var attachmentTypeList = attachmentTypeListQueryService.GetSingle(invoiceItemCertificate.AtachmentTypeCode);
+			if (attachmentTypeList == null)
+			{
+				return null;
+			}
+			supplierInvioceItemCertificatPM.AttachmentTypeCode = invoiceItemCertificate.AtachmentTypeCode;
+
+			if (!string.IsNullOrEmpty(invoiceItemCertificate.Certificateexemptiontypecode))
+			{
+				// validate certificate exemption type code
+				AppendLogLine("Certificateexemptiontypecode: " + invoiceItemCertificate.Certificateexemptiontypecode);
+				CertificateExemptionTypeListQueryService certificateExemptionTypeListQueryService = new CertificateExemptionTypeListQueryService(_context);
+				var certificateExemptionTypeList = certificateExemptionTypeListQueryService.GetSingle(invoiceItemCertificate.Certificateexemptiontypecode);
+				if (certificateExemptionTypeList == null)
+				{
+					return null;
+				}
+				supplierInvioceItemCertificatPM.CertificateExemptionTypeCode = invoiceItemCertificate.Certificateexemptiontypecode;
+			}
+			else
+			{
+				AppendLogLine("CertificateNumber: " + invoiceItemCertificate.CertificateNumber);
+				supplierInvioceItemCertificatPM.CertificateNumber = invoiceItemCertificate.CertificateNumber;
+			}
+            
+			return supplierInvioceItemCertificatPM;
         }
 
         private string TranslateMeasurmentUnit(string amitalMeasurmentUnitCode)
