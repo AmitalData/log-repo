@@ -606,7 +606,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
                  ChartOfAccountsTypeEnglish = chart.ChartOfAccountTypeCode,
                  ChartOfAccountsEnglish = chart.ChartOfAccountTypeCode,
-                 GLAccountEnglish = chart.GLAccountEnglish,
+                 GLAccountEnglish = aGL.EnglishName,
 
                  LeafId = chart.LeafId,
 

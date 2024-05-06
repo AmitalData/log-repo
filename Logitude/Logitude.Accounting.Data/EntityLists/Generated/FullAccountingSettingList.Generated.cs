@@ -124,6 +124,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public bool AllowEditingExchangeRate  { get; set; }
        [DataMember]
        public bool OppositeAccountNumber  { get; set; }
+       [DataMember]
+       public string TenantForConfirmationNumberApi  { get; set; }
    }
 
 }

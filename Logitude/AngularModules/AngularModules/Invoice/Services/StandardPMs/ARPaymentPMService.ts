@@ -22,22 +22,25 @@ import { CustomFieldClass } from '../../../Infrastructure/DataContracts/CustomFi
 import { PerformanceLogger } from '../../../Infrastructure/Utilities/PerformanceLogger';
 
 import { ARPaymentPM } from '../../EntityPMs/ARPaymentPM';
-
+import { BankAccountPMService } from 'Accounting/Services/StandardPMs/BankAccountPMService';
 import { ARPaymentInvoicePM } from '../../EntityPMs/ARPaymentInvoicePM';
 import { LedgerTransactionPM } from 'Accounting/EntityPMs/LedgerTransactionPM';
 import { ARPaymentChequeReplicaPM } from '../../EntityPMs/ARPaymentChequeReplicaPM';
 import { ARPaymentBankTranferPM } from '../../EntityPMs/ARPaymentBankTranferPM';
 import { ARPaymentPMInitService } from '../../EntityPMInitServices/ARPaymentPMInitService';
 import { ARPaymentValidator } from '../../Validators/ARPaymentValidator';
+import { AppTool } from 'Infrastructure/Tools';
 
 @Injectable()
 
 export class ARPaymentPMService {
     private _http: HttpClient;
     private _apiUrl: string;
+    bankAccountPMService: BankAccountPMService;
     constructor() {
         this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/arpayments';
+        this.bankAccountPMService = new BankAccountPMService();
     }
 
     get(id: string) {
@@ -201,6 +204,9 @@ export class ARPaymentPMService {
 
         }
 
+        if (!AppTool.IsNullOrUndefined(entityPM.BankAccount)) {
+            entityPM.BankAccount = this.bankAccountPMService.MapJsonToEntityPM(entityPM.BankAccount, false); // remove circular dependency from bank account
+        }
         this.MapPaymentInvoices(entityPM, jsonPM, mapParent); // Call composition tables map methods
         this.MapInvoicesLedgerTransactions(entityPM, jsonPM, mapParent); // Call composition tables map methods
         this.MapARPaymentChequeReplicas(entityPM, jsonPM, mapParent); // Call composition tables map methods

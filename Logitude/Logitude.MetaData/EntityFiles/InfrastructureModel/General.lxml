@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;0f00&quot;"
+  Code="&quot;f827&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -8308,6 +8308,15 @@
       FeatureTextCodeCode="&quot;General.Features.General.Features.ReleaseSettings&quot;"
       FeatureDefaultText="&quot;Release Settings&quot;"
       IsPackagable="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;CONFIRMATIONNUMBERDEFAULTS&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.CONFIRMATIONNUMBERDEFAULTS&quot;"
+      FeatureDefaultText="&quot;Confirmation number defaults&quot;"
+      IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />

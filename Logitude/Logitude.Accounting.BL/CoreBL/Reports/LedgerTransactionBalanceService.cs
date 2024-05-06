@@ -241,9 +241,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             {
                 rec.CalculatedForeignAmount = rec.ForeignAmountCredit != 0 ? rec.ForeignAmountCredit * -1 : rec.ForeignAmountDebit;
 
-                rec.ForeignAmountCreditWithSign = rec.CalculatedForeignAmount + " " + rec.CurrencySign;
                 ledgerTransactionHelper.MapAmountWithNegativeValue(rec);
-                rec.ForeignAmountCreditWithSign = rec.CalculatedForeignAmount + " " + rec.CurrencySign;
             }
         }
 
@@ -260,10 +258,14 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
         {
             if (this.Response.YearTransferLedgerTransactionIds != null && this.Response.YearTransferLedgerTransactionIds.Count > 0)
             {
+                // Convert YearTransferLedgerTransactionIds to a list of primitive types
+                List<string> yearTransferIds = this.Response.YearTransferLedgerTransactionIds.Select(id => id.ToString()).ToList();
+
+                // Use the list of primitive types in the LINQ query
                 QOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId =
                     QOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId
                     .Where(r =>
-                    !this.Response.YearTransferLedgerTransactionIds.Contains(r.Id));
+                        !yearTransferIds.Contains(r.Id));
             }
 
             return QOrderAccDateAndIdByAccIdBetweenAccDateMaxCreateLimit_AndCurrencyId;

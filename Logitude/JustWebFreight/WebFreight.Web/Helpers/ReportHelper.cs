@@ -2632,11 +2632,12 @@ namespace WebFreight.Web.Helpers
             StiReport report = new StiReport();
                 ExportDocumentHelper exportDocumentHelper = new ExportDocumentHelper();
 
-                string dllName = exportDocumentHelper.GetDllName(reportTemplate, report);
-                byte[] dllData = exportDocumentHelper.GetDllFromStorage(dllName, reportStimulDataProviderDetails.Tenant);
+                
                 if (false)
                 {
-                    if (dllData != null && dllData.Count() != 0)
+                string dllName = exportDocumentHelper.GetDllName(reportTemplate, report);
+                byte[] dllData = exportDocumentHelper.GetDllFromStorage(dllName, reportStimulDataProviderDetails.Tenant);
+                if (dllData != null && dllData.Count() != 0)
                     {
                         report = StiReport.GetReportFromAssembly(dllData);
                         if (reportStimulDataProviderDetails.CurrentBusinessObject != null) exportDocumentHelper.RegBusinessObject(report, reportStimulDataProviderDetails.CurrentBusinessObject);

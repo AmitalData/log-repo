@@ -49,7 +49,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         PrintingBranchNumber, 
 	         PrintingAccountNumber, 
 	         TotalOpenExternalTransactions, 
-	         TotalOpenPagesLines,
+	         TotalOpenPagesLines, 
+	         ChequeCounterSeriesID,
 	      }
 
 
@@ -98,7 +99,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         BankCodeEnglishName, 
 	         BankCodeLocalName, 
 	         TotalOpenExternalTransactions, 
-	         TotalOpenPagesLines,
+	         TotalOpenPagesLines, 
+	         ChequeCounterSeriesID,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -240,6 +242,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TotalOpenPagesLines))
             {
 				entityPOCO.TotalOpenPagesLines = entityPM.TotalOpenPagesLines;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ChequeCounterSeriesID))
+            {
+				entityPOCO.ChequeCounterSeriesID = entityPM.ChequeCounterSeriesID;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -388,6 +395,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.TotalOpenPagesLines = entityPOCO.TotalOpenPagesLines;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ChequeCounterSeriesID))
+            {
+					entityPM.ChequeCounterSeriesID = entityPOCO.ChequeCounterSeriesID;
+            }
+
 		}
 
 		public void PMToOldPM(BankAccountPM entityPM, BankAccountPM oldEntityPM)
@@ -527,6 +539,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TotalOpenPagesLines))
             {
                 oldEntityPM.TotalOpenPagesLines = entityPM.TotalOpenPagesLines;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ChequeCounterSeriesID))
+            {
+                oldEntityPM.ChequeCounterSeriesID = entityPM.ChequeCounterSeriesID;
             }
 			
 		}

@@ -500,8 +500,11 @@
                                     <td>
                                       <div style="margin-right:5px;">
 
-                                        <CheckBox style="margin-right:5px;float:right;"
-                                                  (Checked)="$event == true ? PushStatus(item) : PopStatus(item)">
+                                        <CheckBox 
+                                         [IsChecked]="CheckSelectedStatusItems(item)"  
+
+                                         style="margin-right:5px;float:right;"
+                                         (Checked)="$event == true ? PushStatus(item) : PopStatus(item)">
                                         </CheckBox>
 
                                         <span [title]="showLocals ? item.LocalName : item.EnglishName"

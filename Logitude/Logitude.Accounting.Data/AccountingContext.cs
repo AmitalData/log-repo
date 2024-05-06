@@ -128,6 +128,8 @@ namespace Logitude.Accounting.Data
 	
             modelBuilder.Configurations.Add(new ChartOfAccountsTypeMap());
 	
+            modelBuilder.Configurations.Add(new ChequeCounterSerialMap());
+	
             modelBuilder.Configurations.Add(new CopyFromTenant0Map());
 	
             modelBuilder.Configurations.Add(new ExternalPageAdditionalDataMap());
@@ -902,6 +904,12 @@ namespace Logitude.Accounting.Data
 	 }
 	
 	 public IDbSet<ChartOfAccountsType> ChartOfAccountsTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<ChequeCounterSerial> ChequeCounterSerials 
 	 {
 	      get; set;
 	 

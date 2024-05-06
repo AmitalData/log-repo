@@ -1,0 +1,646 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+ 
+using Simplog.Data.CommonDataModel;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.InfrastructureModel;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Data.InvoiceModel;
+using Simplog.Data.InvoiceModel.Repositories;
+using Simplog.Data.QuoteModel;
+using Simplog.Data.QuoteModel.Repositories;
+using Simplog.Data.ShipmentsModel;
+using Simplog.Data.ShipmentsModel.Repositories;
+using WebFreight.Web.CommonDataModel;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using WebFreight.Web.GlobalModel;
+using WebFreight.Web.Helpers;
+using WebFreight.Web.InfrastructureModel;
+using Logitude.BL.InfrastructureModel.EntityPMs;
+using WebFreight.Web.InvoiceModel;
+using WebFreight.Web.MetaDataUpdate.AddClasses;
+using WebFreight.Web.MetaDataUpdate.DetailClasses;
+using WebFreight.Web.QuoteModel;
+using WebFreight.Web.ShipmentsModel;
+using WebFreight.Web.CommonDataModel.DomainServices;
+using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+using System.Data.Entity.Core.EntityClient;
+using System.Configuration;
+using Simplog.Server.Infrastructure;
+using System.Data.Common;
+using Logitude.CRM.Data.EntityPOCOs;
+using Logitude.CRM.BL;
+using Logitude.CRM.Data.Repsitories;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.BL;
+using Logitude.Accounting.Data.Repositories;
+using Logitude.BookingLib.Data.EntityPOCOs;
+using Logitude.BookingLib.BL;
+using Logitude.BookingLib.Data.Repositories;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.BL;
+using Logitude.Customs.Data.Repsitories;
+using Logitude.Social.Data.EntityPOCOs;
+using Logitude.Social.BL;
+using Logitude.Social.Data.Repsitories;
+using Logitude.Server.Tools.CloseTablesClasses;
+using Logitude.Customs.BL.ClosedTable;
+using Logitude.CRM.BL.CLoseTable;
+using Logitude.BookingLib.BL.CLoseTable;
+using Logitude.WarehouseLib.Data.Repositories;
+using Logitude.WarehouseLib.Data.EntityPOCOs;
+using Logitude.WarehouseLib.BL.CLoseTable;
+using Logitude.TimeManagement.Data.Repositories;
+using Logitude.TimeManagement.Data.EntityPOCOs;
+using Logitude.TimeManagement.BL.CLoseTable;
+using Logitude.BL.ShipmentsModel.CloseTables;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Logitude.BL.ShipmentsModel;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Logitude.BL.GlobalModel;
+using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.EntityPOCOs;
+using Logitude.Infrastructure.BL;
+using Logitude.TariffModule.Data.Repositories;
+using Logitude.TariffModule.Data.EntityPOCOs;
+using Logitude.TariffModule.BL.CLoseTable;
+using Logitude.CargoTracking.Data.Repositories;
+using Logitude.CargoTracking.BL;
+using Logitude.CargoTracking.Data.EntityPOCOs;
+using Logitude.Workflow.Data.Repositories;
+using Logitude.Workflow.Data.EntityPOCOs;
+using Logitude.Workflow.BL.CLoseTable;
+using Logitude.DashboardModule.Data.Repositories;
+using Logitude.DashboardModule.Data.EntityPOCOs;
+using Logitude.DashboardModule.BL;
+
+namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
+{
+   public class ChequeCounterSerialUpdateClass
+   {  		
+		public const string HashString = "b81ce5e2b1e4b1e86f42ac0011c19eeb";
+	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
+        {                     
+            
+            AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
+            {
+			
+	             				    ObjectTableName =  "ChequeCounterSerial",
+			      				    IsNew =  true,
+			      				    DBTableName =  "ChequeCounterSerials",
+			      				    ObjectTableSingular =  "ChequeCounterSerial",
+			      				    ObjectTablePlural =  "ChequeCounterSerials",
+			      				    HasCustomFilter =  false,
+			      				    HasCustomFields =  false,
+			      				    AvailableInCustomization =  true,
+			      				    SupportSubEntity =  false,
+			      				    ApplyGenericCustomFields =  false,
+			      				    AvailableInDocumentTypes =  false,
+			      				    HasHelper =  false,
+			      				    HasShortTitle =  false,
+			      				    HasFiltersMenu =  false,
+			      				    IsEditable =  false,
+			      				    IsNewWizard =  false,
+			      				    LookUp1 =  "SeriesId",
+			      				    AutoCompleteSearchWindow =  false,
+			      				    IsClosed =  false,
+			      				    CacheOnClient =  false,
+			      				    EditableFromAutoCompleteWindow =  false,
+			      				    HasCounter =  false,
+			      				    EnableAddFromLOV =  false,
+			      				    IsRestrictable =  false,
+			      				    IsMain =  false,
+			      				    IsAutoComplete =  false,
+			      				    EnableEditFromLOV =  false,
+			      				    SortingByObjectField =  "BankAccountId",
+			      				    InActive =  false,
+			      				    IsSaveButtonVisible =  false,
+			      				    IsComposition =  true,
+			      				    EnableSecurity =  false,
+			      				    AllowCustomFields =  false,
+			      				    HasDynamicHeader =  false,
+			      				    ObjectTableTypeCode =  "MD",
+			      				    MaxNumberOfCustomFields =  0,
+			      				    LocalDefaultText =  "סדרת שיקים",
+			      				    DefaultText =  "Cheque Series",
+			      				    Code =  "9ec2",
+			      				    Name =  " Query Group",
+			      				    GenerateDomainService =  false,
+			      				    ClientModuleName =  "Accounting",
+			      				    NoTS =  false,
+			      				    HasMenuButtons =  false,
+			      				    AllowedForComputingPartners =  false,
+			      				    CustomFieldsCount =  0,
+			      				    DisableSearchBox =  false,
+			      				    HasDocuments =  false,
+			      				    IsLookUp =  false,
+			      				    IsTabsHidden =  false,
+			      				    HashString =  ChequeCounterSerialUpdateClass.HashString,
+			                    
+            }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
+		}
+	
+	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
+	    {
+	         
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "Tenant",
+					  						ObjectTableName =  "ChequeCounterSerial",
+					  						FieldsDataType =  "Integer",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  true,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "Tenant",
+					  						ListPropertyPath =  "Tenant",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "ChequeCounterSerial",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "Tenant",
+					  						DefaultText =  "Tenant",
+					  						ListFieldLable =  "TenantListLable",
+					  						ListLableDefaultText =  "Tenant",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  true,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  true,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "SeriesId",
+					  						ObjectTableName =  "ChequeCounterSerial",
+					  						FieldsDataType =  "Integer",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  true,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "SeriesId",
+					  						ListPropertyPath =  "SeriesId",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "ChequeCounterSerial",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "SeriesId",
+					  						DefaultText =  "Series Id ",
+					  						FullLocalDefaultText =  "מספר סדרה",
+					  						ListFieldLable =  "SeriesIdListLable",
+					  						ListLableDefaultText =  "Series Id",
+					  						ListLocalDefaultText =  "מספר סדרה",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "ChequeCounterBegin",
+					  						ObjectTableName =  "ChequeCounterSerial",
+					  						FieldsDataType =  "Integer",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  true,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "ChequeCounterBegin",
+					  						ListPropertyPath =  "ChequeCounterBegin",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "ChequeCounterSerial",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "ChequeCounterBegin",
+					  						DefaultText =  "Cheque Counter Begin ",
+					  						FullLocalDefaultText =  "התחלה",
+					  						ListFieldLable =  "ChequeCounterBeginListLable",
+					  						ListLableDefaultText =  "Cheque Counter Begin",
+					  						ListLocalDefaultText =  "התחלה",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "ChequeCounterEnd",
+					  						ObjectTableName =  "ChequeCounterSerial",
+					  						FieldsDataType =  "Integer",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  true,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "ChequeCounterEnd",
+					  						ListPropertyPath =  "ChequeCounterEnd",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "ChequeCounterSerial",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "ChequeCounterEnd",
+					  						DefaultText =  "Cheque Counter End",
+					  						FullLocalDefaultText =  "סיום",
+					  						ListFieldLable =  "ChequeCounterEndListLable",
+					  						ListLableDefaultText =  "Cheque Counter End",
+					  						ListLocalDefaultText =  "סיום",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "BankAccountId",
+					  						ObjectTableName =  "ChequeCounterSerial",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  15,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  15,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "BankAccountId",
+					  						ListPropertyPath =  "BankAccountId",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "ChequeCounterSerial",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "BankAccountId",
+					  						DefaultText =  "Bank Account Id",
+					  						FullLocalDefaultText =  "חשבון בנק",
+					  						ListFieldLable =  "BankAccountIdListLable",
+					  						ListLableDefaultText =  "Bank Account Id",
+					  						ListLocalDefaultText =  "חשבון בנק",
+					  						IsForeignKey =  true,
+					  						ForeignEntity =  "BankAccount",
+					  						NavigationPropertyName =  "BankAccount",
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "Inactive",
+					  						ObjectTableName =  "ChequeCounterSerial",
+					  						FieldsDataType =  "Boolean",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "Inactive",
+					  						ListPropertyPath =  "Inactive",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "ChequeCounterSerial",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "Inactive",
+					  						DefaultText =  "Inactive",
+					  						FullLocalDefaultText =  "לא פעיל",
+					  						ListFieldLable =  "InactiveListLable",
+					  						ListLableDefaultText =  "Inactive",
+					  						ListLocalDefaultText =  "לא פעיל",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+	    }
+
+	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
+	    {    
+	    }
+
+	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
+	    {   
+
+		   ObjectTable ChequeCounterSerialObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ChequeCounterSerial" && d.Tenant == 0).FirstOrDefault();
+		   //List<ObjectField> ChequeCounterSerialObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "ChequeCounterSerial").ToList();
+		       
+	      
+
+	         Screen ChequeCounterSerialChequeCounterSerialHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ChequeCounterSerial.HeaderScreen", Name = "ChequeCounterSerialHeaderScreen", ObjectTableId = ChequeCounterSerialObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    ChequeCounterSerialObjectTable.HeaderScreenId = ChequeCounterSerialChequeCounterSerialHeaderScreenScreen0.Id;
+		    ChequeCounterSerialObjectTable.HeaderScreenCode = ChequeCounterSerialChequeCounterSerialHeaderScreenScreen0.Code;
+
+	   		  
+
+	    }
+
+	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
+	    {      
+	    } 
+	
+	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {     
+	    
+		}
+
+	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
+	    {   
+			ObjectTable ChequeCounterSerialObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ChequeCounterSerial" && d.Tenant == 0).FirstOrDefault(); 
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "CREV",
+                EnglishName =  "Created",
+                LocalName =  "Created",
+                IsManualEntry =  false,
+                ShortView =  true,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = ChequeCounterSerialObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "UPEV",
+                EnglishName =  "Updated",
+                LocalName =  "Updated",
+                IsManualEntry =  false,
+                ShortView =  false,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = ChequeCounterSerialObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+	    }
+	
+	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
+	    {  
+	    }
+
+	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable ChequeCounterSerialObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ChequeCounterSerial" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode ChequeCounterSerialTextCode_ChequeCounterSerialOChequeCounterBeginBigger = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChequeCounterSerial.O.ChequeCounterBeginBigger", DefaultText = "The cheque counter begin field must be smaller than the cheque counter end field",LocalDefaultText = @"שדה תחילת מונה המחאות חייב להיות קטן מהשדה סיום מונה המחאות", ObjectTableId = ChequeCounterSerialObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ChequeCounterSerialTextCode_ChequeCounterSerialOChequeCounterBeginInvalid = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChequeCounterSerial.O.ChequeCounterBeginInvalid", DefaultText = "The cheque counter begin field must be greater than 1",LocalDefaultText = @"שדה תחילת מונה המחאות חייב להיות גדול מ-1", ObjectTableId = ChequeCounterSerialObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ChequeCounterSerialTextCode_ChequeCounterSerialOChequeCounterEndInvalid = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChequeCounterSerial.O.ChequeCounterEndInvalid", DefaultText = "The cheque counter end field must be greater than 1",LocalDefaultText = @"שדה סיום מונה המחאות חייב להיות גדול מ-1", ObjectTableId = ChequeCounterSerialObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ChequeCounterSerialTextCode_ChequeCounterSerialOSeriesOverlaps = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChequeCounterSerial.O.SeriesOverlaps", DefaultText = "There are overlaps between the series",LocalDefaultText = @"ישנן חפיפות בין הסדרות", ObjectTableId = ChequeCounterSerialObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ChequeCounterSerialTextCode_ChequeCounterSerialOCurrentSeriesInactive = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChequeCounterSerial.O.CurrentSeriesInactive", DefaultText = "The current cheques series is inactive. It must be returned to active status or a new active series must be defined in the bank entity before issuing a cheque",LocalDefaultText = @"סדרת ההמחאות הנוכחית לא פעילה. יש להחזיר לסטטוס פעיל או להגדיר ביישות הבנק סדרה פעילה חדשה לפני הפקת המחאה", ObjectTableId = ChequeCounterSerialObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ChequeCounterSerialTextCode_ChequeCounterSerialONoSeriesDefined = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChequeCounterSerial.O.NoSeriesDefined", DefaultText = "The cheque series are not defined in the system, it is mandatory to define some series for the bank entity before issuing a new cheque",LocalDefaultText = @"לא מוגדרות סדרות המחאות במערכת , חובה להגדיר ביישות הבנק סדרה כלשהי לפני הפקת המחאה חדשה", ObjectTableId = ChequeCounterSerialObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ChequeCounterSerialTextCode_ChequeCounterSerialOChequeCounterEndSmaller = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChequeCounterSerial.O.ChequeCounterEndSmaller", DefaultText = "The cheque counter end field must be bigger than the cheque counter begin field",LocalDefaultText = @"שדה סיום מונה המחאות חייב להיות גדול מהשדה תחילת מונה המחאות", ObjectTableId = ChequeCounterSerialObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ChequeCounterSerialTextCode_ChequeCounterSerialOChequeSerialAlreadyUsed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChequeCounterSerial.O.ChequeSerialAlreadyUsed", DefaultText = "Series Id {0} contains cheques numbers that have already been generated in the past.",LocalDefaultText = @"סדרה מספר {0} מכילה מספרי שיקים שכבר נוצרו בעבר. ", ObjectTableId = ChequeCounterSerialObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
+	    
+}
+
+    
+
+   }
+    
+}
+	 

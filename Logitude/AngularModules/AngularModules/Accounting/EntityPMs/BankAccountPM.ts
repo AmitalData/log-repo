@@ -7,6 +7,7 @@
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
+import {ChequeCounterSerialPM} from './ChequeCounterSerialPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -239,7 +240,46 @@ export class BankAccountPM {
     public set TotalOpenPagesLines(newValue: string) { if (this.totalOpenPagesLines != newValue) { this.totalOpenPagesLines = newValue; this.MarkAsDirty("TotalOpenPagesLines"); } }
        
 	 
+    private chequeCounterSeriesID: number;
+    public get ChequeCounterSeriesID() { return this.chequeCounterSeriesID; }
+    public set ChequeCounterSeriesID(newValue: number) { if (this.chequeCounterSeriesID != newValue) { this.chequeCounterSeriesID = newValue; this.MarkAsDirty("ChequeCounterSeriesID"); } }
+       
+	 
+     
+	private chequeCounterSerials: ChequeCounterSerialPM[];
+    get  ChequeCounterSerials() {
+        if (this.chequeCounterSerials == null) {
+            this.chequeCounterSerials = [];
+        }
 
+        return this.chequeCounterSerials;
+    }
+    set  ChequeCounterSerials(newValue: ChequeCounterSerialPM[]) {
+        if (this.chequeCounterSerials != newValue) {
+            this.chequeCounterSerials = newValue;
+        }
+    }
+    public AddChequeCounterSerial(item: ChequeCounterSerialPM) {
+        if (item != null) {
+            var index = this. ChequeCounterSerials.indexOf(item);
+            if (index == -1) {
+                item.EntityParentPM = this;
+                this. ChequeCounterSerials.push(item);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    public RemoveChequeCounterSerial(item: ChequeCounterSerialPM) {
+        if (item != null) {
+            var index = this. ChequeCounterSerials.indexOf(item);
+            if (index > -1) {
+                this. ChequeCounterSerials.splice(index, 1);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    //public ChequeCounterSerials: Array<ChequeCounterSerialPM>= [];
+ 
     public OldEntityPM: BankAccountPM;
 		
     public IsDirty: boolean;

@@ -1481,6 +1481,7 @@ namespace WebFreight.Web.ReportsWebServices
             IQueryable<ARInvoiceLine> tenantARInvoiceLines = aRInvoiceLineRepository.GetInvoiceLinesByTenant(tenant);
 
             List<Shipment> shipments = this.GetShipmentsByARInvoicesMainEntityId(iQueryable, tenant);
+            const int ConfNoRightPartLen = 9;
 
             #region Report Filters
             QueryOperations queryOperations = GetQueryOperationsFromXmlFilters(xmlFilters);
@@ -1762,7 +1763,22 @@ namespace WebFreight.Web.ReportsWebServices
                 {
                     invoicesRecored.BranchCode = branch.Code;
                 }
+                invoicesRecored.ConfirmationNumber = arInvoice.ConfirmationNumber;
 
+                if (!String.IsNullOrEmpty(invoicesRecored.ConfirmationNumber))
+                {
+                    int len = invoicesRecored.ConfirmationNumber.Length;
+                    if (len > ConfNoRightPartLen)
+                    {
+                        invoicesRecored.ConfirmationNumber_LeftPart = invoicesRecored.ConfirmationNumber.Substring(0, len - 1 - ConfNoRightPartLen);
+                        invoicesRecored.ConfirmationNumber_RightPart = invoicesRecored.ConfirmationNumber.Substring(len - ConfNoRightPartLen);
+                    }
+                    else
+                    {
+                        invoicesRecored.ConfirmationNumber_LeftPart = "";
+                        invoicesRecored.ConfirmationNumber_RightPart = invoicesRecored.ConfirmationNumber;
+                    }
+                }
                 Card billTo = CardRepository.GetSingleCard(arInvoice.BillToId, tenant, false);
 
                 if (string.IsNullOrEmpty(invoicesRecored.BillToVatNumber))

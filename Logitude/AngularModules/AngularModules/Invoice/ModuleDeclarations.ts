@@ -44,6 +44,7 @@ import {SATInterfaceSettingsComponent} from './Components/Workspaces/SATInterfac
 import { SendPaymentWindowComponent } from './Components/SAT/SendPaymentWindowComponent';
 import { ARInvoiceCancellationReasionComponent } from './Components/MenuButtons/ARInvoice/ARInvoiceCancellationReasionComponent';
 import { ARInvoiceLinesVATAmountsAdjustmentsComponent } from './Components/SAT/ARInvoiceLinesVATAmountsAdjustmentsComponent';
+import { NewConfirmationNumberDefaultComponent } from './Components/NewEntity/NewConfirmationNumberDefaultComponent';
 
 
 export const Components =
@@ -60,7 +61,8 @@ export const Components =
         TransferStartDateComponent,
         PrintTaxComponent,
         ExternalTransmissionSettingsComponent,
-        NewBankAccountLiteComponent,        
+        NewBankAccountLiteComponent,  
+        NewConfirmationNumberDefaultComponent,    
         APInvoiceShortTitleComponent,
         APPaymentShortTitleComponent,
         ARInvoiceShortTitleComponent,
@@ -105,6 +107,8 @@ export class ModuleDeclarations {
             case "PrintTaxComponent": { myResult = PrintTaxComponent; break; }
             case "NewBankAccountLiteComponent": { myResult = NewBankAccountLiteComponent; break; }             
             case "APInvoiceShortTitleComponent": { myResult = APInvoiceShortTitleComponent; break; }
+            case "NewConfirmationNumberDefaultComponent": { myResult = NewConfirmationNumberDefaultComponent; break; }             
+
             case "APPaymentShortTitleComponent": { myResult = APPaymentShortTitleComponent; break; }
             case "ARInvoiceShortTitleComponent": { myResult = ARInvoiceShortTitleComponent; break; }
             case "ARPaymentShortTitleComponent": { myResult = ARPaymentShortTitleComponent; break; }

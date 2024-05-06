@@ -196,6 +196,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ChequeCounterSeriesID"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"

@@ -48,7 +48,7 @@ export class EditTaxReportLineComponent extends BaseComponent {
     }
 
     SetWindowArgs(args) {
-        if (args != null) {
+                if (args != null) {
             this.TaxReportPM = args.TaxReportPM;
             this.TaxReportLinePM = args.TaxReportLinePM;
 
@@ -56,11 +56,14 @@ export class EditTaxReportLineComponent extends BaseComponent {
             this.OldTransmitStatusCode = this.TransmitStatusCode;
             this.OldVatNumber = this.VatNumber;
             this.OldReference = this.Reference;
+            this.OldConfirmationNumber = this.ConfirmationNumber;
             this.OldReferecneGroup = this.ReferecneGroup;
             this.OldReferenceDate = this.ReferenceDate;
             this.TypeFilterItems.addAdditionalFilter("Code", "I,S", null, null, "InListExact", false, false, false, "string", false, true);
             this.SetUpdatedByMessage();
+            
             this.SetUIProperties();
+           
         }
     }
 
@@ -71,6 +74,7 @@ export class EditTaxReportLineComponent extends BaseComponent {
     OldReference: string;
     OldReferecneGroup: string;
     OldReferenceDate: Date;
+    OldConfirmationNumber: string;
 
     private SetUpdatedByMessage() {
         if (this.TaxReportLinePM.IsManuallyChanged) {
@@ -114,7 +118,12 @@ export class EditTaxReportLineComponent extends BaseComponent {
             this.TaxReportLinePM.Reference = value;
         }
     }
-
+    get ConfirmationNumber() { return this.TaxReportLinePM.ConfirmationNumber; }
+    set ConfirmationNumber(value: string) {
+        if (this.TaxReportLinePM.ConfirmationNumber != value) {
+            this.TaxReportLinePM.ConfirmationNumber = value;
+        }
+    }
     //PreviousReference
     get PreviousReference() { return this.TaxReportLinePM.PreviousReference == null ? null : this.TaxReportLinePM.PreviousReference; }
     set PreviousReference(value: string) {
@@ -171,6 +180,7 @@ export class EditTaxReportLineComponent extends BaseComponent {
 
         }
         this.UIProperties.SetRequired("TransmitStatusCode", this.ObjectTableName, !this.TransmitStatusCode);
+        this.UIProperties.SetRequired("ConfirmationNumber", this.ObjectTableName, !this.TransmitStatusCode);
 
         if (this.LineTypeCode == "I" || this.LineTypeCode == "S") {
             this.UIProperties.SetEnabled("LineTypeCode", this.ObjectTableName, true);
@@ -185,8 +195,9 @@ export class EditTaxReportLineComponent extends BaseComponent {
 
 
         }
-
+        this.UIProperties.SetEnabled("ConfirmationNumber", this.ObjectTableName, true);
     }
+   
     SetEnabledForReferenceField() {
 
         if (!AppTool.IsNullOrEmpty(this.PreviousReference) || this.PreviousReference != " ") {
@@ -204,17 +215,24 @@ export class EditTaxReportLineComponent extends BaseComponent {
 
         if (!this.TaxReportLinePM.IsDirty)
             return this.CurrentSession.CloseCurrentWindowEmit("ok");
-
+        var fieldName: string
+        this.ValidationErrorsList = [];
+        if(this.ConfirmationNumber?.length <9 && this.ConfirmationNumber?.length>0)
+        {
+            var fieldError: string = TextCodeTranslator.Translate("TaxReportLine.O.ConfirmationMinNineDigits");
+            this.ValidationErrorsList.push(fieldError);
+        }
         if (!this.TaxReportLinePM.TransmitStatusCode) {
             var fieldName: string = TextCodeTranslator.Translate('TaxReportLine.F.TransmitStatusCode');
             var translatedRequiredError: string = TextCodeTranslator.Translate("General.M.FieldIsRequired");
             var fieldError: string = translatedRequiredError.replace("%FieldName", fieldName);
 
-            this.ValidationErrorsList = [];
+            
             this.ValidationErrorsList.push(fieldError);
-            return;
+            
         }
-
+        if(this.ValidationErrorsList?.length>0)
+        return;
         // update line
         this.TaxReportLinePM.IsManuallyChanged = true;
 
@@ -278,6 +296,7 @@ export class EditTaxReportLineComponent extends BaseComponent {
         this.Reference = this.OldReference;
         this.ReferecneGroup = this.OldReferecneGroup;
         this.ReferenceDate = this.OldReferenceDate;
+        this.ConfirmationNumber = this.OldConfirmationNumber;
 
         this.CurrentSession.CloseCurrentWindow();
     }
