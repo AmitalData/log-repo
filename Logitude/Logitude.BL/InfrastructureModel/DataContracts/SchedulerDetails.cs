@@ -77,7 +77,9 @@ namespace Logitude.BL.InfrastructureModel.DataContracts
         public string DocumentTypeTemplateId { get; set; }
         [DataMember]
         public string MessageTemplateId { get; set; }
-    }
+		[DataMember]
+		public string ProcedureName { get; set; }
+	}
 
     [DataContract(Namespace = "")]
     public class ReportSchedulerRecepients
