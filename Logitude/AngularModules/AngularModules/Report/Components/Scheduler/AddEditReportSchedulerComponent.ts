@@ -32,6 +32,7 @@ export class AddEditReportSchedulerComponent implements OnInit {
     private PageChild_OPEMA: any = null;
     public BIReportEntity: any;
     public IsBIReport: boolean;
+    public IsQueryReport: boolean;
     public IsNew: boolean = true;
     public TasksSchedulerId: string;
     public OldReportSchedulerDetails;
@@ -77,6 +78,8 @@ export class AddEditReportSchedulerComponent implements OnInit {
     SetWindowArgs(windowArgs) {
         this.ReportGroupList = windowArgs.ReportGroupList;
         this.ReportList = windowArgs.ReportList;
+        this.IsQueryReport = windowArgs.IsQueryReport;
+        
         if (!windowArgs.TasksSchedulerId) {
             this.BIReportEntity = windowArgs.BIReportEntity;
         }
@@ -269,18 +272,19 @@ export class AddEditReportSchedulerComponent implements OnInit {
         this.SetReportRecepientsDetails(isReloaded);
     }
 
-    SetReportRecepientsDetails(isReloaded) {
-        const isPartnersChanged = this.PageChild_PRREP.IsPartnersChanged("3");
-        this.PageChild_PRREP.PrepareContactList();
+    SetReportRecepientsDetails(isReloaded) {        
+        const isPartnersChanged = !this.IsQueryReport? this.PageChild_PRREP.IsPartnersChanged("3"): false; 
+        if(!this.IsQueryReport) 
+         this.PageChild_PRREP.PrepareContactList();        
         var windowArgs: any = {};
         var recepients: ReportSchedulerRecepients = this.PageChild_RETASK.DataContext.SchedulerDetails.ReportDetails.Recepients;
         windowArgs.ToEmail = this.SavedRecepients ? "" : recepients.To;
         windowArgs.Cc = this.SavedRecepients ? "" : recepients.Cc;
         windowArgs.Bcc = this.SavedRecepients ? "" : recepients.Bcc;
-        windowArgs.PartnersObslist = this.PageChild_PRREP.PartnersObslist;
+        windowArgs.PartnersObslist = !this.IsQueryReport ? this.PageChild_PRREP?.PartnersObslist : [];
         windowArgs.EntityId = this.IsBIReport ? this.BIReportEntity['Id'] : this.ReportList.Id;
         windowArgs.OnCloseSendToContactsEvent = false;
-        windowArgs.IsUserFromReport = this.PageChild_PRREP.PartnersObslist ? true : false;
+        windowArgs.IsUserFromReport = this.PageChild_PRREP?.PartnersObslist || this.IsQueryReport? true : false;
         windowArgs.IsSchedulerReport = true;
         windowArgs.isReloaded = isReloaded;
         windowArgs.ClearRecepients = isPartnersChanged;
@@ -305,20 +309,31 @@ export class AddEditReportSchedulerComponent implements OnInit {
 
     public SelectedTabLocation: number = 0; //0: Report Task, 1: Preview Report, 2: Open Email
     NextButtonClicked() {
-        if (this.SelectedTabLocation == 0) {
+        if(this.IsQueryReport) {
             if (this.PageChild_RETASK.NextButtonClicked()) {
-                this.ChangeSelectedLocation("PRREP");
-            }
-        }
-        else if (this.SelectedTabLocation == 1) {
-            if (this.IsBIReport) {
-                this.SelectedEmailPageForBIReport();
-            }
-            else if (this.PageChild_PRREP.ValidateSelectedFilters()) {
                 if (this.PageChild_OPEMA != null) {
                     this.SetRecepientsDetails(true);
                 }
+                this.SelectedTabLocation = 1;
                 this.ChangeSelectedLocation("OPEMA");
+            }
+        }
+        else {
+            if (this.SelectedTabLocation == 0) {
+                if (this.PageChild_RETASK.NextButtonClicked()) {
+                    this.ChangeSelectedLocation("PRREP");
+                }
+            }
+            else if (this.SelectedTabLocation == 1) {
+                if (this.IsBIReport) {
+                    this.SelectedEmailPageForBIReport();
+                }
+                else if (this.PageChild_PRREP.ValidateSelectedFilters()) {
+                    if (this.PageChild_OPEMA != null) {
+                        this.SetRecepientsDetails(true);
+                    }
+                    this.ChangeSelectedLocation("OPEMA");
+                }
             }
         }
     }
@@ -359,7 +374,10 @@ export class AddEditReportSchedulerComponent implements OnInit {
         if (this.IsBIReport) {
             this.SaveBIReportSchedulerDetails();
         }
-        else {
+        else if(this.IsQueryReport) {
+            this.SaveQueryReportSchedulerDetails();
+        }
+        else {         
             this.SaveReportSchedulerDetails();
         }
     }
@@ -416,6 +434,26 @@ export class AddEditReportSchedulerComponent implements OnInit {
             DocumentTypeTemplateId: this.PageChild_PRREP ? this.GetDocumentTemplateMessageId() : this.OldReportSchedulerDetails.DocumentTypeTemplateId,
             DocumentTypeTemplateIds: this.PageChild_PRREP ? this.PageChild_PRREP.MessageTemplateIds : this.OldReportSchedulerDetails.DocumentTypeTemplateIds,
             MessageTemplateId: this.PageChild_PRREP ? this.PageChild_PRREP.GetMessageTemplateId() : this.OldReportSchedulerDetails?.MessageTemplateId,
+            ProcedureName:null,
+        };
+        this.PageChild_RETASK.SaveButtonClicked(reportSchedulerDetails);
+    }
+    private SaveQueryReportSchedulerDetails() {
+        const reportSchedulerDetails: ReportSchedulerDetails = {
+            ReportFilterItems: [],//this.GetReportFilterItems(),
+            ReportTemplateId: this.PageChild_PRREP ? this.PageChild_PRREP.GetReportTemplateId() : this.OldReportSchedulerDetails?.ReportTemplateId,
+            ReportTemplateType: this.PageChild_PRREP ? this.PageChild_PRREP.GetReportTemplateType() : this.OldReportSchedulerDetails?.ReportTemplateType,
+            Recepients: this.GetAllRecepients(),
+            MainCustomerFieldName: this.PageChild_PRREP ? this.PageChild_PRREP.GetReportFilterMainCustomerFieldName() : this.OldReportSchedulerDetails?.MainCustomerFieldName,
+            CreatedByUserId: SessionLocator.LoggedUserId,
+            BIReportEntityId: null,
+            DWQueryId: null,
+            DWQueryFilterData: null,
+            DocumentTypeTemplateId: null,
+            DocumentTypeTemplateIds: null,
+            MessageTemplateId: null,
+            ProcedureName: this.PageChild_RETASK.SelectedReport.Code,
+
         };
         this.PageChild_RETASK.SaveButtonClicked(reportSchedulerDetails);
     }
@@ -463,6 +501,7 @@ export class AddEditReportSchedulerComponent implements OnInit {
             DocumentTypeTemplateIds: this.PageChild_PRREP ? this.PageChild_PRREP.DocumentTypeTemplateIds : this.OldReportSchedulerDetails.DocumentTypeTemplateIds,
             DWQueryFilterData: this.PageChild_PRREP ? this.GetNewSelectedFilters() : this.GetOriginalSelectedFilters(),
             MessageTemplateId: null,
+            ProcedureName:null,
         };
         this.PageChild_RETASK.SaveButtonClicked(reportSchedulerDetails);
     }
@@ -501,15 +540,21 @@ export class AddEditReportSchedulerComponent implements OnInit {
     }
 
     BackButtonClicked() {
-        switch (this.SelectedTabLocation) {
-            case 1:
-                this.reOpenReportTaskTab();
-                break;
-            case 2:
-                this.backFromRecepientsTab();
-                break;
+        if(!this.IsQueryReport) {
+            switch (this.SelectedTabLocation) {
+                case 1:
+                    this.reOpenReportTaskTab();
+                    break;
+                case 2:   
+                    this.backFromRecepientsTab(); 
+                    break;
+            }
+            this.SelectedTabLocation -= 1;
         }
-        this.SelectedTabLocation -= 1;
+        else{
+            this.reOpenReportTaskTab();
+            this.SelectedTabLocation = 0;
+        }
     }
 
     private backFromRecepientsTab() {
@@ -539,6 +584,7 @@ export class AddEditReportSchedulerComponent implements OnInit {
     DisableFinishButton() { 
         if (this.PageChild_OPEMA && this.PageChild_OPEMA.ToEmailLists.length == 0) return true;
         if (!this.IsBIReport && this.PageChild_PRREP && !this.IsNew && !this.PageChild_PRREP.ValidateSelectedFilters()) return true;
+        if(this.IsQueryReport && this.IsNew && (this.PageChild_OPEMA)) return false;
         if (this.IsNew && this.PageChild_PRREP && this.DataContext.IsFTP) return false;
         if (this.IsNew && (!this.PageChild_PRREP || !this.PageChild_OPEMA)) return true;
 

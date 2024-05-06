@@ -28,6 +28,8 @@ export class TaskReportSchedulerComponent implements OnInit {
     public ReportList: ReportList;
     public BIReportEntity: any;
     public IsBIReport: boolean;
+    public IsQueryReport: any;
+
     filterAgrs: ApiQueryFilters;
     SchedulerType: string = "Report";
     IsEditReportSchedulerEventAlreadyExist: boolean = false;
@@ -63,6 +65,8 @@ export class TaskReportSchedulerComponent implements OnInit {
         this.ReportGroupList = windowArgs.ReportGroupList;
         this.ReportList = windowArgs.ReportList;
         this.BIReportEntity = windowArgs.BIReportEntity;
+        this.IsQueryReport = windowArgs.IsQueryReport;
+     
         if (this.BIReportEntity) {
             this.IsBIReport = true;
         }
@@ -108,6 +112,7 @@ export class TaskReportSchedulerComponent implements OnInit {
         windowArgs.ReportGroupList = this.ReportGroupList;
         windowArgs.ReportList = this.ReportList;
         windowArgs.BIReportEntity = this.BIReportEntity;
+        windowArgs.IsQueryReport = this.IsQueryReport;
         var logWindow = new LogitudeWindow();
         logWindow.Height = 820;
         logWindow.Width = 1250;
@@ -130,7 +135,7 @@ export class TaskReportSchedulerComponent implements OnInit {
         windowArgs.ReportList = this.ReportList;
         windowArgs.BIReportEntity = this.BIReportEntity;
         windowArgs.TasksSchedulerId = DataContext.EntityPM.Id;
-
+        windowArgs.IsQueryReport =  DataContext.EntityPM.ProcedureCode == 'QueryReport' ? true : false;
         var logWindow = new LogitudeWindow();
         DataContext.fatherComponent = this;
         logWindow.DataContext = DataContext;
@@ -302,7 +307,7 @@ export class TaskReportSchedulerComponent implements OnInit {
         filters.addAdditionalFilter("EntityId", entityId, null, null, "Equals", true, false, false, "String");
 
 
-        let taskProcedureCode = this.IsBIReport ? "BIReportSchedulerTask" : "ReportSchedulerTask";
+        let taskProcedureCode = this.IsBIReport ? "BIReportSchedulerTask" :this.IsQueryReport? "QueryReport" : "ReportSchedulerTask";
         filters.addAdditionalFilter("ProcedureCode", taskProcedureCode, null, null, "Equals", true, false, false, "String");
 
         
@@ -579,6 +584,7 @@ export class TaskReportSchedulerItemClass extends BaseComponent {
             this.SchedulerDetails.SendIfEmpty = newValue;
         }
     }
+    get SchedulerDetailsData() { return this.EntityPM.SchedulerDetailsData; }
 
     SetReportSchedulerDetailsData(schedulerDetails: SchedulerDetails) {
         this.SchedulerDetails = schedulerDetails;

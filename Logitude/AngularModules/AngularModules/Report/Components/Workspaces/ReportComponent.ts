@@ -156,6 +156,11 @@ export class ReportComponent {
     }
 
     ViewReportClicked(GroupList: ReportGroupList, ReportList: ReportList) {
+        if (ReportList.Code == "LRBE") {
+            this.onReportSchedulerClick(GroupList, ReportList,true)
+            return;
+        }
+
         ServiceLocator.SendTotangoUserActivity("Reports", "Report View");
         
         var isLoadingResources = false;
@@ -247,12 +252,13 @@ export class ReportComponent {
         this.FillTempItemsSource();
     }
 
-    onReportSchedulerClick(groupList: ReportGroupList, reportList: ReportList) {
+    onReportSchedulerClick(groupList: ReportGroupList, reportList: ReportList,isQueryReport: boolean = false) {
         this.entityResourceService.getEntityResourceByTableName("TasksScheduler", 0).subscribe((response:any) => {
 
             var windowArgs: any = {};
             windowArgs.ReportGroupList = groupList;
             windowArgs.ReportList = reportList;
+            windowArgs.IsQueryReport = isQueryReport;
 
             var logWindow = new LogitudeWindow();
             logWindow.Width = 1200;
