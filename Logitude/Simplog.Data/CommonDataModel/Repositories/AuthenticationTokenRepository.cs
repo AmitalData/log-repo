@@ -27,7 +27,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             commonDataContext = CommonDataContext.GetContext(tenant);
         }
-
+        
         public void Add(AuthenticationToken entity)
         {
             context.AuthenticationTokens.Add(entity);
@@ -94,7 +94,12 @@ namespace Simplog.Data.CommonDataModel.Repositories
                 string entityName = "Token" + token;
                 if (CacheManager.CacheWrapper.Get(entityName) != null)
                 {
-                    return (AuthenticationToken)CacheManager.CacheWrapper.Get(entityName);
+                    AuthenticationToken authenticationToken = (AuthenticationToken)CacheManager.CacheWrapper.Get(entityName);
+                    if(authenticationToken.ExpirationDate != null && authenticationToken.ExpirationDate < DateTime.Now)
+                    {
+                        throw new AutenticationException("Sorry! this user is not authorized!");
+                    }
+                    return authenticationToken;
                 }
                 else
                 {
@@ -112,6 +117,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
       
         }
 
+        public class AutenticationException : Exception
+        {
+            public AutenticationException(string message) : base(message) { }
+        }
 
         public List<AuthenticationToken> GetMulti(Simplog.Server.Infrastructure.EntityKeyFields entityKeys)
         {
