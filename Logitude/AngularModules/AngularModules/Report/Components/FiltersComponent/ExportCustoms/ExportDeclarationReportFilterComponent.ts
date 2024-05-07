@@ -1,10 +1,14 @@
-﻿import {Component, OnInit, Output, EventEmitter}  from '@angular/core';
+import {Component, OnInit, Output, EventEmitter, ChangeDetectorRef}  from '@angular/core';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {ReportFliter} from '../../Filters/ReportFliter';
 import {QueryFilterItem} from '../../Filters/QueryFilterItem';
 import {ReportsPreviewComponent} from '../../ReportsPreviewComponent';
+import { AdvancedDatePickerResolverComponent } from 'Infrastructure/Components/LogitudeComponents/AdvancedDatePickerResolverComponent';
+import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
+import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
+import { SessionInfo } from 'Infrastructure/Utilities/SessionInfo';
 
 @Component({
     
@@ -14,12 +18,29 @@ import {ReportsPreviewComponent} from '../../ReportsPreviewComponent';
 export class ExportDeclarationReportFilterComponent extends BaseComponent {
 
     public ReportsPreview: ReportsPreviewComponent;
+    reportFliter: ReportFliter;
     public ValidationErrorsList: string[];
-    public ObjectTableName: string = "Report";
+    public ObjectTableName: string = "Customs.Declaration";
     public DataContext: ExportDeclarationReportFilterComponent = this;
+    TransportFilter_A: string;
+    TransportFilter_O: string;
+    TransportFilter_I: string;
+    errors: any[];
+    isReady: boolean = false;
 
-    constructor() {
+    constructor(private EntityResourceService: EntityResourceService, private CD: ChangeDetectorRef) {
         super();
+         
+        this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response: any) => {
+            this.isReady = true;
+        });
+
+        this.DataContext.UIProperties.SetRequired("FromDate", this.ObjectTableName, true)
+        this.DataContext.UIProperties.SetRequired("ToDate", this.ObjectTableName, true)
+
+        this.TransportFilter_A = "TransportFilter_A";
+        this.TransportFilter_O = "TransportFilter_O";
+        this.TransportFilter_I = "TransportFilter_I";
     }
 
     ngOnInit() {
@@ -31,32 +52,299 @@ export class ExportDeclarationReportFilterComponent extends BaseComponent {
     }
 
     public UserId: string; 
+    private fromDate: Date;
+    public get FromDate() { return this.fromDate; }
+    public set FromDate(value: Date) {
+        if (this.fromDate != value) {
+            this.fromDate = value;
+            this.ValidateDate();
+            this.DataContext.UIProperties.SetRequired("FromDate", this.ObjectTableName, false);
+        }
+    }
+
+    private toDate: Date;
+    public get ToDate() { return this.toDate; }
+    public set ToDate(value: Date) {
+        if (this.toDate != value) {
+            this.toDate = value;
+            this.ValidateDate();
+            this.DataContext.UIProperties.SetRequired("ToDate", this.ObjectTableName, false);
+
+        }
+    }
+
+    private selectedTransportModeId: string = "All";
+    public get SelectedTransportModeId() { return this.selectedTransportModeId; }
+    public set SelectedTransportModeId(value: string) {
+        if (this.selectedTransportModeId != value) {
+            this.selectedTransportModeId = value;
+        }
+    }
+
+    private showInvoices: string = "True";
+    public get ShowInvoices() { return this.showInvoices; }
+    public set ShowInvoices(value: string) {
+        if (this.showInvoices != value) {
+            this.showInvoices = value;
+        }
+    }
+
+    private showConsignments: string = "False";
+    public get ShowConsignments() { return this.showConsignments; }
+    public set ShowConsignments(value: string) {
+        if (this.showConsignments != value) {
+            this.showConsignments = value;
+        }
+    }
+
+    private customerId: string;
+    public get CustomerId() { return this.customerId; }
+    public set CustomerId(value: string) {
+        if (this.customerId != value) {
+            this.customerId = value;
+        }
+    }
+    private declarationStatusTypeCode: string;
+    public get DeclarationStatusTypeCode() { return this.declarationStatusTypeCode; }
+    public set DeclarationStatusTypeCode(value: string) {
+        if (this.declarationStatusTypeCode != value) {
+            this.declarationStatusTypeCode = value;
+        }
+    }
+
+    private declarationTypeCode: string;
+    public get DeclarationTypeCode() { return this.declarationTypeCode; }
+    public set DeclarationTypeCode(value: string) {
+        if (this.declarationTypeCode != value) {
+            this.declarationTypeCode = value;
+        }
+    }
+
+    private destinationCountryCode: string;
+    public get DestinationCountryCode() { return this.destinationCountryCode; }
+    public set DestinationCountryCode(value: string) {
+        if (this.destinationCountryCode != value) {
+            this.destinationCountryCode = value;
+        }
+    }
+
+    private referentUserId: string;
+    public get ReferentUserId() { return this.referentUserId; }
+    public set ReferentUserId(value: string) {
+        if (this.referentUserId != value) { 
+            this.referentUserId = value;
+        }
+    }
+
+    ValidateDate() {
+        var advancedDatePickerResolverComponent: AdvancedDatePickerResolverComponent = new AdvancedDatePickerResolverComponent();
+        if (!advancedDatePickerResolverComponent.SetValidityBetweenTwoDateOptions(this.FromDate, this.ToDate)) {
+
+            setTimeout(() => {
+                if (!this.IsOldDate("ToDate"))
+                    this.UIProperties.SetValidity("ToDate", this.ObjectTableName, false, TextCodeTranslator.Translate("Accounting.General.O.ToDateMustGreaterFromDate"));
+                this.errors = [];
+                if (!this.IsOldDate("FromDate"))
+                    this.UIProperties.SetValidity("FromDate", this.ObjectTableName, false, TextCodeTranslator.Translate("Accounting.General.O.FromDateMustSmallerToDate"));
+                this.CD.detectChanges();
+            }, 200);
+
+        } else {
+            setTimeout(() => {
+                this.UIProperties.SetValidity("ToDate", this.ObjectTableName, true, "");
+                this.UIProperties.SetValidity("FromDate", this.ObjectTableName, true, "");
+                this.CD.detectChanges();
+            }, 200);
+
+        }
+    }
+
+    private IsOldDate(fieldName) {
+        let isOldDate: boolean = false;
+        const uiProperty = this.UIProperties.UIPropertyList.filter(uiProp => uiProp.FieldName == fieldName)[0];
+        if (uiProperty)
+            isOldDate = uiProperty.ValidationError == "Date time is too way in the past!" || uiProperty.ValidationError == "Invalid Date";
+
+        return isOldDate;
+    }
+
+
+    itemClicked(itemValue: string) {
+        //var RemoveFilter = false;
+        this.SelectedTransportModeId = itemValue;
+
+        // this.apiQueryFilters.AdditionalFilters = this.apiQueryFilters.AdditionalFilters.filter(a => a.FieldName != "TransportmodeId")
+
+        // const operator: string = (itemValue !== "All") ? "Equals" : "NotEqual";
+        // this.apiQueryFilters.addAdditionalFilter("TransportmodeId", itemValue, null, null, operator, false, false, false, "string");
+
+        // this.SelectedValueChanged.emit({ Filters: this.apiQueryFilters, RemoveFilter: RemoveFilter });
+    }
+
+
+    itemMouseOver(itemValue: string) {
+        if (this.SelectedTransportModeId != itemValue) {
+            var img_A = document.getElementById(this.TransportFilter_A);
+            var img_O = document.getElementById(this.TransportFilter_O);
+            var img_I = document.getElementById(this.TransportFilter_I);
+
+            switch (itemValue) {
+                case "A": {
+                    img_A.setAttribute("src", "./Images/TransportModes/A.png");
+                    break;
+                }
+
+                case "O": {
+                    img_O.setAttribute("src", "./Images/TransportModes/O.png");
+                    break;
+                }
+
+                case "L": {
+                    img_I.setAttribute("src", "./Images/TransportModes/I.png");
+                    break;
+                }
+            }
+        }
+    }
+
+    itemMouseLeave(itemValue: string) {
+        if (this.SelectedTransportModeId != itemValue) {
+            var img_A = document.getElementById(this.TransportFilter_A);
+            var img_O = document.getElementById(this.TransportFilter_O);
+            var img_I = document.getElementById(this.TransportFilter_I);
+
+            switch (itemValue) {
+                case "A": {
+                    img_A.setAttribute("src", "./Images/TransportModes/A_g.png");
+                    break;
+                }
+
+                case "O": {
+                    img_O.setAttribute("src", "./Images/TransportModes/O_g.png");
+                    break;
+                }
+
+                case "L": {
+                    img_I.setAttribute("src", "./Images/TransportModes/I_g.png");
+                    break;
+                }
+            }
+        }
+    }
+
+    showInvoicesClicked(itemValue: string) {
+        if (this.showInvoices != itemValue) {
+            this.showInvoices = itemValue;
+        }
+    }
+
+    showConsigmentsClicked(itemValue: string) {
+        if (this.showConsignments != itemValue) {
+            this.showConsignments = itemValue;
+        }
+    }
 
     queryFilterItems: QueryFilterItem[];
     queryFilterItem: QueryFilterItem;
     RunReport(isloading: boolean) {
         this.ValidationErrorsList = [];
 
+
+        var FIELD_IS_REQUIERD = TextCodeTranslator.Translate("General.M.FieldIsRequired");
+        
+            if (this.FromDate == null) {
+                var FromDateValidation: string = FIELD_IS_REQUIERD.replace("%FieldName", "מתאריך");
+                this.ValidationErrorsList.push(FromDateValidation);
+            }
+
+            if (this.ToDate == null) {
+                var ToDateValidation: string = FIELD_IS_REQUIERD.replace("%FieldName", "עד תאריך");
+                this.ValidationErrorsList.push(ToDateValidation);
+            }
+
+            if (this.FromDate != null && this.ToDate != null) {
+                var FromDate = new Date(this.FromDate.getUTCFullYear(), this.FromDate.getUTCMonth(), this.FromDate.getUTCDate(), 0, 0, 0, 0);
+                var ToDate = new Date(this.ToDate.getUTCFullYear(), this.ToDate.getUTCMonth(), this.ToDate.getUTCDate(), 0, 0, 0, 0);
+                if (FromDate > ToDate) {
+                    this.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.ToDateMustBeGTF"));
+                }
+            
+        }
         if (this.ValidationErrorsList.length == 0) {
-            this.queryFilterItems = new Array<QueryFilterItem>();
 
-            this.queryFilterItem = new QueryFilterItem();
-            this.queryFilterItem.DisplayInList = false;
-            this.queryFilterItem.FieldName = "UserId";
-            this.queryFilterItem.FieldValue = this.UserId;
-            this.queryFilterItem.Operator = "Equals";
-            this.queryFilterItems.push(this.queryFilterItem);
+            this.BuildReport();
 
-            var reportFliter = new ReportFliter();
-            reportFliter.Tenant = SessionLocator.Tenant;
-            reportFliter.QueryFilterItemLists = this.queryFilterItems;
-            reportFliter.FilterControlName = this.ReportsPreview.FilterControlName;
-            reportFliter.ReportDocumentId = this.ReportsPreview.Report.ReportDocumentId;
-            reportFliter.ReportCode = this.ReportsPreview.Report.Code;
-            reportFliter.NumberOfPage = 1;
-            reportFliter.ProcessType = "GenerateReport";
-
-            this.ReportsPreview.GenerateReport(reportFliter, isloading);
         }
     }
+
+    BuildReport() {
+        this.InitilaizeFilter();
+
+        this.reportFliter = new ReportFliter();
+        this.reportFliter.Tenant = SessionInfo.LoggedUserTenant;
+        this.reportFliter.QueryFilterItemLists = this.queryFilterItems;
+        this.reportFliter.FilterControlName = this.ReportsPreview.FilterControlName;
+        this.reportFliter.ReportDocumentId = this.ReportsPreview.Report.ReportDocumentId;
+        this.reportFliter.ReportCode = this.ReportsPreview.Report.Code;
+        this.reportFliter.NumberOfPage = 1;
+        this.reportFliter.ProcessType = "GenerateReport";
+
+        this.ReportsPreview.GenerateReport(this.reportFliter, true);
+    }
+
+    InitilaizeFilter() {
+       
+        this.queryFilterItems = new Array<QueryFilterItem>();
+        //-----------------------------------------------------------------------------1
+        this.queryFilterItems.push(this.GetNewQueryFilterItem("CreateDate", this.FromDate, this.ToDate, "Date", "Between"));
+        
+        //-----------------------------------------------------------------------------2
+
+        if(this.SelectedTransportModeId != 'All') {
+            this.queryFilterItems.push(this.GetNewQueryFilterItem("TransportModeId", this.SelectedTransportModeId, null, "string"));
+        }
+        //-----------------------------------------------------------------------------3
+        if(!AppTool.IsNullOrEmpty(this.DeclarationStatusTypeCode)) {
+            this.queryFilterItems.push(this.GetNewQueryFilterItem("DeclarationStatusTypeCode", this.DeclarationStatusTypeCode, null, "string"));
+        }
+        //-----------------------------------------------------------------------------4
+        if(!AppTool.IsNullOrEmpty(this.DeclarationTypeCode)) {
+            this.queryFilterItems.push(this.GetNewQueryFilterItem("DeclarationTypeCode", this.DeclarationTypeCode, null, "string"));
+        }
+        //-----------------------------------------------------------------------------5
+         if(!AppTool.IsNullOrEmpty(this.ReferentUserId)) {
+            this.queryFilterItems.push(this.GetNewQueryFilterItem("ReferentUserId", this.ReferentUserId, null, "string"));
+        }
+
+        //-----------------------------------------------------------------------------6
+        if(!AppTool.IsNullOrEmpty(this.DestinationCountryCode)) {
+            this.queryFilterItems.push(this.GetNewQueryFilterItem("DestinationCountryCode", this.DestinationCountryCode, null, "string"));
+        }
+
+        //-----------------------------------------------------------------------------7
+        if(!AppTool.IsNullOrEmpty(this.CustomerId)) {
+            this.queryFilterItems.push(this.GetNewQueryFilterItem("Customer", this.CustomerId, null, "string"));
+        }
+        //-----------------------------------------------------------------------------8
+        
+        this.queryFilterItems.push(this.GetNewQueryFilterItem("ShowInvoices", this.ShowInvoices == 'True' ? true : false, null, "boolean"));
+
+        //-----------------------------------------------------------------------------8
+        
+        this.queryFilterItems.push(this.GetNewQueryFilterItem("ShowConsignments", this.ShowConsignments == 'True' ? true : false, null, "boolean"));
+        
+    }
+
+    GetNewQueryFilterItem(FieldName: string, FieldValue: any, FieldValue2: any = null, FieldDataType: string = null, Operator: string = "Equals") {
+        var queryFilterItem = new QueryFilterItem();
+        queryFilterItem.DisplayInList = false;
+        queryFilterItem.FieldName = FieldName;
+        queryFilterItem.FieldValue = FieldValue;
+        queryFilterItem.FieldValue2 = FieldValue2;
+        queryFilterItem.Operator = Operator;
+        queryFilterItem.FieldDataType = FieldDataType;
+
+        return queryFilterItem;
+    }
+
 }

@@ -57,7 +57,7 @@
                                                 <tr>
                                                     <td>
                     
-                                                        <HyperlinkQuery id="{{'View' + Report.Code+ 'Reportbtn' | IdGeneratorPipe}}" (click)="ViewReportClicked(item.GroupList, Report)">{{showLocal ? (Report.LocalName?Report.LocalName:Report.Name) : Report.Name}}</HyperlinkQuery>
+                                                        <HyperlinkQuery id="{{'View' + Report.Code+ 'Reportbtn' | IdGeneratorAsyncPipe | async}}" (click)="ViewReportClicked(item.GroupList, Report)">{{showLocal ? (Report.LocalName?Report.LocalName:Report.Name) : Report.Name}}</HyperlinkQuery>
                                                     </td>
                                                     <td [hidden]="!IsAvailableForScheduling || !Report.AvailableForScheduling" style="width: 20px;">
                                                         <img class="ReportScheduler" (click)="onReportSchedulerClick(item.GroupList, Report)" title="Report Scheduler" src="./Images/ReportScheduler.png" />

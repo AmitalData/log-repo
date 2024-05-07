@@ -39,6 +39,7 @@ using WebFreight.Web.ReportsWebServices.LogitudeReports;
 using WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting;
 using WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap;
 using WebFreight.Web.ReportsWebServices.LogitudeReports.CRM;
+using WebFreight.Web.ReportsWebServices.LogitudeReports.Customs;
 using WebFreight.Web.ReportsWebServices.LogitudeReports.Operational;
 using WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement;
 using WebFreight.Web.ShipmentPackageModel;
@@ -1243,6 +1244,12 @@ namespace WebFreight.Web.Helpers
                         dataProvider = logitudeReportsWebService.LoadCustomerStatusDataProvider(filters, reportFliter.tenant);
                         break;
                     }
+                case "EXDE":
+                    {
+                        ExportDeclarationLoader myDataManager = new ExportDeclarationLoader(filters, reportFliter.tenant);
+                        dataProvider = myDataManager.GetData();
+                        break;
+                    }
                     #endregion
             }
             return dataProvider;
@@ -1928,6 +1935,18 @@ namespace WebFreight.Web.Helpers
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "RacingQuote", Name = "RacingQuoteDataProvider", BusinessObjectValue = reportDataProvider };
                         
+                        break;
+                    }
+
+                case "EXDE":
+                    {
+                        XmlSerializer serializer = new XmlSerializer(typeof(ExportDeclarationDataProvider));
+                        ExportDeclarationDataProvider reportDataProvider = (ExportDeclarationDataProvider)serializer.Deserialize(memorystream);
+                        reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
+                        //reportDataProvider.CompanyName = DataProviders.General.GetCompanyName(stimulReportDataProviderDetails.Tenant);
+                        //reportDataProvider.Logo = DataProviders.General.GetLogo(stimulReportDataProviderDetails.Tenant);
+                        stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "EXDE", Name = "ExportDeclarationDataProvider", BusinessObjectValue = reportDataProvider };
+
                         break;
                     }
             }
