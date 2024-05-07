@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ClientUpdateClass
    {  		
-		public const string HashString = "8636d16d701d16ca27fde15744c4b440";
+		public const string HashString = "402af86e35e9dcbaffc5d7d9395a38d3";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2850,7 +2850,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode ClientTextCode_CustomsClientItems = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Client.Items", DefaultText = "Items",LocalDefaultText = @"פריטים", ObjectTableId = ClientObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ClientTextCode_CustomsClientOItemOrClassificationSearch = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Client.O.ItemOrClassificationSearch", DefaultText = "Item Or Classification Search",LocalDefaultText = @"פרט / פריט", ObjectTableId = ClientObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ClientTextCode_CustomsClientOItemOrClassificationSearch = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Client.O.ItemOrClassificationSearch", DefaultText = "Item Or Classification Search",LocalDefaultText = @"פרט / פריט / תאור", ObjectTableId = ClientObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

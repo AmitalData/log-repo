@@ -118,7 +118,7 @@ export class ClientItemsTabComponent extends BaseComponent {
         items = items.Collection.filter(f => f.ClassificationCode != null || f.ItemCode != null);
         var TempItemList: ClientItemPM[] = [];
         TempItemList = items;
-        TempItemList = TempItemList.filter(f => f.ClassificationCode?.toUpperCase().includes(searchText?.toUpperCase().toString()) || f.ItemCode?.toUpperCase().includes(searchText?.toUpperCase().toString()));
+        TempItemList = TempItemList.filter(f => f.ClassificationCode?.toUpperCase().includes(searchText?.toUpperCase().toString()) || f.ItemCode?.toUpperCase().includes(searchText?.toUpperCase().toString()) || f.ItemDescription?.toUpperCase().includes(searchText?.toUpperCase().toString()));
 
         this.ItemsList.InsertCollection(TempItemList);
 
