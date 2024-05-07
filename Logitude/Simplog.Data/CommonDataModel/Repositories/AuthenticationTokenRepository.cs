@@ -97,7 +97,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
                     AuthenticationToken authenticationToken = (AuthenticationToken)CacheManager.CacheWrapper.Get(entityName);
                     if(authenticationToken.ExpirationDate != null && authenticationToken.ExpirationDate < DateTime.Now)
                     {
-                        throw new AutenticationException("Sorry! this user is not authorized!");
+                        throw new AutenticationException("Session expired. Please log in again");
                     }
                     return authenticationToken;
                 }
