@@ -1474,6 +1474,10 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 				{
 					this._MyDeclarationPM.Consignments[0].ExportLoadingPortCode = _AmitalCustomsFile.LoadingPortCode;
 				}
+				else if (this._MyDeclarationPM.IsDiamondDeclaration && !String.IsNullOrWhiteSpace(_AmitalCustomsFile.StorageSiteCode))
+                {
+                    this._MyDeclarationPM.Consignments[0].ExportLoadingPortCode = _AmitalCustomsFile.StorageSiteCode;
+                }
 
 				if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.UnloadportId))
 				{
@@ -1535,7 +1539,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
         private void InitSupplierInvoice(ExportInvoice invoice, SupplierInvoicePM supplierInvoice)
 		{
 			AppendLogLine("InitSupplierInvoice" + supplierInvoice.DeclarationId);
-			AppendLogLine("InitSupplierInvoice" + invoice?.InvoiceNumber);
+			AppendLogLine("InitSupplierInvoice" + invoice?.InvoiceNum);
 			AppendLogLine("InitSupplierInvoice" + invoice?.InvoiceDate);
 			AppendLogLine("InitSupplierInvoice" + invoice?.IsEmpty);
 
@@ -1552,7 +1556,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 				if (!invoice.IsEmpty)
 				{
 					AppendLogLine("!invoice.IsEmpty");
-                    supplierInvoice.InvoiceNumber= invoice.InvoiceNumber;
+                    supplierInvoice.InvoiceNumber= invoice.InvoiceNum;
                     supplierInvoice.IssueDate = !String.IsNullOrWhiteSpace(invoice?.InvoiceDate) ? DateTime.Parse(invoice?.InvoiceDate) : supplierInvoice.IssueDate;
                 }
             }
@@ -1597,7 +1601,18 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                     var paymentTypeList = paymentTypeListQueryService.GetSingle(invoice.InvoicePaymentType);
 					if (paymentTypeList != null)
 					{
-                supplierInvoice.PaymentTypeCode = invoice.InvoicePaymentType;
+						SupplierInvoicePaymentPM supplierInvoicePaymentPM = new SupplierInvoicePaymentPM()
+						{
+							ChangeSetOp = ChangeSetOperation.Insert,
+							Tenant = ResolvedTenant(),
+							PaymentTypeCode = invoice.InvoicePaymentType,
+						};
+
+						if (supplierInvoice.InvoiceAmount != null) {
+							supplierInvoicePaymentPM.PaymentAmount = (decimal)supplierInvoice.InvoiceAmount;
+                        }
+
+                        supplierInvoice.SupplierInvoicePayments = new List<SupplierInvoicePaymentPM>{ supplierInvoicePaymentPM };
                     }
                 }
                 supplierInvoice.BuyerRoleCode = invoice.InvoiceBuyerRoleCode;
@@ -1624,7 +1639,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 
             supplierInvoiceItem.ItemCode = invoiceItem?.ItemNo;
             supplierInvoiceItem.ItemDescription = invoiceItem?.ItemDescription;
-            supplierInvoiceItem.ClassificationCode = invoiceItem.ItemHsCode;
+            supplierInvoiceItem.ClassificationCode = invoiceItem.ItemHScode;
             decimal invoiceQuantity;
             if (decimal.TryParse(invoiceItem.ItemQuantity, out invoiceQuantity))
             {
@@ -1637,15 +1652,15 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                 supplierInvoiceItem.ItemPrice = itemPrice;
             }
             supplierInvoiceItem.OriginCountryCode = invoiceItem.ItemOriginCountry;
-            supplierInvoiceItem.ClaimReasonCode = invoiceItem.ItemClassificationClaim;
-            supplierInvoiceItem.TransactionNatureCode = invoiceItem.ItemClassificationDealType;
+            supplierInvoiceItem.ClaimReasonCode = invoiceItem.ClassificationClaim;
+            supplierInvoiceItem.TransactionNatureCode = invoiceItem.ClassificationDealType;
 
-            if (!string.IsNullOrEmpty(invoiceItem.ItemProcessType))
+            if (!string.IsNullOrEmpty(invoiceItem.ProcessType))
             {
                 // validate item process type code
-                AppendLogLine("ItemProcessType: " + invoiceItem.ItemProcessType);
+                AppendLogLine("ProcessType: " + invoiceItem.ProcessType);
                 ItemGovernmentProcedureTypeListQueryService itemGovernmentProcedureTypeListQueryService = new ItemGovernmentProcedureTypeListQueryService(_context);
-                var certificateExemptionTypeList = itemGovernmentProcedureTypeListQueryService.GetSingle(invoiceItem.ItemProcessType);
+                var certificateExemptionTypeList = itemGovernmentProcedureTypeListQueryService.GetSingle(invoiceItem.ProcessType);
 				if (certificateExemptionTypeList != null)
 				{
 					supplierInvoiceItem.SupplierInvoiceItemProcesTypes = new List<SupplierInvoiceItemProcesTypePM>
@@ -1654,7 +1669,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 						{
 							ChangeSetOp = ChangeSetOperation.Insert,
 							Tenant = ResolvedTenant(),
-							ProcessTypeCode = invoiceItem.ItemProcessType,
+							ProcessTypeCode = invoiceItem.ProcessType,
 						}
 					};
 				}
