@@ -1,4 +1,4 @@
-import {Component, OnInit, Output, EventEmitter, ChangeDetectorRef}  from '@angular/core';
+﻿import {Component, OnInit, Output, EventEmitter, ChangeDetectorRef}  from '@angular/core';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
@@ -246,7 +246,7 @@ export class ExportDeclarationReportFilterComponent extends BaseComponent {
 
     queryFilterItems: QueryFilterItem[];
     queryFilterItem: QueryFilterItem;
-    RunReport(isloading: boolean) {
+    RunReport() {
         this.ValidationErrorsList = [];
 
 
