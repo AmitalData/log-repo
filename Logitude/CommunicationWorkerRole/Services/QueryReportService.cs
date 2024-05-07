@@ -357,9 +357,7 @@ namespace CommunicationWorkerRole.Services
         }
         private void SendHtmlDocument(SendHtmlDocumentArgs args)
         {
-            args.recepients.To = "shoshana@amital.co.il";
 			HtmlEditorHelper htmlEditorHelper = new HtmlEditorHelper();
-            SchedulerDetails schedulerDetails = GetSchedulerDetails(args.reportTask);
 			string htmlString = "<html><head><meta http- equiv='Content- Type' content= 'text/html; charset = iso-8859-1' > <style type='text/css' style= 'display: none; '></style></head><body>";
 			htmlString += "</body></html>";
 			byte[] bytedata = Encoding.UTF8.GetBytes(htmlString);
