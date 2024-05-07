@@ -1196,14 +1196,14 @@
     <Compile Include="Controllers\CustomsModel\Extended\DecCargoSplitConExtendedController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\PendingByKeywordsExtendedController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\ClientItemExtendedController.cs" />
-     <Compile Include="Controllers\CustomsModel\Generated\DeclarationCourierStatusViewsController.cs" />
-     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CertificateOfOriginInvoiceViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\DeclarationCourierStatusViewsController.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CertificateOfOriginInvoiceViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CertificateOfOriginItemViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CertificateOfOriginMandatoryFieldsViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CertificateOfOriginStatusCodeEnumViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CertificateOfOriginTypeCodeEnumViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CertificateOfOriginViewsController.Generated.cs" />
-     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ClientItemViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ClientItemViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\SupplierInvioceExportDefaultExtendedController.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ClientIndicationViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ConfirmationNumberTokenLogViewsController.Generated.cs" />
@@ -1440,6 +1440,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\ReferantTeamController.Generated.cs" />
     <Compile Include="DataContracts\PrivateLabelsBrandingData.cs" />
     <Compile Include="DataContracts\PrivateLabelsBrandingDataRequest.cs" />
+    <Compile Include="DataProviders\ExportDeclarationDataProvider.cs" />
     <Compile Include="DataProviders\ProductItemLine.Shared.cs" />
     <Compile Include="DataProviders\UserDefinedReportDataProvider.cs" />
     <Compile Include="ExternalAPIs\RatesUpdateController.cs" />
@@ -6248,6 +6249,7 @@
     <Compile Include="ReportsWebServices\LogitudeReports\CRM\MonthlyConversionManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\CRM\RacingQuoteManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\CRM\BluesnapPaymentsReportManager.cs" />
+    <Compile Include="ReportsWebServices\LogitudeReports\Customs\ExportDeclarationLoader.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Operational\ShipperReturnsManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Operational\FlightBookingsManifestManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Operational\UnicargoExportManager.cs" />

@@ -20,6 +20,7 @@ using System.Data;
 using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Server.Infrastructure.DataContracts;
+using Logitude.Customs.Data.DataContracts;
 
 namespace Logitude.Customs.Data.Repsitories
 {
@@ -1537,7 +1538,91 @@ namespace Logitude.Customs.Data.Repsitories
 
 			return declarations;
 		}
-	}
+
+        public IQueryable<ExportDeclarationForReport> GetExportDeclarationsForReport(int tenant, DateTime? fromDate, DateTime? toDate)
+        {
+            (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false;
+
+            IQueryable<ExportDeclarationForReport> declarations = (from a in context.Declarations
+                                                                   .Include(a=> a.CustomsTransportMode)
+                                                                   .Include(a=> a.DeclarationType)
+                                                                   .Include(a=> a.GovernmentProcedureCurrent)
+                                                                   .Include(a=> a.CustomsCountry)
+                                                                   .Include(a=> a.DeclarationStatusType)
+                                                                   join de in context.DeclarationExportRecipients
+                                                                   .Select(x => new { x.DeclarationId, x.RecipientName })
+                                                                   on a.Id equals de.DeclarationId into deJoin
+                                                                   from der in deJoin.DefaultIfEmpty().Take(1)
+                                                                       //join s in context.SupplierInvoices on a.Id equals s.DeclarationId into sJoin
+                                                                       //from si in sJoin.DefaultIfEmpty()
+                                                                       //join item in context.SupplierInvoiceItems on new { DeclarationId = a.Id, CounterKey = si.InvoiceCounterKey } equals new { DeclarationId = item.DeclarationId, CounterKey = item.CounterKey } into itemJoin
+                                                                       //from sItem in itemJoin.DefaultIfEmpty()
+                                                                   join c in context.ExportDeclarationClosingDatas.Include(a => a.FinalCargoType)
+                                                                   .Select(x => new { x.DeclarationId, x.FinalCargoTypeCode, x.FinalManifestNumber, x.FinalSecondCargoId, x.FinalThirdCargoId, x.FinalCargoType.LocalName })
+                                                                   on a.Id equals c.DeclarationId into cJoin
+                                                                   from closing in cJoin.DefaultIfEmpty()
+                                                                   
+                                                                       //join con in context.Consignments on a.Id equals con.DeclarationId into conJoin
+                                                                       //from consignment in conJoin.DefaultIfEmpty()
+                                                                       //join cp in context.ConsignmentPackages on new { DeclarationId = a.Id, LineNumber = consignment.ConsignmentNumber } equals new { DeclarationId = cp.DeclarationId, LineNumber = cp.ConsignmentNumber } into cpJoin
+                                                                       //from cPackage in cpJoin.DefaultIfEmpty()
+                                                                   where a.Tenant == tenant && a.Direction == "E"/*&& a.CreateDateTime > fromDate && a.CreateDateTime < toDate*/
+                                                                   select new ExportDeclarationForReport()
+                                                                   {
+                                                                       DeclarationId = a.Id,
+                                                                       CreateDateTime = a.CreateDateTime,
+                                                                       TaxationDateTime = a.TaxationDateTime,
+                                                                       ExportFile = a.ExportFile,
+                                                                       TransportModeName = a.CustomsTransportMode != null ? a.CustomsTransportMode.LocalName : null,
+                                                                       CustomFileNo = a.CustomFileNo,
+                                                                       DeclarationNumber = a.DeclarationNumber,
+                                                                       DeclarationTypeName = a.DeclarationType != null ? a.DeclarationType.LocalName : null,
+                                                                       ProcedureCurrentName = a.GovernmentProcedureCurrent != null ? a.GovernmentProcedureCurrent.LocalName : null,
+                                                                       ExporterImporterCode = a.ImporterCode,
+                                                                       RecipientName = der != null && !string.IsNullOrEmpty(der.RecipientName) ? der.RecipientName : null,
+                                                                       DestinationCountryName = a.CustomsCountry != null ? a.CustomsCountry.LocalName : null,
+                                                                       DeclarationStatusTypeName = a.DeclarationStatusType != null ? a.DeclarationStatusType.LocalName : null,
+                                                                       FinalCargoTypeName = closing != null ? closing.LocalName : null,
+                                                                       FinalManifestNumber = closing != null && !string.IsNullOrEmpty(closing.FinalManifestNumber) ? closing.FinalManifestNumber : null,
+                                                                       FinalSecondCargoId = closing != null && !string.IsNullOrEmpty(closing.FinalSecondCargoId) ? closing.FinalSecondCargoId : null,
+                                                                       FinalThirdCargoId = closing != null && !string.IsNullOrEmpty(closing.FinalThirdCargoId) ? closing.FinalThirdCargoId : null,
+                                                                       //Invoices = null,
+                                                                       //Consignments = null
+                                                                       //Invoices = (si != null) ? new List<Invoice>
+                                                                       //{
+                                                                       //    new Invoice
+                                                                       //    {
+                                                                       //        DeclarationId = a.Id,
+                                                                       //        InvoiceCounterKey = si.InvoiceCounterKey,
+                                                                       //        InvoiceNumber = si.InvoiceNumber,
+                                                                       //        IssueDate = si.IssueDate,
+                                                                       //        IncotermCode = si.IncotermCode,
+                                                                       //        InvoiceAmount = si.InvoiceAmount,
+                                                                       //        InvoiceItems = (from sItem in context.SupplierInvoiceItems//.Include(a => a.OriginCountry)//.Include(a => a.TransactionNatureType)
+                                                                       //                        where a.Id == sItem.DeclarationId && si.InvoiceCounterKey == sItem.CounterKey
+                                                                       //                        select new InvoiceItem
+                                                                       //                        {
+                                                                       //                            DeclarationId = sItem.DeclarationId,
+                                                                       //                            CounterKey = sItem.CounterKey,
+                                                                       //                            LineNumber = sItem.LineNumber,
+                                                                       //                            ItemCode = sItem.ItemCode,
+                                                                       //                            ClassificationCode = sItem.ClassificationCode,
+                                                                       //                            PackageQuantity = sItem.PackageQuantity,
+                                                                       //                            InvoiceQuantityType = sItem.InvoiceQuantityType,
+                                                                       //                            ItemPrice = sItem.ItemPrice,
+                                                                       //                            //OriginCountryName = sItem.OriginCountry != null ? sItem.OriginCountry.LocalName : null,
+                                                                       //                            //TransactionNatureName = sItem.TransactionNatureType != null ? sItem.TransactionNatureType.LocalName : null,
+                                                                       //                        }).ToList()
+                                                                       //    }
+                                                                       //} : null
+                                                                   }); 
+
+            var ka = declarations.ToList();
+
+            
+            return declarations;
+        }
+    }
 
 
     public class ExportReport1
