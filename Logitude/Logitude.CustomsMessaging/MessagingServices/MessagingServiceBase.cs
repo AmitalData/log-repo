@@ -301,8 +301,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 }
                 _IIGGatewayMoreParams = new UnifreightIIG.Common.TheGateway.MoreParams() { MyOption = UnifreightIIG.Common.TheGateway.MoreParams.Options.None };
                 stopwatch.Stop();
-                LogMessagingUtil.Instance.AppendLine("MessagingServiceBase:PreCallWS:Took:" + stopwatch.Elapsed.ToString());
                 scope.Complete();
+                LogMessagingUtil.Instance.AppendLine("MessagingServiceBase:PreCallWS:Took:" + stopwatch.Elapsed.ToString());
                 LogMessagingUtil.Instance.AppendLine("RequestsSheetExternalId =" + this.RequestsSheetExternalId);
             }
         }

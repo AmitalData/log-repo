@@ -989,13 +989,19 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 //string key = ProcessLockTableUtil.Instance.GetKey4InProggressCustomsRequestsSheet(requestParams.CustomsRequestsSheetId);
                 //using (var disposableToken = ProcessLockTableUtil.Instance.LockItAndGetReleaseToken(key, "CustomsCommandSendWS"))
                 {
+                    var sw = Stopwatch.StartNew();
                     _CustomsRequestsSheetService.StartStep(CustomsStepEnum.ReceivedCustomResponseCorrelation, _CustomsStateMachineProcess.CurrentCommand);
+                    LogMessagingUtil.Instance.AppendLine("StartStep:Took:" + sw.Elapsed.ToString());
                     var test = false;
                     if (test)
                     {
                         Thread.Sleep(TimeSpan.FromMinutes(2));
                     }
+
+                    sw = Stopwatch.StartNew();
                     DoConcurrentKiller(requestParams);
+                    LogMessagingUtil.Instance.AppendLine("DoConcurrentKiller:Took:" + sw.Elapsed.ToString());
+
                     if (!requestParams.AvoidSign && requestParams.TestCase == null && (_CustomsRequestsSheetService.InterfaceTenantDefinitionManagement.InterfaceManagement.SignatureBy != SignQueueByType.None || requestParams.ForcePersonalSign))
 
                     //if (!requestParams.AvoidSign  && (_CustomsRequestsSheetService.InterfaceTenantDefinitionManagement.InterfaceManagement.SignatureBy != SignQueueByType.None || requestParams.ForcePersonalSign))
@@ -1009,6 +1015,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
                         LogMessagingUtil.Instance.AppendLine("SendWS...");
                         customsResponse = TaskCallWS(requestParams, customsRequest);////no catch exeption
                     }
+
+                    sw = Stopwatch.StartNew();
                     LogMessagingUtil.Instance.AppendLine("IIGGatewayNoteMessage=" + _IIGGatewayMoreParams.NoteMessage);
                     _CustomsRequestsSheetService.OnEndStepAppendLogToCommunicationLog = "IIGGatewayNoteMessage=" + _IIGGatewayMoreParams.NoteMessage;
                     var memCustomsResponse =
@@ -1019,6 +1027,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     SetCorrelationId(_CorrelationId, customsRequest);
 
                     toContinueNextCommand = _CustomsRequestsSheetService.EndStep(memCustomsResponse, null);
+                    LogMessagingUtil.Instance.AppendLine("EndStep:Took:" + sw.Elapsed.ToString());
                 }
                 return toContinueNextCommand;
 
