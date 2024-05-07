@@ -60,6 +60,8 @@ import { ExternalReconciliationLinesReportFilterControl } from './Components/Fil
 import { PerVendorReportFilterComponent } from './Components/FiltersComponent/Accounting/PerVendorReportFilterComponent';
 import { ARinvoiceSequencesReportFilterComponent } from './Components/FiltersComponent/Accounting/ARinvoiceSequencesReportFilterComponent';
 import { ControlInvoiceLinesReportFilterComponent } from './Components/FiltersComponent/Accounting/ControlInvoiceLinesReportFilterComponent';
+import { MonthlyBalancesReportFilterComponent } from './Components/FiltersComponent/Accounting/MonthlyBalancesReportFilterComponent';
+
 
 // Quotes
 import {QuotesFilterComponent} from './Components/FilterReportComponent/QuotesFilterComponent';
@@ -182,7 +184,8 @@ export const Components =
         PerVendorReportFilterComponent,
         ARinvoiceSequencesReportFilterComponent,
         SpotRateQuoteReportFilterComponent,
-        ControlInvoiceLinesReportFilterComponent
+        ControlInvoiceLinesReportFilterComponent,
+        MonthlyBalancesReportFilterComponent
 
     ];
 
@@ -274,6 +277,7 @@ export class ModuleDeclarations {
             case "ARinvoiceSequencesReportFilterComponent": { myResult = ARinvoiceSequencesReportFilterComponent; break; }
             case "SpotRateQuoteReportFilterComponent": { myResult = SpotRateQuoteReportFilterComponent; break; }
             case "ControlInvoiceLinesReportFilterComponent": { myResult = ControlInvoiceLinesReportFilterComponent; break; }
+            case "MonthlyBalancesReportFilterComponent": { myResult = MonthlyBalancesReportFilterComponent; break; }
 
         }
 
