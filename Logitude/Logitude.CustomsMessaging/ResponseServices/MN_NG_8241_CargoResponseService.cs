@@ -42,6 +42,7 @@ using System.Globalization;
 using Logitude.Customs.BL.Messaging.L2U.CustomFile;
 using Logitude.CustomsMessaging.MessagingServices;
 using Logitude.Customs.BL.Messaging.Customs;
+using Logitude.BL.Security;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -194,7 +195,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 {
                                     _status = "SMG";
                                 }
-                                else //if(_MyDeclarationPM.TransportModeId == "O")
+                                else if (!SecurityUtility.CheckFeature("Customs.PackingType", "CancelBuildSST", _MyDeclarationPM.Tenant))
                                 {
                                     _status = "SST";
                                 }
@@ -215,7 +216,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             OpenUnifreighTask();
                         bool  IsAvailabilityDate2 = false;
                         myDeclarationUpdateService.SuppressNewConcurrencyGUID = true;
-                        if (_status == "SST" || _status == "SMG")
+                        if (_status == "SST" || _status == "SMG")                    
                             if (_MyDeclarationPM.AvailabilityDate == null)
                             {
                                 _MyDeclarationPM.AvailabilityDate = DateTime.Now;
@@ -347,7 +348,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         {
                             status = "SMG";
                         }
-                        else //if(_MyDeclarationPM.TransportModeId == "O")
+                        else if (!SecurityUtility.CheckFeature("Customs.PackingType", "CancelBuildSST", _MyDeclarationPM.Tenant))
                         {
                             status = "SST";
                         }
