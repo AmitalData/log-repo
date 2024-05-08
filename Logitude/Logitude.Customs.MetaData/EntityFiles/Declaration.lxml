@@ -27831,6 +27831,36 @@
       LocalDefaultText="&quot;תעודת מקור&quot;"
       TextCodeTypeCode="&quot;TH&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.GroupingAccountLines&quot;"
+      DefaultText="&quot;Grouping Account Lines&quot;"
+      LocalDefaultText="&quot;קיבוץ שורות חשבון&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.GroupedAccountLinesResult&quot;"
+      DefaultText="&quot;Grouped account lines Result&quot;"
+      LocalDefaultText="&quot;שורות חשבון שיקובצו לקבוצות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.GroupedEmptyLines&quot;"
+      DefaultText="&quot;Grouped Empty Lines&quot;"
+      LocalDefaultText="&quot;ריקים&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.GroupedNotFoundLines&quot;"
+      DefaultText="&quot;Grouped Not Found Lines&quot;"
+      LocalDefaultText="&quot;לא נמצאו שורות לקיבוץ&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.Lines&quot;"
+      DefaultText="&quot;Lines&quot;"
+      LocalDefaultText="&quot;שורות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature

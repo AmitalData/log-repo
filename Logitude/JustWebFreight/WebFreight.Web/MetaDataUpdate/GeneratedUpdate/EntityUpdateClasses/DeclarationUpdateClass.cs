@@ -86,7 +86,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
    public class DeclarationUpdateClass
    {  		
 
-		public const string HashString = "76bca36b26f65599c974abc90473460d";
+		public const string HashString = "1c2490b0d203dfeb9a123cd448fed0ff";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -21892,6 +21892,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode DeclarationTextCode_CustomsDeclarationTHNewCertificateOfOrigin = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.NewCertificateOfOrigin", DefaultText = "New Certificate Of Origin",LocalDefaultText = @"תעודה חדשה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DeclarationTextCode_CustomsDeclarationTHCertificateOfOrigin = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.CertificateOfOrigin", DefaultText = "Certificate Of Origin",LocalDefaultText = @"תעודת מקור", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOGroupingAccountLines = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.GroupingAccountLines", DefaultText = "Grouping Account Lines",LocalDefaultText = @"קיבוץ שורות חשבון", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOGroupedAccountLinesResult = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.GroupedAccountLinesResult", DefaultText = "Grouped account lines Result",LocalDefaultText = @"שורות חשבון שיקובצו לקבוצות", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOGroupedEmptyLines = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.GroupedEmptyLines", DefaultText = "Grouped Empty Lines",LocalDefaultText = @"ריקים", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOGroupedNotFoundLines = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.GroupedNotFoundLines", DefaultText = "Grouped Not Found Lines",LocalDefaultText = @"לא נמצאו שורות לקיבוץ", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOLines = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Lines", DefaultText = "Lines",LocalDefaultText = @"שורות", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

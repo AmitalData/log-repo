@@ -1613,6 +1613,94 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
     
     }
 
+    UpdateGroupingAccountLines(){
+        let GroupedItemsSource = new ObservableCollection([]);        
+        let GroupedResult: string = `${TextCodeTranslator.Translate("Customs.Declaration.O.GroupedAccountLinesResult")}: \n`; 
+        
+        this.ItemsSource.Collection.forEach(item => {
+            AppTool.IsNullOrEmpty(item.ClassificationCode) ? item.ClassificationCode = "" : item.ClassificationCode;
+
+            if(GroupedItemsSource.Collection.filter(j=> j.ClassificationCode == item.entityPM.ClassificationCode && item.OriginCountryCode == j.OriginCountryCode).length == 0){
+                let filterItems: SupplierInvoiceItemLine[] = this.ItemsSource.Collection.filter(i => i.ClassificationCode == item.ClassificationCode && item.OriginCountryCode == i.OriginCountryCode);
+                if(filterItems && filterItems.length > 1){
+                    let GroupedItem:SupplierInvoiceItemPM = item.entityPM;
+                    if (!AppTool.IsNullOrEmpty(GroupedItem.ClassificationCode) && !AppTool.IsNullOrEmpty(GroupedItem.OriginCountryCode)) {
+                        GroupedResult += `${filterItems.length} ${TextCodeTranslator.Translate("Customs.Declaration.O.Lines")} - ${GroupedItem.ClassificationCode} - ${GroupedItem.OriginCountryName} \n`;
+                    }
+                    else if (!AppTool.IsNullOrEmpty(GroupedItem.ClassificationCode)) {
+                        GroupedResult += `${filterItems.length}- ${GroupedItem.ClassificationCode} \n`;
+                    } 
+                    else if (!AppTool.IsNullOrEmpty(GroupedItem.OriginCountryCode)) {
+                        GroupedResult += `${filterItems.length}- ${GroupedItem.OriginCountryName} \n`;
+                    } 
+                    else {
+                        GroupedResult += `${filterItems.length}- ${TextCodeTranslator.Translate("Customs.Declaration.O.GroupedEmptyLines")} \n`;
+                    }
+                    
+                    GroupedItemsSource.Insert(new SupplierInvoiceItemLine(GroupedItem, this, this.allowExport)); 
+                }
+            }
+        });
+
+        if(GroupedItemsSource.Collection.length == 0) 
+            GroupedResult = `${TextCodeTranslator.Translate("Customs.Declaration.O.GroupedNotFoundLines")}`;
+        this.openConfirmWindowGroupingAccountLines(GroupedResult); 
+    }
+
+    openConfirmWindowGroupingAccountLines(GroupedResult: string =  "") {
+        var confirm = new ConfirmWindow();
+        confirm.Cancel = true;
+        confirm.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+        confirm.ShowNoButton = true;
+        confirm.Show(GroupedResult);
+        confirm.WindowClosed.subscribe((event: any) => {
+            if (confirm.Yes){
+                this.GroupingAccountLines();
+            } 
+        }); 
+    }
+
+    GroupingAccountLines(){
+        let GroupedItemsSource = new ObservableCollection([]);
+        let GroupedItems: SupplierInvoiceItemPM[] = []; 
+        let sequenceNumeric = 0;
+    
+        this.ItemsSource.Collection.forEach(item => {
+            if(GroupedItemsSource.Collection.filter(j=> j.ClassificationCode == item.entityPM.ClassificationCode && item.OriginCountryCode == j.OriginCountryCode).length == 0){
+                let filterItems: SupplierInvoiceItemLine[] = this.ItemsSource.Collection.filter(i => i.ClassificationCode == item.ClassificationCode && item.OriginCountryCode == i.OriginCountryCode);
+                if(filterItems && filterItems.length > 1){
+                    let GroupedItem:SupplierInvoiceItemPM = item.entityPM;
+                    let invoiceQuantity = 0;
+                    let itemPrice = 0;
+
+                    filterItems.forEach(i => {
+                        invoiceQuantity += AppTool.IsNullOrEmpty(i.entityPM.InvoiceQuantity) ? 0 : i.entityPM.InvoiceQuantity;
+                        itemPrice += AppTool.IsNullOrEmpty(i.entityPM.ItemPrice) ? 0 : i.entityPM.ItemPrice;
+                    });
+
+                    GroupedItem.InvoiceQuantity = invoiceQuantity != 0 ? invoiceQuantity : null;
+                    GroupedItem.ItemPrice = itemPrice != 0 ? itemPrice : null;
+                    GroupedItem.ItemDescription = "";
+                    GroupedItem.ItemCode = "";
+                    GroupedItem.SequenceNumeric = sequenceNumeric += 1;
+                    GroupedItemsSource.Insert(new SupplierInvoiceItemLine(GroupedItem, this, this.allowExport)); 
+                    GroupedItems.push(GroupedItem);  
+                }
+                else{
+                    item.SequenceNumeric = sequenceNumeric += 1;
+                    GroupedItemsSource.Insert(item);  
+                    GroupedItems.push(item.entityPM);   
+                }
+            }
+        });
+
+        if(GroupedItemsSource && GroupedItems){
+            this.ItemsSource = GroupedItemsSource;
+            this.EntityPM.SupplierInvoiceItems = GroupedItems;
+        }
+    }
+
+    
 
     UpdateClicked(type:UpdateOptions){
         let selectedOptionsSettings=this.updateOptionsMap[type];
