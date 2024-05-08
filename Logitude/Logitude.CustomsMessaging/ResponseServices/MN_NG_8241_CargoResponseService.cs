@@ -191,7 +191,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         {
                             if (customResponse.Cargo.totalNumberOfPackeges == customResponse.Cargo.CargoAdditionalData[0].totalRecordNumberOfPackeges && customResponse.Cargo.CargoAdditionalData[0].StorageDate != null)
                             {
-                                bool isCancelBuildSST = SecurityUtility.CheckFeature("Customs.PackingType", "CancelBuildSST", _MyDeclarationPM.Tenant);
+                                bool isCancelBuildSST = SecurityUtility.CheckFeature("Customs.Declaration", "CancelBuildSST", _MyDeclarationPM.Tenant);
                                 if (_MyDeclarationPM.TransportModeId == "A" && !isCancelBuildSST)
                                 {
                                     _status = "SMG";
@@ -345,7 +345,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     DateTime? statusDate = DateTime.Now;
                     if (customResponse.Cargo != null && customResponse.Cargo.CargoAdditionalData != null && customResponse.Cargo.CargoAdditionalData.Count() > 0 && customResponse.Cargo.totalNumberOfPackeges == customResponse.Cargo.CargoAdditionalData[0].totalRecordNumberOfPackeges && customResponse.Cargo.CargoAdditionalData[0].StorageDate != null)
                     {
-                        bool isCancelBuildSST = SecurityUtility.CheckFeature("Customs.PackingType", "CancelBuildSST", _MyDeclarationPM.Tenant);
+                        bool isCancelBuildSST = SecurityUtility.CheckFeature("Customs.Declaration", "CancelBuildSST", _MyDeclarationPM.Tenant);
                         if (_MyDeclarationPM.TransportModeId == "A" && !isCancelBuildSST)
                         {
                             status = "SMG";

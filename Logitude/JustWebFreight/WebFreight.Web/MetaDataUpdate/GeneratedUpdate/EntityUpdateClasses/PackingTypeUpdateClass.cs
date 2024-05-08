@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class PackingTypeUpdateClass
    {  		
-		public const string HashString = "b8154587c66b33fef42ea2af87d76513";
+		public const string HashString = "e2e7b7fbee1d3eaf322623e75c77c593";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -540,15 +540,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable PackingTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.PackingType" && d.Tenant == 0).FirstOrDefault(); 
-
-
-		   		   //--------------> Additional Features <--------------\\
-
-		   Feature PackingTypeFeature_CancelBuildSST = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CancelBuildSST", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = PackingTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.PackingType.Features.CancelBuildSST", NameTextCodeDefaultText = @"Cancel build AvailabilityDate/status in manifest query" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,PackingTypeObjectTable);
-
-   
+	    {     
 	    
 		}
 
