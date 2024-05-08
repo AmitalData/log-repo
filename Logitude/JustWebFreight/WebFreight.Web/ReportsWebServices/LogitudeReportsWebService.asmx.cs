@@ -11887,13 +11887,13 @@ namespace WebFreight.Web.ReportsWebServices
             //    }
             //}
             // filter chart of accounts
-            foreach (var item in totalData.ResultList.Where(x => x.Type == "ChartOfAccount").ToList())
+            /*foreach (var item in totalData.ResultList.Where(x => x.Type == "ChartOfAccount").ToList())
             {
                 if (!trailReportMs.Any(x => x != null && x.ChartOfAccountId == item.Id) && !item.Error)
                 {
                     totalData.ResultList.Remove(item);
                 }
-            }
+            }*/
             // Update chart of account types total amounts
             foreach (var item in totalData.ResultList.Where(x => x.Type == null).ToList())
             {
