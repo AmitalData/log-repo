@@ -44,6 +44,7 @@ using Logitude.Accounting.BL.Utils;
 using System.Xml.Serialization;
 using System.IO;
 using Logitude.Accounting.BL.CoreBL.Batch;
+using Logitude.BL.CommonDataModel.Tools.DataMapping;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -897,6 +898,19 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Card connectedCard = new Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Card();
                 connectedCard.Code = card.Code;
                 connectedCard.PartnerCode = card.PartnerTypeId;
+                
+                var context = CommonDataContext.GetContext(gLAccount.Tenant);
+                CardQuery cardQuery = new CardQuery(gLAccount.Tenant);
+                CardRepository cardRepository = new CardRepository(gLAccount.Tenant);
+                CardPM cardPM = cardQuery.GetSinglePM(card.Id, gLAccount.Tenant);
+                cardPM.GLAccountDisplayNumber = gLAccount.DisplayNumber;
+                var cardPoco = cardRepository.GetSingleCard(card.Id, gLAccount.Tenant);
+                CardMapping.MapEntity(cardPM, cardPoco, false);
+                cardRepository.Update(cardPoco);
+                cardRepository.SubmitChanges();
+                CardService cardService = new CardService(CommonDataContext.GetContext(gLAccount.Tenant),cardPM);
+                cardService.RunStoredProcedures();
+
                 if (gLAccount.CardCode == connectedCard.Code)
                 {
                     connectedCard.IsDisconnectedFromGLAccount = true;
@@ -2602,7 +2616,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
 
 
-        public void UpdateGLAccountWithAdditionalData(string glaccountId, int tenant, string excludeCardId=null, string excludeContactId=null, string includeContactId=null)
+        public void UpdateGLAccountWithAdditionalData(string glaccountId, int tenant, string excludeCardId = null, string excludeContactId = null, string includeContactId = null)
         {
             GLAccountQueryService gLAccountQuery = new GLAccountQueryService(tenant);
             var glaccount = gLAccountQuery.GetSingle(glaccountId, true, false);
@@ -2610,7 +2624,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             {
                 ContactRepository contactRep = new ContactRepository(tenant);
                 CustomerRepository customerRepository = new CustomerRepository(tenant);
-                glaccount.ContactId = contactRep.GetContactForAccountingByGLAccountIdExcludeOneCard(glaccount.Id,tenant, excludeContactId, includeContactId);
+                glaccount.ContactId = contactRep.GetContactForAccountingByGLAccountIdExcludeOneCard(glaccount.Id, tenant, excludeContactId, includeContactId);
                 glaccount.SalesmanUserId = customerRepository.GetSalesManByGLAccountId(glaccount.Id, tenant, excludeCardId);
                 glaccount.CollectorId = customerRepository.GetCollectorByGLAccount(glaccount.Id, tenant, excludeCardId);
                 glaccount.ChangeSetOp = ChangeSetOperation.Update;
