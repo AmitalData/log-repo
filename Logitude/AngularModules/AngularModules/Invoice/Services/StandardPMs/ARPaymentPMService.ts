@@ -205,7 +205,7 @@ export class ARPaymentPMService {
         }
 
         if (!AppTool.IsNullOrUndefined(entityPM.BankAccount)) {
-            entityPM.BankAccount = this.bankAccountPMService.MapJsonToEntityPM(entityPM.BankAccount, false); // remove circular dependency from bank account
+            entityPM.BankAccount = this.bankAccountPMService.MapJsonToEntityPM(entityPM.BankAccount, false,entityPM.BankAccount); // remove circular dependency from bank account
         }
         this.MapPaymentInvoices(entityPM, jsonPM, mapParent); // Call composition tables map methods
         this.MapInvoicesLedgerTransactions(entityPM, jsonPM, mapParent); // Call composition tables map methods
