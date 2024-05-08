@@ -61,12 +61,12 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
                     }
                     CalculateDataForInterestReport();
 
-      
+
 
                     decimal? sumOfEXReports = GetInterestReportOpenBalance();
-                    if (sumOfEXReports > 0 && interestReportPM.OpenBalance != sumOfEXReports) 
+                    if (sumOfEXReports > 0 && interestReportPM.OpenBalance != sumOfEXReports)
                         throw new ApplicationException("The open balance in the newly created report should be equal to the close balance for the last invoiced report");
-                    
+
 
                     scope.Complete();
                 }
@@ -189,10 +189,11 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
                 return;
             }
 
-            if (totalInterestTransactionsLocalAmountWithOpenBalance != interestReportPM.CloseBalance) {
+            if (totalInterestTransactionsLocalAmountWithOpenBalance != interestReportPM.CloseBalance)
+            {
                 SetInterestReportStatusFailed();
                 throw new ApplicationException("Interest report open balance and total transaction details in all lines of the report doesn't match the closing " +
-                    "balance ("+ interestReportPM.OpenBalance + " "+ totalInterestTransactionsLocalAmount + ") != " + interestReportPM.CloseBalance);
+                    "balance (" + interestReportPM.OpenBalance + " " + totalInterestTransactionsLocalAmount + ") != " + interestReportPM.CloseBalance);
             }
 
             if (interestReportLinesByDateTotalLocalAmountWithOpenBalance != interestReportPM.CloseBalance)
@@ -223,23 +224,23 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
 
             InterestTransactionPM firstTransaction = interestTransactionPMs.OrderBy(d => d.InterestValueDate).FirstOrDefault();
             DateTime previousInterestReportCalculationDate = GetOpenBalanceInterestValueDate(previousInterestReport);
-           // DateTime date = firstTransaction? firstTransaction.InterestValueDate.Date;
-            DateTime firstTransactionDate = firstTransaction!=null? GetFirstTransactionDate(firstTransaction, previousInterestReport):new DateTime();
-          
+            // DateTime date = firstTransaction? firstTransaction.InterestValueDate.Date;
+            DateTime firstTransactionDate = firstTransaction != null ? GetFirstTransactionDate(firstTransaction, previousInterestReport) : new DateTime();
+
             //if (OpenBalanceTransaction == null && (firstTransaction == null || previousInterestReportCalculationDate != firstTransactionDate))
             //{
-                CreateOrUpdateInterestTransaction(previousInterestReportCalculationDate, previousInterestReport?.Id);
-                //if (previousInterestReport != null)
-                //{
-                //    //if(previousInterestReport.InterestReportStatusCode == InterestReportStatusCodes.ClosedWithoutInvoice)
-                //    {
-                //        CreateNewInterestTransactionPM(previousInterestReportCalculationDate, previousInterestReport.Id);
-                //    }
-                //}
-                //else
-                //{
-                //    CreateNewInterestTransactionPM(previousInterestReportCalculationDate);
-                //}
+            CreateOrUpdateInterestTransaction(previousInterestReportCalculationDate, previousInterestReport?.Id);
+            //if (previousInterestReport != null)
+            //{
+            //    //if(previousInterestReport.InterestReportStatusCode == InterestReportStatusCodes.ClosedWithoutInvoice)
+            //    {
+            //        CreateNewInterestTransactionPM(previousInterestReportCalculationDate, previousInterestReport.Id);
+            //    }
+            //}
+            //else
+            //{
+            //    CreateNewInterestTransactionPM(previousInterestReportCalculationDate);
+            //}
             //}
         }
 
@@ -271,7 +272,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
             }
 
             var isAdded = interestTransactionPMs.Any(d => d.Id == openBalanceTransaction.Id);
-            if(!isAdded)
+            if (!isAdded)
                 interestTransactionPMs.Add(openBalanceTransaction);
         }
 
@@ -355,7 +356,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
         {
             GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(tenant);
             DateTime? interestCalculationStartDate = gLAccountQueryService.GetInterestCalculationStartDate(interestReportPM.GLAccountId, tenant);
-       //     DateTime? interestCalculationStartDate = DateTime.MinValue;
+            //     DateTime? interestCalculationStartDate = DateTime.MinValue;
             return interestCalculationStartDate;
         }
 
@@ -383,9 +384,9 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
         private List<string> ExcludeCancellePayments(List<string> paymentIds)
         {
             IInvoiceContext accountingContext = InvoiceContext.GetContext(tenant);
-           return (from a in accountingContext.ARPayments
-             where a.Tenant == tenant && a.StatusCode != PaymentStatuses.Void  && paymentIds.Contains(a.Id)
-             select a.Id).ToList();
+            return (from a in accountingContext.ARPayments
+                    where a.Tenant == tenant && a.StatusCode != PaymentStatuses.Void && paymentIds.Contains(a.Id)
+                    select a.Id).ToList();
         }
         private GLAccountPM GetGLAccount(string id, int tenant)
         {
@@ -405,12 +406,12 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
         {
             interestReportPM.InterestReportStatusCode = "1";
         }
-        private void SetInterestReportStatusFailed(string error="")
+        private void SetInterestReportStatusFailed(string error = "")
         {
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
                 interestReportPM.InterestReportStatusCode = "6";
-                interestReportPM.InvoiceFailureReason = error;
+                interestReportPM.InvoiceFailureReason = error.Substring(0, Math.Min(error.Length, 1024));
                 SubmitChangesToInterestReport();
                 scope.Complete();
             }
