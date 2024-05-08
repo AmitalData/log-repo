@@ -41,7 +41,7 @@ using Logitude.Accounting.Data.EntityListQueryServices;
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
     public class APPaymentService
-    {               
+    {
         private int tenant;
         public APPayment payment { get; set; }
         private APPaymentPM entityPM;
@@ -111,7 +111,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 }
             }
         }
-       
+
         public void Create(APPaymentPM theEntityPm)
         {
             this.isNewEntity = true;
@@ -138,11 +138,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             paymentRepository.SubmitChanges();
             invoicePaymentRepository.SubmitChanges();
 
-            paymentCheque= this.CreateFullAccountingPaymentCheque(theEntityPm);
-            if(paymentCheque != null)
+            paymentCheque = this.CreateFullAccountingPaymentCheque(theEntityPm);
+            if (paymentCheque != null)
             {
                 payment.ChequeOrPaymentRef = paymentCheque.ChequeNumber;
-                theEntityPm.ChequeOrPaymentRef = payment.ChequeOrPaymentRef;               
+                theEntityPm.ChequeOrPaymentRef = payment.ChequeOrPaymentRef;
             }
 
             this.UpdatePaymentOpenAmount();
@@ -164,7 +164,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.TraceConnected();
             this.GetForeignFields();
         }
-        
+
         private void CreateAPPaymentMessage(bool setApproved)
         {
             if (setApproved && isTransferEnabled)
@@ -194,25 +194,26 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         public FullAccountingSettingPM GetFullAccountingSetting(APPaymentPM entityPM)
         {
             IFullAccountingSettingQueryServiceExt query = ContainerAccessor.Container.Resolve(typeof(IFullAccountingSettingQueryServiceExt), "FullAccountingSettingQueryServiceExt", new ParameterOverride("", 1)) as IFullAccountingSettingQueryServiceExt;
-           return query.GetFullAccountingSettingByTenant(tenant);
+            return query.GetFullAccountingSettingByTenant(tenant);
 
         }
         PaymentChequePM paymentCheque;
 
         GLAccountPM VendorGLAccount;
-        private PaymentChequePM CreateFullAccountingPaymentCheque(APPaymentPM entityPM )
+        private PaymentChequePM CreateFullAccountingPaymentCheque(APPaymentPM entityPM)
         {
             FullAccountingSettingPM accountingSettings = GetFullAccountingSettings(tenant);
-            if (accountingSettings.AccountingActivated && accountingSettings.IsPaymentChequesActivated) {
+            if (accountingSettings.AccountingActivated && accountingSettings.IsPaymentChequesActivated)
+            {
                 List<PaymentChequePM> PaymentCheques = GetPaymentChequesByAPPaymentId(entityPM);
                 if (PaymentCheques.Count == 0)
                 {
-                    if (setApproved && (entityPM.AutomaticPaymentCheque || string.IsNullOrEmpty(entityPM.ChequeOrPaymentRef)) && entityPM.PaymentMethodCode=="CH")
+                    if (setApproved && (entityPM.AutomaticPaymentCheque || string.IsNullOrEmpty(entityPM.ChequeOrPaymentRef)) && entityPM.PaymentMethodCode == "CH")
                     {
                         SecurityUtility.CheckContactFeature("PaymentCheque", "NEW", entityPM.Tenant);
-                         VendorGLAccount = GetGLAccountByCard(entityPM);
-                        paymentCheque= CreatePaymentCheque(entityPM);
-                        SubmitPaymentCheque(paymentCheque); 
+                        VendorGLAccount = GetGLAccountByCard(entityPM);
+                        paymentCheque = CreatePaymentCheque(entityPM);
+                        SubmitPaymentCheque(paymentCheque);
                     }
                 }
             }
@@ -228,7 +229,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         {
             IBankAccountQueryServiceExt bankAccountQuery = ContainerAccessor.Container.Resolve(typeof(IBankAccountQueryServiceExt), "BankAccountQueryServiceExt", new ParameterOverride("", 1)) as IBankAccountQueryServiceExt;
             BankAccountPM bankAccount = bankAccountQuery.GetByFirstOrDefault(paymentPM.BankAccountId, paymentPM.Tenant);
-            if(bankAccount != null)
+            if (bankAccount != null)
             {
                 return bankAccount.TransferGLAcccountId;
             }
@@ -249,22 +250,22 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             List<PaymentChequeLinePM> paymentChequeLine = MapPaymentChequeLinePM(entityPM);
             paymentCheque.PaymentChequeLines = paymentChequeLine;
             return paymentCheque;
-        } 
+        }
 
         private PaymentChequePM MapPaymentChequePM(APPaymentPM payment)
         {
             PaymentChequePM paymentCheque = new PaymentChequePM();
             paymentCheque.CreateDate = DateTime.Today;
             paymentCheque.PayToGLAccountId = VendorGLAccount != null ? VendorGLAccount.Id : null;
-            
+
             if (payment.PaymentChequeCreationPayToName == null)
             {
-                paymentCheque.PayToName = VendorGLAccount != null ? (VendorGLAccount.NameForPrintingCheques != null? VendorGLAccount.NameForPrintingCheques:  ( VendorGLAccount.LocalName != null ? VendorGLAccount.LocalName : VendorGLAccount.EnglishName)) : null;
+                paymentCheque.PayToName = VendorGLAccount != null ? (VendorGLAccount.NameForPrintingCheques != null ? VendorGLAccount.NameForPrintingCheques : (VendorGLAccount.LocalName != null ? VendorGLAccount.LocalName : VendorGLAccount.EnglishName)) : null;
             }
-            
-            else 
-            { 
-                paymentCheque.PayToName = payment.PaymentChequeCreationPayToName; 
+
+            else
+            {
+                paymentCheque.PayToName = payment.PaymentChequeCreationPayToName;
             }
 
             paymentCheque.BankAccountId = payment.BankAccountId;
@@ -287,24 +288,24 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         {
             List<PaymentChequeLinePM> paymentChequeLines = new List<PaymentChequeLinePM>();
             PaymentChequeLinePM paymentChequeLine = new PaymentChequeLinePM();
-            decimal? sum = 0; 
+            decimal? sum = 0;
             foreach (var item in payment.PaymentInvoices)
             {
                 paymentChequeLine = new PaymentChequeLinePM();
-                paymentChequeLine.Notes = "חשבונית "+item.APInvoiceNumber;
+                paymentChequeLine.Notes = "חשבונית " + item.APInvoiceNumber;
                 paymentChequeLine.Amount = (decimal?)(item.ForeignAmount);
                 paymentChequeLine.ChangeSetOp = ChangeSetOperation.Insert;
                 paymentChequeLine.Line = paymentChequeLines.Count() + 1;
                 paymentChequeLine.Tenant = payment.Tenant;
                 paymentChequeLines.Add(paymentChequeLine);
-                sum+= (decimal?)item.ForeignAmount;
+                sum += (decimal?)item.ForeignAmount;
             }
 
-			if (((decimal?)payment?.AmountInLocalCurrency - sum)>0)
-			{
+            if (((decimal?)payment?.AmountInLocalCurrency - sum) > 0)
+            {
                 paymentChequeLine = new PaymentChequeLinePM();
                 paymentChequeLine.Notes = payment.PaymentNo;
-                paymentChequeLine.Amount = ((decimal?)(payment?.AmountInLocalCurrency)-sum);
+                paymentChequeLine.Amount = ((decimal?)(payment?.AmountInLocalCurrency) - sum);
                 paymentChequeLine.ChangeSetOp = ChangeSetOperation.Insert;
                 paymentChequeLine.Line = paymentChequeLines.Count() + 1;
                 paymentChequeLine.Tenant = payment.Tenant;
@@ -334,7 +335,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 bool useLocal = true;
                 var user = GetLoggedContact(tenant);
                 if (user != null) useLocal = !(GetLoggedContact(tenant).DontShowLocal);
-                if(theEntityPm.PaymentMethodCode == "CH")
+                if (theEntityPm.PaymentMethodCode == "CH")
                 {
                     List<PaymentChequePM> PaymentCheques = GetPaymentChequesByAPPaymentId(theEntityPm);
                     if (PaymentCheques != null)
@@ -357,22 +358,22 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 }
             }
         }
-        private void CompleteCancelAPPaymentInFullAccounting(APPaymentPM aPPaymentPM )
-        {            
+        private void CompleteCancelAPPaymentInFullAccounting(APPaymentPM aPPaymentPM)
+        {
             JournalPM journalPM = GetJournalByAccountingEntityId(aPPaymentPM);
             if (journalPM != null)
             {
                 AddAccountingEntitieJournal(journalPM, AccountingEntityJournalActions.APPaymentVoid, journalPM.Id);
                 VoidJournal(journalPM, aPPaymentPM);
-               
+
             }
-            
+
             List<PaymentChequePM> paymentCheques = GetPaymentChequesByAPPaymentId(aPPaymentPM);
             if (paymentCheques != null)
             {
                 foreach (var item in paymentCheques)
                 {
-                    CancelPaymentCheque(item);                    
+                    CancelPaymentCheque(item);
                 }
             }
         }
@@ -397,15 +398,15 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 AccountingDate = aPPaymentPM.AccountingCancelationDate,
                 LineNotes = aPPaymentPM.CancelationNotes,
             });
-           JournalPM voidedByJournal = GetApprovedJournalByAccountingEntityId(aPPaymentPM);
+            JournalPM voidedByJournal = GetApprovedJournalByAccountingEntityId(aPPaymentPM);
 
-            entityPM.VoidedByJournalNumber = voidedByJournal != null?  voidedByJournal.JournalNumber: null;
+            entityPM.VoidedByJournalNumber = voidedByJournal != null ? voidedByJournal.JournalNumber : null;
         }
 
         private JournalPM GetJournalByAccountingEntityId(APPaymentPM aPPaymentPM)
         {
             IJournalQueryServiceExt journalQuery = ContainerAccessor.Container.Resolve(typeof(IJournalQueryServiceExt), "JournalQueryServiceExt", new ParameterOverride("", 1)) as IJournalQueryServiceExt;
-            return journalQuery.GetJournalByAccountingEntityIdAndCode(aPPaymentPM.Id, "5" , aPPaymentPM.Tenant);
+            return journalQuery.GetJournalByAccountingEntityIdAndCode(aPPaymentPM.Id, "5", aPPaymentPM.Tenant);
         }
         private JournalPM GetApprovedJournalByAccountingEntityId(APPaymentPM aPPaymentPM)
         {
@@ -484,21 +485,21 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
 
             this.InitializeTransferComponents();
-             setApproved = theEntityPm.SetApproved;
+            setApproved = theEntityPm.SetApproved;
             var setVoided = theEntityPm.SetVoided;
             var setCancelApproved = theEntityPm.SetCancelApproval;
             var SetReSendQBO = theEntityPm.SetReSendQBO;
             CreateFullAccountingPaymentCheque(theEntityPm);
-            
+
             if (paymentCheque != null)
-            {               
+            {
                 theEntityPm.ChequeOrPaymentRef = paymentCheque.ChequeNumber;
             }
 
             this.UpdatePrintNotesForJournalLines(theEntityPm);
-            APPaymentMapping.MapEntity(theEntityPm, payment, isNewEntity);   
+            APPaymentMapping.MapEntity(theEntityPm, payment, isNewEntity);
             paymentRepository.Update(payment);
-            paymentRepository.SubmitChanges();           
+            paymentRepository.SubmitChanges();
             invoicePaymentRepository.SubmitChanges();
             this.UpdatePaymentOpenAmount();
 
@@ -612,7 +613,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 entityPM.Id = IdCounter.GetNumber("APPayment", entityPM.Tenant).ToString();
             }
-          
+
 
             if (string.IsNullOrEmpty(entityPM.PaymentNo))
             {
@@ -661,13 +662,13 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         #region Transfer 
         private void InitializeTransferComponents()
         {
-            this.InitializeTransferFields();           
+            this.InitializeTransferFields();
         }
         private void InitializeTransferFields()
         {
-            bool isInitializing = true; 
+            bool isInitializing = true;
 
-             if (payment.TransferStatusCode == "TR")
+            if (payment.TransferStatusCode == "TR")
             {
                 isInitializing = false;
                 entityPM.TransferError = null;
@@ -771,7 +772,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         {
             APInvoicePayment invoicePayment = invoicePaymentRepository.GetSingleAPInvoicePayment(item.Id, entityPM.Tenant);
             ValidatePaymentReconciliation(item, invoicePayment, entityPM);
-            
+
             if (invoicePayment != null)
             {
                 APPaymentMapping.MapEntityInvoicePyament(item, invoicePayment, false);
@@ -781,44 +782,49 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private void ValidatePaymentReconciliation(APPaymentInvoicePM item, APInvoicePayment invoicePayment, APPaymentPM entityPM)
         {
-            
+
             if (isAccountingActivated && (invoicePayment == null || item.PaymentAmount != invoicePayment.PaymentAmount))
             {
                 bool useLocal = true;
                 var user = GetLoggedContact(tenant);
                 if (user != null) useLocal = !(GetLoggedContact(tenant).DontShowLocal);
-                if (entityPM.StatusCode == "DR") {
+                if (entityPM.StatusCode == "DR")
+                {
                     throw new ApplicationException(TranslateTextsClass.Translate("APPayment.M.PaymentDraftCantBeApproved", tenant, useLocal));
                 }
-                if (_InvoicesLedgerTransactions.Count > 0) {
-                    var invoiceTranasction =  _InvoicesLedgerTransactions.Where(x => x.Reference1 == item.APInvoiceNumber).FirstOrDefault();
+                if (_InvoicesLedgerTransactions.Count > 0)
+                {
+                    var invoiceTranasction = _InvoicesLedgerTransactions.Where(x => x.Reference1 == item.APInvoiceNumber).FirstOrDefault();
                     string[] invoiceRecons = new string[] { };
                     string[] paymentRecons = new string[] { };
                     if (invoiceTranasction != null && !string.IsNullOrWhiteSpace(invoiceTranasction.RecoNumber)
-                        && !string.IsNullOrWhiteSpace(invoiceTranasction.Reference3)) {
+                        && !string.IsNullOrWhiteSpace(invoiceTranasction.Reference3))
+                    {
                         invoiceRecons = invoiceTranasction.RecoNumber.Split(',');
                         paymentRecons = invoiceTranasction.Reference3.Split(',');
                     }
-                    
+
                     if (invoiceRecons.Any(x => paymentRecons.Any(y => y == x)))
                     {
-                            var intesectedElements = invoiceRecons.Where(x => paymentRecons.Any(y => y == x)).ToList();
-                            var msg = TranslateTextsClass.Translate("APPayment.M.AlreadyReconciledInvoice", tenant, useLocal);
-                            throw new ApplicationException(String.Format(msg, String.Join(",", intesectedElements)));
+                        var intesectedElements = invoiceRecons.Where(x => paymentRecons.Any(y => y == x)).ToList();
+                        var msg = TranslateTextsClass.Translate("APPayment.M.AlreadyReconciledInvoice", tenant, useLocal);
+                        throw new ApplicationException(String.Format(msg, String.Join(",", intesectedElements)));
                     }
-                    else if (invoiceTranasction != null) {
+                    else if (invoiceTranasction != null)
+                    {
                         invoiceTranasction.AmountToReconcile = item.PaymentAmount != null ? Convert.ToDecimal(item.PaymentAmount) : 0;
                         _InvoicesLedgerTransactionsToReconcile.Add(invoiceTranasction);
                     }
                 }
 
-                
+
             }
         }
 
         public void CreateReconciliationForAPPayment(APPaymentPM paymentPM)
         {
-            if (!_InvoicesLedgerTransactionsToReconcile.Any()) {
+            if (!_InvoicesLedgerTransactionsToReconcile.Any())
+            {
                 return;
             }
             IAccountingContext ctx = AccountingContext.GetContext(paymentPM.Tenant);
@@ -877,7 +883,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private ReconciliationLinePM CreateInvoiceRecoLine(APPaymentPM paymentPM, LedgerTransactionPM invoiceTransactionPM, int line)
         {
-               ReconciliationLinePM _invoiceLine = new ReconciliationLinePM();
+            ReconciliationLinePM _invoiceLine = new ReconciliationLinePM();
             _invoiceLine.ChangeSetOp = ChangeSetOperation.Insert;
             _invoiceLine.Tenant = paymentPM.Tenant;
             _invoiceLine.TransactionId = invoiceTransactionPM.Id;
@@ -900,14 +906,14 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private decimal CalculateInvoiceAmount(LedgerTransactionPM transaction)
         {
-                if (transaction.LocalAmountCredit == 0)
-                {
-                    return transaction.LocalAmountDebit;
-                }
-                else
-                {
-                    return -1 * transaction.LocalAmountCredit;
-                }
+            if (transaction.LocalAmountCredit == 0)
+            {
+                return transaction.LocalAmountDebit;
+            }
+            else
+            {
+                return -1 * transaction.LocalAmountCredit;
+            }
         }
 
         private void DeletePaymentInvoice(APPaymentInvoicePM item)
@@ -931,7 +937,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             // To Avoid twice same invoice connected
             double? connectedAmount = 0;
-            List<string> ids = new List<string>();            
+            List<string> ids = new List<string>();
             foreach (APInvoicePayment item in allConnectedItems)
             {
                 if (!ids.Contains(item.APInvoiceId))
@@ -1251,7 +1257,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                     ObjectTableName = "APInvoice",
                                     Notes = "Disconnected from Payment: " + entityPM.PaymentNo,
                                 });
-                            } 
+                            }
                             break;
                         }
 
@@ -1260,7 +1266,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
         }
         public void GetForeignFields()
-        {          
+        {
             if (payment.StatusCode != null)
             {
                 APPaymentStatusRepository myRepository = new APPaymentStatusRepository(objectContext);
@@ -1279,7 +1285,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private void UpdateDocOutNeedsRebuild()
         {
             DocumentOutRepository documentOutRepository = new DocumentOutRepository(myCommonContext);
-            DocumentOut docOut = documentOutRepository.GetDocumentOutByEntityAndChildEntity(payment.Id, null);
+            DocumentOut docOut = documentOutRepository.GetDocumentOutByEntityAndChildEntity(payment.Id, null, tenant);
             if (docOut != null)
             {
                 docOut.NeedsRebuild = true;
@@ -1292,7 +1298,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private void AddAPPaymentJournalAndJournalLines(APPaymentPM paymentPM, bool setApproved)
         {
             int tenant = paymentPM.Tenant;
-            if (setApproved )
+            if (setApproved)
             {
 
                 TenantRepository tenantRepository = new TenantRepository(tenant);
@@ -1307,18 +1313,20 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private void AutoInternalReconcileAPPaymentLines(APPaymentPM theEntityPm, JournalPM journal)
         {
-            
+
 
             if (theEntityPm.ReconcileInternalTrans == null)
                 return;
 
-             var internalJournalReconciles = GetInternalJournalReconciles(theEntityPm.ReconcileInternalTrans, journal);
-            if (internalJournalReconciles.Count > 0) {
+            var internalJournalReconciles = GetInternalJournalReconciles(theEntityPm.ReconcileInternalTrans, journal);
+            if (internalJournalReconciles.Count > 0)
+            {
                 journal.JournalReconciles.AddRange(internalJournalReconciles);
             }
         }
 
-        private static List<JournalReconcilePM> GetInternalJournalReconciles(List<LedgerTransactionPM> ledgerTransactions, JournalPM journal) {
+        private static List<JournalReconcilePM> GetInternalJournalReconciles(List<LedgerTransactionPM> ledgerTransactions, JournalPM journal)
+        {
             int JournalInternalReconcileLine = 1;
             return ledgerTransactions.Select(transaction => new JournalReconcilePM()
             {
@@ -1369,7 +1377,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         {
                             AccountingEntityId = r.APInvoiceId,
                             LocalAmountToReconcile = Convert.ToDecimal(r.LocalAmount.GetValueOrDefault()) * -1,
-                            ForeignAmountToReconcile = Convert.ToDecimal(r.ForeignAmount.GetValueOrDefault()) *-1,
+                            ForeignAmountToReconcile = Convert.ToDecimal(r.ForeignAmount.GetValueOrDefault()) * -1,
                             ForeignCurrencyIdReconcile = r.ForeignCurrencyId,
 
 
@@ -1413,7 +1421,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
         private static Tuple<LedgerTransactionPM, List<LedgerTransactionPM>> GetInvoicesLedgerTransactions(string appaymentId, string accountId, int tenant)
         {
-            
+
             IAPPaymentInvoicesTransactionFetcherExt aPPaymentInvoicesTransactionFetcher = ContainerAccessor.Container.Resolve(typeof(IAPPaymentInvoicesTransactionFetcherExt), "APPaymentInvoicesTransactionFetcherExt", new ParameterOverride("", 1)) as IAPPaymentInvoicesTransactionFetcherExt;
             return aPPaymentInvoicesTransactionFetcher.GetInvoicesLedgerTransactions(appaymentId, accountId, tenant);
         }
@@ -1546,7 +1554,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 CashBookPM cashBook = cashBookQuery.GetByPaymentAndCurrencyAndBranch(theEntityPm.PaymentCurrencyId, "1", theEntityPm.BranchId, theEntityPm.Tenant);
                 if (cashBook != null)
                 {
-                    if(cashBook.TotalAmount >= ((decimal)theEntityPm.AmountInPaymentCurrency - ((decimal)theEntityPm.TaxDeductionLocalAmount / (decimal)theEntityPm.PaymentCurrencyExchangeRate)))
+                    if (cashBook.TotalAmount >= ((decimal)theEntityPm.AmountInPaymentCurrency - ((decimal)theEntityPm.TaxDeductionLocalAmount / (decimal)theEntityPm.PaymentCurrencyExchangeRate)))
                     {
                         // Update Total Amount
                         ICashBookUpdateServiceExt cashBookUpdate = ContainerAccessor.Container.Resolve(typeof(ICashBookUpdateServiceExt), "CashBookUpdateServiceExt", new ParameterOverride("", 1)) as ICashBookUpdateServiceExt;
@@ -1602,9 +1610,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             if (theEntityPm.PaymentMethodCode == "CA")
             {
                 ICashBookQueryServiceExt cashBookQuery = ContainerAccessor.Container.Resolve(typeof(ICashBookQueryServiceExt), "CashBookQueryServiceExt", new ParameterOverride("", 1)) as ICashBookQueryServiceExt;
-                CashBookPM cashBook = cashBookQuery.GetByPaymentAndCurrencyAndBranch(theEntityPm.PaymentCurrencyId,"1",theEntityPm.BranchId, theEntityPm.Tenant);
-                creditAccoutId = cashBook != null ? cashBook.AccountId: null; 
-                if(cashBook != null)
+                CashBookPM cashBook = cashBookQuery.GetByPaymentAndCurrencyAndBranch(theEntityPm.PaymentCurrencyId, "1", theEntityPm.BranchId, theEntityPm.Tenant);
+                creditAccoutId = cashBook != null ? cashBook.AccountId : null;
+                if (cashBook != null)
                 {
                     creditAccoutId = cashBook?.AccountId;
                 }
