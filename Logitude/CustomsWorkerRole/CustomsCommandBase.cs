@@ -682,7 +682,7 @@ namespace CustomsWorkerRole
                                 var stopwatch = Stopwatch.StartNew();
                                 //LogTime(className + " create new task for msg id: " + item.MessageId);
                                 var t =
-                                Task.Factory.StartNew(() =>
+                                Task.Run(() =>
                                 {
                                     var createdElapsed = stopwatch.Elapsed.TotalSeconds;
                                     // LogTime(className + " start task (created " + stopwatch.Elapsed.TotalSeconds + " seconds ago) for row MessageId: " + item.MessageId);
