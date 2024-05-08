@@ -673,8 +673,12 @@ namespace CustomsWorkerRole
                             proccesDone = true;
                             var taskLIst = new List<Task>();
 
-                            int currentThreadsCount = Process.GetCurrentProcess().Threads.Count;
-                            LogTime($"{className} start open tasks for {responseList.Count} returned rows from Db (current threads count: " + currentThreadsCount);
+                            var currentThreads = Process.GetCurrentProcess().Threads;
+                            var runningThreads = currentThreads.Cast<ProcessThread>().Where(thread => thread.ThreadState.Equals(System.Threading.ThreadState.Running)).Count();
+                            var waitThreads = currentThreads.Cast<ProcessThread>().Where(thread => thread.ThreadState.Equals(System.Threading.ThreadState.WaitSleepJoin)).Count();
+                            var stopThreads = currentThreads.Cast<ProcessThread>().Where(thread => thread.ThreadState.Equals(System.Threading.ThreadState.Stopped)).Count();
+
+                            LogTime($"{className} start open tasks for {responseList.Count} returned rows from Db (threads count: {currentThreads.Count}, {runningThreads}, {waitThreads}, {stopThreads})");
                             var totalStopwatch = Stopwatch.StartNew();
 
                             foreach (var item in responseList)
