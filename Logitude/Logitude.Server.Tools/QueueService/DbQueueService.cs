@@ -319,8 +319,8 @@ namespace Logitude.Server.Tools.QueueService
                         SqlParameter interfaceTypeCodePar = new SqlParameter("@P_INTERFACETYPECODE", SqlDbType.VarChar, 32);
                         SqlParameter useRabbitMQPar = new SqlParameter("@P_USERABBITMQ", SqlDbType.Bit);
                         SqlParameter queueCodeRabbitPar = new SqlParameter("@P_QUEUECODERABBIT", SqlDbType.Bit);
-                        SqlParameter entityCodePar = new SqlParameter("@P_ENTITYCODE", SqlDbType.Bit);
-                        SqlParameter entityIPar = new SqlParameter("@P_ENTITYID", SqlDbType.Bit);
+                        SqlParameter entityCodePar = new SqlParameter("@P_ENTITYCODE", SqlDbType.VarChar, 255);
+                        SqlParameter entityIPar = new SqlParameter("@P_ENTITYID", SqlDbType.VarChar,255);
 
 
                         queueCodePar.Direction = ParameterDirection.Input;
