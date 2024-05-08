@@ -682,9 +682,10 @@ namespace CustomsWorkerRole
                                 var stopwatch = Stopwatch.StartNew();
                                 //LogTime(className + " create new task for msg id: " + item.MessageId);
                                 var t =
-                                Task.Factory.StartNew(() =>
+                                Task.Run(() =>
                                 {
-                                    LogTime(className + " start task (created " + stopwatch.Elapsed.TotalSeconds + " seconds ago) for row MessageId: " + item.MessageId);
+                                    var createdElapsed = stopwatch.Elapsed.TotalSeconds;
+                                    // LogTime(className + " start task (created " + stopwatch.Elapsed.TotalSeconds + " seconds ago) for row MessageId: " + item.MessageId);
                                     var taskstopwatch = Stopwatch.StartNew();
 
                                     CustomsCommandBaseHelper helper = new CustomsCommandBaseHelper();
@@ -692,12 +693,12 @@ namespace CustomsWorkerRole
                                     LogMessagingUtilWR.Instance.AppendLine("LogDoneItemInMemory();");
                                     LogDoneItemInMemory();
                                     LogMessagingUtilWR.Instance.AppendLine("LogDoneItemInMemory();AFTER");
-                                    LogTime(className + " end task (elapsed: " + taskstopwatch.Elapsed.TotalSeconds + " seconds) for row MessageId: " + item.MessageId);
+                                    LogTime(className + " end task (elapsed: " + (int)taskstopwatch.Elapsed.TotalSeconds + " seconds. started after: " + (int)createdElapsed + " seconds) for row MessageId: " + item.MessageId);
                                 });
                                 taskLIst.Add(t);
                             }
                             Task.WaitAll(taskLIst.ToArray());
-                            LogTime(className + " end waiting for all of them (total elapsed: " + totalStopwatch.Elapsed.TotalSeconds + " seconds)");
+                            LogTime(className + " end waiting for all of them (total elapsed: " + (int)totalStopwatch.Elapsed.TotalSeconds + " seconds)");
                             Queue_scope.Complete();
                         }
                     }

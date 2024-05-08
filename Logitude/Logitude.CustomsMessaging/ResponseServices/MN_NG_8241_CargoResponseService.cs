@@ -42,6 +42,7 @@ using System.Globalization;
 using Logitude.Customs.BL.Messaging.L2U.CustomFile;
 using Logitude.CustomsMessaging.MessagingServices;
 using Logitude.Customs.BL.Messaging.Customs;
+using Logitude.BL.Security;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -190,11 +191,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         {
                             if (customResponse.Cargo.totalNumberOfPackeges == customResponse.Cargo.CargoAdditionalData[0].totalRecordNumberOfPackeges && customResponse.Cargo.CargoAdditionalData[0].StorageDate != null)
                             {
-                                if (_MyDeclarationPM.TransportModeId == "A")
+                                bool isCancelBuildSST = SecurityUtility.CheckFeature("Customs.Declaration", "CancelBuildSST", _MyDeclarationPM.Tenant);
+                                if (_MyDeclarationPM.TransportModeId == "A" && !isCancelBuildSST)
                                 {
                                     _status = "SMG";
                                 }
-                                else //if(_MyDeclarationPM.TransportModeId == "O")
+                                else if (!isCancelBuildSST)
                                 {
                                     _status = "SST";
                                 }
@@ -215,7 +217,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             OpenUnifreighTask();
                         bool  IsAvailabilityDate2 = false;
                         myDeclarationUpdateService.SuppressNewConcurrencyGUID = true;
-                        if (_status == "SST" || _status == "SMG")
+                        if (_status == "SST" || _status == "SMG")                    
                             if (_MyDeclarationPM.AvailabilityDate == null)
                             {
                                 _MyDeclarationPM.AvailabilityDate = DateTime.Now;
@@ -343,11 +345,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     DateTime? statusDate = DateTime.Now;
                     if (customResponse.Cargo != null && customResponse.Cargo.CargoAdditionalData != null && customResponse.Cargo.CargoAdditionalData.Count() > 0 && customResponse.Cargo.totalNumberOfPackeges == customResponse.Cargo.CargoAdditionalData[0].totalRecordNumberOfPackeges && customResponse.Cargo.CargoAdditionalData[0].StorageDate != null)
                     {
-                        if (_MyDeclarationPM.TransportModeId == "A")
+                        bool isCancelBuildSST = SecurityUtility.CheckFeature("Customs.Declaration", "CancelBuildSST", _MyDeclarationPM.Tenant);
+                        if (_MyDeclarationPM.TransportModeId == "A" && !isCancelBuildSST)
                         {
                             status = "SMG";
                         }
-                        else //if(_MyDeclarationPM.TransportModeId == "O")
+                        else if (!isCancelBuildSST)
                         {
                             status = "SST";
                         }

@@ -1192,10 +1192,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
         {
             DeclarationPaymentQueryService declarationPaymentQueryService = new DeclarationPaymentQueryService(requestParams.Tenant);
 
-
-            if (declarationPaymentQueryService.GetSingle(_MyDeclarationPM.Id, true, false) == null)
+            DeclarationPaymentPM payment = declarationPaymentQueryService.GetSingle(_MyDeclarationPM.Id, true, false);
+            if (payment == null)
             {
-                DeclarationPaymentPM declarationPaymentPM = new DeclarationPaymentPM()
+                 payment = new DeclarationPaymentPM()
                 {
                     DeclarationId = _MyDeclarationPM.Id,
                     CreatedByUserId = _MyDeclarationPM.CreatedByUserId,
@@ -1204,11 +1204,20 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     Tenant = requestParams.Tenant,
                     ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
                 };
-                var context = CustomContext.GetContext(requestParams.Tenant);
-                DeclarationPaymentUpdateService declarationPaymentUpdateService = new DeclarationPaymentUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
-                declarationPaymentUpdateService.Update(declarationPaymentPM, true);
+            
 
             }
+            else
+            {
+                payment.PaymentDate = DateTime.Now;
+                payment.SignatoryIdentification = requestParams.SignByPersonalId;
+                payment.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
+
+            }
+
+            var context = CustomContext.GetContext(requestParams.Tenant);
+            DeclarationPaymentUpdateService declarationPaymentUpdateService = new DeclarationPaymentUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
+            declarationPaymentUpdateService.Update(payment, true);
 
 
         }

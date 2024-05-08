@@ -6,6 +6,7 @@ using Logitude.CustomsMessaging.ResponseServices;
 using Logitude.Server.Tools.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -108,7 +109,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             }
 
             // var mP = new UnifreightIIG.Common.TheGateway.MoreParams() { MyOption = UnifreightIIG.Common.TheGateway.MoreParams.Options.None };
-
+            var sw = Stopwatch.StartNew();
             using (var uifreightSdkGateway = new UnifreightSdkGateway(base.CustomsSetting.IIGServiceAddress))
             {
                 _ResponseHeader = uifreightSdkGateway.GetChannel<IMANIFESTRequestOperation>()
@@ -119,6 +120,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     ref this._IIGGatewayMoreParams,
                     out response);
             }
+            LogMessagingUtil.Instance.AppendLine("UnifreightSdkGateway:Took:" + sw.Elapsed.ToString());
 
             return response;
         }

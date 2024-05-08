@@ -35,13 +35,14 @@ export class ClientItemsTabComponent extends BaseComponent {
     clientMessageService: ClientMessagesService = new ClientMessagesService();
     responseData: INF_MSG_GenericResponseData;
     public load = false
+    public loading = false
     SequenceNumeric: string = "מס'";
     Parent: ClaimGeneralTabComponent;
     private CurrentSession = SessionLocator.SelectedSession;
     private myService: ClientItemListService = new ClientItemListService();;
     public ItemsList: ObservableCollection;
     public filters = new ApiQueryFilters();
-    public ClientCode : string;
+    public ClientCode: string;
     constructor(private _EntityArgs: EntityArgs, private EntityResourceService: EntityResourceService) {
         super();
         this.EntityResourceService.getEntityResourceByTableName("Customs.ClientItem").subscribe((response: any) => {
@@ -54,7 +55,7 @@ export class ClientItemsTabComponent extends BaseComponent {
 
     }
     LoadDate() {
-
+        this.loading = true;
         this.ItemsList = new ObservableCollection([]);
         let Code = this.entityPM?.Code ?? this.ClientCode;
 
@@ -75,6 +76,7 @@ export class ClientItemsTabComponent extends BaseComponent {
             this.ItemsList.Collection.forEach((obj, index) => obj.SequenceNumeric = index + 1)
             this.originalItemList.InsertCollection(this.ItemsList.Collection);
             this.load = true
+            this.loading = false;
         })
 
 
@@ -90,7 +92,7 @@ export class ClientItemsTabComponent extends BaseComponent {
 
             this.entityPM = args.EntityPM;
             this.Parent = args.Parent;
-            if(args?.isFromSupplierInvoice){
+            if (args?.isFromSupplierInvoice) {
                 this.ClientCode = args.ClientCode;
                 this.LoadDate();
             }
@@ -108,18 +110,17 @@ export class ClientItemsTabComponent extends BaseComponent {
 
     TextChanged(searchText) {
 
-        if (AppTool.IsNullOrEmpty(searchText))
-            this.LoadDate();
-        else {
-            var items: any = this.originalItemList;
-            items = items.Collection.filter(f => f.ClassificationCode != null || f.ItemCode != null);
-            var TempItemList: ClientItemPM[] = [];
-            TempItemList = items;
-            TempItemList = TempItemList.filter(f => f.ClassificationCode?.toUpperCase().includes(searchText?.toUpperCase().toString()) || f.ItemCode?.toUpperCase().includes(searchText?.toUpperCase().toString()));
 
-            this.ItemsList.InsertCollection(TempItemList);
-
+        if (AppTool.IsNullOrEmpty(searchText)) {
+            searchText = "";
         }
+        var items: any = this.originalItemList;
+        items = items.Collection.filter(f => f.ClassificationCode != null || f.ItemCode != null);
+        var TempItemList: ClientItemPM[] = [];
+        TempItemList = items;
+        TempItemList = TempItemList.filter(f => f.ClassificationCode?.toUpperCase().includes(searchText?.toUpperCase().toString()) || f.ItemCode?.toUpperCase().includes(searchText?.toUpperCase().toString()) || f.ItemDescription?.toUpperCase().includes(searchText?.toUpperCase().toString()));
+
+        this.ItemsList.InsertCollection(TempItemList);
 
     }
 

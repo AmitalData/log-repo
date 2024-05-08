@@ -53,14 +53,14 @@ export class OcrDefaultsSettingsComponent extends BaseComponent {
     public DeclarationPM: DeclarationPM;
     public supplierInvoicePMService = new SupplierInvoicePMService();
     public ItemsSource: ObservableCollection;
-    private claimReasonCodeChecked: boolean = true;
-    private transactionNatureCodeChecked: boolean = true;
-    private processTypeCodeChecked: boolean = true;
-    private buyerRoleCodeChecked: boolean = true;
-    private partyRelationshipCodeChecked: boolean = true;
-    private accountTypeCodeChecked: boolean = true;
-    public IsChecked: boolean = true;
-    public disableSubmit: boolean = false
+    private claimReasonCodeChecked: boolean = false;
+    private transactionNatureCodeChecked: boolean = false;
+    private processTypeCodeChecked: boolean = false;
+    private buyerRoleCodeChecked: boolean = false;
+    private partyRelationshipCodeChecked: boolean = false;
+    private accountTypeCodeChecked: boolean = false;
+    public IsChecked: boolean = false;
+    public disableSubmit: boolean = true;
     FIELD_IS_REQUIERD: string;
     public ProcessTypeCodeFilterItems: ApiQueryFilters;
 

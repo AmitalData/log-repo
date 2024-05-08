@@ -48,6 +48,7 @@ using WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting;
 using WebFreight.Web.ReportsWebServices.LogitudeReports.Bluesnap;
 using WebFreight.Web.ReportsWebServices.LogitudeReports.CRM;
 using WebFreight.Web.ReportsWebServices.LogitudeReports.CRM.LogitudeCRMReport;
+using WebFreight.Web.ReportsWebServices.LogitudeReports.Customs;
 using WebFreight.Web.ReportsWebServices.LogitudeReports.Operational;
 using WebFreight.Web.ReportsWebServices.LogitudeReports.Quotes.SpotRate;
 using WebFreight.Web.ReportsWebServices.LogitudeReports.TimeManagement;
@@ -1339,6 +1340,12 @@ namespace WebFreight.Web.Helpers
                         dataProvider = controlForInvoiceLinesLoader.GetData();
                         break;
                     }
+                case "EXDE":
+                    {
+                        ExportDeclarationLoader myDataManager = new ExportDeclarationLoader(filters, reportFliter.tenant);
+                        dataProvider = myDataManager.GetData();
+                        break;
+                    }
                     #endregion
             }
             return dataProvider;
@@ -1762,7 +1769,7 @@ namespace WebFreight.Web.Helpers
 
                         break;
                     }
-                case "VDCA":
+                case ConfirmationNumberDefaultListService:
                     {
                         dataProviderName = "WebFreight.Web.DataProviders.VendorChargesAnalysisDataProvider";
 
@@ -2645,6 +2652,19 @@ namespace WebFreight.Web.Helpers
                             SpotRateQuoteReportDataProvider reportDataProvider = (SpotRateQuoteReportDataProvider)serializer.Deserialize(memorystream);
                             reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
                             stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "Spot Rate Quote Report", Name = "SpotRateQuoteReportDataProvider", BusinessObjectValue = reportDataProvider };
+                        
+                        break;
+                    }
+
+                case "EXDE":
+                    {
+                        XmlSerializer serializer = new XmlSerializer(typeof(ExportDeclarationDataProvider));
+                        ExportDeclarationDataProvider reportDataProvider = (ExportDeclarationDataProvider)serializer.Deserialize(memorystream);
+                        reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
+                        //reportDataProvider.CompanyName = DataProviders.General.GetCompanyName(stimulReportDataProviderDetails.Tenant);
+                        //reportDataProvider.Logo = DataProviders.General.GetLogo(stimulReportDataProviderDetails.Tenant);
+                        stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "EXDE", Name = "ExportDeclarationDataProvider", BusinessObjectValue = reportDataProvider };
+
                             break;
                         }
             }

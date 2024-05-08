@@ -3529,7 +3529,7 @@
     <TextCode
       Code="&quot;Customs.Client.O.ItemOrClassificationSearch&quot;"
       DefaultText="&quot;Item Or Classification Search&quot;"
-      LocalDefaultText="&quot;פרט / פריט&quot;"
+      LocalDefaultText="&quot;פרט / פריט / תאור&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

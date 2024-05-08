@@ -8,6 +8,8 @@ import {DateTimeToDatePipe} from  './Pipes/DateTimeToDatePipe';
 import {DateTimePipe} from './Pipes/DateTimePipe';
 import {TextCodeTranslationPipe} from './Pipes/TextCodeTranslationPipe';
 import {IdGeneratorPipe} from './Pipes/IdGeneratorPipe';
+import {IdGeneratorAsyncPipe} from './Pipes/IdGeneratorAsyncPipe';
+
 import { DateToMonthPipe } from './Pipes/DateToMonthPipe';
 import { MinutesToTimePipe } from './Pipes/MinutesToTimePipe';
 import {ObjectFieldTextCodeTranslationPipe} from './Pipes/ObjectFieldTextCodeTranslationPipe';

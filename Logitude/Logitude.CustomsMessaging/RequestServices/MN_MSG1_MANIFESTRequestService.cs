@@ -30,6 +30,7 @@ using Unifreight.Data.AmitalModel.Repsitories;
 using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.BL.BL;
+using System.Diagnostics;
 
 namespace Logitude.CustomsMessaging.RequestServices
 {
@@ -68,8 +69,10 @@ namespace Logitude.CustomsMessaging.RequestServices
             //requestParams.Tenant = 1;
             //requestParams.ImportManifest = "1-1";
 
+            var stopwatch = Stopwatch.StartNew();
             TenantRepository tenantRepository = new TenantRepository(requestParams.Tenant);
             _Tenant = tenantRepository.GetSingleTenant(requestParams.Tenant);
+            LogMessagingUtil.Instance.AppendLine("GetSingleTenant:Elapsed:" + stopwatch.ElapsedMilliseconds);
             if (_Tenant == null)
             {
                 return myMN_MSG1_MANIFEST;
@@ -82,10 +85,11 @@ namespace Logitude.CustomsMessaging.RequestServices
             this.MyRequestSheetParam.EntityId1 = requestParams.LoggingEntityId;
             this.MyRequestSheetParam.RequestDescription = "מסר מניפסט";
 
-
+            stopwatch = Stopwatch.StartNew();
             FeatureQuery featureQuery = new FeatureQuery();
             var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(_DeclarationPM.Tenant), _DeclarationPM.Tenant);
             var feature = features.Features.FirstOrDefault(x => x.Code == "SendManifestEvent");
+            LogMessagingUtil.Instance.AppendLine("GetAllowedFeaturesForLoggedUser:Elapsed:" + stopwatch.ElapsedMilliseconds);
             if (feature != null)
             {
                 EventContextTagModel myEventContextTagModel = new EventContextTagModel()
@@ -98,12 +102,14 @@ namespace Logitude.CustomsMessaging.RequestServices
                 string loggingUserId = AuthenticationUtil.ResolveUserId(_DeclarationPM.Tenant);
                 RaiseEvent(_DeclarationPM, loggingUserId, myEventContextTagModel);
             }
-           
 
+
+            stopwatch = Stopwatch.StartNew();
             //this._DeclarationPM.CurrentContextTag = myInsertEventContextTagModel;
             _DeclarationPM.ManifestCargoStatusCode = "4";
             _DeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
             myDeclarationUpdateService.Update(_DeclarationPM, true);
+            LogMessagingUtil.Instance.AppendLine("Update:Elapsed:" + stopwatch.ElapsedMilliseconds);
 
             //var xml=XmlGenericUtil<MN_MSG1_MANIFEST>.SerializeObject(myMN_MSG1_MANIFEST);
             return myMN_MSG1_MANIFEST;

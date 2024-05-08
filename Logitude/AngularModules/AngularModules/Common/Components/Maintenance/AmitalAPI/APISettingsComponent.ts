@@ -119,8 +119,8 @@ export class APISettingsComponent extends BaseComponent {
         { name: 'Schema', label: 'Schema', width: '150' },
         { name: 'ApiType', label: 'Api Type', width: '100' },
         { name: 'Address', label: 'Address', width: '100' },
-        { name: 'PartnerName', label: 'PARTNER', width: '100' },
-        { name: 'PartnerToken', label: 'Token', width: '240' },
+        { name: 'PartnerName', label: 'Partner', width: '100' },
+        // { name: 'PartnerToken', label: 'Token', width: '240' },
     ].concat(this.moreParamsList.map(param => ({ name: param.name, label: param.label, width: '100' })));
 
     async ngOnInit() {
