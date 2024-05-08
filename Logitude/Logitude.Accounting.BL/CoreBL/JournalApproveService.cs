@@ -1715,7 +1715,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     Thread.Sleep(10);//itzik - let other thread abilty to use GLAccout !!!
                 }
 
-                if (selectedQueue == JournalApproveService.K_AccountingJournalApproveWR)
+                if (selectedQueue == JournalApproveService.K_AccountingJournalApproveMutliThreadingWR)
                 {
 
 
