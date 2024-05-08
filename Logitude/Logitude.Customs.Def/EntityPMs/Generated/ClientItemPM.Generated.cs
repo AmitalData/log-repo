@@ -111,9 +111,7 @@ namespace Logitude.Customs.Def.EntityPMs
 		 }
 	   }
 	  private string itemCode ;
-	  
-       [Key]
-	  
+	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -227,6 +225,29 @@ namespace Logitude.Customs.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Id",OldValue=id,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   id=value;
+		   }
+			
+		 }
+	   }
+	  private string itemKey ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ItemKey  
+	   {
+	    
+	     get
+		{
+		   return itemKey;
+		 }
+		 set
+		 {
+		   if(itemKey != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ItemKey",OldValue=itemKey,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   itemKey=value;
 		   }
 			
 		 }

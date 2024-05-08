@@ -35,4 +35,34 @@ export class ClientItemExtendedPMService {
                 }), catchError(ServiceHelper.HandleServiceError));
         });
     }
+
+    GetClientItemDescriptionPM(itemDescription: string, exporterCode: string, tenant: number) {
+        return defer(() => {
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+            return this._http.get(this._apiUrl + '/GetClientItemDescription/?' + '&itemDescription=' + itemDescription + '&exporterCode=' + exporterCode + '&tenant=' + tenant, ServiceHelper.GetHttpHeaders())
+                .pipe(map((response: any) => {
+                    var serviceResponse = new ServiceResponse();
+                    serviceResponse.Result = response;
+                    return serviceResponse;
+                }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
+    GetClientItemByItemKeyPM(itemDescription: string, itemCode: string, exporterCode: string, tenant: number) {
+        itemCode = itemCode === 'undefined' ? '' : itemCode;
+        itemDescription = itemDescription === 'undefined' ? '' : itemDescription;
+        return defer(() => {
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+            return this._http.get(this._apiUrl + '/GetClientItemByItemKey/?' + '&itemDescription=' + itemDescription + '&itemCode=' + itemCode + '&exporterCode=' + exporterCode + '&tenant=' + tenant, ServiceHelper.GetHttpHeaders())
+                .pipe(map((response: any) => {
+                    var serviceResponse = new ServiceResponse();
+                    serviceResponse.Result = response;
+                    return serviceResponse;
+                }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
 }

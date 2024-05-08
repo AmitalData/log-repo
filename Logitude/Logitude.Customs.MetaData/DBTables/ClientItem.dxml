@@ -37,8 +37,7 @@
     Type="varchar"
     Size="30">
     <Constraints
-      PrimaryKey="true"
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="OriginCountryCode"
@@ -62,6 +61,13 @@
     <Constraints
       PrimaryKey="true"
       Nullable="false" />
+  </Column>
+  <Column
+    Name="ItemKey"
+    Type="nvarchar"
+    Size="131">
+    <Constraints
+      Nullable="true" />
   </Column>
   <Relation
     ForeignKeyColumn="OriginCountryCode"

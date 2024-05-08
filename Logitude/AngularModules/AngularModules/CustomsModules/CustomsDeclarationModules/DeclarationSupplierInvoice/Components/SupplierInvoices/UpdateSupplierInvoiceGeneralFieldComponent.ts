@@ -8,6 +8,8 @@ import { SupplierInvoicePM } from '../../../../../Customs/EntityPMs/SupplierInvo
 
 import { TextCodeTranslator } from '../../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { CustomsCountryPM } from '../../../../../Customs/EntityPMs/CustomsCountryPM';
+import { FeatureLocator } from 'Infrastructure/Utilities/FeatureLocator';
+import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 
 
 @Component({
@@ -18,9 +20,10 @@ export class UpdateSupplierInvoiceGeneralFieldComponent extends BaseComponent {
     DataContext: any = this;
     public ItemsSource: ObservableCollection;
     SupplierInvoicePM: SupplierInvoicePM;
+    ClientCode: string;
     Validate: any;
     UpdateField: string;
-    FinalValue:any;
+    FinalValue: any;
     LookUpTableName: string;
     ObjectTableName: string;
     Title: string;
@@ -29,23 +32,33 @@ export class UpdateSupplierInvoiceGeneralFieldComponent extends BaseComponent {
     public ValidationErrorsList: string[] = [];
     IsDisplayOnly: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    public hasOcr: boolean;
+    public PreceduralFilterItems: ApiQueryFilters;
+
     constructor() {
         super();
         this.ItemsSource = new ObservableCollection([]);
         this.UIProperties.SetEnabled("FromNumber", null, false);
         this.UIProperties.SetEnabled("ToNumber", null, false);
         this.IsAddButtonEnabled = false;
+        this.hasOcr = FeatureLocator.HasFeaturePermession("Customs.Declaration", "OCR");
+
     }
+
     SetWindowArgs(args: any) {
         if (!AppTool.IsNullOrEmpty(args)) {
             this.SupplierInvoicePM = args.SupplierInvoicePM;
+            this.ClientCode = args.ExporterImporterCode;
             this.UpdateField = args.UpdateField;
-            this.LookUpTableName=args.LookUpTableName;
-            this.ObjectTableName=args.ObjectTableName;
+            this.LookUpTableName = args.LookUpTableName;
+            this.ObjectTableName = args.ObjectTableName;
             this.Validate = args.Validate;
             this.Title = args.Title;
             this.ItemsWithNoValueTitle = args.ItemsWithNoValueTitle;
             this.IsItemsWithNoValue = args.IsItemsWithNoValue;
+            this.PreceduralFilterItems = new ApiQueryFilters();
+            this.PreceduralFilterItems.addAdditionalFilter("Tenant", SessionLocator.Tenant, null, null, "Equals", false, false, false, "number");
+            this.PreceduralFilterItems.addAdditionalFilter("ClientCode", this.ClientCode, null, null, "Contains", false, false, false, "string");
         }
         this.UpdateItemsWithNoValue = true;
     }

@@ -165,7 +165,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 LogitudeSettings.HandleLogMe("ClassificationCode changed " + logData, false, "SupplierInvoiceItemUpdate.ClassificationCode", stopLogAt);                
             }
 
-            if (SecurityUtility.CheckFeature("Customs.Declaration", "OCR", entityPM.Tenant) && !string.IsNullOrEmpty(entityPM.ItemCode)) 
+            if (SecurityUtility.CheckFeature("Customs.Declaration", "OCR", entityPM.Tenant) && !string.IsNullOrEmpty(entityPM.ItemCode) || !string.IsNullOrEmpty(entityPM.ItemDescription)) 
             {
                 if(string.IsNullOrEmpty(entityPM.ClassificationCode))
                 {
@@ -190,10 +190,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                 string quantityType = customsItemQueryService.GetQuantityTypeByClassificationWithMultiCustomItems(entityPM.ClassificationCode, entityPM.Tenant, true);
                                 if (!string.IsNullOrEmpty(quantityType))
                                 {
-                                    entityPM.StatisticQuantityType = quantityType;
-                                    entityPM.StatisticQuantity = entityPM?.InvoiceQuantity;
-                                    entityPM.ItemAdditionalStatus = true;
-                                    if (string.IsNullOrEmpty(entityPM.InvoiceQuantityType))
+                                    //entityPM.StatisticQuantityType = quantityType;
+                                    //entityPM.StatisticQuantity = entityPM?.InvoiceQuantity;
+                                    //entityPM.ItemAdditionalStatus = true;
+                                    //if (string.IsNullOrEmpty(entityPM.InvoiceQuantityType))
                                         entityPM.InvoiceQuantityType = quantityType;
 
                                 }
@@ -202,7 +202,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     }
 
                 }
-                else
+                else 
                 {
                     if (entityPM.ClassificationCode != entityPOCO.ClassificationCode || entityPM.ItemCode != entityPOCO.ItemCode || entityPM.OriginCountryCode != entityPOCO.OriginCountryCode || entityPM.ItemDescription != entityPOCO.ItemDescription)
                     {
@@ -216,8 +216,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     }
                    
                 }
-          
-               
+
+
 
             }
 
@@ -600,17 +600,21 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             ClientItemQueryService clientItemQueryService = new ClientItemQueryService(entityPM.Tenant);
             ClientItemUpdateService clientItemUpdateServicev = new ClientItemUpdateService(context, new Dictionary<string, IContext>(), entityPM.Tenant);
 
-            if (entityPM != null )
+            if (entityPM != null)
             {
-               
-                    if (entityPM.ChangeSetOp != ChangeSetOperation.None && !string.IsNullOrEmpty(entityPM.ItemCode))
+                if (!string.IsNullOrEmpty(entityPM.ItemCode) || !string.IsNullOrEmpty(entityPM.ItemDescription))
+                {
+                    string ItemKey = entityPM.ItemCode + "_" + entityPM.ItemDescription;
+
+                    if (entityPM.ChangeSetOp != ChangeSetOperation.None && !string.IsNullOrEmpty(ItemKey))
                     {
-                        ClientItemPM clientItem = clientItemQueryService.GetSingleWithTenant(entityPM.ItemCode, exporterCode, entityPM.Tenant);
+                        ClientItemPM clientItem = clientItemQueryService.GetSingleWithTenantByItemKey(ItemKey, exporterCode, entityPM.Tenant);
                         if (clientItem == null)
                         {
                             clientItem = new ClientItemPM()
                             {
                                 ItemCode = entityPM.ItemCode,
+                                ItemKey = ItemKey,
                                 Tenant = entityPM.Tenant,
                                 ItemDescription = entityPM.ItemDescription,
                                 ClassificationCode = entityPM.ClassificationCode,
@@ -630,8 +634,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         }
 
                         clientItemUpdateServicev.Update(clientItem, true);
-                   
 
+
+                    }
                 }
             }
         }

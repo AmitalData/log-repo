@@ -53,14 +53,40 @@ export class OcrDefaultsSettingsComponent extends BaseComponent {
     public DeclarationPM: DeclarationPM;
     public supplierInvoicePMService = new SupplierInvoicePMService();
     public ItemsSource: ObservableCollection;
-    private claimReasonCodeChecked: boolean = true
-    private transactionNatureCodeChecked: boolean = true
-    private processTypeCodeChecked: boolean = true
-    private buyerRoleCodeChecked: boolean = true
-    private partyRelationshipCodeChecked: boolean = true
-    private accountTypeCodeChecked: boolean = true
+    private claimReasonCodeChecked: boolean = false;
+    private transactionNatureCodeChecked: boolean = false;
+    private processTypeCodeChecked: boolean = false;
+    private buyerRoleCodeChecked: boolean = false;
+    private partyRelationshipCodeChecked: boolean = false;
+    private accountTypeCodeChecked: boolean = false;
+    public IsChecked: boolean = false;
+    public disableSubmit: boolean = true
     FIELD_IS_REQUIERD: string;
     public ProcessTypeCodeFilterItems: ApiQueryFilters;
+
+    
+
+    OnAllBtnClicked() {
+        this.IsChecked = true;
+        this.claimReasonCodeChecked = true
+        this.transactionNatureCodeChecked = true
+        this.processTypeCodeChecked = true
+        this.buyerRoleCodeChecked = true
+        this.partyRelationshipCodeChecked = true
+        this.accountTypeCodeChecked= true
+    }
+    
+    OnNoneBtnClicked() {
+        this.IsChecked = false;
+        this.claimReasonCodeChecked = false
+        this.transactionNatureCodeChecked = false
+        this.processTypeCodeChecked = false
+        this.buyerRoleCodeChecked = false
+        this.partyRelationshipCodeChecked = false
+        this.accountTypeCodeChecked= false
+    }
+
+
 
     constructor() {
         super();
@@ -429,5 +455,13 @@ export class OcrDefaultsSettingsComponent extends BaseComponent {
             });
         }
 
+    }
+
+    ngDoCheck() {
+        if (!this.accountTypeCodeChecked && !this.partyRelationshipCodeChecked && !this.buyerRoleCodeChecked && !this.processTypeCodeChecked && !this.transactionNatureCodeChecked && !this.claimReasonCodeChecked) {
+            this.disableSubmit=true
+        }else{
+            this.disableSubmit=false
+        }
     }
 }

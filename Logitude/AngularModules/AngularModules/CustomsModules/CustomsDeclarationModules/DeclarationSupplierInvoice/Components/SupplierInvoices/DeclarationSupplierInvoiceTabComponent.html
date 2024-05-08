@@ -15,6 +15,28 @@
         color: gray;
         font-family: sans-serif;
     }
+    
+    .check-all-werapper {
+        height: 26px;
+        display: inline-block;
+        width: 53px;
+    }
+    
+
+    .title-container {
+        display: inline-block;
+        padding: 0px;
+        height: 18px;
+        padding-right: 14px;
+    }
+
+    .ActionButton {
+        background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(186, 206, 227, 1) 100%);
+    }
+
+    .ToggleButton {
+        border: none;
+    }
 </style>
 <table *ngIf=" EntityPM != null && EntityPM.Direction != 'E'">
     <tr>
@@ -295,10 +317,39 @@
         <td>
             <div class="TableHolder">
                 <table *ngIf="IsVisible">
+
                     <tr style="height:25px">
+                        
+                        <td class="check-all-werapper">
+                            <div style="border:1px solid #6A8299;width:47px;border-radius: 3px;max-height: 26px;">
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <div class="ActionButton" style="width: 35px;height:23px;padding-right:4px ">
+                                                <CheckBox [IsChecked]="IsChecked" (Checked)="$event ? OnAllBtnClicked() : OnNoneBtnClicked()"></CheckBox>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="ToggleButton" tabindex="-1" style="width: 20px;height:23px;left:10px ">
+                                                <img src="./Images/ToggleIcon.png" style="float:left;" />
+                                                <div class="ToggleButtonMenu" style="width: 70px;top:26px;text-align:right">
+                                                    <button style="text-align:right" (click)="OnAllBtnClicked()">
+                                                        {{'Customs.General.O.SelectAll' | TextCodeTranslationPipe}}
+                                                    </button>
+                                                    <button style="text-align:right" (click)="OnNoneBtnClicked()">
+                                                        {{ 'Customs.General.O.CancelSelect' | TextCodeTranslationPipe }}
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
 
-                        <td class="TabTitleRow" style="width:150px">  {{'Customs.Declaration.TH.ExporterInvoices'| TextCodeTranslationPipe}} </td>
-
+                        <td class="title-container">
+                        <div class="TabTitleRow" style="width:150px">  {{'Customs.Declaration.TH.ExporterInvoices'| TextCodeTranslationPipe}} </div>
+                        </td>                        
                         <td>
                             <div style="width:100%;text-align:center" *ngIf="IsDisplayOnly">
                                 <div class="DisbleBox">
@@ -343,7 +394,18 @@
                                                     (SelectedItemChanged)="OnRowSelected($event)"
                                                     [SelectedRow]="SelectedRow">
 
-
+                                                    <log-column *ngIf="IsOcr" [header]="'Customs.Consignment.O.ComprehensiveUpdate' | TextCodeTranslationPipe" [binding]="'BuyerRoleName'" [width]="'60'">
+                                                        <ng-template let-item>
+                                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                                                <div style="padding-top: 1px; width: 18px; height:20px;vertical-align:central;PADDING-RIGHT:20PX">
+                                                                    <LogCheckBox  [ObjectTableName]="'Customs.SupplierInvoice'" [Checked]="IsChecked" 
+                                                                     [DataContext]="item" [HideColumns]="true" (ValueChanged)="IsComprehensiveUpdateChecked($event,item)"
+                                                                    ></LogCheckBox>
+                                                                </div>
+                
+                                                            </log-cell-template>
+                                                        </ng-template>
+                                                    </log-column>
 
                                     <log-column [header]="'Customs.SupplierInvoice.F.SequenceNumeric' | TextCodeTranslationPipe" [binding]="'SequenceNumeric'" [width]="'30'" [Alignment]="'left'">
                                         <ng-template let-item>
@@ -497,18 +559,7 @@
                                             </log-cell-template>
                                         </ng-template>
                                     </log-column>
-                                    <log-column *ngIf="IsOcr" [header]="'Customs.Consignment.O.ComprehensiveUpdate' | TextCodeTranslationPipe" [binding]="'BuyerRoleName'" [width]="'60'">
-                                        <ng-template let-item>
-                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                                <div style="padding-top: 1px; width: 18px; height:20px;vertical-align:central;PADDING-RIGHT:20PX">
-                                                    <LogCheckBox  [ObjectTableName]="'Customs.SupplierInvoice'"
-                                                     [DataContext]="item" [HideColumns]="true" (ValueChanged)="IsComprehensiveUpdateChecked($event,item)"
-                                                    ></LogCheckBox>
-                                                </div>
-
-                                            </log-cell-template>
-                                        </ng-template>
-                                    </log-column>
+                                   
                                     <log-column [width]="'55'" [Editable]="true" [Alignment]="'right'" [visibility]="'visibile'">
                                         <ng-template let-item>
                                             <log-cell-template [IgnoreMods]="true" #logcelltemplate>

@@ -1156,7 +1156,8 @@
                                                 <span>{{item.ItemDescription}}</span>
                                             </div>
                                             <div (click)="OnSelectedItemChanged(item)" *ngIf="logcelltemplate.IsEditMode">
-                                                <LogTextBox [ObjectFieldName]="'ItemDescription'" [DataContext]="item" [FocusOnMe]="true"
+                                                <LogTextBox [ObjectFieldName]="'ItemDescription'" [DataContext]="item" [InputType]="'text'" [FocusOnMe]="true"
+                                                            (LostFocus)="item.ItemCodeLostFocus(logcelltemplate)"
                                                             [Text]="item.ItemDescription" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
 
 

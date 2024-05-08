@@ -122,6 +122,7 @@
     <None Include="DBScripts\Post\202307300943_AddCOURIERPENDINGREASONS903.sxml" />
     <None Include="DBScripts\Post\202307201232_AddCOURIERPENDINGREASONS908.sxml" />
     <None Include="DBScripts\Post\202308060942_AddINTERFACETENANTDEFINITIONS.sxml" />
+    <None Include="DBScripts\Post\202414041313_AddClientItemsSearchFields.sxml" />
     <None Include="DBScripts\Post\202208281500_UpdateLoadingOfDeclaration.sxml" />
     <None Include="DBOthers\Procedures\ReconnectObjectMetaDataProcedure.dxml" />
     <None Include="DBScripts\Post\202005210123_DeleteMetadataBadRecords.sxml" />

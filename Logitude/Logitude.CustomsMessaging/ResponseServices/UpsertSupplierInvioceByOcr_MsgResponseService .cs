@@ -48,6 +48,8 @@ using static Logitude.Customs.BL.Messaging.Customs.SupplierInvoiceByOcr;
 using static Logitude.CustomsMessaging.ResponseServices.UpsertSupplierInvioceByOcr_MsgResponseService;
 using DocumentFormat.OpenXml.Spreadsheet;
 using System.Text.RegularExpressions;
+using Logitude.CustomsMessaging.Common.Gen;
+using System.ComponentModel.DataAnnotations;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -470,16 +472,16 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         else
                             supplierInvoiceItemPM.OriginCountryCode = CustomsCountry.Code;
                     }
-                    if (supplierInvoiceItem.TryGetValue("Item_unit", out string ItemUnit))
+                    if (supplierInvoiceItem.TryGetValue("ITEM_HS_CODE", out string itemCode))
                     {
-                        MeasurmentUnitQueryService measurmentUnitQueryService = new MeasurmentUnitQueryService(tenant);
-                        MeasurmentUnitPM MeasurmentUnit = measurmentUnitQueryService.GetSingle(ItemUnit, false, true);
-                        if (MeasurmentUnit == null)
-                            invalidValuesRemarks += $" FieldJson: Item_unit, FieldName: InvoiceQuantityType, InvalidValueReceived: {ItemUnit};";
-                        else
-                            supplierInvoiceItemPM.InvoiceQuantityType = MeasurmentUnit.Code;
+                        supplierInvoiceItemPM.ClassificationCode = ValidateClassificationCode(itemCode.Length > 11 ? itemCode.Substring(0, 11) : itemCode);
+
                     }
-                    
+                    else if(dic.TryGetValue("HS_CODE", out string classificationCode))
+                    {
+                        supplierInvoiceItemPM.ClassificationCode = ValidateClassificationCode(classificationCode.Length > 11 ? classificationCode.Substring(0, 11) : classificationCode);
+                    }
+
                     if (string.IsNullOrEmpty(supplierInvoiceItemPM.OriginCountryCode) && !string.IsNullOrEmpty(originCountryField))
                     {
                         supplierInvoiceItemPM.OriginCountryCode = originCountryField;
@@ -529,6 +531,35 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 
         }
+
+        private string ValidateClassificationCode(string classificationCode)
+        {
+            string newValue = classificationCode;
+
+            if (newValue.Length == 8)
+            {
+                newValue += "00";
+                newValue += LuhnAlgorithm.CalculateLuhnAlgorithm(newValue);
+            }
+            else if (newValue.Length == 9)
+            {
+                newValue = newValue.Substring(0, 8) + "00" + newValue.Substring(8);
+                newValue += LuhnAlgorithm.CalculateLuhnAlgorithm(newValue.Substring(0, 10));
+            }
+            else if (newValue.Length == 10)
+            {
+                newValue += LuhnAlgorithm.CalculateLuhnAlgorithm(newValue);
+            }
+            else if (newValue.Length == 11)
+            {
+                newValue += LuhnAlgorithm.CalculateLuhnAlgorithm(newValue.Substring(0, 10));
+            }
+
+            return newValue;
+        }
+
+
+
         public class UpsertSupplierInvoiceResult
         {
             public bool isNewInvoice { get; set; }

@@ -57,5 +57,55 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
         }
      
 
+        public HttpResponseMessage GetClientItemDescription(string itemDescription, string exporterCode, int tenant)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                
+                string loggedUserEmail = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
+                ClientItemQueryService clientItemQueryService = new ClientItemQueryService(tenant);
+                ClientItemPM clientItem = clientItemQueryService.GetSingleWithTenantDescription(itemDescription, exporterCode, tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, clientItem);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+     
+
+        public HttpResponseMessage GetClientItemByItemKey(string itemDescription, string itemCode, string exporterCode, int tenant)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                
+                string loggedUserEmail = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
+                ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
+                itemCode = itemCode == "undefined" ? string.Empty : itemCode;
+                itemDescription = itemDescription == "undefined" ? string.Empty : itemDescription;
+                ClientItemQueryService clientItemQueryService = new ClientItemQueryService(tenant);
+                ClientItemPM clientItem = clientItemQueryService.GetSingleWithTenantByItemKey(itemCode+"_"+itemDescription, exporterCode, tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, clientItem);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+     
+
     }
 }
