@@ -60,6 +60,8 @@ import { ExternalReconciliationLinesReportFilterControl } from './Components/Fil
 import { PerVendorReportFilterComponent } from './Components/FiltersComponent/Accounting/PerVendorReportFilterComponent';
 import { ARinvoiceSequencesReportFilterComponent } from './Components/FiltersComponent/Accounting/ARinvoiceSequencesReportFilterComponent';
 import { ControlInvoiceLinesReportFilterComponent } from './Components/FiltersComponent/Accounting/ControlInvoiceLinesReportFilterComponent';
+import { MonthlyBalancesReportFilterComponent } from './Components/FiltersComponent/Accounting/MonthlyBalancesReportFilterComponent';
+
 
 // Quotes
 import {QuotesFilterComponent} from './Components/FilterReportComponent/QuotesFilterComponent';
@@ -188,6 +190,8 @@ export const Components =
         ControlInvoiceLinesReportFilterComponent,
         ExportDeclarationReportFilterComponent
 
+        MonthlyBalancesReportFilterComponent
+
     ];
 
 export class ModuleDeclarations {
@@ -279,6 +283,7 @@ export class ModuleDeclarations {
             case "SpotRateQuoteReportFilterComponent": { myResult = SpotRateQuoteReportFilterComponent; break; }
             case "ControlInvoiceLinesReportFilterComponent": { myResult = ControlInvoiceLinesReportFilterComponent; break; }
             case "ExportDeclarationReportFilterComponent": { myResult = ExportDeclarationReportFilterComponent; break; }
+            case "MonthlyBalancesReportFilterComponent": { myResult = MonthlyBalancesReportFilterComponent; break; }
 
         }
 

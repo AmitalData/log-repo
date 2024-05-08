@@ -1305,7 +1305,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
             SortByName: 'OpenAmount'
         });
         this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("OpenAmount", 'Decimal', this.OpenAmountTextCode));
-
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("AmountToReconcile", 'Decimal', TextCodeTranslator.Translate("LedgerTransaction.F.AmountToReconcile")));
         this.columns.push({
             FieldName: 'Reference1',
             DataTypeCode: 'String',

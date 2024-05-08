@@ -508,7 +508,7 @@ into groupBy_currency
 
                  ChartOfAccountsTypeEnglish = chart.ChartOfAccountsTypeEnglish,
                  ChartOfAccountsEnglish = chart.ChartOfAccountsEnglish,
-                 GLAccountEnglish = chart.GLAccountEnglish,
+                 GLAccountEnglish = aGL.EnglishName,
 
                  LeafId = chart.LeafId,
                 
@@ -619,7 +619,7 @@ into groupBy_currency
                
 
 
-                if (trailReportParam.DetailedControlClients
+                /*if (trailReportParam.DetailedControlClients
                     ||
                     trailReportParam.DetailedControlFile
                     ||
@@ -633,7 +633,7 @@ into groupBy_currency
                     )
                 {
                     throw new Exception("Only in TrailReportLevel.GLAccount DetailedControl is allowed !!!");
-                }
+                }*/
                 if (!string.IsNullOrWhiteSpace(trailReportParam.Category1)
                     ||
                     !string.IsNullOrWhiteSpace(trailReportParam.Category2)

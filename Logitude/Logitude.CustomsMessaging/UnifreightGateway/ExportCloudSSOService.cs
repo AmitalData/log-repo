@@ -1,6 +1,4 @@
-﻿
-
-using Logitude.AmitalMessaging.Customs.CustomFile.ReleaseFile;
+﻿using Logitude.AmitalMessaging.Customs.CustomFile.ReleaseFile;
 using Logitude.AmitalMessaging.Infrastructure;
 using Logitude.AmitalMessaging.Utils;
 using Logitude.Customs.Def.Contracts;
@@ -96,7 +94,7 @@ namespace Logitude.CustomsMessaging.UnifreightGateway
                 throw new Exception("user or email is must");
             }
 
-            ContactRepository contactRep = new ContactRepository();
+            ContactRepository contactRep = new ContactRepository(itenant);
             string UserContactId = "";
             Simplog.Data.CommonDataModel.EntityPOCOs.Contact contact =null;
             if (!string.IsNullOrWhiteSpace(unifreightUser))

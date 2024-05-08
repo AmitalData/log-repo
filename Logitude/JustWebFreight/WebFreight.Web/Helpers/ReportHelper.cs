@@ -1333,6 +1333,12 @@ namespace WebFreight.Web.Helpers
                         dataProvider = controlForInvoiceLinesLoader.GetData();
                         break;
                     }
+                case "MBBR":
+                    {
+                        ControlForInvoiceLinesLoader controlForInvoiceLinesLoader = new ControlForInvoiceLinesLoader(filters, reportFliter.tenant);
+                        dataProvider = controlForInvoiceLinesLoader.GetData();
+                        break;
+                    }
                     #endregion
             }
             return dataProvider;
@@ -1835,6 +1841,13 @@ namespace WebFreight.Web.Helpers
 
                         break;
                     }
+                case "MBBR":
+                    {
+                        dataProviderName = "Logitude.Accounting.BL.DataContract.ControlForInvoiceLinesDataProvider";
+
+
+                        break;
+                    }
                     #endregion
             }
 
@@ -1970,7 +1983,18 @@ namespace WebFreight.Web.Helpers
 
                             break;
                         }
-                    case "RSTA":
+                case "MBBR":
+                    {
+                        XmlSerializer serializer = new XmlSerializer(typeof(ControlForInvoiceLinesDataProvider));
+                        ControlForInvoiceLinesDataProvider reportDataProvider = (ControlForInvoiceLinesDataProvider)serializer.Deserialize(memorystream);
+                        reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
+                        reportDataProvider.CompanyName = DataProviders.General.GetCompanyName(stimulReportDataProviderDetails.Tenant);
+                        reportDataProvider.Logo = DataProviders.General.GetLogo(stimulReportDataProviderDetails.Tenant);
+                        stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "MBBR", Name = "ControlForInvoiceLinesDataProvider", BusinessObjectValue = reportDataProvider };
+
+                        break;
+                    }
+                case "RSTA":
                         {
                             XmlSerializer serializer = new XmlSerializer(typeof(StatementDataProvider));
                             StatementDataProvider reportDataProvider = (StatementDataProvider)serializer.Deserialize(memorystream);
@@ -2632,11 +2656,12 @@ namespace WebFreight.Web.Helpers
             StiReport report = new StiReport();
                 ExportDocumentHelper exportDocumentHelper = new ExportDocumentHelper();
 
-                string dllName = exportDocumentHelper.GetDllName(reportTemplate, report);
-                byte[] dllData = exportDocumentHelper.GetDllFromStorage(dllName, reportStimulDataProviderDetails.Tenant);
+                
                 if (false)
                 {
-                    if (dllData != null && dllData.Count() != 0)
+                string dllName = exportDocumentHelper.GetDllName(reportTemplate, report);
+                byte[] dllData = exportDocumentHelper.GetDllFromStorage(dllName, reportStimulDataProviderDetails.Tenant);
+                if (dllData != null && dllData.Count() != 0)
                     {
                         report = StiReport.GetReportFromAssembly(dllData);
                         if (reportStimulDataProviderDetails.CurrentBusinessObject != null) exportDocumentHelper.RegBusinessObject(report, reportStimulDataProviderDetails.CurrentBusinessObject);

@@ -18301,7 +18301,7 @@
     OldNames="SendingInterestReport"
     IsNew="true"
     IsChecked="true"
-    IsDeleted="false"
+    IsDeleted="true"
     ObjectTableName="&quot;Customer&quot;"
     FieldsDataType="&quot;Boolean&quot;"
     MinLength="0"

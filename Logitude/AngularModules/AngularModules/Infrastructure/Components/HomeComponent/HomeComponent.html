@@ -411,7 +411,7 @@
                             <div class="TabControlHead">
                                 <ul>
                                     <li *ngFor="let tab of Tabs" [class.Selected]="tab.IsSelected" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'" (click)="SelectionChanged(tab)"
-                                        [style.width]="(_AmitalBrowserInUse  && !tab.IsSelected ) ? '0px' : '160px'">
+                                        [style.width]="(_AmitalBrowserInUse && !allowMutltiTabs && !tab.IsSelected) ? '0px' : '160px'">
 
                                         <div class="InnerChild" [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'">
                                             <table>
@@ -471,11 +471,11 @@
 
                                                     <td style="width: 8px; vertical-align: top;" *ngIf="Tabs.length > 1">
                                                         <div (click)="CloseTab(tab)" style="width: 8px; height: 9px; margin-top: 3px; cursor: pointer; background: url('./Images/Tab.X.Blue.png') no-repeat;" *ngIf="tab.IsSelected"
-                                                             [hidden]="_AmitalBrowserInUse">
+                                                             [hidden]="_AmitalBrowserInUse && !allowMutltiTabs">
                                                         </div>
 
                                                         <div (click)="CloseTab(tab)" style="width: 8px; height: 9px; margin-top: 3px; cursor: pointer;" *ngIf="!tab.IsSelected" class="TabCloseIcon"
-                                                             [hidden]="_AmitalBrowserInUse">
+                                                             [hidden]="_AmitalBrowserInUse && !allowMutltiTabs">
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -483,7 +483,7 @@
                                         </div>
                                     </li>
 
-                                    <li class="NewTabItem" (click)="AddTab()" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'" *ngIf="!_AmitalBrowserInUse && !IsApplicationBlocked">+</li>
+                                    <li class="NewTabItem" (click)="AddTab()" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'" *ngIf="(!_AmitalBrowserInUse || allowMutltiTabs) && !IsApplicationBlocked">+</li>
                                 </ul>
 
 
@@ -497,10 +497,10 @@
                                                 <div *ngIf="LayoutDirection != 'rtl'">
                                                     <span *ngIf="IsDailyCurrenciesRatesVisible && !this.AccountingActivated" class="hyperlink" (click)="CurrenciesRatesClicked()" style="margin: 10px;">Daily Currencies Rates</span>
                                                     <span *ngIf="IsDailyCurrenciesRatesVisible && this.AccountingActivated" class="hyperlink" (click)="CurrenciesRatesClicked()" style="margin: 10px;">טבלת שערי מטבע</span>
-                                                    <span *ngIf="IsDailyCurrenciesRatesVisible && USDLastUpdate != null">שער מטבע הדולר  עודכן לאחרונה בתאריך {{USDLastUpdate}}</span>
+                                                    <span *ngIf="IsDailyCurrenciesRatesVisible && USDLastUpdate != null">שער מטבע הדולר  עודכן לםחרונה בתםריך {{USDLastUpdate}}</span>
                                                 </div>
                                                 <div *ngIf="LayoutDirection == 'rtl'">
-                                                    <span *ngIf="IsDailyCurrenciesRatesVisible && USDLastUpdate != null">שער מטבע הדולר  עודכן לאחרונה בתאריך {{USDLastUpdate}}</span>
+                                                    <span *ngIf="IsDailyCurrenciesRatesVisible && USDLastUpdate != null">שער מטבע הדולר  עודכן לםחרונה בתםריך {{USDLastUpdate}}</span>
                                                     <span *ngIf="IsDailyCurrenciesRatesVisible && !this.AccountingActivated" class="hyperlink" (click)="CurrenciesRatesClicked()" style="margin: 10px;">Daily Currencies Rates</span>
                                                     <span *ngIf="IsDailyCurrenciesRatesVisible && this.AccountingActivated" class="hyperlink" (click)="CurrenciesRatesClicked()" style="margin: 10px;">טבלת שערי מטבע</span>
                                                 </div>
@@ -523,8 +523,9 @@
 
                             <div class="TabControlBody" (mouseup)="OnSessionMouseUp($event)" style="background: white;" id="ApplicationSession">
                                 <div class="MediaFillAbsolute" *ngFor="let tab of Tabs;" [hidden]="!tab.IsSelected">
-                                    <div style="width: 120px;padding-right:10px;">
-                                        <BackButton [IsEnabled]="!IsAmitalBackButtonDisable" *ngIf=" _AmitalBrowserInUse && this.Tabs[1]==tab && tab.SessionComponent && tab.SessionComponent.CurrentEditComponent==null && ShowBackButton" [Text]="'   Back   '" (click)="AmitalBackButtonClicked()"></BackButton>
+                                    <div style="width: 120px;padding-right:10px;">                                                                                
+
+                                        <BackButton [IsEnabled]="!IsAmitalBackButtonDisable" *ngIf="_AmitalBrowserInUse && (allowMutltiTabs || (this.Tabs[1]==tab && tab.SessionComponent && tab.SessionComponent.CurrentEditComponent==null))" [Text]="'   Back   '" (click)="AmitalBackButtonClicked()"></BackButton>
                                     </div>
                                     <div LocationDirective Code="SessionLocation" Index="{{tab.Index}}"></div>
                                 </div>

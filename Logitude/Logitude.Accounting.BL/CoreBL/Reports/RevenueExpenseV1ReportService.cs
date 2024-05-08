@@ -301,8 +301,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                  GLAccountName = chartf.GLAccountName,
                  GLAccountNumber = chartf.GLAccountNumber,
                  GLAccountId = chartf.GLAccountId,
-
-                 ChartOfAccountId = chartf.ChartOfAccountId,
+				 GLAccountEnglish = chartf.GLAccountEnglish,
+				 ChartOfAccountId = chartf.ChartOfAccountId,
 
                  ChartOfAcountName1English = chartf.Level1English,
                  ChartOfAcountName2English = chartf.Level2English,
@@ -354,9 +354,10 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                  GLAccountNumber = chartf.GLAccountNumber,
                  GLAccountId = chartf.GLAccountId,
                  ChartOfAccountId = chartf.ChartOfAccountId,
+				 GLAccountEnglish = chartf.GLAccountEnglish,
 
 
-                 ChartOfAcountName1English = chartf.Level1English,
+				 ChartOfAcountName1English = chartf.Level1English,
                  ChartOfAcountName2English = chartf.Level2English,
                  ChartOfAcountName3English = chartf.Level3English,
                  ChartOfAcountName4English = chartf.Level4English,
@@ -606,7 +607,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
                  ChartOfAccountsTypeEnglish = chart.ChartOfAccountTypeCode,
                  ChartOfAccountsEnglish = chart.ChartOfAccountTypeCode,
-                 GLAccountEnglish = chart.GLAccountEnglish,
+                 GLAccountEnglish = aGL.EnglishName,
 
                  LeafId = chart.LeafId,
 

@@ -604,8 +604,10 @@ export class ARInvoiceMenuButtonsHandler {
                     this.EntityPM.SetCancelDraft = false;
                     this.EntityPM.SetReSendQBO = false;
                     this.entityArgs.EditComponent.SaveChanges();
-                }
+                    
 
+                }
+      
                 else {
                     this.StopFlags();
                 }
@@ -923,7 +925,9 @@ export class ARInvoiceMenuButtonsHandler {
         else {
             if (this.IsHaveARInvoicePrintToogleFeature()) this.isPrintRequested = true;
              this.addDocumentFilling = true 
+             this.entityArgs.EditComponent.EntityPM=this.EntityPM;
             this.entityArgs.EditComponent.SaveChanges(msg);
+           
 
         }
         // this.InitializePrinting(false);

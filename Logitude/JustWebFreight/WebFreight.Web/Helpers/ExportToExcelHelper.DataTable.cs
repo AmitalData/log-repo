@@ -1,4 +1,7 @@
-﻿using Simplog.Data.CommonDataModel.Repositories;
+﻿using NPOI.HSSF.UserModel;
+using NPOI.SS.UserModel;
+using NPOI.XSSF.UserModel;
+using Simplog.Data.CommonDataModel.Repositories;
 using Syncfusion.XlsIO;
 using System;
 using System.Collections.Generic;
@@ -22,7 +25,7 @@ namespace WebFreight.Web.Helpers
             System.IO.MemoryStream memory = new System.IO.MemoryStream();
             ExcelEngine excelEngine = new ExcelEngine();
             IApplication application = excelEngine.Excel;
-            IWorkbook workbook = excelEngine.Excel.Workbooks.Create(1);
+            Syncfusion.XlsIO.IWorkbook workbook = excelEngine.Excel.Workbooks.Create(1);
             IWorksheet sheet = workbook.Worksheets[0];
 
             int count = dataTable.Columns.Count;
@@ -246,5 +249,70 @@ namespace WebFreight.Web.Helpers
                 }
             }
         }
-    }
+
+		public byte[] DataTableToExcel(DataTable data, string sheetName, bool isColumnWritten,string fileName)
+		{
+			int i = 0;
+			int j = 0;
+			int count = 0;
+			NPOI.SS.UserModel.ISheet sheet = null;
+            NPOI.SS.UserModel.IWorkbook workbook = null;
+
+			FileStream fs = new FileStream(fileName, FileMode.OpenOrCreate, FileAccess.ReadWrite);
+			if (fileName.IndexOf(".xlsx") > 0) 
+				workbook = new XSSFWorkbook();
+			else if (fileName.IndexOf(".xls") > 0)
+				workbook = new HSSFWorkbook();
+
+			try
+			{
+				if (workbook != null)
+				{
+					sheet = workbook.CreateSheet(sheetName);
+				}
+				else
+				{
+					return null;
+				}
+
+				if (isColumnWritten == true) 
+				{
+					IRow row = sheet.CreateRow(0);
+					for (j = 0; j < data.Columns.Count; ++j)
+					{
+						row.CreateCell(j).SetCellValue(data.Columns[j].ColumnName);
+					}
+					count = 1;
+				}
+				else
+				{
+					count = 0;
+				}
+
+				for (i = 0; i < data.Rows.Count; ++i)
+				{
+					IRow row = sheet.CreateRow(count);
+					for (j = 0; j < data.Columns.Count; ++j)
+					{
+						row.CreateCell(j).SetCellValue(data.Rows[i][j].ToString());
+					}
+					++count;
+				}
+				workbook.Write(fs);
+				
+			    byte [] bytes =	File.ReadAllBytes(fs.Name);
+				return bytes;
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine("Exception: " + ex.Message);
+				return null;
+			}
+            finally
+            {
+                if(File.Exists(fs.Name))
+				   File.Delete(fs.Name);
+			}
+		}
+	}
 }

@@ -341,6 +341,10 @@ namespace Logitude.Accounting.Data.EntityLists
        public string ContactId  { get; set; }
         [DataMember]
        public string ContactName  { get; set; }
+       [DataMember]
+       public string ContactEmail  { get; set; }
+       [DataMember]
+       public string ContactPhone  { get; set; }
     }
 
 }

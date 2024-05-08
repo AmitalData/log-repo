@@ -2,18 +2,17 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { defer, of } from 'rxjs';
-import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse'; 
+import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
 import { ReportExecutionLogPM } from '../../EntityPMs/ReportExecutionLogPM';
 import { ReportExecutionLogPMInitService } from '../../EntityPMInitServices/ReportExecutionLogPMInitService';
- 
+
 @Injectable()
 export class ReportExecutionLogPMService {
     private _http: HttpClient;
     private _apiUrl: string;
     constructor() {
         this._http = ServiceHelper.HttpClient;
-         //ReportExecutionLogExtended
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ReportExecutionLogExtended';
     }
     get(id: string) {
@@ -36,6 +35,16 @@ export class ReportExecutionLogPMService {
                     }), catchError(ServiceHelper.HandleServiceError));
         });
     }
+
+    Cancel(reportId: string) {
+        return this._http.post(this._apiUrl + '/PostCancel?reportId=' + reportId, null, ServiceHelper.GetHttpHeaders()).pipe(
+            map(response => {
+                let serviceResponse = response;
+                return serviceResponse;
+            }),
+            catchError(ServiceHelper.HandleServiceError));
+    }
+
     MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: ReportExecutionLogPM = null) {
         if (!entityPM) {
             entityPM = new ReportExecutionLogPM();

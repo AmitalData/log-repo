@@ -279,10 +279,10 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 reportTransaction.AccountNumber = account.DisplayNumber;
                 reportTransaction.AccountEnglishName = account.EnglishName;
                 reportTransaction.AccountLocalName = account.LocalName;
-                reportTransaction.Collector = account.Collector;
-                reportTransaction.PaymentTerms = account.PaymentTerms;
-                reportTransaction.Category1Id=account.Category1LocalName;
-                reportTransaction.Category2Id = account.Category2LocalName;
+            reportTransaction.Collector = account.Collector;
+            reportTransaction.PaymentTerms = account.PaymentTerms;
+            reportTransaction.Category1Id = account.Category1LocalName;
+            reportTransaction.Category2Id = account.Category2LocalName;
             reportTransaction.Category3Id = account.Category3LocalName;
             reportTransaction.Category4Id = account.Category4LocalName;
             reportTransaction.Category5Id = account.Category5LocalName;
@@ -492,7 +492,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 Category3Id = "",
                 Category4Id = "",
                 Category5Id = "",
-
                 ChartOfAccountsId = GetFilterValue<string>("ChartOfAccountId"),
                 ChartOfAccountsTypeCode = GetFilterValue<string>("ChartOfAccountsTypeCode"),
                 AccountTypeCode = GetFilterValue<string>("AccountTypeCode"),

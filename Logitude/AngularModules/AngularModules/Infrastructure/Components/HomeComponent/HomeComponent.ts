@@ -597,9 +597,11 @@ export class HomeComponent implements OnDestroy{
 
     // AmitalBrowserInUse
     _AmitalBrowserInUse: boolean = false;
+    allowMutltiTabs: string = new URLSearchParams(window.location.search).get('allowMutltiTabs');
     CheckAmitalBrowserInUse() {
         if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
-            this.AddTab();//this.Tabs.push(new SessionTabItem());
+            if(!this.allowMutltiTabs)
+                this.AddTab();//this.Tabs.push(new SessionTabItem());
             this._AmitalBrowserInUse = AmitalGatewayUtil.Instance.AmitalBrowserInUse;
             console.log("func: CheckAmitalBrowserInUse, _AmitalBrowserInUse: " + this._AmitalBrowserInUse)
             let myCA23EditTab: SessionTabItem = this.Tabs[1];
@@ -608,7 +610,7 @@ export class HomeComponent implements OnDestroy{
                 setTimeout(() => {
                     //if (tabItem.IsSelected) {
                     clearTimeout(timerToken);
-                    if (!myCA23EditTab.IsSessionLoaded) {
+                    if (myCA23EditTab && !myCA23EditTab.IsSessionLoaded) {
 
                         let locs = this.AllLocations.toArray().filter(f => f.Code == 'SessionLocation');
                         let myLocation: LocationDirective = locs.filter(f => f.Index == myCA23EditTab.Index)[0];

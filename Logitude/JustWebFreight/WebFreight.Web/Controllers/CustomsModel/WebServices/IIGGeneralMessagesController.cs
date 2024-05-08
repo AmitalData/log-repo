@@ -50,9 +50,6 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             try
             {
 
-                //CUSTOM19 - TOKEN
-                //3d75bc21-2e20-4e3a-8792-1ba057a4408f
-                //24fd2056-23b1-4921-8804-1ae02e70fcb3
                 
                     string logKey = PerformanceLogger.LogCurrentTime();
                     string token = HttpContext.Current.Request.Headers["Token"];
@@ -98,6 +95,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 }
                 catch (Exception E)
                 {
+
 
                     
                     requestParams.SUCCESS = "false";
@@ -1010,7 +1008,19 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
         public bool continueInBackground { get; set; }
         public string responseDataXml { get; set; }
         public int ProgressStage { get; set; }
+    }
 
+    public class UnifreightGatewayParams
+    {
+        public string Token { get; set; }
+        public string AssemblyQualifiedName { get; set; }
+        public string DataIn1 { get; set; }
+        public string DataIn2 { get; set; }
+        public string DataOut1 { get; set; }
+        public string DataOut2 { get; set; }
+        public string SUCCESS { get; set; }
+        public string MoreParams { get; set; }
+        public string MessageOut { get; set; }
     }
 
 
@@ -1095,6 +1105,5 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
         public string MoreParams { get; set; }
         public string MessageOut { get; set; }
     }
-
 
 }

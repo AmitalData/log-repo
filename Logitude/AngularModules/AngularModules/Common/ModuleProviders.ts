@@ -158,6 +158,7 @@ import {CustomerMenuButtonsHandler} from './Components/MenuButtons/CustomerMenuB
 import {UserMenuButtonsHandler} from './Components/MenuButtons/UserMenuButtonsHandler';
 import {CommunicationLogMenuButtonsHandler} from './Components/MenuButtons/CommunicationLogMenuButtonsHandler';
 import {CustomerTenantAccessMenuButtonsHandler} from './Components/MenuButtons/CustomerTenantAccessMenuButtonsHandler';
+import {ReportExecutionLogMenuButtonsHandler} from './Components/MenuButtons/ReportExecutionLogMenuButtonsHandler';
 import {ReportsTemplatePMService} from './Services/StandardPMs/ReportsTemplatePMService';
 import {ReportsTemplatesVersionPMService} from './Services/StandardPMs/ReportsTemplatesVersionPMService';
 import {ContactMenuButtonsHandler} from './Components/MenuButtons/ContactMenuButtonsHandler';
@@ -414,6 +415,7 @@ export class ModuleProviders {
             case "ComputingPartnerPMService": { myResult = new ComputingPartnerPMService(); break; }
             case "ComputingPartnerTranslationPMService": { myResult = new ComputingPartnerTranslationPMService(); break; }
             case "CustomerTenantAccessMenuButtonsHandler": { myResult = new CustomerTenantAccessMenuButtonsHandler(); break; }
+            case "ReportExecutionLogMenuButtonsHandler": { myResult = new ReportExecutionLogMenuButtonsHandler(); break; }  
             case "CustomerTenantAccessListService": { myResult = new CustomerTenantAccessListService(); break; }
             case "TenantLoginPolicyListService": { myResult = new TenantLoginPolicyListService(); break; }
             case "RegistryDateTypeListService": { myResult = new RegistryDateTypeListService(); break; }

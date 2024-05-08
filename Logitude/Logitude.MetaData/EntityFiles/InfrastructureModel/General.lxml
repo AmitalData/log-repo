@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-    Code="&quot;f1d1&quot;"
+  Code="&quot;d662&quot;"
     Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -2436,7 +2436,7 @@
     <TextCode
       Code="&quot;Accounting.General.B.Edit&quot;"
       DefaultText="&quot;Edit&quot;"
-      LocalDefaultText="&quot;ערוכה&quot;"
+      LocalDefaultText="&quot;עריכה&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode

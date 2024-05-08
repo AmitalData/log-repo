@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class ARInvoiceUpdateClass
    {  		
-		public const string HashString = "571caa6308b5929354593b2f06525110";
+		public const string HashString = "90cbb770a25934c952207ffe7f6793f1";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -14557,7 +14557,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  2,
-					  						DisplayInList =  true,
+					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
 					  						MultiLine =  false,
@@ -16618,7 +16618,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 
  		   TextCode ARInvoiceTextCode_ARInvoiceONotreportsToVAT = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.O.NotreportsToVAT", DefaultText = "Lines not to report",LocalDefaultText = @"שורות לא לדיווח", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ARInvoiceTextCode_ARInvoiceOConfirmationNumberFailed = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.O.ConfirmationNumberFailed", DefaultText = "Confirmation number failed",LocalDefaultText = @"כשלון בקבלת הקצאה", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ARInvoiceTextCode_ARInvoiceOConfirmationNumberFailedTitle = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.O.ConfirmationNumberFailedTitle", DefaultText = "Confirmation number failed",LocalDefaultText = @"כשלון בקבלת הקצאה", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARInvoiceTextCode_ARInvoiceOConfirmationNumberFailedText = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.O.ConfirmationNumberFailedText", DefaultText = "The invoice did not receive an coonfirmation number from the tax authority. Please handle manually.",LocalDefaultText = @"החשבונית לא קיבלה מספר הקצאה מרשות המיסים. נא לטפל ידנית.", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ARInvoiceTextCode_ARInvoiceOConfirmationNumberErrorDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ARInvoice.O.ConfirmationNumberErrorDetails", DefaultText = "Error details:",LocalDefaultText = @"פירוט השגיאה:", ObjectTableId = ARInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

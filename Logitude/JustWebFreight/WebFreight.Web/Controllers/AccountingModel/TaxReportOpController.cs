@@ -35,11 +35,23 @@ using Simplog.Server.Infrastructure.Helpers;
 using System.Transactions;
 using Logitude.Accounting.BL.CloseTables;
 using Logitude.Accounting.BL.CoreBL.Batch;
+using System.IO;
+using System.Net.Http.Headers;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.BL.GlobalModel.EntityPMs;
+using Logitude.BL.GlobalModel.EntityQueries;
+using static Dropbox.Api.Sharing.ListFileMembersIndividualResult;
 
 namespace WebFreight.Web.Controllers.AccountingModel
 {
 
+    public class GetTaxReportLinesResponse
+    {
+        public int Count { get; set; }
+        public List<TaxReportLineList> Lines { get; set; }
+        public string FileName { get; set; }
 
+    }
     public class TaxReportOpController : ApiController
     {
         //public HttpResponseMessage PostDownloadPNC874File(TaxReportPM entityPM)
@@ -72,10 +84,10 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.AuthenticationOnEntityTenant("TaxReport", entityPM.Tenant,authToken.Tenant);
+                SecurityUtility.AuthenticationOnEntityTenant("TaxReport", entityPM.Tenant, authToken.Tenant);
                 SecurityUtility.CheckContactFeature("TaxReport", "NEW", authToken.Tenant);
-                int tenant = authToken.Tenant;               
-               TaxReportHelper.CheckWithoutTransmitLines(authToken,entityPM);
+                int tenant = authToken.Tenant;
+                TaxReportHelper.CheckWithoutTransmitLines(authToken, entityPM);
                 TaxReportHelper.CheckErrorsInLines(authToken, entityPM);
                 BatchTaskExecutionPM btePM = TaxReportService.CreatePNCFileInBatch(entityPM.Id, tenant);
 
@@ -125,7 +137,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 {
                     taxReportUpdateService.Update(taxReportPM, true);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     taxReportPM.IsCancelled = false;
                     taxReportPM.StatusCode = VatReportStatusValues.CancelationFailed;
@@ -154,6 +166,106 @@ namespace WebFreight.Web.Controllers.AccountingModel
             return tenant;
         }
 
+        private GetTaxReportLinesResponse GetTaxReportLines([FromUri] ApiQueryFilters filters, int tenant)
+        {
+            GetTaxReportLinesResponse response = new GetTaxReportLinesResponse();
+            QueryOperations queryOperations = new QueryOperations()
+            {
+                ObjectTableName = "TaxReportLine",
+                PageIndex = filters.PageIndex,
+                PageSize = filters.PageSize,
+                QuerySection = "TaxReportLines",
+                SortByColumnName = filters.SortBy,
+                SortDirectin = filters.SortDirection,
+                GetAll = filters.GetAll,
+            };
+
+
+            List<ObjectField> TaxReportLineObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("TaxReportLine", tenant);
+            List<PropertyInfo> filterProperties = filters.GetType().GetProperties().ToList();
+            for (int i = 1; i <= 10; i++)
+            {
+                object filterNameProp = filterProperties.FirstOrDefault(f => f.Name == ("Filter" + i + "Name")).GetValue(filters);
+                object filterValue1 = filterProperties.FirstOrDefault(f => f.Name == ("Filter" + i + "Value")).GetValue(filters);
+                object filterOperatorProp = filterProperties.FirstOrDefault(f => f.Name == ("Filter" + i + "Operator")).GetValue(filters);
+                object filterValue2 = null;
+
+                if (filterNameProp != null)
+                {
+                    string filterName = filterNameProp.ToString();
+                    string filterOperator = filterOperatorProp != null ? filterOperatorProp.ToString() : "Equals";
+                    //if (filterValue1 != null && filterValue1.GetType() == typeof(string))
+                    //{
+                    //string[] values = filterValue1.ToString().Split(',');
+                    //if (values.Count() > 1)
+                    //{
+                    //filterValue1 = values[0];
+                    //filterValue2 = values[1];
+                    //}
+                    //}
+                    //ToDo: Get object field by name and set the remained filter properties
+                    ObjectField field = TaxReportLineObjectFields.FirstOrDefault(f => f.FieldName == filterName);
+                    if (field != null)
+                    {
+                        string valuestring1 = filterValue1 != null ? filterValue1.ToString() : null;
+                        object value1 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
+
+                        string valuestring2 = filterValue2 != null ? filterValue2.ToString() : null;
+                        object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
+
+                        queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList);
+                    }
+                    else
+                        queryOperations.SetFilter(filterName, filterValue1, false, filterOperator, filterValue2, true);
+                }
+            }
+
+            if (!string.IsNullOrEmpty(filters.AdditionalFilters))
+            {
+                JavaScriptSerializer JsonConvert = new JavaScriptSerializer();
+                var filters_list = JsonConvert.Deserialize<List<QueryFilterItem>>(filters.AdditionalFilters);
+
+                foreach (QueryFilterItem filter in filters_list)
+                {
+                    ObjectField field = TaxReportLineObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
+                    if (field != null)
+                    {
+
+                        string valuestring1 = filter.FieldValue != null ? filter.FieldValue.ToString() : null;
+                        object value1 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
+                        if (field.FieldName == "TaxReportId")
+                        {
+                            IAccountingContext accountingContext = AccountingContext.GetContext(tenant);
+                            TaxReportQueryService taxReportQuery = new TaxReportQueryService(accountingContext);
+                            TaxReportPM taxReportPM = taxReportQuery.GetSingle(valuestring1, true, false);
+                            var tenantQuery = new TenantQuery(tenant);
+                            var tenantPM = tenantQuery.GetSinglePM(tenant);
+                            response.FileName = tenantPM.Company + "." + taxReportPM.VatNumber + "-" + taxReportPM.TaxReportNumber + ".txt";
+                        }
+                        string valuestring2 = filter.FieldValue2 != null ? filter.FieldValue2.ToString() : null;
+                        object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
+
+                        queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList);
+                    }
+                    else
+                    {
+                        queryOperations.SetFilter(filter.FieldName, filter.FieldValue, filter.IsCustom, filter.Operator, filter.FieldValue2, filter.DisplayInList);
+                    }
+                }
+            }
+
+            IAccountingContext MyContext = AccountingContext.GetContext(tenant);
+            TaxReportLineListQueryService trLineQS = new TaxReportLineListQueryService(MyContext);
+            if (filters.GetCount)
+            {
+                int count = trLineQS.GetListCount(queryOperations, tenant);
+                response.Count = count;
+            }
+            response.Lines = trLineQS.GetList(queryOperations, tenant);
+            return response;
+        }
+
+
         [HttpGet]
         public HttpResponseMessage GetLinesByFilters([FromUri] ApiQueryFilters filters)
         {
@@ -169,100 +281,16 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 if (filters.Tenant != null)
                     tenant = tenant;
 
-                QueryOperations queryOperations = new QueryOperations()
-                {
-                    ObjectTableName = "TaxReportLine",
-                    PageIndex = filters.PageIndex,
-                    PageSize = filters.PageSize,
-                    QuerySection = "TaxReportLines",
-                    SortByColumnName = filters.SortBy,
-                    SortDirectin = filters.SortDirection,
-                    GetAll = filters.GetAll,
-                };
 
-
-                List<ObjectField> TaxReportLineObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("TaxReportLine", tenant);
-                List<PropertyInfo> filterProperties = filters.GetType().GetProperties().ToList();
-                for (int i = 1; i <= 10; i++)
-                {
-                    object filterNameProp = filterProperties.FirstOrDefault(f => f.Name == ("Filter" + i + "Name")).GetValue(filters);
-                    object filterValue1 = filterProperties.FirstOrDefault(f => f.Name == ("Filter" + i + "Value")).GetValue(filters);
-                    object filterOperatorProp = filterProperties.FirstOrDefault(f => f.Name == ("Filter" + i + "Operator")).GetValue(filters);
-                    object filterValue2 = null;
-
-                    if (filterNameProp != null)
-                    {
-                        string filterName = filterNameProp.ToString();
-                        string filterOperator = filterOperatorProp != null ? filterOperatorProp.ToString() : "Equals";
-                        //if (filterValue1 != null && filterValue1.GetType() == typeof(string))
-                        //{
-                        //string[] values = filterValue1.ToString().Split(',');
-                        //if (values.Count() > 1)
-                        //{
-                        //filterValue1 = values[0];
-                        //filterValue2 = values[1];
-                        //}
-                        //}
-                        //ToDo: Get object field by name and set the remained filter properties
-                        ObjectField field = TaxReportLineObjectFields.FirstOrDefault(f => f.FieldName == filterName);
-                        if (field != null)
-                        {
-                            string valuestring1 = filterValue1 != null ? filterValue1.ToString() : null;
-                            object value1 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
-
-                            string valuestring2 = filterValue2 != null ? filterValue2.ToString() : null;
-                            object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
-
-                            queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList);
-                        }
-                        else
-                            queryOperations.SetFilter(filterName, filterValue1, false, filterOperator, filterValue2, true);
-                    }
-
-
-
-                }
-
-                if (!string.IsNullOrEmpty(filters.AdditionalFilters))
-                {
-                    JavaScriptSerializer JsonConvert = new JavaScriptSerializer();
-                    var filters_list = JsonConvert.Deserialize<List<QueryFilterItem>>(filters.AdditionalFilters);
-
-                    foreach (QueryFilterItem filter in filters_list)
-                    {
-                        ObjectField field = TaxReportLineObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
-                        if (field != null)
-                        {
-
-
-                            string valuestring1 = filter.FieldValue != null ? filter.FieldValue.ToString() : null;
-                            object value1 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
-
-                            string valuestring2 = filter.FieldValue2 != null ? filter.FieldValue2.ToString() : null;
-                            object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
-
-                            queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList);
-                        }
-                        else
-                        {
-                            queryOperations.SetFilter(filter.FieldName, filter.FieldValue, filter.IsCustom, filter.Operator, filter.FieldValue2, filter.DisplayInList);
-                        }
-                    }
-                }
-
-                IAccountingContext MyContext = AccountingContext.GetContext(tenant);
-                TaxReportLineListQueryService trLineQS = new TaxReportLineListQueryService(MyContext);
-
-                List<TaxReportLineList> entityLists = trLineQS.GetList(queryOperations, tenant);
+                var resp = GetTaxReportLines(filters, tenant);
 
                 ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)
                 {
-                    int count = trLineQS.GetListCount(queryOperations, tenant);
-                    response.Count = count;
+                    response.Count = resp.Count;
                 }
 
-                response.Result = entityLists;
+                response.Result = resp.Lines;
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
                 PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
@@ -274,6 +302,73 @@ namespace WebFreight.Web.Controllers.AccountingModel
             }
 
         }
+        public HttpResponseMessage PostDownloadPaFile([FromUri] ApiQueryFilters filters)
+        {
+            try
+            {
+                StringBuilder sb = new StringBuilder();
+                string logKey = PerformanceLogger.LogCurrentTime();
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckContactFeature("TaxReport", "READ", authToken.Tenant);
+
+                int tenant = authToken.Tenant;
+                if (filters.Tenant != null)
+                    tenant = tenant;
+
+
+                var resp = GetTaxReportLines(filters, tenant);
+                var pLines = resp.Lines;
+                for (int i = 0; i < pLines.Count; i++)
+                {
+                    string vatNumber = pLines[i].VatNumber.Substring(0,9);
+                    string referenceDate = pLines[i].ReferenceDate.Value.ToString("ddMMyyyy");
+                    string referecneGroup = pLines[i].ReferecneGroup.Substring(0, 1);
+                    string reference = pLines[i].Reference.PadRight(14, ' ').Substring(0,14);
+                    string vatAmount = (pLines[i].VatAmount < 0 ? "-" + pLines[i].VatAmount.ToString().Replace("-", "").TrimEnd('0', '.').PadLeft(8, '0') : pLines[i].VatAmount.ToString().TrimEnd('0', '.').PadLeft(9, '0')).Substring(0,9);
+                    string row = string.Format("{0}{1}{2}{3}{4}", vatNumber, referenceDate, referecneGroup, reference, vatAmount);
+                    if (i == pLines.Count - 1)
+                    {
+                        sb.Append(row);
+                    }
+                    else
+                    {
+                        sb.AppendLine(row);
+                    }
+                }
+                // Generate content of the text file
+                string fileContent = sb.ToString();
+
+                // Convert content to byte array
+                byte[] contentBytes = Encoding.UTF8.GetBytes(fileContent);
+
+                // Create a MemoryStream to hold the file content
+                MemoryStream ms = new MemoryStream(contentBytes);
+
+
+                var response = new HttpResponseMessage
+                {
+                    StatusCode = HttpStatusCode.OK,
+                    Content = new StreamContent(ms),
+                };
+                // Set content type header
+                response.Content.Headers.ContentType = new MediaTypeHeaderValue("text/plain");
+                response.Content.Headers.Add("Access-Control-Expose-Headers", "Content-Disposition");
+
+                // Set file name header
+                response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
+                {
+                    FileName = resp.FileName
+                };
+
+                return response;
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
         public HttpResponseMessage GetLinesCounters(string taxReportId)
         {
             try
@@ -284,14 +379,14 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckContactFeature("TaxReport", "READ", authToken.Tenant);
                 int tenant = authToken.Tenant;
-                
+
 
                 IAccountingContext MyContext = AccountingContext.GetContext(tenant);
                 TaxReportQueryService reportService = new TaxReportQueryService(MyContext);
                 TaxReportLinesCounter reportCounter = reportService.GetReportLinesCounter(taxReportId, tenant);
 
                 ServiceResponse response = new ServiceResponse();
-              
+
                 response.Result = reportCounter;
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
                 PerformanceLogger.AddServerExecutionTimeHeader(logKey);
@@ -313,7 +408,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 AuthenticationToken authToken = GetAuthenticationToken();
                 SecurityUtility.CheckContactFeature("TaxReport", "READ", authToken.Tenant);
                 int tenant = authToken.Tenant;
-                bool FutureReportExist = CheckIfActiveFutureReportsExist(createDate,tenant);              
+                bool FutureReportExist = CheckIfActiveFutureReportsExist(createDate, tenant);
                 ServiceResponse response = new ServiceResponse();
                 response.Result = FutureReportExist;
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
@@ -331,7 +426,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
         {
             IAccountingContext MyContext = AccountingContext.GetContext(tenant);
             TaxReportQueryService taxReportQueryService = new TaxReportQueryService(MyContext);
-           return taxReportQueryService.GetFutureActiveReports(createDate, tenant).Any();
+            return taxReportQueryService.GetFutureActiveReports(createDate, tenant).Any();
 
         }
         private AuthenticationToken GetAuthenticationToken()
@@ -385,11 +480,11 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 SecurityUtility.AuthenticationOnEntityTenant("TaxReport", entityPM.Tenant, authToken.Tenant);
 
                 SecurityUtility.CheckContactFeature("TaxReport", "UPDATE", authToken.Tenant);
-                int tenant = authToken.Tenant;             
-            //    entityPM = TaxReportService.CreatetTaxReportLine(entityPM);
+                int tenant = authToken.Tenant;
+                //    entityPM = TaxReportService.CreatetTaxReportLine(entityPM);
 
 
-                return Request.CreateResponse(HttpStatusCode.OK,entityPM );
+                return Request.CreateResponse(HttpStatusCode.OK, entityPM);
             }
 
             catch (Exception ex)
@@ -462,8 +557,8 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 SecurityUtility.CheckContactFeature("TaxReport", "NEW", authToken.Tenant);
                 int tenant = authToken.Tenant;
                 TaxReportQueryService taxReportQueryService = new TaxReportQueryService(tenant);
-                List<TaxReportPM> reports= taxReportQueryService.GetTransmittedTaxReports(tenant);
-              
+                List<TaxReportPM> reports = taxReportQueryService.GetTransmittedTaxReports(tenant);
+
 
                 return Request.CreateResponse(HttpStatusCode.OK, reports);
             }
@@ -520,9 +615,9 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 TaxReportQueryService reportService = new TaxReportQueryService(accountingContext);
                 var reconciledLines = reportService.GetTaxReportReconciledLines(taxReportId, tenant);
 
-                if(reconciledLines != null && reconciledLines.Count() > 0)
+                if (reconciledLines != null && reconciledLines.Count() > 0)
                 {
-                    string linesNumbersCS = string.Join(",", reconciledLines.Select(d=>d.Line));
+                    string linesNumbersCS = string.Join(",", reconciledLines.Select(d => d.Line));
 
                     return Request.CreateResponse(HttpStatusCode.OK, new ServiceResponse { Result = linesNumbersCS });
                 }
@@ -541,7 +636,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
         {
             try
             {
-                int tenant = GetAuthinticatedTenant();                
+                int tenant = GetAuthinticatedTenant();
                 string batchId = new BatchClosingTaxReportJournalTask(null).CreateQBatchTaskExecution<BatchClosingTaxReportJournalTaskArgs>(
                     new BatchClosingTaxReportJournalTaskArgs()
                     {
@@ -592,4 +687,3 @@ namespace WebFreight.Web.Controllers.AccountingModel
 
     }
 }
-	 

@@ -9,6 +9,7 @@ using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
+using Intuit.Ipp.LinqExtender;
 
 namespace Logitude.BL.CommonDataModel.EntityQueries
 {
@@ -75,5 +76,41 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         FeatureUniqeCode = a.FeatureUniqeCode
                     }).ToList();
         }
-    }
+		public List<RoleFeature> GetRoleFeaturesForRoleFromCache(string roleId, int tenant)
+		{
+			string entityName = "RoleFeature" + roleId + tenant;
+			List<RoleFeature> entity;
+		    bool getFromCache = true;
+
+			if (getFromCache)
+			{
+
+				if (CacheManager.CacheWrapper.Get(entityName) == null)
+				{
+					entity = (from a in repository.context.RoleFeatures
+							  where (a.Tenant == tenant || a.Tenant == 0) && a.RoleId == roleId
+							  select a).ToList(); 
+						if (entity != null)
+						{
+							CacheManager.CacheWrapper.Insert(entityName, entity);
+						}			
+				}
+				else
+				{
+					entity = (List<RoleFeature>)CacheManager.CacheWrapper.Get(entityName);
+				}
+
+
+			}
+			else
+			{
+				entity = (from a in repository.context.RoleFeatures
+						  where (a.Tenant == tenant || a.Tenant == 0) && a.RoleId == roleId
+						  select a).ToList();
+
+			}
+			return entity;
+			
+		}
+	}
 }

@@ -307,12 +307,12 @@ namespace Logitude.Accounting.Data.Repositories
 
         public IQueryable<string> GetQAccIdByAcountIdTypeCategories(int tenant, string AccountId,
              string Category1, string Category2, string Category3, string Category4, string Category5, string gLAccountType, string chartOfAccountsId,
-             string ChartOfAccountsTypeCode, string salesmanId, string collectorId, bool includeControlAccount, int? securityLevel)
+             string ChartOfAccountsTypeCode, string salesmanId, bool includeControlAccount, string collectorId, int? securityLevel)
         {
             return
             this
                 .GetByAcountIdTypeCategories(tenant, AccountId, gLAccountType, chartOfAccountsId,
-            Category1, Category2, Category3, Category4, Category5, ChartOfAccountsTypeCode, salesmanId, collectorId, includeControlAccount, securityLevel)
+            Category1, Category2, Category3, Category4, Category5, ChartOfAccountsTypeCode, salesmanId, includeControlAccount, securityLevel, collectorId)
             .Select(a => a.Id);
 
         }
@@ -437,7 +437,7 @@ namespace Logitude.Accounting.Data.Repositories
 
         public IQueryable<GLAccount> GetByAcountIdTypeCategories(int tenant, string AccountId, string gLAccountType, string chartOfAccountsId,
             string Category1, string Category2, string Category3, string Category4, string Category5,
-            string ChartOfAccountsTypeCode, string salesmanId, string collectorId, bool includeControlAccount, int? securityLevel)
+            string ChartOfAccountsTypeCode, string salesmanId, bool includeControlAccount, int? securityLevel,string collectorId)
         {
             IQueryable<GLAccount> q;
             if (!string.IsNullOrWhiteSpace(AccountId))
@@ -488,6 +488,10 @@ namespace Logitude.Accounting.Data.Repositories
             if (!string.IsNullOrWhiteSpace(ChartOfAccountsTypeCode))
             {
                 q = q.Where(r => r.ChartOfAccountsTypeCode == ChartOfAccountsTypeCode);
+            }
+            if (!string.IsNullOrWhiteSpace(collectorId))
+            {
+                q = q.Where(r => r.CollectorId == collectorId);
             }
             if (!string.IsNullOrWhiteSpace(salesmanId))
             {

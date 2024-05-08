@@ -224,10 +224,10 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         
 
      
-        private void UpdateGLAccountWithAdditionalData(string accountId, int tenant,string excludeId)
+        private void UpdateGLAccountWithAdditionalData(string accountId, int tenant,string excludeCardId)
         {
             IGLAccountUpdateServiceExt glaccountUpdate = ContainerAccessor.Container.Resolve(typeof(IGLAccountUpdateServiceExt), "GLAccountUpdateServiceExt", new ParameterOverride("", 1)) as IGLAccountUpdateServiceExt;
-            glaccountUpdate.UpdateGLAccountWithAdditionalData(accountId, tenant, excludeId);
+            glaccountUpdate.UpdateGLAccountWithAdditionalData(accountId, tenant, excludeCardId);
         }
         private void Initialize()
         {

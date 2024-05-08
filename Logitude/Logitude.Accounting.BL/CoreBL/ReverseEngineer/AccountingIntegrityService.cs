@@ -75,17 +75,28 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
 
                 GLAccountBalanceCheck(accountingIntegrityInParam, myAccountingIntegrityResult);
 
-                Logger.LogTrace(String.Format("AccountingIntegrityService, Point 1, tenant {0}", accountingIntegrityInParam.Tenant));
+                Logger.LogDebug(String.Format("AccountingIntegrityService, Point 1, tenant {0}", accountingIntegrityInParam.Tenant));
                 var myDueLocalBalanceService = new DueLocalBalanceService();
                 myDueLocalBalanceService.ReBuild(accountingIntegrityInParam.Tenant, null, false); // fastRun=false 
-                Logger.LogTrace(String.Format("AccountingIntegrityService, Point 2, tenant {0}", accountingIntegrityInParam.Tenant));
+                Logger.LogDebug(String.Format("AccountingIntegrityService, Point 2, tenant {0}", accountingIntegrityInParam.Tenant));
 
 
                 DueLocalBalanceCheck(accountingIntegrityInParam, myAccountingIntegrityResult);
+                Logger.LogDebug(String.Format("AccountingIntegrityService, Point 3, tenant {0}", accountingIntegrityInParam.Tenant));
+
 
                 LedgerOpenAmountDiffCheck(accountingIntegrityInParam, myAccountingIntegrityResult);
+                Logger.LogDebug(String.Format("AccountingIntegrityService, Point 4, tenant {0}", accountingIntegrityInParam.Tenant));
+
                 InterestReportDiffCheck(accountingIntegrityInParam, myAccountingIntegrityResult);
-                RebuildAgingData(accountingIntegrityInParam, myAccountingIntegrityResult);
+                Logger.LogDebug(String.Format("AccountingIntegrityService, Point 5, tenant {0}", accountingIntegrityInParam.Tenant));
+
+                RebuildAgingDataByType(accountingIntegrityInParam, myAccountingIntegrityResult, "Customer2");
+                Logger.LogDebug(String.Format("AccountingIntegrityService, Point 6, tenant {0}", accountingIntegrityInParam.Tenant));
+
+                RebuildAgingDataByType(accountingIntegrityInParam, myAccountingIntegrityResult, "Vendor3");
+                Logger.LogDebug(String.Format("AccountingIntegrityService, Point 7, tenant {0}", accountingIntegrityInParam.Tenant));
+
 
             }
             catch
@@ -122,6 +133,42 @@ namespace Logitude.Accounting.BL.CoreBL.ReverseEngineer
             {
                 var dailyRebuildAgingService = new DailyRebuildAgingService();
                 dailyRebuildAgingService.ReBuild(accountingIntegrityInParam.Tenant);
+            }
+            catch (Exception ee)
+            {
+                ExceptionMessage = ee.ToString();
+                //throw;
+            }
+            finally
+            {
+
+                myAccountingIntegrityResult.MyAccountingIntegrityStep = myAccountingIntegrityResult.MyAccountingIntegrityStep ?? new List<AccountingIntegrityStep>();
+                myAccountingIntegrityResult.MyAccountingIntegrityStep.Add(new AccountingIntegrityStep()
+                {
+                    Name = System.Reflection.MethodBase.GetCurrentMethod().Name,
+                    //Month = currentMonth,
+                    ExceptionMessage = ExceptionMessage,
+                    BadRows = badRows,
+                    ShouldFix = (badRows > 0 && String.IsNullOrWhiteSpace(ExceptionMessage)),
+                    ElapsedMilliseconds = sw.ElapsedMilliseconds,
+                });
+            }
+
+
+
+        }
+
+
+        private static void RebuildAgingDataByType(AccountingIntegrityInParam accountingIntegrityInParam, AccountingIntegrityResult myAccountingIntegrityResult, string type)
+        {
+            var sw = Stopwatch.StartNew();
+            string ExceptionMessage = "";
+            int badRows = 0;
+
+            try
+            {
+                var dailyRebuildAgingService = new DailyRebuildAgingService();
+                dailyRebuildAgingService.ReBuildByType(accountingIntegrityInParam.Tenant, type);
             }
             catch (Exception ee)
             {
