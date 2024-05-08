@@ -1436,16 +1436,9 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             if (docOut != null)
             {
-                try
-                {
                     docOut.NeedsRebuild = true;
                     documentOutRepository.Update(docOut);
                     documentOutRepository.SubmitChanges();
-                }
-                catch (Exception ex)
-                {
-
-                }
             }
         }
 
