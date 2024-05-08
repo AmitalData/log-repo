@@ -4,6 +4,7 @@ using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.Accounting.Data.EntityLists;
+using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Data.Utilities;
 using Microsoft.ServiceBus.Messaging;
@@ -96,13 +97,30 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                     _allIdAccounts = hashsetallIdAccounts;//new List<string>(hashsetallIdAccounts);
                     _allIdAccounts = _allIdAccounts.ToList().AsQueryable();
                 }
-                IQueryable<LedgerTransactionList> filteredTransactionsQuery = GetFilteredTransactionsQuery(maxCreateDate, ledgerTransactionRepository);
+                bool openBalancePlease_ReCalcYearTransfer = false;
+
+                List<string> idlist = _allIdAccounts.ToList();
+                if (idlist != null && idlist.Count > 0)
+                {
+                    string firstId = idlist.FirstOrDefault();
+                    var myGLAccountQueryService = new GLAccountQueryService(_AccountingContext);
+                    GLAccount acc = myGLAccountQueryService.GetSingleByAccountId(firstId, _Param.Tenant);
+                    if (acc != null)
+                    {
+                        if (acc.ChartOfAccountsTypeCode == "1" || acc.ChartOfAccountsTypeCode == "2") // Revenues or Expenses
+                        {
+                            openBalancePlease_ReCalcYearTransfer = true;
+                        }
+                    }
+                }
+
+                IQueryable <LedgerTransactionList> filteredTransactionsQuery = GetFilteredTransactionsQuery(maxCreateDate, ledgerTransactionRepository);
 
                 if (_Param.CallBack == null)
                 {
                     bool includeAccoutingDateLTransaction = false;
                     var startAccountBalanceService = GetStartAccountBalance(//includeChildAccounts, 
-    includeAccoutingDateLTransaction);
+    includeAccoutingDateLTransaction, openBalancePlease_ReCalcYearTransfer);
                     LogIt("GetStartAccountBalance");
                     includeAccoutingDateLTransaction = true;
                     var endAccountBalanceService = GetEndAccountBalance(//includeChildAccounts, 
@@ -641,14 +659,14 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
         private AccountBalanceM GetStartAccountBalance(
             //bool includeChildAccounts, 
-            bool includeAccoutingDateLTransaction)
+            bool includeAccoutingDateLTransaction, bool openBalancePlease_ReCalcYearTransfer = false)
         {
             var startAccountBalanceService = new AccountBalanceByDateCodeService(
                 _AccountingContext, _Param.Tenant, _Param.GLAccountId,
                 //includeChildAccounts, _Param.IncludeRelatedCurrenciesAccount
                 _allIdAccounts);
 
-            bool openBalancePlease_ReCalcYearTransfer = true;//Yaron said this is Default !!!
+         // bool openBalancePlease_ReCalcYearTransfer = true;//Yaron said this is Default !!!
             startAccountBalanceService.CalculateBalance(
                 openBalancePlease_ReCalcYearTransfer,
                 _Param.DateTypeCode /*GLAccountTotalDateTypeValues.Accountingdate*/, _Param.From,
