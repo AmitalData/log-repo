@@ -1606,7 +1606,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 							ChangeSetOp = ChangeSetOperation.Insert,
 							Tenant = ResolvedTenant(),
 							PaymentTypeCode = invoice.InvoicePaymentType,
-						};
+                            SequenceNumeric = 1,
+                        };
 
 						if (supplierInvoice.InvoiceAmount != null) {
 							supplierInvoicePaymentPM.PaymentAmount = (decimal)supplierInvoice.InvoiceAmount;
@@ -1654,6 +1655,11 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
             supplierInvoiceItem.OriginCountryCode = invoiceItem.ItemOriginCountry;
             supplierInvoiceItem.ClaimReasonCode = invoiceItem.ClassificationClaim;
             supplierInvoiceItem.TransactionNatureCode = invoiceItem.ClassificationDealType;
+
+			if (_MyDeclarationPM.IsDiamondDeclaration)
+			{
+                supplierInvoiceItem.ItemAdditionalStatus = true;
+            }
 
             if (!string.IsNullOrEmpty(invoiceItem.ProcessType))
             {
