@@ -235,5 +235,6 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string CustomsInvoiceTemplateId { get; set; }
         public string ConsolidationInvoiceTemplateId { get; set; }
         public string ManifestInvoiceTemplateId { get; set; }
+        public bool IsFromGlaAccountUpdate { get; set; }
     }
 }
