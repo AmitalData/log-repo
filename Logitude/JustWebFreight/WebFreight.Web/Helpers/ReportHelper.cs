@@ -1769,7 +1769,7 @@ namespace WebFreight.Web.Helpers
 
                         break;
                     }
-                case ConfirmationNumberDefaultListService:
+                case "VDCA":
                     {
                         dataProviderName = "WebFreight.Web.DataProviders.VendorChargesAnalysisDataProvider";
 

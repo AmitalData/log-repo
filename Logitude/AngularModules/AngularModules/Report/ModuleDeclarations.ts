@@ -188,7 +188,7 @@ export const Components =
         ARinvoiceSequencesReportFilterComponent,
         SpotRateQuoteReportFilterComponent,
         ControlInvoiceLinesReportFilterComponent,
-        ExportDeclarationReportFilterComponent
+        ExportDeclarationReportFilterComponent,
 
         MonthlyBalancesReportFilterComponent
 

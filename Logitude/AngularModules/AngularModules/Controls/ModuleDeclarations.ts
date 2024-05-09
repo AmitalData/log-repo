@@ -13,8 +13,7 @@ import {IdGeneratorAsyncPipe} from './Pipes/IdGeneratorAsyncPipe';
 import { DateToMonthPipe } from './Pipes/DateToMonthPipe';
 import { MinutesToTimePipe } from './Pipes/MinutesToTimePipe';
 import {ObjectFieldTextCodeTranslationPipe} from './Pipes/ObjectFieldTextCodeTranslationPipe';
-import {IdGeneratorAsyncPipe} from './Pipes/IdGeneratorAsyncPipe';
-
+ 
 // All
 import {AccessLevelButton} from './All/AccessLevelButton';
 import {CheckBox} from './All/CheckBox';

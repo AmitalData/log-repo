@@ -1088,22 +1088,6 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
     }
 
 
-    public class UnifreightGatewayParams
-    {
-
-        public string Token { get; set; }
-        public string AssemblyQualifiedName { get; set; }
-        public string DataIn1 { get; set; }
-        public string DataIn2 { get; set; }
-
-
-
-        public string DataOut1 { get; set; }
-        public string DataOut2 { get; set; }
-
-        public string SUCCESS { get; set; }
-        public string MoreParams { get; set; }
-        public string MessageOut { get; set; }
-    }
+ 
 
 }

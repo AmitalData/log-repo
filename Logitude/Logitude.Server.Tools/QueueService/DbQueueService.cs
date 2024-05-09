@@ -316,9 +316,9 @@ namespace Logitude.Server.Tools.QueueService
                         SqlParameter watingStatusPar = new SqlParameter("@V_WatingStatus", SqlDbType.Int);
                         SqlParameter messageIdPar = new SqlParameter("@V_QUEUEMESSAGEID", SqlDbType.BigInt);
                         SqlParameter tenantpriorityPar = new SqlParameter("@P_TENANTPRIORITY", SqlDbType.Int);
-                        SqlParameter interfaceTypeCodePar = new SqlParameter("@P_INTERFACETYPECODE", SqlDbType.VarChar, 32);
+                        SqlParameter interfaceTypeCodePar = new SqlParameter("@P_INTERFACETYPECODE", SqlDbType.VarChar, 255);
                         SqlParameter useRabbitMQPar = new SqlParameter("@P_USERABBITMQ", SqlDbType.Bit);
-                        SqlParameter queueCodeRabbitPar = new SqlParameter("@P_QUEUECODERABBIT", SqlDbType.Bit);
+                        SqlParameter queueCodeRabbitPar = new SqlParameter("@P_QUEUECODERABBIT", SqlDbType.VarChar ,255);
                         SqlParameter entityCodePar = new SqlParameter("@P_ENTITYCODE", SqlDbType.VarChar, 255);
                         SqlParameter entityIPar = new SqlParameter("@P_ENTITYID", SqlDbType.VarChar,255);
 
@@ -351,7 +351,7 @@ namespace Logitude.Server.Tools.QueueService
                         hashCodePar.Value = bodyHashCode;
                         watingStatusPar.Value = WorkerNameService.GetWorkerWaitingStatusForSending(tenant);
                         tenantpriorityPar.Value = tenantPriority;
-                        interfaceTypeCodePar.Value = queueSendModel?.InterfaceTypeCode;
+                        interfaceTypeCodePar.Value =   queueSendModel?.InterfaceTypeCode!= null? queueSendModel?.InterfaceTypeCode: "";
                         
                         if (queueSendModel != null && queueSendModel.UseRabbitMQ)
                         {
@@ -390,7 +390,7 @@ namespace Logitude.Server.Tools.QueueService
                         var output = cmd.ExecuteNonQuery();
                         cn.Close();
 
-                        var v_QueueMessageId = cmd.Parameters["@V_MessageId"].Value;
+                        var v_QueueMessageId = cmd.Parameters["@V_QUEUEMESSAGEID"].Value;
                         if (v_QueueMessageId != null)
                         {
                             string sQueueMessageId = v_QueueMessageId.ToString();

@@ -128,7 +128,7 @@ namespace WebFreight.Web.Helpers
             System.IO.MemoryStream memory = new System.IO.MemoryStream();
             ExcelEngine excelEngine = new ExcelEngine();
             IApplication application = excelEngine.Excel;
-            IWorkbook workbook = excelEngine.Excel.Workbooks.Create(numSheet);
+            Syncfusion.XlsIO.IWorkbook workbook = excelEngine.Excel.Workbooks.Create(numSheet);
             for (int k = 0; k < numSheet; k++)
             {
 
