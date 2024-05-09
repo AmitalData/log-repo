@@ -120,8 +120,8 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     private InitializeBillToLov() {
         if (this.IsFullAccounting) {
 
-            this.DisplayFieldsFromList = "Code,GLAccountDisplayNumber,CalculatedEnglishName,CityName,CountryCode";
-            this.DisplayLocalFieldsFromList = "Code,GLAccountDisplayNumber,CalculatedLocalName,CityName,CountryCode";
+            this.DisplayFieldsFromList = "Code,GLAccountDisplayNumber,CalculatedEnglishName,CalculatedLocalName,PartnerTypeName,CountryCode";
+            this.DisplayLocalFieldsFromList = "Code,GLAccountDisplayNumber,CalculatedLocalName,PartnerTypeName,CountryCode";
 
             this.VendorLovSizeForFullAccounting = 550;
         }
