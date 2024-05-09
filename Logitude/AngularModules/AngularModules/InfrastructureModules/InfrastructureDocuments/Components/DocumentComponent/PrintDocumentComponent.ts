@@ -696,7 +696,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
                 var originalCopy = this.Items.filter(x => x.IsOriginal == true)[0];
                 if(originalCopy) {
                     if(originalCopy.IsPrintButtonEnabled) {
-                        this.Items = this.Items.filter(x => x.IsOriginal == true);
+                        //this.Items = this.Items.filter(x => x.IsOriginal == true);
                         this.IsTemplateDisabled = false;
                     } else {
                         this.IsTemplateDisabled = true;
