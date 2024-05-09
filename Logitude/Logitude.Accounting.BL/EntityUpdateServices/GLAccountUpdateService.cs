@@ -44,7 +44,6 @@ using Logitude.Accounting.BL.Utils;
 using System.Xml.Serialization;
 using System.IO;
 using Logitude.Accounting.BL.CoreBL.Batch;
-using Logitude.BL.CommonDataModel.Tools.DataMapping;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {

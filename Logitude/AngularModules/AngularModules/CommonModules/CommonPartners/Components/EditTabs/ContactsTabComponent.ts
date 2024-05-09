@@ -149,7 +149,6 @@ export class ContactsTabComponent extends BaseComponent implements OnDestroy {
     }
 
     SetContactForAccounting(items: ContactPM[]){
-        debugger;
         items.forEach(item => {
             if(item.ContactForAccounting == true){
                 this.EntityPM.ContactForAccounting=item.Id;
@@ -303,7 +302,6 @@ export class   ContactItemClass extends BaseComponent{
     CheckContactForAccounting(){
         var ContactForAccounting = false;
         var myCardContactForAccounting=null;
-        debugger;
         if (this.fatherComponent && this.fatherComponent.EntityPM) {
             myCardContactForAccounting = this.fatherComponent.EntityPM['ContactForAccounting'];
             if (!AppTool.IsNullOrEmpty(myCardContactForAccounting)) {
@@ -316,7 +314,6 @@ export class   ContactItemClass extends BaseComponent{
     }
 
     setContactForAccounting(){
-        debugger;
         this.fatherComponent.EntityPM['ContactForAccounting']=this.Id;
         this.fatherComponent.ItemsSource.forEach(item => {
             item.CheckContactForAccounting();
