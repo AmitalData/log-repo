@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class CardUpdateClass
    {  		
-		public const string HashString = "53e21f8fbb5a6b053bf30c8424a1fb68";
+		public const string HashString = "9ef248ed391fa3441f0d81c5dab8b965";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -3024,13 +3024,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LocalName",
 					  						DefaultText =  "Local Name",
-					  						FullLocalDefaultText =  "שם הלקוח",
+					  						FullLocalDefaultText =  "שם בעברית",
 					  						ListFieldLable =  "LocalNameListLable",
 					  						ListLableDefaultText =  "Local Name",
-					  						ListLocalDefaultText =  "שם הלקוח",
+					  						ListLocalDefaultText =  "שם בעברית",
 					  						ShortFieldLable =  "LocalName",
 					  						ShortFieldLableDefaultText =  "Local Name",
-					  						ShortLocalDefaultText =  "שם הלקוח",
+					  						ShortLocalDefaultText =  "שם בעברית",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
