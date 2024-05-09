@@ -463,7 +463,22 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         }
         protected override void OnUpdating(GLAccountPM entityPM, GLAccount entityPOCO)
         {
+            var tenant = entityPM.Tenant;
+            CardQuery cardQuery = new CardQuery(tenant);
 
+            if (entityPM.DisplayNumber != entityPOCO.DisplayNumber)
+            {
+                List<CardList> cardLists = GetCardsByGLAccountId(entityPM.Id, tenant);
+                foreach (CardList card in cardLists)
+                {
+                    var context = CommonDataContext.GetContext(tenant);
+                    CardPM cardPM = cardQuery.GetSinglePM(card.Id, tenant);
+                    cardPM.GLAccountDisplayNumber = entityPM.DisplayNumber;
+                    cardPM.IsFromGlaAccountUpdate = true;
+                    CardService cardService = new CardService(context, tenant);
+                    cardService.Update(cardPM);
+                }
+            }
             if (!entityPM.IsControlAccount.GetValueOrDefault())
             {
                 this.setAccountingTypeCodeByChartofAccountTypeCode(entityPM);
@@ -898,18 +913,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Card connectedCard = new Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Card();
                 connectedCard.Code = card.Code;
                 connectedCard.PartnerCode = card.PartnerTypeId;
-                
-                var context = CommonDataContext.GetContext(gLAccount.Tenant);
-                CardQuery cardQuery = new CardQuery(gLAccount.Tenant);
-                CardRepository cardRepository = new CardRepository(gLAccount.Tenant);
-                CardPM cardPM = cardQuery.GetSinglePM(card.Id, gLAccount.Tenant);
-                cardPM.GLAccountDisplayNumber = gLAccount.DisplayNumber;
-                var cardPoco = cardRepository.GetSingleCard(card.Id, gLAccount.Tenant);
-                CardMapping.MapEntity(cardPM, cardPoco, false);
-                cardRepository.Update(cardPoco);
-                cardRepository.SubmitChanges();
-                CardService cardService = new CardService(CommonDataContext.GetContext(gLAccount.Tenant),cardPM);
-                cardService.RunStoredProcedures();
 
                 if (gLAccount.CardCode == connectedCard.Code)
                 {
@@ -2396,6 +2399,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 CardPM card = query.GetSinglePM(cardId, tenant);
                 card.GLAccountId = glAccountId;
                 card.GLAccountDisplayNumber = GetDisplayNumberFromGLAccount(glAccountId, tenant);
+                card.IsFromGlaAccountUpdate = true;
                 service.Update(card);
             }
         }
