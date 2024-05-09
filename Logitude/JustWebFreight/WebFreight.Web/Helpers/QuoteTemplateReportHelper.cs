@@ -42,6 +42,10 @@ using Logitude.BL.CommonDataModel.EntityLists;
 using System.Text.RegularExpressions;
 using Logitude.BL.QuoteModel.DataContracts;
 using WebFreight.Web.Helpers.QuoteTemplate;
+using Simplog.Server.Infrastructure;
+using System.Net.Http;
+using System.Configuration;
+using Newtonsoft.Json;
 
 namespace Logitude.BL.Helpers
 {
@@ -59,236 +63,281 @@ namespace Logitude.BL.Helpers
 
         public byte[] BuildQuoteTemplatePdfReport(string quoteId, string quoteTemplateId, string userId, int tenant, List<QuoteTemplateSectionPM> templateSections, int? userTenant = null, QuotePM quotePM = null, int? versionNumber = null)
         {
+            var isAppServiceENV = Environment.GetEnvironmentVariable("IsAppService") == "true";
+            bool isAppService = ConfigurationManager.AppSettings["IsAppService"] == "true";
+			byte[] pdfData = null;
+
+			if ((isAppServiceENV || isAppService) && !string.IsNullOrEmpty(LogitudeSettings.LogitudeIISURL))
+            {                
+				string URI = LogitudeSettings.LogitudeIISURL.TrimEnd('/') + "/api/QuoteTemplateExtended/" + "BuildQuoteTemplatePdfReportForAppService";
+				BuildQuoteRequest buildQuoteRequest = new BuildQuoteRequest()
+			    {
+                    QuoteId= quoteId,
+                    QuoteTemplateId= quoteTemplateId,
+                    UserId= userId,
+                    Tenant= tenant,
+                    TemplateSections= templateSections, 
+                    UserTenant= userTenant,
+                    QuotePM= quotePM,
+                    VersionNumber= versionNumber
+				};
 
 
-            QuoteTemplateBuildArges quoteTemplateBuildArges = new QuoteTemplateBuildArges();
-            IQuotesContext context = QuotesContext.GetContext(tenant);
-            QuoteQuery quoteQuery = new QuoteQuery(new QuoteRepository(context));
-            QuoteTemplateQuery quoteTemplateQuery = new QuoteTemplateQuery(new QuoteTemplateRepository(context));
-            QuoteTemplateSettingQuery quoteTemplateSettingQuery = new QuoteTemplateSettingQuery(new QuoteTemplateSettingRepository(context));
-            QuoteTemplateSectionQuery sectionsQuery = new QuoteTemplateSectionQuery(new QuoteTemplateSectionRepository(context));
-            QuoteTemplateTextDesignQuery quotetemplateTextDesignQuery = new QuoteTemplateTextDesignQuery(new QuoteTemplateTextDesignRepository(context));
-            QuoteTemplateTableDesignQuery quotetemplateTableDesignQuery = new QuoteTemplateTableDesignQuery(new QuoteTemplateTableDesignRepository(context));
-            QuoteTemplateTextCodeQuery quoteTemplateTextCodeQuery = new QuoteTemplateTextCodeQuery(tenant);
-            HtmlEditorHelper htmlEditorHelper = new HtmlEditorHelper();
-            byte[] pdfData = null;
-            string headerHtmlString = null;
-            string footerHtmlString = null;
-            string bodyHtmlString = null;
-            string RequestArea = "Maintenance";
-            QuoteTemplatePM template = quoteTemplateQuery.GetSinglePM(quoteTemplateId, tenant);
-            ObjectTableRepository objectTabelRepository = null;
-            ObjectTable objectTable = null;
-            int correctTenant = userTenant != null ? (int)userTenant : tenant;
-
-            if (!string.IsNullOrEmpty(quoteId) && quotePM == null)
-            {
-                quotePM = quoteQuery.GetSinglePM(quoteId, correctTenant);
-            }
-
-            if (quotePM == null) quotePM = BuildingQuotePM();
-
-            if (templateSections == null)
-            {
-                if (quotePM.QuoteTemplateId == quoteTemplateId)
+				using (var client = new HttpClient())
                 {
-                    if (!string.IsNullOrEmpty(quotePM.QuotationSections))
+                    string serializedObject = JsonConvert.SerializeObject(buildQuoteRequest);
+                    StringContent content = new StringContent(serializedObject, Encoding.UTF8, "application/json");
+                    var result1 = client.PostAsync(URI, content);
+
+                    result1.Wait();
+                    if (result1.Result.StatusCode == System.Net.HttpStatusCode.OK)
                     {
-                        templateSections = sectionsQuery.GetQuoteTemplateSectionPMsByIds(quotePM.QuotationSections.Split(',').ToList(), tenant);
-                    }
-                }
-
-                if (templateSections == null)
-                {
-                    templateSections = sectionsQuery.GetQuoteTemplateSectionPMsByTemplateId(quoteTemplateId, tenant);
-                }
-
-                QuoteTemplateSectionRepository quoteTemplateSectionsRepository = new QuoteTemplateSectionRepository(context);
-                List<QuoteTemplateSectionModification> modifications = quoteTemplateSectionsRepository.GetAllQuoteTemplateSectionModifications(quotePM.Id, tenant).ToList();
-                foreach (QuoteTemplateSectionModification mod in modifications)
-                {
-                    QuoteTemplateSectionPM section = templateSections.Where(s => s.Id == mod.QuoteTemplateSectionId).FirstOrDefault();
-                    if (section != null)
-                    {
-                        section.SectionDocId = mod.SectionDocId;
-                    }
-                }
-
-                QuoteTemplateExcludedSectionRepository excludedSectionRepository = new QuoteTemplateExcludedSectionRepository(tenant);
-                List<QuoteTemplateExcludedSection> excludedsection = excludedSectionRepository.GetAllQuoteTemplateExcludedSection(quoteId, quoteTemplateId, tenant).ToList();
-
-                if (excludedsection != null)
-                {
-                    foreach (QuoteTemplateExcludedSection mod2 in excludedsection)
-                    {
-                        QuoteTemplateSectionPM section = templateSections.Where(s => s.Id == mod2.QuoteTemplateSectionId).FirstOrDefault();
-                        if (section != null)
-                        {
-                            section.IsExcluded = true;
-                        }
+						var result = result1.Result.Content.ReadAsAsync(typeof(byte[])).Result;
+						pdfData = (byte[])result;						                     
                     }
                 }
             }
-
-
-            QuoteTemplateSettingPM setting = quoteTemplateSettingQuery.GetSinglePM(template.QuoteTemplateSettingId, tenant);
-            List<QuoteTemplateTextDesignPM> quoteTemplateTextDesignsList = quotetemplateTextDesignQuery.GetQuoteTemplateTextDesignPMsByTenant(tenant).ToList();
-            List<QuoteTemplateTableDesignPM> quoteTemplateTableDesignsList = quotetemplateTableDesignQuery.GetQuoteTemplateTableDesignPMsByTenant(tenant).ToList();
-            List<QuoteTemplateTextCodePM> textcodes = quoteTemplateTextCodeQuery.GetQuoteTemplateTextCodePMsByQuoteTemplateId(template.Tenant, template.Id).ToList();
-
-
-
-            if (!string.IsNullOrEmpty(quoteId))
+            else
             {
-                RequestArea = "Quote";
-                if (quotePM != null)
-                {
-                    if (quotePM.TransportModeId == "A" || quotePM.ShipmentTypeId == "LCL" || quotePM.ShipmentTypeId == "LCLD" || quotePM.ShipmentTypeId == "LTL")
-                    {
-                        templateSections = templateSections.Where(t => t.QuoteTemplateSectionTypeCode != "PC").ToList();
 
-                    }
-                    else if (quotePM.ShipmentTypeId == "FCL" || quotePM.ShipmentTypeId == "FCLD" || quotePM.ShipmentTypeId == "FTL")
-                    {
-                        templateSections = templateSections.Where(t => t.QuoteTemplateSectionTypeCode != "PP").ToList(); ;
-                    }
-                }
-            }
+				pdfData = BuildQuoteTemplatePdfReportForAppService(quoteId, quoteTemplateId,userId,tenant,templateSections,userTenant,quotePM,versionNumber);
 
-
-
-            quoteTemplateBuildArges.Tenant = tenant;
-            quoteTemplateBuildArges.IsResultPDF = true;
-            quoteTemplateBuildArges.QuotePM = quotePM;
-            quoteTemplateBuildArges.QuoteTemplateSettingPM = setting;
-            quoteTemplateBuildArges.QuoteTemplateTextDesignPMLists = quoteTemplateTextDesignsList;
-            quoteTemplateBuildArges.QuoteTemplateTableDesignsLists = quoteTemplateTableDesignsList;
-            quoteTemplateBuildArges.QuoteTemplateTextCodePMLists = textcodes;
-            quoteTemplateBuildArges.UserTenant = correctTenant;
-            quoteTemplateBuildArges.UserId = userId;
-            quoteTemplateBuildArges.QuoteTemplateSectionPMLists = templateSections;
-            quoteTemplateBuildArges.QuoteTemplatePM = template;
-            quoteTemplateBuildArges.VersionNumber = versionNumber;
-
-
-            HtmlToPdfConverter pdfConverter = new HtmlToPdfConverter();
-            pdfConverter.LicenseKey = "fvDj8eTh8eDg4vHk/+Hx4uD/4OP/6Ojo6A==";
-            pdfConverter.PdfDocumentOptions.PdfPageSize = PdfPageSize.A4;
-            pdfConverter.HtmlViewerWidth = 800;
-            pdfConverter.PdfDocumentOptions.PdfCompressionLevel = PdfCompressionLevel.Normal;
-            pdfConverter.PdfDocumentOptions.EnhancedGraphicsQuality = true;
-            pdfConverter.PdfDocumentOptions.PdfPageOrientation = PdfPageOrientation.Portrait;
-            pdfConverter.TriggeringMode = TriggeringMode.Auto;
-            SetPdfMargins(setting, pdfConverter.PdfDocumentOptions);
-
-
-            // set the header HTML area
-            QuoteTemplateSectionPM headerSection = templateSections.Where(s => s.QuoteTemplateSectionTypeCode == "PH").FirstOrDefault();
-            if (!headerSection.IsExcluded)
-            {
-                pdfConverter.PdfDocumentOptions.ShowHeader = true;
-                if (setting.PageHeaderArea1Type == "Quote Header" || setting.PageHeaderArea2Type == "Quote Header" || setting.PageHeaderArea3Type == "Quote Header") quoteTemplateBuildArges.HideQuoteHeaderFromPdf = true;
-                SetSectionTypeCode(quoteTemplateBuildArges, "PH");
-                byte[] headerdata = GetQuoteTemplatePageHeaderFooter(quoteTemplateBuildArges);
-                headerHtmlString += GetBodyString(headerdata);
-
-
-
-                headerHtmlString = ResolveHtmlData(correctTenant, htmlEditorHelper, headerHtmlString, quotePM, template, userId, ref objectTabelRepository, ref objectTable);
-                HtmlToPdfElement headerHtml = new HtmlToPdfElement(0, 0, 0, 0, headerHtmlString, null, 2040, 0);
-                pdfConverter.PdfHeaderOptions.AddElement(headerHtml);
-                pdfConverter.PdfHeaderOptions.HeaderHeight = setting.PageHeaderAreaHeight * 27.375f;
-            }
-
-
-            // set the Footer HTML area
-            QuoteTemplateSectionPM footerSection = templateSections.Where(s => s.QuoteTemplateSectionTypeCode == "PF").FirstOrDefault();
-            if (!footerSection.IsExcluded)
-            {
-                pdfConverter.PdfDocumentOptions.ShowFooter = true;
-                SetSectionTypeCode(quoteTemplateBuildArges, "PF");
-                byte[] footerdata = GetQuoteTemplatePageHeaderFooter(quoteTemplateBuildArges);
-                footerHtmlString += GetBodyString(footerdata);
-
-                double footerTopMargin = (double)setting.SpaceLinesBeforeFooters * 21;
-                float heightFooter = (setting.PageFooterAreaHeight * 29) + (float)footerTopMargin + 5;
-
-                footerHtmlString = ResolveHtmlData(correctTenant, htmlEditorHelper, footerHtmlString, quotePM, template, userId, ref objectTabelRepository, ref objectTable);
-                HtmlToPdfElement footerHtml = new HtmlToPdfElement(0, 0, 0, 0, footerHtmlString, null, 2040, 0);
-                pdfConverter.PdfFooterOptions.AddElement(footerHtml);
-                pdfConverter.PdfFooterOptions.FooterHeight = (heightFooter + 10);
-
-                if (!setting.HidePageNumber)
-                {
-                    QuoteTemplateTextDesignPM quotetemplateTextDesignPMPageNumbering = quoteTemplateTextDesignsList.Where(t => t.Id == setting.PageNumberingTextDesignId).FirstOrDefault();
-                    TextElement footerTextElement = null;
-                    if (quotetemplateTextDesignPMPageNumbering != null)
-                    {
-                        footerTextElement = GetTextElementProperitiesForQuotetemplateTextDesign(quotetemplateTextDesignPMPageNumbering, heightFooter);
-                        pdfConverter.PdfFooterOptions.FooterHeight += Convert.ToSingle(quotetemplateTextDesignPMPageNumbering.FontSize) - 7;
-                    }
-                    else
-                    {
-                        footerTextElement = new TextElement(0, heightFooter, "page &p; of &P;  ", new Font(new System.Drawing.FontFamily("Times New Roman"), 7, GraphicsUnit.Point));
-                        footerTextElement.TextAlign = HorizontalTextAlign.Right;
-                    }
-                    pdfConverter.PdfFooterOptions.AddElement(footerTextElement);
-                }
-
-
-            }
-            else pdfConverter.PdfFooterOptions.FooterHeight = 1;
-
-
-
-
-            //Body
-
-            SetSectionTypeCode(quoteTemplateBuildArges, null);
-            byte[] bodyData = GetQuoteTemplateHtmlReport(quoteTemplateBuildArges, false, RequestArea);
-            bodyHtmlString = GetBodyString(bodyData);
-
-            HtmlAgilityPack.HtmlDocument htmlDocument = new HtmlAgilityPack.HtmlDocument();
-            htmlDocument.LoadHtml(bodyHtmlString);
-            var nodes = htmlDocument.DocumentNode.Elements("p");
-            foreach (HtmlAgilityPack.HtmlNode node in nodes)
-            {
-                if (node.Attributes["dir"] != null && node.Attributes["dir"].Value.ToString() == "RTL")
-                {
-                    int childnodescount = node.ChildNodes.Count;
-                    if (childnodescount > 1)
-                    {
-                        List<HtmlNode> deletedNodes = new List<HtmlNode>();
-                        for (int i = 1; i < childnodescount; i++)
-                        {
-                            node.ChildNodes[0].InnerHtml = node.ChildNodes[0].InnerHtml + node.ChildNodes[i].InnerText;
-                            deletedNodes.Add(node.ChildNodes[i]);
-                        }
-
-                        foreach (HtmlNode dnode in deletedNodes) node.ChildNodes.Remove(dnode);
-
-                    }
-                }
-            }
-            bodyHtmlString = htmlDocument.DocumentNode.InnerHtml;
-            bodyHtmlString = ResolveHtmlData(correctTenant, htmlEditorHelper, bodyHtmlString, quotePM, template, userId, ref objectTabelRepository, ref objectTable);
-
-            if (!headerSection.IsExcluded)
-            {
-                bodyHtmlString = RemoveHeaderBodySpace(bodyHtmlString);
-            }
-
-            pdfData = pdfConverter.ConvertHtml(bodyHtmlString, null);
-            if (quotePM.Id != "10697")
-            {
-                string fullHtml = headerHtmlString + bodyHtmlString + footerHtmlString;
-                CreateHtmlQuotationDocument(tenant, quotePM, fullHtml);
-            }
-
+			}
             return pdfData;
-        }
 
-        private string RemoveHeaderBodySpace(string bodyHtmlString)
+		}
+
+		public byte[] BuildQuoteTemplatePdfReportForAppService(string quoteId, string quoteTemplateId, string userId, int tenant, List<QuoteTemplateSectionPM> templateSections, int? userTenant = null, QuotePM quotePM = null, int? versionNumber = null)
+		{
+			
+				QuoteTemplateBuildArges quoteTemplateBuildArges = new QuoteTemplateBuildArges();
+				IQuotesContext context = QuotesContext.GetContext(tenant);
+				QuoteQuery quoteQuery = new QuoteQuery(new QuoteRepository(context));
+				QuoteTemplateQuery quoteTemplateQuery = new QuoteTemplateQuery(new QuoteTemplateRepository(context));
+				QuoteTemplateSettingQuery quoteTemplateSettingQuery = new QuoteTemplateSettingQuery(new QuoteTemplateSettingRepository(context));
+				QuoteTemplateSectionQuery sectionsQuery = new QuoteTemplateSectionQuery(new QuoteTemplateSectionRepository(context));
+				QuoteTemplateTextDesignQuery quotetemplateTextDesignQuery = new QuoteTemplateTextDesignQuery(new QuoteTemplateTextDesignRepository(context));
+				QuoteTemplateTableDesignQuery quotetemplateTableDesignQuery = new QuoteTemplateTableDesignQuery(new QuoteTemplateTableDesignRepository(context));
+				QuoteTemplateTextCodeQuery quoteTemplateTextCodeQuery = new QuoteTemplateTextCodeQuery(tenant);
+				HtmlEditorHelper htmlEditorHelper = new HtmlEditorHelper();
+				byte[] pdfData = null;
+				string headerHtmlString = null;
+				string footerHtmlString = null;
+				string bodyHtmlString = null;
+				string RequestArea = "Maintenance";
+				QuoteTemplatePM template = quoteTemplateQuery.GetSinglePM(quoteTemplateId, tenant);
+				ObjectTableRepository objectTabelRepository = null;
+				ObjectTable objectTable = null;
+				int correctTenant = userTenant != null ? (int)userTenant : tenant;
+
+				if (!string.IsNullOrEmpty(quoteId) && quotePM == null)
+				{
+					quotePM = quoteQuery.GetSinglePM(quoteId, correctTenant);
+				}
+
+				if (quotePM == null) quotePM = BuildingQuotePM();
+
+				if (templateSections == null)
+				{
+					if (quotePM.QuoteTemplateId == quoteTemplateId)
+					{
+						if (!string.IsNullOrEmpty(quotePM.QuotationSections))
+						{
+							templateSections = sectionsQuery.GetQuoteTemplateSectionPMsByIds(quotePM.QuotationSections.Split(',').ToList(), tenant);
+						}
+					}
+
+					if (templateSections == null)
+					{
+						templateSections = sectionsQuery.GetQuoteTemplateSectionPMsByTemplateId(quoteTemplateId, tenant);
+					}
+
+					QuoteTemplateSectionRepository quoteTemplateSectionsRepository = new QuoteTemplateSectionRepository(context);
+					List<QuoteTemplateSectionModification> modifications = quoteTemplateSectionsRepository.GetAllQuoteTemplateSectionModifications(quotePM.Id, tenant).ToList();
+					foreach (QuoteTemplateSectionModification mod in modifications)
+					{
+						QuoteTemplateSectionPM section = templateSections.Where(s => s.Id == mod.QuoteTemplateSectionId).FirstOrDefault();
+						if (section != null)
+						{
+							section.SectionDocId = mod.SectionDocId;
+						}
+					}
+
+					QuoteTemplateExcludedSectionRepository excludedSectionRepository = new QuoteTemplateExcludedSectionRepository(tenant);
+					List<QuoteTemplateExcludedSection> excludedsection = excludedSectionRepository.GetAllQuoteTemplateExcludedSection(quoteId, quoteTemplateId, tenant).ToList();
+
+					if (excludedsection != null)
+					{
+						foreach (QuoteTemplateExcludedSection mod2 in excludedsection)
+						{
+							QuoteTemplateSectionPM section = templateSections.Where(s => s.Id == mod2.QuoteTemplateSectionId).FirstOrDefault();
+							if (section != null)
+							{
+								section.IsExcluded = true;
+							}
+						}
+					}
+				}
+
+
+				QuoteTemplateSettingPM setting = quoteTemplateSettingQuery.GetSinglePM(template.QuoteTemplateSettingId, tenant);
+				List<QuoteTemplateTextDesignPM> quoteTemplateTextDesignsList = quotetemplateTextDesignQuery.GetQuoteTemplateTextDesignPMsByTenant(tenant).ToList();
+				List<QuoteTemplateTableDesignPM> quoteTemplateTableDesignsList = quotetemplateTableDesignQuery.GetQuoteTemplateTableDesignPMsByTenant(tenant).ToList();
+				List<QuoteTemplateTextCodePM> textcodes = quoteTemplateTextCodeQuery.GetQuoteTemplateTextCodePMsByQuoteTemplateId(template.Tenant, template.Id).ToList();
+
+
+
+				if (!string.IsNullOrEmpty(quoteId))
+				{
+					RequestArea = "Quote";
+					if (quotePM != null)
+					{
+						if (quotePM.TransportModeId == "A" || quotePM.ShipmentTypeId == "LCL" || quotePM.ShipmentTypeId == "LCLD" || quotePM.ShipmentTypeId == "LTL")
+						{
+							templateSections = templateSections.Where(t => t.QuoteTemplateSectionTypeCode != "PC").ToList();
+
+						}
+						else if (quotePM.ShipmentTypeId == "FCL" || quotePM.ShipmentTypeId == "FCLD" || quotePM.ShipmentTypeId == "FTL")
+						{
+							templateSections = templateSections.Where(t => t.QuoteTemplateSectionTypeCode != "PP").ToList(); ;
+						}
+					}
+				}
+
+
+
+				quoteTemplateBuildArges.Tenant = tenant;
+				quoteTemplateBuildArges.IsResultPDF = true;
+				quoteTemplateBuildArges.QuotePM = quotePM;
+				quoteTemplateBuildArges.QuoteTemplateSettingPM = setting;
+				quoteTemplateBuildArges.QuoteTemplateTextDesignPMLists = quoteTemplateTextDesignsList;
+				quoteTemplateBuildArges.QuoteTemplateTableDesignsLists = quoteTemplateTableDesignsList;
+				quoteTemplateBuildArges.QuoteTemplateTextCodePMLists = textcodes;
+				quoteTemplateBuildArges.UserTenant = correctTenant;
+				quoteTemplateBuildArges.UserId = userId;
+				quoteTemplateBuildArges.QuoteTemplateSectionPMLists = templateSections;
+				quoteTemplateBuildArges.QuoteTemplatePM = template;
+				quoteTemplateBuildArges.VersionNumber = versionNumber;
+
+
+				HtmlToPdfConverter pdfConverter = new HtmlToPdfConverter();
+				pdfConverter.LicenseKey = "fvDj8eTh8eDg4vHk/+Hx4uD/4OP/6Ojo6A==";
+				pdfConverter.PdfDocumentOptions.PdfPageSize = PdfPageSize.A4;
+				pdfConverter.HtmlViewerWidth = 800;
+				pdfConverter.PdfDocumentOptions.PdfCompressionLevel = PdfCompressionLevel.Normal;
+				pdfConverter.PdfDocumentOptions.EnhancedGraphicsQuality = true;
+				pdfConverter.PdfDocumentOptions.PdfPageOrientation = PdfPageOrientation.Portrait;
+				pdfConverter.TriggeringMode = TriggeringMode.Auto;
+				SetPdfMargins(setting, pdfConverter.PdfDocumentOptions);
+
+
+				// set the header HTML area
+				QuoteTemplateSectionPM headerSection = templateSections.Where(s => s.QuoteTemplateSectionTypeCode == "PH").FirstOrDefault();
+				if (!headerSection.IsExcluded)
+				{
+					pdfConverter.PdfDocumentOptions.ShowHeader = true;
+					if (setting.PageHeaderArea1Type == "Quote Header" || setting.PageHeaderArea2Type == "Quote Header" || setting.PageHeaderArea3Type == "Quote Header") quoteTemplateBuildArges.HideQuoteHeaderFromPdf = true;
+					SetSectionTypeCode(quoteTemplateBuildArges, "PH");
+					byte[] headerdata = GetQuoteTemplatePageHeaderFooter(quoteTemplateBuildArges);
+					headerHtmlString += GetBodyString(headerdata);
+
+
+
+					headerHtmlString = ResolveHtmlData(correctTenant, htmlEditorHelper, headerHtmlString, quotePM, template, userId, ref objectTabelRepository, ref objectTable);
+					HtmlToPdfElement headerHtml = new HtmlToPdfElement(0, 0, 0, 0, headerHtmlString, null, 2040, 0);
+					pdfConverter.PdfHeaderOptions.AddElement(headerHtml);
+					pdfConverter.PdfHeaderOptions.HeaderHeight = setting.PageHeaderAreaHeight * 27.375f;
+				}
+
+
+				// set the Footer HTML area
+				QuoteTemplateSectionPM footerSection = templateSections.Where(s => s.QuoteTemplateSectionTypeCode == "PF").FirstOrDefault();
+				if (!footerSection.IsExcluded)
+				{
+					pdfConverter.PdfDocumentOptions.ShowFooter = true;
+					SetSectionTypeCode(quoteTemplateBuildArges, "PF");
+					byte[] footerdata = GetQuoteTemplatePageHeaderFooter(quoteTemplateBuildArges);
+					footerHtmlString += GetBodyString(footerdata);
+
+					double footerTopMargin = (double)setting.SpaceLinesBeforeFooters * 21;
+					float heightFooter = (setting.PageFooterAreaHeight * 29) + (float)footerTopMargin + 5;
+
+					footerHtmlString = ResolveHtmlData(correctTenant, htmlEditorHelper, footerHtmlString, quotePM, template, userId, ref objectTabelRepository, ref objectTable);
+					HtmlToPdfElement footerHtml = new HtmlToPdfElement(0, 0, 0, 0, footerHtmlString, null, 2040, 0);
+					pdfConverter.PdfFooterOptions.AddElement(footerHtml);
+					pdfConverter.PdfFooterOptions.FooterHeight = (heightFooter + 10);
+
+					if (!setting.HidePageNumber)
+					{
+						QuoteTemplateTextDesignPM quotetemplateTextDesignPMPageNumbering = quoteTemplateTextDesignsList.Where(t => t.Id == setting.PageNumberingTextDesignId).FirstOrDefault();
+						TextElement footerTextElement = null;
+						if (quotetemplateTextDesignPMPageNumbering != null)
+						{
+							footerTextElement = GetTextElementProperitiesForQuotetemplateTextDesign(quotetemplateTextDesignPMPageNumbering, heightFooter);
+							pdfConverter.PdfFooterOptions.FooterHeight += Convert.ToSingle(quotetemplateTextDesignPMPageNumbering.FontSize) - 7;
+						}
+						else
+						{
+							footerTextElement = new TextElement(0, heightFooter, "page &p; of &P;  ", new Font(new System.Drawing.FontFamily("Times New Roman"), 7, GraphicsUnit.Point));
+							footerTextElement.TextAlign = HorizontalTextAlign.Right;
+						}
+						pdfConverter.PdfFooterOptions.AddElement(footerTextElement);
+					}
+
+
+				}
+				else pdfConverter.PdfFooterOptions.FooterHeight = 1;
+
+
+
+
+				//Body
+
+				SetSectionTypeCode(quoteTemplateBuildArges, null);
+				byte[] bodyData = GetQuoteTemplateHtmlReport(quoteTemplateBuildArges, false, RequestArea);
+				bodyHtmlString = GetBodyString(bodyData);
+
+				HtmlAgilityPack.HtmlDocument htmlDocument = new HtmlAgilityPack.HtmlDocument();
+				htmlDocument.LoadHtml(bodyHtmlString);
+				var nodes = htmlDocument.DocumentNode.Elements("p");
+				foreach (HtmlAgilityPack.HtmlNode node in nodes)
+				{
+					if (node.Attributes["dir"] != null && node.Attributes["dir"].Value.ToString() == "RTL")
+					{
+						int childnodescount = node.ChildNodes.Count;
+						if (childnodescount > 1)
+						{
+							List<HtmlNode> deletedNodes = new List<HtmlNode>();
+							for (int i = 1; i < childnodescount; i++)
+							{
+								node.ChildNodes[0].InnerHtml = node.ChildNodes[0].InnerHtml + node.ChildNodes[i].InnerText;
+								deletedNodes.Add(node.ChildNodes[i]);
+							}
+
+							foreach (HtmlNode dnode in deletedNodes) node.ChildNodes.Remove(dnode);
+
+						}
+					}
+				}
+				bodyHtmlString = htmlDocument.DocumentNode.InnerHtml;
+				bodyHtmlString = ResolveHtmlData(correctTenant, htmlEditorHelper, bodyHtmlString, quotePM, template, userId, ref objectTabelRepository, ref objectTable);
+
+				if (!headerSection.IsExcluded)
+				{
+					bodyHtmlString = RemoveHeaderBodySpace(bodyHtmlString);
+				}
+
+				pdfData = pdfConverter.ConvertHtml(bodyHtmlString, null);
+				if (quotePM.Id != "10697")
+				{
+					string fullHtml = headerHtmlString + bodyHtmlString + footerHtmlString;
+					CreateHtmlQuotationDocument(tenant, quotePM, fullHtml);
+				}
+
+				return pdfData;			
+		}
+
+		private string RemoveHeaderBodySpace(string bodyHtmlString)
         {
             if (string.IsNullOrEmpty(bodyHtmlString))
                 return bodyHtmlString;
@@ -4298,6 +4347,18 @@ namespace Logitude.BL.Helpers
         public string Currency { get; set; }
         public bool IsHiddenTotal { get; set; }
     }
+	public class BuildQuoteRequest
+	{
+		public string QuoteId { get; set; }
+		public string QuoteTemplateId { get; set; }
+		public string UserId { get; set; }
+		public int Tenant { get; set; }
+		public List<QuoteTemplateSectionPM> TemplateSections { get; set; }
+        public int? UserTenant { get; set; } = null;
+        public QuotePM QuotePM { get; set; } = null;
+		public int? VersionNumber { get; set; } = null;
+
+	}
 
 }
 

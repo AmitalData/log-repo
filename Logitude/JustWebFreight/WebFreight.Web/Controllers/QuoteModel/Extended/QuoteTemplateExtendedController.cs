@@ -88,8 +88,8 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
             }
         }
-
-        public HttpResponseMessage GetQuoteTemplateLists(string queryName)
+	
+		public HttpResponseMessage GetQuoteTemplateLists(string queryName)
         {
             try
             {
@@ -338,7 +338,23 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.PMControllers
             }
 
         }
-        public HttpResponseMessage GetCommunicationLogDocument(string id)
+		
+        [HttpPost]
+		public HttpResponseMessage BuildQuoteTemplatePdfReportForAppService(BuildQuoteRequest buildQuoteRequest)
+		{
+			try
+			{
+				byte[] data = null;
+				QuoteTemplateReportHelper quoteTemplateReportHelper = new QuoteTemplateReportHelper();
+				data = quoteTemplateReportHelper.BuildQuoteTemplatePdfReportForAppService(buildQuoteRequest.QuoteId, buildQuoteRequest.QuoteTemplateId, buildQuoteRequest.UserId, buildQuoteRequest.Tenant, buildQuoteRequest.TemplateSections, buildQuoteRequest.UserTenant, buildQuoteRequest.QuotePM, buildQuoteRequest.VersionNumber);
+				return Request.CreateResponse(HttpStatusCode.OK, data);
+			}
+			catch (Exception ex)
+			{
+				return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+			}
+		}
+		public HttpResponseMessage GetCommunicationLogDocument(string id)
         {
             try
             {
