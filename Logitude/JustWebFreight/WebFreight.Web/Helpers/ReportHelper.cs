@@ -1843,7 +1843,7 @@ namespace WebFreight.Web.Helpers
                     }
                 case "MBBR":
                     {
-                        dataProviderName = "Logitude.Accounting.BL.DataContract.ControlForInvoiceLinesDataProvider";
+                        dataProviderName = "Logitude.Accounting.BL.DataContract.MonthlyBalancesReportDataProvider";
 
 
                         break;
@@ -1985,12 +1985,12 @@ namespace WebFreight.Web.Helpers
                         }
                 case "MBBR":
                     {
-                        XmlSerializer serializer = new XmlSerializer(typeof(ControlForInvoiceLinesDataProvider));
-                        ControlForInvoiceLinesDataProvider reportDataProvider = (ControlForInvoiceLinesDataProvider)serializer.Deserialize(memorystream);
+                        XmlSerializer serializer = new XmlSerializer(typeof(MonthlyBalancesReportDataProvider));
+                        MonthlyBalancesReportDataProvider reportDataProvider = (MonthlyBalancesReportDataProvider)serializer.Deserialize(memorystream);
                         reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
                         reportDataProvider.CompanyName = DataProviders.General.GetCompanyName(stimulReportDataProviderDetails.Tenant);
                         reportDataProvider.Logo = DataProviders.General.GetLogo(stimulReportDataProviderDetails.Tenant);
-                        stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "MBBR", Name = "ControlForInvoiceLinesDataProvider", BusinessObjectValue = reportDataProvider };
+                        stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "MBBR", Name = "MonthlyBalancesReportDataProvider", BusinessObjectValue = reportDataProvider };
 
                         break;
                     }

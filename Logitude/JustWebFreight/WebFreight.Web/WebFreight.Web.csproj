@@ -1580,6 +1580,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\ReferantTeamController.Generated.cs" />
     <Compile Include="DataContracts\PrivateLabelsBrandingData.cs" />
     <Compile Include="DataContracts\PrivateLabelsBrandingDataRequest.cs" />
+    <Compile Include="DataProviders\MonthlyBalancesReportDataProvider.cs" />
     <Compile Include="DataProviders\CustomFieldDataProviedr.cs" />
     <Compile Include="DataProviders\ControlForInvoiceLinesDataProvider.cs" />
     <Compile Include="DataProviders\LogitudeCRMReportDataProvider.cs" />
@@ -6676,6 +6677,7 @@
     </Compile>
     <Compile Include="ReportsWebServices\LogitudeReports\Accounting\AccountingDepositReportManager.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Accounting\ARinvoiceSequencesService.cs" />
+    <Compile Include="ReportsWebServices\LogitudeReports\Accounting\MonthlyBalancesLinesLoader.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Accounting\ControlForInvoiceLinesLoader.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Accounting\ExternalReconciliationLinesReportLoader.cs" />
     <Compile Include="ReportsWebServices\LogitudeReports\Accounting\CustomerStatusDataProviderLoader.cs" />

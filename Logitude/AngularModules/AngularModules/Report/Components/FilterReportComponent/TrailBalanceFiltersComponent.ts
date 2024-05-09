@@ -455,7 +455,7 @@ export class TrailBalanceFiltersComponent extends BaseComponent
 
     public FilterSelectedValue: string = 'ChartOfAccountType';
     FilterItemClicked(itemValue: string)
-    {
+    {debugger
         if (this.FilterSelectedValue != itemValue) {
             this.FilterSelectedValue = itemValue;
             this.Level = itemValue;
