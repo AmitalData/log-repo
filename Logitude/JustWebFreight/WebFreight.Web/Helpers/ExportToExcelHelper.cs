@@ -1281,16 +1281,34 @@ namespace WebFreight.Web.Helpers
                             cell.SetCellType(GetCellType(column.ObjectFieldDataTypeCode));
 
                             value = value != null ? value : "";
-                            if (value != null)
-                                value = value.ToString();
+                            try
+                            {
+                                if (value != null)
+                                    value = value.ToString();
 
 
-                            if (GetCellType(column.ObjectFieldDataTypeCode) == CellType.Numeric)
-                                cell.SetCellValue(Double.Parse(value));
-                            else if (GetCellType(column.ObjectFieldDataTypeCode) == CellType.Boolean)
-                                cell.SetCellValue(bool.Parse(value));
-                            else
-                                cell.SetCellValue(value.ToString());
+                                if (GetCellType(column.ObjectFieldDataTypeCode) == CellType.Numeric)
+                                {
+                                    if (value == "") value = "0";
+                                    cell.SetCellValue(Double.Parse(value));
+
+                                }
+                                else if (GetCellType(column.ObjectFieldDataTypeCode) == CellType.Boolean)
+                                {
+                                    if (value == "") value = "0";
+                                    cell.SetCellValue(bool.Parse(value));
+                                }
+                                else
+                                    cell.SetCellValue(value.ToString());
+                            }
+                            catch (Exception ex1)
+                            {
+
+                                throw;
+                            }
+                  
+                          
+                        
                             i++;
                         }
 
