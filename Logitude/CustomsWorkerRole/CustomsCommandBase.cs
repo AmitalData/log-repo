@@ -618,8 +618,24 @@ namespace CustomsWorkerRole
             bool proccesDone = false;
             for (int filtterPriority = 2; filtterPriority < 3; filtterPriority++)
             {
+                int maxActiveTasks = 10;
+                var num = System.Configuration.ConfigurationManager.AppSettings.Get("CustomDbQueueNewReceiveSelectCount");
+                if (!string.IsNullOrEmpty(num) && int.Parse(num) > 0)
+                {
+                    maxActiveTasks = int.Parse(num);
+                }
+
+                List<string> activeTasks = new List<string> { };
+
                 while (!WorkerRoleServiceLocator.PleaseShutDown)
                 {
+                    // as long as the max active tasks is reached, we should wait for few of them to finish
+                    if (activeTasks.Count == maxActiveTasks)
+                    {
+                        Thread.Sleep(1000);
+                        continue;
+                    }
+
                     LogMessagingUtilWR.Instance.Clear();
                     LogMessagingUtil.Instance.Clear();
 
@@ -637,10 +653,10 @@ namespace CustomsWorkerRole
 
                                 try
                                 {
-
                                     LogMessagingUtilWR.Instance.AppendLine("QRecive");
-                                    LogTime(className + " start get data from DB");
-                                    responseList = _CustomDbQueueService.Receive_new(CustomsWorkerRole.Utils.GenUtil.GetQueueTimeOutInMin() * 60);
+                                    int selectCount = maxActiveTasks - activeTasks.Count;
+                                    LogTime(className + " start get data from DB (select " + selectCount + ")");
+                                    responseList = _CustomDbQueueService.Receive_new(CustomsWorkerRole.Utils.GenUtil.GetQueueTimeOutInMin() * 60, selectCount);
                                     //LogTime(className + " end get data from DB");
                                     LogMessagingUtilWR.Instance.AppendLine("QRecive:after");
 
@@ -686,6 +702,8 @@ namespace CustomsWorkerRole
                             {
                                 var stopwatch = Stopwatch.StartNew();
                                 //LogTime(className + " create new task for msg id: " + item.MessageId);
+                                activeTasks.Add(item.MessageId);
+
                                 var t =
                                 Task.Factory.StartNew(() =>
                                 {
@@ -693,17 +711,26 @@ namespace CustomsWorkerRole
                                     // LogTime(className + " start task (created " + stopwatch.Elapsed.TotalSeconds + " seconds ago) for row MessageId: " + item.MessageId);
                                     var taskstopwatch = Stopwatch.StartNew();
 
-                                    CustomsCommandBaseHelper helper = new CustomsCommandBaseHelper();
-                                    helper.RunTask(item, className);
-                                    LogMessagingUtilWR.Instance.AppendLine("LogDoneItemInMemory();");
-                                    LogDoneItemInMemory();
-                                    LogMessagingUtilWR.Instance.AppendLine("LogDoneItemInMemory();AFTER");
-                                    LogTime(className + " end task (elapsed: " + (int)taskstopwatch.Elapsed.TotalSeconds + " seconds. started after: " + (int)createdElapsed + " seconds) for row MessageId: " + item.MessageId);
+                                    try
+                                    {
+                                        CustomsCommandBaseHelper helper = new CustomsCommandBaseHelper();
+                                        helper.RunTask(item, className);
+                                        LogMessagingUtilWR.Instance.AppendLine("LogDoneItemInMemory();");
+                                        LogDoneItemInMemory();
+                                        LogMessagingUtilWR.Instance.AppendLine("LogDoneItemInMemory();AFTER");
+                                    }
+                                    finally
+                                    {
+                                        activeTasks.Remove(item.MessageId);
+                                    }
                                 });
+
                                 taskLIst.Add(t);
                             }
-                            Task.WaitAll(taskLIst.ToArray());
-                            LogTime(className + " end waiting for all of them (total elapsed: " + (int)totalStopwatch.Elapsed.TotalSeconds + " seconds)");
+                            // Task.WaitAll(taskLIst.ToArray());
+                            // LogTime(className + " end waiting for all of them (total elapsed: " + (int)totalStopwatch.Elapsed.TotalSeconds + " seconds)");
+
+                            // ?
                             Queue_scope.Complete();
                         }
                     }
