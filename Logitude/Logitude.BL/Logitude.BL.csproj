@@ -648,6 +648,7 @@
     <Compile Include="InfrastructureModel\EntityLists\DeploymentPackageExecutionLogList.cs" />
     <Compile Include="InfrastructureModel\EntityLists\EntityStatusTypeList.cs" />
     <Compile Include="InfrastructureModel\EntityLists\ImageLibraryList.cs" />
+    <Compile Include="InfrastructureModel\EntityLists\QueueMessageList.cs" />
     <Compile Include="InfrastructureModel\EntityLists\QuoteChargesGroupList.cs" />
     <Compile Include="InfrastructureModel\EntityLists\ReferenceCustomObjectList.cs" />
     <Compile Include="InfrastructureModel\EntityLists\ScreenSectionList.cs" />
@@ -663,6 +664,7 @@
     <Compile Include="InfrastructureModel\EntityPMs\ImageLibraryPM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\MultiEntityUpdateLogPM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\ObjectCustomFieldPM.cs" />
+    <Compile Include="InfrastructureModel\EntityPMs\QueueMessagePM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\QuoteChargesGroupPM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\DeploymentPackagePM.cs" />
     <Compile Include="InfrastructureModel\EntityPMs\ReferenceCustomObjectPM.cs" />
@@ -678,6 +680,7 @@
     <Compile Include="InfrastructureModel\EntityQueries\EntityStatusTypeQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\ImageLibraryQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\MultiEntityUpdateLogQuery.cs" />
+    <Compile Include="InfrastructureModel\EntityQueries\QueueMessageQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\QuoteChargesGroupQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\ReferenceCustomObjectQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\ScreenSectionQuery.cs" />

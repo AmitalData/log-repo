@@ -1,17 +1,17 @@
 declare var window: any;
-import {Component} from '@angular/core';
-import {TextCodeTranslator} from '../../Utilities/TextCodeTranslator';
-import {SessionLocator} from '../../Utilities/SessionLocator';
-import {FeatureLocator} from '../../Utilities/FeatureLocator';
-import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
+import { Component } from '@angular/core';
+import { TextCodeTranslator } from '../../Utilities/TextCodeTranslator';
+import { SessionLocator } from '../../Utilities/SessionLocator';
+import { FeatureLocator } from '../../Utilities/FeatureLocator';
+import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
-import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
-import {ListComponentArgs} from '../../../Infrastructure/Args';
-import { AppTool, DateTool} from '../../../Infrastructure/Tools';
-import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
+import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { ListComponentArgs } from '../../../Infrastructure/Args';
+import { AppTool, DateTool } from '../../../Infrastructure/Tools';
+import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
 //import {CustomsSettingExtendedListService} from '../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
-import {ObjectsLocator} from '../../Locators/ObjectsLocator';
+import { ObjectsLocator } from '../../Locators/ObjectsLocator';
 import { DeclarationRemarksService } from '../../../Common/Services/ExtendedPMs/DeclarationRemarksService';
 import { DeclarationRemarks } from '../../../Customs/EntityPMs/Extended/DeclarationRemarks';
 import { SessionInfo } from '../../Utilities/SessionInfo';
@@ -28,7 +28,7 @@ import { filter } from 'rxjs/operators';
 import { TaxesWebService } from 'Customs/Services/WebServices/TaxesWebService';
 
 @Component({
-    
+
 
     templateUrl: './MaintenanceComponent.html',
 })
@@ -79,10 +79,10 @@ export class MaintenanceComponent {
         this.PagesMenu.push(new Menu("OTH", TextCodeTranslator.Translate("General.MC.Others.Others")));
         this.PagesMenu.push(new Menu("PRS", TextCodeTranslator.Translate("General.MC.PersonalSettings.PersonalSettings")));
         this.PagesMenu.push(new Menu("CMS", TextCodeTranslator.Translate("General.MC.SystemSettings.SystemSettings")));
-         
+
         if (FeatureLocator.HasFeaturePermession("General", this.invoiceConfirmationNumber))
             this.PagesMenu.push(new Menu("SHA", TextCodeTranslator.Translate("General.MC.ShaamTokenManagement")));
-        
+
         if (SessionLocator.Tenant == 0) {
             this.PagesMenu.push(new Menu("MNG", TextCodeTranslator.Translate("General.MC.Management.Management")));
         }
@@ -130,10 +130,10 @@ export class MaintenanceComponent {
             }
         }
 
-       if (this.isTransmissionsPageVisible) {
+        if (this.isTransmissionsPageVisible) {
             this.PagesMenu.push(new Menu("TRANS", "Transmissions"));
         }
-  
+
 
         if (FeatureLocator.HasFeaturePermession("General", "General.Features.BusinessProcessQueue") || FeatureLocator.HasFeaturePermession("General", "General.Features.BusinessProcessTeam") ||
             FeatureLocator.HasFeaturePermession("General", "General.Features.BusinessProcessBusinessRole")) {
@@ -153,7 +153,7 @@ export class MaintenanceComponent {
             this.PagesMenu.push(new Menu("TSK", TextCodeTranslator.Translate("General.MC.Tasks.Tasks")));
         }
     }
-    
+
     // Maintenance Menu
     private AllMaintenanceMenu: MaintenanceMenuItem[];
     private BuildMaintenanceMenu() {
@@ -161,7 +161,7 @@ export class MaintenanceComponent {
         var allMenusTables: MenusTablePM[] = window.MenusTables.filter(x => x.MenuTypeCode === "MTC").sort((a, b) => { return a.IndexOfOrder - b.IndexOfOrder });
 
         allMenusTables.forEach(item => {
- 
+
             if (FeatureLocator.IsFeatureGrantedByUniqeCode(item.FeatureUniqeCode)) {
 
                 if (item.Code == "MTCB") {
@@ -186,7 +186,7 @@ export class MaintenanceComponent {
                         this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
                     }
                 }
-                 
+
                 else if (item.Code == "MTCO") {
                     this.PushEntityStatusMenu(item);
                 }
@@ -449,7 +449,7 @@ export class MaintenanceComponent {
                 item.Icon = "List"
                 item.Code = "WHKS";
                 item.ObjectTableName = "WebhookKeys";
-                item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "WebhookKeys")[0]?window.ObjectTables.filter(d => d.Name == "WebhookKeys")[0].Id:null;
+                item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "WebhookKeys")[0] ? window.ObjectTables.filter(d => d.Name == "WebhookKeys")[0].Id : null;
                 this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
             }
             if (FeatureLocator.HasFeaturePermession("APILogs", "APILogs")) {
@@ -583,7 +583,7 @@ export class MaintenanceComponent {
         this.AllMaintenanceMenu.push(new MaintenanceMenuItem(menusTablePM));
     }
 
-   
+
     private BuildPersonalSettings() {
         if (FeatureLocator.HasFeaturePermession("General", "PERSONALSETTINGS")) {
 
@@ -641,13 +641,12 @@ export class MaintenanceComponent {
         //let allowed = false;
         //allowed = (LoggedUserPMCode == "amital" || LoggedUserPMCode.startsWith("amital."));
 
-        if (SessionLocator.LoggedUserPM.Email.includes("amital"))             
-         {
+        if (SessionLocator.LoggedUserPM.Email.includes("amital")) {
             var item = new MenusTablePM();
             item.CategoryTypeCode = "CSM";
             item.Icon = "Settings"
-             item.Code = "CSRA";
-            item.ObjectTableName = TextCodeTranslator.Translate("General.MC.Customs.ReAnalysis") ;
+            item.Code = "CSRA";
+            item.ObjectTableName = TextCodeTranslator.Translate("General.MC.Customs.ReAnalysis");
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
 
         }
@@ -699,14 +698,14 @@ export class MaintenanceComponent {
 
     }
     private BuildOtherMenus() {
-        if (SessionLocator.Tenant == 0){// && FeatureLocator.HasFeaturePermession("General", "HYBRIDPARTNERS")) {
+        if (SessionLocator.Tenant == 0) {// && FeatureLocator.HasFeaturePermession("General", "HYBRIDPARTNERS")) {
             var item = new MenusTablePM();
             item.CategoryTypeCode = "OTH";
             item.Icon = "List"
             item.Code = "MTHP";
             item.ObjectTableName = "HybridPartner";
             item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "HybridPartner")[0].Id
-            this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));            
+            this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
         }
 
         if (FeatureLocator.HasFeaturePermession("General", "SCHEDULERS")) {
@@ -747,7 +746,7 @@ export class MaintenanceComponent {
             item.Code = "PAUP";
             item.ObjectTableName = "Partners Upload";
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
-        } 
+        }
 
         if (FeatureLocator.HasFeaturePermession("General", "CacheLogMenu")) {
             var item = new MenusTablePM();
@@ -757,7 +756,7 @@ export class MaintenanceComponent {
             item.ObjectTableName = "Cache Log";
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
         }
-        
+
         if (FeatureLocator.HasFeaturePermession("General", "CARGOTRACKING")) {
             var item = new MenusTablePM();
             item.CategoryTypeCode = "OTH";
@@ -766,7 +765,15 @@ export class MaintenanceComponent {
             item.ObjectTableName = "Cargo Tracking";
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
         }
-      
+
+        if (FeatureLocator.HasFeaturePermession("General", "CARGOTRACKING")) {
+            var item = new MenusTablePM();
+            item.CategoryTypeCode = "OTH";
+            item.Icon = "List"
+            item.Code = "QUEUEMSG";
+            item.ObjectTableName = "Queue Messages";
+            this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+        }
 
         if (SessionLocator.Tenant == 0) {
             var item = new MenusTablePM();
@@ -868,7 +875,7 @@ export class MaintenanceComponent {
             this.AddTranslateLabelMenu();
             this.AddTranslationMenu();
         }
-        this.AddCustomFieldsMenu();  
+        this.AddCustomFieldsMenu();
     }
     private AddCustomFieldsMenu() {
         let item = new MenusTablePM();
@@ -917,11 +924,11 @@ export class MaintenanceComponent {
         maintenanceMenuItem.DescriptionText = objectTable.Description != null ? objectTable.Description : TextCodeTranslator.Translate(objectTable.DescriptionTextCodeCode);
         this.AllMaintenanceMenu.push(maintenanceMenuItem);
     }
-     
+
 
     // Commands
     PageChanged(item: Menu) {
-        if(item.Code === 'SHA') 
+        if (item.Code === 'SHA')
             return this.navigateToExportCustoms('showShaamTokenManagment');
 
         this.SelectedMenu = item;
@@ -968,7 +975,7 @@ export class MaintenanceComponent {
                     break;
                 }
                 case "CODE": {
-                    this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe((response:any) => {
+                    this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe((response: any) => {
                         var windowTitle = "System Defaults ";
                         var logWindow = new LogitudeWindow();
                         logWindow.Width = 850;
@@ -980,7 +987,7 @@ export class MaintenanceComponent {
                     break;
                 }
                 case "LBSE": {
-                    this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe((response:any) => {
+                    this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe((response: any) => {
                         var windowTitle = "LogBox Settings ";
                         var logWindow = new LogitudeWindow();
                         logWindow.Width = 850;
@@ -992,7 +999,7 @@ export class MaintenanceComponent {
                     break;
                 }
                 case "LOSE": {
-                    this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe((response:any) => {
+                    this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe((response: any) => {
                         var windowTitle = "Local Settings";
                         var logWindow = new LogitudeWindow();
                         logWindow.Width = 750;
@@ -1004,15 +1011,19 @@ export class MaintenanceComponent {
                     break;
                 }
                 case "CARGO": {
-               
-                        var windowTitle = "Cargo Tracking";
-                        var logWindow = new LogitudeWindow();
-                        logWindow.Width = 950;
-                        logWindow.Height = 500;
-                        logWindow.Title = windowTitle;
-                        logWindow.IsShowCloseButton = true;
-                        logWindow.Show('./Accounting/Components/Others/CargoTrackingService/CargoTrackingServiceComponent');
-                   
+
+                    var windowTitle = "Cargo Tracking";
+                    var logWindow = new LogitudeWindow();
+                    logWindow.Width = 950;
+                    logWindow.Height = 500;
+                    logWindow.Title = windowTitle;
+                    logWindow.IsShowCloseButton = true;
+                    logWindow.Show('./Accounting/Components/Others/CargoTrackingService/CargoTrackingServiceComponent');
+
+                    break;
+                }
+                case "QUEUEMSG": {
+                    this.QueueMessages(item);
                     break;
                 }
                 case "MTCE": {
@@ -1081,11 +1092,11 @@ export class MaintenanceComponent {
                     logWindow.WindowArgs = windowArgs;
                     logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsRequestsSheetsComponent');
 
-                 
-                        
-                
 
- 
+
+
+
+
                     break;
                 }
                 case "COAD": {
@@ -1105,7 +1116,7 @@ export class MaintenanceComponent {
                     logWindow.Height = 250;
                     logWindow.Title = windowTitle;
                     logWindow.IsShowCloseButton = true;
-                    this._entityResourceService.getEntityResourceByTableName("TenantAdditionalData").subscribe((response:any) => {
+                    this._entityResourceService.getEntityResourceByTableName("TenantAdditionalData").subscribe((response: any) => {
 
                         logWindow.Show('./InfrastructureModules/InfrastructureGettingStarted/Components/PaymentGateway/PaymentGatewayComponent');
                     });
@@ -1123,7 +1134,7 @@ export class MaintenanceComponent {
                     logitudeWindow.Width = 600;
                     logitudeWindow.Height = 400;
                     logitudeWindow.Title = "Change User Password";
-                    this._entityResourceService.getEntityResourceByTableName("User").subscribe((response:any) => {
+                    this._entityResourceService.getEntityResourceByTableName("User").subscribe((response: any) => {
                         logitudeWindow.DataContext = this;
                         logitudeWindow.Show('./InfrastructureModules/InfrastructureUser/Components/PersonalSettings/ChangePasswordComponent');
                     });
@@ -1150,14 +1161,14 @@ export class MaintenanceComponent {
                     break;
                 }
 
-                case "CFMM": { 
+                case "CFMM": {
                     var { logWindow, windowArgs }: { logWindow: LogitudeWindow; windowArgs: any; } = this.ShowCustomizationCustomFieldsWindow(logWindow, windowArgs);
                     break;
                 }
-                     
+
 
                 case "SYIN": {
-                    this._entityResourceService.getEntityResourceByTableName("TenantManagement", 0).subscribe((response:any) => {
+                    this._entityResourceService.getEntityResourceByTableName("TenantManagement", 0).subscribe((response: any) => {
                         this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe(tenantResp => {
 
                             var logitudeWindow = new LogitudeWindow();
@@ -1171,7 +1182,7 @@ export class MaintenanceComponent {
                     break;
                 }
                 case "SIGN": {
-                    this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe((response:any) => {
+                    this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe((response: any) => {
 
                         var windowArgs: any = {};
                         windowArgs.DataViewModel = this;
@@ -1192,7 +1203,7 @@ export class MaintenanceComponent {
                     break;
                 }
                 case "TOUS": {
-                    this._entityResourceService.getEntityResourceByTableName("TermsofUseSignature", 0).subscribe((response:any) => {
+                    this._entityResourceService.getEntityResourceByTableName("TermsofUseSignature", 0).subscribe((response: any) => {
                         var widthwindow = window.innerWidth;
                         var heighthwindow = window.innerHeight;
 
@@ -1217,7 +1228,7 @@ export class MaintenanceComponent {
                     break;
                 }
                 case "FACS": {
-                    this._entityResourceService.getEntityResourceByTableName("FullAccountingSetting", 0).subscribe((response:any) => {
+                    this._entityResourceService.getEntityResourceByTableName("FullAccountingSetting", 0).subscribe((response: any) => {
                         var logitudeWindow = new LogitudeWindow();
                         logitudeWindow.Width = 900;
                         logitudeWindow.Height = 600;
@@ -1227,7 +1238,7 @@ export class MaintenanceComponent {
                     break;
                 }
                 case "COATO": {
-                    this._entityResourceService.getEntityResourceByTableName("ChartOfAccountsType", 0).subscribe((response:any) => {
+                    this._entityResourceService.getEntityResourceByTableName("ChartOfAccountsType", 0).subscribe((response: any) => {
                         var logitudeWindow = new LogitudeWindow();
                         logitudeWindow.Width = 500;
                         logitudeWindow.Height = 400;
@@ -1238,7 +1249,7 @@ export class MaintenanceComponent {
                 }
                 case "ACYT": {
                     this.CurrentSession.StartBusyIndicatorLoading();
-                    this._entityResourceService.getEntityResourceByTableName("AccountingPeriod", 0).subscribe((response:any) => {
+                    this._entityResourceService.getEntityResourceByTableName("AccountingPeriod", 0).subscribe((response: any) => {
                         var logitudeWindow = new LogitudeWindow();
                         logitudeWindow.Width = 500;
                         logitudeWindow.Height = 300;
@@ -1248,7 +1259,7 @@ export class MaintenanceComponent {
                     break;
                 }
                 case "ACPD": {
-                    this._entityResourceService.getEntityResourceByTableName("AccountingPeriod", 0).subscribe((response:any) => {
+                    this._entityResourceService.getEntityResourceByTableName("AccountingPeriod", 0).subscribe((response: any) => {
                         var logitudeWindow = new LogitudeWindow();
                         logitudeWindow.Width = 750;
                         logitudeWindow.Height = 500;
@@ -1258,8 +1269,8 @@ export class MaintenanceComponent {
                     break;
                 }
                 case "MTSV": {
-                    this._entityResourceService.getEntityResourceByTableName("SLAHeader", 0).subscribe((response:any) => {
-                        this._entityResourceService.getEntityResourceByTableName("SLALine", 0).subscribe((response:any) => {
+                    this._entityResourceService.getEntityResourceByTableName("SLAHeader", 0).subscribe((response: any) => {
+                        this._entityResourceService.getEntityResourceByTableName("SLALine", 0).subscribe((response: any) => {
                             var logitudeWindow = new LogitudeWindow();
                             logitudeWindow.Width = 950;
                             logitudeWindow.Height = 640;
@@ -1289,8 +1300,8 @@ export class MaintenanceComponent {
                     break;
                 }
                 case "MTBH": {
-                    this._entityResourceService.getEntityResourceByTableName("BusinessHour", 0).subscribe((response:any) => {
-                        this._entityResourceService.getEntityResourceByTableName("BusinessHoursHoliday", 0).subscribe((response:any) => {
+                    this._entityResourceService.getEntityResourceByTableName("BusinessHour", 0).subscribe((response: any) => {
+                        this._entityResourceService.getEntityResourceByTableName("BusinessHoursHoliday", 0).subscribe((response: any) => {
                             var logitudeWindow = new LogitudeWindow();
                             logitudeWindow.Width = 950;
                             logitudeWindow.Height = 550;
@@ -1302,7 +1313,7 @@ export class MaintenanceComponent {
                     break;
                 }
                 case "AIRS": {
-                    this._entityResourceService.getEntityResourceByTableName("TenantManagement", 0).subscribe((response:any) => {
+                    this._entityResourceService.getEntityResourceByTableName("TenantManagement", 0).subscribe((response: any) => {
                         var windowTitle = "Airline Settings";
                         var logWindow = new LogitudeWindow();
                         logWindow.Width = 650;
@@ -1353,7 +1364,7 @@ export class MaintenanceComponent {
                     break;
                 }
                 case "CUSA": {
-                    this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe((response:any) => {
+                    this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe((response: any) => {
                         var windowTitle = "Customer Settings";
                         var logWindow = new LogitudeWindow();
                         logWindow.Width = 800;
@@ -1365,7 +1376,7 @@ export class MaintenanceComponent {
                     break;
                 }
                 case "VATS": {
-                    this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe((response:any) => {
+                    this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe((response: any) => {
                         var windowTitle = "VAT Settings";
                         var logWindow = new LogitudeWindow();
                         logWindow.Width = 800;
@@ -1388,7 +1399,7 @@ export class MaintenanceComponent {
                     let allowed = false;
                     allowed = (LoggedUserPMCode == "amital" || LoggedUserPMCode.startsWith("amital."));
                     let LoggedUserIsnotCustomerCare: boolean = true;
-                    if (SessionLocator.LoggedUserPM.IsCustomerCare ) {
+                    if (SessionLocator.LoggedUserPM.IsCustomerCare) {
                         LoggedUserIsnotCustomerCare = false;
                     }
                     if (allowed) {
@@ -1421,7 +1432,7 @@ export class MaintenanceComponent {
                     break;
                 }
                 case "INVS": {
-                    this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe((response:any) => {
+                    this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe((response: any) => {
                         var windowTitle = "Invoice Settings";
                         var logWindow = new LogitudeWindow();
                         logWindow.Title = windowTitle;
@@ -1441,7 +1452,7 @@ export class MaintenanceComponent {
                     break;
                 }
                 case "MTSE": {
-                    this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe((response:any) => {
+                    this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe((response: any) => {
                         var windowTitle = "Ticket Settings";
                         var logWindow = new LogitudeWindow();
                         logWindow.Title = windowTitle;
@@ -1460,7 +1471,7 @@ export class MaintenanceComponent {
                     break;
                 }
                 case "SECP": {
-                    this._entityResourceService.getEntityResourceByTableName("TenantLoginPolicy", 0).subscribe((response:any) => {
+                    this._entityResourceService.getEntityResourceByTableName("TenantLoginPolicy", 0).subscribe((response: any) => {
                         var windowTitle = TextCodeTranslator.Translate("TenantLoginPolicy");
                         var logWindow = new LogitudeWindow();
                         logWindow.Width = 800;
@@ -1527,7 +1538,7 @@ export class MaintenanceComponent {
                 }
 
                 case "MASC": {
-                    this._entityResourceService.getEntityResourceByTableName("TasksScheduler", 0).subscribe((response:any) => {
+                    this._entityResourceService.getEntityResourceByTableName("TasksScheduler", 0).subscribe((response: any) => {
 
                         var logWindow = new LogitudeWindow();
                         logWindow.Width = 1200;
@@ -1624,7 +1635,7 @@ export class MaintenanceComponent {
                             if (confirmWindow.Yes) {
 
                                 var servicelink = './Customs/CustomsGeneralRequests/Components/RecallClientsForCutoms';
-                              //  servicelink = './Customs/Services/Others/CustomsRequestMenuService';
+                                //  servicelink = './Customs/Services/Others/CustomsRequestMenuService';
 
                                 // SessionLocator.DynamicLoader.GetInstance(servicelink).then((service: any) => {
                                 //     service.SendRecallMessageToServer();
@@ -1696,7 +1707,7 @@ export class MaintenanceComponent {
                 }
 
                 case "SUPM": {
-                    this._entityResourceService.getEntityResourceByTableName("SupportMailbox", 0).subscribe((response:any) => {
+                    this._entityResourceService.getEntityResourceByTableName("SupportMailbox", 0).subscribe((response: any) => {
                         var windowTitle = "Support Mail Boxes";
                         var logWindow = new LogitudeWindow();
                         logWindow.Title = windowTitle;
@@ -1753,7 +1764,7 @@ export class MaintenanceComponent {
                     this.ShowCustomObject(item);
                     break;
                 default: {
-                    
+
                     if (item.ObjectTableId) {
                         var allQueries: any[] = window.Queries.filter(x => x.ObjectTableId === item.ObjectTableId).sort((a, b) => { return a.IndexOrder - b.IndexOrder });
                         if (allQueries.length == 0) {
@@ -1790,12 +1801,12 @@ export class MaintenanceComponent {
                                 }
                             }
 
-                            if(item.Code=="UDRM"){
-                                this._entityResourceService.getEntityResourceByTableName("CalculatedChartsOfAccount", 0).subscribe((response:any) => {
-                                    this._entityResourceService.getEntityResourceByTableName("CalculatedChartsOfAccountsLine", 0).subscribe((response:any) => {
+                            if (item.Code == "UDRM") {
+                                this._entityResourceService.getEntityResourceByTableName("CalculatedChartsOfAccount", 0).subscribe((response: any) => {
+                                    this._entityResourceService.getEntityResourceByTableName("CalculatedChartsOfAccountsLine", 0).subscribe((response: any) => {
                                     });
                                 });
-                              
+
                             }
                             //var SelectedQuery = allQueries.filter(f => ((f.UserId == SessionLocator.LoggedUserId && f.Tenant == SessionLocator.Tenant) || f.Tenant == 0) && f.Perspective == listArgs.Perspective)[0];
 
@@ -1805,7 +1816,7 @@ export class MaintenanceComponent {
                             listArgs.ObjectTableName = objectTablePM.Name;
 
                             listArgs.BackButtonTitle = "Maintenance";
-                            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response:any) => {
+                            this._entityResourceService.getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response: any) => {
                                 listArgs.DisplayTitle = TextCodeTranslator.Translate(SelectedQuery.NameTextCodeCode);
                                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
                                     .then(cmpRef => {
@@ -1837,9 +1848,9 @@ export class MaintenanceComponent {
             link += "&logitudeCommandId=" + logitudeCommandId;
             open(link);
         } catch (error) {
-            console.log('******* error throw when try get login link to export', error);            
+            console.log('******* error throw when try get login link to export', error);
             SessionLocator.SelectedSession.StopBusyIndicator();
-            await this.showErrorMessage();            
+            await this.showErrorMessage();
         }
 
         SessionLocator.SelectedSession.StopBusyIndicator();
@@ -1918,7 +1929,7 @@ export class MaintenanceComponent {
             case "jokerinv":
                 {
 
-                        //$$GGG_IN = "UnifreightEntity=CFIFILEM;UnifreightEntityNumber=%%FILE_NO.CFIFILEM;LogitudeEntity=Customs.Declaration;LogitudeEntityNumber=%%LOGITUDE_FILE.CFIFILEM;LogitudeViewModel=UnifreightMassageHandler;LogitudeCommandId=CreateInvoiceCommand;formtitle=%%$text(IMP_DECLERATION)"
+                    //$$GGG_IN = "UnifreightEntity=CFIFILEM;UnifreightEntityNumber=%%FILE_NO.CFIFILEM;LogitudeEntity=Customs.Declaration;LogitudeEntityNumber=%%LOGITUDE_FILE.CFIFILEM;LogitudeViewModel=UnifreightMassageHandler;LogitudeCommandId=CreateInvoiceCommand;formtitle=%%$text(IMP_DECLERATION)"
                     ///"UnifreightEntity=CFIFILEM·;
                     //UnifreightEntityNumber = 3000028·;
                     //LogitudeEntity = Customs.Declaration·;
@@ -1927,7 +1938,7 @@ export class MaintenanceComponent {
                     //LogitudeCommandId = CreateInvoiceCommand·;
                     //formtitle = הצהרת יבום"
                     var json = '{"UnifreightEntity"  :  "CFIFILEM" , "UnifreightEntityNumber"  :  "93320020" , "LogitudeEntity"  :  "Customs.Declaration" , "LogitudeEntityNumber"  :  "1-5415" , "LogitudeViewModel"  :  "UnifreightMassageHandler" , "LogitudeCommandId"  :  "CreateInvoiceCommand" , "formtitle"  :  "הצהרת יבום"}';
-                    
+
                     var objParams = JSON.parse(json);
                     objParams.Requset = new Array();
                     //objParams.Requset.push(["Requset.JumpTo", "Payment"]);
@@ -1935,7 +1946,7 @@ export class MaintenanceComponent {
                     objParams.Requset.push(["Requset.JumpTo", "Answer"]);
 
                     AmitalGatewayUtil.Instance.UnifaceRequest(objParams, null, null, null);
-                    
+
                 } break;
             case "jokeraccfunctionaltest": {
 
@@ -2017,7 +2028,7 @@ export class MaintenanceComponent {
                         .subscribe((response: any) => {
                             windowArgs.EntityPM = response.Result;
                             windowArgs.length = response.Result.length;
-                            logitudeWindow.Title = windowArgs.length+ "  הערות מסווג  " ;
+                            logitudeWindow.Title = windowArgs.length + "  הערות מסווג  ";
                             logitudeWindow.WindowArgs = windowArgs;
                             logitudeWindow.Show('./CustomsModules/CustomsMaintenance/Components/DeclarationRemarksComponent');
                         });
@@ -2048,7 +2059,7 @@ export class MaintenanceComponent {
         if (AppTool.IsNullOrEmpty(text)) {
             itemsSource = this.AllMaintenanceMenu.filter(f => f.CategoryTypeCode.toUpperCase() == this.SelectedMenu.Code.toUpperCase());
         }
-       else {
+        else {
             itemsSource = itemsSource.filter(f => f.TranslatedName != null);
             itemsSource = itemsSource.filter(f => f.TranslatedName.toUpperCase().indexOf(text.toUpperCase()) > -1);
         }
@@ -2057,7 +2068,7 @@ export class MaintenanceComponent {
     }
     CustomsClosedTablesMethod(item: MaintenanceMenuItem) {
         //ObjectTableName                     :        "Customs.CustomsClosedTable"
-        this._entityResourceService.getEntityResourceByTableName(item.ObjectTableName, 0).subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName(item.ObjectTableName, 0).subscribe((response: any) => {
             var listArgs = new ListComponentArgs();
             listArgs.DisplayTitle = item.TranslatedName;//TextCodeTranslator.Translate();
             SessionLocator.DynamicLoader.Load('./CustomsModules/CustomsMaintenance/Components/Maintenance/CustomsClosedTablesComponent',
@@ -2069,8 +2080,20 @@ export class MaintenanceComponent {
                 });
         });
     }
+    QueueMessages(item: MaintenanceMenuItem) {
+        this._entityResourceService.getEntityResourceByTableName("ARInvoice", 0).subscribe((response: any) => {
+            var listArgs = new ListComponentArgs();
+            listArgs.DisplayTitle = "Queue Messages";
+            SessionLocator.DynamicLoader.Load('./Accounting/Components/Others/QueueMessagesServices/QueueMessagesStatistics',
+                this.CurrentSession.SessionMenuLocation.viewContainerRef)
+                .then(cmpRef => {
+                    cmpRef.instance.ComponentRef = cmpRef;
+                    this.CurrentSession.AddMenuReference(cmpRef);
+                });
+        });
+    }
     CustomsAutonomyKeywordMethod(item: MaintenanceMenuItem): any {
-        
+
         this._entityResourceService.getEntityResourceByTableName(item.ObjectTableName, 0).subscribe(response => {
             var logitudeWindow = new LogitudeWindow();
             logitudeWindow.Title = item.TranslatedName
@@ -2086,7 +2109,7 @@ export class MaintenanceComponent {
 
     InterfaceManageentMethod(item: MaintenanceMenuItem) {
         //ObjectTableName                     :        "Customs.CustomsClosedTable"
-        this._entityResourceService.getEntityResourceByTableName(item.ObjectTableName, 0).subscribe((response:any) => {
+        this._entityResourceService.getEntityResourceByTableName(item.ObjectTableName, 0).subscribe((response: any) => {
             var listArgs = new ListComponentArgs();
             listArgs.DisplayTitle = item.TranslatedName;//TextCodeTranslator.Translate();
             SessionLocator.DynamicLoader.Load('./CustomsModules/CustomsMaintenance/Components/Maintenance/InterfaceManagementComponent',
@@ -2169,6 +2192,7 @@ class MaintenanceMenuItem {
                 case "SIGN": { myResult = "Set Signature Settings"; break; }
                 case "CHPA": { myResult = "Change Password"; break; }
                 case "CARGO": { myResult = "Cargo Tracking"; break; }
+                case "QUEUEMSG": { myResult = "Queue Messages"; break; }
                 case "COAD": { myResult = "Company Address Settings"; break; }
                 case "PAGD": { myResult = "Payment Gateway Definition"; break; }
                 case "CODE": { myResult = "System Defaults"; break; }

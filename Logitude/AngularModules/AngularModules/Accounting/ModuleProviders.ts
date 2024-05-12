@@ -144,6 +144,8 @@ import { InterestReportLineListService } from './Services/StandardLists/Interest
 import { InterestReportStatuseListService } from './Services/StandardLists/InterestReportStatuseListService';
 import { InterestReportLinesByDateListService } from './Services/StandardLists/InterestReportLinesByDateListService';
 import { CargoTrackingIncrementalStatExtendedListService } from './Services/ExtendedLists/CargoTrackingIncrementalStatExtendedListService';
+import { QueueMessagesStatExtendedListService } from './Services/ExtendedLists/QueueMessagesStatExtendedListService';//simon
+import { QueueMessagesMoreDetailsExtendedListService } from './Services/ExtendedLists/QueueMessagesMoreDetailsExtendedListService';//simon
 import { UserDefinedReportListService } from './Services/StandardLists/UserDefinedReportListService';
 import { UserDefinedReportPMService } from './Services/StandardPMs/UserDefinedReportPMService';
 import { CalculatedChartsLineTypeListService } from './Services/StandardLists/CalculatedChartsLineTypeListService';
@@ -303,6 +305,8 @@ export class ModuleProviders {
             case "GLAccountOpService": { myResult = new AccountingOpService(); break; }
             case "InterestTransactionExtendedListService": { myResult = new InterestTransactionExtendedListService(); break; }
             case "CargoTrackingIncrementalStatExtendedListService": { myResult = new CargoTrackingIncrementalStatExtendedListService(); break; }
+            case "QueueMessagesStatExtendedListService": { myResult = new QueueMessagesStatExtendedListService(); break; }//simon
+            case "QueueMessagesMoreDetailsExtendedListService": { myResult = new QueueMessagesMoreDetailsExtendedListService(); break; }//simon
 
             //Menu Buttons
             case "JournalMenuButtonsHandler": { myResult = new JournalMenuButtonsHandler; break; }

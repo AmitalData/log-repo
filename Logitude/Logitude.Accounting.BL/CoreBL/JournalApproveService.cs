@@ -1047,8 +1047,8 @@ namespace Logitude.Accounting.BL.CoreBL
                     if (journal.QueueId != null)
                     {
                         QueueMessageRepository QueueMessageRepository = new QueueMessageRepository(SeedTenant);
-                        var status = QueueMessageRepository.GetSingleQueueMessage(Convert.ToInt64(journal.QueueId))?.Status;
-                        if (status != 1)
+                        var status = QueueMessageRepository.GetSingleQueueMessage(journal.QueueId)?.Status;
+                        if (status  !=  1)
                             continue;
                     }
 
