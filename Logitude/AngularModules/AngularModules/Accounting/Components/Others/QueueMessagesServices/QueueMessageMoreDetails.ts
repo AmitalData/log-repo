@@ -1,56 +1,104 @@
-import { Component, OnInit, AfterViewInit, Output, EventEmitter } from '@angular/core';
-import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
-import { DateTool } from 'Infrastructure/Tools';
+import { EventEmitter, OnInit, Output, Component, ComponentRef } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { QueueMessagesMoreDetailsExtendedListService } from 'Accounting/Services/ExtendedLists/QueueMessagesMoreDetailsExtendedListService';
+import { CustomsClosedTablesComponent } from 'CustomsModules/CustomsMaintenance/Components/CustomsClosedTablesComponent';
+import { ListComponentArgs } from 'Infrastructure/Args';
 import { BaseComponent } from 'Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
-import { QueueMessageMoreDetailsList } from 'Infrastructure/EntityLists/QueueMessageMoreDetailsList';
-import { QueueMessagesMoreDetailsExtendedListService } from 'Accounting/Services/ExtendedLists/QueueMessagesMoreDetailsExtendedListService';
-import { buildColumns } from './dynamic-columns-builder';
-
+import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
+import { DateTool } from 'Infrastructure/Tools';
+import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 
 @Component({
-
     templateUrl: './QueueMessageMoreDetails.html',
 })
-
 export class QueueMessageMoreDetails extends BaseComponent implements OnInit {
-    private _entityListService: QueueMessagesMoreDetailsExtendedListService;//simon
-    public _CargoTrackingIncrementalArgs: CargoTrackingIncrementalArgs;
+    private _entityListService: QueueMessagesMoreDetailsExtendedListService;
     public ValidationErrorsList: string[] = [];
-    public DataContext: any = this;
-    public ObjectTableName: string = "CargoTrackingIncrementalStat";
-    public Main_Filter: ApiQueryFilters;
+    private _entityResourceService: EntityResourceService = new EntityResourceService();
+    public ComponentRef: ComponentRef<CustomsClosedTablesComponent>;
+    private CurrentSession = SessionLocator.SelectedSession;
+    public columns: any[] = null;
+    formData: FormGroup;
     @Output() onQueryChangeEvent = new EventEmitter();
-    constructor() {
-        super();
-        this._CargoTrackingIncrementalArgs = new CargoTrackingIncrementalArgs();
-        this._entityListService = new QueueMessagesMoreDetailsExtendedListService();
-    }
+    public Main_Filter: ApiQueryFilters;
+    public FromDateText: string = "Date From: ";
+    public ToDateText: string = "To: ";
+    public ToStatusText: string = "Status:  ";
+    public ToTenantText: string = "Tenant: ";
 
-    public GridHeaderText: string = "Incremental Records Details";
+    public WaitingSinceText: string = " waiting since ";
+    public Parag1: string = "Incremental last run on: ";
+    public Parag2: string = "Records wating for incremental update: ";
+    public Parag3: string = "Oldest update still waiting: ";
+    public Parag4: string = "Total records updated in last 10 minutes: ";
+    public ObjectTableName: string = "QueueMessageMoreDetails";
+    public DataContext: any = this;
+
+    constructor(private fb: FormBuilder) {
+        super();
+        this._entityListService = new QueueMessagesMoreDetailsExtendedListService();
+        // var month = new Date().getMonth();
+        // var Year = new Date().getFullYear();
+        // var Day = new Date().getDate();
+        // this.ToDate = this.SetDate(Year, month, Day);
+        // this.FromDate = this.SetDate(Year, month, Day);
+        // this.FromDate.setUTCDate(this.ToDate.getDate() - 14);
+    }
+    public GridHeaderText: string = "Queue Messages More Details";
+
+    ReloadScreen() {
+        this.onQueryChangeEvent.emit({ Filters: this.Main_Filter });
+    }
 
     ngOnInit() {
-        this.InitializeDate();
         this.BuildColumns();
     }
-    private fromDate: Date;
-    public get FromDate() { return this.fromDate; }
-    public set FromDate(value: Date) {
-        if (this.fromDate != value) {
-            this.fromDate = value;
-            this.ValidateDate("FromDate");
 
-        }
-    }
-    private toDate: Date;
-    public get ToDate() { return this.toDate; }
-    public set ToDate(value: Date) {
-        if (this.toDate != value) {
-            this.toDate = value;
-            this.ValidateDate("ToDate");
+    SetDate(year: number, month: number, day: number) {
+        var date = new Date();
+        date.setUTCFullYear(year);
+        date.setUTCMonth(month);
+        date.setUTCDate(day);
+        date.setUTCHours(0);
+        date.setUTCMinutes(0);
+        date.setUTCSeconds(0);
+        date.setUTCMilliseconds(0);
 
-        }
+        return date;
     }
+    private ImplementFilter(take, skip): ApiQueryFilters {
+        var filters = new ApiQueryFilters();
+        filters.PageSize = take;
+        filters.PageIndex = skip;
+        filters.GetAll = false;
+        filters.GetCount = true;
+        filters.addAdditionalFilter("CreateDateTime", this.FromDate, this.ToDate, null, "Between", true, false, false, "DateTime");
+        return filters;
+    }
+
+    public MoreDetails() {
+        this._entityResourceService.getEntityResourceByTableName("ARInvoice", 0).subscribe((response: any) => {
+            var listArgs = new ListComponentArgs();
+            listArgs.DisplayTitle = "Queue Messages More Details";
+            SessionLocator.DynamicLoader.Load('./Accounting/Components/Others/QueueMessagesServices/QueueMessageMoreDetails',
+                this.CurrentSession.SessionMenuLocation.viewContainerRef)
+                .then(cmpRef => {
+                    cmpRef.instance.ComponentRef = cmpRef;
+                    this.CurrentSession.AddMenuReference(cmpRef);
+                });
+        });
+    }
+
+
+    BackButtonClicked() {
+        if (this.ComponentRef) {
+            this.ComponentRef.destroy();
+        }
+
+
+    }
+
     public DataSource = {
         pageSize: 50,
         rowCount: null,
@@ -65,17 +113,6 @@ export class QueueMessageMoreDetails extends BaseComponent implements OnInit {
         this.Main_Filter = this.ImplementFilter(take, skip);
         return this._entityListService.getByFiltersForVirtualization(this.Main_Filter);
     }
-
-    private ImplementFilter(take, skip): ApiQueryFilters {
-        var filters = new ApiQueryFilters();
-        filters.PageSize = take;
-        filters.PageIndex = skip;
-        filters.GetAll = false;
-        filters.GetCount = true;
-        filters.addAdditionalFilter("Start_End_Date", this.FromDate, this.ToDate, null, "Between", true, false, false, "DateTime");
-        return filters;
-    }
-    public columns: any[] = null;
 
     BuildColumns() {
         this.columns = [
@@ -174,18 +211,7 @@ export class QueueMessageMoreDetails extends BaseComponent implements OnInit {
     }
 
 
-    // BuildColumns() {
-    //     this.columns = buildColumns(QueueMessageMoreDetailsList);
-    // } TODO: find generic solution for this
-
-
-
-
-    ReloadScreen() {
-
-        this.onQueryChangeEvent.emit({ Filters: this.Main_Filter }); // refresh grid
-    }
-    ValidateDate(fieldName: any) {
+    ValidateDate(fieldName: string) {
         var date1 = DateTool.GetDateFromDate(this.FromDate, true);
         var date2 = DateTool.GetDateFromDate(this.ToDate, true);
         var diffDays = 0;
@@ -193,61 +219,46 @@ export class QueueMessageMoreDetails extends BaseComponent implements OnInit {
             diffDays = date2.getDate() - date1.getDate();
         }
         if (DateTool.GetDateFromDate(this.FromDate, true) > DateTool.GetDateFromDate(this.ToDate, true)) {
-            this.UIProperties.SetValidity("ToDate", this.ObjectTableName, false, "''To date'' field must be greater than or equal to ''From date'' field");
-            this.UIProperties.SetValidity("FromDate", this.ObjectTableName, false, "''From date'' field must be less than or equal to ''To date'' field");
+            this.UIProperties.SetValidity("ToDate", "QueueMessageMoreDetails", false, "''To date'' field must be greater than or equal to ''From date'' field");
+            this.UIProperties.SetValidity("FromDate", "QueueMessageMoreDetails", false, "''From date'' field must be less than or equal to ''To date'' field");
         }
         else if (diffDays > 7) {
-            this.UIProperties.SetValidity("ToDate", this.ObjectTableName, false, "The date range should be less than or equal to 7 days.");
-            this.UIProperties.SetValidity("FromDate", this.ObjectTableName, false, "The date range should be less than or equal to 7 days.");
+            this.UIProperties.SetValidity("ToDate", "QueueMessageMoreDetails", false, "The date range should be less than or equal to 7 days.");
+            this.UIProperties.SetValidity("FromDate", "QueueMessageMoreDetails", false, "The date range should be less than or equal to 7 days.");
         }
         else {
 
-            this.UIProperties.SetValidity("ToDate", this.ObjectTableName, true, null);
-            this.UIProperties.SetValidity("FromDate", this.ObjectTableName, true, null);
+            this.UIProperties.SetValidity("ToDate", "QueueMessageMoreDetails", true, null);
+            this.UIProperties.SetValidity("FromDate", "QueueMessageMoreDetails", true, null);
             this.ReloadScreen();
         }
-
-
-    }
-    InitializeDate() {
-
-        var month = new Date().getMonth();
-        var Year = new Date().getFullYear();
-        var Day = new Date().getDate();
-        this.ToDate = this.SetDate(Year, month, Day);
-        this.FromDate = this.SetDate(Year, month, Day);
-        this.FromDate.setUTCDate(this.ToDate.getDate() - 7);
     }
 
-    SetDate(year: number, month: number, day: number) {
-        var date = new Date();
-        date.setUTCFullYear(year);
-        date.setUTCMonth(month);
-        date.setUTCDate(day);
-        date.setUTCHours(0);
-        date.setUTCMinutes(0);
-        date.setUTCSeconds(0);
-        date.setUTCMilliseconds(0);
+    private tenant: Number;
+    public get Tenant() { return this.tenant; }
+    public set Tenant(value: Number) {
+        if (this.tenant != value) {
+            this.tenant = value;
+            this.ValidateDate("Tenant");
 
-        return date;
+        }
     }
-    public FromDateText: string = "Date From: ";
-    public ToDateText: string = "To: ";
-    public WaitingSinceText: string = " waiting since ";
+    private fromDate: Date;
+    public get FromDate() { return this.fromDate; }
+    public set FromDate(value: Date) {
+        if (this.fromDate != value) {
+            this.fromDate = value;
+            this.ValidateDate("FromDate");
 
-    RefreshButtonClicked() {
-        this.ReloadScreen();
+        }
+    }
+    private toDate: Date;
+    public get ToDate() { return this.toDate; }
+    public set ToDate(value: Date) {
+        if (this.toDate != value) {
+            this.toDate = value;
+            this.ValidateDate("ToDate");
+
+        }
     }
 }
-
-export class CargoTrackingIncrementalArgs {
-    public RecordsWating: number;
-    public IncrementalLastRun: Date;
-    public OldestUpdateStillWaiting: string;
-    public TotalUpdatedLast10Minutes: number;
-    public DateOfOldestUpdateStillWaiting: Date;
-}
-
-
-
-

@@ -1,20 +1,140 @@
- <style>
-     .Desc_Style{
-         color: grey;
-     }
-     .Resp_Style{
-         color:black;
-     }
- </style>
-<div class="TabHolder">
+<style>
+    .CustomLink:hover {
+        cursor: pointer;
+        color: #1B90CB;
+        text-decoration: underline;
+    }
+
+    .CustomLink {
+        color: #0026ff;
+        text-decoration: none;
+    }
+
+
+    .simple-element {
+        position: relative;
+        display: block;
+        background-color: transparent;
+        height: 100%;
+    }
+
+    .Counter {
+        display: inline-block;
+        height: 30px;
+        font-size: 20px;
+        color: #548AEA;
+        vertical-align: top;
+    }
+
+    /* Dropdown Button */
+    .dropbtn {
+        box-sizing: border-box;
+        height: 22px;
+        line-height: 22px;
+        border: 1px solid #6a8299;
+        border-radius: 3px;
+        box-sizing: border-box;
+        color: #45494a;
+        cursor: pointer;
+        display: block;
+        font-size: 11px;
+        height: 22px;
+        outline: medium none;
+        position: relative;
+        text-align: center;
+        text-shadow: 1px 1px white;
+        width: 100%;
+    }
+
+    /* Dropdown button on hover & focus */
+    .dropbtn:hover,
+    .dropbtn:focus {
+        background-color: #3e8e41;
+    }
+
+    /* The container <div> - needed to position the dropdown content */
+    .dropdown {
+        position: relative;
+        display: inline-block;
+        margin: 7px;
+    }
+
+    /* Dropdown Content (Hidden by Default) */
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        width: 206px;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        z-index: 2147483647;
+        height: 246px;
+    }
+
+    /* Links inside the dropdown */
+    .dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+    }
+
+    /* Change color of dropdown links on hover */
+    .dropdown-content a:hover {
+        background-color: #f1f1f1;
+    }
+
+    .dropcontent {}
+
+    /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+    .showDDButton {
+        display: block;
+        right: 0;
+    }
+
+    .noselect {
+        -webkit-touch-callout: none;
+        /* iOS Safari */
+        -webkit-user-select: none;
+        /* Chrome/Safari/Opera */
+        -khtml-user-select: none;
+        /* Konqueror */
+        -moz-user-select: none;
+        /* Firefox */
+        -ms-user-select: none;
+        /* Internet Explorer/Edge */
+        user-select: none;
+        /* Non-prefixed version, currently
+                                  not supported by any browser */
+    }
+
+
+    .Desc_Style {
+        color: grey;
+    }
+
+    .Resp_Style {
+        color: black;
+    }
+</style>
+<div
+    style="position: absolute; top:0px; bottom:0; left:0; right:0; margin:auto; padding: 10px; background: white;border-radius:0 5px 5px 0;">
+
     <table>
         <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
             <td>
                 <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
             </td>
         </tr>
+        <tr>
+            <div style="width: 60px; display: flex;">
+                <td style="width: 60px">
+                    <BackButton [Text]="BackBtnTitle" (click)="BackButtonClicked()"></BackButton>
+                </td>
+            </div>
+        </tr>
         <tr style="height: 20px;vertical-align:top">
-            <td  >
+            <td>
                 <div></div>
             </td>
         </tr>
@@ -24,8 +144,7 @@
             </td>
         </tr>
         <tr style="height: 1px;vertical-align:top">
-            <td  >
-                <div></div>
+            <td>
             </td>
         </tr>
         <tr style="height: 32px;">
@@ -34,46 +153,44 @@
                     <tr>
                         <td style="width: 75px;">
                             {{FromDateText}}
-                       </td>
-                       <td style="width:120px;">
-                           <LogDatePicker [ObjectFieldName]="'FromDate'" [ObjectTableName]="ObjectTableName"
-                                                                       [NoObjectField]="true" [ForceSubscribe]="true" [DataContext]="DataContext"
-                                                                       [HideColumns]="true" [SelectedDateValue]="FromDate"></LogDatePicker>
-                       </td>
-                       <td style="width:30px"></td>
-                       <td style="width: 25px;">
+                        </td>
+                        <td style="width:120px;">
+                            <LogDatePicker [ObjectFieldName]="'FromDate'" [ObjectTableName]="ObjectTableName"
+                                [NoObjectField]="true" [ForceSubscribe]="true" [DataContext]="DataContext"
+                                [HideColumns]="true" [SelectedDateValue]="FromDate"></LogDatePicker>
+                        </td>
+                        <td style="width:30px"></td>
+                        <td style="width: 25px;">
                             {{ToDateText}}
-                       </td>
-               
-                       <td style="width:120px;">
-                           <LogDatePicker [ObjectFieldName]="'ToDate'" [ObjectTableName]="ObjectTableName"
-                                                                       [NoObjectField]="true" [ForceSubscribe]="true" [DataContext]="DataContext"
-                                                                       [HideColumns]="true" [SelectedDateValue]="ToDate"></LogDatePicker>
-                       </td>
-               
-                       <td><div></div></td>
+                        </td>
+
+                        <td style="width:120px;">
+                            <LogDatePicker [ObjectFieldName]="'ToDate'" [ObjectTableName]="ObjectTableName"
+                                [NoObjectField]="true" [ForceSubscribe]="true" [DataContext]="DataContext"
+                                [HideColumns]="true" [SelectedDateValue]="ToDate"></LogDatePicker>
+                        </td>
+                        <td>
+                            <div></div>
+                        </td>
+                        <td>
+                            <div></div>
+                        </td>
                     </tr>
                 </table>
             </td>
- 
         </tr>
-        
+
         <tr>
-            <td   style="height: 100%;">
+            <td style="height: 100%;">
                 <div class="GeneratedGridContainer">
-                    <logitude-grid GridWidth="100%" GridHeight="100%"
-                                   [ObjectTable]="'CargoTrackingIncrementalStat'"
-                                   [dataSource]="DataSource"
-                                   [columns]="columns"
-                                   [autoLoad]="true"
-                                   [IsCustomTemplate]="true"
-                                   [QueryChangeEvent]="onQueryChangeEvent"
-                                   >
+                    <logitude-grid GridWidth="100%" GridHeight="100%" [ObjectTable]="'CargoTrackingIncrementalStat'"
+                        [dataSource]="DataSource" [columns]="columns" [autoLoad]="true" [IsCustomTemplate]="true"
+                        [QueryChangeEvent]="onQueryChangeEvent">
                     </logitude-grid>
                 </div>
             </td>
         </tr>
 
-        
+
     </table>
-    </div>
+</div>

@@ -29,6 +29,10 @@ using Logitude.BL.InfrastructureModel.EntityQueries;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Server.Infrastructure.Helpers;
 using WebFreight.Web.Services;
+using System.Linq.Expressions;
+using WebFreight.Web.Controllers.DigitalPortal.Models;
+using Newtonsoft.Json;
+using Microsoft.TeamFoundation.Common;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 {
@@ -106,11 +110,16 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             }
         }
 
+
+
+
         [HttpGet]
-        public HttpResponseMessage GetByFilters([FromUri] ApiQueryFilters filters)
+        public HttpResponseMessage GetByFilters([FromUri] string additionalFilters)
         {
             try
             {
+                List<FilterCriteria> filterCriteria = JsonConvert.DeserializeObject<List<FilterCriteria>>(additionalFilters);
+
                 string logKey = PerformanceLogger.LogCurrentTime();
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
@@ -122,194 +131,35 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 QueryOperations queryOperations = new QueryOperations()
                 {
                     ObjectTableName = "QueueMessage",
-                    PageIndex = filters.PageIndex,
-                    PageSize = filters.PageSize,
+                    PageIndex = 0,
+                    PageSize = 100,
                     QuerySection = "QueueMessage",
-                    SortByColumnName = filters.SortBy,
-                    SortDirectin = filters.SortDirection,
-                    GetAll = filters.GetAll,
+                    SortByColumnName = "CreateDateTime",
+                    SortDirectin = "ASC",
+                    GetAll = false,
                 };
 
                 List<ObjectField> QueueMessageObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("QueueMessages", tenant);
-                List<PropertyInfo> filterProperties = filters.GetType().GetProperties().ToList();
-                for (int i = 1; i <= 10; i++)
+                QueueMessageRepository queueMessageRepository = new QueueMessageRepository();
+
+                QueueMessagesService queueMessagesService = new QueueMessagesService();
+                List<QueueMessage> resultList = queueMessagesService.FilteredQuery(queueMessageRepository, filterCriteria, tenant);
+                ServiceResponse response = new ServiceResponse()
                 {
-                    object filterNameProp = filterProperties.FirstOrDefault(f => f.Name == ("Filter" + i + "Name")).GetValue(filters);
-                    object filterValue1 = filterProperties.FirstOrDefault(f => f.Name == ("Filter" + i + "Value")).GetValue(filters);
-                    object filterOperatorProp = filterProperties.FirstOrDefault(f => f.Name == ("Filter" + i + "Operator")).GetValue(filters);
-                    object filterValue2 = null;
+                    Result = resultList,
+                    Count = resultList.Count,
+                };
 
-                    if (filterNameProp != null)
-                    {
-                        string filterName = filterNameProp.ToString();
-                        string filterOperator = filterOperatorProp != null ? filterOperatorProp.ToString() : "Equals";
-                        ObjectField field = QueueMessageObjectFields.FirstOrDefault(f => f.FieldName == filterName);
-                        if (field != null)
-                        {
-                            string valuestring1 = filterValue1 != null ? filterValue1.ToString() : null;
-                            object value1 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
-
-                            string valuestring2 = filterValue2 != null ? filterValue2.ToString() : null;
-                            object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
-
-                            //queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList);
-                            queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode);
-                        }
-                        else
-                            queryOperations.SetFilter(filterName, filterValue1, false, filterOperator, filterValue2, true);
-                    }
-
-
-
-                }
-
-                if (!string.IsNullOrEmpty(filters.AdditionalFilters))
-                {
-                    JavaScriptSerializer JsonConvert = new JavaScriptSerializer();
-                    var filters_list = JsonConvert.Deserialize<List<QueryFilterItem>>(filters.AdditionalFilters);
-
-                    foreach (QueryFilterItem filter in filters_list)
-                    {
-                        ObjectField field = QueueMessageObjectFields.FirstOrDefault(f => f.FieldName == filter.FieldName);
-                        if (field != null)
-                        {
-
-
-                            string valuestring1 = filter.FieldValue != null ? filter.FieldValue.ToString() : null;
-                            object value1 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring1);
-
-                            string valuestring2 = filter.FieldValue2 != null ? filter.FieldValue2.ToString() : null;
-                            object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
-
-                            //queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList);
-                            queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode);
-                        }
-                        else
-                        {
-                            queryOperations.SetFilter(filter.FieldName, filter.FieldValue, filter.IsCustom, filter.Operator, filter.FieldValue2, filter.DisplayInList);
-                        }
-                    }
-                }
-
-
-                GenericFilter genericFilter = new GenericFilter();
-                GenericSort sortClass = new GenericSort();
-
-                IWebFreightContext MyContext = WebFreightContext.GetContext(tenant);
-                QueueMessageRepository QueueMessageRepository = new QueueMessageRepository(MyContext);
-                IQueryable<QueueMessage> entityPocos = QueueMessageRepository.GetQueueMessages();
-
-                QueueMessageQuery QueueMessageQuery = new QueueMessageQuery(QueueMessageRepository);
-
-                QueryOperations nonListQueryOperation = new QueryOperations();
-                nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
-                QueryOperations listQueryOperation = new QueryOperations();
-                listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
-
-                entityPocos = genericFilter.GetFilteredQuery<QueueMessage>(nonListQueryOperation, entityPocos);
-                int skippedEntities = queryOperations.PageIndex;
-                IQueryable<QueueMessageList> entityLists = QueueMessageQuery.GetIQueryableEntityList(entityPocos);
-
-                entityLists = genericFilter.GetFilteredQuery<QueueMessageList>(listQueryOperation, entityLists);
-
-
-                if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
-                {
-                    PropertyInfo propInfo = typeof(QueueMessageList).GetProperty(queryOperations.SortByColumnName);
-
-
-                    ObjectField objectField = (from a in QueueMessageObjectFields
-                                               where a.FieldName == queryOperations.SortByColumnName
-                                               select a).FirstOrDefault();
-
-                    if (objectField != null)
-                    {
-                        if (objectField.IsCustom)
-                        {
-                            entityLists = sortClass.GetSorterQuery<QueueMessageList, string>(queryOperations, entityLists);
-                        }
-                        else
-                        {
-                            switch (objectField.DataTypeCode.ToLower())
-                            {
-                                case "ntext":
-                                case "text":
-                                case "lookup":
-                                    {
-                                        entityLists = sortClass.GetSorterQuery<QueueMessageList, string>(queryOperations, entityLists);
-                                        break;
-                                    }
-                                case "sigdouble":
-                                case "double":
-                                    {
-                                        entityLists = sortClass.GetSorterQuery<QueueMessageList, double>(queryOperations, entityLists);
-                                        break;
-                                    }
-                                case "date":
-                                case "datetime":
-                                    {
-                                        entityLists = sortClass.GetSorterQuery<QueueMessageList, DateTime>(queryOperations, entityLists);
-                                        break;
-                                    }
-                                case "unsinteger":
-                                case "integer":
-                                    {
-                                        entityLists = sortClass.GetSorterQuery<QueueMessageList, int>(queryOperations, entityLists);
-                                        break;
-                                    }
-                                case "boolean":
-                                    {
-                                        entityLists = sortClass.GetSorterQuery<QueueMessageList, bool>(queryOperations, entityLists);
-                                        break;
-                                    }
-                                case "unsdecimal":
-                                case "decimal":
-                                    {
-                                        entityLists = sortClass.GetSorterQuery<QueueMessageList, decimal>(queryOperations, entityLists);
-                                        break;
-                                    }
-                                default:
-                                    {
-                                        entityLists = entityLists.OrderBy(d => d.Id);
-                                        break;
-                                    }
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    entityLists = entityLists.OrderBy(d => d.Id);
-                }
-
-                ServiceResponse response = new ServiceResponse();
-
-                if (filters.GetCount)
-                {
-                    response.Count = entityLists.Count();
-                }
-                if (!queryOperations.GetAll)
-                {
-
-                    entityLists = entityLists.Skip(skippedEntities);
-                    entityLists = entityLists.Take(queryOperations.PageSize);
-
-                }
-                List<QueueMessageList> listResult = entityLists.ToList();
-
-                response.Result = listResult;
-                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
+                HttpResponseMessage responseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
                 PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
-                return reponseMessage;
+                return responseMessage;
             }
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
-
         }
-
 
 
     }

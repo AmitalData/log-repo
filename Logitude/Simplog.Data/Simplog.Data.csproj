@@ -703,6 +703,7 @@
     <Compile Include="InfrastructureModel\Repositories\EntityStatusTypeRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\MultiEntityUpdateLogRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\QueryExportExecutionLogRepository.cs" />
+    <Compile Include="InfrastructureModel\Repositories\QueueMessagesService.cs" />
     <Compile Include="InfrastructureModel\Repositories\QuoteChargesGroupRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\ReferenceCustomObjectRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\ScreenSectionRepository.cs" />
