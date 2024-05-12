@@ -1024,15 +1024,6 @@ export class MaintenanceComponent {
                 }
                 case "QUEUEMSG": {
                     this.QueueMessages(item);
-                    // var windowTitle = "Queue Messages";
-                    // var logWindow = new LogitudeWindow();
-                    // logWindow.Width = 1500;
-                    // logWindow.Height = 500;
-                    // logWindow.Title = windowTitle;
-                    // logWindow.IsShowCloseButton = true;
-                    // logWindow.Show('./Accounting/Components/Others/QueueMessagesServices/QueueMessagesStatistics');
-                    // logWindow.Show('./CustomsModules/CustomsMaintenance/Components/CourierSendStatusComponent');
-
                     break;
                 }
                 case "MTCE": {

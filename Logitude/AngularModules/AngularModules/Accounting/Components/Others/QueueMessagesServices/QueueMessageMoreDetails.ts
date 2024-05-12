@@ -77,20 +77,6 @@ export class QueueMessageMoreDetails extends BaseComponent implements OnInit {
         return filters;
     }
 
-    public MoreDetails() {
-        this._entityResourceService.getEntityResourceByTableName("ARInvoice", 0).subscribe((response: any) => {
-            var listArgs = new ListComponentArgs();
-            listArgs.DisplayTitle = "Queue Messages More Details";
-            SessionLocator.DynamicLoader.Load('./Accounting/Components/Others/QueueMessagesServices/QueueMessageMoreDetails',
-                this.CurrentSession.SessionMenuLocation.viewContainerRef)
-                .then(cmpRef => {
-                    cmpRef.instance.ComponentRef = cmpRef;
-                    this.CurrentSession.AddMenuReference(cmpRef);
-                });
-        });
-    }
-
-
     BackButtonClicked() {
         if (this.ComponentRef) {
             this.ComponentRef.destroy();
