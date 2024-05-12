@@ -29,6 +29,17 @@ using WebFreight.Web.Services;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using Simplog.Data.InvoiceModel.Repositories;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
+using iTextSharp.text;
+using Syncfusion.XlsIO;
+using System.Data.SqlClient;
+using Simplog.Data.InfrastructureModel;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Server.Infrastructure.Helpers;
+using Simplog.Server.Infrastructure;
+using System.Data.Common;
+using System.Transactions;
+using static Logitude.Customs.BL.Messaging.Amital.UnifreightQInvoiceList;
 
 namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 {
@@ -72,26 +83,132 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 		}
 		
 
-		List<InvoiceLine> invoiceLines = new List<InvoiceLine>();
+		
 
 		private void SetMonthlyBalancesLine()
 		{
+            ChartOfAccountRepository chartOfAccountRepository = new ChartOfAccountRepository(tenant);
+            List<ChartOfAccount> chartOfAccountList =chartOfAccountRepository.GetAllByTenant(tenant);
+            QueryFilterItem ChartOfAccountsIdList = reportQueryOperations.QueryFilterItems.Where(d => d.FieldName == "ChartOfAccountsIdList").FirstOrDefault();
+			if (ChartOfAccountsIdList != null)
+			{
+                string[] ChartOfAccountsIdArray = ChartOfAccountsIdList.FieldValue.ToString().Split(',');
+				 chartOfAccountList = chartOfAccountList.Where(a => ChartOfAccountsIdArray.Contains(a.Id)).ToList();
+			 }
+            var year = int.Parse(reportQueryOperations.QueryFilterItems.Where(d => d.FieldName == "NumberOfYear").FirstOrDefault()?.FieldValue?.ToString());
+            List<MonthlyBalancesLine> monthlyBalancesLine=GetMonthlyBalancesReportByYearAndTenant(tenant, year);
+            dataProvider.ChartOfAccountLine=new List<ChartOfAccountLine>();
+            for (int i = 0; i < chartOfAccountList?.Count(); i++)
+            {
+                QueryFilterItem DetailedForJobs = reportQueryOperations.QueryFilterItems.Where(d => d.FieldName == "DetailedForJobs").FirstOrDefault();
+                List<MonthlyBalancesLine> monthlyBalancesLineOfChartOfAccount= monthlyBalancesLine.Where(a=>a.ChartOfAccount == chartOfAccountList[i].Id).ToList();
+
+                ChartOfAccountLine chartOfAccountLine = 
+                                new ChartOfAccountLine()
+                                {
+                                    QuantityForJanuary = monthlyBalancesLineOfChartOfAccount!=null? monthlyBalancesLineOfChartOfAccount.Sum(a=>a.QuantityForJanuary):0,
+                                    QuantityForFebruary = monthlyBalancesLineOfChartOfAccount != null ? monthlyBalancesLineOfChartOfAccount.Sum(a => a.QuantityForFebruary) : 0,
+                                    QuantityForMarch = monthlyBalancesLineOfChartOfAccount != null ? monthlyBalancesLineOfChartOfAccount.Sum(a => a.QuantityForMarch) : 0,
+                                    QuantityForApril = monthlyBalancesLineOfChartOfAccount != null ? monthlyBalancesLineOfChartOfAccount.Sum(a => a.QuantityForApril) : 0,
+                                    QuantityForMay = monthlyBalancesLineOfChartOfAccount != null ? monthlyBalancesLineOfChartOfAccount.Sum(a => a.QuantityForMay) : 0,
+                                    QuantityForJune = monthlyBalancesLineOfChartOfAccount != null ? monthlyBalancesLineOfChartOfAccount.Sum(a => a.QuantityForJune) : 0,
+                                    QuantityForJuly = monthlyBalancesLineOfChartOfAccount != null ? monthlyBalancesLineOfChartOfAccount.Sum(a => a.QuantityForJuly) : 0,
+                                    QuantityForAugust = monthlyBalancesLineOfChartOfAccount != null ? monthlyBalancesLineOfChartOfAccount.Sum(a => a.QuantityForAugust) : 0,
+                                    QuantityForSeptember = monthlyBalancesLineOfChartOfAccount != null ? monthlyBalancesLineOfChartOfAccount.Sum(a => a.QuantityForSeptember) : 0,	
+                                    QuantityForOctober = monthlyBalancesLineOfChartOfAccount != null ? monthlyBalancesLineOfChartOfAccount.Sum(a => a.QuantityForOctober) : 0,
+                                    QuantityForNovember = monthlyBalancesLineOfChartOfAccount != null ? monthlyBalancesLineOfChartOfAccount.Sum(a => a.QuantityForNovember) : 0,
+                                    QuantityForDecember = monthlyBalancesLineOfChartOfAccount != null ? monthlyBalancesLineOfChartOfAccount.Sum(a => a.QuantityForDecember) : 0,
+                                    TotalReport = monthlyBalancesLineOfChartOfAccount != null ? monthlyBalancesLineOfChartOfAccount.Sum(a => a.TotalReport) : 0,
+                                    GLAcountLocalName = chartOfAccountList[i].LocalName,
+                                    GLAcountNumber = chartOfAccountList[i].Code,
+                                    GLAcountEnglishName = chartOfAccountList[i].EnglishName,
+									MonthlyBalancesLine= (bool)DetailedForJobs?.FieldValue ? monthlyBalancesLineOfChartOfAccount: new List<MonthlyBalancesLine>()
 
 
-			ARInvoiceRepository arInvoiceRepository = new ARInvoiceRepository(tenant);
-			var invoicesLines = arInvoiceRepository.GetControlForInvoiceLinesDataView(tenant);
-			invoicesLines = this.ApplyCustomFilters(reportQueryOperations, invoicesLines, tenant);
-			invoiceLines = (from a in invoicesLines
-							select new MonthlyBalancesLine()
-							{
-								
+                                };
+				dataProvider.ChartOfAccountLine.Add(chartOfAccountLine);
 
-							}).ToList();
-			dataProvider.MonthlyBalancesLine = invoiceLines;
-		}
+            }
+             
+        }
 
-	
-		public IQueryable<ControlForInvoiceLinesDataView> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<ControlForInvoiceLinesDataView> iQueryable, int tenant)
+        private List<MonthlyBalancesLine> GetMonthlyBalancesReportByYearAndTenant(int tenant , int year)
+		{
+            try
+            {
+                List<MonthlyBalancesLine> results = new List<MonthlyBalancesLine>();
+                string strConnString = GetConnection(0);
+                using (SqlConnection connection = new SqlConnection(strConnString))
+                {
+                    connection.Open();
+                    var command = connection.CreateCommand();
+                    command.CommandText = "usp_MonthlyBalancesReport";
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                   
+                    command.Parameters.AddWithValue("@Tenant", tenant);
+                    command.Parameters.AddWithValue("@Year", year);
+                 
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var result = new MonthlyBalancesLine
+                            {
+                                QuantityForJanuary = reader["MONTH1"] != DBNull.Value ? (decimal)reader["MONTH1"] : 0,
+                                QuantityForFebruary = reader["MONTH2"] != DBNull.Value ? (decimal)reader["MONTH2"] : 0,
+                                QuantityForMarch = reader["MONTH3"] != DBNull.Value ? (decimal)reader["MONTH3"] : 0,
+                                QuantityForApril = reader["MONTH4"] != DBNull.Value ? (decimal)reader["MONTH4"] : 0,
+                                QuantityForMay = reader["MONTH5"] != DBNull.Value ? (decimal)reader["MONTH5"] : 0,
+                                QuantityForJune = reader["MONTH6"] != DBNull.Value ? (decimal)reader["MONTH6"] : 0,
+                                QuantityForJuly = reader["MONTH7"] != DBNull.Value ? (decimal)reader["MONTH7"] : 0,
+                                QuantityForAugust= reader["MONTH8"] != DBNull.Value ? (decimal)reader["MONTH8"] : 0,
+                                QuantityForSeptember= reader["MONTH9"] != DBNull.Value ? (decimal)reader["MONTH9"] : 0,
+                                QuantityForOctober = reader["MONTH10"] != DBNull.Value ? (decimal)reader["MONTH10"] : 0,
+                                QuantityForNovember = reader["MONTH11"] != DBNull.Value ? (decimal)reader["MONTH11"] : 0,
+                                QuantityForDecember= reader["MONTH12"] != DBNull.Value ? (decimal)reader["MONTH12"] : 0,
+                                TotalReport = reader["MONTH12"] != DBNull.Value ? (decimal)reader["TOTAL_MONTHS"] : 0,
+								GLAcountLocalName = reader["LocalName"] != DBNull.Value ? (string)reader["LocalName"] : null,
+								GLAcountNumber = reader["DisplayNumber"] != DBNull.Value ? (string)reader["DisplayNumber"] : null,
+                                GLAcountEnglishName= reader["EnglishName"] != DBNull.Value ? (string)reader["EnglishName"] : null,
+                                ChartOfAccount = reader["chartOfAccount"] != DBNull.Value ? (string)reader["chartOfAccount"] : null,
+
+                            };
+                            results.Add(result);
+                        }
+                    }
+                    connection.Close();
+                }
+
+                return results;
+            }
+
+            catch (Exception ex)
+            {
+                throw new Exception();
+            }
+        }
+
+        private static string GetConnection(int tenant)
+        {
+            GlobalDB currentDb;
+
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())//TransactionFactory.GetNewTransaction())
+            {
+                currentDb = GlobalDBRepository.GetGlobalDBByTenant(tenant);
+                scope.Complete();
+            }
+
+            string dbConnectionInfo = currentDb.DBConnection;
+            string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
+
+            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo, dbSeconderyConnectionInfo);
+            WebFreightContext context = new WebFreightContext(connection);
+
+            return context.Database.Connection.ConnectionString;
+        }
+
+        public IQueryable<ControlForInvoiceLinesDataView> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<ControlForInvoiceLinesDataView> iQueryable, int tenant)
 		{
 			QueryFilterItem CreateDateFilter = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CreateDate").FirstOrDefault();
 			if (CreateDateFilter != null)

@@ -1335,7 +1335,7 @@ namespace WebFreight.Web.Helpers
                     }
                 case "MBBR":
                     {
-                        ControlForInvoiceLinesLoader controlForInvoiceLinesLoader = new ControlForInvoiceLinesLoader(filters, reportFliter.tenant);
+                        MonthlyBalancesLinesLoader controlForInvoiceLinesLoader = new MonthlyBalancesLinesLoader(filters, reportFliter.tenant);
                         dataProvider = controlForInvoiceLinesLoader.GetData();
                         break;
                     }
