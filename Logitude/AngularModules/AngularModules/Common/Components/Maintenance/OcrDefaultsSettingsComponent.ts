@@ -60,11 +60,11 @@ export class OcrDefaultsSettingsComponent extends BaseComponent {
     private partyRelationshipCodeChecked: boolean = false;
     private accountTypeCodeChecked: boolean = false;
     public IsChecked: boolean = false;
-    public disableSubmit: boolean = true
+    public disableSubmit: boolean = this.IsFromSupplierInvoice;
     FIELD_IS_REQUIERD: string;
     public ProcessTypeCodeFilterItems: ApiQueryFilters;
 
-    
+
 
     OnAllBtnClicked() {
         this.IsChecked = true;
@@ -73,9 +73,9 @@ export class OcrDefaultsSettingsComponent extends BaseComponent {
         this.processTypeCodeChecked = true
         this.buyerRoleCodeChecked = true
         this.partyRelationshipCodeChecked = true
-        this.accountTypeCodeChecked= true
+        this.accountTypeCodeChecked = true
     }
-    
+
     OnNoneBtnClicked() {
         this.IsChecked = false;
         this.claimReasonCodeChecked = false
@@ -83,7 +83,7 @@ export class OcrDefaultsSettingsComponent extends BaseComponent {
         this.processTypeCodeChecked = false
         this.buyerRoleCodeChecked = false
         this.partyRelationshipCodeChecked = false
-        this.accountTypeCodeChecked= false
+        this.accountTypeCodeChecked = false
     }
 
 
@@ -94,9 +94,8 @@ export class OcrDefaultsSettingsComponent extends BaseComponent {
         this.FIELD_IS_REQUIERD = TextCodeTranslator.Translate("General.M.FieldIsRequired");
 
         this.CurrentSession.StartBusyIndicator('Loading...');
-        debugger
         this.ProcessTypeCodeFilterItems = new ApiQueryFilters();
-       
+
         this.LoadDefaults();
 
     }
@@ -108,7 +107,7 @@ export class OcrDefaultsSettingsComponent extends BaseComponent {
             this.IsFromSupplierInvoice = args.IsFromSupplierInvoice
         }
         if (this.DeclarationPM.Direction == "E") {
-            this.ProcessTypeCodeFilterItems.addAdditionalFilter("LeadDocumentTypeID", this.DeclarationPM.DeclarationTypeCode, null, null, "Equals", false, false, false, "string",false,true);
+            this.ProcessTypeCodeFilterItems.addAdditionalFilter("LeadDocumentTypeID", this.DeclarationPM.DeclarationTypeCode, null, null, "Equals", false, false, false, "string", false, true);
         }
     }
     private LoadDefaults() {
@@ -284,7 +283,7 @@ export class OcrDefaultsSettingsComponent extends BaseComponent {
         const decPM = SessionLocator.SelectedSession.CurrentEditComponent.EntityPM;
         const isExport: boolean = decPM.direction == 'E'
         for (let item of multiUpdateOcrParams.SupplierInvioceItemCertificats) {
-          
+
             if (item.AttachmentTypeCode == null) {
                 //var translatedRequiredError: string = TextCodeTranslator.Translate("General.M.FieldIsRequired");
                 //var fieldError: string = translatedRequiredError.replace("%FieldName", "AttachmentTypeCode");
@@ -458,10 +457,8 @@ export class OcrDefaultsSettingsComponent extends BaseComponent {
     }
 
     ngDoCheck() {
-        if (!this.accountTypeCodeChecked && !this.partyRelationshipCodeChecked && !this.buyerRoleCodeChecked && !this.processTypeCodeChecked && !this.transactionNatureCodeChecked && !this.claimReasonCodeChecked) {
-            this.disableSubmit=true
-        }else{
-            this.disableSubmit=false
+        if (this.IsFromSupplierInvoice) {
+            this.disableSubmit = !(this.accountTypeCodeChecked || this.partyRelationshipCodeChecked || this.buyerRoleCodeChecked || this.processTypeCodeChecked || this.transactionNatureCodeChecked || this.claimReasonCodeChecked);
         }
     }
 }

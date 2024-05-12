@@ -62,11 +62,11 @@
                                                                         <table class="noselect">
 
                                                                                                           
-                                                                            <td class="ActionButton"  style="width: 4%;">
+                                                                            <td class="ActionButton" *ngIf="IsFromSupplierInvoice" style="width: 4%;">
                                                                                 <CheckBox [IsChecked]="IsChecked" (Checked)="$event ? OnAllBtnClicked() : OnNoneBtnClicked()"></CheckBox>
                                                                             </td>
-                                                                            <td class="Label" style="width: 150px; text-align:right">
-                                                                                 {{'Customs.General.O.SelectAll' | TextCodeTranslationPipe}}
+                                                                            <td class="Label" *ngIf="IsFromSupplierInvoice" style="width: 150px; text-align:right">
+                                                                                {{ 'Customs.General.O.SelectAll' | TextCodeTranslationPipe }}
                                                                             </td>
 
                                                                             <tr class="FormFieldRow">
