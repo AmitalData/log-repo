@@ -1323,42 +1323,16 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return isFullAccountingActivated;
         }
 
-        public static int Update_ConnectCardToGLAccount(string cardId, int tenant, string gLAccountId, string gLAccountDisplayNumber)
+        public void Update_ConnectCardToGLAccount(string cardId, int tenant, string gLAccountId, string gLAccountDisplayNumber)
         {
-
-            string strConnString = TenantServerConfigration.GetDbConnection(tenant);
-
-            using (SqlConnection connection = new SqlConnection(strConnString))
-            {
-                connection.Open();
-                using (SqlCommand command = connection.CreateCommand())
-                {
-                    command.CommandText =
-                        "UPDATE Cards SET GLAccountId= @V_gLAccountId , GLAccountDisplayNumber= @V_gLAccountDisplayNumber " +
-                        "WHERE Id =@V_cardId and tenant= @V_tenant";
-
-                    command.CommandType = CommandType.Text;
-
-                    command.Parameters.Add("@V_tenant", SqlDbType.Int);
-                    command.Parameters["@V_tenant"].Value = tenant;
-
-                    command.Parameters.Add("@V_cardId", SqlDbType.VarChar);
-                    command.Parameters["@V_cardId"].Value = cardId;
-
-                    command.Parameters.Add("@V_gLAccountId", SqlDbType.VarChar);
-                    command.Parameters["@V_gLAccountId"].Value = gLAccountId;
-
-                    command.Parameters.Add("@V_gLAccountDisplayNumber", SqlDbType.VarChar);
-                    command.Parameters["@V_gLAccountDisplayNumber"].Value = gLAccountDisplayNumber;
-
-
-                    int rows = command.ExecuteNonQuery();
-                    connection.Close();
-                    return rows;
-                }
-            }
+            var context = CommonDataContext.GetContext(tenant);
+            CardQuery cardQuery = new CardQuery(tenant);
+            CardPM cardPM = cardQuery.GetSinglePM(cardId, tenant);
+            cardPM.GLAccountDisplayNumber = gLAccountDisplayNumber;
+            cardPM.GLAccountId = gLAccountId;
+            CardService cardService = new CardService(context, tenant);
+            cardService.Update(cardPM);
         }
-
 
         public void ConnectCardToGLAccount(CardGLAccountConnectionArgs args)
         {
@@ -1379,16 +1353,10 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
             //SubmitCard(cardPM);
             if (!String.IsNullOrEmpty(args.CardId) && !String.IsNullOrEmpty(args.AccountId) && args.Tenant > 0)
-            { 
-                int res = Update_ConnectCardToGLAccount(args.CardId, args.Tenant, args.AccountId, displayNumber); 
-                
-            }
-            if (IsFullAccountingActivated(args.Tenant))
             {
-                IAccountingContext context = MainContext as AccountingContext;
-                GLAccountUpdateService gLAccountUpdateService = new GLAccountUpdateService(context, new Dictionary<string, IContext>(), args.Tenant);
-                gLAccountUpdateService.UpdateGLAccountWithAdditionalData(args.AccountId, args.Tenant);
+                Update_ConnectCardToGLAccount(args.CardId, args.Tenant, args.AccountId, displayNumber); 
             }
+
             //ICommonDataContext context = CommonDataContext.GetContext(args.Tenant);
             //CardRepository cardRepository = new CardRepository(context);
             //Card card = null;
