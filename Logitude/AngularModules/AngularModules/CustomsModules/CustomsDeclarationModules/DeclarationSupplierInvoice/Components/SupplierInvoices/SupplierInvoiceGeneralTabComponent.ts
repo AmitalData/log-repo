@@ -1613,6 +1613,7 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
 
     }
 
+
     UpdateGroupingAccountLines(){
         let GroupedItemsSource = new ObservableCollection([]);        
         let GroupedResult: string = `${TextCodeTranslator.Translate("Customs.Declaration.O.GroupedAccountLinesResult")}: \n`; 
@@ -1702,8 +1703,9 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
 
     
 
-    UpdateClicked(type: UpdateOptions) {
-        let selectedOptionsSettings = this.updateOptionsMap[type];
+    UpdateClicked(type:UpdateOptions){
+        let selectedOptionsSettings=this.updateOptionsMap[type];
+
         let title = selectedOptionsSettings.Title;
         var args = selectedOptionsSettings.Arguments;
         this.UpdateSupplierInvoiceGeneralField(args, title);
@@ -4066,6 +4068,7 @@ export class SupplierInvoiceItemLine extends BaseComponent {
     }
 
 
+    
 
     GetQuantityType(isChangeInvoiceQuantityType: boolean = true, calcInvoiceQuantityType: boolean = false) {
 
