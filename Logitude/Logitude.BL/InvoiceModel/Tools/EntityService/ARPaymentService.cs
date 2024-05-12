@@ -1527,7 +1527,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                 return;
             }
             DocumentOutRepository documentOutRepository = new DocumentOutRepository(myCommonContext);
-            DocumentOut docOut = documentOutRepository.GetDocumentOutByEntityAndChildEntity(paymentPoco.Id, null);
+            DocumentOut docOut = documentOutRepository.GetDocumentOutByEntityAndChildEntity(paymentPoco.Id, null, tenant);
             if (docOut != null)
             {
                 docOut.NeedsRebuild = true;

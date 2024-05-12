@@ -130,9 +130,9 @@ using Simplog.Data.InvoiceModel;
 				   if(MyEntityPM.ProfitCurrencyId != null)
 				   {
 					   CurrencyQueryService CurrencyService5 = new CurrencyQueryService(Tenant);
-					   					   temp.ProfitCurrency = CurrencyService5.GetCurrencyById(MyEntityPM.ProfitCurrencyId,Tenant,ComputingPartnerName); 
-			       
-					   				   }
+					   					   temp.ProfitCurrency = CurrencyService5.GetCurrencyById(MyEntityPM.ProfitCurrencyId,Tenant,ComputingPartnerName);
+
+                                          }
 				   
 				   temp.ProfitCurrencyExchangeRate = MyEntityPM.ProfitCurrencyExchangeRate;
 				   temp.AmountInProfitCurrency = MyEntityPM.AmountInProfitCurrency; 

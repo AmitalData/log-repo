@@ -696,7 +696,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         filters.SortDirection = "Descending";
 
         filters.addAdditionalFilter("VendorId", this.EntityPM.VendorId, null, null, "Equals", false, false, false, "string");
-        filters.addAdditionalFilter("StatusCode", "WA,AD,PP,PD", null, null, "InList", false, true, false, "string");
+        filters.addAdditionalFilter("StatusCode", "AD,PP", null, null, "InList", false, true, false, "string");
         filters.addAdditionalFilter("IsClosed", false, null, null, "Equals", false, false, false, "Boolean");
         if(this.FilterInvoiceByAPPayment)
         filters.addAdditionalFilter("InvoiceCurrencyId", this.EntityPM.PaymentCurrencyId, null, null, "Equals", false, false, false, "string");

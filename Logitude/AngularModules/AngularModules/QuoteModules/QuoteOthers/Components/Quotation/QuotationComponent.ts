@@ -74,7 +74,7 @@ export class QuotationComponent extends BaseComponent implements OnInit {
     IsReady: boolean = false;
 
     QuoteTypeCode: string;
-
+    IsFromBuildDocumentVersion: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     public UpdateQuoteDocument:boolean= false;
     public _ReconciliationExtendedPMService: ReconciliationExtendedPMService = new ReconciliationExtendedPMService();
@@ -155,6 +155,13 @@ export class QuotationComponent extends BaseComponent implements OnInit {
             this.LoadCompletedEvent = this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
                     this.QuotePM = this.CurrentSession.CurrentEditComponent.EntityPM;
+                    
+                    if(this.IsFromBuildDocumentVersion) {
+                       this.ReportVersions = this.QuotePM.QuoteDocumentVersions.sort((a, b) => { return (a.VersionNumber === a.VersionNumber) ? 0 : (a.VersionNumber < a.VersionNumber) ? -1 : 1 });
+                       this.ComputeVersionTypeName();               
+                       this.currentDocumentVersion = this.ReportVersions.filter(v => v.IsSent == false)[0];
+                       this.IsFromBuildDocumentVersion = false;
+                    }
                 }
             });
         }
@@ -527,7 +534,7 @@ export class QuotationComponent extends BaseComponent implements OnInit {
             });
 
             orderdVersionsByDate.sort((a, b) => { return (DateTool.GetDateFromDate(a.UpdateDate) === DateTool.GetDateFromDate(b.UpdateDate)) ? 0 : (DateTool.GetDateFromDate(a.UpdateDate) > DateTool.GetDateFromDate(b.UpdateDate)) ? -1 : 1 });
-
+           
 
             this.currentDocumentVersion = orderdVersionsByDate[0];
 
@@ -679,6 +686,7 @@ export class QuotationComponent extends BaseComponent implements OnInit {
                     this.currentDocumentVersion = this.ReportVersions.filter(v => v.IsSent == false)[0];
 
                     this.ClearLastQuoteTemplateVersionDocuemnt();
+                    this.IsFromBuildDocumentVersion = true;
                     if(this.QuotePM.CommunicationLogId) {
                         this.getCommunicationLog(this.QuotePM.CommunicationLogId);
                     } else {
@@ -689,7 +697,6 @@ export class QuotationComponent extends BaseComponent implements OnInit {
                 }
                 else { }
 
-                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
             });
 
             //this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((response:any) => {
@@ -768,7 +775,8 @@ export class QuotationComponent extends BaseComponent implements OnInit {
                 this.IFrameURI = objectURL;
                 this.IsQuoteTemplateSectionInCludedChange = false;
 
-
+                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+               
 
             }
 
