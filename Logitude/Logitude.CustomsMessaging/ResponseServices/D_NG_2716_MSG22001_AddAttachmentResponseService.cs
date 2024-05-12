@@ -297,9 +297,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
             }
 
-            // for the Diamonds declaration in export, send it automatically to the mehes
-          
-
             UpdateDeclarationCourierStatus(context, _MyCustomsDocumentPM, requestParams.DeclaretionId);
             this.MyResponseData.ApplicationID = _MyCustomsDocumentPM.CustomsDocId;
             this.MyResponseData.DocumentNumber = _MyCustomsDocumentPM.ExternalAttachmentId;
@@ -371,26 +368,23 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     }
                 }
 
-
-                  if (declarationPM.IsDiamondDeclaration && declarationPM.Direction == "E" && declarationPM.AutoSending)
-            {
-              
-            }
-            else
-            {
-                LogMessagingUtil.Instance.AppendLine("No check for diamonds process");
-            }
-            }
-
-
-            try
-            {
-                LogMessagingUtil.Instance.AppendLine("Check to send diamonds declaration to mehes");
-                SendAutomaticReadyDeclaration(declarationPM);
-            }
-            catch (System.Exception e)
-            {
-                LogMessagingUtil.Instance.AppendLine("Failed to send automatic diamonds declarations: " + e.ToString());
+                // for the Diamonds declaration in export, send it automatically to the mehes
+                if (declarationPM.IsDiamondDeclaration && declarationPM.Direction == "E" && declarationPM.AutoSending)
+                {
+                    try
+                    {
+                        LogMessagingUtil.Instance.AppendLine("Check to send diamonds declaration to mehes");
+                        SendAutomaticReadyDeclaration(declarationPM);
+                    }
+                    catch (System.Exception e)
+                    {
+                        LogMessagingUtil.Instance.AppendLine("Failed to send automatic diamonds declarations: " + e.ToString());
+                    }
+                }
+                else
+                {
+                    LogMessagingUtil.Instance.AppendLine("No check for diamonds process");
+                }
             }
         }
 
