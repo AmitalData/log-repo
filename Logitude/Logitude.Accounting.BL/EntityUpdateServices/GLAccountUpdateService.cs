@@ -460,13 +460,14 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
 
         }
-        public void UpdateCardDisplayNumber(int tenant,string cardId,string DisplayNumber)
+        public void UpdateCardDisplayNumber(int tenant, string cardId, string displayNumber, string glaccountId, bool isFromGlaAccountUpdate)
         {
             CardQuery cardQuery = new CardQuery(tenant);
             var context = CommonDataContext.GetContext(tenant);
             CardPM cardPM = cardQuery.GetSinglePM(cardId, tenant);
-            cardPM.GLAccountDisplayNumber = DisplayNumber;
-            cardPM.IsFromGlaAccountUpdate = true;
+            cardPM.GLAccountId = glaccountId;
+            cardPM.GLAccountDisplayNumber = displayNumber;
+            cardPM.IsFromGlaAccountUpdate = isFromGlaAccountUpdate;
             CardService cardService = new CardService(context, tenant);
             cardService.Update(cardPM);
         }
@@ -479,7 +480,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 List<CardList> cardLists = GetCardsByGLAccountId(entityPM.Id, tenant);
                 foreach (CardList card in cardLists)
                 {
-                    UpdateCardDisplayNumber(tenant, card.Id, entityPM.DisplayNumber);
+                    UpdateCardDisplayNumber(tenant, card.Id, entityPM.DisplayNumber, entityPM.Id, true);
                 }
             }
             if (!entityPM.IsControlAccount.GetValueOrDefault())

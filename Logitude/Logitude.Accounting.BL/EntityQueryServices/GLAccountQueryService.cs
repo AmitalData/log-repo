@@ -1381,7 +1381,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             if (!String.IsNullOrEmpty(args.CardId) && !String.IsNullOrEmpty(args.AccountId) && args.Tenant > 0)
             {
                 Update_ConnectCardToGLAccount(args.CardId, args.Tenant, args.AccountId, displayNumber);
-                gLAccountUpdateService.UpdateCardDisplayNumber(args.Tenant, args.CardId, displayNumber);
+                gLAccountUpdateService.UpdateCardDisplayNumber(args.Tenant, args.CardId, displayNumber, args.AccountId, false);
             }
 
             //ICommonDataContext context = CommonDataContext.GetContext(args.Tenant);
