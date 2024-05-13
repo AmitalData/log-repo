@@ -115,16 +115,18 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             foreach (var prediction in page.prediction)
                             {
                                 if (prediction.label.ToUpper() != label && !dic.ContainsKey(prediction.label) && !string.IsNullOrEmpty(prediction.ocr_text))
-                                {
+                                {  
                                     dic.Add(prediction.label, prediction.ocr_text);
                                 }
                             }
                         }
 
                         List<Dictionary<string, string>> supplierInvoiceItemsList = new List<Dictionary<string, string>>();
+                        List<Dictionary<string, int>> ocrPositionItems = new List<Dictionary<string, int>>();
                         Dictionary<string, string> dicItems = new Dictionary<string, string>();
                         for(int i = 0; i < convertJson.pages.Count(); i++)
                         {
+                            var ocrDataPositionCell = new Dictionary<string, int>();
                             var tables = convertJson.pages[i].prediction.Where(x => x.label.ToUpper() == label);
                             if (tables.Any())
                             {
@@ -140,13 +142,22 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                             dicItems = new Dictionary<string, string>();
                                         }
                                         if (!dicItems.ContainsKey(cell.label) && !string.IsNullOrEmpty(cell.text) && cell.label != ExpensesAmount && cell.label != ExpensesName)
+                                        {
                                             dicItems.Add(cell.label, cell.text);
+                                            if(ocrDataPositionCell.Count() == 0)
+                                            {
+                                                ocrDataPositionCell.Add("ymin", cell.ymin);
+                                                ocrDataPositionCell.Add("ymax", cell.ymax);
+                                                ocrDataPositionCell.Add("page_no", table.page_no);
+                                            }
+                                        }
                                         row = cell.row;
                                     }
 
                                     if (dicItems.Count > 0)
                                     {
                                         supplierInvoiceItemsList.Add(dicItems);
+                                        ocrPositionItems.Add(ocrDataPositionCell);
                                     }
 
                                 }
@@ -160,7 +171,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         //insert or update supplierInvoice
                         try
                         {
-                            UpsertSupplierInvoiceResult Result = UpsertSupplierInvoiceByOcr(customResponse, myOcrDocument.Reference, dic, supplierInvoiceItemsList);
+                            UpsertSupplierInvoiceResult Result = UpsertSupplierInvoiceByOcr(customResponse, myOcrDocument.Reference, dic, supplierInvoiceItemsList, ocrPositionItems);
                             
                             if(Result.isNewInvoice)// update CustomsDocumentPointer
                             {
@@ -277,7 +288,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 
 
-        public UpsertSupplierInvoiceResult UpsertSupplierInvoiceByOcr(DCAInUCBUpsertSupplierInvioceByOcrResponseContentHeader customResponse, string invoiceNumber, Dictionary<string, string> dic, List<Dictionary<string, string>> supplierInvoiceItemsList)
+        public UpsertSupplierInvoiceResult UpsertSupplierInvoiceByOcr(DCAInUCBUpsertSupplierInvioceByOcrResponseContentHeader customResponse, string invoiceNumber, Dictionary<string, string> dic, List<Dictionary<string, string>> supplierInvoiceItemsList, List<Dictionary<string, int>> ocrPosition)
         {
             int tenant = customResponse.tenant;
             string originCountryField = "";
@@ -430,6 +441,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             if (supplierInvoiceItemsList.Count > 0)
             {
+                int counter = 0;
                 foreach (var supplierInvoiceItem in supplierInvoiceItemsList)
                 {
                     SupplierInvoiceItemPM supplierInvoiceItemPM = new SupplierInvoiceItemPM();
@@ -506,13 +518,23 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             supplierInvoiceItemPM.ItemAdditionalStatus = true;
                         }
                     }
-                    
+                    // update ocr column position: page_no, ymin, ymax - #94509
+                    if (ocrPosition[counter].TryGetValue("page_no", out int ocrPageNumber))
+                    {
+                        supplierInvoiceItemPM.OcrPageNumber = ocrPageNumber + 1;
+                    }
+                    if (ocrPosition[counter].TryGetValue("ymin", out int ymin))
+                    {
+                        supplierInvoiceItemPM.OcrTop = ymin; ;
+                        if (ocrPosition[counter].TryGetValue("ymax", out int ymax))
+                        {
+                            supplierInvoiceItemPM.OcrHeight = ymax - ymin;
+                        }
+                    }
 
                     //add supplierInvoiceItem
                     mySupplierInvoice.SupplierInvoiceItems.Add(supplierInvoiceItemPM);
-
-
-
+                    counter++;
                 }
             }
 

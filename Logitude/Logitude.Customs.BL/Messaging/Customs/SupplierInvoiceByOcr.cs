@@ -44,6 +44,7 @@ namespace Logitude.Customs.BL.Messaging.Customs
             public string label { get; set; }
             public string ocr_text { get; set; }
             public Cell[] cells { get; set; }
+            public int page_no { get; set; }
         }
 
         public class Cell
@@ -51,6 +52,8 @@ namespace Logitude.Customs.BL.Messaging.Customs
             public int row { get; set; }
             public string label { get; set; }
             public string text { get; set; }
+            public int ymin { get; set; }
+            public int ymax { get; set; }
 
         }
     }
