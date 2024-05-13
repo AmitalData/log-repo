@@ -327,13 +327,13 @@ export class ExportDeclarationReportFilterComponent extends BaseComponent {
         }
         //-----------------------------------------------------------------------------8
         
-        this.queryFilterItems.push(this.GetNewQueryFilterItem("ShowInvoices", this.ShowInvoices == 'True' ? true : false, null, "boolean"));
+        this.queryFilterItems.push(this.GetNewQueryFilterItem("ShowInvoices", this.ShowInvoices , null, "string"));
 
         //-----------------------------------------------------------------------------8
         
-        this.queryFilterItems.push(this.GetNewQueryFilterItem("ShowConsignments", this.ShowConsignments == 'True' ? true : false, null, "boolean"));
+        this.queryFilterItems.push(this.GetNewQueryFilterItem("ShowConsignments", this.ShowConsignments, null, "string"));
         
-    }
+    } 
 
     GetNewQueryFilterItem(FieldName: string, FieldValue: any, FieldValue2: any = null, FieldDataType: string = null, Operator: string = "Equals") {
         var queryFilterItem = new QueryFilterItem();

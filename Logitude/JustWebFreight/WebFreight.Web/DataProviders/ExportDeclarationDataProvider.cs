@@ -16,6 +16,7 @@ namespace WebFreight.Web.DataProviders
     }
     public class ExportDeclaration
     {
+        public string DeclarationId { get; set; }
         public DateTime? TaxationDateTime { get; set; }//תאריך חישוב מיסים
         public string ExportFile { get; set; }// תיק תפעולי
         public string TransportModeName { get; set; }
@@ -33,18 +34,19 @@ namespace WebFreight.Web.DataProviders
         public string FinalSecondCargoId { get; set; }
         public string FinalThirdCargoId { get; set; }
         #endregion
-        public List<Invoice> Invoice { get; set; }//חשבונות
+        public List<SupplierInvoices> SupplierInvoices { get; set; }//חשבונות
         public List<Consignment> Consignment { get; set; }//נתוני סגירה
 
     }
 
 
-    public class Invoice
+    public class SupplierInvoices
     {
         public string InvoiceNumber { get; set; }
         public DateTime? IssueDate { get; set; }
         public string IncotermCode { get; set; }
         public decimal? InvoiceAmount { get; set; }
+        public int InvoiceCounterKey { get; set; }
         public List<InvoiceItem> InvoiceItem { get; set; }
 
 
@@ -55,17 +57,19 @@ namespace WebFreight.Web.DataProviders
     {
         public string ItemCode { get; set; }
         public string ClassificationCode { get; set; }
-        public int PackageQuantity { get; set; }
+        public int? PackageQuantity { get; set; }
         public string InvoiceQuantityType { get; set; }
         public decimal? ItemPrice { get; set; }
         public string OriginCountryName { get; set; }
         public string TransactionNatureName { get; set; }//אופי עסקה
+        public int LineNumber { get; set; }//אופי עסקה
         
     }
 
     
     public class Consignment
     {
+        public int? ConsignmentNumber { get; set; }
         public string ConsignmentType { get; set; }
         public string CargoTypeName { get; set; }
         public string ManifestNumber { get; set; }
@@ -73,7 +77,7 @@ namespace WebFreight.Web.DataProviders
         public string ThirdCargoID { get; set; }
         public string CargoDescription { get; set; }
         public string FinalDestinationPortName { get; set; }
-        public int PackageQuantity { get; set; }//כמות מטבלת Customs.ConsignmentPackage
+        public int? PackageQuantity { get; set; }//כמות מטבלת Customs.ConsignmentPackage
         public decimal? GrossMassMeasure { get; set; }//משקל מטבלת Customs.ConsignmentPackage
 
     }
