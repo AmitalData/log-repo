@@ -60,7 +60,7 @@ namespace CommunicationWorkerRole.Services
 
 				if (procedureName != null)
                 {
-					DataTable dataTable= GetDataTableByProc(procedureName);
+					DataTable dataTable= GetDataTableByProc(procedureName, reportTask.Tenant);
 
 					var xls = new ExportToExcelHelper();
 
@@ -89,7 +89,7 @@ namespace CommunicationWorkerRole.Services
                 throw new Exception(errorMessage);
             }
         }
-		private DataTable GetDataTableByProc(string proceName)
+		private DataTable GetDataTableByProc(string proceName,int tenant)
 		{			
 			DataTable dataTable = new DataTable();
 			string connectionString = TenantServerConfigration.GetDbConnection(0);
@@ -100,6 +100,8 @@ namespace CommunicationWorkerRole.Services
 				connection.Open();
 				using (SqlCommand command = new SqlCommand(query, connection))
 				{
+					command.CommandType = CommandType.StoredProcedure;
+					command.Parameters.AddWithValue("@tenant", tenant);
 					using (SqlDataReader reader = command.ExecuteReader())
 					{
 						// Load the reader data into the DataTable
