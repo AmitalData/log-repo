@@ -1,6 +1,6 @@
 <style>
     td {
-        float: left; margin-right: 20px; vertical-align:middle;
+        float: left; margin-right: 10px; vertical-align:middle;
     }
     td:last-child {
         margin-right: 0px;
@@ -10,7 +10,7 @@
 <table>
     <tr>
         <td *ngIf="isExport">
-            <button class="Button" style="width: 126px;" (click)="openFiltersWindow()">
+            <button class="Button" style="width: 95px;" (click)="openFiltersWindow()">
                 {{titleExportFilterMenu}}
                 <img *ngIf="exportFilterData?.filterActive" width="20" height="20" style="vertical-align: middle;" src="./Images/Icons/MiniGreenTick.png" />
             </button>
