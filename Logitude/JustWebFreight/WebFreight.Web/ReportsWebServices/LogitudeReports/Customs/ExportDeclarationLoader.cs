@@ -1,36 +1,22 @@
-﻿using Logitude.Accounting.BL.CoreBL;
-using Logitude.Accounting.BL.CoreBL.Reports;
-using Logitude.Accounting.Data;
-using Logitude.Accounting.Data.EntityListQueryServices;
-using Logitude.Accounting.Data.EntityLists;
-using Logitude.Accounting.Data.EntityPOCOs;
-using Logitude.Accounting.Data.Enums;
-using Logitude.Accounting.Data.Repositories;
-using Logitude.Accounting.Def.EntityPMs;
-using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.CommonDataModel.EntityQueries;
-using Logitude.BL.Resolvers;
-using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.Helpers;
-using Simplog.Data.InfrastructureModel.Repositories;
+﻿
 using Simplog.Server.Infrastructure.DataContracts;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.IO;
 using System.Linq;
-using System.Web;
 using System.Xml.Serialization;
-using WebFreight.Web.AccountingModel.LedgerTransactionService;
 using WebFreight.Web.DataProviders;
-using WebFreight.Web.Security;
-using Logitude.BL.InvoiceModel.EntityQueries;
-using Simplog.Data.InvoiceModel.Repositories;
-using Simplog.Data.InvoiceModel.EntityPOCOs;
-using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.Data.DataContracts;
-using static Logitude.Customs.BL.Messaging.Amital.UnifreightQInvoiceList;
+using Logitude.Customs.BL.EntityQueryServices;
+using Logitude.Customs.Data.EntityKeys;
+using Logitude.Customs.Data.Repsitories;
+using System.Linq.Expressions;
+using CHAMP17;
+using NPOI.SS.Formula.Functions;
+using System.Data.Entity.Infrastructure;
+using System.Runtime.Remoting.Contexts;
+using Logitude.Customs.Data;
+using System.Data.Entity;
 
 namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
 {
@@ -58,7 +44,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
            
             BuildDataProvider();
             
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(OpportunityMonthlyConversionDataProvider));
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(ExportDeclarationDataProvider));
             MemoryStream memoryStream = new MemoryStream();
             xmlSerializer.Serialize(memoryStream, myDataProvider);
             memoryStream.Seek(0, SeekOrigin.Begin);
@@ -72,179 +58,270 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
             dataProvider = new ExportDeclarationDataProvider();
 
 
-            SetExportDeclarationBase();
+            SetExportDeclaration(tenant, reportQueryOperations);
 
         }
         
 
-        List<ExportDeclarationForReport> ExportDeclarationForReport = new List<ExportDeclarationForReport>();
 
-        private void SetExportDeclarationBase()
+        public void SetExportDeclaration(int tenant, QueryOperations queryOperations)
         {
+            ICustomContext context = CustomContext.GetContext(tenant);
+            (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false;
+
+            var declarations = (from a in context.Declarations
+                                                   .Include(a => a.CustomsTransportMode)
+                                                   .Include(a => a.DeclarationType)
+                                                   .Include(a => a.GovernmentProcedureCurrent)
+                                                   .Include(a => a.CustomsCountry)
+                                                   .Include(a => a.DeclarationStatusType)
+                                join de in context.DeclarationExportRecipients
+                                .Select(x => new { x.DeclarationId, x.RecipientName })
+                                on a.Id equals de.DeclarationId into deJoin
+            from der in deJoin.DefaultIfEmpty().Take(1)
+
+                                join s in context.SupplierInvoices on a.Id equals s.DeclarationId into sJoin
+            from si in sJoin.DefaultIfEmpty()
+
+                                join item in context.SupplierInvoiceItems
+                                .Include(a => a.InvoiceMeasurmentUnit).Include(a => a.OriginCountry).Include(a => a.TransactionNatureType)
+                                .Select(x => new { x.DeclarationId, x.CounterKey, x.ItemCode, x.ClassificationCode, x.PackageQuantity, x.InvoiceQuantityType, x.ItemPrice, OriginCountryName = x.OriginCountry.LocalName, TransactionNatureName = x.TransactionNatureType.LocalName, x.LineNumber })
+                                on new { DeclarationId = a.Id, CounterKey = si.InvoiceCounterKey } equals new { DeclarationId = item.DeclarationId, CounterKey = item.CounterKey } into itemJoin
+                                from sItem in itemJoin.DefaultIfEmpty()
+
+                                join c in context.ExportDeclarationClosingDatas.Include(a => a.FinalCargoType)
+                                .Select(x => new { x.DeclarationId, x.FinalCargoTypeCode, x.FinalManifestNumber, x.FinalSecondCargoId, x.FinalThirdCargoId, x.FinalCargoType.LocalName })
+                                on a.Id equals c.DeclarationId into cJoin
+            from closing in cJoin.DefaultIfEmpty()
+
+                                join con in context.Consignments
+                                .Include(a => a.CargoType)
+                                .Include(a => a.FinalDestinationPort)
+                                .Select(x => new { x.DeclarationId, x.ConsignmentNumber, x.ConsignmentType, CargoTypeName = x.CargoType.LocalName, x.ManifestNumber, x.SecondCargoID, x.ThirdCargoID, x.CargoDescription, FinalDestinationPort = x.FinalDestinationPort.LocalName })
+                                on a.Id equals con.DeclarationId into conJoin
+                                from consignment in conJoin.DefaultIfEmpty()
+
+                                join cp in context.ConsignmentPackages on new { DeclarationId = a.Id, ConsignmentNumber = consignment.ConsignmentNumber } equals new { DeclarationId = cp.DeclarationId, ConsignmentNumber = cp.ConsignmentNumber } into cpJoin
+                                from cPackage in cpJoin.DefaultIfEmpty().Take(1)
+
+                                where a.Tenant == tenant && a.Direction == "E"
+                                select new
+                                {
+                                    a.Id,
+                                    a.CreateDateTime,
+                                    a.TaxationDateTime,
+                                    a.ExportFile,
+                                    a.TransportModeId,
+                                    TransportModeName = a.CustomsTransportMode != null ? a.CustomsTransportMode.LocalName : null,
+                                    a.CustomFileNo,
+                                    a.DeclarationNumber,
+                                    DeclarationTypeName = a.DeclarationType != null ? a.DeclarationType.LocalName : null,
+                                    ProcedureCurrentName = a.GovernmentProcedureCurrent != null ? a.GovernmentProcedureCurrent.LocalName : null,
+                                    ExporterImporterCode = a.ImporterCode,
+                                    RecipientName = der != null && !string.IsNullOrEmpty(der.RecipientName) ? der.RecipientName : null,
+                                    DestinationCountryName = a.CustomsCountry != null ? a.CustomsCountry.LocalName : null,
+                                    a.DestinationCountryCode,
+                                    a.DeclarationStatusTypeCode,
+                                    a.DeclarationTypeCode,
+                                    DeclarationStatusTypeName = a.DeclarationStatusType != null ? a.DeclarationStatusType.LocalName : null,
+                                    a.ReferentUserId,
+                                    a.CustomerId,
+                                    FinalCargoTypeName = closing != null ? closing.LocalName : null,
+                                    FinalManifestNumber = closing != null && !string.IsNullOrEmpty(closing.FinalManifestNumber) ? closing.FinalManifestNumber : null,
+                                    FinalSecondCargoId = closing != null && !string.IsNullOrEmpty(closing.FinalSecondCargoId) ? closing.FinalSecondCargoId : null,
+                                    FinalThirdCargoId = closing != null && !string.IsNullOrEmpty(closing.FinalThirdCargoId) ? closing.FinalThirdCargoId : null,
+                                    //consignment
+                                    ConsignmentType = consignment != null ? consignment.ConsignmentType : null,
+                                    ConsignmentNumber = consignment != null ? consignment.ConsignmentNumber : null,
+                                    CargoTypeName = consignment != null ? consignment.CargoTypeName : null,
+                                    ManifestNumber = consignment != null ? consignment.ManifestNumber : null,
+                                    SecondCargoID = consignment != null ? consignment.SecondCargoID : null,
+                                    ThirdCargoID = consignment != null ? consignment.ThirdCargoID : null,
+                                    CargoDescription = consignment != null ? consignment.CargoDescription : null,
+                                    FinalDestinationPortName = consignment != null ? consignment.FinalDestinationPort : null,
+                                    cPackage.PackageQuantity,
+                                    cPackage.GrossMassMeasure,
+                                    //supplierInvoice
+                                    si.InvoiceNumber,
+                                    si.IssueDate,
+                                    si.IncotermCode,
+                                    si.InvoiceAmount,
+                                    InvoiceCounterKey = si != null ? si.InvoiceCounterKey : 0,
+                                    //supplierInvoiceItem
+                                    sItem.ItemCode,
+                                    sItem.ClassificationCode,
+                                    itemPackageQuantity = sItem.PackageQuantity,
+                                    sItem.InvoiceQuantityType,
+                                    sItem.ItemPrice,
+                                    sItem.OriginCountryName,
+                                    sItem.TransactionNatureName,
+                                    LineNumber = sItem != null ? sItem.LineNumber : 0,
+                                });
 
 
-            DeclarationRepository declarationRepository = new DeclarationRepository(tenant);
-            IQueryable<ExportDeclarationForReport> exportDeclarationsBase = declarationRepository.GetExportDeclarationsForReport(tenant, DateTime.Now, DateTime.Now);
-            exportDeclarationsBase = this.ApplyCustomFilters(reportQueryOperations, exportDeclarationsBase, tenant);
+            #region  ApplyCustomFilters
 
-            dataProvider.ExportDeclaration = (from ed in exportDeclarationsBase
-                                          select new ExportDeclaration()
-                                          {
-                                              TaxationDateTime = ed.TaxationDateTime,
-                                              ExportFile = ed.ExportFile,
-                                              TransportModeName = ed.TransportModeName,
-                                              CustomFileNo = ed.CustomFileNo,
-                                              DeclarationNumber = ed.DeclarationNumber,
-                                              DeclarationStatusTypeName = ed.DeclarationStatusTypeName,
-                                              ProcedureCurrentName = ed.ProcedureCurrentName,
-                                              ExporterImporterCode  = ed.ExporterImporterCode,
-                                              RecipientName = ed.RecipientName,
-                                              DestinationCountryName = ed.DestinationCountryName,
-                                              DeclarationTypeName = ed.DeclarationTypeName,
-                                              FinalCargoTypeName = ed.FinalCargoTypeName,
-                                              FinalManifestNumber = ed.FinalManifestNumber,
-                                              FinalSecondCargoId = ed.FinalSecondCargoId,
-                                              FinalThirdCargoId = ed.FinalThirdCargoId,
-                                              //Consignment = null,
-                                              //Invoice = 
-                                          }).ToList();
-        }
+            bool showInvoices = false;
+            bool showConsignments = false;
 
-
-        public IQueryable<ExportDeclarationForReport> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<ExportDeclarationForReport> iQueryable, int tenant)
-        {
             QueryFilterItem CreateDateFilter = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CreateDate").FirstOrDefault();
             if (CreateDateFilter != null)
             {
                 DateTime startDate = ((DateTime)CreateDateFilter.FieldValue).Date;
                 DateTime endDate = ((DateTime)CreateDateFilter.FieldValue2).Date.AddDays(1);
-                iQueryable = iQueryable.Where(x => x.CreateDateTime >= startDate && x.CreateDateTime < endDate);
+                declarations = declarations.Where(x => x.CreateDateTime >= startDate && x.CreateDateTime < endDate);
 
             }
-            //QueryFilterItem InvoiceDateFilter = queryOperations.QueryFilterItems.Where(d => d.FieldName == "InvoiceDate").FirstOrDefault();
-            //if (InvoiceDateFilter != null)
-            //{
-            //    DateTime startDate = ((DateTime)InvoiceDateFilter.FieldValue).Date;
-            //    DateTime endDate = ((DateTime)InvoiceDateFilter.FieldValue2).Date.AddDays(1);
-            //    iQueryable = iQueryable.Where(x => x.InvoiceDate >= startDate && x.InvoiceDate < endDate);
 
-            //}
-            //QueryFilterItem TaxReportIdFilter = queryOperations.QueryFilterItems.Where(d => d.FieldName == "TaxReportId").FirstOrDefault();
-            //if (TaxReportIdFilter != null)
-            //{
-            //    iQueryable = iQueryable.Where(x => x.TaxReportId == TaxReportIdFilter.FieldValue.ToString());
+            QueryFilterItem TransportModeIdFilter = queryOperations.QueryFilterItems.Where(d => d.FieldName == "TransportModeId").FirstOrDefault();
+            if (TransportModeIdFilter != null)
+            {
+                declarations = declarations.Where(x => x.TransportModeId == TransportModeIdFilter.FieldValue.ToString());
+            }
 
-            //}
-            //QueryFilterItem NotIncludedInAnyTaxReportFilter = queryOperations.QueryFilterItems.Where(d => d.FieldName == "NotIncludedInAnyTaxReport").FirstOrDefault();
-            //if (NotIncludedInAnyTaxReportFilter != null)
-            //{
-            //    iQueryable = iQueryable.Where(x => x.TaxReportId == null || (x.StatusCode != "T" && x.StatusCode != "J"));
+            QueryFilterItem DeclarationStatusFilter = queryOperations.QueryFilterItems.Where(d => d.FieldName == "DeclarationStatusTypeCode").FirstOrDefault();
+            if (DeclarationStatusFilter != null)
+            {
+                declarations = declarations.Where(x => x.DeclarationStatusTypeCode == DeclarationStatusFilter.FieldValue.ToString());
+            }
 
-            //}
+            QueryFilterItem DeclarationTypeFilter = queryOperations.QueryFilterItems.Where(d => d.FieldName == "DeclarationTypeCode").FirstOrDefault();
+            if (DeclarationTypeFilter != null)
+            {
+                declarations = declarations.Where(x => x.DeclarationTypeCode == DeclarationTypeFilter.FieldValue.ToString());
+            }
 
-            //QueryFilterItem AmountInLocalCurrencyFilter = queryOperations.QueryFilterItems.Where(d => d.FieldName == "AmountInLocalCurrency").FirstOrDefault();
-            //if (AmountInLocalCurrencyFilter != null)
-            //{
-            //    double amount;
-            //    double amount2;
-            //    double.TryParse(AmountInLocalCurrencyFilter.FieldValue.ToString(), out amount);
-            //    double.TryParse(AmountInLocalCurrencyFilter.FieldValue2?.ToString(), out amount2);
+            QueryFilterItem ReferentUserIdFilter = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ReferentUserId").FirstOrDefault();
+            if (ReferentUserIdFilter != null)
+            {
+                declarations = declarations.Where(x => x.ReferentUserId == ReferentUserIdFilter.FieldValue.ToString());
+            }
 
-            //    switch (AmountInLocalCurrencyFilter.Operator)
-            //    {
-            //        case "LargerThan":
-            //            {
-            //                iQueryable = iQueryable.Where(pageLine =>
-            //                amount < (pageLine.AmountInLocalCurrency)
-            //                //||
-            //                //-1 * amount > (pageLine.AmountInLocalCurrency)
-            //                );
-            //                break;
-            //            }
+            QueryFilterItem DestinationCountryCodeFilter = queryOperations.QueryFilterItems.Where(d => d.FieldName == "DestinationCountryCode").FirstOrDefault();
+            if (DestinationCountryCodeFilter != null)
+            {
+                declarations = declarations.Where(x => x.DestinationCountryCode == DestinationCountryCodeFilter.FieldValue.ToString());
+            }
 
-            //        case "GreaterThanOrEqual":
-            //            {
-            //                iQueryable = iQueryable.Where(pageLine =>
-            //                amount <= (pageLine.AmountInLocalCurrency)
-            //                //||
-            //                //-1 * amount >= (pageLine.AmountInLocalCurrency)
-            //                );
-            //                break;
-            //            }
+            QueryFilterItem CustomerFilter = queryOperations.QueryFilterItems.Where(d => d.FieldName == "Customer").FirstOrDefault();
+            if (CustomerFilter != null)
+            {
+                declarations = declarations.Where(x => x.CustomerId == CustomerFilter.FieldValue.ToString());
+            }
 
-            //        case "LessThan":
-            //            {
-            //                iQueryable = iQueryable.Where(pageLine =>
-            //                (amount > (pageLine.AmountInLocalCurrency)));
-            //                break;
-            //            }
+            QueryFilterItem ShowInvoicesFilter = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ShowInvoices").FirstOrDefault();
+            if (ShowInvoicesFilter != null && ShowInvoicesFilter.FieldValue.ToString() == "True")
+            {
+                showInvoices = true;
+            }
+            QueryFilterItem ShowConsignmentsFilter = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ShowConsignments").FirstOrDefault();
+            if (ShowConsignmentsFilter != null && ShowConsignmentsFilter.FieldValue.ToString() == "True")
+            {
+                showConsignments = true;
+            }
+            #endregion
 
-            //        case "LessThanOrEqual":
-            //            {
-            //                iQueryable = iQueryable.Where(pageLine =>
-            //                (amount >= (pageLine.AmountInLocalCurrency)));
-            //                break;
-            //            }
+            #region map to data provider
 
-            //        case "NotEqual":
-            //            {
-            //                iQueryable = iQueryable.Where(pageLine =>
-            //                (amount != (pageLine.AmountInLocalCurrency))
-            //                //&&
-            //                //(-1 * amount != (pageLine.AmountInLocalCurrency))
-            //                );
-            //                break;
-            //            }
 
-            //        case "Between":
-            //            {
-            //                iQueryable = iQueryable.Where(pageLine =>
-            //                (amount <= (pageLine.AmountInLocalCurrency))
-            //                &&
-            //                (amount2 >= (pageLine.AmountInLocalCurrency)));
-            //                break;
-            //            }
-            //        case "Equals":
-            //            {
-            //                iQueryable = iQueryable.Where(pageLine =>
-            //                (amount == (pageLine.AmountInLocalCurrency))
-            //                );
-            //                break;
-            //            }
-            //        default:
-            //            {
-            //                iQueryable = iQueryable.Where(pageLine =>
-            //                (amount == (pageLine.AmountInLocalCurrency))
-            //                ||
-            //                (amount2 == (pageLine.AmountInLocalCurrency))
-            //                );
-            //                break;
-            //            }
-            //    }
+            dataProvider.ExportDeclaration = declarations.GroupBy(d => new
+            {
+                d.Id,
+                //d.CreateDateTime,
+                d.TaxationDateTime,
+                d.ExportFile,
+                //d.TransportModeId,
+                d.TransportModeName,
+                d.CustomFileNo,
+                d.DeclarationNumber,
+                d.DeclarationTypeName,
+                d.ProcedureCurrentName,
+                d.ExporterImporterCode,
+                d.RecipientName,
+                d.DestinationCountryName,
+                //d.DestinationCountryCode,
+                //d.DeclarationStatusTypeCode,
+                //d.DeclarationTypeCode,
+                d.DeclarationStatusTypeName,
+                //d.ReferentUserId,
+                //d.CustomerId,
+                d.FinalCargoTypeName,
+                d.FinalManifestNumber,
+                d.FinalSecondCargoId,
+                d.FinalThirdCargoId,
+            })
+            .Select(g => new ExportDeclaration()
+            {
+                DeclarationId = g.Key.Id,
+                //g.Key.CreateDateTime,
+                TaxationDateTime = g.Key.TaxationDateTime,
+                ExportFile = g.Key.ExportFile,
+                //g.Key.TransportModeId,
+                TransportModeName = g.Key.TransportModeName,
+                CustomFileNo = g.Key.CustomFileNo,
+                DeclarationNumber = g.Key.DeclarationNumber,
+                DeclarationTypeName = g.Key.DeclarationTypeName,
+                ProcedureCurrentName = g.Key.ProcedureCurrentName,
+                ExporterImporterCode = g.Key.ExporterImporterCode,
+                RecipientName = g.Key.RecipientName,
+                DestinationCountryName = g.Key.DestinationCountryName,
+                //g.Key.DestinationCountryCode,
+                // g.Key.DeclarationStatusTypeCode,
+                // g.Key.DeclarationTypeCode,
+                DeclarationStatusTypeName = g.Key.DeclarationStatusTypeName,
+                //g.Key.ReferentUserId,
+                // g.Key.CustomerId,
+                FinalCargoTypeName = g.Key.FinalCargoTypeName,
+                FinalManifestNumber = g.Key.FinalManifestNumber,
+                FinalSecondCargoId = g.Key.FinalSecondCargoId,
+                FinalThirdCargoId = g.Key.FinalThirdCargoId,
+                Consignment = g.GroupBy(d => new { d.ConsignmentNumber, d.ConsignmentType, d.CargoTypeName, d.ManifestNumber, d.SecondCargoID, d.ThirdCargoID, d.CargoDescription, d.FinalDestinationPortName, d.PackageQuantity, d.GrossMassMeasure })
+                .Select(con => new Consignment()
+                {
+                    ConsignmentNumber = con.Key.ConsignmentNumber,
+                    ConsignmentType = con.Key.ConsignmentType,
+                    CargoTypeName = con.Key.CargoTypeName,
+                    ManifestNumber = con.Key.ManifestNumber,
+                    SecondCargoID = con.Key.SecondCargoID,
+                    ThirdCargoID = con.Key.ThirdCargoID,
+                    CargoDescription = con.Key.CargoDescription,
+                    FinalDestinationPortName = con.Key.FinalDestinationPortName,
+                    PackageQuantity = con.Key.PackageQuantity,
+                    GrossMassMeasure = con.Key.GrossMassMeasure,
+                })
+                .Where(c => c.ConsignmentNumber != null && showConsignments)
+                .ToList(),
+                SupplierInvoices = g.GroupBy(d => new { d.InvoiceNumber, d.IssueDate, d.IncotermCode, d.InvoiceAmount, d.InvoiceCounterKey })
+                            .Select(groupedInvoice => new SupplierInvoices()
+                            {
+                                InvoiceNumber = groupedInvoice.Key.InvoiceNumber,
+                                IssueDate = groupedInvoice.Key.IssueDate,
+                                IncotermCode =groupedInvoice.Key.IncotermCode,
+                                InvoiceAmount = groupedInvoice.Key.InvoiceAmount,
+                                InvoiceCounterKey = groupedInvoice.Key.InvoiceCounterKey,
+                                InvoiceItems = groupedInvoice
+                                                .Where(item => item.LineNumber != 0)
+                                                .Select(item => new InvoiceItems()
+                                                {
+                                                    ItemCode = item.ItemCode,
+                                                    ClassificationCode = item.ClassificationCode,
+                                                    InvoiceQuantityType = item.InvoiceQuantityType,
+                                                    ItemPrice = item.ItemPrice,
+                                                    OriginCountryName = item.OriginCountryName,
+                                                    PackageQuantity = item.PackageQuantity,
+                                                    TransactionNatureName = item.TransactionNatureName,
+                                                    LineNumber = item.LineNumber
+                                                }).Distinct().ToList()
+                            }).Where(i => i.InvoiceCounterKey != 0 && showInvoices)
+                            .ToList()
+            }).ToList();
+            #endregion
 
-            //}
-            //QueryFilterItem LineActionCodeFilter = queryOperations.QueryFilterItems.Where(d => d.FieldName == "LineActionCode").FirstOrDefault();
-            //if (LineActionCodeFilter != null)
-            //{
-            //    if (LineActionCodeFilter.FieldValue.ToString() == "1")
-            //    {
-            //        iQueryable = iQueryable.Where(x => x.LineActionCode == LineActionCodeFilter.FieldValue.ToString());
-            //    }
-            //    else
-            //    {
-            //        iQueryable = iQueryable.Where(x => x.LineActionCode == LineActionCodeFilter.FieldValue.ToString() || x.LineActionCode == LineActionCodeFilter.FieldValue2.ToString());
-
-            //    }
-            //}
-            //QueryFilterItem IsExternalEntityFilter = queryOperations.QueryFilterItems.Where(d => d.FieldName == "IsExternalEntity").FirstOrDefault();
-            //if (IsExternalEntityFilter != null)
-            //{
-            //    bool value = IsExternalEntityFilter.FieldValue?.ToString() == "1" ? true : false;
-            //    iQueryable = iQueryable.Where(x => x.IsExternalEntity == value);
-
-            //}
-            return iQueryable;
         }
+
+
+
+    
 
         private QueryOperations DeserializeQueryOperationFromXml(byte[] xmlFilters)
         {
@@ -253,6 +330,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
             QueryOperations queryOperations = (QueryOperations)serializer.Deserialize(memorystream);
             return queryOperations;
         }
+
+
+
 
     }
 
