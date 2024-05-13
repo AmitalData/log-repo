@@ -102,6 +102,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         public void UpdatePendingByKeyWords(ConsignmentPM entityPM, Boolean IsAfterDeclarationCourierStatusInsert = false)
         {
+            LogMessagingUtil.Instance.AppendLine("UpdatePendingByKeyWords");
+            try
+            {
             if (!String.IsNullOrWhiteSpace(entityPM.CargoDescription))
             {
                 ConsignmentPM dbOccConsignmentPM = GetDBEntity(entityPM);
@@ -160,6 +163,15 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         }
                     }
                 }
+            }
+
+            }
+            catch (Exception ex )
+            {
+                LogMessagingUtil.Instance.AppendLine("UpdatePendingByKeyWords:" +ex.Message);
+
+
+                throw ex;
             }
         }
 
