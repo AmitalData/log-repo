@@ -47,13 +47,13 @@ namespace WebFreight.Web.DataProviders
         public string IncotermCode { get; set; }
         public decimal? InvoiceAmount { get; set; }
         public int InvoiceCounterKey { get; set; }
-        public List<InvoiceItem> InvoiceItem { get; set; }
+        public List<InvoiceItems> InvoiceItems { get; set; }
 
 
 
     }
 
-    public class InvoiceItem
+    public class InvoiceItems
     {
         public string ItemCode { get; set; }
         public string ClassificationCode { get; set; }

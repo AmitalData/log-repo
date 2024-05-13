@@ -299,9 +299,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
                                 IncotermCode =groupedInvoice.Key.IncotermCode,
                                 InvoiceAmount = groupedInvoice.Key.InvoiceAmount,
                                 InvoiceCounterKey = groupedInvoice.Key.InvoiceCounterKey,
-                                InvoiceItem = groupedInvoice
+                                InvoiceItems = groupedInvoice
                                                 .Where(item => item.LineNumber != 0)
-                                                .Select(item => new InvoiceItem()
+                                                .Select(item => new InvoiceItems()
                                                 {
                                                     ItemCode = item.ItemCode,
                                                     ClassificationCode = item.ClassificationCode,
