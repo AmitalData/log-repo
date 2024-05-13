@@ -348,23 +348,23 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             if (requestParams.InterfaceTypeCode == "2755")
             {
-                var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
-                {
+                //var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
+                //{
 
-                    Tenant = _MyDeclarationPM.Tenant,
-                    objectTableName = "Customs.Declaration",
-                    EventCode = null,
-                    notes = "",
-                    CommunicationLoggingEntityReference = _MyDeclarationPM.DeclarationNumber,
-                    EntityId = _MyDeclarationPM.Id,
-                    UserId = _MyDeclarationPM.CreatedByUserId,
+                //    Tenant = _MyDeclarationPM.Tenant,
+                //    objectTableName = "Customs.Declaration",
+                //    EventCode = null,
+                //    notes = "",
+                //    CommunicationLoggingEntityReference = _MyDeclarationPM.DeclarationNumber,
+                //    EntityId = _MyDeclarationPM.Id,
+                //    UserId = _MyDeclarationPM.CreatedByUserId,
 
-                    CommunicationSubject = "עדכון תיק מכס",
+                //    CommunicationSubject = "עדכון תיק מכס",
 
-                };
-                Logitude.AmitalMessaging.Infrastructure.FuStatus.LOGICUSTFILE logistictFile = AmitalInsertToQueueEzer.setLogistictFile(_MyDeclarationPM);
-                var amitalInsertToQueueService = new AmitalInsertToQueueService<Logitude.AmitalMessaging.Infrastructure.FuStatus.LOGICUSTFILE>(logistictFile);
-                amitalInsertToQueueService.InsertToQueue(myAmitalEventTracerModel, "UpdateExportCustomsFile");
+                //};
+                //Logitude.AmitalMessaging.Infrastructure.FuStatus.LOGICUSTFILE logistictFile = AmitalInsertToQueueEzer.setLogistictFile(_MyDeclarationPM);
+                //var amitalInsertToQueueService = new AmitalInsertToQueueService<Logitude.AmitalMessaging.Infrastructure.FuStatus.LOGICUSTFILE>(logistictFile);
+                //amitalInsertToQueueService.InsertToQueue(myAmitalEventTracerModel, "UpdateExportCustomsFile");
 
 
                 this._IsSubmitDeclarationResponse = !this._IsCancelPaymentResponse;
