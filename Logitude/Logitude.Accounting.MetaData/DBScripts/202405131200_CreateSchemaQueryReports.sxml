@@ -4,7 +4,7 @@
 	
 IF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = 'QueryReports')
 BEGIN
-    EXEC ('CREATE SCHEMA query;');
+    EXEC ('CREATE SCHEMA QueryReports;');
 END
 		
      ]]>
