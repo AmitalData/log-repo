@@ -2,7 +2,6 @@ import { EventEmitter, OnInit, Output, Component, ComponentRef } from '@angular/
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { QueueMessagesStatExtendedListService } from 'Accounting/Services/ExtendedLists/QueueMessagesStatExtendedListService';
 import { LogitudeWindow } from 'Controls/Windows/LogitudeWindow';
-import { CustomsClosedTablesComponent } from 'CustomsModules/CustomsMaintenance/Components/CustomsClosedTablesComponent';
 import { ListComponentArgs } from 'Infrastructure/Args';
 import { BaseComponent } from 'Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
@@ -17,7 +16,7 @@ export class QueueMessagesStatistics extends BaseComponent implements OnInit {
     private _entityListService: QueueMessagesStatExtendedListService;
     public ValidationErrorsList: string[] = [];
     private _entityResourceService: EntityResourceService = new EntityResourceService();
-    public ComponentRef: ComponentRef<CustomsClosedTablesComponent>;
+    public ComponentRef: ComponentRef<any>;
     private CurrentSession = SessionLocator.SelectedSession;
     public CurrentTenant = SessionLocator.Tenant;
     public columns: any[] = null;
@@ -48,7 +47,7 @@ export class QueueMessagesStatistics extends BaseComponent implements OnInit {
         this.FromDate = this.SetDate(Year, month, Day);
         this.FromDate.setUTCDate(this.ToDate.getDate() - 7);
     }
-    public GridHeaderText:string = "Queue Messages";
+    public GridHeaderText: string = "Queue Messages";
 
     ReloadScreen() {
         this.onQueryChangeEvent.emit({ Filters: this.Main_Filter });
@@ -77,16 +76,16 @@ export class QueueMessagesStatistics extends BaseComponent implements OnInit {
         filters.GetAll = false;
         filters.GetCount = true;
         filters.addAdditionalFilter("CreateDateTime", this.FromDate, this.ToDate, null, "Between", true, false, false, "DateTime");
-       if (this.Status != null)
-           filters.addAdditionalFilter("Status", this.Status, null, null, "Equals", false, false, false, "string", false, true);
-       if (this.Tenant != null)
-           filters.addAdditionalFilter("Tenant", this.Tenant, null, null, "Equals", false, false, false, "string", false, true);
-       if (this.RetryNumber != null)
-           filters.addAdditionalFilter("RetryNumber", this.RetryNumber, null, null, "Equals", false, false, false, "string", false, true);
+        if (this.Status != null)
+            filters.addAdditionalFilter("Status", this.Status, null, null, "Equals", false, false, false, "string", false, true);
+        if (this.Tenant != null)
+            filters.addAdditionalFilter("Tenant", this.Tenant, null, null, "Equals", false, false, false, "string", false, true);
+        if (this.RetryNumber != null)
+            filters.addAdditionalFilter("RetryNumber", this.RetryNumber, null, null, "Equals", false, false, false, "string", false, true);
         return filters;
     }
 
-    public MoreDetails() {      
+    public MoreDetails() {
         this._entityResourceService.getEntityResourceByTableName("ARInvoice", 0).subscribe((response: any) => {
             var listArgs = new ListComponentArgs();
             listArgs.DisplayTitle = "Queue Messages More Details";
@@ -99,7 +98,7 @@ export class QueueMessagesStatistics extends BaseComponent implements OnInit {
         });
     }
 
-    
+
     BackButtonClicked() {
         if (this.ComponentRef) {
             this.ComponentRef.destroy();
