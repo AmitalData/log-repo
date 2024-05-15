@@ -101,10 +101,10 @@ export class AddEditReportTaskSchedulerComponent implements AfterViewInit{
      private SetSchedulerReport() {
         if(!this.IsQueryReport) return;
         var currentProcedureName = this.DataContext.SchedulerDetailsData.ReportDetails.ProcedureName;
-        console.log('currentProcedureName'+currentProcedureName);
-        console.log('SchedulerReports'+this.SchedulerReports);
+        console.log(currentProcedureName);
+        console.log(this.SchedulerReports);
         this.SelectedReport = this.SchedulerReports.filter(proc => proc.Code == currentProcedureName)[0];
-        console.log('SelectedReport'+this.SelectedReport);
+        console.log(this.SelectedReport);
      }
     
 
