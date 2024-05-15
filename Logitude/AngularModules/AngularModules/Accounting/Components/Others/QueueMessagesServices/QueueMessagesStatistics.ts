@@ -29,6 +29,7 @@ export class QueueMessagesStatistics extends BaseComponent implements OnInit {
     public ToStatusText: string = "Status:  ";
     public ToTenantText: string = "Tenant: ";
     public ToRetryNumberText: string = "Retry Number: ";
+    public BackBtnTitle:string ="";
 
     public WaitingSinceText: string = " waiting since ";
     public Parag1: string = "Incremental last run on: ";
