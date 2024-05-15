@@ -38,6 +38,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
         public void Add(CCUPAYLINEF entity)
         {
             context.CCUPAYLINEFs.Add(entity);
+            SyncRecordCache.ClearCacheLasySync(entity.FILENO.ToString(), entity.TENANT.Value);
         }
 
         public void Remove(CCUPAYLINEF entity)
@@ -48,6 +49,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             }
             //context.AddToCCUPAYLINEFs 
             context.CCUPAYLINEFs.Remove(entity);
+            SyncRecordCache.ClearCacheLasySync(entity.FILENO.ToString(), entity.TENANT.Value);
         }
 
         public void Update(CCUPAYLINEF entity)
@@ -56,6 +58,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             {
                 context.CCUPAYLINEFs.Attach(entity); context.SetAsModified(entity);
             }
+            SyncRecordCache.ClearCacheLasySync(entity.FILENO.ToString(), entity.TENANT.Value);
         }
 
         public List<CCUPAYLINEF> All()

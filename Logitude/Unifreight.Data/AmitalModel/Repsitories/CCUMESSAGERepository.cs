@@ -39,6 +39,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
         public void Add(CCUMESSAGE entity)
         {
             context.CCUMESSAGEs.Add(entity);
+            SyncRecordCache.ClearCacheLasySync(entity.FILENO.ToString(), entity.TENANT.Value);
         }
 
         public void Remove(CCUMESSAGE entity)
@@ -52,6 +53,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             //http://forums.devart.com/viewtopic.php?t=13223
             //context.ExecuteStoreCommand 
             context.CCUMESSAGEs.Remove(entity);
+            SyncRecordCache.ClearCacheLasySync(entity.FILENO.ToString(), entity.TENANT.Value);
         }
 
         public void Update(CCUMESSAGE entity)
@@ -60,6 +62,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             {
                 context.CCUMESSAGEs.Attach(entity); context.SetAsModified(entity);
             }
+            SyncRecordCache.ClearCacheLasySync(entity.FILENO.ToString(), entity.TENANT.Value);
         }
 
         public List<CCUMESSAGE> All()

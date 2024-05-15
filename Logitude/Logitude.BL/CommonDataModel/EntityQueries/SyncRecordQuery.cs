@@ -90,7 +90,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public DateTime? GetLastSyncDate(int tenant, string fileNo)
         {         
-            string cacheKey = $"SyncRecordQuery.GetLastSyncDate." + fileNo + ";" + tenant;
+            string cacheKey = "SyncRecordQuery.GetLastSyncDate." + fileNo + ";" + tenant;
             DateTime? lastSync = CacheHelper.GetFromCache(cacheKey, () => 
                 repository.GetLastSyncDate(tenant, fileNo));
 

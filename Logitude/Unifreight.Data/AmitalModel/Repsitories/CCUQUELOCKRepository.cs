@@ -40,6 +40,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
         public void Add(CCUQUELOCK entity)
         {
             context.CCUQUELOCKs.Add(entity);
+            SyncRecordCache.ClearCacheLasySync(entity.FILE_NO, entity.TENANT.Value);
         }
 
         public void Remove(CCUQUELOCK entity)
@@ -48,6 +49,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             AttachIfNot(entity);context.SetAsModified(entity); //context.CCUQUELOCKs.Attach(entity);
             //context.AddToCCUQUELOCKs 
             context.CCUQUELOCKs.Remove(entity);
+            SyncRecordCache.ClearCacheLasySync(entity.FILE_NO, entity.TENANT.Value);
         }
 
         public void Update(CCUQUELOCK entity)
@@ -55,6 +57,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             AttachIfNot(entity);context.SetAsModified(entity);
 
             context.SetAsModified(entity);
+            SyncRecordCache.ClearCacheLasySync(entity.FILE_NO, entity.TENANT.Value);
         }
         void AttachIfNot(CCUQUELOCK entity)
         {
