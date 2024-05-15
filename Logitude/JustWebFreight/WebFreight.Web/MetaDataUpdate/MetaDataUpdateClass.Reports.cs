@@ -23,7 +23,7 @@ namespace WebFreight.Web.MetaDataUpdate
             ReportGroup CRMGroup = AddReports.AddReportGroup(new ReportGroupDetails() { Code = "RQCR", EnglishName = "CRM", LocalName = "CRM", Tenant = 0, OrderNumber = 5 }, reportGroupRepository, TenantReportGroups);
             ReportGroup TFSGroup = AddReports.AddReportGroup(new ReportGroupDetails() { Code = "RTFS", EnglishName = "TFS", LocalName = "TFS", Tenant = 0, OrderNumber = 6 }, reportGroupRepository, TenantReportGroups);
             ReportGroup AdminGroup = AddReports.AddReportGroup(new ReportGroupDetails() { Code = "ADMN", EnglishName = "Administrative ", LocalName = "Administrative", Tenant = 0, OrderNumber = 4 }, reportGroupRepository, TenantReportGroups);
-            ReportGroup ExportCustomGroup = AddReports.AddReportGroup(new ReportGroupDetails() { Code = "EXCR", EnglishName = "ExportCustoms", LocalName = "דוחות - יצוא", Tenant = 0, OrderNumber = 7 }, reportGroupRepository, TenantReportGroups);
+            ReportGroup ExportCustomGroup = AddReports.AddReportGroup(new ReportGroupDetails() { Code = "EXCR", EnglishName = "ExportCustoms", LocalName = "דוחות - יצוא", Tenant = 0, OrderNumber = -1 }, reportGroupRepository, TenantReportGroups);
 
             reportGroupRepository.SubmitChanges();
 
