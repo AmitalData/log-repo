@@ -47,9 +47,9 @@ using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Helpers.WorkerRoleHelpers;
 
-namespace CommunicationWorkerRole
+namespace CustomsWorkerRole
 {
-     public class ReportExecutionLogWR : WorkerEntryPoint
+     public class ReportExecutionLogWR : CustomsWorkerEntryPoint
     {
 
         DbQueueService queueService;
@@ -71,7 +71,7 @@ namespace CommunicationWorkerRole
 
         public override void Run()
         {
-            while (IsRunning)
+            while (!WorkerRoleServiceLocator.PleaseShutDown)
             {
                 if (!this.IsUpdating())
                 {
@@ -167,7 +167,26 @@ namespace CommunicationWorkerRole
             }
         }
 
+        public override void WorkOnce()
+        {
 
+            try
+            {
+                OnStart();
+
+                //  WorkUntil_AnalyzeQueue_Empty_Db_NOTINUSE();
+
+
+            }
+            catch (Exception e)
+            {
+                ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "WorkerRole" + this.GetType().Name, " : Run() Method", null);
+                Thread.Sleep(TimeSpan.FromSeconds(5));
+               // _OnStartDone = false;
+            }
+
+
+        }
 
     }
 
