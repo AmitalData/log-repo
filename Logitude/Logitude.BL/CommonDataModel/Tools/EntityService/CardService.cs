@@ -143,7 +143,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         {
             this.isNewEntity = false;
             this.Poco = entityRepository.GetSingleCard(entityPM.Id , tenant);
-            this.UpdateGLAccount();
+           if(entityPM.GLAccountId!= null)   this.UpdateGLAccount();
 
             this.Initialize();
 

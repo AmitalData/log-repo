@@ -2433,7 +2433,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             //if Supplier Invoice Modifications of type I02 is empty - Take Type I01
             if (_CCUFILEMPM.FEEPLATFORM == 0)
             {
-                _CCUFILEMPM.FEEPLATFORM = (long)_CCUFILEMPMSupplierInvoiceModificationsI01;
+                _CCUFILEMPM.FEEPLATFORM = (long)_CCUFILEMPMSupplierInvoiceModificationsI01.GetValueOrDefault();
             }
             //This is to be done in a full saving mode ONLY  --->
         }
@@ -2534,7 +2534,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             amountDouble = Transfer(decSupplierInvoice.InsuranceAmount, decSupplierInvoice.InsruanceCurrencyTypeCode, "ILS", decSupplierInvoice.ExchangeRate);
             if (amountDouble != null)
             {
-                _CCUFILEMPM.INSURANCEVALUE = _CCUFILEMPM.INSURANCEVALUE.GetValueOrDefault() + (long)amountDouble;
+                _CCUFILEMPM.INSURANCEVALUE = _CCUFILEMPM.INSURANCEVALUE.GetValueOrDefault() + (long)amountDouble.GetValueOrDefault();
             }
 
             ////<--- Yuval Chalup 02.08.2015 // Mirit 10/07/16 Task 20996
@@ -2575,7 +2575,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     }
                 }
 
-                _CCUFILEMPM.INDEXVALUE = _CCUFILEMPM.INDEXVALUE.GetValueOrDefault() +(long) ((decSupplierInvoice.InvoiceAmount * invoiceExchangeRate) / firstInvoiceExchangeRate);
+                _CCUFILEMPM.INDEXVALUE = _CCUFILEMPM.INDEXVALUE.GetValueOrDefault() +(long) ((decSupplierInvoice.InvoiceAmount * invoiceExchangeRate) / firstInvoiceExchangeRate).GetValueOrDefault();
             }
             else
             {
@@ -2674,7 +2674,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     case "09":
                     case "9":
                         amountDouble = Transfer(decSupplierInvoiceModifications.Amount, decSupplierInvoiceModifications.CurrencyTypeCode, "ILS", null);
-                        _CCUFILEMPM.REGIONVALUE = _CCUFILEMPM.REGIONVALUE.GetValueOrDefault() + (long)amountDouble;
+                        _CCUFILEMPM.REGIONVALUE = _CCUFILEMPM.REGIONVALUE.GetValueOrDefault() + (long)amountDouble.GetValueOrDefault();
                         break;
                     case "I01":
                         amountDouble = Transfer(decSupplierInvoiceModifications.Amount, decSupplierInvoiceModifications.CurrencyTypeCode, "ILS", null);
@@ -2682,13 +2682,13 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         break;
                     case "I02":
                         amountDouble = Transfer(decSupplierInvoiceModifications.Amount, decSupplierInvoiceModifications.CurrencyTypeCode, "ILS", null);
-                        _CCUFILEMPM.FEEPLATFORM = _CCUFILEMPM.FEEPLATFORM.GetValueOrDefault() + (long)amountDouble;
+                        _CCUFILEMPM.FEEPLATFORM = _CCUFILEMPM.FEEPLATFORM.GetValueOrDefault() + (long)amountDouble.GetValueOrDefault();
                         break;
                     case "160":
                         if(isCancelUpdateExpenses != "Y")
                         {
                             amountDouble = Transfer(decSupplierInvoiceModifications.Amount, decSupplierInvoiceModifications.CurrencyTypeCode, "ILS", null);
-                            _CCUFILEMPM.EXPENSEVALUE = _CCUFILEMPM.EXPENSEVALUE.GetValueOrDefault() +(long) amountDouble;
+                            _CCUFILEMPM.EXPENSEVALUE = _CCUFILEMPM.EXPENSEVALUE.GetValueOrDefault() +(long) amountDouble.GetValueOrDefault();
                         }
                         amountDouble = Transfer(decSupplierInvoiceModifications.Amount, decSupplierInvoiceModifications.CurrencyTypeCode, decSupplierInvoice.InvoiceCurrencyTypeCode, null);
                         supplierInvoicePM.CHANGINGVALUE = supplierInvoicePM.CHANGINGVALUE.GetValueOrDefault() + amountDouble;
@@ -2712,7 +2712,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     //<---Yuval Chalup 16.02.2016 TASK-19998 (Also remark case "265" and "16" above)
                     case "I10":
                         amountDouble = Transfer(decSupplierInvoiceModifications.Amount, decSupplierInvoiceModifications.CurrencyTypeCode, "ILS", null);
-                        _CCUFILEMPM.SERVICEVALUE = _CCUFILEMPM.SERVICEVALUE.GetValueOrDefault() +(long) amountDouble;
+                        _CCUFILEMPM.SERVICEVALUE = _CCUFILEMPM.SERVICEVALUE.GetValueOrDefault() +(long) amountDouble.GetValueOrDefault();
                         supplierInvoicePM.COMMISSION = supplierInvoicePM.COMMISSION.GetValueOrDefault() + amountDouble;
                         break;
                     //Yuval Chalup 16.02.2016 TASK-19998 --->
