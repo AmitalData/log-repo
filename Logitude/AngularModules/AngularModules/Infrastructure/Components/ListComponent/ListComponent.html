@@ -276,16 +276,12 @@
                             <img style="height:30px;width:30px;margin-top:1px" (click)="TipVisibilityChanged('true')" src="./Images/Lamp2.png" />
                         </td>
 
-                        <td style="width: 35px;">
-                            <div></div>
+                        <td *ngIf="ShowViews" style="width: 35px; vertical-align: middle; font-size: 11px; color:  #45494A; padding-right: 10px; padding-left: 5px;">
+                            <span>{{'General.O.View' | TextCodeTranslationPipe}}:</span>
                         </td>
 
-                        <td style="width: 35px; vertical-align: middle; font-size: 11px; color:  #45494A;">
-                            <span *ngIf="ShowViews">{{'General.O.View' | TextCodeTranslationPipe}}:</span>
-                        </td>
-
-                        <td style="width: 35px; vertical-align: middle; font-size: 11px; color:  #45494A;">
-                            <span *ngIf="EnglishView">{{'View'}}:</span>
+                        <td *ngIf="EnglishView" style="width: 35px; vertical-align: middle; font-size: 11px; color:  #45494A;">
+                            <span>{{'View'}}:</span>
                         </td>
 
                         <td style="vertical-align: middle;width:170px">
@@ -312,7 +308,7 @@
                             <div></div>
                         </td>
 
-                        <td *ngIf="HasCustomsFilterMenu" style="float: left; left:50PX;">
+                        <td *ngIf="HasCustomsFilterMenu" style="float: left; margin-right: 20px">
                             <div LocationDirective Code="MNH"></div>
                         </td>
                         <td style="width: 1px;" *ngIf="IsNavigateButtonVisible">
@@ -327,8 +323,10 @@
                             <div></div>
                         </td>
 
+
                         <td style="width: 250px; vertical-align: middle;">
                             <SearchTextBox [IsDisabled]="SeachBoxIsDisabled || !SelectedQuery" [SearchText]="searchFields" [ObjectTableName]="ObjectTableName" (SearchTextChangeEvent)="onSearchTextChangeEvent($event)" [DataCy]="'Search' + ObjectTableName"></SearchTextBox>
+
                         </td>
 
 

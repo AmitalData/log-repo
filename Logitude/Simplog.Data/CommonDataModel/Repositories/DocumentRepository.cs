@@ -72,8 +72,9 @@ namespace Simplog.Data.CommonDataModel.Repositories
             char[] delimiterChars = {  '-' };
              var query= (from a in context.Documents
                     where a.Tenant== tenant &&  a.Extension == extension && a.FileName.StartsWith(fileName) 
+                    orderby a.CreateDate descending
                     select a.Id);
-            return query.FirstOrDefault();
+            return query.FirstOrDefault(); 
         }
 
         public void Add(Document entity)

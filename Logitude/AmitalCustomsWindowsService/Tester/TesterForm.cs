@@ -57,6 +57,7 @@ namespace AmitalCustomsWindowsService.Tester
             _CBWorkerRole.Items.Add("CustomsSchedularWR");
             _CBWorkerRole.Items.Add("RabbitMQReceiveWR");
             _CBWorkerRole.Items.Add("CustomsHSMSignWR");
+            _CBWorkerRole.Items.Add("ReportExecutionLogWR");
 
             Debug.WriteLine("Env:");
             Debug.WriteLine(LogitudeSettings.LogitudeURL);
@@ -267,6 +268,14 @@ namespace AmitalCustomsWindowsService.Tester
                 case "CustomsHSMSignWR":
                     {
                         d = new AmitalCustomsWindowsService.BL.WorkerOnce<CustomsHSMSignWR>(
+                10, 1, checkBoxDebugMode.Checked, _CBInterfaceID.Text)
+                        { ServiceStarted = true, };
+                    }
+                    break;
+
+                case "ReportExecutionLogWR":
+                    {
+                        d = new AmitalCustomsWindowsService.BL.WorkerOnce<ReportExecutionLogWR>(
                 10, 1, checkBoxDebugMode.Checked, _CBInterfaceID.Text)
                         { ServiceStarted = true, };
                     }
@@ -732,6 +741,13 @@ namespace AmitalCustomsWindowsService.Tester
                         var SendWEBAPIMessage2MamanWR = new CustomsHSMSignWR();
                         SendWEBAPIMessage2MamanWR.DebugStep(_TBID.Text, _CBInterfaceID.Text, GetTenant(), 
                             "032443830", "SignQueueByPersonId");
+
+                    }
+                    break;
+                case "ReportExecutionLogWR":
+                    {
+                        var reportExecutionLogWR = new ReportExecutionLogWR();
+                        reportExecutionLogWR.Run();
 
                     }
                     break;

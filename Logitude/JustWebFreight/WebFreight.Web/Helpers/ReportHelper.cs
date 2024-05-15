@@ -2677,26 +2677,29 @@ namespace WebFreight.Web.Helpers
                 ExportDocumentHelper exportDocumentHelper = new ExportDocumentHelper();
 
                 
-                if (false)
-                {
+               
                 string dllName = exportDocumentHelper.GetDllName(reportTemplate, report);
-                byte[] dllData = exportDocumentHelper.GetDllFromStorage(dllName, reportStimulDataProviderDetails.Tenant);
-                if (dllData != null && dllData.Count() != 0)
-                    {
-                        report = StiReport.GetReportFromAssembly(dllData);
-                        if (reportStimulDataProviderDetails.CurrentBusinessObject != null) exportDocumentHelper.RegBusinessObject(report, reportStimulDataProviderDetails.CurrentBusinessObject);
-                        report.NeedsCompiling = false;
-                        exportDocumentHelper.AddLogo(report, reportStimulDataProviderDetails.Logo);
-                    }
-                    else
-                    {
-                        if (reportStimulDataProviderDetails.CurrentBusinessObject != null) exportDocumentHelper.RegBusinessObject(report, reportStimulDataProviderDetails.CurrentBusinessObject);
-                        report.Load(reportTemplate);
 
-                        exportDocumentHelper.AddLogo(report, reportStimulDataProviderDetails.Logo);
+            //byte[] dllData = exportDocumentHelper.GetDllFromStorage(dllName, reportStimulDataProviderDetails.Tenant);
 
-                        exportDocumentHelper.SaveDllFileInStorage(reportTemplate, report, reportStimulDataProviderDetails.Tenant);
-                    }
+            if (false)
+            {
+                //if (dllData != null && dllData.Count() != 0)
+                //{
+                //    report = StiReport.GetReportFromAssembly(dllData);
+                //    if (reportStimulDataProviderDetails.CurrentBusinessObject != null) exportDocumentHelper.RegBusinessObject(report, reportStimulDataProviderDetails.CurrentBusinessObject);
+                //    report.NeedsCompiling = false;
+                //    exportDocumentHelper.AddLogo(report, reportStimulDataProviderDetails.Logo);
+                //}
+                //else
+                //{
+                //    if (reportStimulDataProviderDetails.CurrentBusinessObject != null) exportDocumentHelper.RegBusinessObject(report, reportStimulDataProviderDetails.CurrentBusinessObject);
+                //    report.Load(reportTemplate);
+
+                //    exportDocumentHelper.AddLogo(report, reportStimulDataProviderDetails.Logo);
+
+                //    exportDocumentHelper.SaveDllFileInStorage(reportTemplate, report, reportStimulDataProviderDetails.Tenant);
+                //}
                 }
                 else
                 {
