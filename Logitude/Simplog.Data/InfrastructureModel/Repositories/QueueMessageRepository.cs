@@ -35,15 +35,15 @@ namespace Simplog.Data.InfrastructureModel.Repositories
         //    return context.QueueMessages.Where(a => a.QueueDefinitionCode == "ImportersShipmentsBatchQueue" || a.QueueDefinitionCode == "ImportersShipmentDocumentsBatchQueue");
         //}
 
-        public QueueMessage GetSingleQueueMessage(long id)
+        public QueueMessage GetSingleQueueMessage(string id)
         {
-            //long? longId = null;
-            //if (id != null)
-            //{
-            //    longId = long.Parse(id);
-            //}
+            long? longId = null;
+            if (id != null)
+            {
+                longId = long.Parse(id);
+            }
             return (from a in context.QueueMessages
-                    where a.Id == id
+                    where a.Id == longId
                     select a).FirstOrDefault();
         }
         public QueueMessage GetSingleQueueMessage(string entityId,string entityCode)

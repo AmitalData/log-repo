@@ -198,7 +198,7 @@ namespace Logitude.Server.Tools.QueueService
         {
             var messagesRepository = new QueueMessageRepository(Tenant);
 
-            var q = messagesRepository.GetSingleQueueMessage(messageId);
+            var q = messagesRepository.GetSingleQueueMessage(messageId.ToString());
             if (q?.Id == null)
             {
                 return null;
