@@ -91,7 +91,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class CardUpdateClass
    {  		
-		public const string HashString = "1b9b576952107d085194c1af3e4817b9";
+
+		public const string HashString = "4d49ddb72b4794436c72ba991642ea81";
+
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -142,9 +144,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  50,
+			      				    LocalDefaultText =  "כרטיסים",
 			      				    DefaultText =  "Card",
-                                    LocalDefaultText = "כרטיסים",
-									Code =  "1561",
+			      				    Code =  "1561",
 			      				    Name =  "Card",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",
@@ -1418,10 +1420,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  true,
 					  						PMPropertyPath =  "PartnerTypeName",
 					  						ListPropertyPath =  "PartnerTypeName",
-					  						DisplayInLookUpIndex =  6,
+					  						DisplayInLookUpIndex =  4,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  6,
+					  						DisplayInSearchWindowListIndex =  4,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
@@ -2773,9 +2775,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SearchFields",
 					  						DefaultText =  "Search names/ vat.#/ City/ Country",
-                                            FullLocalDefaultText = "חפש שמות/ח.פ./מדינה",
-
-                                              HelpTextCode =  "SearchFields",
+					  						FullLocalDefaultText =  "חפש שמות/ח.פ./מדינה",
+					  						HelpTextCode =  "SearchFields",
 					  						HelpTextDefaultText =  "Searching by :\n1: code\n2: english and local names\n3: prefix\n4: accounting card\n5: vat number",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -3039,13 +3040,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LocalName",
 					  						DefaultText =  "Local Name",
-					  						FullLocalDefaultText =  "שם מקומי",
+					  						FullLocalDefaultText =  "שם בעברית",
 					  						ListFieldLable =  "LocalNameListLable",
 					  						ListLableDefaultText =  "Local Name",
-					  						ListLocalDefaultText =  "שם הלקוח",
+					  						ListLocalDefaultText =  "שם בעברית",
 					  						ShortFieldLable =  "LocalName",
 					  						ShortFieldLableDefaultText =  "Local Name",
-					  						ShortLocalDefaultText =  "שם הלקוח",
+					  						ShortLocalDefaultText =  "שם בעברית",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -3075,7 +3076,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MaxLength =  100,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  true,
+					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
@@ -3086,7 +3087,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  true,
+					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "ComputedLocalName",
 					  						ListPropertyPath =  "ComputedLocalName",
 					  						DisplayInLookUpIndex =  2,
@@ -3537,10 +3538,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  true,
 					  						PMPropertyPath =  "CityName",
 					  						ListPropertyPath =  "CityName",
-					  						DisplayInLookUpIndex =  4,
+					  						DisplayInLookUpIndex =  6,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  4,
+					  						DisplayInSearchWindowListIndex =  6,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
@@ -7096,7 +7097,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MaxLength =  200,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUp =  true,
 					  						DisplayOnLookUpLocal =  true,
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
@@ -7110,10 +7111,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  true,
 					  						PMPropertyPath =  "CalculatedLocalName",
 					  						ListPropertyPath =  "CalculatedLocalName",
-					  						DisplayInLookUpIndex =  1,
+					  						DisplayInLookUpIndex =  2,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  1,
+					  						DisplayInSearchWindowListIndex =  2,
 					  						IsMulti =  false,
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
@@ -7128,10 +7129,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CalculatedLocalName",
 					  						DefaultText =  "Local Name",
-					  						FullLocalDefaultText =  "שם מקומי",
+
+
 					  						ListFieldLable =  "CalculatedLocalNameListLable",
 					  						ListLableDefaultText =  "Local Name",
-					  						ListLocalDefaultText =  "שם מקומי",
+
+					  						ListLocalDefaultText =  "שם בעברית",
+
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,

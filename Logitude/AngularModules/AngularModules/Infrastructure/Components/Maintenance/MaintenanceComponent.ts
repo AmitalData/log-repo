@@ -82,10 +82,10 @@ export class MaintenanceComponent {
         this.PagesMenu.push(new Menu("OTH", TextCodeTranslator.Translate("General.MC.Others.Others")));
         this.PagesMenu.push(new Menu("PRS", TextCodeTranslator.Translate("General.MC.PersonalSettings.PersonalSettings")));
         this.PagesMenu.push(new Menu("CMS", TextCodeTranslator.Translate("General.MC.SystemSettings.SystemSettings")));
-         
+
         if (FeatureLocator.HasFeaturePermession("General", this.invoiceConfirmationNumber))
             this.PagesMenu.push(new Menu("SHA", TextCodeTranslator.Translate("General.MC.ShaamTokenManagement")));
-        
+
         if (SessionLocator.Tenant == 0) {
             this.PagesMenu.push(new Menu("MNG", TextCodeTranslator.Translate("General.MC.Management.Management")));
         }
@@ -139,10 +139,10 @@ export class MaintenanceComponent {
             }
         }
 
-       if (this.isTransmissionsPageVisible) {
+        if (this.isTransmissionsPageVisible) {
             this.PagesMenu.push(new Menu("TRANS", "Transmissions"));
         }
-  
+
 
         if (FeatureLocator.HasFeaturePermession("General", "General.Features.BusinessProcessQueue") || FeatureLocator.HasFeaturePermession("General", "General.Features.BusinessProcessTeam") ||
             FeatureLocator.HasFeaturePermession("General", "General.Features.BusinessProcessBusinessRole")) {
@@ -162,7 +162,7 @@ export class MaintenanceComponent {
             this.PagesMenu.push(new Menu("TSK", TextCodeTranslator.Translate("General.MC.Tasks.Tasks")));
         }
     }
-    
+
     // Maintenance Menu
     private AllMaintenanceMenu: MaintenanceMenuItem[];
     private BuildMaintenanceMenu() {
@@ -170,7 +170,7 @@ export class MaintenanceComponent {
         var allMenusTables: MenusTablePM[] = window.MenusTables.filter(x => x.MenuTypeCode === "MTC").sort((a, b) => { return a.IndexOfOrder - b.IndexOfOrder });
 
         allMenusTables.forEach(item => {
- 
+
             if (FeatureLocator.IsFeatureGrantedByUniqeCode(item.FeatureUniqeCode)) {
 
                 if (item.Code == "MTCB") {
@@ -195,7 +195,7 @@ export class MaintenanceComponent {
                         this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
                     }
                 }
-                 
+
                 else if (item.Code == "MTCO") {
                     this.PushEntityStatusMenu(item);
                 }
@@ -596,7 +596,7 @@ export class MaintenanceComponent {
         this.AllMaintenanceMenu.push(new MaintenanceMenuItem(menusTablePM));
     }
 
-   
+
     private BuildPersonalSettings() {
         if (FeatureLocator.HasFeaturePermession("General", "PERSONALSETTINGS")) {
 
@@ -820,7 +820,7 @@ export class MaintenanceComponent {
             item.ObjectTableName = "Cache Log";
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
         }
-        
+
         if (FeatureLocator.HasFeaturePermession("General", "CARGOTRACKING")) {
             var item = new MenusTablePM();
             item.CategoryTypeCode = "OTH";
@@ -830,6 +830,14 @@ export class MaintenanceComponent {
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
         }
 
+        if (FeatureLocator.HasFeaturePermession("General", "CARGOTRACKING")) {
+            var item = new MenusTablePM();
+            item.CategoryTypeCode = "OTH";
+            item.Icon = "List"
+            item.Code = "QUEUEMSG";
+            item.ObjectTableName = "Queue Messages";
+            this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+        }
 
         if (SessionLocator.Tenant == 0) {
             var item = new MenusTablePM();
@@ -937,7 +945,7 @@ export class MaintenanceComponent {
             this.AddTranslateLabelMenu();
             this.AddTranslationMenu();
         }
-        this.AddCustomFieldsMenu();  
+        this.AddCustomFieldsMenu();
     }
     private AddCustomFieldsMenu() {
         let item = new MenusTablePM();
@@ -987,7 +995,7 @@ export class MaintenanceComponent {
         maintenanceMenuItem.DescriptionText = objectTable.Description != null ? objectTable.Description : TextCodeTranslator.Translate(objectTable.DescriptionTextCodeCode);
         this.AllMaintenanceMenu.push(maintenanceMenuItem);
     }
-      private BuildShaamTokenManagementMenu() {
+       private BuildShaamTokenManagementMenu() {
         if (!FeatureLocator.HasFeaturePermession("General", this.invoiceConfirmationNumber)) return;
 
         var item = new MenusTablePM();
@@ -1040,9 +1048,10 @@ export class MaintenanceComponent {
         this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
     }
  
+ 
     // Commands
      PageChanged(item: Menu) {
-        if(item.Code === 'SHA') 
+        if (item.Code === 'SHA')
             return this.navigateToExportCustoms('showShaamTokenManagment');
  
         this.SelectedMenu = item;
@@ -1192,6 +1201,10 @@ export class MaintenanceComponent {
 
                     break;
                 }
+                case "QUEUEMSG": {
+                    this.QueueMessages(item);
+                    break;
+                }
                 case "MTCE": {
                     this.CustomsClosedTablesMethod(item);
                     break;
@@ -1333,11 +1346,11 @@ export class MaintenanceComponent {
                     break;
                 }
 
-                case "CFMM": { 
+                case "CFMM": {
                     var { logWindow, windowArgs }: { logWindow: LogitudeWindow; windowArgs: any; } = this.ShowCustomizationCustomFieldsWindow(logWindow, windowArgs);
                     break;
                 }
-                     
+
 
                 case "SYIN": {
                     this._entityResourceService.getEntityResourceByTableName("TenantManagement", 0).subscribe((response: any) => {
@@ -1410,7 +1423,7 @@ export class MaintenanceComponent {
                     break;
                 }
                 case "COATO": {
-                    this._entityResourceService.getEntityResourceByTableName("ChartOfAccountsType", 0).subscribe((response:any) => {
+                    this._entityResourceService.getEntityResourceByTableName("ChartOfAccountsType", 0).subscribe((response: any) => {
                         var logitudeWindow = new LogitudeWindow();
                         logitudeWindow.Width = 500;
                         logitudeWindow.Height = 400;
@@ -2038,7 +2051,7 @@ export class MaintenanceComponent {
                         break;
                     }
                 default: {
-                    
+
                     if (item.ObjectTableId) {
                         var allQueries: any[] = window.Queries.filter(x => x.ObjectTableId === item.ObjectTableId).sort((a, b) => { return a.IndexOrder - b.IndexOrder });
                         if (allQueries.length == 0) {
@@ -2122,9 +2135,9 @@ export class MaintenanceComponent {
             link += "&logitudeCommandId=" + logitudeCommandId;
             open(link);
         } catch (error) {
-            console.log('******* error throw when try get login link to export', error);            
+            console.log('******* error throw when try get login link to export', error);
             SessionLocator.SelectedSession.StopBusyIndicator();
-            await this.showErrorMessage();            
+            await this.showErrorMessage();
         }
 
         SessionLocator.SelectedSession.StopBusyIndicator();
@@ -2409,6 +2422,18 @@ export class MaintenanceComponent {
                 });
         });
     }
+    QueueMessages(item: MaintenanceMenuItem) {
+        this._entityResourceService.getEntityResourceByTableName("ARInvoice", 0).subscribe((response: any) => {
+            var listArgs = new ListComponentArgs();
+            listArgs.DisplayTitle = "Queue Messages";
+            SessionLocator.DynamicLoader.Load('./Accounting/Components/Others/QueueMessagesServices/QueueMessagesStatistics',
+                this.CurrentSession.SessionMenuLocation.viewContainerRef)
+                .then(cmpRef => {
+                    cmpRef.instance.ComponentRef = cmpRef;
+                    this.CurrentSession.AddMenuReference(cmpRef);
+                });
+        });
+    }
     CustomsAutonomyKeywordMethod(item: MaintenanceMenuItem): any {
 
         this._entityResourceService.getEntityResourceByTableName(item.ObjectTableName, 0).subscribe(response => {
@@ -2512,6 +2537,7 @@ class MaintenanceMenuItem {
                 case "SIGN": { myResult = "Set Signature Settings"; break; }
                 case "CHPA": { myResult = "Change Password"; break; }
                 case "CARGO": { myResult = "Cargo Tracking"; break; }
+                case "QUEUEMSG": { myResult = "Queue Messages"; break; }
                 case "COAD": { myResult = "Company Address Settings"; break; }
                 case "PAGD": { myResult = "Payment Gateway Definition"; break; }
                 case "CODE": { myResult = "System Defaults"; break; }

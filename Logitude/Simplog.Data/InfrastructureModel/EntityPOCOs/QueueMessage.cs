@@ -11,7 +11,7 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
     public class QueueMessage
     {
         [Key]
-        public long  Id { get; set; }
+        public long Id { get; set; }
         public int Tenant { get; set; }
         public string QueueDefinitionCode { get; set; }
         public DateTime CreateDateTime { get; set; }
@@ -21,6 +21,7 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public DateTime? ProcessingDateTime { get; set; }
         public DateTime? CompleteDateTime { get; set; }
         public int RetryNumber { get; set; }
+        public string HashCode { get; set; }
 
         public virtual QueueDefinition QueueDefinition { get; set; }
         //public QueueMessageMoreDetails QueueMessageMoreDetails { get; set; }
@@ -66,5 +67,6 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
 
         #endregion
 
+ 
     }
 }

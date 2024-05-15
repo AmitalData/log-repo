@@ -115,7 +115,7 @@
                     </table>
 
 
-                    <div class="ToggleButtonMenu" [ngStyle]="LayoutDirection == 'rtl' ? {'left': '0', 'right' : 'initial' , top: ToggleButtonTop} : {top: ToggleButtonTop}">
+                    <div class="ToggleButtonMenu" [ngStyle]="LayoutDirection == 'rtl' ? {'left': '0', 'right' : 'initial' , top: ToggleButtonTop} : {'left': 'initial', 'right' : '0' , top: ToggleButtonTop}">
                         <div *ngFor="let menuItem of MenuButtons | MenuButtonsItemsPipe:button.Id; let menuItemIndex=index">
                              <button id="{{ menuItem.LabelTextCodeCode | IdGeneratorPipe}}" *ngIf="menuItem.MenuButtonType=='menuitem' && !menuItem.IsHidden" (click)="OnClick(menuItem)" [disabled]="menuItem.IsDisabled" [ngStyle]="LayoutDirection == 'rtl' ? {'text-align': 'right'} : {'text-align': 'left'}">
                                 <div *ngIf="menuItem.LabelTextCodeCode!=null">{{menuItem.LabelTextCodeCode | TextCodeTranslationPipe}}
