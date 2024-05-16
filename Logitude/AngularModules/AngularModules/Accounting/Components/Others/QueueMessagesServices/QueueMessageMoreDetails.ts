@@ -25,7 +25,7 @@ export class QueueMessageMoreDetails extends BaseComponent implements OnInit {
     public ToDateText: string = "To: ";
     public ToStatusText: string = "Status:  ";
     public ToTenantText: string = "Tenant: ";
-
+    public BackBtnTitle:string ="";
     public WaitingSinceText: string = " waiting since ";
     public Parag1: string = "Incremental last run on: ";
     public Parag2: string = "Records wating for incremental update: ";

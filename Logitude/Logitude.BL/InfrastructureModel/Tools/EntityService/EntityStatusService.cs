@@ -42,21 +42,31 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 
         public void Create(EntityStatusPM theEntityPm)
         {
-            this.isNewEntity = true;
-            this.entityPM = theEntityPm;
-            this.entityPM.Id = IdCounter.GetNumber("EntityStatus", tenant).ToString();
-            this.Poco = new EntityStatus();
-            this.Poco.Id = this.entityPM.Id;
-
-            EntityStatusValidating.Validate(theEntityPm);
-            if (!entityPM.IsHybrid)
+            EntityStatus entity = entityRepository.GetSingleEntityStatusByCodeTableId(entityPM.Code, entityPM.ObjectTableId, entityPM.Tenant);
+            if (entity != null)
             {
-                EntityStatusTracing.Trace(theEntityPm, Poco, isNewEntity);
+                theEntityPm.Id = entity.Id;
+                Update(theEntityPm);
             }
-            EntityStatusMapping.MapEntity(theEntityPm, Poco, isNewEntity);
-            entityRepository.Add(Poco);
-            entityRepository.SubmitChanges();
-            AddQueueMessages();
+                
+            else
+            {
+                this.isNewEntity = true;
+                this.entityPM = theEntityPm;
+                this.entityPM.Id = IdCounter.GetNumber("EntityStatus", tenant).ToString();
+                this.Poco = new EntityStatus();
+                this.Poco.Id = this.entityPM.Id;
+
+                EntityStatusValidating.Validate(theEntityPm);
+                if (!entityPM.IsHybrid)
+                {
+                    EntityStatusTracing.Trace(theEntityPm, Poco, isNewEntity);
+                }
+                EntityStatusMapping.MapEntity(theEntityPm, Poco, isNewEntity);
+                entityRepository.Add(Poco);
+                entityRepository.SubmitChanges();
+                AddQueueMessages();
+            }
         }
 
         public void Update(EntityStatusPM theEntityPm)
