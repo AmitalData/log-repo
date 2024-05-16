@@ -11,7 +11,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
     {
         bool isNewEntity;
         private int tenant;
-        public DefaultAndConfigurationKeys Poco { get; set; }
+        public DefaultAndConfigurationKey Poco { get; set; }
 
         public IWebFreightContext ObjectContext
         {
@@ -33,7 +33,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
         {
             
             this.entityPM = theEntityPm;
-            this.Poco = new DefaultAndConfigurationKeys();
+            this.Poco = new DefaultAndConfigurationKey();
             DefaultAndConfigurationKeyMapping.MapEntity(theEntityPm, Poco);
             entityRepository.Add(Poco);
             entityRepository.SubmitChanges();
@@ -44,15 +44,15 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
         {
              
             this.entityPM = theEntityPm;
-            this.Poco = entityRepository.GetSingleDefaultAndConfigurationKey(theEntityPm.Id);
+            this.Poco = entityRepository.GetSingleDefaultAndConfigurationKey(theEntityPm.SetKey);
             DefaultAndConfigurationKeyMapping.MapEntity(theEntityPm, Poco);
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
         }
 
-        public void Delete(string Id)
+        public void Delete(string SetKey)
         { 
-            this.Poco = entityRepository.GetSingleDefaultAndConfigurationKey(Id); 
+            this.Poco = entityRepository.GetSingleDefaultAndConfigurationKey(SetKey); 
             entityRepository.Remove(Poco);
             entityRepository.SubmitChanges();
         }

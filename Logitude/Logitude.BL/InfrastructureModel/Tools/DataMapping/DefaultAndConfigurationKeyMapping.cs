@@ -6,7 +6,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
 {
     public class DefaultAndConfigurationKeyMapping
     {
-        public static void MapEntity(DefaultAndConfigurationKeyPM entityPM, DefaultAndConfigurationKeys entityPOCO)
+        public static void MapEntity(DefaultAndConfigurationKeyPM entityPM, DefaultAndConfigurationKey entityPOCO)
         { 
             entityPOCO.CreateDateTime = entityPM.CreateDateTime;
             entityPOCO.SetType = entityPM.SetType;

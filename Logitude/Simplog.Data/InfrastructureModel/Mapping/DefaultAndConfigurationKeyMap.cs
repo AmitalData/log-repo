@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Simplog.Data.InfrastructureModel.Mapping
 {
-    public class DefaultAndConfigurationKeyMap : EntityTypeConfiguration<DefaultAndConfigurationKeys>
+    public class DefaultAndConfigurationKeyMap : EntityTypeConfiguration<DefaultAndConfigurationKey>
     {
         public DefaultAndConfigurationKeyMap()
         {

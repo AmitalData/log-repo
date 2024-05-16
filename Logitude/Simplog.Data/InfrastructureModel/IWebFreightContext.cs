@@ -95,7 +95,7 @@ namespace Simplog.Data.InfrastructureModel
         IDbSet<APILogsData> APILogsData { get; }
         IDbSet<QueueMessageMoreDetails> QueueMessageMoreDetails { get; }
         IDbSet<DefaultAndConfiguration> DefaultAndConfigurations { get; }
-        IDbSet<DefaultAndConfigurationKeys> DefaultAndConfigurationKeys { get; }
+        IDbSet<DefaultAndConfigurationKey> DefaultAndConfigurationKey { get; }
         IDbSet<TasksScheduler> TasksSchedulers { get; }
         IDbSet<TaskSchedulerHistory> TaskSchedulerHistories { get; }
         IDbSet<DWObjectTable> DWObjectTables { get; }

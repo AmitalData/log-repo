@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Simplog.Data.InfrastructureModel.EntityPOCOs
 {
-    public class DefaultAndConfigurationKeys
+    public class DefaultAndConfigurationKey
     {
         [Key]
         public string Id { get; set; }

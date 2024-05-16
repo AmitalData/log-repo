@@ -58,6 +58,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             // Table & Column Mappings
             this.ToTable("DefaultAndConfigurations");
             this.Property(t => t.Id).HasColumnName("Id");
+            this.Property(t => t.Id).HasColumnName("Tenant");
             this.Property(t => t.QueueDefinitionCode).HasColumnName("QueueDefinitionCode");
             this.Property(t => t.CreateDateTime).HasColumnName("CreateDateTime");
             this.Property(t => t.SearchFields).HasColumnName("SearchFields");
@@ -65,7 +66,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.StoreInCache).HasColumnName("StoreInCache");
             this.Property(t => t.SetKey).HasColumnName("SetKey");
             this.Property(t => t.AdditionalKey).HasColumnName("AdditionalKey ");
-            this.Property(t => t.SortOrder).HasColumnName("AdditionalKey  ");
+            this.Property(t => t.SortOrder).HasColumnName("AdditionalKey");
             this.Property(t => t.SetValueType1).HasColumnName("SetValueType1"); 
             this.Property(t => t.Value1).HasColumnName("Value1");
             this.Property(t => t.SetValueType2).HasColumnName("SetValueType2"); 

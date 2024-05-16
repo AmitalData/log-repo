@@ -31,16 +31,16 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             repository = new DefaultAndConfigurationKeyRepository(tenant);
         }
 
-        public DefaultAndConfigurationKeyQuery(DefaultAndConfigurationKeyRepository DefaultAndConfigurationKeysRepository)
+        public DefaultAndConfigurationKeyQuery(DefaultAndConfigurationKeyRepository DefaultAndConfigurationKeyRepository)
         {
-            repository = DefaultAndConfigurationKeysRepository;
+            repository = DefaultAndConfigurationKeyRepository;
         }
 
-        public DefaultAndConfigurationKeyPM GetSinglePM(string id)
+        public DefaultAndConfigurationKeyPM GetSinglePM(string SetKey, int tenant1, string settype, string setkey, int tenant)
         {        
             DefaultAndConfigurationKeyPM result =
-          (from a in repository.context.DefaultAndConfigurationKeys
-           where a.Id == id
+          (from a in repository.context.DefaultAndConfigurationKey
+           where a.SetKey == SetKey
            select new DefaultAndConfigurationKeyPM()
            {
                Id = a.Id,
@@ -58,10 +58,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
         }
 
-        public DefaultAndConfigurationKeyPM GetSingleDefaultAndConfigurationKeysPM(string id)
+        public DefaultAndConfigurationKeyPM GetSingleDefaultAndConfigurationKeyPM(string id)
         {
             DefaultAndConfigurationKeyPM result =
-            (from a in repository.context.DefaultAndConfigurationKeys
+            (from a in repository.context.DefaultAndConfigurationKey
              where a.Id == id
              select new DefaultAndConfigurationKeyPM()
              {
@@ -83,7 +83,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         public DefaultAndConfigurationKeyList GetSingleDefaultAndConfigurationKeyList(string id)
         {
             DefaultAndConfigurationKeyList result =
-            (from a in repository.context.DefaultAndConfigurationKeys
+            (from a in repository.context.DefaultAndConfigurationKey
              where a.Id == id
              select new DefaultAndConfigurationKeyList()
              {
@@ -102,10 +102,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
         }
 
-        public List<DefaultAndConfigurationKeyPM> GetDefaultAndConfigurationKeysPMByField1(string SetKey)
+        public List<DefaultAndConfigurationKeyPM> GetDefaultAndConfigurationKeyPMByField1(string SetKey)
         {
             List<DefaultAndConfigurationKeyPM> result =
-            (from a in repository.context.DefaultAndConfigurationKeys
+            (from a in repository.context.DefaultAndConfigurationKey
              where a.SetKey == SetKey
              select new DefaultAndConfigurationKeyPM()
              {
@@ -124,10 +124,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
         }
 
-        public List<DefaultAndConfigurationKeyPM> GetDefaultAndConfigurationKeysPMByField2(string SetType)
+        public List<DefaultAndConfigurationKeyPM> GetDefaultAndConfigurationKeyPMByField2(string SetType)
         {
             List<DefaultAndConfigurationKeyPM> result =
-            (from a in repository.context.DefaultAndConfigurationKeys
+            (from a in repository.context.DefaultAndConfigurationKey
              where a.SetType == SetType
              select new DefaultAndConfigurationKeyPM()
              {
@@ -146,7 +146,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
         }
 
-        public IQueryable<DefaultAndConfigurationKeyList> GetIQueryableEntityList(IQueryable<DefaultAndConfigurationKeys> iQueryable)
+        public IQueryable<DefaultAndConfigurationKeyList> GetIQueryableEntityList(IQueryable<DefaultAndConfigurationKey> iQueryable)
         {
             IQueryable<DefaultAndConfigurationKeyList> result = from a in iQueryable
                                                              select new DefaultAndConfigurationKeyList()
@@ -162,10 +162,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             return result;
         }
         
-        public IQueryable<DefaultAndConfigurationKeyPM> GetIQueryableDefaultAndConfigurationKeysPMByField1(string SetKey)
+        public IQueryable<DefaultAndConfigurationKeyPM> GetIQueryableDefaultAndConfigurationKeyPMByField1(string SetKey)
         {
             IQueryable<DefaultAndConfigurationKeyPM> result =
-            (from a in repository.context.DefaultAndConfigurationKeys
+            (from a in repository.context.DefaultAndConfigurationKey
              where a.SetKey == SetKey
              select new DefaultAndConfigurationKeyPM()
              {
@@ -184,10 +184,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
         }
 
-        public IQueryable<DefaultAndConfigurationKeyPM> GetIQueryableDefaultAndConfigurationKeysPMByField1Field2(string SetKey, string SetType)
+        public IQueryable<DefaultAndConfigurationKeyPM> GetIQueryableDefaultAndConfigurationKeyPMByField1Field2(string SetKey, string SetType)
         {
             IQueryable<DefaultAndConfigurationKeyPM> result =
-            (from a in repository.context.DefaultAndConfigurationKeys
+            (from a in repository.context.DefaultAndConfigurationKey
              where a.SetKey == SetKey && a.SetType == SetType
              select new DefaultAndConfigurationKeyPM()
              {
@@ -206,10 +206,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
         }
 
-        public IQueryable<DefaultAndConfigurationKeyList> GetIQueryableDefaultAndConfigurationKeysPMByField1List(string SetKey)
+        public IQueryable<DefaultAndConfigurationKeyList> GetIQueryableDefaultAndConfigurationKeyPMByField1List(string SetKey)
         {
             IQueryable<DefaultAndConfigurationKeyList> result =
-            (from a in repository.context.DefaultAndConfigurationKeys
+            (from a in repository.context.DefaultAndConfigurationKey
              where a.SetKey == SetKey
              select new DefaultAndConfigurationKeyList()
              {
@@ -228,10 +228,10 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
         }
 
-        public IQueryable<DefaultAndConfigurationKeyList> GetIQueryableDefaultAndConfigurationKeysPMByField2List(string SetType)
+        public IQueryable<DefaultAndConfigurationKeyList> GetIQueryableDefaultAndConfigurationKeyPMByField2List(string SetType)
         {
             IQueryable<DefaultAndConfigurationKeyList> result =
-            (from a in repository.context.DefaultAndConfigurationKeys
+            (from a in repository.context.DefaultAndConfigurationKey
              where a.SetType == SetType
              select new DefaultAndConfigurationKeyList()
              {

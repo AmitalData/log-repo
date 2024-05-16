@@ -7,10 +7,11 @@ using System.Threading.Tasks;
 
 namespace Logitude.BL.InfrastructureModel.EntityLists
 {
-    public class DefaultAndConfigurationLists
+    public class DefaultAndConfigurationList
     {
         [Key]
         public string Id { get; set; }
+        public int Tenant { get; set; }
         public string QueueDefinitionCode { get; set; }
         public string CreateDateTime { get; set; }
         public string SearchFields { get; set; }

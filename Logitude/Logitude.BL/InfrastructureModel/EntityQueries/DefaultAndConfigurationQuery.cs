@@ -20,24 +20,24 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 {
     public class DefaultAndConfigurationQuery
     {
-        DefaultAndConfigurationsRepository repository;
+        DefaultAndConfigurationRepository repository;
 
         public DefaultAndConfigurationQuery()
         {
-            repository = new DefaultAndConfigurationsRepository();
+            repository = new DefaultAndConfigurationRepository();
         }
 
         public DefaultAndConfigurationQuery(int tenant)
         {
-            repository = new DefaultAndConfigurationsRepository(tenant);
+            repository = new DefaultAndConfigurationRepository(tenant);
         }
 
-        public DefaultAndConfigurationQuery(DefaultAndConfigurationsRepository DefaultAndConfigurationsRepository)
+        public DefaultAndConfigurationQuery(DefaultAndConfigurationRepository DefaultAndConfigurationsRepository)
         {
             repository = DefaultAndConfigurationsRepository;
         }
 
-        public DefaultAndConfigurationPM GetSinglePM(string id)
+        public DefaultAndConfigurationPM GetSinglePM(string id, int tenant)
         {
             long? LongId = null;
             if (id != null)
@@ -51,6 +51,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
            select new DefaultAndConfigurationPM()
            {
                Id = a.Id,
+               Tenant = a.Tenant,
                QueueDefinitionCode = a.QueueDefinitionCode,
                CreateDateTime = a.CreateDateTime,
                SearchFields = a.SearchFields,
@@ -80,6 +81,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
              select new DefaultAndConfigurationPM()
              {
                  Id = a.Id,
+                 Tenant = a.Tenant,
                  QueueDefinitionCode = a.QueueDefinitionCode,
                  CreateDateTime = a.CreateDateTime,
                  SearchFields = a.SearchFields,
@@ -101,14 +103,15 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
         }
 
-        public DefaultAndConfigurationLists GetSingleDefaultAndConfigurationLists(string id)
+        public DefaultAndConfigurationList GetSingleDefaultAndConfigurationList(string id)
         {
-            DefaultAndConfigurationLists result =
+            DefaultAndConfigurationList result =
             (from a in repository.context.DefaultAndConfigurations
              where a.Id == id
-             select new DefaultAndConfigurationLists()
+             select new DefaultAndConfigurationList()
              {
                  Id = a.Id,
+                 Tenant = a.Tenant,
                  QueueDefinitionCode = a.QueueDefinitionCode,
                  CreateDateTime = a.CreateDateTime,
                  SearchFields = a.SearchFields,
@@ -138,6 +141,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
              select new DefaultAndConfigurationPM()
              {
                  Id = a.Id,
+                 Tenant = a.Tenant,
                  QueueDefinitionCode = a.QueueDefinitionCode,
                  CreateDateTime = a.CreateDateTime,
                  SearchFields = a.SearchFields,
@@ -159,12 +163,13 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
         }
 
-        public IQueryable<DefaultAndConfigurationLists> GetIQueryableEntityList(IQueryable<DefaultAndConfiguration> iQueryable)
+        public IQueryable<DefaultAndConfigurationList> GetIQueryableEntityList(IQueryable<DefaultAndConfiguration> iQueryable)
         {
-            IQueryable<DefaultAndConfigurationLists> result = from a in iQueryable
-                                                             select new DefaultAndConfigurationLists()
+            IQueryable<DefaultAndConfigurationList> result = from a in iQueryable
+                                                             select new DefaultAndConfigurationList()
                                                              {
                                                                  Id = a.Id,
+                                                                 Tenant = a.Tenant,
                                                                  QueueDefinitionCode = a.QueueDefinitionCode,
                                                                  CreateDateTime = a.CreateDateTime,
                                                                  SearchFields = a.SearchFields,
@@ -190,6 +195,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
              select new DefaultAndConfigurationPM()
              {
                  Id = a.Id,
+                 Tenant = a.Tenant,
                  QueueDefinitionCode = a.QueueDefinitionCode,
                  CreateDateTime = a.CreateDateTime,
                  SearchFields = a.SearchFields,
@@ -212,14 +218,15 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         }
 
 
-        public IQueryable<DefaultAndConfigurationLists> GetIQueryableDefaultAndConfigurationsPMByField1List(string SetKey)
+        public IQueryable<DefaultAndConfigurationList> GetIQueryableDefaultAndConfigurationsPMByField1List(string SetKey)
         {
-            IQueryable<DefaultAndConfigurationLists> result =
+            IQueryable<DefaultAndConfigurationList> result =
             (from a in repository.context.DefaultAndConfigurations
              where a.SetKey == SetKey
-             select new DefaultAndConfigurationLists()
+             select new DefaultAndConfigurationList()
              {
                  Id = a.Id,
+                 Tenant = a.Tenant,
                  QueueDefinitionCode = a.QueueDefinitionCode,
                  CreateDateTime = a.CreateDateTime,
                  SearchFields = a.SearchFields,

@@ -8,6 +8,8 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
     {
         public static void MapEntity(DefaultAndConfigurationPM entityPM, DefaultAndConfiguration entityPOCO)
         { 
+            entityPOCO.Id = entityPM.Id;
+            entityPOCO.Tenant = entityPM.Tenant;
             entityPOCO.QueueDefinitionCode = entityPM.QueueDefinitionCode;
             entityPOCO.CreateDateTime = entityPM.CreateDateTime;
             entityPOCO.SearchFields = entityPM.SearchFields;

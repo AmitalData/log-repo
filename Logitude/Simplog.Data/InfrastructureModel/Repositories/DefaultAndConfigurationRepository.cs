@@ -8,24 +8,24 @@ using System.Threading.Tasks;
 
 namespace Simplog.Data.InfrastructureModel.Repositories
 {
-    public class DefaultAndConfigurationsRepository : IRepository<DefaultAndConfiguration>
+    public class DefaultAndConfigurationRepository : IRepository<DefaultAndConfiguration>
     {
 
         IWebFreightContext webFreightContext;
-        public DefaultAndConfigurationsRepository(IWebFreightContext context)
+        public DefaultAndConfigurationRepository(IWebFreightContext context)
         {
             webFreightContext = context;
 
         }
-        public DefaultAndConfigurationsRepository()
+        public DefaultAndConfigurationRepository()
         {
             webFreightContext = new WebFreightContext();
         }
-        public DefaultAndConfigurationsRepository(int tenant)
+        public DefaultAndConfigurationRepository(int tenant)
         {
             webFreightContext = WebFreightContext.GetContext(tenant);
         }
-        public DefaultAndConfiguration GetSingleQueueMessage(long id)
+        public DefaultAndConfiguration GetSingleQueueMessage(string id)
         {
             return (from a in context.DefaultAndConfigurations
                     where a.Id == id
@@ -38,7 +38,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
         }
 
 
-        public DefaultAndConfiguration GetSingleDefaultAndConfigurations(string id)
+        public DefaultAndConfiguration GetSingleDefaultAndConfiguration(string id)
         {
             long? longId = null;
             if (id != null)
@@ -47,7 +47,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             }
 
             return (from a in context.DefaultAndConfigurations
-                    where a.Id == longId
+                    where a.Id == id
                     select a).FirstOrDefault();
 
 
@@ -102,6 +102,24 @@ namespace Simplog.Data.InfrastructureModel.Repositories
         }
 
         DefaultAndConfiguration IRepository<DefaultAndConfiguration>.GetSingle(EntityKeyFields entityKeys)
+        {
+            throw new NotImplementedException();
+        }
+
+        public DefaultAndConfiguration GetSingleDefaultAndConfiguration(string id, int tenant)
+        {
+            long? longId = null;
+            if (id != null)
+            {
+                longId = long.Parse(id);
+            }
+
+            return (from a in context.DefaultAndConfigurations
+                    where a.Id == id
+                    select a).FirstOrDefault();
+        }
+
+        public IQueryable<DefaultAndConfiguration> GetDefaultAndConfigurations(int tenant)
         {
             throw new NotImplementedException();
         }

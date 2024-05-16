@@ -49,7 +49,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
     {
 	  
        
-        public HttpResponseMessage GetSingle(string id, string settype, string setkey)
+        public HttpResponseMessage GetSingle(string id, int tenant, string settype, string setkey)
         {
 		  try
             {
@@ -61,7 +61,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 		    	IWebFreightContext MyContext = WebFreightContext.GetContext(authToken.Tenant);
 				DefaultAndConfigurationKeyRepository  defaultAndConfigurationKeyRepository = new DefaultAndConfigurationKeyRepository(MyContext);
 				DefaultAndConfigurationKeyList entityList = null;
-				DefaultAndConfigurationKey entityPoco = defaultAndConfigurationKeyRepository.GetSingleDefaultAndConfigurationKey(id, settype, setkey , authToken.Tenant);
+				DefaultAndConfigurationKey entityPoco = defaultAndConfigurationKeyRepository.GetSingleDefaultAndConfigurationKey(id, tenant, settype, setkey , authToken.Tenant);
 
 				if (entityPoco != null)
 				{
