@@ -44,7 +44,11 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
         {
             EntityStatus entity = entityRepository.GetSingleEntityStatusByCodeTableId(entityPM.Code, entityPM.ObjectTableId, entityPM.Tenant);
             if (entity != null)
+            {
+                theEntityPm.Id = entity.Id;
                 Update(theEntityPm);
+            }
+                
             else
             {
                 this.isNewEntity = true;
