@@ -1381,7 +1381,6 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             //SubmitCard(cardPM);
             if (!String.IsNullOrEmpty(args.CardId) && !String.IsNullOrEmpty(args.AccountId) && args.Tenant > 0)
             {
-                Update_ConnectCardToGLAccount(args.CardId, args.Tenant, args.AccountId, displayNumber);
                 gLAccountUpdateService.UpdateCardDisplayNumber(args.Tenant, args.CardId, displayNumber, args.AccountId, false);
             }
 
