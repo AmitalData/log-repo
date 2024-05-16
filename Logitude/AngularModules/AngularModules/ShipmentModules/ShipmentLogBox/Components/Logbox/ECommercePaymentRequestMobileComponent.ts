@@ -47,7 +47,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     public DimApproveButton: boolean = false;
     public orianStyle: boolean = false;
     public dsvStyle: boolean = false;
-
+    public qaIndicator: number = 0;
     DataContext: ECommercePaymentRequestMobileComponent = this;
     //private messageWindow: MessageWindow = new MessageWindow();
     EntityPm: ShipmentPM = new ShipmentPM();
@@ -138,7 +138,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
             }
         }
         this.StartBusyIndicator("Loading ...");
-        this._ShipmentPMService.getSingleBySecurityKeyTenantWithoutToken(this.SecurityKey, this.Tenant).subscribe((MyResult:any) => {
+        this._ShipmentPMService.getSingleBySecurityKeyTenantWithoutToken(this.SecurityKey, this.Tenant).subscribe((MyResult: any) => {
             this.MapFieldsFromResponseData(MyResult);
             if (MyResult.Result) {
                 //this.EntityPm = MyResult.Result;
@@ -147,12 +147,12 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                 this.AdditionalData = MyResult.Result;//AdditionalResult.Result
                 if (this.AdditionalData.IsPaymentRequired) {
                     if (this.EntityPm) {
-
+                        this.qaIndicator = 1;
                         this.SetTotalAmountInNIS();
                     }
                 }
                 else {
-                    var myMessage = "משלוח זה כבר שולם בתאריך";
+                    var myMessage = "משלוח זה כבר שולם בתםריך";
                     if (this.AdditionalData.PaymentDateTime != null) {
                         var formatedPaymentDateTime = this.datePipe.transform(this.AdditionalData.PaymentDateTime, 'dd/MM/yyyy');
                         myMessage = myMessage + " " + formatedPaymentDateTime;
@@ -183,14 +183,14 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                 this.RefreshTimer = setInterval(() => this.ReloadPage(), 1200000);//1200000
             }
             else {
-                this.FinalMessage = "התיק לא קיים בסביבה הזו";
+                this.FinalMessage = "התיק לם קיים בסביבה הזו";
                 this.ShowFinalMessage = true;
                 this.ShowErrorMessage = true;
                 this.StopBusyIndicator();
             }
         });
 
-        if(this.dsvStyle)
+        if (this.dsvStyle)
             this.initTenantManagements(this.SecurityKey)
     }
 
@@ -228,7 +228,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
             if (this.RefreshTimer) {
                 clearTimeout(this.RefreshTimer);
             }
-            this._ShipmentPMService.getSingleBySecurityKeyTenantWithoutToken(this.SecurityKey, this.Tenant).subscribe((MyResult:any) => {
+            this._ShipmentPMService.getSingleBySecurityKeyTenantWithoutToken(this.SecurityKey, this.Tenant).subscribe((MyResult: any) => {
                 this.MapFieldsFromResponseData(MyResult);
                 if (MyResult.Result) {
                     //this.EntityPm = MyResult.Result;
@@ -237,7 +237,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                     this.AdditionalData = MyResult.Result;//AdditionalResult.Result
                     if (this.AdditionalData.IsPaymentRequired) {
                         if (this.EntityPm) {
-
+                            this.qaIndicator = 1;
                             this.SetTotalAmountInNIS();
                         }
                     }
@@ -254,7 +254,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                     this.RefreshTimer = setInterval(() => this.ReloadPage(), 1200000);//1200000
                 }
                 else {
-                    this.FinalMessage = "התיק לא קיים בסביבה הזו";
+                    this.FinalMessage = "התיק לם קיים בסביבה הזו";
                     this.ShowFinalMessage = true;
                     this.ShowErrorMessage = true;
                 }
@@ -409,7 +409,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
         //if (myResult.Result) { 
         //var securityId = myResult.Result.SecurityId;
 
-        if(this.serviceAgreementURL)
+        if (this.serviceAgreementURL)
             open(this.serviceAgreementURL)
         else
             DownloadManager.DownloadExternalPage(null, this.Tenant, this.TermsOfUseDocumentId);
@@ -426,7 +426,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     }
 
     openLogoUrl() {
-        if(this.logoUrl)
+        if (this.logoUrl)
             window.open(this.logoUrl)
     }
 }
