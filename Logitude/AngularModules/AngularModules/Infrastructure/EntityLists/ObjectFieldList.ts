@@ -92,5 +92,6 @@ export class ObjectFieldList {
 		NumberOfDigits: number;
 		DigitsAfterPoint: number;
 		CustomPickListCode: string;
+		DisplayInRequiredFields: boolean;
 	
 }

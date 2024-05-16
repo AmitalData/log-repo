@@ -659,6 +659,8 @@
     <Compile Include="InfrastructureModel\EntityPOCOs\ReleaseArgs.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\TabModification.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\ScreenSection.cs" />
+    <Compile Include="InfrastructureModel\EntityPOCOs\DefaultAndConfiguration.cs" />
+    <Compile Include="InfrastructureModel\EntityPOCOs\DefaultAndConfigurationKey.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\WorkerRoleName.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\DWSubQuery.cs" />
     <Compile Include="InfrastructureModel\EntityPOCOs\DWQuery .cs" />
@@ -688,6 +690,8 @@
     <Compile Include="InfrastructureModel\Mapping\ReferenceCustomObjectMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\TabModificationMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\ScreenSectionMap.cs" />
+    <Compile Include="InfrastructureModel\Mapping\DefaultAndConfigurationMap.cs" />
+    <Compile Include="InfrastructureModel\Mapping\DefaultAndConfigurationKeyMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\WokerRoleNameMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\DWSubQueryMap.cs" />
     <Compile Include="InfrastructureModel\Mapping\RuleUpdateHistoryMap.cs" />
@@ -716,6 +720,8 @@
     <Compile Include="InfrastructureModel\Repositories\ReferenceCustomObjectRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\ScreenSectionRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\TabModificationRepository.cs" />
+    <Compile Include="InfrastructureModel\Repositories\DefaultAndConfigurationRepository.cs" />
+    <Compile Include="InfrastructureModel\Repositories\DefaultAndConfigurationKeyRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\WorkerRoleNameRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\DWSubQueryRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\DWQueryRepository.cs" />

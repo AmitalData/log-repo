@@ -675,6 +675,10 @@ export class ObjectFieldPM {
     private isRelatedEntity: boolean;
     public get IsRelatedEntity() { return this.isRelatedEntity; }
     public set IsRelatedEntity(newValue: boolean) { if (this.isRelatedEntity != newValue) { this.isRelatedEntity = newValue; this.MarkAsDirty("IsRelatedEntity"); } }
+
+    private displayInRequiredFields: boolean;
+    public get DisplayInRequiredFields() { return this.displayInRequiredFields; }
+    public set DisplayInRequiredFields(newValue: boolean) { if (this.displayInRequiredFields != newValue) { this.displayInRequiredFields = newValue; this.MarkAsDirty("DisplayInRequiredFields"); } }
        
 	 
 
