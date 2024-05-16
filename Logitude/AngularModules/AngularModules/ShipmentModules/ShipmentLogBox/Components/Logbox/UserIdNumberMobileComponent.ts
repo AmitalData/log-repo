@@ -58,6 +58,7 @@ export class UserIdNumberMobileComponent extends BaseComponent implements OnInit
     public _DocumentTypeMetaDataExtendedService: DocumentTypeMetaDataExtendedService;
     public _documentsFilingExtendedPMService: DocumentsFilingExtendedPMService;
     public _ShipmentAdditionalCloudDataService: ShipmentAdditionalCloudDataService;
+    public qaIndicator: number = 0;
 
     public _ShipmentPMService: ShipmentPMService;
     private datePipe: DatePipe;
@@ -151,9 +152,8 @@ export class UserIdNumberMobileComponent extends BaseComponent implements OnInit
             else {
                 this._ShipmentPMService.getUserIdDetailsByShipmentSecurityKeyWithoutToken(this.SecurityKey, this.Tenant).subscribe((MyResult: any) => {
                     if (MyResult.Result) {
-
                         this.AdditionalData = MyResult.Result;//AdditionalResult.Result
-
+                        this.qaIndicator = 1;
                         var service = new CommonDomainService();
                         service.GetTenantLogoUri(this.Tenant).subscribe((myLogoResult: any) => {
 
@@ -255,7 +255,6 @@ export class UserIdNumberMobileComponent extends BaseComponent implements OnInit
     SendButtonClicked() {
         this.ValidationList = [];
         this._ShipmentAdditionalCloudDataService.getSingleWithoutToken(this.SecurityKey, this.Tenant).subscribe(async (myAdditionalResult: any) => {
-
             var entity = myAdditionalResult.Result;//AdditionalResult.Result
             if (entity.IsUserIDNumberRequired == false) {
                 var myMessage = AppTool.IsNullOrEmpty(this.UserIdNumber) ? "לא נדרשת השלמת תעודת זהות למשלוח זה" : "הפרטים נשמרו בהצלחה";
@@ -275,7 +274,7 @@ export class UserIdNumberMobileComponent extends BaseComponent implements OnInit
                     entity.UserIdNumber = this.UserIdNumber;
                     if (this.IsValidIsraeliID(this.UserIdNumber)) {
 
-                        entity.UserAcceptSaveID = this.orianStyle ? await this.checkUserAcceptSave(): 0;
+                        entity.UserAcceptSaveID = this.orianStyle ? await this.checkUserAcceptSave() : 0;
 
                         this._ShipmentAdditionalCloudDataService.updateUserID(entity).subscribe((AdditionalResult: any) => {
                             if (!AdditionalResult.HasError) {
