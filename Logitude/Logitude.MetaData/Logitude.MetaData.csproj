@@ -816,6 +816,8 @@
     <None Include="DBTables\InfrastructureModel\DBMigrationSettings.dxml" />
     <None Include="DBTables\InfrastructureModel\DBMigrationsHistory.dxml" />
     <None Include="DBTables\InfrastructureModel\DBScriptsHistory.dxml" />
+    <None Include="DBTables\InfrastructureModel\DefaultAndConfiguration.dxml" />
+    <None Include="DBTables\InfrastructureModel\DefaultAndConfigurationKey.dxml" />
     <None Include="DBTables\InfrastructureModel\DescriptionOfGoods.dxml" />
     <None Include="DBTables\InfrastructureModel\Direction.dxml" />
     <None Include="DBTables\InfrastructureModel\DWCategories.dxml" />
@@ -1059,6 +1061,8 @@
     <None Include="EntityFiles\CommonDataModel\WarehouseWeightRounding.lxml">
       <SubType>Designer</SubType>
     </None>
+    <None Include="EntityFiles\InfrastructureModel\DefaultAndConfiguration.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\DefaultAndConfigurationKey.lxml" />
     <None Include="EntityFiles\InfrastructureModel\DescriptionOfGoods.lxml" />
     <None Include="EntityFiles\InfrastructureModel\QueryExportExecutionLog.lxml" />
     <None Include="EntityFiles\InfrastructureModel\WorkerRoleName.lxml" />

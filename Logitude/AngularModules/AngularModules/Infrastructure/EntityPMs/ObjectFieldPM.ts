@@ -613,6 +613,11 @@ export class ObjectFieldPM {
     public set AdditionalQuerySections(newValue: string) { if (this.additionalQuerySections != newValue) { this.additionalQuerySections = newValue; this.MarkAsDirty("AdditionalQuerySections"); } }
        
 	 
+    private displayInRequiredFields: boolean;
+    public get DisplayInRequiredFields() { return this.displayInRequiredFields; }
+    public set DisplayInRequiredFields(newValue: boolean) { if (this.displayInRequiredFields != newValue) { this.displayInRequiredFields = newValue; this.MarkAsDirty("DisplayInRequiredFields"); } }
+       
+	 
 
     public OldEntityPM: ObjectFieldPM;
 		

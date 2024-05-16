@@ -82,5 +82,6 @@ export class ObjectFieldList {
 		ShortNameTextCodeCode: string;
 		HelpTextCodeCode: string;
 		AdditionalQuerySections: string;
+		DisplayInRequiredFields: boolean;
 	
 }

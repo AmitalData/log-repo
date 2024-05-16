@@ -524,6 +524,12 @@
     <Compile Include="InfrastructureModel\APIDataContract\QueryService\EntityStatusQueryService.Generated.cs" />
     <Compile Include="InfrastructureModel\APIDataContract\Messages\RatesUpdateService.cs" />
     <Compile Include="InfrastructureModel\APIDataContract\RatesUpdate.cs" />
+    <Compile Include="InfrastructureModel\EntityLists\DefaultAndConfigurationList.cs" />
+    <Compile Include="InfrastructureModel\EntityLists\DefaultAndConfigurationKeyList.cs" />
+    <Compile Include="InfrastructureModel\EntityPMs\DefaultAndConfigurationPM.cs" />
+    <Compile Include="InfrastructureModel\EntityPMs\DefaultAndConfigurationKeyPM.cs" />
+    <Compile Include="InfrastructureModel\EntityQueries\DefaultAndConfigurationQuery.cs" />
+    <Compile Include="InfrastructureModel\EntityQueries\DefaultAndConfigurationKeyQuery.cs" />
     <Compile Include="InfrastructureModel\FieldShortNameGetters\ObjectFieldsShortNamesGetter.cs" />
     <Compile Include="GlobalModel\EntityLists\BluesnapTransactionList.cs" />
     <Compile Include="GlobalModel\EntityLists\HelpResourceList.cs" />
@@ -553,9 +559,13 @@
     <Compile Include="InfrastructureModel\EntityQueries\WorkerRoleNameQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\RuleUpdateHistoryQuery.cs" />
     <Compile Include="InfrastructureModel\Services\QuoteUpdateService.cs" />
+    <Compile Include="InfrastructureModel\Tools\DataMapping\DefaultAndConfigurationMapping.cs" />
+    <Compile Include="InfrastructureModel\Tools\DataMapping\DefaultAndConfigurationKeyMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\WorkerRoleNameMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\RuleUpdateHistoryMapping.cs" />
     <Compile Include="InfrastructureModel\Tools\DataMapping\SchedulerProcedureMapping.cs" />
+    <Compile Include="InfrastructureModel\Tools\EntityService\DefaultAndConfigurationService.cs" />
+    <Compile Include="InfrastructureModel\Tools\EntityService\DefaultAndConfigurationKeyService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\WorkerRoleNameService.cs" />
     <Compile Include="InfrastructureModel\Tools\EntityService\RuleUpdateHistoryService.cs" />
     <Compile Include="InfrastructureModel\Tools\Validating\TasksSchedulerValidator.cs" />
