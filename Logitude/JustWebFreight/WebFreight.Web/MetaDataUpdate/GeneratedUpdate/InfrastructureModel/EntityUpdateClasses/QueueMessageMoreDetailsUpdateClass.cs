@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
- 
+
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -83,335 +83,278 @@ using Amital.QuoteOPM.BL;
 
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.EntityUpdateClasses
 {
-   public class QueueMessageMoreDetailsUpdateClass
-   {  		
-		public const string HashString = "1159f0cef9a5f75b96f8824142ff6768";
-	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
-        {                     
-            
+    public class QueueMessageMoreDetailsUpdateClass
+    {
+        public const string HashString = "49c7364efbc2f890502fe62462368b07";
+        public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, ObjectTableRepository ObjectTableRepository, TextCodeRepository TextCodeRepository)
+        {
+
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
             {
-			
-	             				    ObjectTableName =  "QueueMessageMoreDetails",
-			      				    IsNew =  false,
-			      				    DBTableName =  "QueueMessageMoreDetails",
-			      				    ObjectTableSingular =  "Queue Message More Details",
-			      				    ObjectTablePlural =  "Queue Messages More Details",
-			      				    HasCustomFilter =  false,
-			      				    HasCustomFields =  false,
-			      				    HasHelper =  false,
-			      				    HasShortTitle =  false,
-			      				    HasFiltersMenu =  false,
-			      				    IsEditable =  false,
-			      				    IsNewWizard =  false,
-			      				    AutoCompleteSearchWindow =  false,
-			      				    IsClosed =  false,
-			      				    CacheOnClient =  false,
-			      				    EditableFromAutoCompleteWindow =  false,
-			      				    HasCounter =  false,
-			      				    EnableAddFromLOV =  false,
-			      				    IsRestrictable =  false,
-			      				    IsMain =  true,
-			      				    IsAutoComplete =  false,
-			      				    EnableEditFromLOV =  false,
-			      				    InActive =  false,
-			      				    IsSaveButtonVisible =  true,
-			      				    IsComposition =  false,
-			      				    EnableSecurity =  true,
-			      				    AllowCustomFields =  false,
-			      				    HasDynamicHeader =  false,
-			      				    ObjectTableTypeCode =  "MD",
-			      				    MaxNumberOfCustomFields =  0,
-			      				    DefaultText =  "Queue Message More Details",
-			      				    Code =  "3498",
-			      				    Name =  "QueueMessageMoreDetails",
-			      				    GenerateDomainService =  false,
-			      				    ClientModuleName =  "Infrastructure",
-			      				    NoTS =  false,
-			      				    HasMenuButtons =  false,
-			      				    AllowedForComputingPartners =  false,
-			      				    CustomFieldsCount =  0,
-			      				    DisableSearchBox =  false,
-			      				    HasDocuments =  false,
-			      				    IsLookUp =  false,
-			      				    IsTabsHidden =  false,
-			      				    SearchFields =  "QueueMessageMoreDetails,QueueMessageMoreDetails,,,",
-			      				    HashString =  QueueMessageMoreDetailsUpdateClass.HashString,
-			                    
+
+                ObjectTableName = "QueueMessageMoreDetails",
+                IsNew = false,
+                DBTableName = "QueueMessageMoreDetails",
+                ObjectTableSingular = "Queue Message More Details",
+                ObjectTablePlural = "Queue Messages More Details",
+                HasCustomFilter = false,
+                HasCustomFields = false,
+                HasHelper = false,
+                HasShortTitle = false,
+                HasFiltersMenu = false,
+                IsEditable = false,
+                IsNewWizard = false,
+                AutoCompleteSearchWindow = false,
+                IsClosed = false,
+                CacheOnClient = false,
+                EditableFromAutoCompleteWindow = false,
+                HasCounter = false,
+                EnableAddFromLOV = false,
+                IsRestrictable = false,
+                IsMain = true,
+                IsAutoComplete = false,
+                EnableEditFromLOV = false,
+                InActive = false,
+                IsSaveButtonVisible = true,
+                IsComposition = false,
+                EnableSecurity = true,
+                AllowCustomFields = false,
+                HasDynamicHeader = false,
+                ObjectTableTypeCode = "MD",
+                MaxNumberOfCustomFields = 0,
+                DefaultText = "Queue Message More Details",
+                Code = "3bc7",
+                Name = "QueueMessageMoreDetails",
+                GenerateDomainService = false,
+                ClientModuleName = "Infrastructure",
+                NoTS = false,
+                HasMenuButtons = false,
+                AllowedForComputingPartners = false,
+                CustomFieldsCount = 0,
+                DisableSearchBox = false,
+                HasDocuments = false,
+                IsLookUp = false,
+                IsTabsHidden = false,
+                SearchFields = "QueueMessageMoreDetails,QueueMessageMoreDetails,,,",
+                HashString = QueueMessageMoreDetailsUpdateClass.HashString,
+
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
-		}
-	
-	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
-	    {
-	         
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "Id",
-					  						ObjectTableName =  "QueueMessageMoreDetails",
-					  						FieldsDataType =  "BigInteger",
-					  						MinLength =  0,
-					  						MaxLength =  0,
-					  						IsRequired =  true,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  0,
-					  						DisplayInList =  true,
-					  						IsCustomFilter =  false,
-					  						Operator =  "StartsWith",
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "Id",
-					  						ListPropertyPath =  "Id",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "ErrorLog",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  true,
-					  						Code =  "Id",
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						NumberOfDigits =  0,
-					  						DigitsAfterPoint =  0,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "Id",
-					  						DefaultText =  "Id",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						HelpTextCode =  "Id",
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
- 
+        }
 
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "CreateDateTime",
-					  						ObjectTableName =  "QueueMessageMoreDetails",
-					  						FieldsDataType =  "DateTime",
-					  						MinLength =  0,
-					  						MaxLength =  0,
-					  						IsRequired =  true,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  true,
-					  						DisplayOnly =  true,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  0,
-					  						DisplayInList =  true,
-					  						IsCustomFilter =  false,
-					  						Operator =  "Equals",
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "CreateDateTime",
-					  						ListPropertyPath =  "CreateDateTime",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "QueueMessageMoreDetails",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  true,
-					  						Code =  "CreateDateTime",
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						NumberOfDigits =  0,
-					  						DigitsAfterPoint =  0,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "CreateDateTime",
-					  						DefaultText =  "Create Date",
-					  						ListFieldLable =  "CreateDateTimeListLable",
-					  						ListLableDefaultText =  "Create Date",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						HelpTextCode =  "CreateDateTime",
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
- 
+        public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, ObjectFieldRepository ObjectFieldsRepository, TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
+        {
 
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "TenantPriority",
-					  						ObjectTableName =  "QueueMessageMoreDetails",
-					  						FieldsDataType =  "Integer",
-					  						MinLength =  0,
-					  						MaxLength =  0,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
-					  						IsCustomFilter =  false,
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "TenantPriority",
-					  						ListPropertyPath =  "TenantPriority",
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "TenantPriority",
-					  						DefaultText =  "Tenant Priority",
-					  						FullLocalDefaultText =  "עדיפות שליחה / ניתוח",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
- 
-	    }
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
 
-	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
-	    {    
-	    }
+                FieldName = "Id",
+                ObjectTableName = "QueueMessageMoreDetails",
+                FieldsDataType = "BigInteger",
+                MinLength = 0,
+                MaxLength = 0,
+                IsRequired = true,
+                CopyToDW = false,
+                DisplayOnLookUp = false,
+                DisplayOnLookUpLocal = false,
+                CanFilter = false,
+                DisplayOnly = false,
+                SystemRequired = false,
+                SystemMaxLength = 0,
+                DisplayInList = true,
+                IsCustomFilter = false,
+                Operator = "StartsWith",
+                MultiLine = false,
+                IsTimeFrameFilter = false,
+                DisplayInSearchWindowList = false,
+                PMPropertyPath = "Id",
+                ListPropertyPath = "Id",
+                DisplayInLookUpIndex = 0,
+                AutomaticField = false,
+                UniqueField = false,
+                DisplayInSearchWindowListIndex = 0,
+                IsMulti = false,
+                DependencyFilter1IsList = false,
+                DependencyFilter2IsList = false,
+                DependencyFilter3IsList = false,
+                ValidForQuerySection1 = "ErrorLog",
+                IsRestrictable = false,
+                DisplayInEntityVariables = true,
+                Code = "Id",
+                AllowedInCustomerFieldsSettings = false,
+                DisplayInSearchWindowFilters = false,
+                DisplayInSearchWindowFiltersIndex = 0,
+                DisplayInDocumentReferences = false,
+                NumberOfDigits = 0,
+                DigitsAfterPoint = 0,
+                InActive = false,
+                DisplayLongName = false,
+                FullFieldLable = "Id",
+                DefaultText = "Id",
+                IsMaxLength = false,
+                IsFixedLength = false,
+                EnableAutoFill = false,
+                IncludeInSearchField = false,
+                AllowedinAutomationConditions = false,
+                AutomationEmailRecipient = false,
+                CanAutomateSetValue = false,
+                DisplayInAutomationAsEnitity = false,
+                HasTemplate = false,
+                IsCustom = false,
+                HelpTextCode = "Id",
+                EnableFullscreenTextBox = false,
 
-	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {   
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes, objectTables, addedFields, addedTextCodes);
 
-		   ObjectTable QueueMessageMoreDetailsObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "QueueMessageMoreDetails" && d.Tenant == 0).FirstOrDefault();
-		   //List<ObjectField> QueueMessageMoreDetailsObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "QueueMessageMoreDetails").ToList();
-		       
-	      
 
-	         Screen QueueMessageMoreDetailsQueueMessageMoreDetailsHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "QueueMessageMoreDetails.HeaderScreen", Name = "QueueMessageMoreDetailsHeaderScreen", ObjectTableId = QueueMessageMoreDetailsObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
-      	
-		    QueueMessageMoreDetailsObjectTable.HeaderScreenId = QueueMessageMoreDetailsQueueMessageMoreDetailsHeaderScreenScreen0.Id;
-		    QueueMessageMoreDetailsObjectTable.HeaderScreenCode = QueueMessageMoreDetailsQueueMessageMoreDetailsHeaderScreenScreen0.Code;
+            AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails()
+            {
 
-	   		  
+                FieldName = "CreateDateTime",
+                ObjectTableName = "QueueMessageMoreDetails",
+                FieldsDataType = "DateTime",
+                MinLength = 0,
+                MaxLength = 0,
+                IsRequired = true,
+                CopyToDW = false,
+                DisplayOnLookUp = false,
+                DisplayOnLookUpLocal = false,
+                CanFilter = true,
+                DisplayOnly = true,
+                SystemRequired = false,
+                SystemMaxLength = 0,
+                DisplayInList = true,
+                IsCustomFilter = false,
+                Operator = "Equals",
+                MultiLine = false,
+                IsTimeFrameFilter = false,
+                DisplayInSearchWindowList = false,
+                PMPropertyPath = "CreateDateTime",
+                ListPropertyPath = "CreateDateTime",
+                DisplayInLookUpIndex = 0,
+                AutomaticField = false,
+                UniqueField = false,
+                DisplayInSearchWindowListIndex = 0,
+                IsMulti = false,
+                DependencyFilter1IsList = false,
+                DependencyFilter2IsList = false,
+                DependencyFilter3IsList = false,
+                ValidForQuerySection1 = "QueueMessageMoreDetails",
+                IsRestrictable = false,
+                DisplayInEntityVariables = true,
+                Code = "CreateDateTime",
+                AllowedInCustomerFieldsSettings = false,
+                DisplayInSearchWindowFilters = false,
+                DisplayInSearchWindowFiltersIndex = 0,
+                DisplayInDocumentReferences = false,
+                NumberOfDigits = 0,
+                DigitsAfterPoint = 0,
+                InActive = false,
+                DisplayLongName = false,
+                FullFieldLable = "CreateDateTime",
+                DefaultText = "Create Date",
+                ListFieldLable = "CreateDateTimeListLable",
+                ListLableDefaultText = "Create Date",
+                IsMaxLength = false,
+                IsFixedLength = false,
+                EnableAutoFill = false,
+                IncludeInSearchField = false,
+                AllowedinAutomationConditions = false,
+                AutomationEmailRecipient = false,
+                CanAutomateSetValue = false,
+                DisplayInAutomationAsEnitity = false,
+                HasTemplate = false,
+                IsCustom = false,
+                HelpTextCode = "CreateDateTime",
+                EnableFullscreenTextBox = false,
 
-	    }
+            }, TextCodeRepository, ObjectFieldsRepository, objectFields, textCodes, objectTables, addedFields, addedTextCodes);
 
-	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
-	    {      
-	    } 
-	
-	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {  
-		   ObjectTable QueueMessageMoreDetailsObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "QueueMessageMoreDetails" && d.Tenant == 0).FirstOrDefault(); 
-   
-	    
-		}
+        }
 
-	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
-	    {   
-			ObjectTable QueueMessageMoreDetailsObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "QueueMessageMoreDetails" && d.Tenant == 0).FirstOrDefault(); 
+        public void AddTableQueries(Dictionary<string, Query> tenantQueries, Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository, TextCodeRepository TextCodeRepository, FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures, AdvancedQueryFilterRepository advancedQueryFiltersRepository, Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters, Dictionary<string, QueryGroup> tenantQueryGroups)
+        {
+        }
+
+        public void AddTableScreens(Dictionary<string, Screen> tenantScreens, Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository, IWebFreightContext ObjectContext)
+        {
+
+            ObjectTable QueueMessageMoreDetailsObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "QueueMessageMoreDetails" && d.Tenant == 0).FirstOrDefault();
+            //List<ObjectField> QueueMessageMoreDetailsObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "QueueMessageMoreDetails").ToList();
+
+
+
+            Screen QueueMessageMoreDetailsQueueMessageMoreDetailsHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "QueueMessageMoreDetails.HeaderScreen", Name = "QueueMessageMoreDetailsHeaderScreen", ObjectTableId = QueueMessageMoreDetailsObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+
+            QueueMessageMoreDetailsObjectTable.HeaderScreenId = QueueMessageMoreDetailsQueueMessageMoreDetailsHeaderScreenScreen0.Id;
+            QueueMessageMoreDetailsObjectTable.HeaderScreenCode = QueueMessageMoreDetailsQueueMessageMoreDetailsHeaderScreenScreen0.Code;
+
+
+
+        }
+
+        public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes, ObjectTableTabRepository objectTableTabsRepository, TextCodeRepository TextCodeRepository, FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures, IWebFreightContext ObjectContext)
+        {
+        }
+
+        public void AddTableFeatures(TextCodeRepository TextCodeRepository, FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures, Dictionary<string, TextCode> TextCodes, IWebFreightContext ObjectContext)
+        {
+            ObjectTable QueueMessageMoreDetailsObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "QueueMessageMoreDetails" && d.Tenant == 0).FirstOrDefault();
+
+
+        }
+
+        public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes, EventTypeRepository EventTypeRepository, IWebFreightContext ObjectContext, List<EntityStatus> AllEntityStatuses)
+        {
+            ObjectTable QueueMessageMoreDetailsObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "QueueMessageMoreDetails" && d.Tenant == 0).FirstOrDefault();
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code =  "CREV",
-                EnglishName =  "Created",
-                LocalName =  "Created",
-                IsManualEntry =  false,
-                ShortView =  true,
-                IsAgentView =  false,
-                IsCustomerView =  false,
-                IsSharedLogisticsEnabled =  false,
-                AllowedInAutomation =  false,
-                ManualActivatedFollowUp =  false,
-                IsFollowUp =  false,
+                Code = "CREV",
+                EnglishName = "Created",
+                LocalName = "Created",
+                IsManualEntry = false,
+                ShortView = true,
+                IsAgentView = false,
+                IsCustomerView = false,
+                IsSharedLogisticsEnabled = false,
+                AllowedInAutomation = false,
+                ManualActivatedFollowUp = false,
+                IsFollowUp = false,
                 ObjectTableId = QueueMessageMoreDetailsObjectTable.Id,
-				 
+
             }, EventTypeRepository, tenantEventTypes);
 
 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code =  "UPEV",
-                EnglishName =  "Updated",
-                LocalName =  "Updated",
-                IsManualEntry =  false,
-                ShortView =  false,
-                IsAgentView =  false,
-                IsCustomerView =  false,
-                IsSharedLogisticsEnabled =  false,
-                AllowedInAutomation =  false,
-                ManualActivatedFollowUp =  false,
-                IsFollowUp =  false,
+                Code = "UPEV",
+                EnglishName = "Updated",
+                LocalName = "Updated",
+                IsManualEntry = false,
+                ShortView = false,
+                IsAgentView = false,
+                IsCustomerView = false,
+                IsSharedLogisticsEnabled = false,
+                AllowedInAutomation = false,
+                ManualActivatedFollowUp = false,
+                IsFollowUp = false,
                 ObjectTableId = QueueMessageMoreDetailsObjectTable.Id,
-				 
+
             }, EventTypeRepository, tenantEventTypes);
 
 
-	    }
-	
-	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
-	    {  
-	    }
+        }
 
-	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
-	    
+        public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons, Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes, TextCodeRepository TextCodeRepository, FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository, Dictionary<string, Feature> TenantFeatures, MenuButtonGroupRepository menuButtonGroupRepository, IWebFreightContext ObjectContext)
+        {
+        }
+
+        public void AddTableTextCodes(TextCodeRepository TextCodeRepository, FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures, Dictionary<string, TextCode> TextCodes, IWebFreightContext ObjectContext)
+        {
+
+        }
+
+
+
+    }
+
 }
-
-    
-
-   }
-    
-}
-	 
