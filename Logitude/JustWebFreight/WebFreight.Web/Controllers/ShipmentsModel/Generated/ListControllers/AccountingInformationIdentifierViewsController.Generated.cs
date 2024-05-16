@@ -64,8 +64,8 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
 				AccountingInformationIdentifierRepository  accountingInformationIdentifierRepository = new AccountingInformationIdentifierRepository(MyContext);
 				AccountingInformationIdentifierList entityList = null;
 				AccountingInformationIdentifier entityPoco = accountingInformationIdentifierRepository.GetSingleAccountingInformationIdentifier(code );
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<AccountingInformationIdentifier> singleEntityList = new List<AccountingInformationIdentifier>();
 					singleEntityList.Add(entityPoco);
@@ -100,7 +100,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
 
 				IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
 				AccountingInformationIdentifierRepository  accountingInformationIdentifierRepository = new AccountingInformationIdentifierRepository(MyContext);
-				IQueryable<AccountingInformationIdentifier> entityPocos = accountingInformationIdentifierRepository.GetAccountingInformationIdentifiers();
+				IQueryable<AccountingInformationIdentifier> entityPocos = accountingInformationIdentifierRepository.GetAccountingInformatiIdentifiers();
 
 				AccountingInformationIdentifierQuery accountingInformationIdentifierQuery = new AccountingInformationIdentifierQuery(accountingInformationIdentifierRepository);
 			    IQueryable<AccountingInformationIdentifierList> entityLists = accountingInformationIdentifierQuery.GetIQueryableEntityList(entityPocos);
@@ -132,7 +132,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
                     ObjectTableName = "AccountingInformationIdentifier",
                     PageIndex = filters.PageIndex,
                     PageSize = filters.PageSize,
-                    QuerySection = "AccountingInformationIdentifiers",
+                    QuerySection = "AccountingInformatiIdentifiers",
                     SortByColumnName = filters.SortBy,
                     SortDirectin = filters.SortDirection,
 					GetAll = filters.GetAll, 
@@ -226,7 +226,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
 								
                 IShipmentsContext MyContext = ShipmentsContext.GetContext(tenant);
                 AccountingInformationIdentifierRepository  accountingInformationIdentifierRepository = new AccountingInformationIdentifierRepository(MyContext);
-                IQueryable<AccountingInformationIdentifier> entityPocos = accountingInformationIdentifierRepository.GetAccountingInformationIdentifiers();
+                IQueryable<AccountingInformationIdentifier> entityPocos = accountingInformationIdentifierRepository.GetAccountingInformatiIdentifiers();
 
                 AccountingInformationIdentifierQuery accountingInformationIdentifierQuery = new AccountingInformationIdentifierQuery(accountingInformationIdentifierRepository);
                 
