@@ -29,7 +29,7 @@ export class CB_CustomsBookAdditionsDetailsHistoryPMService {
  private _apiUrl: string;
  constructor() {
         this._http = ServiceHelper.HttpClient;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/cb_customsbookadditionsdetailshistorys';      
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/cb_customsbookaddidetahistors';      
     }
 
 	get(cb_id: string) {       

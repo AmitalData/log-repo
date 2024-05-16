@@ -22,7 +22,7 @@ namespace Logitude.Customs.Data.Repsitories
         }
         public List<CertificateOfOriginMandatoryFields> GetMandatoryFieldsByCooTypeCode(string cooTypeCode)
         {
-            return (from a in context.CertificateOfOriginMandatoryFieldss
+            return (from a in context.CertificateOfOriginMandatorys
                     where a.CertificateOfOriginTypeCodeID.ToString() == cooTypeCode
                     select a).ToList();
         }

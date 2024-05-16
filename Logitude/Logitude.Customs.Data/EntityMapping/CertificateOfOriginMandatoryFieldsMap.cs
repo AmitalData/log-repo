@@ -19,17 +19,7 @@ namespace Logitude.Customs.Data.EntityMapping
 	    string dbms;
         public CertificateOfOriginMandatoryFieldsMap()
         { 
-		
-     dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-    if (dbms == "oracle")
-    {
-	  this.ToTable("CertificateOfOriginMandatoryFi", "Customs");
-	}
-    else
-    {
-	  this.ToTable("CertificateOfOriginMandatoryFieldss", "Customs");
-	}
-
+			  this.ToTable("CertificateOfOriginMandatorys", "Customs");
 		
 		    this.HasKey(t => new { t.Code });
 	 

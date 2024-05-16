@@ -34,7 +34,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
 
-            IQueryable<CB_CustomsBookAdditionsDetailsHistory> iQueryable = (from a in context.CB_CustomsBookAdditionsDetailsHistorys
+            IQueryable<CB_CustomsBookAdditionsDetailsHistory> iQueryable = (from a in context.CB_CustomsBookAddiDetaHistors
                                                select a);
             			iQueryable = ApplyCustomFilters(queryOperations, iQueryable);
 
@@ -136,7 +136,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
         public CB_CustomsBookAdditionsDetailsHistoryList GetSingle(string cb_id)
         {
-            IQueryable<CB_CustomsBookAdditionsDetailsHistory> CB_CustomsBookAdditionsDetailsHistoryQuery = (from a in context.CB_CustomsBookAdditionsDetailsHistorys
+            IQueryable<CB_CustomsBookAdditionsDetailsHistory> CB_CustomsBookAdditionsDetailsHistoryQuery = (from a in context.CB_CustomsBookAddiDetaHistors
                                                        where a.CB_ID == cb_id
                                                        select a);
 
@@ -159,7 +159,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
 
-            IQueryable<CB_CustomsBookAdditionsDetailsHistory> iQueryable = (from a in context.CB_CustomsBookAdditionsDetailsHistorys  select a);
+            IQueryable<CB_CustomsBookAdditionsDetailsHistory> iQueryable = (from a in context.CB_CustomsBookAddiDetaHistors  select a);
 
 			  			iQueryable = ApplyCustomFilters(queryOperations, iQueryable);
 

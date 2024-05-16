@@ -34,7 +34,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
 
-            IQueryable<CertificateOfOriginTypeCodeEnum> iQueryable = (from a in context.CertificateOfOriginTypeCodeEnums
+            IQueryable<CertificateOfOriginTypeCodeEnum> iQueryable = (from a in context.CertificateOfOriginTypeCodes
                                                select a);
             			iQueryable = ApplyCustomFilters(queryOperations, iQueryable);
 
@@ -136,7 +136,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
         public CertificateOfOriginTypeCodeEnumList GetSingle(string code)
         {
-            IQueryable<CertificateOfOriginTypeCodeEnum> CertificateOfOriginTypeCodeEnumQuery = (from a in context.CertificateOfOriginTypeCodeEnums
+            IQueryable<CertificateOfOriginTypeCodeEnum> CertificateOfOriginTypeCodeEnumQuery = (from a in context.CertificateOfOriginTypeCodes
                                                        where a.Code == code
                                                        select a);
 
@@ -159,7 +159,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
 
-            IQueryable<CertificateOfOriginTypeCodeEnum> iQueryable = (from a in context.CertificateOfOriginTypeCodeEnums  select a);
+            IQueryable<CertificateOfOriginTypeCodeEnum> iQueryable = (from a in context.CertificateOfOriginTypeCodes  select a);
 
 			  			iQueryable = ApplyCustomFilters(queryOperations, iQueryable);
 

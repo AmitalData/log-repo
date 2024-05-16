@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Table
-  Name="CB_CustomsBookAdditionsDetailsHistorys"
+  Name="CB_CustomsBookAddiDetaHistors"
+  OldNames="CB_CustomsBookAdditionsDetailsHistorys"
   Schema="Customs"
   DBType="Main"
   Module="Customs">
