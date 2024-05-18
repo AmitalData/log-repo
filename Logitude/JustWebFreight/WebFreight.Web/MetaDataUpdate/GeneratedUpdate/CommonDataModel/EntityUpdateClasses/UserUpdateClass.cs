@@ -81,9 +81,6 @@ using Logitude.DashboardModule.Data.Repositories;
 using Logitude.DashboardModule.Data.EntityPOCOs;
 using Logitude.DashboardModule.BL;
 
-//using Amital.QuoteOPM.BL.CLoseTable;
-
-
 
 
 
@@ -91,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class UserUpdateClass
    {  		
-		public const string HashString = "35e492ec81fed41550bdb272fe3085874";
+		public const string HashString = "6d2be77a5adbccd0ddaa9b0c90be2623";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -107,6 +104,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    HasCustomFilter =  true,
 			      				    HasCustomFields =  false,
 			      				    AvailableInCustomization =  true,
+			      				    SupportSubEntity =  false,
+			      				    ApplyGenericCustomFields =  false,
+			      				    AvailableInDocumentTypes =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasFiltersMenu =  false,
@@ -2237,7 +2237,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "IsShowContactDetailsInTheMobileApp",
+					 						FieldName =  "IsShowContactDetailInMobileApp",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -2257,8 +2257,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "IsShowContactDetailsInTheMobileApp",
-					  						ListPropertyPath =  "IsShowContactDetailsInTheMobileApp",
+					  						PMPropertyPath =  "IsShowContactDetailInMobileApp",
+					  						ListPropertyPath =  "IsShowContactDetailInMobileApp",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -2279,7 +2279,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "IsShowContactDetailsInTheMobileApp",
+					  						FullFieldLable =  "IsShowContactDetailInMobileApp",
 					  						DefaultText =  "Show Contact Details In The Mobile App",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -2544,10 +2544,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SearchFields",
 					  						DefaultText =  "Search names/ positions",
-                                            FullLocalDefaultText = "חיפוש שמות/תפקידים",
-
-
-                                              HelpTextCode =  "SearchFields",
+					  						FullLocalDefaultText =  "חיפוש שמות/תפקידים",
+					  						HelpTextCode =  "SearchFields",
 					  						HelpTextDefaultText =  "Searching by :\n1: Emails\n2: names",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -4342,7 +4340,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "IsTwoFactorAuthenticationEnabled",
+					 						FieldName =  "IsTwoFactorAuthenticatiEnabled",
 					  						ObjectTableName =  "User",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -4362,8 +4360,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "IsTwoFactorAuthenticationEnabled",
-					  						ListPropertyPath =  "IsTwoFactorAuthenticationEnabled",
+					  						PMPropertyPath =  "IsTwoFactorAuthenticatiEnabled",
+					  						ListPropertyPath =  "IsTwoFactorAuthenticatiEnabled",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -4384,7 +4382,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "IsTwoFactorAuthenticationEnabled",
+					  						FullFieldLable =  "IsTwoFactorAuthenticatiEnabled",
 					  						DefaultText =  "Is Two Factor Authentication Enabled",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
