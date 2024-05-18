@@ -102,7 +102,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 
 				ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
 				ChargesExternalAccountsByProductRepository  chargesExternalAccountsByProductRepository = new ChargesExternalAccountsByProductRepository(MyContext);
-				IQueryable<ChargesExternalAccountsByProduct> entityPocos = chargesExternalAccountsByProductRepository.GetChargesExternalAccountsByProducts(authToken.Tenant);
+				IQueryable<ChargesExternalAccountsByProduct> entityPocos = chargesExternalAccountsByProductRepository.GetChargesExternalAccByProducts(authToken.Tenant);
 
 				ChargesExternalAccountsByProductQuery chargesExternalAccountsByProductQuery = new ChargesExternalAccountsByProductQuery(chargesExternalAccountsByProductRepository);
 			    IQueryable<ChargesExternalAccountsByProductList> entityLists = chargesExternalAccountsByProductQuery.GetIQueryableEntityList(entityPocos);
@@ -136,7 +136,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                     ObjectTableName = "ChargesExternalAccountsByProduct",
                     PageIndex = filters.PageIndex,
                     PageSize = filters.PageSize,
-                    QuerySection = "ChargesExternalAccountsByProducts",
+                    QuerySection = "ChargesExternalAccByProducts",
                     SortByColumnName = filters.SortBy,
                     SortDirectin = filters.SortDirection,
 					GetAll = filters.GetAll, 
@@ -230,7 +230,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 								
                 ICommonDataContext MyContext = CommonDataContext.GetContext(tenant);
                 ChargesExternalAccountsByProductRepository  chargesExternalAccountsByProductRepository = new ChargesExternalAccountsByProductRepository(MyContext);
-                IQueryable<ChargesExternalAccountsByProduct> entityPocos = chargesExternalAccountsByProductRepository.GetChargesExternalAccountsByProducts(tenant);
+                IQueryable<ChargesExternalAccountsByProduct> entityPocos = chargesExternalAccountsByProductRepository.GetChargesExternalAccByProducts(tenant);
 
                 ChargesExternalAccountsByProductQuery chargesExternalAccountsByProductQuery = new ChargesExternalAccountsByProductQuery(chargesExternalAccountsByProductRepository);
                 
