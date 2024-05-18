@@ -136,8 +136,9 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="SharedLogisticsInvitationStatusCode"
+    Name="SharedLogisticsInvitStatusCode"
     ShortName="SharedLogInvitationStatCode"
+    OldNames="SharedLogisticsInvitationStatusCode"
     Type="int">
     <Constraints
       Nullable="true" />
@@ -149,8 +150,9 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="CargoTrackingInvitationStatusCode"
+    Name="CargoTrackingInvitatStatusCode"
     ShortName="CargoTracInvitationStatCode"
+    OldNames="CargoTrackingInvitationStatusCode"
     Type="int">
     <Constraints
       Nullable="true" />
@@ -552,13 +554,13 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
-    ForeignKeyColumn="SharedLogisticsInvitationStatusCode"
-    ReferencedTable="SharedLogisticsInvitationStatus"
+    ForeignKeyColumn="SharedLogisticsInvitStatusCode"
+    ReferencedTable="SharedLogisticInvitationStatus"
     ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
   <Relation
-    ForeignKeyColumn="CargoTrackingInvitationStatusCode"
-    ReferencedTable="SharedLogisticsInvitationStatus"
+    ForeignKeyColumn="CargoTrackingInvitatStatusCode"
+    ReferencedTable="SharedLogisticInvitationStatus"
     ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
   <Relation
@@ -617,22 +619,7 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
-    ForeignKeyColumn="SingleInvoiceTemplateId"
-    ReferencedTable="DocumentTypeTemplates"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="CustomsInvoiceTemplateId"
-    ReferencedTable="DocumentTypeTemplates"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="ConsolidationInvoiceTemplateId"
-    ReferencedTable="DocumentTypeTemplates"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="ManifestInvoiceTemplateId"
+    ForeignKeyColumn="SingleInvoiceTemplateId,CustomsInvoiceTemplateId,ConsolidationInvoiceTemplateId,ManifestInvoiceTemplateId"
     ReferencedTable="DocumentTypeTemplates"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
@@ -644,8 +631,8 @@
     Columns="Tenant,InActive,PartnerTypeId,IsCustomer" />
   <Index
     Columns="AutomaticLastUpdateDate" />
-	<Index
-  Columns="Code" />
+  <Index
+    Columns="Code" />
   <UniqueConstraint
     Columns="Tenant,Code,PartnerTypeId" />
 </Table>

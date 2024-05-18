@@ -16,7 +16,7 @@ export class CB_CustomsItemList {
 	ComputedCheckDigit: string;
 	CustomsBookTypeID: string;
 	CustomsItemCategoryID: string;
-	CustomsItemHierarchicLocationID: string;
+	CustomsItemHierarchicLocatioID: string;
 	GoodsDescription: string;
 	Rules: number;
 	Remarks: string;

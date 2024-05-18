@@ -79,29 +79,11 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.VatDiscountRate).HasColumnName("VatDiscountRate").HasPrecision(6, 2);
 
-            dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-            if (dbms == "oracle")
-            {
-              this.Property(t => t.Discount_CustomsItemGroupTypeID).HasColumnName("Discount_CustomsItemGroupTypeI").HasMaxLength(4).IsUnicode(false);
-			}
-			else
-			{
-              this.Property(t => t.Discount_CustomsItemGroupTypeID).HasColumnName("Discount_CustomsItemGroupTypeID").HasMaxLength(4).IsUnicode(false);
-			}
-
+            this.Property(t => t.Discount_CustomItemGroupTypeID).HasColumnName("Discount_CustomItemGroupTypeID").HasMaxLength(4).IsUnicode(false);
 
             this.Property(t => t.IsCarDiscount).HasColumnName("IsCarDiscount");
 
-            dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-            if (dbms == "oracle")
-            {
-              this.Property(t => t.DiscountRegularityRequirementType).HasColumnName("DiscountRegularityRequirementT").HasMaxLength(4).IsUnicode(false);
-			}
-			else
-			{
-              this.Property(t => t.DiscountRegularityRequirementType).HasColumnName("DiscountRegularityRequirementType").HasMaxLength(4).IsUnicode(false);
-			}
-
+            this.Property(t => t.DiscountRegularityRequiremType).HasColumnName("DiscountRegularityRequiremType").HasMaxLength(4).IsUnicode(false);
 
             this.Property(t => t.CB_ID).HasColumnName("CB_ID").IsRequired().HasMaxLength(15).IsUnicode(false);
         }

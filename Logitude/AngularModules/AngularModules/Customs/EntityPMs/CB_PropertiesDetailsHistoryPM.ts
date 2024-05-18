@@ -167,9 +167,9 @@ export class CB_PropertiesDetailsHistoryPM {
     public set VatDiscountRate(newValue: number) { if (this.vatDiscountRate != newValue) { this.vatDiscountRate = newValue; this.MarkAsDirty("VatDiscountRate"); } }
        
 	 
-    private discount_CustomsItemGroupTypeID: string;
-    public get Discount_CustomsItemGroupTypeID() { return this.discount_CustomsItemGroupTypeID; }
-    public set Discount_CustomsItemGroupTypeID(newValue: string) { if (this.discount_CustomsItemGroupTypeID != newValue) { this.discount_CustomsItemGroupTypeID = newValue; this.MarkAsDirty("Discount_CustomsItemGroupTypeID"); } }
+    private discount_CustomItemGroupTypeID: string;
+    public get Discount_CustomItemGroupTypeID() { return this.discount_CustomItemGroupTypeID; }
+    public set Discount_CustomItemGroupTypeID(newValue: string) { if (this.discount_CustomItemGroupTypeID != newValue) { this.discount_CustomItemGroupTypeID = newValue; this.MarkAsDirty("Discount_CustomItemGroupTypeID"); } }
        
 	 
     private isCarDiscount: boolean;
@@ -177,9 +177,9 @@ export class CB_PropertiesDetailsHistoryPM {
     public set IsCarDiscount(newValue: boolean) { if (this.isCarDiscount != newValue) { this.isCarDiscount = newValue; this.MarkAsDirty("IsCarDiscount"); } }
        
 	 
-    private discountRegularityRequirementType: string;
-    public get DiscountRegularityRequirementType() { return this.discountRegularityRequirementType; }
-    public set DiscountRegularityRequirementType(newValue: string) { if (this.discountRegularityRequirementType != newValue) { this.discountRegularityRequirementType = newValue; this.MarkAsDirty("DiscountRegularityRequirementType"); } }
+    private discountRegularityRequiremType: string;
+    public get DiscountRegularityRequiremType() { return this.discountRegularityRequiremType; }
+    public set DiscountRegularityRequiremType(newValue: string) { if (this.discountRegularityRequiremType != newValue) { this.discountRegularityRequiremType = newValue; this.MarkAsDirty("DiscountRegularityRequiremType"); } }
        
 	 
     private cB_ID: string;

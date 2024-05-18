@@ -87,25 +87,25 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private int? customsItemHierarchicLocationID ;
+	  private int? customsItemHierarchicLocatioID ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public int? CustomsItemHierarchicLocationID  
+       public int? CustomsItemHierarchicLocatioID  
 	   {
 	    
 	     get
 		{
-		   return customsItemHierarchicLocationID;
+		   return customsItemHierarchicLocatioID;
 		 }
 		 set
 		 {
-		   if(customsItemHierarchicLocationID != value)
+		   if(customsItemHierarchicLocatioID != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomsItemHierarchicLocationID",OldValue=customsItemHierarchicLocationID,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomsItemHierarchicLocatioID",OldValue=customsItemHierarchicLocatioID,NewValue=value,PropertyType="int?"};
 		    NotifyPropertyChanged(values);
-		   customsItemHierarchicLocationID=value;
+		   customsItemHierarchicLocatioID=value;
 		   }
 			
 		 }

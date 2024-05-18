@@ -50,9 +50,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CarEngineVolumeID, 
 	         CarWeightID, 
 	         VatDiscountRate, 
-	         Discount_CustomsItemGroupTypeID, 
+	         Discount_CustomItemGroupTypeID, 
 	         IsCarDiscount, 
-	         DiscountRegularityRequirementType, 
+	         DiscountRegularityRequiremType, 
 	         CB_ID,
 	      }
 
@@ -88,9 +88,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CarEngineVolumeID, 
 	         CarWeightID, 
 	         VatDiscountRate, 
-	         Discount_CustomsItemGroupTypeID, 
+	         Discount_CustomItemGroupTypeID, 
 	         IsCarDiscount, 
-	         DiscountRegularityRequirementType, 
+	         DiscountRegularityRequiremType, 
 	         CB_ID,
 	      }
 
@@ -240,9 +240,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 				entityPOCO.VatDiscountRate = entityPM.VatDiscountRate;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Discount_CustomsItemGroupTypeID))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Discount_CustomItemGroupTypeID))
             {
-				entityPOCO.Discount_CustomsItemGroupTypeID = entityPM.Discount_CustomsItemGroupTypeID;
+				entityPOCO.Discount_CustomItemGroupTypeID = entityPM.Discount_CustomItemGroupTypeID;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsCarDiscount))
@@ -250,9 +250,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 				entityPOCO.IsCarDiscount = entityPM.IsCarDiscount;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DiscountRegularityRequirementType))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DiscountRegularityRequiremType))
             {
-				entityPOCO.DiscountRegularityRequirementType = entityPM.DiscountRegularityRequirementType;
+				entityPOCO.DiscountRegularityRequiremType = entityPM.DiscountRegularityRequiremType;
 			}
 			}
 
@@ -399,9 +399,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.VatDiscountRate = entityPOCO.VatDiscountRate;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Discount_CustomsItemGroupTypeID))
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Discount_CustomItemGroupTypeID))
             {
-					entityPM.Discount_CustomsItemGroupTypeID = entityPOCO.Discount_CustomsItemGroupTypeID;
+					entityPM.Discount_CustomItemGroupTypeID = entityPOCO.Discount_CustomItemGroupTypeID;
             }
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsCarDiscount))
@@ -409,9 +409,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.IsCarDiscount = entityPOCO.IsCarDiscount;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DiscountRegularityRequirementType))
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DiscountRegularityRequiremType))
             {
-					entityPM.DiscountRegularityRequirementType = entityPOCO.DiscountRegularityRequirementType;
+					entityPM.DiscountRegularityRequiremType = entityPOCO.DiscountRegularityRequiremType;
             }
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CB_ID))
@@ -565,9 +565,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.VatDiscountRate = entityPM.VatDiscountRate;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Discount_CustomsItemGroupTypeID))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Discount_CustomItemGroupTypeID))
             {
-                oldEntityPM.Discount_CustomsItemGroupTypeID = entityPM.Discount_CustomsItemGroupTypeID;
+                oldEntityPM.Discount_CustomItemGroupTypeID = entityPM.Discount_CustomItemGroupTypeID;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsCarDiscount))
@@ -575,9 +575,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.IsCarDiscount = entityPM.IsCarDiscount;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DiscountRegularityRequirementType))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DiscountRegularityRequiremType))
             {
-                oldEntityPM.DiscountRegularityRequirementType = entityPM.DiscountRegularityRequirementType;
+                oldEntityPM.DiscountRegularityRequiremType = entityPM.DiscountRegularityRequiremType;
             }
 			
 		}

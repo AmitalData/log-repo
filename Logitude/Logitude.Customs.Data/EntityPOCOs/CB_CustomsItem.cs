@@ -41,8 +41,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	      
         public virtual CustomsItemCategory CustomsItemCategoryCode { get; set; }
         [ForeignKey("CustomsItemHierarchicLocationCode")]
-     
-	    public string CustomsItemHierarchicLocationID { get; set; }
+        [Column("CustomsItemHierarchicLocatioID")]
+	    public string CustomsItemHierarchicLocatioID { get; set; }
 	      
         public virtual CustomsItemHierarchicLocation CustomsItemHierarchicLocationCode { get; set; }
      [Key]

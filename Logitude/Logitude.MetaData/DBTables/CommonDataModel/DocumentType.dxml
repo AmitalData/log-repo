@@ -27,16 +27,18 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="DocumentTypeDefaultReportTemplateId"
+    Name="DocumentTypeDefaulReportTempId"
     ShortName="DocTypeDefaultReportTempId"
+    OldNames="DocumentTypeDefaultReportTemplateId"
     Type="varchar"
     Size="15">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="DocumentTypeDefaultHTMLTemplateId"
+    Name="DocumentTypeDefaHTMLTemplateId"
     ShortName="DocTypeDefaultHTMLTempId"
+    OldNames="DocumentTypeDefaultHTMLTemplateId"
     Type="varchar"
     Size="15">
     <Constraints
@@ -197,8 +199,9 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="IsSystemAdditionalPrintingFields"
+    Name="IsSystemAdditionaPrintingField"
     ShortName="IsSysAdditionalPrintingFields"
+    OldNames="IsSystemAdditionalPrintingFields"
     Type="bit">
     <Constraints
       Nullable="false" />

@@ -24,8 +24,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string FullClassification { get; set; }
         [Column("CustomsItemCategoryID")]
 	    public int CustomsItemCategoryID { get; set; }
-     
-	    public int? CustomsItemHierarchicLocationID { get; set; }
+        [Column("CustomsItemHierarchicLocatioID")]
+	    public int? CustomsItemHierarchicLocatioID { get; set; }
         [Column("ComputedCheckDigit")]
 	    public string ComputedCheckDigit { get; set; }
      [Key]

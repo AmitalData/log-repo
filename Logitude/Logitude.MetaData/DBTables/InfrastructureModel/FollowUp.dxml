@@ -82,8 +82,9 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="DateEscalationActionTimeIndicatorCode"
+    Name="DateEscalaActTimeIndicatorCode"
     ShortName="DateEscalationActionTimeCode"
+    OldNames="DateEscalationActionTimeIndicatorCode"
     Type="varchar"
     Size="2">
     <Constraints
