@@ -1032,9 +1032,7 @@ namespace Simplog.Data.CommonDataModel
         public IDbSet<ProductItem> ProductItems { get; set; }
         public IDbSet<HTSCode> HTSCodes { get; set; }
         public IDbSet<DWHEnvironmentSetting> DWHEnvironmentSettings { get; set; }
-
-
-
+        public IDbSet<SyncRecord> SyncRecord { get; set; }
 
         public DbConnection GetConnection()
         {

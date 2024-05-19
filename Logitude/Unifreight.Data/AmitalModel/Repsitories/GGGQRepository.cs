@@ -37,8 +37,9 @@ namespace Unifreight.Data.AmitalModel.Repsitories
 
         public void Add(GGGQ entity)
         {
-            context.GGGQs.Add(entity);
-        }
+            context.GGGQs.Add(entity);            
+            SyncRecordCache.ClearCacheLasySyncByPrimaryNum(entity.PRIMARYNUM, entity.TENANT);
+        }        
 
         public void Remove(GGGQ entity)
         {
@@ -48,11 +49,13 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             }
             //context.AddToGGGQs 
             context.GGGQs.Remove(entity);
+            SyncRecordCache.ClearCacheLasySyncByPrimaryNum(entity.PRIMARYNUM, entity.TENANT);
         }
 
         public void Update(GGGQ entity)
         {
             context.GGGQs.Attach(entity); context.SetAsModified(entity);
+            SyncRecordCache.ClearCacheLasySyncByPrimaryNum(entity.PRIMARYNUM, entity.TENANT);
         }
 
         public List<GGGQ> All()

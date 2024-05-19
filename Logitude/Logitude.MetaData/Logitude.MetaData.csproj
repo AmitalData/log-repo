@@ -1049,6 +1049,7 @@
     <None Include="EntityFiles\CommonDataModel\HybridTenantState.lxml" />
     <None Include="EntityFiles\CommonDataModel\ProductItem.lxml" />
     <None Include="EntityFiles\CommonDataModel\ReportExecutionLog.lxml" />
+    <None Include="EntityFiles\CommonDataModel\SyncRecord.lxml" />
     <None Include="EntityFiles\CommonDataModel\TariffCarrierTranslation.lxml">
       <SubType>Designer</SubType>
     </None>

@@ -41,6 +41,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
         public void Add(CCUFILEM entity)
         {
             context.CCUFILEMs.Add(entity);
+            SyncRecordCache.ClearCacheLasySync(entity.FILENO.ToString(), entity.TENANT.Value);
         }
 
         public void Remove(CCUFILEM entity)
@@ -49,11 +50,13 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             AttachIfNot(entity);context.SetAsModified(entity); //context.CCUFILEMs.Attach(entity);
             //context.AddToCCUFILEMs 
             context.CCUFILEMs.Remove(entity);
+            SyncRecordCache.ClearCacheLasySync(entity.FILENO.ToString(), entity.TENANT.Value);
         }
 
         public void Update(CCUFILEM entity)
         {
             AttachIfNot(entity);context.SetAsModified(entity);
+            SyncRecordCache.ClearCacheLasySync(entity.FILENO.ToString(), entity.TENANT.Value);
         }
         void AttachIfNot(CCUFILEM entity)
         {

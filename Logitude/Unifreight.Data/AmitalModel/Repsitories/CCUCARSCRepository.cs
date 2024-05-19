@@ -39,6 +39,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
         public void Add(CCUCARSC entity)
         {
             context.CCUCARSCs.Add(entity);
+            SyncRecordCache.ClearCacheLasySync(entity.FILENO.ToString(), entity.TENANT.Value);
         }
 
         public void Remove(CCUCARSC entity)
@@ -52,6 +53,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             //http://forums.devart.com/viewtopic.php?t=13223
             //context.ExecuteStoreCommand 
             context.CCUCARSCs.Remove(entity);
+            SyncRecordCache.ClearCacheLasySync(entity.FILENO.ToString(), entity.TENANT.Value);
         }
 
         public void Update(CCUCARSC entity)
@@ -61,7 +63,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
                 context.CCUCARSCs.Attach(entity); context.SetAsModified(entity);
             }
            
-
+            SyncRecordCache.ClearCacheLasySync(entity.FILENO.ToString(), entity.TENANT.Value);
         }
 
         public List<CCUCARSC> All()

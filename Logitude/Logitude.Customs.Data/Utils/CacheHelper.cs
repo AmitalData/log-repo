@@ -9,6 +9,8 @@ namespace Logitude.Customs.BL.BL
 {
     public static class CacheHelper
     {
+        public static void ClearCache(string cacheId) => CacheManager.CacheWrapper.Remove(cacheId);
+
         public static T GetFromCache<T>(string cacheId, Func<T> action)
         {
             T entity = (T)CacheManager.CacheWrapper.Get(cacheId);
