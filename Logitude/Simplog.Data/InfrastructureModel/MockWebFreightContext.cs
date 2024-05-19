@@ -2120,5 +2120,9 @@ namespace Simplog.Data.InfrastructureModel
         public IDbSet<DeploymentPackageExecutionLog> DeploymentPackageExecutionLogs => throw new NotImplementedException();
 
         public IDbSet<EventRemark> EventRemarks => throw new NotImplementedException();
+
+        public IDbSet<DefaultAndConfiguration> DefaultAndConfigurations => throw new NotImplementedException();
+
+        public IDbSet<DefaultAndConfigurationKey> DefaultAndConfigurationKey => throw new NotImplementedException();
     }
 }
