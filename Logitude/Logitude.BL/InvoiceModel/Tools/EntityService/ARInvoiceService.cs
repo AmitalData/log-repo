@@ -505,13 +505,15 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         private string CreateBodyFromARInvoice()
         {
             FullAccountingSettingRepository fullAccountingSettingRepository = new FullAccountingSettingRepository(entityPM.Tenant);
+            Tenant myTenant = TenantRepository.GetSingleTenant(tenant, true);
+
             int ConsolidationVAT;
             int.TryParse(fullAccountingSettingRepository.GetSingleFullAccountingSetting(entityPM.Tenant).ConsolidationVAT, out ConsolidationVAT);
             ConfirmationNumberAPI confirmationNumberAPI = new ConfirmationNumberAPI()
             {
                 Invoice_ID = entityPM.InvoiceNumber,
                 Invoice_Type = 305,
-                Vat_Number = int.Parse(entityPM.VatNumber),
+                Vat_Number = int.Parse(myTenant.VatNumber ?? "0"),
                 Union_Vat_Number = ConsolidationVAT,
                 Invoice_Reference_Number = entityPM.InvoiceNumber,
                 Customer_VAT_Number = int.Parse(entityPM.VatNumber),
