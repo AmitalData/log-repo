@@ -246,6 +246,7 @@ namespace AmitalCustomsWindowsService
             listOfWorkerEntryPoint.Add(new RabbitMQReceiveWR());
             listOfWorkerEntryPoint.Add(new CustomsHSMSignWR());
             listOfWorkerEntryPoint.Add(new ReportExecutionLogWR());
+            listOfWorkerEntryPoint.Add(new SyncRecordsCCUTableWR());
 
             bool testCustomsSchedularWR = false;
             if (testCustomsSchedularWR)

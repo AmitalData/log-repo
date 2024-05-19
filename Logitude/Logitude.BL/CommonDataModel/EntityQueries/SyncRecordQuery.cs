@@ -9,6 +9,7 @@ using Logitude.Server.Tools.Utils;
 using System.Data.SqlClient;
 using System.Data;
 using Logitude.Customs.BL.BL;
+using System.Runtime.Remoting.Contexts;
 
 namespace Logitude.BL.CommonDataModel.EntityQueries
 {
@@ -96,5 +97,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             return lastSync;
         }
+
+        public List<SyncRecord> GetAndMarkNewSyncRecord() => repository.GetAndMarkNewSyncRecord();
+
+        public void UpdateStatusInQueue(List<SyncRecord> records) => repository.UpdateStatusInQueue(records);
     }
 }

@@ -57,14 +57,14 @@ namespace Simplog.Data.CommonDataModel.Repositories
             context.SaveChanges();
         }
 
-        public List<SyncRecord> GetMulti(Simplog.Server.Infrastructure.EntityKeyFields entityKeys)
+        public List<SyncRecord> GetMulti(EntityKeyFields entityKeys)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
-        public SyncRecord GetSingle(Simplog.Server.Infrastructure.EntityKeyFields entityKeys)
+        public SyncRecord GetSingle(EntityKeyFields entityKeys)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public List<SyncRecord> GetUnsyncAndMarkAsInProcess(int tenant, string fileNo)
@@ -94,7 +94,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public void UpdateSyncDate(string fileNo, DateTime syncDT, int tenant)
         {
-            DateTime yesterday = DateTime.Now.AddDays(-4);
+            DateTime yesterday = DateTime.Now.AddDays(-1);
 
             IEnumerable<SyncRecord> records = context.SyncRecord.Where(syncRecord =>
                 syncRecord.Tenant == tenant &&
@@ -124,5 +124,30 @@ namespace Simplog.Data.CommonDataModel.Repositories
             context.SyncRecord
                 .Where(syncRecord => syncRecord.Tenant == tenant && syncRecord.FileNo == fileNo)
                 .Max(syncRecord => syncRecord.SyncDT);
+
+        public List<SyncRecord> GetAndMarkNewSyncRecord()
+        {
+            DateTime yesterday = DateTime.Now.AddDays(-1);
+
+            IEnumerable<SyncRecord> records = context.SyncRecord.Where(syncRecord =>                                
+                syncRecord.IsSync == 0 && syncRecord.CreateDate > yesterday);
+
+            for (int i = 0; i < records.Count(); i++)
+                records.ElementAt(i).IsSync = 1;
+
+            return records.ToList();
+        }
+
+        public void UpdateStatusInQueue(List<SyncRecord> records)
+        {
+            for (int i = 0; i < records.Count; i++)
+            {
+                records[i].IsSync = 2;                
+                context.SyncRecord.Attach(records[i]);
+                context.SetAsModified(records[i]);
+            }
+
+            context.SaveChanges();
+        }
     }
 }
