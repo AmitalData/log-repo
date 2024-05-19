@@ -1099,7 +1099,7 @@ export class EditDocumentComponent implements OnInit {
 
                     if (this.TemplateFormatCode == "P") {
 
-                        this.DocumentTypePM.documentTypeDefaulReportTempId = selectitem.Id;
+                        this.DocumentTypePM.DocumentTypeDefaulReportTempId = selectitem.Id;
                         this.DocumentTypePM.DocumentTypeDefaultEditorTool = selectitem.EditorTool;
                     }
                     else if (this.DocumentTypePM.TemplateFormatCode == "M") {
@@ -1267,7 +1267,7 @@ export class EditDocumentComponent implements OnInit {
         var IsDefualt = false;
 
         if (selectitem.TemplateType == "P") {
-            if (selectitem.Id == this.DocumentTypePM.documentTypeDefaulReportTempId) {
+            if (selectitem.Id == this.DocumentTypePM.DocumentTypeDefaulReportTempId) {
                 IsDefualt = true;
             }
         }
