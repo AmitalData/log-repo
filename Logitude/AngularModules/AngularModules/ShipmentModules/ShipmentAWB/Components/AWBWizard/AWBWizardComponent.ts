@@ -3147,7 +3147,7 @@ export class AWBWizardComponent implements AfterViewInit{
     }
     StartPrint() {
         if (this.documentTypePM != null) {
-            if (this.documentTypePM.documentTypeDefaulReportTempId) {
+            if (this.documentTypePM.DocumentTypeDefaulReportTempId) {
                 this.LoadPrintControl();
             }
 
@@ -3329,7 +3329,7 @@ export class AWBWizardComponent implements AfterViewInit{
 
         this.StopBusyIndicator();
 
-        if (this.documentTypePM.documentTypeDefaulReportTempId) {
+        if (this.documentTypePM.DocumentTypeDefaulReportTempId) {
             this.LoadPreviewControl();
         }
 

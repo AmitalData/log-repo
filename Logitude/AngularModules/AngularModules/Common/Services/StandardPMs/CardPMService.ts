@@ -27,7 +27,7 @@ import {ContactPM} from '../../EntityPMs/ContactPM';
 
 import {CardContactAdditionalServicePM} from '../../EntityPMs/CardContactAdditionalServicePM';
 import {CardContactProductPM} from '../../EntityPMs/CardContactProductPM';
-//import {CustomFieldPM} from '../../EntityPMs/CustomFieldPM';
+import {CustomFieldPM} from '../../EntityPMs/CustomFieldPM';
 
 @Injectable()
 
@@ -191,7 +191,7 @@ export class CardPMService {
 			
                this.MapAddresses(entityPM, jsonPM, mapParent); // Call composition tables map methods
                this.MapContacts(entityPM, jsonPM, mapParent); // Call composition tables map methods
-               //this.MapCustomFields(entityPM, jsonPM, mapParent); // Call composition tables map methods
+               this.MapCustomFields(entityPM, jsonPM, mapParent); // Call composition tables map methods
 			 
             
 
@@ -230,14 +230,14 @@ export class CardPMService {
             entityPM.OldEntityPM.Contacts.push(newContactPM);
             }
 			   			   			   
-            //entityPM.OldEntityPM.CustomFields = [];
-            //for (var item in entityPM.CustomFields) {
-            //var myCustomFieldPM = entityPM.CustomFields[item];
-            //var newCustomFieldPM: CustomFieldPM = this.clone(myCustomFieldPM);
+            entityPM.OldEntityPM.CustomFields = [];
+            for (var item in entityPM.CustomFields) {
+            var myCustomFieldPM = entityPM.CustomFields[item];
+            var newCustomFieldPM: CustomFieldPM = this.clone(myCustomFieldPM);
 						
 							 
-            //entityPM.OldEntityPM.CustomFields.push(newCustomFieldPM);
-            //}
+            entityPM.OldEntityPM.CustomFields.push(newCustomFieldPM);
+            }
 			   
 		}
         else {
@@ -302,32 +302,32 @@ export class CardPMService {
             entityPM.Contacts.push(newContactPM);
         }
     }
-   // MapCustomFields(entityPM: CardPM, jsonPM: any, mapParent: boolean = true) {
+    MapCustomFields(entityPM: CardPM, jsonPM: any, mapParent: boolean = true) {
 
-   //     entityPM.CustomFields = new Array<CustomFieldPM>();
-   //     for (var item in jsonPM.CustomFields) {
+        entityPM.CustomFields = new Array<CustomFieldPM>();
+        for (var item in jsonPM.CustomFields) {
 
-   //         var jItem = jsonPM.CustomFields[item];
-   //         if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
-   //             continue;
-   //         }
-   //         var newCustomFieldPM: CustomFieldPM;
-   //         newCustomFieldPM = new CustomFieldPM();
-		 //   newCustomFieldPM.DisableMarkAsDirty = true;                
-   //         var pmKeysArray = Object.keys(jItem);
-   //         for (var pmKey in pmKeysArray) {
+            var jItem = jsonPM.CustomFields[item];
+            if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+                continue;
+            }
+            var newCustomFieldPM: CustomFieldPM;
+            newCustomFieldPM = new CustomFieldPM();
+		    newCustomFieldPM.DisableMarkAsDirty = true;                
+            var pmKeysArray = Object.keys(jItem);
+            for (var pmKey in pmKeysArray) {
 			
-   //             if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
-   //                 continue;
-   //             }
-   //             var pmProperty = pmKeysArray[pmKey];
-   //             newCustomFieldPM[pmProperty] = jItem[pmProperty];
-   //         }
-			//newCustomFieldPM.DisableMarkAsDirty = false;
-   //         newCustomFieldPM.IsDirty = false;
-   //         entityPM.CustomFields.push(newCustomFieldPM);
-   //     }
-   // }
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                    continue;
+                }
+                var pmProperty = pmKeysArray[pmKey];
+                newCustomFieldPM[pmProperty] = jItem[pmProperty];
+            }
+			newCustomFieldPM.DisableMarkAsDirty = false;
+            newCustomFieldPM.IsDirty = false;
+            entityPM.CustomFields.push(newCustomFieldPM);
+        }
+    }
 
 	  public clone(jsonPM: any) {
         var entityPM: any;
