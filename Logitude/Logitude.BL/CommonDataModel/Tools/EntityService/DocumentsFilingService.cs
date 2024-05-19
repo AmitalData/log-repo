@@ -1618,6 +1618,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
         private void CreateCustomsDocumentsFilingMetaDataValue(DocumentsFilingMetaDataValuePM itemPM)
         {
+
             CustomsDocumentMetaDataValue customsDocumentMetaDataValue = new CustomsDocumentMetaDataValue();
             customsDocumentMetaDataValue.MetaDataTypeCode = itemPM.DocumentsMetaDataTypeCode;
             customsDocumentMetaDataValue.CustomsDocumentId = entityPM.Id;
@@ -1627,14 +1628,20 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         }
         private void UpdateCustomsDocumentsFilingMetaDataValue(DocumentsFilingMetaDataValuePM itemPM)
         {
+
             CustomsDocumentMetaDataValue customsDocumentMetaDataValue = customsDocumentMetaDataValueRepository.GetCustomsDocumentMetaDataValuesByCustomDocumentAndMetaDateValue(entityPM.Id, tenant, itemPM.DocumentsMetaDataTypeCode);
-            customsDocumentMetaDataValue.MetaDataValue=itemPM.MetaDataValue;
-            customsDocumentMetaDataValueRepository.Update(customsDocumentMetaDataValue);
+            if(customsDocumentMetaDataValue != null) {
+                customsDocumentMetaDataValue.MetaDataValue = itemPM.MetaDataValue;
+                customsDocumentMetaDataValueRepository.Update(customsDocumentMetaDataValue);
+            }
+           
         }
         private void DeleteCustomsDocumentsFilingMetaDataValue(DocumentsFilingMetaDataValuePM itemPM)
         {
-            CustomsDocumentMetaDataValue customsDocumentMetaDataValue = customsDocumentMetaDataValueRepository.GetCustomsDocumentMetaDataValuesByCustomDocumentAndMetaDateValue(entityPM.Id, tenant, itemPM.DocumentsMetaDataTypeCode);
-            customsDocumentMetaDataValueRepository.Remove(customsDocumentMetaDataValue);
+
+            CustomsDocumentMetaDataValue customsDocumentMetaDataValue = customsDocumentMetaDataValueRepository.GetCustomsDocumentMetaDataValuesByCustomDocumentAndMetaDateValue(entityPM.Id, tenant,itemPM.DocumentsMetaDataTypeCode);
+            if(customsDocumentMetaDataValue != null) 
+               customsDocumentMetaDataValueRepository.Remove(customsDocumentMetaDataValue);
         }
 
         public string RandomString(int length)
