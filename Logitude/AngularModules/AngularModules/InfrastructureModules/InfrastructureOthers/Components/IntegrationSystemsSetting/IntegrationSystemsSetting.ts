@@ -20,7 +20,7 @@ import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeName
 export class IntegrationSystemsSetting extends BaseComponent implements OnInit {
     public tenantPMService: TenantPMService;
     DataContext: IntegrationSystemsSetting = this;
-    ExportQuotationsToIntegratedSystem: boolean = false;
+    ExportQuotationsoIntegratedSys: boolean = false;
     myTenantPM: TenantPM;
     public QuotationTransferTriggersList: CodeNameClass[] = [];
     public DisplayQuotationTransferTriggers: boolean = false;
@@ -75,8 +75,8 @@ export class IntegrationSystemsSetting extends BaseComponent implements OnInit {
                 if (myResult) {
                     this.myTenantPM = myResult;
                     if (this.myTenantPM) {
-                        this.ExportQuotationsToIntegratedSystem = this.myTenantPM.ExportQuotationsToIntegratedSystem;
-                        this.SelectedTransferToUnfreightTriggerType = this.QuotationTransferTriggersList.filter(f => f.Code === this.myTenantPM.TransferQuotationsToUnifreightTrigger)[0];
+                        this.ExportQuotationsoIntegratedSys = this.myTenantPM.ExportQuotationsoIntegratedSys;
+                        this.SelectedTransferToUnfreightTriggerType = this.QuotationTransferTriggersList.filter(f => f.Code === this.myTenantPM.TransferQuotationsToUnfTrigger)[0];
                     }
                 }
             }
@@ -93,17 +93,17 @@ export class IntegrationSystemsSetting extends BaseComponent implements OnInit {
 
     SaveButtonClicked() {
         if (this.myTenantPM) {
-            if (this.ExportQuotationsToIntegratedSystem !== this.myTenantPM.ExportQuotationsToIntegratedSystem
-                || this.SelectedTransferToUnfreightTriggerType?.Code !== this.myTenantPM.TransferQuotationsToUnifreightTrigger) {
-                this.myTenantPM.ExportQuotationsToIntegratedSystem = this.ExportQuotationsToIntegratedSystem;
-                this.myTenantPM.TransferQuotationsToUnifreightTrigger = this.SelectedTransferToUnfreightTriggerType?.Code;
+            if (this.ExportQuotationsoIntegratedSys !== this.myTenantPM.ExportQuotationsoIntegratedSys
+                || this.SelectedTransferToUnfreightTriggerType?.Code !== this.myTenantPM.TransferQuotationsToUnfTrigger) {
+                this.myTenantPM.ExportQuotationsoIntegratedSys = this.ExportQuotationsoIntegratedSys;
+                this.myTenantPM.TransferQuotationsToUnfTrigger = this.SelectedTransferToUnfreightTriggerType?.Code;
                 this.CurrentSession.StartBusyIndicatorSaving();
                 this.tenantPMService.update(this.myTenantPM).subscribe((res:any) => {
                     this.CurrentSession.StopBusyIndicator();
                     var pmResponse: ServiceResponse = res;
                     if (!pmResponse.HasError) {
-                        SessionLocator.TenantPM.ExportQuotationsToIntegratedSystem = this.ExportQuotationsToIntegratedSystem;
-                        SessionLocator.TenantPM.TransferQuotationsToUnifreightTrigger = this.SelectedTransferToUnfreightTriggerType?.Code;
+                        SessionLocator.TenantPM.ExportQuotationsoIntegratedSys = this.ExportQuotationsoIntegratedSys;
+                        SessionLocator.TenantPM.TransferQuotationsToUnfTrigger = this.SelectedTransferToUnfreightTriggerType?.Code;
                         this.CloseButtonClicked();
                     }
                 });

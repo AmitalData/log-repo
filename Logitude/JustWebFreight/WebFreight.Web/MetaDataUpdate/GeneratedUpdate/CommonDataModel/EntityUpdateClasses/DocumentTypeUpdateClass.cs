@@ -81,9 +81,6 @@ using Logitude.DashboardModule.Data.Repositories;
 using Logitude.DashboardModule.Data.EntityPOCOs;
 using Logitude.DashboardModule.BL;
 
-//using Amital.QuoteOPM.BL.CLoseTable;
-
-
 
 
 
@@ -91,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class DocumentTypeUpdateClass
    {  		
-		public const string HashString = "60aaa86c2a9e95f7319b23644d60441d";
+		public const string HashString = "edba836578cd7dc7f0be914dd8354bdb";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -108,6 +105,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    HasCustomFields =  false,
 			      				    AvailableInCustomization =  true,
 			      				    SupportSubEntity =  false,
+			      				    ApplyGenericCustomFields =  false,
+			      				    AvailableInDocumentTypes =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasFiltersMenu =  false,
@@ -419,7 +418,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "DocumentTypeDefaultReportTemplateId",
+					 						FieldName =  "DocumentTypeDefaulReportTempId",
 					  						ObjectTableName =  "DocumentType",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -438,8 +437,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "DocumentTypeDefaultReportTemplateId",
-					  						ListPropertyPath =  "DocumentTypeDefaultReportTemplateId",
+					  						PMPropertyPath =  "DocumentTypeDefaulReportTempId",
+					  						ListPropertyPath =  "DocumentTypeDefaulReportTempId",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -457,10 +456,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "DocumentTypeDefaultReportTemplateId",
+					  						FullFieldLable =  "DocumentTypeDefaulReportTempId",
 					  						DefaultText =  "DocumentTypeDefaultReportTemplateId",
 					  						FullLocalDefaultText =  "DocumentTypeDefaultReportTemplateId",
-					  						ListFieldLable =  "DocumentTypeDefaultReportTemplateIdListLable",
+					  						ListFieldLable =  "DocumentTypeDefaulReportTempIdListLable",
 					  						ListLableDefaultText =  "DocumentTypeDefaultReportTemplateId",
 					  						ListLocalDefaultText =  "DocumentTypeDefaultReportTemplateId",
 					  						IsForeignKey =  false,
@@ -483,7 +482,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "DocumentTypeDefaultHTMLTemplateId",
+					 						FieldName =  "DocumentTypeDefaHTMLTemplateId",
 					  						ObjectTableName =  "DocumentType",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -502,8 +501,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "DocumentTypeDefaultHTMLTemplateId",
-					  						ListPropertyPath =  "DocumentTypeDefaultHTMLTemplateId",
+					  						PMPropertyPath =  "DocumentTypeDefaHTMLTemplateId",
+					  						ListPropertyPath =  "DocumentTypeDefaHTMLTemplateId",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -521,10 +520,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "DocumentTypeDefaultHTMLTemplateId",
+					  						FullFieldLable =  "DocumentTypeDefaHTMLTemplateId",
 					  						DefaultText =  "DocumentTypeDefaultHTMLTemplateId",
 					  						FullLocalDefaultText =  "DocumentTypeDefaultHTMLTemplateId",
-					  						ListFieldLable =  "DocumentTypeDefaultHTMLTemplateIdListLable",
+					  						ListFieldLable =  "DocumentTypeDefaHTMLTemplateIdListLable",
 					  						ListLableDefaultText =  "DocumentTypeDefaultHTMLTemplateId",
 					  						ListLocalDefaultText =  "DocumentTypeDefaultHTMLTemplateId",
 					  						IsForeignKey =  false,
@@ -2182,7 +2181,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "IsSystemAdditionalPrintingFields",
+					 						FieldName =  "IsSystemAdditionaPrintingField",
 					  						ObjectTableName =  "DocumentType",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -2202,8 +2201,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "IsSystemAdditionalPrintingFields",
-					  						ListPropertyPath =  "IsSystemAdditionalPrintingFields",
+					  						PMPropertyPath =  "IsSystemAdditionaPrintingField",
+					  						ListPropertyPath =  "IsSystemAdditionaPrintingField",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -2224,9 +2223,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "IsSystemAdditionalPrintingFields",
+					  						FullFieldLable =  "IsSystemAdditionaPrintingField",
 					  						DefaultText =  "Is System Additional Printing Fields",
-					  						ListFieldLable =  "IsSystemAdditionalPrintingFieldsListLable",
+					  						ListFieldLable =  "IsSystemAdditionaPrintingFieldListLable",
 					  						ListLableDefaultText =  "Is System Additional Printing Fields",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -4035,6 +4034,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "IsCustomerUploadPermission",
 					  						ListPropertyPath =  "IsCustomerUploadPermission",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,

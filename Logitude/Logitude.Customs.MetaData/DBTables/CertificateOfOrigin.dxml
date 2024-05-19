@@ -503,7 +503,7 @@
   </Column>
   <Relation
     ForeignKeyColumn="CooTypeCode"
-    ReferencedTable="CertificateOfOriginTypeCodeEnums"
+    ReferencedTable="CertificateOfOriginTypeCodes"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
   <Relation
@@ -628,7 +628,7 @@
     ReferencedTableSchema="Customs" />
   <Relation
     ForeignKeyColumn="CooStatusCode"
-    ReferencedTable="CertificateOfOriginStatusCodeEnums"
+    ReferencedTable="CertificateOfOriginStatusCodes"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
   <Relation

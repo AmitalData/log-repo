@@ -118,7 +118,7 @@ namespace CommunicationWorkerRole
 
                                     if (airlineTenant != null)
                                     {
-                                        List<LogitudeMessagesTransmissionLog> allLogs = logRepository.GetLogitudeMessagesTransmissionLogs(airlineTenant.Id).ToList();
+                                        List<LogitudeMessagesTransmissionLog> allLogs = logRepository.GetLogitudeMessagTransmissionLogs(airlineTenant.Id).ToList();
 
                                         bool exist = this.IsEntityExists(myRecord.AWBNumber, myRecord.SentDate, allLogs);
 

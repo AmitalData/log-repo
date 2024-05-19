@@ -454,10 +454,10 @@ export class AccountingTab_QuickBooksOnline extends BaseComponent implements OnD
 
         else if (this.ObjectTableName == "ChargesType") {
             if (this.EntityPM != null)
-                if (this.EntityPM.ReceivablesChargesTypeExternalCode != null && this.EntityPM.ReceivablesChargesTypeExternalCode != "") {
+                if (this.EntityPM.ReceivablesChargesTypeExtCode != null && this.EntityPM.ReceivablesChargesTypeExtCode != "") {
                     this.ExistRecordOtherExternalFromAPi = true;
                    
-                    this.GlobalDomainService.GetQuickBooksOnlineReceivableChargesTypesById(this.EntityPM.ReceivablesChargesTypeExternalCode).subscribe((result:any) => {
+                    this.GlobalDomainService.GetQuickBooksOnlineReceivableChargesTypesById(this.EntityPM.ReceivablesChargesTypeExtCode).subscribe((result:any) => {
                         if (result.Result != null && result.Result.length > 0) {
                             this.TextBoxText = result.Result[0].fullyQualifiedNameField;
                             this.Loading = true;
@@ -474,9 +474,9 @@ export class AccountingTab_QuickBooksOnline extends BaseComponent implements OnD
                  
                 }
 
-            if (this.EntityPM.PayablesChargesTypeExternalCode != null && this.EntityPM.PayablesChargesTypeExternalCode != ""){
+            if (this.EntityPM.PayablesChargesTypeExtCode != null && this.EntityPM.PayablesChargesTypeExtCode != ""){
                 this.ExistPayablesRecordOtherExternalFromAPi = true;
-                this.GlobalDomainService.GetQuickBooksOnlinePayablesChargesTypesById(this.EntityPM.PayablesChargesTypeExternalCode).subscribe((result:any) => {
+                this.GlobalDomainService.GetQuickBooksOnlinePayablesChargesTypesById(this.EntityPM.PayablesChargesTypeExtCode).subscribe((result:any) => {
                     if (result.Result != null && result.Result.length > 0) {
                         this.ChargeTypeTextBoxText = result.Result[0].nameField;
                         this.LoadingSecond = true;
@@ -761,11 +761,11 @@ export class AccountingTab_QuickBooksOnline extends BaseComponent implements OnD
 
                             case "ChargesType": {
                                 if (!this.isPayables) {
-                                    this.EntityPM.ReceivablesChargesTypeExternalCode = this.Item.idField;
+                                    this.EntityPM.ReceivablesChargesTypeExtCode = this.Item.idField;
                                     this.TextBoxText = this.Item.fullyQualifiedNameField;
                                 }
                                 else {
-                                    this.EntityPM.PayablesChargesTypeExternalCode = this.Item.idField;
+                                    this.EntityPM.PayablesChargesTypeExtCode = this.Item.idField;
                                     this.ChargeTypeTextBoxText = this.Item.nameField;
                                 }
                                 break;

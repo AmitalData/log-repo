@@ -45,7 +45,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
 { 
 
     
-    public partial class ChargesExternalAccountsByProductsController : ApiController
+    public partial class ChargesExternalAccByProductsController : ApiController
     {
 	  
        

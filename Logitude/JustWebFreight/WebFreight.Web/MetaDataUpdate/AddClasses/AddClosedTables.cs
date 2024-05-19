@@ -1826,7 +1826,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
 
         public static void AddAccountingInformationIdentifier(AccountingInformationIdentifierDetails detailsClass, AccountingInformationIdentifierRepository repository)
         {
-            Dictionary<string, AccountingInformationIdentifier> dictionary = repository.GetAccountingInformationIdentifiers().ToDictionary(d => d.Code, a => a);
+            Dictionary<string, AccountingInformationIdentifier> dictionary = repository.GetAccountingInformatiIdentifiers().ToDictionary(d => d.Code, a => a);
 
             if (dictionary.Keys.Contains(detailsClass.Code))
             {

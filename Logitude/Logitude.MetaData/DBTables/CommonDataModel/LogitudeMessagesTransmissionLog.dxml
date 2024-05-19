@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Table
-  Name="LogitudeMessagesTransmissionLogs"
+  Name="LogitudeMessagTransmissionLogs"
   ShortName="LogitudeMessagesTransLogs"
+  OldNames="LogitudeMessagesTransmissionLogs"
   Schema="dbo"
   DBType="Main"
   Module="Common">

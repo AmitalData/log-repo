@@ -29,7 +29,7 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string CustomsItemCategoryID  { get; set; }
        [DataMember]
-       public string CustomsItemHierarchicLocationID  { get; set; }
+       public string CustomsItemHierarchicLocatioID  { get; set; }
        [DataMember]
        public string GoodsDescription  { get; set; }
        [DataMember]

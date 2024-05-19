@@ -80,8 +80,6 @@ using Logitude.Workflow.BL.CLoseTable;
 using Logitude.DashboardModule.Data.Repositories;
 using Logitude.DashboardModule.Data.EntityPOCOs;
 using Logitude.DashboardModule.BL;
-//using Amital.QuoteOPM.BL.CLoseTable;
-
 
 
 
@@ -90,8 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class TenantUpdateClass
    {  		
-
-		public const string HashString = "8cca644bb7ebee8d49460b49b4bd5dc3";
+		public const string HashString = "20551cd64a0cae213bbc8122822b1303";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -135,8 +132,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Tenant",
-
-			      				    Code =  "8d94",
+			      				    Code =  "61a6",
 			      				    Name =  "Tenant",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",
@@ -2000,7 +1996,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "MasterExportFreightPrepaidCollectId",
+					 						FieldName =  "MasterExpFreigPrepaidCollectId",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "PrepaidCollect",
@@ -2021,8 +2017,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "MasterExportFreightPrepaidCollectId",
-					  						ListPropertyPath =  "MasterExportFreightPrepaidCollectId",
+					  						PMPropertyPath =  "MasterExpFreigPrepaidCollectId",
+					  						ListPropertyPath =  "MasterExpFreigPrepaidCollectId",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -2043,9 +2039,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "MasterExportFreightPrepaidCollectId",
+					  						FullFieldLable =  "MasterExpFreigPrepaidCollectId",
 					  						DefaultText =  "Master Export Freight P/C",
-					  						ListFieldLable =  "MasterExportFreightPrepaidCollectIdListLable",
+					  						ListFieldLable =  "MasterExpFreigPrepaidCollectIdListLable",
 					  						ListLableDefaultText =  "Master Export Freight P/C",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "PrepaidCollect",
@@ -2070,7 +2066,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "MasterImportFreightPrepaidCollectId",
+					 						FieldName =  "MasterImpFreiPrepaidCollectId",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "PrepaidCollect",
@@ -2091,8 +2087,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "MasterImportFreightPrepaidCollectId",
-					  						ListPropertyPath =  "MasterImportFreightPrepaidCollectId",
+					  						PMPropertyPath =  "MasterImpFreiPrepaidCollectId",
+					  						ListPropertyPath =  "MasterImpFreiPrepaidCollectId",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -2113,9 +2109,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "MasterImportFreightPrepaidCollectId",
+					  						FullFieldLable =  "MasterImpFreiPrepaidCollectId",
 					  						DefaultText =  "Master Import Freight P/C",
-					  						ListFieldLable =  "MasterImportFreightPrepaidCollectIdListLable",
+					  						ListFieldLable =  "MasterImpFreiPrepaidCollectIdListLable",
 					  						ListLableDefaultText =  "Master Import Freight P/C",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "PrepaidCollect",
@@ -2140,7 +2136,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "MasterExportOtherPrepaidCollectId",
+					 						FieldName =  "MasterExpOtherPrepaidCollectId",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "PrepaidCollect",
@@ -2161,8 +2157,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "MasterExportOtherPrepaidCollectId",
-					  						ListPropertyPath =  "MasterExportOtherPrepaidCollectId",
+					  						PMPropertyPath =  "MasterExpOtherPrepaidCollectId",
+					  						ListPropertyPath =  "MasterExpOtherPrepaidCollectId",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -2183,9 +2179,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "MasterExportOtherPrepaidCollectId",
+					  						FullFieldLable =  "MasterExpOtherPrepaidCollectId",
 					  						DefaultText =  "Master Export Other P/C",
-					  						ListFieldLable =  "MasterExportOtherPrepaidCollectIdListLable",
+					  						ListFieldLable =  "MasterExpOtherPrepaidCollectIdListLable",
 					  						ListLableDefaultText =  "Master Export Other P/C",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "PrepaidCollect",
@@ -2210,7 +2206,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "MasterImportOtherPrepaidCollectId",
+					 						FieldName =  "MasterImpOtherPrepaidCollectId",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "PrepaidCollect",
@@ -2231,8 +2227,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "MasterImportOtherPrepaidCollectId",
-					  						ListPropertyPath =  "MasterImportOtherPrepaidCollectId",
+					  						PMPropertyPath =  "MasterImpOtherPrepaidCollectId",
+					  						ListPropertyPath =  "MasterImpOtherPrepaidCollectId",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -2253,9 +2249,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "MasterImportOtherPrepaidCollectId",
+					  						FullFieldLable =  "MasterImpOtherPrepaidCollectId",
 					  						DefaultText =  "Master Import Other P/C",
-					  						ListFieldLable =  "MasterImportOtherPrepaidCollectIdListLable",
+					  						ListFieldLable =  "MasterImpOtherPrepaidCollectIdListLable",
 					  						ListLableDefaultText =  "Master Import Other P/C",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "PrepaidCollect",
@@ -5153,7 +5149,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "VatMandatoryForPotentialCustomers",
+					 						FieldName =  "VatMandatoryForPotentialCust",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -5173,8 +5169,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "VatMandatoryForPotentialCustomers",
-					  						ListPropertyPath =  "VatMandatoryForPotentialCustomers",
+					  						PMPropertyPath =  "VatMandatoryForPotentialCust",
+					  						ListPropertyPath =  "VatMandatoryForPotentialCust",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -5195,7 +5191,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "VatMandatoryForPotentialCustomers",
+					  						FullFieldLable =  "VatMandatoryForPotentialCust",
 					  						DefaultText =  "Mandatory for potential customers",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -7072,7 +7068,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "ExportQuotationsToIntegratedSystem",
+					 						FieldName =  "ExportQuotationsoIntegratedSys",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -7092,8 +7088,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "ExportQuotationsToIntegratedSystem",
-					  						ListPropertyPath =  "ExportQuotationsToIntegratedSystem",
+					  						PMPropertyPath =  "ExportQuotationsoIntegratedSys",
+					  						ListPropertyPath =  "ExportQuotationsoIntegratedSys",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -7114,9 +7110,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "ExportQuotationsToIntegratedSystem",
+					  						FullFieldLable =  "ExportQuotationsoIntegratedSys",
 					  						DefaultText =  "Export Quotations To Integrated System",
-					  						ListFieldLable =  "ExportQuotationsToIntegratedSystemListLable",
+					  						ListFieldLable =  "ExportQuotationsoIntegratedSysListLable",
 					  						ListLableDefaultText =  "Export Quotations To Integrated System",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -7995,7 +7991,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "IsCorrespondenceRightToLeftEnabled",
+					 						FieldName =  "IsCorrespondRightToLeftEnabled",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -8015,8 +8011,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "IsCorrespondenceRightToLeftEnabled",
-					  						ListPropertyPath =  "IsCorrespondenceRightToLeftEnabled",
+					  						PMPropertyPath =  "IsCorrespondRightToLeftEnabled",
+					  						ListPropertyPath =  "IsCorrespondRightToLeftEnabled",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -8037,7 +8033,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "IsCorrespondenceRightToLeftEnabled",
+					  						FullFieldLable =  "IsCorrespondRightToLeftEnabled",
 					  						DefaultText =  "Correspondence Right To Left",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -9441,7 +9437,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "TransferQuotationsToUnifreightTrigger",
+					 						FieldName =  "TransferQuotationsToUnfTrigger",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -9460,8 +9456,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "TransferQuotationsToUnifreightTrigger",
-					  						ListPropertyPath =  "TransferQuotationsToUnifreightTrigger",
+					  						PMPropertyPath =  "TransferQuotationsToUnfTrigger",
+					  						ListPropertyPath =  "TransferQuotationsToUnfTrigger",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -9478,7 +9474,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "TransferQuotationsToUnifreightTrigger",
+					  						FullFieldLable =  "TransferQuotationsToUnfTrigger",
 					  						DefaultText =  "Transfer Quotations to Unifreight",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -9863,7 +9859,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "IsQuotesRequestActivatedInShared",
+					 						FieldName =  "IsQuoteRequestActivateInShared",
 					  						ObjectTableName =  "Tenant",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -9882,8 +9878,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "IsQuotesRequestActivatedInShared",
-					  						ListPropertyPath =  "IsQuotesRequestActivatedInShared",
+					  						PMPropertyPath =  "IsQuoteRequestActivateInShared",
+					  						ListPropertyPath =  "IsQuoteRequestActivateInShared",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -9900,7 +9896,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "IsQuotesRequestActivatedInShared",
+					  						FullFieldLable =  "IsQuoteRequestActivateInShared",
 					  						DefaultText =  "Activate Quotes Requests in Shared Logistics",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -10527,6 +10523,244 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "DPArchiveShipmentCreateFilter",
+					  						ObjectTableName =  "Tenant",
+					  						FieldsDataType =  "Integer",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "DPArchiveShipmentCreateFilter",
+					  						ListPropertyPath =  "DPArchiveShipmentCreateFilter",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "DPArchiveShipmentCreateFilter",
+					  						DefaultText =  "DPArchiveShipmentCreateFilter",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "DPArchiveShipmentArrivalFilter",
+					  						ObjectTableName =  "Tenant",
+					  						FieldsDataType =  "Integer",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "DPArchiveShipmentArrivalFilter",
+					  						ListPropertyPath =  "DPArchiveShipmentArrivalFilter",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "DPArchiveShipmentArrivalFilter",
+					  						DefaultText =  "DPArchiveShipmentArrivalFilter",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "DPArchiveShipmentDepartFilter",
+					  						ObjectTableName =  "Tenant",
+					  						FieldsDataType =  "Integer",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "DPArchiveShipmentDepartFilter",
+					  						ListPropertyPath =  "DPArchiveShipmentDepartFilter",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "DPArchiveShipmentDepartFilter",
+					  						DefaultText =  "DPArchiveShipmentDepartFilter",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "JouranlApprovalIsIdle",
+					  						ObjectTableName =  "Tenant",
+					  						FieldsDataType =  "Boolean",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "JouranlApprovalIsIdle",
+					  						ListPropertyPath =  "JouranlApprovalIsIdle",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Tenant",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "JouranlApprovalIsIdle",
+					  						DefaultText =  "Jouranl Approval Is Idle",
+					  						ListFieldLable =  "JouranlApprovalIsIdleListLable",
+					  						ListLableDefaultText =  "Jouranl Approval Is Idle",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
 
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
@@ -10553,6 +10787,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "EcommerceTenant",
 					  						ListPropertyPath =  "EcommerceTenant",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -10587,7 +10822,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
- 	    }
+	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {    

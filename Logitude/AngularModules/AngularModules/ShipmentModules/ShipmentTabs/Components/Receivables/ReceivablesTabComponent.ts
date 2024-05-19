@@ -105,7 +105,7 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
         
         if (this.ShipmentLevelCode == "D" || this.ShipmentLevelCode == "H") {
             if (ObjectsLocator.CustomsInterfaceSettingPM != null) {
-                if (ObjectsLocator.CustomsInterfaceSettingPM.ActivateCustomsManagementInShipments) {
+                if (ObjectsLocator.CustomsInterfaceSettingPM.ActivateCustomsManagInShipment) {
                     this.IsCustomsToggleVisible = true;
                 }
             }
@@ -1032,7 +1032,7 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
                     {
                         availableAmountText = TextCodeTranslator.Translate("Shipment.M.NoOpenedMinusAmounts");
 
-                        if (SessionLocator.AccountingSettingPM.AllowPositiveAmountsInTheCreditNote) {
+                        if (SessionLocator.AccountingSettingPM.AllowPositiveAmountsCreditNote) {
                             availableAmount = this.EntityPM.ShipmentReceivables.filter(f => f.ShipmentReceivableLineStatusCode == "OAMT" && f.ARInvoiceId == null && f.ARInvoiceLineId == null).length;
                         }
 

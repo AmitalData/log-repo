@@ -132,7 +132,7 @@ export class EditDocumentComponent implements OnInit {
 
 
     }
-    IsSystemAdditionalPrintingFields: boolean;
+    IsSystemAdditionaPrintingField: boolean;
     PrintingFieldsScreenCode: string;
     DataViewModel: any;
     Run() {
@@ -198,7 +198,7 @@ export class EditDocumentComponent implements OnInit {
 
             else if (this.DocumentTemplateEditorTool == "S" && this.PageType == "AdditionalPrintingFields") {
 
-                this.IsSystemAdditionalPrintingFields = this.DocumentTypePM.IsSystemAdditionalPrintingFields;
+                this.IsSystemAdditionaPrintingField = this.DocumentTypePM.IsSystemAdditionaPrintingField;
                 this.PrintingFieldsScreenCode = this.DocumentTypePM.PrintingFieldsScreenCode;
 
                 this.stimulsoftArg.ScreenHeight = this.WindowHeight - 105;
@@ -214,7 +214,7 @@ export class EditDocumentComponent implements OnInit {
                 this.AdditionalPrintingAFieldsreaHeight = (this.stimulsoftArg.ScreenHeight - 0).toString() + "px";
            
 
-                if (!this.IsSystemAdditionalPrintingFields) {
+                if (!this.IsSystemAdditionaPrintingField) {
                     this.IsAdditionalPrintingStimula = true;
                 } else {
                     if (!AppTool.IsNullOrEmpty(this.PrintingFieldsScreenCode) && this.DataViewModel) {
@@ -1099,12 +1099,12 @@ export class EditDocumentComponent implements OnInit {
 
                     if (this.TemplateFormatCode == "P") {
 
-                        this.DocumentTypePM.DocumentTypeDefaultReportTemplateId = selectitem.Id;
+                        this.DocumentTypePM.documentTypeDefaulReportTempId = selectitem.Id;
                         this.DocumentTypePM.DocumentTypeDefaultEditorTool = selectitem.EditorTool;
                     }
                     else if (this.DocumentTypePM.TemplateFormatCode == "M") {
 
-                        this.DocumentTypePM.DocumentTypeDefaultHTMLTemplateId = selectitem.Id;
+                        this.DocumentTypePM.DocumentTypeDefaulReportTempId = selectitem.Id;
                         this.DocumentTypePM.DocumentTypeDefaultEditorTool = selectitem.EditorTool;
                     }
 
@@ -1267,13 +1267,13 @@ export class EditDocumentComponent implements OnInit {
         var IsDefualt = false;
 
         if (selectitem.TemplateType == "P") {
-            if (selectitem.Id == this.DocumentTypePM.DocumentTypeDefaultReportTemplateId) {
+            if (selectitem.Id == this.DocumentTypePM.documentTypeDefaulReportTempId) {
                 IsDefualt = true;
             }
         }
         else
             if (selectitem.TemplateType == "M") {
-                if (selectitem.Id == this.DocumentTypePM.DocumentTypeDefaultHTMLTemplateId) {
+                if (selectitem.Id == this.DocumentTypePM.DocumentTypeDefaulReportTempId) {
                     IsDefualt = true;
                 }
             }

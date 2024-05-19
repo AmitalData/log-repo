@@ -145,15 +145,10 @@ export class DocumentTypePM {
     public get AgentRoleId() { return this.agentRoleId; }
     public set AgentRoleId(newValue: string) { if (this.agentRoleId != newValue) { this.agentRoleId = newValue; this.MarkAsDirty("AgentRoleId"); } }
        
-	 
-    private documentTypeDefaultReportTemplateId: string;
-    public get DocumentTypeDefaultReportTemplateId() { return this.documentTypeDefaultReportTemplateId; }
-    public set DocumentTypeDefaultReportTemplateId(newValue: string) { if (this.documentTypeDefaultReportTemplateId != newValue) { this.documentTypeDefaultReportTemplateId = newValue; this.MarkAsDirty("DocumentTypeDefaultReportTemplateId"); } }
-       
-	 
-    private documentTypeDefaultHTMLTemplateId: string;
-    public get DocumentTypeDefaultHTMLTemplateId() { return this.documentTypeDefaultHTMLTemplateId; }
-    public set DocumentTypeDefaultHTMLTemplateId(newValue: string) { if (this.documentTypeDefaultHTMLTemplateId != newValue) { this.documentTypeDefaultHTMLTemplateId = newValue; this.MarkAsDirty("DocumentTypeDefaultHTMLTemplateId"); } }
+	
+    private documentTypeDefaulReportTempId: string;
+    public get DocumentTypeDefaulReportTempId() { return this.documentTypeDefaulReportTempId; }
+    public set DocumentTypeDefaulReportTempId(newValue: string) { if (this.documentTypeDefaulReportTempId != newValue) { this.documentTypeDefaulReportTempId = newValue; this.MarkAsDirty("DocumentTypeDefaulReportTempId"); } }
        
 	 
     private documentTypeDefaultEditorTool: string;
@@ -352,9 +347,9 @@ export class DocumentTypePM {
     public set FileName(newValue: string) { if (this.fileName != newValue) { this.fileName = newValue; this.MarkAsDirty("FileName"); } }
        
 	 
-    private isSystemAdditionalPrintingFields: boolean;
-    public get IsSystemAdditionalPrintingFields() { return this.isSystemAdditionalPrintingFields; }
-    public set IsSystemAdditionalPrintingFields(newValue: boolean) { if (this.isSystemAdditionalPrintingFields != newValue) { this.isSystemAdditionalPrintingFields = newValue; this.MarkAsDirty("IsSystemAdditionalPrintingFields"); } }
+    private isSystemAdditionaPrintingField: boolean;
+    public get IsSystemAdditionaPrintingField() { return this.isSystemAdditionaPrintingField; }
+    public set IsSystemAdditionaPrintingField(newValue: boolean) { if (this.isSystemAdditionaPrintingField != newValue) { this.isSystemAdditionaPrintingField = newValue; this.MarkAsDirty("IsSystemAdditionaPrintingField"); } }
        
 	 
     private printingFieldsScreenCode: string;
@@ -399,4 +394,4 @@ export class DocumentTypePM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

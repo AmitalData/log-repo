@@ -50,8 +50,8 @@ export class ChargesTypeList {
     AccountingVATSplit: boolean;
     ReceivableCreditAccount: string;
     PayableDebitAccount: string;
-    ReceivablesChargesTypeExternalCode: string;
-    PayablesChargesTypeExternalCode: string;
+    ReceivablesChargesTypeExtCode: string;
+    PayablesChargesTypeExtCode: string;
     PayableDebitGLAcountId: string;
     ReceivableCreditGLAccountId: string;
 		RecCreditGLAcountLocalName: string;

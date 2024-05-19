@@ -81,9 +81,6 @@ using Logitude.DashboardModule.Data.Repositories;
 using Logitude.DashboardModule.Data.EntityPOCOs;
 using Logitude.DashboardModule.BL;
 
-//using Amital.QuoteOPM.BL.CLoseTable;
-
-
 
 
 
@@ -91,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class LogitudeMessagesTransmissionLogUpdateClass
    {  		
-		public const string HashString = "6673bea2cce79fd8f020fdd89158e3dd";
+		public const string HashString = "df634104910529f063c626473ae966e3";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -100,7 +97,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			
 	             				    ObjectTableName =  "LogitudeMessagesTransmissionLog",
 			      				    IsNew =  false,
-			      				    DBTableName =  "LogitudeMessagesTransmissionLogs",
+			      				    DBTableName =  "LogitudeMessagTransmissionLogs",
 			      				    ObjectTableSingular =  "Logitude Messages Transmission Log",
 			      				    ObjectTablePlural =  "Logitude Messages Transmission Logs",
 			      				    HasCustomFilter =  true,

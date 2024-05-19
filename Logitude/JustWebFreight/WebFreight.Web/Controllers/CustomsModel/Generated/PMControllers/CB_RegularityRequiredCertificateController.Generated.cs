@@ -47,7 +47,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 { 
 
     
-    public partial class CB_RegularityRequiredCertificatesController : ApiController
+    public partial class CB_RegularityRequiredCertisController : ApiController
     {
 	  
        

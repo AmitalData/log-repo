@@ -314,11 +314,11 @@ var UserGeneralTabComponent = /** @class */ (function (_super) {
         enumerable: true,
         configurable: true
     });
-    Object.defineProperty(UserGeneralTabComponent.prototype, "IsShowContactDetailsInTheMobileApp", {
-        get: function () { return this.EntityPM.IsShowContactDetailsInTheMobileApp; },
+    Object.defineProperty(UserGeneralTabComponent.prototype, "IsShowContactDetailInMobileApp", {
+        get: function () { return this.EntityPM.IsShowContactDetailInMobileApp; },
         set: function (value) {
-            if (this.EntityPM.IsShowContactDetailsInTheMobileApp != value) {
-                this.EntityPM.IsShowContactDetailsInTheMobileApp = value;
+            if (this.EntityPM.IsShowContactDetailInMobileApp != value) {
+                this.EntityPM.IsShowContactDetailInMobileApp = value;
             }
         },
         enumerable: true,

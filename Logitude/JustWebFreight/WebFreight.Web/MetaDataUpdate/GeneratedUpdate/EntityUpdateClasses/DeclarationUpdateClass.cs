@@ -88,12 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-
-
-
-
-
-		public const string HashString = "1c2490b0d203dfeb9a123cd448fed0ff";
+		public const string HashString = "2c30d52528c04c88c26c78a2a2b3de82";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -19830,6 +19825,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   Feature DeclarationFeature_ViewDocumentAsPdf = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ViewDocumentAsPdf", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.ViewDocumentAsPdf", NameTextCodeDefaultText = @"להציג את המסמך כ-PDF" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
 
 		   Feature DeclarationFeature_ExportDiamonds = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExportDiamonds", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.ExportDiamonds", NameTextCodeDefaultText = @"הצהרת יהלומים - יצוא" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
+
 		   Feature DeclarationFeature_CancelBuildSST = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CancelBuildSST", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.CancelBuildSST", NameTextCodeDefaultText = @"Cancel build AvailabilityDate/status in manifest query" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
 
    
@@ -22891,10 +22887,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode DeclarationTextCode_CustomsDeclarationOGroupedEmptyLines = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.GroupedEmptyLines", DefaultText = "Grouped Empty Lines",LocalDefaultText = @"ריקים", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode DeclarationTextCode_CustomsDeclarationOGroupedNotFoundLines = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.GroupedNotFoundLines", DefaultText = "Grouped Not Found Lines",LocalDefaultText = @"לא נמצאו שורות לקיבוץ", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
- 		   TextCode DeclarationTextCode_CustomsDeclarationOLines = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Lines", DefaultText = "Lines",LocalDefaultText = @"שורות", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
  		   TextCode DeclarationTextCode_CustomsDeclarationODeclarationsWithDeficiencies = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DeclarationsWithDeficiencies", DefaultText = "Declarations With Deficiencies",LocalDefaultText = @"הצהרות עם חוסרים", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DeclarationTextCode_CustomsDeclarationOIncorrectDeclarations = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.IncorrectDeclarations", DefaultText = "Incorrect Declarations",LocalDefaultText = @"הצהרות שגויות", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
@@ -22905,6 +22897,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode DeclarationTextCode_CustomsDeclarationOReleasedDeclarations = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ReleasedDeclarations", DefaultText = "Released Declarations",LocalDefaultText = @"הצהרות שהותרו", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOGroupedNotFoundLines = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.GroupedNotFoundLines", DefaultText = "Grouped Not Found Lines",LocalDefaultText = @"לא נמצאו שורות לקיבוץ", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOLines = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.Lines", DefaultText = "Lines",LocalDefaultText = @"שורות", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

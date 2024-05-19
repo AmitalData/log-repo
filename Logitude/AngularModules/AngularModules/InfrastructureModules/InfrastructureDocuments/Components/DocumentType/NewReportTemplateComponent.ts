@@ -279,11 +279,11 @@ export class NewReportTemplateComponent extends BaseComponent implements OnInit 
                     var templateViewModel = new DocumentTypeTemplateViewModel(myResult.Result);
                     if (this.FullDocumentTypeTemplateLists.length == 0) {
                         if (this.TypeTab == "Document") {
-                            this.DocumentType.DocumentTypeDefaultReportTemplateId = myResult.Result.Id;
+                            this.DocumentType.documentTypeDefaulReportTempId = myResult.Result.Id;
 
                         }
                         else {
-                            this.DocumentType.DocumentTypeDefaultHTMLTemplateId = myResult.Result.Id;
+                            this.DocumentType.DocumentTypeDefaulReportTempId = myResult.Result.Id;
                         }
                     }
 

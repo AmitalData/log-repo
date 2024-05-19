@@ -45,7 +45,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
 { 
 
     
-    public partial class LogitudeMessagesTransmissionLogsController : ApiController
+    public partial class LogitudeMessagTransmissionLogsController : ApiController
     {
 	  
        

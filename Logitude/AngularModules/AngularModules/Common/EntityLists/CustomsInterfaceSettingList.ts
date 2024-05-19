@@ -14,10 +14,10 @@ export class CustomsInterfaceSettingList {
 		LocalCompanyId: string;
 		LocalUserId: string;
 		LocalPassword: string;
-		ActivateCustomsManagementInShipments: boolean;
+		ActivateCustomsManagInShipment: boolean;
 		ArtemusOutSettingsId: string;
 		ArtemusInSettingsId: string;
 		AMCAirStartDate: Date;
 		AMCOceanStartDate: Date;
 	
-}
+}

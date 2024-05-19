@@ -19,17 +19,7 @@ namespace Logitude.Customs.Data.EntityMapping
 	    string dbms;
         public CB_RegularityRequiredCertificateMap()
         { 
-		
-     dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-    if (dbms == "oracle")
-    {
-	  this.ToTable("CB_RegularityRequiredCertifica", "Customs");
-	}
-    else
-    {
-	  this.ToTable("CB_RegularityRequiredCertificates", "Customs");
-	}
-
+			  this.ToTable("CB_RegularityRequiredCertis", "Customs");
 		
 		    this.HasKey(t => new { t.CB_ID });
 	 

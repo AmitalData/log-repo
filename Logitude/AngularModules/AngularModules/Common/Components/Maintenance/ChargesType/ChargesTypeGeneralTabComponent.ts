@@ -80,7 +80,7 @@ export class ChargesTypeGeneralTabComponent extends BaseComponent implements OnI
         }        
 
         if (ObjectsLocator.CustomsInterfaceSettingPM != null) {
-            if (ObjectsLocator.CustomsInterfaceSettingPM.ActivateCustomsManagementInShipments) {
+            if (ObjectsLocator.CustomsInterfaceSettingPM.ActivateCustomsManagInShipment) {
                 this.CustomsFieldsIsVisible = true;
             }
         }

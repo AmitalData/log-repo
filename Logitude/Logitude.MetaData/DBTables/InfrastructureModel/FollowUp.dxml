@@ -82,8 +82,9 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="DateEscalationActionTimeIndicatorCode"
+    Name="DateEscalaActTimeIndicatorCode"
     ShortName="DateEscalationActionTimeCode"
+    OldNames="DateEscalationActionTimeIndicatorCode"
     Type="varchar"
     Size="2">
     <Constraints
@@ -146,11 +147,11 @@
     ReferencedTable="DocumentOuts"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
-  <Relation
+  <!--<Relation
     ForeignKeyColumn="QuoteId"
     ReferencedTable="Quotes"
     ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
+    ReferencedTableSchema="dbo" />-->
   <Relation
     ForeignKeyColumn="DocumentTypeId"
     ReferencedTable="DocumentTypes"

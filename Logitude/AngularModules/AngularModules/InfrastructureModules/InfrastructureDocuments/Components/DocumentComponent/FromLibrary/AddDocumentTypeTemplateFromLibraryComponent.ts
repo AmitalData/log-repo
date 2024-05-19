@@ -130,7 +130,7 @@ export class AddDocumentTypeTemplateFromLibraryComponent implements OnInit {
                 this.newTemplatePm.LastUpdateByUserName = SessionInfo.LoggedUserPM.Contact;
                 this.newTemplatePm.DocumentTypeId = this.CurrentDocumentType.Id;
 
-                if (!this.CurrentDocumentType.DocumentTypeDefaultHTMLTemplateId) {
+                if (!this.CurrentDocumentType.DocumentTypeDefaulReportTempId) {
                     this.newTemplatePm.IsDefault = true;
 
                 }

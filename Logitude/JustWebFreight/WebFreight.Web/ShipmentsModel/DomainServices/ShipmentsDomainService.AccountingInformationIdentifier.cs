@@ -40,7 +40,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
             accountingInformationIdentifierQuery = new AccountingInformationIdentifierQuery(tenant);
             accountingInformationIdentifierRepository = new AccountingInformationIdentifierRepository(tenant);
 
-            IQueryable<AccountingInformationIdentifier> iQueryable = accountingInformationIdentifierRepository.GetAccountingInformationIdentifiers();
+            IQueryable<AccountingInformationIdentifier> iQueryable = accountingInformationIdentifierRepository.GetAccountingInformatiIdentifiers();
             var query2 = from entity in iQueryable
                          select new AccountingInformationIdentifierList()
                          {
@@ -69,7 +69,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
             GenericSort sortClass = new GenericSort();
 
             accountingInformationIdentifierRepository = new AccountingInformationIdentifierRepository(tenant);
-            IQueryable<AccountingInformationIdentifier> iQueryable = accountingInformationIdentifierRepository.GetAccountingInformationIdentifiers();
+            IQueryable<AccountingInformationIdentifier> iQueryable = accountingInformationIdentifierRepository.GetAccountingInformatiIdentifiers();
 
             QueryOperations nonListQueryOperation = new QueryOperations();
             nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
@@ -158,7 +158,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
             GenericSort sortClass = new GenericSort();
 
             accountingInformationIdentifierRepository = new AccountingInformationIdentifierRepository(tenant);
-            IQueryable<AccountingInformationIdentifier> iQueryable = accountingInformationIdentifierRepository.GetAccountingInformationIdentifiers();
+            IQueryable<AccountingInformationIdentifier> iQueryable = accountingInformationIdentifierRepository.GetAccountingInformatiIdentifiers();
 
             QueryOperations nonListQueryOperation = new QueryOperations();
             nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();

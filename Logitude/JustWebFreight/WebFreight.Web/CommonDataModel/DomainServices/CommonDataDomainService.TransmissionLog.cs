@@ -67,7 +67,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             logitudeMessagesTransmissionLogRepository = new LogitudeMessagesTransmissionLogRepository(tenant);
             logitudeMessagesTransmissionLogQuery = new LogitudeMessagesTransmissionLogQuery(logitudeMessagesTransmissionLogRepository);
 
-            IQueryable<LogitudeMessagesTransmissionLog> logs = logitudeMessagesTransmissionLogRepository.GetLogitudeMessagesTransmissionLogs(tenant);
+            IQueryable<LogitudeMessagesTransmissionLog> logs = logitudeMessagesTransmissionLogRepository.GetLogitudeMessagTransmissionLogs(tenant);
             IQueryable<LogitudeMessagesTransmissionLogList> query2 = logitudeMessagesTransmissionLogQuery.GetIQueryableEntityList(logs);
             return query2;
         }
@@ -87,7 +87,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
 
-            IQueryable<LogitudeMessagesTransmissionLog> iQueryable = logitudeMessagesTransmissionLogRepository.GetLogitudeMessagesTransmissionLogs(tenant);
+            IQueryable<LogitudeMessagesTransmissionLog> iQueryable = logitudeMessagesTransmissionLogRepository.GetLogitudeMessagTransmissionLogs(tenant);
             QueryOperations nonListQueryOperation = new QueryOperations();
             nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
             QueryOperations listQueryOperation = new QueryOperations();
@@ -174,7 +174,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
 
-            IQueryable<LogitudeMessagesTransmissionLog> iQueryable = logitudeMessagesTransmissionLogRepository.GetLogitudeMessagesTransmissionLogs(tenant);
+            IQueryable<LogitudeMessagesTransmissionLog> iQueryable = logitudeMessagesTransmissionLogRepository.GetLogitudeMessagTransmissionLogs(tenant);
 
             QueryOperations nonListQueryOperation = new QueryOperations();
             nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();

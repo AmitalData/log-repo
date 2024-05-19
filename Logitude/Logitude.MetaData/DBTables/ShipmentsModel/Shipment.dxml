@@ -4163,32 +4163,32 @@
     ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="AccountingInformationIdentifierCode1"
-    ReferencedTable="AccountingInformationIdentifiers"
+    ReferencedTable="AccountingInformatiIdentifiers"
     ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="AccountingInformationIdentifierCode2"
-    ReferencedTable="AccountingInformationIdentifiers"
+    ReferencedTable="AccountingInformatiIdentifiers"
     ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="AccountingInformationIdentifierCode3"
-    ReferencedTable="AccountingInformationIdentifiers"
+    ReferencedTable="AccountingInformatiIdentifiers"
     ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="AccountingInformationIdentifierCode4"
-    ReferencedTable="AccountingInformationIdentifiers"
+    ReferencedTable="AccountingInformatiIdentifiers"
     ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="AccountingInformationIdentifierCode5"
-    ReferencedTable="AccountingInformationIdentifiers"
+    ReferencedTable="AccountingInformatiIdentifiers"
     ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="AccountingInformationIdentifierCode6"
-    ReferencedTable="AccountingInformationIdentifiers"
+    ReferencedTable="AccountingInformatiIdentifiers"
     ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
   <Relation

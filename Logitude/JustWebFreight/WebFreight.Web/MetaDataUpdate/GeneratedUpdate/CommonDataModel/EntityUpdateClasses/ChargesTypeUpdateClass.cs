@@ -80,8 +80,6 @@ using Logitude.Workflow.BL.CLoseTable;
 using Logitude.DashboardModule.Data.Repositories;
 using Logitude.DashboardModule.Data.EntityPOCOs;
 using Logitude.DashboardModule.BL;
-//using Amital.QuoteOPM.BL.CLoseTable;
-
 
 
 
@@ -90,8 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class ChargesTypeUpdateClass
    {  		
-
- 		public const string HashString = "4e0b9f1b1eda0393f2716fad61e27c0125";
+		public const string HashString = "82a167dd272e85b567fcd3feed26a9ed";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -639,7 +636,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "ReceivablesChargesTypeExternalCode",
+					 						FieldName =  "ReceivablesChargesTypeExtCode",
 					  						ObjectTableName =  "ChargesType",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -659,8 +656,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "ReceivablesChargesTypeExternalCode",
-					  						ListPropertyPath =  "ReceivablesChargesTypeExternalCode",
+					  						PMPropertyPath =  "ReceivablesChargesTypeExtCode",
+					  						ListPropertyPath =  "ReceivablesChargesTypeExtCode",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -681,7 +678,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "ReceivablesChargesTypeExternalCode",
+					  						FullFieldLable =  "ReceivablesChargesTypeExtCode",
 					  						DefaultText =  "External Code",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -704,7 +701,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "PayablesChargesTypeExternalCode",
+					 						FieldName =  "PayablesChargesTypeExtCode",
 					  						ObjectTableName =  "ChargesType",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -724,8 +721,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "PayablesChargesTypeExternalCode",
-					  						ListPropertyPath =  "PayablesChargesTypeExternalCode",
+					  						PMPropertyPath =  "PayablesChargesTypeExtCode",
+					  						ListPropertyPath =  "PayablesChargesTypeExtCode",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -746,10 +743,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "PayablesChargesTypeExternalCode",
+					  						FullFieldLable =  "PayablesChargesTypeExtCode",
 					  						DefaultText =  "PayablesChargesTypeExternalCode",
 					  						FullLocalDefaultText =  "PayablesChargesTypeExternalCode",
-					  						ListFieldLable =  "PayablesChargesTypeExternalCodeListLable",
+					  						ListFieldLable =  "PayablesChargesTypeExtCodeListLable",
 					  						ListLableDefaultText =  "PayablesChargesTypeExternalCode",
 					  						ListLocalDefaultText =  "PayablesChargesTypeExternalCode",
 					  						IsForeignKey =  false,
@@ -838,7 +835,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "ReceivableCreditAccountExternalId",
+					 						FieldName =  "ReceivableCreditAccountExtId",
 					  						ObjectTableName =  "ChargesType",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "ExternalSystemsTablesCode",
@@ -859,8 +856,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "ReceivableCreditAccountExternalId",
-					  						ListPropertyPath =  "ReceivableCreditAccountExternalId",
+					  						PMPropertyPath =  "ReceivableCreditAccountExtId",
+					  						ListPropertyPath =  "ReceivableCreditAccountExtId",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -881,7 +878,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "ReceivableCreditAccountExternalId",
+					  						FullFieldLable =  "ReceivableCreditAccountExtId",
 					  						DefaultText =  "Receivable Credit Account",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -904,7 +901,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "ChargesTypeExternalCodeExternalId",
+					 						FieldName =  "ChargesTypeExternalCodeExtId",
 					  						ObjectTableName =  "ChargesType",
 					  						FieldsDataType =  "LookUp",
 					  						LookUpTableName =  "ExternalSystemsTablesCode",
@@ -925,8 +922,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "ChargesTypeExternalCodeExternalId",
-					  						ListPropertyPath =  "ChargesTypeExternalCodeExternalId",
+					  						PMPropertyPath =  "ChargesTypeExternalCodeExtId",
+					  						ListPropertyPath =  "ChargesTypeExternalCodeExtId",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -947,7 +944,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "ChargesTypeExternalCodeExternalId",
+					  						FullFieldLable =  "ChargesTypeExternalCodeExtId",
 					  						DefaultText =  "External Code",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -1152,9 +1149,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SearchFields",
 					  						DefaultText =  "Search codes/ names",
-                                            FullLocalDefaultText = "חיפוש קודים/ שמות",
-
-                                              HelpTextCode =  "SearchFields",
+					  						FullLocalDefaultText =  "חיפוש קודים/ שמות",
+					  						HelpTextCode =  "SearchFields",
 					  						HelpTextDefaultText =  "Searching by :\n1: code\n2: english name\n3: local name",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
@@ -5228,6 +5224,77 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
+					 						FieldName =  "QuoteGroupSectionID",
+					  						ObjectTableName =  "ChargesType",
+					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "QuoteGroupSection",
+					  						MinLength =  0,
+					  						MaxLength =  1,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "QuoteGroupSectionID",
+					  						ListPropertyPath =  "QuoteGroupSectionID",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "ChargesType",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						Code =  "QuoteGroupSectionID",
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  0,
+					  						DigitsAfterPoint =  0,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "QuoteGroupSectionID",
+					  						DefaultText =  "Quote Group Section",
+					  						ListFieldLable =  "QuoteGroupSectionIDListLable",
+					  						ListLableDefaultText =  "Quote Group Section",
+					  						HelpTextCode =  "QuoteGroupSectionID",
+					  						HelpTextDefaultText =  "Select the group to which this charge type belongs. Mandatory field. For example, if it belongs to the FRT-Freight group, then when adding this charge in a shipment Logitude will refer to the system currency defined for the freight group in setup.",
+					  						IsForeignKey =  true,
+					  						ForeignEntity =  "QuoteGroupSection",
+					  						NavigationPropertyName =  "QuoteGroupSection",
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
 					 						FieldName =  "QuoteChargesGroupName",
 					  						ObjectTableName =  "ChargesType",
 					  						FieldsDataType =  "Text",
@@ -5274,72 +5341,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "QuoteGroupSectionID",
-					  						ObjectTableName =  "ChargesType",
-					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "QuoteGroupSection",
-					  						MinLength =  0,
-					  						MaxLength =  1,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  true,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
-					  						IsCustomFilter =  false,
-					  						Operator =  "Equals",
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "QuoteGroupSectionID",
-					  						ListPropertyPath =  "QuoteGroupSectionID",
-					  						DisplayInLookUpIndex =  0,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "ChargesType",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  true,
-					  						Code =  "QuoteGroupSectionID",
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						NumberOfDigits =  0,
-					  						DigitsAfterPoint =  0,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "QuoteGroupSectionID",
-					  						DefaultText =  "Quote Group Section",
-					  						ListFieldLable =  "QuoteGroupSectionIDListLable",
-					  						ListLableDefaultText =  "Quote Group Section",
-					  						HelpTextCode =  "QuoteGroupSectionID",
-					  						HelpTextDefaultText =  "Select the group to which this charge type belongs. Mandatory field. For example, if it belongs to the FRT-Freight group, then when adding this charge in a shipment Logitude will refer to the system currency defined for the freight group in setup.",
-					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,

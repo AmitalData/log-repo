@@ -64,9 +64,9 @@ export class CB_CustomsItemPM {
     public set CustomsItemCategoryID(newValue: string) { if (this.customsItemCategoryID != newValue) { this.customsItemCategoryID = newValue; this.MarkAsDirty("CustomsItemCategoryID"); } }
        
 	 
-    private customsItemHierarchicLocationID: string;
-    public get CustomsItemHierarchicLocationID() { return this.customsItemHierarchicLocationID; }
-    public set CustomsItemHierarchicLocationID(newValue: string) { if (this.customsItemHierarchicLocationID != newValue) { this.customsItemHierarchicLocationID = newValue; this.MarkAsDirty("CustomsItemHierarchicLocationID"); } }
+    private customsItemHierarchicLocatioID: string;
+    public get CustomsItemHierarchicLocatioID() { return this.customsItemHierarchicLocatioID; }
+    public set CustomsItemHierarchicLocatioID(newValue: string) { if (this.customsItemHierarchicLocatioID != newValue) { this.customsItemHierarchicLocatioID = newValue; this.MarkAsDirty("CustomsItemHierarchicLocatioID"); } }
        
 	 
     private cB_ID: string;

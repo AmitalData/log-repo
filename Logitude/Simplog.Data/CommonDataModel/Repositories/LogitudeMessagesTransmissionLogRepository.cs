@@ -27,7 +27,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
             commonDataContext = CommonDataContext.GetContext(tenant);
         }
 
-        public IQueryable<LogitudeMessagesTransmissionLog> GetLogitudeMessagesTransmissionLogs(int tenant)
+        public IQueryable<LogitudeMessagesTransmissionLog> GetLogitudeMessagTransmissionLogs(int tenant)
         {
             return (from record in context.LogitudeMessagesTransmissionLogs where record.Tenant == tenant select record);
         }
