@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class CardUpdateClass
    {  		
-		public const string HashString = "20e01b925d1c2b46e2d996ed87a666d4";
+		public const string HashString = "72e7749a40caed02f331a8ef908d24b8";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -9433,7 +9433,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ListLableDefaultText =  "Customs Invoice",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "DocumentTypeTemplate",
-					  						NavigationPropertyName =  "DocumentTemplate",
+					  						NavigationPropertyName =  "DocumentTemplate3",
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
@@ -9498,7 +9498,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ListLableDefaultText =  "Consolidation Invoice",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "DocumentTypeTemplate",
-					  						NavigationPropertyName =  "DocumentTemplate",
+					  						NavigationPropertyName =  "DocumentTemplate2",
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
@@ -9563,7 +9563,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ListLableDefaultText =  "Manifest Invoice",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "DocumentTypeTemplate",
-					  						NavigationPropertyName =  "DocumentTemplate",
+					  						NavigationPropertyName =  "DocumentTemplate1",
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
