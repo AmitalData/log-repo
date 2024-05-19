@@ -374,7 +374,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                    into cdJoin_
                                                       from cd in cdJoin_.DefaultIfEmpty()
 
-                                                      join dcsJoin in context.DeclarationCourierStatuses
+                                                      join dcs in context.DeclarationCourierStatuses
                                                       .Select(x => new
                                                       {
                                                           x.DeclarationId,
@@ -385,28 +385,29 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                           x.IsCourierMissingClassification,
                                                           x.TerminalReleaseDate
                                                       })
-                                                                   on a.Id equals dcsJoin.DeclarationId
-                                                                   into dcsJoin_
-                                                      from dcs in dcsJoin_.DefaultIfEmpty()
+                                                      on a.Id equals dcs.DeclarationId
 
-
-                                                      join recConsignment in context.Consignments.Include("CargoType")
-                                                      .Select(x => new { x.DeclarationId, x.ConsignmentNumber, x.CargoDescription, x.CargoType.LocalName, x.SecondCargoID, x.ThirdCargoID, x.ManifestNumber })
-                                                      on a.Id equals recConsignment.DeclarationId into qjoinConsignments
-                                                      from myJoinConsignment in qjoinConsignments.DefaultIfEmpty()
 
                                                       join c in qConsignmentNumber
                                                       .Select(x => new { x.DeclarationId, x.ConsignmentNumber })
-                                                      on new { myJoinConsignment.DeclarationId, myJoinConsignment.ConsignmentNumber } equals new { c.DeclarationId, c.ConsignmentNumber }
+                                                      on a.Id equals c.DeclarationId into leftJoin
+                                                      from leftJoinResult in leftJoin.DefaultIfEmpty()
+
+                                                      join recConsignment in context.Consignments.Include("CargoType")
+                                                      .Select(x => new { x.DeclarationId, x.ConsignmentNumber, x.CargoDescription, x.CargoType.LocalName, x.SecondCargoID, x.ThirdCargoID, x.ManifestNumber })
+                                                      on new { leftJoinResult.DeclarationId, leftJoinResult.ConsignmentNumber } equals new { recConsignment.DeclarationId, recConsignment.ConsignmentNumber }
+                                                      into qjoinConsignments
+                                                      from myJoinConsignment in qjoinConsignments.DefaultIfEmpty()
 
 
+                                                      
                                                       join recOriginalDeclarations in context.Declarations.Where(x => x.IsAmendment != true)
                                                       .Select(x => new { x.CustomFileNo, x.DeclarationNumber, x.Id })
                                                       on a.AmendmentOriginalDeclartation equals recOriginalDeclarations.Id
                                                       into originalDeclarations
                                                       from myJoinOriginalDeclaration in originalDeclarations.DefaultIfEmpty()
 
-                                                      join recDisplayDeclarations in context.Declarations.Where(x => x.AmendmentDontDisplayInList != true && !string.IsNullOrEmpty(x.AmendmentOriginalDeclartation))
+                                                      join recDisplayDeclarations in context.Declarations.Where(x => x.AmendmentDontDisplayInList != true && x.AmendmentOriginalDeclartation != null)
                                                      .Select(x => new { x.DeclarationNumber, x.AmendmentOriginalDeclartation })
                                                      on a.AmendmentOriginalDeclartation equals recDisplayDeclarations.AmendmentOriginalDeclartation
                                                      into displayDeclarations
@@ -523,17 +524,17 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                           CourierSuspentionName = a.CourierSuspention != null ? a.CourierSuspention.LocalName : null,
                                                           DepositionStatusCode = a.DepositionStatusCode,
                                                           AmendmentDontDisplayInList = a.AmendmentDontDisplayInList,
-                                                          IsClosedForFollowUp = isCourierEnv && dcs != null && dcs.IsClosedForFollowUp,
-                                                          FastIndividualProcessCode = !isCourierEnv ? "" : dcs != null ? dcs.FastIndividualProcessCode : null,
-                                                          TotalInvoiceAmountInUSD = !isCourierEnv ? 1 : dcs != null ? dcs.TotalInvoiceAmountInUSD : null,
-                                                          IsPending902 = !isCourierEnv ? true : dcs != null ? dcs.CourierPendingReasonList.Contains("902") : false,
-                                                          IsPendingNotNull = !isCourierEnv || (dcs != null && dcs.CourierPendingReasonList != null && dcs.CourierPendingReasonList.Length > 0),
-                                                          CourierPendingReasonList = isCourierEnv && dcs != null ? dcs.CourierPendingReasonList : null,
-                                                          IntegratorCode = !isCourierEnv ? "" : cd != null ? cd.IntegratorCode : null,
-                                                          IntegratorName = isCourierEnv && cd != null ? cd.LocalName : null,
+                                                          IsClosedForFollowUp = dcs != null && dcs.IsClosedForFollowUp,
+                                                          FastIndividualProcessCode = dcs != null ? dcs.FastIndividualProcessCode : null,
+                                                          TotalInvoiceAmountInUSD = dcs != null ? dcs.TotalInvoiceAmountInUSD : null,
+                                                          IsPending902 = dcs != null ? dcs.CourierPendingReasonList != null && dcs.CourierPendingReasonList.Contains("902") : false,
+                                                          IsPendingNotNull = (dcs != null && dcs.CourierPendingReasonList != null && dcs.CourierPendingReasonList.Length > 0),
+                                                          CourierPendingReasonList = dcs != null ? dcs.CourierPendingReasonList : null,
+                                                          IntegratorCode = cd != null ? cd.IntegratorCode : null,
+                                                          IntegratorName = cd != null ? cd.LocalName : null,
 
-                                                          MAWB = isCourierEnv && cd != null ? cd.MAWB : null,
-                                                          IsCourierMissingClassification = !isCourierEnv ? true : dcs != null ? dcs.IsCourierMissingClassification : false,
+                                                          MAWB = cd != null ? cd.MAWB : null,
+                                                          IsCourierMissingClassification = dcs != null ? dcs.IsCourierMissingClassification : false,
                                                           CargoDescription = myJoinConsignment != null ? myJoinConsignment.CargoDescription : null,
                                                           IsPaymentProtested = a.IsPaymentProtested,
                                                           DeclarationNoAmendment = myJoinOriginalDeclaration.DeclarationNumber,
@@ -559,7 +560,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                           SecondCargoID = myJoinConsignment != null ? myJoinConsignment.SecondCargoID : null,
                                                           ThirdCargoID = myJoinConsignment != null ? myJoinConsignment.ThirdCargoID : null,
                                                           ManifestNumber = myJoinConsignment != null ? myJoinConsignment.ManifestNumber : null,
-                                                          TerminalReleaseDate = !isCourierEnv ? null : dcs != null ? dcs.TerminalReleaseDate : null,
+                                                          TerminalReleaseDate = dcs != null ? dcs.TerminalReleaseDate : null,
                                                           PhysicalCheck = a.PhysicalCheck,
                                                           PhysicalCheckName = a.PhysicalCheck == null ? "��� �����" : a.PhysicalCheckCode.Name,
                                                           DeclarationTypeCode = a.DeclarationTypeCode,
@@ -576,7 +577,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                           VATReshimonFee = MyDeclarationTaxesByTaxTypeCodeViews.VATReshimonFee,
                                                           SecurityFee = MyDeclarationTaxesByTaxTypeCodeViews.SecurityFee,
                                                           ComputerFee = MyDeclarationTaxesByTaxTypeCodeViews.ComputerFee,
-
+                                                          
                                                       });
 
 
