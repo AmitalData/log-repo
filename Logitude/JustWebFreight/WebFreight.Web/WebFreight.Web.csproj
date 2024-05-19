@@ -897,6 +897,7 @@
     <Compile Include="Controllers\DigitalPortal\DigitalActivityController.cs" />
     <Compile Include="Controllers\DigitalPortal\DigitalCustomizationController.cs" />
     <Compile Include="Controllers\DigitalPortal\Helpers\UpdateLanguageRequest.cs" />
+    <Compile Include="Controllers\InfrastructureModel\Extended\BatchTaskExecutionsExtendedController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\ContainerSettingsController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\CounterDefinitionExtendedController.cs" />
     <Compile Include="Controllers\InfrastructureModel\Extended\DeploymentPackageExtendedController.cs" />
