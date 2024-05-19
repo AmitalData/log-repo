@@ -84,9 +84,27 @@ namespace WebFreight.Web.DataProviders
         public string ChartOfAccountsEnglishName { get; set; }
         public string ChartOfAccountsTypeEnglishName { get; set; }
         public string ChartOfAccountsTypeLocalName { get; set; }
-    }
 
-    public class AgingPeriodTotal
+		public decimal AccountingBalance { get; set; }
+		public decimal CreditLimit { get; set; }
+
+
+		public decimal ExternalTransactionsTotal { get; set; }
+
+		public decimal TotalToCollect { get { return AccountingBalance + (decimal)(TotalOpenShipments); } }
+		public decimal? FutureChequesTotal { get { return TotalFutureOpenCheques + ExternalTransactionsTotal; } }
+		public decimal? Obligo { get { return TotalToCollect + FutureChequesTotal; } }
+		public decimal? CreditUsed { get { return CreditLimit - Obligo; } }
+
+		public decimal TotalLocal { get; set; } = 0;
+		public decimal TotalForeign { get; set; } = 0;
+		public decimal SumTotalCredit { get; set; } = 0;
+
+
+
+	}
+
+	public class AgingPeriodTotal
     {
         public decimal TotalCredit { get; set; }
         public decimal TotalDebit { get; set; }
