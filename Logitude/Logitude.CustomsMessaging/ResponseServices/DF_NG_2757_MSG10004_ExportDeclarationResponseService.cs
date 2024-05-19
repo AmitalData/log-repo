@@ -173,6 +173,41 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 
                 //myDeclarationUpdateService.Update(this._MyDe'clarationPM, true);
             }
+
+            // for diamonds declarations in export, define the status soy remarks to send to unifreight
+            string statusSoyRemarks = null;
+            if ((setting.IsConnectedToUniFreight || AmitalEventTracer.UseHybrid_When_NotIsConnectedToUniFreight)
+                && this._MyDeclarationPM.Direction == "E" && this._MyDeclarationPM.IsDiamondDeclaration && this._MyDeclarationPM.AutoSending)
+            {
+                // determine if the export diamonds feature is enabled to allow autosending
+                ICommonDataContext myContextCommon = CommonDataContext.GetContext(this._MyDeclarationPM.Tenant);
+                FeatureRepository myFeatureRepository = new FeatureRepository(myContextCommon);
+                FeatureQuery featureQuery = new FeatureQuery(myFeatureRepository);
+                var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(this._MyDeclarationPM.Tenant), this._MyDeclarationPM.Tenant);
+                var featureExportDiamonds = features.Features.FirstOrDefault(x => x.Code == "ExportDiamonds");
+
+                if (featureExportDiamonds != null)
+                {
+                    string declarationStatus = "0";
+                    string declarationStatusLabel = "";
+                    if (!string.IsNullOrEmpty(customResponse.Response?.Status[0]?.NameCode?.Value))
+                    {
+                        declarationStatus = customResponse.Response.Status[0].NameCode.Value;
+
+                        // get the declaration status label
+                        DeclarationStatusTypeQueryService declarationStatusTypeQueryService = new DeclarationStatusTypeQueryService(_MyDeclarationPM.Tenant);
+                        DeclarationStatusTypePM declarationStatusType = declarationStatusTypeQueryService.GetSingle(customResponse.Response.Status[0].NameCode.Value, false, true);
+                        declarationStatusLabel = declarationStatusType?.LocalName ?? "";
+                    }
+                    string declarationNumber = this._MyDeclarationPM.DeclarationNumber ?? "";
+                    statusSoyRemarks = $"CODE-{declarationStatus}-{declarationStatusLabel}-{declarationNumber}";
+                }
+            }
+
+            ICommonDataContext commondbContext = CommonDataContext.GetContext(_MyDeclarationPM.Tenant);
+            UserRepository userRepository = new UserRepository(commondbContext);
+            var user = userRepository.GetSingleUserByCode("MEHES", _MyDeclarationPM.Tenant, true);
+
             if (customResponse.ResponseContentHeader != null && customResponse.ResponseContentHeader.Exception != null && customResponse.ResponseContentHeader.Exception.Count() > 0)
             {
                 if (!string.IsNullOrWhiteSpace(requestParams.AppicationId))
@@ -189,6 +224,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 this.MyResponseData.ApplicationID = requestParams.AppicationId;
                 this.MyResponseData.Succeeded = true;
                 this.MyResponseData.HasException = true;
+
+                if (!string.IsNullOrEmpty(statusSoyRemarks))
+                {
+                    RaiseEvent(this._MyDeclarationPM, user?.Id,
+                        status_id: "SOY",
+                        versionId: customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value,
+                        status_DateTime: _DateTime,
+                        comments: statusSoyRemarks + "\n" + this.MyResponseData.UserMessage);
+                }
 
                 return;
 
@@ -408,12 +452,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
 
 
-           
-
-            ICommonDataContext commondbContext = CommonDataContext.GetContext(_MyDeclarationPM.Tenant);
-            UserRepository userRepository = new UserRepository(commondbContext);
-            var user = userRepository.GetSingleUserByCode("MEHES", _MyDeclarationPM.Tenant, true);
-
             if (setting.IsConnectedToUniFreight || AmitalEventTracer.UseHybrid_When_NotIsConnectedToUniFreight)
             {
 
@@ -476,34 +514,31 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             RaiseEvent(this._MyDeclarationPM, user?.Id, status_id: "WAT", versionId: customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value, status_DateTime: _DateTime);
                         }
 
-                        if (this._MyDeclarationPM.IsDiamondDeclaration && this._MyDeclarationPM.AutoSending)
+                    }
+                }
+
+                if (!string.IsNullOrEmpty(statusSoyRemarks))
+                {
+                    // add the error messages to the remarks
+                    if (customResponse.Response?.Error != null)
+                    {
+                        foreach (var errorItem in customResponse.Response.Error)
                         {
-                            // determine if the export diamonds feature is enabled to allow autosending
-                            ICommonDataContext myContextCommon = CommonDataContext.GetContext(this._MyDeclarationPM.Tenant);
-                            FeatureRepository myFeatureRepository = new FeatureRepository(myContextCommon);
-                            FeatureQuery featureQuery = new FeatureQuery(myFeatureRepository);
-                            var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(this._MyDeclarationPM.Tenant), this._MyDeclarationPM.Tenant);
-                            var featureExportDiamonds = features.Features.FirstOrDefault(x => x.Code == "ExportDiamonds");
-
-                            if (featureExportDiamonds != null)
+                            if (!string.IsNullOrEmpty(errorItem?.ValidationCode?.name))
                             {
-                                // get the declaration status label
-                                DeclarationStatusTypeQueryService declarationStatusTypeQueryService = new DeclarationStatusTypeQueryService(_MyDeclarationPM.Tenant);
-                                DeclarationStatusTypePM declarationStatusType = declarationStatusTypeQueryService.GetSingle(customResponse.Response.Status[0].NameCode.Value, false, true);
-                                string declarationStatusLabel = declarationStatusType?.LocalName ?? "";
-                                string declarationNumber = this._MyDeclarationPM.DeclarationNumber ?? "";
-
-                                RaiseEvent(this._MyDeclarationPM, user?.Id, 
-                                    status_id: "SOY", 
-                                    versionId: customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value, 
-                                    status_DateTime: _DateTime, 
-                                    comments: $"CODE-{customResponse.Response.Status[0].NameCode.Value}-{declarationStatusLabel}-{declarationNumber}");
+                                statusSoyRemarks += "\n" + errorItem?.ValidationCode?.name;
                             }
                         }
                     }
+
+                    RaiseEvent(this._MyDeclarationPM, user?.Id,
+                        status_id: "SOY",
+                        versionId: customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value,
+                        status_DateTime: _DateTime,
+                        comments: statusSoyRemarks);
                 }
             }
- 
+
             if (_MyDeclarationPM.DepositionStatusCode == "R") _MyDeclarationPM.DepositionStatusCode = null;
             if (requestParams.ResponseName != "5117" && requestParams.ResponseName != "8237" && customResponse.ResponseContentHeader.Exception != null)
             {
