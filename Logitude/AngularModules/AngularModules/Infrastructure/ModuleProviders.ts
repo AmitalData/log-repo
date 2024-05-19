@@ -70,6 +70,7 @@ import { BatchTaskExecutionListService } from './Services/StandardLists/BatchTas
 import { BatchTaskExecutionPMService } from './Services/StandardPMs/BatchTaskExecutionPMService';
 
 import { AnalyzeQueueMenuButtonsHandler } from './Components/MenuButtons/AnalyzeQueueMenuButtonsHandler';
+import { BatchTaskExecutiontMenuButtonsHandler } from './Components/MenuButtons/BatchTaskExecutiontMenuButtonsHandler';
 import {TenantManagementMenuButtonsHandler} from './Components/MenuButtons/TenantManagementMenuButtonsHandler';
 import {DeploymentPackageMenuButtonsHandler} from './Components/MenuButtons/DeploymentPackageMenuButtonsHandler';
 //
@@ -206,6 +207,7 @@ export class ModuleProviders {
             case "ErrorLogPMService": { myResult = new ErrorLogPMService(); break; }
             case "ApiCredintialsListService": { myResult = new ApiCredintialsListService(); break; }
             case "AnalyzeQueueMenuButtonsHandler": { myResult = new AnalyzeQueueMenuButtonsHandler(); break; }
+            case "BatchTaskExecutiontMenuButtonsHandler": { myResult = new BatchTaskExecutiontMenuButtonsHandler(); break; }
             case "TenantManagementMenuButtonsHandler": { myResult = new TenantManagementMenuButtonsHandler(); break; }
             case "DeploymentPackageMenuButtonsHandler": { myResult = new DeploymentPackageMenuButtonsHandler(); break; }
             case "ErrorLogPMFileLoggerService": { myResult = new ErrorLogPMFileLoggerService(); break; }
