@@ -618,7 +618,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 if (StorageSiteCode == "ILOVL" && courierPendingReason?.OverseasSuspendedCode != null)
                 {
                     var courierMessageDataOverseasRequestService = new CourierOVSECTHMessageRequestService();
-                    string drityMessage = courierMessageDataOverseasRequestService.GetMessageUpdateHawbStatus(entityPM.DeclarationId, entityPM.Tenant, null, null, entityPM);
+                    string drityMessage = courierMessageDataOverseasRequestService.GetMessageUpdateHawbStatus(entityPM.DeclarationId, entityPM.Tenant, null, null, entityPM, true);
                     if (drityMessage != null)
                     {
                         var res = courierMessageDataOverseasRequestService.BuildUpdateHawbStatus(entityPM.DeclarationId, entityPM.Tenant, drityMessage);
