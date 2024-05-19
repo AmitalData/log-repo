@@ -125,9 +125,9 @@ export class TenantManagementList {
 		PrivateLabelName: string;
 		IsParentTenant: boolean;
 		ParentTenantId: number;
-		AgentSharedLogisticsStatisticsLastDate: Date;
-		AgentSharedLogisticsStatisticsLastWeek: number;
-		AgentSharedLogisticsStatisticsLastMonth: number;
+		AgentSharedLogStatistiLastDate: Date;
+		AgentSharedLogStatistiLastWeek: number;
+		AgentSharedLogStatistLastMonth: number;
 		ChangeHeaderColor: boolean;
 		IsINTTRAStockPrepaid: boolean;
 		PackageCodeSearchField: string;

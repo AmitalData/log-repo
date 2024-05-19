@@ -94,7 +94,7 @@ export class PartnerARInvoiceDocumentTypeTemplateComponent extends BaseComponent
     CheckIfDefaultChanged(DocumentTypeCode: string, documentTypeTemplateId: string) {
         let documentType = this.ARInvoiceDocumentTypes.filter(d => d.Code == DocumentTypeCode)[0];
         if (!documentType) return false;
-        return (documentType.DocumentTypeDefaultReportTemplateId != documentTypeTemplateId);
+        return (documentType.documentTypeDefaulReportTempId != documentTypeTemplateId);
     }
 
     IsHaveARInvoicePrintToogleFeature() {

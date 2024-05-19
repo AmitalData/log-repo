@@ -59,7 +59,7 @@ export class VatNumberValidator {
                         isValidatingField = true;
                     }
 
-                    if (InfraSettings.TenantPM.VatMandatoryForPotentialCustomers) {
+                    if (InfraSettings.TenantPM.VatMandatoryForPotentialCust) {
                         isValidatingField = true;
                     }
                 }

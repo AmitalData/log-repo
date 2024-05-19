@@ -540,7 +540,7 @@ export class WizardBaseComponent extends BaseComponent {
             else {
 
                 if (ObjectsLocator.CustomsInterfaceSettingPM) {
-                    ObjectsLocator.CustomsInterfaceSettingPM.ActivateCustomsManagementInShipments = true;
+                    ObjectsLocator.CustomsInterfaceSettingPM.ActivateCustomsManagInShipment = true;
                 }
 
 
@@ -557,7 +557,7 @@ export class WizardBaseComponent extends BaseComponent {
 
             else {
                 if (ObjectsLocator.CustomsInterfaceSettingPM) {
-                    ObjectsLocator.CustomsInterfaceSettingPM.ActivateCustomsManagementInShipments = true;
+                    ObjectsLocator.CustomsInterfaceSettingPM.ActivateCustomsManagInShipment = true;
                 }
 
                 this.CurrentSession.StopBusyIndicator();

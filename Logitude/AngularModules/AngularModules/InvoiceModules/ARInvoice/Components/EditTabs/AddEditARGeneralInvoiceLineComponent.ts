@@ -108,7 +108,7 @@ export class AddEditARGeneralInvoiceLineComponent implements OnInit{
         else {
             if (this.DataContext.fatherComponent.EntityPM.ARInvoiceTypeCode == "CD") {
                 if (this.DataContext.UnitPrice > 0) {
-                    if (!SessionLocator.AccountingSettingPM.AllowPositiveAmountsInTheCreditNote) {
+                    if (!SessionLocator.AccountingSettingPM.AllowPositiveAmountsCreditNote) {
                         errors.push(TextCodeTranslator.Translate("ARInvoice.M.NoPositivePrice"));
                     }
                 }

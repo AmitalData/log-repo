@@ -41,7 +41,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Accounting Information Identifier&quot;"
-  Code="&quot;1838&quot;"
+  Code="&quot;23c6&quot;"
   Name="&quot;AccountingInformationIdentifier&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"

@@ -215,24 +215,24 @@ export class TenantPM {
     public set ImportOtherPrepaidCollectId(newValue: string) { if (this.importOtherPrepaidCollectId != newValue) { this.importOtherPrepaidCollectId = newValue; this.MarkAsDirty("ImportOtherPrepaidCollectId"); } }
        
 	 
-    private masterExportFreightPrepaidCollectId: string;
-    public get MasterExportFreightPrepaidCollectId() { return this.masterExportFreightPrepaidCollectId; }
-    public set MasterExportFreightPrepaidCollectId(newValue: string) { if (this.masterExportFreightPrepaidCollectId != newValue) { this.masterExportFreightPrepaidCollectId = newValue; this.MarkAsDirty("MasterExportFreightPrepaidCollectId"); } }
+    private masterExpFreigPrepaidCollectId: string;
+    public get MasterExpFreigPrepaidCollectId() { return this.masterExpFreigPrepaidCollectId; }
+    public set MasterExpFreigPrepaidCollectId(newValue: string) { if (this.masterExpFreigPrepaidCollectId != newValue) { this.masterExpFreigPrepaidCollectId = newValue; this.MarkAsDirty("MasterExpFreigPrepaidCollectId"); } }
        
 	 
-    private masterImportFreightPrepaidCollectId: string;
-    public get MasterImportFreightPrepaidCollectId() { return this.masterImportFreightPrepaidCollectId; }
-    public set MasterImportFreightPrepaidCollectId(newValue: string) { if (this.masterImportFreightPrepaidCollectId != newValue) { this.masterImportFreightPrepaidCollectId = newValue; this.MarkAsDirty("MasterImportFreightPrepaidCollectId"); } }
+    private masterImpFreiPrepaidCollectId: string;
+    public get MasterImpFreiPrepaidCollectId() { return this.masterImpFreiPrepaidCollectId; }
+    public set MasterImpFreiPrepaidCollectId(newValue: string) { if (this.masterImpFreiPrepaidCollectId != newValue) { this.masterImpFreiPrepaidCollectId = newValue; this.MarkAsDirty("MasterImpFreiPrepaidCollectId"); } }
        
 	 
-    private masterExportOtherPrepaidCollectId: string;
-    public get MasterExportOtherPrepaidCollectId() { return this.masterExportOtherPrepaidCollectId; }
-    public set MasterExportOtherPrepaidCollectId(newValue: string) { if (this.masterExportOtherPrepaidCollectId != newValue) { this.masterExportOtherPrepaidCollectId = newValue; this.MarkAsDirty("MasterExportOtherPrepaidCollectId"); } }
+    private masterExpOtherPrepaidCollectId: string;
+    public get MasterExpOtherPrepaidCollectId() { return this.masterExpOtherPrepaidCollectId; }
+    public set MasterExpOtherPrepaidCollectId(newValue: string) { if (this.masterExpOtherPrepaidCollectId != newValue) { this.masterExpOtherPrepaidCollectId = newValue; this.MarkAsDirty("MasterExpOtherPrepaidCollectId"); } }
        
 	 
-    private masterImportOtherPrepaidCollectId: string;
-    public get MasterImportOtherPrepaidCollectId() { return this.masterImportOtherPrepaidCollectId; }
-    public set MasterImportOtherPrepaidCollectId(newValue: string) { if (this.masterImportOtherPrepaidCollectId != newValue) { this.masterImportOtherPrepaidCollectId = newValue; this.MarkAsDirty("MasterImportOtherPrepaidCollectId"); } }
+    private masterImpOtherPrepaidCollectId: string;
+    public get MasterImpOtherPrepaidCollectId() { return this.masterImpOtherPrepaidCollectId; }
+    public set MasterImpOtherPrepaidCollectId(newValue: string) { if (this.masterImpOtherPrepaidCollectId != newValue) { this.masterImpOtherPrepaidCollectId = newValue; this.MarkAsDirty("MasterImpOtherPrepaidCollectId"); } }
        
 	 
     private sTDVatPercentage: number;
@@ -400,9 +400,9 @@ export class TenantPM {
     public set VatMandatoryCountryId(newValue: string) { if (this.vatMandatoryCountryId != newValue) { this.vatMandatoryCountryId = newValue; this.MarkAsDirty("VatMandatoryCountryId"); } }
        
 	 
-    private vatMandatoryForPotentialCustomers: boolean;
-    public get VatMandatoryForPotentialCustomers() { return this.vatMandatoryForPotentialCustomers; }
-    public set VatMandatoryForPotentialCustomers(newValue: boolean) { if (this.vatMandatoryForPotentialCustomers != newValue) { this.vatMandatoryForPotentialCustomers = newValue; this.MarkAsDirty("VatMandatoryForPotentialCustomers"); } }
+    private vatMandatoryForPotentialCust: boolean;
+    public get VatMandatoryForPotentialCust() { return this.vatMandatoryForPotentialCust; }
+    public set VatMandatoryForPotentialCust(newValue: boolean) { if (this.vatMandatoryForPotentialCust != newValue) { this.vatMandatoryForPotentialCust = newValue; this.MarkAsDirty("VatMandatoryForPotentialCust"); } }
        
 	 
     private isCustomerTelRequired: boolean;
@@ -530,9 +530,9 @@ export class TenantPM {
     public set CreateTenantFromSignUp(newValue: boolean) { if (this.createTenantFromSignUp != newValue) { this.createTenantFromSignUp = newValue; this.MarkAsDirty("CreateTenantFromSignUp"); } }
        
 	 
-    private isCorrespondenceRightToLeftEnabled: boolean;
-    public get IsCorrespondenceRightToLeftEnabled() { return this.isCorrespondenceRightToLeftEnabled; }
-    public set IsCorrespondenceRightToLeftEnabled(newValue: boolean) { if (this.isCorrespondenceRightToLeftEnabled != newValue) { this.isCorrespondenceRightToLeftEnabled = newValue; this.MarkAsDirty("IsCorrespondenceRightToLeftEnabled"); } }
+    private isCorrespondRightToLeftEnabled: boolean;
+    public get IsCorrespondRightToLeftEnabled() { return this.isCorrespondRightToLeftEnabled; }
+    public set IsCorrespondRightToLeftEnabled(newValue: boolean) { if (this.isCorrespondRightToLeftEnabled != newValue) { this.isCorrespondRightToLeftEnabled = newValue; this.MarkAsDirty("IsCorrespondRightToLeftEnabled"); } }
        
 	 
     private isNotesRightToLeftEnabled: boolean;
@@ -570,9 +570,9 @@ export class TenantPM {
     public set ProrateMasterReceivables(newValue: boolean) { if (this.prorateMasterReceivables != newValue) { this.prorateMasterReceivables = newValue; this.MarkAsDirty("ProrateMasterReceivables"); } }
        
 	 
-    private exportQuotationsToIntegratedSystem: boolean;
-    public get ExportQuotationsToIntegratedSystem() { return this.exportQuotationsToIntegratedSystem; }
-    public set ExportQuotationsToIntegratedSystem(newValue: boolean) { if (this.exportQuotationsToIntegratedSystem != newValue) { this.exportQuotationsToIntegratedSystem = newValue; this.MarkAsDirty("ExportQuotationsToIntegratedSystem"); } }
+    private exportQuotationsoIntegratedSys: boolean;
+    public get ExportQuotationsoIntegratedSys() { return this.exportQuotationsoIntegratedSys; }
+    public set ExportQuotationsoIntegratedSys(newValue: boolean) { if (this.exportQuotationsoIntegratedSys != newValue) { this.exportQuotationsoIntegratedSys = newValue; this.MarkAsDirty("ExportQuotationsoIntegratedSys"); } }
        
 	 
     private isIncrementalBuildRunning: boolean;
@@ -702,9 +702,9 @@ export class TenantPM {
     public set VatUniquePartnerTypeCode(newValue: string) { if (this.vatUniquePartnerTypeCode != newValue) { this.vatUniquePartnerTypeCode = newValue; this.MarkAsDirty("VatUniquePartnerTypeCode"); } }
        
 	 
-    private transferQuotationsToUnifreightTrigger: string;
-    public get TransferQuotationsToUnifreightTrigger() { return this.transferQuotationsToUnifreightTrigger; }
-    public set TransferQuotationsToUnifreightTrigger(newValue: string) { if (this.transferQuotationsToUnifreightTrigger != newValue) { this.transferQuotationsToUnifreightTrigger = newValue; this.MarkAsDirty("TransferQuotationsToUnifreightTrigger"); } }
+    private transferQuotationsToUnfTrigger: string;
+    public get TransferQuotationsToUnfTrigger() { return this.transferQuotationsToUnfTrigger; }
+    public set TransferQuotationsToUnfTrigger(newValue: string) { if (this.transferQuotationsToUnfTrigger != newValue) { this.transferQuotationsToUnfTrigger = newValue; this.MarkAsDirty("TransferQuotationsToUnfTrigger"); } }
        
 	 
     private sharedLogisMasterMessageLink: boolean;
@@ -740,9 +740,9 @@ export class TenantPM {
     public set FTLRatio(newValue: number) { if (this.fTLRatio != newValue) { this.fTLRatio = newValue; this.MarkAsDirty("FTLRatio"); } }
        
 	 
-    private isQuotesRequestActivatedInShared: boolean;
-    public get IsQuotesRequestActivatedInShared() { return this.isQuotesRequestActivatedInShared; }
-    public set IsQuotesRequestActivatedInShared(newValue: boolean) { if (this.isQuotesRequestActivatedInShared != newValue) { this.isQuotesRequestActivatedInShared = newValue; this.MarkAsDirty("IsQuotesRequestActivatedInShared"); } }
+    private isQuoteRequestActivateInShared: boolean;
+    public get IsQuoteRequestActivateInShared() { return this.isQuoteRequestActivateInShared; }
+    public set IsQuoteRequestActivateInShared(newValue: boolean) { if (this.isQuoteRequestActivateInShared != newValue) { this.isQuoteRequestActivateInShared = newValue; this.MarkAsDirty("IsQuoteRequestActivateInShared"); } }
        
 	 
     private isCargoTrackWebAccessActivated: boolean;

@@ -403,7 +403,7 @@ export class CardPM extends ObjectCustomFieldPM {
 	 
     private sharedLogisticsInvitStatusCode: number;
     public get SharedLogisticsInvitStatusCode() { return this.sharedLogisticsInvitStatusCode; }
-    public set SharedLogisticsInvitStatusCode(newValue: number) { if (this.sharedLogisticsInvitStatusCode != newValue) { this.sharedLogisticsInvitStatusCode = newValue; this.MarkAsDirty("SharedLogisticsInvitationStatusCode"); } }
+    public set SharedLogisticsInvitStatusCode(newValue: number) { if (this.sharedLogisticsInvitStatusCode != newValue) { this.sharedLogisticsInvitStatusCode = newValue; this.MarkAsDirty("SharedLogisticsInvitStatusCode"); } }
        
 	 
     private sharedLogisticsInvitationStatusName: string;

@@ -1127,7 +1127,7 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                 var openReceivables = allReceivables.filter(f => f.ShipmentReceivableLineStatusCode == "OAMT" && !AppTool.IsNullOrEmpty(f.UnitPrice) && !AppTool.IsNullOrEmpty(f.Quantity));
 
                 if (this.EntityPM.ARInvoiceTypeCode == "CD") {
-                    if (!SessionLocator.AccountingSettingPM.AllowPositiveAmountsInTheCreditNote) {
+                    if (!SessionLocator.AccountingSettingPM.AllowPositiveAmountsCreditNote) {
                         openReceivables = openReceivables.filter(f => f.UnitPrice < 0);
                     }
                 }

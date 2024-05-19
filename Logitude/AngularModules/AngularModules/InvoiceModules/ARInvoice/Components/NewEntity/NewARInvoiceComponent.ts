@@ -1438,7 +1438,7 @@ export class NewARInvoiceComponent extends BaseComponent {
                 case "CD":
                 case "CC":
                     {
-                        if (!SessionLocator.AccountingSettingPM.AllowPositiveAmountsInTheCreditNote) {
+                        if (!SessionLocator.AccountingSettingPM.AllowPositiveAmountsCreditNote) {
                             filteredReceivables = filteredReceivables.filter(f => f.UnitPrice < 0 || (f.MeasurementCode == "STFE" && f.ChargesTypeCode == "ISTOR" && f.TotalAmount < 0));
                         }
 

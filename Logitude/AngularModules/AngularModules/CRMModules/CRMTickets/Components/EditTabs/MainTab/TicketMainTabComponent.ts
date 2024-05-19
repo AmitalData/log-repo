@@ -946,7 +946,7 @@ export class CorrespondenceViewModelData extends BaseComponent {
     }
     get TextAlignRegionVisibility() {
         var myResult = false;
-        if (SessionLocator.TenantPM.IsCorrespondenceRightToLeftEnabled == true) {
+        if (SessionLocator.TenantPM.IsCorrespondRightToLeftEnabled == true) {
             myResult = true;
         }
         return myResult;
@@ -1166,7 +1166,7 @@ export class CorrespondenceViewModelData extends BaseComponent {
     public FlowDirection: string = "ltr";
     private GetFlowDirection() {
         var myResult = "ltr";
-        if (SessionLocator.TenantPM.IsCorrespondenceRightToLeftEnabled == true) {
+        if (SessionLocator.TenantPM.IsCorrespondRightToLeftEnabled == true) {
             myResult = "rtl";
             if (this.entityPM.RightToLeft) {
                 myResult = "rtl";

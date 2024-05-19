@@ -90,9 +90,9 @@ export class AccountingSystemPM {
     public set AllowAPInvoicesTransfer(newValue: boolean) { this.allowAPInvoicesTransfer = newValue; this.MarkAsDirty(); }
        
 	 
-    private allowPositiveAmountsInTheCreditNote: boolean;
-    public get AllowPositiveAmountsInTheCreditNote() { return this.allowPositiveAmountsInTheCreditNote; }
-    public set AllowPositiveAmountsInTheCreditNote(newValue: boolean) { this.allowPositiveAmountsInTheCreditNote = newValue; this.MarkAsDirty(); }
+    private allowPositiveAmountsCreditNote: boolean;
+    public get AllowPositiveAmountsCreditNote() { return this.allowPositiveAmountsCreditNote; }
+    public set AllowPositiveAmountsCreditNote(newValue: boolean) { this.allowPositiveAmountsCreditNote = newValue; this.MarkAsDirty(); }
        
 	 
     private inActive: boolean;
@@ -115,4 +115,4 @@ export class AccountingSystemPM {
         this.IsDirty = true;
 		  	
     }
-}
+}

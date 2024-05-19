@@ -262,7 +262,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             if (SecurityUtility.CheckTableContactFeature("LogitudeMessagesTransmissionLog", "READ", tenant))
             {
                 LogitudeMessagesTransmissionLogRepository myRepository = new LogitudeMessagesTransmissionLogRepository(tenant);
-                IQueryable<LogitudeMessagesTransmissionLog> iQueryable = myRepository.GetLogitudeMessagesTransmissionLogs(tenant);
+                IQueryable<LogitudeMessagesTransmissionLog> iQueryable = myRepository.GetLogitudeMessagTransmissionLogs(tenant);
 
                 IQueryable<LogitudeMessagesTransmissionLog> iQueryable_FWB = iQueryable.Where(d => d.MessageTypeCode == "FWB");
                 IQueryable<LogitudeMessagesTransmissionLog> iQueryable_FHL = iQueryable.Where(d => d.MessageTypeCode == "FHL");

@@ -469,7 +469,7 @@ var AddEditAutomationsComponent = /** @class */ (function (_super) {
                 this.AutomationFollowUp.LegType = this.AutomatedBackupClass.AutomationFollowUp.LegType;
                 this.AutomationFollowUp.ObjectTableName = this.AutomatedBackupClass.AutomationFollowUp.ObjectTableName;
                 this.AutomationFollowUp.DocumentTypeLists = this.AutomatedBackupClass.AutomationFollowUp.DocumentTypeLists;
-                this.AutomationFollowUp.DateEscalationActionTimeIndicatorCode = this.FollowDateEscalationActionTimeIndicatorCode = this.AutomatedBackupClass.AutomationFollowUp.DateEscalationActionTimeIndicatorCode;
+                this.AutomationFollowUp.DateEscalaActTimeIndicatorCode = this.FollowDateEscalationActionTimeIndicatorCode = this.AutomatedBackupClass.AutomationFollowUp.DateEscalaActTimeIndicatorCode;
                 this.AutomationFollowUp.DateEscalationTime = this.FollowDateEscalationTime = this.AutomatedBackupClass.AutomationFollowUp.DateEscalationTime;
                 if (this.AutomationFollowUp.DocumentTypeLists && this.AutomationFollowUp.DocumentTypeLists.length > 0) {
                     this.CountDocumentSelection = this.AutomationFollowUp.DocumentTypeLists.length + " documents selected";
@@ -521,8 +521,8 @@ var AddEditAutomationsComponent = /** @class */ (function (_super) {
                     }
                 }
             }
-            if (Tools_1.AppTool.IsNullOrEmpty(this.AutomationFollowUp.DateEscalationActionTimeIndicatorCode)) {
-                this.AutomationFollowUp.DateEscalationActionTimeIndicatorCode = this.FollowDateEscalationActionTimeIndicatorCode = "AF";
+            if (Tools_1.AppTool.IsNullOrEmpty(this.AutomationFollowUp.DateEscalaActTimeIndicatorCode)) {
+                this.AutomationFollowUp.DateEscalaActTimeIndicatorCode = this.FollowDateEscalationActionTimeIndicatorCode = "AF";
             }
             if (!this.AutomationFollowUp.DateEscalationTime) {
                 this.AutomationFollowUp.DateEscalationTime = this.FollowDateEscalationTime = 0;
@@ -816,7 +816,7 @@ var AddEditAutomationsComponent = /** @class */ (function (_super) {
             this.AutomationFollowUp.OwnerValue = this.AutomationFollowUp.OwnerFieldType == "Field" ? this.FollowOwnerObjectFieldId : this.FollowUpOwnerId;
             this.AutomationFollowUp.NoteValue = this.FollowUpNote;
             this.AutomationFollowUp.DateEscalationTime = this.FollowDateEscalationTime;
-            this.AutomationFollowUp.DateEscalationActionTimeIndicatorCode = this.FollowDateEscalationActionTimeIndicatorCode;
+            this.AutomationFollowUp.DateEscalaActTimeIndicatorCode = this.FollowDateEscalationActionTimeIndicatorCode;
             this.AutomationFollowUp.DateValue = this.DateValue;
             if (this.CurrentEntityPM.ResultCode == "DOCOUTFOLLOWUP" || this.CurrentEntityPM.ResultCode == "DOCINFOLLOWUP") {
                 var eventCode = this.CurrentEntityPM.ResultCode == "DOCOUTFOLLOWUP" ? "DOCO" : "DOCI";
@@ -1087,7 +1087,7 @@ var AddEditAutomationsComponent = /** @class */ (function (_super) {
                 isChange = true;
             if (this.AutomatedBackupClass.AutomationFollowUp.DateEscalationTime != this.AutomationFollowUp.DateEscalationTime)
                 isChange = true;
-            if (this.AutomatedBackupClass.AutomationFollowUp.DateEscalationActionTimeIndicatorCode != this.AutomationFollowUp.DateEscalationActionTimeIndicatorCode)
+            if (this.AutomatedBackupClass.AutomationFollowUp.DateEscalaActTimeIndicatorCode != this.AutomationFollowUp.DateEscalaActTimeIndicatorCode)
                 isChange = true;
         }
         else

@@ -183,7 +183,6 @@
   </Column>
   <Column
     Name="Discount_CustomItemGroupTypeID"
-    OldNames="Discount_CustomsItemGroupTypeID"
     Type="varchar"
     Size="4">
     <Constraints
@@ -197,7 +196,6 @@
   </Column>
   <Column
     Name="DiscountRegularityRequiremType"
-    OldNames="DiscountRegularityRequirementType"
     Type="varchar"
     Size="4">
     <Constraints

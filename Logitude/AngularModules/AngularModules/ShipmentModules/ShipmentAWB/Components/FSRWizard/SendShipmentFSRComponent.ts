@@ -153,13 +153,13 @@ export class SendShipmentFSRComponent extends BaseComponent implements OnInit {
             this.EntityPM.DirectionId = newValue;
 
             if (newValue == "E") {
-                this.EntityPM.FreightPrepaidCollectId = SessionLocator.TenantPM.MasterExportFreightPrepaidCollectId;
-                this.EntityPM.OtherPrepaidCollectId = SessionLocator.TenantPM.MasterExportOtherPrepaidCollectId;
+                this.EntityPM.FreightPrepaidCollectId = SessionLocator.TenantPM.MasterExpFreigPrepaidCollectId;
+                this.EntityPM.OtherPrepaidCollectId = SessionLocator.TenantPM.MasterExpOtherPrepaidCollectId;
             }
 
             else {
-                this.EntityPM.FreightPrepaidCollectId = SessionLocator.TenantPM.MasterImportFreightPrepaidCollectId;
-                this.EntityPM.OtherPrepaidCollectId = SessionLocator.TenantPM.MasterImportOtherPrepaidCollectId;
+                this.EntityPM.FreightPrepaidCollectId = SessionLocator.TenantPM.MasterImpFreiPrepaidCollectId;
+                this.EntityPM.OtherPrepaidCollectId = SessionLocator.TenantPM.MasterImpOtherPrepaidCollectId;
             }
 
             ShipmentTool.BuildAWBChargesCodeCode(this.EntityPM);

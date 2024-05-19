@@ -47,7 +47,7 @@ export class CardList {
 		RecentlyAdded: string;
 		InvitationDate: Date;
 		CargoTrackingInvitationDate: Date;
-		SharedLogisticsInvitationStatusCode: number;
+		SharedLogisticsInvitStatusCode: number;
 		SharedLogisticsInvitationStatusName: string;
 		CargoTrackingInvitatStatusCode: number;
 		CargoTrackingInvitationStatusName: string;

@@ -627,7 +627,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                     }
 
                     if (!selectedTemplate) {
-                        selectedTemplate = this.DocumentTypeTemplateLists.filter(d => d.Id == documentTypeList.DocumentTypeDefaultHTMLTemplateId)[0];
+                        selectedTemplate = this.DocumentTypeTemplateLists.filter(d => d.Id == documentTypeList.DocumentTypeDefaulReportTempId)[0];
                         if (!selectedTemplate) {
                             selectedTemplate = this.DocumentTypeTemplateLists[0];
                         }
@@ -1092,7 +1092,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                 this.AutomationFollowUp.LegType = this.AutomatedBackupClass.AutomationFollowUp.LegType;
                 this.AutomationFollowUp.ObjectTableName = this.AutomatedBackupClass.AutomationFollowUp.ObjectTableName;
                 this.AutomationFollowUp.DocumentTypeLists = this.AutomatedBackupClass.AutomationFollowUp.DocumentTypeLists;
-                this.AutomationFollowUp.DateEscalationActionTimeIndicatorCode = this.FollowDateEscalationActionTimeIndicatorCode = this.AutomatedBackupClass.AutomationFollowUp.DateEscalationActionTimeIndicatorCode;
+                this.AutomationFollowUp.DateEscalaActTimeIndicatorCode = this.FollowDateEscalationActionTimeIndicatorCode = this.AutomatedBackupClass.AutomationFollowUp.DateEscalaActTimeIndicatorCode;
 
                 this.AutomationFollowUp.DateEscalationTime = this.FollowDateEscalationTime = this.AutomatedBackupClass.AutomationFollowUp.DateEscalationTime;
 
@@ -1152,8 +1152,8 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
                 }
             }
 
-            if (AppTool.IsNullOrEmpty(this.AutomationFollowUp.DateEscalationActionTimeIndicatorCode)) {
-                this.AutomationFollowUp.DateEscalationActionTimeIndicatorCode = this.FollowDateEscalationActionTimeIndicatorCode = "AF";
+            if (AppTool.IsNullOrEmpty(this.AutomationFollowUp.DateEscalaActTimeIndicatorCode)) {
+                this.AutomationFollowUp.DateEscalaActTimeIndicatorCode = this.FollowDateEscalationActionTimeIndicatorCode = "AF";
             }
 
             if (!this.AutomationFollowUp.DateEscalationTime) {
@@ -1837,7 +1837,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
             this.AutomationFollowUp.OwnerValue = this.AutomationFollowUp.OwnerFieldType == "Field" ? this.FollowOwnerObjectFieldCode : this.FollowUpOwnerId;
             this.AutomationFollowUp.NoteValue = this.FollowUpNote;
             this.AutomationFollowUp.DateEscalationTime = this.FollowDateEscalationTime;
-            this.AutomationFollowUp.DateEscalationActionTimeIndicatorCode = this.FollowDateEscalationActionTimeIndicatorCode;
+            this.AutomationFollowUp.DateEscalaActTimeIndicatorCode = this.FollowDateEscalationActionTimeIndicatorCode;
             this.AutomationFollowUp.DateValue = this.DateValue;
 
             if (this.CurrentEntityPM.ResultCode == "DOCOUTFOLLOWUP" || this.CurrentEntityPM.ResultCode == "DOCINFOLLOWUP") {
@@ -2438,7 +2438,7 @@ export class AddEditAutomationsComponent extends BaseComponent implements OnInit
             if (this.AutomatedBackupClass.AutomationFollowUp.DateValue != this.AutomationFollowUp.DateValue) isChange = true;
             if (this.AutomatedBackupClass.AutomationFollowUp.DocumentTypeLists != this.AutomationFollowUp.DocumentTypeLists) isChange = true;
             if (this.AutomatedBackupClass.AutomationFollowUp.DateEscalationTime != this.AutomationFollowUp.DateEscalationTime) isChange = true;
-            if (this.AutomatedBackupClass.AutomationFollowUp.DateEscalationActionTimeIndicatorCode != this.AutomationFollowUp.DateEscalationActionTimeIndicatorCode) isChange = true;
+            if (this.AutomatedBackupClass.AutomationFollowUp.DateEscalaActTimeIndicatorCode != this.AutomationFollowUp.DateEscalaActTimeIndicatorCode) isChange = true;
         }
 
         else isChange = true;

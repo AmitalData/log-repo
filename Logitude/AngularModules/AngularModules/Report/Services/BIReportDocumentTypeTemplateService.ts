@@ -95,7 +95,7 @@ export class BIReportDocumentTypeTemplateService {
             selectedTemplate = this.bIReportPreviewComponent.DocumentTypeTemplateLists.filter(d => d.Id == this.docuemntTypeTemplateId)[0];
         }
         if (!selectedTemplate) {
-            selectedTemplate = this.bIReportPreviewComponent.DocumentTypeTemplateLists.filter(d => d.Id == this.DocumentTypeSelected.DocumentTypeDefaultHTMLTemplateId)[0];
+            selectedTemplate = this.bIReportPreviewComponent.DocumentTypeTemplateLists.filter(d => d.Id == this.DocumentTypeSelected.DocumentTypeDefaulReportTempId)[0];
         }
         if (!selectedTemplate) {
             selectedTemplate = this.bIReportPreviewComponent.DocumentTypeTemplateLists[0];

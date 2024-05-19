@@ -105,7 +105,7 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
         
         if (this.ShipmentLevelCode == "D" || this.ShipmentLevelCode == "H") {
             if (ObjectsLocator.CustomsInterfaceSettingPM != null) {
-                if (ObjectsLocator.CustomsInterfaceSettingPM.ActivateCustomsManagementInShipments) {
+                if (ObjectsLocator.CustomsInterfaceSettingPM.ActivateCustomsManagInShipment) {
                     this.IsCustomsToggleVisible = true;
                 }
             }

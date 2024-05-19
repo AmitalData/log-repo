@@ -8343,7 +8343,7 @@ namespace WebFreight.Web.ReportsWebServices
 
             UserRepository userRep = new UserRepository(tenant);
             LogitudeMessagesTransmissionLogRepository messageLogRep = new LogitudeMessagesTransmissionLogRepository(tenant);
-            IQueryable<LogitudeMessagesTransmissionLog> iQueryable = messageLogRep.GetLogitudeMessagesTransmissionLogs(tenant);
+            IQueryable<LogitudeMessagesTransmissionLog> iQueryable = messageLogRep.GetLogitudeMessagTransmissionLogs(tenant);
 
             #region Report Filters
 

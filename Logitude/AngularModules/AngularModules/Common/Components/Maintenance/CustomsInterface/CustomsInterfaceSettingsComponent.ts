@@ -135,11 +135,11 @@ export class CustomsInterfaceSettingsComponent extends BaseComponent implements 
                 this.EntityPM.LocalCompanyId = null;
                 this.EntityPM.LocalUserId = null;
                 this.EntityPM.LocalPassword = null;
-                this.ActivateCustomsManagementInShipments = false;
+                this.ActivateCustomsManagInShipment = false;
             }
 
             else {
-                this.ActivateCustomsManagementInShipments = true;
+                this.ActivateCustomsManagInShipment = true;
             }
 
             this.SetUIProperties();
@@ -165,10 +165,10 @@ export class CustomsInterfaceSettingsComponent extends BaseComponent implements 
         }
     }
     
-    get ActivateCustomsManagementInShipments() { return this.EntityPM.ActivateCustomsManagementInShipments; }
-    set ActivateCustomsManagementInShipments(value: boolean) {
-        if (this.EntityPM.ActivateCustomsManagementInShipments != value) {
-            this.EntityPM.ActivateCustomsManagementInShipments = value;
+    get ActivateCustomsManagInShipment() { return this.EntityPM.ActivateCustomsManagInShipment; }
+    set ActivateCustomsManagInShipment(value: boolean) {
+        if (this.EntityPM.ActivateCustomsManagInShipment != value) {
+            this.EntityPM.ActivateCustomsManagInShipment = value;
         }
     }
 

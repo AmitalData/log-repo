@@ -59,7 +59,6 @@
   </Column>
   <Column
     Name="CustomsItemHierarchicLocatioID"
-    OldNames="CustomsItemHierarchicLocationID"
     Type="varchar"
     Size="2">
     <Constraints

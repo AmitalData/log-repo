@@ -228,7 +228,7 @@ export class VATSettingsComponent extends BaseComponent {
             this.SetUIProperties_VatMandatory();
             this.tenantPM.VatMandatoryCountryId = null;
             if (value == "MNT") {
-                this.VatMandatoryForPotentialCustomers = false;
+                this.VatMandatoryForPotentialCust = false;
             }
         }
     }
@@ -241,10 +241,10 @@ export class VATSettingsComponent extends BaseComponent {
         }
     }
 
-    get VatMandatoryForPotentialCustomers() { return this.tenantPM.VatMandatoryForPotentialCustomers; }
-    set VatMandatoryForPotentialCustomers(value: boolean) {
-        if (this.tenantPM.VatMandatoryForPotentialCustomers != value) {
-            this.tenantPM.VatMandatoryForPotentialCustomers = value;
+    get VatMandatoryForPotentialCust() { return this.tenantPM.VatMandatoryForPotentialCust; }
+    set VatMandatoryForPotentialCust(value: boolean) {
+        if (this.tenantPM.VatMandatoryForPotentialCust != value) {
+            this.tenantPM.VatMandatoryForPotentialCust = value;
         }
     }
     private SetUIProperties_VatMandatory() {
@@ -261,7 +261,7 @@ export class VATSettingsComponent extends BaseComponent {
 
         this.UIProperties.SetEnabled("VatMandatoryCountryId", this.ObjectTableName, isEnabled);
         this.UIProperties.SetRequired("VatMandatoryCountryId", this.ObjectTableName, isRequired);
-        this.UIProperties.SetEnabled("VatMandatoryForPotentialCustomers", this.ObjectTableName, this.VatMandatoryTypeCode != "MNT");
+        this.UIProperties.SetEnabled("VatMandatoryForPotentialCust", this.ObjectTableName, this.VatMandatoryTypeCode != "MNT");
     }
 
     get CheckDigitControlAlgorithmCode() { return this.tenantPM.CheckDigitControlAlgorithmCode; }

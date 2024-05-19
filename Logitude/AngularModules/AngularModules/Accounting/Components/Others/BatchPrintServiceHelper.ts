@@ -180,7 +180,7 @@ this.BuildingDocumentText  = "Building document ( "+(this.CurrentCount+1)+" From
             var myResult = pmResponse.Result;
               this.documentTypeList = myResult.filter(d => d.Code.toUpperCase() == this.DocumentTypeCode)[0];
             if (this.documentTypeList) {
-                if (this.documentTypeList.DocumentTypeDefaultReportTemplateId) {
+                if (this.documentTypeList.DocumentTypeDefaulReportTempId) {
                     this.IsLoadPrintControl = true;
 
                 }
@@ -371,7 +371,7 @@ public setArguments(item: DocsOutDataViewModel) {
 
  
 IsQuotationDocument: boolean = false;
-IsSystemAdditionalPrintingFields: boolean;
+IsSystemAdditionaPrintingField: boolean;
 PrintingFieldsScreenCode: string;
 BuildingDocumentText: string = "Building document ( "+(this.CurrentCount+1)+" From "+(this.LastCount+1)+" )";
 ObjectTableId: string;
@@ -402,7 +402,7 @@ LastBuildDateVisible: boolean;
     this.EntityId = item.EntityId;
     this.Title = "Print " + this.DataContext.DocumentTypePM.Name;
     this.isAWBWizard = this.DataContext.IsAWBWizard;
-    this.IsSystemAdditionalPrintingFields = this.DataContext.DocumentTypePM.IsSystemAdditionalPrintingFields;
+    this.IsSystemAdditionaPrintingField = this.DataContext.DocumentTypePM.IsSystemAdditionaPrintingField;
     this.PrintingFieldsScreenCode = this.DataContext.DocumentTypePM.PrintingFieldsScreenCode;
 
     var table = window.ObjectTables.filter(d => d.Id == this.ObjectTableId)[0];
@@ -527,7 +527,7 @@ public LoadDocumentCustomFields() {
     this.DocumentCustomFieldsArgs.DocumentTypeId = this.DataContext.DocumentTypePM.Id;
     this.DocumentCustomFieldsArgs.EntityId = this.EntityId;
 
-    if (!this.IsSystemAdditionalPrintingFields) {
+    if (!this.IsSystemAdditionaPrintingField) {
 
         this._documentTypeCustomFieldService.getDocumentTypeCustomFieldsByDocument(this.CurrentDocumentOut.Tenant, this.DocumentCustomFieldsArgs.DocumentTypeId).subscribe((res: any) => {
 
@@ -1228,7 +1228,7 @@ GetTemplates() {
                     this.CurrentDocumentOut.DocumentTemplateId
                     var item = this.DocumentTypeTemplateLists.filter(r => r.Id == this.CurrentDocumentOut.DocumentTemplateId)[0];
 
-                    if (item == null) item = this.DocumentTypeTemplateLists.filter(r => r.Id == this.DataContext.DocumentTypePM.DocumentTypeDefaultReportTemplateId)[0];
+                    if (item == null) item = this.DocumentTypeTemplateLists.filter(r => r.Id == this.DataContext.DocumentTypePM.DocumentTypeDefaulReportTempId)[0];
                     if (item == null) item = this.DocumentTypeTemplateLists[0];
 
                     this.CurrentDocumentTypeTemplateList = item;
