@@ -49,7 +49,7 @@ export class CardList {
 		CargoTrackingInvitationDate: Date;
 		SharedLogisticsInvitationStatusCode: number;
 		SharedLogisticsInvitationStatusName: string;
-		CargoTrackingInvitationStatusCode: number;
+		CargoTrackingInvitatStatusCode: number;
 		CargoTrackingInvitationStatusName: string;
 		LastLoginDate: Date;
 		AirlineAccountNumber: string;
@@ -129,4 +129,4 @@ export class CardList {
 		ConsolidationInvoiceTemplateId: string;
 		ManifestInvoiceTemplateId: string;
 	
-}
+}

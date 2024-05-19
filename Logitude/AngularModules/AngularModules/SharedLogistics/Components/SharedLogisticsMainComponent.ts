@@ -535,7 +535,7 @@ export class SharedLogisticsMainComponent implements OnInit {
                     else {
                         this.filterAgrs.SortBy = this.IsCargoTracking ? "CargoTrackingInvitationDate" : "InvitationDate";
                         this.filterAgrs.SortDirection = "Descending";
-                        this.filterAgrs.addAdditionalFilter(this.IsCargoTracking ? "CargoTrackingInvitationStatusCode" : "SharedLogisticsInvitationStatusCode", 2, null, null, "Equals", false, true, false, "string");
+                        this.filterAgrs.addAdditionalFilter(this.IsCargoTracking ? "CargoTrackingInvitatStatusCode" : "SharedLogisticsInvitStatusCode", 2, null, null, "Equals", false, true, false, "string");
                         displayTitle = "Invited " + displayObjectTableName;
                     }
                     break;
@@ -548,7 +548,7 @@ export class SharedLogisticsMainComponent implements OnInit {
                     else {
                         this.filterAgrs.SortBy = this.IsCtoolSetting ? "InvitationDate" : "LastShipmentDate";
                         this.filterAgrs.SortDirection = "Descending";
-                        this.filterAgrs.addAdditionalFilter(this.IsCargoTracking ? "CargoTrackingInvitationStatusCode" : "SharedLogisticsInvitationStatusCode", 1, null, null, "Equals", false, true, false, "string");
+                        this.filterAgrs.addAdditionalFilter(this.IsCargoTracking ? "CargoTrackingInvitatStatusCode" : "SharedLogisticsInvitStatusCode", 1, null, null, "Equals", false, true, false, "string");
                         displayTitle = "Not Invited " + displayObjectTableName;
 
                     }
@@ -564,7 +564,7 @@ export class SharedLogisticsMainComponent implements OnInit {
                         this.filterAgrs.SortBy = "LastLoginDate";
                         this.filterAgrs.SortDirection = "Descending";
 
-                        this.filterAgrs.addAdditionalFilter(this.IsCargoTracking ? "CargoTrackingInvitationStatusCode" : "SharedLogisticsInvitationStatusCode", 3, null, null, "Equals", false, true, false, "string");
+                        this.filterAgrs.addAdditionalFilter(this.IsCargoTracking ? "CargoTrackingInvitatStatusCode" : "SharedLogisticsInvitStatusCode", 3, null, null, "Equals", false, true, false, "string");
 
                         displayTitle = "Activated " + displayObjectTableName;
 
@@ -583,7 +583,7 @@ export class SharedLogisticsMainComponent implements OnInit {
                         this.filterAgrs.SortBy = "LastLoginDate";
                         this.filterAgrs.SortDirection = "Descending";
 
-                        this.filterAgrs.addAdditionalFilter(this.IsCargoTracking ? "CargoTrackingInvitationStatusCode" : "SharedLogisticsInvitationStatusCode", 3, null, null, "Equals", false, true, false, "string");
+                        this.filterAgrs.addAdditionalFilter(this.IsCargoTracking ? "CargoTrackingInvitatStatusCode" : "SharedLogisticsInvitStatusCode", 3, null, null, "Equals", false, true, false, "string");
                         this.filterAgrs.addAdditionalFilter("IsActiveForMobile", true, null, null, "Equals", false, true, false, "boolen");
                         displayTitle = "Activated Mobile Customers";
 

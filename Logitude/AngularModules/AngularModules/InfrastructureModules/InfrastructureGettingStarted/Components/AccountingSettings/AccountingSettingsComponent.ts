@@ -105,7 +105,7 @@ export class AccountingSettingsComponent extends BaseComponent {
             this.UIProperties.SetEnabled("AllowVoidARP", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("IsVatNumberMandatoryInAR", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("AllowMinusInvoicelines", this.ObjectTableName, false);
-            this.UIProperties.SetEnabled("AllowPositiveAmountsInTheCreditNote", this.ObjectTableName, false);
+            this.UIProperties.SetEnabled("AllowPositiveAmountsCreditNote", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("AllowManualInvoiceNumber", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("IsARInvoiceChronologicalDates", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("IsARPaymentChronologicalDates", this.ObjectTableName, false);
@@ -217,10 +217,10 @@ export class AccountingSettingsComponent extends BaseComponent {
         }
     }
 
-    get AllowPositiveAmountsInTheCreditNote() { return this.EntityPM.AllowPositiveAmountsInTheCreditNote; }
-    set AllowPositiveAmountsInTheCreditNote(value: boolean) {
-        if (this.EntityPM.AllowPositiveAmountsInTheCreditNote != value) {
-            this.EntityPM.AllowPositiveAmountsInTheCreditNote = value;
+    get AllowPositiveAmountsCreditNote() { return this.EntityPM.AllowPositiveAmountsCreditNote; }
+    set AllowPositiveAmountsCreditNote(value: boolean) {
+        if (this.EntityPM.AllowPositiveAmountsCreditNote != value) {
+            this.EntityPM.AllowPositiveAmountsCreditNote = value;
         }
     }
 

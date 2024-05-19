@@ -1032,7 +1032,7 @@ export class ReceivablesTabComponent extends BaseComponent implements OnInit, On
                     {
                         availableAmountText = TextCodeTranslator.Translate("Shipment.M.NoOpenedMinusAmounts");
 
-                        if (SessionLocator.AccountingSettingPM.AllowPositiveAmountsInTheCreditNote) {
+                        if (SessionLocator.AccountingSettingPM.AllowPositiveAmountsCreditNote) {
                             availableAmount = this.EntityPM.ShipmentReceivables.filter(f => f.ShipmentReceivableLineStatusCode == "OAMT" && f.ARInvoiceId == null && f.ARInvoiceLineId == null).length;
                         }
 
