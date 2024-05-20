@@ -33,6 +33,8 @@ using System.Web.Http;
 using Logitude.BL.Helpers;
 using System.Web.Script.Serialization;
 using WebFreight.Web.DataContracts;
+using Logitude.Server.Tools.TreeFilterQuery.Interpreter;
+using Logitude.Server.Tools.TreeFilterQuery;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Simplog.Data.InfrastructureModel;
@@ -49,7 +51,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
     {
 	  
        
-        public HttpResponseMessage GetSingle(string id, int tenant, string settype, string setkey)
+        public HttpResponseMessage GetSingle(int tenant, string settype, string setkey)
         {
 		  try
             {
@@ -61,9 +63,9 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 		    	IWebFreightContext MyContext = WebFreightContext.GetContext(authToken.Tenant);
 				DefaultAndConfigurationKeyRepository  defaultAndConfigurationKeyRepository = new DefaultAndConfigurationKeyRepository(MyContext);
 				DefaultAndConfigurationKeyList entityList = null;
-				DefaultAndConfigurationKey entityPoco = defaultAndConfigurationKeyRepository.GetSingleDefaultAndConfigurationKey(id, tenant, settype, setkey , authToken.Tenant);
-
-				if (entityPoco != null)
+				DefaultAndConfigurationKey entityPoco = defaultAndConfigurationKeyRepository.GetSingleDefaultAndConfigurationKey(tenant, settype, setkey , authToken.Tenant);
+                
+                if (entityPoco != null)
 				{
 									List<DefaultAndConfigurationKey> singleEntityList = new List<DefaultAndConfigurationKey>();
 					singleEntityList.Add(entityPoco);
@@ -102,7 +104,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 
 				DefaultAndConfigurationKeyQuery defaultAndConfigurationKeyQuery = new DefaultAndConfigurationKeyQuery(defaultAndConfigurationKeyRepository);
 			    IQueryable<DefaultAndConfigurationKeyList> entityLists = defaultAndConfigurationKeyQuery.GetIQueryableEntityList(entityPocos);
-				entityLists = entityLists.OrderBy(d => d.Id);
+				entityLists = entityLists.OrderBy(d => d.Tenant);
 				List<DefaultAndConfigurationKeyList> listResult = entityLists.ToList();
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
 										
@@ -169,7 +171,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
                             object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
 
                             //queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList);
-							queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList,field.IsCustom,field.DataTypeCode);
+							queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList,field.IsCustom,field.DataTypeCode, field.IsListFilter);
                         }
                         else
                             queryOperations.SetFilter(filterName, filterValue1, false, filterOperator, filterValue2, true);
@@ -198,7 +200,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
                             object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
 
                             //queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList);
-							queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList,field.IsCustom,field.DataTypeCode);
+							queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList,field.IsCustom,field.DataTypeCode, field.IsListFilter);
                         }
                         else
                         {
@@ -210,6 +212,16 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
 
                 GenericFilter genericFilter = new GenericFilter();
                 GenericSort sortClass = new GenericSort();
+                
+                TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
+                 { 
+                     AdditionalTreeFilter = filters.TreeFilters,
+                     ObjectTableName = "DefaultAndConfigurationKey",
+                     ParentEntityId = filters.ParentEntityId,
+                     ParentObjectTableName = filters.ParentObjectTableName, 
+                     Tenant = tenant ,
+                     ParentEntity = filters.ParentEntity
+                 };
 
 								
                 IWebFreightContext MyContext = WebFreightContext.GetContext(tenant);
@@ -219,15 +231,16 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
                 DefaultAndConfigurationKeyQuery defaultAndConfigurationKeyQuery = new DefaultAndConfigurationKeyQuery(defaultAndConfigurationKeyRepository);
                 
 				QueryOperations nonListQueryOperation = new QueryOperations();
-                nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+                nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false && !d.IsListFilter).ToList();
                 QueryOperations listQueryOperation = new QueryOperations();
-                listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+                listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true || d.IsListFilter).ToList();
 				
                 entityPocos = genericFilter.GetFilteredQuery<DefaultAndConfigurationKey>(nonListQueryOperation, entityPocos);
                 int skippedEntities = queryOperations.PageIndex;
                 IQueryable<DefaultAndConfigurationKeyList> entityLists = defaultAndConfigurationKeyQuery.GetIQueryableEntityList(entityPocos);
 
                 entityLists = genericFilter.GetFilteredQuery<DefaultAndConfigurationKeyList>(listQueryOperation, entityLists);
+                entityLists = new TreeFilterQueryService().Apply<DefaultAndConfigurationKeyList>(entityLists , treeFilterQueryArgs);
 
 		      
 			  								
@@ -288,7 +301,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
                             }
                         default:
                             {
-                                entityLists = entityLists.OrderBy(d => d.Id);
+                                entityLists = entityLists.OrderBy(d => d.Tenant);
                                 break;
                             }
                     }
@@ -297,7 +310,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.ListControlle
             }					  						
 	       else
             {
-                entityLists = entityLists.OrderBy(d => d.Id);
+                entityLists = entityLists.OrderBy(d => d.Tenant);
             } 
 
 			ServiceResponse response = new ServiceResponse();

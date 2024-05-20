@@ -13,7 +13,8 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             entityPOCO.SetKey = entityPM.SetKey;
             entityPOCO.ShortDescription = entityPM.ShortDescription;
             entityPOCO.FullDesctiption = entityPM.FullDesctiption;
-         
+            entityPOCO.Tenant = entityPM.Tenant;
+
         }
     }
 }

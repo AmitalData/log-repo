@@ -40,6 +40,7 @@ using Logitude.BL.InfrastructureModel.EntityLists;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
 
+
 namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
 { 
 
@@ -48,7 +49,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
     {
 	  
        
-        public HttpResponseMessage GetSingle(string id, int tenant, string settype, string setkey)
+        public HttpResponseMessage GetSingle(int tenant, string settype, string setkey)
         {
 		  try
             {
@@ -57,7 +58,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 DefaultAndConfigurationKeyQuery defaultAndConfigurationKeyQuery = new DefaultAndConfigurationKeyQuery(authToken.Tenant);
-                DefaultAndConfigurationKeyPM defaultAndConfigurationKeyPM = defaultAndConfigurationKeyQuery.GetSinglePM(id, tenant, settype, setkey, authToken.Tenant);
+                DefaultAndConfigurationKeyPM defaultAndConfigurationKeyPM = defaultAndConfigurationKeyQuery.GetSinglePM(tenant, settype, setkey, authToken.Tenant);
                 
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
@@ -98,7 +99,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                         //Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);
                         //if (loggedContact != null)
                         //{
-                        //    ActivityLog.AddAcitivityLog(entityPM.Id, objectTable.Id, entityPM.Tenant, "U", loggedContact.Id);
+                        //    ActivityLog.AddAcitivityLog(entityPM.Tenant, objectTable.Id, entityPM.Tenant, "U", loggedContact.Id);
                         //}
 
                         scope.Complete();
@@ -133,8 +134,8 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
-                        string entityName = "DefaultAndConfigurationKey" + entityPM.Id + entityPM.Tenant;
-                        string entityPmName = "DefaultAndConfigurationKeyPM" + entityPM.Id + entityPM.Tenant;
+                        string entityName = "DefaultAndConfigurationKey" + entityPM.Tenant + entityPM.Tenant;
+                        string entityPmName = "DefaultAndConfigurationKeyPM" + entityPM.Tenant + entityPM.Tenant;
                         if (CacheManager.CacheWrapper.Get(entityName) != null)
                         {
                             CacheManager.CacheWrapper.Invalidate(entityName);
@@ -156,7 +157,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Generated.PMControllers
                         //Contact loggedContact = contactRepository.GetSingleContactByEmail(email, entityPM.Tenant);
                         //if (loggedContact != null)
                         //{
-                        //   ActivityLog.AddAcitivityLog(entityPM.Id, objectTable.Id, entityPM.Tenant, "U", loggedContact.Id);
+                        //   ActivityLog.AddAcitivityLog(entityPM.Tenant, objectTable.Id, entityPM.Tenant, "U", loggedContact.Id);
                         //}
 
 
