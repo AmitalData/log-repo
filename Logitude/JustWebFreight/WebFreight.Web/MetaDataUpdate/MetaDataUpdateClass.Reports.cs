@@ -218,8 +218,12 @@ namespace WebFreight.Web.MetaDataUpdate
 
         private void LoadReports_ExportCustoms(ReportGroup ExportCustomGroup, List<Feature> tenantFeatures, ReportRepository reportRepository, Dictionary<string, Report> tenantReports)
         {
-            Feature licenseManagementFeature = tenantFeatures.Where(d => d.Code == "ExportDeclarationReport" && d.FeatureTypeCode == "AREA").FirstOrDefault();
-            AddReports.AddReport(new ReportDetails() { Code = "EXDE", Description = "Export Declaration", Name = "Export Declaration", FilterControlName = "ExportDeclarationReportFilterComponent", Tenant = 0, ReportGroupId = ExportCustomGroup.Id, FeatureId = licenseManagementFeature.Id, FeatureUniqeCode = licenseManagementFeature.FeatureUniqeCode, FilterHtmlComponentUrl = "./Report/Components/FiltersComponent/ExportCustoms/ExportDeclarationReportFilterComponent" }, reportRepository, tenantReports);
+            Feature ExportDeclarationFeature = tenantFeatures.Where(d => d.Code == "ExportDeclarationReport" && d.FeatureTypeCode == "AREA").FirstOrDefault();
+            AddReports.AddReport(new ReportDetails() { Code = "EXDE", Description = "Export Declaration", Name = "Export Declaration", FilterControlName = "ExportDeclarationReportFilterComponent", Tenant = 0, ReportGroupId = ExportCustomGroup.Id, FeatureId = ExportDeclarationFeature.Id, FeatureUniqeCode = ExportDeclarationFeature.FeatureUniqeCode, FilterHtmlComponentUrl = "./Report/Components/FiltersComponent/ExportCustoms/ExportDeclarationReportFilterComponent" }, reportRepository, tenantReports);
+            
+            Feature CustomsCollateralFeature = tenantFeatures.Where(d => d.Code == "CustomsCollateralReport" && d.FeatureTypeCode == "AREA").FirstOrDefault();
+            AddReports.AddReport(new ReportDetails() { Code = "ECCR", Description = "Customs Collateral", Name = "Customs Collateral", FilterControlName = "CustomsCollateralReportFilterComponent", Tenant = 0, ReportGroupId = ExportCustomGroup.Id, FeatureId = CustomsCollateralFeature.Id, FeatureUniqeCode = CustomsCollateralFeature.FeatureUniqeCode, FilterHtmlComponentUrl = "./Report/Components/FiltersComponent/ExportCustoms/CustomsCollateralFilterComponent" }, reportRepository, tenantReports);
+        
         }
 
     }
