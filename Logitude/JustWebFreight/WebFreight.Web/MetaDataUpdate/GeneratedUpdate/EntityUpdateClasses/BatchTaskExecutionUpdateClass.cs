@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class BatchTaskExecutionUpdateClass
    {  		
-		public const string HashString = "a6841690790826878a8da87c5cb47af3";
+		public const string HashString = "c1fd603b37129e9a2575a59d67a03b68";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1395,7 +1395,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
 		   ObjectTable BatchTaskExecutionObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "BatchTaskExecution" && d.Tenant == 0).FirstOrDefault();       
     
-			   Feature BatchTaskExecutionFeature_MB0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Cancel", ObjectTableId = BatchTaskExecutionObjectTable.Id, Tenant = 0, NameTextCodeCode = "BatchTaskExecution.Features.Cancel", NameTextCodeDefaultText = "Cancel", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,BatchTaskExecutionObjectTable);
+			   Feature BatchTaskExecutionFeature_MB0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Cancel", ObjectTableId = BatchTaskExecutionObjectTable.Id, Tenant = 0, NameTextCodeCode = "BatchTaskExecution.Features.Cancel", NameTextCodeDefaultText = "Cancel", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,BatchTaskExecutionObjectTable);
 
  
 
