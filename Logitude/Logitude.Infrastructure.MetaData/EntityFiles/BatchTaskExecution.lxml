@@ -1524,7 +1524,7 @@
       MenuButtonType="&quot;button&quot;"
       IndexOrder="0"
       LocalDefaultText="&quot;בטל תהליך&quot;"
-      IsPackagable="false" />
+      IsPackagable="true" />
   </MenuButtons>
   <DataContracts />
   <AdditionalTextCodes />
