@@ -27,7 +27,7 @@
   </Column>
   <Column
     Name="SetType"
-    Type="nvarchar"
+    Type="varchar"
     Size="-1">
     <Constraints
       PrimaryKey="true"
@@ -35,7 +35,7 @@
   </Column>
   <Column
     Name="SetKey"
-    Type="nvarchar"
+    Type="varchar"
     Size="-1">
     <Constraints
       PrimaryKey="true"
