@@ -5,14 +5,6 @@
   DBType="Main"
   Module="Infrastructure">
   <Column
-    Name="Id"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      PrimaryKey="true"
-      Nullable="false" />
-  </Column>
-  <Column
     Name="Tenant"
     Type="int">
     <Constraints
@@ -28,7 +20,7 @@
   <Column
     Name="SetType"
     Type="varchar"
-    Size="-1">
+    Size="128">
     <Constraints
       PrimaryKey="true"
       Nullable="false" />
@@ -36,7 +28,7 @@
   <Column
     Name="SetKey"
     Type="varchar"
-    Size="-1">
+    Size="36">
     <Constraints
       PrimaryKey="true"
       Nullable="false" />
@@ -44,15 +36,15 @@
   <Column
     Name="ShortDescription"
     Type="nvarchar"
-    Size="-1">
+    Size="4000">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="FullDesctiption"
     Type="nvarchar"
-    Size="-1">
+    Size="4000">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
 </Table>

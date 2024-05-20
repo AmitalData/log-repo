@@ -80,7 +80,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             throw new NotImplementedException();
         }
 
-        public DefaultAndConfigurationKey GetSingleDefaultAndConfigurationKey(string id, int tenant1, string settype, string setkey, int tenant)
+        public DefaultAndConfigurationKey GetSingleDefaultAndConfigurationKey( int tenant1, string settype, string setkey, int tenant)
         {
             throw new NotImplementedException();
         }

@@ -36,14 +36,13 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             repository = DefaultAndConfigurationKeyRepository;
         }
 
-        public DefaultAndConfigurationKeyPM GetSinglePM(string SetKey, int tenant1, string settype, string setkey, int tenant)
+        public DefaultAndConfigurationKeyPM GetSinglePM( int tenant1, string settype, string setkey, int tenant)
         {        
             DefaultAndConfigurationKeyPM result =
           (from a in repository.context.DefaultAndConfigurationKey
-           where a.SetKey == SetKey
+           where a.SetKey == setkey
            select new DefaultAndConfigurationKeyPM()
-           {
-               Id = a.Id,
+           { 
                Tenant = a.Tenant,
                CreateDateTime = a.CreateDateTime,
                SetType = a.SetType,
@@ -58,49 +57,30 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
         }
 
-        public DefaultAndConfigurationKeyPM GetSingleDefaultAndConfigurationKeyPM(string id)
-        {
-            DefaultAndConfigurationKeyPM result =
-            (from a in repository.context.DefaultAndConfigurationKey
-             where a.Id == id
-             select new DefaultAndConfigurationKeyPM()
-             {
-                 Id = a.Id,
-                 Tenant = a.Tenant,
-                 CreateDateTime = a.CreateDateTime,
-                 SetType = a.SetType,
-                 SetKey = a.SetKey,
-                 ShortDescription = a.ShortDescription,
-                 FullDesctiption = a.FullDesctiption
+        //public DefaultAndConfigurationKeyPM GetSingleDefaultAndConfigurationKeyPM(string id)
+        //{
+        //    DefaultAndConfigurationKeyPM result =
+        //    (from a in repository.context.DefaultAndConfigurationKey
+        //     where a.Id == id
+        //     select new DefaultAndConfigurationKeyPM()
+        //     {
+                
+        //         Tenant = a.Tenant,
+        //         CreateDateTime = a.CreateDateTime,
+        //         SetType = a.SetType,
+        //         SetKey = a.SetKey,
+        //         ShortDescription = a.ShortDescription,
+        //         FullDesctiption = a.FullDesctiption
 
-             }).FirstOrDefault();
+        //     }).FirstOrDefault();
 
              
-            return result;
+        //    return result;
 
-        }
+        //}
 
-        public DefaultAndConfigurationKeyList GetSingleDefaultAndConfigurationKeyList(string id)
-        {
-            DefaultAndConfigurationKeyList result =
-            (from a in repository.context.DefaultAndConfigurationKey
-             where a.Id == id
-             select new DefaultAndConfigurationKeyList()
-             {
-                 Id = a.Id,
-                 Tenant = a.Tenant,
-                 CreateDateTime = a.CreateDateTime,
-                 SetType = a.SetType,
-                 SetKey = a.SetKey,
-                 ShortDescription = a.ShortDescription,
-                 FullDesctiption = a.FullDesctiption
-
-             }).FirstOrDefault();
-
-
-            return result;
-
-        }
+      
+    
 
         public List<DefaultAndConfigurationKeyPM> GetDefaultAndConfigurationKeyPMByField1(string SetKey)
         {
@@ -109,7 +89,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
              where a.SetKey == SetKey
              select new DefaultAndConfigurationKeyPM()
              {
-                 Id = a.Id,
+                
                  Tenant = a.Tenant,
                  CreateDateTime = a.CreateDateTime,
                  SetType = a.SetType,
@@ -131,7 +111,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
              where a.SetType == SetType
              select new DefaultAndConfigurationKeyPM()
              {
-                 Id = a.Id,
                  Tenant = a.Tenant,
                  CreateDateTime = a.CreateDateTime,
                  SetType = a.SetType,
@@ -151,7 +130,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             IQueryable<DefaultAndConfigurationKeyList> result = from a in iQueryable
                                                              select new DefaultAndConfigurationKeyList()
                                                              {
-                                                                 Id = a.Id,
+                                                                 
                                                                  Tenant = a.Tenant,
                                                                  CreateDateTime = a.CreateDateTime,
                                                                  SetType = a.SetType,
@@ -169,7 +148,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
              where a.SetKey == SetKey
              select new DefaultAndConfigurationKeyPM()
              {
-                 Id = a.Id,
+                
                  Tenant = a.Tenant,
                  CreateDateTime = a.CreateDateTime,
                  SetType = a.SetType,
@@ -191,7 +170,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
              where a.SetKey == SetKey && a.SetType == SetType
              select new DefaultAndConfigurationKeyPM()
              {
-                 Id = a.Id,
                  Tenant = a.Tenant,
                  CreateDateTime = a.CreateDateTime,
                  SetType = a.SetType,
@@ -212,8 +190,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             (from a in repository.context.DefaultAndConfigurationKey
              where a.SetKey == SetKey
              select new DefaultAndConfigurationKeyList()
-             {
-                 Id = a.Id,
+             { 
                  Tenant = a.Tenant,
                  CreateDateTime = a.CreateDateTime,
                  SetType = a.SetType,
@@ -235,7 +212,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
              where a.SetType == SetType
              select new DefaultAndConfigurationKeyList()
              {
-                 Id = a.Id,
+                
                  Tenant = a.Tenant,
                  CreateDateTime = a.CreateDateTime,
                  SetType = a.SetType,
