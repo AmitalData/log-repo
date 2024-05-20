@@ -1440,6 +1440,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\ReferantTeamController.Generated.cs" />
     <Compile Include="DataContracts\PrivateLabelsBrandingData.cs" />
     <Compile Include="DataContracts\PrivateLabelsBrandingDataRequest.cs" />
+    <Compile Include="DataProviders\CustomsCollateralDataProvider.cs" />
     <Compile Include="DataProviders\ExportDeclarationDataProvider.cs" />
     <Compile Include="DataProviders\ProductItemLine.Shared.cs" />
     <Compile Include="DataProviders\UserDefinedReportDataProvider.cs" />

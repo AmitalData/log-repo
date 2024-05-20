@@ -94,6 +94,8 @@ import { UserDefinedReportFilterControl } from './Components/FilterReportCompone
 
 //Export Customs
 import { ExportDeclarationReportFilterComponent } from './Components/FiltersComponent/ExportCustoms/ExportDeclarationReportFilterComponent';
+import { CustomsCollateralFilterComponent } from './Components/FiltersComponent/ExportCustoms/CustomsCollateralFilterComponent';
+
 
 export const Components =
     [
@@ -172,7 +174,9 @@ export const Components =
         BluesnapPaymentsReportFilterComponent,
         ExternalReconciliationLinesReportFilterControl,
         UserDefinedReportFilterControl,
-        ExportDeclarationReportFilterComponent
+        ExportDeclarationReportFilterComponent,
+        CustomsCollateralFilterComponent,
+
     ];
 
 export class ModuleDeclarations {
@@ -257,6 +261,7 @@ export class ModuleDeclarations {
             case "ExternalReconciliationLinesReportFilterControl": { myResult = ExternalReconciliationLinesReportFilterControl; break; }
             case "UserDefinedReportFilterControl": { myResult = UserDefinedReportFilterControl; break; }
             case "ExportDeclarationReportFilterComponent": { myResult = ExportDeclarationReportFilterComponent; break; }
+            case "CustomsCollateralFilterComponent": { myResult = CustomsCollateralFilterComponent; break; }
 
         }
 
