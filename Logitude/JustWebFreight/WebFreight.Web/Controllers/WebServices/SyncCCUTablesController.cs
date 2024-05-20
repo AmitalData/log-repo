@@ -11,6 +11,9 @@ namespace WebFreight.Web.Controllers.WebServices
     {
         public IHttpActionResult GetSyncData(string fileNo)
         {
+            if(string.IsNullOrEmpty(fileNo))
+                return BadRequest("FileNo is required");
+
             try
             {
                 int tenant = HeaderHelper.Authenticate().Tenant;
@@ -27,6 +30,9 @@ namespace WebFreight.Web.Controllers.WebServices
         [HttpPut]
         public IHttpActionResult UpdateSyncData(string fileNo, DateTime syncDT)
         {
+            if (string.IsNullOrEmpty(fileNo) || syncDT != null)
+                return BadRequest("FileNo and syncDT is required");
+
             try
             {
                 int tenant = HeaderHelper.Authenticate().Tenant;
@@ -43,6 +49,9 @@ namespace WebFreight.Web.Controllers.WebServices
         [HttpGet]
         public IHttpActionResult GetLastSyncDate(string fileNo)
         {
+            if (string.IsNullOrEmpty(fileNo))
+                return BadRequest("FileNo is required");
+
             try
             {
                 int tenant = HeaderHelper.Authenticate().Tenant;

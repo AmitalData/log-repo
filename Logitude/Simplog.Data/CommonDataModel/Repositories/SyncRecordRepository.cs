@@ -69,6 +69,8 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public List<SyncRecord> GetUnsyncAndMarkAsInProcess(int tenant, string fileNo)
         {
+            var date = DateTime.Now;
+
             IEnumerable<SyncRecord> records = context.SyncRecord.Where(syncRecord =>
                 syncRecord.Tenant == tenant &&
                 (syncRecord.IsSync == 2 || syncRecord.IsSync == 3) &&
@@ -78,7 +80,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
             foreach (SyncRecord syncRecord in records)
             {
                 syncRecord.IsSync = 3;
-                syncRecord.SyncDT = DateTime.Now;
+                syncRecord.SyncDT = date;
             }
 
             context.SaveChanges();

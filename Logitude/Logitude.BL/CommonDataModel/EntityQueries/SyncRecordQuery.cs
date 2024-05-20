@@ -67,6 +67,13 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         private string GetRecordOfRowNeedSync(SyncRecord syncRecord)
         {
+            
+            if (syncRecord == null || string.IsNullOrEmpty(syncRecord.KeyVal))
+            {
+                Logger.LogMe($"GetRecordOfRowNeedSync, keyVal is empty or null, id: " + syncRecord?.Id, true);
+                return null;
+            }
+
             string query = $"SELECT * FROM {syncRecord.Entname} WHERE {syncRecord.KeyVal.Replace(",", " and ")}";
 
             SqlConnection conn = repository.context.GetActiveDbContext().Database.Connection as SqlConnection;
@@ -76,9 +83,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             dt.Load(dataReader);
             conn.Close();
 
-            if (dt.Rows.Count == 0)
+            if (dt.Rows.Count != 1)
             {
-                Logger.LogMe($"record not found for table: {syncRecord.Entname: name} and keyVal: {syncRecord.KeyVal.Replace(",", " and ")}", true);
+                Logger.LogMe($"record not found once for table: {syncRecord.Entname: name} and keyVal: {syncRecord.KeyVal.Replace(",", " and ")}", true);
                 return null;
             }
 
