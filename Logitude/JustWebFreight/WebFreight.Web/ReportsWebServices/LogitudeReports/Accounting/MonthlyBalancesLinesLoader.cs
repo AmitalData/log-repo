@@ -40,6 +40,7 @@ using Simplog.Server.Infrastructure;
 using System.Data.Common;
 using System.Transactions;
 using static Logitude.Customs.BL.Messaging.Amital.UnifreightQInvoiceList;
+using NPOI.SS.Formula.Functions;
 
 namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 {
@@ -90,6 +91,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             ChartOfAccountRepository chartOfAccountRepository = new ChartOfAccountRepository(tenant);
             List<ChartOfAccount> chartOfAccountList =chartOfAccountRepository.GetAllByTenant(tenant);
             QueryFilterItem ChartOfAccountsIdList = reportQueryOperations.QueryFilterItems.Where(d => d.FieldName == "ChartOfAccountsIdList").FirstOrDefault();
+
 			if (ChartOfAccountsIdList != null)
 			{
                 string[] ChartOfAccountsIdArray = ChartOfAccountsIdList.FieldValue.ToString().Split(',');
@@ -98,6 +100,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             var year = int.Parse(reportQueryOperations.QueryFilterItems.Where(d => d.FieldName == "NumberOfYear").FirstOrDefault()?.FieldValue?.ToString());
             List<MonthlyBalancesLine> monthlyBalancesLine=GetMonthlyBalancesReportByYearAndTenant(tenant, year);
             dataProvider.ChartOfAccountLine=new List<ChartOfAccountLine>();
+            
             for (int i = 0; i < chartOfAccountList?.Count(); i++)
             {
                 QueryFilterItem DetailedForJobs = reportQueryOperations.QueryFilterItems.Where(d => d.FieldName == "DetailedForJobs").FirstOrDefault();
@@ -122,8 +125,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                     GLAcountLocalName = chartOfAccountList[i].LocalName,
                                     GLAcountNumber = chartOfAccountList[i].Code,
                                     GLAcountEnglishName = chartOfAccountList[i].EnglishName,
-									MonthlyBalancesLine= (bool)DetailedForJobs?.FieldValue ? monthlyBalancesLineOfChartOfAccount: new List<MonthlyBalancesLine>()
-
+									MonthlyBalancesLine= (bool)DetailedForJobs?.FieldValue ? monthlyBalancesLineOfChartOfAccount: new List<MonthlyBalancesLine>(),
+									LocalOpenBalance= monthlyBalancesLineOfChartOfAccount != null ? monthlyBalancesLineOfChartOfAccount.Sum(a => a.LocalOpenBalance) : 0,
+                                    ForeignOpenBalance = monthlyBalancesLineOfChartOfAccount != null ? monthlyBalancesLineOfChartOfAccount.Sum(a => a.ForeignOpenBalance) : 0,
 
                                 };
 				dataProvider.ChartOfAccountLine.Add(chartOfAccountLine);
@@ -153,7 +157,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     {
                         while (reader.Read())
                         {
-                            var result = new MonthlyBalancesLine
+                            MonthlyBalancesLine result = new MonthlyBalancesLine
                             {
                                 QuantityForJanuary = reader["MONTH1"] != DBNull.Value ? (decimal)reader["MONTH1"] : 0,
                                 QuantityForFebruary = reader["MONTH2"] != DBNull.Value ? (decimal)reader["MONTH2"] : 0,
@@ -172,14 +176,23 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 								GLAcountNumber = reader["DisplayNumber"] != DBNull.Value ? (string)reader["DisplayNumber"] : null,
                                 GLAcountEnglishName= reader["EnglishName"] != DBNull.Value ? (string)reader["EnglishName"] : null,
                                 ChartOfAccount = reader["chartOfAccount"] != DBNull.Value ? (string)reader["chartOfAccount"] : null,
-
+                                AccountId = reader["AccountId"] != DBNull.Value ? (string)reader["AccountId"] : null
                             };
                             results.Add(result);
                         }
                     }
                     connection.Close();
                 }
+                var ac = new AccountBalanceByDateCodeService(null, tenant, results.Select(a => a.AccountId).FirstOrDefault(), results.Select(a => a.AccountId).AsQueryable<string>());
+                ac.CalculateBalance(true, null, new DateTime(year, 1, 1), false, false, true, false, false);
+				foreach (var result in results)
+				{
+					var CurrencySumUntillMounth = ac.AccountBalance.verbose.CurrencySumUntillMounth.Where(A => A.AccountId == result.AccountId).FirstOrDefault();
 
+                    result.LocalOpenBalance = CurrencySumUntillMounth?.LocalAmountDebit - CurrencySumUntillMounth?.LocalAmountCredit;
+                    result.ForeignOpenBalance = CurrencySumUntillMounth?.ForeignAmountDebit - CurrencySumUntillMounth?.ForeignAmountDebit;
+
+                }
                 return results;
             }
 
