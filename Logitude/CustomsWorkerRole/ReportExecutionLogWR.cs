@@ -77,7 +77,9 @@ namespace CustomsWorkerRole
                 {
                     try
                     {
-                        ExecuteQueue();
+                        WorkOnce();
+                        Thread.Sleep(TimeSpan.FromSeconds(1));
+
                     }
                     catch (Exception exception)
                     {
