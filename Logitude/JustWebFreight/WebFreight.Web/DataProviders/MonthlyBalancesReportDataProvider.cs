@@ -32,7 +32,8 @@ namespace WebFreight.Web.DataProviders
         public decimal QuantityForOctober { get; set; }
         public decimal QuantityForNovember { get; set; }
         public decimal QuantityForDecember { get; set; }
-        public decimal OpenBalance { get; set; }
+        public decimal? ForeignOpenBalance { get; set; }
+        public decimal? LocalOpenBalance { get; set; }
         public string GLAcountLocalName { get; set; }
         public string GLAcountNumber { get; set; }
         public decimal TotalReport { get; set; }
@@ -56,13 +57,16 @@ namespace WebFreight.Web.DataProviders
         public decimal QuantityForOctober { get; set; }
         public decimal QuantityForNovember { get; set; }
         public decimal QuantityForDecember { get; set; }
-        public decimal OpenBalance { get; set; }
+        public decimal? ForeignOpenBalance { get; set; }
+        public decimal? LocalOpenBalance { get; set; }
         public string GLAcountLocalName { get; set; }
         public string GLAcountNumber { get; set; }
         public string ChartOfAccount { get; set; }
         public string GLAcountEnglishName { get; set; }
 
         public decimal TotalReport { get; set; }
+        public string AccountId { get; set; }
+
     }
 
 }
