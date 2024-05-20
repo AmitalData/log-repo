@@ -755,11 +755,11 @@ namespace Logitude.Server.Tools.QueueService
             return response;
         }
 
-        public List<QueueResponse> Receive_new(int nextRunDelayInSec = 60, TimeSpan? serverWaitTime = null)
+        public List<QueueResponse> Receive_new(int nextRunDelayInSec = 60, TimeSpan? serverWaitTime = null, int? selectCount = null)
         {
             if (LogitudeSettings.IsCostomsDeploy)
             {
-                return ReceiveCustoms_new(nextRunDelayInSec);
+                return ReceiveCustoms_new(nextRunDelayInSec, selectCount);
             }
             if (serverWaitTime == null) { serverWaitTime = TimeSpan.FromSeconds(5); }
             long messageId = -1;
