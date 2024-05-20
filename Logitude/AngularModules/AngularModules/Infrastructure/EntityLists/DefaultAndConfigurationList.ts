@@ -8,6 +8,7 @@
 
 export class DefaultAndConfigurationList {
    		Id: string;
+		Tenant: number;
 		QueueDefinitionCode: string;
 		CreateDateTime: string;
 		SearchFields: string;
