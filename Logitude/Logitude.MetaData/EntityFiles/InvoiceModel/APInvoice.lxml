@@ -12764,6 +12764,12 @@
       LocalDefaultText="&quot;לא ניתן לקלוט באותה חשבונית שורות של זיכוי וחיוב ע&quot;פ התקנות יש להפרידם לשתי חשבוניות נפרדות&quot;"
       TextCodeTypeCode="&quot;M&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;APInvoice.O.ConfirmationNumberLength&quot;"
+      DefaultText="&quot;Confirmation number length should be between 9 to 30 &quot;"
+      LocalDefaultText="&quot;מספר הקצאה צריך להיות באורך שבין 9 ל-30 תווים&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
