@@ -1618,13 +1618,18 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
         private void CreateCustomsDocumentsFilingMetaDataValue(DocumentsFilingMetaDataValuePM itemPM)
         {
+            CustomsDocumentQueryService myCustomsDocumentQueryService = new CustomsDocumentQueryService(tenant);
+            string documentsFilingId = myCustomsDocumentQueryService.GetDocumentInIdByCustomsDocId(itemPM.Id, tenant);
 
-            CustomsDocumentMetaDataValue customsDocumentMetaDataValue = new CustomsDocumentMetaDataValue();
-            customsDocumentMetaDataValue.MetaDataTypeCode = itemPM.DocumentsMetaDataTypeCode;
-            customsDocumentMetaDataValue.CustomsDocumentId = entityPM.Id;
-            customsDocumentMetaDataValue.Tenant = tenant; 
-            customsDocumentMetaDataValue.MetaDataValue = itemPM.MetaDataValue;
-            customsDocumentMetaDataValueRepository.Add(customsDocumentMetaDataValue);
+            if (documentsFilingId != null)
+            {
+                CustomsDocumentMetaDataValue customsDocumentMetaDataValue = new CustomsDocumentMetaDataValue();
+                customsDocumentMetaDataValue.MetaDataTypeCode = itemPM.DocumentsMetaDataTypeCode;
+                customsDocumentMetaDataValue.CustomsDocumentId = entityPM.Id;
+                customsDocumentMetaDataValue.Tenant = tenant;
+                customsDocumentMetaDataValue.MetaDataValue = itemPM.MetaDataValue;
+                customsDocumentMetaDataValueRepository.Add(customsDocumentMetaDataValue);
+            }
         }
         private void UpdateCustomsDocumentsFilingMetaDataValue(DocumentsFilingMetaDataValuePM itemPM)
         {
