@@ -30,7 +30,7 @@ namespace WebFreight.Web.Controllers.WebServices
         [HttpPut]
         public IHttpActionResult UpdateSyncData(string fileNo, DateTime syncDT)
         {
-            if (string.IsNullOrEmpty(fileNo) || syncDT != null)
+            if (string.IsNullOrEmpty(fileNo) || syncDT == null)
                 return BadRequest("FileNo and syncDT is required");
 
             try
