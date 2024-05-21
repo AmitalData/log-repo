@@ -21986,6 +21986,13 @@
         ObjectFieldName="&quot;AmendmentDontDisplayInList&quot;"
         IsPredefined="true"
         IndexOrder="0" />
+      <QueryFilter
+        QueryCode="&quot;UnReleasedFastProcess&quot;"
+        PredefinedValue="&quot;false&quot;"
+        ObjectFieldName="&quot;IsClosedForFollowUp&quot;"
+        IsPredefined="true"
+        Operator="&quot;Equal&quot;"
+        IndexOrder="0" />
     </QueryFilters>
   </Query>
   <Query
@@ -22177,6 +22184,13 @@
         ObjectFieldName="&quot;AmendmentDontDisplayInList&quot;"
         IsPredefined="true"
         IndexOrder="0" />
+      <QueryFilter
+        QueryCode="&quot;UnReleasedIndividual&quot;"
+        PredefinedValue="&quot;false&quot;"
+        ObjectFieldName="&quot;IsClosedForFollowUp&quot;"
+        IsPredefined="true"
+        Operator="&quot;Equal&quot;"
+        IndexOrder="0" />
     </QueryFilters>
   </Query>
   <Query
@@ -22351,6 +22365,13 @@
         ObjectFieldName="&quot;AmendmentDontDisplayInList&quot;"
         IsPredefined="true"
         IndexOrder="0" />
+      <QueryFilter
+        QueryCode="&quot;WithoutClassification&quot;"
+        PredefinedValue="&quot;false&quot;"
+        ObjectFieldName="&quot;IsClosedForFollowUp&quot;"
+        IsPredefined="true"
+        Operator="&quot;Equal&quot;"
+        IndexOrder="0" />
     </QueryFilters>
   </Query>
   <Query
@@ -22431,6 +22452,13 @@
         ObjectFieldName="&quot;CourierPendingReasonList&quot;"
         IsPredefined="true"
         Operator="&quot;Contains&quot;"
+        IndexOrder="0" />
+      <QueryFilter
+        QueryCode="&quot;PendingPayment&quot;"
+        PredefinedValue="&quot;false&quot;"
+        ObjectFieldName="&quot;IsClosedForFollowUp&quot;"
+        IsPredefined="true"
+        Operator="&quot;Equal&quot;"
         IndexOrder="0" />
     </QueryFilters>
   </Query>
