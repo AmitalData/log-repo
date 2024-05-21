@@ -741,7 +741,8 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
                     where ((a.AccountingDate >= fromDate && a.AccountingDate <= toDate))
                         && a.Tenant == tenant
-                        && (DbFunctions.TruncateTime(a.AccountingDate) != firstDayOfFromDate || (DbFunctions.TruncateTime(a.AccountingDate) == firstDayOfFromDate && j.AccountingEntityCode != AccountingEntityValues.YearTransfer))
+                        && (DbFunctions.TruncateTime(a.AccountingDate) != firstDayOfFromDate || (DbFunctions.TruncateTime(a.AccountingDate) == firstDayOfFromDate 
+                                && !(j.AccountingEntityCode == AccountingEntityValues.YearTransfer & (g.ChartOfAccountsTypeCode == "1" || g.ChartOfAccountsTypeCode == "2"))))
                     select new B100Data()
                     {
                         AccountingDate = a.AccountingDate,
