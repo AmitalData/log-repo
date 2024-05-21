@@ -688,7 +688,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     double lines_amt = localAmount.HasValue ? localAmount.Value : 0;
                     double absdiff = Math.Abs(head_amt - lines_amt);
                     bool just_one_value = localAmount.HasValue ^ localAmount_Computed.HasValue;
-                    if (absdiff > 0.01 | just_one_value) 
+                    if (absdiff > 0.2 | just_one_value) 
                     {
                         decimal head_amt_dec = Convert.ToDecimal(head_amt); 
                         decimal lines_amt_dec = Convert.ToDecimal(lines_amt);
