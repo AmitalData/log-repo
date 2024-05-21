@@ -71,6 +71,27 @@ namespace Logitude.Accounting.BL.CoreBL
         public static int recalculateDataAddedLanes = 0;
         const string RecalculateEventCode = "IREC";
 
+        
+
+        static bool CheckLastNineAreNine(string input)
+        {
+            if (string.IsNullOrEmpty(input) || input.Length < 9)
+            {
+                return false; // If string length is less than 9, it's impossible for the last 9 characters to be '9'
+            }
+
+            string lastNine = input.Substring(input.Length - 9); // Get the last 9 characters
+
+            foreach (char c in lastNine)
+            {
+                if (c != '9')
+                {
+                    return false; // If any character in the last 9 is not '9', return false
+                }
+            }
+
+            return true; // All characters are '9'
+        }
         public static List<TaxReportLinePM> CreateTaxReportLines(TaxReportPM taxReport, int tenant,bool recalculateData=false)
         {
 
@@ -168,7 +189,7 @@ namespace Logitude.Accounting.BL.CoreBL
                             Tenant = tenant,
                             TaxReportDate = taxReport.TaxReportMonth,
                             LedgerTransactionId = taxData.LedgerTransactionId,
-                            ConfirmationNumber=invoice.ConfirmationNumber,
+                            ConfirmationNumber = invoice.ConfirmationNumber,
                         };
                         Simplog.Data.CommonDataModel.EntityPOCOs.Card card = cards.Where(d => d.Id == invoice.BillToId).FirstOrDefault();
 
@@ -200,7 +221,6 @@ namespace Logitude.Accounting.BL.CoreBL
             journalsTransactions = ledgerTransactionRepository.GetLedgerTransactionsByJournalIds(JournalIds, tenant);
 
             bool isEquipment = false;
-            APInvoicePM aPInvoice = null;
             List<string> glAccountIds = journalsTransactions.Select(d => d.AccountId).ToList();
             List<string> oppositeglAccountIds = ledgerTransactons.Select(d => d.OppositGLAccount).ToList();
             gLAccountCurrencies = gLAccountCurrencyQueryService.GetGLAccountCurrenciesByAccountIds(tenant, oppositeglAccountIds);
@@ -294,16 +314,27 @@ namespace Logitude.Accounting.BL.CoreBL
                     TaxReportDate = taxReport.TaxReportMonth,
                     JournalLineNumber = transaction.JournalLineNumber,
                     LedgerTransactionId = transaction.LedgerTransactionId,
-                    ConfirmationNumber= aPInvoicePM != null ?  aPInvoicePM.ConfirmationNumber : null,
+                    ConfirmationNumber = aPInvoicePM != null ? aPInvoicePM.ConfirmationNumber : null,
 
                     };
 
                     JournalPM journal = journalPMs.Where(d => d.Id == transaction.JournalId && d.TaxReportJournalLineNumber == transaction.JournalLineNumber).FirstOrDefault();
-                    if (aPInvoice != null && (aPInvoice.VATNumber == tenantPM.VatNumber))
+                if (inputReportLine.ConfirmationNumber == null && journal.ConfirmationNumber != null)
+                {
+                    inputReportLine.ConfirmationNumber = journal.ConfirmationNumber;
+                }
+                if (aPInvoicePM != null)
+                {
+                    if (CheckLastNineAreNine(aPInvoicePM.ConfirmationNumber))
+                    {
+                        inputReportLine.LineTypeCode = "H";
+                        inputReportLine.ConfirmationNumber = null;
+                    }
+                    else if (aPInvoicePM.VATNumber == tenantPM.VatNumber)
                     {
                         inputReportLine.LineTypeCode = "C";
                     }
-
+                }
                     else if (journal.LineCounter > 0 && journal.LineCreditAccountId != null && journal.LineCreditAccountId == setting.CustomsGLAccountId)
                     {
 
@@ -320,7 +351,6 @@ namespace Logitude.Accounting.BL.CoreBL
 
                     else if ((journal.LineCreditAccountTypeCode == "3" && (account != null && account.Smallcashbook == true)))
                     {
-
                         inputReportLine.LineTypeCode = "K";
                     }
                     else if ((journal.LineCreditAccountTypeCode == "3" && (account != null && account.ReportingAsAnotherDocument == true)))
@@ -332,10 +362,8 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         inputReportLine.LineTypeCode = "T";
                     }
-                if (inputReportLine.ConfirmationNumber == null && journal.ConfirmationNumber != null)
-                {
-                    inputReportLine.ConfirmationNumber = journal.ConfirmationNumber;
-                }
+
+
                     reportLinesList.Add(inputReportLine);
                     //     UpdateJournalAdditionalDataRecord(inputReportLine, transaction);
 
