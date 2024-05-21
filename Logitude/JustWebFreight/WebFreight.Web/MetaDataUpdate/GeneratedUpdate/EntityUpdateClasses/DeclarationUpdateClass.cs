@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "2c30d52528c04c88c26c78a2a2b3de82";
+		public const string HashString = "7dfc553bbdb26ff5affb85f5afc8ca89";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -18868,6 +18868,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
              AdvancedQueryFilter UnReleasedFastProcessQueryFilter_4 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.AmendmentDontDisplayInList", PredefinedValue = "false",PredefinedValue2 = null, CustomPredefined = false, QueryId = UnReleasedFastProcessQuery.Id,QueryCode = UnReleasedFastProcessQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
+
+             AdvancedQueryFilter UnReleasedFastProcessQueryFilter_5 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsClosedForFollowUp", PredefinedValue = "false",PredefinedValue2 = null, CustomPredefined = false, QueryId = UnReleasedFastProcessQuery.Id,QueryCode = UnReleasedFastProcessQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+
   
 	      
 
@@ -18940,6 +18943,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
              AdvancedQueryFilter UnReleasedIndividualQueryFilter_4 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.AmendmentDontDisplayInList", PredefinedValue = "false",PredefinedValue2 = null, CustomPredefined = false, QueryId = UnReleasedIndividualQuery.Id,QueryCode = UnReleasedIndividualQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
+
+             AdvancedQueryFilter UnReleasedIndividualQueryFilter_5 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsClosedForFollowUp", PredefinedValue = "false",PredefinedValue2 = null, CustomPredefined = false, QueryId = UnReleasedIndividualQuery.Id,QueryCode = UnReleasedIndividualQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+
   
 	      
 
@@ -19005,6 +19011,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
              AdvancedQueryFilter WithoutClassificationQueryFilter_3 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.AmendmentDontDisplayInList", PredefinedValue = "false",PredefinedValue2 = null, CustomPredefined = false, QueryId = WithoutClassificationQuery.Id,QueryCode = WithoutClassificationQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
+
+             AdvancedQueryFilter WithoutClassificationQueryFilter_4 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsClosedForFollowUp", PredefinedValue = "false",PredefinedValue2 = null, CustomPredefined = false, QueryId = WithoutClassificationQuery.Id,QueryCode = WithoutClassificationQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+
   
 	      
 
@@ -19034,6 +19043,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 
              AdvancedQueryFilter PendingPaymentQueryFilter_3 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.CourierPendingReasonList", PredefinedValue = "900",PredefinedValue2 = null, CustomPredefined = false, QueryId = PendingPaymentQuery.Id,QueryCode = PendingPaymentQuery.UniqueCode, Tenant = 0,Operator = "Contains"}, addedQueryFilters);
+
+
+             AdvancedQueryFilter PendingPaymentQueryFilter_4 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Declaration.IsClosedForFollowUp", PredefinedValue = "false",PredefinedValue2 = null, CustomPredefined = false, QueryId = PendingPaymentQuery.Id,QueryCode = PendingPaymentQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
   
 	      
@@ -22868,6 +22880,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode DeclarationTextCode_CustomsDeclarationOMultiQantityType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.MultiQantityType", DefaultText = "This screen allows to multi update Qantity Type",LocalDefaultText = @"מסך זה מאפשר לעדכן את סוג היחידה באופן גורף לכל שורות פרטי המכס או לחלקן . אנא בחר בסוג יחידה ובפעולה הרצויה.", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DeclarationTextCode_CustomsDeclarationOItemsWithNoQuantityType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ItemsWithNoQuantityType", DefaultText = "Update Items with no Quantity Type",LocalDefaultText = @"עדכן פריטים ללא סוג יחידה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOCancelPointers = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CancelPointers", DefaultText = "Approve Cancellation of pointers on customs items",LocalDefaultText = @"נא אשר ביטול ההצבעות בכל שורות פרט המכס", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DeclarationTextCode_CustomsDeclarationODeletePointer = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DeletePointer", DefaultText = "Pointers successfully deleted",LocalDefaultText = @"נתוני ההצבעה נמחקו בהצלחה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
