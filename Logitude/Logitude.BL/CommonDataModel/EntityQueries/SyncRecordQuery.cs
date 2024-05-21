@@ -50,10 +50,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                 return new EntityRecord
                 {
-                    KeyVal = syncRecord.KeyVal,
+                    Key = syncRecord.KeyVal,
                     TrigAction = syncRecord.TrigAction,
                     Entname = syncRecord.Entname,
                     RecordAsJson = recordAsJson,
+                    UpdateDate = syncRecord.SyncDT,
                 };
             }).SkipWhile(x => x == null).ToList();
 
