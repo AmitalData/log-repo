@@ -18,7 +18,6 @@ export class BatchTaskExecutionMenuButtonsHandler {
     }
 
     public CheckButtonState(menuButtons: MenuButtonPM[]) {
-        debugger;
         if (this.EntityPM != null) {
             if (this.entityArgs.EditComponent != null) {
                 menuButtons.forEach(menuButton => {
