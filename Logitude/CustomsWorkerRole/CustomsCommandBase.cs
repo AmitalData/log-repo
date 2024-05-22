@@ -625,6 +625,12 @@ namespace CustomsWorkerRole
             }
             List<string> activeTasks = new List<string> { };
 
+            bool waitAll = false;
+            if ( ConfigurationManager.AppSettings.Get("WaitAllForReceiveNew")?.ToLower() == "true")
+            {
+                waitAll = true;
+            }
+
             for (int filtterPriority = 2; filtterPriority < 3; filtterPriority++)
             {
                 while (!WorkerRoleServiceLocator.PleaseShutDown)
@@ -684,13 +690,16 @@ namespace CustomsWorkerRole
                                 proccesDone = true;
                                 var taskLIst = new List<Task>();
 
+                                /*
                                 var currentThreads = Process.GetCurrentProcess().Threads;
                                 var currentThreadsCast = currentThreads.Cast<ProcessThread>();
                                 var runningThreads = currentThreadsCast.Where(thread => thread.ThreadState.ToString() == "Running").Count();
                                 var waitThreads = currentThreadsCast.Where(thread => thread.ThreadState.ToString().StartsWith("Wait")).Count();
                                 var stopThreads = currentThreadsCast.Where(thread => thread.ThreadState.ToString() == "Unstarted").Count();
+                                */
 
-                                LogTime($"{className} start open tasks for {responseList.Count} returned rows from Db (threads count: {currentThreads.Count}, {runningThreads}, {waitThreads}, {stopThreads})");
+                                // LogTime($"{className} start open tasks for {responseList.Count} returned rows from Db (threads count: {currentThreads.Count}, {runningThreads}, {waitThreads}, {stopThreads})");
+                                LogTime($"{className} start open tasks for {responseList.Count} returned rows from Db");
                                 var totalStopwatch = Stopwatch.StartNew();
 
                                 foreach (var item in responseList)
@@ -700,38 +709,49 @@ namespace CustomsWorkerRole
                                     activeTasks.Add(item.MessageId);
 
                                     var t =
-                                Task.Factory.StartNew(() =>
-                                {
-                                    var createdElapsed = stopwatch.Elapsed.TotalSeconds;
-                                    // LogTime(className + " start task (created " + stopwatch.Elapsed.TotalSeconds + " seconds ago) for row MessageId: " + item.MessageId);
-                                    var taskstopwatch = Stopwatch.StartNew();
+                                    Task.Factory.StartNew(() =>
+                                    {
+                                        var createdElapsed = stopwatch.Elapsed.TotalSeconds;
+                                        // LogTime(className + " start task (created " + stopwatch.Elapsed.TotalSeconds + " seconds ago) for row MessageId: " + item.MessageId);
+                                        LogTime(className + " start task for row MessageId: " + item.MessageId);
+                                        var taskstopwatch = Stopwatch.StartNew();
 
-                                    try
-                                    {
-                                        CustomsCommandBaseHelper helper = new CustomsCommandBaseHelper();
-                                        helper.RunTask(item, className);
-                                        LogMessagingUtilWR.Instance.AppendLine("LogDoneItemInMemory();");
-                                        LogDoneItemInMemory();
-                                        LogMessagingUtilWR.Instance.AppendLine("LogDoneItemInMemory();AFTER");
-                                        LogTime(className + " end task (elapsed: " + (int)taskstopwatch.Elapsed.TotalSeconds + " seconds. started after: " + (int)createdElapsed + " seconds) for row MessageId: " + item.MessageId);
-                                    }
-                                    finally
-                                    {
-                                        activeTasks.Remove(item.MessageId);
-                                    }
-                                });
-                                    //taskLIst.Add(t);
+                                        try
+                                        {
+                                            CustomsCommandBaseHelper helper = new CustomsCommandBaseHelper();
+                                            helper.RunTask(item, className);
+                                            LogMessagingUtilWR.Instance.AppendLine("LogDoneItemInMemory();");
+                                            LogDoneItemInMemory();
+                                            LogMessagingUtilWR.Instance.AppendLine("LogDoneItemInMemory();AFTER");
+                                            LogTime(className + " end task (elapsed: " + (int)taskstopwatch.Elapsed.TotalSeconds + " seconds. started after: " + (int)createdElapsed + " seconds) for row MessageId: " + item.MessageId);
+                                        }
+                                        finally
+                                        {
+                                            activeTasks.Remove(item.MessageId);
+                                        }
+                                    });
+                                    taskLIst.Add(t);
                                 }
-                                //Task.WaitAll(taskLIst.ToArray());
-                                //LogTime(className + " end waiting for all of them (total elapsed: " + (int)totalStopwatch.Elapsed.TotalSeconds + " seconds)");
+
+                                if (waitAll)
+                                {
+                                    Task.WaitAll(taskLIst.ToArray());
+                                    LogTime(className + " end waiting for all of them (total elapsed: " + (int)totalStopwatch.Elapsed.TotalSeconds + " seconds)");
+                                }
                                 Queue_scope.Complete();
                             }
                         }
                     }
                     finally
                     {
-                        Thread.Sleep(1000);
-                        // PerformanceM.SleepMSAfterEachQueuePeek();
+                        if (waitAll)
+                        {
+                            PerformanceM.SleepMSAfterEachQueuePeek();
+                        }
+                        else
+                        {
+                            Thread.Sleep(1000);
+                        }
                     }
                 }
             }
