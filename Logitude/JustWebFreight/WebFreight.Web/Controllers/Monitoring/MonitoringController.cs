@@ -8,48 +8,44 @@ using System.Data.Entity;
 using System.Data.Entity.Core.Objects;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Transactions;
 using System.Web;
 using System.Web.Http;
-
+using System.Web.Mvc;
+using WebFreight.Web.DataContracts;
+using HttpGetAttribute = System.Web.Http.HttpGetAttribute;
 
 namespace WebFreight.Web.Controllers.Monitoring
 {
     public class MonitoringController:ApiController
     {
-        #region AdvancedGenericInterfaceMonitoringStatus
-        public HttpResponse AdvancedGenericInterfaceMonitoringStatus(object sender, EventArgs e)
+        public class pingdom_http_custom_check
         {
-            TextWriter textWriter = new StringWriter();
-            HttpResponse Response = new HttpResponse(textWriter);
+            public string status { get; set; }
+            public int response_time { get; set; }
+        }
 
-            Response.Clear();
-            Response.ContentType = "text/xml";
-            Response.Write("<pingdom_http_custom_check>");
 
-            if (AdvancedGenericInterfaceMonitoringStatus())
-            {
-                Response.Write("<status>Fail</status>");
-            }
-            else
-            {
-                Response.Write("<status>OK</status>");
-            }
+        #region AdvancedGenericInterfaceMonitoringStatus
+        [HttpGet]
 
-            int ResponseTime_Millisecond = HttpContext.Current.Timestamp.Millisecond;
-            String ResponseTime = "<response_time>" + ResponseTime_Millisecond + "</response_time>";
-            Response.Write(ResponseTime);
-            Response.Write("</pingdom_http_custom_check>");
-            Response.End();
+        public HttpResponseMessage AdvancedGenericInterfaceMonitoringStatus()
+        {
 
+            pingdom_http_custom_check pingdomCheck = new pingdom_http_custom_check();
+            bool isOK = CheckAdvancedGenericInterfaceMonitoringStatus();
+            pingdomCheck.status = isOK ? "OK" : "Fail";
+            pingdomCheck.response_time = HttpContext.Current.Timestamp.Millisecond;
+
+            HttpResponseMessage Response = Request.CreateResponse(HttpStatusCode.OK, pingdomCheck);
             return Response;
         }
 
 
-
-        private bool AdvancedGenericInterfaceMonitoringStatus()
+        private bool CheckAdvancedGenericInterfaceMonitoringStatus()
         {
             bool isFailed = false;
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
