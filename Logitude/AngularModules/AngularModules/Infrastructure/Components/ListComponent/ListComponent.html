@@ -119,6 +119,10 @@
     .Hide {
         display: none;
     }
+
+    .DeclarationsTable {
+        width: 165px !important;
+    }
 </style>
 
 <div style="position: absolute; top:0px; bottom:0px; left:0px; right:0px;margin:auto; background:white;" *ngIf="IsDemoTenant">
@@ -275,7 +279,7 @@
                             <span>{{'View'}}:</span>
                         </td>
 
-                        <td style="vertical-align: middle;width:170px">
+                        <td style="vertical-align: middle;width:170px;padding-left: 20px;">
                             <QueryList *ngIf="(ShowViews || EnglishView) && ResourcesLoaded" [ItemsSource]="Queries" [UserItemSource]="UserQueries" [Binding]="'NameTextCodeCode'" [onSelectedQueryChangeEvent]="onSelectedQueryChangeEvent" [SelectedItem]="SelectedQuery" [ObjectTableName]="ObjectTableName" (itemSelectedEvent)="QueryValueChanged($event)" [QueryListSourceChanged]="QueryListSourceChanged" (QueriesChangedEvent)="QueriesChangedEvent($event)" [LoadResourceCompleted]="LoadResourceCompleted" [pubSubAdvanceQueryFiltersService]="AdvanceQFiltersService" (NewViewClosedEvent)="NewViewClosedEvent($event)"></QueryList>
 
 
@@ -339,7 +343,7 @@
                             <div></div>
                         </td>
 
-                        <td style="width: 200px; vertical-align: middle;">
+                        <td style="width: 250px; vertical-align: middle;" [class.DeclarationsTable]="DeclarationsTable">
                             <SearchTextBox [IsDisabled]="SeachBoxIsDisabled" [SearchText]="searchFields" [ObjectTableName]="ObjectTableName" (SearchTextChangeEvent)="onSearchTextChangeEvent($event)"></SearchTextBox>
                         </td>
 
