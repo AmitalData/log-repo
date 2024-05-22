@@ -33,6 +33,7 @@ using Microsoft.Practices.Unity;
 using System.ServiceModel.Description;
 using System.Web;
 using Logitude.SystemLogs;
+using Simplog.Server.Infrastructure;
 
 namespace WebFreight.Web.WcfApi
 {
@@ -581,6 +582,47 @@ namespace WebFreight.Web.WcfApi
                 }
                 return response;
             }
+        }
+
+        public Response GetStorageContainerConnectionString(int tenant)
+        {
+            Response response = new Response();
+            try
+            {
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                response.Result = DocumentFileUploadHelper.GetTempStorageSasWrite(tenant);
+                return response;
+            }
+            catch (Exception ex)
+            {
+                return UpdateResponseException(response, ex);
+            }
+        }
+
+        private Response UpdateResponseException(Response response, Exception ex)
+        {
+            response.IsAuthenticationError = ex.GetType() == typeof(AutenticationException);
+            response.HasError = true;
+            response.ErrorMessage = ex.Message;
+            response.InnerErrorMessage = (ex.InnerException != null ? (ex.InnerException.InnerException != null ? ex.InnerException.InnerException.Message : ex.InnerException.Message) : null);
+            if (!string.IsNullOrEmpty(ex.StackTrace))
+            {
+                response.ErrorMessage += Environment.NewLine + ex.StackTrace;
+            }
+
+            return response;
+        }
+
+        public Response UploadDocumentFileData(int tenant, string blobname, string DocumentId)
+        {
+            Response response = new Response();
+            if(string.IsNullOrEmpty(blobname) || string.IsNullOrEmpty(DocumentId))
+                return UpdateResponseException(response, new ArgumentException("blobname or DocumentId is null or empty"));
+
+            SecurityUtility.AuthenticationOnTenant(tenant);
+            response = DocumentFileUploadHelper.AddDocumentAndSendToInternalStorage(tenant, blobname, DocumentId);
+
+            return response;
         }
 
         public Response UploadDocumentFileData(byte[] buffer, long fileSize, long sentBytes, string[] blockIdsList, int bufferNumber, int tenant, string FileNameWithExtention, string DocumentId)
