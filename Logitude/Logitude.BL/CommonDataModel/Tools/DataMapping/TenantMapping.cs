@@ -50,10 +50,10 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.ProfitCurrencyId = entityPM.ProfitCurrencyId;
             poco.AgentId = entityPM.AgentId;
             poco.PasswordPolicyCode = entityPM.PasswordPolicyCode;
-            poco.MasterExportFreightPrepaidCollectId = entityPM.MasterExportFreightPrepaidCollectId;
-            poco.MasterExportOtherPrepaidCollectId = entityPM.MasterExportOtherPrepaidCollectId;
-            poco.MasterImportFreightPrepaidCollectId = entityPM.MasterImportFreightPrepaidCollectId;
-            poco.MasterImportOtherPrepaidCollectId = entityPM.MasterImportOtherPrepaidCollectId;
+            poco.MasterExpFreigPrepaidCollectId = entityPM.MasterExpFreigPrepaidCollectId;
+            poco.MasterExpOtherPrepaidCollectId = entityPM.MasterExpOtherPrepaidCollectId;
+            poco.MasterImpFreiPrepaidCollectId = entityPM.MasterImpFreiPrepaidCollectId;
+            poco.MasterImpOtherPrepaidCollectId = entityPM.MasterImpOtherPrepaidCollectId;
             poco.IsDataBackupBuilt = entityPM.IsDataBackupBuilt;
             poco.WeightMeasurementUnitCode = entityPM.WeightMeasurementUnitCode;
             poco.DateTimeFormat = entityPM.DateTimeFormat;
@@ -69,7 +69,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.VatMandatoryTypeCode = entityPM.VatMandatoryTypeCode;
             poco.VatUniqueCountryId = entityPM.VatUniqueCountryId;
             poco.VatMandatoryCountryId = entityPM.VatMandatoryCountryId;
-            poco.VatMandatoryForPotentialCustomers = entityPM.VatMandatoryForPotentialCustomers;
+            poco.VatMandatoryForPotentialCust = entityPM.VatMandatoryForPotentialCust;
             poco.IsCustomerTelRequired = entityPM.IsCustomerTelRequired;
             poco.IsCustomerFaxRequired = entityPM.IsCustomerFaxRequired;
             poco.IsPickDelAdrsRequired = entityPM.IsPickDelAdrsRequired;
@@ -98,7 +98,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.IsWebAccessActivated = entityPM.IsWebAccessActivated;
             poco.IsCargoTrackWebAccessActivated = entityPM.IsCargoTrackWebAccessActivated;
             poco.IsDigitalPortalAccessActivated = entityPM.IsDigitalPortalAccessActivated;
-            poco.IsCorrespondenceRightToLeftEnabled = entityPM.IsCorrespondenceRightToLeftEnabled;
+            poco.IsCorrespondRightToLeftEnabled = entityPM.IsCorrespondRightToLeftEnabled;
             poco.IsNotesRightToLeftEnabled = entityPM.IsNotesRightToLeftEnabled;
             poco.AccountingActivationDate = entityPM.AccountingActivationDate;
             poco.AccountingActivated = entityPM.AccountingActivated;
@@ -106,7 +106,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.IsInternalTicketByDefault = entityPM.IsInternalTicketByDefault;
             poco.ProrateMasterReceivables = entityPM.ProrateMasterReceivables;
             poco.SCACCode = entityPM.SCACCode;
-            poco.ExportQuotationsToIntegratedSystem = entityPM.ExportQuotationsToIntegratedSystem;
+            poco.ExportQuotationsoIntegratedSys = entityPM.ExportQuotationsoIntegratedSys;
             poco.FMCNumber = entityPM.FMCNumber;
             poco.TenantVATManagement = entityPM.TenantVATManagement;
           
@@ -137,16 +137,16 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.CheckDigitControlAlgorithmCode = entityPM.CheckDigitControlAlgorithmCode;
             poco.DisplayDocumentsAndEvents = entityPM.DisplayDocumentsAndEvents;
             poco.VatUniquePartnerTypeCode = entityPM.VatUniquePartnerTypeCode;
-            if (string.IsNullOrEmpty(entityPM.TransferQuotationsToUnifreightTrigger))// Rabaia Added this check to solve ergent signup problem
+            if (string.IsNullOrEmpty(entityPM.TransferQuotationsToUnfTrigger))// Rabaia Added this check to solve ergent signup problem
             {
-                poco.TransferQuotationsToUnifreightTrigger = "Dont";
+                poco.TransferQuotationsToUnfTrigger = "Dont";
             }
             else
             {
-                poco.TransferQuotationsToUnifreightTrigger = entityPM.TransferQuotationsToUnifreightTrigger;
+                poco.TransferQuotationsToUnfTrigger = entityPM.TransferQuotationsToUnfTrigger;
             }
 
-            poco.IsQuotesRequestActivatedInShared = entityPM.IsQuotesRequestActivatedInShared;
+            poco.IsQuoteRequestActivateInShared = entityPM.IsQuoteRequestActivateInShared;
             poco.EmptyReturnClosingDays = entityPM.EmptyReturnClosingDays;
             poco.ShipmentATAClosingDays = entityPM.ShipmentATAClosingDays;
             poco.UseNewTermsOfUse = entityPM.UseNewTermsOfUse;

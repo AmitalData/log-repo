@@ -80,7 +80,7 @@ namespace Logitude.DocumentTests.Models
         
         public string AgentRoleId { get; set; }
         
-        public string DocumentTypeDefaultReportTemplateId { get; set; }
+        public string DocumentTypeDefaulReportTempId { get; set; }
         
         public string DocumentTypeDefaultHTMLTemplateId { get; set; }
         

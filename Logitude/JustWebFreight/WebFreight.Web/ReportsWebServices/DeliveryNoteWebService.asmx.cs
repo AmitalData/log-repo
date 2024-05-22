@@ -1106,7 +1106,7 @@ namespace WebFreight.Web.ReportsWebServices
                 DocumentType documentType = commonContext.DocumentTypes.Where(doc => doc.Code == "781" && doc.Tenant == tenant).FirstOrDefault();
                 if (documentType != null)
                 {
-                    DocumentTypeTemplate template = commonContext.DocumentTypeTemplates.Where(doc => doc.Id == documentType.DocumentTypeDefaultReportTemplateId && doc.Tenant == tenant).FirstOrDefault();
+                    DocumentTypeTemplate template = commonContext.DocumentTypeTemplates.Where(doc => doc.Id == documentType.DocumentTypeDefaulReportTempId && doc.Tenant == tenant).FirstOrDefault();
                     if (template != null)
                     {
                         dataProvider.VerticalShift = template.VerticalShift != null ? template.VerticalShift.Value : 10;

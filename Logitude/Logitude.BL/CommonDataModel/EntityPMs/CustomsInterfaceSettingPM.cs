@@ -33,7 +33,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string LocalPassword { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public bool ActivateCustomsManagementInShipments { get; set; }
+        public bool ActivateCustomsManagInShipment { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ArtemusOutSettingsId { get; set; }

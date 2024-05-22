@@ -41,8 +41,8 @@
       <xs:element minOccurs="0" name="IsHybrid" type="xs:boolean" />
       <xs:element minOccurs="0" name="IsProductRestricted" type="xs:boolean" />
       <xs:element minOccurs="0" name="IsSalesman" type="xs:boolean" />
-      <xs:element minOccurs="0" name="IsShowContactDetailsInTheMobileApp" type="xs:boolean" />
-      <xs:element minOccurs="0" name="IsTwoFactorAuthenticationEnabled" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsShowContactDetailInMobileApp" type="xs:boolean" />
+      <xs:element minOccurs="0" name="IsTwoFactorAuthenticatiEnabled" type="xs:boolean" />
       <xs:element minOccurs="0" name="LicencedUser" type="xs:boolean" />
       <xs:element minOccurs="0" name="LocalName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Mobile" nillable="true" type="xs:string" />

@@ -1400,7 +1400,7 @@ namespace Logitude.Server.Tools.Helpers
 //            followUp.IsNew = false;
 //            followUp.LegType = automationFollowUp.LegType;
 //            followUp.AutomationId = automationId;
-//            followUp.DateEscalationActionTimeIndicatorCode = automationFollowUp.DateEscalationActionTimeIndicatorCode;
+//            followUp.DateEscalaActTimeIndicatorCode = automationFollowUp.DateEscalaActTimeIndicatorCode;
 //            followUp.DateEscalationTime = automationFollowUp.DateEscalationTime;
 //            followUp.DateFieldName = followUpDateFieldName;
 

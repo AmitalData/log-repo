@@ -290,7 +290,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
 
                 if (entityPM.QuoteTypeCode != "P")
                 {
-                    if (!entityPM.DontExportQuotationsToIntegratedSystem)
+                    if (!entityPM.DontExportQuotationsoIntegratedSys)
                     {
                         SentQuoteStatusMessageToUnifreight(objecttable.Id);
                     }
@@ -630,7 +630,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                 List<QueueTask> queue2Tasks = new List<QueueTask>();
                 queue2Tasks.Add(new QueueTask()
                 {
-                    Action = "ExportQuotationsToIntegratedSystem",
+                    Action = "ExportQuotationsoIntegratedSys",
                     Parameters = new List<Parameter>() {
                         new Parameter {
                             Name = "QuoteMetaData",
@@ -652,7 +652,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
 
             TenantQuery tenantQuery = new TenantQuery(tenant);
             TenantPM tenantPM = tenantQuery.GetSinglePM(entityPM.Tenant);
-            if (tenantPM.ExportQuotationsToIntegratedSystem)
+            if (tenantPM.ExportQuotationsoIntegratedSys)
             {
                 QuoteStageRepository myQuoteStageRepository = new QuoteStageRepository(tenant);
                 QuoteStage quoteStageSend = myQuoteStageRepository.GetQuoteStages(tenant).Where(d => d.Code == "QTST").FirstOrDefault();
@@ -661,8 +661,8 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                 bool quoteStatusChangedToSent = (quoteStageSend != null && quoteStageSend.Id == entityPM.StageId && this.entityPoco.StageId != quoteStageSend.Id);
                 bool quoteStatusChangedAccept = (quoteStageAccepted != null && quoteStageAccepted.Id == entityPM.StageId && this.entityPoco.StageId != quoteStageAccepted.Id);
 
-                if ((tenantPM?.TransferQuotationsToUnifreightTrigger == "OnSend" && quoteStatusChangedToSent)
-                    || (tenantPM?.TransferQuotationsToUnifreightTrigger == "OnAccept" && quoteStatusChangedAccept))
+                if ((tenantPM?.TransferQuotationsToUnfTrigger == "OnSend" && quoteStatusChangedToSent)
+                    || (tenantPM?.TransferQuotationsToUnfTrigger == "OnAccept" && quoteStatusChangedAccept))
                 {
                     canSendQuote = true;
                 }
@@ -1804,7 +1804,7 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
                     {
                         Id = newDocumentFiling.Id,
                         EmailTemplateId = documentType.DocumentTypeDefaultHTMLTemplateId,
-                        DocumentTemplateId = documentType.DocumentTypeDefaultReportTemplateId,
+                        DocumentTemplateId = documentType.DocumentTypeDefaulReportTempId,
                         Tenant = tenant,
                         Issued = true,
                         IsBlobExist = true,

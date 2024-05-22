@@ -944,7 +944,7 @@ namespace CommunicationWorkerRole
 
                     documentsFilingRepository.Add(newDocumentFiling);
 
-                    documentout = new DocumentOut() { Id = newDocumentFiling.Id, EmailTemplateId = documentType.DocumentTypeDefaultHTMLTemplateId, DocumentTemplateId = documentType.DocumentTypeDefaultReportTemplateId, Tenant = tenant, Issued = false };
+                    documentout = new DocumentOut() { Id = newDocumentFiling.Id, EmailTemplateId = documentType.DocumentTypeDefaultHTMLTemplateId, DocumentTemplateId = documentType.DocumentTypeDefaulReportTempId, Tenant = tenant, Issued = false };
                     documentout.Id = newDocumentFiling.Id;
 
                     documentOutRepository.Add(documentout);

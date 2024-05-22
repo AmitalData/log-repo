@@ -93,7 +93,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string DateEscalationActionTimeIndicatorCode { get; set; }
+        public string DateEscalaActTimeIndicatorCode { get; set; }
 
 
 

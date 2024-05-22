@@ -1882,7 +1882,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                         else
                         {
-                            line.CreditAccount = myChargesType.ReceivablesChargesTypeExternalCode;
+                            line.CreditAccount = myChargesType.ReceivablesChargesTypeExtCode;
                         }
                     }
 
@@ -3148,7 +3148,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                             else
                             {
-                                item.CreditAccount = myChargesType.ReceivablesChargesTypeExternalCode;
+                                item.CreditAccount = myChargesType.ReceivablesChargesTypeExtCode;
                             }
                         }
                         #endregion

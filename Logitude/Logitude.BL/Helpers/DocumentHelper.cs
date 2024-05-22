@@ -79,7 +79,7 @@ namespace Logitude.BL.Helpers
 
                 if (string.IsNullOrEmpty(documentTemplateId))
                 {
-                    documentTemplateId = documentType.DocumentTypeDefaultReportTemplateId;
+                    documentTemplateId = documentType.DocumentTypeDefaulReportTempId;
                 }
 
                 emailTemplateId = documentType.DocumentTypeDefaultHTMLTemplateId;

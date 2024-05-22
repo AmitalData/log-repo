@@ -54,7 +54,7 @@ namespace WebFreight.Web.MetaDataUpdate.DetailClasses
         public string ShortFieldLable { get; set; }
         public string ShortFieldLableDefaultText { get; set; }
         public int DisplayInSearchWindowListIndex { get; set; }
-        public int DisplayInSearchWindowFiltersIndex { get; set; }
+        public int DisplayInSearchWindowFilterInx { get; set; }
         public bool IsMulti { get; set; }
         public string MultiTableId { get; set; }
         public string DependencyFilter1Value { get; set; }
@@ -106,7 +106,7 @@ namespace WebFreight.Web.MetaDataUpdate.DetailClasses
         public string HtmlHeaderComponentName { get; set; }
         public string HtmlListComponentUrl { get; set; }
         public string HtmlListComponentName { get; set; }
-        public bool AllowedInCustomerFieldsSettings { get; set; }
+        public bool AllowedInCustomerFieldsSetting { get; set; }
         public string GeneratedComponentPath { get; set; }
         public bool DisplayInDocumentReferences { get; set; }
         public bool IsNew { get; set; }

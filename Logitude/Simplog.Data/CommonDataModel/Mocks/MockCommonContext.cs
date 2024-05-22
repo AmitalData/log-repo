@@ -560,7 +560,7 @@ namespace Simplog.Data.CommonDataModel.Mocks
                 if (documentTypes == null)
                 {
                     documentTypes = new List<DocumentType>() {
-                        new DocumentType() { Id = "1-1", Tenant = 1 , Name= "docs" , DocumentTypeDefaultReportTemplateId= "1-1" , DocumentTypeDefaultHTMLTemplateId= "1-1"   , DocumentTypeCategoryCode = "O" },
+                        new DocumentType() { Id = "1-1", Tenant = 1 , Name= "docs" , DocumentTypeDefaulReportTempId= "1-1" , DocumentTypeDefaultHTMLTemplateId= "1-1"   , DocumentTypeCategoryCode = "O" },
                         new DocumentType() { Id = "1-2", Tenant = 2 } };
                 }
                 return new MockObjectSet<DocumentType>(documentTypes);

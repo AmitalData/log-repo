@@ -24,7 +24,7 @@ namespace Simplog.Data.Helpers
         public string OwnerFieldType { get; set; }
 
         [DataMember]
-        public string DateEscalationActionTimeIndicatorCode { get; set; }
+        public string DateEscalaActTimeIndicatorCode { get; set; }
 
 
 

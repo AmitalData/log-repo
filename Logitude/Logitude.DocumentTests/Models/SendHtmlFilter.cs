@@ -23,7 +23,7 @@ namespace Logitude.DocumentTests.Models
         public string ObjectTableId { get; set; }
         public string Attachments { get; set; }
         public string EntityReference { get; set; }
-        public bool ExportQuotationsToIntegratedSystem { get; set; }
+        public bool ExportQuotationsoIntegratedSys { get; set; }
         public string ObjectTableName { get; set; }
 
         public string CustomerId { get; set; }

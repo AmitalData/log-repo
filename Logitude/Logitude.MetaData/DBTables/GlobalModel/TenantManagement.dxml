@@ -641,7 +641,7 @@
   <Column
     Name="AgentSharedLogStatistiLastDate"
     ShortName="AgentSharedLogisticsLastDate"
-    OldNames="AgentSharedLogisticsStatisticsLastDate"
+    OldNames="AgentSharedLogStatistiLastDate"
     Type="datetime">
     <Constraints
       Nullable="true" />
@@ -649,7 +649,7 @@
   <Column
     Name="AgentSharedLogStatistiLastWeek"
     ShortName="AgentSharedLogisticsLastWeek"
-    OldNames="AgentSharedLogisticsStatisticsLastWeek"
+    OldNames="AgentSharedLogisticsLastWeek"
     Type="int"
     DefaultValue="0">
     <Constraints
@@ -658,7 +658,7 @@
   <Column
     Name="AgentSharedLogStatistLastMonth"
     ShortName="AgentSharedLogisticsLastMonth"
-    OldNames="AgentSharedLogisticsStatisticsLastMonth"
+    OldNames="AgentSharedLogStatistLastMonth"
     Type="int"
     DefaultValue="0">
     <Constraints

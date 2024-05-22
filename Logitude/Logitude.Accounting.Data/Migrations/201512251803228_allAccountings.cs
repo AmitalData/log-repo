@@ -1093,10 +1093,10 @@ namespace Logitude.Accounting.Data.Migrations
             DropForeignKey("dbo.Tenants", "PaymentTermId", "dbo.PaymentTerms");
             DropForeignKey("dbo.Tenants", "PasswordPolicyCode", "dbo.PasswordPolicies");
             DropForeignKey("dbo.Tenants", "OtherChargesCurrencyId", "dbo.Currencies");
-            DropForeignKey("dbo.Tenants", "MasterImportOtherPrepaidCollectId", "dbo.PrepaidCollects");
-            DropForeignKey("dbo.Tenants", "MasterImportFreightPrepaidCollectId", "dbo.PrepaidCollects");
-            DropForeignKey("dbo.Tenants", "MasterExportOtherPrepaidCollectId", "dbo.PrepaidCollects");
-            DropForeignKey("dbo.Tenants", "MasterExportFreightPrepaidCollectId", "dbo.PrepaidCollects");
+            DropForeignKey("dbo.Tenants", "MasterImpOtherPrepaidCollectId", "dbo.PrepaidCollects");
+            DropForeignKey("dbo.Tenants", "MasterImpFreiPrepaidCollectId", "dbo.PrepaidCollects");
+            DropForeignKey("dbo.Tenants", "MasterExpOtherPrepaidCollectId", "dbo.PrepaidCollects");
+            DropForeignKey("dbo.Tenants", "MasterExpFreigPrepaidCollectId", "dbo.PrepaidCollects");
             DropForeignKey("dbo.Tenants", "ImportOtherPrepaidCollectId", "dbo.PrepaidCollects");
             DropForeignKey("dbo.Tenants", "ImportFreightPrepaidCollectId", "dbo.PrepaidCollects");
             DropForeignKey("dbo.Tenants", "GrossWeightUnitCode", "dbo.WeightUnits");
@@ -1180,7 +1180,7 @@ namespace Logitude.Accounting.Data.Migrations
             DropForeignKey("dbo.ShippingLines", "ShippingAgentId", "dbo.ShippingAgents");
             DropForeignKey("dbo.ShippingLines", "Id", "dbo.Cards");
             DropForeignKey("dbo.ShippingAgents", "Id", "dbo.Cards");
-            DropForeignKey("dbo.Cards", "SharedLogisticsInvitationStatusCode", "dbo.SharedLogisticsInvitationStatus");
+            DropForeignKey("dbo.Cards", "SharedLogisticsInvitStatusCode", "dbo.SharedLogisticsInvitationStatus");
             DropForeignKey("dbo.Cards", "SalesmanUserId", "dbo.Users");
             DropForeignKey("dbo.Cards", "PrimaryContactId", "dbo.Contacts");
             DropForeignKey("dbo.Cards", "PaymentTermId", "dbo.PaymentTerms");
@@ -1838,10 +1838,10 @@ namespace Logitude.Accounting.Data.Migrations
             DropIndex("dbo.Tenants", new[] { "QuoteSaleCurrencyId" });
             DropIndex("dbo.Tenants", new[] { "OtherChargesCurrencyId" });
             DropIndex("dbo.Tenants", new[] { "FreightCurrencyId" });
-            DropIndex("dbo.Tenants", new[] { "MasterImportOtherPrepaidCollectId" });
-            DropIndex("dbo.Tenants", new[] { "MasterImportFreightPrepaidCollectId" });
-            DropIndex("dbo.Tenants", new[] { "MasterExportOtherPrepaidCollectId" });
-            DropIndex("dbo.Tenants", new[] { "MasterExportFreightPrepaidCollectId" });
+            DropIndex("dbo.Tenants", new[] { "MasterImpOtherPrepaidCollectId" });
+            DropIndex("dbo.Tenants", new[] { "MasterImpFreiPrepaidCollectId" });
+            DropIndex("dbo.Tenants", new[] { "MasterExpOtherPrepaidCollectId" });
+            DropIndex("dbo.Tenants", new[] { "MasterExpFreigPrepaidCollectId" });
             DropIndex("dbo.Tenants", new[] { "ImportOtherPrepaidCollectId" });
             DropIndex("dbo.Tenants", new[] { "ImportFreightPrepaidCollectId" });
             DropIndex("dbo.Tenants", new[] { "ExportOtherPrepaidCollectId" });
@@ -1894,7 +1894,7 @@ namespace Logitude.Accounting.Data.Migrations
             DropIndex("dbo.Agents", new[] { "Id" });
             DropIndex("dbo.Cards", new[] { "ClassifierId" });
             DropIndex("dbo.Cards", new[] { "CollectorId" });
-            DropIndex("dbo.Cards", new[] { "SharedLogisticsInvitationStatusCode" });
+            DropIndex("dbo.Cards", new[] { "SharedLogisticsInvitStatusCode" });
             DropIndex("dbo.Cards", new[] { "UpdatedByUserId" });
             DropIndex("dbo.Cards", new[] { "CreatedByUserId" });
             DropIndex("dbo.Cards", new[] { "SalesmanUserId" });

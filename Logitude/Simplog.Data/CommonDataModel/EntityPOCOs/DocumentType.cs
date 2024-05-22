@@ -36,7 +36,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         // public string XML { get; set; }
         public string ObjectTableId { get; set; }
         public string Subject { get; set; }
-        public string DocumentTypeDefaultReportTemplateId { get; set; }
+        public string DocumentTypeDefaulReportTempId { get; set; }
         public string DocumentTypeDefaultHTMLTemplateId { get; set; }
         public string DocumentTypeDefaultEditorTool { get; set; }
 

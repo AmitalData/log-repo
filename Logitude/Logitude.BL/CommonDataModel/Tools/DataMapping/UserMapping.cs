@@ -35,11 +35,11 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             user.ProductTypeCode = userPm.ProductTypeCode;
             user.IsDistributor = userPm.IsDistributor;
             user.DistributorCode = userPm.DistributorCode;
-            user.IsShowContactDetailsInTheMobileApp = userPm.IsShowContactDetailsInTheMobileApp;
+            user.IsShowContactDetailInMobileApp = userPm.IsShowContactDetailInMobileApp;
             user.PersonalId = userPm.PersonalId;
             user.Technology = userPm.Technology;
             user.SetAngularAsDefault = userPm.SetAngularAsDefault;
-            user.IsTwoFactorAuthenticationEnabled = userPm.IsTwoFactorAuthenticationEnabled;
+            user.IsTwoFactorAuthenticatiEnabled = userPm.IsTwoFactorAuthenticatiEnabled;
             user.DocumentFilingInbox = userPm.DocumentFilingInbox;
             user.ShowLogBoxToolTip = userPm.ShowLogBoxToolTip;
             user.ShowInboxToolTip = userPm.ShowInboxToolTip;
