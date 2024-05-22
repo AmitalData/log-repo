@@ -780,9 +780,11 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             {
                 AddToTasksQueue(theEntityPm, isNewEntity, loggedUserId);
             }
-           
+
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
+
+            UpdateCustomsDocumentMetaDataValuesCollection();
 
             AddImporterQueue(theEntityPm, tenantPM, HavingDREL);
 
@@ -971,7 +973,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
             AddImporterQueue(theEntityPm, tenantPM, HavingDREL);
-           
+            UpdateCustomsDocumentMetaDataValuesCollection();
+
 
 
             if (entityPM.IsUpdateSharedDocument)
@@ -1542,11 +1545,9 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
         private void UpdateDocumentsFilingMetaDataValuesCollection()
         {
-            var isExport = false;
             if (documentsFilingMetaDataValueChangeSet != null)
             {
-                if (this.entityPM.ExternalEntityName == "EFIFILEM" || this.entityPM.ExternalEntityName == "MFIFILEM")
-                    isExport = true;
+             
                 foreach (DocumentsFilingMetaDataValuePM itemPM in documentsFilingMetaDataValueChangeSet)
                 {
                     switch (itemPM.ChangeSetOp)
@@ -1554,27 +1555,21 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                         case ChangeSetOperation.Insert:
                             {
                                 this.CreateDocumentsFilingMetaDataValue(itemPM);
-                                if(isExport)
-                                    this.CreateCustomsDocumentsFilingMetaDataValue(itemPM);
-
+                              
                                 break;
                             }
 
                         case ChangeSetOperation.Update:
                             {
                                 this.UpdateDocumentsFilingMetaDataValue(itemPM);
-                                if (isExport)
-                                    this.UpdateCustomsDocumentsFilingMetaDataValue(itemPM);
-
+                             
                                 break;
                             }
 
                         case ChangeSetOperation.Delete:
                             {
                                 this.DeleteDocumentsFilingMetaDataValue(itemPM);
-                                if (isExport)
-                                    this.DeleteCustomsDocumentsFilingMetaDataValue(itemPM);
-
+                              
                                 break;
                             }
                       
@@ -1587,6 +1582,47 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
 
            
+
+        }
+        private void UpdateCustomsDocumentMetaDataValuesCollection()
+        {
+           
+            if (documentsFilingMetaDataValueChangeSet != null)
+            {
+                if (this.entityPM.ExternalEntityName == "EFIFILEM" || this.entityPM.ExternalEntityName == "MFIFILEM")
+                {
+
+                    foreach (DocumentsFilingMetaDataValuePM itemPM in documentsFilingMetaDataValueChangeSet)
+                    {
+                        switch (itemPM.ChangeSetOp)
+                        {
+                            case ChangeSetOperation.Insert:
+                                {
+                                     this.CreateCustomsDocumentsFilingMetaDataValue(itemPM);
+                                     break;
+                                }
+
+                            case ChangeSetOperation.Update:
+                                {
+                                       this.UpdateCustomsDocumentsFilingMetaDataValue(itemPM);
+                                       break;
+                                }
+
+                            case ChangeSetOperation.Delete:
+                                {
+                                     this.DeleteCustomsDocumentsFilingMetaDataValue(itemPM);
+                                       break;
+                                }
+
+                            default: { break; }
+                        }
+                    }
+                }
+
+                customContext.SaveChanges();
+            }
+
+
 
         }
 
