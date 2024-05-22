@@ -97,12 +97,12 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string PartnerTypeId { get; set; }
         public string PartnerTypeName { get; set; }
 
-        [ForeignKey("SharedLogisticsInvitationStatusCode")]
+        [ForeignKey("SharedLogisticsInvitStatusCode")]
         public virtual SharedLogisticsInvitationStatus SharedLogisticsInvitationStatus { get; set; }
-        public int? SharedLogisticsInvitationStatusCode { get; set; }
-        [ForeignKey("CargoTrackingInvitationStatusCode")]
+        public int? SharedLogisticsInvitStatusCode { get; set; }
+        [ForeignKey("CargoTrackingInvitatStatusCode")]
         public virtual SharedLogisticsInvitationStatus CargoTrackingInvitationStatus { get; set; }
-        public int? CargoTrackingInvitationStatusCode { get; set; }
+        public int? CargoTrackingInvitatStatusCode { get; set; }
         [ForeignKey("CollectorId")]
         public virtual User CollectorUser { get; set; }
         public string CollectorId { get; set; }

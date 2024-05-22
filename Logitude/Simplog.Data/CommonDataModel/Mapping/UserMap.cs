@@ -113,14 +113,14 @@ namespace Simplog.Data.CommonDataModel.Mapping
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
             {
-                this.Property(t => t.IsShowContactDetailsInTheMobileApp).HasColumnName("IsShowContactDetailsInMobile");
-                this.Property(t => t.IsTwoFactorAuthenticationEnabled).HasColumnName("IsTwoFactorAuthenticateEnabled");
+                this.Property(t => t.IsShowContactDetailInMobileApp).HasColumnName("IsShowContactDetailsInMobile");
+                this.Property(t => t.IsTwoFactorAuthenticatiEnabled).HasColumnName("IsTwoFactorAuthenticateEnabled");
             }
             //#else
             else
             {
-                this.Property(t => t.IsShowContactDetailsInTheMobileApp).HasColumnName("IsShowContactDetailsInTheMobileApp");
-                this.Property(t => t.IsTwoFactorAuthenticationEnabled).HasColumnName("IsTwoFactorAuthenticationEnabled");
+                this.Property(t => t.IsShowContactDetailInMobileApp).HasColumnName("IsShowContactDetailInMobileApp");
+                this.Property(t => t.IsTwoFactorAuthenticatiEnabled).HasColumnName("IsTwoFactorAuthenticatiEnabled");
             }
 //#endif
 

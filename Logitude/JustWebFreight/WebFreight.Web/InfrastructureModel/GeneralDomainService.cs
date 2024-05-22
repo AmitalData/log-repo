@@ -1769,7 +1769,7 @@ namespace WebFreight.Web.InfrastructureModel
         //    objectField.DisplayInList = objectFieldPM.DisplayInList;
         //    objectField.DisplayInLookUpIndex = objectFieldPM.DisplayInLookUpIndex;
         //    objectField.DisplayInSearchWindowFilters = objectFieldPM.DisplayInSearchWindowFilters;
-        //    objectField.DisplayInSearchWindowFiltersIndex = objectFieldPM.DisplayInSearchWindowFiltersIndex;
+        //    objectField.DisplayInSearchWindowFilterInx = objectFieldPM.DisplayInSearchWindowFilterInx;
         //    objectField.DisplayInSearchWindowList = objectFieldPM.DisplayInSearchWindowList;
         //    objectField.DisplayInSearchWindowListIndex = objectFieldPM.DisplayInSearchWindowListIndex;
         //    objectField.DisplayOnLookUp = objectFieldPM.DisplayOnLookUp;

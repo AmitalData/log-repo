@@ -41,7 +41,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
                 .HasMaxLength(500)
                 .IsUnicode(true);
 
-            this.Property(t => t.DocumentTypeDefaultReportTemplateId)
+            this.Property(t => t.DocumentTypeDefaulReportTempId)
                 .HasMaxLength(15)
                 .IsUnicode(false);
 
@@ -222,14 +222,14 @@ namespace Simplog.Data.CommonDataModel.Mapping
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
             {
-                this.Property(t => t.DocumentTypeDefaultReportTemplateId).HasColumnName("DocTypeDefaultReportTempId");
+                this.Property(t => t.DocumentTypeDefaulReportTempId).HasColumnName("DocTypeDefaultReportTempId");
                 this.Property(t => t.DocumentTypeDefaultHTMLTemplateId).HasColumnName("DocTypeDefaultHTMLTempId");
                 this.Property(t => t.IsSystemAdditionalPrintingFields).HasColumnName("IsSysAdditionalPrintingFields");
             }
             else
             {
                 //#else
-                this.Property(t => t.DocumentTypeDefaultReportTemplateId).HasColumnName("DocumentTypeDefaultReportTemplateId");
+                this.Property(t => t.DocumentTypeDefaulReportTempId).HasColumnName("DocumentTypeDefaulReportTempId");
                 this.Property(t => t.DocumentTypeDefaultHTMLTemplateId).HasColumnName("DocumentTypeDefaultHTMLTemplateId");
                 this.Property(t => t.IsSystemAdditionalPrintingFields).HasColumnName("IsSystemAdditionalPrintingFields");
             }

@@ -78,14 +78,14 @@ namespace WebFreight.Web.Helpers
 
             if (sharedLogisticsContact.InternetAccess)
             {
-                if (sharedLogisticsContact.IsCargoTrackingInvitation && card.CargoTrackingInvitationStatusCode != 3)
+                if (sharedLogisticsContact.IsCargoTrackingInvitation && card.CargoTrackingInvitatStatusCode != 3)
                 {
-                    card.CargoTrackingInvitationStatusCode = 2;
+                    card.CargoTrackingInvitatStatusCode = 2;
                     card.CargoTrackingInvitationDate = DateTime.Now;
                 }
-                if (!sharedLogisticsContact.IsCargoTrackingInvitation && card.SharedLogisticsInvitationStatusCode != 3)
+                if (!sharedLogisticsContact.IsCargoTrackingInvitation && card.SharedLogisticsInvitStatusCode != 3)
                 {
-                    card.SharedLogisticsInvitationStatusCode = 2;
+                    card.SharedLogisticsInvitStatusCode = 2;
                     card.InvitationDate = DateTime.Now;
                 }
 
@@ -331,8 +331,8 @@ namespace WebFreight.Web.Helpers
                 List<CardContact> CardContacts = objectContext.CardContacts.Where(t => t.Tenant == sharedLogisticsContact.Tenant).ToList();
                 if (!CardContacts.Where(d => d.InternetAccess).Any())
                 {
-                    card.SharedLogisticsInvitationStatusCode = !sharedLogisticsContact.IsCargoTrackingInvitation ? 1 : card.SharedLogisticsInvitationStatusCode;
-                    card.CargoTrackingInvitationStatusCode = sharedLogisticsContact.IsCargoTrackingInvitation ? 1 : card.CargoTrackingInvitationStatusCode;
+                    card.SharedLogisticsInvitStatusCode = !sharedLogisticsContact.IsCargoTrackingInvitation ? 1 : card.SharedLogisticsInvitStatusCode;
+                    card.CargoTrackingInvitatStatusCode = sharedLogisticsContact.IsCargoTrackingInvitation ? 1 : card.CargoTrackingInvitatStatusCode;
                     card.InvitationDate = null;
                     card.CargoTrackingInvitationDate = null;
                     

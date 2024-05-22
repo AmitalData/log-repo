@@ -545,7 +545,7 @@ namespace MetaDataGenerator
         public bool UniqueField { get; set; }
        
         public int  DisplayInSearchWindowListIndex { get; set; }
-        public int DisplayInSearchWindowFiltersIndex { get; set; }
+        public int DisplayInSearchWindowFilterInx { get; set; }
         public bool IsMulti { get; set; }
        
 

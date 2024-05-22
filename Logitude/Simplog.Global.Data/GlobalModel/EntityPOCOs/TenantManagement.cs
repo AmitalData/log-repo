@@ -139,9 +139,9 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
         public int? ParentTenantId { get; set; }
         public bool ChangeHeaderColor { get; set; } 
         public string HeaderColor { get; set; }
-        public DateTime? AgentSharedLogisticsStatisticsLastDate { get; set; }
-        public int AgentSharedLogisticsStatisticsLastWeek { get; set; }
-        public int AgentSharedLogisticsStatisticsLastMonth { get; set; }
+        public DateTime? AgentSharedLogStatistiLastDate { get; set; }
+        public int AgentSharedLogisticsLastWeek { get; set; }
+        public int AgentSharedLogStatistLastMonth { get; set; }
         public bool ShowMoneyOrder { get; set; }
         public bool CargoTrackingPublicShowEvents { get; set; }
         public bool CargoTrackingPrivateShowEvents { get; set; }

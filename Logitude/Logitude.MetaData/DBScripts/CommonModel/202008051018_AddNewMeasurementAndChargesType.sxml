@@ -42,8 +42,8 @@ BEGIN
             insert into ChargesTypes(Code, EnglishName, LocalName, Id, Tenant, AddedManually, InActive, ChargesGroupCode, VatTypeId, IsReceivable, 
 			IsPayable, IsAir, IsOcean, IsInland, IsAutoDisplayInShipment, IsAutoDisplayInConsolidation, Description, AWBPrintDescription, DueTypeCode,
 			IsAutoDisplayInQuote, MeasurementId, ContainerMeasurementId, ViewOrder, SearchFields, ReceivableAccountId, PayableAccountId, AccountingVATSplit,
-			ReceivableCreditAccount, PayableDebitAccount, ReceivablesChargesTypeExternalCode, IATACodeId, PayableDebitGLAcountId, ReceivableCreditGLAccountId,
-			ChargesGroupId,PayablesChargesTypeExternalCode,IsBackToBack,IsAutoDisplayInCustoms,
+			ReceivableCreditAccount, PayableDebitAccount, ReceivablesChargesTypeExtCode, IATACodeId, PayableDebitGLAcountId, ReceivableCreditGLAccountId,
+			ChargesGroupId,PayablesChargesTypeExtCode,IsBackToBack,IsAutoDisplayInCustoms,
 			IsCustoms,IsExpense,SATExternalId,IsImport,IsDomestic,IsExport,IsDrop,
 			ReceivablesDefaultCurrencyId,PayablesDefaultCurrencyId,ApplyRegionalTax, HasPickup, HasDelivery)
 

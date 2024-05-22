@@ -55,10 +55,10 @@ namespace WebFreight.Web.Controllers.ShardLogistics
                 {
                     customers = customers.Where(d => d.CustomerStatusCode == "ACT" && d.IsCustomer && !d.InActive);
 
-                    dataClass.InvitedCustomersCount = customers.Where(d => (invitationStatusType == "CargoTracking" ? d.CargoTrackingInvitationStatusCode == 2 : d.SharedLogisticsInvitationStatusCode == 2)).Count();
-                    dataClass.NotInvitedCustomersCount = customers.Where(d => (invitationStatusType == "CargoTracking" ? d.CargoTrackingInvitationStatusCode == 1 : d.SharedLogisticsInvitationStatusCode == 1)).Count();
-                    dataClass.ActivatedCustomersCount = customers.Where(d => (invitationStatusType == "CargoTracking" ? d.CargoTrackingInvitationStatusCode == 3 : d.SharedLogisticsInvitationStatusCode == 3) && !d.IsActiveForMobile).Count();
-                    dataClass.ActivatedCustomersForMobileCount = customers.Where(d => (invitationStatusType == "CargoTracking" ? d.CargoTrackingInvitationStatusCode == 3 : d.SharedLogisticsInvitationStatusCode == 3) && d.IsActiveForMobile).Count();
+                    dataClass.InvitedCustomersCount = customers.Where(d => (invitationStatusType == "CargoTracking" ? d.CargoTrackingInvitatStatusCode == 2 : d.SharedLogisticsInvitStatusCode == 2)).Count();
+                    dataClass.NotInvitedCustomersCount = customers.Where(d => (invitationStatusType == "CargoTracking" ? d.CargoTrackingInvitatStatusCode == 1 : d.SharedLogisticsInvitStatusCode == 1)).Count();
+                    dataClass.ActivatedCustomersCount = customers.Where(d => (invitationStatusType == "CargoTracking" ? d.CargoTrackingInvitatStatusCode == 3 : d.SharedLogisticsInvitStatusCode == 3) && !d.IsActiveForMobile).Count();
+                    dataClass.ActivatedCustomersForMobileCount = customers.Where(d => (invitationStatusType == "CargoTracking" ? d.CargoTrackingInvitatStatusCode == 3 : d.SharedLogisticsInvitStatusCode == 3) && d.IsActiveForMobile).Count();
                 }
 
                 if (cards != null)
@@ -70,9 +70,9 @@ namespace WebFreight.Web.Controllers.ShardLogistics
 
                 if (agents != null && agents.Count() > 0)
                 {
-                    dataClass.InvitedAgentsCount = agents.Where(d => (invitationStatusType == "CargoTracking" ? d.CargoTrackingInvitationStatusCode == 2 : d.SharedLogisticsInvitationStatusCode == 2)).Count();
-                    dataClass.NotInvitedAgentsCount = agents.Where(d => (invitationStatusType == "CargoTracking" ? d.CargoTrackingInvitationStatusCode == 1 : d.SharedLogisticsInvitationStatusCode == 1)).Count();
-                    dataClass.ActivatedAgentsCount = agents.Where(d => (invitationStatusType == "CargoTracking" ? d.CargoTrackingInvitationStatusCode == 3 : d.SharedLogisticsInvitationStatusCode == 3)).Count();
+                    dataClass.InvitedAgentsCount = agents.Where(d => (invitationStatusType == "CargoTracking" ? d.CargoTrackingInvitatStatusCode == 2 : d.SharedLogisticsInvitStatusCode == 2)).Count();
+                    dataClass.NotInvitedAgentsCount = agents.Where(d => (invitationStatusType == "CargoTracking" ? d.CargoTrackingInvitatStatusCode == 1 : d.SharedLogisticsInvitStatusCode == 1)).Count();
+                    dataClass.ActivatedAgentsCount = agents.Where(d => (invitationStatusType == "CargoTracking" ? d.CargoTrackingInvitatStatusCode == 3 : d.SharedLogisticsInvitStatusCode == 3)).Count();
                 }
 
                 if (ctoolPartners != null && ctoolPartners.Count() > 0)
@@ -92,9 +92,9 @@ namespace WebFreight.Web.Controllers.ShardLogistics
         private void SetCtoolpartnersStatistics(SharedLogisticsStatusStatistics sharedLogisticsStatusStatistics, IQueryable<CardList> ctoolPartners)
         {
 
-            sharedLogisticsStatusStatistics.InvitedCToolPartnersCount = ctoolPartners.Where(d => d.SharedLogisticsInvitationStatusCode == 2).Count();
-            sharedLogisticsStatusStatistics.NotInvitedCToolPartnersCount = ctoolPartners.Where(d => d.SharedLogisticsInvitationStatusCode == 1).Count();
-            sharedLogisticsStatusStatistics.ActivatedCToolPartnersCount = ctoolPartners.Where(d => d.SharedLogisticsInvitationStatusCode == 3).Count();
+            sharedLogisticsStatusStatistics.InvitedCToolPartnersCount = ctoolPartners.Where(d => d.SharedLogisticsInvitStatusCode == 2).Count();
+            sharedLogisticsStatusStatistics.NotInvitedCToolPartnersCount = ctoolPartners.Where(d => d.SharedLogisticsInvitStatusCode == 1).Count();
+            sharedLogisticsStatusStatistics.ActivatedCToolPartnersCount = ctoolPartners.Where(d => d.SharedLogisticsInvitStatusCode == 3).Count();
 
         }
 

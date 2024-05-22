@@ -396,7 +396,7 @@ namespace Logitude.Update
                         DocumentTypeCategoryCode = item.DocumentTypeCategoryCode,
                         DocumentTypeDefaultEditorTool = item.DocumentTypeDefaultEditorTool,
                         DocumentTypeDefaultHTMLTemplateId = AmitalDocumentTypeHtmlTemplate != null ? AmitalDocumentTypeHtmlTemplate.Id : null,
-                        DocumentTypeDefaultReportTemplateId = AmitalDocumentTypeReportTemplate != null ? AmitalDocumentTypeReportTemplate.Id : null,
+                        DocumentTypeDefaulReportTempId = AmitalDocumentTypeReportTemplate != null ? AmitalDocumentTypeReportTemplate.Id : null,
                         IsAgentView = item.IsAgentView,
                         IsAir = item.IsAir,
                         IsCopiedAtSignup = item.IsCopiedAtSignup,

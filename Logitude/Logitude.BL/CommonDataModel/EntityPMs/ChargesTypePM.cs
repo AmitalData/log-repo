@@ -95,9 +95,9 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string ReceivableCreditAccount { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string ReceivablesChargesTypeExternalCode { get; set; }
+        public string ReceivablesChargesTypeExtCode { get; set; }
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string PayablesChargesTypeExternalCode { get; set; }        
+        public string PayablesChargesTypeExtCode { get; set; }        
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string PayableDebitAccountExternalId { get; set; }
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
@@ -105,10 +105,10 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string ReceivableCreditAccountExternalId { get; set; }
+        public string ReceivableCreditAccountExtId { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string ChargesTypeExternalCodeExternalId { get; set; }
+        public string ChargesTypeExternalCodeExtId { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public bool IsAutoDisplayInCustoms { get; set; }

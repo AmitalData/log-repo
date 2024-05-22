@@ -28,7 +28,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public bool AllowAPInvoicesTransfer { get; set; }
         public bool AllowARPaymentsTransfer { get; set; }
         public bool AllowMinusInvoiceLines { get; set; }
-        public bool AllowPositiveAmountsInTheCreditNote { get; set; }
+        public bool AllowPositiveAmountsCreditNote { get; set; }
         public bool CanTransferToDropbox { get; set; }
         public bool AllowAPPaymentsTransfer { get; set; }
         public bool CanTransferToFTP { get; set; }

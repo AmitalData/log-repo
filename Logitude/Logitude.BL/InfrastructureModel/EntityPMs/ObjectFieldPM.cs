@@ -46,7 +46,7 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public bool UniqueField { get; set; }
         public string ShortNameTextCodeId { get; set; }
         public int DisplayInSearchWindowListIndex { get; set; }
-        public int DisplayInSearchWindowFiltersIndex { get; set; }
+        public int DisplayInSearchWindowFilterInx { get; set; }
         public bool IsMulti { get; set; }
         public string MultiTableId { get; set; }
 
@@ -105,7 +105,7 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public bool CanAutomateSetValue { get; set; }
         public bool DisplayInDocumentReferences { get; set; }
 
-        public bool AllowedInCustomerFieldsSettings { get; set; }
+        public bool AllowedInCustomerFieldsSetting { get; set; }
         public string GeneratedComponentPath { get; set; }
         public bool DisplayOnLookUpLocal { get; set; }
 

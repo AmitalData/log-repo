@@ -40,7 +40,7 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         [DataMember]
         public string Subject { get; set; }
         [DataMember]
-        public string DocumentTypeDefaultReportTemplateId { get; set; }
+        public string DocumentTypeDefaulReportTempId { get; set; }
         [DataMember]
         public string DocumentTypeDefaultHTMLTemplateId { get; set; }
         [DataMember]

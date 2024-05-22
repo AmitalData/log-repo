@@ -142,7 +142,7 @@ namespace WebFreight.Web.Controllers.DigitalPortal
                     myResult.ProfitCurrencyCode = myTenant.ProfitCurrency.Code;
                     myResult.TenantDateTimeFormat = myTenant.DateTimeFormat;
                     myResult.DisplayDocumentsAndEvents = myTenant.DisplayDocumentsAndEvents;
-                    myResult.IsQuotesRequestsMenuEnabled = myTenant.IsQuotesRequestActivatedInShared;
+                    myResult.IsQuotesRequestsMenuEnabled = myTenant.IsQuoteRequestActivateInShared;
                     myResult.ShowMultiUnitsOfMeasurements = myTenant.ShowMultiUnitsOfMeasurements;
                 }
 

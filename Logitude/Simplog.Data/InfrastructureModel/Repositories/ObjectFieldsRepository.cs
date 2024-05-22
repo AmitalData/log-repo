@@ -398,7 +398,7 @@ namespace Simplog.Data.InfrastructureModel.Repositories
         //                                                DisplayInList = a.ObjectField.DisplayInList,
         //                                                DisplayInLookUpIndex = a.ObjectField.DisplayInLookUpIndex,
         //                                                DisplayInSearchWindowFilters = a.ObjectField.DisplayInSearchWindowFilters,
-        //                                                DisplayInSearchWindowFiltersIndex = a.ObjectField.DisplayInSearchWindowFiltersIndex,
+        //                                                DisplayInSearchWindowFilterInx = a.ObjectField.DisplayInSearchWindowFilterInx,
         //                                                DisplayInSearchWindowList = a.ObjectField.DisplayInSearchWindowList,
         //                                                DisplayInSearchWindowListIndex = a.ObjectField.DisplayInSearchWindowListIndex,
         //                                                DisplayOnLookUp = a.ObjectField.DisplayOnLookUp,

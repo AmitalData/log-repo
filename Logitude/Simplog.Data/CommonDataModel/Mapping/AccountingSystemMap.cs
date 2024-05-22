@@ -40,12 +40,12 @@ namespace Simplog.Data.CommonDataModel.Mapping
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
             {
-                this.Property(t => t.AllowPositiveAmountsInTheCreditNote).HasColumnName("AllowPstvAmountsInCrdtNote");
+                this.Property(t => t.AllowPositiveAmountsCreditNote).HasColumnName("AllowPstvAmountsInCrdtNote");
             }
             //#else
             else
             {
-                this.Property(t => t.AllowPositiveAmountsInTheCreditNote).HasColumnName("AllowPositiveAmountsInTheCreditNote");
+                this.Property(t => t.AllowPositiveAmountsCreditNote).HasColumnName("AllowPositiveAmountsCreditNote");
             }
             //#endif
         }

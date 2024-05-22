@@ -55,7 +55,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                     IsARInvoicesTransferEnabled = false,
                     APInvoiceTransferStartDate = null,
                     ARInvoiceTransferStartDate = null,
-                    AllowPositiveAmountsInTheCreditNote = false,                    
+                    AllowPositiveAmountsCreditNote = false,                    
                 };
             }
 
@@ -159,7 +159,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             entityPOCO.IsARInvoicesTransferEnabled = entityPM.IsARInvoicesTransferEnabled;
             entityPOCO.APInvoiceTransferStartDate = entityPM.APInvoiceTransferStartDate;
             entityPOCO.ARInvoiceTransferStartDate = entityPM.ARInvoiceTransferStartDate;
-            entityPOCO.AllowPositiveAmountsInTheCreditNote = entityPM.AllowPositiveAmountsInTheCreditNote;
+            entityPOCO.AllowPositiveAmountsCreditNote = entityPM.AllowPositiveAmountsCreditNote;
             entityPOCO.IsSingleTaxPerInvoice = entityPM.IsSingleTaxPerInvoice;
             entityPOCO.IsARPaymentsTransferEnabled = entityPM.IsARPaymentsTransferEnabled;
             entityPOCO.ARPaymentTransferStartDate = entityPM.ARPaymentTransferStartDate;

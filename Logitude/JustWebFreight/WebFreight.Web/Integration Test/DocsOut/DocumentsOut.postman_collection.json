@@ -18,7 +18,7 @@
 							"    ",
 							"    var idvalue1 = (pm.response.json().Result.filter(a => a.Code == '785A')[0].Id);",
 							"    var idvalue2 = (pm.response.json().Result.filter(a => a.Code == '785A')[0].ObjectTableId);",
-							"    var idvalue3 = (pm.response.json().Result.filter(a => a.Code == '785A')[0].DocumentTypeDefaultReportTemplateId);",
+							"    var idvalue3 = (pm.response.json().Result.filter(a => a.Code == '785A')[0].DocumentTypeDefaulReportTempId);",
 							"    var idvalue4 = (pm.response.json().Result.filter(a => a.Code == '785A')[0].DocumentTypeDefaultHTMLTemplateId);",
 							"    var idvalue5 = (pm.response.json().Result.filter(a => a.Code == 'FU')[0].Id);",
 							"    ",

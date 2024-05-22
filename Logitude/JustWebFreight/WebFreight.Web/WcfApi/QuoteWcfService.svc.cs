@@ -878,7 +878,7 @@ namespace WebFreight.Web.WcfApi
                             {
                                 Id = newDocumentFiling.Id,
                                 EmailTemplateId = documentType.DocumentTypeDefaultHTMLTemplateId,
-                                DocumentTemplateId = documentType.DocumentTypeDefaultReportTemplateId,
+                                DocumentTemplateId = documentType.DocumentTypeDefaulReportTempId,
                                 Tenant = tenant,
                                 Issued = true,
                                 IsBlobExist = true,

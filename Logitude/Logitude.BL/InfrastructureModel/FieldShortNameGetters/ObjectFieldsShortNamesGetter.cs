@@ -13,8 +13,8 @@ namespace Logitude.BL.InfrastructureModel.FieldShortNameGetters
         public override void InitializeShortNames()
         {
             FieldShortNames = new Dictionary<string, string>();
-            FieldShortNames.Add("DisplayInSearchWindowFiltersIndex", "SearchWindowFiltersIndex");
-            FieldShortNames.Add("AllowedInCustomerFieldsSettings", "AllowedInCustFieldsSettings");
+            FieldShortNames.Add("DisplayInSearchWindowFilterInx", "SearchWindowFiltersIndex");
+            FieldShortNames.Add("AllowedInCustomerFieldsSetting", "AllowedInCustFieldsSettings");
         }
     }
 }

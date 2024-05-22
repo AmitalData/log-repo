@@ -179,7 +179,7 @@
   <Column
     Name="MasterExpFreigPrepaidCollectId"
     ShortName="MasterExportFreightPCId"
-    OldNames="MasterExportFreightPrepaidCollectId"
+    OldNames="MasterExpFreigPrepaidCollectId"
     Type="varchar"
     Size="1">
     <Constraints
@@ -188,7 +188,7 @@
   <Column
     Name="MasterImpFreiPrepaidCollectId"
     ShortName="MasterImportFreightPCId"
-    OldNames="MasterImportFreightPrepaidCollectId"
+    OldNames="MasterImpFreiPrepaidCollectId"
     Type="varchar"
     Size="1">
     <Constraints
@@ -197,7 +197,7 @@
   <Column
     Name="MasterExpOtherPrepaidCollectId"
     ShortName="MasterExportOtherPCId"
-    OldNames="MasterExportOtherPrepaidCollectId"
+    OldNames="MasterExpOtherPrepaidCollectId"
     Type="varchar"
     Size="1">
     <Constraints
@@ -206,7 +206,7 @@
   <Column
     Name="MasterImpOtherPrepaidCollectId"
     ShortName="MasterImportOtherPCId"
-    OldNames="MasterImportOtherPrepaidCollectId"
+    OldNames="MasterImpOtherPrepaidCollectId"
     Type="varchar"
     Size="1">
     <Constraints
@@ -401,7 +401,7 @@
   <Column
     Name="VatMandatoryForPotentialCust"
     ShortName="VaTMandatoryPotentialCustomers"
-    OldNames="VatMandatoryForPotentialCustomers"
+    OldNames="VatMandatoryForPotentialCust"
     Type="bit">
     <Constraints
       Nullable="false" />
@@ -505,7 +505,7 @@
   <Column
     Name="ExportQuotationsoIntegratedSys"
     ShortName="ExportQuotationsToIntegrated"
-    OldNames="ExportQuotationsToIntegratedSystem"
+    OldNames="ExportQuotationsoIntegratedSys"
     Type="bit">
     <Constraints
       Nullable="false" />
@@ -578,7 +578,7 @@
   <Column
     Name="IsCorrespondRightToLeftEnabled"
     ShortName="IsCorrespondenceRTLEnabled"
-    OldNames="IsCorrespondenceRightToLeftEnabled"
+    OldNames="IsCorrespondRightToLeftEnabled"
     Type="bit">
     <Constraints
       Nullable="false" />
@@ -711,7 +711,7 @@
   <Column
     Name="TransferQuotationsToUnfTrigger"
     ShortName="TransferQuotationsToUNFTrigger"
-    OldNames="TransferQuotationsToUnifreightTrigger"
+    OldNames="TransferQuotationsToUnfTrigger"
     Type="varchar"
     Size="10"
     DefaultValue="'OnSend'">
@@ -756,7 +756,7 @@
   </Column>
   <Column
     Name="IsQuoteRequestActivateInShared"
-    OldNames="IsQuotesRequestActivatedInShared"
+    OldNames="IsQuoteRequestActivateInShared"
     Type="bit">
     <Constraints
       Nullable="false" />
