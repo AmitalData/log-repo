@@ -200,5 +200,10 @@ namespace Logitude.Server.Tools.StorageService
         {
           //  throw new NotImplementedException();
         }
+
+        public void MoveFromAnotherStorage(string containerSASURI, string fileNameSource, BlobFileInfo destinationFileInfo)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
