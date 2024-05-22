@@ -5,7 +5,7 @@ import { BatchTaskExecutionExtendedPMService } from 'Infrastructure/Services/Ext
 import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 declare var window: any;
 
-export class BatchTaskExecutiontMenuButtonsHandler {
+export class BatchTaskExecutionMenuButtonsHandler {
     BatchTaskExecutionExtendedPMService: BatchTaskExecutionExtendedPMService;
     public EntityPM: BatchTaskExecutionPM;
     public entityArgs: EntityArgs;

@@ -49,7 +49,8 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                 BatchTaskExecutionPM batchTaskExecutionPM = batchTaskExecutionQuery.GetSingle(batchTaskExecutionId, true, false);
                 batchTaskExecutionPM.StatusCode = "F";
                 batchTaskExecutionPM.ChangeSetOp = ChangeSetOperation.Update;
-                var batchTaskExecutionUpdateService = new BatchTaskExecutionUpdateService(authToken.Tenant);
+                Logitude.Infrastructure.Data.IInfrastructureContext context = Logitude.Infrastructure.Data.InfrastructureContext.GetContext(batchTaskExecutionPM.Tenant);
+                BatchTaskExecutionUpdateService batchTaskExecutionUpdateService = new BatchTaskExecutionUpdateService(context, new Dictionary<string, Simplog.Server.Infrastructure.IContext>(), batchTaskExecutionPM.Tenant);
                 batchTaskExecutionUpdateService.Update(batchTaskExecutionPM, true);
 
                 return Request.CreateResponse(HttpStatusCode.OK, "OK");
