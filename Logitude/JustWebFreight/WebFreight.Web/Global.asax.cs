@@ -527,6 +527,7 @@ namespace WebFreight.Web
             LogitudeSettings.AmitalCloudEnvironmentURL = setting.AmitalCloudEnvironmentURL;
             LogitudeSettings.AmitalCloudLogitudeTenantPrimaryKey = setting.AmitalCloudLogitudeTenantPrimaryKey;
             LogitudeSettings.OITenantNumber = setting.OITenantNumber;
+            LogitudeSettings.TempStorageConnection = setting.TempStorageConnection;
         }
 
         private void StartSignalRTopicThread()
