@@ -238,5 +238,12 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public bool IsFromGlaAccountUpdate { get; set; }
         public bool IsExcludeCard { get; set; }
 
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        [DataMember]
+        public string EmailForSendingSingArinvoice { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        [DataMember]
+        public bool SendingInterestReport { get; set; }
     }
 }
