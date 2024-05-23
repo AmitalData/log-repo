@@ -97,7 +97,6 @@
                   HSMSignServiceUrl IS NULL;
           END IF;
       END;
-      /
         ]]>
   </Oracle>
 </Script>
