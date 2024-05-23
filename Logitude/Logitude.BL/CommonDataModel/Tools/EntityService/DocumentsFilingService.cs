@@ -786,7 +786,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
 
-            UpdateCustomsDocumentMetaDataValuesCollection();
+            //UpdateCustomsDocumentMetaDataValuesCollection();
 
             AddImporterQueue(theEntityPm, tenantPM, HavingDREL);
 
@@ -975,7 +975,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
             AddImporterQueue(theEntityPm, tenantPM, HavingDREL);
-            UpdateCustomsDocumentMetaDataValuesCollection();
+            //UpdateCustomsDocumentMetaDataValuesCollection();
 
 
 
