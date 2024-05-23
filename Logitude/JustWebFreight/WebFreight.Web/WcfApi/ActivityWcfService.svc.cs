@@ -642,7 +642,7 @@ namespace WebFreight.Web.WcfApi
             return response;
         }
 
-        public Response UploadDocumentFileData(int tenant, string blobname, string DocumentId)
+        public Response UploadDocumentFileDataFromStorage(int tenant, string blobname, string DocumentId)
         {
             Response response = new Response();
             if (string.IsNullOrEmpty(blobname) || string.IsNullOrEmpty(DocumentId))
