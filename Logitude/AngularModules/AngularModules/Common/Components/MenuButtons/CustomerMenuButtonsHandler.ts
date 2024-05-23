@@ -36,8 +36,10 @@ export class CustomerMenuButtonsHandler {
         this.Listen();
     }
     private Listen() {
+        debugger
         if (this.entityArgs.EditComponent != null) {
             this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                debugger
                 if (isSaveSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
 

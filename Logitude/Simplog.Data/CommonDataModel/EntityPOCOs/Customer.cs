@@ -129,8 +129,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string PrimaryContactName { get; set; }
         public string PrimaryContactEmail { get; set; }
         public string PrimaryContactPhone { get; set; }
-        public string EmailForSendingSingArinvoice { get; set; }
-        public bool SendingInterestReport { get; set; }
+       
         public string ImportLocalCustomerGroupId { get; set; }
         public string ExportLocalCustomerGroupId { get; set; }
         public string EORInumber { get; set; }
