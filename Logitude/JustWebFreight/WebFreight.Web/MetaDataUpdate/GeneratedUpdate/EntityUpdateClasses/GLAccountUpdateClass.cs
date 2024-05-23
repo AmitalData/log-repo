@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GLAccountUpdateClass
    {  		
-		public const string HashString = "cd74a37ff37c4287989f761a6ac9af77";
+		public const string HashString = "031f262764eb764bb880c85c41e21562";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -7724,13 +7724,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  1000,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
+					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -7788,13 +7789,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  1000,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
+					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -9782,7 +9784,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "CreditLimit",
 					  						ObjectTableName =  "GLAccount",
-					  						FieldsDataType =  "Double",
+					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
@@ -11594,7 +11596,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "CreditUsed",
 					  						ObjectTableName =  "GLAccount",
-					  						FieldsDataType =  "Double",
+					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
@@ -12000,13 +12002,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
+					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -12064,13 +12067,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
+					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -14343,7 +14347,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode GLAccountTextCode_GLAccountOCancelSelectedRecoConfirm = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.CancelSelectedRecoConfirm", DefaultText = "The process of canceling the adjustments to the marked lines will be performed in the background and will last several minutes during which time it will not be possible to stop the process, do you approve?",LocalDefaultText = @"תהליך ביטול ההתאמות לשורות שסומנו יבוצע ברקע וימשך מספר דקות בזמן זה לא ניתן יהיה לעצור את התהליך, האם אתה מאשר?", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode GLAccountTextCode_GLAccountONoSelectedItems = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.NoSelectedItems", DefaultText = "No Selected Items",LocalDefaultText = @"לא נבחרו התאמות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);  
+ 		   TextCode GLAccountTextCode_GLAccountONoSelectedItems = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.NoSelectedItems", DefaultText = "No Selected Items",LocalDefaultText = @"לא נבחרו התאמות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
 	    
 }
 
