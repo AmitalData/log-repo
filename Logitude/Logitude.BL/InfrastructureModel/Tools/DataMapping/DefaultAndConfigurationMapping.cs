@@ -10,8 +10,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
         { 
             entityPOCO.Id = entityPM.Id;
             entityPOCO.Tenant = entityPM.Tenant;
-            entityPOCO.QueueDefinitionCode = entityPM.QueueDefinitionCode;
-            entityPOCO.CreateDateTime = entityPM.CreateDateTime;
+            entityPOCO.CreateDate = entityPM.CreateDate;
             entityPOCO.SearchFields = entityPM.SearchFields;
             entityPOCO.Is_Active = entityPM.Is_Active;
             entityPOCO.StoreInCache = entityPM.StoreInCache;

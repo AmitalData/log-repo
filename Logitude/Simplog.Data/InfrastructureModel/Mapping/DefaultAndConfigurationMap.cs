@@ -20,12 +20,6 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.Id)
                 .IsRequired();
                
-
-            this.Property(t => t.QueueDefinitionCode)
-                .IsRequired()
-                .HasMaxLength(265)
-                .IsUnicode(false);
-
             this.Property(t => t.SetKey)
                .IsRequired()
                .HasMaxLength(36)
@@ -59,8 +53,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.ToTable("DefaultAndConfigurations");
             this.Property(t => t.Id).HasColumnName("Id");
             this.Property(t => t.Id).HasColumnName("Tenant");
-            this.Property(t => t.QueueDefinitionCode).HasColumnName("QueueDefinitionCode");
-            this.Property(t => t.CreateDateTime).HasColumnName("CreateDateTime");
+            this.Property(t => t.CreateDate).HasColumnName("CreateDate");
             this.Property(t => t.SearchFields).HasColumnName("SearchFields");
             this.Property(t => t.Is_Active).HasColumnName("Is_Active");
             this.Property(t => t.StoreInCache).HasColumnName("StoreInCache");
