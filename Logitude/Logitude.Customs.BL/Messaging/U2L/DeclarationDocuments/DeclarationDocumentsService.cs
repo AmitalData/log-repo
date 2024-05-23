@@ -231,6 +231,26 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
                     List<CustomsDocumentMetaDataValuePM> CustomsDocumentMetaDataValues = customsDocumentMetaDataValueQuery.GetCustomsDocumentMetaDataValuesByConnectedEntity(_MyDeclarationPM.Id, _MyDeclarationPM.Tenant);
                     CustomsDocumentMetaDataValues = CustomsDocumentMetaDataValues.Where(r => r.MetaDataTypeCode == customsDocumentsTicketPM.DocumentTypeCode).ToList();
                     
+
+                    if(_MyDeclarationPM.IsDiamondDeclaration && _MyDeclarationPM.AutoSending && _MyDeclarationPM.Direction=="E")
+                    {
+                        DocumentsMetaDataTypeRepository documentsMetaDataTypeRepository = new DocumentsMetaDataTypeRepository();
+
+
+                        foreach (DocumentsFilingMetaDataValuePM itemPM in documentIn?.DocumentsFilingMetaDataValues)
+                          {
+
+                            CustomsDocumentMetaDataValuePM customsDocumentMetaDataValue = new CustomsDocumentMetaDataValuePM();
+                            customsDocumentMetaDataValue.MetaDataTypeCode = documentsMetaDataTypeRepository.GetSingleDocumentsMetaDataType(itemPM.DocumentsMetaDataTypeId,itemPM.Tenant)?.Code;
+                            customsDocumentMetaDataValue.CustomsDocumentId = itemPM.DocumentsFilingId;
+                            customsDocumentMetaDataValue.Tenant = itemPM.Tenant;
+                            customsDocumentMetaDataValue.MetaDataValue = itemPM.MetaDataValue;
+                            CustomsDocumentMetaDataValues.Add(customsDocumentMetaDataValue);
+
+
+                        }
+                                                         
+                    }
                     //if(CustomsDocumentMetaDataValues.Where(r => r.MetaDataValue == "1" && r.MetaDataTypeCode == "380").FirstOrDefault() == null)
                     //{
                     //    CustomsDocumentMetaDataValues.Add(new CustomsDocumentMetaDataValuePM { CustomsDocumentId = this._LogitudeDocs.COM_ID, MetaDataTypeCode = "380", MetaDataValue = "1", Tenant = _MyDeclarationPM.Tenant, ChangeSetOp = ChangeSetOperation.Insert });
