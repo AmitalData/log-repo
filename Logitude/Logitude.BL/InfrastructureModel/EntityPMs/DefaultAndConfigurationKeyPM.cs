@@ -11,7 +11,7 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
     {
         [Key]
         public int Tenant { get; set; }
-        public DateTime CreateDateTime { get; set; }
+        public DateTime CreateDate { get; set; }
         [Key]
         public string SetType { get; set; }
         [Key]
