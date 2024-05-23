@@ -25,6 +25,13 @@
       Nullable="false" />
   </Column>
   <Column
+    Name="CreatedByUserId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
     Name="SearchFields"
     Type="nvarchar"
     Size="-1">
@@ -97,4 +104,9 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Relation
+    ForeignKeyColumn="CreatedByUserId"
+    ReferencedTable="Users"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
 </Table>

@@ -52,7 +52,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
            {
                Id = a.Id,
                Tenant = a.Tenant,
-               CreateDate = a.CreateDate,
+               QueueDefinitionCode = a.QueueDefinitionCode,
+               CreateDateTime = a.CreateDateTime,
                SearchFields = a.SearchFields,
                Is_Active = a.Is_Active,
                StoreInCache = a.StoreInCache,
@@ -81,7 +82,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
              {
                  Id = a.Id,
                  Tenant = a.Tenant,
-                 CreateDate = a.CreateDate,
+                 QueueDefinitionCode = a.QueueDefinitionCode,
+                 CreateDateTime = a.CreateDateTime,
                  SearchFields = a.SearchFields,
                  Is_Active = a.Is_Active,
                  StoreInCache = a.StoreInCache,
@@ -110,7 +112,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
              {
                  Id = a.Id,
                  Tenant = a.Tenant,
-                 CreateDate = a.CreateDate,
+                 QueueDefinitionCode = a.QueueDefinitionCode,
+                 CreateDateTime = a.CreateDateTime,
                  SearchFields = a.SearchFields,
                  Is_Active = a.Is_Active,
                  StoreInCache = a.StoreInCache,
@@ -139,7 +142,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
              {
                  Id = a.Id,
                  Tenant = a.Tenant,
-                 CreateDate = a.CreateDate,
+                 QueueDefinitionCode = a.QueueDefinitionCode,
+                 CreateDateTime = a.CreateDateTime,
                  SearchFields = a.SearchFields,
                  Is_Active = a.Is_Active,
                  StoreInCache = a.StoreInCache,
@@ -166,7 +170,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                              {
                                                                  Id = a.Id,
                                                                  Tenant = a.Tenant,
-                                                                 CreateDate = a.CreateDate,
+                                                                 QueueDefinitionCode = a.QueueDefinitionCode,
+                                                                 CreateDateTime = a.CreateDateTime,
                                                                  SearchFields = a.SearchFields,
                                                                  Is_Active = a.Is_Active,
                                                                  StoreInCache = a.StoreInCache,
@@ -191,7 +196,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
              {
                  Id = a.Id,
                  Tenant = a.Tenant,
-                 CreateDate = a.CreateDate,
+                 QueueDefinitionCode = a.QueueDefinitionCode,
+                 CreateDateTime = a.CreateDateTime,
                  SearchFields = a.SearchFields,
                  Is_Active = a.Is_Active,
                  StoreInCache = a.StoreInCache,
@@ -221,7 +227,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
              {
                  Id = a.Id,
                  Tenant = a.Tenant,
-                 CreateDate = a.CreateDate,
+                 QueueDefinitionCode = a.QueueDefinitionCode,
+                 CreateDateTime = a.CreateDateTime,
                  SearchFields = a.SearchFields,
                  Is_Active = a.Is_Active,
                  StoreInCache = a.StoreInCache,

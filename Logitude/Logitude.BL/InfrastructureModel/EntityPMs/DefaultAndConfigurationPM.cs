@@ -12,7 +12,8 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         [Key]
         public string Id { get; set; }
         public int Tenant { get; set; }
-        public DateTime CreateDate { get; set; }
+        public string QueueDefinitionCode { get; set; }
+        public string CreateDateTime { get; set; }
         public string SearchFields { get; set; }
         public Boolean? Is_Active { get; set; }
         public Boolean? StoreInCache { get; set; }

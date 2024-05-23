@@ -44,7 +44,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
            select new DefaultAndConfigurationKeyPM()
            { 
                Tenant = a.Tenant,
-               CreateDate = a.CreateDate,
+               CreateDateTime = a.CreateDateTime,
                SetType = a.SetType,
                SetKey = a.SetKey,
                ShortDescription = a.ShortDescription,
@@ -91,7 +91,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
              {
                 
                  Tenant = a.Tenant,
-                 CreateDate = a.CreateDate,
+                 CreateDateTime = a.CreateDateTime,
                  SetType = a.SetType,
                  SetKey = a.SetKey,
                  ShortDescription = a.ShortDescription,
@@ -112,7 +112,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
              select new DefaultAndConfigurationKeyPM()
              {
                  Tenant = a.Tenant,
-                 CreateDate = a.CreateDate,
+                 CreateDateTime = a.CreateDateTime,
                  SetType = a.SetType,
                  SetKey = a.SetKey,
                  ShortDescription = a.ShortDescription,
@@ -132,7 +132,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                              {
                                                                  
                                                                  Tenant = a.Tenant,
-                                                                 CreateDate = a.CreateDate,
+                                                                 CreateDateTime = a.CreateDateTime,
                                                                  SetType = a.SetType,
                                                                  SetKey = a.SetKey,
                                                                  ShortDescription = a.ShortDescription,
@@ -150,7 +150,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
              {
                 
                  Tenant = a.Tenant,
-                 CreateDate = a.CreateDate,
+                 CreateDateTime = a.CreateDateTime,
                  SetType = a.SetType,
                  SetKey = a.SetKey,
                  ShortDescription = a.ShortDescription,
@@ -171,7 +171,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
              select new DefaultAndConfigurationKeyPM()
              {
                  Tenant = a.Tenant,
-                 CreateDate = a.CreateDate,
+                 CreateDateTime = a.CreateDateTime,
                  SetType = a.SetType,
                  SetKey = a.SetKey,
                  ShortDescription = a.ShortDescription,
@@ -192,7 +192,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
              select new DefaultAndConfigurationKeyList()
              { 
                  Tenant = a.Tenant,
-                 CreateDate = a.CreateDate,
+                 CreateDateTime = a.CreateDateTime,
                  SetType = a.SetType,
                  SetKey = a.SetKey,
                  ShortDescription = a.ShortDescription,
@@ -214,7 +214,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
              {
                 
                  Tenant = a.Tenant,
-                 CreateDate = a.CreateDate,
+                 CreateDateTime = a.CreateDateTime,
                  SetType = a.SetType,
                  SetKey = a.SetKey,
                  ShortDescription = a.ShortDescription,
