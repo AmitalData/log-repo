@@ -416,13 +416,6 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [DataMember]
         public string PrimaryContactPhone { get; set; }
 
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        [DataMember]
-        public string EmailForSendingSingArinvoice { get; set; }
-
-        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        [DataMember]
-        public bool SendingInterestReport { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         [DataMember]
