@@ -254,7 +254,7 @@ export class CustomsCollateralFilterComponent extends BaseComponent {
             this.queryFilterItems.push(this.GetNewQueryFilterItem("TransportModeId", this.SelectedTransportModeId, null, "string"));
         }
         //-----------------------------------------------------------------------------3
-        if(!AppTool.IsNullOrEmpty(this.ImportExport != 'All')) {
+        if(AppTool.IsNullOrEmpty(this.ImportExport != 'All')) {
             this.queryFilterItems.push(this.GetNewQueryFilterItem("ImportExport", this.ImportExport, null, "string"));
         }
         
