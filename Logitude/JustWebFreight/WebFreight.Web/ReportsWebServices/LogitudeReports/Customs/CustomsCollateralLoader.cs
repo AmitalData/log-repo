@@ -39,14 +39,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
 
 
         public byte[] GetData()
-        {
-            CustomsCollateralDataProvider myDataProvider = new CustomsCollateralDataProvider();
-           
+        {           
             BuildDataProvider();
             
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(CustomsCollateralDataProvider));
             MemoryStream memoryStream = new MemoryStream();
-            xmlSerializer.Serialize(memoryStream, myDataProvider);
+            xmlSerializer.Serialize(memoryStream,dataProvider);
             memoryStream.Seek(0, SeekOrigin.Begin);
             StreamReader streamReader = new StreamReader(memoryStream);
             string content = streamReader.ReadToEnd();
