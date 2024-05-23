@@ -8,7 +8,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
     {
         public static void MapEntity(DefaultAndConfigurationKeyPM entityPM, DefaultAndConfigurationKey entityPOCO)
         { 
-            entityPOCO.CreateDate = entityPM.CreateDate;
+            entityPOCO.CreateDateTime = entityPM.CreateDateTime;
             entityPOCO.SetType = entityPM.SetType;
             entityPOCO.SetKey = entityPM.SetKey;
             entityPOCO.ShortDescription = entityPM.ShortDescription;
