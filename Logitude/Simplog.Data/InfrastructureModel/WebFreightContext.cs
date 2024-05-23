@@ -1127,8 +1127,16 @@ namespace Simplog.Data.InfrastructureModel
             set;
         }
 
-        public IDbSet<DefaultAndConfiguration> DefaultAndConfigurations => throw new NotImplementedException();
+        public IDbSet<DefaultAndConfiguration> DefaultAndConfigurations
+        {
+            get;
+            set;
+        }
 
-        public IDbSet<DefaultAndConfigurationKey> DefaultAndConfigurationKey => throw new NotImplementedException();
+        public IDbSet<DefaultAndConfigurationKey> DefaultAndConfigurationKey
+        {
+            get;
+            set;
+        }
     }
 }

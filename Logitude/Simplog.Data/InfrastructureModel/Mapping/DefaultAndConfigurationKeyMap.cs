@@ -43,7 +43,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.ToTable("DefaultAndConfigurationKeys");
 
             this.Property(t => t.Tenant).HasColumnName("Tenant");
-            this.Property(t => t.CreateDateTime).HasColumnName("CreateDateTime");
+            this.Property(t => t.CreateDate).HasColumnName("CreateDate");
             this.Property(t => t.SetType).HasColumnName("SetType");
             this.Property(t => t.SetKey).HasColumnName("SetKey");
             this.Property(t => t.ShortDescription).HasColumnName("ShortDescription");
