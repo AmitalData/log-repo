@@ -55,7 +55,7 @@
   <Column
     Name="ReceivablesChargesTypeExtCode"
     ShortName="ReceivablesChargesTypeExtCode"
-    OldNames="ReceivablesChargesTypeExtCode"
+    OldNames="ReceivablesChargesTypeExternalCode"
     Type="varchar"
     Size="25">
     <Constraints
@@ -64,7 +64,7 @@
   <Column
     Name="PayablesChargesTypeExtCode"
     ShortName="PayablesChargesTypeExtCode"
-    OldNames="PayablesChargesTypeExtCode"
+    OldNames="PayablesChargesTypeExternalCode"
     Type="varchar"
     Size="25">
     <Constraints
