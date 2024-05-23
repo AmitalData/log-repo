@@ -47,7 +47,7 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
            
         }
 
-        public GlobalDB GetSingleGlobalDB(string id)
+        public GlobalDB GetGlobalDBById(string id)
         {
             string enviroment = ConfigurationManager.AppSettings.Get("ENVIROMENT");
             if (enviroment == "azure app service")
@@ -57,8 +57,8 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
                     where a.Id == id
                     select a).FirstOrDefault();
         }
-
-        public static GlobalDB GetGlobalDBById(string id)
+        
+        public GlobalDB GetSingleGlobalDB(string id)
         {
 
             string name = "TenantDB" + id;
