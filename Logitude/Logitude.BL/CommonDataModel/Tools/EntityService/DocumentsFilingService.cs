@@ -260,7 +260,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             foreach (DocumentsFilingMetaDataValuePM itemPM in entityPM.DocumentsFilingMetaDataValues)
             {
                 this.CreateDocumentsFilingMetaDataValue(itemPM);
-                this.CreateCustomsDocumentsFilingMetaDataValue(itemPM);
             }
 
             //if (tenantPM.IsHybrid)
@@ -397,7 +396,10 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             {
                 AddToTasksQueue(theEntityPm, isNewEntity, loggedUserId);
             }
-
+            foreach (DocumentsFilingMetaDataValuePM itemPM in entityPM.DocumentsFilingMetaDataValues)
+            {
+                this.CreateCustomsDocumentsFilingMetaDataValue(itemPM);
+            }
             AddImporterQueue(theEntityPm, tenantPM, HavingDREL);
 
             if (!string.IsNullOrEmpty(this.entityPM.DocumentId))
@@ -1655,7 +1657,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private void CreateCustomsDocumentsFilingMetaDataValue(DocumentsFilingMetaDataValuePM itemPM)
         {
             CustomsDocumentQueryService myCustomsDocumentQueryService = new CustomsDocumentQueryService(tenant);
-            string documentsFilingId = myCustomsDocumentQueryService.GetDocumentInIdByCustomsDocId(itemPM.Id, tenant);
+            string documentsFilingId = myCustomsDocumentQueryService.GetDocumentInIdByCustomsDocId(entityPM.Id, tenant);
 
             if (documentsFilingId != null)
             {
