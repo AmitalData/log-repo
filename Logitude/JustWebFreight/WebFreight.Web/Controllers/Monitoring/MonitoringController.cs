@@ -1,4 +1,5 @@
 ﻿using Logitude.SystemLogs;
+using Newtonsoft.Json;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure.Helpers;
@@ -15,12 +16,14 @@ using System.Transactions;
 using System.Web;
 using System.Web.Http;
 using System.Web.Mvc;
+using System.Xml;
+using System.Xml.Serialization;
 using WebFreight.Web.DataContracts;
 using HttpGetAttribute = System.Web.Http.HttpGetAttribute;
 
 namespace WebFreight.Web.Controllers.Monitoring
 {
-    public class MonitoringController:ApiController
+    public class MonitoringController : ApiController
     {
         public class pingdom_http_custom_check
         {
@@ -28,20 +31,41 @@ namespace WebFreight.Web.Controllers.Monitoring
             public int response_time { get; set; }
         }
 
+        public static string XmlSerialize<T>(T entity) where T : class
+        {
+            // removes version
+            XmlWriterSettings settings = new XmlWriterSettings();
+            settings.OmitXmlDeclaration = true;
+
+            XmlSerializer xsSubmit = new XmlSerializer(typeof(T));
+            using (StringWriter sw = new StringWriter())
+            using (XmlWriter writer = XmlWriter.Create(sw, settings))
+            {
+                // removes namespace
+                var xmlns = new XmlSerializerNamespaces();
+                xmlns.Add(string.Empty, string.Empty);
+
+                xsSubmit.Serialize(writer, entity, xmlns);
+                return sw.ToString(); // Your XML
+            }
+        }
+
+
 
         #region AdvancedGenericInterfaceMonitoringStatus
         [HttpGet]
 
         public HttpResponseMessage AdvancedGenericInterfaceMonitoringStatus()
         {
-
             pingdom_http_custom_check pingdomCheck = new pingdom_http_custom_check();
-            bool isOK = CheckAdvancedGenericInterfaceMonitoringStatus();
+            bool isOK = !CheckAdvancedGenericInterfaceMonitoringStatus();
             pingdomCheck.status = isOK ? "OK" : "Fail";
             pingdomCheck.response_time = HttpContext.Current.Timestamp.Millisecond;
 
-            HttpResponseMessage Response = Request.CreateResponse(HttpStatusCode.OK, pingdomCheck);
-            return Response;
+            string xml = XmlSerialize(pingdomCheck);
+
+
+            return new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent(xml, System.Text.Encoding.UTF8, "text/xml") };
         }
 
 
