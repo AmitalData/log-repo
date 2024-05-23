@@ -36,7 +36,7 @@ BEGIN
         print '1111'
 		DECLARE eventsCursor CURSOR READ_ONLY
 		FOR
-		SELECT Id,Code,ObjectTableId,DocumentTypeDefaultHTMLTemplateId,DocumentTypeDefaulReportTempId
+		SELECT Id,Code,ObjectTableId,DocumentTypeDefaHTMLTemplateId,DocumentTypeDefaulReportTempId
 		FROM [dbo].[DocumentTypes] where Tenant = @SourceTenant
     	OPEN eventsCursor FETCH NEXT FROM eventsCursor INTO @DocTypeId,@DocTypeCode,@DocTypeOTId,@DocumentTypeDefaultHTMLTemplateId,@DocumentTypeDefaulReportTempId
 		WHILE @@FETCH_STATUS = 0
@@ -60,7 +60,7 @@ BEGIN
                   
            INSERT INTO [dbo].[DocumentTypes]
            ([Id],[Tenant],[Name],[Code],[Notes],[IsAir],[IsOcean],[IsInland],[IsDocIn],[IsDocOut],[ObjectTableId],[Subject],[DocumentTypeDefaulReportTempId]
-           ,[DocumentTypeDefaultHTMLTemplateId],[TemplateFormatCode],[DocumentTypeDefaultEditorTool],[InActive],[IsMaster],[IsHouse],[IsDirect],[SearchFields]
+           ,[DocumentTypeDefaHTMLTemplateId],[TemplateFormatCode],[DocumentTypeDefaultEditorTool],[InActive],[IsMaster],[IsHouse],[IsDirect],[SearchFields]
            ,[CustomControl],[CustomerRoleId],[AgentRoleId],[IsCustomerView],[IsAgentView],[IsReadOnly],[IsDocumentOneTimePrintLimited],[LimitedPrintCopyId]
            ,[IsEnabledForCustomers],[IsCopiedAtSignup],[CountryCode],[DocumentsDataProviderCode],[DocumentTypeCategoryCode])
            ( select @NewDocTypeId,@DestanationTenant,[Name],[Code],[Notes],[IsAir],[IsOcean],[IsInland],[IsDocIn],[IsDocOut],@ObjectTableId,[Subject],null
@@ -109,7 +109,7 @@ BEGIN
           end
            ------------------------------------------------------------------------------
            
-           update [dbo].[DocumentTypes] set [DocumentTypeDefaultHTMLTemplateId] = @DocumentTypeTemplatesHtmlId,[DocumentTypeDefaulReportTempId] = @DocumentTypeTemplatesReportId
+           update [dbo].[DocumentTypes] set [DocumentTypeDefaHTMLTemplateId] = @DocumentTypeTemplatesHtmlId,[DocumentTypeDefaulReportTempId] = @DocumentTypeTemplatesReportId
            
            ------------------------------------------------------------------------------
            
@@ -179,7 +179,7 @@ BEGIN
            ,[ObjectTableId] = (select [ObjectTableId] from [dbo].[DocumentTypes] where Id = @DocTypeId and Tenant = @SourceTenant)
            ,[Subject] = (select [Subject] from [dbo].[DocumentTypes] where Id = @DocTypeId and Tenant = @SourceTenant)
            --,[DocumentTypeDefaulReportTempId] = (select [DocumentTypeDefaulReportTempId] from [dbo].[DocumentTypes] where Id = @DocTypeId and Tenant = @SourceTenant)
-           --,[DocumentTypeDefaultHTMLTemplateId] = (select [DocumentTypeDefaultHTMLTemplateId] from [dbo].[DocumentTypes] where Id = @DocTypeId and Tenant = @SourceTenant)
+           --,[DocumentTypeDefaHTMLTemplateId] = (select [DocumentTypeDefaHTMLTemplateId] from [dbo].[DocumentTypes] where Id = @DocTypeId and Tenant = @SourceTenant)
            ,[TemplateFormatCode] = (select [TemplateFormatCode] from [dbo].[DocumentTypes] where Id = @DocTypeId and Tenant = @SourceTenant)
            ,[DocumentTypeDefaultEditorTool] = (select [DocumentTypeDefaultEditorTool] from [dbo].[DocumentTypes] where Id = @DocTypeId and Tenant = @SourceTenant)
            ,[InActive] = (select [InActive] from [dbo].[DocumentTypes] where Id = @DocTypeId and Tenant = @SourceTenant)

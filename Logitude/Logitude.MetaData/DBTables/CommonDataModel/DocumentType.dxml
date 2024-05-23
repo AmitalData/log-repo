@@ -29,7 +29,7 @@
   <Column
     Name="DocumentTypeDefaulReportTempId"
     ShortName="DocTypeDefaultReportTempId"
-    OldNames="DocumentTypeDefaulReportTempId"
+    OldNames="DocumentTypeDefaultReportTemplateId"
     Type="varchar"
     Size="15">
     <Constraints
@@ -312,7 +312,6 @@
   </Column>
   <Column
     Name="OnSendPopulateDateFieldName"
-    OldNames="OnSendPolpulateDateFieldName"
     Type="varchar"
     Size="100">
     <Constraints

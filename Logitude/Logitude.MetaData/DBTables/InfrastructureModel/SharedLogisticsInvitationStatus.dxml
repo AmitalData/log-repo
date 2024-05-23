@@ -1,8 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Table
-  Name="SharedLogisticInvitationStatus"
+  Name="SharedLogisticsInvitationStatus"
   ShortName="SharedLogInvitationStatus"
-  OldNames="SharedLogisticsInvitationStatus"
   Schema="dbo"
   DBType="Main"
   Module="Infrastructure">
