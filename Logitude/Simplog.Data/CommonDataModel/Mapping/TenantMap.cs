@@ -37,10 +37,10 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.ProfitCurrencyId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.AgentId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.PasswordPolicyCode).HasMaxLength(4).IsUnicode(false);
-            this.Property(t => t.MasterExportFreightPrepaidCollectId).HasMaxLength(1).IsUnicode(false);
-            this.Property(t => t.MasterExportOtherPrepaidCollectId).HasMaxLength(1).IsUnicode(false);
-            this.Property(t => t.MasterImportFreightPrepaidCollectId).HasMaxLength(1).IsUnicode(false);
-            this.Property(t => t.MasterImportOtherPrepaidCollectId).HasMaxLength(1).IsUnicode(false);
+            this.Property(t => t.MasterExpFreigPrepaidCollectId).HasMaxLength(1).IsUnicode(false);
+            this.Property(t => t.MasterExpOtherPrepaidCollectId).HasMaxLength(1).IsUnicode(false);
+            this.Property(t => t.MasterImpFreiPrepaidCollectId).HasMaxLength(1).IsUnicode(false);
+            this.Property(t => t.MasterImpOtherPrepaidCollectId).HasMaxLength(1).IsUnicode(false);
             this.Property(t => t.SearchFields).HasMaxLength(1000).IsUnicode(true);
             this.Property(t => t.ChargeableWeightUnitCode).HasMaxLength(3).IsUnicode(false);
             this.Property(t => t.WeightMeasurementUnitCode).HasMaxLength(3).IsUnicode(false);
@@ -73,7 +73,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.CheckDigitControlAlgorithmCode).HasMaxLength(4).IsRequired().IsUnicode(false);
             this.Property(t => t.AllowCustomersInAgentsLOV).IsRequired();
             this.Property(t => t.VatUniquePartnerTypeCode).HasMaxLength(3).IsUnicode(false);
-            this.Property(t => t.TransferQuotationsToUnifreightTrigger).HasMaxLength(10).IsUnicode(false);
+            this.Property(t => t.TransferQuotationsToUnfTrigger).HasMaxLength(10).IsUnicode(false);
             this.Property(t => t.ShipmentATADateIndicator).HasMaxLength(20).IsUnicode(false);
 
             this.ToTable("Tenants");
@@ -142,32 +142,32 @@ namespace Simplog.Data.CommonDataModel.Mapping
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
             {
-                this.Property(t => t.MasterExportFreightPrepaidCollectId).HasColumnName("MasterExportFreightPCId");
-                this.Property(t => t.MasterExportOtherPrepaidCollectId).HasColumnName("MasterExportOtherPCId");
-                this.Property(t => t.MasterImportFreightPrepaidCollectId).HasColumnName("MasterImportFreightPCId");
-                this.Property(t => t.MasterImportOtherPrepaidCollectId).HasColumnName("MasterImportOtherPCId");
-                this.Property(t => t.VatMandatoryForPotentialCustomers).HasColumnName("VaTMandatoryPotentialCustomers");
+                this.Property(t => t.MasterExpFreigPrepaidCollectId).HasColumnName("MasterExportFreightPCId");
+                this.Property(t => t.MasterExpOtherPrepaidCollectId).HasColumnName("MasterExportOtherPCId");
+                this.Property(t => t.MasterImpFreiPrepaidCollectId).HasColumnName("MasterImportFreightPCId");
+                this.Property(t => t.MasterImpOtherPrepaidCollectId).HasColumnName("MasterImportOtherPCId");
+                this.Property(t => t.VatMandatoryForPotentialCust).HasColumnName("VaTMandatoryPotentialCustomers");
                 this.Property(t => t.AllowAgentInCustomersLOV).HasColumnName("AllowAgentInShipCustomersLOV");
-                this.Property(t => t.IsCorrespondenceRightToLeftEnabled).HasColumnName("IsCorrespondenceRTLEnabled");
-                this.Property(t => t.ExportQuotationsToIntegratedSystem).HasColumnName("ExportQuotationsToIntegrated");
-                this.Property(t => t.TransferQuotationsToUnifreightTrigger).HasColumnName("TransferQuotationsToUNFTrigger");
-                this.Property(t => t.IsQuotesRequestActivatedInShared).HasColumnName("IsQuotesRequestActivated");
+                this.Property(t => t.IsCorrespondRightToLeftEnabled).HasColumnName("IsCorrespondenceRTLEnabled");
+                this.Property(t => t.ExportQuotationsoIntegratedSys).HasColumnName("ExportQuotationsToIntegrated");
+                this.Property(t => t.TransferQuotationsToUnfTrigger).HasColumnName("TransferQuotationsToUNFTrigger");
+                this.Property(t => t.IsQuoteRequestActivateInShared).HasColumnName("IsQuotesRequestActivated");
 
             }
             //#else
 
             else
             {
-                this.Property(t => t.MasterExportFreightPrepaidCollectId).HasColumnName("MasterExportFreightPrepaidCollectId");
-                this.Property(t => t.MasterExportOtherPrepaidCollectId).HasColumnName("MasterExportOtherPrepaidCollectId");
-                this.Property(t => t.MasterImportFreightPrepaidCollectId).HasColumnName("MasterImportFreightPrepaidCollectId");
-                this.Property(t => t.MasterImportOtherPrepaidCollectId).HasColumnName("MasterImportOtherPrepaidCollectId");
-                this.Property(t => t.VatMandatoryForPotentialCustomers).HasColumnName("VatMandatoryForPotentialCustomers");
+                this.Property(t => t.MasterExpFreigPrepaidCollectId).HasColumnName("MasterExpFreigPrepaidCollectId");
+                this.Property(t => t.MasterExpOtherPrepaidCollectId).HasColumnName("MasterExpOtherPrepaidCollectId");
+                this.Property(t => t.MasterImpFreiPrepaidCollectId).HasColumnName("MasterImpFreiPrepaidCollectId");
+                this.Property(t => t.MasterImpOtherPrepaidCollectId).HasColumnName("MasterImpOtherPrepaidCollectId");
+                this.Property(t => t.VatMandatoryForPotentialCust).HasColumnName("VatMandatoryForPotentialCust");
                 this.Property(t => t.AllowAgentInCustomersLOV).HasColumnName("AllowAgentInCustomersLOV");
-                this.Property(t => t.IsCorrespondenceRightToLeftEnabled).HasColumnName("IsCorrespondenceRightToLeftEnabled");
-                this.Property(t => t.ExportQuotationsToIntegratedSystem).HasColumnName("ExportQuotationsToIntegratedSystem");
-                this.Property(t => t.TransferQuotationsToUnifreightTrigger).HasColumnName("TransferQuotationsToUnifreightTrigger");
-                this.Property(t => t.IsQuotesRequestActivatedInShared).HasColumnName("IsQuotesRequestActivatedInShared");
+                this.Property(t => t.IsCorrespondRightToLeftEnabled).HasColumnName("IsCorrespondRightToLeftEnabled");
+                this.Property(t => t.ExportQuotationsoIntegratedSys).HasColumnName("ExportQuotationsoIntegratedSys");
+                this.Property(t => t.TransferQuotationsToUnfTrigger).HasColumnName("TransferQuotationsToUnfTrigger");
+                this.Property(t => t.IsQuoteRequestActivateInShared).HasColumnName("IsQuoteRequestActivateInShared");
 
             }
 

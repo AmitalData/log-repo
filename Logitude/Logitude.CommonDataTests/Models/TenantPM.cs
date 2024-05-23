@@ -40,10 +40,10 @@
         public string ImportFreightPrepaidCollectId { get; set; }
         public string ExportOtherPrepaidCollectId { get; set; }
         public string ImportOtherPrepaidCollectId { get; set; }
-        public string MasterExportFreightPrepaidCollectId { get; set; }
-        public string MasterImportFreightPrepaidCollectId { get; set; }
-        public string MasterExportOtherPrepaidCollectId { get; set; }
-        public string MasterImportOtherPrepaidCollectId { get; set; }
+        public string MasterExpFreigPrepaidCollectId { get; set; }
+        public string MasterImpFreiPrepaidCollectId { get; set; }
+        public string MasterExpOtherPrepaidCollectId { get; set; }
+        public string MasterImpOtherPrepaidCollectId { get; set; }
         public object STDVatPercentage { get; set; }
         public double TimeZoneOffset { get; set; }
         public string Language { get; set; }
@@ -77,7 +77,7 @@
         public string VatMandatoryTypeCode { get; set; }
         public object VatUniqueCountryId { get; set; }
         public object VatMandatoryCountryId { get; set; }
-        public bool VatMandatoryForPotentialCustomers { get; set; }
+        public bool VatMandatoryForPotentialCust { get; set; }
         public bool IsCustomerTelRequired { get; set; }
         public bool IsCustomerFaxRequired { get; set; }
         public bool IsPickDelAdrsRequired { get; set; }
@@ -103,7 +103,7 @@
         public object VatSize { get; set; }
         public object LogBoxAdminUserId { get; set; }
         public bool CreateTenantFromSignUp { get; set; }
-        public bool IsCorrespondenceRightToLeftEnabled { get; set; }
+        public bool IsCorrespondRightToLeftEnabled { get; set; }
         public bool IsNotesRightToLeftEnabled { get; set; }
         public object AccountingActivationDate { get; set; }
         public bool AccountingActivated { get; set; }
@@ -111,7 +111,7 @@
         public object PrivateLabelId { get; set; }
         public bool IsInternalTicketByDefault { get; set; }
         public bool ProrateMasterReceivables { get; set; }
-        public bool ExportQuotationsToIntegratedSystem { get; set; }
+        public bool ExportQuotationsoIntegratedSys { get; set; }
         public bool IsIncrementalBuildRunning { get; set; }
         public object SCACCode { get; set; }
         public object FMCNumber { get; set; }
@@ -138,7 +138,7 @@
         public bool DisplayDocumentsAndEvents { get; set; }
         public bool ShowTaxAmountWarning { get; set; }
         public object VatUniquePartnerTypeCode { get; set; }
-        public string TransferQuotationsToUnifreightTrigger { get; set; }
+        public string TransferQuotationsToUnfTrigger { get; set; }
         public bool SharedLogisMasterMessageLink { get; set; }
         public bool ShowMultiUnitsOfMeasurements { get; set; }
         public double AirRatio { get; set; }
@@ -146,6 +146,6 @@
         public double FCLRatio { get; set; }
         public double LTLRatio { get; set; }
         public double FTLRatio { get; set; }
-        public bool IsQuotesRequestActivatedInShared { get; set; }
+        public bool IsQuoteRequestActivateInShared { get; set; }
     }
 }

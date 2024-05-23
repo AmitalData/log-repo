@@ -129,7 +129,7 @@
       <xs:element minOccurs="0" name="SearchFields" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="SetAsInactiveByName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="SetAsInactiveByUserId" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="SharedLogisticsInvitationStatusCode" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="SharedLogisticsInvitStatusCode" nillable="true" type="xs:int" />
       <xs:element minOccurs="0" name="SharedLogisticsInvitationStatusName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="StartWorkingDate" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="StartWorkingManuallySet" type="xs:boolean" />

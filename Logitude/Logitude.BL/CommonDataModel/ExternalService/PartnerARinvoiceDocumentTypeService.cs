@@ -32,7 +32,7 @@ namespace Logitude.BL.CommonDataModel.ExternalService
         private string GetDefaultDocumentTypeTemplateId(string documentTypeCode)
         {
             var documentTypeList = documentTypeLists.Where(d => d.Code == documentTypeCode).FirstOrDefault();
-            return documentTypeList?.DocumentTypeDefaultReportTemplateId;
+            return documentTypeList?.DocumentTypeDefaulReportTempId;
         }
     }
 }

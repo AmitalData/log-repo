@@ -436,7 +436,7 @@ namespace Logitude.Server.Tools.QueueService
 
             LogitudeSettings.HandleLogMe(msg, false, "WorkUntilQEmpty_Db_new", stopLogAt);
         }
-        public List<QueueResponse> ReceiveCustoms_new(int nextRunDelayInSec = 60)
+        public List<QueueResponse> ReceiveCustoms_new(int nextRunDelayInSec = 60, int? selectCount = null)
         {
             if (!LogitudeSettings.IsCostomsDeploy)
             {
@@ -472,15 +472,12 @@ namespace Logitude.Server.Tools.QueueService
                             vQueueMessages.Direction = ParameterDirection.Output;
                             watingStatusPar.Direction = ParameterDirection.Input;
 
-                            var num = System.Configuration.ConfigurationManager.AppSettings.Get("CustomDbQueueNewReceiveSelectCount");
-                            if (!string.IsNullOrEmpty(num))
+                            if (selectCount == null || selectCount == 0)
                             {
-                                selectCountPar.Value = int.Parse(num);
+                                selectCount = 10;
                             }
-                            else
-                            {
-                                selectCountPar.Value = 10;
-                            }
+                            selectCountPar.Value = selectCount;
+
                             watingStatusPar.Value = WorkerNameService.GetWorkerWaitingStatusForReceiving(this.Tenant);
                             queueCodePar.Value = QueueCode;
                             nextRunDelayInSecPar.Value = nextRunDelayInSec;

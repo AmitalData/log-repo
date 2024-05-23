@@ -1332,7 +1332,7 @@ namespace WebFreight.Web.MetaDataUpdate.AddClasses
                 accountingSystem.AllowMinusInvoiceLines = accountingSystemDetails.AllowMinusInvoiceLines;
                 accountingSystem.SearchFields = accountingSystemDetails.Code + "," + accountingSystemDetails.Name;
                 accountingSystem.ShowDownloadScreen = accountingSystemDetails.ShowDownloadScreen;
-                accountingSystem.AllowPositiveAmountsInTheCreditNote = accountingSystemDetails.AllowPositiveAmountsInTheCreditNote;
+                accountingSystem.AllowPositiveAmountsCreditNote = accountingSystemDetails.AllowPositiveAmountsCreditNote;
                 accountingSystem.AllowARInvoicesTransfer = accountingSystemDetails.AllowARInvoicesTransfer;
                 accountingSystemRepository.Update(accountingSystem);
             }

@@ -189,15 +189,15 @@ namespace Simplog.Global.Data.GlobalModel.Mapping
 			string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
             {
-                this.Property(t => t.AgentSharedLogisticsStatisticsLastDate).HasColumnName("AgentSharedLogisticsLastDate");
-                this.Property(t => t.AgentSharedLogisticsStatisticsLastWeek).HasColumnName("AgentSharedLogisticsLastWeek");
-                this.Property(t => t.AgentSharedLogisticsStatisticsLastMonth).HasColumnName("AgentSharedLogisticsLastMonth");
+                this.Property(t => t.AgentSharedLogStatistiLastDate).HasColumnName("AgentSharedLogisticsLastDate");
+                this.Property(t => t.AgentSharedLogisticsLastWeek).HasColumnName("AgentSharedLogisticsLastWeek");
+                this.Property(t => t.AgentSharedLogStatistLastMonth).HasColumnName("AgentSharedLogisticsLastMonth");
             }
             else
             {
-                this.Property(t => t.AgentSharedLogisticsStatisticsLastDate).HasColumnName("AgentSharedLogisticsStatisticsLastDate");
-                this.Property(t => t.AgentSharedLogisticsStatisticsLastWeek).HasColumnName("AgentSharedLogisticsStatisticsLastWeek");
-                this.Property(t => t.AgentSharedLogisticsStatisticsLastMonth).HasColumnName("AgentSharedLogisticsStatisticsLastMonth");
+                this.Property(t => t.AgentSharedLogStatistiLastDate).HasColumnName("AgentSharedLogStatistiLastDate");
+                this.Property(t => t.AgentSharedLogisticsLastWeek).HasColumnName("AgentSharedLogisticsLastWeek");
+                this.Property(t => t.AgentSharedLogStatistLastMonth).HasColumnName("AgentSharedLogStatistLastMonth");
 
             }
 

@@ -333,7 +333,7 @@ namespace WebFreight.Web.CRMModel.DomainServices
             bool isRightToLeft = false;
             TenantRepository repo = new TenantRepository(entityPM.Tenant);
             Tenant tenant = repo.GetSingleByTenant(entityPM.Tenant);
-            if (tenant != null && tenant.IsCorrespondenceRightToLeftEnabled == true)
+            if (tenant != null && tenant.IsCorrespondRightToLeftEnabled == true)
             {
                 isRightToLeft = true;
             }

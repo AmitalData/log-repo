@@ -616,6 +616,21 @@ namespace CustomsWorkerRole
             List<CustomDBQueueMessage> responseList=null;
             List<long> deferredSequenceNumbers = new List<long>();
             bool proccesDone = false;
+
+            int maxActiveTasks = 10;
+            var num = System.Configuration.ConfigurationManager.AppSettings.Get("CustomDbQueueNewReceiveSelectCount");
+            if (!string.IsNullOrEmpty(num) && int.Parse(num) > 0)
+            {
+                maxActiveTasks = int.Parse(num);
+            }
+            List<string> activeTasks = new List<string> { };
+
+            bool waitAll = false;
+            if ( ConfigurationManager.AppSettings.Get("WaitAllForReceiveNew")?.ToLower() == "true")
+            {
+                waitAll = true;
+            }
+
             for (int filtterPriority = 2; filtterPriority < 3; filtterPriority++)
             {
                 while (!WorkerRoleServiceLocator.PleaseShutDown)
@@ -627,89 +642,116 @@ namespace CustomsWorkerRole
                     //throw new Exception("BrokeredMessage receivedMessage = _QueueClient.Receive(TimeSpan.FromSeconds(5));");
                     try
                     {
-                        LogMessagingUtilWR.Instance.AppendLine("TransactionFactory.GetTransaction");
-                        //int transactionTimeOutInMin = Math.Max(10, CustomsWorkerRole.Utils.GenUtil.GetQueueTimeOutInMin());
-                        using (TransactionScope Queue_scope = TransactionFactory.GetTransaction())
+                        if (activeTasks.Count < maxActiveTasks)
                         {
-                            using (TransactionScope scopeRecive = TransactionFactory.GetNewReadCommittedTransaction())
+                            LogMessagingUtilWR.Instance.AppendLine("TransactionFactory.GetTransaction");
+                            //int transactionTimeOutInMin = Math.Max(10, CustomsWorkerRole.Utils.GenUtil.GetQueueTimeOutInMin());
+                            using (TransactionScope Queue_scope = TransactionFactory.GetTransaction())
                             {
-
-
-                                try
+                                using (TransactionScope scopeRecive = TransactionFactory.GetNewReadCommittedTransaction())
                                 {
 
-                                    LogMessagingUtilWR.Instance.AppendLine("QRecive");
-                                    LogTime(className + " start get data from DB");
-                                    responseList = _CustomDbQueueService.Receive_new(CustomsWorkerRole.Utils.GenUtil.GetQueueTimeOutInMin() * 60);
-                                    //LogTime(className + " end get data from DB");
-                                    LogMessagingUtilWR.Instance.AppendLine("QRecive:after");
 
-                                    scopeRecive.Complete();
+                                    try
+                                    {
+                                        LogMessagingUtilWR.Instance.AppendLine("QRecive");
+                                        int selectCount = maxActiveTasks - activeTasks.Count;
+                                        LogTime(className + " start get data from DB (select " + selectCount + ")");
+                                        responseList = _CustomDbQueueService.Receive_new(CustomsWorkerRole.Utils.GenUtil.GetQueueTimeOutInMin() * 60, selectCount);
+                                        //LogTime(className + " end get data from DB");
+                                        LogMessagingUtilWR.Instance.AppendLine("QRecive:after");
 
-                                    // receivedMessage = _QueueClient.Receive(TimeSpan.FromSeconds(5)); //islam
+                                        scopeRecive.Complete();
+
+                                        // receivedMessage = _QueueClient.Receive(TimeSpan.FromSeconds(5)); //islam
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        LogTime(className + " exception: " + ex.Message);
+                                        scopeRecive.Dispose();
+                                        throw;
+                                    }
                                 }
-                                catch (Exception ex)
+
+                                if (responseList == null || (responseList != null && responseList.Count == 0))
                                 {
-                                    LogTime(className + " exception: " + ex.Message);
-                                    scopeRecive.Dispose();
-                                    throw;
+                                    //LogTime(className + " queue is empty");
+                                    QueueThreadStateService.Upsert(QueueThreadStateService.GetWRKey(this.GetType().Name), "No Work");
+                                    Thread.Sleep(TimeSpan.FromSeconds(CustomsWorkerRole.Utils.GenUtil.IfNoQueue_ServerWaitTimeInSec()));
+
+                                    break;
                                 }
-                            }
 
-                            if (responseList == null || (responseList != null && responseList.Count == 0))
-                            {
-                                //LogTime(className + " queue is empty");
-                                QueueThreadStateService.Upsert(QueueThreadStateService.GetWRKey(this.GetType().Name), "No Work");
-                                Thread.Sleep(TimeSpan.FromSeconds(CustomsWorkerRole.Utils.GenUtil.IfNoQueue_ServerWaitTimeInSec()));
+                                PerformanceM.EnqueueLastInstance();
+                                PerformanceM.LastInstance.QueueStartDate = QueueStartDate;
+                                PerformanceM.LastInstance.QueueReceiveDate = DateTime.Now;
 
-                                break;
-                            }
+                                LastActivity = DateTime.UtcNow;
+                                proccesDone = true;
+                                var taskLIst = new List<Task>();
 
-                            PerformanceM.EnqueueLastInstance();
-                            PerformanceM.LastInstance.QueueStartDate = QueueStartDate;
-                            PerformanceM.LastInstance.QueueReceiveDate = DateTime.Now;
+                                /*
+                                var currentThreads = Process.GetCurrentProcess().Threads;
+                                var currentThreadsCast = currentThreads.Cast<ProcessThread>();
+                                var runningThreads = currentThreadsCast.Where(thread => thread.ThreadState.ToString() == "Running").Count();
+                                var waitThreads = currentThreadsCast.Where(thread => thread.ThreadState.ToString().StartsWith("Wait")).Count();
+                                var stopThreads = currentThreadsCast.Where(thread => thread.ThreadState.ToString() == "Unstarted").Count();
+                                */
 
-                            LastActivity = DateTime.UtcNow;
-                            proccesDone = true;
-                            var taskLIst = new List<Task>();
+                                // LogTime($"{className} start open tasks for {responseList.Count} returned rows from Db (threads count: {currentThreads.Count}, {runningThreads}, {waitThreads}, {stopThreads})");
+                                LogTime($"{className} start open tasks for {responseList.Count} returned rows from Db");
+                                var totalStopwatch = Stopwatch.StartNew();
 
-                            var currentThreads = Process.GetCurrentProcess().Threads;
-                            var currentThreadsCast = currentThreads.Cast<ProcessThread>();
-                            var runningThreads = currentThreadsCast.Where(thread => thread.ThreadState.ToString() == "Running").Count();
-                            var waitThreads = currentThreadsCast.Where(thread => thread.ThreadState.ToString().StartsWith("Wait")).Count();
-                            var stopThreads = currentThreadsCast.Where(thread => thread.ThreadState.ToString() == "Unstarted").Count();
-
-                            LogTime($"{className} start open tasks for {responseList.Count} returned rows from Db (threads count: {currentThreads.Count}, {runningThreads}, {waitThreads}, {stopThreads})");
-                            var totalStopwatch = Stopwatch.StartNew();
-
-                            foreach (var item in responseList)
-                            {
-                                var stopwatch = Stopwatch.StartNew();
-                                //LogTime(className + " create new task for msg id: " + item.MessageId);
-                                var t =
-                                Task.Factory.StartNew(() =>
+                                foreach (var item in responseList)
                                 {
-                                    var createdElapsed = stopwatch.Elapsed.TotalSeconds;
-                                    // LogTime(className + " start task (created " + stopwatch.Elapsed.TotalSeconds + " seconds ago) for row MessageId: " + item.MessageId);
-                                    var taskstopwatch = Stopwatch.StartNew();
+                                    var stopwatch = Stopwatch.StartNew();
+                                    //LogTime(className + " create new task for msg id: " + item.MessageId);
+                                    activeTasks.Add(item.MessageId);
 
-                                    CustomsCommandBaseHelper helper = new CustomsCommandBaseHelper();
-                                    helper.RunTask(item, className);
-                                    LogMessagingUtilWR.Instance.AppendLine("LogDoneItemInMemory();");
-                                    LogDoneItemInMemory();
-                                    LogMessagingUtilWR.Instance.AppendLine("LogDoneItemInMemory();AFTER");
-                                    LogTime(className + " end task (elapsed: " + (int)taskstopwatch.Elapsed.TotalSeconds + " seconds. started after: " + (int)createdElapsed + " seconds) for row MessageId: " + item.MessageId);
-                                });
-                                taskLIst.Add(t);
+                                    var t =
+                                    Task.Factory.StartNew(() =>
+                                    {
+                                        var createdElapsed = stopwatch.Elapsed.TotalSeconds;
+                                        // LogTime(className + " start task (created " + stopwatch.Elapsed.TotalSeconds + " seconds ago) for row MessageId: " + item.MessageId);
+                                        LogTime(className + " start task for row MessageId: " + item.MessageId);
+                                        var taskstopwatch = Stopwatch.StartNew();
+
+                                        try
+                                        {
+                                            CustomsCommandBaseHelper helper = new CustomsCommandBaseHelper();
+                                            helper.RunTask(item, className);
+                                            LogMessagingUtilWR.Instance.AppendLine("LogDoneItemInMemory();");
+                                            LogDoneItemInMemory();
+                                            LogMessagingUtilWR.Instance.AppendLine("LogDoneItemInMemory();AFTER");
+                                            LogTime(className + " end task (elapsed: " + (int)taskstopwatch.Elapsed.TotalSeconds + " seconds. started after: " + (int)createdElapsed + " seconds) for row MessageId: " + item.MessageId);
+                                        }
+                                        finally
+                                        {
+                                            activeTasks.Remove(item.MessageId);
+                                        }
+                                    });
+                                    taskLIst.Add(t);
+                                }
+
+                                if (waitAll)
+                                {
+                                    Task.WaitAll(taskLIst.ToArray());
+                                    LogTime(className + " end waiting for all of them (total elapsed: " + (int)totalStopwatch.Elapsed.TotalSeconds + " seconds)");
+                                }
+                                Queue_scope.Complete();
                             }
-                            Task.WaitAll(taskLIst.ToArray());
-                            LogTime(className + " end waiting for all of them (total elapsed: " + (int)totalStopwatch.Elapsed.TotalSeconds + " seconds)");
-                            Queue_scope.Complete();
                         }
                     }
                     finally
                     {
-                        PerformanceM.SleepMSAfterEachQueuePeek();
+                        if (waitAll)
+                        {
+                            PerformanceM.SleepMSAfterEachQueuePeek();
+                        }
+                        else
+                        {
+                            Thread.Sleep(1000);
+                        }
                     }
                 }
             }

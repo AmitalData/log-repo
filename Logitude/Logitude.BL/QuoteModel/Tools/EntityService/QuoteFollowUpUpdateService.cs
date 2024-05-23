@@ -114,9 +114,9 @@ namespace Logitude.BL.QuoteModel.Tools.EntityService
         private static DateTime? AddFollowupDateEscalationTimeDays(FollowUp follow, DateTime? fieldValuedate)
         {
             DateTime? theFieldValuedate = fieldValuedate; 
-            if (follow.DateEscalationActionTimeIndicatorCode != "IM" && follow.DateEscalationTime != 0)
+            if (follow.DateEscalaActTimeIndicatorCode != "IM" && follow.DateEscalationTime != 0)
             {
-                int dateEscalationTime = follow.DateEscalationActionTimeIndicatorCode == "AF" ? follow.DateEscalationTime : follow.DateEscalationTime * -1;
+                int dateEscalationTime = follow.DateEscalaActTimeIndicatorCode == "AF" ? follow.DateEscalationTime : follow.DateEscalationTime * -1;
                 theFieldValuedate = fieldValuedate.Value.AddDays(dateEscalationTime);
 
             }

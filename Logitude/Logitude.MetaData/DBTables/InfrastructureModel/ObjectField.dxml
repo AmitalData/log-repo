@@ -220,7 +220,7 @@
   <Column
     Name="DisplayInSearchWindowFilterInx"
     ShortName="SearchWindowFiltersIndex"
-    OldNames="DisplayInSearchWindowFiltersIndex"
+    OldNames="DisplayInSearchWindowFilterInx"
     Type="int">
     <Constraints
       Nullable="false" />
@@ -427,7 +427,7 @@
   <Column
     Name="AllowedInCustomerFieldsSetting"
     ShortName="AllowedInCustFieldsSettings"
-    OldNames="AllowedInCustomerFieldsSettings"
+    OldNames="AllowedInCustomerFieldsSetting"
     Type="bit">
     <Constraints
       Nullable="false" />

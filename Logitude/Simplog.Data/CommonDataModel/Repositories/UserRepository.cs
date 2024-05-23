@@ -38,12 +38,12 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public IQueryable<User> GetUsersTwoFactorAuthenticationEnabled(int tenant)
         {
-            return (from record in context.Users where record.Tenant == tenant && record.IsTwoFactorAuthenticationEnabled select record);
+            return (from record in context.Users where record.Tenant == tenant && record.IsTwoFactorAuthenticatiEnabled select record);
         }
 
         public bool CheckUsersTwoFactorAuthenticationEnabled(int tenant)
         {
-            return (from record in context.Users where record.Tenant == tenant && record.IsTwoFactorAuthenticationEnabled select record).Any();
+            return (from record in context.Users where record.Tenant == tenant && record.IsTwoFactorAuthenticatiEnabled select record).Any();
         }
 
         public User GetSingleUserById(string id)

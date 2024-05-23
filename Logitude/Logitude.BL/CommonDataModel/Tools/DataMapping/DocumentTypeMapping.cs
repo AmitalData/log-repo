@@ -30,7 +30,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             documentType.Tenant = documentTypePM.Tenant;
             documentType.Code = documentTypePM.Code;
             documentType.ObjectTableId = documentTypePM.ObjectTableId;
-            documentType.DocumentTypeDefaultReportTemplateId = documentTypePM.DocumentTypeDefaultReportTemplateId;
+            documentType.DocumentTypeDefaulReportTempId = documentTypePM.DocumentTypeDefaulReportTempId;
             documentType.DocumentTypeDefaultHTMLTemplateId = documentTypePM.DocumentTypeDefaultHTMLTemplateId;
             documentType.TemplateFormatCode = documentTypePM.TemplateFormatCode;
             documentType.Subject = documentTypePM.Subject;

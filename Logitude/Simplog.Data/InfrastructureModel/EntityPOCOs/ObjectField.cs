@@ -47,7 +47,7 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public bool UniqueField { get; set; }
         public string ShortNameTextCodeId { get; set; }
         public int  DisplayInSearchWindowListIndex { get; set; }
-        public int DisplayInSearchWindowFiltersIndex { get; set; }
+        public int DisplayInSearchWindowFilterInx { get; set; }
         public bool IsMulti { get; set; }
         public string MultiTableId { get; set; }
 
@@ -91,7 +91,7 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public bool AutomationEmailRecipient { get; set; }
         public bool CanAutomateSetValue { get; set; }
 
-        public bool AllowedInCustomerFieldsSettings { get; set; }
+        public bool AllowedInCustomerFieldsSetting { get; set; }
 
         public bool AllowedInAirlineMessaging { get; set; }
 

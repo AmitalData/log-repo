@@ -125,8 +125,8 @@ namespace Logitude.IntegrationTest.Shipment.EntitiesInitializer
                     {
                         if (entityPM.ShipmentLevelCode == "C")
                         {
-                            freightPrepaidCollectId = CorePreparationVariables.TenantPM.MasterExportFreightPrepaidCollectId;
-                            otherPrepaidCollectId = CorePreparationVariables.TenantPM.MasterExportOtherPrepaidCollectId;
+                            freightPrepaidCollectId = CorePreparationVariables.TenantPM.MasterExpFreigPrepaidCollectId;
+                            otherPrepaidCollectId = CorePreparationVariables.TenantPM.MasterExpOtherPrepaidCollectId;
                         }
 
                         else
@@ -142,8 +142,8 @@ namespace Logitude.IntegrationTest.Shipment.EntitiesInitializer
                     {
                         if (entityPM.ShipmentLevelCode == "C")
                         {
-                            freightPrepaidCollectId = CorePreparationVariables.TenantPM.MasterImportFreightPrepaidCollectId;
-                            otherPrepaidCollectId = CorePreparationVariables.TenantPM.MasterImportOtherPrepaidCollectId;
+                            freightPrepaidCollectId = CorePreparationVariables.TenantPM.MasterImpFreiPrepaidCollectId;
+                            otherPrepaidCollectId = CorePreparationVariables.TenantPM.MasterImpOtherPrepaidCollectId;
                         }
 
                         else

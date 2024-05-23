@@ -354,7 +354,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 docout.DocumentTypeObjectTableId = docType.ObjectTableId;
                 DocumentTypeTemplate template = null;
 
-                if (string.IsNullOrEmpty(docout.DocumentTemplateId)) docout.DocumentTemplateId = docType.DocumentTypeDefaultReportTemplateId;
+                if (string.IsNullOrEmpty(docout.DocumentTemplateId)) docout.DocumentTemplateId = docType.DocumentTypeDefaulReportTempId;
                 if (string.IsNullOrEmpty(docout.EmailTemplateId)) docout.EmailTemplateId = docType.DocumentTypeDefaultHTMLTemplateId;
                 if (!string.IsNullOrEmpty(docout.DocumentTemplateId))
                 {
@@ -536,7 +536,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     {
                         if (docType.TemplateFormatCode == "P")
                         {
-                            doc.DocumentTemplateId = docType.DocumentTypeDefaultReportTemplateId;
+                            doc.DocumentTemplateId = docType.DocumentTypeDefaulReportTempId;
                         }
     
                     }

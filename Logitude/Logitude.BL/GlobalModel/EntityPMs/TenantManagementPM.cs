@@ -243,9 +243,9 @@ namespace Logitude.BL.GlobalModel.EntityPMs
 
 
 
-        public DateTime? AgentSharedLogisticsStatisticsLastDate { get; set; }
-        public int AgentSharedLogisticsStatisticsLastWeek { get; set; }
-        public int AgentSharedLogisticsStatisticsLastMonth { get; set; }
+        public DateTime? AgentSharedLogStatistiLastDate { get; set; }
+        public int AgentSharedLogisticsLastWeek { get; set; }
+        public int AgentSharedLogStatistLastMonth { get; set; }
         public bool ChangeHeaderColor { get; set; }
         public string HeaderColor { get; set; }
         public bool DocumentShareAsDefault { get; set; }

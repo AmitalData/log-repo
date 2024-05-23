@@ -24,7 +24,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.Area).HasMaxLength(20).IsUnicode(false);
 
             this.Property(t => t.DateFieldName).HasMaxLength(120).IsUnicode(false);
-            this.Property(t => t.DateEscalationActionTimeIndicatorCode).HasMaxLength(2).IsUnicode(false);
+            this.Property(t => t.DateEscalaActTimeIndicatorCode).HasMaxLength(2).IsUnicode(false);
             
             
 
@@ -44,13 +44,13 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             if (dbms == "oracle")
             {
                 this.Property(t => t.Date).HasColumnName("FollowUpDate");
-                this.Property(t => t.DateEscalationActionTimeIndicatorCode).HasColumnName("DateEscalationActionTimeCode");
+                this.Property(t => t.DateEscalaActTimeIndicatorCode).HasColumnName("DateEscalationActionTimeCode");
             }
             //#else
             else
             {
                 this.Property(t => t.Date).HasColumnName("Date");
-                this.Property(t => t.DateEscalationActionTimeIndicatorCode).HasColumnName("DateEscalationActionTimeIndicatorCode");
+                this.Property(t => t.DateEscalaActTimeIndicatorCode).HasColumnName("DateEscalaActTimeIndicatorCode");
             }
             
 //#endif

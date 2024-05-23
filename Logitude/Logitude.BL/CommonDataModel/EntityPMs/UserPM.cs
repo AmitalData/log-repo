@@ -137,10 +137,10 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public bool IsProductRestricted { get; set; }
 
         [DataMember]
-        public bool IsShowContactDetailsInTheMobileApp { get; set; }
+        public bool IsShowContactDetailInMobileApp { get; set; }
 
         [DataMember]
-        public bool IsTwoFactorAuthenticationEnabled { get; set; }
+        public bool IsTwoFactorAuthenticatiEnabled { get; set; }
 
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]

@@ -1645,7 +1645,7 @@ namespace WebFreight.Web
 
                     if (securityPolicy.IsEnabledForSpecificUsers)
                     {
-                        if (!logitudeUser.IsTwoFactorAuthenticationEnabled)
+                        if (!logitudeUser.IsTwoFactorAuthenticatiEnabled)
                         {
                             return false;
                         }
@@ -2312,8 +2312,8 @@ namespace WebFreight.Web
                             if (cardContact != null)
                             {
                                 card = commonDataContext.Cards.Where(d => d.Id == cardId).FirstOrDefault();
-                                card.SharedLogisticsInvitationStatusCode = !IsFromCargoTracking ? 3 : card.SharedLogisticsInvitationStatusCode;
-                                card.CargoTrackingInvitationStatusCode = IsFromCargoTracking ? 3 : card.CargoTrackingInvitationStatusCode;
+                                card.SharedLogisticsInvitStatusCode = !IsFromCargoTracking ? 3 : card.SharedLogisticsInvitStatusCode;
+                                card.CargoTrackingInvitatStatusCode = IsFromCargoTracking ? 3 : card.CargoTrackingInvitatStatusCode;
                                 card.LastLoginDate = TenantServerConfigration.GetCurrentDateTime(tenant);
                                 cardContact.LastLoginDate = TenantServerConfigration.GetCurrentDateTime(tenant);
                                 user.CardId = card.Id;

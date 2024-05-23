@@ -1231,7 +1231,7 @@ namespace MeatadataGeneratorTool
                 SetAttribute("AutomaticField", f.AutomaticField.ToString().ToLower(), fieldElement, null);
                 SetAttribute("UniqueField", f.UniqueField.ToString().ToLower(), fieldElement, null);
                 SetAttribute("DisplayInSearchWindowListIndex", f.DisplayInSearchWindowListIndex.ToString(), fieldElement, null);
-                //SetAttribute("DisplayInSearchWindowFiltersIndex", f.DisplayInSearchWindowFiltersIndex.ToString(), fieldElement, null);
+                //SetAttribute("DisplayInSearchWindowFilterInx", f.DisplayInSearchWindowFilterInx.ToString(), fieldElement, null);
                 SetAttribute("IsMulti", f.IsMulti.ToString().ToLower(), fieldElement, null);
                 SetAttribute("MultiTableName", GetStringValue(f.MultiTableName), fieldElement, null);
 
@@ -1254,9 +1254,9 @@ namespace MeatadataGeneratorTool
                 SetAttribute("ControlField2", GetStringValue(f.ControlField2), fieldElement, null);
                 SetAttribute("ControlField3", GetStringValue(f.ControlField3), fieldElement, null);
                 SetAttribute("Code", GetStringValue(f.Code), fieldElement, null);
-                SetAttribute("AllowedInCustomerFieldsSettings", f.AllowedInCustomerFieldsSettings.ToString().ToLower(), fieldElement, null);
+                SetAttribute("AllowedInCustomerFieldsSetting", f.AllowedInCustomerFieldsSetting.ToString().ToLower(), fieldElement, null);
                 SetAttribute("DisplayInSearchWindowFilters", f.DisplayInSearchWindowFilters.ToString().ToLower(), fieldElement, null);
-                SetAttribute("DisplayInSearchWindowFiltersIndex", f.DisplayInSearchWindowFiltersIndex.ToString().ToLower(), fieldElement, null);
+                SetAttribute("DisplayInSearchWindowFilterInx", f.DisplayInSearchWindowFilterInx.ToString().ToLower(), fieldElement, null);
                 SetAttribute("DisplayInDocumentReferences", f.DisplayInDocumentReferences.ToString().ToLower(), fieldElement, null);
 
                 if (f.NumberOfDigits != null)
@@ -2239,20 +2239,6 @@ namespace MeatadataGeneratorTool
 
                         indexElement.Attributes().ToList().ForEach(element =>
                         {
-                            indexXmlElement.SetAttribute("Columns", indexElement.Attribute("Columns").Value);
-                        }
-                        if (indexElement.Attribute("Partition") != null)
-                        {
-                            indexXmlElement.SetAttribute("Partition", indexElement.Attribute("Partition").Value);
-                        }
-                        if (indexElement.Attribute("PartitionValue") != null)
-                        {
-                            indexXmlElement.SetAttribute("PartitionValue", indexElement.Attribute("PartitionValue").Value);
-                        }
-                        if (indexElement.Attribute("Include") != null)
-                        {
-                            indexXmlElement.SetAttribute("Include", indexElement.Attribute("Include").Value);
-                        }
                             indexXmlElement.SetAttribute(element.Name.LocalName, element.Value);
                         });
 

@@ -119,7 +119,7 @@
   <Column
     Name="IsShowContactDetailInMobileApp"
     ShortName="IsShowContactDetailsInMobile"
-    OldNames="IsShowContactDetailsInTheMobileApp"
+    OldNames="IsShowContactDetailInMobileApp"
     Type="bit">
     <Constraints
       Nullable="false" />
@@ -148,7 +148,7 @@
   <Column
     Name="IsTwoFactorAuthenticatiEnabled"
     ShortName="IsTwoFactorAuthenticateEnabled"
-    OldNames="IsTwoFactorAuthenticationEnabled"
+    OldNames="IsTwoFactorAuthenticatiEnabled"
     Type="bit">
     <Constraints
       Nullable="false" />

@@ -341,18 +341,18 @@ namespace CommunicationWorkerRole
 
                 if (sharingShipments.Any())
                 {
-                    if (tenantManagement.AgentSharedLogisticsStatisticsLastDate == null)
+                    if (tenantManagement.AgentSharedLogStatistiLastDate == null)
                     {
-                        tenantManagement.AgentSharedLogisticsStatisticsLastDate = sharingShipments.Max(s => s.ManifestLastSharingDate);
+                        tenantManagement.AgentSharedLogStatistiLastDate = sharingShipments.Max(s => s.ManifestLastSharingDate);
                     }
                     else
                     {
-                        tenantManagement.AgentSharedLogisticsStatisticsLastDate = sharingShipments.Where(d => d.ManifestLastSharingDate >= tenantManagement.AgentSharedLogisticsStatisticsLastDate)
+                        tenantManagement.AgentSharedLogStatistiLastDate = sharingShipments.Where(d => d.ManifestLastSharingDate >= tenantManagement.AgentSharedLogStatistiLastDate)
                                                                                                   .Max(s => s.ManifestLastSharingDate);
                     }
 
-                    tenantManagement.AgentSharedLogisticsStatisticsLastWeek = sharingShipments.Count(s => s.ManifestLastSharingDate >= lastweek);
-                    tenantManagement.AgentSharedLogisticsStatisticsLastMonth = sharingShipments.Count(s => s.ManifestLastSharingDate >= lastmonth);
+                    tenantManagement.AgentSharedLogisticsLastWeek = sharingShipments.Count(s => s.ManifestLastSharingDate >= lastweek);
+                    tenantManagement.AgentSharedLogStatistLastMonth = sharingShipments.Count(s => s.ManifestLastSharingDate >= lastmonth);
                 }
 
                 if (myCommunicationLogs.Any())
