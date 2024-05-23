@@ -469,13 +469,26 @@ namespace CustomsWorkerRole
             }
         }
 
+        string GetThreadCounts()
+        {
+            var currentThreads = Process.GetCurrentProcess().Threads;
+            var currentThreadsCast = currentThreads.Cast<ProcessThread>();
+            var runningThreads = currentThreadsCast.Where(thread => thread.ThreadState.ToString() == "Running").Count();
+            var waitThreads = currentThreadsCast.Where(thread => thread.ThreadState.ToString().StartsWith("Wait")).Count();
+            var readyThreads = currentThreadsCast.Where(thread => thread.ThreadState.ToString() == "Ready").Count();
+            var initThreads = currentThreadsCast.Where(thread => thread.ThreadState.ToString() == "Initialized").Count();
+            var terminatedThreads = currentThreadsCast.Where(thread => thread.ThreadState.ToString() == "Terminated").Count();
+
+            return $"threads count: { currentThreads.Count}, initialized: { initThreads}, ready: { readyThreads}, wait: { waitThreads}, " +
+                    $"running: {runningThreads}, terminated: {terminatedThreads})";
+        }
 
 
         // islam db queue service
         void WorkUntilQEmpty_Db()
         {
-
-
+            string counts = GetThreadCounts();
+            LogTime($"{className} start all ({counts})");
 
             CustomDBQueueMessage response = null;
             List<long> deferredSequenceNumbers = new List<long>();
@@ -690,16 +703,8 @@ namespace CustomsWorkerRole
                                 proccesDone = true;
                                 var taskLIst = new List<Task>();
 
-                                /*
-                                var currentThreads = Process.GetCurrentProcess().Threads;
-                                var currentThreadsCast = currentThreads.Cast<ProcessThread>();
-                                var runningThreads = currentThreadsCast.Where(thread => thread.ThreadState.ToString() == "Running").Count();
-                                var waitThreads = currentThreadsCast.Where(thread => thread.ThreadState.ToString().StartsWith("Wait")).Count();
-                                var stopThreads = currentThreadsCast.Where(thread => thread.ThreadState.ToString() == "Unstarted").Count();
-                                */
-
-                                // LogTime($"{className} start open tasks for {responseList.Count} returned rows from Db (threads count: {currentThreads.Count}, {runningThreads}, {waitThreads}, {stopThreads})");
-                                LogTime($"{className} start open tasks for {responseList.Count} returned rows from Db");
+                                string counts = GetThreadCounts();
+                                LogTime($"{className} start open tasks for {responseList.Count} returned rows from Db ({counts})");
                                 var totalStopwatch = Stopwatch.StartNew();
 
                                 foreach (var item in responseList)
