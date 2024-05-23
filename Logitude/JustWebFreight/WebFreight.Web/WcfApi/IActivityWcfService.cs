@@ -36,10 +36,10 @@ namespace WebFreight.Web.WcfApi
         ActivityPM GetActivityPM(string id, int tenant, ref Response response);
 
         [OperationContract]
-        Response UploadDocumentFileData(int tenant, string blobname, string DocumentId);
+        Response GetStorageContainerConnectionString(int tenant);
 
         [OperationContract]
-        Response GetStorageContainerConnectionString(int tenant);
+        Response UploadDocumentFileDataFromStorage(int tenant, string blobname, string DocumentId);
 
         [OperationContract]
         Response UploadDocumentFileData(byte[] buffer, long fileSize, long sentBytes, string[] blockIdsList, int bufferNumber, int tenant, string FileNameWithExtention, string DocumentId);

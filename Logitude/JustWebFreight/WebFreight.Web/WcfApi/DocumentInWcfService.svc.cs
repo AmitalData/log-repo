@@ -34,6 +34,7 @@ using System.ServiceModel.Description;
 using System.Web;
 using Logitude.SystemLogs;
 using Simplog.Server.Infrastructure;
+using System.Diagnostics;
 
 namespace WebFreight.Web.WcfApi
 {
@@ -589,8 +590,9 @@ namespace WebFreight.Web.WcfApi
             Response response = new Response();
             try
             {
-                SecurityUtility.AuthenticationOnTenant(tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);                
                 response.Result = DocumentFileUploadHelper.GetTempStorageSasWrite(tenant);
+
                 return response;
             }
             catch (Exception ex)
@@ -613,7 +615,7 @@ namespace WebFreight.Web.WcfApi
             return response;
         }
 
-        public Response UploadDocumentFileData(int tenant, string blobname, string DocumentId)
+        public Response UploadDocumentFileDataFromStorage(int tenant, string blobname, string DocumentId)
         {
             Response response = new Response();
             if(string.IsNullOrEmpty(blobname) || string.IsNullOrEmpty(DocumentId))

@@ -26,10 +26,10 @@ namespace WebFreight.Web.WcfApi
         Response UpsertDocumentData(DocumentDataPM documentDataPM, bool batch);
 
         [OperationContract]
-        Response UploadDocumentFileData(int tenant, string blobname, string DocumentId);
+        Response GetStorageContainerConnectionString(int tenant);
         
         [OperationContract]
-        Response GetStorageContainerConnectionString(int tenant);
+        Response UploadDocumentFileDataFromStorage(int tenant, string blobname, string DocumentId);
 
         [OperationContract]
         Response UploadDocumentFileData(byte[] buffer, long fileSize, long sentBytes, string[] blockIdsList, int bufferNumber, int tenant, string FileNameWithExtention, string DocumentId);
