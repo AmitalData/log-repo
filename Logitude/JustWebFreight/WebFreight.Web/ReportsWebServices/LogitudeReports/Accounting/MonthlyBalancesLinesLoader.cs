@@ -92,7 +92,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             List<ChartOfAccount> chartOfAccountList =chartOfAccountRepository.GetAllByTenant(tenant);
             QueryFilterItem ChartOfAccountsIdList = reportQueryOperations.QueryFilterItems.Where(d => d.FieldName == "ChartOfAccountsIdList").FirstOrDefault();
 
-			if (ChartOfAccountsIdList?.FieldValue != null)
+			if (!string.IsNullOrEmpty((string)ChartOfAccountsIdList?.FieldValue))
 			{
                 string[] ChartOfAccountsIdArray = ChartOfAccountsIdList.FieldValue.ToString().Split(',');
 				 chartOfAccountList = chartOfAccountList.Where(a => ChartOfAccountsIdArray.Contains(a.Id)).ToList();
