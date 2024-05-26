@@ -1,0 +1,6 @@
+Warning: Missing Index In DXML File CustomsInterfaceSetting.dxml, The Found Index On DB Is IX_N908481237, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File DocumentsFiling.dxml, The Found Index On DB Is IX_DOCFILINGS_EXTERNALENTITYN, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File DocumentsFiling.dxml, The Found Index On DB Is DOCFILINGS_EXTENTITYREF, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File DocumentType.dxml, The Found Index On DB Is UC_DOCUMENTTYPES_TCO, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File FollowUp.dxml, The Found Index On DB Is IX_FOLLOWUPS_QUOTEID, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File ObjectField.dxml, The Found Index On DB Is UC_OBJFIELDS_TID_FN, The Index Should Added To The DXML File
