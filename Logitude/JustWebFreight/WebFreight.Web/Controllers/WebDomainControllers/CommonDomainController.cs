@@ -1930,7 +1930,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 if (myCustomsInterfaceSetting != null)
                 {
-                    myCustomsInterfaceSetting.ActivateCustomsManagInShipment = true;
+                    myCustomsInterfaceSetting.ActivateCustomsManagementInShipments = true;
                     myCustomsInterfaceSettingRepository.Update(myCustomsInterfaceSetting);
                     myCustomsInterfaceSettingRepository.SubmitChanges();
                 }
@@ -1990,7 +1990,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 if (myCustomsInterfaceSetting != null)
                 {
-                    myCustomsInterfaceSetting.ActivateCustomsManagInShipment = true;
+                    myCustomsInterfaceSetting.ActivateCustomsManagementInShipments = true;
                     myCustomsInterfaceSettingRepository.Update(myCustomsInterfaceSetting);
                     myCustomsInterfaceSettingRepository.SubmitChanges();
                 }

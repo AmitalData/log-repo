@@ -6229,7 +6229,7 @@ namespace WebFreight.Web.MetaDataUpdate
         //        DisplayInSearchWindowList = true,
         //        DisplayInSearchWindowListIndex = 0,
         //        DisplayInSearchWindowFilters = true,
-        //        DisplayInSearchWindowFilterInx = 0,
+        //        DisplayInSearchWindowFiltersIndex = 0,
         //        FullFieldLable = "Name",
         //        FieldName = "Name",
         //        FieldsDataType = "Text",

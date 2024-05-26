@@ -1162,17 +1162,17 @@ namespace MeatadataGeneratorTool
             set { helpTextCode = value; FirePropertyChanged("HelpTextCode"); }
         }
 
-        private bool AllowedInCustomerFieldsSetting;
-        public bool AllowedInCustomerFieldsSetting
+        private bool allowedInCustomerFieldsSettings;
+        public bool AllowedInCustomerFieldsSettings
         {
             get
             {
-                return AllowedInCustomerFieldsSetting;
+                return allowedInCustomerFieldsSettings;
             }
             set
             {
-                AllowedInCustomerFieldsSetting = value;
-                FirePropertyChanged("AllowedInCustomerFieldsSetting");
+                allowedInCustomerFieldsSettings = value;
+                FirePropertyChanged("AllowedInCustomerFieldsSettings");
             }
         }
 
@@ -1191,17 +1191,17 @@ namespace MeatadataGeneratorTool
             }
         }
 
-        private int DisplayInSearchWindowFilterInx;
-        public int DisplayInSearchWindowFilterInx
+        private int displayInSearchWindowFiltersIndex;
+        public int DisplayInSearchWindowFiltersIndex
         {
             get
             {
-                return DisplayInSearchWindowFilterInx;
+                return displayInSearchWindowFiltersIndex;
             }
             set
             {
-                DisplayInSearchWindowFilterInx = value;
-                FirePropertyChanged("DisplayInSearchWindowFilterInx");
+                displayInSearchWindowFiltersIndex = value;
+                FirePropertyChanged("DisplayInSearchWindowFiltersIndex");
             }
         }
 

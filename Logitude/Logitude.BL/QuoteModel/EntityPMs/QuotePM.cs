@@ -442,7 +442,7 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public string NotifyCountryId { get; set; }
         public string NotifyCity { get; set; }
 
-        public bool DontExportQuotationsoIntegratedSys { get; set; }
+        public bool DontExportQuotationsToIntegratedSystem { get; set; }
         public string QuotationSections { get; set; }
         public string SameOrFixed { get; set; }
 

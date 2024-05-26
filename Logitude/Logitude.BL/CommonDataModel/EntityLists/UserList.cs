@@ -32,7 +32,7 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public bool LicencedUser { get; set; }
         public DateTime? LastLoginDate { get; set; }
         public bool IsProductRestricted { get; set; }
-        public bool IsShowContactDetailInMobileApp { get; set; }
+        public bool IsShowContactDetailsInTheMobileApp { get; set; }
         public string Technology { get; set; }
         public string BusinessPhone { get; set; }
         public string Fax { get; set; }
@@ -44,7 +44,7 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public bool IsDistributor { get; set; }
         public string DistributorCode { get; set; }
         public string PersonalId { get; set; }
-        public bool IsTwoFactorAuthenticatiEnabled { get; set; }
+        public bool IsTwoFactorAuthenticationEnabled { get; set; }
         public int? SecurityLevel { get; set; }
 
         public string DocumentFilingInbox { get; set; }

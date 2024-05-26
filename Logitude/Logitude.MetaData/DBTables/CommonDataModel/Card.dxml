@@ -138,7 +138,7 @@
   <Column
     Name="SharedLogisticsInvitStatusCode"
     ShortName="SharedLogInvitationStatCode"
-    OldNames="SharedLogisticsInvitStatusCode"
+    OldNames="SharedLogisticsInvitationStatusCode"
     Type="int">
     <Constraints
       Nullable="true" />
@@ -152,7 +152,7 @@
   <Column
     Name="CargoTrackingInvitatStatusCode"
     ShortName="CargoTracInvitationStatCode"
-    OldNames="CargoTrackingInvitatStatusCode"
+    OldNames="CargoTrackingInvitationStatusCode"
     Type="int">
     <Constraints
       Nullable="true" />

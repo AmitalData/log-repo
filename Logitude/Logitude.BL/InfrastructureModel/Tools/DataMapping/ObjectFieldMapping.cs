@@ -34,7 +34,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             objectField.DisplayInList = objectFieldPM.DisplayInList;
             objectField.DisplayInLookUpIndex = objectFieldPM.DisplayInLookUpIndex;
             objectField.DisplayInSearchWindowFilters = objectFieldPM.DisplayInSearchWindowFilters;
-            objectField.DisplayInSearchWindowFilterInx = objectFieldPM.DisplayInSearchWindowFilterInx;
+            objectField.DisplayInSearchWindowFiltersIndex = objectFieldPM.DisplayInSearchWindowFiltersIndex;
             objectField.DisplayInSearchWindowList = objectFieldPM.DisplayInSearchWindowList;
             objectField.DisplayInSearchWindowListIndex = objectFieldPM.DisplayInSearchWindowListIndex;
             objectField.DisplayOnLookUp = objectFieldPM.DisplayOnLookUp;
@@ -87,7 +87,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             objectField.HtmlListComponentUrl = objectFieldPM.HtmlListComponentUrl;
             objectField.HtmlHeaderComponentName = objectFieldPM.HtmlHeaderComponentName;
             objectField.HtmlListComponentName = objectFieldPM.HtmlListComponentName;
-            objectField.AllowedInCustomerFieldsSetting = objectFieldPM.AllowedInCustomerFieldsSetting;
+            objectField.AllowedInCustomerFieldsSettings = objectFieldPM.AllowedInCustomerFieldsSettings;
             objectField.GeneratedComponentPath = objectFieldPM.GeneratedComponentPath;
             objectField.DisplayInDocumentReferences = objectFieldPM.DisplayInDocumentReferences;
             objectField.CopyToDW = objectField.CopyToDW;

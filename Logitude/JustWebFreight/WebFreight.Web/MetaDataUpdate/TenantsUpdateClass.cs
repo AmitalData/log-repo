@@ -2304,7 +2304,7 @@ namespace WebFreight.Web.MetaDataUpdate
                             IsEnabledForCustomers = true,
                             Notes = docType.Notes,
                             DocumentTypeDefaultHTMLTemplateId = docType.DocumentTypeDefaultHTMLTemplateId,
-                            DocumentTypeDefaulReportTempId = docType.DocumentTypeDefaulReportTempId,
+                            DocumentTypeDefaultReportTemplateId = docType.DocumentTypeDefaultReportTemplateId,
                             IsSystemAdditionalPrintingFields = docType.IsSystemAdditionalPrintingFields,
                             PrintingFieldsScreenCode = docType.PrintingFieldsScreenCode,
                             OrderBy = docType.OrderBy,
@@ -2356,7 +2356,7 @@ namespace WebFreight.Web.MetaDataUpdate
                             DocumentTypePM documenttype = tenantZeroDocumentTypes.Values.Where(d => d.Id == a.DocumentTypeId && d.Tenant == 0).FirstOrDefault();
 
                             bool isDefault = (from doc in tenantZeroDocumentTypes.Values
-                                              where doc.DocumentTypeDefaultHTMLTemplateId == a.Id || doc.DocumentTypeDefaulReportTempId == a.Id
+                                              where doc.DocumentTypeDefaultHTMLTemplateId == a.Id || doc.DocumentTypeDefaultReportTemplateId == a.Id
                                               select doc).Any();
 
 
@@ -2397,7 +2397,7 @@ namespace WebFreight.Web.MetaDataUpdate
                                 {
                                     if (newtemplate.TemplateType == "P")
                                     {
-                                        newDocType.DocumentTypeDefaulReportTempId = newtemplate.Id;
+                                        newDocType.DocumentTypeDefaultReportTemplateId = newtemplate.Id;
                                     }
                                     else
                                     {

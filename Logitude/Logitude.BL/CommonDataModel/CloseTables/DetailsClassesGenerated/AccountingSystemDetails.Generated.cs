@@ -36,7 +36,7 @@ namespace Logitude.BL.CommonDataModel
                 ShowDownloadScreen = true, 
                 AllowARInvoicesTransfer = true, 
                 AllowAPInvoicesTransfer = true, 
-                AllowPositiveAmountsCreditNote = true, 
+                AllowPositiveAmountsInTheCreditNote = true, 
                 InActive = false, 
                 AllowAPPaymentsTransfer = false, 
                 IsExternalCodesFromAPI = false, 
@@ -60,7 +60,7 @@ namespace Logitude.BL.CommonDataModel
                 ShowDownloadScreen = true, 
                 AllowARInvoicesTransfer = true, 
                 AllowAPInvoicesTransfer = true, 
-                AllowPositiveAmountsCreditNote = true, 
+                AllowPositiveAmountsInTheCreditNote = true, 
                 InActive = false, 
                 AllowAPPaymentsTransfer = true, 
                 IsExternalCodesFromAPI = false, 
@@ -84,7 +84,7 @@ namespace Logitude.BL.CommonDataModel
                 ShowDownloadScreen = true, 
                 AllowARInvoicesTransfer = true, 
                 AllowAPInvoicesTransfer = true, 
-                AllowPositiveAmountsCreditNote = true, 
+                AllowPositiveAmountsInTheCreditNote = true, 
                 InActive = false, 
                 AllowAPPaymentsTransfer = true, 
                 IsExternalCodesFromAPI = false, 
@@ -108,7 +108,7 @@ namespace Logitude.BL.CommonDataModel
                 ShowDownloadScreen = true, 
                 AllowARInvoicesTransfer = false, 
                 AllowAPInvoicesTransfer = false, 
-                AllowPositiveAmountsCreditNote = false, 
+                AllowPositiveAmountsInTheCreditNote = false, 
                 InActive = false, 
                 AllowAPPaymentsTransfer = false, 
                 IsExternalCodesFromAPI = false, 
@@ -132,7 +132,7 @@ namespace Logitude.BL.CommonDataModel
                 ShowDownloadScreen = true, 
                 AllowARInvoicesTransfer = true, 
                 AllowAPInvoicesTransfer = true, 
-                AllowPositiveAmountsCreditNote = true, 
+                AllowPositiveAmountsInTheCreditNote = true, 
                 InActive = false, 
                 AllowAPPaymentsTransfer = false, 
                 IsExternalCodesFromAPI = false, 
@@ -152,7 +152,7 @@ namespace Logitude.BL.CommonDataModel
                 AllowMinusInvoiceLines = true, 
                 AllowARInvoicesTransfer = true, 
                 AllowAPInvoicesTransfer = true, 
-                AllowPositiveAmountsCreditNote = true, 
+                AllowPositiveAmountsInTheCreditNote = true, 
                 IsExternalCodesFromAPI = true, 
                 AllowARPaymentsTransfer = true, 
                 AllowAPPaymentsTransfer = true, 
@@ -176,7 +176,7 @@ namespace Logitude.BL.CommonDataModel
                 AllowMinusInvoiceLines = true, 
                 AllowARInvoicesTransfer = true, 
                 AllowAPInvoicesTransfer = true, 
-                AllowPositiveAmountsCreditNote = true, 
+                AllowPositiveAmountsInTheCreditNote = true, 
                 IsExternalCodesFromAPI = true, 
                 AllowARPaymentsTransfer = true, 
                 AllowAPPaymentsTransfer = true, 
@@ -207,7 +207,7 @@ namespace Logitude.BL.CommonDataModel
 		    newPoco.ShowDownloadScreen = this.ShowDownloadScreen;  
 		    newPoco.AllowARInvoicesTransfer = this.AllowARInvoicesTransfer;  
 		    newPoco.AllowAPInvoicesTransfer = this.AllowAPInvoicesTransfer;  
-		    newPoco.AllowPositiveAmountsCreditNote = this.AllowPositiveAmountsCreditNote;  
+		    newPoco.AllowPositiveAmountsInTheCreditNote = this.AllowPositiveAmountsInTheCreditNote;  
 		    newPoco.InActive = this.InActive;  
 		    newPoco.AllowAPPaymentsTransfer = this.AllowAPPaymentsTransfer;  
 		    newPoco.IsExternalCodesFromAPI = this.IsExternalCodesFromAPI;  
@@ -218,7 +218,7 @@ namespace Logitude.BL.CommonDataModel
 
 		public string GetSearchFields(AccountingSystem rec)
         {   
-           return String.Concat(rec.Code,",",rec.IsExternalCodesFromTable,",",rec.IsExternalCodesSyncEnabled,",",rec.IsSingleTaxPerInvoice,",",rec.IsSingleCurrencyAccount,",",rec.AllowManuallyDueDate,",",rec.IsJournalMode,",",rec.IsTaxItemManaged,",",rec.AllowMinusInvoiceLines,",",rec.ShowDownloadScreen,",",rec.AllowARInvoicesTransfer,",",rec.AllowAPInvoicesTransfer,",",rec.AllowPositiveAmountsCreditNote,",",rec.InActive,",",rec.AllowAPPaymentsTransfer,",",rec.IsExternalCodesFromAPI,",",rec.AllowARPaymentsTransfer,",",rec.CanTransferToDropbox,",",rec.Name,",");
+           return String.Concat(rec.Code,",",rec.IsExternalCodesFromTable,",",rec.IsExternalCodesSyncEnabled,",",rec.IsSingleTaxPerInvoice,",",rec.IsSingleCurrencyAccount,",",rec.AllowManuallyDueDate,",",rec.IsJournalMode,",",rec.IsTaxItemManaged,",",rec.AllowMinusInvoiceLines,",",rec.ShowDownloadScreen,",",rec.AllowARInvoicesTransfer,",",rec.AllowAPInvoicesTransfer,",",rec.AllowPositiveAmountsInTheCreditNote,",",rec.InActive,",",rec.AllowAPPaymentsTransfer,",",rec.IsExternalCodesFromAPI,",",rec.AllowARPaymentsTransfer,",",rec.CanTransferToDropbox,",",rec.Name,",");
         }
    }
 }

@@ -19,7 +19,7 @@ BEGIN
 declare @Tenant as int
 declare @DocTypeId as varchar(15)
 declare @DocumentTypeDefaultHTMLTemplateId as varchar(15)
-declare @DocumentTypeDefaulReportTempId as varchar(15)
+declare @DocumentTypeDefaultReportTemplateId as varchar(15)
 declare @DocTypeCode as varchar(15) 
 declare @DocumentTypeTemplatesHtmlId as varchar(15) 
 declare @DocumentTypeTemplatesReportId as varchar(15) 
@@ -36,9 +36,9 @@ BEGIN
         print '1111'
 		DECLARE eventsCursor CURSOR READ_ONLY
 		FOR
-		SELECT Id,Code,ObjectTableId,DocumentTypeDefaultHTMLTemplateId,DocumentTypeDefaulReportTempId
+		SELECT Id,Code,ObjectTableId,DocumentTypeDefaultHTMLTemplateId,DocumentTypeDefaultReportTemplateId
 		FROM [dbo].[DocumentTypes] where Tenant = @SourceTenant
-    	OPEN eventsCursor FETCH NEXT FROM eventsCursor INTO @DocTypeId,@DocTypeCode,@DocTypeOTId,@DocumentTypeDefaultHTMLTemplateId,@DocumentTypeDefaulReportTempId
+    	OPEN eventsCursor FETCH NEXT FROM eventsCursor INTO @DocTypeId,@DocTypeCode,@DocTypeOTId,@DocumentTypeDefaultHTMLTemplateId,@DocumentTypeDefaultReportTemplateId
 		WHILE @@FETCH_STATUS = 0
 			BEGIN 
 			
@@ -59,7 +59,7 @@ BEGIN
                FROM [dbo].[ObjectTables] where Name = @ObjectTableName and Tenant = @DestanationTenant
                   
            INSERT INTO [dbo].[DocumentTypes]
-           ([Id],[Tenant],[Name],[Code],[Notes],[IsAir],[IsOcean],[IsInland],[IsDocIn],[IsDocOut],[ObjectTableId],[Subject],[DocumentTypeDefaulReportTempId]
+           ([Id],[Tenant],[Name],[Code],[Notes],[IsAir],[IsOcean],[IsInland],[IsDocIn],[IsDocOut],[ObjectTableId],[Subject],[DocumentTypeDefaultReportTemplateId]
            ,[DocumentTypeDefaultHTMLTemplateId],[TemplateFormatCode],[DocumentTypeDefaultEditorTool],[InActive],[IsMaster],[IsHouse],[IsDirect],[SearchFields]
            ,[CustomControl],[CustomerRoleId],[AgentRoleId],[IsCustomerView],[IsAgentView],[IsReadOnly],[IsDocumentOneTimePrintLimited],[LimitedPrintCopyId]
            ,[IsEnabledForCustomers],[IsCopiedAtSignup],[CountryCode],[DocumentsDataProviderCode],[DocumentTypeCategoryCode])
@@ -90,7 +90,7 @@ BEGIN
            ------------------------------------------------------------------------------      
            
            ------------------------------------------------------------------------------
-           if @DocumentTypeDefaulReportTempId is not null
+           if @DocumentTypeDefaultReportTemplateId is not null
 		   begin 
 		           
                 set @DocumentTypeTemplatesReportId = null 
@@ -105,11 +105,11 @@ BEGIN
            ( select @DocumentTypeTemplatesReportId,@DestanationTenant,@NewDocTypeId,[TemplateBody],[TemplateType],[Description],[LastUpdateDate],[LastUpdatedByUserId],[InActive]
            ,[EditorTool],[VerticalShift],[HorizontalShift],[Subject],[IsEnabledForCustomers],[IsCopiedAtSignup],[CountryCode],[InternalRemarks]
            ,[Language],[OriginalTemplateId]
-              from [dbo].[DocumentTypeTemplates] where Id = @DocumentTypeDefaulReportTempId and Tenant = @SourceTenant)
+              from [dbo].[DocumentTypeTemplates] where Id = @DocumentTypeDefaultReportTemplateId and Tenant = @SourceTenant)
           end
            ------------------------------------------------------------------------------
            
-           update [dbo].[DocumentTypes] set [DocumentTypeDefaultHTMLTemplateId] = @DocumentTypeTemplatesHtmlId,[DocumentTypeDefaulReportTempId] = @DocumentTypeTemplatesReportId
+           update [dbo].[DocumentTypes] set [DocumentTypeDefaultHTMLTemplateId] = @DocumentTypeTemplatesHtmlId,[DocumentTypeDefaultReportTemplateId] = @DocumentTypeTemplatesReportId
            
            ------------------------------------------------------------------------------
            
@@ -178,7 +178,7 @@ BEGIN
            ,[IsDocOut] = (select [IsDocOut] from [dbo].[DocumentTypes] where Id = @DocTypeId and Tenant = @SourceTenant)
            ,[ObjectTableId] = (select [ObjectTableId] from [dbo].[DocumentTypes] where Id = @DocTypeId and Tenant = @SourceTenant)
            ,[Subject] = (select [Subject] from [dbo].[DocumentTypes] where Id = @DocTypeId and Tenant = @SourceTenant)
-           --,[DocumentTypeDefaulReportTempId] = (select [DocumentTypeDefaulReportTempId] from [dbo].[DocumentTypes] where Id = @DocTypeId and Tenant = @SourceTenant)
+           --,[DocumentTypeDefaultReportTemplateId] = (select [DocumentTypeDefaultReportTemplateId] from [dbo].[DocumentTypes] where Id = @DocTypeId and Tenant = @SourceTenant)
            --,[DocumentTypeDefaultHTMLTemplateId] = (select [DocumentTypeDefaultHTMLTemplateId] from [dbo].[DocumentTypes] where Id = @DocTypeId and Tenant = @SourceTenant)
            ,[TemplateFormatCode] = (select [TemplateFormatCode] from [dbo].[DocumentTypes] where Id = @DocTypeId and Tenant = @SourceTenant)
            ,[DocumentTypeDefaultEditorTool] = (select [DocumentTypeDefaultEditorTool] from [dbo].[DocumentTypes] where Id = @DocTypeId and Tenant = @SourceTenant)
@@ -207,7 +207,7 @@ BEGIN
           -- ,[IsEnabledForCustomers],[IsCopiedAtSignup],[CountryCode],[DocumentsDataProviderCode],[DocumentTypeCategoryCode]
            --  from [dbo].[DocumentTypes] where Id = @DocTypeId and Tenant = @SourceTenant
               end -- else 
-		   FETCH NEXT FROM eventsCursor INTO @DocTypeId,@DocTypeCode,@DocTypeOTId,@DocumentTypeDefaultHTMLTemplateId,@DocumentTypeDefaulReportTempId			
+		   FETCH NEXT FROM eventsCursor INTO @DocTypeId,@DocTypeCode,@DocTypeOTId,@DocumentTypeDefaultHTMLTemplateId,@DocumentTypeDefaultReportTemplateId			
 			END
 		CLOSE eventsCursor
 		DEALLOCATE eventsCursor

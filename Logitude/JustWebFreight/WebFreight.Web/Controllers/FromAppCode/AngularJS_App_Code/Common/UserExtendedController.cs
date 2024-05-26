@@ -222,7 +222,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
 
             foreach (User user in twoFactorUsers)
             {
-                user.IsTwoFactorAuthenticatiEnabled = true;
+                user.IsTwoFactorAuthenticationEnabled = true;
                 userRepository.Update(user);
             }
 
@@ -230,7 +230,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
             {
                 if (!twoFactorUsers.Any(u => u.Id == user.Id))
                 {
-                    user.IsTwoFactorAuthenticatiEnabled = false;
+                    user.IsTwoFactorAuthenticationEnabled = false;
                     userRepository.Update(user);
                 }
             }

@@ -125,16 +125,16 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string ImportOtherPrepaidCollectId { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string MasterExpFreigPrepaidCollectId { get; set; }
+        public string MasterExportFreightPrepaidCollectId { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string MasterImpFreiPrepaidCollectId { get; set; }
+        public string MasterImportFreightPrepaidCollectId { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string MasterExpOtherPrepaidCollectId { get; set; }
+        public string MasterExportOtherPrepaidCollectId { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public string MasterImpOtherPrepaidCollectId { get; set; }
+        public string MasterImportOtherPrepaidCollectId { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public double? STDVatPercentage { get; set; }
@@ -236,7 +236,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public string VatMandatoryCountryId { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public bool VatMandatoryForPotentialCust { get; set; }
+        public bool VatMandatoryForPotentialCustomers { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public bool IsCustomerTelRequired { get; set; }
@@ -313,7 +313,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public bool CreateTenantFromSignUp { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
-        public bool IsCorrespondRightToLeftEnabled { get; set; }
+        public bool IsCorrespondenceRightToLeftEnabled { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public bool IsNotesRightToLeftEnabled { get; set; }
@@ -334,7 +334,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         public bool ProrateMasterReceivables { get; set; }
 
-        public bool ExportQuotationsoIntegratedSys { get; set; }
+        public bool ExportQuotationsToIntegratedSystem { get; set; }
 
         public bool IsIncrementalBuildRunning { get; set; }
 
@@ -396,7 +396,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string VatUniquePartnerTypeCode { get; set; }
 
-        public string TransferQuotationsToUnfTrigger { get; set; }
+        public string TransferQuotationsToUnifreightTrigger { get; set; }
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public bool SharedLogisMasterMessageLink { get; set; }
 
@@ -419,7 +419,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public double? FTLRatio { get; set; }
 
 
-        public bool IsQuoteRequestActivateInShared { get; set; }
+        public bool IsQuotesRequestActivatedInShared { get; set; }
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public bool IsCargoTrackWebAccessActivated { get; set; }        
         public bool EnableDeliveryOptions { get; set; }

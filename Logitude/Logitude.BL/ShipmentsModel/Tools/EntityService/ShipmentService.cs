@@ -1059,9 +1059,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                             {
                                 DateTime? fieldValuedate = (DateTime?)fieldValue;
 
-                                if (follow.DateEscalaActTimeIndicatorCode != "IM" && follow.DateEscalationTime != 0)
+                                if (follow.DateEscalationActionTimeIndicatorCode != "IM" && follow.DateEscalationTime != 0)
                                 {
-                                    int dateEscalationTime = follow.DateEscalaActTimeIndicatorCode == "AF" ? follow.DateEscalationTime : follow.DateEscalationTime * -1;
+                                    int dateEscalationTime = follow.DateEscalationActionTimeIndicatorCode == "AF" ? follow.DateEscalationTime : follow.DateEscalationTime * -1;
                                     fieldValuedate = fieldValuedate.Value.AddDays(dateEscalationTime);
 
                                 }
@@ -1196,7 +1196,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
                     Area = follow.Area,
                     DocumentTypeId = follow.DocumentTypeId,
                     AutomationId = follow.AutomationId,
-                    DateEscalaActTimeIndicatorCode = follow.DateEscalaActTimeIndicatorCode,
+                    DateEscalationActionTimeIndicatorCode = follow.DateEscalationActionTimeIndicatorCode,
                     DateEscalationTime = follow.DateEscalationTime,
                     DateFieldName = follow.DateFieldName,
 

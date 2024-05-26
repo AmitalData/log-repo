@@ -1,7 +1,7 @@
 ﻿<Script DBType="Main" Module="Common"  AOT="true" TargetTableName="Cards">
     <Sql Version="1"> 
     <![CDATA[
-update cards set SharedLogisticsInvitStatusCode =1  where  $LastCounterWhere$ and SharedLogisticsInvitStatusCode is null and PartnerTypeId !='CS'
+update cards set SharedLogisticsInvitationStatusCode =1  where  $LastCounterWhere$ and SharedLogisticsInvitationStatusCode is null and PartnerTypeId !='CS'
 
     ]]>
   </Sql>

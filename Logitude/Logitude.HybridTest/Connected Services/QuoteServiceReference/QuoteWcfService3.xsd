@@ -55,7 +55,7 @@
       <xs:element minOccurs="0" name="DimensionsUnitCode" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="DirectionId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="DirectionName" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="DontExportQuotationsoIntegratedSys" type="xs:boolean" />
+      <xs:element minOccurs="0" name="DontExportQuotationsToIntegratedSystem" type="xs:boolean" />
       <xs:element minOccurs="0" name="ETA" nillable="true" type="xs:dateTime" />
       <xs:element minOccurs="0" name="ETALabel" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ETD" nillable="true" type="xs:dateTime" />

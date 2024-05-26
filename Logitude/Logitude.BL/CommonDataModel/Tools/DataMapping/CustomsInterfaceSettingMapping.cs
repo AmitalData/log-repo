@@ -20,7 +20,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.LocalCompanyId = entityPM.LocalCompanyId;
             poco.LocalUserId = entityPM.LocalUserId;
             poco.LocalPassword = entityPM.LocalPassword;
-            poco.ActivateCustomsManagInShipment = entityPM.ActivateCustomsManagInShipment;
+            poco.ActivateCustomsManagementInShipments = entityPM.ActivateCustomsManagementInShipments;
             poco.ArtemusInSettingsId = entityPM.ArtemusInSettingsId;
             poco.ArtemusOutSettingsId = entityPM.ArtemusOutSettingsId;
             poco.AMCAirStartDate = entityPM.AMCAirStartDate;

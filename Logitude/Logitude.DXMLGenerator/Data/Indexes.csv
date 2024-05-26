@@ -881,7 +881,7 @@ CommunicationLogSteps,DocumentId,NULL
 Cards,UpdatedByUserId,NULL
 Cards,PaymentTermId,NULL
 Cards,ImageDetailId,NULL
-Cards,SharedLogisticsInvitStatusCode,NULL
+Cards,SharedLogisticsInvitationStatusCode,NULL
 Cards,Tenant; CreateDate,NULL
 Cards,VatTypeId,NULL
 Cards,PrimaryContactId,NULL
@@ -1420,7 +1420,7 @@ AWBOCIs,ShipmentId,NULL
 Tenants,OtherChargesCurrencyId,NULL
 Tenants,VatUniqueCountryId,NULL
 Tenants,AgentId,NULL
-Tenants,MasterImpOtherPrepaidCollectId,NULL
+Tenants,MasterImportOtherPrepaidCollectId,NULL
 Tenants,VatMandatoryTypeCode,NULL
 Tenants,ExportFreightPrepaidCollectId,NULL
 Tenants,PasswordPolicyCode,NULL
@@ -1435,13 +1435,13 @@ Tenants,DimensionsUnitCode,NULL
 Tenants,ImportOtherPrepaidCollectId,NULL
 Tenants,CurrencyId,NULL
 Tenants,VolumeUnitCode,NULL
-Tenants,MasterExpFreigPrepaidCollectId,NULL
+Tenants,MasterExportFreightPrepaidCollectId,NULL
 Tenants,PaymentTermId,NULL
 Tenants,FreightCurrencyId,NULL
-Tenants,MasterExpOtherPrepaidCollectId,NULL
+Tenants,MasterExportOtherPrepaidCollectId,NULL
 Tenants,WeightMeasurementUnitCode,NULL
 Tenants,VatMandatoryCountryId,NULL
-Tenants,MasterImpFreiPrepaidCollectId,NULL
+Tenants,MasterImportFreightPrepaidCollectId,NULL
 Tenants,GrossWeightUnitCode,NULL
 Tenants,CustomerId,NULL
 Tenants,VatFormatTypeCode,NULL

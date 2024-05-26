@@ -677,7 +677,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                     }
                     else
                     {
-                        itemDocumentType.DocumentTypeDefaulReportTempId = itemDocumentTypeTemplate.Id;
+                        itemDocumentType.DocumentTypeDefaultReportTemplateId = itemDocumentTypeTemplate.Id;
                         itemDocumentType.DocumentTypeDefaultEditorTool = itemDocumentTypeTemplate.EditorTool;
                         itemDocumentType.TemplateFormatCode = "P";
 

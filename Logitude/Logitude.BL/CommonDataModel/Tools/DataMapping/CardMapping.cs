@@ -37,8 +37,8 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPOCO.InvoiceCurrencyId = entityPM.InvoiceCurrencyId;
             entityPOCO.InvitationDate = entityPM.InvitationDate;
             entityPOCO.CargoTrackingInvitationDate = entityPM.CargoTrackingInvitationDate;
-            entityPOCO.SharedLogisticsInvitStatusCode = entityPM.SharedLogisticsInvitStatusCode;
-            entityPOCO.CargoTrackingInvitatStatusCode = entityPM.CargoTrackingInvitatStatusCode;
+            entityPOCO.SharedLogisticsInvitationStatusCode = entityPM.SharedLogisticsInvitationStatusCode;
+            entityPOCO.CargoTrackingInvitationStatusCode = entityPM.CargoTrackingInvitationStatusCode;
             entityPOCO.LastLoginDate = entityPM.LastLoginDate;
             entityPOCO.ClassifierId = entityPM.ClassifierId;
             entityPOCO.CollectorId = entityPM.CollectorId;

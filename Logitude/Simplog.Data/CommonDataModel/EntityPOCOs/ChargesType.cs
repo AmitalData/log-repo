@@ -32,8 +32,8 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public int ViewOrder { get; set; }
         public string SearchFields { get; set; }
         public bool AccountingVATSplit { get; set; }
-        public string ReceivablesChargesTypeExtCode { get; set; }
-        public string PayablesChargesTypeExtCode { get; set; }
+        public string ReceivablesChargesTypeExternalCode { get; set; }
+        public string PayablesChargesTypeExternalCode { get; set; }
         public string ChargesGroupCode { get; set; }
         public bool IsBackToBack { get; set; }
         public bool IsAutoDisplayInCustoms { get; set; }

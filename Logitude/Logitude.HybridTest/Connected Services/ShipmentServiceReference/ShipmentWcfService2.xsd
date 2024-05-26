@@ -993,7 +993,7 @@
       <xs:element minOccurs="0" name="AutomationId" nillable="true" type="xs:string" />
       <xs:element xmlns:q45="http://schemas.datacontract.org/2004/07/Simplog.Server.Infrastructure" minOccurs="0" name="ChangeSetOp" type="q45:ChangeSetOperation" />
       <xs:element minOccurs="0" name="Date" nillable="true" type="xs:dateTime" />
-      <xs:element minOccurs="0" name="DateEscalaActTimeIndicatorCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DateEscalationActionTimeIndicatorCode" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="DateEscalationTime" type="xs:int" />
       <xs:element minOccurs="0" name="DateFieldName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="Deleted" type="xs:boolean" />

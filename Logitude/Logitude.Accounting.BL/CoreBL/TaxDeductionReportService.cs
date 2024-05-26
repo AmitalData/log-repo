@@ -744,7 +744,7 @@ namespace Logitude.Accounting.BL.CoreBL
         //        string documentTemplateId = null;
         //        string emailTemplateId = null;
 
-        //        documentTemplateId = documentType.DocumentTypeDefaulReportTempId;
+        //        documentTemplateId = documentType.DocumentTypeDefaultReportTemplateId;
         //        emailTemplateId = documentType.DocumentTypeDefaultHTMLTemplateId;
 
 

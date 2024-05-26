@@ -180,8 +180,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             {
                 Id = entityPM.Id,
                 Tenant = tenant,
-                SharedLogisticsInvitStatusCode = 1,
-                CargoTrackingInvitatStatusCode = 1,
+                SharedLogisticsInvitationStatusCode = 1,
+                CargoTrackingInvitationStatusCode = 1,
                 UploadingUniqueKey = entityPM.UploadingUniqueKey,
             };
 

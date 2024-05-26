@@ -141,7 +141,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.CanAutomateSetValue).HasColumnName("CanAutomateSetValue");
             this.Property(t => t.AllowedInAirlineMessaging).HasColumnName("AllowedInAirlineMessaging");
             this.Property(t => t.HasTemplate).HasColumnName("HasTemplate");
-            this.Property(t => t.AllowedInCustomerFieldsSetting).HasColumnName("AllowedInCustomerFieldsSetting");
+            this.Property(t => t.AllowedInCustomerFieldsSettings).HasColumnName("AllowedInCustomerFieldsSettings");
             this.Property(t => t.GeneratedComponentPath).HasColumnName("GeneratedComponentPath");
             this.Property(t => t.DisplayInDocumentReferences).HasColumnName("DisplayInDocumentReferences");
             this.Property(t => t.Code).HasColumnName("Code");
@@ -171,15 +171,15 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
             {
-                this.Property(t => t.DisplayInSearchWindowFilterInx).HasColumnName("SearchWindowFiltersIndex");
-                this.Property(t => t.AllowedInCustomerFieldsSetting).HasColumnName("AllowedInCustFieldsSettings");
+                this.Property(t => t.DisplayInSearchWindowFiltersIndex).HasColumnName("SearchWindowFiltersIndex");
+                this.Property(t => t.AllowedInCustomerFieldsSettings).HasColumnName("AllowedInCustFieldsSettings");
             }
 
             //#else
             else
             {
-                this.Property(t => t.DisplayInSearchWindowFilterInx).HasColumnName("DisplayInSearchWindowFilterInx");
-                this.Property(t => t.AllowedInCustomerFieldsSetting).HasColumnName("AllowedInCustomerFieldsSetting");
+                this.Property(t => t.DisplayInSearchWindowFiltersIndex).HasColumnName("DisplayInSearchWindowFiltersIndex");
+                this.Property(t => t.AllowedInCustomerFieldsSettings).HasColumnName("AllowedInCustomerFieldsSettings");
             }
 
 //#endif

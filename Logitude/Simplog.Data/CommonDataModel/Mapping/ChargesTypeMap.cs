@@ -25,8 +25,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.PayableAccountId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ReceivableCreditAccount).HasMaxLength(25).IsUnicode(false);
             this.Property(t => t.PayableDebitAccount).HasMaxLength(25).IsUnicode(false);
-            this.Property(t => t.ReceivablesChargesTypeExtCode).HasMaxLength(25).IsUnicode(false);
-            this.Property(t => t.PayablesChargesTypeExtCode).HasMaxLength(25).IsUnicode(false);            
+            this.Property(t => t.ReceivablesChargesTypeExternalCode).HasMaxLength(25).IsUnicode(false);
+            this.Property(t => t.PayablesChargesTypeExternalCode).HasMaxLength(25).IsUnicode(false);            
             this.Property(t => t.PayableDebitGLAcountId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ReceivableCreditGLAccountId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ChargesGroupId).HasMaxLength(15).IsUnicode(false);
@@ -95,15 +95,15 @@ namespace Simplog.Data.CommonDataModel.Mapping
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
             {
-                this.Property(t => t.ReceivablesChargesTypeExtCode).HasColumnName("ReceivablesChargesTypeExtCode");
-                this.Property(t => t.PayablesChargesTypeExtCode).HasColumnName("PayablesChargesTypeExtCode");
+                this.Property(t => t.ReceivablesChargesTypeExternalCode).HasColumnName("ReceivablesChargesTypeExtCode");
+                this.Property(t => t.PayablesChargesTypeExternalCode).HasColumnName("PayablesChargesTypeExtCode");
 
             }
             //#elseelse
             else
             {
-                this.Property(t => t.ReceivablesChargesTypeExtCode).HasColumnName("ReceivablesChargesTypeExtCode");
-                this.Property(t => t.PayablesChargesTypeExtCode).HasColumnName("PayablesChargesTypeExtCode");
+                this.Property(t => t.ReceivablesChargesTypeExternalCode).HasColumnName("ReceivablesChargesTypeExternalCode");
+                this.Property(t => t.PayablesChargesTypeExternalCode).HasColumnName("PayablesChargesTypeExternalCode");
             }
 
             

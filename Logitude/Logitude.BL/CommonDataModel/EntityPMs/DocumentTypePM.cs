@@ -90,7 +90,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [DataMember]
         public string AgentRoleId { get; set; }
         [DataMember]
-        public string DocumentTypeDefaulReportTempId { get; set; }
+        public string DocumentTypeDefaultReportTemplateId { get; set; }
         [DataMember]
         public string DocumentTypeDefaultHTMLTemplateId { get; set; }
         [DataMember]

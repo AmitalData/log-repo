@@ -29,7 +29,7 @@
   <Column
     Name="DocumentTypeDefaulReportTempId"
     ShortName="DocTypeDefaultReportTempId"
-    OldNames="DocumentTypeDefaulReportTempId"
+    OldNames="DocumentTypeDefaultReportTemplateId"
     Type="varchar"
     Size="15">
     <Constraints

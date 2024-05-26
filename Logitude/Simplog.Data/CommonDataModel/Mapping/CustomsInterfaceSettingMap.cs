@@ -42,13 +42,13 @@ namespace Simplog.Data.CommonDataModel.Mapping
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
             {
-                this.Property(t => t.ActivateCustomsManagInShipment).HasColumnName("ActivateCustManagInShipments");
+                this.Property(t => t.ActivateCustomsManagementInShipments).HasColumnName("ActivateCustManagInShipments");
 
             }
             //#elseelse
             else
             {
-                this.Property(t => t.ActivateCustomsManagInShipment).HasColumnName("ActivateCustomsManagInShipment");
+                this.Property(t => t.ActivateCustomsManagementInShipments).HasColumnName("ActivateCustomsManagementInShipments");
             }
 
             //Relationships

@@ -130,9 +130,9 @@ namespace Logitude.BL.GlobalModel.EntityLists
         public int? ParentTenantId { get; set; }
 
 
-        public DateTime? AgentSharedLogStatistiLastDate { get; set; }
-        public int AgentSharedLogisticsLastWeek { get; set; }
-        public int AgentSharedLogStatistLastMonth { get; set; }
+        public DateTime? AgentSharedLogisticsStatisticsLastDate { get; set; }
+        public int AgentSharedLogisticsStatisticsLastWeek { get; set; }
+        public int AgentSharedLogisticsStatisticsLastMonth { get; set; }
         public bool ChangeHeaderColor { get; set; }
         public bool IsINTTRAStockPrepaid { get; set; }
 

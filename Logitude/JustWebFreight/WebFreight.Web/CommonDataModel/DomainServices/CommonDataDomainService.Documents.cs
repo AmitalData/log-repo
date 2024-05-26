@@ -727,7 +727,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             string documentTemplateId = null;
             string emailTemplateId = null;
 
-            documentTemplateId = documentType.DocumentTypeDefaulReportTempId;
+            documentTemplateId = documentType.DocumentTypeDefaultReportTemplateId;
             emailTemplateId = documentType.DocumentTypeDefaultHTMLTemplateId;
 
 
@@ -1653,7 +1653,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                     IsDocOut = documentType.IsDocOut,
                     ObjectTableId = documentType.ObjectTableId,
                     Subject = documentType.Subject,
-                   // DocumentTypeDefaulReportTempId = documentType.DocumentTypeDefaulReportTempId,
+                   // DocumentTypeDefaultReportTemplateId = documentType.DocumentTypeDefaultReportTemplateId,
                    // DocumentTypeDefaultHTMLTemplateId = documentType.DocumentTypeDefaultHTMLTemplateId,
                     TemplateFormatCode = documentType.TemplateFormatCode,
                   //  DocumentTypeDefaultEditorTool = documentType.DocumentTypeDefaultEditorTool,
@@ -1772,7 +1772,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                 }
                 else
                 {
-                    itemDocumentType.DocumentTypeDefaulReportTempId = itemDocumentTypeTemplate.Id;
+                    itemDocumentType.DocumentTypeDefaultReportTemplateId = itemDocumentTypeTemplate.Id;
                     itemDocumentType.DocumentTypeDefaultEditorTool = itemDocumentTypeTemplate.EditorTool;
                     itemDocumentType.TemplateFormatCode = "P";
                     

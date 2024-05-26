@@ -77,7 +77,7 @@ namespace Logitude.BL.CommonDataModel.Tools.Validating
                                 isValidating = true;
                             }
 
-                            if (myTenant.VatMandatoryForPotentialCust)
+                            if (myTenant.VatMandatoryForPotentialCustomers)
                             {
                                 isValidating = true;
                             }
