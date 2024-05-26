@@ -818,6 +818,11 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                            InsuredCreditPercentage = glaccount.InsuredCreditPercentage,
                            ContactId = glaccount.ContactId,
                            ContactName = glaccount.ContactName,
+                           ContactPhone = glaccount.ContactPhone,
+                           ContactEmail = glaccount.ContactEmail,
+                           SalesmanName = glaccount.SalesmanName,
+                           CollectorName = glaccount.CollectorName,
+                           SalesmanUserId = glaccount.SalesmanUserId,
                        };
 
 
