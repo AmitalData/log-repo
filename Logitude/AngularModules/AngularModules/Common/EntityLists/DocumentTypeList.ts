@@ -23,6 +23,7 @@ export class DocumentTypeList {
 		ObjectTableName: string;
 		Subject: string;
 		DocumentTypeDefaulReportTempId: string;
+		DocumentTypeDefaulReportTempId: string;
 		DocumentTypeDefaultEditorTool: string;
 		TemplateFormatCode: string;
 		InActive: boolean;

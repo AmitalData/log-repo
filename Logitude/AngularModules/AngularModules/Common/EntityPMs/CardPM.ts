@@ -401,9 +401,9 @@ export class CardPM extends ObjectCustomFieldPM {
     public set CargoTrackingInvitationDate(newValue: Date) { if (this.cargoTrackingInvitationDate != newValue) { this.cargoTrackingInvitationDate = newValue; this.MarkAsDirty("CargoTrackingInvitationDate"); } }
        
 	 
-    private sharedLogisticsInvitationStatusCode: number;
-    public get SharedLogisticsInvitationStatusCode() { return this.sharedLogisticsInvitationStatusCode; }
-    public set SharedLogisticsInvitationStatusCode(newValue: number) { if (this.sharedLogisticsInvitationStatusCode != newValue) { this.sharedLogisticsInvitationStatusCode = newValue; this.MarkAsDirty("SharedLogisticsInvitationStatusCode"); } }
+    private sharedLogisticsInvitStatusCode: number;
+    public get SharedLogisticsInvitStatusCode() { return this.sharedLogisticsInvitStatusCode; }
+    public set SharedLogisticsInvitStatusCode(newValue: number) { if (this.sharedLogisticsInvitStatusCode != newValue) { this.sharedLogisticsInvitStatusCode = newValue; this.MarkAsDirty("SharedLogisticsInvitStatusCode"); } }
        
 	 
     private sharedLogisticsInvitationStatusName: string;
@@ -411,9 +411,9 @@ export class CardPM extends ObjectCustomFieldPM {
     public set SharedLogisticsInvitationStatusName(newValue: string) { if (this.sharedLogisticsInvitationStatusName != newValue) { this.sharedLogisticsInvitationStatusName = newValue; this.MarkAsDirty("SharedLogisticsInvitationStatusName"); } }
        
 	 
-    private cargoTrackingInvitationStatusCode: number;
-    public get CargoTrackingInvitationStatusCode() { return this.cargoTrackingInvitationStatusCode; }
-    public set CargoTrackingInvitationStatusCode(newValue: number) { if (this.cargoTrackingInvitationStatusCode != newValue) { this.cargoTrackingInvitationStatusCode = newValue; this.MarkAsDirty("CargoTrackingInvitationStatusCode"); } }
+    private cargoTrackingInvitatStatusCode: number;
+    public get CargoTrackingInvitatStatusCode() { return this.cargoTrackingInvitatStatusCode; }
+    public set CargoTrackingInvitatStatusCode(newValue: number) { if (this.cargoTrackingInvitatStatusCode != newValue) { this.cargoTrackingInvitatStatusCode = newValue; this.MarkAsDirty("CargoTrackingInvitatStatusCode"); } }
        
 	 
     private cargoTrackingInvitationStatusName: string;
@@ -606,11 +606,6 @@ export class CardPM extends ObjectCustomFieldPM {
     public set ManifestInvoiceTemplateId(newValue: string) { if (this.manifestInvoiceTemplateId != newValue) { this.manifestInvoiceTemplateId = newValue; this.MarkAsDirty("ManifestInvoiceTemplateId"); } }
        
 	 
-    private isFromGlaAccountUpdate: boolean;
-    public get IsFromGlaAccountUpdate() { return this.isFromGlaAccountUpdate; }
-    public set IsFromGlaAccountUpdate(newValue: boolean) { if (this.isFromGlaAccountUpdate != newValue) { this.isFromGlaAccountUpdate = newValue; this.MarkAsDirty("IsFromGlaAccountUpdate"); } }
-       
-	 
 
     public OldEntityPM: CardPM;
 		
@@ -638,4 +633,4 @@ export class CardPM extends ObjectCustomFieldPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

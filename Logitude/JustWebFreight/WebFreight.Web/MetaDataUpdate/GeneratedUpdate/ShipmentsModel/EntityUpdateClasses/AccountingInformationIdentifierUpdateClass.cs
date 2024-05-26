@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class AccountingInformationIdentifierUpdateClass
    {  		
-		public const string HashString = "7c593e8996281aeb73409169176bec94";
+		public const string HashString = "b8cbe8ce70a8c1983fc3e5d753a8f8b1";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -132,7 +132,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Accounting Information Identifier",
-			      				    Code =  "23c6",
+			      				    Code =  "1838",
 			      				    Name =  "AccountingInformationIdentifier",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "Name",
