@@ -97,7 +97,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			
 	             				    ObjectTableName =  "SharedLogisticsInvitationStatus",
 			      				    IsNew =  false,
-			      				    DBTableName =  "SharedLogisticsInvitationStatus",
+			      				    DBTableName =  "SharedLogisticInvitationStatus",
 			      				    ObjectTableSingular =  "Shared Logistics Invitation Status",
 			      				    ObjectTablePlural =  "Shared Logistics Invitation Status",
 			      				    HasCustomFilter =  false,

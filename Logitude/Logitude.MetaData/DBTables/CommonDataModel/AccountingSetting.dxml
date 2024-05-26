@@ -112,7 +112,7 @@
   <Column
     Name="AllowPositiveAmountsCreditNote"
     ShortName="AllowPstvAmountsInCrdtNote"
-    OldNames="AllowPositiveAmountsInTheCreditNote"
+    OldNames="AllowPositiveAmountsCreditNote"
     Type="bit">
     <Constraints
       Nullable="false" />
