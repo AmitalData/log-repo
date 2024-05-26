@@ -163,7 +163,7 @@
 
 
                                             <td style="width:60px;max-width:60px;margin-left:3px;margin-right:3px; min-width:60px;border-bottom:1px solid #E4E3E1;">
-{{this.EntityPM?.IsSigned}}
+
                                                 <button [disabled]="(!item.IsPrintButtonEnabled &&!(item.IsOriginal && Signed ))|| this.EntityPM?.IsSigned==2 " *ngIf="item.IsButtonsStackPanelVisible" id="Printbutton" class="Button" style="margin-top:1px;height:25px;width:55px" (click)="PrintMethod(item)">
                                                     <table>
                                                         <tr>
