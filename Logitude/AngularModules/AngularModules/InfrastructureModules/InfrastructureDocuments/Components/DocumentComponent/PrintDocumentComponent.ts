@@ -556,7 +556,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
 
                         var item = this.DocumentTypeTemplateLists.filter(r => r.Id == this.CurrentDocumentOut.DocumentTemplateId)[0];
 
-                        if (item == null) item = this.DocumentTypeTemplateLists.filter(r => r.Id == this.DataContext.DocumentTypePM.DocumentTypeDefaulReportTempId)[0];
+                        if (item == null) item = this.DocumentTypeTemplateLists.filter(r => r.Id == this.DataContext.DocumentTypePM.documentTypeDefaulReportTempId)[0];
                         if (item == null) item = this.DocumentTypeTemplateLists[0];
 
                         this.CurrentDocumentTypeTemplateList = item;
