@@ -300,7 +300,7 @@ namespace WebFreight.Web.Helpers
                             if (documentTypeTemplate == null)
                             {
                                 documentTypeTemplate = (from a in context.DocumentTypeTemplates
-                                                        where a.Id == docType.DocumentTypeDefaulReportTempId
+                                                        where a.Id == docType.DocumentTypeDefaultReportTemplateId
 
                                                         select a).FirstOrDefault();
                             }
@@ -861,7 +861,7 @@ namespace WebFreight.Web.Helpers
                             if (documentTypeTemplate == null)
                             {
                                 documentTypeTemplate = (from a in context.DocumentTypeTemplates
-                                                        where a.Id == docType.DocumentTypeDefaulReportTempId
+                                                        where a.Id == docType.DocumentTypeDefaultReportTemplateId
 
                                                         select a).FirstOrDefault();
                             }
@@ -2425,7 +2425,7 @@ namespace WebFreight.Web.Helpers
 
                     documentsFilingRepository.Add(newDocumentFiling);
 
-                    documentout = new DocumentOut() { Id = newDocumentFiling.Id, EmailTemplateId = documentType.DocumentTypeDefaultHTMLTemplateId, DocumentTemplateId = documentType.DocumentTypeDefaulReportTempId, Tenant = tenant, Issued = false };
+                    documentout = new DocumentOut() { Id = newDocumentFiling.Id, EmailTemplateId = documentType.DocumentTypeDefaultHTMLTemplateId, DocumentTemplateId = documentType.DocumentTypeDefaultReportTemplateId, Tenant = tenant, Issued = false };
                     //documentout.Id = IdCounter.GetNumber("Document", tenant).ToString();
                     documentout.IsBlobExist = true;
 

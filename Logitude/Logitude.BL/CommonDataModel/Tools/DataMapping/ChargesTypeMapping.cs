@@ -55,8 +55,8 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.ViewOrder = entityPM.ViewOrder;
             poco.PayableAccountId = entityPM.PayableAccountId;
             poco.ReceivableAccountId = entityPM.ReceivableAccountId;
-            poco.ReceivablesChargesTypeExtCode = entityPM.ReceivablesChargesTypeExtCode;
-            poco.PayablesChargesTypeExtCode = entityPM.PayablesChargesTypeExtCode;
+            poco.ReceivablesChargesTypeExternalCode = entityPM.ReceivablesChargesTypeExternalCode;
+            poco.PayablesChargesTypeExternalCode = entityPM.PayablesChargesTypeExternalCode;
             poco.ReceivableCreditAccount = entityPM.ReceivableCreditAccount;
             poco.PayableDebitAccount = entityPM.PayableDebitAccount;
             poco.AccountingVATSplit = entityPM.AccountingVATSplit;

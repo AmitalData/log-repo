@@ -1231,7 +1231,7 @@ namespace MeatadataGeneratorTool
                 SetAttribute("AutomaticField", f.AutomaticField.ToString().ToLower(), fieldElement, null);
                 SetAttribute("UniqueField", f.UniqueField.ToString().ToLower(), fieldElement, null);
                 SetAttribute("DisplayInSearchWindowListIndex", f.DisplayInSearchWindowListIndex.ToString(), fieldElement, null);
-                //SetAttribute("DisplayInSearchWindowFilterInx", f.DisplayInSearchWindowFilterInx.ToString(), fieldElement, null);
+                //SetAttribute("DisplayInSearchWindowFiltersIndex", f.DisplayInSearchWindowFiltersIndex.ToString(), fieldElement, null);
                 SetAttribute("IsMulti", f.IsMulti.ToString().ToLower(), fieldElement, null);
                 SetAttribute("MultiTableName", GetStringValue(f.MultiTableName), fieldElement, null);
 
@@ -1254,9 +1254,9 @@ namespace MeatadataGeneratorTool
                 SetAttribute("ControlField2", GetStringValue(f.ControlField2), fieldElement, null);
                 SetAttribute("ControlField3", GetStringValue(f.ControlField3), fieldElement, null);
                 SetAttribute("Code", GetStringValue(f.Code), fieldElement, null);
-                SetAttribute("AllowedInCustomerFieldsSetting", f.AllowedInCustomerFieldsSetting.ToString().ToLower(), fieldElement, null);
+                SetAttribute("AllowedInCustomerFieldsSettings", f.AllowedInCustomerFieldsSettings.ToString().ToLower(), fieldElement, null);
                 SetAttribute("DisplayInSearchWindowFilters", f.DisplayInSearchWindowFilters.ToString().ToLower(), fieldElement, null);
-                SetAttribute("DisplayInSearchWindowFilterInx", f.DisplayInSearchWindowFilterInx.ToString().ToLower(), fieldElement, null);
+                SetAttribute("DisplayInSearchWindowFiltersIndex", f.DisplayInSearchWindowFiltersIndex.ToString().ToLower(), fieldElement, null);
                 SetAttribute("DisplayInDocumentReferences", f.DisplayInDocumentReferences.ToString().ToLower(), fieldElement, null);
 
                 if (f.NumberOfDigits != null)

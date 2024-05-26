@@ -32,7 +32,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         public DateTime? APInvoiceTransferStartDate { get; set; }
         public DateTime? ARPaymentTransferStartDate { get; set; }
         public DateTime? APPaymentTransferStartDate { get; set; }
-        public bool AllowPositiveAmountsCreditNote { get; set; }
+        public bool AllowPositiveAmountsInTheCreditNote { get; set; }
         public string QBOrealMeID { get; set; }
         public string VatNumber { get; set; }
         public string PaymentTermId { get; set; }

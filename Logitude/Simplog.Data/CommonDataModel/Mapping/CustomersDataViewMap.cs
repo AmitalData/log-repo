@@ -132,17 +132,17 @@ namespace Simplog.Data.CommonDataModel.Mapping
             if (dbms == "oracle")
             {
                 this.Property(t => t.SharedLogisticsInvitationStatusName).HasColumnName("SharedLogsInvitationStatusName");
-                this.Property(t => t.SharedLogisticsInvitStatusCode).HasColumnName("SharedLogInvitationStatCode");
+                this.Property(t => t.SharedLogisticsInvitationStatusCode).HasColumnName("SharedLogInvitationStatCode");
                 this.Property(t => t.CargoTrackingInvitationStatusName).HasColumnName("CargoTracInvitationStatName");
-                this.Property(t => t.CargoTrackingInvitatStatusCode).HasColumnName("CargoTracInvitationStatCode");
+                this.Property(t => t.CargoTrackingInvitationStatusCode).HasColumnName("CargoTracInvitationStatCode");
             }
             //#elseelse
             else
             {
                 this.Property(t => t.SharedLogisticsInvitationStatusName).HasColumnName("SharedLogisticsInvitationStatusName");
-                this.Property(t => t.SharedLogisticsInvitStatusCode).HasColumnName("SharedLogisticsInvitStatusCode");
+                this.Property(t => t.SharedLogisticsInvitationStatusCode).HasColumnName("SharedLogisticsInvitationStatusCode");
                 this.Property(t => t.CargoTrackingInvitationStatusName).HasColumnName("CargoTrackingInvitationStatusName");
-                this.Property(t => t.CargoTrackingInvitatStatusCode).HasColumnName("CargoTrackingInvitatStatusCode");
+                this.Property(t => t.CargoTrackingInvitationStatusCode).HasColumnName("CargoTrackingInvitationStatusCode");
 
             }
             //#endif

@@ -18,7 +18,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string LocalCompanyId { get; set; }
         public string LocalUserId { get; set; }
         public string LocalPassword { get; set; }       
-        public bool ActivateCustomsManagInShipment { get; set; }
+        public bool ActivateCustomsManagementInShipments { get; set; }
         public string ArtemusOutSettingsId { get; set; }
         public string ArtemusInSettingsId { get; set; }
         public DateTime? AMCAirStartDate { get; set; }

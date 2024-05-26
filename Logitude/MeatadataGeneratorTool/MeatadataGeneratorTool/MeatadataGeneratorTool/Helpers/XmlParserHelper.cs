@@ -348,9 +348,9 @@ namespace MeatadataGeneratorTool.Helpers
             {
                 field.DisplayInDocumentReferences = false;
             }
-            if (fieldNode.Attributes["DisplayInSearchWindowFilterInx"] != null)
+            if (fieldNode.Attributes["DisplayInSearchWindowFiltersIndex"] != null)
             {
-                field.DisplayInSearchWindowFilterInx = GetAttributeIntegerValue(fieldNode.Attributes["DisplayInSearchWindowFilterInx"]);
+                field.DisplayInSearchWindowFiltersIndex = GetAttributeIntegerValue(fieldNode.Attributes["DisplayInSearchWindowFiltersIndex"]);
             }
 
 
@@ -365,13 +365,13 @@ namespace MeatadataGeneratorTool.Helpers
                 field.DisplayInSearchWindowFilters = false;
             }
 
-            if (fieldNode.Attributes["AllowedInCustomerFieldsSetting"] != null)
+            if (fieldNode.Attributes["AllowedInCustomerFieldsSettings"] != null)
             {
-                field.AllowedInCustomerFieldsSetting = GetAttributeBoolValue(fieldNode.Attributes["AllowedInCustomerFieldsSetting"]);
+                field.AllowedInCustomerFieldsSettings = GetAttributeBoolValue(fieldNode.Attributes["AllowedInCustomerFieldsSettings"]);
             }
             else
             {
-                field.AllowedInCustomerFieldsSetting = false;
+                field.AllowedInCustomerFieldsSettings = false;
             }
 
             if (fieldNode.Attributes["IsRestrictable"] != null)

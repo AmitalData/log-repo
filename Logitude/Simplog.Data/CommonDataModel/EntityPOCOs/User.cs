@@ -27,9 +27,9 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public bool IsFreelancer { get; set; }
 
         public string Technology { get; set; }
-        public bool IsShowContactDetailInMobileApp { get; set; }
+        public bool IsShowContactDetailsInTheMobileApp { get; set; }
         public bool SetAngularAsDefault { get; set; }
-        public bool IsTwoFactorAuthenticatiEnabled { get; set; }
+        public bool IsTwoFactorAuthenticationEnabled { get; set; }
 
         public bool IsProductRestricted { get; set; }
         public bool IsDistributor { get; set; }

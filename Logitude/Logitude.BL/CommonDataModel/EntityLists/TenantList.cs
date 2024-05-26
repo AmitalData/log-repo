@@ -40,10 +40,10 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string ImportFreightPrepaidCollectId { get; set; }
         public string ExportOtherPrepaidCollectId { get; set; }
         public string ImportOtherPrepaidCollectId { get; set; }
-        public string MasterExpFreigPrepaidCollectId { get; set; }
-        public string MasterImpFreiPrepaidCollectId { get; set; }
-        public string MasterExpOtherPrepaidCollectId { get; set; }
-        public string MasterImpOtherPrepaidCollectId { get; set; }
+        public string MasterExportFreightPrepaidCollectId { get; set; }
+        public string MasterImportFreightPrepaidCollectId { get; set; }
+        public string MasterExportOtherPrepaidCollectId { get; set; }
+        public string MasterImportOtherPrepaidCollectId { get; set; }
         public double? STDVatPercentage { get; set; }
         public double? TimeZoneOffset { get; set; }
         public string Language { get; set; }
@@ -73,7 +73,7 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string VatMandatoryTypeCode { get; set; }
         public string VatUniqueCountryId { get; set; }
         public string VatMandatoryCountryId { get; set; }
-        public bool VatMandatoryForPotentialCust { get; set; }
+        public bool VatMandatoryForPotentialCustomers { get; set; }
         public bool IsQuoteSubjectEdited { get; set; }
         public bool AllowEAWBMoreThanTenPackages { get; set; }
         public string RegulatedAgentNumber { get; set; }
@@ -85,7 +85,7 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public bool CustomerTenantShareImportFile { get; set; }
         public bool CustomerTenantShareExportFile { get; set; }
         public bool AllowAgentInCustomersLOV { get; set; }
-        public bool IsCorrespondRightToLeftEnabled { get; set; }
+        public bool IsCorrespondenceRightToLeftEnabled { get; set; }
         public bool IsNotesRightToLeftEnabled { get; set; }
         public DateTime? AccountingActivationDate { get; set; }
         public bool AccountingActivated { get; set; }
@@ -94,7 +94,7 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public bool IsIncrementalBuildRunning { get; set; }
 
         public string SCACCode { get; set; }
-        public bool ExportQuotationsoIntegratedSys { get; set; }
+        public bool ExportQuotationsToIntegratedSystem { get; set; }
         //public string DropBoxAccessToken { get; set; }
         public bool TenantVATManagement { get; set; }
         public string StorageEncryptionKey { get; set; }
@@ -111,7 +111,7 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string VatUniquePartnerTypeCode { get; set; }
         public bool SharedLogisMasterMessageLink { get; set; }
         public bool ShowMultiUnitsOfMeasurements { get; set; }
-        public bool IsQuoteRequestActivateInShared { get; set; }
+        public bool IsQuotesRequestActivatedInShared { get; set; }
         public bool IsCargoTrackWebAccessActivated { get; set; }
         public bool EnableDeliveryOptions { get; set; }
         public int? EmptyReturnClosingDays { get; set; }

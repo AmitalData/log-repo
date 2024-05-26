@@ -2203,7 +2203,7 @@ namespace Edm_EntityMappingGeneratedViews
                     "           T.CreateDate AS User_CreateDate, \r\n            T.ExpirationDate AS Us" +
                     "er_ExpirationDate, \r\n            T.LicencedUser AS User_LicencedUser, \r\n        " +
                     "    T.IsFreelancer AS User_IsFreelancer, \r\n            T.IsShowContactDetailsInT" +
-                    "heMobileApp AS User_IsShowContactDetailInMobileApp, \r\n            T.IsProduc" +
+                    "heMobileApp AS User_IsShowContactDetailsInTheMobileApp, \r\n            T.IsProduc" +
                     "tRestricted AS User_IsProductRestricted, \r\n            T.IsDistributor AS User_I" +
                     "sDistributor, \r\n            T.DistributorCode AS User_DistributorCode, \r\n       " +
                     "     T.PersonalId AS User_PersonalId, \r\n            T.ProductTypeCode AS User_Pr" +
@@ -2357,7 +2357,7 @@ namespace Edm_EntityMappingGeneratedViews
             viewString.Append("d_CountryName, \r\n            T.SalesmanUserId AS Card_SalesmanUserId, \r\n        ");
             viewString.Append("    T.IsActiveForMobile AS Card_IsActiveForMobile, \r\n            T.CreatedByUser");
             viewString.Append("Id AS Card_CreatedByUserId, \r\n            T.UpdatedByUserId AS Card_UpdatedByUse");
-            viewString.Append("rId, \r\n            T.SharedLogisticsInvitStatusCode AS Card_SharedLogistics");
+            viewString.Append("rId, \r\n            T.SharedLogisticsInvitationStatusCode AS Card_SharedLogistics");
             viewString.Append("InvitationStatusCode, \r\n            T.CollectorId AS Card_CollectorId, \r\n       ");
             viewString.Append("     T.ClassifierId AS Card_ClassifierId, \r\n            True AS _from0\r\n        ");
             viewString.Append("FROM InvoiceContext.Cards AS T\r\n    ) AS T1");
@@ -2962,7 +2962,7 @@ namespace Edm_EntityMappingGeneratedViews
             T.Name AS SharedLogisticsInvitationStatus_Name, 
             T.SearchFields AS SharedLogisticsInvitationStatus_SearchFields, 
             True AS _from0
-        FROM InvoiceContext.SharedLogisticInvitationStatus AS T
+        FROM InvoiceContext.SharedLogisticsInvitationStatus AS T
     ) AS T1");
         }
         
@@ -4043,7 +4043,7 @@ namespace Edm_EntityMappingGeneratedViews
             viewString.Append("uallyDueDate, T1.AccountingSystem_IsJournalMode, T1.AccountingSystem_IsTaxItemMa");
             viewString.Append("naged, T1.AccountingSystem_AllowMinusInvoiceLines, T1.AccountingSystem_ShowDownl");
             viewString.Append("oadScreen, T1.AccountingSystem_AllowARInvoicesTransfer, T1.AccountingSystem_Allo");
-            viewString.Append("wAPInvoicesTransfer, T1.AccountingSystem_AllowPositiveAmountsCreditNote, T1");
+            viewString.Append("wAPInvoicesTransfer, T1.AccountingSystem_AllowPositiveAmountsInTheCreditNote, T1");
             viewString.Append(".AccountingSystem_InActive)\r\n    FROM (\r\n        SELECT \r\n            T.Code AS ");
             viewString.Append("AccountingSystem_Code, \r\n            T.Name AS AccountingSystem_Name, \r\n        ");
             viewString.Append("    T.SearchFields AS AccountingSystem_SearchFields, \r\n            T.IsExternalC");
@@ -4081,7 +4081,7 @@ namespace Edm_EntityMappingGeneratedViews
             viewString.Append("g_AllowClosureWithoutPayables, T1.AccountingSetting_IsARInvoicesTransferEnabled,");
             viewString.Append(" T1.AccountingSetting_IsAPInvoicesTransferEnabled, T1.AccountingSetting_ARInvoic");
             viewString.Append("eTransferStartDate, T1.AccountingSetting_APInvoiceTransferStartDate, T1.Accounti");
-            viewString.Append("ngSetting_AllowPositiveAmountsCreditNote)\r\n    FROM (\r\n        SELECT \r\n   ");
+            viewString.Append("ngSetting_AllowPositiveAmountsInTheCreditNote)\r\n    FROM (\r\n        SELECT \r\n   ");
             viewString.Append("         T.Id AS AccountingSetting_Id, \r\n            T.AllowVoidARI AS Accountin");
             viewString.Append("gSetting_AllowVoidARI, \r\n            T.AllowVoidARP AS AccountingSetting_AllowVo");
             viewString.Append("idARP, \r\n            T.AllowVoidAPI AS AccountingSetting_AllowVoidAPI, \r\n       ");
@@ -4119,9 +4119,9 @@ namespace Edm_EntityMappingGeneratedViews
             viewString.Append("t_DimensionsUnitCode, T1.Tenant_VolumeUnitCode, T1.Tenant_GrossWeightUnitCode, T");
             viewString.Append("1.Tenant_ChargeableWeightUnitCode, T1.Tenant_ExportFreightPrepaidCollectId, T1.T");
             viewString.Append("enant_ExportOtherPrepaidCollectId, T1.Tenant_ImportFreightPrepaidCollectId, T1.T");
-            viewString.Append("enant_ImportOtherPrepaidCollectId, T1.Tenant_MasterExpFreigPrepaidCollectId");
-            viewString.Append(", T1.Tenant_MasterExpOtherPrepaidCollectId, T1.Tenant_MasterImportFreightPrep");
-            viewString.Append("aidCollectId, T1.Tenant_MasterImpOtherPrepaidCollectId, T1.Tenant_IsHybrid, T");
+            viewString.Append("enant_ImportOtherPrepaidCollectId, T1.Tenant_MasterExportFreightPrepaidCollectId");
+            viewString.Append(", T1.Tenant_MasterExportOtherPrepaidCollectId, T1.Tenant_MasterImportFreightPrep");
+            viewString.Append("aidCollectId, T1.Tenant_MasterImportOtherPrepaidCollectId, T1.Tenant_IsHybrid, T");
             viewString.Append("1.Tenant_IsQuoteSubjectEdited, T1.Tenant_DefaultQuestionnaireId, T1.Tenant_Freig");
             viewString.Append("htCurrencyId, T1.Tenant_OtherChargesCurrencyId, T1.Tenant_VatNumber, T1.Tenant_T");
             viewString.Append("imeZoneOffset, T1.Tenant_DayLightOffset, T1.Tenant_DayLightStartDate, T1.Tenant_");
@@ -4129,7 +4129,7 @@ namespace Edm_EntityMappingGeneratedViews
             viewString.Append(".Tenant_PaymentTermId, T1.Tenant_ProfitCurrencyId, T1.Tenant_AgentId, T1.Tenant_");
             viewString.Append("SearchFields, T1.Tenant_IsDataBackupBuilt, T1.Tenant_WeightMeasurementUnitCode, ");
             viewString.Append("T1.Tenant_DateTimeFormat, T1.Tenant_LocalCustomsCode, T1.Tenant_VatUniqueTypeCod");
-            viewString.Append("e, T1.Tenant_VatUniqueCountryId, T1.Tenant_VatMandatoryForPotentialCust, T1");
+            viewString.Append("e, T1.Tenant_VatUniqueCountryId, T1.Tenant_VatMandatoryForPotentialCustomers, T1");
             viewString.Append(".Tenant_VatMandatoryTypeCode, T1.Tenant_VatMandatoryCountryId, T1.Tenant_Invoice");
             viewString.Append("Section1, T1.Tenant_InvoiceSection2, T1.Tenant_BankDetails, T1.Tenant_IsSharedLo");
             viewString.Append("gisticsActivated, T1.Tenant_IsMobileActivated, T1.Tenant_SharedLogisticsMessageL");
@@ -4151,11 +4151,11 @@ namespace Edm_EntityMappingGeneratedViews
             viewString.Append("CollectId, \r\n            T.ExportOtherPrepaidCollectId AS Tenant_ExportOtherPrep");
             viewString.Append("aidCollectId, \r\n            T.ImportFreightPrepaidCollectId AS Tenant_ImportFrei");
             viewString.Append("ghtPrepaidCollectId, \r\n            T.ImportOtherPrepaidCollectId AS Tenant_Impor");
-            viewString.Append("tOtherPrepaidCollectId, \r\n            T.MasterExpFreigPrepaidCollectId AS T");
-            viewString.Append("enant_MasterExpFreigPrepaidCollectId, \r\n            T.MasterExportOtherPrep");
-            viewString.Append("aidCollectId AS Tenant_MasterExpOtherPrepaidCollectId, \r\n            T.Master");
-            viewString.Append("ImportFreightPrepaidCollectId AS Tenant_MasterImpFreiPrepaidCollectId, \r\n ");
-            viewString.Append("           T.MasterImpOtherPrepaidCollectId AS Tenant_MasterImportOtherPrepai");
+            viewString.Append("tOtherPrepaidCollectId, \r\n            T.MasterExportFreightPrepaidCollectId AS T");
+            viewString.Append("enant_MasterExportFreightPrepaidCollectId, \r\n            T.MasterExportOtherPrep");
+            viewString.Append("aidCollectId AS Tenant_MasterExportOtherPrepaidCollectId, \r\n            T.Master");
+            viewString.Append("ImportFreightPrepaidCollectId AS Tenant_MasterImportFreightPrepaidCollectId, \r\n ");
+            viewString.Append("           T.MasterImportOtherPrepaidCollectId AS Tenant_MasterImportOtherPrepai");
             viewString.Append("dCollectId, \r\n            T.IsHybrid AS Tenant_IsHybrid, \r\n            T.IsQuote");
             viewString.Append("SubjectEdited AS Tenant_IsQuoteSubjectEdited, \r\n            T.DefaultQuestionnai");
             viewString.Append("reId AS Tenant_DefaultQuestionnaireId, \r\n            T.FreightCurrencyId AS Tena");
@@ -4173,7 +4173,7 @@ namespace Edm_EntityMappingGeneratedViews
             viewString.Append("DateTimeFormat AS Tenant_DateTimeFormat, \r\n            T.LocalCustomsCode AS Ten");
             viewString.Append("ant_LocalCustomsCode, \r\n            T.VatUniqueTypeCode AS Tenant_VatUniqueTypeC");
             viewString.Append("ode, \r\n            T.VatUniqueCountryId AS Tenant_VatUniqueCountryId, \r\n        ");
-            viewString.Append("    T.VatMandatoryForPotentialCust AS Tenant_VatMandatoryForPotentialCustom");
+            viewString.Append("    T.VatMandatoryForPotentialCustomers AS Tenant_VatMandatoryForPotentialCustom");
             viewString.Append("ers, \r\n            T.VatMandatoryTypeCode AS Tenant_VatMandatoryTypeCode, \r\n    ");
             viewString.Append("        T.VatMandatoryCountryId AS Tenant_VatMandatoryCountryId, \r\n            T");
             viewString.Append(".InvoiceSection1 AS Tenant_InvoiceSection1, \r\n            T.InvoiceSection2 AS T");
@@ -4484,7 +4484,7 @@ namespace Edm_EntityMappingGeneratedViews
             viewString.Append("maticField, \r\n            T.UniqueField AS ObjectField_UniqueField, \r\n          ");
             viewString.Append("  T.ShortNameTextCodeId AS ObjectField_ShortNameTextCodeId, \r\n            T.Disp");
             viewString.Append("layInSearchWindowListIndex AS ObjectField_DisplayInSearchWindowListIndex, \r\n    ");
-            viewString.Append("        T.DisplayInSearchWindowFilterInx AS ObjectField_DisplayInSearchWindow");
+            viewString.Append("        T.DisplayInSearchWindowFiltersIndex AS ObjectField_DisplayInSearchWindow");
             viewString.Append("FiltersIndex, \r\n            T.IsMulti AS ObjectField_IsMulti, \r\n            T.Mu");
             viewString.Append("ltiTableId AS ObjectField_MultiTableId, \r\n            T.DependencyFilter1Value A");
             viewString.Append("S ObjectField_DependencyFilter1Value, \r\n            T.DependencyFilter2Value AS ");
@@ -4923,8 +4923,8 @@ namespace Edm_EntityMappingGeneratedViews
             viewString.Append("     T.IsDirect AS DocumentType_IsDirect, \r\n            T.IsHouse AS DocumentTyp");
             viewString.Append("e_IsHouse, \r\n            T.SearchFields AS DocumentType_SearchFields, \r\n        ");
             viewString.Append("    T.ObjectTableId AS DocumentType_ObjectTableId, \r\n            T.Subject AS Do");
-            viewString.Append("cumentType_Subject, \r\n            T.DocumentTypeDefaulReportTempId AS Docum");
-            viewString.Append("entType_DocumentTypeDefaulReportTempId, \r\n            T.DocumentTypeDefault");
+            viewString.Append("cumentType_Subject, \r\n            T.DocumentTypeDefaultReportTemplateId AS Docum");
+            viewString.Append("entType_DocumentTypeDefaultReportTemplateId, \r\n            T.DocumentTypeDefault");
             viewString.Append("HTMLTemplateId AS DocumentType_DocumentTypeDefaultHTMLTemplateId, \r\n            ");
             viewString.Append("T.DocumentTypeDefaultEditorTool AS DocumentType_DocumentTypeDefaultEditorTool, \r");
             viewString.Append("\n            T.TemplateFormatCode AS DocumentType_TemplateFormatCode, \r\n        ");
@@ -8912,7 +8912,7 @@ namespace Edm_EntityMappingGeneratedViews
                     "\r\n            T.CreateDate AS User_CreateDate, \r\n            T.ExpirationDate AS" +
                     " User_ExpirationDate, \r\n            T.LicencedUser AS User_LicencedUser, \r\n     " +
                     "       T.IsFreelancer AS User_IsFreelancer, \r\n            T.IsShowContactDetails" +
-                    "InTheMobileApp AS User_IsShowContactDetailInMobileApp, \r\n            T.IsPro" +
+                    "InTheMobileApp AS User_IsShowContactDetailsInTheMobileApp, \r\n            T.IsPro" +
                     "ductRestricted AS User_IsProductRestricted, \r\n            T.IsDistributor AS Use" +
                     "r_IsDistributor, \r\n            T.DistributorCode AS User_DistributorCode, \r\n    " +
                     "        T.PersonalId AS User_PersonalId, \r\n            T.ProductTypeCode AS User" +
@@ -9066,7 +9066,7 @@ namespace Edm_EntityMappingGeneratedViews
             viewString.Append("Card_CountryName, \r\n            T.SalesmanUserId AS Card_SalesmanUserId, \r\n     ");
             viewString.Append("       T.IsActiveForMobile AS Card_IsActiveForMobile, \r\n            T.CreatedByU");
             viewString.Append("serId AS Card_CreatedByUserId, \r\n            T.UpdatedByUserId AS Card_UpdatedBy");
-            viewString.Append("UserId, \r\n            T.SharedLogisticsInvitStatusCode AS Card_SharedLogist");
+            viewString.Append("UserId, \r\n            T.SharedLogisticsInvitationStatusCode AS Card_SharedLogist");
             viewString.Append("icsInvitationStatusCode, \r\n            T.CollectorId AS Card_CollectorId, \r\n    ");
             viewString.Append("        T.ClassifierId AS Card_ClassifierId, \r\n            True AS _from0\r\n     ");
             viewString.Append("   FROM CodeFirstDatabase.Card AS T\r\n    ) AS T1");
@@ -9671,7 +9671,7 @@ namespace Edm_EntityMappingGeneratedViews
             T.Name AS SharedLogisticsInvitationStatus_Name, 
             T.SearchFields AS SharedLogisticsInvitationStatus_SearchFields, 
             True AS _from0
-        FROM CodeFirstDatabase.SharedLogisticInvitationStatus AS T
+        FROM CodeFirstDatabase.SharedLogisticsInvitationStatus AS T
     ) AS T1");
         }
         
@@ -10753,7 +10753,7 @@ namespace Edm_EntityMappingGeneratedViews
             viewString.Append("ManuallyDueDate, T1.AccountingSystem_IsJournalMode, T1.AccountingSystem_IsTaxIte");
             viewString.Append("mManaged, T1.AccountingSystem_AllowMinusInvoiceLines, T1.AccountingSystem_ShowDo");
             viewString.Append("wnloadScreen, T1.AccountingSystem_AllowARInvoicesTransfer, T1.AccountingSystem_A");
-            viewString.Append("llowAPInvoicesTransfer, T1.AccountingSystem_AllowPositiveAmountsCreditNote,");
+            viewString.Append("llowAPInvoicesTransfer, T1.AccountingSystem_AllowPositiveAmountsInTheCreditNote,");
             viewString.Append(" T1.AccountingSystem_InActive)\r\n    FROM (\r\n        SELECT \r\n            T.Code ");
             viewString.Append("AS AccountingSystem_Code, \r\n            T.Name AS AccountingSystem_Name, \r\n     ");
             viewString.Append("       T.SearchFields AS AccountingSystem_SearchFields, \r\n            T.IsExtern");
@@ -10792,7 +10792,7 @@ namespace Edm_EntityMappingGeneratedViews
             viewString.Append("ting_AllowClosureWithoutPayables, T1.AccountingSetting_IsARInvoicesTransferEnabl");
             viewString.Append("ed, T1.AccountingSetting_IsAPInvoicesTransferEnabled, T1.AccountingSetting_ARInv");
             viewString.Append("oiceTransferStartDate, T1.AccountingSetting_APInvoiceTransferStartDate, T1.Accou");
-            viewString.Append("ntingSetting_AllowPositiveAmountsCreditNote)\r\n    FROM (\r\n        SELECT \r\n");
+            viewString.Append("ntingSetting_AllowPositiveAmountsInTheCreditNote)\r\n    FROM (\r\n        SELECT \r\n");
             viewString.Append("            T.Id AS AccountingSetting_Id, \r\n            T.AllowVoidARI AS Accoun");
             viewString.Append("tingSetting_AllowVoidARI, \r\n            T.AllowVoidARP AS AccountingSetting_Allo");
             viewString.Append("wVoidARP, \r\n            T.AllowVoidAPI AS AccountingSetting_AllowVoidAPI, \r\n    ");
@@ -10831,8 +10831,8 @@ namespace Edm_EntityMappingGeneratedViews
             viewString.Append(", T1.Tenant_ChargeableWeightUnitCode, T1.Tenant_ExportFreightPrepaidCollectId, T");
             viewString.Append("1.Tenant_ExportOtherPrepaidCollectId, T1.Tenant_ImportFreightPrepaidCollectId, T");
             viewString.Append("1.Tenant_ImportOtherPrepaidCollectId, T1.Tenant_MasterExportFreightPrepaidCollec");
-            viewString.Append("tId, T1.Tenant_MasterExpOtherPrepaidCollectId, T1.Tenant_MasterImportFreightP");
-            viewString.Append("repaidCollectId, T1.Tenant_MasterImpOtherPrepaidCollectId, T1.Tenant_IsHybrid");
+            viewString.Append("tId, T1.Tenant_MasterExportOtherPrepaidCollectId, T1.Tenant_MasterImportFreightP");
+            viewString.Append("repaidCollectId, T1.Tenant_MasterImportOtherPrepaidCollectId, T1.Tenant_IsHybrid");
             viewString.Append(", T1.Tenant_IsQuoteSubjectEdited, T1.Tenant_DefaultQuestionnaireId, T1.Tenant_Fr");
             viewString.Append("eightCurrencyId, T1.Tenant_OtherChargesCurrencyId, T1.Tenant_VatNumber, T1.Tenan");
             viewString.Append("t_TimeZoneOffset, T1.Tenant_DayLightOffset, T1.Tenant_DayLightStartDate, T1.Tena");
@@ -10840,7 +10840,7 @@ namespace Edm_EntityMappingGeneratedViews
             viewString.Append(" T1.Tenant_PaymentTermId, T1.Tenant_ProfitCurrencyId, T1.Tenant_AgentId, T1.Tena");
             viewString.Append("nt_SearchFields, T1.Tenant_IsDataBackupBuilt, T1.Tenant_WeightMeasurementUnitCod");
             viewString.Append("e, T1.Tenant_DateTimeFormat, T1.Tenant_LocalCustomsCode, T1.Tenant_VatUniqueType");
-            viewString.Append("Code, T1.Tenant_VatUniqueCountryId, T1.Tenant_VatMandatoryForPotentialCust,");
+            viewString.Append("Code, T1.Tenant_VatUniqueCountryId, T1.Tenant_VatMandatoryForPotentialCustomers,");
             viewString.Append(" T1.Tenant_VatMandatoryTypeCode, T1.Tenant_VatMandatoryCountryId, T1.Tenant_Invo");
             viewString.Append("iceSection1, T1.Tenant_InvoiceSection2, T1.Tenant_BankDetails, T1.Tenant_IsShare");
             viewString.Append("dLogisticsActivated, T1.Tenant_IsMobileActivated, T1.Tenant_SharedLogisticsMessa");
@@ -10862,11 +10862,11 @@ namespace Edm_EntityMappingGeneratedViews
             viewString.Append("aidCollectId, \r\n            T.ExportOtherPrepaidCollectId AS Tenant_ExportOtherP");
             viewString.Append("repaidCollectId, \r\n            T.ImportFreightPrepaidCollectId AS Tenant_ImportF");
             viewString.Append("reightPrepaidCollectId, \r\n            T.ImportOtherPrepaidCollectId AS Tenant_Im");
-            viewString.Append("portOtherPrepaidCollectId, \r\n            T.MasterExpFreigPrepaidCollectId A");
-            viewString.Append("S Tenant_MasterExpFreigPrepaidCollectId, \r\n            T.MasterExportOtherP");
-            viewString.Append("repaidCollectId AS Tenant_MasterExpOtherPrepaidCollectId, \r\n            T.Mas");
-            viewString.Append("terImportFreightPrepaidCollectId AS Tenant_MasterImpFreiPrepaidCollectId, ");
-            viewString.Append("\r\n            T.MasterImpOtherPrepaidCollectId AS Tenant_MasterImportOtherPre");
+            viewString.Append("portOtherPrepaidCollectId, \r\n            T.MasterExportFreightPrepaidCollectId A");
+            viewString.Append("S Tenant_MasterExportFreightPrepaidCollectId, \r\n            T.MasterExportOtherP");
+            viewString.Append("repaidCollectId AS Tenant_MasterExportOtherPrepaidCollectId, \r\n            T.Mas");
+            viewString.Append("terImportFreightPrepaidCollectId AS Tenant_MasterImportFreightPrepaidCollectId, ");
+            viewString.Append("\r\n            T.MasterImportOtherPrepaidCollectId AS Tenant_MasterImportOtherPre");
             viewString.Append("paidCollectId, \r\n            T.IsHybrid AS Tenant_IsHybrid, \r\n            T.IsQu");
             viewString.Append("oteSubjectEdited AS Tenant_IsQuoteSubjectEdited, \r\n            T.DefaultQuestion");
             viewString.Append("naireId AS Tenant_DefaultQuestionnaireId, \r\n            T.FreightCurrencyId AS T");
@@ -10884,7 +10884,7 @@ namespace Edm_EntityMappingGeneratedViews
             viewString.Append(" T.DateTimeFormat AS Tenant_DateTimeFormat, \r\n            T.LocalCustomsCode AS ");
             viewString.Append("Tenant_LocalCustomsCode, \r\n            T.VatUniqueTypeCode AS Tenant_VatUniqueTy");
             viewString.Append("peCode, \r\n            T.VatUniqueCountryId AS Tenant_VatUniqueCountryId, \r\n     ");
-            viewString.Append("       T.VatMandatoryForPotentialCust AS Tenant_VatMandatoryForPotentialCus");
+            viewString.Append("       T.VatMandatoryForPotentialCustomers AS Tenant_VatMandatoryForPotentialCus");
             viewString.Append("tomers, \r\n            T.VatMandatoryTypeCode AS Tenant_VatMandatoryTypeCode, \r\n ");
             viewString.Append("           T.VatMandatoryCountryId AS Tenant_VatMandatoryCountryId, \r\n          ");
             viewString.Append("  T.InvoiceSection1 AS Tenant_InvoiceSection1, \r\n            T.InvoiceSection2 A");
@@ -11196,7 +11196,7 @@ namespace Edm_EntityMappingGeneratedViews
             viewString.Append("utomaticField, \r\n            T.UniqueField AS ObjectField_UniqueField, \r\n       ");
             viewString.Append("     T.ShortNameTextCodeId AS ObjectField_ShortNameTextCodeId, \r\n            T.D");
             viewString.Append("isplayInSearchWindowListIndex AS ObjectField_DisplayInSearchWindowListIndex, \r\n ");
-            viewString.Append("           T.DisplayInSearchWindowFilterInx AS ObjectField_DisplayInSearchWin");
+            viewString.Append("           T.DisplayInSearchWindowFiltersIndex AS ObjectField_DisplayInSearchWin");
             viewString.Append("dowFiltersIndex, \r\n            T.IsMulti AS ObjectField_IsMulti, \r\n            T");
             viewString.Append(".MultiTableId AS ObjectField_MultiTableId, \r\n            T.DependencyFilter1Valu");
             viewString.Append("e AS ObjectField_DependencyFilter1Value, \r\n            T.DependencyFilter2Value ");
@@ -11635,8 +11635,8 @@ namespace Edm_EntityMappingGeneratedViews
             viewString.Append("        T.IsDirect AS DocumentType_IsDirect, \r\n            T.IsHouse AS Document");
             viewString.Append("Type_IsHouse, \r\n            T.SearchFields AS DocumentType_SearchFields, \r\n     ");
             viewString.Append("       T.ObjectTableId AS DocumentType_ObjectTableId, \r\n            T.Subject AS");
-            viewString.Append(" DocumentType_Subject, \r\n            T.DocumentTypeDefaulReportTempId AS Do");
-            viewString.Append("cumentType_DocumentTypeDefaulReportTempId, \r\n            T.DocumentTypeDefa");
+            viewString.Append(" DocumentType_Subject, \r\n            T.DocumentTypeDefaultReportTemplateId AS Do");
+            viewString.Append("cumentType_DocumentTypeDefaultReportTemplateId, \r\n            T.DocumentTypeDefa");
             viewString.Append("ultHTMLTemplateId AS DocumentType_DocumentTypeDefaultHTMLTemplateId, \r\n         ");
             viewString.Append("   T.DocumentTypeDefaultEditorTool AS DocumentType_DocumentTypeDefaultEditorTool");
             viewString.Append(", \r\n            T.TemplateFormatCode AS DocumentType_TemplateFormatCode, \r\n     ");

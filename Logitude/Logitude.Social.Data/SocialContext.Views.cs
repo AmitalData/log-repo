@@ -2775,7 +2775,7 @@ namespace Edm_EntityMappingGeneratedViews
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing User
-        [CodeFirstDatabaseSchema.User](T1.User_Id, T1.User_Tenant, T1.User_Code, T1.User_Notes, T1.User_SearchFields, T1.User_IsBranchRestricted, T1.User_IsSalesman, T1.User_CreateDate, T1.User_ExpirationDate, T1.User_LicencedUser, T1.User_IsFreelancer, T1.User_IsShowContactDetailInMobileApp, T1.User_IsProductRestricted, T1.User_IsDistributor, T1.User_DistributorCode, T1.User_PersonalId, T1.User_ProductTypeCode, T1.User_BusinessUnitId, T1.User_BranchId, T1.User_DepartmentId, T1.User_FreelancerId)
+        [CodeFirstDatabaseSchema.User](T1.User_Id, T1.User_Tenant, T1.User_Code, T1.User_Notes, T1.User_SearchFields, T1.User_IsBranchRestricted, T1.User_IsSalesman, T1.User_CreateDate, T1.User_ExpirationDate, T1.User_LicencedUser, T1.User_IsFreelancer, T1.User_IsShowContactDetailsInTheMobileApp, T1.User_IsProductRestricted, T1.User_IsDistributor, T1.User_DistributorCode, T1.User_PersonalId, T1.User_ProductTypeCode, T1.User_BusinessUnitId, T1.User_BranchId, T1.User_DepartmentId, T1.User_FreelancerId)
     FROM (
         SELECT 
             T.Id AS User_Id, 
@@ -2789,7 +2789,7 @@ namespace Edm_EntityMappingGeneratedViews
             T.ExpirationDate AS User_ExpirationDate, 
             T.LicencedUser AS User_LicencedUser, 
             T.IsFreelancer AS User_IsFreelancer, 
-            T.IsShowContactDetailInMobileApp AS User_IsShowContactDetailInMobileApp, 
+            T.IsShowContactDetailsInTheMobileApp AS User_IsShowContactDetailsInTheMobileApp, 
             T.IsProductRestricted AS User_IsProductRestricted, 
             T.IsDistributor AS User_IsDistributor, 
             T.DistributorCode AS User_DistributorCode, 
@@ -3022,7 +3022,7 @@ namespace Edm_EntityMappingGeneratedViews
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing Card
-        [CodeFirstDatabaseSchema.Card](T1.Card_Id, T1.Card_BankName, T1.Card_BankAddress, T1.Card_Swift, T1.Card_AccountNumber, T1.Card_IBANNumber, T1.Card_EnglishName, T1.Card_Tenant, T1.Card_VatNumber, T1.Card_LocalName, T1.Card_InActive, T1.Card_PaymentTermId, T1.Card_PartnerTypeId, T1.Card_AccountingCard, T1.Card_Notes, T1.Card_Code, T1.Card_Website, T1.Card_InvoiceCurrencyId, T1.Card_VatTypeId, T1.Card_SearchFields, T1.Card_ImageDetailId, T1.Card_PrimaryContactId, T1.Card_LastLoginDate, T1.Card_InvitationDate, T1.Card_CreateDate, T1.Card_UpdateDate, T1.Card_IsCustomer, T1.Card_EnableConsolidationInvoices, T1.Card_CityName, T1.Card_CountryId, T1.Card_CountryCode, T1.Card_CountryName, T1.Card_SalesmanUserId, T1.Card_IsActiveForMobile, T1.Card_CreatedByUserId, T1.Card_UpdatedByUserId, T1.Card_SharedLogisticsInvitStatusCode, T1.Card_CollectorId, T1.Card_ClassifierId)
+        [CodeFirstDatabaseSchema.Card](T1.Card_Id, T1.Card_BankName, T1.Card_BankAddress, T1.Card_Swift, T1.Card_AccountNumber, T1.Card_IBANNumber, T1.Card_EnglishName, T1.Card_Tenant, T1.Card_VatNumber, T1.Card_LocalName, T1.Card_InActive, T1.Card_PaymentTermId, T1.Card_PartnerTypeId, T1.Card_AccountingCard, T1.Card_Notes, T1.Card_Code, T1.Card_Website, T1.Card_InvoiceCurrencyId, T1.Card_VatTypeId, T1.Card_SearchFields, T1.Card_ImageDetailId, T1.Card_PrimaryContactId, T1.Card_LastLoginDate, T1.Card_InvitationDate, T1.Card_CreateDate, T1.Card_UpdateDate, T1.Card_IsCustomer, T1.Card_EnableConsolidationInvoices, T1.Card_CityName, T1.Card_CountryId, T1.Card_CountryCode, T1.Card_CountryName, T1.Card_SalesmanUserId, T1.Card_IsActiveForMobile, T1.Card_CreatedByUserId, T1.Card_UpdatedByUserId, T1.Card_SharedLogisticsInvitationStatusCode, T1.Card_CollectorId, T1.Card_ClassifierId)
     FROM (
         SELECT 
             T.Id AS Card_Id, 
@@ -3061,7 +3061,7 @@ namespace Edm_EntityMappingGeneratedViews
             T.IsActiveForMobile AS Card_IsActiveForMobile, 
             T.CreatedByUserId AS Card_CreatedByUserId, 
             T.UpdatedByUserId AS Card_UpdatedByUserId, 
-            T.SharedLogisticsInvitStatusCode AS Card_SharedLogisticsInvitStatusCode, 
+            T.SharedLogisticsInvitationStatusCode AS Card_SharedLogisticsInvitationStatusCode, 
             T.CollectorId AS Card_CollectorId, 
             T.ClassifierId AS Card_ClassifierId, 
             True AS _from0
@@ -3484,7 +3484,7 @@ namespace Edm_EntityMappingGeneratedViews
             T.Name AS SharedLogisticsInvitationStatus_Name, 
             T.SearchFields AS SharedLogisticsInvitationStatus_SearchFields, 
             True AS _from0
-        FROM SocialContext.SharedLogisticInvitationStatus AS T
+        FROM SocialContext.SharedLogisticsInvitationStatus AS T
     ) AS T1");
         }
         
@@ -4023,7 +4023,7 @@ namespace Edm_EntityMappingGeneratedViews
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing AccountingSystem
-        [CodeFirstDatabaseSchema.AccountingSystem](T1.AccountingSystem_Code, T1.AccountingSystem_Name, T1.AccountingSystem_SearchFields, T1.AccountingSystem_IsExternalCodesFromTable, T1.AccountingSystem_IsExternalCodesSyncEnabled, T1.AccountingSystem_IsSingleTaxPerInvoice, T1.AccountingSystem_IsSingleCurrencyAccount, T1.AccountingSystem_AllowManuallyDueDate, T1.AccountingSystem_IsJournalMode, T1.AccountingSystem_IsTaxItemManaged, T1.AccountingSystem_AllowMinusInvoiceLines, T1.AccountingSystem_ShowDownloadScreen, T1.AccountingSystem_AllowARInvoicesTransfer, T1.AccountingSystem_AllowAPInvoicesTransfer, T1.AccountingSystem_AllowPositiveAmountsCreditNote, T1.AccountingSystem_InActive)
+        [CodeFirstDatabaseSchema.AccountingSystem](T1.AccountingSystem_Code, T1.AccountingSystem_Name, T1.AccountingSystem_SearchFields, T1.AccountingSystem_IsExternalCodesFromTable, T1.AccountingSystem_IsExternalCodesSyncEnabled, T1.AccountingSystem_IsSingleTaxPerInvoice, T1.AccountingSystem_IsSingleCurrencyAccount, T1.AccountingSystem_AllowManuallyDueDate, T1.AccountingSystem_IsJournalMode, T1.AccountingSystem_IsTaxItemManaged, T1.AccountingSystem_AllowMinusInvoiceLines, T1.AccountingSystem_ShowDownloadScreen, T1.AccountingSystem_AllowARInvoicesTransfer, T1.AccountingSystem_AllowAPInvoicesTransfer, T1.AccountingSystem_AllowPositiveAmountsInTheCreditNote, T1.AccountingSystem_InActive)
     FROM (
         SELECT 
             T.Code AS AccountingSystem_Code, 
@@ -4040,7 +4040,7 @@ namespace Edm_EntityMappingGeneratedViews
             T.ShowDownloadScreen AS AccountingSystem_ShowDownloadScreen, 
             T.AllowARInvoicesTransfer AS AccountingSystem_AllowARInvoicesTransfer, 
             T.AllowAPInvoicesTransfer AS AccountingSystem_AllowAPInvoicesTransfer, 
-            T.AllowPositiveAmountsCreditNote AS AccountingSystem_AllowPositiveAmountsCreditNote, 
+            T.AllowPositiveAmountsInTheCreditNote AS AccountingSystem_AllowPositiveAmountsInTheCreditNote, 
             T.InActive AS AccountingSystem_InActive, 
             True AS _from0
         FROM SocialContext.AccountingSystems AS T
@@ -4055,7 +4055,7 @@ namespace Edm_EntityMappingGeneratedViews
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing AccountingSetting
-        [CodeFirstDatabaseSchema.AccountingSetting](T1.AccountingSetting_Id, T1.AccountingSetting_AllowVoidARI, T1.AccountingSetting_AllowVoidARP, T1.AccountingSetting_AllowVoidAPI, T1.AccountingSetting_AllowVoidAPP, T1.AccountingSetting_AllowManualInvoiceNumber, T1.AccountingSetting_IsVatNumberMandatoryInAR, T1.AccountingSetting_IsVatNumberMandatoryInAP, T1.AccountingSetting_IsChronologicalDates, T1.AccountingSetting_AccountingSystemCode, T1.AccountingSetting_VATableTempCard, T1.AccountingSetting_VATExemptTempCard, T1.AccountingSetting_AllowMinusInvoicelines, T1.AccountingSetting_AllowClosureWithoutPayables, T1.AccountingSetting_IsARInvoicesTransferEnabled, T1.AccountingSetting_IsAPInvoicesTransferEnabled, T1.AccountingSetting_ARInvoiceTransferStartDate, T1.AccountingSetting_APInvoiceTransferStartDate, T1.AccountingSetting_AllowPositiveAmountsCreditNote)
+        [CodeFirstDatabaseSchema.AccountingSetting](T1.AccountingSetting_Id, T1.AccountingSetting_AllowVoidARI, T1.AccountingSetting_AllowVoidARP, T1.AccountingSetting_AllowVoidAPI, T1.AccountingSetting_AllowVoidAPP, T1.AccountingSetting_AllowManualInvoiceNumber, T1.AccountingSetting_IsVatNumberMandatoryInAR, T1.AccountingSetting_IsVatNumberMandatoryInAP, T1.AccountingSetting_IsChronologicalDates, T1.AccountingSetting_AccountingSystemCode, T1.AccountingSetting_VATableTempCard, T1.AccountingSetting_VATExemptTempCard, T1.AccountingSetting_AllowMinusInvoicelines, T1.AccountingSetting_AllowClosureWithoutPayables, T1.AccountingSetting_IsARInvoicesTransferEnabled, T1.AccountingSetting_IsAPInvoicesTransferEnabled, T1.AccountingSetting_ARInvoiceTransferStartDate, T1.AccountingSetting_APInvoiceTransferStartDate, T1.AccountingSetting_AllowPositiveAmountsInTheCreditNote)
     FROM (
         SELECT 
             T.Id AS AccountingSetting_Id, 
@@ -4076,7 +4076,7 @@ namespace Edm_EntityMappingGeneratedViews
             T.IsAPInvoicesTransferEnabled AS AccountingSetting_IsAPInvoicesTransferEnabled, 
             T.ARInvoiceTransferStartDate AS AccountingSetting_ARInvoiceTransferStartDate, 
             T.APInvoiceTransferStartDate AS AccountingSetting_APInvoiceTransferStartDate, 
-            T.AllowPositiveAmountsCreditNote AS AccountingSetting_AllowPositiveAmountsCreditNote, 
+            T.AllowPositiveAmountsInTheCreditNote AS AccountingSetting_AllowPositiveAmountsInTheCreditNote, 
             True AS _from0
         FROM SocialContext.AccountingSettings AS T
     ) AS T1");
@@ -4090,7 +4090,7 @@ namespace Edm_EntityMappingGeneratedViews
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing Tenant
-        [CodeFirstDatabaseSchema.Tenant](T1.Tenant_Id, T1.Tenant_Company, T1.Tenant_CurrencyId, T1.Tenant_Email, T1.Tenant_Website, T1.Tenant_AddressId, T1.Tenant_Format, T1.Tenant_Language, T1.Tenant_Direction, T1.Tenant_IATA, T1.Tenant_Signature, T1.Tenant_CASSCode, T1.Tenant_DimensionsUnitCode, T1.Tenant_VolumeUnitCode, T1.Tenant_GrossWeightUnitCode, T1.Tenant_ChargeableWeightUnitCode, T1.Tenant_ExportFreightPrepaidCollectId, T1.Tenant_ExportOtherPrepaidCollectId, T1.Tenant_ImportFreightPrepaidCollectId, T1.Tenant_ImportOtherPrepaidCollectId, T1.Tenant_MasterExpFreigPrepaidCollectId, T1.Tenant_MasterExpOtherPrepaidCollectId, T1.Tenant_MasterImpFreiPrepaidCollectId, T1.Tenant_MasterImpOtherPrepaidCollectId, T1.Tenant_IsHybrid, T1.Tenant_IsQuoteSubjectEdited, T1.Tenant_DefaultQuestionnaireId, T1.Tenant_FreightCurrencyId, T1.Tenant_OtherChargesCurrencyId, T1.Tenant_VatNumber, T1.Tenant_TimeZoneOffset, T1.Tenant_DayLightOffset, T1.Tenant_DayLightStartDate, T1.Tenant_DayLightEndDate, T1.Tenant_QuoteSaleCurrencyId, T1.Tenant_PasswordPolicyCode, T1.Tenant_PaymentTermId, T1.Tenant_ProfitCurrencyId, T1.Tenant_AgentId, T1.Tenant_SearchFields, T1.Tenant_IsDataBackupBuilt, T1.Tenant_WeightMeasurementUnitCode, T1.Tenant_DateTimeFormat, T1.Tenant_LocalCustomsCode, T1.Tenant_VatUniqueTypeCode, T1.Tenant_VatUniqueCountryId, T1.Tenant_VatMandatoryForPotentialCust, T1.Tenant_VatMandatoryTypeCode, T1.Tenant_VatMandatoryCountryId, T1.Tenant_InvoiceSection1, T1.Tenant_InvoiceSection2, T1.Tenant_BankDetails, T1.Tenant_IsSharedLogisticsActivated, T1.Tenant_IsMobileActivated, T1.Tenant_SharedLogisticsMessageLink, T1.Tenant_IsCustomerTelRequired, T1.Tenant_IsCustomerFaxRequired, T1.Tenant_IsPickDelAdrsRequired, T1.Tenant_IsCustomerAddress1Required, T1.Tenant_HasPrimaryContact, T1.Tenant_AllowEAWBMoreThanTenPackages, T1.Tenant_RegulatedAgentNumber, T1.Tenant_RegulatedAgentRegimeActivated, T1.Tenant_IsDocumentsArchive, T1.Tenant_CustomerId, T1.Tenant_IsCustomerTenantShare, T1.Tenant_CustomerTenantShareImportFile)
+        [CodeFirstDatabaseSchema.Tenant](T1.Tenant_Id, T1.Tenant_Company, T1.Tenant_CurrencyId, T1.Tenant_Email, T1.Tenant_Website, T1.Tenant_AddressId, T1.Tenant_Format, T1.Tenant_Language, T1.Tenant_Direction, T1.Tenant_IATA, T1.Tenant_Signature, T1.Tenant_CASSCode, T1.Tenant_DimensionsUnitCode, T1.Tenant_VolumeUnitCode, T1.Tenant_GrossWeightUnitCode, T1.Tenant_ChargeableWeightUnitCode, T1.Tenant_ExportFreightPrepaidCollectId, T1.Tenant_ExportOtherPrepaidCollectId, T1.Tenant_ImportFreightPrepaidCollectId, T1.Tenant_ImportOtherPrepaidCollectId, T1.Tenant_MasterExportFreightPrepaidCollectId, T1.Tenant_MasterExportOtherPrepaidCollectId, T1.Tenant_MasterImportFreightPrepaidCollectId, T1.Tenant_MasterImportOtherPrepaidCollectId, T1.Tenant_IsHybrid, T1.Tenant_IsQuoteSubjectEdited, T1.Tenant_DefaultQuestionnaireId, T1.Tenant_FreightCurrencyId, T1.Tenant_OtherChargesCurrencyId, T1.Tenant_VatNumber, T1.Tenant_TimeZoneOffset, T1.Tenant_DayLightOffset, T1.Tenant_DayLightStartDate, T1.Tenant_DayLightEndDate, T1.Tenant_QuoteSaleCurrencyId, T1.Tenant_PasswordPolicyCode, T1.Tenant_PaymentTermId, T1.Tenant_ProfitCurrencyId, T1.Tenant_AgentId, T1.Tenant_SearchFields, T1.Tenant_IsDataBackupBuilt, T1.Tenant_WeightMeasurementUnitCode, T1.Tenant_DateTimeFormat, T1.Tenant_LocalCustomsCode, T1.Tenant_VatUniqueTypeCode, T1.Tenant_VatUniqueCountryId, T1.Tenant_VatMandatoryForPotentialCustomers, T1.Tenant_VatMandatoryTypeCode, T1.Tenant_VatMandatoryCountryId, T1.Tenant_InvoiceSection1, T1.Tenant_InvoiceSection2, T1.Tenant_BankDetails, T1.Tenant_IsSharedLogisticsActivated, T1.Tenant_IsMobileActivated, T1.Tenant_SharedLogisticsMessageLink, T1.Tenant_IsCustomerTelRequired, T1.Tenant_IsCustomerFaxRequired, T1.Tenant_IsPickDelAdrsRequired, T1.Tenant_IsCustomerAddress1Required, T1.Tenant_HasPrimaryContact, T1.Tenant_AllowEAWBMoreThanTenPackages, T1.Tenant_RegulatedAgentNumber, T1.Tenant_RegulatedAgentRegimeActivated, T1.Tenant_IsDocumentsArchive, T1.Tenant_CustomerId, T1.Tenant_IsCustomerTenantShare, T1.Tenant_CustomerTenantShareImportFile)
     FROM (
         SELECT 
             T.Id AS Tenant_Id, 
@@ -4113,10 +4113,10 @@ namespace Edm_EntityMappingGeneratedViews
             T.ExportOtherPrepaidCollectId AS Tenant_ExportOtherPrepaidCollectId, 
             T.ImportFreightPrepaidCollectId AS Tenant_ImportFreightPrepaidCollectId, 
             T.ImportOtherPrepaidCollectId AS Tenant_ImportOtherPrepaidCollectId, 
-            T.MasterExpFreigPrepaidCollectId AS Tenant_MasterExpFreigPrepaidCollectId, 
-            T.MasterExpOtherPrepaidCollectId AS Tenant_MasterExpOtherPrepaidCollectId, 
-            T.MasterImpFreiPrepaidCollectId AS Tenant_MasterImpFreiPrepaidCollectId, 
-            T.MasterImpOtherPrepaidCollectId AS Tenant_MasterImpOtherPrepaidCollectId, 
+            T.MasterExportFreightPrepaidCollectId AS Tenant_MasterExportFreightPrepaidCollectId, 
+            T.MasterExportOtherPrepaidCollectId AS Tenant_MasterExportOtherPrepaidCollectId, 
+            T.MasterImportFreightPrepaidCollectId AS Tenant_MasterImportFreightPrepaidCollectId, 
+            T.MasterImportOtherPrepaidCollectId AS Tenant_MasterImportOtherPrepaidCollectId, 
             T.IsHybrid AS Tenant_IsHybrid, 
             T.IsQuoteSubjectEdited AS Tenant_IsQuoteSubjectEdited, 
             T.DefaultQuestionnaireId AS Tenant_DefaultQuestionnaireId, 
@@ -4139,7 +4139,7 @@ namespace Edm_EntityMappingGeneratedViews
             T.LocalCustomsCode AS Tenant_LocalCustomsCode, 
             T.VatUniqueTypeCode AS Tenant_VatUniqueTypeCode, 
             T.VatUniqueCountryId AS Tenant_VatUniqueCountryId, 
-            T.VatMandatoryForPotentialCust AS Tenant_VatMandatoryForPotentialCust, 
+            T.VatMandatoryForPotentialCustomers AS Tenant_VatMandatoryForPotentialCustomers, 
             T.VatMandatoryTypeCode AS Tenant_VatMandatoryTypeCode, 
             T.VatMandatoryCountryId AS Tenant_VatMandatoryCountryId, 
             T.InvoiceSection1 AS Tenant_InvoiceSection1, 
@@ -4459,7 +4459,7 @@ namespace Edm_EntityMappingGeneratedViews
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing ObjectField
-        [CodeFirstDatabaseSchema.ObjectField](T1.ObjectField_Id, T1.ObjectField_Tenant, T1.ObjectField_FullNameTextCodeId, T1.ObjectField_ObjectTableId, T1.ObjectField_FieldName, T1.ObjectField_DataTypeCode, T1.ObjectField_MaxLength, T1.ObjectField_IsRequiered, T1.ObjectField_IsCustom, T1.ObjectField_HelpTextCodeId, T1.ObjectField_MinLength, T1.ObjectField_LookUpTableId, T1.ObjectField_DisplayOnLookUp, T1.ObjectField_CanFilter, T1.ObjectField_DisplayOnly, T1.ObjectField_SystemRequired, T1.ObjectField_SystemMaxLength, T1.ObjectField_ListTextCodeId, T1.ObjectField_DisplayInList, T1.ObjectField_ConverterName, T1.ObjectField_DataTemplateName, T1.ObjectField_IsCustomFilter, T1.ObjectField_Operator, T1.ObjectField_MultiLine, T1.ObjectField_IsTimeFrameFilter, T1.ObjectField_DisplayInSearchWindowList, T1.ObjectField_DisplayInSearchWindowFilters, T1.ObjectField_PMPropertyPath, T1.ObjectField_ListPropertyPath, T1.ObjectField_LookUpControlName, T1.ObjectField_DisplayInLookUpIndex, T1.ObjectField_AutomaticField, T1.ObjectField_UniqueField, T1.ObjectField_ShortNameTextCodeId, T1.ObjectField_DisplayInSearchWindowListIndex, T1.ObjectField_DisplayInSearchWindowFilterInx, T1.ObjectField_IsMulti, T1.ObjectField_MultiTableId, T1.ObjectField_DependencyFilter1Value, T1.ObjectField_DependencyFilter2Value, T1.ObjectField_DependencyFilter1Type, T1.ObjectField_DependencyFilter2Type, T1.ObjectField_ValidForQuerySection1, T1.ObjectField_ValidForQuerySection2, T1.ObjectField_DependencyFilter1IsList, T1.ObjectField_DependencyFilter2IsList, T1.ObjectField_IsRestrictable, T1.ObjectField_DisplayInEntityVariables, T1.ObjectField_TextCase, T1.ObjectField_ControlField1, T1.ObjectField_ControlField2, T1.ObjectField_DigitsAfterPoint, T1.ObjectField_InActive, T1.ObjectField_SearchFields, T1.ObjectField_DisplayInLookupColumnSize, T1.ObjectField_ColumnHeaderTemplateName, T1.ObjectField_DisplayLongName, T1.ObjectField_CustomerPermissionTypeCode, T1.ObjectField_AgentPermissionTypeCode, T1.ObjectField_NumberOfDigits, T1.ObjectField_CustomPickListCode, T1.ObjectField_IsMaxLength)
+        [CodeFirstDatabaseSchema.ObjectField](T1.ObjectField_Id, T1.ObjectField_Tenant, T1.ObjectField_FullNameTextCodeId, T1.ObjectField_ObjectTableId, T1.ObjectField_FieldName, T1.ObjectField_DataTypeCode, T1.ObjectField_MaxLength, T1.ObjectField_IsRequiered, T1.ObjectField_IsCustom, T1.ObjectField_HelpTextCodeId, T1.ObjectField_MinLength, T1.ObjectField_LookUpTableId, T1.ObjectField_DisplayOnLookUp, T1.ObjectField_CanFilter, T1.ObjectField_DisplayOnly, T1.ObjectField_SystemRequired, T1.ObjectField_SystemMaxLength, T1.ObjectField_ListTextCodeId, T1.ObjectField_DisplayInList, T1.ObjectField_ConverterName, T1.ObjectField_DataTemplateName, T1.ObjectField_IsCustomFilter, T1.ObjectField_Operator, T1.ObjectField_MultiLine, T1.ObjectField_IsTimeFrameFilter, T1.ObjectField_DisplayInSearchWindowList, T1.ObjectField_DisplayInSearchWindowFilters, T1.ObjectField_PMPropertyPath, T1.ObjectField_ListPropertyPath, T1.ObjectField_LookUpControlName, T1.ObjectField_DisplayInLookUpIndex, T1.ObjectField_AutomaticField, T1.ObjectField_UniqueField, T1.ObjectField_ShortNameTextCodeId, T1.ObjectField_DisplayInSearchWindowListIndex, T1.ObjectField_DisplayInSearchWindowFiltersIndex, T1.ObjectField_IsMulti, T1.ObjectField_MultiTableId, T1.ObjectField_DependencyFilter1Value, T1.ObjectField_DependencyFilter2Value, T1.ObjectField_DependencyFilter1Type, T1.ObjectField_DependencyFilter2Type, T1.ObjectField_ValidForQuerySection1, T1.ObjectField_ValidForQuerySection2, T1.ObjectField_DependencyFilter1IsList, T1.ObjectField_DependencyFilter2IsList, T1.ObjectField_IsRestrictable, T1.ObjectField_DisplayInEntityVariables, T1.ObjectField_TextCase, T1.ObjectField_ControlField1, T1.ObjectField_ControlField2, T1.ObjectField_DigitsAfterPoint, T1.ObjectField_InActive, T1.ObjectField_SearchFields, T1.ObjectField_DisplayInLookupColumnSize, T1.ObjectField_ColumnHeaderTemplateName, T1.ObjectField_DisplayLongName, T1.ObjectField_CustomerPermissionTypeCode, T1.ObjectField_AgentPermissionTypeCode, T1.ObjectField_NumberOfDigits, T1.ObjectField_CustomPickListCode, T1.ObjectField_IsMaxLength)
     FROM (
         SELECT 
             T.Id AS ObjectField_Id, 
@@ -4497,7 +4497,7 @@ namespace Edm_EntityMappingGeneratedViews
             T.UniqueField AS ObjectField_UniqueField, 
             T.ShortNameTextCodeId AS ObjectField_ShortNameTextCodeId, 
             T.DisplayInSearchWindowListIndex AS ObjectField_DisplayInSearchWindowListIndex, 
-            T.DisplayInSearchWindowFilterInx AS ObjectField_DisplayInSearchWindowFilterInx, 
+            T.DisplayInSearchWindowFiltersIndex AS ObjectField_DisplayInSearchWindowFiltersIndex, 
             T.IsMulti AS ObjectField_IsMulti, 
             T.MultiTableId AS ObjectField_MultiTableId, 
             T.DependencyFilter1Value AS ObjectField_DependencyFilter1Value, 
@@ -5849,7 +5849,7 @@ namespace Edm_EntityMappingGeneratedViews
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing DocumentType
-        [CodeFirstDatabaseSchema.DocumentType](T1.DocumentType_Id, T1.DocumentType_Tenant, T1.DocumentType_Code, T1.DocumentType_Name, T1.DocumentType_Notes, T1.DocumentType_IsAir, T1.DocumentType_IsOcean, T1.DocumentType_IsInland, T1.DocumentType_IsDocIn, T1.DocumentType_IsDocOut, T1.DocumentType_InActive, T1.DocumentType_IsMaster, T1.DocumentType_IsDirect, T1.DocumentType_IsHouse, T1.DocumentType_SearchFields, T1.DocumentType_ObjectTableId, T1.DocumentType_Subject, T1.DocumentType_DocumentTypeDefaulReportTempId, T1.DocumentType_DocumentTypeDefaultHTMLTemplateId, T1.DocumentType_DocumentTypeDefaultEditorTool, T1.DocumentType_TemplateFormatCode, T1.DocumentType_CustomControl, T1.DocumentType_CustomerRoleId, T1.DocumentType_AgentRoleId, T1.DocumentType_IsDocumentOneTimePrintLimited, T1.DocumentType_LimitedPrintCopyId, T1.DocumentType_IsEnabledForCustomers, T1.DocumentType_IsCopiedAtSignup, T1.DocumentType_CountryCode, T1.DocumentType_DocumentsDataProviderCode, T1.DocumentType_IsCustomerView, T1.DocumentType_IsAgentView, T1.DocumentType_IsReadOnly, T1.DocumentType_DocumentTypeCategoryCode)
+        [CodeFirstDatabaseSchema.DocumentType](T1.DocumentType_Id, T1.DocumentType_Tenant, T1.DocumentType_Code, T1.DocumentType_Name, T1.DocumentType_Notes, T1.DocumentType_IsAir, T1.DocumentType_IsOcean, T1.DocumentType_IsInland, T1.DocumentType_IsDocIn, T1.DocumentType_IsDocOut, T1.DocumentType_InActive, T1.DocumentType_IsMaster, T1.DocumentType_IsDirect, T1.DocumentType_IsHouse, T1.DocumentType_SearchFields, T1.DocumentType_ObjectTableId, T1.DocumentType_Subject, T1.DocumentType_DocumentTypeDefaultReportTemplateId, T1.DocumentType_DocumentTypeDefaultHTMLTemplateId, T1.DocumentType_DocumentTypeDefaultEditorTool, T1.DocumentType_TemplateFormatCode, T1.DocumentType_CustomControl, T1.DocumentType_CustomerRoleId, T1.DocumentType_AgentRoleId, T1.DocumentType_IsDocumentOneTimePrintLimited, T1.DocumentType_LimitedPrintCopyId, T1.DocumentType_IsEnabledForCustomers, T1.DocumentType_IsCopiedAtSignup, T1.DocumentType_CountryCode, T1.DocumentType_DocumentsDataProviderCode, T1.DocumentType_IsCustomerView, T1.DocumentType_IsAgentView, T1.DocumentType_IsReadOnly, T1.DocumentType_DocumentTypeCategoryCode)
     FROM (
         SELECT 
             T.Id AS DocumentType_Id, 
@@ -5869,7 +5869,7 @@ namespace Edm_EntityMappingGeneratedViews
             T.SearchFields AS DocumentType_SearchFields, 
             T.ObjectTableId AS DocumentType_ObjectTableId, 
             T.Subject AS DocumentType_Subject, 
-            T.DocumentTypeDefaulReportTempId AS DocumentType_DocumentTypeDefaulReportTempId, 
+            T.DocumentTypeDefaultReportTemplateId AS DocumentType_DocumentTypeDefaultReportTemplateId, 
             T.DocumentTypeDefaultHTMLTemplateId AS DocumentType_DocumentTypeDefaultHTMLTemplateId, 
             T.DocumentTypeDefaultEditorTool AS DocumentType_DocumentTypeDefaultEditorTool, 
             T.TemplateFormatCode AS DocumentType_TemplateFormatCode, 
@@ -9930,7 +9930,7 @@ namespace Edm_EntityMappingGeneratedViews
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing Users
-        [Logitude.Social.Data.User](T1.User_Id, T1.User_Tenant, T1.User_Code, T1.User_Notes, T1.User_SearchFields, T1.User_IsBranchRestricted, T1.User_IsSalesman, T1.User_CreateDate, T1.User_ExpirationDate, T1.User_LicencedUser, T1.User_IsFreelancer, T1.User_IsShowContactDetailInMobileApp, T1.User_IsProductRestricted, T1.User_IsDistributor, T1.User_DistributorCode, T1.User_PersonalId, T1.User_ProductTypeCode, T1.User_BusinessUnitId, T1.User_BranchId, T1.User_DepartmentId, T1.User_FreelancerId)
+        [Logitude.Social.Data.User](T1.User_Id, T1.User_Tenant, T1.User_Code, T1.User_Notes, T1.User_SearchFields, T1.User_IsBranchRestricted, T1.User_IsSalesman, T1.User_CreateDate, T1.User_ExpirationDate, T1.User_LicencedUser, T1.User_IsFreelancer, T1.User_IsShowContactDetailsInTheMobileApp, T1.User_IsProductRestricted, T1.User_IsDistributor, T1.User_DistributorCode, T1.User_PersonalId, T1.User_ProductTypeCode, T1.User_BusinessUnitId, T1.User_BranchId, T1.User_DepartmentId, T1.User_FreelancerId)
     FROM (
         SELECT 
             T.Id AS User_Id, 
@@ -9944,7 +9944,7 @@ namespace Edm_EntityMappingGeneratedViews
             T.ExpirationDate AS User_ExpirationDate, 
             T.LicencedUser AS User_LicencedUser, 
             T.IsFreelancer AS User_IsFreelancer, 
-            T.IsShowContactDetailInMobileApp AS User_IsShowContactDetailInMobileApp, 
+            T.IsShowContactDetailsInTheMobileApp AS User_IsShowContactDetailsInTheMobileApp, 
             T.IsProductRestricted AS User_IsProductRestricted, 
             T.IsDistributor AS User_IsDistributor, 
             T.DistributorCode AS User_DistributorCode, 
@@ -10177,7 +10177,7 @@ namespace Edm_EntityMappingGeneratedViews
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing Cards
-        [Logitude.Social.Data.Card](T1.Card_Id, T1.Card_BankName, T1.Card_BankAddress, T1.Card_Swift, T1.Card_AccountNumber, T1.Card_IBANNumber, T1.Card_EnglishName, T1.Card_Tenant, T1.Card_VatNumber, T1.Card_LocalName, T1.Card_InActive, T1.Card_PaymentTermId, T1.Card_PartnerTypeId, T1.Card_AccountingCard, T1.Card_Notes, T1.Card_Code, T1.Card_Website, T1.Card_InvoiceCurrencyId, T1.Card_VatTypeId, T1.Card_SearchFields, T1.Card_ImageDetailId, T1.Card_PrimaryContactId, T1.Card_LastLoginDate, T1.Card_InvitationDate, T1.Card_CreateDate, T1.Card_UpdateDate, T1.Card_IsCustomer, T1.Card_EnableConsolidationInvoices, T1.Card_CityName, T1.Card_CountryId, T1.Card_CountryCode, T1.Card_CountryName, T1.Card_SalesmanUserId, T1.Card_IsActiveForMobile, T1.Card_CreatedByUserId, T1.Card_UpdatedByUserId, T1.Card_SharedLogisticsInvitStatusCode, T1.Card_CollectorId, T1.Card_ClassifierId)
+        [Logitude.Social.Data.Card](T1.Card_Id, T1.Card_BankName, T1.Card_BankAddress, T1.Card_Swift, T1.Card_AccountNumber, T1.Card_IBANNumber, T1.Card_EnglishName, T1.Card_Tenant, T1.Card_VatNumber, T1.Card_LocalName, T1.Card_InActive, T1.Card_PaymentTermId, T1.Card_PartnerTypeId, T1.Card_AccountingCard, T1.Card_Notes, T1.Card_Code, T1.Card_Website, T1.Card_InvoiceCurrencyId, T1.Card_VatTypeId, T1.Card_SearchFields, T1.Card_ImageDetailId, T1.Card_PrimaryContactId, T1.Card_LastLoginDate, T1.Card_InvitationDate, T1.Card_CreateDate, T1.Card_UpdateDate, T1.Card_IsCustomer, T1.Card_EnableConsolidationInvoices, T1.Card_CityName, T1.Card_CountryId, T1.Card_CountryCode, T1.Card_CountryName, T1.Card_SalesmanUserId, T1.Card_IsActiveForMobile, T1.Card_CreatedByUserId, T1.Card_UpdatedByUserId, T1.Card_SharedLogisticsInvitationStatusCode, T1.Card_CollectorId, T1.Card_ClassifierId)
     FROM (
         SELECT 
             T.Id AS Card_Id, 
@@ -10216,7 +10216,7 @@ namespace Edm_EntityMappingGeneratedViews
             T.IsActiveForMobile AS Card_IsActiveForMobile, 
             T.CreatedByUserId AS Card_CreatedByUserId, 
             T.UpdatedByUserId AS Card_UpdatedByUserId, 
-            T.SharedLogisticsInvitStatusCode AS Card_SharedLogisticsInvitStatusCode, 
+            T.SharedLogisticsInvitationStatusCode AS Card_SharedLogisticsInvitationStatusCode, 
             T.CollectorId AS Card_CollectorId, 
             T.ClassifierId AS Card_ClassifierId, 
             True AS _from0
@@ -10639,7 +10639,7 @@ namespace Edm_EntityMappingGeneratedViews
             T.Name AS SharedLogisticsInvitationStatus_Name, 
             T.SearchFields AS SharedLogisticsInvitationStatus_SearchFields, 
             True AS _from0
-        FROM CodeFirstDatabase.SharedLogisticInvitationStatus AS T
+        FROM CodeFirstDatabase.SharedLogisticsInvitationStatus AS T
     ) AS T1");
         }
 
@@ -11178,7 +11178,7 @@ namespace Edm_EntityMappingGeneratedViews
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing AccountingSystems
-        [Logitude.Social.Data.AccountingSystem](T1.AccountingSystem_Code, T1.AccountingSystem_Name, T1.AccountingSystem_SearchFields, T1.AccountingSystem_IsExternalCodesFromTable, T1.AccountingSystem_IsExternalCodesSyncEnabled, T1.AccountingSystem_IsSingleTaxPerInvoice, T1.AccountingSystem_IsSingleCurrencyAccount, T1.AccountingSystem_AllowManuallyDueDate, T1.AccountingSystem_IsJournalMode, T1.AccountingSystem_IsTaxItemManaged, T1.AccountingSystem_AllowMinusInvoiceLines, T1.AccountingSystem_ShowDownloadScreen, T1.AccountingSystem_AllowARInvoicesTransfer, T1.AccountingSystem_AllowAPInvoicesTransfer, T1.AccountingSystem_AllowPositiveAmountsCreditNote, T1.AccountingSystem_InActive)
+        [Logitude.Social.Data.AccountingSystem](T1.AccountingSystem_Code, T1.AccountingSystem_Name, T1.AccountingSystem_SearchFields, T1.AccountingSystem_IsExternalCodesFromTable, T1.AccountingSystem_IsExternalCodesSyncEnabled, T1.AccountingSystem_IsSingleTaxPerInvoice, T1.AccountingSystem_IsSingleCurrencyAccount, T1.AccountingSystem_AllowManuallyDueDate, T1.AccountingSystem_IsJournalMode, T1.AccountingSystem_IsTaxItemManaged, T1.AccountingSystem_AllowMinusInvoiceLines, T1.AccountingSystem_ShowDownloadScreen, T1.AccountingSystem_AllowARInvoicesTransfer, T1.AccountingSystem_AllowAPInvoicesTransfer, T1.AccountingSystem_AllowPositiveAmountsInTheCreditNote, T1.AccountingSystem_InActive)
     FROM (
         SELECT 
             T.Code AS AccountingSystem_Code, 
@@ -11195,7 +11195,7 @@ namespace Edm_EntityMappingGeneratedViews
             T.ShowDownloadScreen AS AccountingSystem_ShowDownloadScreen, 
             T.AllowARInvoicesTransfer AS AccountingSystem_AllowARInvoicesTransfer, 
             T.AllowAPInvoicesTransfer AS AccountingSystem_AllowAPInvoicesTransfer, 
-            T.AllowPositiveAmountsCreditNote AS AccountingSystem_AllowPositiveAmountsCreditNote, 
+            T.AllowPositiveAmountsInTheCreditNote AS AccountingSystem_AllowPositiveAmountsInTheCreditNote, 
             T.InActive AS AccountingSystem_InActive, 
             True AS _from0
         FROM CodeFirstDatabase.AccountingSystem AS T
@@ -11210,7 +11210,7 @@ namespace Edm_EntityMappingGeneratedViews
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing AccountingSettings
-        [Logitude.Social.Data.AccountingSetting](T1.AccountingSetting_Id, T1.AccountingSetting_AllowVoidARI, T1.AccountingSetting_AllowVoidARP, T1.AccountingSetting_AllowVoidAPI, T1.AccountingSetting_AllowVoidAPP, T1.AccountingSetting_AllowManualInvoiceNumber, T1.AccountingSetting_IsVatNumberMandatoryInAR, T1.AccountingSetting_IsVatNumberMandatoryInAP, T1.AccountingSetting_IsChronologicalDates, T1.AccountingSetting_AccountingSystemCode, T1.AccountingSetting_VATableTempCard, T1.AccountingSetting_VATExemptTempCard, T1.AccountingSetting_AllowMinusInvoicelines, T1.AccountingSetting_AllowClosureWithoutPayables, T1.AccountingSetting_IsARInvoicesTransferEnabled, T1.AccountingSetting_IsAPInvoicesTransferEnabled, T1.AccountingSetting_ARInvoiceTransferStartDate, T1.AccountingSetting_APInvoiceTransferStartDate, T1.AccountingSetting_AllowPositiveAmountsCreditNote)
+        [Logitude.Social.Data.AccountingSetting](T1.AccountingSetting_Id, T1.AccountingSetting_AllowVoidARI, T1.AccountingSetting_AllowVoidARP, T1.AccountingSetting_AllowVoidAPI, T1.AccountingSetting_AllowVoidAPP, T1.AccountingSetting_AllowManualInvoiceNumber, T1.AccountingSetting_IsVatNumberMandatoryInAR, T1.AccountingSetting_IsVatNumberMandatoryInAP, T1.AccountingSetting_IsChronologicalDates, T1.AccountingSetting_AccountingSystemCode, T1.AccountingSetting_VATableTempCard, T1.AccountingSetting_VATExemptTempCard, T1.AccountingSetting_AllowMinusInvoicelines, T1.AccountingSetting_AllowClosureWithoutPayables, T1.AccountingSetting_IsARInvoicesTransferEnabled, T1.AccountingSetting_IsAPInvoicesTransferEnabled, T1.AccountingSetting_ARInvoiceTransferStartDate, T1.AccountingSetting_APInvoiceTransferStartDate, T1.AccountingSetting_AllowPositiveAmountsInTheCreditNote)
     FROM (
         SELECT 
             T.Id AS AccountingSetting_Id, 
@@ -11231,7 +11231,7 @@ namespace Edm_EntityMappingGeneratedViews
             T.IsAPInvoicesTransferEnabled AS AccountingSetting_IsAPInvoicesTransferEnabled, 
             T.ARInvoiceTransferStartDate AS AccountingSetting_ARInvoiceTransferStartDate, 
             T.APInvoiceTransferStartDate AS AccountingSetting_APInvoiceTransferStartDate, 
-            T.AllowPositiveAmountsCreditNote AS AccountingSetting_AllowPositiveAmountsCreditNote, 
+            T.AllowPositiveAmountsInTheCreditNote AS AccountingSetting_AllowPositiveAmountsInTheCreditNote, 
             True AS _from0
         FROM CodeFirstDatabase.AccountingSetting AS T
     ) AS T1");
@@ -11245,7 +11245,7 @@ namespace Edm_EntityMappingGeneratedViews
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing Tenants
-        [Logitude.Social.Data.Tenant](T1.Tenant_Id, T1.Tenant_Company, T1.Tenant_CurrencyId, T1.Tenant_Email, T1.Tenant_Website, T1.Tenant_AddressId, T1.Tenant_Format, T1.Tenant_Language, T1.Tenant_Direction, T1.Tenant_IATA, T1.Tenant_Signature, T1.Tenant_CASSCode, T1.Tenant_DimensionsUnitCode, T1.Tenant_VolumeUnitCode, T1.Tenant_GrossWeightUnitCode, T1.Tenant_ChargeableWeightUnitCode, T1.Tenant_ExportFreightPrepaidCollectId, T1.Tenant_ExportOtherPrepaidCollectId, T1.Tenant_ImportFreightPrepaidCollectId, T1.Tenant_ImportOtherPrepaidCollectId, T1.Tenant_MasterExpFreigPrepaidCollectId, T1.Tenant_MasterExpOtherPrepaidCollectId, T1.Tenant_MasterImpFreiPrepaidCollectId, T1.Tenant_MasterImpOtherPrepaidCollectId, T1.Tenant_IsHybrid, T1.Tenant_IsQuoteSubjectEdited, T1.Tenant_DefaultQuestionnaireId, T1.Tenant_FreightCurrencyId, T1.Tenant_OtherChargesCurrencyId, T1.Tenant_VatNumber, T1.Tenant_TimeZoneOffset, T1.Tenant_DayLightOffset, T1.Tenant_DayLightStartDate, T1.Tenant_DayLightEndDate, T1.Tenant_QuoteSaleCurrencyId, T1.Tenant_PasswordPolicyCode, T1.Tenant_PaymentTermId, T1.Tenant_ProfitCurrencyId, T1.Tenant_AgentId, T1.Tenant_SearchFields, T1.Tenant_IsDataBackupBuilt, T1.Tenant_WeightMeasurementUnitCode, T1.Tenant_DateTimeFormat, T1.Tenant_LocalCustomsCode, T1.Tenant_VatUniqueTypeCode, T1.Tenant_VatUniqueCountryId, T1.Tenant_VatMandatoryForPotentialCust, T1.Tenant_VatMandatoryTypeCode, T1.Tenant_VatMandatoryCountryId, T1.Tenant_InvoiceSection1, T1.Tenant_InvoiceSection2, T1.Tenant_BankDetails, T1.Tenant_IsSharedLogisticsActivated, T1.Tenant_IsMobileActivated, T1.Tenant_SharedLogisticsMessageLink, T1.Tenant_IsCustomerTelRequired, T1.Tenant_IsCustomerFaxRequired, T1.Tenant_IsPickDelAdrsRequired, T1.Tenant_IsCustomerAddress1Required, T1.Tenant_HasPrimaryContact, T1.Tenant_AllowEAWBMoreThanTenPackages, T1.Tenant_RegulatedAgentNumber, T1.Tenant_RegulatedAgentRegimeActivated, T1.Tenant_IsDocumentsArchive, T1.Tenant_CustomerId, T1.Tenant_IsCustomerTenantShare, T1.Tenant_CustomerTenantShareImportFile)
+        [Logitude.Social.Data.Tenant](T1.Tenant_Id, T1.Tenant_Company, T1.Tenant_CurrencyId, T1.Tenant_Email, T1.Tenant_Website, T1.Tenant_AddressId, T1.Tenant_Format, T1.Tenant_Language, T1.Tenant_Direction, T1.Tenant_IATA, T1.Tenant_Signature, T1.Tenant_CASSCode, T1.Tenant_DimensionsUnitCode, T1.Tenant_VolumeUnitCode, T1.Tenant_GrossWeightUnitCode, T1.Tenant_ChargeableWeightUnitCode, T1.Tenant_ExportFreightPrepaidCollectId, T1.Tenant_ExportOtherPrepaidCollectId, T1.Tenant_ImportFreightPrepaidCollectId, T1.Tenant_ImportOtherPrepaidCollectId, T1.Tenant_MasterExportFreightPrepaidCollectId, T1.Tenant_MasterExportOtherPrepaidCollectId, T1.Tenant_MasterImportFreightPrepaidCollectId, T1.Tenant_MasterImportOtherPrepaidCollectId, T1.Tenant_IsHybrid, T1.Tenant_IsQuoteSubjectEdited, T1.Tenant_DefaultQuestionnaireId, T1.Tenant_FreightCurrencyId, T1.Tenant_OtherChargesCurrencyId, T1.Tenant_VatNumber, T1.Tenant_TimeZoneOffset, T1.Tenant_DayLightOffset, T1.Tenant_DayLightStartDate, T1.Tenant_DayLightEndDate, T1.Tenant_QuoteSaleCurrencyId, T1.Tenant_PasswordPolicyCode, T1.Tenant_PaymentTermId, T1.Tenant_ProfitCurrencyId, T1.Tenant_AgentId, T1.Tenant_SearchFields, T1.Tenant_IsDataBackupBuilt, T1.Tenant_WeightMeasurementUnitCode, T1.Tenant_DateTimeFormat, T1.Tenant_LocalCustomsCode, T1.Tenant_VatUniqueTypeCode, T1.Tenant_VatUniqueCountryId, T1.Tenant_VatMandatoryForPotentialCustomers, T1.Tenant_VatMandatoryTypeCode, T1.Tenant_VatMandatoryCountryId, T1.Tenant_InvoiceSection1, T1.Tenant_InvoiceSection2, T1.Tenant_BankDetails, T1.Tenant_IsSharedLogisticsActivated, T1.Tenant_IsMobileActivated, T1.Tenant_SharedLogisticsMessageLink, T1.Tenant_IsCustomerTelRequired, T1.Tenant_IsCustomerFaxRequired, T1.Tenant_IsPickDelAdrsRequired, T1.Tenant_IsCustomerAddress1Required, T1.Tenant_HasPrimaryContact, T1.Tenant_AllowEAWBMoreThanTenPackages, T1.Tenant_RegulatedAgentNumber, T1.Tenant_RegulatedAgentRegimeActivated, T1.Tenant_IsDocumentsArchive, T1.Tenant_CustomerId, T1.Tenant_IsCustomerTenantShare, T1.Tenant_CustomerTenantShareImportFile)
     FROM (
         SELECT 
             T.Id AS Tenant_Id, 
@@ -11268,10 +11268,10 @@ namespace Edm_EntityMappingGeneratedViews
             T.ExportOtherPrepaidCollectId AS Tenant_ExportOtherPrepaidCollectId, 
             T.ImportFreightPrepaidCollectId AS Tenant_ImportFreightPrepaidCollectId, 
             T.ImportOtherPrepaidCollectId AS Tenant_ImportOtherPrepaidCollectId, 
-            T.MasterExpFreigPrepaidCollectId AS Tenant_MasterExpFreigPrepaidCollectId, 
-            T.MasterExpOtherPrepaidCollectId AS Tenant_MasterExpOtherPrepaidCollectId, 
-            T.MasterImpFreiPrepaidCollectId AS Tenant_MasterImpFreiPrepaidCollectId, 
-            T.MasterImpOtherPrepaidCollectId AS Tenant_MasterImpOtherPrepaidCollectId, 
+            T.MasterExportFreightPrepaidCollectId AS Tenant_MasterExportFreightPrepaidCollectId, 
+            T.MasterExportOtherPrepaidCollectId AS Tenant_MasterExportOtherPrepaidCollectId, 
+            T.MasterImportFreightPrepaidCollectId AS Tenant_MasterImportFreightPrepaidCollectId, 
+            T.MasterImportOtherPrepaidCollectId AS Tenant_MasterImportOtherPrepaidCollectId, 
             T.IsHybrid AS Tenant_IsHybrid, 
             T.IsQuoteSubjectEdited AS Tenant_IsQuoteSubjectEdited, 
             T.DefaultQuestionnaireId AS Tenant_DefaultQuestionnaireId, 
@@ -11294,7 +11294,7 @@ namespace Edm_EntityMappingGeneratedViews
             T.LocalCustomsCode AS Tenant_LocalCustomsCode, 
             T.VatUniqueTypeCode AS Tenant_VatUniqueTypeCode, 
             T.VatUniqueCountryId AS Tenant_VatUniqueCountryId, 
-            T.VatMandatoryForPotentialCust AS Tenant_VatMandatoryForPotentialCust, 
+            T.VatMandatoryForPotentialCustomers AS Tenant_VatMandatoryForPotentialCustomers, 
             T.VatMandatoryTypeCode AS Tenant_VatMandatoryTypeCode, 
             T.VatMandatoryCountryId AS Tenant_VatMandatoryCountryId, 
             T.InvoiceSection1 AS Tenant_InvoiceSection1, 
@@ -11614,7 +11614,7 @@ namespace Edm_EntityMappingGeneratedViews
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing ObjectFields
-        [Logitude.Social.Data.ObjectField](T1.ObjectField_Id, T1.ObjectField_Tenant, T1.ObjectField_FullNameTextCodeId, T1.ObjectField_ObjectTableId, T1.ObjectField_FieldName, T1.ObjectField_DataTypeCode, T1.ObjectField_MaxLength, T1.ObjectField_IsRequiered, T1.ObjectField_IsCustom, T1.ObjectField_HelpTextCodeId, T1.ObjectField_MinLength, T1.ObjectField_LookUpTableId, T1.ObjectField_DisplayOnLookUp, T1.ObjectField_CanFilter, T1.ObjectField_DisplayOnly, T1.ObjectField_SystemRequired, T1.ObjectField_SystemMaxLength, T1.ObjectField_ListTextCodeId, T1.ObjectField_DisplayInList, T1.ObjectField_ConverterName, T1.ObjectField_DataTemplateName, T1.ObjectField_IsCustomFilter, T1.ObjectField_Operator, T1.ObjectField_MultiLine, T1.ObjectField_IsTimeFrameFilter, T1.ObjectField_DisplayInSearchWindowList, T1.ObjectField_DisplayInSearchWindowFilters, T1.ObjectField_PMPropertyPath, T1.ObjectField_ListPropertyPath, T1.ObjectField_LookUpControlName, T1.ObjectField_DisplayInLookUpIndex, T1.ObjectField_AutomaticField, T1.ObjectField_UniqueField, T1.ObjectField_ShortNameTextCodeId, T1.ObjectField_DisplayInSearchWindowListIndex, T1.ObjectField_DisplayInSearchWindowFilterInx, T1.ObjectField_IsMulti, T1.ObjectField_MultiTableId, T1.ObjectField_DependencyFilter1Value, T1.ObjectField_DependencyFilter2Value, T1.ObjectField_DependencyFilter1Type, T1.ObjectField_DependencyFilter2Type, T1.ObjectField_ValidForQuerySection1, T1.ObjectField_ValidForQuerySection2, T1.ObjectField_DependencyFilter1IsList, T1.ObjectField_DependencyFilter2IsList, T1.ObjectField_IsRestrictable, T1.ObjectField_DisplayInEntityVariables, T1.ObjectField_TextCase, T1.ObjectField_ControlField1, T1.ObjectField_ControlField2, T1.ObjectField_DigitsAfterPoint, T1.ObjectField_InActive, T1.ObjectField_SearchFields, T1.ObjectField_DisplayInLookupColumnSize, T1.ObjectField_ColumnHeaderTemplateName, T1.ObjectField_DisplayLongName, T1.ObjectField_CustomerPermissionTypeCode, T1.ObjectField_AgentPermissionTypeCode, T1.ObjectField_NumberOfDigits, T1.ObjectField_CustomPickListCode, T1.ObjectField_IsMaxLength)
+        [Logitude.Social.Data.ObjectField](T1.ObjectField_Id, T1.ObjectField_Tenant, T1.ObjectField_FullNameTextCodeId, T1.ObjectField_ObjectTableId, T1.ObjectField_FieldName, T1.ObjectField_DataTypeCode, T1.ObjectField_MaxLength, T1.ObjectField_IsRequiered, T1.ObjectField_IsCustom, T1.ObjectField_HelpTextCodeId, T1.ObjectField_MinLength, T1.ObjectField_LookUpTableId, T1.ObjectField_DisplayOnLookUp, T1.ObjectField_CanFilter, T1.ObjectField_DisplayOnly, T1.ObjectField_SystemRequired, T1.ObjectField_SystemMaxLength, T1.ObjectField_ListTextCodeId, T1.ObjectField_DisplayInList, T1.ObjectField_ConverterName, T1.ObjectField_DataTemplateName, T1.ObjectField_IsCustomFilter, T1.ObjectField_Operator, T1.ObjectField_MultiLine, T1.ObjectField_IsTimeFrameFilter, T1.ObjectField_DisplayInSearchWindowList, T1.ObjectField_DisplayInSearchWindowFilters, T1.ObjectField_PMPropertyPath, T1.ObjectField_ListPropertyPath, T1.ObjectField_LookUpControlName, T1.ObjectField_DisplayInLookUpIndex, T1.ObjectField_AutomaticField, T1.ObjectField_UniqueField, T1.ObjectField_ShortNameTextCodeId, T1.ObjectField_DisplayInSearchWindowListIndex, T1.ObjectField_DisplayInSearchWindowFiltersIndex, T1.ObjectField_IsMulti, T1.ObjectField_MultiTableId, T1.ObjectField_DependencyFilter1Value, T1.ObjectField_DependencyFilter2Value, T1.ObjectField_DependencyFilter1Type, T1.ObjectField_DependencyFilter2Type, T1.ObjectField_ValidForQuerySection1, T1.ObjectField_ValidForQuerySection2, T1.ObjectField_DependencyFilter1IsList, T1.ObjectField_DependencyFilter2IsList, T1.ObjectField_IsRestrictable, T1.ObjectField_DisplayInEntityVariables, T1.ObjectField_TextCase, T1.ObjectField_ControlField1, T1.ObjectField_ControlField2, T1.ObjectField_DigitsAfterPoint, T1.ObjectField_InActive, T1.ObjectField_SearchFields, T1.ObjectField_DisplayInLookupColumnSize, T1.ObjectField_ColumnHeaderTemplateName, T1.ObjectField_DisplayLongName, T1.ObjectField_CustomerPermissionTypeCode, T1.ObjectField_AgentPermissionTypeCode, T1.ObjectField_NumberOfDigits, T1.ObjectField_CustomPickListCode, T1.ObjectField_IsMaxLength)
     FROM (
         SELECT 
             T.Id AS ObjectField_Id, 
@@ -11652,7 +11652,7 @@ namespace Edm_EntityMappingGeneratedViews
             T.UniqueField AS ObjectField_UniqueField, 
             T.ShortNameTextCodeId AS ObjectField_ShortNameTextCodeId, 
             T.DisplayInSearchWindowListIndex AS ObjectField_DisplayInSearchWindowListIndex, 
-            T.DisplayInSearchWindowFilterInx AS ObjectField_DisplayInSearchWindowFilterInx, 
+            T.DisplayInSearchWindowFiltersIndex AS ObjectField_DisplayInSearchWindowFiltersIndex, 
             T.IsMulti AS ObjectField_IsMulti, 
             T.MultiTableId AS ObjectField_MultiTableId, 
             T.DependencyFilter1Value AS ObjectField_DependencyFilter1Value, 
@@ -13004,7 +13004,7 @@ namespace Edm_EntityMappingGeneratedViews
         {
             return new DbMappingView(@"
     SELECT VALUE -- Constructing DocumentTypes
-        [Logitude.Social.Data.DocumentType](T1.DocumentType_Id, T1.DocumentType_Tenant, T1.DocumentType_Code, T1.DocumentType_Name, T1.DocumentType_Notes, T1.DocumentType_IsAir, T1.DocumentType_IsOcean, T1.DocumentType_IsInland, T1.DocumentType_IsDocIn, T1.DocumentType_IsDocOut, T1.DocumentType_InActive, T1.DocumentType_IsMaster, T1.DocumentType_IsDirect, T1.DocumentType_IsHouse, T1.DocumentType_SearchFields, T1.DocumentType_ObjectTableId, T1.DocumentType_Subject, T1.DocumentType_DocumentTypeDefaulReportTempId, T1.DocumentType_DocumentTypeDefaultHTMLTemplateId, T1.DocumentType_DocumentTypeDefaultEditorTool, T1.DocumentType_TemplateFormatCode, T1.DocumentType_CustomControl, T1.DocumentType_CustomerRoleId, T1.DocumentType_AgentRoleId, T1.DocumentType_IsDocumentOneTimePrintLimited, T1.DocumentType_LimitedPrintCopyId, T1.DocumentType_IsEnabledForCustomers, T1.DocumentType_IsCopiedAtSignup, T1.DocumentType_CountryCode, T1.DocumentType_DocumentsDataProviderCode, T1.DocumentType_IsCustomerView, T1.DocumentType_IsAgentView, T1.DocumentType_IsReadOnly, T1.DocumentType_DocumentTypeCategoryCode)
+        [Logitude.Social.Data.DocumentType](T1.DocumentType_Id, T1.DocumentType_Tenant, T1.DocumentType_Code, T1.DocumentType_Name, T1.DocumentType_Notes, T1.DocumentType_IsAir, T1.DocumentType_IsOcean, T1.DocumentType_IsInland, T1.DocumentType_IsDocIn, T1.DocumentType_IsDocOut, T1.DocumentType_InActive, T1.DocumentType_IsMaster, T1.DocumentType_IsDirect, T1.DocumentType_IsHouse, T1.DocumentType_SearchFields, T1.DocumentType_ObjectTableId, T1.DocumentType_Subject, T1.DocumentType_DocumentTypeDefaultReportTemplateId, T1.DocumentType_DocumentTypeDefaultHTMLTemplateId, T1.DocumentType_DocumentTypeDefaultEditorTool, T1.DocumentType_TemplateFormatCode, T1.DocumentType_CustomControl, T1.DocumentType_CustomerRoleId, T1.DocumentType_AgentRoleId, T1.DocumentType_IsDocumentOneTimePrintLimited, T1.DocumentType_LimitedPrintCopyId, T1.DocumentType_IsEnabledForCustomers, T1.DocumentType_IsCopiedAtSignup, T1.DocumentType_CountryCode, T1.DocumentType_DocumentsDataProviderCode, T1.DocumentType_IsCustomerView, T1.DocumentType_IsAgentView, T1.DocumentType_IsReadOnly, T1.DocumentType_DocumentTypeCategoryCode)
     FROM (
         SELECT 
             T.Id AS DocumentType_Id, 
@@ -13024,7 +13024,7 @@ namespace Edm_EntityMappingGeneratedViews
             T.SearchFields AS DocumentType_SearchFields, 
             T.ObjectTableId AS DocumentType_ObjectTableId, 
             T.Subject AS DocumentType_Subject, 
-            T.DocumentTypeDefaulReportTempId AS DocumentType_DocumentTypeDefaulReportTempId, 
+            T.DocumentTypeDefaultReportTemplateId AS DocumentType_DocumentTypeDefaultReportTemplateId, 
             T.DocumentTypeDefaultHTMLTemplateId AS DocumentType_DocumentTypeDefaultHTMLTemplateId, 
             T.DocumentTypeDefaultEditorTool AS DocumentType_DocumentTypeDefaultEditorTool, 
             T.TemplateFormatCode AS DocumentType_TemplateFormatCode, 

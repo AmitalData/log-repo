@@ -130,9 +130,9 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
             entityPOCO.SilverlightEndDate = entityPM.SilverlightEndDate;
             entityPOCO.IsParentTenant = entityPM.IsParentTenant;
             entityPOCO.ParentTenantId = entityPM.ParentTenantId;
-            entityPOCO.AgentSharedLogStatistiLastDate = entityPM.AgentSharedLogStatistiLastDate;
-            entityPOCO.AgentSharedLogisticsLastWeek = entityPM.AgentSharedLogisticsLastWeek;
-            entityPOCO.AgentSharedLogStatistLastMonth = entityPM.AgentSharedLogStatistLastMonth;
+            entityPOCO.AgentSharedLogisticsStatisticsLastDate = entityPM.AgentSharedLogisticsStatisticsLastDate;
+            entityPOCO.AgentSharedLogisticsStatisticsLastWeek = entityPM.AgentSharedLogisticsStatisticsLastWeek;
+            entityPOCO.AgentSharedLogisticsStatisticsLastMonth = entityPM.AgentSharedLogisticsStatisticsLastMonth;
             entityPOCO.ChangeHeaderColor = entityPM.ChangeHeaderColor;
             entityPOCO.HeaderColor = entityPM.HeaderColor;
             entityPOCO.StockTypeCode = entityPM.StockTypeCode;

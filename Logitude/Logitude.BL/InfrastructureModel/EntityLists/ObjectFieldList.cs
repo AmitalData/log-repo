@@ -40,7 +40,7 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
         public bool UniqueField { get; set; }
         public string ShortNameTextCodeId { get; set; }
         public int DisplayInSearchWindowListIndex { get; set; }
-        public int DisplayInSearchWindowFilterInx { get; set; }
+        public int DisplayInSearchWindowFiltersIndex { get; set; }
         public bool IsMulti { get; set; }
         public string MultiTableId { get; set; }
         public string DependencyFilter1Value { get; set; }
@@ -65,7 +65,7 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
         public bool CanAutomateSetValue { get; set; }
         public bool HasTemplate { get; set; }        
         public string FullNameTextCodeDefaultText { get; set; }
-        public bool AllowedInCustomerFieldsSetting { get; set; }
+        public bool AllowedInCustomerFieldsSettings { get; set; }
         public bool DisplayInDocumentReferences { get; set; }
         public string ListTextCodeCode { get; set; }
         public string Code { get; set; }

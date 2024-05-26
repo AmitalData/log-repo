@@ -304,7 +304,7 @@
       <xs:element minOccurs="0" name="SalesmanBusinessUnitId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="SalesmanUserId" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="SearchFields" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="SharedLogisticsInvitStatusCode" nillable="true" type="xs:int" />
+      <xs:element minOccurs="0" name="SharedLogisticsInvitationStatusCode" nillable="true" type="xs:int" />
       <xs:element minOccurs="0" name="SharedLogisticsInvitationStatusName" nillable="true" type="xs:string" />
       <xs:element minOccurs="0" name="ShippingAgent" nillable="true" type="tns:ShippingAgentPM" />
       <xs:element minOccurs="0" name="StateName" nillable="true" type="xs:string" />

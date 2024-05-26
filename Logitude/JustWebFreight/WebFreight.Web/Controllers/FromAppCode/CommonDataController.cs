@@ -247,7 +247,7 @@ namespace WebFreight.Web
                 myResult.ProfitCurrencyCode = myTenant.ProfitCurrency.Code;
                 myResult.TenantDateTimeFormat = myTenant.DateTimeFormat;
                 myResult.DisplayDocumentsAndEvents = myTenant.DisplayDocumentsAndEvents;
-                myResult.IsQuotesRequestsMenuEnabled = myTenant.IsQuoteRequestActivateInShared;
+                myResult.IsQuotesRequestsMenuEnabled = myTenant.IsQuotesRequestActivatedInShared;
 
             }
 

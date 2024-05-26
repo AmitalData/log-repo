@@ -115,7 +115,7 @@ namespace WebFreight.Web.ExternalAPIs
                             quotePM.EventNote = entity.QuoteCancelNote;
                         }
 
-                        quotePM.DontExportQuotationsoIntegratedSys = true;
+                        quotePM.DontExportQuotationsToIntegratedSystem = true;
 
                         IQuotesContext MyContext = QuotesContext.GetContext(authToken.Tenant);
                         QuoteService service = new QuoteService(MyContext, authToken.Tenant);

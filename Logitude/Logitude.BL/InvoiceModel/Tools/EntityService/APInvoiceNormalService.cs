@@ -918,7 +918,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                             else
                             {
-                                line.DebitAccount = myChargesType.PayablesChargesTypeExtCode;
+                                line.DebitAccount = myChargesType.PayablesChargesTypeExternalCode;
                             }
                         }
 

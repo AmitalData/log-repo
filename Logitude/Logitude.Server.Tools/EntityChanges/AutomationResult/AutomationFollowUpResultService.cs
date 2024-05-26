@@ -235,7 +235,7 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
             followUp.IsNew = false;
             followUp.LegType = automationFollowUp.LegType;
             followUp.AutomationId = automationId;
-            followUp.DateEscalaActTimeIndicatorCode = automationFollowUp.DateEscalaActTimeIndicatorCode;
+            followUp.DateEscalationActionTimeIndicatorCode = automationFollowUp.DateEscalationActionTimeIndicatorCode;
             followUp.DateEscalationTime = automationFollowUp.DateEscalationTime;
             followUp.DateFieldName = followUpDateFieldName;
 

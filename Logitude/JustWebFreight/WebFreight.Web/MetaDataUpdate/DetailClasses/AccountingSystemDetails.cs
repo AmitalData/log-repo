@@ -19,7 +19,7 @@ namespace WebFreight.Web.MetaDataUpdate.DetailClasses
         public bool IsTaxItemManaged { get; set; }
         public bool AllowMinusInvoiceLines { get; set; }
         public bool ShowDownloadScreen { get; set; }
-        public bool AllowPositiveAmountsCreditNote { get; set; }
+        public bool AllowPositiveAmountsInTheCreditNote { get; set; }
         public bool AllowARInvoicesTransfer { get; set; }
     }
 }

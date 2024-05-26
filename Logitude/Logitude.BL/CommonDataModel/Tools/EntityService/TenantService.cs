@@ -138,7 +138,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 {
                     tenantManagement.TenantTypeCode = "FOR";
                     tenantManagement.Technology = "AG";
-                    //theEntityPm.ExportQuotationsoIntegratedSys = false;
+                    //theEntityPm.ExportQuotationsToIntegratedSystem = false;
                 }
                 
                 MapNewLogboxFromCloudTenantManagement(tenantManagement, theEntityPm);
@@ -259,24 +259,24 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 entityPM.VatMandatoryCountryId = null;
             }
 
-            if (string.IsNullOrEmpty(entityPM.MasterExpFreigPrepaidCollectId))
+            if (string.IsNullOrEmpty(entityPM.MasterExportFreightPrepaidCollectId))
             {
-                entityPM.MasterExpFreigPrepaidCollectId = "P";
+                entityPM.MasterExportFreightPrepaidCollectId = "P";
             }
 
-            if (string.IsNullOrEmpty(entityPM.MasterExpOtherPrepaidCollectId))
+            if (string.IsNullOrEmpty(entityPM.MasterExportOtherPrepaidCollectId))
             {
-                entityPM.MasterExpOtherPrepaidCollectId = "P";
+                entityPM.MasterExportOtherPrepaidCollectId = "P";
             }
 
-            if (string.IsNullOrEmpty(entityPM.MasterImpFreiPrepaidCollectId))
+            if (string.IsNullOrEmpty(entityPM.MasterImportFreightPrepaidCollectId))
             {
-                entityPM.MasterImpFreiPrepaidCollectId = "P";
+                entityPM.MasterImportFreightPrepaidCollectId = "P";
             }
 
-            if (string.IsNullOrEmpty(entityPM.MasterImpOtherPrepaidCollectId))
+            if (string.IsNullOrEmpty(entityPM.MasterImportOtherPrepaidCollectId))
             {
-                entityPM.MasterImpOtherPrepaidCollectId = "P";
+                entityPM.MasterImportOtherPrepaidCollectId = "P";
             }
         }
         private void InitializeBusinessUnit()

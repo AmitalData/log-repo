@@ -1182,7 +1182,7 @@ namespace WebFreight.Web.InfrastructureModel
                     ObjectTableId = field.ObjectTableId,
                     Subject = field.Subject,
                     DocumentTypeDefaultHTMLTemplateId = field.DocumentTypeDefaultHTMLTemplateId,
-                    DocumentTypeDefaulReportTempId = field.DocumentTypeDefaulReportTempId,
+                    DocumentTypeDefaultReportTemplateId = field.DocumentTypeDefaultReportTemplateId,
                     TemplateFormatCode = field.TemplateFormatCode,
                     DocumentTypeDefaultEditorTool = field.DocumentTypeDefaultEditorTool,
                     IsMaster = field.IsMaster,
@@ -1491,7 +1491,7 @@ namespace WebFreight.Web.InfrastructureModel
                 CreateTenantFromSignUp = true,
                 TimeZoneOffset = null,
                 CheckDigitControlAlgorithmCode = "NONE",
-                TransferQuotationsToUnfTrigger = "OnSend",
+                TransferQuotationsToUnifreightTrigger = "OnSend",
                 VatNumber = signUpInfoClass.VatNumber,
                 IsNewLogboxFromCloud = signUpInfoClass.IsCreateLogboxTenantFromCloud,
             };
@@ -1501,10 +1501,10 @@ namespace WebFreight.Web.InfrastructureModel
 
         private static TenantPM MapTenantZeroDetailsToNewTenant(TenantPM newTenant, Tenant tenantZero, SignUpInfoClass signUpInfo)
         {
-            newTenant.MasterExpFreigPrepaidCollectId = tenantZero.MasterExpFreigPrepaidCollectId;
-            newTenant.MasterExpOtherPrepaidCollectId = tenantZero.MasterExpOtherPrepaidCollectId;
-            newTenant.MasterImpFreiPrepaidCollectId = tenantZero.MasterImpFreiPrepaidCollectId;
-            newTenant.MasterImpOtherPrepaidCollectId = tenantZero.MasterImpOtherPrepaidCollectId;
+            newTenant.MasterExportFreightPrepaidCollectId = tenantZero.MasterExportFreightPrepaidCollectId;
+            newTenant.MasterExportOtherPrepaidCollectId = tenantZero.MasterExportOtherPrepaidCollectId;
+            newTenant.MasterImportFreightPrepaidCollectId = tenantZero.MasterImportFreightPrepaidCollectId;
+            newTenant.MasterImportOtherPrepaidCollectId = tenantZero.MasterImportOtherPrepaidCollectId;
 
             newTenant.AirRatio = tenantZero.AirRatio;
             newTenant.FCLRatio = tenantZero.FCLRatio;
@@ -2054,7 +2054,7 @@ namespace WebFreight.Web.InfrastructureModel
                             documentTypeTemplates.Add(newDocumentTypeTemplate); 
                         }
                     }
-                    usedDocumenttype.DocumentTypeDefaulReportTempId = GetDocumentTypeDefaulReportTempId(documentTypeTemplates, documenttype, coutryCode);
+                    usedDocumenttype.DocumentTypeDefaultReportTemplateId = GetDocumentTypeDefaultReportTemplateId(documentTypeTemplates, documenttype, coutryCode);
                     usedDocumenttype.DocumentTypeDefaultHTMLTemplateId = GetDocumentTypeDefaultHTMLTemplateId(documentTypeTemplates, documenttype, coutryCode);
 
                     usedDocumenttype.IsDocOut = documenttype.IsDocOut;
@@ -2088,9 +2088,9 @@ namespace WebFreight.Web.InfrastructureModel
             return documentTypeDefaultHTMLTemplate != null ? documentTypeDefaultHTMLTemplate.Id : null;
         }
 
-        private static string GetDocumentTypeDefaulReportTempId(List<DocumentTypeTemplate> documentTypeTemplates, DocumentTypePM documenttype, string coutryCode)
+        private static string GetDocumentTypeDefaultReportTemplateId(List<DocumentTypeTemplate> documentTypeTemplates, DocumentTypePM documenttype, string coutryCode)
         {
-            DocumentTypeTemplate documentTypeDefaultReportTemplate = documentTypeTemplates.Where(d => d.CountryCode == coutryCode && d.TemplateType == "P" && d.OriginalTemplateId == documenttype.DocumentTypeDefaulReportTempId).FirstOrDefault();
+            DocumentTypeTemplate documentTypeDefaultReportTemplate = documentTypeTemplates.Where(d => d.CountryCode == coutryCode && d.TemplateType == "P" && d.OriginalTemplateId == documenttype.DocumentTypeDefaultReportTemplateId).FirstOrDefault();
 
             if (documentTypeDefaultReportTemplate == null)
             {
@@ -2099,7 +2099,7 @@ namespace WebFreight.Web.InfrastructureModel
             }
             if (documentTypeDefaultReportTemplate == null)
             {
-                documentTypeDefaultReportTemplate = documentTypeTemplates.Where(d => d.TemplateType == "P" && d.OriginalTemplateId == documenttype.DocumentTypeDefaulReportTempId).FirstOrDefault();
+                documentTypeDefaultReportTemplate = documentTypeTemplates.Where(d => d.TemplateType == "P" && d.OriginalTemplateId == documenttype.DocumentTypeDefaultReportTemplateId).FirstOrDefault();
             }
 
             if (documentTypeDefaultReportTemplate == null)

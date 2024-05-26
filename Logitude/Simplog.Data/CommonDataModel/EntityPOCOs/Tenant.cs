@@ -34,10 +34,10 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string ExportOtherPrepaidCollectId { get; set; }
         public string ImportFreightPrepaidCollectId { get; set; }
         public string ImportOtherPrepaidCollectId { get; set; }
-        public string MasterExpFreigPrepaidCollectId { get; set; }
-        public string MasterExpOtherPrepaidCollectId { get; set; }
-        public string MasterImpFreiPrepaidCollectId { get; set; }
-        public string MasterImpOtherPrepaidCollectId { get; set; }
+        public string MasterExportFreightPrepaidCollectId { get; set; }
+        public string MasterExportOtherPrepaidCollectId { get; set; }
+        public string MasterImportFreightPrepaidCollectId { get; set; }
+        public string MasterImportOtherPrepaidCollectId { get; set; }
         public bool IsHybrid { get; set; }
         public bool IsIncrementalBuildRunning { get; set; }
         public bool IsQuoteSubjectEdited { get; set; }
@@ -63,7 +63,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string VatUniqueCountryId { get; set; }
         public string VatMandatoryCountryId { get; set; }
         public string VatMandatoryTypeCode { get; set; }
-        public bool VatMandatoryForPotentialCust { get; set; }
+        public bool VatMandatoryForPotentialCustomers { get; set; }
         public bool AllowAgentInCustomersLOV { get; set; }
         public string VatUniquePartnerTypeCode { get; set; }
 
@@ -109,9 +109,9 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public bool AllowEAWBMoreThanTenPackages { get; set; }
         public bool SharedLogisMasterMessageLink { get; set; }
 
-        public bool ExportQuotationsoIntegratedSys { get; set; }
+        public bool ExportQuotationsToIntegratedSystem { get; set; }
 
-        public bool IsQuoteRequestActivateInShared { get; set; }
+        public bool IsQuotesRequestActivatedInShared { get; set; }
 
         public virtual AccountingSetting AccountingSetting { get; set; }
 
@@ -146,7 +146,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public virtual Country VatFormatCountry { get; set; }
 
 
-        public bool IsCorrespondRightToLeftEnabled { get; set; }
+        public bool IsCorrespondenceRightToLeftEnabled { get; set; }
         public bool IsNotesRightToLeftEnabled { get; set; }
 
         public DateTime? AccountingActivationDate { get; set; }
@@ -191,7 +191,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public bool AllowCustomersInAgentsLOV { get; set; }
         public DateTime? AutomaticLastUpdateDate { get; set; }
         public bool DisplayDocumentsAndEvents { get; set; }
-        public string TransferQuotationsToUnfTrigger { get; set; }
+        public string TransferQuotationsToUnifreightTrigger { get; set; }
 
         public double? AirRatio { get; set; }
         public double? LCLRatio { get; set; }

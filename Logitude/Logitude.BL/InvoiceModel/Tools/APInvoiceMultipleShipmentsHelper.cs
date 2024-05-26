@@ -216,7 +216,7 @@ namespace Logitude.BL.InvoiceModel.Tools
 
                                 ChargesType myChargesType = ChargesTypeRepository.GetSingleChargesType(line.ChargesTypeId, tenant, false);
 
-                                if (myChargesType.PayablesChargesTypeExtCode == null || (myChargesType.PayablesChargesTypeExtCode != null && string.IsNullOrEmpty(myChargesType.PayablesChargesTypeExtCode.Trim())))
+                                if (myChargesType.PayablesChargesTypeExternalCode == null || (myChargesType.PayablesChargesTypeExternalCode != null && string.IsNullOrEmpty(myChargesType.PayablesChargesTypeExternalCode.Trim())))
                                 {
                                     isReady = false;
                                     chargeTypeError = "Payable Charge Type: " + myChargesType.EnglishName + ". External ID is missing.";
@@ -225,7 +225,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                                 else
                                 {
 
-                                    PayablesExternalChargesTypesCode.Add(myChargesType.PayablesChargesTypeExtCode);
+                                    PayablesExternalChargesTypesCode.Add(myChargesType.PayablesChargesTypeExternalCode);
 
                                 }
                                 VatType myVatType = VatTypeRepository.GetSingleVatType(line.VatTypeId, tenant, false);

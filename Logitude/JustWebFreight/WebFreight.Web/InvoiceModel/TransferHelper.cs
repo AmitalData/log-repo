@@ -176,7 +176,7 @@ namespace WebFreight.Web.InvoiceModel
 
                             else
                             {
-                                lineItem.CreditAccount = myChargesType.ReceivablesChargesTypeExtCode;
+                                lineItem.CreditAccount = myChargesType.ReceivablesChargesTypeExternalCode;
                             }
                         }
                     }
@@ -290,7 +290,7 @@ namespace WebFreight.Web.InvoiceModel
 
                             else
                             {
-                                lineItem.DebitAccount = myChargesType.ReceivablesChargesTypeExtCode;
+                                lineItem.DebitAccount = myChargesType.ReceivablesChargesTypeExternalCode;
                             }
                         }
                     }

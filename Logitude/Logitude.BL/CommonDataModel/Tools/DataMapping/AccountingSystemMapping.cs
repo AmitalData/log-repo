@@ -31,7 +31,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.ShowDownloadScreen = entityPM.ShowDownloadScreen;
             poco.AllowARInvoicesTransfer = entityPM.AllowARInvoicesTransfer;
             poco.AllowAPInvoicesTransfer = entityPM.AllowAPInvoicesTransfer;
-            poco.AllowPositiveAmountsCreditNote = entityPM.AllowPositiveAmountsCreditNote;
+            poco.AllowPositiveAmountsInTheCreditNote = entityPM.AllowPositiveAmountsInTheCreditNote;
             poco.InActive = entityPM.InActive;
             poco.AllowARPaymentsTransfer = entityPM.AllowARPaymentsTransfer;
             poco.SearchFields = entityPM.Code + "," + entityPM.Name;

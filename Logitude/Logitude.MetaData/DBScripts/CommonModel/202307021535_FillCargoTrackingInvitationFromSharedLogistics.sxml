@@ -2,7 +2,7 @@
   <Sql Version="1">
     <![CDATA[ 
     UPDATE Cards 
-    SET Cards.CargoTrackingInvitatStatusCode = Cards.SharedLogisticsInvitStatusCode, Cards.CargoTrackingInvitationDate = Cards.InvitationDate
+    SET Cards.CargoTrackingInvitationStatusCode = Cards.SharedLogisticsInvitationStatusCode, Cards.CargoTrackingInvitationDate = Cards.InvitationDate
     Where $LastCounterWhere$
     ]]>
 </Sql>

@@ -61,14 +61,14 @@ namespace Logitude.BL.CommonDataModel.ExternalService
 
         private void SetDefaultReportDocumentType(DocumentType currentTenantDocumentType, DocumentTypePM tenantZeroDocumentTypePM)
         {
-            DocumentTypeTemplatePM tenantZeroDefaultDocumentTypeReportTemplatePM = allSystemTenantZeroDocumentTypeTemplatePMs.Where(d => d.Id == tenantZeroDocumentTypePM.DocumentTypeDefaulReportTempId).FirstOrDefault();
-            if (tenantZeroDefaultDocumentTypeReportTemplatePM != null && !documentOuts.Where(d => d.DocumentTemplateId == currentTenantDocumentType.DocumentTypeDefaulReportTempId).Any())
+            DocumentTypeTemplatePM tenantZeroDefaultDocumentTypeReportTemplatePM = allSystemTenantZeroDocumentTypeTemplatePMs.Where(d => d.Id == tenantZeroDocumentTypePM.DocumentTypeDefaultReportTemplateId).FirstOrDefault();
+            if (tenantZeroDefaultDocumentTypeReportTemplatePM != null && !documentOuts.Where(d => d.DocumentTemplateId == currentTenantDocumentType.DocumentTypeDefaultReportTemplateId).Any())
             {
-                currentTenantDocumentType.DocumentTypeDefaulReportTempId = GetDefaultDocumentType(tenantZeroDefaultDocumentTypeReportTemplatePM, currentTenantDocumentType.DocumentTypeDefaulReportTempId);
+                currentTenantDocumentType.DocumentTypeDefaultReportTemplateId = GetDefaultDocumentType(tenantZeroDefaultDocumentTypeReportTemplatePM, currentTenantDocumentType.DocumentTypeDefaultReportTemplateId);
             }
-            if (allSystemCurrentTenantDocumentTypeTemplatePMs.Where(d => d.TemplateType == "P").Count() == 1 || (allSystemCurrentTenantDocumentTypeTemplatePMs.Where(d => d.TemplateType == "P").Count()>0 && String.IsNullOrEmpty(currentTenantDocumentType.DocumentTypeDefaulReportTempId)))
+            if (allSystemCurrentTenantDocumentTypeTemplatePMs.Where(d => d.TemplateType == "P").Count() == 1 || (allSystemCurrentTenantDocumentTypeTemplatePMs.Where(d => d.TemplateType == "P").Count()>0 && String.IsNullOrEmpty(currentTenantDocumentType.DocumentTypeDefaultReportTemplateId)))
             {
-                currentTenantDocumentType.DocumentTypeDefaulReportTempId = allSystemCurrentTenantDocumentTypeTemplatePMs.Where(d => d.TemplateType == "P").FirstOrDefault().Id;
+                currentTenantDocumentType.DocumentTypeDefaultReportTemplateId = allSystemCurrentTenantDocumentTypeTemplatePMs.Where(d => d.TemplateType == "P").FirstOrDefault().Id;
             }
         }
 

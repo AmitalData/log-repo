@@ -18,7 +18,7 @@ DXML Column,LXML Column,Attribute,DXML Value,LXML Value
 AllowClosureWithoutPayables,AllowClosureWithoutPayables,Size,0,1
 AllowManualInvoiceNumber,AllowManualInvoiceNumber,Size,0,1
 AllowMinusInvoicelines,AllowMinusInvoicelines,Size,0,1
-AllowPositiveAmountsCreditNote,AllowPositiveAmountsCreditNote,Size,0,1
+AllowPositiveAmountsInTheCreditNote,AllowPositiveAmountsInTheCreditNote,Size,0,1
 AllowVoidAPI,AllowVoidAPI,Size,0,1
 AllowVoidAPP,AllowVoidAPP,Size,0,1
 AllowVoidARI,AllowVoidARI,Size,0,1
@@ -63,7 +63,7 @@ AllowARInvoicesTransfer,AllowARInvoicesTransfer,Size,0,1
 AllowARPaymentsTransfer,AllowARPaymentsTransfer,Size,0,1
 AllowManuallyDueDate,AllowManuallyDueDate,Size,0,1
 AllowMinusInvoiceLines,AllowMinusInvoiceLines,Size,0,1
-AllowPositiveAmountsCreditNote,AllowPositiveAmountsCreditNote,Size,0,1
+AllowPositiveAmountsInTheCreditNote,AllowPositiveAmountsInTheCreditNote,Size,0,1
 CanTransferToDropbox,CanTransferToDropbox,Size,0,1
 Code,Code,Size,4,3
 InActive,InActive,Size,0,1
@@ -350,8 +350,8 @@ IsCustomer,IsCustomer,Size,0,1
 Notes,Notes,Type,nvarchar,varchar
 PartnerTypeId,PartnerTypeId,Type,char,varchar
 SearchFields,SearchFields,Type,nvarchar,varchar
-SharedLogisticsInvitStatusCode,SharedLogisticsInvitStatusCode,Type,int,varchar
-SharedLogisticsInvitStatusCode,SharedLogisticsInvitStatusCode,Size,0,4
+SharedLogisticsInvitationStatusCode,SharedLogisticsInvitationStatusCode,Type,int,varchar
+SharedLogisticsInvitationStatusCode,SharedLogisticsInvitationStatusCode,Size,0,4
 SupportNotes,SupportNotes,Type,nvarchar,varchar
 Swift,Swift,Size,20,0
 UpdatedByUserId,UpdatedByUserId,Size,15,0
@@ -915,7 +915,7 @@ Main,
 DXML Schema, LXML Schema
 dbo,
 DXML Column,LXML Column,Attribute,DXML Value,LXML Value
-ActivateCustomsManagInShipment,ActivateCustomsManagInShipment,Size,0,15
+ActivateCustomsManagementInShipments,ActivateCustomsManagementInShipments,Size,0,15
 
 
 DXML Table, LXML Table
@@ -1789,16 +1789,16 @@ ImportOtherPrepaidCollectId,ImportOtherPrepaidCollectId,Size,1,15
 IsCustomerTenantShare,IsCustomerTenantShare,Size,0,1
 LayoutDirection,LayoutDirection,Type,nvarchar,varchar
 LayoutDirection,LayoutDirection,Size,-1,0
-MasterExpFreigPrepaidCollectId,MasterExpFreigPrepaidCollectId,Size,1,15
-MasterExpOtherPrepaidCollectId,MasterExpOtherPrepaidCollectId,Size,1,15
-MasterImpFreiPrepaidCollectId,MasterImpFreiPrepaidCollectId,Size,1,15
-MasterImpOtherPrepaidCollectId,MasterImpOtherPrepaidCollectId,Size,1,15
+MasterExportFreightPrepaidCollectId,MasterExportFreightPrepaidCollectId,Size,1,15
+MasterExportOtherPrepaidCollectId,MasterExportOtherPrepaidCollectId,Size,1,15
+MasterImportFreightPrepaidCollectId,MasterImportFreightPrepaidCollectId,Size,1,15
+MasterImportOtherPrepaidCollectId,MasterImportOtherPrepaidCollectId,Size,1,15
 NumberFormatCode,NumberFormatCode,Type,nvarchar,varchar
 NumberFormatCode,NumberFormatCode,Size,128,4
 ProfitCurrencyId,ProfitCurrencyId,Nullable,True,False
 SearchFields,SearchFields,Type,nvarchar,varchar
 StorageEncryptionKey,StorageEncryptionKey,Size,40,0
-VatMandatoryForPotentialCust,VatMandatoryForPotentialCust,Size,0,1
+VatMandatoryForPotentialCustomers,VatMandatoryForPotentialCustomers,Size,0,1
 
 
 DXML Table, LXML Table
@@ -1887,8 +1887,8 @@ Id,Id,Size,15,0
 IsDistributor,IsDistributor,Size,0,1
 IsFreelancer,IsFreelancer,Size,0,1
 IsSalesman,IsSalesman,Size,0,1
-IsShowContactDetailInMobileApp,IsShowContactDetailInMobileApp,Size,0,1
-IsTwoFactorAuthenticatiEnabled,IsTwoFactorAuthenticatiEnabled,Size,0,1
+IsShowContactDetailsInTheMobileApp,IsShowContactDetailsInTheMobileApp,Size,0,1
+IsTwoFactorAuthenticationEnabled,IsTwoFactorAuthenticationEnabled,Size,0,1
 LicencedUser,LicencedUser,Size,0,1
 Notes,Notes,Type,nvarchar,varchar
 SearchFields,SearchFields,Type,nvarchar,varchar

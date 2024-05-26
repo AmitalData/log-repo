@@ -45,7 +45,7 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public string DocumentTypeId { get; set; }
         public string AutomationId { get; set; }
 
-        public string DateEscalaActTimeIndicatorCode { get; set; }
+        public string DateEscalationActionTimeIndicatorCode { get; set; }
         public int DateEscalationTime { get; set; }
         public string DateFieldName { get; set; }
 

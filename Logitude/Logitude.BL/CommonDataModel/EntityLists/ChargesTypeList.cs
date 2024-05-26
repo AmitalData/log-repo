@@ -64,8 +64,8 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public bool AccountingVATSplit { get; set; }
         public string ReceivableCreditAccount { get; set; }
         public string PayableDebitAccount { get; set; }
-        public string ReceivablesChargesTypeExtCode { get; set; }
-        public string PayablesChargesTypeExtCode { get; set; }
+        public string ReceivablesChargesTypeExternalCode { get; set; }
+        public string PayablesChargesTypeExternalCode { get; set; }
         public string PayableDebitGLAcountId { get; set; }
         public string ReceivableCreditGLAccountId { get; set; }
         public string RecCreditGLAcountLocalName { get; set; }

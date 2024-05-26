@@ -331,7 +331,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                         foreach (ARInvoiceLinePM line in lines)
                         {
                             ChargesType myChargesType = ChargesTypeRepository.GetSingleChargesType(line.ChargesTypeId, tenant, false);
-                            if (myChargesType.ReceivablesChargesTypeExtCode == null || (myChargesType.ReceivablesChargesTypeExtCode != null && string.IsNullOrEmpty(myChargesType.ReceivablesChargesTypeExtCode.Trim())))
+                            if (myChargesType.ReceivablesChargesTypeExternalCode == null || (myChargesType.ReceivablesChargesTypeExternalCode != null && string.IsNullOrEmpty(myChargesType.ReceivablesChargesTypeExternalCode.Trim())))
                             {
                                 isReady = false;
                                 chargeTypeError = "Charge Type: " + myChargesType.EnglishName + ". External ID is missing.";
@@ -340,7 +340,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                             else
                             {
 
-                                ExternalChargesTypesCode.Add(myChargesType.ReceivablesChargesTypeExtCode);
+                                ExternalChargesTypesCode.Add(myChargesType.ReceivablesChargesTypeExternalCode);
 
                             }
                           

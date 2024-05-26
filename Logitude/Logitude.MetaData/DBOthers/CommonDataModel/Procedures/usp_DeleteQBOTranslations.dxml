@@ -13,7 +13,7 @@ AS
 
 BEGIN
 
-update ChargesTypes set ReceivablesChargesTypeExtCode = NULL,PayablesChargesTypeExtCode = NULL where Tenant = @Tenant
+update ChargesTypes set ReceivablesChargesTypeExternalCode = NULL,PayablesChargesTypeExternalCode = NULL where Tenant = @Tenant
 update vattypes set ExternalVATCard = NULL where Tenant = @Tenant
 update Currencies set AccountingExternalCode = NULL where Tenant = @Tenant
 update PaymentTerms set ExternalId = NULL where Tenant = @Tenant

@@ -772,7 +772,7 @@ namespace TestTenantConfiguration
         {
             CustomsInterfaceSettingPM customsInterfaceSettingPM = new CustomsInterfaceSettingPM
             {
-                ActivateCustomsManagInShipment = true,
+                ActivateCustomsManagementInShipments = true,
                 LocalCustomsInterfaceCode = "AMC",
                 ExportFromUSAInterfaceCode = "NO",
                 ImportToUSAInterfaceCode = "NO",

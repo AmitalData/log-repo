@@ -85,7 +85,7 @@ namespace Logitude.FullAccounting.Test.Models
 
 
         public DateTime? InvitationDate { get; set; }
-        public int? SharedLogisticsInvitStatusCode { get; set; }
+        public int? SharedLogisticsInvitationStatusCode { get; set; }
         public string SharedLogisticsInvitationStatusName { get; set; }
         public DateTime? LastLoginDate { get; set; }
         public string CollectorId { get; set; }
