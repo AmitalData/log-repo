@@ -45,7 +45,7 @@ namespace WebFreight.Web.Helpers
 
         public static string GetTempStorageSasWrite(int tenant) =>
             AzureStorage.GetFromCache(LogitudeSettings.TempStorageConnection, GetTempStorageContainerName(tenant))
-            .CreateSaSWrite().ToString();
+            .CreateSaSWrite().ToString().Replace("&amp;", "&");
 
         private static string GetTempStorageContainerName(int tenant) => "hybrid-upload-tenant" + tenant.ToString();
 
@@ -91,7 +91,7 @@ namespace WebFreight.Web.Helpers
                 response.ErrorMessage = "Error while copying file to internal storage!, Error: " + e.Message;
             }
 
-            response.HasError = string.IsNullOrEmpty(response.ErrorMessage);
+            response.HasError = !string.IsNullOrEmpty(response.ErrorMessage);
 
             return response;
         }

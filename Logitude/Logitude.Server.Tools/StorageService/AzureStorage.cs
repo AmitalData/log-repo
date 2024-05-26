@@ -11,6 +11,7 @@ using System.IO.Compression;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Net.Http;
+using Azure.Storage.Blobs.Specialized;
 
 namespace Logitude.Server.Tools.StorageService
 {
@@ -18,6 +19,11 @@ namespace Logitude.Server.Tools.StorageService
     {
         public readonly BlobContainerClient containerClient;
         private static Dictionary<string, AzureStorage> azureStorageCache = new Dictionary<string, AzureStorage>();
+
+        public AzureStorage(string connectionString)
+        {
+            containerClient = GetContainer(connectionString);
+        }
 
         public AzureStorage(string accountName, string key, string containerName)
         {
@@ -46,6 +52,14 @@ namespace Logitude.Server.Tools.StorageService
 
             return containerClient;
         }
+        
+        private static BlobContainerClient GetContainer(string connectionString)
+        {
+            BlobContainerClient containerClient = new BlobContainerClient(new Uri(connectionString));
+            TryCreateContainerIfNotExists(containerClient.Name, containerClient.GetParentBlobServiceClient(), containerClient);
+
+            return containerClient;
+        }
 
         private static BlobContainerClient GetContainer(Azure.Storage.Blobs.BlobServiceClient blobServiceClient, string containerName)
         {
@@ -59,6 +73,8 @@ namespace Logitude.Server.Tools.StorageService
         {
             try
             {
+                System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12 | System.Net.SecurityProtocolType.Tls | System.Net.SecurityProtocolType.Tls11;
+
                 if (!containerClient.Exists())
                     containerClient = blobServiceClient.CreateBlobContainer(containerName);
 
@@ -79,9 +95,18 @@ namespace Logitude.Server.Tools.StorageService
             return azureStorageCache[cacheKey];
         }
 
+        public static AzureStorage GetFromCache(string connectionString)
+        {
+            string cacheKey = connectionString.Substring(connectionString.Length - 30, 30);
+            if (!azureStorageCache.ContainsKey(cacheKey))
+                azureStorageCache[cacheKey] = new AzureStorage(connectionString);
+
+            return azureStorageCache[cacheKey];
+        }
+
         public static AzureStorage GetFromCache(string connectionString, string containerName)
         {
-            string cacheKey = connectionString + ";" + containerName;
+            string cacheKey = connectionString.Substring(connectionString.Length - 30, 30) + ";" + containerName;
             if (!azureStorageCache.ContainsKey(cacheKey))
                 azureStorageCache[cacheKey] = new AzureStorage(connectionString, containerName);
 
@@ -147,10 +172,10 @@ namespace Logitude.Server.Tools.StorageService
             BlobSasBuilder sasBuilder = new BlobSasBuilder()
             {
                 BlobContainerName = containerClient.Name,
-                Resource = "c"
+                Resource = "c",
+                ExpiresOn = DateTimeOffset.UtcNow.AddDays(1)
             };
 
-            sasBuilder.ExpiresOn = DateTimeOffset.UtcNow.AddDays(1);
             sasBuilder.SetPermissions(permissions);
 
             Uri sasURI = containerClient.GenerateSasUri(sasBuilder);
