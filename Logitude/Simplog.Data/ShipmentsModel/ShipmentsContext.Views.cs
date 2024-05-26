@@ -3228,7 +3228,7 @@ namespace Edm_EntityMappingGeneratedViews
             T.Name AS SharedLogisticsInvitationStatus_Name, 
             T.SearchFields AS SharedLogisticsInvitationStatus_SearchFields, 
             True AS _from0
-        FROM ShipmentsContext.SharedLogisticsInvitationStatus AS T
+        FROM ShipmentsContext.SharedLogisticInvitationStatus AS T
     ) AS T1");
         }
         
@@ -10009,7 +10009,7 @@ namespace Edm_EntityMappingGeneratedViews
             T.Name AS SharedLogisticsInvitationStatus_Name, 
             T.SearchFields AS SharedLogisticsInvitationStatus_SearchFields, 
             True AS _from0
-        FROM CodeFirstDatabase.SharedLogisticsInvitationStatus AS T
+        FROM CodeFirstDatabase.SharedLogisticInvitationStatus AS T
     ) AS T1");
         }
         
