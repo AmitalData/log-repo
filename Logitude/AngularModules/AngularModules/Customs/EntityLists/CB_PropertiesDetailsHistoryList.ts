@@ -36,9 +36,9 @@ export class CB_PropertiesDetailsHistoryList {
 	CarEngineVolumeID: string;
 	CarWeightID: string;
 	VatDiscountRate: number;
-	Discount_CustomItemGroupTypeID: string;
+	Discount_CustomsItemGroupTypeID: string;
 	IsCarDiscount: boolean;
-	DiscountRegularityRequiremType: string;
+	DiscountRegularityRequirementType: string;
 	CB_ID: string;
 	
 }

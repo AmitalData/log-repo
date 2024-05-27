@@ -605,9 +605,9 @@
   <field
     Id="&quot;636d2640-f909-4b35-b4f5-c9d78f4caa22&quot;"
     FieldName="&quot;SharedLogisticsInvitationStatusName&quot;"
-    OldNames="SharedLogisticsInvitationStatusName,SharedLogisticsInvitStatusName"
+    OldNames="SharedLogisticsInvitationStatusName"
     IsNew="false"
-    IsChecked="true"
+    IsChecked="false"
     IsDeleted="false"
     ObjectTableName="&quot;Agent&quot;"
     FieldsDataType="&quot;Text&quot;"
@@ -683,9 +683,9 @@
   <field
     Id="&quot;97916e45-b9bf-4944-86ca-b89192d621dc&quot;"
     FieldName="&quot;CargoTrackingInvitationStatusName&quot;"
-    OldNames="CargoTrackingInvitationStatusName,CargoTrackingInvitatStatusName"
+    OldNames="CargoTrackingInvitationStatusName"
     IsNew="false"
-    IsChecked="true"
+    IsChecked="false"
     IsDeleted="false"
     ObjectTableName="&quot;Agent&quot;"
     FieldsDataType="&quot;Text&quot;"

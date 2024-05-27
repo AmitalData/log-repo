@@ -11,7 +11,7 @@ export class CustomsItemList {
 	CustomsBookTypeID: number;
 	FullClassification: string;
 	CustomsItemCategoryID: number;
-	CustomsItemHierarchicLocatioID: number;
+	CustomsItemHierarchicLocationID: number;
 	ComputedCheckDigit: string;
 	ID: string;
 	

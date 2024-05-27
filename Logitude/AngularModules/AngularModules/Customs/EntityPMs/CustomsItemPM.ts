@@ -41,9 +41,9 @@ export class CustomsItemPM {
     public set CustomsItemCategoryID(newValue: number) { if (this.customsItemCategoryID != newValue) { this.customsItemCategoryID = newValue; this.MarkAsDirty("CustomsItemCategoryID"); } }
        
 	 
-    private customsItemHierarchicLocatioID: number;
-    public get CustomsItemHierarchicLocatioID() { return this.customsItemHierarchicLocatioID; }
-    public set CustomsItemHierarchicLocatioID(newValue: number) { if (this.customsItemHierarchicLocatioID != newValue) { this.customsItemHierarchicLocatioID = newValue; this.MarkAsDirty("CustomsItemHierarchicLocatioID"); } }
+    private customsItemHierarchicLocationID: number;
+    public get CustomsItemHierarchicLocationID() { return this.customsItemHierarchicLocationID; }
+    public set CustomsItemHierarchicLocationID(newValue: number) { if (this.customsItemHierarchicLocationID != newValue) { this.customsItemHierarchicLocationID = newValue; this.MarkAsDirty("CustomsItemHierarchicLocationID"); } }
        
 	 
     private computedCheckDigit: string;

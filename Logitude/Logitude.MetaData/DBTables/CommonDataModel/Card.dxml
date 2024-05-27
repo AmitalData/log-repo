@@ -136,9 +136,8 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="SharedLogisticsInvitStatusCode"
+    Name="SharedLogisticsInvitationStatusCode"
     ShortName="SharedLogInvitationStatCode"
-    OldNames="SharedLogisticsInvitationStatusCode"
     Type="int">
     <Constraints
       Nullable="true" />
@@ -150,9 +149,8 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="CargoTrackingInvitatStatusCode"
+    Name="CargoTrackingInvitationStatusCode"
     ShortName="CargoTracInvitationStatCode"
-    OldNames="SharedLogisticsInvitationStatusCode"
     Type="int">
     <Constraints
       Nullable="true" />
@@ -554,12 +552,12 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
-    ForeignKeyColumn="SharedLogisticsInvitStatusCode"
+    ForeignKeyColumn="SharedLogisticsInvitationStatusCode"
     ReferencedTable="SharedLogisticsInvitationStatus"
     ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
   <Relation
-    ForeignKeyColumn="CargoTrackingInvitatStatusCode"
+    ForeignKeyColumn="CargoTrackingInvitationStatusCode"
     ReferencedTable="SharedLogisticsInvitationStatus"
     ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
@@ -619,7 +617,22 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
-    ForeignKeyColumn="SingleInvoiceTemplateId,CustomsInvoiceTemplateId,ConsolidationInvoiceTemplateId,ManifestInvoiceTemplateId"
+    ForeignKeyColumn="SingleInvoiceTemplateId"
+    ReferencedTable="DocumentTypeTemplates"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="CustomsInvoiceTemplateId"
+    ReferencedTable="DocumentTypeTemplates"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ConsolidationInvoiceTemplateId"
+    ReferencedTable="DocumentTypeTemplates"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ManifestInvoiceTemplateId"
     ReferencedTable="DocumentTypeTemplates"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
@@ -631,8 +644,8 @@
     Columns="Tenant,InActive,PartnerTypeId,IsCustomer" />
   <Index
     Columns="AutomaticLastUpdateDate" />
-  <Index
-    Columns="Code" />
+	<Index
+  Columns="Code" />
   <UniqueConstraint
     Columns="Tenant,Code,PartnerTypeId" />
 </Table>

@@ -58,7 +58,7 @@ namespace Logitude.CustomsMessaging.CustomsBook
                         if (doUpdate)
                         {
                             currentDBListCustomsItemRow.FullClassification = mehesCustomsItemRow.FullClassification;
-                            currentDBListCustomsItemRow.CustomsItemHierarchicLocatioID = mehesCustomsItemRow.CustomsItemHierarchicLocationID;
+                            currentDBListCustomsItemRow.CustomsItemHierarchicLocationID = mehesCustomsItemRow.CustomsItemHierarchicLocationID;
                             currentDBListCustomsItemRow.ComputedCheckDigit = mehesCustomsItemRow.ComputedCheckDigit;
                             currentDBListCustomsItemRow.CustomsBookTypeID = mehesCustomsItemRow.CustomsBookTypeID;
                             currentDBListCustomsItemRow.CustomsItemCategoryID = mehesCustomsItemRow.CustomsItemCategoryID;
@@ -89,7 +89,7 @@ namespace Logitude.CustomsMessaging.CustomsBook
         {
             if (mehesCustomsItemRow.FullClassification != currentDBListCustomsItemRow.FullClassification ||
                 mehesCustomsItemRow.CustomsItemCategoryID != currentDBListCustomsItemRow.CustomsItemCategoryID ||
-                mehesCustomsItemRow.CustomsItemHierarchicLocationID != currentDBListCustomsItemRow.CustomsItemHierarchicLocatioID ||
+                mehesCustomsItemRow.CustomsItemHierarchicLocationID != currentDBListCustomsItemRow.CustomsItemHierarchicLocationID ||
                 mehesCustomsItemRow.ComputedCheckDigit != currentDBListCustomsItemRow.ComputedCheckDigit)
             {
                 return true;

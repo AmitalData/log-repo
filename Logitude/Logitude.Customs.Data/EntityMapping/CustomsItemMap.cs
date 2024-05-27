@@ -29,7 +29,16 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.CustomsItemCategoryID).HasColumnName("CustomsItemCategoryID");
 
-            this.Property(t => t.CustomsItemHierarchicLocatioID).HasColumnName("CustomsItemHierarchicLocatioID");
+            dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+            if (dbms == "oracle")
+            {
+              this.Property(t => t.CustomsItemHierarchicLocationID).HasColumnName("CustomsItemHierarchicLocationI");
+			}
+			else
+			{
+              this.Property(t => t.CustomsItemHierarchicLocationID).HasColumnName("CustomsItemHierarchicLocationID");
+			}
+
 
             this.Property(t => t.ComputedCheckDigit).HasColumnName("ComputedCheckDigit").HasMaxLength(1).IsUnicode(false);
 

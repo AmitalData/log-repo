@@ -639,26 +639,23 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="AgentSharedLogStatistiLastDate"
+    Name="AgentSharedLogisticsStatisticsLastDate"
     ShortName="AgentSharedLogisticsLastDate"
-    OldNames="AgentSharedLogStatistiLastDate"
     Type="datetime">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="AgentSharedLogStatistiLastWeek"
+    Name="AgentSharedLogisticsStatisticsLastWeek"
     ShortName="AgentSharedLogisticsLastWeek"
-    OldNames="AgentSharedLogisticsLastWeek"
     Type="int"
     DefaultValue="0">
     <Constraints
       Nullable="false" />
   </Column>
   <Column
-    Name="AgentSharedLogStatistLastMonth"
+    Name="AgentSharedLogisticsStatisticsLastMonth"
     ShortName="AgentSharedLogisticsLastMonth"
-    OldNames="AgentSharedLogStatistLastMonth"
     Type="int"
     DefaultValue="0">
     <Constraints
@@ -959,7 +956,14 @@
     <Constraints
       Nullable="true" />
   </Column>
-  <Column
+   <Column
+    Name="AmitalApiToken"
+    Type="varchar"
+    Size="200">
+    <Constraints
+      Nullable="true" />
+  </Column>
+   <Column
     Name="WhatsAppMessagingPhoneNumber"
     Type="varchar"
     Size="15">
@@ -1111,20 +1115,13 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="AmitalApiToken"
-    Type="varchar"
-    Size="200">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="HeaderColor"
     Type="varchar"
     Size="20">
     <Constraints
       Nullable="true" />
   </Column>
-  <Column
+   <Column
     Name="ExportLoginCredintial"
     Type="varchar"
     Size="50">
@@ -1149,8 +1146,9 @@
     <Constraints
       Nullable="false" />
   </Column>
+
   <Relation
-    ForeignKeyColumn="Id"
+     ForeignKeyColumn="Id"
     ReferencedTable="GlobalTenants"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />

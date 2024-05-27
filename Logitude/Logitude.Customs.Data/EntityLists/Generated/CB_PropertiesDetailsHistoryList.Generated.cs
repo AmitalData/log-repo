@@ -69,11 +69,11 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public decimal VatDiscountRate  { get; set; }
        [DataMember]
-       public string Discount_CustomItemGroupTypeID  { get; set; }
+       public string Discount_CustomsItemGroupTypeID  { get; set; }
        [DataMember]
        public bool IsCarDiscount  { get; set; }
        [DataMember]
-       public string DiscountRegularityRequiremType  { get; set; }
+       public string DiscountRegularityRequirementType  { get; set; }
 
        [Key]
        [DataMember]

@@ -662,25 +662,25 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private string discount_CustomItemGroupTypeID ;
+	  private string discount_CustomsItemGroupTypeID ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string Discount_CustomItemGroupTypeID  
+       public string Discount_CustomsItemGroupTypeID  
 	   {
 	    
 	     get
 		{
-		   return discount_CustomItemGroupTypeID;
+		   return discount_CustomsItemGroupTypeID;
 		 }
 		 set
 		 {
-		   if(discount_CustomItemGroupTypeID != value)
+		   if(discount_CustomsItemGroupTypeID != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Discount_CustomItemGroupTypeID",OldValue=discount_CustomItemGroupTypeID,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Discount_CustomsItemGroupTypeID",OldValue=discount_CustomsItemGroupTypeID,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
-		   discount_CustomItemGroupTypeID=value;
+		   discount_CustomsItemGroupTypeID=value;
 		   }
 			
 		 }
@@ -708,25 +708,25 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private string discountRegularityRequiremType ;
+	  private string discountRegularityRequirementType ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string DiscountRegularityRequiremType  
+       public string DiscountRegularityRequirementType  
 	   {
 	    
 	     get
 		{
-		   return discountRegularityRequiremType;
+		   return discountRegularityRequirementType;
 		 }
 		 set
 		 {
-		   if(discountRegularityRequiremType != value)
+		   if(discountRegularityRequirementType != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DiscountRegularityRequiremType",OldValue=discountRegularityRequiremType,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DiscountRegularityRequirementType",OldValue=discountRegularityRequirementType,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
-		   discountRegularityRequiremType=value;
+		   discountRegularityRequirementType=value;
 		   }
 			
 		 }

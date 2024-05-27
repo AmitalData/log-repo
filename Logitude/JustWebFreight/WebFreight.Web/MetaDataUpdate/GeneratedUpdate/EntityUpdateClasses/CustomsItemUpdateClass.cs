@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsItemUpdateClass
    {  		
-		public const string HashString = "8ec0253a54ded405df07bce9f1bfbd60";
+		public const string HashString = "e5b57ced425cee27fb5464f5ac4b0a70";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -103,9 +103,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    AvailableInCustomization =  true,
-			      				    SupportSubEntity =  false,
-			      				    ApplyGenericCustomFields =  false,
-			      				    AvailableInDocumentTypes =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasFiltersMenu =  false,
@@ -134,7 +131,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "פרט מכס",
 			      				    DefaultText =  "CustomsItem",
-			      				    Code =  "6520",
+			      				    Code =  "b842",
 			      				    Name =  "Customs.CustomsItem Query Group",
 			      				    GenerateDomainService =  true,
 			      				    ClientModuleName =  "Customs",
@@ -351,7 +348,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "CustomsItemHierarchicLocatioID",
+					 						FieldName =  "CustomsItemHierarchicLocationID",
 					  						ObjectTableName =  "Customs.CustomsItem",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -370,8 +367,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  true,
-					  						PMPropertyPath =  "CustomsItemHierarchicLocatioID",
-					  						ListPropertyPath =  "CustomsItemHierarchicLocatioID",
+					  						PMPropertyPath =  "CustomsItemHierarchicLocationID",
+					  						ListPropertyPath =  "CustomsItemHierarchicLocationID",
 					  						DisplayInLookUpIndex =  4,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -389,10 +386,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "CustomsItemHierarchicLocatioID",
+					  						FullFieldLable =  "CustomsItemHierarchicLocationID",
 					  						DefaultText =  "Customs Item Hierarchic Location ID",
 					  						FullLocalDefaultText =  "קוד היררכיה",
-					  						ListFieldLable =  "CustomsItemHierarchicLocatioIDListLable",
+					  						ListFieldLable =  "CustomsItemHierarchicLocationIDListLable",
 					  						ListLableDefaultText =  "Customs Item Hierarchic Location ID",
 					  						ListLocalDefaultText =  "קוד היררכיה",
 					  						IsForeignKey =  false,
