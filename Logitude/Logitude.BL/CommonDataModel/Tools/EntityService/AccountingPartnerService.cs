@@ -328,6 +328,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     entityPM.CountryName = entityCard.CountryName;
                 }
             }
+            entityCard.EmailForSendingSingArinvoice = entityPM.Card.EmailForSendingSingArinvoice;
+            entityCard.SendingInterestReport = entityPM.Card.SendingInterestReport;
         }
 
         private void ComputeContactFields()

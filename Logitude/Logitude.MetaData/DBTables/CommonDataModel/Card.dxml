@@ -522,6 +522,19 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="EmailForSendingSingArinvoice"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SendingInterestReport"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="InvoiceCurrencyId"
     ReferencedTable="Currencies"
@@ -618,7 +631,7 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
-    ForeignKeyColumn="SingleInvoiceTemplateId"
+ ForeignKeyColumn="SingleInvoiceTemplateId"
     ReferencedTable="DocumentTypeTemplates"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
@@ -633,8 +646,7 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
-    ForeignKeyColumn="ManifestInvoiceTemplateId"
-    ReferencedTable="DocumentTypeTemplates"
+    ForeignKeyColumn="ManifestInvoiceTemplateId"    ReferencedTable="DocumentTypeTemplates"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Index

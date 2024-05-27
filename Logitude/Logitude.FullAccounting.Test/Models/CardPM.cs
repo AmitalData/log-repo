@@ -131,5 +131,7 @@ namespace Logitude.FullAccounting.Test.Models
 
         public string BillToId { get; set; }
         public string ICAO { get; set; }
+
+        public string EmailForSendingSingArinvoice { get; set; }
     }
 }

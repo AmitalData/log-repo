@@ -578,6 +578,8 @@ export class CustomerPM extends ObjectCustomFieldPM {
     public set SendingInterestReport(newValue: boolean) { if (this.sendingInterestReport != newValue) { this.sendingInterestReport = newValue; this.MarkAsDirty("SendingInterestReport"); } }
        
 	 
+   
+	 
     private customerStatusName: string;
     public get CustomerStatusName() { return this.customerStatusName; }
     public set CustomerStatusName(newValue: string) { if (this.customerStatusName != newValue) { this.customerStatusName = newValue; this.MarkAsDirty("CustomerStatusName"); } }
@@ -1483,4 +1485,4 @@ export class CustomerPM extends ObjectCustomFieldPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

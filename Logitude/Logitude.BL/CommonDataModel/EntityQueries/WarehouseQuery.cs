@@ -109,6 +109,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              CustomsInvoiceTemplateId = a.Card.CustomsInvoiceTemplateId,
                                              ConsolidationInvoiceTemplateId = a.Card.ConsolidationInvoiceTemplateId,
                                              ManifestInvoiceTemplateId = a.Card.ManifestInvoiceTemplateId,
+                                             EmailForSendingSingArinvoice = a.Card.EmailForSendingSingArinvoice,
+                                             SendingInterestReport = a.Card.SendingInterestReport,
                                          },
                                      }).FirstOrDefault();
 
@@ -217,6 +219,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              CustomsInvoiceTemplateId = a.Card.CustomsInvoiceTemplateId,
                                              ConsolidationInvoiceTemplateId = a.Card.ConsolidationInvoiceTemplateId,
                                              ManifestInvoiceTemplateId = a.Card.ManifestInvoiceTemplateId,
+                                             EmailForSendingSingArinvoice = a.Card.EmailForSendingSingArinvoice,
+                                             SendingInterestReport = a.Card.SendingInterestReport,
                                          },
                                      }).FirstOrDefault();
 
@@ -500,6 +504,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                    CustomsInvoiceTemplateId = a.Card.CustomsInvoiceTemplateId,
                                    ConsolidationInvoiceTemplateId = a.Card.ConsolidationInvoiceTemplateId,
                                    ManifestInvoiceTemplateId = a.Card.ManifestInvoiceTemplateId,
+                                   EmailForSendingSingArinvoice = a.Card.EmailForSendingSingArinvoice,
+                                   SendingInterestReport = a.Card.SendingInterestReport,
                                },
                            }).FirstOrDefault();
             if(warehouse != null)
