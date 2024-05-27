@@ -27,20 +27,20 @@
               'unimq', -- RABBITHOST value
               'v5101', -- RABBITUSERNAME value
               'Aa123', -- RABBITPASSWORD value
-              'Ecom', 
+              'Customs', 
               'CM3Xqwa7fCrIkFpayEXw1hBaCnI7w7EsBoaPjP0FhxADAzFuo0tLew==', 
-              'http://signhsm-10.azurewebsites.net/api/SignHSMGetActiveCertificates', 
-              'http://signhsm-10.azurewebsites.net/api/SIGNHSM'
+              'https://customs.amital.co.il/api/SignHSMGetActiveCertificates', 
+              'https://customs.amital.co.il/api/SignHSM'
           );
       END
       ELSE
       BEGIN
           UPDATE customs.CustomsEnvironmentSettings 
           SET 
-              HSMSignProcess = 'Ecom', 
+              HSMSignProcess = 'Customs', 
               HSMToken = 'CM3Xqwa7fCrIkFpayEXw1hBaCnI7w7EsBoaPjP0FhxADAzFuo0tLew==',
-              HSMActiveCertUrl = 'http://signhsm-10.azurewebsites.net/api/SignHSMGetActiveCertificates',
-              HSMSignServiceUrl = 'http://signhsm-10.azurewebsites.net/api/SIGNHSM'
+              HSMActiveCertUrl = 'https://customs.amital.co.il/api/SignHSMGetActiveCertificates',
+              HSMSignServiceUrl = 'https://customs.amital.co.il/api/SignHSM'
           WHERE 
               HSMSignProcess IS NULL OR 
               HSMToken IS NULL OR 
