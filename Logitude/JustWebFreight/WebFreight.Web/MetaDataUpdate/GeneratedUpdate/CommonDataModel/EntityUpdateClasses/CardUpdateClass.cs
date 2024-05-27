@@ -81,6 +81,9 @@ using Logitude.DashboardModule.Data.Repositories;
 using Logitude.DashboardModule.Data.EntityPOCOs;
 using Logitude.DashboardModule.BL;
 
+//using Amital.QuoteOPM.BL.CLoseTable;
+
+
 
 
 
@@ -88,7 +91,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class CardUpdateClass
    {  		
-		public const string HashString = "72e7749a40caed02f331a8ef908d24b8";
+
+		public const string HashString = "4d49ddb72b4794436c72ba991642ea81";
+
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1461,7 +1466,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "SharedLogisticsInvitStatusCode",
+					 						FieldName =  "SharedLogisticsInvitationStatusCode",
 					  						ObjectTableName =  "Card",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -1481,8 +1486,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "SharedLogisticsInvitStatusCode",
-					  						ListPropertyPath =  "SharedLogisticsInvitStatusCode",
+					  						PMPropertyPath =  "SharedLogisticsInvitationStatusCode",
+					  						ListPropertyPath =  "SharedLogisticsInvitationStatusCode",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -1503,7 +1508,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "SharedLogisticsInvitStatusCode",
+					  						FullFieldLable =  "SharedLogisticsInvitationStatusCode",
 					  						DefaultText =  "Invitation Status",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "SharedLogisticsInvitationStatus",
@@ -1663,7 +1668,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "CargoTrackingInvitatStatusCode",
+					 						FieldName =  "CargoTrackingInvitationStatusCode",
 					  						ObjectTableName =  "Card",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -1683,8 +1688,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "CargoTrackingInvitatStatusCode",
-					  						ListPropertyPath =  "CargoTrackingInvitatStatusCode",
+					  						PMPropertyPath =  "CargoTrackingInvitationStatusCode",
+					  						ListPropertyPath =  "CargoTrackingInvitationStatusCode",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -1705,7 +1710,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DigitsAfterPoint =  0,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "CargoTrackingInvitatStatusCode",
+					  						FullFieldLable =  "CargoTrackingInvitationStatusCode",
 					  						DefaultText =  "Cargo Tracking Invitation Status",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "SharedLogisticsInvitationStatus",
@@ -2904,10 +2909,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EnglishName",
 					  						DefaultText =  "English Name",
-					  						FullLocalDefaultText =  "שם באנגלית",
+					  						FullLocalDefaultText =  "שם בםנגלית",
 					  						ListFieldLable =  "EnglishNameListLable",
 					  						ListLableDefaultText =  "English Name",
-					  						ListLocalDefaultText =  "שם באנגלית",
+					  						ListLocalDefaultText =  "שם בםנגלית",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -7124,10 +7129,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CalculatedLocalName",
 					  						DefaultText =  "Local Name",
-					  						FullLocalDefaultText =  "שם בעברית",
+
+
 					  						ListFieldLable =  "CalculatedLocalNameListLable",
 					  						ListLableDefaultText =  "Local Name",
+
 					  						ListLocalDefaultText =  "שם בעברית",
+
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -7187,10 +7195,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CalculatedEnglishName",
 					  						DefaultText =  "English Name",
-					  						FullLocalDefaultText =  "שם באנגלית",
+					  						FullLocalDefaultText =  "שם בםנגלית",
 					  						ListFieldLable =  "CalculatedEnglishNameListLable",
 					  						ListLableDefaultText =  "English Name",
-					  						ListLocalDefaultText =  "שם באנגלית",
+					  						ListLocalDefaultText =  "שם בםנגלית",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -7862,7 +7870,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "InsruedcreditLimit",
 					  						DefaultText =  "Insrued Credit Limit  ",
-					  						FullLocalDefaultText =  "מסגרת אשראי מבוטחת",
+					  						FullLocalDefaultText =  "מסגרת םשרםי מבוטחת",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
