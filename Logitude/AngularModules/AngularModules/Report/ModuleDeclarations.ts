@@ -192,7 +192,7 @@ export const Components =
         ControlInvoiceLinesReportFilterComponent,
         ExportDeclarationReportFilterComponent,
 
-        MonthlyBalancesReportFilterComponent
+        MonthlyBalancesReportFilterComponent,
         CustomsCollateralFilterComponent,
 
     ];
