@@ -91,6 +91,7 @@
     <Compile Include="EntityPMs\Generated\CB_RegularityRequirementPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CB_RuleDetailsHistoryPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CB_RulePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CB_TariffComputedDataPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CB_TariffDetailsHistoryPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CB_TariffPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CB_TradeAgreementHistoryPM.Generated.cs" />

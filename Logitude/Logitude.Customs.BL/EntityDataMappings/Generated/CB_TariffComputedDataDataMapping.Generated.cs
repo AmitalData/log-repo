@@ -1,0 +1,251 @@
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Server.Tools;  
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Server.Infrastructure.DataContracts;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Def.EntityPMs; 
+using Logitude.Customs.Data;
+
+namespace Logitude.Customs.BL.EntityDataMappings
+{
+   
+   public partial class CB_TariffComputedDataDataMapping: IMapping<CB_TariffComputedDataPM, CB_TariffComputedData>,IMappingEncodeBase64NVARCHARFields<CB_TariffComputedDataPM>
+   {
+          public enum POCOPropertyNames
+          { 
+		     None,  
+	         CB_ID, 
+	         ID, 
+	         TariffID, 
+	         TDH_IDNum, 
+	         StartDate, 
+	         EndDate, 
+	         WithoutQuota_ComputationID, 
+	         WithinQuota_ComputationID, 
+	         CustomsItemIDNum, 
+	         TradeAgreementID, 
+	         QuotaID,
+	      }
+
+
+	      public enum PMPropertyNames
+          { 
+		     None,  
+	         CB_ID, 
+	         ID, 
+	         TariffID, 
+	         TDH_IDNum, 
+	         StartDate, 
+	         EndDate, 
+	         WithoutQuota_ComputationID, 
+	         WithinQuota_ComputationID, 
+	         CustomsItemIDNum, 
+	         TradeAgreementID, 
+	         QuotaID,
+	      }
+
+		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
+        List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
+    
+	    public void PMToPOCO(CB_TariffComputedDataPM entityPM, CB_TariffComputedData entityPOCO)
+        {
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ID))
+            {
+				entityPOCO.ID = entityPM.ID;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TariffID))
+            {
+				entityPOCO.TariffID = entityPM.TariffID;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TDH_IDNum))
+            {
+				entityPOCO.TDH_IDNum = entityPM.TDH_IDNum;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StartDate))
+            {
+				entityPOCO.StartDate = entityPM.StartDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EndDate))
+            {
+				entityPOCO.EndDate = entityPM.EndDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.WithoutQuota_ComputationID))
+            {
+				entityPOCO.WithoutQuota_ComputationID = entityPM.WithoutQuota_ComputationID;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.WithinQuota_ComputationID))
+            {
+				entityPOCO.WithinQuota_ComputationID = entityPM.WithinQuota_ComputationID;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsItemIDNum))
+            {
+				entityPOCO.CustomsItemIDNum = entityPM.CustomsItemIDNum;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TradeAgreementID))
+            {
+				entityPOCO.TradeAgreementID = entityPM.TradeAgreementID;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.QuotaID))
+            {
+				entityPOCO.QuotaID = entityPM.QuotaID;
+			}
+			}
+
+		public void POCOToPM(CB_TariffComputedDataPM entityPM, CB_TariffComputedData entityPOCO)
+        {
+			 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CB_ID))
+            {
+					entityPM.CB_ID = entityPOCO.CB_ID;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ID))
+            {
+					entityPM.ID = entityPOCO.ID;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TariffID))
+            {
+					entityPM.TariffID = entityPOCO.TariffID;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TDH_IDNum))
+            {
+					entityPM.TDH_IDNum = entityPOCO.TDH_IDNum;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.StartDate))
+            {
+					entityPM.StartDate = entityPOCO.StartDate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.EndDate))
+            {
+					entityPM.EndDate = entityPOCO.EndDate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.WithoutQuota_ComputationID))
+            {
+					entityPM.WithoutQuota_ComputationID = entityPOCO.WithoutQuota_ComputationID;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.WithinQuota_ComputationID))
+            {
+					entityPM.WithinQuota_ComputationID = entityPOCO.WithinQuota_ComputationID;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CustomsItemIDNum))
+            {
+					entityPM.CustomsItemIDNum = entityPOCO.CustomsItemIDNum;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.TradeAgreementID))
+            {
+					entityPM.TradeAgreementID = entityPOCO.TradeAgreementID;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.QuotaID))
+            {
+					entityPM.QuotaID = entityPOCO.QuotaID;
+            }
+
+		}
+
+		public void PMToOldPM(CB_TariffComputedDataPM entityPM, CB_TariffComputedDataPM oldEntityPM)
+        {
+		     oldEntityPM.ChangedProperties.Clear();
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ID))
+            {
+                oldEntityPM.ID = entityPM.ID;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TariffID))
+            {
+                oldEntityPM.TariffID = entityPM.TariffID;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TDH_IDNum))
+            {
+                oldEntityPM.TDH_IDNum = entityPM.TDH_IDNum;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StartDate))
+            {
+                oldEntityPM.StartDate = entityPM.StartDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EndDate))
+            {
+                oldEntityPM.EndDate = entityPM.EndDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.WithoutQuota_ComputationID))
+            {
+                oldEntityPM.WithoutQuota_ComputationID = entityPM.WithoutQuota_ComputationID;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.WithinQuota_ComputationID))
+            {
+                oldEntityPM.WithinQuota_ComputationID = entityPM.WithinQuota_ComputationID;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsItemIDNum))
+            {
+                oldEntityPM.CustomsItemIDNum = entityPM.CustomsItemIDNum;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.TradeAgreementID))
+            {
+                oldEntityPM.TradeAgreementID = entityPM.TradeAgreementID;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.QuotaID))
+            {
+                oldEntityPM.QuotaID = entityPM.QuotaID;
+            }
+			
+		}
+
+	    public void EncodeBase64NVARCHARFields(CB_TariffComputedDataPM entityPM)
+        {
+            if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 
+            {
+                return;
+
+            }
+            entityPM.EncodeBase64NVARCHARFieldsBy=null;
+		}
+
+
+	    public void AddPOCOPropertyName(POCOPropertyNames pocoPropertyName)
+        {
+            CustomMappedPOCOProperties.Add(pocoPropertyName);
+        }
+
+        public void AddPMPropertyName(PMPropertyNames pocoPropertyName)
+        {
+            CustomMappedPMProperties.Add(pocoPropertyName);
+        }
+			  
+   }
+}
+	 
