@@ -1652,7 +1652,10 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
             {
                 supplierInvoiceItem.ItemPrice = itemPrice;
             }
-            supplierInvoiceItem.OriginCountryCode = invoiceItem.ItemOriginCountry;
+			if (!string.IsNullOrEmpty(invoiceItem.ItemOriginCountry))
+			{
+                supplierInvoiceItem.OriginCountryCode = invoiceItem.ItemOriginCountry;
+            }
             supplierInvoiceItem.ClaimReasonCode = invoiceItem.ClassificationClaim;
             supplierInvoiceItem.TransactionNatureCode = invoiceItem.ClassificationDealType;
 
