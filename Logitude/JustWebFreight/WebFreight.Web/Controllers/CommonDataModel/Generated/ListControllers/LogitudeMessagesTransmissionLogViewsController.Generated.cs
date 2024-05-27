@@ -104,7 +104,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 
 				ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
 				LogitudeMessagesTransmissionLogRepository  logitudeMessagesTransmissionLogRepository = new LogitudeMessagesTransmissionLogRepository(MyContext);
-				IQueryable<LogitudeMessagesTransmissionLog> entityPocos = logitudeMessagesTransmissionLogRepository.GetLogitudeMessagTransmissionLogs(authToken.Tenant);
+				IQueryable<LogitudeMessagesTransmissionLog> entityPocos = logitudeMessagesTransmissionLogRepository.GetLogitudeMessagesTransmissionLogs(authToken.Tenant);
 
 				LogitudeMessagesTransmissionLogQuery logitudeMessagesTransmissionLogQuery = new LogitudeMessagesTransmissionLogQuery(logitudeMessagesTransmissionLogRepository);
 			    IQueryable<LogitudeMessagesTransmissionLogList> entityLists = logitudeMessagesTransmissionLogQuery.GetIQueryableEntityList(entityPocos);
@@ -138,7 +138,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                     ObjectTableName = "LogitudeMessagesTransmissionLog",
                     PageIndex = filters.PageIndex,
                     PageSize = filters.PageSize,
-                    QuerySection = "LogitudeMessagTransmissionLogs",
+                    QuerySection = "LogitudeMessagesTransmissionLogs",
                     SortByColumnName = filters.SortBy,
                     SortDirectin = filters.SortDirection,
 					GetAll = filters.GetAll, 
@@ -232,7 +232,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 								
                 ICommonDataContext MyContext = CommonDataContext.GetContext(tenant);
                 LogitudeMessagesTransmissionLogRepository  logitudeMessagesTransmissionLogRepository = new LogitudeMessagesTransmissionLogRepository(MyContext);
-                IQueryable<LogitudeMessagesTransmissionLog> entityPocos = logitudeMessagesTransmissionLogRepository.GetLogitudeMessagTransmissionLogs(tenant);
+                IQueryable<LogitudeMessagesTransmissionLog> entityPocos = logitudeMessagesTransmissionLogRepository.GetLogitudeMessagesTransmissionLogs(tenant);
 
                 LogitudeMessagesTransmissionLogQuery logitudeMessagesTransmissionLogQuery = new LogitudeMessagesTransmissionLogQuery(logitudeMessagesTransmissionLogRepository);
                 

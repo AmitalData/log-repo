@@ -29,7 +29,7 @@ export class LogitudeMessagesTransmissionLogPMService {
  private _apiUrl: string;
  constructor() {
         this._http = ServiceHelper.HttpClient;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/logitudemessagtransmissionlogs';      
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/logitudemessagestransmissionlogs';      
     }
 
 	get(id: string) {       
