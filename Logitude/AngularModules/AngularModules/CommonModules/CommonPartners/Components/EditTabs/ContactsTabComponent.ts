@@ -333,7 +333,7 @@ export class   ContactItemClass extends BaseComponent{
 
 
     SetEmailForSendingSingArinvoices() {
-        debugger
+        
         this.fatherComponent.EntityPM['Card']['SendingInterestReport'] = false;
         this.fatherComponent.EntityPM['IsDirty'] = true;
         this.fatherComponent.EntityPM['Card']['EmailForSendingSingArinvoice'] = this.Id;
