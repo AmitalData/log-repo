@@ -224,7 +224,6 @@ export class ContactItemClass {
     public EntityPM: ContactPM;
     public IsNewEntity: boolean = false; 
     constructor(item: ContactPM, public fatherComponent: ContactsTabComponent, isNewEntity: boolean) {
-        debugger;
         this.EntityPM = item;
         this.IsNewEntity = isNewEntity; 
         this.CheckPrimary();
@@ -291,7 +290,7 @@ export class ContactItemClass {
 
 
     SetEmailForSendingSingArinvoices() {
-        debugger
+        
         this.fatherComponent.EntityPM['Card']['SendingInterestReport'] = false;
         this.fatherComponent.EntityPM['IsDirty'] = true;
         this.fatherComponent.EntityPM['Card']['EmailForSendingSingArinvoice'] = this.Id;
