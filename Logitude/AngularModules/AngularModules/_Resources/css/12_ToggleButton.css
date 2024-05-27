@@ -42,7 +42,7 @@
     padding: 2px;
     position: absolute;
     top: 23px;
-    right: 0;
+    /* right: 0; */
     z-index: 1;
     min-width: 100px;
     opacity: 0;
@@ -54,6 +54,9 @@
     -moz-box-shadow: 2px 2px 5px 0px rgba(50, 50, 50, 0.5);
     box-shadow: 2px 2px 5px 0px rgba(50, 50, 50, 0.5);
     cursor: default;
+    left: 20px;
+    width: 150px;
+
 }
 
 .ToggleButtonMenuTemp {
