@@ -241,7 +241,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.DeclarationDocuments
                           {
 
                             CustomsDocumentMetaDataValuePM customsDocumentMetaDataValue = new CustomsDocumentMetaDataValuePM();
-                            customsDocumentMetaDataValue.MetaDataTypeCode = documentsMetaDataTypeRepository.GetSingleDocumentsMetaDataType(itemPM.DocumentsMetaDataTypeId,itemPM.Tenant)?.Code;
+                            customsDocumentMetaDataValue.MetaDataTypeCode = itemPM.DocumentsMetaDataTypeCode;
                             customsDocumentMetaDataValue.CustomsDocumentId = itemPM.DocumentsFilingId;
                             customsDocumentMetaDataValue.Tenant = itemPM.Tenant;
                             customsDocumentMetaDataValue.MetaDataValue = itemPM.MetaDataValue;
