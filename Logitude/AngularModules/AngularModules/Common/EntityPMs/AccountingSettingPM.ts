@@ -150,9 +150,9 @@ export class AccountingSettingPM {
     public set APPaymentTransferStartDate(newValue: Date) { if (this.aPPaymentTransferStartDate != newValue) { this.aPPaymentTransferStartDate = newValue; this.MarkAsDirty("APPaymentTransferStartDate"); } }
        
 	 
-    private allowPositiveAmountsCreditNote: boolean;
-    public get AllowPositiveAmountsCreditNote() { return this.allowPositiveAmountsCreditNote; }
-    public set AllowPositiveAmountsCreditNote(newValue: boolean) { if (this.allowPositiveAmountsCreditNote != newValue) { this.allowPositiveAmountsCreditNote = newValue; this.MarkAsDirty("AllowPositiveAmountsCreditNote"); } }
+    private allowPositiveAmountsInTheCreditNote: boolean;
+    public get AllowPositiveAmountsInTheCreditNote() { return this.allowPositiveAmountsInTheCreditNote; }
+    public set AllowPositiveAmountsInTheCreditNote(newValue: boolean) { if (this.allowPositiveAmountsInTheCreditNote != newValue) { this.allowPositiveAmountsInTheCreditNote = newValue; this.MarkAsDirty("AllowPositiveAmountsInTheCreditNote"); } }
        
 	 
     private qBOrealMeID: string;
@@ -322,4 +322,4 @@ export class AccountingSettingPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

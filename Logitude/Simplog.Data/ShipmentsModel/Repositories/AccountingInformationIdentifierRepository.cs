@@ -35,7 +35,7 @@ namespace Simplog.Data.ShipmentsModel.Repositories
         {
             return (from a in context.AccountingInformationIdentifiers select a);
         }
-        public IQueryable<AccountingInformationIdentifier> GetAccountingInformatiIdentifiers()
+        public IQueryable<AccountingInformationIdentifier> GetAccountingInformationIdentifiers()
         {
             return (from a in context.AccountingInformationIdentifiers select a);
         }
