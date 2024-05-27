@@ -164,6 +164,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new CB_QuotaMap());
 	
+            modelBuilder.Configurations.Add(new CB_QuotaComputedDataMap());
+	
             modelBuilder.Configurations.Add(new CB_QuotaDetailsHistoryMap());
 	
             modelBuilder.Configurations.Add(new CB_QuotaRenewalMap());
@@ -1815,6 +1817,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<CB_Quota> CB_Quotas 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CB_QuotaComputedData> CB_QuotaComputedDatas 
 	 {
 	      get; set;
 	 

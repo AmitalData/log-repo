@@ -410,6 +410,7 @@
     <Compile Include="EntityDataMappings\CB_LevyExclusionDataMapping.cs" />
     <Compile Include="EntityDataMappings\CB_PropertiesDetailsHistoryDataMapping.cs" />
     <Compile Include="EntityDataMappings\CarWeightDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CB_QuotaComputedDataDataMapping.cs" />
     <Compile Include="EntityDataMappings\CB_QuotaDataMapping.cs" />
     <Compile Include="EntityDataMappings\CB_QuotaDetailsHistoryDataMapping.cs" />
     <Compile Include="EntityDataMappings\CB_QuotaRenewalDataMapping.cs" />
@@ -679,6 +680,7 @@
     <Compile Include="EntityDataMappings\Generated\CB_LevyConditionDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CB_LevyExclusionDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CB_PropertiesDetailsHistoryDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CB_QuotaComputedDataDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CB_QuotaDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CB_QuotaDetailsHistoryDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CB_QuotaRenewalDataMapping.Generated.cs" />
@@ -1339,6 +1341,7 @@
     <Compile Include="EntityQueryServices\Generated\CB_LevyConditionQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CB_LevyExclusionQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CB_PropertiesDetailsHistoryQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CB_QuotaComputedDataQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CB_QuotaDetailsHistoryQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CB_QuotaQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CB_QuotaRenewalQueryService.Generated.cs" />
@@ -1953,6 +1956,7 @@
     <Compile Include="EntityUpdateServices\Generated\CB_LevyConditionUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CB_LevyExclusionUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CB_PropertiesDetailsHistoryUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\CB_QuotaComputedDataUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CB_QuotaDetailsHistoryUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CB_QuotaRenewalUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CB_QuotaUpdateService.Generated.cs" />
