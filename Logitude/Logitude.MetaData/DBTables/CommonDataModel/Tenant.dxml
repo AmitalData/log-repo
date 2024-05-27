@@ -438,9 +438,9 @@
     <Constraints
       Nullable="true" />
   </Column>
-  
   <Column
     Name="CustomerTenantShareCustomsFile"
+    OldNames="IsCustomerTenantShare"
     Type="bit">
     <Constraints
       Nullable="false" />
@@ -756,6 +756,8 @@
   </Column>
   <Column
     Name="IsQuotesRequestActivatedInShared"
+    ShortName="IsQuotesRequestActivated"
+    OldNames="IsQuotesRequestActivatInShared"
     Type="bit">
     <Constraints
       Nullable="false" />
