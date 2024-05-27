@@ -19,6 +19,7 @@ using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using System.Transactions;
 using Simplog.Server.Infrastructure.Helpers;
+using System.Configuration;
 
 namespace Logitude.Server.Tools.Helpers
 {
@@ -67,7 +68,16 @@ namespace Logitude.Server.Tools.Helpers
                             
                             HttpContext context = HttpContext.Current;
                             string url = context.Request.Url.ToString().Split('/')[2];//("http://", "");
-                                                                                      //var url = SecurityUtility.getLoggedDomain();
+
+                            var isAppServiceENV = Environment.GetEnvironmentVariable("IsAppService") == "true";
+                            bool isAppService = ConfigurationManager.AppSettings["IsAppService"] == "true";
+
+                            if (isAppServiceENV || isAppService)
+                            {
+                                if (!string.IsNullOrEmpty(context.Request.Headers["X-ORIGINAL-HOST"]))
+                                    url = context.Request.Headers["X-ORIGINAL-HOST"];
+                            }
+
                             if (!url.Contains("system.logitudeworld.com") && !url.Contains("system.logbox.co.il") && !url.Contains("cloud.amital.co.il"))
                             {
                                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())//TransactionFactory.GetNewTransaction())
@@ -188,6 +198,16 @@ namespace Logitude.Server.Tools.Helpers
                     HttpContext context = HttpContext.Current;
                     string url = context.Request.Url.ToString().Split('/')[2];//("http://", "");
                                                                               //var url = SecurityUtility.getLoggedDomain();
+
+                    var isAppServiceENV = Environment.GetEnvironmentVariable("IsAppService") == "true";
+                    bool isAppService = ConfigurationManager.AppSettings["IsAppService"] == "true";
+
+                    if (isAppServiceENV || isAppService)
+                    {
+                        if (!string.IsNullOrEmpty(context.Request.Headers["X-ORIGINAL-HOST"]))
+                            url = context.Request.Headers["X-ORIGINAL-HOST"];
+                    }
+
                     if (!url.Contains("system.logitudeworld.com") && !url.Contains("system.logbox.co.il") && !url.Contains("cloud.amital.co.il"))
                     {
                         using (TransactionScope scope = TransactionFactory.GetNewTransaction())//TransactionFactory.GetNewTransaction())
