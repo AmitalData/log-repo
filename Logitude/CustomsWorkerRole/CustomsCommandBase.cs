@@ -629,19 +629,28 @@ namespace CustomsWorkerRole
             List<CustomDBQueueMessage> responseList=null;
             List<long> deferredSequenceNumbers = new List<long>();
             bool proccesDone = false;
+            List<string> activeTasks = new List<string> { };
 
             int maxActiveTasks = 10;
-            var num = System.Configuration.ConfigurationManager.AppSettings.Get("CustomDbQueueNewReceiveSelectCount");
+            var num = ConfigurationManager.AppSettings.Get("CustomDbQueueNewReceiveSelectCount_" + className);
             if (!string.IsNullOrEmpty(num) && int.Parse(num) > 0)
             {
                 maxActiveTasks = int.Parse(num);
             }
-            List<string> activeTasks = new List<string> { };
-
-            bool waitAll = false;
-            if ( ConfigurationManager.AppSettings.Get("WaitAllForReceiveNew")?.ToLower() == "true")
+            else
             {
-                waitAll = true;
+                num = ConfigurationManager.AppSettings.Get("CustomDbQueueNewReceiveSelectCount");
+                if (!string.IsNullOrEmpty(num) && int.Parse(num) > 0)
+                {
+                    maxActiveTasks = int.Parse(num);
+                }
+            }
+
+            int maxSleepAfterEachQueuePeekList = -1;
+            num = ConfigurationManager.AppSettings.Get("MaxSleepAfterEachQueuePeekList");
+            if (!string.IsNullOrEmpty(num) && int.Parse(num) > 0)
+            {
+                maxSleepAfterEachQueuePeekList = int.Parse(num);
             }
 
             for (int filtterPriority = 2; filtterPriority < 3; filtterPriority++)
@@ -738,25 +747,27 @@ namespace CustomsWorkerRole
                                     taskLIst.Add(t);
                                 }
 
-                                if (waitAll)
+                                Task.WaitAll(taskLIst.ToArray(), maxSleepAfterEachQueuePeekList);
+                                
+                                if (maxSleepAfterEachQueuePeekList < 0)
                                 {
-                                    Task.WaitAll(taskLIst.ToArray());
                                     LogTime(className + " end waiting for all of them (total elapsed: " + (int)totalStopwatch.Elapsed.TotalSeconds + " seconds)");
                                 }
                                 Queue_scope.Complete();
                             }
                         }
+                        else
+                        {
+                            // activeTasks.Count >= maxActiveTasks, so we need to wait for some time
+                            if (maxSleepAfterEachQueuePeekList > 0)
+                            {
+                                Thread.Sleep(maxSleepAfterEachQueuePeekList);
+                            }
+                        }
                     }
                     finally
                     {
-                        if (waitAll)
-                        {
-                            PerformanceM.SleepMSAfterEachQueuePeek();
-                        }
-                        else
-                        {
-                            Thread.Sleep(1000);
-                        }
+                        //
                     }
                 }
             }
