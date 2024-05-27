@@ -73,6 +73,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<CB_Rule> CB_Rules { get; }
 		 IDbSet<CB_RuleDetailsHistory> CB_RuleDetailsHistorys { get; }
 		 IDbSet<CB_Tariff> CB_Tariffs { get; }
+		 IDbSet<CB_TariffComputedData> CB_TariffComputedDatas { get; }
 		 IDbSet<CB_TariffDetailsHistory> CB_TariffDetailsHistorys { get; }
 		 IDbSet<CB_TradeAgreement> CB_TradeAgreements { get; }
 		 IDbSet<CB_TradeAgreementHistory> CB_TradeAgreementHistories { get; }
