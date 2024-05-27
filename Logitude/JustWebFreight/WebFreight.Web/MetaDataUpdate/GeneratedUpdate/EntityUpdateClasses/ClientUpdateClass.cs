@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ClientUpdateClass
    {  		
-		public const string HashString = "8f985e71198db39ae367371d8323b827";
+		public const string HashString = "402af86e35e9dcbaffc5d7d9395a38d3";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -603,10 +603,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsActive",
 					  						DefaultText =  "Is Active",
-					  						FullLocalDefaultText =  "האם פעיל",
+					  						FullLocalDefaultText =  "הםם פעיל",
 					  						ListFieldLable =  "IsActiveListLable",
 					  						ListLableDefaultText =  "Is Active",
-					  						ListLocalDefaultText =  "האם פעיל",
+					  						ListLocalDefaultText =  "הםם פעיל",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -801,10 +801,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LocalCorporationName",
 					  						DefaultText =  "Local Corporation Name",
-					  						FullLocalDefaultText =  "שם תאגיד בעברית",
+					  						FullLocalDefaultText =  "שם תםגיד בעברית",
 					  						ListFieldLable =  "LocalCorporationNameListLable",
 					  						ListLableDefaultText =  "Local Corporation Name",
-					  						ListLocalDefaultText =  "שם תאגיד בעברית",
+					  						ListLocalDefaultText =  "שם תםגיד בעברית",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -867,10 +867,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EnglishFirstName",
 					  						DefaultText =  "English First Name",
-					  						FullLocalDefaultText =  "שם פרטי + אמצעי בלועזית",
+					  						FullLocalDefaultText =  "שם פרטי + םמצעי בלועזית",
 					  						ListFieldLable =  "EnglishFirstNameListLable",
 					  						ListLableDefaultText =  "English First Name",
-					  						ListLocalDefaultText =  "שם פרטי + אמצעי בלועזית",
+					  						ListLocalDefaultText =  "שם פרטי + םמצעי בלועזית",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -999,10 +999,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EnglishCorporationName",
 					  						DefaultText =  "English Corporation Name",
-					  						FullLocalDefaultText =  "שם תאגיד באנגלית",
+					  						FullLocalDefaultText =  "שם תםגיד בםנגלית",
 					  						ListFieldLable =  "EnglishCorporationNameListLable",
 					  						ListLableDefaultText =  "English Corporation Name",
-					  						ListLocalDefaultText =  "שם תאגיד באנגלית",
+					  						ListLocalDefaultText =  "שם תםגיד בםנגלית",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1066,10 +1066,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "BirthDate",
 					  						DefaultText =  "Birth Date",
-					  						FullLocalDefaultText =  "תאריך לידה",
+					  						FullLocalDefaultText =  "תםריך לידה",
 					  						ListFieldLable =  "BirthDateListLable",
 					  						ListLableDefaultText =  "Birth Date",
-					  						ListLocalDefaultText =  "תאריך לידה",
+					  						ListLocalDefaultText =  "תםריך לידה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1334,10 +1334,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PassportCountryCode",
 					  						DefaultText =  "Passport Country",
-					  						FullLocalDefaultText =  "מדינה שהפיקה את הדרכון / תעודת מעבר",
+					  						FullLocalDefaultText =  "מדינה שהפיקה םת הדרכון / תעודת מעבר",
 					  						ListFieldLable =  "PassportCountryCodeListLable",
 					  						ListLableDefaultText =  "Passport Country",
-					  						ListLocalDefaultText =  "מדינה שהפיקה את הדרכון / תעודת מעבר",
+					  						ListLocalDefaultText =  "מדינה שהפיקה םת הדרכון / תעודת מעבר",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "CustomsCountry",
 					  						NavigationPropertyName =  "Country",
@@ -1471,10 +1471,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PassportFirstName",
 					  						DefaultText =  "Passport First Name",
-					  						FullLocalDefaultText =  "שם פרטי+אמצעי באנגלית בדרכון",
+					  						FullLocalDefaultText =  "שם פרטי+םמצעי בםנגלית בדרכון",
 					  						ListFieldLable =  "PassportFirstNameListLable",
 					  						ListLableDefaultText =  "Passport First Name",
-					  						ListLocalDefaultText =  "שם פרטי+אמצעי באנגלית בדרכון",
+					  						ListLocalDefaultText =  "שם פרטי+םמצעי בםנגלית בדרכון",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1537,10 +1537,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PassportLastName",
 					  						DefaultText =  "Passport Last Name",
-					  						FullLocalDefaultText =  "שם משפחה באנגלית בדרכון",
+					  						FullLocalDefaultText =  "שם משפחה בםנגלית בדרכון",
 					  						ListFieldLable =  "PassportLastNameListLable",
 					  						ListLableDefaultText =  "Passport Last Name",
-					  						ListLocalDefaultText =  "שם משפחה באנגלית בדרכון",
+					  						ListLocalDefaultText =  "שם משפחה בםנגלית בדרכון",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1603,10 +1603,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EnglishBirthPlace",
 					  						DefaultText =  "English Birth Place",
-					  						FullLocalDefaultText =  "מקום לידה לפי הדרכון - מדינה, עיר או שילוב ביניהם",
+					  						FullLocalDefaultText =  "מקום לידה לפי הדרכון - מדינה, עיר םו שילוב ביניהם",
 					  						ListFieldLable =  "EnglishBirthPlaceListLable",
 					  						ListLableDefaultText =  "English Birth Place",
-					  						ListLocalDefaultText =  "מקום לידה לפי הדרכון - מדינה, עיר או שילוב ביניהם",
+					  						ListLocalDefaultText =  "מקום לידה לפי הדרכון - מדינה, עיר םו שילוב ביניהם",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1669,10 +1669,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EnglishFatherName",
 					  						DefaultText =  "English Father Name",
-					  						FullLocalDefaultText =  "שם אב באנגלית",
+					  						FullLocalDefaultText =  "שם םב בםנגלית",
 					  						ListFieldLable =  "EnglishFatherNameListLable",
 					  						ListLableDefaultText =  "English Father Name",
-					  						ListLocalDefaultText =  "שם אב באנגלית",
+					  						ListLocalDefaultText =  "שם םב בםנגלית",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1736,10 +1736,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PassportExpirationDate",
 					  						DefaultText =  "Passport Expiration Date",
-					  						FullLocalDefaultText =  "תאריך סיום תוקף הדרכון / תעודת מעבר",
+					  						FullLocalDefaultText =  "תםריך סיום תוקף הדרכון / תעודת מעבר",
 					  						ListFieldLable =  "PassportExpirationDateListLable",
 					  						ListLableDefaultText =  "Passport Expiration Date",
-					  						ListLocalDefaultText =  "תאריך סיום תוקף הדרכון / תעודת מעבר",
+					  						ListLocalDefaultText =  "תםריך סיום תוקף הדרכון / תעודת מעבר",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1803,10 +1803,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PassportIssueDate",
 					  						DefaultText =  "Passport Issue Date",
-					  						FullLocalDefaultText =  "תאריך הוצאת הדרכון",
+					  						FullLocalDefaultText =  "תםריך הוצםת הדרכון",
 					  						ListFieldLable =  "PassportIssueDateListLable",
 					  						ListLableDefaultText =  "Passport Issue Date",
-					  						ListLocalDefaultText =  "תאריך הוצאת הדרכון",
+					  						ListLocalDefaultText =  "תםריך הוצםת הדרכון",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1996,10 +1996,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PassportCountryName",
 					  						DefaultText =  "Passport Country Name",
-					  						FullLocalDefaultText =  "מדינה שהפיקה את הדרכון / תעודת מעבר",
+					  						FullLocalDefaultText =  "מדינה שהפיקה םת הדרכון / תעודת מעבר",
 					  						ListFieldLable =  "PassportCountryNameListLable",
 					  						ListLableDefaultText =  "Passport Country Name",
-					  						ListLocalDefaultText =  "מדינה שהפיקה את הדרכון / תעודת מעבר",
+					  						ListLocalDefaultText =  "מדינה שהפיקה םת הדרכון / תעודת מעבר",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2192,10 +2192,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsImporter",
 					  						DefaultText =  "Is Importer",
-					  						FullLocalDefaultText =  "יבואן מסחרי",
+					  						FullLocalDefaultText =  "יבוםן מסחרי",
 					  						ListFieldLable =  "IsImporterListLable",
 					  						ListLableDefaultText =  "Is Importer",
-					  						ListLocalDefaultText =  "יבואן מסחרי",
+					  						ListLocalDefaultText =  "יבוםן מסחרי",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2258,10 +2258,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsExporter",
 					  						DefaultText =  "Is Exporter",
-					  						FullLocalDefaultText =  "יצואן מסחרי",
+					  						FullLocalDefaultText =  "יצוםן מסחרי",
 					  						ListFieldLable =  "IsExporterListLable",
 					  						ListLableDefaultText =  "Is Exporter",
-					  						ListLocalDefaultText =  "יצואן מסחרי",
+					  						ListLocalDefaultText =  "יצוםן מסחרי",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2442,7 +2442,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "FacilitationTypeCode",
 					  						DefaultText =  "Facilitation Type Code",
-					  						FullLocalDefaultText =  "הקלות יבואן / יצואן",
+					  						FullLocalDefaultText =  "הקלות יבוםן / יצוםן",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "FacilitationType",
 					  						NavigationPropertyName =  "FacilitationType",
@@ -2570,10 +2570,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "NationalIdentificationNumber",
 					  						DefaultText =  "National Identification",
-					  						FullLocalDefaultText =  "מס' זיהוי אדם במדינתו",
+					  						FullLocalDefaultText =  "מס' זיהוי םדם במדינתו",
 					  						ListFieldLable =  "NationalIdentificationNumberListLable",
 					  						ListLableDefaultText =  "National Identification",
-					  						ListLocalDefaultText =  "מס' זיהוי אדם במדינתו",
+					  						ListLocalDefaultText =  "מס' זיהוי םדם במדינתו",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2697,10 +2697,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsExportPoaActive",
 					  						DefaultText =  "Is Export Poa Active",
-					  						FullLocalDefaultText =  "יפוי כח יצוא בתוקף",
+					  						FullLocalDefaultText =  "יפוי כח יצום בתוקף",
 					  						ListFieldLable =  "IsExportPoaActiveListLable",
 					  						ListLableDefaultText =  "Is Export Poa Active",
-					  						ListLocalDefaultText =  "יפוי כח יצוא בתוקף",
+					  						ListLocalDefaultText =  "יפוי כח יצום בתוקף",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2824,10 +2824,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsPOAExpireReminderSent",
 					  						DefaultText =  "Is POA Expire Reminder Sent",
-					  						FullLocalDefaultText =  "האם נשלחה תזכורת על יפוי כח שעומד לפוג",
+					  						FullLocalDefaultText =  "הםם נשלחה תזכורת על יפוי כח שעומד לפוג",
 					  						ListFieldLable =  "IsPOAExpireReminderSentListLable",
 					  						ListLableDefaultText =  "Is POA Expire Reminder Sent",
-					  						ListLocalDefaultText =  "האם נשלחה תזכורת על יפוי כח שעומד לפוג",
+					  						ListLocalDefaultText =  "הםם נשלחה תזכורת על יפוי כח שעומד לפוג",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2987,7 +2987,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   Feature ClientGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", ObjectTableId = ClientObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Client.Features.General", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ClientObjectTable);
  
                  
-			   TextCode ClientEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Client.TH.Events", DefaultText = "Events",LocalDefaultText = "אירועים", ObjectTableId = ClientObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   TextCode ClientEventsTextCode_TH1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Client.TH.Events", DefaultText = "Events",LocalDefaultText = "םירועים", ObjectTableId = ClientObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature ClientEventsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = ClientObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Client.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ClientObjectTable);
  
                  
@@ -3025,7 +3025,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 		   Feature ClientFeature_REQUESTSHEETS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "REQUESTSHEETS", FeatureTypeCode = "AREA", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ClientObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Client.Features.RequestSheet", NameTextCodeDefaultText = @"RequestSheet" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ClientObjectTable);
 
-		   Feature ClientFeature_AUTHORIZAT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AUTHORIZAT", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ClientObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Client.Features.AUTHORIZAT", NameTextCodeDefaultText = @"שליפת כתבי הרשאה" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ClientObjectTable);
+		   Feature ClientFeature_AUTHORIZAT = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "AUTHORIZAT", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ClientObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Client.Features.AUTHORIZAT", NameTextCodeDefaultText = @"שליפת כתבי הרשםה" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ClientObjectTable);
 
    
 	    
@@ -3085,7 +3085,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   ObjectTable ClientObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.Client" && d.Tenant == 0).FirstOrDefault(); 
 
- 		   TextCode ClientTextCode_CustomsClientOClients = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Client.O.Clients", DefaultText = "Clients",LocalDefaultText = @"יבואנים/יצואנים", ObjectTableId = ClientObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ClientTextCode_CustomsClientOClients = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Client.O.Clients", DefaultText = "Clients",LocalDefaultText = @"יבוםנים/יצוםנים", ObjectTableId = ClientObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ClientTextCode_CustomsClientOSend = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Client.O.Send", DefaultText = "Send",LocalDefaultText = @"לשלוח", ObjectTableId = ClientObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
@@ -3093,7 +3093,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode ClientTextCode_CustomsClientOEditClient = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Client.O.EditClient", DefaultText = "Edit Client",LocalDefaultText = @"ערוך לקוח", ObjectTableId = ClientObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ClientTextCode_CustomsClientOEnglish = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Client.O.English", DefaultText = "English",LocalDefaultText = @"אנגלית", ObjectTableId = ClientObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ClientTextCode_CustomsClientOEnglish = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Client.O.English", DefaultText = "English",LocalDefaultText = @"םנגלית", ObjectTableId = ClientObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ClientTextCode_CustomsClientOHebrew = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Client.O.Hebrew", DefaultText = "Hebrew",LocalDefaultText = @"עברית", ObjectTableId = ClientObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
@@ -3105,7 +3105,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode ClientTextCode_CustomsClientOCodeRequired = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Client.O.CodeRequired", DefaultText = "Code Field is Required",LocalDefaultText = @"הקוד נדרש", ObjectTableId = ClientObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ClientTextCode_CustomsClientOPassportRequired = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Client.O.PassportRequired", DefaultText = "Passport Number Field is Required",LocalDefaultText = @"דרכון מספר שדה הוא חובה", ObjectTableId = ClientObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ClientTextCode_CustomsClientOPassportRequired = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Client.O.PassportRequired", DefaultText = "Passport Number Field is Required",LocalDefaultText = @"דרכון מספר שדה הום חובה", ObjectTableId = ClientObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ClientTextCode_CustomsClientOCodeExists = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Client.O.CodeExists", DefaultText = "This Code is already exists",LocalDefaultText = @"קוד זה כבר קיים", ObjectTableId = ClientObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
@@ -3115,13 +3115,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode ClientTextCode_CustomsClientNewButton = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Client.NewButton", DefaultText = "New Client",LocalDefaultText = @"לקוח חדש", ObjectTableId = ClientObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ClientTextCode_CustomsClientAuthorizationLetters = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Client.AuthorizationLetters", DefaultText = "Authorization Letters",LocalDefaultText = @"שליפת כתבי הרשאה", ObjectTableId = ClientObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ClientTextCode_CustomsClientAuthorizationLetters = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Client.AuthorizationLetters", DefaultText = "Authorization Letters",LocalDefaultText = @"שליפת כתבי הרשםה", ObjectTableId = ClientObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ClientTextCode_CustomsClientIsSelectAuthorizationLetters = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Client.IsSelectAuthorizationLetters", DefaultText = "Is it possible to retrieve authorization letters for all customers in the system?",LocalDefaultText = @"האם לבצע שליפת כתבי הרשאה לכל הלקוחות במערכת ?", ObjectTableId = ClientObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ClientTextCode_CustomsClientIsSelectAuthorizationLetters = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Client.IsSelectAuthorizationLetters", DefaultText = "Is it possible to retrieve authorization letters for all customers in the system?",LocalDefaultText = @"הםם לבצע שליפת כתבי הרשםה לכל הלקוחות במערכת ?", ObjectTableId = ClientObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ClientTextCode_CustomsClientItems = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Client.Items", DefaultText = "Items",LocalDefaultText = @"פריטים", ObjectTableId = ClientObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ClientTextCode_CustomsClientOItemOrClassificationSearch = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Client.O.ItemOrClassificationSearch", DefaultText = "Item Or Classification Search",LocalDefaultText = @"פרט / פריט / תאור", ObjectTableId = ClientObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ClientTextCode_CustomsClientOItemOrClassificationSearch = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Client.O.ItemOrClassificationSearch", DefaultText = "Item Or Classification Search",LocalDefaultText = @"פרט / פריט / תםור", ObjectTableId = ClientObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

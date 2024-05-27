@@ -1,4 +1,4 @@
-
+﻿
    
 using System;
 using System.Collections.Generic;
@@ -292,15 +292,7 @@ namespace Logitude.Infrastructure.BL
                 Description = "Lock Counter Procedure", 
                 Code = "LCP", 
 			});
-			 
-            all.Add(new ToggleDetails()
-            {    
-                Code = "TCR", 
-                Name = "Toggle OCR", 
-                SearchFields = "TOCR", 
-                Description = "Toggle for OCR", 
-			});
-			 
+ 
             all.Add(new ToggleDetails()
             {    
                 Code = "CPT", 
@@ -986,7 +978,7 @@ namespace Logitude.Infrastructure.BL
                 Code = "MC1", 
                 Name = "IsMulti With ReconcileMethodCode Equal One", 
                 SearchFields = "MC1", 
-                Description = "לאפשר הגדרת כרטיס מולטי ככרטיס שמותאם במטז", 
+                Description = "×œ×�×¤×©×¨ ×”×’×“×¨×ª ×›×¨×˜×™×¡ ×ž×•×œ×˜×™ ×›×›×¨×˜×™×¡ ×©×ž×•×ª×�×� ×‘×ž×˜×–", 
 			});
 			 
             all.Add(new ToggleDetails()
@@ -1004,6 +996,15 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "ILO,Invoice Status According To Ledger Open Amount", 
                 Description = "Invoice Status According To Ledger Open Amount", 
 			});
+
+             all.Add(new ToggleDetails()
+            {    
+                Code = "TCR", 
+                Name = "Toggle OCR", 
+                SearchFields = "TOCR", 
+                Description = "Toggle for OCR", 
+			});
+			
 			
             return all;
        }

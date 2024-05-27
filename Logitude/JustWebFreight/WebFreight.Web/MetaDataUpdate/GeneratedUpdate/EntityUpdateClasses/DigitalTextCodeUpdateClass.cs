@@ -81,14 +81,11 @@ using Logitude.DashboardModule.Data.Repositories;
 using Logitude.DashboardModule.Data.EntityPOCOs;
 using Logitude.DashboardModule.BL;
 
-
-
-
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DigitalTextCodeUpdateClass
    {  		
-		public const string HashString = "502100126143fc890ac19faac3cfe483";
+		public const string HashString = "40c1931fb39a43db71708441ef6340ca";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -132,10 +129,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "DigitalTextCode",
-			      				    Code =  "e31a",
+			      				    Code =  "70b9",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
-			      				    ClientModuleName =  "Common",
+			      				    ClientModuleName =  "TextCodes",
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
 			      				    AllowedForComputingPartners =  false,

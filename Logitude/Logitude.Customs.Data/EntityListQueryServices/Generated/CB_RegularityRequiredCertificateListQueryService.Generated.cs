@@ -34,7 +34,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
 
-            IQueryable<CB_RegularityRequiredCertificate> iQueryable = (from a in context.CB_RegularityRequiredCertis
+            IQueryable<CB_RegularityRequiredCertificate> iQueryable = (from a in context.CB_RegularityRequiredCertificates
                                                select a);
             			iQueryable = ApplyCustomFilters(queryOperations, iQueryable);
 
@@ -136,7 +136,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
         public CB_RegularityRequiredCertificateList GetSingle(string cb_id)
         {
-            IQueryable<CB_RegularityRequiredCertificate> CB_RegularityRequiredCertificateQuery = (from a in context.CB_RegularityRequiredCertis
+            IQueryable<CB_RegularityRequiredCertificate> CB_RegularityRequiredCertificateQuery = (from a in context.CB_RegularityRequiredCertificates
                                                        where a.CB_ID == cb_id
                                                        select a);
 
@@ -159,7 +159,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
 
-            IQueryable<CB_RegularityRequiredCertificate> iQueryable = (from a in context.CB_RegularityRequiredCertis  select a);
+            IQueryable<CB_RegularityRequiredCertificate> iQueryable = (from a in context.CB_RegularityRequiredCertificates  select a);
 
 			  			iQueryable = ApplyCustomFilters(queryOperations, iQueryable);
 

@@ -30,21 +30,21 @@ namespace Logitude.Customs.Data.Repsitories
 		
 		public  CertificateOfOriginMandatoryFields GetSingle(string code)
         {
-            return (from a in context.CertificateOfOriginMandatorys
+            return (from a in context.CertificateOfOriginMandatoryFieldss
                     where a.Code == code 
                     select a).FirstOrDefault();
         }
 
         public IQueryable<CertificateOfOriginMandatoryFields> GetAll()
         {
-            return from a in context.CertificateOfOriginMandatorys  
+            return from a in context.CertificateOfOriginMandatoryFieldss  
                    select a;
         }
 				 
         public CertificateOfOriginMandatoryFields GetSingle(EntityKeyFields entityKeys)
         {
             CertificateOfOriginMandatoryFieldsKeys keys = entityKeys as CertificateOfOriginMandatoryFieldsKeys;
-            return (from a in context.CertificateOfOriginMandatorys
+            return (from a in context.CertificateOfOriginMandatoryFieldss
                     where a.Code == keys.Code
                     select a).FirstOrDefault();
         }
@@ -53,26 +53,26 @@ namespace Logitude.Customs.Data.Repsitories
         public void Add(CertificateOfOriginMandatoryFields entity)
         {
             onAdd();
-            context.CertificateOfOriginMandatorys.Add(entity);
+            context.CertificateOfOriginMandatoryFieldss.Add(entity);
         }
 
         public void Remove(CertificateOfOriginMandatoryFields entity)
         {
-            context.CertificateOfOriginMandatorys.Attach(entity);
-            context.CertificateOfOriginMandatorys.Remove(entity);
+            context.CertificateOfOriginMandatoryFieldss.Attach(entity);
+            context.CertificateOfOriginMandatoryFieldss.Remove(entity);
         }
 
         partial void onUpdate();//Partial Methods Definition in Generated
         public void Update(CertificateOfOriginMandatoryFields entity)
         {
             onUpdate();
-            context.CertificateOfOriginMandatorys.Attach(entity);
+            context.CertificateOfOriginMandatoryFieldss.Attach(entity);
             context.SetAsModified(entity);
         }
 
         public List<CertificateOfOriginMandatoryFields> All()
         {
-            return context.CertificateOfOriginMandatorys.ToList();
+            return context.CertificateOfOriginMandatoryFieldss.ToList();
         }
 
         private ICustomContext context

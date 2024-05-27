@@ -30,21 +30,21 @@ namespace Logitude.Customs.Data.Repsitories
 		
 		public  CB_CustomsBookAdditionsDetailsHistory GetSingle(string cb_id)
         {
-            return (from a in context.CB_CustomsBookAddiDetaHistors
+            return (from a in context.CB_CustomsBookAdditionsDetailsHistorys
                     where a.CB_ID == cb_id 
                     select a).FirstOrDefault();
         }
 
         public IQueryable<CB_CustomsBookAdditionsDetailsHistory> GetAll()
         {
-            return from a in context.CB_CustomsBookAddiDetaHistors  
+            return from a in context.CB_CustomsBookAdditionsDetailsHistorys  
                    select a;
         }
 				 
         public CB_CustomsBookAdditionsDetailsHistory GetSingle(EntityKeyFields entityKeys)
         {
             CB_CustomsBookAdditionsDetailsHistoryKeys keys = entityKeys as CB_CustomsBookAdditionsDetailsHistoryKeys;
-            return (from a in context.CB_CustomsBookAddiDetaHistors
+            return (from a in context.CB_CustomsBookAdditionsDetailsHistorys
                     where a.CB_ID == keys.CB_ID
                     select a).FirstOrDefault();
         }
@@ -53,26 +53,26 @@ namespace Logitude.Customs.Data.Repsitories
         public void Add(CB_CustomsBookAdditionsDetailsHistory entity)
         {
             onAdd();
-            context.CB_CustomsBookAddiDetaHistors.Add(entity);
+            context.CB_CustomsBookAdditionsDetailsHistorys.Add(entity);
         }
 
         public void Remove(CB_CustomsBookAdditionsDetailsHistory entity)
         {
-            context.CB_CustomsBookAddiDetaHistors.Attach(entity);
-            context.CB_CustomsBookAddiDetaHistors.Remove(entity);
+            context.CB_CustomsBookAdditionsDetailsHistorys.Attach(entity);
+            context.CB_CustomsBookAdditionsDetailsHistorys.Remove(entity);
         }
 
         partial void onUpdate();//Partial Methods Definition in Generated
         public void Update(CB_CustomsBookAdditionsDetailsHistory entity)
         {
             onUpdate();
-            context.CB_CustomsBookAddiDetaHistors.Attach(entity);
+            context.CB_CustomsBookAdditionsDetailsHistorys.Attach(entity);
             context.SetAsModified(entity);
         }
 
         public List<CB_CustomsBookAdditionsDetailsHistory> All()
         {
-            return context.CB_CustomsBookAddiDetaHistors.ToList();
+            return context.CB_CustomsBookAdditionsDetailsHistorys.ToList();
         }
 
         private ICustomContext context

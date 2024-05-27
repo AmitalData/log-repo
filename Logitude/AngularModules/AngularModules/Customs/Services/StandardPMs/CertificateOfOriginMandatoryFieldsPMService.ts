@@ -29,7 +29,7 @@ export class CertificateOfOriginMandatoryFieldsPMService {
  private _apiUrl: string;
  constructor() {
         this._http = ServiceHelper.HttpClient;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/certificateoforiginmandatorys';      
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/certificateoforiginmandatoryfieldss';      
     }
 
 	get(code: string) {       

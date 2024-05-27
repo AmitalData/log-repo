@@ -30,21 +30,21 @@ namespace Logitude.Customs.Data.Repsitories
 		
 		public  CB_RegularityRequiredCertificate GetSingle(string cb_id)
         {
-            return (from a in context.CB_RegularityRequiredCertis
+            return (from a in context.CB_RegularityRequiredCertificates
                     where a.CB_ID == cb_id 
                     select a).FirstOrDefault();
         }
 
         public IQueryable<CB_RegularityRequiredCertificate> GetAll()
         {
-            return from a in context.CB_RegularityRequiredCertis  
+            return from a in context.CB_RegularityRequiredCertificates  
                    select a;
         }
 				 
         public CB_RegularityRequiredCertificate GetSingle(EntityKeyFields entityKeys)
         {
             CB_RegularityRequiredCertificateKeys keys = entityKeys as CB_RegularityRequiredCertificateKeys;
-            return (from a in context.CB_RegularityRequiredCertis
+            return (from a in context.CB_RegularityRequiredCertificates
                     where a.CB_ID == keys.CB_ID
                     select a).FirstOrDefault();
         }
@@ -53,26 +53,26 @@ namespace Logitude.Customs.Data.Repsitories
         public void Add(CB_RegularityRequiredCertificate entity)
         {
             onAdd();
-            context.CB_RegularityRequiredCertis.Add(entity);
+            context.CB_RegularityRequiredCertificates.Add(entity);
         }
 
         public void Remove(CB_RegularityRequiredCertificate entity)
         {
-            context.CB_RegularityRequiredCertis.Attach(entity);
-            context.CB_RegularityRequiredCertis.Remove(entity);
+            context.CB_RegularityRequiredCertificates.Attach(entity);
+            context.CB_RegularityRequiredCertificates.Remove(entity);
         }
 
         partial void onUpdate();//Partial Methods Definition in Generated
         public void Update(CB_RegularityRequiredCertificate entity)
         {
             onUpdate();
-            context.CB_RegularityRequiredCertis.Attach(entity);
+            context.CB_RegularityRequiredCertificates.Attach(entity);
             context.SetAsModified(entity);
         }
 
         public List<CB_RegularityRequiredCertificate> All()
         {
-            return context.CB_RegularityRequiredCertis.ToList();
+            return context.CB_RegularityRequiredCertificates.ToList();
         }
 
         private ICustomContext context

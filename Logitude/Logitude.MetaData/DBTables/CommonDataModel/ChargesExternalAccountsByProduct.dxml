@@ -1,8 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Table
-  Name="ChargesExternalAccByProducts"
+  Name="ChargesExternalAccountsByProducts"
   ShortName="ChargesExtAccountsByProducts"
-  OldNames="ChargesExternalAccountsByProducts"
   Schema="dbo"
   DBType="Main"
   Module="Common">
