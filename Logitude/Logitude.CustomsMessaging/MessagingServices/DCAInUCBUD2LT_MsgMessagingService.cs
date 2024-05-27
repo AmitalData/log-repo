@@ -459,7 +459,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     {
                         LogitudeSettings.HandleLogMe("Not Diamond Declaration " + logData, false, "CreateUD2LTService", stopLogAt);
 
-                        if (CheckIsSendByDocType(logData))
+                        if (CheckIsSendByDocType(logData,declarationPM))
                         {
                             LogitudeSettings.HandleLogMe("if (CheckIsSendByDocType(logData)) " + logData, false, "CreateUD2LTService", stopLogAt);
                             shouldCreateDCAComm = true;
@@ -525,7 +525,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
 
     
-        private bool CheckIsSendByDocType(string logData)
+        private bool CheckIsSendByDocType(string logData,DeclarationPM declartionPM)
         {
             DateTime stopLogAt = DateTime.MinValue; //new DateTime(2022, 01, 01);
             string UntilDateyyyyMMdd = ConfigurationManager.AppSettings["20220412HD367591.LogUntilDateyyyyMMdd"];
@@ -550,8 +550,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 DocumentTypeQueryService documentTypeQueryService = new DocumentTypeQueryService(_DocumentsFilingPM.Tenant);
                 DocumentTypePM documentTypePM = documentTypeQueryService.GetDocumentTypeCodeById(_DocumentsFilingPM.DocumentTypeId, _DocumentsFilingPM.Tenant);
 
-                var declarationQueryService = new Logitude.Customs.BL.EntityQueryServices.DeclarationQueryService(_DocumentsFilingPM.Tenant);
-                DeclarationPM declartionPM = declarationQueryService.GetDeclarationByExportFile(_DocumentsFilingPM.Tenant, _DocumentsFilingPM.ExternalEntityReference);
+               
                 if (documentTypePM != null && !String.IsNullOrWhiteSpace(documentTypePM.Code))
                 {
                     LogitudeSettings.HandleLogMe("documentTypePM != null " + documentTypePM?.Code + logData, false, "CreateUD2LTService", stopLogAt);
