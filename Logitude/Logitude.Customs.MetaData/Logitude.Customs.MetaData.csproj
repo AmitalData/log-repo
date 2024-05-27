@@ -271,6 +271,7 @@
     <None Include="DBTables\CB_Rule.dxml" />
     <None Include="DBTables\CB_RuleDetailsHistory.dxml" />
     <None Include="DBTables\CB_Tariff.dxml" />
+    <None Include="DBTables\CB_TariffComputedData.dxml" />
     <None Include="DBTables\CB_TariffDetailsHistory.dxml" />
     <None Include="DBTables\CB_TradeAgreement.dxml" />
     <None Include="DBTables\CB_TradeAgreementHistory.dxml" />
@@ -674,6 +675,7 @@
     <None Include="EntityFiles\CB_LevyCondition.lxml" />
     <None Include="EntityFiles\CB_LevyExclusion.lxml" />
     <None Include="EntityFiles\CB_RegularityRequiredCertificate.lxml" />
+    <None Include="EntityFiles\CB_TariffComputedData.lxml" />
     <None Include="EntityFiles\CB_TradeLevy.lxml" />
     <None Include="EntityFiles\CB_Vendor.lxml" />
     <None Include="EntityFiles\DiscountTypeRegulation.lxml" />

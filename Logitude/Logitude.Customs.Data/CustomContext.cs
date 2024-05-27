@@ -180,6 +180,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new CB_TariffMap());
 	
+            modelBuilder.Configurations.Add(new CB_TariffComputedDataMap());
+	
             modelBuilder.Configurations.Add(new CB_TariffDetailsHistoryMap());
 	
             modelBuilder.Configurations.Add(new CB_TradeAgreementMap());
@@ -1861,6 +1863,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<CB_Tariff> CB_Tariffs 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CB_TariffComputedData> CB_TariffComputedDatas 
 	 {
 	      get; set;
 	 
