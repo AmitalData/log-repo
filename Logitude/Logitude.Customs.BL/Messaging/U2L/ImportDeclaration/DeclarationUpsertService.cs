@@ -1434,11 +1434,11 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 
                 if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.ReceiverAddress))
 				{
-					this._MyDeclarationPM.DeclarationExportRecipients[0].RecipientAddress = _AmitalCustomsFile.ReceiverAddress;
+					this._MyDeclarationPM.DeclarationExportRecipients[0].RecipientAddress = _AmitalCustomsFile.ReceiverAddress.Length>35 ? _AmitalCustomsFile.ReceiverAddress.Substring(0,35):_AmitalCustomsFile.ReceiverAddress;
 				}
                 else if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.BuyerAddress))
                 {
-                    this._MyDeclarationPM.DeclarationExportRecipients[0].RecipientAddress = _AmitalCustomsFile.BuyerAddress;
+                    this._MyDeclarationPM.DeclarationExportRecipients[0].RecipientAddress = _AmitalCustomsFile.BuyerAddress.Length>35? _AmitalCustomsFile.BuyerAddress.Substring(0,35):_AmitalCustomsFile.BuyerAddress;
                 }
                 
 				if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.ReceiverCountryCode))
