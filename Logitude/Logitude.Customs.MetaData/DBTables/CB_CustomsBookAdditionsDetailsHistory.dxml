@@ -6,7 +6,7 @@
   DBType="Main"
   Module="Customs">
   <Column
-    Name="ID"
+    Name="ID" 
     Type="int">
     <Constraints
       Nullable="false" />
