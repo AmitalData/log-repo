@@ -81,7 +81,7 @@ namespace Logitude.Server.Tools.StorageService
                 return true;
             }
             catch
-            {
+            {                
                 return false;
             }
         }
@@ -165,7 +165,7 @@ namespace Logitude.Server.Tools.StorageService
 
         public Uri CreateSaSReadDelete() => CreateServiceSASContainer(BlobContainerSasPermissions.Read | BlobContainerSasPermissions.Delete);
 
-        public Uri CreateSaSWrite() => CreateServiceSASContainer(BlobContainerSasPermissions.Write | BlobContainerSasPermissions.Create);
+        public Uri CreateSaSWrite() => CreateServiceSASContainer(BlobContainerSasPermissions.Write);
 
         public Uri CreateServiceSASContainer(BlobContainerSasPermissions permissions)
         {
