@@ -289,8 +289,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
             ARInvoiceValidator.Validate(entityPM, this.invoice, this.objectContext, this.myCommonContext, this.isNewEntity);
             ARInvoiceTracing.Trace(entityPM, invoice, isNewEntity, loggedContactId);
-
-            if (entityPM.IsConsolidationInvoice)
+            if (entityPM.ARInvoiceTypeCode == "IT")
+            {
+                UpdateInterestReportStatus(entityPM,"8");
+            }
+                if (entityPM.IsConsolidationInvoice)
             {
                 this.UpdateConsolidationLines();
                 this.InitializeTransferComponents();
@@ -538,6 +541,12 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         {
             IInterestReportUpdateServiceExt InterestReportUpdate = ContainerAccessor.Container.Resolve(typeof(IInterestReportUpdateServiceExt), "InterestReportUpdateServiceExt", new ParameterOverride("", 1)) as IInterestReportUpdateServiceExt;
             InterestReportUpdate.UpdateConfirmCreateInvoice(null, tenant, null, theEntityPM.Id, theEntityPM.InvoiceNumber, theEntityPM.AmountInLocalCurrency, theEntityPM.InvoiceEntities[0].EntityId);
+
+        }
+        private void UpdateInterestReportStatus(ARInvoicePM theEntityPM, string Statues)
+        {
+            IInterestReportUpdateServiceExt InterestReportUpdate = ContainerAccessor.Container.Resolve(typeof(IInterestReportUpdateServiceExt), "InterestReportUpdateServiceExt", new ParameterOverride("", 1)) as IInterestReportUpdateServiceExt;
+            InterestReportUpdate.UpdateInterestReportStatus(Statues,null, tenant, null, theEntityPM.Id, theEntityPM.InvoiceNumber, theEntityPM.AmountInLocalCurrency, theEntityPM.InvoiceEntities[0].EntityId, theEntityPM.CreatedByUserId);
 
         }
 
