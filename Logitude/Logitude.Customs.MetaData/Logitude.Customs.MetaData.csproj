@@ -258,6 +258,7 @@
     <None Include="DBTables\CB_CustomsBookAddition.dxml" />
     <None Include="DBTables\CB_CustomsBookAdditionsDetailsHistory.dxml" />
     <None Include="DBTables\CB_CustomsItem.dxml" />
+    <None Include="DBTables\CB_CustomsItemComputedData.dxml" />
     <None Include="DBTables\CB_CustomsItemDetailsHistory.dxml" />
     <None Include="DBTables\CB_CustomsItemExclusion.dxml" />
     <None Include="DBTables\CB_CustomsItemLinkage.dxml" />
@@ -920,6 +921,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CustomClassesGenerator.tt</DependentUpon>
     </Compile>
+    <None Include="EntityFiles\CB_CustomsItemComputedData.lxml" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

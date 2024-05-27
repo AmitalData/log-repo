@@ -1,0 +1,66 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization; 
+
+namespace Logitude.Customs.Data.EntityLists
+{
+   [DataContract]
+   public partial class CB_CustomsItemComputedDataList
+   {
+   
+       [Key]
+       [DataMember]
+       public string CB_ID  { get; set; }
+       [DataMember]
+       public int ID  { get; set; }
+       [DataMember]
+       public int CustomsItemID  { get; set; }
+       [DataMember]
+       public string FullClassification  { get; set; }
+       [DataMember]
+       public bool IsLeaf  { get; set; }
+       [DataMember]
+       public int CustomsItemDetailsHistoryID  { get; set; }
+       [DataMember]
+       public int PropertiesDetailsHistoryID  { get; set; }
+       [DataMember]
+       public int? PH_MeasurementUnitID  { get; set; }
+       [DataMember]
+       public bool IsHistoryExists  { get; set; }
+       [DataMember]
+       public bool IsRulesExists  { get; set; }
+       [DataMember]
+       public DateTime StartDate  { get; set; }
+       [DataMember]
+       public DateTime EndDate  { get; set; }
+       [DataMember]
+       public int? CI_Parent_CustomsItemIDNum  { get; set; }
+       [DataMember]
+       public string CI_BaseFullClassification  { get; set; }
+       [DataMember]
+       public string CI_ComputedCheckDigit  { get; set; }
+       [DataMember]
+       public string CI_CustomsBookTypeIDNum  { get; set; }
+       [DataMember]
+       public string CI_CustomsItemCategoryIDNum  { get; set; }
+       [DataMember]
+       public string ItemHierarchicLocationID  { get; set; }
+       [DataMember]
+       public string CIH_Title  { get; set; }
+       [DataMember]
+       public string CIH_GoodsDescription  { get; set; }
+       [DataMember]
+       public int CustomsItemEntityStatusIDNum  { get; set; }
+       [DataMember]
+       public bool? PH_IsCarItem  { get; set; }
+       [DataMember]
+       public string FullGoodsDescription  { get; set; }
+   }
+
+}
+	 
