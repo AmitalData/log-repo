@@ -59,6 +59,7 @@
   </Column>
   <Column
     Name="CustomsItemHierarchicLocationID"
+    ShortName="CustomsItemHierarcLocationID"
     Type="varchar"
     Size="2">
     <Constraints
@@ -82,9 +83,5 @@
     ReferencedTable="CustomsItemCategories"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
-  <Relation
-    ForeignKeyColumn="CustomsItemHierarchicLocationID"
-    ReferencedTable="CustomsItemHierarchicLocations"
-    ReferencedColumn="Code"
-    ReferencedTableSchema="Customs" />
+ 
 </Table>
