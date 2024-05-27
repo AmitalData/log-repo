@@ -147,11 +147,6 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
-    ForeignKeyColumn="QuoteId"
-    ReferencedTable="Quotes"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
     ForeignKeyColumn="DocumentTypeId"
     ReferencedTable="DocumentTypes"
     ReferencedColumn="Id"
