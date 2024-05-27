@@ -646,6 +646,7 @@ namespace CustomsWorkerRole
                 }
             }
 
+
             int maxSleepAfterEachQueuePeekList = -1;
             num = ConfigurationManager.AppSettings.Get("MaxSleepAfterEachQueuePeekList");
             if (!string.IsNullOrEmpty(num) && int.Parse(num) > 0)
@@ -655,15 +656,6 @@ namespace CustomsWorkerRole
 
             for (int filtterPriority = 2; filtterPriority < 3; filtterPriority++)
             {
-                int maxActiveTasks = 10;
-                var num = System.Configuration.ConfigurationManager.AppSettings.Get("CustomDbQueueNewReceiveSelectCount");
-                if (!string.IsNullOrEmpty(num) && int.Parse(num) > 0)
-                {
-                    maxActiveTasks = int.Parse(num);
-                }
-
-                List<string> activeTasks = new List<string> { };
-
                 while (!WorkerRoleServiceLocator.PleaseShutDown)
                 {
                     // as long as the max active tasks is reached, we should wait for few of them to finish
