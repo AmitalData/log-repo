@@ -140,10 +140,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   PrimaryContactName = a.PrimaryContactName,
                                   PrimaryContactEmail = a.PrimaryContactEmail,
                                   PrimaryContactPhone = a.PrimaryContactPhone,
-                                  EmailForSendingSingArinvoice = a.EmailForSendingSingArinvoice,
-                                  SendingInterestReport = a.SendingInterestReport,
-
                                   CustomerStatusName = a.CustomerStatus != null ? a.CustomerStatus.Name : null,
+                               
                                   PrimaryContactId = a.Card.PrimaryContactId,
                                   ReadyForActivationDate = a.ReadyForActivationDate,
                                   RegionId = a.RegionId,
@@ -215,6 +213,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       CustomsInvoiceTemplateId = a.Card.CustomsInvoiceTemplateId,
                                       ConsolidationInvoiceTemplateId = a.Card.ConsolidationInvoiceTemplateId,
                                       ManifestInvoiceTemplateId = a.Card.ManifestInvoiceTemplateId,
+                                      EmailForSendingSingArinvoice = a.Card.EmailForSendingSingArinvoice,
+                                      SendingInterestReport = a.Card.SendingInterestReport,
                                   },
 
                               }).FirstOrDefault();
@@ -316,8 +316,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               CodeMyCustomer = a.IsCustomer ? a.Card.Code + " (Customer)" : a.Card.Code,
                               PrimaryContactName = a.PrimaryContactName,
                               PrimaryContactEmail = a.PrimaryContactEmail,
-                              EmailForSendingSingArinvoice = a.EmailForSendingSingArinvoice,
-                              SendingInterestReport = a.SendingInterestReport,
+                             
                               PrimaryContactPhone = a.PrimaryContactPhone,
                               CustomerStatusName = a.CustomerStatus != null ? a.CustomerStatus.Name : null,
                               PrimaryContactId = a.Card.PrimaryContactId,
@@ -388,6 +387,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   CustomsInvoiceTemplateId = a.Card.CustomsInvoiceTemplateId,
                                   ConsolidationInvoiceTemplateId = a.Card.ConsolidationInvoiceTemplateId,
                                   ManifestInvoiceTemplateId = a.Card.ManifestInvoiceTemplateId,
+                                  EmailForSendingSingArinvoice = a.Card.EmailForSendingSingArinvoice,
+                                  SendingInterestReport = a.Card.SendingInterestReport,
                               },
 
                           }).FirstOrDefault();
@@ -2689,9 +2690,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              PrimaryContactName = customer.PrimaryContactName,
                                              PrimaryContactEmail = customer.PrimaryContactEmail,
                                              PrimaryContactPhone = customer.PrimaryContactPhone,
-                                             EmailForSendingSingArinvoice = customer.EmailForSendingSingArinvoice,
-                                             SendingInterestReport = customer.SendingInterestReport,
-
+                                        
                                              PrimaryContactId = customer.Card.PrimaryContactId,
                                              RegionId = customer.RegionId,
                                              RegionName = customer.Region != null ? customer.Region.Name : null,
@@ -2901,8 +2900,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              PrimaryContactName = customer.PrimaryContactName,
                                              PrimaryContactEmail = customer.PrimaryContactEmail,
                                              PrimaryContactPhone = customer.PrimaryContactPhone,
-                                             EmailForSendingSingArinvoice = customer.EmailForSendingSingArinvoice,
-                                             SendingInterestReport = customer.SendingInterestReport,
+                                           
                                              PrimaryContactId = customer.Card.PrimaryContactId,
                                              RegionId = customer.RegionId,
                                              RegionName = customer.Region != null ? customer.Region.Name : null,
@@ -3033,8 +3031,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                              PrimaryContactName = customer.PrimaryContactName,
                                              PrimaryContactEmail = customer.PrimaryContactEmail,
                                              PrimaryContactPhone = customer.PrimaryContactPhone,
-                                             EmailForSendingSingArinvoice = customer.EmailForSendingSingArinvoice,
-                                             SendingInterestReport = customer.SendingInterestReport,
+                                          
                                              PrimaryContactId = customer.Card.PrimaryContactId,
                                              RegionId = customer.RegionId,
                                              RegionName = customer.Region != null ? customer.Region.Name : null,
@@ -3179,9 +3176,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         UpdatedByUserName = a.Card.UpdatedByUser != null ? a.Card.UpdatedByUser.Contact.EnglishName : null,
                         PrimaryContactName = a.PrimaryContactName,
                         PrimaryContactEmail = a.PrimaryContactEmail,
-                        EmailForSendingSingArinvoice = a.EmailForSendingSingArinvoice,
-                        SendingInterestReport = a.SendingInterestReport,
-
+                    
                         PrimaryContactPhone = a.PrimaryContactPhone,
                         PrimaryContactId = a.Card.PrimaryContactId,
                         RegionId = a.RegionId,
@@ -4465,6 +4460,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                          CustomsInvoiceTemplateId = a.Card.CustomsInvoiceTemplateId,
                                          ConsolidationInvoiceTemplateId = a.Card.ConsolidationInvoiceTemplateId,
                                          ManifestInvoiceTemplateId = a.Card.ManifestInvoiceTemplateId,
+                                         EmailForSendingSingArinvoice = a.Card.EmailForSendingSingArinvoice,
+                                         SendingInterestReport = a.Card.SendingInterestReport,
                                      },
 
                                  }).FirstOrDefault();
@@ -4625,8 +4622,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   CodeMyCustomer = a.IsCustomer ? a.Card.Code + " (Customer)" : a.Card.Code,
                                   PrimaryContactName = a.PrimaryContactName,
                                   PrimaryContactEmail = a.PrimaryContactEmail,
-                                  EmailForSendingSingArinvoice = a.EmailForSendingSingArinvoice,
-                                  SendingInterestReport = a.SendingInterestReport,
+                                
                                   PrimaryContactPhone = a.PrimaryContactPhone,
                                   CustomerStatusName = a.CustomerStatus != null ? a.CustomerStatus.Name : null,
                                   PrimaryContactId = a.Card.PrimaryContactId,
@@ -4788,8 +4784,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               PrimaryContactName = a.PrimaryContactName,
                               PrimaryContactEmail = a.PrimaryContactEmail,
                               PrimaryContactPhone = a.PrimaryContactPhone,
-                              EmailForSendingSingArinvoice = a.EmailForSendingSingArinvoice,
-                              SendingInterestReport = a.SendingInterestReport,
+                             
                               CustomerStatusName = a.CustomerStatus != null ? a.CustomerStatus.Name : null,
                               PrimaryContactId = a.Card.PrimaryContactId,
                               ReadyForActivationDate = a.ReadyForActivationDate,
