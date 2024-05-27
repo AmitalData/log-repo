@@ -176,6 +176,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new CB_RegularityRequirementMap());
 	
+            modelBuilder.Configurations.Add(new CB_RequirementComputedDataMap());
+	
             modelBuilder.Configurations.Add(new CB_RuleMap());
 	
             modelBuilder.Configurations.Add(new CB_RuleDetailsHistoryMap());
@@ -1853,6 +1855,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<CB_RegularityRequirement> CB_RegularityRequirements 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CB_RequirementComputedData> CB_RequirementComputedDatas 
 	 {
 	      get; set;
 	 
