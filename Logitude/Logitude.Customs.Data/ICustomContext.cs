@@ -57,6 +57,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<CB_CustomsBookAddition> CB_CustomsBookAdditions { get; }
 		 IDbSet<CB_CustomsBookAdditionsDetailsHistory> CB_CustomsBookAdditionsDetailsHistorys { get; }
 		 IDbSet<CB_CustomsItem> CB_CustomsItems { get; }
+		 IDbSet<CB_CustomsItemComputedData> CB_CustomsItemComputedDatas { get; }
 		 IDbSet<CB_CustomsItemDetailsHistory> CB_CustomsItemDetailsHistorys { get; }
 		 IDbSet<CB_CustomsItemExclusion> CB_CustomsItemExclusion { get; }
 		 IDbSet<CB_CustomsItemLinkage> CB_CustomsItemLinkages { get; }
