@@ -16,6 +16,7 @@ using WebFreight.Web.InfrastructureModel;
 using WebFreight.Web.Helpers;
 using System.IO;
 using System.Xml.Serialization;
+using System.Configuration;
 
 namespace WebFreight.Web
 {
@@ -49,6 +50,16 @@ namespace WebFreight.Web
             {
                 if (LogitudeSettings.WorkEnvironment == "logbox")
                 {
+
+                    var isAppServiceENV = Environment.GetEnvironmentVariable("IsAppService") == "true";
+                    bool isAppService = ConfigurationManager.AppSettings["IsAppService"] == "true";
+
+                    if (isAppServiceENV || isAppService)
+                    {
+                        if (!string.IsNullOrEmpty( context.Request.Headers["X-ORIGINAL-HOST"]))
+                            url = context.Request.Headers["X-ORIGINAL-HOST"];
+
+                    }
 
                     if (url.Contains("system.dsv.co.il"))
                     {
