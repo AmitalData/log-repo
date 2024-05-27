@@ -47,6 +47,19 @@ namespace Simplog.Server.Infrastructure.Helpers
             }
             return clearItem;
         }
+
+        public static List<string> GetAllCacheKeys()
+        {
+            var cacheKeys = new List<string>();
+            var enumerator = CacheWrapper.GetEnumerator();
+
+            while (enumerator.MoveNext())
+            {
+                cacheKeys.Add(enumerator.Key.ToString());
+            }
+
+            return cacheKeys;
+        }
         public static TEntity GetOrInsertNewObject<TEntity>(string entityKeyString, Func<TEntity> GetNewObject, bool fromCache = true, bool donotCacheNull = false, bool supressForceInsert = true, int absoluteExpiration = 30) //Itzik Test
             where TEntity : class ///,new()
             
