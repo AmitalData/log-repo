@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class TaxReportUpdateClass
    {  		
-		public const string HashString = "8bfaf4c0ed3eaaba21d1eb294871139a";
+		public const string HashString = "a774c4012d4bfcd4e96bceb0d9a5a73e";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -3306,6 +3306,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode TaxReportTextCode_TaxReportOCloseJournalRunInBackground = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReport.O.CloseJournalRunInBackground", DefaultText = "Creating journal will be done in the background and may take several minutes",LocalDefaultText = @"יצירת פקודת היומן תעשה ברקע והיא עשויה לקחת מספר דקות", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode TaxReportTextCode_TaxReportOConfirmRecalculateReport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReport.O.ConfirmRecalculateReport", DefaultText = "Confirm recalculating the report",LocalDefaultText = "פעולה זאת מאתרת פקודות יומן שנוצרו לאחר יצירת הדו''ח( וצריכות להיכלל בדו''ח לחודש זה )הפעולה מוסיפה את פקודות היומן לדו''ח", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
  		   TextCode TaxReportTextCode_TaxReportODownloadPa = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReport.O.DownloadPa", DefaultText = "Download PA file",LocalDefaultText = "הורדת קובץ רש''פ", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    

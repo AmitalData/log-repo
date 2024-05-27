@@ -2862,7 +2862,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_AccountingOYear = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.Year", DefaultText = "Year",LocalDefaultText = @"שנה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 	    
+
+            TextCode GeneralTextCode_GeneralMCMine = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.Mine", DefaultText = "Mine", LocalDefaultText = @"שלי", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode GeneralTextCode_AccountingOYear = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.Year", DefaultText = "Year",LocalDefaultText = @"שנה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
         }
 
 
