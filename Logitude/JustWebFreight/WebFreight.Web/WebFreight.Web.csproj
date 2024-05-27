@@ -1481,6 +1481,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CB_LevyConditionViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CB_LevyExclusionViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CB_PropertiesDetailsHistoryViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CB_QuotaComputedDataViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CB_QuotaDetailsHistoryViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CB_QuotaRenewalViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CB_QuotaViewsController.Generated.cs" />
@@ -1560,6 +1561,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CB_LevyConditionController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CB_LevyExclusionController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CB_PropertiesDetailsHistoryController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CB_QuotaComputedDataController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CB_QuotaController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CB_QuotaDetailsHistoryController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CB_QuotaRenewalController.Generated.cs" />
@@ -1842,6 +1844,7 @@
     <Compile Include="CustomModel\DomainServices\CustomDomainService.LoadingSiteType.cs" />
     <Compile Include="CustomModel\DomainServices\Generated\CB_CustomsItemComputedDataDomainService.Generated.cs" />
     <Compile Include="CustomModel\DomainServices\Generated\CB_CustomsItemDomainService.Generated.cs" />
+    <Compile Include="CustomModel\DomainServices\Generated\CB_QuotaComputedDataDomainService.Generated.cs" />
     <Compile Include="CustomModel\DomainServices\Generated\CB_TariffComputedDataDomainService.Generated.cs" />
     <Compile Include="CustomModel\DomainServices\Generated\LogisticActionRequestTypeDomainService.Generated.cs" />
     <Compile Include="CustomModel\DomainServices\CustomDomainService.CustomsDocumentUpload.cs" />
@@ -4033,6 +4036,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CB_LevyConditionUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CB_LevyExclusionUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CB_PropertiesDetailsHistoryUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CB_QuotaComputedDataUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CB_QuotaDetailsHistoryUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CB_QuotaRenewalUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CB_QuotaUpdateClass.cs" />

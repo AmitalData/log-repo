@@ -84,6 +84,7 @@
     <Compile Include="EntityPMs\Generated\CB_LevyConditionPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CB_LevyExclusionPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CB_PropertiesDetailsHistoryPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CB_QuotaComputedDataPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CB_QuotaDetailsHistoryPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CB_QuotaPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CB_QuotaRenewalPM.Generated.cs" />
