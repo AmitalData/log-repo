@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Script DBType="Main" Module="Customs">
-	<Sql Version="1">
+	<Sql Version="3">
 
 		<![CDATA[
 			IF NOT EXISTS (
@@ -50,7 +50,7 @@
         ]]>
 	</Sql>
   
-  <Oracle Version="1">
+  <Oracle Version="2">
     <![CDATA[
 			
       DECLARE

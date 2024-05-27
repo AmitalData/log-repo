@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Table
   Name="CB_RegularityRequiredCertificates"
+  ShortName="CB_RegularityRequiredCertis"
   Schema="Customs"
   DBType="Main"
   Module="Customs">
