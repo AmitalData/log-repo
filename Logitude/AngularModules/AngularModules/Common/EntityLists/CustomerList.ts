@@ -67,9 +67,9 @@ export class CustomerList {
 		CustomsAgentName: string;
 		MediatorName: string;
 		SharedLogisticsInvitationStatusName: string;
-		SharedLogisticsInvitStatusCode: number;
+		SharedLogisticsInvitationStatusCode: number;
 		CargoTrackingInvitationStatusName: string;
-		CargoTrackingInvitatStatusCode: number;
+		CargoTrackingInvitationStatusCode: number;
 		LastLoginDate: Date;
 		InvitationDate: Date;
 		CargoTrackingInvitationDate: Date;

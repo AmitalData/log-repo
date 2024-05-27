@@ -207,9 +207,9 @@ export class ObjectFieldPM {
     public set DisplayInSearchWindowListIndex(newValue: number) { if (this.displayInSearchWindowListIndex != newValue) { this.displayInSearchWindowListIndex = newValue; this.MarkAsDirty("DisplayInSearchWindowListIndex"); } }
        
 	 
-    private displayInSearchWindowFilterInx: number;
-    public get DisplayInSearchWindowFilterInx() { return this.displayInSearchWindowFilterInx; }
-    public set DisplayInSearchWindowFilterInx(newValue: number) { if (this.displayInSearchWindowFilterInx != newValue) { this.displayInSearchWindowFilterInx = newValue; this.MarkAsDirty("DisplayInSearchWindowFilterInx"); } }
+    private displayInSearchWindowFiltersIndex: number;
+    public get DisplayInSearchWindowFiltersIndex() { return this.displayInSearchWindowFiltersIndex; }
+    public set DisplayInSearchWindowFiltersIndex(newValue: number) { if (this.displayInSearchWindowFiltersIndex != newValue) { this.displayInSearchWindowFiltersIndex = newValue; this.MarkAsDirty("DisplayInSearchWindowFiltersIndex"); } }
        
 	 
     private isMulti: boolean;
@@ -467,9 +467,9 @@ export class ObjectFieldPM {
     public set DisplayInDocumentReferences(newValue: boolean) { if (this.displayInDocumentReferences != newValue) { this.displayInDocumentReferences = newValue; this.MarkAsDirty("DisplayInDocumentReferences"); } }
        
 	 
-    private allowedInCustomerFieldsSetting: boolean;
-    public get AllowedInCustomerFieldsSetting() { return this.allowedInCustomerFieldsSetting; }
-    public set AllowedInCustomerFieldsSetting(newValue: boolean) { if (this.allowedInCustomerFieldsSetting != newValue) { this.allowedInCustomerFieldsSetting = newValue; this.MarkAsDirty("AllowedInCustomerFieldsSetting"); } }
+    private allowedInCustomerFieldsSettings: boolean;
+    public get AllowedInCustomerFieldsSettings() { return this.allowedInCustomerFieldsSettings; }
+    public set AllowedInCustomerFieldsSettings(newValue: boolean) { if (this.allowedInCustomerFieldsSettings != newValue) { this.allowedInCustomerFieldsSettings = newValue; this.MarkAsDirty("AllowedInCustomerFieldsSettings"); } }
        
 	 
     private generatedComponentPath: string;

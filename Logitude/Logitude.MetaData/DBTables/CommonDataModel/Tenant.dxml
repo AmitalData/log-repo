@@ -177,36 +177,36 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="MasterExpFreigPrepaidCollectId"
+    Name="MasterExportFreightPrepaidCollectId"
     ShortName="MasterExportFreightPCId"
-    OldNames="MasterExportFreightPrepaidCollectId"
+
     Type="varchar"
     Size="1">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="MasterImpFreiPrepaidCollectId"
+    Name="MasterImportFreightPrepaidCollectId"
     ShortName="MasterImportFreightPCId"
-    OldNames="MasterImportFreightPrepaidCollectId"
+
     Type="varchar"
     Size="1">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="MasterExpOtherPrepaidCollectId"
+    Name="MasterExportOtherPrepaidCollectId"
     ShortName="MasterExportOtherPCId"
-    OldNames="MasterExportOtherPrepaidCollectId"
+
     Type="varchar"
     Size="1">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="MasterImpOtherPrepaidCollectId"
+    Name="MasterImportOtherPrepaidCollectId"
     ShortName="MasterImportOtherPCId"
-    OldNames="MasterImportOtherPrepaidCollectId"
+
     Type="varchar"
     Size="1">
     <Constraints
@@ -399,9 +399,9 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="VatMandatoryForPotentialCust"
+    Name="VatMandatoryForPotentialCustomers"
     ShortName="VaTMandatoryPotentialCustomers"
-    OldNames="VatMandatoryForPotentialCustomers"
+
     Type="bit">
     <Constraints
       Nullable="false" />
@@ -438,9 +438,9 @@
     <Constraints
       Nullable="true" />
   </Column>
+  
   <Column
     Name="CustomerTenantShareCustomsFile"
-    OldNames="IsCustomerTenantShare"
     Type="bit">
     <Constraints
       Nullable="false" />
@@ -503,9 +503,9 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="ExportQuotationsoIntegratedSys"
+    Name="ExportQuotationsToIntegratedSystem"
     ShortName="ExportQuotationsToIntegrated"
-    OldNames="ExportQuotationsToIntegratedSystem"
+
     Type="bit">
     <Constraints
       Nullable="false" />
@@ -576,9 +576,9 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="IsCorrespondRightToLeftEnabled"
+    Name="IsCorrespondenceRightToLeftEnabled"
     ShortName="IsCorrespondenceRTLEnabled"
-    OldNames="IsCorrespondenceRightToLeftEnabled"
+
     Type="bit">
     <Constraints
       Nullable="false" />
@@ -709,9 +709,9 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="TransferQuotationsToUnfTrigger"
+    Name="TransferQuotationsToUnifreightTrigger"
     ShortName="TransferQuotationsToUNFTrigger"
-    OldNames="TransferQuotationsToUnifreightTrigger"
+
     Type="varchar"
     Size="10"
     DefaultValue="'OnSend'">
@@ -755,8 +755,7 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="IsQuoteRequestActivateInShared"
-    OldNames="IsQuotesRequestActivatedInShared"
+    Name="IsQuotesRequestActivatedInShared"
     Type="bit">
     <Constraints
       Nullable="false" />
@@ -915,22 +914,22 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
-    ForeignKeyColumn="MasterExpFreigPrepaidCollectId"
+    ForeignKeyColumn="MasterExportFreightPrepaidCollectId"
     ReferencedTable="PrepaidCollects"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
-    ForeignKeyColumn="MasterImpFreiPrepaidCollectId"
+    ForeignKeyColumn="MasterImportFreightPrepaidCollectId"
     ReferencedTable="PrepaidCollects"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
-    ForeignKeyColumn="MasterExpOtherPrepaidCollectId"
+    ForeignKeyColumn="MasterExportOtherPrepaidCollectId"
     ReferencedTable="PrepaidCollects"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
-    ForeignKeyColumn="MasterImpOtherPrepaidCollectId"
+    ForeignKeyColumn="MasterImportOtherPrepaidCollectId"
     ReferencedTable="PrepaidCollects"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />

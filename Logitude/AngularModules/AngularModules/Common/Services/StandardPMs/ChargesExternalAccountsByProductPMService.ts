@@ -29,7 +29,7 @@ export class ChargesExternalAccountsByProductPMService {
  private _apiUrl: string;
  constructor() {
         this._http = ServiceHelper.HttpClient;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/chargesexternalaccbyproducts';      
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/chargesexternalaccountsbyproducts';      
     }
 
 	get(id: string) {       

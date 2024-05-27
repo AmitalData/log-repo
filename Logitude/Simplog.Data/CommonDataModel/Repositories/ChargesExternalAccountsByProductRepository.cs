@@ -25,7 +25,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
             commonDataContext = CommonDataContext.GetContext(tenant);
         }
 
-        public IQueryable<ChargesExternalAccountsByProduct> GetChargesExternalAccByProducts(int tenant)
+        public IQueryable<ChargesExternalAccountsByProduct> GetChargesExternalAccountsByProducts(int tenant)
         {
             return (from d in context.ChargesExternalAccountsByProducts where d.Tenant == tenant select d);
         }

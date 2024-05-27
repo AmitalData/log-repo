@@ -58,7 +58,7 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="CustomsItemHierarchicLocatioID"
+    Name="CustomsItemHierarchicLocationID"
     Type="varchar"
     Size="2">
     <Constraints
@@ -83,7 +83,7 @@
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
   <Relation
-    ForeignKeyColumn="CustomsItemHierarchicLocatioID"
+    ForeignKeyColumn="CustomsItemHierarchicLocationID"
     ReferencedTable="CustomsItemHierarchicLocations"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />

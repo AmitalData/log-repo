@@ -82,7 +82,8 @@ export class GeneralPrintHelper {
                 var myResult = pmResponse.Result;
                 this.documentTypeList = myResult.filter(d => d.Code.toUpperCase() == this.DocumentTypeCode)[0];
                 if (this.documentTypeList) {
-                    if (this.documentTypeList.documentTypeDefaulReportTempId) {
+
+                    if (this.documentTypeList.DocumentTypeDefaultReportTemplateId) {
 
                             this.GetDocumentOut(documentTypeTemplate,StatusCode,ApprovedDate,ShowPrintWindow, showController);
 

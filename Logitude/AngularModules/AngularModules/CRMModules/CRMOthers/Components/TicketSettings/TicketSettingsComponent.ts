@@ -36,10 +36,10 @@ export class TicketSettingsComponent extends BaseComponent {
         });
     }
 
-    get IsCorrespondRightToLeftEnabled() { return this.TenantPm.IsCorrespondRightToLeftEnabled; }
-    set IsCorrespondRightToLeftEnabled(value: boolean) {
-        if (this.TenantPm.IsCorrespondRightToLeftEnabled != value) {
-            this.TenantPm.IsCorrespondRightToLeftEnabled = value;
+    get IsCorrespondenceRightToLeftEnabled() { return this.TenantPm.IsCorrespondenceRightToLeftEnabled; }
+    set IsCorrespondenceRightToLeftEnabled(value: boolean) {
+        if (this.TenantPm.IsCorrespondenceRightToLeftEnabled != value) {
+            this.TenantPm.IsCorrespondenceRightToLeftEnabled = value;
         }
     }
 

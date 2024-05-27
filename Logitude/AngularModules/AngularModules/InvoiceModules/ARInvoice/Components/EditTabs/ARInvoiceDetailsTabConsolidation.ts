@@ -777,7 +777,7 @@ export class ARInvoiceDetailsTabConsolidation extends BaseComponent implements O
 
             // Type Filter
             if (this.EntityPM.ARInvoiceTypeCode == "CD") {
-                if (SessionLocator.AccountingSettingPM.AllowPositiveAmountsCreditNote) {
+                if (SessionLocator.AccountingSettingPM.AllowPositiveAmountsInTheCreditNote) {
                     filters.addAdditionalFilter("ARInvoiceTypeCode", "IN,CD", null, null, "InList", false, true, false, "string");
                 }
 

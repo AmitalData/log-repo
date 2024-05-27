@@ -19,7 +19,17 @@ namespace Logitude.Customs.Data.EntityMapping
 	    string dbms;
         public CertificateOfOriginTypeCodeEnumMap()
         { 
-			  this.ToTable("CertificateOfOriginTypeCodes", "Customs");
+		
+     dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+    if (dbms == "oracle")
+    {
+	  this.ToTable("CertificateOfOriginTypeCodeEnu", "Customs");
+	}
+    else
+    {
+	  this.ToTable("CertificateOfOriginTypeCodeEnums", "Customs");
+	}
+
 		
 		    this.HasKey(t => new { t.Code });
 	 

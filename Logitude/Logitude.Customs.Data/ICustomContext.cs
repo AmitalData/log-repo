@@ -55,7 +55,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<CB_ComputationMethodData> CB_ComputationMethodDatas { get; }
 		 IDbSet<CB_CountriesExclusion> CB_CountriesExclusions { get; }
 		 IDbSet<CB_CustomsBookAddition> CB_CustomsBookAdditions { get; }
-		 IDbSet<CB_CustomsBookAdditionsDetailsHistory> CB_CustomsBookAddiDetaHistors { get; }
+		 IDbSet<CB_CustomsBookAdditionsDetailsHistory> CB_CustomsBookAdditionsDetailsHistorys { get; }
 		 IDbSet<CB_CustomsItem> CB_CustomsItems { get; }
 		 IDbSet<CB_CustomsItemDetailsHistory> CB_CustomsItemDetailsHistorys { get; }
 		 IDbSet<CB_CustomsItemExclusion> CB_CustomsItemExclusion { get; }
@@ -67,7 +67,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<CB_QuotaDetailsHistory> CB_QuotaDetailsHistorys { get; }
 		 IDbSet<CB_QuotaRenewal> CB_QuotaRenewals { get; }
 		 IDbSet<CB_RegularityInception> CB_RegularityInceptions { get; }
-		 IDbSet<CB_RegularityRequiredCertificate> CB_RegularityRequiredCertis { get; }
+		 IDbSet<CB_RegularityRequiredCertificate> CB_RegularityRequiredCertificates { get; }
 		 IDbSet<CB_RegularityRequirement> CB_RegularityRequirements { get; }
 		 IDbSet<CB_Rule> CB_Rules { get; }
 		 IDbSet<CB_RuleDetailsHistory> CB_RuleDetailsHistorys { get; }
@@ -81,9 +81,9 @@ namespace Logitude.Customs.Data
 		 IDbSet<CertificateOfOrigin> CertificateOfOrigins { get; }
 		 IDbSet<CertificateOfOriginInvoice> CertificateOfOriginInvoices { get; }
 		 IDbSet<CertificateOfOriginItem> CertificateOfOriginItems { get; }
-		 IDbSet<CertificateOfOriginMandatoryFields> CertificateOfOriginMandatorys { get; }
-		 IDbSet<CertificateOfOriginStatusCodeEnum> CertificateOfOriginStatusCodes { get; }
-		 IDbSet<CertificateOfOriginTypeCodeEnum> CertificateOfOriginTypeCodes { get; }
+		 IDbSet<CertificateOfOriginMandatoryFields> CertificateOfOriginMandatoryFieldss { get; }
+		 IDbSet<CertificateOfOriginStatusCodeEnum> CertificateOfOriginStatusCodeEnums { get; }
+		 IDbSet<CertificateOfOriginTypeCodeEnum> CertificateOfOriginTypeCodeEnums { get; }
 		 IDbSet<CertificatesStatus> CertificatesStatuses { get; }
 		 IDbSet<ChangeType> ChangeTypes { get; }
 		 IDbSet<CheckEntityType> CheckEntityTypes { get; }

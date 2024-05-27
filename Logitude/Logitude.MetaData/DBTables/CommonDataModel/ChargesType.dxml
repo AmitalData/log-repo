@@ -53,18 +53,16 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="ReceivablesChargesTypeExtCode"
+    Name="ReceivablesChargesTypeExternalCode"
     ShortName="ReceivablesChargesTypeExtCode"
-    OldNames="ReceivablesChargesTypeExternalCode"
     Type="varchar"
     Size="25">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="PayablesChargesTypeExtCode"
+    Name="PayablesChargesTypeExternalCode"
     ShortName="PayablesChargesTypeExtCode"
-    OldNames="PayablesChargesTypeExternalCode"
     Type="varchar"
     Size="25">
     <Constraints
@@ -380,6 +378,13 @@
       Nullable="false" />
   </Column>
   <Column
+    Name="QuoteGroupSectionID"
+    Type="varchar"
+    Size="1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="QuoteChargesGroupCode"
     Type="varchar"
     Size="5">
@@ -390,13 +395,6 @@
     Name="QuoteChargesGroupId"
     Type="varchar"
     Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="QuoteGroupSectionID"
-    Type="varchar"
-    Size="1">
     <Constraints
       Nullable="true" />
   </Column>
@@ -451,14 +449,14 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
-    ForeignKeyColumn="QuoteChargesGroupId"
-    ReferencedTable="QuoteChargesGroups"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
     ForeignKeyColumn="QuoteGroupSectionID"
     ReferencedTable="QuoteGroupSections"
     ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="QuoteChargesGroupId"
+    ReferencedTable="QuoteChargesGroups"
+    ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Index
     Columns="Tenant" />

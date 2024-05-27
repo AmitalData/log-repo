@@ -155,7 +155,7 @@ export class SendEmailComponent extends BaseComponent implements OnInit {
     }
     CreateCorrespondence() {
         var isRightToLeft = false;
-        if (SessionLocator.TenantPM.IsCorrespondRightToLeftEnabled == true) {
+        if (SessionLocator.TenantPM.IsCorrespondenceRightToLeftEnabled == true) {
             isRightToLeft = true;
         }
         var todayDate: Date = DateTool.GetCurrentDateAsUtc();
@@ -259,7 +259,7 @@ export class SendEmailComponent extends BaseComponent implements OnInit {
     }
     get TextAlignRegionVisibility() {
         var myResult = false;
-        if (SessionLocator.TenantPM.IsCorrespondRightToLeftEnabled == true) {
+        if (SessionLocator.TenantPM.IsCorrespondenceRightToLeftEnabled == true) {
             myResult = true;
         }
         return myResult;
@@ -269,7 +269,7 @@ export class SendEmailComponent extends BaseComponent implements OnInit {
     public FlowDirection: string = "ltr";
     private GetFlowDirection() {
         var myResult = "ltr";
-        if (SessionLocator.TenantPM.IsCorrespondRightToLeftEnabled == true) {
+        if (SessionLocator.TenantPM.IsCorrespondenceRightToLeftEnabled == true) {
             myResult = "rtl";
             if (this.EntityPM.RightToLeft) {
                 myResult = "rtl";

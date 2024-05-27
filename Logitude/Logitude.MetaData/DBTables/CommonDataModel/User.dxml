@@ -117,9 +117,9 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="IsShowContactDetailInMobileApp"
+    Name="IsShowContactDetailsInTheMobileApp"
     ShortName="IsShowContactDetailsInMobile"
-    OldNames="IsShowContactDetailsInTheMobileApp"
+
     Type="bit">
     <Constraints
       Nullable="false" />
@@ -146,9 +146,9 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="IsTwoFactorAuthenticatiEnabled"
+    Name="IsTwoFactorAuthenticationEnabled"
     ShortName="IsTwoFactorAuthenticateEnabled"
-    OldNames="IsTwoFactorAuthenticationEnabled"
+
     Type="bit">
     <Constraints
       Nullable="false" />
@@ -268,8 +268,8 @@
     ReferencedTableSchema="dbo" />
   <Index
     Columns="Tenant" />
-  <Index
-    Columns="Tenant,Code" />
+	<Index
+   Columns="Tenant,Code" />
   <Index
     Columns="AutomaticLastUpdateDate" />
 </Table>

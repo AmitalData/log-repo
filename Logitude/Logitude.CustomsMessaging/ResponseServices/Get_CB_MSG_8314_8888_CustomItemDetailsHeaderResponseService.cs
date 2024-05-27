@@ -151,7 +151,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     if (doUpdateCustomsItem && (mehesCustomsItemRow.isDiscountCode == true || mehesCustomsItemRow.fullClassification.Contains("-")))
                     {
                         currentDBListCustomsItemRow.FullClassification = mehesCustomsItemRow.fullClassification.Split('/')[0]?? mehesCustomsItemRow.fullClassification;
-                        currentDBListCustomsItemRow.CustomsItemHierarchicLocatioID = mehesCustomsItemRow.HierarchicLocationID;
+                        currentDBListCustomsItemRow.CustomsItemHierarchicLocationID = mehesCustomsItemRow.HierarchicLocationID;
                         currentDBListCustomsItemRow.ComputedCheckDigit =mehesCustomsItemRow.fullClassification.Length>10 ?mehesCustomsItemRow.fullClassification.Substring(mehesCustomsItemRow.fullClassification.Length - 1):null ;
                         currentDBListCustomsItemRow.CustomsBookTypeID = requestParams.CustomsBookType;
                         currentDBListCustomsItemRow.CustomsItemCategoryID = mehesCustomsItemRow.isDiscountCode == false && !mehesCustomsItemRow.fullClassification.Contains("-") ? 1 : 2;
@@ -209,7 +209,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
             if (mehesCustomsItemRow.fullClassification != fullClassification ||
 
-                mehesCustomsItemRow.HierarchicLocationID != currentDBListCustomsItemRow.CustomsItemHierarchicLocatioID)
+                mehesCustomsItemRow.HierarchicLocationID != currentDBListCustomsItemRow.CustomsItemHierarchicLocationID )
                 
             {
                 return true;

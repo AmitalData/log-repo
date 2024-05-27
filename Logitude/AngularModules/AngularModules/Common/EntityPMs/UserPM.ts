@@ -253,14 +253,14 @@ export class UserPM {
     public set IsProductRestricted(newValue: boolean) { if (this.isProductRestricted != newValue) { this.isProductRestricted = newValue; this.MarkAsDirty("IsProductRestricted"); } }
        
 	 
-    private isShowContactDetailInMobileApp: boolean;
-    public get IsShowContactDetailInMobileApp() { return this.isShowContactDetailInMobileApp; }
-    public set IsShowContactDetailInMobileApp(newValue: boolean) { if (this.isShowContactDetailInMobileApp != newValue) { this.isShowContactDetailInMobileApp = newValue; this.MarkAsDirty("IsShowContactDetailInMobileApp"); } }
+    private isShowContactDetailsInTheMobileApp: boolean;
+    public get IsShowContactDetailsInTheMobileApp() { return this.isShowContactDetailsInTheMobileApp; }
+    public set IsShowContactDetailsInTheMobileApp(newValue: boolean) { if (this.isShowContactDetailsInTheMobileApp != newValue) { this.isShowContactDetailsInTheMobileApp = newValue; this.MarkAsDirty("IsShowContactDetailsInTheMobileApp"); } }
        
 	 
-    private isTwoFactorAuthenticatiEnabled: boolean;
-    public get IsTwoFactorAuthenticatiEnabled() { return this.isTwoFactorAuthenticatiEnabled; }
-    public set IsTwoFactorAuthenticatiEnabled(newValue: boolean) { if (this.isTwoFactorAuthenticatiEnabled != newValue) { this.isTwoFactorAuthenticatiEnabled = newValue; this.MarkAsDirty("IsTwoFactorAuthenticatiEnabled"); } }
+    private isTwoFactorAuthenticationEnabled: boolean;
+    public get IsTwoFactorAuthenticationEnabled() { return this.isTwoFactorAuthenticationEnabled; }
+    public set IsTwoFactorAuthenticationEnabled(newValue: boolean) { if (this.isTwoFactorAuthenticationEnabled != newValue) { this.isTwoFactorAuthenticationEnabled = newValue; this.MarkAsDirty("IsTwoFactorAuthenticationEnabled"); } }
        
 	 
     private productTypeCode: string;
@@ -533,4 +533,4 @@ export class UserPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

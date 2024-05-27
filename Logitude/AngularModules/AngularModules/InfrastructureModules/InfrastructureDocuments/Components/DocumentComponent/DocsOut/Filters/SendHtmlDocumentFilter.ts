@@ -12,7 +12,7 @@ export class SendHtmlDocumentFilter {
     EntityReference: string
     HtmlString: string;
     HtmlPlainString: string;
-    ExportQuotationsoIntegratedSys: boolean;
+    ExportQuotationsToIntegratedSystem: boolean;
     DocumentTypeCode: string;
     DocumentTypeId: string;
     EntityId: string;

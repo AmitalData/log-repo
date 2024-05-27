@@ -93,15 +93,15 @@ namespace Logitude.Customs.Data.EntityPOCOs
         [Column("VatDiscountRate")]
 	    public decimal VatDiscountRate { get; set; }
         [ForeignKey("CustomsItemGroup")]
-        [Column("Discount_CustomItemGroupTypeID")]
-	    public string Discount_CustomItemGroupTypeID { get; set; }
+     
+	    public string Discount_CustomsItemGroupTypeID { get; set; }
 	      
         public virtual CustomsItemGroup CustomsItemGroup { get; set; }
         [Column("IsCarDiscount")]
 	    public bool IsCarDiscount { get; set; }
         [ForeignKey("DiscountTypeRegulation")]
-        [Column("DiscountRegularityRequiremType")]
-	    public string DiscountRegularityRequiremType { get; set; }
+     
+	    public string DiscountRegularityRequirementType { get; set; }
 	      
         public virtual DiscountTypeRegulation DiscountTypeRegulation { get; set; }
      [Key]

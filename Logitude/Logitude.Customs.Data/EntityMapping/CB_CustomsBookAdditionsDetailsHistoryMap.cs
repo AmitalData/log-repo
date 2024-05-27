@@ -19,7 +19,17 @@ namespace Logitude.Customs.Data.EntityMapping
 	    string dbms;
         public CB_CustomsBookAdditionsDetailsHistoryMap()
         { 
-			  this.ToTable("CB_CustomsBookAddiDetaHistors", "Customs");
+		
+     dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
+    if (dbms == "oracle")
+    {
+	  this.ToTable("CB_CustomsBookAdditionsDetails", "Customs");
+	}
+    else
+    {
+	  this.ToTable("CB_CustomsBookAdditionsDetailsHistorys", "Customs");
+	}
+
 		
 		    this.HasKey(t => new { t.CB_ID });
 	 

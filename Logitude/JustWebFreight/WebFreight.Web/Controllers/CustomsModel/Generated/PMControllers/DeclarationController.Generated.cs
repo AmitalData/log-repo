@@ -134,6 +134,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             {
                 try
                 {
+
                     using (TransactionScope scope = TransactionFactory.GetTransaction())
                     {
                         string logKey = PerformanceLogger.LogCurrentTime();					                        

@@ -74,12 +74,15 @@ using Logitude.TariffModule.BL.CLoseTable;
 using Logitude.CargoTracking.Data.Repositories;
 using Logitude.CargoTracking.BL;
 using Logitude.CargoTracking.Data.EntityPOCOs;
+
 using Logitude.Workflow.Data.Repositories;
 using Logitude.Workflow.Data.EntityPOCOs;
 using Logitude.Workflow.BL.CLoseTable;
 using Logitude.DashboardModule.Data.Repositories;
 using Logitude.DashboardModule.Data.EntityPOCOs;
 using Logitude.DashboardModule.BL;
+//using Amital.QuoteOPM.BL.CLoseTable;
+
 
 
 
@@ -88,7 +91,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class ObjectFieldUpdateClass
    {  		
-		public const string HashString = "878c06b854cb04fe29efbed7ea8bca48";
+		public const string HashString = "f7f7f2ea48d7e55791f4ab6a626b798e";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -132,7 +135,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Object Field",
-			      				    Code =  "24d9",
+
+			      				    Code =  "7a0c",
 			      				    Name =  "ObjectField",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Infrastructure",
@@ -2285,7 +2289,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "DisplayInSearchWindowFilterInx",
+					 						FieldName =  "DisplayInSearchWindowFiltersIndex",
 					  						ObjectTableName =  "ObjectField",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -2304,8 +2308,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "DisplayInSearchWindowFilterInx",
-					  						ListPropertyPath =  "DisplayInSearchWindowFilterInx",
+					  						PMPropertyPath =  "DisplayInSearchWindowFiltersIndex",
+					  						ListPropertyPath =  "DisplayInSearchWindowFiltersIndex",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -2323,10 +2327,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "DisplayInSearchWindowFilterInx",
+
+					  						FullFieldLable =  "DisplayInSearchWindowFiltersIndex",
 					  						DefaultText =  "DisplayInSearchWindowFiltersIndex",
 					  						FullLocalDefaultText =  "DisplayInSearchWindowFiltersIndex",
-					  						ListFieldLable =  "DisplayInSearchWindowFilterInxListLable",
+					  						ListFieldLable =  "DisplayInSearchWindowFiltersIndexListLable",
 					  						ListLableDefaultText =  "DisplayInSearchWindowFiltersIndex",
 					  						ListLocalDefaultText =  "DisplayInSearchWindowFiltersIndex",
 					  						IsForeignKey =  false,
@@ -4275,7 +4280,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "AllowedInCustomerFieldsSetting",
+					 						FieldName =  "AllowedInCustomerFieldsSettings",
 					  						ObjectTableName =  "ObjectField",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -4294,8 +4299,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "AllowedInCustomerFieldsSetting",
-					  						ListPropertyPath =  "AllowedInCustomerFieldsSetting",
+					  						PMPropertyPath =  "AllowedInCustomerFieldsSettings",
+					  						ListPropertyPath =  "AllowedInCustomerFieldsSettings",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -4313,10 +4318,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "AllowedInCustomerFieldsSetting",
+
+					  						FullFieldLable =  "AllowedInCustomerFieldsSettings",
 					  						DefaultText =  "AllowedInCustomerFieldsSettings",
 					  						FullLocalDefaultText =  "AllowedInCustomerFieldsSettings",
-					  						ListFieldLable =  "AllowedInCustomerFieldsSettingListLable",
+					  						ListFieldLable =  "AllowedInCustomerFieldsSettingsListLable",
 					  						ListLableDefaultText =  "AllowedInCustomerFieldsSettings",
 					  						ListLocalDefaultText =  "AllowedInCustomerFieldsSettings",
 					  						IsForeignKey =  false,
@@ -8258,13 +8264,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
-					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "DisplayInRequiredFields",
 					  						ListPropertyPath =  "DisplayInRequiredFields",
-					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -8282,9 +8286,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DisplayInRequiredFields",
 					  						DefaultText =  "DisplayInRequiredFields",
-					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
-					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,

@@ -41,10 +41,10 @@ export class TenantList {
 		ImportFreightPrepaidCollectId: string;
 		ExportOtherPrepaidCollectId: string;
 		ImportOtherPrepaidCollectId: string;
-		MasterExpFreigPrepaidCollectId: string;
-		MasterImpFreiPrepaidCollectId: string;
-		MasterExpOtherPrepaidCollectId: string;
-		MasterImpOtherPrepaidCollectId: string;
+		MasterExportFreightPrepaidCollectId: string;
+		MasterImportFreightPrepaidCollectId: string;
+		MasterExportOtherPrepaidCollectId: string;
+		MasterImportOtherPrepaidCollectId: string;
 		STDVatPercentage: number;
 		TimeZoneOffset: number;
 		Language: string;
@@ -74,7 +74,7 @@ export class TenantList {
 		VatMandatoryTypeCode: string;
 		VatUniqueCountryId: string;
 		VatMandatoryCountryId: string;
-		VatMandatoryForPotentialCust: boolean;
+		VatMandatoryForPotentialCustomers: boolean;
 		IsQuoteSubjectEdited: boolean;
 		AllowEAWBMoreThanTenPackages: boolean;
 		RegulatedAgentNumber: string;
@@ -86,7 +86,7 @@ export class TenantList {
 		CustomerTenantShareImportFile: boolean;
 		CustomerTenantShareExportFile: boolean;
 		AllowAgentInCustomersLOV: boolean;
-		IsCorrespondRightToLeftEnabled: boolean;
+		IsCorrespondenceRightToLeftEnabled: boolean;
 		IsNotesRightToLeftEnabled: boolean;
 		AccountingActivationDate: Date;
 		AccountingActivated: boolean;
@@ -94,7 +94,7 @@ export class TenantList {
 		ProrateMasterReceivables: boolean;
 		IsIncrementalBuildRunning: boolean;
 		SCACCode: string;
-		ExportQuotationsoIntegratedSys: boolean;
+		ExportQuotationsToIntegratedSystem: boolean;
 		TenantVATManagement: boolean;
 		StorageEncryptionKey: string;
 		TemperatureUnitCode: string;
@@ -109,7 +109,7 @@ export class TenantList {
 		VatUniquePartnerTypeCode: string;
 		SharedLogisMasterMessageLink: boolean;
 		ShowMultiUnitsOfMeasurements: boolean;
-		IsQuoteRequestActivateInShared: boolean;
+		IsQuotesRequestActivatedInShared: boolean;
 		IsCargoTrackWebAccessActivated: boolean;
 		EnableDeliveryOptions: boolean;
 		EmptyReturnClosingDays: number;

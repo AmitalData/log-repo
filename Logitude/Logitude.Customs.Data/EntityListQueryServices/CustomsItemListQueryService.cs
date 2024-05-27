@@ -29,7 +29,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      ComputedCheckDigit = a.ComputedCheckDigit,
                                                      CustomsBookTypeID = a.CustomsBookTypeID,
                                                      CustomsItemCategoryID = a.CustomsItemCategoryID,
-                                                     CustomsItemHierarchicLocatioID = a.CustomsItemHierarchicLocatioID
+                                                     CustomsItemHierarchicLocationID = a.CustomsItemHierarchicLocationID,
                                                  });
             return query;
         }
@@ -170,7 +170,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      ComputedCheckDigit = a.ComputedCheckDigit,
                                                      CustomsBookTypeID = a.CustomsBookTypeID,
                                                      CustomsItemCategoryID = a.CustomsItemCategoryID,
-                                                     CustomsItemHierarchicLocationID = a.CustomsItemHierarchicLocatioID,
+                                                     CustomsItemHierarchicLocationID = a.CustomsItemHierarchicLocationID,
                                                      Title = ci.Title,
                                                  });
           

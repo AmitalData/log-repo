@@ -1161,7 +1161,7 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
                 var openReceivables = allReceivables.filter(f => f.ShipmentReceivableLineStatusCode == "OAMT" && !AppTool.IsNullOrEmpty(f.UnitPrice) && !AppTool.IsNullOrEmpty(f.Quantity));
 
                 if (this.EntityPM.ARInvoiceTypeCode == "CD") {
-                    if (!SessionLocator.AccountingSettingPM.AllowPositiveAmountsCreditNote) {
+                    if (!SessionLocator.AccountingSettingPM.AllowPositiveAmountsInTheCreditNote) {
                         openReceivables = openReceivables.filter(f => f.UnitPrice < 0 || (f.ChargesTypeCode == "ISTOR" && f.MeasurementCode == "STFE" && f.TotalAmount < 0));
                     }
                 }

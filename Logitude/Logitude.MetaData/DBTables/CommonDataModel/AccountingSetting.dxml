@@ -110,9 +110,8 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="AllowPositiveAmountsCreditNote"
+    Name="AllowPositiveAmountsInTheCreditNote"
     ShortName="AllowPstvAmountsInCrdtNote"
-    OldNames="AllowPositiveAmountsInTheCreditNote"
     Type="bit">
     <Constraints
       Nullable="false" />

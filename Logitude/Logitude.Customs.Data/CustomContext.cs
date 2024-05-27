@@ -1755,7 +1755,7 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
-	 public IDbSet<CB_CustomsBookAdditionsDetailsHistory> CB_CustomsBookAddiDetaHistors 
+	 public IDbSet<CB_CustomsBookAdditionsDetailsHistory> CB_CustomsBookAdditionsDetailsHistorys 
 	 {
 	      get; set;
 	 
@@ -1827,7 +1827,7 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
-	 public IDbSet<CB_RegularityRequiredCertificate> CB_RegularityRequiredCertis 
+	 public IDbSet<CB_RegularityRequiredCertificate> CB_RegularityRequiredCertificates 
 	 {
 	      get; set;
 	 
@@ -1911,19 +1911,19 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
-	 public IDbSet<CertificateOfOriginMandatoryFields> CertificateOfOriginMandatorys 
+	 public IDbSet<CertificateOfOriginMandatoryFields> CertificateOfOriginMandatoryFieldss 
 	 {
 	      get; set;
 	 
 	 }
 	
-	 public IDbSet<CertificateOfOriginStatusCodeEnum> CertificateOfOriginStatusCodes 
+	 public IDbSet<CertificateOfOriginStatusCodeEnum> CertificateOfOriginStatusCodeEnums 
 	 {
 	      get; set;
 	 
 	 }
 	
-	 public IDbSet<CertificateOfOriginTypeCodeEnum> CertificateOfOriginTypeCodes 
+	 public IDbSet<CertificateOfOriginTypeCodeEnum> CertificateOfOriginTypeCodeEnums 
 	 {
 	      get; set;
 	 

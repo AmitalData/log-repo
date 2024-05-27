@@ -136,9 +136,8 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="SharedLogisticsInvitStatusCode"
+    Name="SharedLogisticsInvitationStatusCode"
     ShortName="SharedLogInvitationStatCode"
-    OldNames="SharedLogisticsInvitationStatusCode"
     Type="int">
     <Constraints
       Nullable="true" />
@@ -150,9 +149,9 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="CargoTrackingInvitatStatusCode"
+    Name="CargoTrackingInvitationStatusCode"
     ShortName="CargoTracInvitationStatCode"
-    OldNames="CargoTrackingInvitationStatusCode"
+
     Type="int">
     <Constraints
       Nullable="true" />
@@ -554,13 +553,13 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
-    ForeignKeyColumn="SharedLogisticsInvitStatusCode"
-    ReferencedTable="SharedLogisticInvitationStatus"
+    ForeignKeyColumn="SharedLogisticsInvitationStatusCode"
+    ReferencedTable="SharedLogisticsInvitationStatus"
     ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
   <Relation
-    ForeignKeyColumn="CargoTrackingInvitatStatusCode"
-    ReferencedTable="SharedLogisticInvitationStatus"
+    ForeignKeyColumn="CargoTrackingInvitationStatusCode"
+    ReferencedTable="SharedLogisticsInvitationStatus"
     ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
   <Relation
@@ -646,8 +645,8 @@
     Columns="Tenant,InActive,PartnerTypeId,IsCustomer" />
   <Index
     Columns="AutomaticLastUpdateDate" />
-  <Index
-    Columns="Code" />
+	<Index
+  Columns="Code" />
   <UniqueConstraint
     Columns="Tenant,Code,PartnerTypeId" />
 </Table>

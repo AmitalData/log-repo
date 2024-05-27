@@ -429,7 +429,7 @@ export class SharedLogisticsDigitalPortalComponent implements OnInit {
                     else {
                         this.filterAgrs.SortBy = "InvitationDate";
                         this.filterAgrs.SortDirection = "Descending";
-                        this.filterAgrs.addAdditionalFilter("SharedLogisticsInvitStatusCode", 2, null, null, "Equals", false, true, false, "string");
+                        this.filterAgrs.addAdditionalFilter("SharedLogisticsInvitationStatusCode", 2, null, null, "Equals", false, true, false, "string");
                         displayTitle = "Invited " + displayObjectTableName;
                     }
                     break;
@@ -442,7 +442,7 @@ export class SharedLogisticsDigitalPortalComponent implements OnInit {
                     else {
                         this.filterAgrs.SortBy = "LastShipmentDate";
                         this.filterAgrs.SortDirection = "Descending";
-                        this.filterAgrs.addAdditionalFilter("SharedLogisticsInvitStatusCode", 1, null, null, "Equals", false, true, false, "string");
+                        this.filterAgrs.addAdditionalFilter("SharedLogisticsInvitationStatusCode", 1, null, null, "Equals", false, true, false, "string");
                         displayTitle = "Not Invited " + displayObjectTableName;
 
                     }
@@ -458,7 +458,7 @@ export class SharedLogisticsDigitalPortalComponent implements OnInit {
                         this.filterAgrs.SortBy = "LastLoginDate";
                         this.filterAgrs.SortDirection = "Descending";
 
-                        this.filterAgrs.addAdditionalFilter("SharedLogisticsInvitStatusCode", 3, null, null, "Equals", false, true, false, "string");
+                        this.filterAgrs.addAdditionalFilter("SharedLogisticsInvitationStatusCode", 3, null, null, "Equals", false, true, false, "string");
 
                         displayTitle = "Activated " + displayObjectTableName;
 
@@ -477,7 +477,7 @@ export class SharedLogisticsDigitalPortalComponent implements OnInit {
                         this.filterAgrs.SortBy = "LastLoginDate";
                         this.filterAgrs.SortDirection = "Descending";
 
-                        this.filterAgrs.addAdditionalFilter("SharedLogisticsInvitStatusCode", 3, null, null, "Equals", false, true, false, "string");
+                        this.filterAgrs.addAdditionalFilter("SharedLogisticsInvitationStatusCode", 3, null, null, "Equals", false, true, false, "string");
                         this.filterAgrs.addAdditionalFilter("IsActiveForMobile", true, null, null, "Equals", false, true, false, "boolen");
                         displayTitle = "Activated Mobile Customers";
 

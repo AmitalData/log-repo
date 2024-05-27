@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Table
-  Name="CertificateOfOriginTypeCodes"
-  OldNames="CertificateOfOriginTypeCode,CertificateOfOriginTypeCodeEnums"
+  Name="CertificateOfOriginTypeCodeEnums"
   Schema="Customs"
   DBType="Main"
   Module="Customs">

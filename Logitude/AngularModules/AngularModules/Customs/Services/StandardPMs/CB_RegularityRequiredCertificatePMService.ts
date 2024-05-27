@@ -29,7 +29,7 @@ export class CB_RegularityRequiredCertificatePMService {
  private _apiUrl: string;
  constructor() {
         this._http = ServiceHelper.HttpClient;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/cb_regularityrequiredcertis';      
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/cb_regularityrequiredcertificates';      
     }
 
 	get(cb_id: string) {       

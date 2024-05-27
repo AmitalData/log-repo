@@ -19,7 +19,7 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public int CustomsItemCategoryID  { get; set; }
        [DataMember]
-       public int? CustomsItemHierarchicLocatioID  { get; set; }
+       public int? CustomsItemHierarchicLocationID  { get; set; }
        [DataMember]
        public string ComputedCheckDigit  { get; set; }
 

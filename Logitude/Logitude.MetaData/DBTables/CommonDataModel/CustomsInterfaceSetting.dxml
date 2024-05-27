@@ -13,9 +13,8 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="ActivateCustomsManagInShipment"
+    Name="ActivateCustomsManagementInShipments"
     ShortName="ActivateCustManagInShipments"
-    OldNames="ActivateCustomsManagementInShipments"
     Type="bit">
     <Constraints
       Nullable="false" />

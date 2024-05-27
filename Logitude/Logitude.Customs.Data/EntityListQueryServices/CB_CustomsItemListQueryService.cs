@@ -36,7 +36,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
 												  FullClassification = cb.FullClassification,
 
-													CustomsItemHierarchicLocatioID = cb.CustomsItemHierarchicLocationID,
+												  CustomsItemHierarchicLocationID = cb.CustomsItemHierarchicLocationID,
 
 												  GoodsDescription = cb.GoodsDescription,
 

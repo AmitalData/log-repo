@@ -59,7 +59,7 @@ export class CountersComponent implements OnInit {
 
                             else if (item.Code == "CUST") {
                                 if (ObjectsLocator.CustomsInterfaceSettingPM != null) {
-                                    if (ObjectsLocator.CustomsInterfaceSettingPM.ActivateCustomsManagInShipment) {
+                                    if (ObjectsLocator.CustomsInterfaceSettingPM.ActivateCustomsManagementInShipments) {
                                         myCounters.push(new CounterItem(item));
                                     }
                                 }

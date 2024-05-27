@@ -5,6 +5,14 @@
   DBType="Main"
   Module="Customs">
   <Column
+    Name="ID"
+    Type="varchar"
+    Size="9">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
     Name="CustomsBookTypeID"
     Type="int">
     <Constraints
@@ -24,9 +32,8 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="CustomsItemHierarchicLocatioID"
+    Name="CustomsItemHierarchicLocationID"
     ShortName="CustomsItemHierarchicLocationI"
-    OldNames="CustomsItemHierarchicLocationID"
     Type="int">
     <Constraints
       Nullable="true" />
@@ -37,13 +44,5 @@
     Size="1">
     <Constraints
       Nullable="true" />
-  </Column>
-  <Column
-    Name="ID"
-    Type="varchar"
-    Size="9">
-    <Constraints
-      PrimaryKey="true"
-      Nullable="false" />
   </Column>
 </Table>

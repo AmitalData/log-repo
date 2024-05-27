@@ -30,21 +30,21 @@ namespace Logitude.Customs.Data.Repsitories
 		
 		public  CertificateOfOriginTypeCodeEnum GetSingle(string code)
         {
-            return (from a in context.CertificateOfOriginTypeCodes
+            return (from a in context.CertificateOfOriginTypeCodeEnums
                     where a.Code == code 
                     select a).FirstOrDefault();
         }
 
         public IQueryable<CertificateOfOriginTypeCodeEnum> GetAll()
         {
-            return from a in context.CertificateOfOriginTypeCodes  
+            return from a in context.CertificateOfOriginTypeCodeEnums  
                    select a;
         }
 				 
         public CertificateOfOriginTypeCodeEnum GetSingle(EntityKeyFields entityKeys)
         {
             CertificateOfOriginTypeCodeEnumKeys keys = entityKeys as CertificateOfOriginTypeCodeEnumKeys;
-            return (from a in context.CertificateOfOriginTypeCodes
+            return (from a in context.CertificateOfOriginTypeCodeEnums
                     where a.Code == keys.Code
                     select a).FirstOrDefault();
         }
@@ -53,26 +53,26 @@ namespace Logitude.Customs.Data.Repsitories
         public void Add(CertificateOfOriginTypeCodeEnum entity)
         {
             onAdd();
-            context.CertificateOfOriginTypeCodes.Add(entity);
+            context.CertificateOfOriginTypeCodeEnums.Add(entity);
         }
 
         public void Remove(CertificateOfOriginTypeCodeEnum entity)
         {
-            context.CertificateOfOriginTypeCodes.Attach(entity);
-            context.CertificateOfOriginTypeCodes.Remove(entity);
+            context.CertificateOfOriginTypeCodeEnums.Attach(entity);
+            context.CertificateOfOriginTypeCodeEnums.Remove(entity);
         }
 
         partial void onUpdate();//Partial Methods Definition in Generated
         public void Update(CertificateOfOriginTypeCodeEnum entity)
         {
             onUpdate();
-            context.CertificateOfOriginTypeCodes.Attach(entity);
+            context.CertificateOfOriginTypeCodeEnums.Attach(entity);
             context.SetAsModified(entity);
         }
 
         public List<CertificateOfOriginTypeCodeEnum> All()
         {
-            return context.CertificateOfOriginTypeCodes.ToList();
+            return context.CertificateOfOriginTypeCodeEnums.ToList();
         }
 
         private ICustomContext context

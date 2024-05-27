@@ -22,8 +22,9 @@ export class DocumentTypeList {
 		ObjectTableId: string;
 		ObjectTableName: string;
 		Subject: string;
-		DocumentTypeDefaulReportTempId: string;
-		DocumentTypeDefaulReportTempId: string;
+
+		DocumentTypeDefaultReportTemplateId: string;
+		DocumentTypeDefaultHTMLTemplateId: string;
 		DocumentTypeDefaultEditorTool: string;
 		TemplateFormatCode: string;
 		InActive: boolean;
@@ -53,7 +54,7 @@ export class DocumentTypeList {
 		OnPrintPopulateDateFieldName: string;
 		OrderBy: number;
 		OrderedDisplayName: string;
-		IsSystemAdditionaPrintingField: boolean;
+		IsSystemAdditionalPrintingFields: boolean;
 		PrintingFieldsScreenCode: string;
 		AddedManually: boolean;
 	

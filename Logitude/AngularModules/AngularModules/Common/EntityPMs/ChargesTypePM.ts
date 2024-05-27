@@ -174,14 +174,14 @@ export class ChargesTypePM extends ObjectCustomFieldPM {
     public set ReceivableCreditAccount(newValue: string) { if (this.receivableCreditAccount != newValue) { this.receivableCreditAccount = newValue; this.MarkAsDirty("ReceivableCreditAccount"); } }
        
 	 
-    private receivablesChargesTypeExtCode: string;
-    public get ReceivablesChargesTypeExtCode() { return this.receivablesChargesTypeExtCode; }
-    public set ReceivablesChargesTypeExtCode(newValue: string) { if (this.receivablesChargesTypeExtCode != newValue) { this.receivablesChargesTypeExtCode = newValue; this.MarkAsDirty("ReceivablesChargesTypeExtCode"); } }
+    private receivablesChargesTypeExternalCode: string;
+    public get ReceivablesChargesTypeExternalCode() { return this.receivablesChargesTypeExternalCode; }
+    public set ReceivablesChargesTypeExternalCode(newValue: string) { if (this.receivablesChargesTypeExternalCode != newValue) { this.receivablesChargesTypeExternalCode = newValue; this.MarkAsDirty("ReceivablesChargesTypeExternalCode"); } }
        
 	 
-    private payablesChargesTypeExtCode: string;
-    public get PayablesChargesTypeExtCode() { return this.payablesChargesTypeExtCode; }
-    public set PayablesChargesTypeExtCode(newValue: string) { if (this.payablesChargesTypeExtCode != newValue) { this.payablesChargesTypeExtCode = newValue; this.MarkAsDirty("PayablesChargesTypeExtCode"); } }
+    private payablesChargesTypeExternalCode: string;
+    public get PayablesChargesTypeExternalCode() { return this.payablesChargesTypeExternalCode; }
+    public set PayablesChargesTypeExternalCode(newValue: string) { if (this.payablesChargesTypeExternalCode != newValue) { this.payablesChargesTypeExternalCode = newValue; this.MarkAsDirty("PayablesChargesTypeExternalCode"); } }
        
 	 
     private payableDebitAccountExternalId: string;
@@ -194,14 +194,14 @@ export class ChargesTypePM extends ObjectCustomFieldPM {
     public set QuoteGroupSectionID(newValue: string) { if (this.quoteGroupSectionID != newValue) { this.quoteGroupSectionID = newValue; this.MarkAsDirty("QuoteGroupSectionID"); } }
        
 	 
-    private receivableCreditAccountExtId: string;
-    public get ReceivableCreditAccountExtId() { return this.receivableCreditAccountExtId; }
-    public set ReceivableCreditAccountExtId(newValue: string) { if (this.receivableCreditAccountExtId != newValue) { this.receivableCreditAccountExtId = newValue; this.MarkAsDirty("ReceivableCreditAccountExtId"); } }
+    private receivableCreditAccountExternalId: string;
+    public get ReceivableCreditAccountExternalId() { return this.receivableCreditAccountExternalId; }
+    public set ReceivableCreditAccountExternalId(newValue: string) { if (this.receivableCreditAccountExternalId != newValue) { this.receivableCreditAccountExternalId = newValue; this.MarkAsDirty("ReceivableCreditAccountExternalId"); } }
        
 	 
-    private chargesTypeExternalCodeExtId: string;
-    public get ChargesTypeExternalCodeExtId() { return this.chargesTypeExternalCodeExtId; }
-    public set ChargesTypeExternalCodeExtId(newValue: string) { if (this.chargesTypeExternalCodeExtId != newValue) { this.chargesTypeExternalCodeExtId = newValue; this.MarkAsDirty("ChargesTypeExternalCodeExtId"); } }
+    private chargesTypeExternalCodeExternalId: string;
+    public get ChargesTypeExternalCodeExternalId() { return this.chargesTypeExternalCodeExternalId; }
+    public set ChargesTypeExternalCodeExternalId(newValue: string) { if (this.chargesTypeExternalCodeExternalId != newValue) { this.chargesTypeExternalCodeExternalId = newValue; this.MarkAsDirty("ChargesTypeExternalCodeExternalId"); } }
        
 	 
     private isAutoDisplayInCustoms: boolean;
@@ -447,4 +447,4 @@ export class ChargesTypePM extends ObjectCustomFieldPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

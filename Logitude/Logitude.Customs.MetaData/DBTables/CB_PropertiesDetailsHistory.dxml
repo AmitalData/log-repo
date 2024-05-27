@@ -182,7 +182,7 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="Discount_CustomItemGroupTypeID"
+    Name="Discount_CustomsItemGroupTypeID"
     Type="varchar"
     Size="4">
     <Constraints
@@ -195,7 +195,7 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="DiscountRegularityRequiremType"
+    Name="DiscountRegularityRequirementType"
     Type="varchar"
     Size="4">
     <Constraints
@@ -240,12 +240,12 @@
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
   <Relation
-    ForeignKeyColumn="Discount_CustomItemGroupTypeID"
+    ForeignKeyColumn="Discount_CustomsItemGroupTypeID"
     ReferencedTable="CustomsItemGroups"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
   <Relation
-    ForeignKeyColumn="DiscountRegularityRequiremType"
+    ForeignKeyColumn="DiscountRegularityRequirementType"
     ReferencedTable="DiscountTypeRegulations"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />

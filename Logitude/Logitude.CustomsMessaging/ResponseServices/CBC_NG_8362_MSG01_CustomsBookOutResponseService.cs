@@ -370,7 +370,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         {
             if (mehesCustomsItemRow.FullClassification != currentDBListCustomsItemRow.FullClassification ||
                 mehesCustomsItemRow.CustomsItemCategoryID != currentDBListCustomsItemRow.CustomsItemCategoryID ||
-                mehesCustomsItemRow.CustomsItemHierarchicLocationID != currentDBListCustomsItemRow.CustomsItemHierarchicLocatioID ||
+                mehesCustomsItemRow.CustomsItemHierarchicLocationID != currentDBListCustomsItemRow.CustomsItemHierarchicLocationID ||
                 mehesCustomsItemRow.ComputedCheckDigit != currentDBListCustomsItemRow.ComputedCheckDigit)
             {
                 return true;

@@ -328,7 +328,7 @@ export class AWBWizardComponent implements AfterViewInit{
         this.EntityPM.FreightPrepaidCollectId = this.TenantPM.ExportFreightPrepaidCollectId;
 
         if (this.EntityPM.ShipmentLevelCode == "C") {
-            this.EntityPM.FreightPrepaidCollectId = this.TenantPM.MasterExpFreigPrepaidCollectId;
+            this.EntityPM.FreightPrepaidCollectId = this.TenantPM.MasterExportFreightPrepaidCollectId;
         }
 
         this.GetAWBSignature();
@@ -3147,7 +3147,8 @@ export class AWBWizardComponent implements AfterViewInit{
     }
     StartPrint() {
         if (this.documentTypePM != null) {
-            if (this.documentTypePM.documentTypeDefaulReportTempId) {
+
+            if (this.documentTypePM.DocumentTypeDefaultReportTemplateId) {
                 this.LoadPrintControl();
             }
 
@@ -3329,7 +3330,8 @@ export class AWBWizardComponent implements AfterViewInit{
 
         this.StopBusyIndicator();
 
-        if (this.documentTypePM.documentTypeDefaulReportTempId) {
+
+        if (this.documentTypePM.DocumentTypeDefaultReportTemplateId) {
             this.LoadPreviewControl();
         }
 

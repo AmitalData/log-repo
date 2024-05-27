@@ -660,14 +660,14 @@ export class NewMasterComponent extends BaseComponent implements OnInit, AfterVi
         switch (this.DirectionId) {
             case "E":
             case "R": {
-                this.FreightPrepaidCollectId = this.TenantPM.MasterExpFreigPrepaidCollectId;
-                this.OtherPrepaidCollectId = this.TenantPM.MasterExpOtherPrepaidCollectId;
+                this.FreightPrepaidCollectId = this.TenantPM.MasterExportFreightPrepaidCollectId;
+                this.OtherPrepaidCollectId = this.TenantPM.MasterExportOtherPrepaidCollectId;
                 break;
             }
 
             case "I": {
-                this.FreightPrepaidCollectId = this.TenantPM.MasterImpFreiPrepaidCollectId;
-                this.OtherPrepaidCollectId = this.TenantPM.MasterImpOtherPrepaidCollectId;
+                this.FreightPrepaidCollectId = this.TenantPM.MasterImportFreightPrepaidCollectId;
+                this.OtherPrepaidCollectId = this.TenantPM.MasterImportOtherPrepaidCollectId;
                 break;
             }
 

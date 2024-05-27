@@ -42,7 +42,7 @@ export class ObjectFieldList {
 		UniqueField: boolean;
 		ShortNameTextCodeId: string;
 		DisplayInSearchWindowListIndex: number;
-		DisplayInSearchWindowFilterInx: number;
+		DisplayInSearchWindowFiltersIndex: number;
 		IsMulti: boolean;
 		MultiTableId: string;
 		DependencyFilter1Value: string;
@@ -67,7 +67,7 @@ export class ObjectFieldList {
 		CanAutomateSetValue: boolean;
 		HasTemplate: boolean;
 		FullNameTextCodeDefaultText: string;
-		AllowedInCustomerFieldsSetting: boolean;
+		AllowedInCustomerFieldsSettings: boolean;
 		DisplayInDocumentReferences: boolean;
 		ListTextCodeCode: string;
 		Code: string;

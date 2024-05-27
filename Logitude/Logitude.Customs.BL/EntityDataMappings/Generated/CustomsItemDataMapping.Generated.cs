@@ -25,7 +25,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CustomsBookTypeID, 
 	         FullClassification, 
 	         CustomsItemCategoryID, 
-	         CustomsItemHierarchicLocatioID, 
+	         CustomsItemHierarchicLocationID, 
 	         ComputedCheckDigit, 
 	         ID,
 	      }
@@ -37,7 +37,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CustomsBookTypeID, 
 	         FullClassification, 
 	         CustomsItemCategoryID, 
-	         CustomsItemHierarchicLocatioID, 
+	         CustomsItemHierarchicLocationID, 
 	         ComputedCheckDigit, 
 	         ClassificationWithCheckDigit, 
 	         ID,
@@ -64,9 +64,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 				entityPOCO.CustomsItemCategoryID = entityPM.CustomsItemCategoryID;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsItemHierarchicLocatioID))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsItemHierarchicLocationID))
             {
-				entityPOCO.CustomsItemHierarchicLocatioID = entityPM.CustomsItemHierarchicLocatioID;
+				entityPOCO.CustomsItemHierarchicLocationID = entityPM.CustomsItemHierarchicLocationID;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ComputedCheckDigit))
@@ -93,9 +93,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.CustomsItemCategoryID = entityPOCO.CustomsItemCategoryID;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CustomsItemHierarchicLocatioID))
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CustomsItemHierarchicLocationID))
             {
-					entityPM.CustomsItemHierarchicLocatioID = entityPOCO.CustomsItemHierarchicLocatioID;
+					entityPM.CustomsItemHierarchicLocationID = entityPOCO.CustomsItemHierarchicLocationID;
             }
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ComputedCheckDigit))
@@ -129,9 +129,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.CustomsItemCategoryID = entityPM.CustomsItemCategoryID;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsItemHierarchicLocatioID))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsItemHierarchicLocationID))
             {
-                oldEntityPM.CustomsItemHierarchicLocatioID = entityPM.CustomsItemHierarchicLocatioID;
+                oldEntityPM.CustomsItemHierarchicLocationID = entityPM.CustomsItemHierarchicLocationID;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ComputedCheckDigit))

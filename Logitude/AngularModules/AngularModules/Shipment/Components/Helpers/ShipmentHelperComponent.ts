@@ -296,7 +296,7 @@ export class ShipmentHelperComponent implements OnDestroy {
             this.CheckABMVisibility();
             this.CheckAESVisibility();
 
-            if (ObjectsLocator.CustomsInterfaceSettingPM.ActivateCustomsManagInShipment) {
+            if (ObjectsLocator.CustomsInterfaceSettingPM.ActivateCustomsManagementInShipments) {
                 if (this.IsABMVisible || this.IsAESVisible || this.IsATMSVisible_BOL || this.IsATMSVisible_VOG) {
                     this.IsSendToCustomVisible = true;
                 }

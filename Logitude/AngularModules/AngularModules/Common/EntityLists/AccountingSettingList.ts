@@ -32,7 +32,7 @@ export class AccountingSettingList {
 		APInvoiceTransferStartDate: Date;
 		ARPaymentTransferStartDate: Date;
 		APPaymentTransferStartDate: Date;
-		AllowPositiveAmountsCreditNote: boolean;
+		AllowPositiveAmountsInTheCreditNote: boolean;
 		QBOrealMeID: string;
 		TransferToDropboxActivated: boolean;
 		EnableMultiPercentageVATTypes: boolean;
@@ -57,4 +57,4 @@ export class AccountingSettingList {
 		EnableEnteringTotalVAT: boolean;
 		BlockSendInvoiceOriginalCopy: boolean;
 	
-}
+}

@@ -34,7 +34,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
 
-            IQueryable<CertificateOfOriginMandatoryFields> iQueryable = (from a in context.CertificateOfOriginMandatorys
+            IQueryable<CertificateOfOriginMandatoryFields> iQueryable = (from a in context.CertificateOfOriginMandatoryFieldss
                                                select a);
             			iQueryable = ApplyCustomFilters(queryOperations, iQueryable);
 
@@ -136,7 +136,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
         public CertificateOfOriginMandatoryFieldsList GetSingle(string code)
         {
-            IQueryable<CertificateOfOriginMandatoryFields> CertificateOfOriginMandatoryFieldsQuery = (from a in context.CertificateOfOriginMandatorys
+            IQueryable<CertificateOfOriginMandatoryFields> CertificateOfOriginMandatoryFieldsQuery = (from a in context.CertificateOfOriginMandatoryFieldss
                                                        where a.Code == code
                                                        select a);
 
@@ -159,7 +159,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
 
-            IQueryable<CertificateOfOriginMandatoryFields> iQueryable = (from a in context.CertificateOfOriginMandatorys  select a);
+            IQueryable<CertificateOfOriginMandatoryFields> iQueryable = (from a in context.CertificateOfOriginMandatoryFieldss  select a);
 
 			  			iQueryable = ApplyCustomFilters(queryOperations, iQueryable);
 
