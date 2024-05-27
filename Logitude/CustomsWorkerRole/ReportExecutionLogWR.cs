@@ -71,13 +71,15 @@ namespace CustomsWorkerRole
 
         public override void Run()
         {
-            while (!WorkerRoleServiceLocator.PleaseShutDown)
+            while (true)
             {
-                if (!this.IsUpdating())
+                if (!General.IsUpdating())
                 {
                     try
                     {
-                        ExecuteQueue();
+                        WorkOnce();
+                        Thread.Sleep(TimeSpan.FromSeconds(1));
+
                     }
                     catch (Exception exception)
                     {
@@ -125,67 +127,71 @@ namespace CustomsWorkerRole
             }
         }
 
-        public bool IsUpdating()
-        {
-            try
-            {
-                bool isUpgrading = false;
-                if (CacheManager.CacheWrapper != null)
-                {
-                    string cachekey = "isUpgrading_Check";
-                    if (CacheManager.CacheWrapper.Get(cachekey) == null)
-                    {
+        //public bool IsUpdating()
+        //{
+        //    try
+        //    {
+        //        bool isUpgrading = false;
+        //        if (CacheManager.CacheWrapper != null)
+        //        {
+        //            string cachekey = "isUpgrading_Check";
+        //            if (CacheManager.CacheWrapper.Get(cachekey) == null)
+        //            {
 
-                        IGlobalContext globalcontext = GlobalContext.GetContext();
-                        isUpgrading = (from a in globalcontext.GlobalDBs
-                                       select a).FirstOrDefault().IsUpgrading;
+        //                IGlobalContext globalcontext = GlobalContext.GetContext();
+        //                isUpgrading = (from a in globalcontext.GlobalDBs
+        //                               select a).FirstOrDefault().IsUpgrading;
 
-                        if (CacheManager.CacheWrapper.Get(cachekey) == null)
-                        {
-                            CacheManager.CacheWrapper.Insert(cachekey, isUpgrading, null, DateTime.UtcNow.AddSeconds(30), TimeSpan.Zero);
-                        }
+        //                if (CacheManager.CacheWrapper.Get(cachekey) == null)
+        //                {
+        //                    CacheManager.CacheWrapper.Insert(cachekey, isUpgrading, null, DateTime.UtcNow.AddSeconds(30), TimeSpan.Zero);
+        //                }
 
-                    }
-                    else
-                    {
-                        isUpgrading = (bool)CacheManager.CacheWrapper.Get(cachekey);
-                    }
-                }
-                else
-                {
-                    IGlobalContext globalcontext = GlobalContext.GetContext();
-                    isUpgrading = (from a in globalcontext.GlobalDBs
-                                   select a).FirstOrDefault().IsUpgrading;
-                }
+        //            }
+        //            else
+        //            {
+        //                isUpgrading = (bool)CacheManager.CacheWrapper.Get(cachekey);
+        //            }
+        //        }
+        //        else
+        //        {
+        //            IGlobalContext globalcontext = GlobalContext.GetContext();
+        //            isUpgrading = (from a in globalcontext.GlobalDBs
+        //                           select a).FirstOrDefault().IsUpgrading;
+        //        }
 
-                return isUpgrading;
-            }
-            catch (Exception e)
-            {
-                ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "WorkerRole", "General : IsUpdating() Method", null);
-                return false;
-            }
-        }
+        //        return isUpgrading;
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "WorkerRole", "General : IsUpdating() Method", null);
+        //        return false;
+        //    }
+        //}
 
         public override void WorkOnce()
         {
-
-            try
+            while (!WorkerRoleServiceLocator.PleaseShutDown)
             {
-                OnStart();
-
-                //  WorkUntil_AnalyzeQueue_Empty_Db_NOTINUSE();
-
-
+                
+                    try
+                    {
+                        ExecuteQueue();
+                    }
+                    catch (Exception exception)
+                    {
+                        ExceptionHandler.HandleException(exception, DateTime.Now, 0, null, "Report execution log queue worker role start", null, null);
+                        Thread.Sleep(new TimeSpan(0, 0, 1));
+                    }
+                
             }
-            catch (Exception e)
-            {
-                ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "WorkerRole" + this.GetType().Name, " : Run() Method", null);
-                Thread.Sleep(TimeSpan.FromSeconds(5));
-               // _OnStartDone = false;
-            }
 
 
+        }
+
+        public void DebugStep()
+        {
+            ExecuteQueue();
         }
 
     }

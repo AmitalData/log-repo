@@ -15,6 +15,7 @@ namespace Simplog.Data.CommonDataModel
         IDbSet<AddressType> AddressTypes { get; }
         IDbSet<Country> Countries { get; }
         IDbSet<State> States { get; }
+        IDbSet<SyncRecord> SyncRecord { get; }
         IDbSet<GlobalZone> GlobalZones { get; }
         IDbSet<Address> Addresses { get; }
         IDbSet<Port> Ports { get; }

@@ -39,6 +39,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
         public void Add(CCUTRANSPVAL entity)
         {
             context.CCUTRANSPVALs.Add(entity);
+            SyncRecordCache.ClearCacheLasySync(entity.FILENO.ToString(), entity.TENANT.Value);
         }
 
         public void Remove(CCUTRANSPVAL entity)
@@ -52,6 +53,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             //http://forums.devart.com/viewtopic.php?t=13223
             //context.ExecuteStoreCommand 
             context.CCUTRANSPVALs.Remove(entity);
+            SyncRecordCache.ClearCacheLasySync(entity.FILENO.ToString(), entity.TENANT.Value);
         }
 
         public void Update(CCUTRANSPVAL entity)
@@ -60,6 +62,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             {
                 context.CCUTRANSPVALs.Attach(entity); context.SetAsModified(entity);
             }
+            SyncRecordCache.ClearCacheLasySync(entity.FILENO.ToString(), entity.TENANT.Value);
         }
 
         public List<CCUTRANSPVAL> All()

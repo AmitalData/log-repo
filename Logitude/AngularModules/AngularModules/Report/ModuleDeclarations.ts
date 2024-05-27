@@ -103,6 +103,8 @@ import { ReportVariablesComponent } from './Components/ReportVariablesComponent'
 
 //Export Customs
 import { ExportDeclarationReportFilterComponent } from './Components/FiltersComponent/ExportCustoms/ExportDeclarationReportFilterComponent';
+import { CustomsCollateralFilterComponent } from './Components/FiltersComponent/ExportCustoms/CustomsCollateralFilterComponent';
+
 
 export const Components =
     [
@@ -191,6 +193,7 @@ export const Components =
         ExportDeclarationReportFilterComponent,
 
         MonthlyBalancesReportFilterComponent
+        CustomsCollateralFilterComponent,
 
     ];
 
@@ -284,6 +287,7 @@ export class ModuleDeclarations {
             case "ControlInvoiceLinesReportFilterComponent": { myResult = ControlInvoiceLinesReportFilterComponent; break; }
             case "ExportDeclarationReportFilterComponent": { myResult = ExportDeclarationReportFilterComponent; break; }
             case "MonthlyBalancesReportFilterComponent": { myResult = MonthlyBalancesReportFilterComponent; break; }
+            case "CustomsCollateralFilterComponent": { myResult = CustomsCollateralFilterComponent; break; }
 
         }
 

@@ -40,8 +40,9 @@ namespace Unifreight.Data.AmitalModel.Repsitories
         public void Add(YCULTASK entity)
         {
             context.YCULTASKs.Add(entity);
+            SyncRecordCache.ClearCacheLasySyncByPrimaryNum(entity.PRIMARYNUM, entity.TENANT);
         }
-
+        
         public void Remove(YCULTASK entity)
         {
             //if (entity.EntityState == System.Data.EntityState.Unchanged)
@@ -50,6 +51,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             }
             //context.AddToYCULTASKs 
             context.YCULTASKs.Remove(entity);
+            SyncRecordCache.ClearCacheLasySyncByPrimaryNum(entity.PRIMARYNUM, entity.TENANT);
         }
 
         public void Update(YCULTASK entity)
@@ -58,6 +60,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             {
                 context.YCULTASKs.Attach(entity); context.SetAsModified(entity);
             }
+            SyncRecordCache.ClearCacheLasySyncByPrimaryNum(entity.PRIMARYNUM, entity.TENANT);
         }
 
         public List<YCULTASK> All()

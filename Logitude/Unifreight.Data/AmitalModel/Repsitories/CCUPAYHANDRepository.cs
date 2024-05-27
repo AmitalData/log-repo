@@ -38,6 +38,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
         public void Add(CCUPAYHAND entity)
         {
             context.CCUPAYHANDs.Add(entity);
+            SyncRecordCache.ClearCacheLasySync(entity.FILENO.ToString(), entity.TENANT.Value);
         }
 
         public void Remove(CCUPAYHAND entity)
@@ -48,6 +49,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             }
             //context.AddToCCUPAYHANDs 
             context.CCUPAYHANDs.Remove(entity);
+            SyncRecordCache.ClearCacheLasySync(entity.FILENO.ToString(), entity.TENANT.Value);
         }
 
         public void Update(CCUPAYHAND entity)
@@ -56,6 +58,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             {
                 context.CCUPAYHANDs.Attach(entity); context.SetAsModified(entity);
             }
+            SyncRecordCache.ClearCacheLasySync(entity.FILENO.ToString(), entity.TENANT.Value);
         }
 
         public List<CCUPAYHAND> All()

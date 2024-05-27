@@ -646,8 +646,24 @@ namespace CustomsWorkerRole
 
             for (int filtterPriority = 2; filtterPriority < 3; filtterPriority++)
             {
+                int maxActiveTasks = 10;
+                var num = System.Configuration.ConfigurationManager.AppSettings.Get("CustomDbQueueNewReceiveSelectCount");
+                if (!string.IsNullOrEmpty(num) && int.Parse(num) > 0)
+                {
+                    maxActiveTasks = int.Parse(num);
+                }
+
+                List<string> activeTasks = new List<string> { };
+
                 while (!WorkerRoleServiceLocator.PleaseShutDown)
                 {
+                    // as long as the max active tasks is reached, we should wait for few of them to finish
+                    if (activeTasks.Count == maxActiveTasks)
+                    {
+                        Thread.Sleep(1000);
+                        continue;
+                    }
+
                     LogMessagingUtilWR.Instance.Clear();
                     LogMessagingUtil.Instance.Clear();
 
@@ -735,6 +751,7 @@ namespace CustomsWorkerRole
                                             activeTasks.Remove(item.MessageId);
                                         }
                                     });
+
                                     taskLIst.Add(t);
                                 }
 

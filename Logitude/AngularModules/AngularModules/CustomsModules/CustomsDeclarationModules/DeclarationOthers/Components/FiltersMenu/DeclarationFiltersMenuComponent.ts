@@ -41,39 +41,43 @@ export class DeclarationFiltersMenuComponent
         this.TransportFilter_A = "TransportFilter_A";
         this.TransportFilter_O = "TransportFilter_O";
         this.TransportFilter_I = "TransportFilter_I";
-    }
-
-    ngOnInit() {        
-        this.initIsExport();
 
         // prepare diamonds menus translates
         this.diamondsMenus.forEach(menu => this.diamondsMenuTranslates[menu] = TextCodeTranslator.Translate("Customs.Declaration.O." + menu));
 
         // on query/menu changed or refresh clicked
         this.CurrentSession.CurrentListComponent.onQueryChangeEvent.subscribe(data => {
-
-            if (data.QueryCode == this.diamondsDeclarationsQuery) {
-                // if the query has been changed and it is now diamonds menu, get the diamonds declarations according to the selected menu filter
-                if (data.QueryCode != this.currentQuery) {
-                    setTimeout(() => this.ShowDiamondsDeclarationByMenu(), 200);                    
-                }
-
-                this._DeclarationExtendedListService.GetDiamondsDeclarationsCounts(this.diamondsMenus)
-                    .subscribe((myResponse: ServiceResponse) => {
-                        if (myResponse != null) {
-                            if (!myResponse.HasError) {
-                                this.diamondsMenusCount = myResponse?.Result?.Counts;
-                                this.CustomGetTotalCount.emit(myResponse?.Result?.TotalCount);
-                            }
-                        }
-                    });
-            }
-            else {
-                this.CustomGetTotalCount.emit(null);
-            }
-
-            this.currentQuery = data.QueryCode;
+            this.DeclarationFilterChanged(data);
         });
+    }
+
+    ngOnInit() {        
+        this.initIsExport();
+    }
+
+    DeclarationFilterChanged(data) {
+
+        if (data.QueryCode == this.diamondsDeclarationsQuery) {
+            // if the query has been changed and it is now diamonds menu, get the diamonds declarations according to the selected menu filter
+            if (data.QueryCode != this.currentQuery) {
+                setTimeout(() => this.ShowDiamondsDeclarationByMenu(), 200);                    
+            }
+
+            this._DeclarationExtendedListService.GetDiamondsDeclarationsCounts(this.diamondsMenus)
+                .subscribe((myResponse: ServiceResponse) => {
+                    if (myResponse != null) {
+                        if (!myResponse.HasError) {
+                            this.diamondsMenusCount = myResponse?.Result?.Counts;
+                            this.CustomGetTotalCount.emit(myResponse?.Result?.TotalCount);
+                        }
+                    }
+                });
+        }
+        else {
+            this.CustomGetTotalCount.emit(null);
+        }
+
+        this.currentQuery = data.QueryCode;
     }
 
     private initIsExport() {

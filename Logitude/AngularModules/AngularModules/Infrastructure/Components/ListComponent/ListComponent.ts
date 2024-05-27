@@ -889,6 +889,7 @@ export class ListComponent implements OnInit, AfterViewInit {
 
     FiltersMenu: ApiQueryFilters = null;
     private isLoaderReady: boolean;
+    DeclarationsTable = false;
     View: string;
     RunComponent() {
 
@@ -926,7 +927,9 @@ export class ListComponent implements OnInit, AfterViewInit {
             else
                 this.HasExcelExportButton = true;
         }
-
+        if (this.ObjectTable.Name == "Customs.Declaration") {
+            this.DeclarationsTable = true;
+        }
 
         if (this.ObjectTable.Name == "DocumentType") {
             if (FeatureLocator.HasFeaturePermession("DocumentType", "FROMLIBRARY")) {

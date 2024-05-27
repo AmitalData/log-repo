@@ -500,6 +500,7 @@
     <Compile Include="CommonDataModel\ExternalService\CopyDocumentTypeTemplateService.cs" />
     <Compile Include="CommonDataModel\ExternalService\PartnerARinvoiceDocumentTypeService.cs" />
     <Compile Include="CommonDataModel\ExternalService\SystemReportsTemplatesService.cs" />
+    <Compile Include="CommonDataModel\EntityQueries\StateQuery.cs" />
     <Compile Include="CommonDataModel\ExternalService\CustomerDataSearchService.cs" />
     <Compile Include="CommonDataModel\CustomFilters\CustomsShipperCustomFilter.cs" />
     <Compile Include="CommonDataModel\CustomFilters\AccountingPartnerCustomFilter.cs" />
@@ -556,6 +557,7 @@
     <Compile Include="CommonDataModel\Helpers\CustomsSettingsHelper.cs" />
     <Compile Include="CommonDataModel\Helpers\BatchTaskNames.cs" />
     <Compile Include="CommonDataModel\Helpers\ShipmentOrderDocumentsQueueService.cs" />
+    <Compile Include="CommonDataModel\Helpers\EntityRecord.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\CardSearchMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\CarrierAreasPortMapping.cs" />
     <Compile Include="CommonDataModel\Tools\DataMapping\CarrierAreaMapping.cs" />
@@ -1622,7 +1624,7 @@
     <Compile Include="CommonDataModel\EntityQueries\SharedManifestTranslationQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\ShippingAgentQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\ShippingLineQuery.cs" />
-    <Compile Include="CommonDataModel\EntityQueries\StateQuery.cs" />
+    <Compile Include="CommonDataModel\EntityQueries\SyncRecordQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\SystemDataQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\TarrifChargeQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\TarrifFromToQuery.cs" />

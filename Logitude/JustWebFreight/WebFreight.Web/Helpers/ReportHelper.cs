@@ -1346,6 +1346,12 @@ namespace WebFreight.Web.Helpers
                         dataProvider = myDataManager.GetData();
                         break;
                     }
+                case "ECCR":
+                    {
+                        CustomsCollateralLoader myDataManager = new CustomsCollateralLoader(filters, reportFliter.tenant);
+                        dataProvider = myDataManager.GetData();
+                        break;
+                    }
                     #endregion
             }
             return dataProvider;
@@ -2664,6 +2670,17 @@ namespace WebFreight.Web.Helpers
                         //reportDataProvider.CompanyName = DataProviders.General.GetCompanyName(stimulReportDataProviderDetails.Tenant);
                         //reportDataProvider.Logo = DataProviders.General.GetLogo(stimulReportDataProviderDetails.Tenant);
                         stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "EXDE", Name = "ExportDeclarationDataProvider", BusinessObjectValue = reportDataProvider };
+
+                            break;
+                        }
+                case "ECCR":
+                    {
+                        XmlSerializer serializer = new XmlSerializer(typeof(CustomsCollateralDataProvider));
+                        CustomsCollateralDataProvider reportDataProvider = (CustomsCollateralDataProvider)serializer.Deserialize(memorystream);
+                        reportDataProvider.Today_DateTime = TenantServerConfigration.GetCurrentDateTime(stimulReportDataProviderDetails.Tenant);
+                        //reportDataProvider.CompanyName = DataProviders.General.GetCompanyName(stimulReportDataProviderDetails.Tenant);
+                        //reportDataProvider.Logo = DataProviders.General.GetLogo(stimulReportDataProviderDetails.Tenant);
+                        stimulReportDataProviderDetails.CurrentBusinessObject = new StiBusinessObject() { Category = "ECCR", Name = "CustomsCollateralDataProvider", BusinessObjectValue = reportDataProvider };
 
                             break;
                         }

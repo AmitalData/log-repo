@@ -414,6 +414,7 @@
     <Compile Include="AmitalModel\Repsitories\VRELEASE2ENTRYRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\YCULTASKRepository.cs" />
     <Compile Include="AmitalModel\Repsitories\YTBTABLERepository.cs" />
+    <Compile Include="AmitalModel\SyncRecordCache.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

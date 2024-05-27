@@ -1078,6 +1078,7 @@ namespace Simplog.Data.CommonDataModel
         public IDbSet<HTSCode> HTSCodes { get; set; }
         public IDbSet<DWHEnvironmentSetting> DWHEnvironmentSettings { get; set; }
 
+        public IDbSet<SyncRecord> SyncRecord { get; set; }
         public IDbSet<PortTimeZone> PortTimeZones { get; set; }
         public IDbSet<UnassignedEntity> UnassignedEntitys { get; set; }
         public IDbSet<Mention> Mentions { get; set; }
@@ -1089,8 +1090,6 @@ namespace Simplog.Data.CommonDataModel
         public IDbSet<CustomFieldsMainObject> CustomFieldsMainObjects { get; set; }
 
         public IDbSet<AllActiveGLAccountsView> AllActiveGLAccountsViews { get; set; }
-
-
 
         public DbConnection GetConnection()
         {

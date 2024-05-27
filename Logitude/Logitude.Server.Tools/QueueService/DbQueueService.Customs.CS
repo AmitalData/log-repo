@@ -477,6 +477,16 @@ namespace Logitude.Server.Tools.QueueService
                                 selectCount = 10;
                             }
                             selectCountPar.Value = selectCount;
+                            /*
+                            // var num = System.Configuration.ConfigurationManager.AppSettings.Get("CustomDbQueueNewReceiveSelectCount");
+                            if (!string.IsNullOrEmpty(selectCount))
+                            {
+                                selectCountPar.Value = int.Parse(num);
+                            }
+                            else
+                            {
+                                selectCountPar.Value = 10;
+                            }*/
 
                             watingStatusPar.Value = WorkerNameService.GetWorkerWaitingStatusForReceiving(this.Tenant);
                             queueCodePar.Value = QueueCode;

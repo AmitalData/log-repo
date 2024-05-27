@@ -38,6 +38,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
         public void Add(CCUMSHGR entity)
         {
             context.CCUMSHGRs.Add(entity);
+            SyncRecordCache.ClearCacheLasySyncByPrimaryNum(entity.FILENO.ToString(), entity.TENANT);
         }
 
         public void Remove(CCUMSHGR entity)
@@ -48,6 +49,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             }
             //context.AddToCCUMSHGRs 
             context.CCUMSHGRs.Remove(entity);
+            SyncRecordCache.ClearCacheLasySyncByPrimaryNum(entity.FILENO.ToString(), entity.TENANT);
         }
 
         public void Update(CCUMSHGR entity)
@@ -56,6 +58,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             {
                 context.CCUMSHGRs.Attach(entity); context.SetAsModified(entity);
             }
+            SyncRecordCache.ClearCacheLasySyncByPrimaryNum(entity.FILENO.ToString(), entity.TENANT);
         }
 
         public List<CCUMSHGR> All()
