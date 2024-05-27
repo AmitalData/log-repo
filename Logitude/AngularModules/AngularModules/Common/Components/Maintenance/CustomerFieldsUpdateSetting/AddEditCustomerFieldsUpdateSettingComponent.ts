@@ -96,7 +96,7 @@ export class AddEditCustomerFieldsUpdateSettingComponent extends BaseComponent {
                     var objectTablePM: ObjectTablePM = window.ObjectTables.filter(d => d.Name === "Customer")[0];
                     var tableObjectFieldPM = window.ObjectFields.filter(d => d.ObjectTableId === objectTablePM.Id);
                     var m = tableObjectFieldPM.filter(f => f.FieldName === "SalesmanUserId")[0];
-                    this.ObjectFieldPMLists = window.ObjectFields.filter(d => d.AllowedInCustomerFieldsSetting === true && d.ObjectTableId === objectTablePM.Id);
+                    this.ObjectFieldPMLists = window.ObjectFields.filter(d => d.AllowedInCustomerFieldsSettings === true && d.ObjectTableId === objectTablePM.Id);
                     this.EntityPM = args.EntityPM;
                     this.EntityId = args.EntityId;
                     if (args.IsNew) {

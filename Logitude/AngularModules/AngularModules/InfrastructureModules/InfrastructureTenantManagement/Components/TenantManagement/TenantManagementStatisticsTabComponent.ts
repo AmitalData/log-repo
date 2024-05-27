@@ -93,9 +93,9 @@ export class TenantManagementStatisticsTabComponent extends BaseComponent implem
         this.MobileTotalLastMonth = this.EntityPM.MobileTotalLastMonth;
 
 
-		this.AgentSharedLogStatistiLastDate = this.EntityPM.AgentSharedLogStatistiLastDate;
-        this.AgentSharedLogStatistiLastWeek = this.EntityPM.AgentSharedLogStatistiLastWeek;
-        this.AgentSharedLogStatistLastMonth = this.EntityPM.AgentSharedLogStatistLastMonth;
+		this.AgentSharedLogisticsStatisticsLastDate = this.EntityPM.AgentSharedLogisticsStatisticsLastDate;
+        this.AgentSharedLogisticsStatisticsLastWeek = this.EntityPM.AgentSharedLogisticsStatisticsLastWeek;
+        this.AgentSharedLogisticsStatisticsLastMonth = this.EntityPM.AgentSharedLogisticsStatisticsLastMonth;
 
         this.LastEbookingSentDate = this.EntityPM.LastEbookingSentDate;
         this.LastSISentDate = this.EntityPM.LastSISentDate;
@@ -224,8 +224,8 @@ export class TenantManagementStatisticsTabComponent extends BaseComponent implem
             }
         }
 		
-		if (this.EntityPM.AgentSharedLogStatistiLastDate != null) {
-            var myDate = new Date(this.EntityPM.AgentSharedLogStatistiLastDate.valueOf()).valueOf();
+		if (this.EntityPM.AgentSharedLogisticsStatisticsLastDate != null) {
+            var myDate = new Date(this.EntityPM.AgentSharedLogisticsStatisticsLastDate.valueOf()).valueOf();
 
             if (myDate < date7) {
                 this.AgentSharedLogisticsStatisticsLastDateColor = FontTool.Red;
@@ -290,9 +290,9 @@ export class TenantManagementStatisticsTabComponent extends BaseComponent implem
     public MobileTotalLastMonth: number;
     public MobileLastDateColor: string
         
-	public AgentSharedLogStatistiLastDate: Date;
-    public AgentSharedLogStatistiLastWeek: number;
-    public AgentSharedLogStatistLastMonth: number;
+	public AgentSharedLogisticsStatisticsLastDate: Date;
+    public AgentSharedLogisticsStatisticsLastWeek: number;
+    public AgentSharedLogisticsStatisticsLastMonth: number;
     public AgentSharedLogisticsStatisticsLastDateColor: string
 
     public LastEbookingSentDate: Date;

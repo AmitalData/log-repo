@@ -1143,7 +1143,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                     }
                     else {
                         if (ObjectsLocator.CustomsInterfaceSettingPM != null) {
-                            if (!ObjectsLocator.CustomsInterfaceSettingPM.ActivateCustomsManagInShipment) {
+                            if (!ObjectsLocator.CustomsInterfaceSettingPM.ActivateCustomsManagementInShipments) {
                                 var indexOfTab = allTabs.findIndex(t => t.Code == "SHCT");
                                 if (indexOfTab > -1) {
                                     allTabs.splice(indexOfTab, 1);

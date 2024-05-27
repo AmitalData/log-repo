@@ -280,7 +280,7 @@ export class SharedLogisticsSettingComponent implements OnInit {
         this.SharedLogisticsMessageLink = this.TenantPM.SharedLogisticsMessageLink;
         this.SharedLogisticsMasterMessageLink = this.TenantPM.SharedLogisMasterMessageLink;
         this.ShowMultiUnitsOfMeasurements = this.TenantPM.ShowMultiUnitsOfMeasurements;
-        this.IsQuotesRequestActivatedInSharedLogistics = this.TenantPM.IsQuoteRequestActivateInShared;
+        this.IsQuotesRequestActivatedInSharedLogistics = this.TenantPM.IsQuotesRequestActivatedInShared;
         this.ApproveUploadedDocuments = this.TenantPM.ApproveUploadedDocuments;
         if (!FeatureLocator.HasFeaturePermession("General", "MOBILE") || this.SharedTitleType == "CargoTracking" || this.SharedTitleType == "DigitalPortal") {
             this.IsShowMobileActivateArea = false;
@@ -406,7 +406,7 @@ export class SharedLogisticsSettingComponent implements OnInit {
         this.myCloner.AddField('SharedLogisticsMessageLink');
         this.myCloner.AddField('DisplayDocumentsAndEvents');
         this.myCloner.AddField('SharedLogisticsMasterMessageLink');
-        this.myCloner.AddField('IsQuoteRequestActivateInShared');
+        this.myCloner.AddField('IsQuotesRequestActivatedInShared');
         this.myCloner.AddField('IsCargoTrackWebAccessActivated');
         this.myCloner.AddField('IsDigitalPortalAccessActivated');
         this.myCloner.AddField('DPArchiveShipmentCreateFilter');
@@ -453,12 +453,12 @@ export class SharedLogisticsSettingComponent implements OnInit {
     public get IsQuotesRequestActivatedInSharedLogistics() {
         if (!this.TenantPM) 
             return false
-        return this.TenantPM.IsQuoteRequestActivateInShared;
+        return this.TenantPM.IsQuotesRequestActivatedInShared;
     }
 
     public set IsQuotesRequestActivatedInSharedLogistics(value: boolean) {
         if (this.TenantPM) {
-            this.TenantPM.IsQuoteRequestActivateInShared = value;
+            this.TenantPM.IsQuotesRequestActivatedInShared = value;
         }
     }
 

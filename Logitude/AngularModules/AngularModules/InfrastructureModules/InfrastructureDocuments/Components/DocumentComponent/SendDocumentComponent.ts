@@ -1865,7 +1865,7 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
                     //else {
 
                         if (selectitem.TemplateType == "M") {
-                            this.CurrentDocumentType.DocumentTypeDefaulReportTempId = selectitem.Id;
+                            this.CurrentDocumentType.DocumentTypeDefaultHTMLTemplateId = selectitem.Id;
                             this.CurrentDocumentType.DocumentTypeDefaultEditorTool = selectitem.EditorTool;
                         }
 
@@ -1974,13 +1974,13 @@ export class SendDocumentComponent implements OnInit, AfterViewInit {
         var IsDefualt = false;
 
         if (selectitem.TemplateType == "P") {
-            if (selectitem.Id == this.CurrentDocumentType.DocumentTypeDefaulReportTempId) {
+            if (selectitem.Id == this.CurrentDocumentType.DocumentTypeDefaultReportTemplateId) {
                 IsDefualt = true;
             }
         }
         else
             if (selectitem.TemplateType == "M") {
-                if (selectitem.Id == this.CurrentDocumentType.DocumentTypeDefaulReportTempId) {
+                if (selectitem.Id == this.CurrentDocumentType.DocumentTypeDefaultHTMLTemplateId) {
                     IsDefualt = true;
                 }
             }

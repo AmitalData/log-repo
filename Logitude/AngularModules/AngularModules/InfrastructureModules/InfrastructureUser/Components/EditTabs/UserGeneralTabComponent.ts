@@ -251,7 +251,7 @@ export class UserGeneralTabComponent extends BaseComponent implements OnDestroy 
         this.UIProperties.SetEnabled("IsSalesman", this.ObjectTableName, isEditingEnabled);
         this.UIProperties.SetEnabled("InActive", this.ObjectTableName, isEditingEnabled);
         this.UIProperties.SetEnabled("LicencedUser", this.ObjectTableName, isEditingEnabled);
-        this.UIProperties.SetEnabled("IsShowContactDetailInMobileApp", this.ObjectTableName, isEditingEnabled);
+        this.UIProperties.SetEnabled("IsShowContactDetailsInTheMobileApp", this.ObjectTableName, isEditingEnabled);
         this.UIProperties.SetEnabled("ShowLocalNameInLOV", this.ObjectTableName, isEditingEnabled);
         this.UIProperties.SetEnabled("DontShowLocalLabels", this.ObjectTableName, isEditingEnabled);
 
@@ -390,10 +390,10 @@ export class UserGeneralTabComponent extends BaseComponent implements OnDestroy 
         }
     }
 
-    public get IsShowContactDetailInMobileApp() { return this.EntityPM.IsShowContactDetailInMobileApp; }
-    public set IsShowContactDetailInMobileApp(value: boolean) {
-        if (this.EntityPM.IsShowContactDetailInMobileApp != value) {
-            this.EntityPM.IsShowContactDetailInMobileApp = value;
+    public get IsShowContactDetailsInTheMobileApp() { return this.EntityPM.IsShowContactDetailsInTheMobileApp; }
+    public set IsShowContactDetailsInTheMobileApp(value: boolean) {
+        if (this.EntityPM.IsShowContactDetailsInTheMobileApp != value) {
+            this.EntityPM.IsShowContactDetailsInTheMobileApp = value;
         }
     }
 
@@ -405,10 +405,10 @@ export class UserGeneralTabComponent extends BaseComponent implements OnDestroy 
     }
 
 
-    public get IsTwoFactorAuthenticatiEnabled() { return this.EntityPM.IsTwoFactorAuthenticatiEnabled; }
-    public set IsTwoFactorAuthenticatiEnabled(value: boolean) {
-        if (this.EntityPM.IsTwoFactorAuthenticatiEnabled != value) {
-            this.EntityPM.IsTwoFactorAuthenticatiEnabled = value;
+    public get IsTwoFactorAuthenticationEnabled() { return this.EntityPM.IsTwoFactorAuthenticationEnabled; }
+    public set IsTwoFactorAuthenticationEnabled(value: boolean) {
+        if (this.EntityPM.IsTwoFactorAuthenticationEnabled != value) {
+            this.EntityPM.IsTwoFactorAuthenticationEnabled = value;
         }
     }
     

@@ -24,9 +24,9 @@ export class AccountingSystemList {
 		AllowAPInvoicesTransfer: boolean;
 		AllowARPaymentsTransfer: boolean;
 		AllowMinusInvoiceLines: boolean;
-		AllowPositiveAmountsCreditNote: boolean;
+		AllowPositiveAmountsInTheCreditNote: boolean;
 		CanTransferToDropbox: boolean;
 		AllowAPPaymentsTransfer: boolean;
 		CanTransferToFTP: boolean;
 	
-}
+}

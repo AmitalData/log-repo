@@ -155,7 +155,7 @@ var SendShipmentFSRComponent = /** @class */ (function (_super) {
                     this.EntityPM.OtherPrepaidCollectId = SessionLocator_1.SessionLocator.TenantPM.MasterExportOtherPrepaidCollectId;
                 }
                 else {
-                    this.EntityPM.FreightPrepaidCollectId = SessionLocator_1.SessionLocator.TenantPM.MasterImpFreiPrepaidCollectId;
+                    this.EntityPM.FreightPrepaidCollectId = SessionLocator_1.SessionLocator.TenantPM.MasterImportFreightPrepaidCollectId;
                     this.EntityPM.OtherPrepaidCollectId = SessionLocator_1.SessionLocator.TenantPM.MasterImportOtherPrepaidCollectId;
                 }
                 Tools_2.ShipmentTool.BuildAWBChargesCodeCode(this.EntityPM);

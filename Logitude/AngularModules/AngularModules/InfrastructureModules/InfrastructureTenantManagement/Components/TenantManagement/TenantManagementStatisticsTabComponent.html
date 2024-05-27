@@ -872,16 +872,16 @@
                                         <table style="margin:5px;">
                                             <tr class="StatRow">
                                                 <td style="width:265px;">
-                                                    <LogLabel [ObjectFieldName]="'AgentSharedLogStatistiLastDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                    <LogLabel [ObjectFieldName]="'AgentSharedLogisticsStatisticsLastDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>
 
-                                                <td style="width: 65px;" [ngStyle]="{color: AgentSharedLogisticsStatisticsLastDateColor}">{{AgentSharedLogStatistiLastDate | DateTimeToDatePipe}}</td>
+                                                <td style="width: 65px;" [ngStyle]="{color: AgentSharedLogisticsStatisticsLastDateColor}">{{AgentSharedLogisticsStatisticsLastDate | DateTimeToDatePipe}}</td>
 
                                                 <td style="width:10px;">
                                                     <div></div>
                                                 </td>
 
-                                                <td style="width: 30px; text-align: right;" [ngStyle]="{color: AgentSharedLogisticsStatisticsLastDateColor}">{{AgentSharedLogStatistiLastDate | DateTimeToTimePipe: 'S12'}}</td>
+                                                <td style="width: 30px; text-align: right;" [ngStyle]="{color: AgentSharedLogisticsStatisticsLastDateColor}">{{AgentSharedLogisticsStatisticsLastDate | DateTimeToTimePipe: 'S12'}}</td>
 
                                                 <td>
                                                     <div></div>
@@ -890,10 +890,10 @@
 
                                             <tr class="StatRow">
                                                 <td style="width:265px;">
-                                                    <LogLabel [ObjectFieldName]="'AgentSharedLogStatistiLastWeek'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                    <LogLabel [ObjectFieldName]="'AgentSharedLogisticsStatisticsLastWeek'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>
 
-                                                <td colspan="3">{{AgentSharedLogStatistiLastWeek}}</td>
+                                                <td colspan="3">{{AgentSharedLogisticsStatisticsLastWeek}}</td>
 
                                                 <td>
                                                     <div></div>
@@ -902,10 +902,10 @@
 
                                             <tr class="StatRow">
                                                 <td style="width:265px;">
-                                                    <LogLabel [ObjectFieldName]="'AgentSharedLogStatistLastMonth'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                    <LogLabel [ObjectFieldName]="'AgentSharedLogisticsStatisticsLastMonth'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>
 
-                                                <td colspan="3">{{AgentSharedLogStatistLastMonth}}</td>
+                                                <td colspan="3">{{AgentSharedLogisticsStatisticsLastMonth}}</td>
 
                                                 <td>
                                                     <div></div>

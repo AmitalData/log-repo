@@ -78,7 +78,7 @@ export class AddEditARInvoiceLineComponent {
         else {
             if (this.DataContext.fatherComponent.EntityPM.ARInvoiceTypeCode == "CD" || this.DataContext.fatherComponent.EntityPM.ARInvoiceTypeCode == "CC") {
                 if (this.DataContext.UnitPrice > 0) {
-                    if (!SessionLocator.AccountingSettingPM.AllowPositiveAmountsCreditNote) {
+                    if (!SessionLocator.AccountingSettingPM.AllowPositiveAmountsInTheCreditNote) {
                         errors.push(TextCodeTranslator.Translate("ARInvoice.M.NoPositivePrice"));
                     }
                 }

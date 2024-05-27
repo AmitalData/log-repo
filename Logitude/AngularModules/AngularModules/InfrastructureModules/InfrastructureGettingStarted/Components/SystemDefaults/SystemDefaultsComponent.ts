@@ -85,15 +85,15 @@ export class SystemDefaultsComponent extends BaseComponent{
         this.UIProperties.SetEnabled("ImportFreightPrepaidCollectId", "Tenant", false);
         this.UIProperties.SetEnabled("ExportOtherPrepaidCollectId", "Tenant", false);
         this.UIProperties.SetEnabled("ImportOtherPrepaidCollectId", "Tenant", false);
-        this.UIProperties.SetEnabled("MasterExpFreigPrepaidCollectId", "Tenant", false);
-        this.UIProperties.SetEnabled("MasterImpFreiPrepaidCollectId", "Tenant", false);
-        this.UIProperties.SetEnabled("MasterExpOtherPrepaidCollectId", "Tenant", false);
-        this.UIProperties.SetEnabled("MasterImpOtherPrepaidCollectId", "Tenant", false);
+        this.UIProperties.SetEnabled("MasterExportFreightPrepaidCollectId", "Tenant", false);
+        this.UIProperties.SetEnabled("MasterImportFreightPrepaidCollectId", "Tenant", false);
+        this.UIProperties.SetEnabled("MasterExportOtherPrepaidCollectId", "Tenant", false);
+        this.UIProperties.SetEnabled("MasterImportOtherPrepaidCollectId", "Tenant", false);
 
         this.UIProperties.SetEnabled("VatMandatoryTypeCode", "Tenant", false);
         this.UIProperties.SetEnabled("VatMandatoryCountryId", "Tenant", false);
-        this.UIProperties.SetEnabled("VatMandatoryForPotentialCust", "Tenant", false);
-        this.IsVatMandatoryForPotentialCust = false;
+        this.UIProperties.SetEnabled("VatMandatoryForPotentialCustomers", "Tenant", false);
+        this.IsVatMandatoryForPotentialCustomers = false;
         this.UIProperties.SetEnabled("VatUniqueTypeCode", "Tenant", false);
         this.UIProperties.SetEnabled("VatUniqueCountryId", "Tenant", false);
 
@@ -225,31 +225,31 @@ export class SystemDefaultsComponent extends BaseComponent{
         }
     }
 
-    get MasterImpOtherPrepaidCollectId() { return this.TenantPm.MasterImpOtherPrepaidCollectId; }
-    set MasterImpOtherPrepaidCollectId(value: string) {
-        if (this.TenantPm.MasterImpOtherPrepaidCollectId != value) {
-            this.TenantPm.MasterImpOtherPrepaidCollectId = value;
+    get MasterImportOtherPrepaidCollectId() { return this.TenantPm.MasterImportOtherPrepaidCollectId; }
+    set MasterImportOtherPrepaidCollectId(value: string) {
+        if (this.TenantPm.MasterImportOtherPrepaidCollectId != value) {
+            this.TenantPm.MasterImportOtherPrepaidCollectId = value;
         }
     }
 
-    get MasterExpFreigPrepaidCollectId() { return this.TenantPm.MasterExpFreigPrepaidCollectId; }
-    set MasterExpFreigPrepaidCollectId(value: string) {
-        if (this.TenantPm.MasterExpFreigPrepaidCollectId != value) {
-            this.TenantPm.MasterExpFreigPrepaidCollectId = value;
+    get MasterExportFreightPrepaidCollectId() { return this.TenantPm.MasterExportFreightPrepaidCollectId; }
+    set MasterExportFreightPrepaidCollectId(value: string) {
+        if (this.TenantPm.MasterExportFreightPrepaidCollectId != value) {
+            this.TenantPm.MasterExportFreightPrepaidCollectId = value;
         }
     }
 
-    get MasterImpFreiPrepaidCollectId() { return this.TenantPm.MasterImpFreiPrepaidCollectId; }
-    set MasterImpFreiPrepaidCollectId(value: string) {
-        if (this.TenantPm.MasterImpFreiPrepaidCollectId != value) {
-            this.TenantPm.MasterImpFreiPrepaidCollectId = value;
+    get MasterImportFreightPrepaidCollectId() { return this.TenantPm.MasterImportFreightPrepaidCollectId; }
+    set MasterImportFreightPrepaidCollectId(value: string) {
+        if (this.TenantPm.MasterImportFreightPrepaidCollectId != value) {
+            this.TenantPm.MasterImportFreightPrepaidCollectId = value;
         }
     }
 
-    get MasterExpOtherPrepaidCollectId() { return this.TenantPm.MasterExpOtherPrepaidCollectId; }
-    set MasterExpOtherPrepaidCollectId(value: string) {
-        if (this.TenantPm.MasterExpOtherPrepaidCollectId != value) {
-            this.TenantPm.MasterExpOtherPrepaidCollectId = value;
+    get MasterExportOtherPrepaidCollectId() { return this.TenantPm.MasterExportOtherPrepaidCollectId; }
+    set MasterExportOtherPrepaidCollectId(value: string) {
+        if (this.TenantPm.MasterExportOtherPrepaidCollectId != value) {
+            this.TenantPm.MasterExportOtherPrepaidCollectId = value;
         }
     }
 
@@ -295,15 +295,15 @@ export class SystemDefaultsComponent extends BaseComponent{
             this.SetUIProperties_VatMandatory();
             this.VatMandatoryCountryId = null;
             if (value == "MNT") {
-                this.VatMandatoryForPotentialCust = false;
+                this.VatMandatoryForPotentialCustomers = false;
             }
         }
     }
 
-    get VatMandatoryForPotentialCust() { return this.TenantPm.VatMandatoryForPotentialCust; }
-    set VatMandatoryForPotentialCust(value: boolean) {
-        if (this.TenantPm.VatMandatoryForPotentialCust != value) {
-            this.TenantPm.VatMandatoryForPotentialCust = value;
+    get VatMandatoryForPotentialCustomers() { return this.TenantPm.VatMandatoryForPotentialCustomers; }
+    set VatMandatoryForPotentialCustomers(value: boolean) {
+        if (this.TenantPm.VatMandatoryForPotentialCustomers != value) {
+            this.TenantPm.VatMandatoryForPotentialCustomers = value;
         }
     }
 
@@ -315,13 +315,13 @@ export class SystemDefaultsComponent extends BaseComponent{
         }
     }
 
-    public iVatMandatoryForPotentialCust = false;
-    get IsVatMandatoryForPotentialCust() {
-        return this.iVatMandatoryForPotentialCust;
+    public iVatMandatoryForPotentialCustomers = false;
+    get IsVatMandatoryForPotentialCustomers() {
+        return this.iVatMandatoryForPotentialCustomers;
     }
 
-    set IsVatMandatoryForPotentialCust(value: boolean){
-        this.iVatMandatoryForPotentialCust = value;
+    set IsVatMandatoryForPotentialCustomers(value: boolean){
+        this.iVatMandatoryForPotentialCustomers = value;
     }
 
     SetUIProperties_VatMandatory() {
@@ -337,8 +337,8 @@ export class SystemDefaultsComponent extends BaseComponent{
         }
 
         this.UIProperties.SetEnabled("VatMandatoryCountryId", "Tenant", isEnabled);
-        this.UIProperties.SetEnabled("VatMandatoryForPotentialCust", "Tenant", this.VatMandatoryTypeCode != "MNT");
-        this.IsVatMandatoryForPotentialCust = this.VatMandatoryTypeCode != "MNT";
+        this.UIProperties.SetEnabled("VatMandatoryForPotentialCustomers", "Tenant", this.VatMandatoryTypeCode != "MNT");
+        this.IsVatMandatoryForPotentialCustomers = this.VatMandatoryTypeCode != "MNT";
         this.UIProperties.SetRequired("VatMandatoryCountryId", "Tenant", isRequired);
     }
 
@@ -516,10 +516,10 @@ export class SystemDefaultsComponent extends BaseComponent{
         }
     }
 
-    get IsCorrespondRightToLeftEnabled() { return this.TenantPm.IsCorrespondRightToLeftEnabled; }
-    set IsCorrespondRightToLeftEnabled(value: boolean)
+    get IsCorrespondenceRightToLeftEnabled() { return this.TenantPm.IsCorrespondenceRightToLeftEnabled; }
+    set IsCorrespondenceRightToLeftEnabled(value: boolean)
     {
-        this.TenantPm.IsCorrespondRightToLeftEnabled = value;
+        this.TenantPm.IsCorrespondenceRightToLeftEnabled = value;
     }
 
     get RightToLeftVisible()

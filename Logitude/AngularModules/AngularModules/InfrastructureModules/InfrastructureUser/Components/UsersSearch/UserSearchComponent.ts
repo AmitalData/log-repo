@@ -80,7 +80,7 @@ export class UserSearchComponent {
            
 
             this.filterAgrs = new ApiQueryFilters();
-            this.filterAgrs.SortBy = "IsTwoFactorAuthenticatiEnabled";
+            this.filterAgrs.SortBy = "IsTwoFactorAuthenticationEnabled";
             this.filterAgrs.SortDirection = "Descending";
             this.onQueryChangeEvent.emit({ QueryCode: "", Filters: this.filterAgrs });
 
@@ -194,7 +194,7 @@ export class UserSearchComponent {
         pageSize: 20,
         rowCount: null,
         sortingDir: "Descending",
-        sortingCol:"IsTwoFactorAuthenticatiEnabled",
+        sortingCol:"IsTwoFactorAuthenticationEnabled",
         getRows: (skip: number, take: number, sortingCol: string, sortingDir: string, getCount: boolean, searchFields?: string, filters: ApiQueryFilters = null) => {
             var tempo = this.getRows(skip, take, sortingCol, sortingDir, getCount, searchFields, filters);
 
@@ -209,7 +209,7 @@ export class UserSearchComponent {
         filters.GetCount = getCount;
         filters.PageIndex = skip;
         filters.PageSize = take;
-        filters.SortBy = "IsTwoFactorAuthenticatiEnabled";
+        filters.SortBy = "IsTwoFactorAuthenticationEnabled";
         filters.SortDirection = "Descending";
         filters.Tenant = SessionLocator.Tenant;
         var rowsObjectTable = this.ObjectTableName;

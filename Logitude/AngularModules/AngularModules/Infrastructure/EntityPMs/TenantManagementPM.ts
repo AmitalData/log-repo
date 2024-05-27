@@ -667,19 +667,19 @@ export class TenantManagementPM {
     public set ParentTenantId(newValue: number) { if (this.parentTenantId != newValue) { this.parentTenantId = newValue; this.MarkAsDirty("ParentTenantId"); } }
        
 	 
-    private agentSharedLogStatistiLastDate: Date;
-    public get AgentSharedLogStatistiLastDate() { return this.agentSharedLogStatistiLastDate; }
-    public set AgentSharedLogStatistiLastDate(newValue: Date) { if (this.agentSharedLogStatistiLastDate != newValue) { this.agentSharedLogStatistiLastDate = newValue; this.MarkAsDirty("AgentSharedLogStatistiLastDate"); } }
+    private agentSharedLogisticsStatisticsLastDate: Date;
+    public get AgentSharedLogisticsStatisticsLastDate() { return this.agentSharedLogisticsStatisticsLastDate; }
+    public set AgentSharedLogisticsStatisticsLastDate(newValue: Date) { if (this.agentSharedLogisticsStatisticsLastDate != newValue) { this.agentSharedLogisticsStatisticsLastDate = newValue; this.MarkAsDirty("AgentSharedLogisticsStatisticsLastDate"); } }
        
 	 
-    private agentSharedLogStatistiLastWeek: number;
-    public get AgentSharedLogStatistiLastWeek() { return this.agentSharedLogStatistiLastWeek; }
-    public set AgentSharedLogStatistiLastWeek(newValue: number) { if (this.agentSharedLogStatistiLastWeek != newValue) { this.agentSharedLogStatistiLastWeek = newValue; this.MarkAsDirty("AgentSharedLogStatistiLastWeek"); } }
+    private agentSharedLogisticsStatisticsLastWeek: number;
+    public get AgentSharedLogisticsStatisticsLastWeek() { return this.agentSharedLogisticsStatisticsLastWeek; }
+    public set AgentSharedLogisticsStatisticsLastWeek(newValue: number) { if (this.agentSharedLogisticsStatisticsLastWeek != newValue) { this.agentSharedLogisticsStatisticsLastWeek = newValue; this.MarkAsDirty("AgentSharedLogisticsStatisticsLastWeek"); } }
        
 	 
-    private agentSharedLogStatistLastMonth: number;
-    public get AgentSharedLogStatistLastMonth() { return this.agentSharedLogStatistLastMonth; }
-    public set AgentSharedLogStatistLastMonth(newValue: number) { if (this.agentSharedLogStatistLastMonth != newValue) { this.agentSharedLogStatistLastMonth = newValue; this.MarkAsDirty("AgentSharedLogStatistLastMonth"); } }
+    private agentSharedLogisticsStatisticsLastMonth: number;
+    public get AgentSharedLogisticsStatisticsLastMonth() { return this.agentSharedLogisticsStatisticsLastMonth; }
+    public set AgentSharedLogisticsStatisticsLastMonth(newValue: number) { if (this.agentSharedLogisticsStatisticsLastMonth != newValue) { this.agentSharedLogisticsStatisticsLastMonth = newValue; this.MarkAsDirty("AgentSharedLogisticsStatisticsLastMonth"); } }
        
 	 
     private changeHeaderColor: boolean;

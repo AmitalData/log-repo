@@ -216,7 +216,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
         this.DocumentCustomFieldsArgs.DocumentTypeId = this.DataContext.DocumentTypePM.Id;
         this.DocumentCustomFieldsArgs.EntityId = this.EntityId;
 
-        if (!this.IsSystemAdditionaPrintingField) {
+        if (!this.IsSystemAdditionalPrintingFields) {
 
             this._documentTypeCustomFieldService.getDocumentTypeCustomFieldsByDocument(this.CurrentDocumentOut.Tenant, this.DocumentCustomFieldsArgs.DocumentTypeId).subscribe((res: any) => {
 
@@ -556,7 +556,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
 
                         var item = this.DocumentTypeTemplateLists.filter(r => r.Id == this.CurrentDocumentOut.DocumentTemplateId)[0];
 
-                        if (item == null) item = this.DocumentTypeTemplateLists.filter(r => r.Id == this.DataContext.DocumentTypePM.DocumentTypeDefaulReportTempId)[0];
+                        if (item == null) item = this.DocumentTypeTemplateLists.filter(r => r.Id == this.DataContext.DocumentTypePM.DocumentTypeDefaultReportTemplateId)[0];
                         if (item == null) item = this.DocumentTypeTemplateLists[0];
 
                         this.CurrentDocumentTypeTemplateList = item;
@@ -1484,7 +1484,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
     ChildObjectTableId: string;
     ChildReference: string;
     IsQuotationDocument: boolean = false;
-    IsSystemAdditionaPrintingField: boolean;
+    IsSystemAdditionalPrintingFields: boolean;
     PrintingFieldsScreenCode: string;
     BuildingDocumentText: string = "Building document...";
     Start(item: DocsOutDataViewModel) {
@@ -1505,7 +1505,7 @@ export class PrintDocumentComponent extends BaseComponent implements OnInit {
         this.EntityId = item.EntityId;
         this.Title = "Print " + this.DataContext.DocumentTypePM.Name;
         this.isAWBWizard = this.DataContext.IsAWBWizard;
-        this.IsSystemAdditionaPrintingField = this.DataContext.DocumentTypePM.IsSystemAdditionaPrintingField;
+        this.IsSystemAdditionalPrintingFields = this.DataContext.DocumentTypePM.IsSystemAdditionalPrintingFields;
         this.PrintingFieldsScreenCode = this.DataContext.DocumentTypePM.PrintingFieldsScreenCode;
 
         var table = window.ObjectTables.filter(d => d.Id == this.ObjectTableId)[0];

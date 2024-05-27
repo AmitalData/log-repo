@@ -77,7 +77,7 @@ export class NewChargesTypeComponent extends BaseComponent {
         this.UIProperties.SetEnabled("AWBPrintDescription", this.ObjectTableName, this.IsAir);
 
         if (ObjectsLocator.CustomsInterfaceSettingPM != null) {
-            if (ObjectsLocator.CustomsInterfaceSettingPM.ActivateCustomsManagInShipment) {
+            if (ObjectsLocator.CustomsInterfaceSettingPM.ActivateCustomsManagementInShipments) {
                 this.CustomsFieldsIsVisible = true;
             }
         }

@@ -60,9 +60,9 @@ export class CustomsInterfaceSettingPM {
     public set LocalPassword(newValue: string) { if (this.localPassword != newValue) { this.localPassword = newValue; this.MarkAsDirty("LocalPassword"); } }
        
 	 
-    private activateCustomsManagInShipment: boolean;
-    public get ActivateCustomsManagInShipment() { return this.activateCustomsManagInShipment; }
-    public set ActivateCustomsManagInShipment(newValue: boolean) { if (this.activateCustomsManagInShipment != newValue) { this.activateCustomsManagInShipment = newValue; this.MarkAsDirty("ActivateCustomsManagInShipment"); } }
+    private activateCustomsManagementInShipments: boolean;
+    public get ActivateCustomsManagementInShipments() { return this.activateCustomsManagementInShipments; }
+    public set ActivateCustomsManagementInShipments(newValue: boolean) { if (this.activateCustomsManagementInShipments != newValue) { this.activateCustomsManagementInShipments = newValue; this.MarkAsDirty("ActivateCustomsManagementInShipments"); } }
        
 	 
     private artemusOutSettingsId: string;
@@ -127,4 +127,4 @@ export class CustomsInterfaceSettingPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

@@ -15,7 +15,7 @@ export class AutomationFollowUp {
     public DocumentTypeLists: FollowUpDocumentTypeList[];
     public OwnerFieldType: string;
     public ObjectTableName: string;
-    public DateEscalaActTimeIndicatorCode: string;
+    public DateEscalationActionTimeIndicatorCode: string;
     public DateEscalationTime: number;
 
 }

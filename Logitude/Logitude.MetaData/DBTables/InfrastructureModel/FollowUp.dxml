@@ -147,11 +147,11 @@
     ReferencedTable="DocumentOuts"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
-  <!--<Relation
+  <Relation
     ForeignKeyColumn="QuoteId"
     ReferencedTable="Quotes"
     ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />-->
+    ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="DocumentTypeId"
     ReferencedTable="DocumentTypes"

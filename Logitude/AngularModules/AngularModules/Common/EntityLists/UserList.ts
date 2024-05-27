@@ -32,7 +32,7 @@ export class UserList {
 		LicencedUser: boolean;
 		LastLoginDate: Date;
 		IsProductRestricted: boolean;
-		IsShowContactDetailInMobileApp: boolean;
+		IsShowContactDetailsInTheMobileApp: boolean;
 		Technology: string;
 		BusinessPhone: string;
 		Fax: string;
@@ -43,7 +43,7 @@ export class UserList {
 		IsDistributor: boolean;
 		DistributorCode: string;
 		PersonalId: string;
-		IsTwoFactorAuthenticatiEnabled: boolean;
+		IsTwoFactorAuthenticationEnabled: boolean;
 		SecurityLevel: number;
 		DocumentFilingInbox: string;
 		EmployeeGroupCustomFilter: string;
@@ -53,4 +53,4 @@ export class UserList {
 		GroupId: Array<string>;
 		SignatureImageId: string;
 	
-}
+}

@@ -107,11 +107,11 @@ export class DocumentTypeTemplateComponent extends BaseComponent implements OnIn
         if (this.DocumentType && this.DocumentTypeTemplates) {
             this.DocumentTypeTemplates.filter(D=> D.TemplateType == this.TemplateTabCode).forEach((item) => {
                 if (item.TemplateType == "M") {
-                    if (item.Id == this.DocumentType.DocumentTypeDefaulReportTempId) item.IsDefault = true;
+                    if (item.Id == this.DocumentType.DocumentTypeDefaultHTMLTemplateId) item.IsDefault = true;
                     else item.IsDefault = false;
                 }
                 else {
-                    if (item.Id == this.DocumentType.DocumentTypeDefaulReportTempId) item.IsDefault = true;
+                    if (item.Id == this.DocumentType.DocumentTypeDefaultReportTemplateId) item.IsDefault = true;
                     else item.IsDefault = false;
 
                    
@@ -161,7 +161,7 @@ export class DocumentTypeTemplateComponent extends BaseComponent implements OnIn
 
         if (this.CurrentDocumentTypeTemplatePM && this.DocumentType){
             if (this.TypeTab == "Document") {
-                this.DocumentType.DocumentTypeDefaulReportTempId = this.CurrentDocumentTypeTemplatePM.Id;
+                this.DocumentType.DocumentTypeDefaultReportTemplateId = this.CurrentDocumentTypeTemplatePM.Id;
                 this.CurrentDocumentTypeTemplatePM.IsDefault = true;
                 this.DocumentTypeTemplateLists.forEach((item) => {
                     if (item.Id != this.CurrentDocumentTypeTemplatePM.Id) {
@@ -171,7 +171,7 @@ export class DocumentTypeTemplateComponent extends BaseComponent implements OnIn
             }
 
             else {
-                this.DocumentType.DocumentTypeDefaulReportTempId = this.CurrentDocumentTypeTemplatePM.Id;
+                this.DocumentType.DocumentTypeDefaultHTMLTemplateId = this.CurrentDocumentTypeTemplatePM.Id;
                 this.CurrentDocumentTypeTemplatePM.IsDefault = true;
                 this.DocumentTypeTemplateLists.forEach((item) => {
                     if (item.Id != this.CurrentDocumentTypeTemplatePM.Id) {
