@@ -1581,20 +1581,22 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 			{
 				supplierInvoice.BuyerCountryCode = _AmitalCustomsFile.BuyerCountryCode;
 			}
+            AppendLogLine("_AmitalCustomsFile.Invoices?.Invoice?.Length > 0" + _AmitalCustomsFile.Invoices?.Invoice?.Length );
+            if (_AmitalCustomsFile.Invoices?.Invoice?.Length > 0)
+            {
+                AppendLogLine("_AmitalCustomsFile.Invoices?.Invoice?.Length > 0 in" );
 
-			if (invoice != null)
-			{
                 supplierInvoice.AccountTypeCode = invoice.InvoiceType ?? invoice.InvoiceType;
                 decimal invoiceAmount;
                 if (decimal.TryParse(invoice.InvoiceAmount, out invoiceAmount))
                 {
                     supplierInvoice.InvoiceAmount = invoiceAmount!=null? invoiceAmount: 0;
                 }
-                supplierInvoice.InvoiceCurrencyTypeCode = invoice.InvoiceCurrency??invoice.InvoiceCurrency;
-                supplierInvoice.IncotermCode = invoice.InvoiceIncoterms??invoice.InvoiceIncoterms;
-                supplierInvoice.BuyerName = invoice.InvoiceBuyerName??invoice.InvoiceBuyerName;
-                supplierInvoice.BuyerAddress = invoice.InvoiceBuyerAddress ?? invoice.InvoiceBuyerAddress;
-                supplierInvoice.BuyerCountryCode = invoice.InvoiceBuyerCountryCode?? invoice.InvoiceBuyerCountryCode;
+                supplierInvoice.InvoiceCurrencyTypeCode = invoice.InvoiceCurrency;
+				supplierInvoice.IncotermCode = invoice.InvoiceIncoterms;
+				supplierInvoice.BuyerName = invoice.InvoiceBuyerName;
+                supplierInvoice.BuyerAddress = invoice.InvoiceBuyerAddress;
+				supplierInvoice.BuyerCountryCode = invoice.InvoiceBuyerCountryCode;
                 AppendLogLine("supplierInvoice.BuyerAddress" + supplierInvoice.BuyerAddress);
                 AppendLogLine(" invoice.InvoiceBuyerAddress" + invoice.InvoiceBuyerAddress);
                 if (!string.IsNullOrEmpty(invoice.InvoicePaymentType))
@@ -1618,8 +1620,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                         supplierInvoice.SupplierInvoicePayments = new List<SupplierInvoicePaymentPM>{ supplierInvoicePaymentPM };
                     }
                 }
-                supplierInvoice.BuyerRoleCode = invoice.InvoiceBuyerRoleCode?? invoice.InvoiceBuyerRoleCode;
-                supplierInvoice.PartyRelationshipCode = invoice.InvoiceBuyerRelation ?? invoice.InvoiceBuyerRelation;
+                supplierInvoice.BuyerRoleCode =invoice.InvoiceBuyerRoleCode;
+                supplierInvoice.PartyRelationshipCode = invoice.InvoiceBuyerRelation ;
 
                 if (invoice.InvoiceItems?.InvoiceItem?.Length > 0)
                 {
