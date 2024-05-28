@@ -91,19 +91,19 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             ChartOfAccountRepository chartOfAccountRepository = new ChartOfAccountRepository(tenant);
             List<ChartOfAccount> chartOfAccountList =chartOfAccountRepository.GetAllByTenant(tenant);
             QueryFilterItem ChartOfAccountsIdList = reportQueryOperations.QueryFilterItems.Where(d => d.FieldName == "ChartOfAccountsIdList").FirstOrDefault();
+            QueryFilterItem DetailedForJobs = reportQueryOperations.QueryFilterItems.Where(d => d.FieldName == "DetailedForJobs").FirstOrDefault();
+            var year = int.Parse(reportQueryOperations.QueryFilterItems.Where(d => d.FieldName == "NumberOfYear").FirstOrDefault()?.FieldValue?.ToString());
 
-			if (!string.IsNullOrEmpty((string)ChartOfAccountsIdList?.FieldValue))
+            if (!string.IsNullOrEmpty((string)ChartOfAccountsIdList?.FieldValue))
 			{
                 string[] ChartOfAccountsIdArray = ChartOfAccountsIdList.FieldValue.ToString().Split(',');
 				 chartOfAccountList = chartOfAccountList.Where(a => ChartOfAccountsIdArray.Contains(a.Id)).ToList();
 			 }
-            var year = int.Parse(reportQueryOperations.QueryFilterItems.Where(d => d.FieldName == "NumberOfYear").FirstOrDefault()?.FieldValue?.ToString());
             List<MonthlyBalancesLine> monthlyBalancesLine=GetMonthlyBalancesReportByYearAndTenant(tenant, year);
             dataProvider.ChartOfAccountLine=new List<ChartOfAccountLine>();
             
             for (int i = 0; i < chartOfAccountList?.Count(); i++)
             {
-                QueryFilterItem DetailedForJobs = reportQueryOperations.QueryFilterItems.Where(d => d.FieldName == "DetailedForJobs").FirstOrDefault();
                 List<MonthlyBalancesLine> monthlyBalancesLineOfChartOfAccount= monthlyBalancesLine.Where(a=>a.ChartOfAccount == chartOfAccountList[i].Id).ToList();
 
                 ChartOfAccountLine chartOfAccountLine = 

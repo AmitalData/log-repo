@@ -77,7 +77,7 @@ export class MonthlyBalancesReportFilterComponent extends BaseComponent {
     }
     InitializeComponent(myReportsPreview: ReportsPreviewComponent) {
         this.ReportsPreview = myReportsPreview;
-      
+        this.DetailedForJobs=false
     }
 
   
