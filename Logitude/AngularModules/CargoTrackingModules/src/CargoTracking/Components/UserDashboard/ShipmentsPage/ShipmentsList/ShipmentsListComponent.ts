@@ -841,10 +841,17 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     }
  
     private async getFromDate() {
+
         const fromDate = new Date();
-        this.backMonths = this.backMonths || await this.tenantManagementService.getShipmentBuildMonth();
-        
-        fromDate.setMonth(fromDate.getMonth() - this.backMonths);
+        //this.backMonths = this.backMonths || await this.tenantManagementService.getShipmentBuildMonth();
+        fromDate.setMonth(fromDate.getMonth() - 6);
+        if (this.FilterByOpenDateDataGreaterThan=="") {
+            this.FilterByOpenDateDataGreaterThan = fromDate.toString();
+        }
+        if (this.FilterByOpenDateDataLessThan=="") {
+            this.FilterByOpenDateDataLessThan = new Date().toString();
+            this.ApplyFilterButtonClicked(true)
+        }
         return fromDate;
     }
  
@@ -1150,7 +1157,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     }
     // public tempArr:any;
 
-    ApplyFilterButtonClicked() {
+    ApplyFilterButtonClicked(loaded:boolean=false) {
         
         this.ShipmentSearchInput.OpenDateGreaterThan = this.formatDate(this.FilterByOpenDateDataGreaterThan);
         this.ShipmentSearchInput.ClearanceDateGreaterThan = this.formatDate(this.FilterByClearanceDateDataGreaterThan);
@@ -1171,7 +1178,8 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         }
 
         RootContext.ShipmentsScrollPosition = 0;
-        this.LoadScreenData();
+        if(!loaded)
+            this.LoadScreenData();
     }
 
     MapMoreMobileFilter() {
