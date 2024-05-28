@@ -1574,7 +1574,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 
 			if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.BuyerAddress))
 			{
-				supplierInvoice.BuyerAddress = _AmitalCustomsFile.BuyerAddress;
+                AppendLogLine(" supplierInvoice.BuyerAddress = _AmitalCustomsFile.BuyerAddress"+ _AmitalCustomsFile.BuyerAddress);
+                supplierInvoice.BuyerAddress = _AmitalCustomsFile.BuyerAddress;
 			}
 			if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.BuyerCountryCode))
 			{
@@ -1583,19 +1584,20 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 
 			if (invoice != null)
 			{
-                supplierInvoice.AccountTypeCode = invoice.InvoiceType;
+                supplierInvoice.AccountTypeCode = invoice.InvoiceType ?? invoice.InvoiceType;
                 decimal invoiceAmount;
                 if (decimal.TryParse(invoice.InvoiceAmount, out invoiceAmount))
                 {
-                    supplierInvoice.InvoiceAmount = invoiceAmount;
+                    supplierInvoice.InvoiceAmount = invoiceAmount!=null? invoiceAmount: 0;
                 }
-                supplierInvoice.InvoiceCurrencyTypeCode = invoice.InvoiceCurrency;
-                supplierInvoice.IncotermCode = invoice.InvoiceIncoterms;
-                supplierInvoice.BuyerName = invoice.InvoiceBuyerName;
-                supplierInvoice.BuyerAddress = invoice.InvoiceBuyerAddress;
-                supplierInvoice.BuyerCountryCode = invoice.InvoiceBuyerCountryCode;
-
-				if (!string.IsNullOrEmpty(invoice.InvoicePaymentType))
+                supplierInvoice.InvoiceCurrencyTypeCode = invoice.InvoiceCurrency??invoice.InvoiceCurrency;
+                supplierInvoice.IncotermCode = invoice.InvoiceIncoterms??invoice.InvoiceIncoterms;
+                supplierInvoice.BuyerName = invoice.InvoiceBuyerName??invoice.InvoiceBuyerName;
+                supplierInvoice.BuyerAddress = invoice.InvoiceBuyerAddress ?? invoice.InvoiceBuyerAddress;
+                supplierInvoice.BuyerCountryCode = invoice.InvoiceBuyerCountryCode?? invoice.InvoiceBuyerCountryCode;
+                AppendLogLine("supplierInvoice.BuyerAddress" + supplierInvoice.BuyerAddress);
+                AppendLogLine(" invoice.InvoiceBuyerAddress" + invoice.InvoiceBuyerAddress);
+                if (!string.IsNullOrEmpty(invoice.InvoicePaymentType))
 				{
                     PaymentTypeListQueryService paymentTypeListQueryService = new PaymentTypeListQueryService(_context);
                     var paymentTypeList = paymentTypeListQueryService.GetSingle(invoice.InvoicePaymentType);
@@ -1616,8 +1618,8 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                         supplierInvoice.SupplierInvoicePayments = new List<SupplierInvoicePaymentPM>{ supplierInvoicePaymentPM };
                     }
                 }
-                supplierInvoice.BuyerRoleCode = invoice.InvoiceBuyerRoleCode;
-                supplierInvoice.PartyRelationshipCode = invoice.InvoiceBuyerRelation;
+                supplierInvoice.BuyerRoleCode = invoice.InvoiceBuyerRoleCode?? invoice.InvoiceBuyerRoleCode;
+                supplierInvoice.PartyRelationshipCode = invoice.InvoiceBuyerRelation ?? invoice.InvoiceBuyerRelation;
 
                 if (invoice.InvoiceItems?.InvoiceItem?.Length > 0)
                 {
