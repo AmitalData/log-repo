@@ -1569,6 +1569,16 @@ export class DeclarationPM {
     public set EffectiveFlight(newValue: boolean) { if (this.effectiveFlight != newValue) { this.effectiveFlight = newValue; this.MarkAsDirty("EffectiveFlight"); } }
        
 	 
+    private autoSending: boolean;
+    public get AutoSending() { return this.autoSending; }
+    public set AutoSending(newValue: boolean) { if (this.autoSending != newValue) { this.autoSending = newValue; this.MarkAsDirty("AutoSending"); } }
+       
+	 
+    private diamondsDeclarationFilter: string;
+    public get DiamondsDeclarationFilter() { return this.diamondsDeclarationFilter; }
+    public set DiamondsDeclarationFilter(newValue: string) { if (this.diamondsDeclarationFilter != newValue) { this.diamondsDeclarationFilter = newValue; this.MarkAsDirty("DiamondsDeclarationFilter"); } }
+       
+	 
 
     public OldEntityPM: DeclarationPM;
 		

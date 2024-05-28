@@ -182,7 +182,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ForwarderFiles, 
 	         ShortProcedure, 
 	         ExportFlightDate, 
-	         UNFCourier,
+	         UNFCourier, 
+	         AutoSending,
 	      }
 
 
@@ -439,7 +440,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ShortProcedure, 
 	         ExportFlightDate, 
 	         UNFCourier, 
-	         EffectiveFlight,
+	         EffectiveFlight, 
+	         AutoSending, 
+	         DiamondsDeclarationFilter,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -1246,6 +1249,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UNFCourier))
             {
 				entityPOCO.UNFCourier = entityPM.UNFCourier;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AutoSending))
+            {
+				entityPOCO.AutoSending = entityPM.AutoSending;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -2059,6 +2067,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.UNFCourier = entityPOCO.UNFCourier;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AutoSending))
+            {
+					entityPM.AutoSending = entityPOCO.AutoSending;
+            }
+
 		}
 
 		public void PMToOldPM(DeclarationPM entityPM, DeclarationPM oldEntityPM)
@@ -2863,6 +2876,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UNFCourier))
             {
                 oldEntityPM.UNFCourier = entityPM.UNFCourier;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AutoSending))
+            {
+                oldEntityPM.AutoSending = entityPM.AutoSending;
             }
 			
 		}

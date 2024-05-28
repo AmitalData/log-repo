@@ -39,6 +39,7 @@ using Simplog.Server.Infrastructure.DataContracts;
 using Logitude.CustomsMessaging.Common.ResponseData;
 using Logitude.BL.Security;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.Customs.Data.CustomFilters;
 //using Logitude.Server.Tools.Helpers;
 
 namespace Logitude.Customs.BL.EntityQueryServices
@@ -2043,6 +2044,84 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return ticketValidStatus;
         }
 
+        public bool CheckDiamondsDeclarationReadyForSending(DeclarationPM declarationPM)
+        {
+            bool declarationReadyForSending;
+
+            // get all documents CONNECTED to the declaration
+            CustomsDocumentsTicketQueryService myCustomsDocumentsTicketQueryService = new CustomsDocumentsTicketQueryService(declarationPM.Tenant);
+            List<CustomsDocumentsTicketPM> customsDocumentsTicketPMList = myCustomsDocumentsTicketQueryService.GetCustomsDocumentsTicketPMsByEntityIdAndChilds(declarationPM.Id, "", "", "", declarationPM.Tenant, "Declaration").ToList();
+            var DocumentsFilingIdList = new List<string>();
+            foreach (var customsDocumentsTicketPM in customsDocumentsTicketPMList)
+            {
+                if (!string.IsNullOrWhiteSpace(customsDocumentsTicketPM.DocumentsFilingId))
+                {
+                    DocumentsFilingIdList.Add(customsDocumentsTicketPM.DocumentsFilingId);
+                }
+            }
+
+            // if the declaration has no connected document, it can not been sent to the mehes
+            if (DocumentsFilingIdList.Count() == 0)
+            {
+                declarationReadyForSending = false;
+            }
+            else
+            {
+                // get all declaration Customs Document
+                var myCustomsDocumentQueryService = new CustomsDocumentQueryService(declarationPM.Tenant);
+                var customsDocumentPMList = myCustomsDocumentQueryService.GetCustomsDocumentList(DocumentsFilingIdList, declarationPM.Tenant);
+
+                // determine how many supplier invoices documents had been successfully sent to the mekhes
+                int sentSupplierInvoices = customsDocumentPMList.Where(document => document.DocumentTypeCode == "380" && document.DocumentStatusCode == "1").Count();
+
+                // get all supplier invoices count of the declaration
+                SupplierInvoiceListQueryService supplierInvoiceQuery = new SupplierInvoiceListQueryService(context);
+                QueryOperations queryOperations = new QueryOperations();
+                queryOperations.SetFilter("DeclarationId", declarationPM.Id, false, "Equals", null, false, false, "string");
+                int declarationSupplierInvoiceCount = supplierInvoiceQuery.GetListCount(queryOperations, declarationPM.Tenant);
+
+                // the declaration may be sent if documents about all its supplier invoices have been sent to the mehes and received simuhin
+                declarationReadyForSending = sentSupplierInvoices >= declarationSupplierInvoiceCount;
+
+                /* if need to check for every invoice, the relation between document and invoice is
+                 * (invoice.SequenceNumeric == customsDocumentsTicketPM.ConnectedInvoicesSequences) */
+            }
+
+            return declarationReadyForSending;
+        }
+
+        public DiamondsDeclarationSummary GetDiamondsDeclarationsCounts(int tenant, List<string> requestedCounts)
+        {
+            var mycontext = CustomContext.GetContext(tenant);
+            IQueryable<Declaration> declaration =
+                 from dc in mycontext.Declarations
+                 where dc.Tenant == tenant
+                     // DiamondsDeclarations query
+                     && dc.Direction == "E" && dc.IsCancelled == false
+                     && dc.AmendmentDontDisplayInList == false && dc.IsDiamondDeclaration == true
+                     && dc.IsExportClosed == false && dc.IsClose == false
+                 select dc;
+
+            DeclarationCustomFilters declarationCustomFilters = new DeclarationCustomFilters();
+            DiamondsDeclarationSummary diamondsDeclarationSummary = new DiamondsDeclarationSummary()
+            {
+                Counts = new Dictionary<string, int>()
+            };
+
+            int total = 0;
+            foreach (var requestedCount in requestedCounts) {
+                var query = declarationCustomFilters.AddDiamondsDeclarationFilter(declaration, requestedCount);
+                if (query != null)
+                {
+                    int count = query.Count();
+                    diamondsDeclarationSummary.Counts[requestedCount] = count;
+                    total += count;
+                }
+            }
+
+            diamondsDeclarationSummary.TotalCount = total;
+            return diamondsDeclarationSummary;
+        }
 
         public bool IsDocumentMissing(DeclarationPM myDeclarationPM)
         {
@@ -2436,9 +2515,21 @@ namespace Logitude.Customs.BL.EntityQueryServices
 		{
 			return this.repository.GetSignedByUserIdByCustomFileNo(tenant, customFileNo);
 		}
-		public List<DeclarationPM> GetDeclarationsByExportFile(int tenant, string exportFile)
+        public DeclarationPM GetDeclarationByExportFile(int tenant, string customFileNo)
+        {
+            Declaration declaration =this.repository.GetDeclarationsByExportFile(tenant, customFileNo);
+            DeclarationDataMapping mappings = new DeclarationDataMapping();
+            DeclarationPM declarationPM = new DeclarationPM();
+            if (declaration != null)
+            {
+                mappings.CustomPOCOToPM(declarationPM, declaration);
+                mappings.POCOToPM(declarationPM, declaration);
+            }
+            return declarationPM;
+        }
+        public List<DeclarationPM> GetDeclarationsByExportFile(int tenant, string exportFile)
 		{
-			List<Declaration> declarations = repository.GetDeclarationsByExportFile(tenant, exportFile);
+			List<Declaration> declarations = repository.GetDeclarationsByExportFileNotClose(tenant, exportFile);
 			DeclarationDataMapping mappings = new DeclarationDataMapping();
 			List<DeclarationPM> declarationPMs = new List<DeclarationPM>();
 			foreach (Declaration declaration in declarations)
@@ -2451,4 +2542,10 @@ namespace Logitude.Customs.BL.EntityQueryServices
 			return declarationPMs;
 		}
 	}
+
+    public class DiamondsDeclarationSummary
+    {
+        public Dictionary<string, int> Counts { get; set; }
+        public int TotalCount { get; set; }
+    }
 }

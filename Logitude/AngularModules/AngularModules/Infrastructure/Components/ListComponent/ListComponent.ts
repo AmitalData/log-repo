@@ -86,6 +86,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     public ReattachToDetection: boolean;
     public columnsObjectFields: any[] = [];
     public rowCount: number;
+    public CustomGetTotalCount: number = null;
     public items: any[] = [];
     public columns: any[] = [];
     public SearchText: string = "Search Partners / Ports / Ref.#";
@@ -821,6 +822,7 @@ export class ListComponent implements OnInit, AfterViewInit {
 
     FiltersMenu: ApiQueryFilters = null;
     private isLoaderReady: boolean;
+    DeclarationsTable = false;
     View: string;
     RunComponent() {
 
@@ -858,7 +860,9 @@ export class ListComponent implements OnInit, AfterViewInit {
             else
                 this.HasExcelExportButton = true;
         }
-
+        if (this.ObjectTable.Name == "Customs.Declaration") {
+            this.DeclarationsTable = true;
+        }
 
         if (this.ObjectTable.Name == "DocumentType") {
             if (FeatureLocator.HasFeaturePermession("DocumentType", "FROMLIBRARY")) {
@@ -944,7 +948,9 @@ export class ListComponent implements OnInit, AfterViewInit {
                                         this.FiltersMenu = $event.Filters;
                                         this.MenuHeaderchangeevent.emit({ Filters: $event.Filters, RemoveFilter: $event.RemoveFilter });
                                     });
-
+                                    cmpRef.instance.CustomGetTotalCount.subscribe(($event: number) => {
+                                        this.CustomGetTotalCount = $event;
+                                    });
                                 });
                         }
                     }
@@ -1440,7 +1446,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         };
         if (this.FiltersMenu) {
             this.FiltersMenu.AdditionalFilters.forEach((filter, key) => {
-                if (Args.Filters && filter.IgnoreFilter) {
+                if (Args.Filters && (filter.IgnoreFilter || filter["SpecificMenuFilter"])) {
                     Args.Filters.AdditionalFilters = Args.Filters.AdditionalFilters.filter(a => a.FieldName != filter.FieldName);
                 }
                 else {

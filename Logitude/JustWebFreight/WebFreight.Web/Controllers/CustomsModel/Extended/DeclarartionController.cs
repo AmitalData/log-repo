@@ -646,6 +646,28 @@ new XElement("FileStreamError",
 
         }
 
+        public HttpResponseMessage GetDiamondsDeclarationsCounts(string requestedCounts)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                JavaScriptSerializer JsonConvert = new JavaScriptSerializer();
+                var requestedCountsList = JsonConvert.Deserialize<List<string>>(requestedCounts);
+
+                ICustomContext context = CustomContext.GetContext(authToken.Tenant);
+                DeclarationQueryService declarationQueryService = new DeclarationQueryService(authToken.Tenant);
+                var counts = declarationQueryService.GetDiamondsDeclarationsCounts(authToken.Tenant, requestedCountsList);
+
+                return Request.CreateResponse(HttpStatusCode.OK, counts);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
 
     }
 }

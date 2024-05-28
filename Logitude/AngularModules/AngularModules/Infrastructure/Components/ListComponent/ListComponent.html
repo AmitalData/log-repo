@@ -119,6 +119,10 @@
     .Hide {
         display: none;
     }
+
+    .DeclarationsTable {
+        width: 165px !important;
+    }
 </style>
 
 <div style="position: absolute; top:0px; bottom:0px; left:0px; right:0px;margin:auto; background:white;" *ngIf="IsDemoTenant">
@@ -170,8 +174,8 @@
                         </td>
 
                         <td style="width: 1px;" *ngIf="HasPermition == true">
-                            <span class="Counter" *ngIf="dataSource.rowCount > 1000" style="font-size: 18px; color: #1B90CB;">1000+ {{Title}}</span>
-                            <span class="Counter" *ngIf="dataSource.rowCount <= 1000" style="font-size: 18px; color: #1B90CB;">{{dataSource.rowCount}} {{Title}}</span>
+                            <span class="Counter" *ngIf="CustomGetTotalCount == null" style="font-size: 18px; color: #1B90CB;">{{ dataSource.rowCount > 1000? "1000+": dataSource.rowCount }} {{Title}}</span>
+                            <span class="Counter" *ngIf="CustomGetTotalCount != null" style="font-size: 18px; color: #1B90CB;">{{ CustomGetTotalCount > 1000? "1000+": CustomGetTotalCount }} {{Title}}</span>
                         </td>
 
                         <td style="width:3px" *ngIf="IsEditBIReportVisible">
@@ -267,19 +271,15 @@
                             <img style="height:30px;width:30px;margin-top:1px" (click)="TipVisibilityChanged('true')" src="./Images/Lamp2.png" />
                         </td>
 
-                        <td style="width: 35px;">
-                            <div></div>
+                        <td *ngIf="ShowViews" style="width: 35px; vertical-align: middle; font-size: 11px; color:  #45494A; padding-right: 10px; padding-left: 5px;">
+                            <span>{{'General.O.View' | TextCodeTranslationPipe}}:</span>
                         </td>
 
-                        <td style="width: 35px; vertical-align: middle; font-size: 11px; color:  #45494A;">
-                            <span *ngIf="ShowViews">{{'General.O.View' | TextCodeTranslationPipe}}:</span>
+                        <td *ngIf="EnglishView" style="width: 35px; vertical-align: middle; font-size: 11px; color:  #45494A;">
+                            <span>{{'View'}}:</span>
                         </td>
 
-                        <td style="width: 35px; vertical-align: middle; font-size: 11px; color:  #45494A;">
-                            <span *ngIf="EnglishView">{{'View'}}:</span>
-                        </td>
-
-                        <td style="vertical-align: middle;width:170px">
+                        <td style="vertical-align: middle;width:170px;padding-left: 20px;">
                             <QueryList *ngIf="(ShowViews || EnglishView) && ResourcesLoaded" [ItemsSource]="Queries" [UserItemSource]="UserQueries" [Binding]="'NameTextCodeCode'" [onSelectedQueryChangeEvent]="onSelectedQueryChangeEvent" [SelectedItem]="SelectedQuery" [ObjectTableName]="ObjectTableName" (itemSelectedEvent)="QueryValueChanged($event)" [QueryListSourceChanged]="QueryListSourceChanged" (QueriesChangedEvent)="QueriesChangedEvent($event)" [LoadResourceCompleted]="LoadResourceCompleted" [pubSubAdvanceQueryFiltersService]="AdvanceQFiltersService" (NewViewClosedEvent)="NewViewClosedEvent($event)"></QueryList>
 
 
@@ -309,10 +309,10 @@
                         <td *ngIf="IsPhysicalCheckObjectTable || IsLogisticActionRequestObjectTable" style="width: 100px;">
                             <div LocationDirective Code="MNO"></div>
                         </td>
-                        <td style="width:200px;vertical-align:central">
+                        <td *ngIf="IsShowAddReportFromLibraryLink" style="width:200px;vertical-align:central">
 
                             <div style="width:200px;height:20px">
-                                <p *ngIf="IsShowAddReportFromLibraryLink" (click)="LinkAddReportFromLibraryClick()" class="CustomLink" style="font-size:12px;float:right;width:200px;height:20px">Add Report From Library</p>
+                                <p (click)="LinkAddReportFromLibraryClick()" class="CustomLink" style="font-size:12px;float:right;width:200px;height:20px">Add Report From Library</p>
 
                             </div>
 
@@ -328,7 +328,7 @@
                             <div></div>
                         </td>
 
-                        <td *ngIf="HasCustomsFilterMenu" style="width: 650px; left:50PX;">
+                        <td *ngIf="HasCustomsFilterMenu" style="float: left; margin-right: 20px">
                             <div LocationDirective Code="MNH"></div>
                         </td>
                         <td style="width: 1px;" *ngIf="IsNavigateButtonVisible">
@@ -343,7 +343,7 @@
                             <div></div>
                         </td>
 
-                        <td style="width: 250px; vertical-align: middle;">
+                        <td style="width: 250px; vertical-align: middle;" [class.DeclarationsTable]="DeclarationsTable">
                             <SearchTextBox [IsDisabled]="SeachBoxIsDisabled" [SearchText]="searchFields" [ObjectTableName]="ObjectTableName" (SearchTextChangeEvent)="onSearchTextChangeEvent($event)"></SearchTextBox>
                         </td>
 
