@@ -575,11 +575,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
             else if (newValue.Length == 9)
             {
-                newValue = newValue.Substring(0, 8) + "00" + newValue.Substring(8);
-                if (LuhnAlgorithm.CalculateLuhnAlgorithm(newValue.Substring(0, 10)) != int.Parse(newValue.Substring(8)))
-                {
-                    newValue = "";
-                }
+                string lastDigit = newValue.Substring(8, 1);
+                string modifiedValue = $"{newValue.Substring(0, 8)}00{lastDigit}";
+                bool isValid = LuhnAlgorithm.CalculateLuhnAlgorithm(modifiedValue) == int.Parse(lastDigit);
+                newValue = isValid ? modifiedValue : null;
             }
             else if (newValue.Length == 10)
             {
