@@ -577,7 +577,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 string lastDigit = newValue.Substring(8, 1);
                 string modifiedValue = $"{newValue.Substring(0, 8)}00{lastDigit}";
-                bool isValid = LuhnAlgorithm.CalculateLuhnAlgorithm(modifiedValue) == int.Parse(lastDigit);
+                bool isValid = LuhnAlgorithm.CalculateLuhnAlgorithm(modifiedValue.Substring(0, modifiedValue.Length - 1)) == int.Parse(lastDigit);
                 newValue = isValid ? modifiedValue : null;
             }
             else if (newValue.Length == 10)
