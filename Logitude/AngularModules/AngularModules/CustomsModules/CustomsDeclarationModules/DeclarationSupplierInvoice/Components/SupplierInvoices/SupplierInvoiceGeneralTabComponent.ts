@@ -4552,9 +4552,9 @@ export class SupplierInvoiceItemLine extends BaseComponent {
         if (!this.entityPM.ClassificationCode) this.entityPM.ClassificationCode = "";
         if (!this.entityPM.ItemDescription) this.entityPM.ItemDescription = "";
 
-        // if (AppTool.IsNullOrEmpty(this.ItemCode)) {
-        //     return;
-        // }
+        if (AppTool.IsNullOrEmpty(this.ItemCode) && this.Parent.declarationPM.Direction != "E") {
+            return;
+        }
         //if (this.Parent.Parent.ItemCode_LocalCache != null && this.Parent.Parent.ItemCode_LocalCache.length > 0) {
         //if (GITITEMCacheService.Instance.ItemCode_LocalCache != null && GITITEMCacheService.Instance.ItemCode_LocalCache.length > 0)
         {
