@@ -725,13 +725,22 @@ namespace WebFreight.Web.MetaDataUpdate
         {
             string output = RunGitCommand("config user.name");
             return output.Trim();
-        }
+        }//
 
         private static void UpdateCustomsRelatedModels(IWebFreightContext context)
         {
-            string user = GetCurrentGitUser();
-            string branch = GetCurrentGitBranch();
-            string message = $"Starting Customs Related Modules Update from machine: {Environment.MachineName} by {user} into branch: {branch}";
+            string message = "";
+            try
+            {
+                string user = GetCurrentGitUser();
+                string branch = GetCurrentGitBranch();
+            }
+            catch (Exception)
+            {
+                message= $"Starting Customs Related Modules Update from machine: {Environment.MachineName} by {user} into branch: {branch}";
+
+            }
+
             WriteLogMessage(message);
             AzureLog.SaveLogsInStorage(message, "L", DateTime.Now, "", "", 0, null, null, null);
 
