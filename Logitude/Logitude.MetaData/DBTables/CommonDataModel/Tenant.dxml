@@ -435,7 +435,6 @@
   </Column>
   <Column
     Name="CustomerTenantShareCustomsFile"
-    OldNames="IsCustomerTenantShare"
     Type="bit">
     <Constraints
       Nullable="false" />

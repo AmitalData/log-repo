@@ -2,7 +2,7 @@
   <SqlScript>
 	  <![CDATA[
 
-create or alter PROCEDURE QueueEnqueue_succeedRequestsheets
+create or alter PROCEDURE QueueEnqueue_succeedRequSheets
 AS BEGIN
     DECLARE @v_DelaySeconds INT = 5;
     DECLARE @v_nextRunDateTime DATETIME = (getdate() + @v_DelaySeconds/86400);
@@ -41,7 +41,7 @@ END;
   <OracleScript>
 	<![CDATA[
 
-create or replace PROCEDURE QueueEnqueue_succeedRequestsheets
+create or replace PROCEDURE QueueEnqueue_succeedRequSheets
 AS
     v_DelaySeconds NUMBER;
     v_nextRunDateTime DATE;
