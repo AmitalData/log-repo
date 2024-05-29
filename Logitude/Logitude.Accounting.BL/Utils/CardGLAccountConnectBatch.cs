@@ -296,8 +296,8 @@ namespace Logitude.Accounting.BL.Utils
 
 			var PartnerTypeIdReceivables = new string[] { "CS", "PO" };
 			var PartnerTypeIdPayables = new string[] { "VD", "DR", "LL", "WA", "AG" };
-			var myDiffReceivables = card.ReceivablesAccountingCard != card.AccountNumber;
-			var myDiffPayables = card.PayablesAccountingCard != card.AccountNumber;
+			var myDiffReceivables = !string.IsNullOrEmpty(card.AccountNumber) && card.ReceivablesAccountingCard != card.AccountNumber;
+			var myDiffPayables = !string.IsNullOrEmpty(card.AccountNumber) && card.PayablesAccountingCard != card.AccountNumber;
 			CardDTO cardDTO = null;
 
 			if (PartnerTypeIdReceivables.Contains(card.PartnerTypeId))
@@ -337,7 +337,7 @@ namespace Logitude.Accounting.BL.Utils
                
 				try
 				{
-					ConnectCardToGLAccount(card.GLAccountId, card.Id, context, tenant);
+					ConnectCardToGLAccount(cardDTO.GLAccountId, cardDTO.Id, context, tenant);
 					_SingleCardMade++;
 					if (sw.Elapsed.TotalMinutes > halftime)
 					{
