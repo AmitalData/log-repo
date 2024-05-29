@@ -370,22 +370,25 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
 
             // for the Diamonds declaration in export, send it automatically to the mehes
-            if (declarationPM.IsDiamondDeclaration && declarationPM.Direction == "E" && declarationPM.AutoSending)
-            {
-                try
+            if (declarationPM != null) {
+                if (declarationPM.IsDiamondDeclaration && declarationPM.Direction == "E" && declarationPM.AutoSending)
                 {
-                    LogMessagingUtil.Instance.AppendLine("Check to send diamonds declaration to mehes");
-                    SendAutomaticReadyDeclaration(declarationPM);
+                    try
+                    {
+                        LogMessagingUtil.Instance.AppendLine("Check to send diamonds declaration to mehes");
+                        SendAutomaticReadyDeclaration(declarationPM);
+                    }
+                    catch (System.Exception e)
+                    {
+                        LogMessagingUtil.Instance.AppendLine("Failed to send automatic diamonds declarations: " + e.ToString());
+                    }
                 }
-                catch (System.Exception e)
+                else
                 {
-                    LogMessagingUtil.Instance.AppendLine("Failed to send automatic diamonds declarations: " + e.ToString());
+                    LogMessagingUtil.Instance.AppendLine("No check for diamonds process");
                 }
             }
-            else
-            {
-                LogMessagingUtil.Instance.AppendLine("No check for diamonds process");
-            }
+           
         }
 
         private void SendAutomaticReadyDeclaration(DeclarationPM declaration)
