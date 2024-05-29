@@ -139,7 +139,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                         if (cell != null && cell.row != row && dicItems.Count > 0)
                                         {
                                             supplierInvoiceItemsList.Add(dicItems);
+                                            ocrPositionItems.Add(ocrDataPositionCell);
                                             dicItems = new Dictionary<string, string>();
+                                            ocrDataPositionCell = new Dictionary<string, int>();
                                         }
                                         if (!dicItems.ContainsKey(cell.label) && !string.IsNullOrEmpty(cell.text) && cell.label != ExpensesAmount && cell.label != ExpensesName)
                                         {
@@ -158,6 +160,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                     {
                                         supplierInvoiceItemsList.Add(dicItems);
                                         ocrPositionItems.Add(ocrDataPositionCell);
+
                                     }
 
                                 }
@@ -533,16 +536,19 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         }
                     }
                     // update ocr column position: page_no, ymin, ymax - #94509
-                    if (ocrPosition[counter].TryGetValue("page_no", out int ocrPageNumber))
+                    if(ocrPosition.Count > counter)
                     {
-                        supplierInvoiceItemPM.OcrPageNumber = ocrPageNumber + 1;
-                    }
-                    if (ocrPosition[counter].TryGetValue("ymin", out int ymin))
-                    {
-                        supplierInvoiceItemPM.OcrTop = ymin; ;
-                        if (ocrPosition[counter].TryGetValue("ymax", out int ymax))
+                        if (ocrPosition[counter].TryGetValue("page_no", out int ocrPageNumber))
                         {
-                            supplierInvoiceItemPM.OcrHeight = ymax - ymin;
+                            supplierInvoiceItemPM.OcrPageNumber = ocrPageNumber + 1;
+                        }
+                        if (ocrPosition[counter].TryGetValue("ymin", out int ymin))
+                        {
+                            supplierInvoiceItemPM.OcrTop = ymin; ;
+                            if (ocrPosition[counter].TryGetValue("ymax", out int ymax))
+                            {
+                                supplierInvoiceItemPM.OcrHeight = ymax - ymin;
+                            }
                         }
                     }
 
