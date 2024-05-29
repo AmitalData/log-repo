@@ -734,10 +734,11 @@ namespace WebFreight.Web.MetaDataUpdate
             {
                 string user = GetCurrentGitUser();
                 string branch = GetCurrentGitBranch();
+                message = $"Starting Customs Related Modules Update from machine: {Environment.MachineName} by {user} into branch: {branch}";
+
             }
             catch (Exception)
             {
-                message= $"Starting Customs Related Modules Update from machine: {Environment.MachineName} by {user} into branch: {branch}";
 
             }
 
