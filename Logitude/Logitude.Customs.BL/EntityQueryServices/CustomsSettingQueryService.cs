@@ -176,9 +176,13 @@ namespace Logitude.Customs.BL.EntityQueryServices
             bool fromTenantSetting =
                 !string.IsNullOrEmpty(setting.HSMCompanyId) &&
                 !string.IsNullOrEmpty(setting.HSMToken);
+            bool hasValidHsm = false;
+            if (fromEnvSetting && fromTenantSetting)
+            {
+                var signQueueHSMService = new SignQueueHSMService();
+                hasValidHsm = (bool)(signQueueHSMService.GetHSMAllCertificates(tenant, false)?.Any(i => i.IsOk == true));
 
-            var signQueueHSMService = new SignQueueHSMService();
-            bool hasValidHsm = (bool)(signQueueHSMService.GetHSMAllCertificates(tenant, false)?.Any(i => i.IsOk == true));
+            }
 
             return fromEnvSetting && fromTenantSetting && hasValidHsm;
         }
