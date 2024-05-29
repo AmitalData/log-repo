@@ -6,7 +6,7 @@ Feature: Cheque Deposit
         Given the user logged in and navigates to Full Accounting workspace
         And an AR Payment with the following details
             | Partner         | HadiNewCustomer2023    |
-            | RegisterDate    | 15/11/2023             |
+            | RegisterDate    | TODAY                  |
             | PaymentCurrency | NIS                    |
             | PaymentMethod   | Cheque                 |
             | PaymentAmount   | 1000                   |
@@ -16,7 +16,7 @@ Feature: Cheque Deposit
     Scenario: Approve the AR Payment
         Given a cheque with the following details
             | ChequeAmount     | 1000       |
-            | ChequeValueDate  | 15/11/2023 |
+            | ChequeValueDate  | TODAY      |
             | ChequeRef        | 1235       |
             | ChequeBank       | 6958       |
             | ChequeBankBranch | 784        |
