@@ -8544,6 +8544,7 @@
   <ItemGroup>
     <Folder Include="BookingModel\DomainServices\Generated\" />
     <Folder Include="CargoTrackingModel\DomainServices\" />
+    <Folder Include="Controllers\HybridModel\" />
     <Folder Include="Controllers\ShipmentOrderModel\Extended\" />
     <Folder Include="CRMModel\Controllers\Generated\" />
     <Folder Include="CustomModel\Tools\TraceEvents\" />
