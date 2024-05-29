@@ -957,6 +957,7 @@
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\ChequeCounterSerialViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\APInvoiceStatusUpdateController.cs" />
     <Compile Include="Controllers\AccountingModel\GLAccountMultiToCurrencyController.cs" />
+    <Compile Include="Controllers\HybridModel\DocumentInController.cs" />
     <Compile Include="Controllers\InfrastructureModel\QueueMessagesViewsController.cs" />
     <Compile Include="Controllers\CommonDataModel\ApiHelpers\CardAPiHelper.cs" />
     <!-- <Compile Include="ContainerTracking\ContainerTrackingHelper.cs" /> -->
@@ -8565,6 +8566,7 @@
     <Folder Include="MobileApplication\Views\CurrencyType\" />
     <Folder Include="MobileApplication\Views\DashboardAnalytics\" />
     <Folder Include="MobileApplication\Views\DeclarationVehicleModification\" />
+    <Folder Include="MobileApplication\Views\Default\" />
     <Folder Include="MobileApplication\Views\DigitalActivity\" />
     <Folder Include="MobileApplication\Views\IIGGeneralMessages\" />
     <Folder Include="MobileApplication\Views\InterfaceManagementListExtended\" />
