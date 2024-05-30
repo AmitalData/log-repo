@@ -1,8 +1,9 @@
 ﻿using Newtonsoft.Json.Linq;
+using System.IO;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Web.Http;
-using WebFreight.Web.Helpers;
 using WebFreight.Web.Helpers.AmitalAPI;
 using WebFreight.Web.Helpers.AmitalAPI.Structs;
 
@@ -15,28 +16,36 @@ namespace WebFreight.Web.Controllers.WebServices
         [HttpGet]
         public HttpResponseMessage GetSettings()
         {
-            int? tenant = HeaderHelper.GetTenantFromToken();
-            if (tenant == null)
-                return Request.CreateResponse(HttpStatusCode.Unauthorized);
-
-            string token = GetAmitalApiToken(tenant.Value);
-            var res = schemaApi.GetSettings(token); 
+            string token = AutorizeAndGetToken();
+            var res = schemaApi.GetSettings(token);
             return Request.CreateResponse(HttpStatusCode.OK, res);
         }
 
         [HttpPost]
         public HttpResponseMessage PostRequestQuery([FromBody] JObject parameters)
         {
-            int? tenant = HeaderHelper.GetTenantFromToken();
-            if (tenant == null)
-                return Request.CreateResponse(HttpStatusCode.Unauthorized);
-
-            string token = GetAmitalApiToken(tenant.Value);
-            object res = schemaApi.GetRequestQuery(token, parameters); 
+            string token = AutorizeAndGetToken();
+            object res = schemaApi.GetRequestQuery(token, parameters);
 
             return res == null ?
                 Request.CreateResponse(HttpStatusCode.BadRequest) :
                 Request.CreateResponse(HttpStatusCode.OK, res);
+        }
+
+        [HttpGet]
+        public HttpResponseMessage GetDownloadRequest(string id)
+        {
+            string token = AutorizeAndGetToken();
+            Stream stream = schemaApi.DownloadRequest(token, id);
+
+            if (stream == null)
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+
+            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.OK);
+            response.Content = new StreamContent(stream);
+            response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+
+            return response;
         }
     }
 }

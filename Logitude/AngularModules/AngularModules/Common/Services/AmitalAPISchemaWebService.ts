@@ -12,8 +12,15 @@ export class AmitalAPISchemaWebService extends AmitalAPIWebServiceBase<AmitalApi
     }
 
     getRequestQuery(params: RequestQueryParams): Promise<RequestQuery[]> {
-        // const paramsStr = Object.entries(params).map(([key, value]) => `${key}=${value}`).join('&')
         return this.http.post(this.apiUrl + '/postRequestQuery', params, { headers: this.headers }).toPromise() as Promise<RequestQuery[]>
+    }
+
+    downloadRequest(id: string): Promise<any> {
+        return this.http.get(this.apiUrl + '/getDownloadRequest', { 
+            params: { id },
+            headers: this.headers, 
+            responseType: 'blob' 
+        }).toPromise() as Promise<any>
     }
 }
 

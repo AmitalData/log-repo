@@ -11,7 +11,7 @@ import { GridColumn, LogitudeGridSimpleComponent } from './components/LogitudeGr
             <log-text-box-form #form class='form-data-field' [fields]='fields' [dir]="'ltr'"></log-text-box-form>
             <button class="Button" (click)="refreshTable(grid)">{{'General.O.Search' | TextCodeTranslationPipe}}</button>
         </div>
-        <logitude-grid-simple #grid [columns]='columns' [getData]='getData' [directionRTL]='false'></logitude-grid-simple>        
+        <logitude-grid-simple #grid [columns]='columns' [getData]='getData' [directionRTL]='false' [htmlTemplateComponentUrl]='htmlTemplateComponentUrl' ></logitude-grid-simple>        
         `,
     styles: [`      
         :host() { 
@@ -45,6 +45,7 @@ import { GridColumn, LogitudeGridSimpleComponent } from './components/LogitudeGr
 export class AmitalAPIRequestsComponent {
     @ViewChild('form') form!: LogTexBoxFormComponent;
     amitalAPISchemaWebService: AmitalAPISchemaWebService = new AmitalAPISchemaWebService();
+    htmlTemplateComponentUrl: string = './CustomsModules/CustomsListTemplates/Components/AmitalAPIRequestsTemplate';
     fields: TextBoxField[] = [
         { name: 'fromCreateDate', label: 'Create Date', type: 'date', required: true },
         { name: 'reference', label: 'Ref' },
@@ -70,6 +71,7 @@ export class AmitalAPIRequestsComponent {
         { Display: 'Create Date', FieldName: 'CreateDate', Styles: { width: '140px' }, isTemplate: true },
         { Display: 'Blob', FieldName: 'StorageBlob', Styles: { width: '425px' } },
         { Display: 'Success', FieldName: 'HasError', Styles: { width: '60px' }, isTemplate: true },
+        { Display: '', FieldName: 'Buttons', Styles: { width: '60px' }, isTemplate: true },
     ]
 
     convertYesNoToBoolean(value: string) {

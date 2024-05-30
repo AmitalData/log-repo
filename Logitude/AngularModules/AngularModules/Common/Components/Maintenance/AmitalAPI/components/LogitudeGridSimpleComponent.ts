@@ -27,6 +27,7 @@ import { Subject } from 'rxjs';
 export class LogitudeGridSimpleComponent {
     @Input() getData: (skip: number, take: number, page: number) => Promise<any[]>;
     @Input() directionRTL: boolean = true;
+    @Input() htmlTemplateComponentUrl!: string;
     @Input() set columns(value: GridColumn[]) {
         this.gridColumns = this.createGridColumns(value);
         this.finishBuildColumns = true;
@@ -86,8 +87,8 @@ export class LogitudeGridSimpleComponent {
             col['SortByName'] = col.SortByName || col.FieldName;
 
             if (col.isTemplate) {
-                col['HtmlListComponentName'] = 'AmitalAPIRequestsTemplate';
-                col['HtmlListComponentUrl'] = './CustomsModules/CustomsListTemplates/Components/AmitalAPIRequestsTemplate';
+                col['HtmlListComponentName'] = this.htmlTemplateComponentUrl.split('/').pop();
+                col['HtmlListComponentUrl'] = this.htmlTemplateComponentUrl;
             }
         })
 

@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
 using WebFreight.Web.Helpers.AmitalAPI.Structs;
@@ -35,6 +36,19 @@ namespace WebFreight.Web.Helpers.AmitalAPI
                 return null;            
 
             return JsonConvert.DeserializeObject(res.Content);
+        }
+
+        public Stream DownloadRequest(string token, string id)
+        {
+            if(token == null || id == null)
+                return null;
+
+            string url = "DownloadRequest?id=" + id;
+            HttpClienResponse res = AmitalAPIHelper.SendRequest(token, url, HttpMethod.Get);
+            if (!res.Res.IsSuccessStatusCode)
+                return null;            
+
+            return res.Res.Content.ReadAsStreamAsync().Result;
         }
     }
 }
