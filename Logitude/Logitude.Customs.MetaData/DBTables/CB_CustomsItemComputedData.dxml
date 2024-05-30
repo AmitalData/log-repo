@@ -1,0 +1,171 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="CB_CustomsItemComputedDatas"
+  Schema="Customs"
+  DBType="Main"
+  Module="Customs">
+  <Column
+    Name="CB_ID"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ID"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="CustomsItemID"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="FullClassification"
+    Type="varchar"
+    Size="13">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IsLeaf"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="CustomsItemDetailsHistoryID"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="PropertiesDetailsHistoryID"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="PH_MeasurementUnitID"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IsHistoryExists"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsRulesExists"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="StartDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="EndDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="CI_Parent_CustomsItemIDNum"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CI_BaseFullClassification"
+    Type="varchar"
+    Size="11">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CI_ComputedCheckDigit"
+    Type="varchar"
+    Size="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CI_CustomsBookTypeIDNum"
+    Type="varchar"
+    Size="4">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CI_CustomsItemCategoryIDNum"
+    Type="varchar"
+    Size="4">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ItemHierarchicLocationID"
+    Type="varchar"
+    Size="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CIH_Title"
+    Type="nvarchar"
+    Size="255">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CIH_GoodsDescription"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CustomsItemEntityStatusIDNum"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="PH_IsCarItem"
+    Type="bit">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="FullGoodsDescription"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="CI_CustomsBookTypeIDNum"
+    ReferencedTable="CustomsBookTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="CI_CustomsItemCategoryIDNum"
+    ReferencedTable="CustomsItemCategories"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="ItemHierarchicLocationID"
+    ReferencedTable="CustomsItemHierarchicLocations"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+</Table>
