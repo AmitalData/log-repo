@@ -1,0 +1,115 @@
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Server.Infrastructure.DataContracts;
+using Simplog.Server.Infrastructure.Helpers;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml.Serialization;
+using WebFreight.Web.Security;
+using WebFreight.Web.Helpers;
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.Interfaces;
+using Logitude.Server.Tools;
+using Microsoft.Practices.Unity;
+using System.ServiceModel.DomainServices.Hosting; 
+using System.ServiceModel.DomainServices.Server;
+using System.Web;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Def.EntityPMs;
+using Logitude.Customs.Data;
+using Logitude.Customs.BL;
+using Logitude.Customs.Data.EntityLists;
+using Logitude.Customs.BL.EntityUpdateServices;
+using Logitude.Customs.Data.EntityListQueryServices;
+using Logitude.Customs.BL.EntityQueryServices;
+
+namespace WebFreight.Web.CustomModel.DomainServices
+{ 
+
+    [EnableClientAccess()]
+    public partial class CB_QuotaComputedDataDomainService : LogitudeDomainService
+    {
+	    IDomainServiceUpdateClass<CB_QuotaComputedDataPM> service;
+		ICustomContext MyContext;
+     	public CB_QuotaComputedDataDomainService()
+		{ 
+		  //service = ContainerAccessor.Container.Resolve(typeof(IDomainServiceUpdateClass<CB_QuotaComputedDataPM>), "CustomDomainServiceUpdateClass", new ParameterOverride("", 1)) as IDomainServiceUpdateClass<CB_QuotaComputedDataPM>;
+		}
+       
+        public CB_QuotaComputedDataPM GetSingleCB_QuotaComputedDataPM(string cb_id,int tenant)
+        {
+            if (MyContext == null)
+            {
+                  MyContext = CustomContext.GetContext(tenant);
+            }
+
+            CB_QuotaComputedDataQueryService cB_QuotaComputedDataQuery = new CB_QuotaComputedDataQueryService(MyContext);
+            CB_QuotaComputedDataPM cB_QuotaComputedDataPM = cB_QuotaComputedDataQuery.GetSingle(cb_id,false,false);
+            return cB_QuotaComputedDataPM;
+           
+        }
+
+         
+		public CB_QuotaComputedDataList GetSingleCB_QuotaComputedDataList(string cb_id,int tenant)
+        {
+            SecurityUtility.AuthenticationOnTenant(tenant);
+			             SecurityUtility.CheckContactFeature("Customs.CB_QuotaComputedData", "READ", tenant); if ( MyContext == null)
+            {
+                 MyContext = CustomContext.GetContext(tenant);
+            }
+
+          
+            CB_QuotaComputedDataListQueryService listService = new CB_QuotaComputedDataListQueryService(MyContext);
+            return listService.GetSingle(cb_id);
+        }
+
+		public List<CB_QuotaComputedDataList> GetCB_QuotaComputedDataLists(int tenant)
+        {
+            SecurityUtility.AuthenticationOnTenant(tenant);
+			             SecurityUtility.CheckContactFeature("Customs.CB_QuotaComputedData", "READ", tenant);if ( MyContext == null)
+            {
+                  MyContext = CustomContext.GetContext(tenant);
+            }
+            CB_QuotaComputedDataListQueryService listService = new CB_QuotaComputedDataListQueryService(MyContext);
+            return listService.GetList(tenant);
+        }
+       
+	    public List<CB_QuotaComputedDataList> GetCB_QuotaComputedDataFilters(byte[] xmlFilters, int tenant)
+        {
+            SecurityUtility.AuthenticationOnTenant(tenant);
+			            SecurityUtility.CheckContactFeature("Customs.CB_QuotaComputedData", "READ", tenant);
+if ( MyContext == null)
+            {
+                  MyContext = CustomContext.GetContext(tenant);
+            };
+            CB_QuotaComputedDataListQueryService listService = new CB_QuotaComputedDataListQueryService(MyContext);
+            QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);
+            return listService.GetList(queryOperations, tenant);
+           
+        }
+
+	    public int GetCB_QuotaComputedDataFiltersCount(byte[] xmlFilters, int tenant)
+        {
+            SecurityUtility.AuthenticationOnTenant(tenant);
+			            SecurityUtility.CheckContactFeature("Customs.CB_QuotaComputedData", "READ", tenant);if ( MyContext == null)
+            {
+                  MyContext = CustomContext.GetContext(tenant);
+            };
+            CB_QuotaComputedDataListQueryService queryService = new CB_QuotaComputedDataListQueryService(MyContext);
+            QueryOperations queryOperations = EntityListFilter.GetQueryOperations(xmlFilters);
+            return queryService.GetListCount(queryOperations);
+
+        }
+				
+      
+    }
+}
+	 
