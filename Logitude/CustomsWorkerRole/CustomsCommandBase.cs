@@ -487,8 +487,8 @@ namespace CustomsWorkerRole
         // islam db queue service
         void WorkUntilQEmpty_Db()
         {
-            string counts = GetThreadCounts();
-            LogTime($"{className} start all ({counts})");
+            // string counts = GetThreadCounts();
+            // LogTime($"{className} start all ({counts})");
 
             CustomDBQueueMessage response = null;
             List<long> deferredSequenceNumbers = new List<long>();
@@ -712,8 +712,9 @@ namespace CustomsWorkerRole
                                 proccesDone = true;
                                 var taskLIst = new List<Task>();
 
-                                string counts = GetThreadCounts();
-                                LogTime($"{className} start open tasks for {responseList.Count} returned rows from Db ({counts})");
+                                // string counts = GetThreadCounts();
+                                // LogTime($"{className} start open tasks for {responseList.Count} returned rows from Db ({counts})");
+                                LogTime($"{className} start open tasks for {responseList.Count} returned rows from Db");
                                 var totalStopwatch = Stopwatch.StartNew();
 
                                 foreach (var item in responseList)

@@ -1,7 +1,16 @@
 <Procedure DBType="Main" Name="QueueEnqueue_succeedRequestsheets" Schema="dbo" Module="Customs">
-  
-  <OracleScript>
-	<![CDATA[
+
+	<OracleScript>
+		<![CDATA[
+
+CREATE OR REPLACE TYPE QueueMessageType AS OBJECT (
+    id NUMBER(18,0),
+    RetryNumber NUMBER(10,0),
+    CreateDateTime TIMESTAMP(7),
+    MessageBody VARCHAR2(1000 CHAR)
+);
+
+CREATE OR REPLACE TYPE QueueMessageTableType AS TABLE OF QueueMessageType;
 
 create or replace PROCEDURE Queue_Peek_list(
     cursor_ out SYS_REFCURSOR,
@@ -12,54 +21,60 @@ create or replace PROCEDURE Queue_Peek_list(
 )
 AS
     v_frequency NUMBER(10,0);
-    v_row QueueMessages%rowtype;     
+    v_row QueueMessages%rowtype;
+
+    v_QueueMessages QueueMessageTableType := QueueMessageTableType();    
+    -- v_Count NUMBER := 0;     
 BEGIN
  
     v_frequency := 60;
 
-    OPEN cursor_ FOR
-    SELECT  *
-    -- select qt.id , qt.RetryNumber, qt.CREATEDATETIME, qt.messagebody
-    -- BULK COLLECT  INTO v_QueueMessages
+    select QueueMessageType(qt.id , qt.RetryNumber, qt.CREATEDATETIME, qt.messagebody)
+    BULK COLLECT  INTO v_QueueMessages
     FROM QueueMessages qt
     WHERE qt.NextRunDateTime <= SYSDATE
-        AND  qt.Status = v_WatingStatus
+       AND  qt.Status = v_WatingStatus
         AND QueueDefinitionCode = v_QueueDefinitionCode
         AND qt.UseRabbitMQ = 0
         and ROWNUM <= v_SelectCount
     ORDER BY qt.tenantpriority ASC, qt.NextRunDateTime ASC
     FOR UPDATE SKIP LOCKED;
 
-    --OPEN cursor_;
+FOR i IN 1 .. v_QueueMessages.COUNT LOOP
+    UPDATE QueueMessages
+    SET ProcessingDateTime = SYSDATE,
+    NextRunDateTime      = (SYSDATE + v_NextRunDelayInSec/86400), 
+    RetryNumber          = (RetryNumber + 1)
+    WHERE Id = v_QueueMessages(i).Id;
+    
+    UPDATE queuemessagemoredetails
+    SET ProcessingDateTime = SYSDATE,
+    NextRunDateTime      = (SYSDATE + v_NextRunDelayInSec/86400),
+    RetryNumber          = (RetryNumber + 1)
+    WHERE Id = v_QueueMessages(i).Id;
+    
+    -- v_Count := v_Count + 1;
+END LOOP;
 
-    FETCH cursor_ into v_row; -- v_MessageId;
+-- COMMIT;
 
-    --If found, flag it to prevent being picked up again
-    IF cursor_%FOUND 
+-- Open the output cursor on the collection
+OPEN cursor_ FOR
+SELECT * FROM TABLE(v_QueueMessages);
 
-        IF v_row.Id IS NOT NULL THEN
-            BEGIN
-            
-                    UPDATE QueueMessages
-                    SET ProcessingDateTime = SYSDATE,
-                    NextRunDateTime      = (SYSDATE + v_NextRunDelayInSec/86400), 
-                    RetryNumber          = (RetryNumber + 1)
-                    WHERE Id               = v_row.id;
-                    
-                    UPDATE queuemessagemoredetails
-                    SET ProcessingDateTime = SYSDATE,
-                    NextRunDateTime      = (SYSDATE + v_NextRunDelayInSec/86400),
-                    RetryNumber          = (RetryNumber + 1)
-                    WHERE Id               = v_row.id;
-            END;
-        END IF;
-    END IF;
+-- DBMS_OUTPUT.PUT_LINE('Rows updated: ' || v_Count);
 
-CLOSE cursor_;
+EXCEPTION
+    WHEN OTHERS THEN
+        -- Ensure the cursor is closed in case of an error
+        --IF cursor_%ISOPEN THEN
+        --    CLOSE cursor_;
+        --END IF;
+        RAISE;
 
 END;
 
 	]]>
 
-</OracleScript>
+	</OracleScript>
 </Procedure>
