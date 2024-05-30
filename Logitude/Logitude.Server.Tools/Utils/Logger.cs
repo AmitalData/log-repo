@@ -8,13 +8,15 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Web;
+using System.Web; 
 using System.Windows.Forms;
 
 namespace Logitude.Server.Tools.Utils
 {
     public static class Logger
     {
+        public static readonly NLog.Logger NLogger = NLog.LogManager.GetLogger("AmitalLogger");
+
         static Thread writeLogLoop = null;
         static Dictionary<string, string> suffixs = null;
         delegate DialogResult Show(string text, string caption);
@@ -29,6 +31,8 @@ namespace Logitude.Server.Tools.Utils
             cq = new ConcurrentQueue<Tuple<string, bool, string>>();
             writeLogLoop = new Thread(new ParameterizedThreadStart(ManagerThreadLoop));
             writeLogLoop.Start();
+
+            NLog.LogManager.Configuration = new NLog.Config.XmlLoggingConfiguration(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "NLog.config"));
         }
 
         static void ManagerThreadLoop(object threadParam)
@@ -75,6 +79,8 @@ namespace Logitude.Server.Tools.Utils
                 {
                     if (string.IsNullOrEmpty(suffix)) suffix = "Mess";
                     cq.Enqueue(new Tuple<string, bool, string>(mess, false, suffix));
+
+                    LogInfo(mess + " " + suffix);
                 }
                 else
                 {
@@ -103,6 +109,8 @@ namespace Logitude.Server.Tools.Utils
                         UIErrorBufferAt = DateTime.Now;
                     }
                     #endregion
+
+                    LogError(mess + " " + suffix);
                 }
             }
             catch (Exception ex)
@@ -498,5 +506,103 @@ namespace Logitude.Server.Tools.Utils
             }
 
         }
+
+        #region Nlog functions
+
+        public static void LogDebug(string mess, params object[] args)
+        {
+            LogDebug(null, mess, args);
+        }
+        public static void LogDebug(Exception ex, string mess, params object[] args)
+        {
+
+            LogToNlog(NLog.LogLevel.Debug, ex, mess, args);
+        }
+
+        public static void LogInfo(string mess, params object[] args)
+        {
+            LogInfo(null, mess, args);
+        }
+        public static void LogInfo(Exception ex, string mess, params object[] args)
+        {
+
+            LogToNlog(NLog.LogLevel.Info, ex, mess, args);
+        }
+
+        public static void LogWarn(string mess, params object[] args)
+        {
+            LogWarn(null, mess, args);
+        }
+        public static void LogWarn(Exception ex, string mess, params object[] args)
+        {
+
+            LogToNlog(NLog.LogLevel.Warn, ex, mess, args);
+        }
+
+        public static void LogError(string mess, params object[] args)
+        {
+            LogError(null, mess, args);
+        }
+        public static void LogError(Exception ex, string mess, params object[] args)
+        {
+
+            LogToNlog(NLog.LogLevel.Error, ex, mess, args);
+        }
+
+        public static void LogFatal(string mess, params object[] args)
+        {
+            LogFatal(null, mess, args);
+        }
+        public static void LogFatal(Exception ex, string mess, params object[] args)
+        {
+
+            LogToNlog(NLog.LogLevel.Fatal, ex, mess, args);
+        }
+
+        public static void LogTrace(string mess, params object[] args)
+        {
+            LogTrace(null, mess, args);
+        }
+        public static void LogTrace(Exception ex, string mess, params object[] args)
+        {
+
+            LogToNlog(NLog.LogLevel.Trace, ex, mess, args);
+        }
+
+
+        private static void LogToNlog(NLog.LogLevel level, Exception exception, string mess, params object[] args)
+        {
+
+            switch (level.Ordinal)
+            {
+                case 1:// NLog.LogLevel.Debug:
+                    NLogger.Debug(exception, mess, args);
+                    break;
+                case 2:// NLog.LogLevel.Info:
+                    NLogger.Info(exception, mess, args);
+                    break;
+                case 3:// NLog.LogLevel.Warn:
+                    NLogger.Warn(exception, mess, args);
+                    break;
+                case 4: // NLog.LogLevel.Error:
+                    NLogger.Error(exception, mess, args);
+                    break;
+                case 5:// NLog.LogLevel.Fatal:                       
+                    NLogger.Fatal(exception, mess, args);
+                    break;
+
+                case 0:
+                    NLogger.Trace(exception, mess, args);
+                    break;
+
+
+                default:
+                    break;
+            }
+
+
+        }
+
+        #endregion
     }
 }

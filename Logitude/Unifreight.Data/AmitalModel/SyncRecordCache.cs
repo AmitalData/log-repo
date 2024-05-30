@@ -1,4 +1,5 @@
 ﻿using Logitude.Customs.BL.BL;
+using Logitude.Server.Tools.Utils;
 using System;
 using Unifreight.Data.AmitalModel.Repsitories;
 
@@ -38,7 +39,7 @@ namespace Unifreight.Data.AmitalModel
             }
             catch (Exception e)
             {
-
+                Logger.LogMe("Error in ClearCacheLastSync error: " + e, true);
             }
         }
     }
