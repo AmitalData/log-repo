@@ -1,0 +1,74 @@
+ 
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools;
+using Simplog.Data.Helpers;
+using Logitude.Server.Tools.Counters;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System.Web;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Def.EntityPMs;
+using Logitude.Customs.BL.EntityDataMappings;
+using Logitude.Customs.Data.Repsitories;
+using Logitude.Customs.Data.EntityKeys;
+using Logitude.Customs.Data;
+
+namespace Logitude.Customs.BL.EntityUpdateServices
+{ 
+   public partial class CB_TariffComputedDataUpdateService:EntityUpdateService<CB_TariffComputedData,CB_TariffComputedDataPM,EntityPM>
+   {
+   
+        CB_TariffComputedDataRepository entityRepository;
+        public CB_TariffComputedDataUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
+        {
+            ICustomContext  context = mainContext as CustomContext;
+            context = context ??mainContext as ICustomContext ; //Up line is A BUG -and i need it 4 Fakes
+            Mapping = new CB_TariffComputedDataDataMapping();
+            Repository = new CB_TariffComputedDataRepository(context);
+        }
+
+       
+        private ICustomContext currentContext;
+        public CB_TariffComputedDataUpdateService(int tenant)
+        {
+            currentContext = CustomContext.GetContext(tenant);
+        }
+
+        public CB_TariffComputedDataUpdateService(ICustomContext context)
+        {
+            currentContext = context;
+        }
+
+		
+		protected override EntityKeyFields GetKeys(CB_TariffComputedDataPM entityPM)
+        {
+            CB_TariffComputedDataKeys entityKeys = new CB_TariffComputedDataKeys() { CB_ID = entityPM.CB_ID };
+            return entityKeys;
+        }
+
+		
+		protected override void FillDefaultValuesOnCreate(CB_TariffComputedDataPM entityPM)
+        {     
+  
+		
+	    }
+        
+		protected override void FillDefaultValuesOnUpdate(CB_TariffComputedDataPM entityPM)
+        {       
+           
+        }
+		  
+		 
+	 
+   }
+   
+}
+	 
