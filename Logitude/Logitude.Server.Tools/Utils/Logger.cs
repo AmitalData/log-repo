@@ -32,7 +32,12 @@ namespace Logitude.Server.Tools.Utils
             writeLogLoop = new Thread(new ParameterizedThreadStart(ManagerThreadLoop));
             writeLogLoop.Start();
 
-            NLog.LogManager.Configuration = new NLog.Config.XmlLoggingConfiguration(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "NLog.config"));
+            InitNlog();
+        }
+
+        private static void InitNlog()
+        {
+            try { NLog.LogManager.Configuration = new NLog.Config.XmlLoggingConfiguration(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "NLog.config")); } catch { }
         }
 
         static void ManagerThreadLoop(object threadParam)
@@ -572,6 +577,7 @@ namespace Logitude.Server.Tools.Utils
 
         private static void LogToNlog(NLog.LogLevel level, Exception exception, string mess, params object[] args)
         {
+            if (NLogger == null || NLog.LogManager.Configuration == null) return;
 
             switch (level.Ordinal)
             {
