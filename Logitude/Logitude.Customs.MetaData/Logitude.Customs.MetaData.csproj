@@ -99,6 +99,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ContextGenerator.tt</DependentUpon>
     </Compile>
+    <None Include="DBOthers\Procedures\Queue_Peek_list.dxml" />
     <None Include="DBOthers\Procedures\QueueEnqueue_succeedRequestsheets.dxml" />
     <None Include="DBOthers\Procedures\Usp_DeleteCustomsRequestSheets.dxml" />
     <None Include="DBOthers\Procedures\Usp_DeleteComLogSteps.dxml" />
