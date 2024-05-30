@@ -1,0 +1,55 @@
+<View DBType="Main" Name="ShipmentDataView" Schema="dbo" Module="Shipment">
+  <SqlScript>
+    <![CDATA[
+
+CREATE VIEW [dbo].[LogBoxShipmentDataView]
+AS
+SELECT        
+dbo.Shipments.Id,
+dbo.Shipments.Tenant,
+dbo.Shipments.ShipmentNumber, 
+dbo.Shipments.ComputedStatusDate, 
+dbo.Shipments.CustomerReference1,
+dbo.Shipments.CustomerReference2,
+dbo.Shipments.CustomerReference3, 
+dbo.Shipments.AgentReference2, 
+dbo.Shipments.AgentReference1,
+dbo.Shipments.IsOperationalClosed, 
+dbo.Shipments.DirectionId, 
+dbo.Shipments.TransportModeId, 
+dbo.Shipments.CreateDateTime,
+dbo.Shipments.ShipperName,
+dbo.Shipments.ShipperName as Shipper, 
+dbo.Shipments.PrivateLabelAgentName AS PrivateLabelAgentName,
+dbo.Shipments.SearchFields,
+dbo.Shipments.ComputedStatusDate as StatusDate,
+dbo.Shipments.ForwarderShipmentNumber as ForwarderShipmentNumber,
+HybridPartner.Id as ForwarderPartnerId,
+dbo.Shipments.IsCancelled,
+ShipmentAdditionalCloudDatas.ApprovedByUserName as ApprovedByUserName,
+ShipmentAdditionalCloudDatas.IsImporterApprovalRequried as IsImporterApprovalRequried,
+ShipmentComputedFields.IsDepositionRequired as IsDepositionRequired,
+ShipmentComputedFields.IsDigitalSignRequired as IsDigitalSignRequired,
+ShipmentComputedFields.RequestedDocumentsCount as RequestedDocumentsCount,
+ShipmentComputedFields.IsRequestedDocuments as IsRequestedDocuments,
+ShipmentComputedFields.LastDocumentDateTime as LastDocumentDateTime,
+ShipmentComputedFields.DocumentsSearchFields as DocumentsSearchFields,
+CASE WHEN (MasterShipmentDataId IS NOT NULL) THEN CASE WHEN (ShipmentMasterDataEntityStatus.StatusWeight > dbo.EntityStatus.StatusWeight) THEN ShipmentMasterDataEntityStatus.Name ELSE dbo.EntityStatus.Name END ELSE dbo.EntityStatus.Name END AS StatusName,
+CASE WHEN (dbo.ShipmentMasterDatas.MainCarriageATA IS NOT NULL) THEN dbo.ShipmentMasterDatas.MainCarriageATA ELSE dbo.ShipmentMasterDatas.MainCarriageETA END AS MainCarriageExpectedOrActual,
+CASE WHEN (MasterShipmentDataId IS NOT NULL) THEN CASE WHEN (ShipmentMasterDataEntityStatus.StatusWeight > dbo.EntityStatus.StatusWeight) THEN dbo.ShipmentMasterDatas.StatusLocation ELSE dbo.Shipments.StatusLocation END ELSE dbo.Shipments.StatusLocation END AS StatusLocation
+FROM            
+dbo.Shipments LEFT OUTER JOIN
+dbo.ShipmentMasterDatas ON dbo.ShipmentMasterDatas.Id = dbo.Shipments.MasterShipmentDataId LEFT OUTER JOIN
+dbo.EntityStatus ON dbo.Shipments.StatusId = dbo.EntityStatus.Id LEFT OUTER JOIN
+dbo.EntityStatus AS ShipmentMasterDataEntityStatus ON dbo.ShipmentMasterDatas.StatusId = ShipmentMasterDataEntityStatus.Id LEFT OUTER JOIN
+dbo.HybridPartners AS HybridPartner ON dbo.Shipments.ForwarderPartnerId = HybridPartner.Id LEFT OUTER JOIN
+dbo.ShipmentComputedFields AS ShipmentComputedFields ON dbo.Shipments.Id = ShipmentComputedFields.Id INNER JOIN
+dbo.ShipmentAdditionalCloudDatas AS ShipmentAdditionalCloudDatas ON dbo.Shipments.Id = ShipmentAdditionalCloudDatas.Id 
+						 
+   
+						 
+    ]]>
+  </SqlScript>
+  <OracleScript>
+  </OracleScript>
+</View>

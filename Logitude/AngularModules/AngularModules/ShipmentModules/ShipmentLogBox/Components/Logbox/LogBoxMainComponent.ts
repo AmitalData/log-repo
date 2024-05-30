@@ -847,8 +847,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
             filters.SortDirection = sortingDir;
         }
         filters.Tenant = SessionLocator.Tenant;
-
-        return this._entityListService.getByFilters("Shipment", filters);
+        return this._entityListService.getByFilters("Shipment", filters, "LogBoxShipment");
     }
 
     private getApiQueryFiltersWithAdditionalFilters(searchfields: string) {
@@ -950,7 +949,6 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
 
 
     MenuFiltersClicked(Selected, id) {
-
         this.SetQueryFiltersColor(id, Selected);
 
         this.SelectedFilter = Selected;
@@ -1034,6 +1032,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         //this.filterAgrs.addAdditionalFilter("IsOperationalClosed", false, null, null, "Equals", false, false, false, "Boolean");
         //this.filterAgrs.addAdditionalFilter("ForwarderShipmentNumber", false, null, null, "Equals", false, false, false, "Boolean");
         //this.filterAgrs.addAdditionalFilter("IsRequestedDocuments", false, null, null, "Equals", false, false, false, "Boolean");
+
         if (this.SelectedTransportFilter != "All") {
             this.filterAgrs.addAdditionalFilter("TransportModeId", this.SelectedTransportFilter, null, null, "Equals", false, true, false, "string", this.SelectedTransportFilter == "All" ? true : false);
         }
