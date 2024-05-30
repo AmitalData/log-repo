@@ -147,6 +147,7 @@
     <Compile Include="EntityKeys\CB_RegularityInceptionKeys.cs" />
     <Compile Include="EntityKeys\CB_RegularityRequiredCertificateKeys.cs" />
     <Compile Include="EntityKeys\CB_RegularityRequirementKeys.cs" />
+    <Compile Include="EntityKeys\CB_RequirementComputedDataKeys.cs" />
     <Compile Include="EntityKeys\CB_RuleDetailsHistoryKeys.cs" />
     <Compile Include="EntityKeys\CB_RuleKeys.cs" />
     <Compile Include="EntityKeys\CB_TariffComputedDataKeys.cs" />
@@ -379,6 +380,7 @@
     <Compile Include="EntityListQueryServices\CB_RegularityInceptionListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CB_RegularityRequiredCertificateListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CB_RegularityRequirementListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\CB_RequirementComputedDataListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CB_RuleDetailsHistoryListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CB_RuleListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CB_TariffComputedDataListQueryService.cs" />
@@ -528,6 +530,7 @@
     <Compile Include="EntityListQueryServices\Generated\CB_RegularityInceptionListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CB_RegularityRequiredCertificateListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CB_RegularityRequirementListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\CB_RequirementComputedDataListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CB_RuleDetailsHistoryListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CB_RuleListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CB_TariffComputedDataListQueryService.Generated.cs" />
@@ -819,6 +822,7 @@
     <Compile Include="EntityLists\Generated\CB_RegularityInceptionList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CB_RegularityRequiredCertificateList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CB_RegularityRequirementList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\CB_RequirementComputedDataList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CB_RuleDetailsHistoryList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CB_RuleList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CB_TariffComputedDataList.Generated.cs" />
@@ -1076,6 +1080,7 @@
     <Compile Include="EntityMapping\CB_RegularityInceptionMap.cs" />
     <Compile Include="EntityMapping\CB_RegularityRequiredCertificateMap.cs" />
     <Compile Include="EntityMapping\CB_RegularityRequirementMap.cs" />
+    <Compile Include="EntityMapping\CB_RequirementComputedDataMap.cs" />
     <Compile Include="EntityMapping\CB_RuleDetailsHistoryMap.cs" />
     <Compile Include="EntityMapping\CB_RuleMap.cs" />
     <Compile Include="EntityMapping\CB_TariffComputedDataMap.cs" />
@@ -1308,6 +1313,7 @@
     <Compile Include="EntityPOCOs\CB_RegularityInception.cs" />
     <Compile Include="EntityPOCOs\CB_RegularityRequiredCertificate.cs" />
     <Compile Include="EntityPOCOs\CB_RegularityRequirement.cs" />
+    <Compile Include="EntityPOCOs\CB_RequirementComputedData.cs" />
     <Compile Include="EntityPOCOs\CB_Rule.cs" />
     <Compile Include="EntityPOCOs\CB_RuleDetailsHistory.cs" />
     <Compile Include="EntityPOCOs\CB_Tariff.cs" />
@@ -1541,6 +1547,7 @@
     <Compile Include="Repsitories\CB_RegularityInceptionRepository.cs" />
     <Compile Include="Repsitories\CB_RegularityRequiredCertificateRepository.cs" />
     <Compile Include="Repsitories\CB_RegularityRequirementRepository.cs" />
+    <Compile Include="Repsitories\CB_RequirementComputedDataRepository.cs" />
     <Compile Include="Repsitories\CB_RuleDetailsHistoryRepository.cs" />
     <Compile Include="Repsitories\CB_RuleRepository.cs" />
     <Compile Include="Repsitories\CB_TariffComputedDataRepository.cs" />
@@ -1690,6 +1697,7 @@
     <Compile Include="Repsitories\Generated\CB_RegularityInceptionRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CB_RegularityRequiredCertificateRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CB_RegularityRequirementRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\CB_RequirementComputedDataRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CB_RuleDetailsHistoryRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CB_RuleRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CB_TariffComputedDataRepository.Generated.cs" />
