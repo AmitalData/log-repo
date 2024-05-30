@@ -76,6 +76,7 @@
     <Compile Include="EntityPMs\Generated\CB_CountriesExclusionPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CB_CustomsBookAdditionPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CB_CustomsBookAdditionsDetailsHistoryPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CB_CustomsItemComputedDataPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CB_CustomsItemDetailsHistoryPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CB_CustomsItemExclusionPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CB_CustomsItemLinkagePM.Generated.cs" />
