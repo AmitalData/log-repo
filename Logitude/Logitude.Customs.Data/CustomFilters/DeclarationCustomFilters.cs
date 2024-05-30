@@ -47,7 +47,8 @@ namespace Logitude.Customs.Data.CustomFilters
                 if (item.FieldName == "CourierPendingReasonList")
                 {
                     queryableData = queryableData.Join(context.DeclarationCourierStatuses, x => x.Id, x => x.DeclarationId, (dec, sta) => new { dec = dec, sta = sta })
-                        .Where(x => x.sta.Tenant == tenant && x.sta.CourierPendingReasonList.Contains(item.FieldValue.ToString()))
+                        .Where(x => x.sta.Tenant == tenant && x.sta.CourierPendingReasonList != null 
+                            && (x.sta.CourierPendingReasonList != null? ("," + x.sta.CourierPendingReasonList + ",").Contains("," + item.FieldValue.ToString() + ","): false) == true)
                         .Select(x => x.dec);
                     }
             }
