@@ -1,0 +1,65 @@
+<Procedure DBType="Main" Name="QueueEnqueue_succeedRequestsheets" Schema="dbo" Module="Customs">
+  
+  <OracleScript>
+	<![CDATA[
+
+create or replace PROCEDURE Queue_Peek_list(
+    cursor_ out SYS_REFCURSOR,
+    v_QueueDefinitionCode IN VARCHAR2,
+    v_NextRunDelayInSec IN NUMBER,
+    v_WatingStatus IN NUMBER,
+    v_SelectCount  IN NUMBER
+)
+AS
+    v_frequency NUMBER(10,0);
+    v_row QueueMessages%rowtype;     
+BEGIN
+ 
+    v_frequency := 60;
+
+    OPEN cursor_ FOR
+    SELECT  *
+    -- select qt.id , qt.RetryNumber, qt.CREATEDATETIME, qt.messagebody
+    -- BULK COLLECT  INTO v_QueueMessages
+    FROM QueueMessages qt
+    WHERE qt.NextRunDateTime <= SYSDATE
+        AND  qt.Status = v_WatingStatus
+        AND QueueDefinitionCode = v_QueueDefinitionCode
+        AND qt.UseRabbitMQ = 0
+        and ROWNUM <= v_SelectCount
+    ORDER BY qt.tenantpriority ASC, qt.NextRunDateTime ASC
+    FOR UPDATE SKIP LOCKED;
+
+    --OPEN cursor_;
+
+    FETCH cursor_ into v_row; -- v_MessageId;
+
+    --If found, flag it to prevent being picked up again
+    IF cursor_%FOUND 
+
+        IF v_row.Id IS NOT NULL THEN
+            BEGIN
+            
+                    UPDATE QueueMessages
+                    SET ProcessingDateTime = SYSDATE,
+                    NextRunDateTime      = (SYSDATE + v_NextRunDelayInSec/86400), 
+                    RetryNumber          = (RetryNumber + 1)
+                    WHERE Id               = v_row.id;
+                    
+                    UPDATE queuemessagemoredetails
+                    SET ProcessingDateTime = SYSDATE,
+                    NextRunDateTime      = (SYSDATE + v_NextRunDelayInSec/86400),
+                    RetryNumber          = (RetryNumber + 1)
+                    WHERE Id               = v_row.id;
+            END;
+        END IF;
+    END IF;
+
+CLOSE cursor_;
+
+END;
+
+	]]>
+
+</OracleScript>
+</Procedure>
