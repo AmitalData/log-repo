@@ -10,8 +10,7 @@ namespace CustomsWorkerRole
 {
     public class SyncRecordsCCUTableWR : CustomsWorkerEntryPoint
     {
-        private bool isFirstTime = true;
-        private readonly SyncRecordQuery syncRecordQuery = new SyncRecordQuery();        
+        private bool isFirstTime = true;        
 
         public override void WorkOnce()
         {
@@ -25,6 +24,7 @@ namespace CustomsWorkerRole
         private void SendSyncRecoredToUnifreightQueue()
         {
             List<SyncRecord> syncRecordsInQueueList = new List<SyncRecord>();
+            SyncRecordQuery syncRecordQuery = new SyncRecordQuery();
             List<SyncRecord> records = syncRecordQuery.GetAndMarkNewSyncRecord();
 
             if (records == null || records.Count == 0)

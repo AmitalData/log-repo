@@ -184,6 +184,9 @@
     <Reference Include="NLog.Targets.GrowlNotify, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\NLog.Growl.New.1.1.0\lib\NLog.Targets.GrowlNotify.dll</HintPath>
     </Reference>
+    <Reference Include="NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.5.2.4\lib\net46\NLog.dll</HintPath>
+    </Reference>
     <Reference Include="nsoftware.IPWorksSSH, Version=16.0.6800.0, Culture=neutral, PublicKeyToken=cdc168f89cffe9cf, processorArchitecture=MSIL">
       <HintPath>..\packages\SFTP3.4.1.0\lib\Net40\nsoftware.IPWorksSSH.dll</HintPath>
     </Reference>
