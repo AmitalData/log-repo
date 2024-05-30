@@ -266,6 +266,7 @@
     <None Include="DBTables\CB_LevyExclusion.dxml" />
     <None Include="DBTables\CB_PropertiesDetailsHistory.dxml" />
     <None Include="DBTables\CB_Quota.dxml" />
+    <None Include="DBTables\CB_QuotaComputedData.dxml" />
     <None Include="DBTables\CB_QuotaDetailsHistory.dxml" />
     <None Include="DBTables\CB_QuotaRenewal.dxml" />
     <None Include="DBTables\CB_RegularityInception.dxml" />
@@ -677,6 +678,7 @@
     <None Include="EntityFiles\CB_CustomsItemLinkage.lxml" />
     <None Include="EntityFiles\CB_LevyCondition.lxml" />
     <None Include="EntityFiles\CB_LevyExclusion.lxml" />
+    <None Include="EntityFiles\CB_QuotaComputedData.lxml" />
     <None Include="EntityFiles\CB_RegularityRequiredCertificate.lxml" />
     <None Include="EntityFiles\CB_TariffComputedData.lxml" />
     <None Include="EntityFiles\CB_TradeLevy.lxml" />
