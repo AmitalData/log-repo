@@ -27,7 +27,7 @@ namespace Logitude.Customs.CustomsMessaging.Tasks
 {
     public class EnqueueSucceedRequestsheets : ICustomsEnqueueSucceedRequestsheets
     {
-        private readonly string procName = "QueueEnqueue_succeedRequestsheets";
+        private readonly string procName = "QueueEnqueue_succeedRequSheets";
 
         public void StartRun(string taskId, int seedDefaultTenant)
         {
