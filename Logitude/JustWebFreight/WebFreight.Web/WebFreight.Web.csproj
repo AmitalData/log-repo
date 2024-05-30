@@ -4110,7 +4110,9 @@
     <Content Include="css\kendo.default.min.css.map" />
     <Content Include="css\kendo.mobile.all.min.css.map" />
     <Content Include="Integration Test\LoginVars\Production\Cloud\TeamIslam\LoginVars.csv" />
-    <Content Include="Nlog.config" />
+    <Content Include="Nlog.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Properties\PublishProfiles\Customs.pubxml" />
     <None Include="Properties\PublishProfiles\CustomsNewProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FeatureBranchPub.pubxml" />
