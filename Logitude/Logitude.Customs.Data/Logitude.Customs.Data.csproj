@@ -148,6 +148,7 @@
     <Compile Include="EntityKeys\CB_RegularityRequirementKeys.cs" />
     <Compile Include="EntityKeys\CB_RuleDetailsHistoryKeys.cs" />
     <Compile Include="EntityKeys\CB_RuleKeys.cs" />
+    <Compile Include="EntityKeys\CB_TariffComputedDataKeys.cs" />
     <Compile Include="EntityKeys\CB_TariffDetailsHistoryKeys.cs" />
     <Compile Include="EntityKeys\CB_TariffKeys.cs" />
     <Compile Include="EntityKeys\CB_TradeAgreementHistoryKeys.cs" />
@@ -378,6 +379,7 @@
     <Compile Include="EntityListQueryServices\CB_RegularityRequirementListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CB_RuleDetailsHistoryListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CB_RuleListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\CB_TariffComputedDataListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CB_TariffDetailsHistoryListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CB_TariffListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CB_TradeAgreementHistoryListQueryService.cs" />
@@ -525,6 +527,7 @@
     <Compile Include="EntityListQueryServices\Generated\CB_RegularityRequirementListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CB_RuleDetailsHistoryListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CB_RuleListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\CB_TariffComputedDataListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CB_TariffDetailsHistoryListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CB_TariffListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CB_TradeAgreementHistoryListQueryService.Generated.cs" />
@@ -814,6 +817,7 @@
     <Compile Include="EntityLists\Generated\CB_RegularityRequirementList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CB_RuleDetailsHistoryList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CB_RuleList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\CB_TariffComputedDataList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CB_TariffDetailsHistoryList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CB_TariffList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CB_TradeAgreementHistoryList.Generated.cs" />
@@ -1069,6 +1073,7 @@
     <Compile Include="EntityMapping\CB_RegularityRequirementMap.cs" />
     <Compile Include="EntityMapping\CB_RuleDetailsHistoryMap.cs" />
     <Compile Include="EntityMapping\CB_RuleMap.cs" />
+    <Compile Include="EntityMapping\CB_TariffComputedDataMap.cs" />
     <Compile Include="EntityMapping\CB_TariffDetailsHistoryMap.cs" />
     <Compile Include="EntityMapping\CB_TariffMap.cs" />
     <Compile Include="EntityMapping\CB_TradeAgreementHistoryMap.cs" />
@@ -1300,6 +1305,7 @@
     <Compile Include="EntityPOCOs\CB_Rule.cs" />
     <Compile Include="EntityPOCOs\CB_RuleDetailsHistory.cs" />
     <Compile Include="EntityPOCOs\CB_Tariff.cs" />
+    <Compile Include="EntityPOCOs\CB_TariffComputedData.cs" />
     <Compile Include="EntityPOCOs\CB_TariffDetailsHistory.cs" />
     <Compile Include="EntityPOCOs\CB_TradeAgreement.cs" />
     <Compile Include="EntityPOCOs\CB_TradeAgreementHistory.cs" />
@@ -1530,6 +1536,7 @@
     <Compile Include="Repsitories\CB_RegularityRequirementRepository.cs" />
     <Compile Include="Repsitories\CB_RuleDetailsHistoryRepository.cs" />
     <Compile Include="Repsitories\CB_RuleRepository.cs" />
+    <Compile Include="Repsitories\CB_TariffComputedDataRepository.cs" />
     <Compile Include="Repsitories\CB_TariffDetailsHistoryRepository.cs" />
     <Compile Include="Repsitories\CB_TariffRepository.cs" />
     <Compile Include="Repsitories\CB_TradeAgreementHistoryRepository.cs" />
@@ -1677,6 +1684,7 @@
     <Compile Include="Repsitories\Generated\CB_RegularityRequirementRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CB_RuleDetailsHistoryRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CB_RuleRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\CB_TariffComputedDataRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CB_TariffDetailsHistoryRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CB_TariffRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CB_TradeAgreementHistoryRepository.Generated.cs" />
