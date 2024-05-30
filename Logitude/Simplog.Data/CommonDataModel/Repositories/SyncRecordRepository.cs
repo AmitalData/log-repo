@@ -73,13 +73,13 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
             IQueryable<SyncRecord> records = context.SyncRecord.Where(syncRecord =>
                 syncRecord.Tenant == tenant &&
-                (syncRecord.IsSync == 2 || syncRecord.IsSync == 3) &&
+                (syncRecord.IsSync == SyncRecordStatus.InQueue || syncRecord.IsSync == SyncRecordStatus.Synced) &&
                 syncRecord.FileNo == fileNo
             );
 
             foreach (SyncRecord syncRecord in records)
             {
-                syncRecord.IsSync = 3;
+                syncRecord.IsSync = SyncRecordStatus.Synced;
                 syncRecord.SyncDT = date;
             }
 
@@ -100,13 +100,13 @@ namespace Simplog.Data.CommonDataModel.Repositories
             IEnumerable<SyncRecord> records = context.SyncRecord.Where(syncRecord =>
                 syncRecord.Tenant == tenant &&
                 syncRecord.FileNo == fileNo &&
-                syncRecord.IsSync == 3 &&
+                syncRecord.IsSync == SyncRecordStatus.Synced &&
                 syncRecord.SyncDT <= syncDT &&
                 syncRecord.CreateDate > yesterday
             );
 
             for (int i = 0; i < records.Count(); i++)
-                records.ElementAt(i).IsSync = 4;
+                records.ElementAt(i).IsSync = SyncRecordStatus.SyncedAndUpdated;
 
             //IEnumerable<SyncRecord> records2 = context.SyncRecord.Where(syncRecord =>
             //    syncRecord.Tenant == tenant &&
@@ -131,10 +131,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
             DateTime yesterday = DateTime.Now.AddDays(-1);
 
             IEnumerable<SyncRecord> records = context.SyncRecord.Where(syncRecord =>                                
-                syncRecord.IsSync == 0 && syncRecord.CreateDate > yesterday);
+                syncRecord.IsSync == SyncRecordStatus.New && syncRecord.CreateDate > yesterday);
 
             for (int i = 0; i < records.Count(); i++)
-                records.ElementAt(i).IsSync = 1;
+                records.ElementAt(i).IsSync = SyncRecordStatus.InProcess;
 
             return records.ToList();
         }
@@ -143,12 +143,21 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             for (int i = 0; i < records.Count; i++)
             {
-                records[i].IsSync = 2;                
+                records[i].IsSync = SyncRecordStatus.InQueue;                
                 context.SyncRecord.Attach(records[i]);
                 context.SetAsModified(records[i]);
             }
 
             context.SaveChanges();
         }
+    }
+
+    public class SyncRecordStatus
+    {
+        public const int New = 0;
+        public const int InProcess = 1;
+        public const int InQueue = 2;
+        public const int Synced = 3;
+        public const int SyncedAndUpdated = 4;
     }
 }
