@@ -10,6 +10,7 @@ import {OtherParticipantIdListService} from './Services/StandardLists/OtherParti
 import {ShipmentCustomerTypeListService} from './Services/StandardLists/ShipmentCustomerTypeListService';
 import {ShipmentLevelListService} from './Services/StandardLists/ShipmentLevelListService';
 import {ShipmentListService} from './Services/StandardLists/ShipmentListService';
+import {LogBoxShipmentListService} from './Services/StandardLists/LogBoxShipmentListService';
 import {ShipmentPayableStatusListService} from './Services/StandardLists/ShipmentPayableStatusListService';
 import {ShipmentReceivableStatusListService} from './Services/StandardLists/ShipmentReceivableStatusListService';
 import {ShipmentTypeListService} from './Services/StandardLists/ShipmentTypeListService';
@@ -61,6 +62,7 @@ export class ModuleProviders {
             case "ShipmentCustomerTypeListService": { myResult = new ShipmentCustomerTypeListService(); break; }
             case "ShipmentLevelListService": { myResult = new ShipmentLevelListService(); break; }
             case "ShipmentListService": { myResult = new ShipmentListService(); break; }
+            case "LogBoxShipmentListService": { myResult = new LogBoxShipmentListService(); break; }
             case "ShipmentPayableStatusListService": { myResult = new ShipmentPayableStatusListService(); break; }
             case "ShipmentReceivableStatusListService": { myResult = new ShipmentReceivableStatusListService(); break; }
             case "ShipmentTypeListService": { myResult = new ShipmentTypeListService(); break; }

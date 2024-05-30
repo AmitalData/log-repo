@@ -1,0 +1,33 @@
+export class LogBoxShipmentList {
+	Id: string;
+	Tenant: number;
+	ComputedStatusDate: Date;
+	TransportModeId: string;
+	DirectionId: string;
+	ShipmentNumber: string;
+	IsOperationalClosed: boolean;
+	StatusName: string;
+	CustomsClearanceDate: Date;
+	StatusDate: Date;
+	Shipper: string;
+	CustomerReference1: string;
+	CustomerReference2: string;
+	CustomerReference3: string;
+	ShipperName: string;
+	ForwarderShipmentNumber: string;
+	PrivateLabelAgentName: string;
+	ForwarderPartnerId: string;
+	SearchFields: string;
+	DocumentsSearchFields: string;
+	IsCancelled: boolean;
+	LastDocumentDateTime: Date;
+	IsRequestedDocuments: boolean;
+	RequestedDocumentsCount: number;
+	IsDigitalSignRequired: boolean;
+	IsDepositionRequired: boolean;
+	IsImporterApprovalRequried: boolean;
+	ApprovedByUserName: string;
+	MainCarriageExpectedOrActual: Date;
+	CreateDateTime: Date;
+	StatusLocation: string;
+}

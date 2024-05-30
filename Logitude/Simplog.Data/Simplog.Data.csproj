@@ -809,6 +809,7 @@
     <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentCustomsTransmission.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\ContainerTrackingRequest.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\ContainerTrackingResponse.cs" />
+    <Compile Include="ShipmentsModel\EntityPOCOs\LogBoxShipmentDataView.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentDigitalField.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentDocsField.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentPackageHarmonize.cs" />
@@ -816,6 +817,7 @@
     <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentStoragePricing.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentSubType.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentUnassignedField.cs" />
+    <Compile Include="ShipmentsModel\ILogBoxShipmentDataViewContext.cs" />
     <Compile Include="ShipmentsModel\Mapping\ContainerMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\ContainersExternalDataMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\ContainerStatusMap.cs" />
@@ -846,6 +848,7 @@
     <Compile Include="ShipmentsModel\Mapping\ShipmentCustomsMessageTypeMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\ShipmentCustomsTransmissionMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\ContainerTrackingProviderMap.cs" />
+    <Compile Include="ShipmentsModel\Mapping\LogBoxShipmentDataViewMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\ShipmentDigitalFieldMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\ShipmentDocsFieldMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\ShipmentPackageHarmonizeMap.cs" />
@@ -1680,6 +1683,7 @@
     <Compile Include="ShipmentsModel\Repositories\AWBOCIRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\ShipmentCommodityRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\ShipmentPackageItemRepository.cs" />
+    <Compile Include="ShipmentsModel\LogBoxShipmentDataViewContext.cs" />
     <Compile Include="ShipmentsModel\ShipmentsContext.cs" />
     <None Include="ShipmentsModel\ShipmentsContext.Views.cs" />
     <Content Include="CommonDataModel\ProductTypeModificationViewScript.sql" />
