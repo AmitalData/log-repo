@@ -112,26 +112,6 @@ namespace CustomsBook
             return files.Select(file => file.Name).ToList();
         }
 
-        static string FindFileName()
-        {
-
-            DirectoryInfo directory = new DirectoryInfo("C:\\CustomsBook\\ExtractedFiles");
-            FileInfo[] files = directory.GetFiles();
-
-            // עבור על כל הקובצים
-            foreach (FileInfo file in files)
-            {
-                // בדוק אם הקובץ מסתיים בסיומת accdb
-                if (file.Extension == ".xml")
-                {
-                    // מצא את שם הקובץ
-                    string filename = file.Name;
-
-                    return filename;
-                }
-            }
-            return null;
-        }
         static async Task DownloadFiles(string fileUrl, string savePath)
         {
 
@@ -231,11 +211,13 @@ namespace CustomsBook
                 }
                 catch (Exception ex)
                 {
-                    logger.Debug($"Error occurred: {ex.Message}");
+                    logger.Debug($"Exception in Table {xmlTableName} migrated to {sqlTableName} --- Error --- \n Error occurred: {ex.Message}");
+                    Console.WriteLine($"Exception in Table {xmlTableName} migrated to {sqlTableName} --- Error --- \n Error occurred: {ex.Message}");
                     return;
                 }
             }
             else {
+                logger.Debug($"Table {fileName} name not found in mapping.");
                 return;
             }
             using (SqlConnection sqlConnection = new SqlConnection(sqlConnectionString))
