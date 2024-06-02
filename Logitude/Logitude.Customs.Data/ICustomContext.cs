@@ -57,6 +57,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<CB_CustomsBookAddition> CB_CustomsBookAdditions { get; }
 		 IDbSet<CB_CustomsBookAdditionsDetailsHistory> CB_CustomsBookAdditionsDetailsHistorys { get; }
 		 IDbSet<CB_CustomsItem> CB_CustomsItems { get; }
+		 IDbSet<CB_CustomsItemComputedData> CB_CustomsItemComputedDatas { get; }
 		 IDbSet<CB_CustomsItemDetailsHistory> CB_CustomsItemDetailsHistorys { get; }
 		 IDbSet<CB_CustomsItemExclusion> CB_CustomsItemExclusion { get; }
 		 IDbSet<CB_CustomsItemLinkage> CB_CustomsItemLinkages { get; }
@@ -64,14 +65,17 @@ namespace Logitude.Customs.Data
 		 IDbSet<CB_LevyExclusion> CB_LevyExclusions { get; }
 		 IDbSet<CB_PropertiesDetailsHistory> CB_PropertiesDetailsHistorys { get; }
 		 IDbSet<CB_Quota> CB_Quotas { get; }
+		 IDbSet<CB_QuotaComputedData> CB_QuotaComputedDatas { get; }
 		 IDbSet<CB_QuotaDetailsHistory> CB_QuotaDetailsHistorys { get; }
 		 IDbSet<CB_QuotaRenewal> CB_QuotaRenewals { get; }
 		 IDbSet<CB_RegularityInception> CB_RegularityInceptions { get; }
 		 IDbSet<CB_RegularityRequiredCertificate> CB_RegularityRequiredCertificates { get; }
 		 IDbSet<CB_RegularityRequirement> CB_RegularityRequirements { get; }
+		 IDbSet<CB_RequirementComputedData> CB_RequirementComputedDatas { get; }
 		 IDbSet<CB_Rule> CB_Rules { get; }
 		 IDbSet<CB_RuleDetailsHistory> CB_RuleDetailsHistorys { get; }
 		 IDbSet<CB_Tariff> CB_Tariffs { get; }
+		 IDbSet<CB_TariffComputedData> CB_TariffComputedDatas { get; }
 		 IDbSet<CB_TariffDetailsHistory> CB_TariffDetailsHistorys { get; }
 		 IDbSet<CB_TradeAgreement> CB_TradeAgreements { get; }
 		 IDbSet<CB_TradeAgreementHistory> CB_TradeAgreementHistories { get; }

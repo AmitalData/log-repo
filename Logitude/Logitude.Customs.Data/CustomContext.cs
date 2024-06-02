@@ -148,6 +148,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new CB_CustomsItemMap());
 	
+            modelBuilder.Configurations.Add(new CB_CustomsItemComputedDataMap());
+	
             modelBuilder.Configurations.Add(new CB_CustomsItemDetailsHistoryMap());
 	
             modelBuilder.Configurations.Add(new CB_CustomsItemExclusionMap());
@@ -162,6 +164,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new CB_QuotaMap());
 	
+            modelBuilder.Configurations.Add(new CB_QuotaComputedDataMap());
+	
             modelBuilder.Configurations.Add(new CB_QuotaDetailsHistoryMap());
 	
             modelBuilder.Configurations.Add(new CB_QuotaRenewalMap());
@@ -172,11 +176,15 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new CB_RegularityRequirementMap());
 	
+            modelBuilder.Configurations.Add(new CB_RequirementComputedDataMap());
+	
             modelBuilder.Configurations.Add(new CB_RuleMap());
 	
             modelBuilder.Configurations.Add(new CB_RuleDetailsHistoryMap());
 	
             modelBuilder.Configurations.Add(new CB_TariffMap());
+	
+            modelBuilder.Configurations.Add(new CB_TariffComputedDataMap());
 	
             modelBuilder.Configurations.Add(new CB_TariffDetailsHistoryMap());
 	
@@ -1767,6 +1775,12 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<CB_CustomsItemComputedData> CB_CustomsItemComputedDatas 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<CB_CustomsItemDetailsHistory> CB_CustomsItemDetailsHistorys 
 	 {
 	      get; set;
@@ -1809,6 +1823,12 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<CB_QuotaComputedData> CB_QuotaComputedDatas 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<CB_QuotaDetailsHistory> CB_QuotaDetailsHistorys 
 	 {
 	      get; set;
@@ -1839,6 +1859,12 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<CB_RequirementComputedData> CB_RequirementComputedDatas 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<CB_Rule> CB_Rules 
 	 {
 	      get; set;
@@ -1852,6 +1878,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<CB_Tariff> CB_Tariffs 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CB_TariffComputedData> CB_TariffComputedDatas 
 	 {
 	      get; set;
 	 

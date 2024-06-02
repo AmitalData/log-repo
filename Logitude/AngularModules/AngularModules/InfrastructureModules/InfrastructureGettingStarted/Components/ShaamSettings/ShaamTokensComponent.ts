@@ -1,4 +1,5 @@
 import { ChangeDetectorRef, Component, EventEmitter, Output } from '@angular/core';
+import { GridColumn } from 'Common/Components/Maintenance/AmitalAPI/components/LogitudeGridSimpleComponent';
 import { CommunicationLogListService } from 'Common/Services/StandardLists/CommunicationLogListService';
 import { BaseComponent } from 'Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
@@ -142,14 +143,3 @@ export class ShaamTokensComponent extends BaseComponent {
     }
 }
 
-
-type GridColumn = {
-    FieldName: string;
-    DataTypeCode?: string;
-    Display?: string;
-    Styles?: any;
-    IsCustomTemplate?: boolean;
-    ServerSideSortable?: boolean;
-    SortByName?: string;
-    isTemplate?: boolean;
-};

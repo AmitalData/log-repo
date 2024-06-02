@@ -10,6 +10,18 @@ export class AmitalAPISchemaWebService extends AmitalAPIWebServiceBase<AmitalApi
     getSettings(): Promise<AmitalApiSettings> {
         return this.http.get(this.apiUrl + '/getSettings', { headers: this.headers }).toPromise() as Promise<AmitalApiSettings>
     }
+
+    getRequestQuery(params: RequestQueryParams): Promise<RequestQuery[]> {
+        return this.http.post(this.apiUrl + '/postRequestQuery', params, { headers: this.headers }).toPromise() as Promise<RequestQuery[]>
+    }
+
+    downloadRequest(id: string): Promise<any> {
+        return this.http.get(this.apiUrl + '/getDownloadRequest', { 
+            params: { id },
+            headers: this.headers, 
+            responseType: 'blob' 
+        }).toPromise() as Promise<any>
+    }
 }
 
 export interface AmitalApiSchema {
@@ -34,4 +46,42 @@ export interface AmitalApiSettings {
     baseAddress: string
     authAddress: string
     AuthScope: string
+}
+
+export interface RequestQuery {
+    Id: string;
+    CreateDate: Date;
+    Tenant: string;
+    PartnerName: string;
+    ClientId: string;
+    ClientName: string;
+    ClientApi: string;
+    StorageBlob: string;
+    TaskName: string;
+    TotalItems: number;
+    Ref1: string | null;
+    Ref2: string | null;
+    Ref3: string | null;
+    Ref4: string | null;
+    IsParent: boolean;
+    ParentId: string;
+    ChunkIdx: number;
+    OuterProess: string | null;
+    TotalChunks: number;
+    FileSize: number | null;
+    HasError: boolean;
+    ErrorMessage: string | null;
+}
+
+export interface RequestQueryParams {
+    fromCreateDate: Date;
+    reference: string | null;
+    partner: string | null;
+    clientApi: string | null;
+    taskName: string | null;
+    isParent: string | null;
+    hasErrors: string | null;
+    minItems: number | null;
+    page: number | null;
+    pageSize: number | null;
 }

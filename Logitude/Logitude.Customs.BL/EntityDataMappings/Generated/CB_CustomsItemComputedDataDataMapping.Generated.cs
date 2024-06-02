@@ -1,0 +1,467 @@
+
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Logitude.Server.Tools;  
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Server.Infrastructure.DataContracts;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Def.EntityPMs; 
+using Logitude.Customs.Data;
+
+namespace Logitude.Customs.BL.EntityDataMappings
+{
+   
+   public partial class CB_CustomsItemComputedDataDataMapping: IMapping<CB_CustomsItemComputedDataPM, CB_CustomsItemComputedData>,IMappingEncodeBase64NVARCHARFields<CB_CustomsItemComputedDataPM>
+   {
+          public enum POCOPropertyNames
+          { 
+		     None,  
+	         CB_ID, 
+	         ID, 
+	         CustomsItemID, 
+	         FullClassification, 
+	         IsLeaf, 
+	         CustomsItemDetailsHistoryID, 
+	         PropertiesDetailsHistoryID, 
+	         PH_MeasurementUnitID, 
+	         IsHistoryExists, 
+	         IsRulesExists, 
+	         StartDate, 
+	         EndDate, 
+	         CI_Parent_CustomsItemIDNum, 
+	         CI_BaseFullClassification, 
+	         CI_ComputedCheckDigit, 
+	         CI_CustomsBookTypeIDNum, 
+	         CI_CustomsItemCategoryIDNum, 
+	         ItemHierarchicLocationID, 
+	         CIH_Title, 
+	         CIH_GoodsDescription, 
+	         CustomsItemEntityStatusIDNum, 
+	         PH_IsCarItem, 
+	         FullGoodsDescription,
+	      }
+
+
+	      public enum PMPropertyNames
+          { 
+		     None,  
+	         CB_ID, 
+	         ID, 
+	         CustomsItemID, 
+	         FullClassification, 
+	         IsLeaf, 
+	         CustomsItemDetailsHistoryID, 
+	         PropertiesDetailsHistoryID, 
+	         PH_MeasurementUnitID, 
+	         IsHistoryExists, 
+	         IsRulesExists, 
+	         StartDate, 
+	         EndDate, 
+	         CI_Parent_CustomsItemIDNum, 
+	         CI_BaseFullClassification, 
+	         CI_ComputedCheckDigit, 
+	         CI_CustomsBookTypeIDNum, 
+	         CI_CustomsItemCategoryIDNum, 
+	         ItemHierarchicLocationID, 
+	         CIH_Title, 
+	         CIH_GoodsDescription, 
+	         CustomsItemEntityStatusIDNum, 
+	         PH_IsCarItem, 
+	         FullGoodsDescription,
+	      }
+
+		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
+        List<PMPropertyNames> CustomMappedPMProperties=new List<PMPropertyNames>();
+    
+	    public void PMToPOCO(CB_CustomsItemComputedDataPM entityPM, CB_CustomsItemComputedData entityPOCO)
+        {
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ID))
+            {
+				entityPOCO.ID = entityPM.ID;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsItemID))
+            {
+				entityPOCO.CustomsItemID = entityPM.CustomsItemID;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FullClassification))
+            {
+				entityPOCO.FullClassification = entityPM.FullClassification;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsLeaf))
+            {
+				entityPOCO.IsLeaf = entityPM.IsLeaf;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsItemDetailsHistoryID))
+            {
+				entityPOCO.CustomsItemDetailsHistoryID = entityPM.CustomsItemDetailsHistoryID;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PropertiesDetailsHistoryID))
+            {
+				entityPOCO.PropertiesDetailsHistoryID = entityPM.PropertiesDetailsHistoryID;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PH_MeasurementUnitID))
+            {
+				entityPOCO.PH_MeasurementUnitID = entityPM.PH_MeasurementUnitID;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsHistoryExists))
+            {
+				entityPOCO.IsHistoryExists = entityPM.IsHistoryExists;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsRulesExists))
+            {
+				entityPOCO.IsRulesExists = entityPM.IsRulesExists;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StartDate))
+            {
+				entityPOCO.StartDate = entityPM.StartDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EndDate))
+            {
+				entityPOCO.EndDate = entityPM.EndDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CI_Parent_CustomsItemIDNum))
+            {
+				entityPOCO.CI_Parent_CustomsItemIDNum = entityPM.CI_Parent_CustomsItemIDNum;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CI_BaseFullClassification))
+            {
+				entityPOCO.CI_BaseFullClassification = entityPM.CI_BaseFullClassification;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CI_ComputedCheckDigit))
+            {
+				entityPOCO.CI_ComputedCheckDigit = entityPM.CI_ComputedCheckDigit;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CI_CustomsBookTypeIDNum))
+            {
+				entityPOCO.CI_CustomsBookTypeIDNum = entityPM.CI_CustomsBookTypeIDNum;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CI_CustomsItemCategoryIDNum))
+            {
+				entityPOCO.CI_CustomsItemCategoryIDNum = entityPM.CI_CustomsItemCategoryIDNum;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ItemHierarchicLocationID))
+            {
+				entityPOCO.ItemHierarchicLocationID = entityPM.ItemHierarchicLocationID;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CIH_Title))
+            {
+				entityPOCO.CIH_Title = entityPM.CIH_Title;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CIH_GoodsDescription))
+            {
+				entityPOCO.CIH_GoodsDescription = entityPM.CIH_GoodsDescription;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsItemEntityStatusIDNum))
+            {
+				entityPOCO.CustomsItemEntityStatusIDNum = entityPM.CustomsItemEntityStatusIDNum;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PH_IsCarItem))
+            {
+				entityPOCO.PH_IsCarItem = entityPM.PH_IsCarItem;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FullGoodsDescription))
+            {
+				entityPOCO.FullGoodsDescription = entityPM.FullGoodsDescription;
+			}
+			}
+
+		public void POCOToPM(CB_CustomsItemComputedDataPM entityPM, CB_CustomsItemComputedData entityPOCO)
+        {
+			 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CB_ID))
+            {
+					entityPM.CB_ID = entityPOCO.CB_ID;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ID))
+            {
+					entityPM.ID = entityPOCO.ID;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CustomsItemID))
+            {
+					entityPM.CustomsItemID = entityPOCO.CustomsItemID;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.FullClassification))
+            {
+					entityPM.FullClassification = entityPOCO.FullClassification;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsLeaf))
+            {
+					entityPM.IsLeaf = entityPOCO.IsLeaf;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CustomsItemDetailsHistoryID))
+            {
+					entityPM.CustomsItemDetailsHistoryID = entityPOCO.CustomsItemDetailsHistoryID;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.PropertiesDetailsHistoryID))
+            {
+					entityPM.PropertiesDetailsHistoryID = entityPOCO.PropertiesDetailsHistoryID;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.PH_MeasurementUnitID))
+            {
+					entityPM.PH_MeasurementUnitID = entityPOCO.PH_MeasurementUnitID;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsHistoryExists))
+            {
+					entityPM.IsHistoryExists = entityPOCO.IsHistoryExists;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsRulesExists))
+            {
+					entityPM.IsRulesExists = entityPOCO.IsRulesExists;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.StartDate))
+            {
+					entityPM.StartDate = entityPOCO.StartDate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.EndDate))
+            {
+					entityPM.EndDate = entityPOCO.EndDate;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CI_Parent_CustomsItemIDNum))
+            {
+					entityPM.CI_Parent_CustomsItemIDNum = entityPOCO.CI_Parent_CustomsItemIDNum;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CI_BaseFullClassification))
+            {
+					entityPM.CI_BaseFullClassification = entityPOCO.CI_BaseFullClassification;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CI_ComputedCheckDigit))
+            {
+					entityPM.CI_ComputedCheckDigit = entityPOCO.CI_ComputedCheckDigit;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CI_CustomsBookTypeIDNum))
+            {
+					entityPM.CI_CustomsBookTypeIDNum = entityPOCO.CI_CustomsBookTypeIDNum;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CI_CustomsItemCategoryIDNum))
+            {
+					entityPM.CI_CustomsItemCategoryIDNum = entityPOCO.CI_CustomsItemCategoryIDNum;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ItemHierarchicLocationID))
+            {
+					entityPM.ItemHierarchicLocationID = entityPOCO.ItemHierarchicLocationID;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CIH_Title))
+            {
+					entityPM.CIH_Title = entityPOCO.CIH_Title;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CIH_GoodsDescription))
+            {
+					entityPM.CIH_GoodsDescription = entityPOCO.CIH_GoodsDescription;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CustomsItemEntityStatusIDNum))
+            {
+					entityPM.CustomsItemEntityStatusIDNum = entityPOCO.CustomsItemEntityStatusIDNum;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.PH_IsCarItem))
+            {
+					entityPM.PH_IsCarItem = entityPOCO.PH_IsCarItem;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.FullGoodsDescription))
+            {
+					entityPM.FullGoodsDescription = entityPOCO.FullGoodsDescription;
+            }
+
+		}
+
+		public void PMToOldPM(CB_CustomsItemComputedDataPM entityPM, CB_CustomsItemComputedDataPM oldEntityPM)
+        {
+		     oldEntityPM.ChangedProperties.Clear();
+			 
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ID))
+            {
+                oldEntityPM.ID = entityPM.ID;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsItemID))
+            {
+                oldEntityPM.CustomsItemID = entityPM.CustomsItemID;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FullClassification))
+            {
+                oldEntityPM.FullClassification = entityPM.FullClassification;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsLeaf))
+            {
+                oldEntityPM.IsLeaf = entityPM.IsLeaf;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsItemDetailsHistoryID))
+            {
+                oldEntityPM.CustomsItemDetailsHistoryID = entityPM.CustomsItemDetailsHistoryID;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PropertiesDetailsHistoryID))
+            {
+                oldEntityPM.PropertiesDetailsHistoryID = entityPM.PropertiesDetailsHistoryID;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PH_MeasurementUnitID))
+            {
+                oldEntityPM.PH_MeasurementUnitID = entityPM.PH_MeasurementUnitID;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsHistoryExists))
+            {
+                oldEntityPM.IsHistoryExists = entityPM.IsHistoryExists;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsRulesExists))
+            {
+                oldEntityPM.IsRulesExists = entityPM.IsRulesExists;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StartDate))
+            {
+                oldEntityPM.StartDate = entityPM.StartDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EndDate))
+            {
+                oldEntityPM.EndDate = entityPM.EndDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CI_Parent_CustomsItemIDNum))
+            {
+                oldEntityPM.CI_Parent_CustomsItemIDNum = entityPM.CI_Parent_CustomsItemIDNum;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CI_BaseFullClassification))
+            {
+                oldEntityPM.CI_BaseFullClassification = entityPM.CI_BaseFullClassification;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CI_ComputedCheckDigit))
+            {
+                oldEntityPM.CI_ComputedCheckDigit = entityPM.CI_ComputedCheckDigit;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CI_CustomsBookTypeIDNum))
+            {
+                oldEntityPM.CI_CustomsBookTypeIDNum = entityPM.CI_CustomsBookTypeIDNum;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CI_CustomsItemCategoryIDNum))
+            {
+                oldEntityPM.CI_CustomsItemCategoryIDNum = entityPM.CI_CustomsItemCategoryIDNum;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ItemHierarchicLocationID))
+            {
+                oldEntityPM.ItemHierarchicLocationID = entityPM.ItemHierarchicLocationID;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CIH_Title))
+            {
+                oldEntityPM.CIH_Title = entityPM.CIH_Title;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CIH_GoodsDescription))
+            {
+                oldEntityPM.CIH_GoodsDescription = entityPM.CIH_GoodsDescription;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsItemEntityStatusIDNum))
+            {
+                oldEntityPM.CustomsItemEntityStatusIDNum = entityPM.CustomsItemEntityStatusIDNum;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PH_IsCarItem))
+            {
+                oldEntityPM.PH_IsCarItem = entityPM.PH_IsCarItem;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.FullGoodsDescription))
+            {
+                oldEntityPM.FullGoodsDescription = entityPM.FullGoodsDescription;
+            }
+			
+		}
+
+	    public void EncodeBase64NVARCHARFields(CB_CustomsItemComputedDataPM entityPM)
+        {
+            if (String.IsNullOrWhiteSpace(entityPM.EncodeBase64NVARCHARFieldsBy)) 
+            {
+                return;
+
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.CIH_Title)) //T4 find type == nText 
+            {
+                entityPM.CIH_Title = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.CIH_Title));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.CIH_GoodsDescription)) //T4 find type == nText 
+            {
+                entityPM.CIH_GoodsDescription = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.CIH_GoodsDescription));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.FullGoodsDescription)) //T4 find type == nText 
+            {
+                entityPM.FullGoodsDescription = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.FullGoodsDescription));
+            }
+            entityPM.EncodeBase64NVARCHARFieldsBy=null;
+		}
+
+
+	    public void AddPOCOPropertyName(POCOPropertyNames pocoPropertyName)
+        {
+            CustomMappedPOCOProperties.Add(pocoPropertyName);
+        }
+
+        public void AddPMPropertyName(PMPropertyNames pocoPropertyName)
+        {
+            CustomMappedPMProperties.Add(pocoPropertyName);
+        }
+			  
+   }
+}
+	 

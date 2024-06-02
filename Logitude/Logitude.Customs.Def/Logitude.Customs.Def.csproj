@@ -76,6 +76,7 @@
     <Compile Include="EntityPMs\Generated\CB_CountriesExclusionPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CB_CustomsBookAdditionPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CB_CustomsBookAdditionsDetailsHistoryPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CB_CustomsItemComputedDataPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CB_CustomsItemDetailsHistoryPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CB_CustomsItemExclusionPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CB_CustomsItemLinkagePM.Generated.cs" />
@@ -83,14 +84,17 @@
     <Compile Include="EntityPMs\Generated\CB_LevyConditionPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CB_LevyExclusionPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CB_PropertiesDetailsHistoryPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CB_QuotaComputedDataPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CB_QuotaDetailsHistoryPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CB_QuotaPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CB_QuotaRenewalPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CB_RegularityInceptionPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CB_RegularityRequiredCertificatePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CB_RegularityRequirementPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CB_RequirementComputedDataPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CB_RuleDetailsHistoryPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CB_RulePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CB_TariffComputedDataPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CB_TariffDetailsHistoryPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CB_TariffPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CB_TradeAgreementHistoryPM.Generated.cs" />

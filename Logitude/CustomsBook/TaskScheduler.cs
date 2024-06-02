@@ -14,14 +14,14 @@ using System.Data.OleDb;
 using System.Data.SqlClient;
 using System.Data;
 using Simplog.Data.InfrastructureModel;
-using System.Data.Entity;
 using Simplog.Data.ShipmentsModel;
 using Logitude.Customs.Data;
-using System.Data.Entity.Infrastructure;
 using System.Configuration;
 using System.Linq;
 using NLog;
 using System.Threading;
+using System.Xml.Linq;
+using System.Xml.Schema;
 
 namespace CustomsBook
 {
@@ -29,14 +29,13 @@ namespace CustomsBook
     {
 
         static Logger logger = LogManager.GetCurrentClassLogger();
-
         static async void DownloadFile()
         {
-        // Define the URL of the ZIP file to download
-        string url = "https://shaarolami-query.customs.mof.gov.il/CustomspilotWeb/he/CustomsBook/Home/DownloadFile";
+            // Define the URL of the ZIP file to download
+            string url = "https://shaarolami-query.customs.mof.gov.il/CustomspilotWeb/he/CustomsBook/Home/DownloadFile";
             string downloadedFilePath = @"C:\CustomsBook\Download\fullCustomsBookData.zip";  // Adjust the download path as needed
             string extractFolder = @"C:\CustomsBook\ExtractedFiles";
-        
+
             try
             {
                 if (!Directory.Exists(@"C:\CustomsBook\Download"))
@@ -53,41 +52,42 @@ namespace CustomsBook
 
                 while (!success && attempts < maxAttempts)
                 {
-                    
-                        // Code to download the ZIP file
-                        await DownloadFiles(url, downloadedFilePath);
 
-                        // Check if the downloaded file size is 0 KB
-                        long fileSize = new FileInfo(downloadedFilePath).Length;
-                        if (fileSize == 0)
-                        {
-                            attempts++;
-                        }
-                        else
-                        {
-                            success = true; // If the file size is not 0 KB, consider the download successful
-                        }
+                    // Code to download the ZIP file
+                    await DownloadFiles(url, downloadedFilePath);
+
+                    // Check if the downloaded file size is 0 KB
+                    long fileSize = new FileInfo(downloadedFilePath).Length;
+                    if (fileSize == 0)
+                    {
+                        attempts++;
+                    }
+                    else
+                    {
+                        success = true; // If the file size is not 0 KB, consider the download successful
+                    }
 
                 }
 
                 if (File.Exists(downloadedFilePath) && success)
                 {
                     await ExtractZipFile(downloadedFilePath, extractFolder);
-                    string fileName = FindFileName();
-                    if(fileName != null)
+                    TruncateTables();
+                    List<string> fileNames = FindFileNames();
+                    foreach (string fileName in fileNames)
                     {
-                        MapAccessTables(fileName);
-
+                        if (fileName != null)
+                        {
+                            MapXmlToTables(fileName);
+                        }
                     }
                 }
                 else
                 {
                     // File is not a valid ZIP file
-
-                    logger.Debug("The file is not a valid ZIP file.");
                     logger.Debug("The file is not a valid ZIP file.");
                 }
-               
+
             }
             catch (Exception ex)
             {
@@ -104,27 +104,14 @@ namespace CustomsBook
                 }
             }
         }
-
-         static string FindFileName()
-         {
-
+        static List<string> FindFileNames()
+        {
             DirectoryInfo directory = new DirectoryInfo("C:\\CustomsBook\\ExtractedFiles");
-            FileInfo[] files = directory.GetFiles();
+            FileInfo[] files = directory.GetFiles("*.xml");
 
-            // עבור על כל הקובצים
-            foreach (FileInfo file in files)
-            {
-                // בדוק אם הקובץ מסתיים בסיומת accdb
-                if (file.Extension == ".accdb")
-                {
-                    // מצא את שם הקובץ
-                    string filename = file.Name;
+            return files.Select(file => file.Name).ToList();
+        }
 
-                    return filename;
-                }
-            }
-            return null;
-         }
         static async Task DownloadFiles(string fileUrl, string savePath)
         {
 
@@ -149,7 +136,7 @@ namespace CustomsBook
                 }
             }
         }
-        
+
         static async Task ExtractZipFile(string zipFilePath, string extractFolder)
         {
             using (IArchive archive = ArchiveFactory.Open(zipFilePath))
@@ -159,15 +146,28 @@ namespace CustomsBook
             }
         }
 
+        static string GetNameFromFilename(string filename)
+        {
+            // Check if the file name contains "_"
+            int index = filename.IndexOf('_');
+            if (index != -1)
+            {
+                // If "_" exists, take only the part before it
+                return filename.Substring(0, index);
+            }
+            else
+            {
+                // If no "_", just return the file name without extension
+                return System.IO.Path.GetFileNameWithoutExtension(filename);
+            }
+        }
 
-        static void MapAccessTables(string fileName)
-        { // Get the paths to the Access database and the SQL database
-            var accessConnectionString ="Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\\CustomsBook\\ExtractedFiles\\" + fileName;
+        static void TruncateTables()
+        {
             string sqlConnectionString = ConfigurationManager.ConnectionStrings[0].ConnectionString;
+
             using (SqlConnection sqlConnection = new SqlConnection(sqlConnectionString))
             {
-
-
                 try
                 {
                     sqlConnection.Open();
@@ -175,111 +175,159 @@ namespace CustomsBook
                     using (SqlCommand command = new SqlCommand("dbo.TruncateCustomsBookTables", sqlConnection))
                     {
                         command.CommandType = CommandType.StoredProcedure;
-
                         command.ExecuteNonQuery();
                     }
 
-                    logger.Debug($"Tables Truncate successfully.");
+                    logger.Debug($"Tables truncated successfully.");
                 }
-
                 catch (Exception ex)
                 {
                     logger.Debug($"Error occurred: {ex.Message}");
                 }
-                finally 
+                finally
                 {
-                    sqlConnection.Close(); 
-                }
-
-            }
-                
-
-                
-            using (OleDbConnection accessConnection = new OleDbConnection(accessConnectionString))
-            {
-                accessConnection.Open();
-
-                DataTable schema = accessConnection.GetSchema("Tables");
-
-                using (SqlConnection sqlConnection = new SqlConnection(sqlConnectionString))
-                {
-                    sqlConnection.Open();
-                   
-                    foreach (DataRow table in schema.Rows)
-                    {
-                        try
-                        {
-                            string accessTableName = table["TABLE_NAME"].ToString();
-                            string sqlTableName = GetSqlTableName(accessTableName); // Map Access table name to SQL table name
-                            if (sqlTableName == null)
-                            {
-                                continue;
-                            }
-
-                           
-                            using (OleDbCommand accessCommand = new OleDbCommand($"SELECT * FROM [{accessTableName}]", accessConnection))
-                            {
-                                using (OleDbDataReader accessReader = accessCommand.ExecuteReader())
-                                {
-                                    DataTable accessSchema = accessReader.GetSchemaTable();
-                                    List<string> sqlSchema = GetColumnNames(sqlTableName);
-
-                                    using (SqlBulkCopy bulkCopy = new SqlBulkCopy(sqlConnection))
-                                    {
-                                        //bulkCopy.BulkCopyTimeout = 240;
-                                        bulkCopy.DestinationTableName = sqlTableName;
-                                        bulkCopy.BatchSize = 1000; // Set desired segment size
-
-                                        string runningId = "1"; // Initialize the running ID as string
-
-                                        foreach (DataRow accessRow in accessReader)
-                                        {
-                                            accessRow["CB_ID"] = runningId; // Assign the running ID (as string) to the CB_ID field
-                                            runningId = (int.Parse(runningId) + 1).ToString(); // Increment the running ID for the next record
-                                        }
-
-                                        bulkCopy.ColumnMappings.Add("CB_ID", "CB_ID");
-
-                                        foreach (DataRow accessColumn in accessSchema.Rows)
-                                        {
-                                            string columnName = accessColumn["ColumnName"].ToString();
-                                            if (sqlSchema.Contains(columnName))
-                                            {
-                                                bulkCopy.ColumnMappings.Add(columnName, columnName);
-                                            }
-                                            else if(columnName == "Connected_CustomsItemDetailsHistoryID")
-                                            {
-                                                bulkCopy.ColumnMappings.Add(columnName, "Connect_CustItemDetailsHistID");
-                                            }
-                                            else if(columnName == "WithoutQuota_ComputationMethodDataID")
-                                            {
-                                                bulkCopy.ColumnMappings.Add(columnName, "WithoutQuota_ComputMethDataID");
-                                            }
-                                            else if(columnName == "WithinQuota_ComputationMethodDataID")
-                                            {
-                                                bulkCopy.ColumnMappings.Add(columnName, "WithinQuota_ComputMethDataID");
-                                            }
-                                        }
-
-                                        bulkCopy.WriteToServer(accessReader);
-                                    }
-                                }
-                            }
-
-                            logger.Debug($"Table {accessTableName} migrated to {sqlTableName} successfully.");
-                        }
-
-                        catch (Exception ex)
-                        {
-                            logger.Debug($"Error occurred: {ex.Message}");
-                            continue;
-                        }
-                    }
-
                     sqlConnection.Close();
                 }
+            }
 
-                accessConnection.Close();
+        }
+
+        static void MapXmlToTables(string fileName)
+        {
+
+            // Get the path to the XML file and the SQL database
+            string xmlFilePath = Path.Combine("C:\\CustomsBook\\ExtractedFiles\\", fileName);
+            string sqlConnectionString = ConfigurationManager.ConnectionStrings[0].ConnectionString;
+            string xmlTableName = GetNameFromFilename(fileName);
+            string sqlTableName = GetSqlTableName(xmlTableName); // Map XML table name to SQL table name
+            XDocument xmlDoc = new XDocument();
+            if (sqlTableName != null)
+            {
+                try
+                {
+            // Load the XML document
+                    xmlDoc = XDocument.Load(xmlFilePath);
+
+                }
+                catch (Exception ex)
+                {
+                    logger.Debug($"Exception in Table {xmlTableName} migrated to {sqlTableName} --- Error --- \n Error occurred: {ex.Message}");
+                    Console.WriteLine($"Exception in Table {xmlTableName} migrated to {sqlTableName} --- Error --- \n Error occurred: {ex.Message}");
+                    return;
+                }
+            }
+            else {
+                logger.Debug($"Table {fileName} name not found in mapping.");
+                return;
+            }
+            using (SqlConnection sqlConnection = new SqlConnection(sqlConnectionString))
+            {
+                sqlConnection.Open();
+
+                // Iterate through each table element in the XML document
+                foreach (XElement tableElement in xmlDoc.Root.Elements())
+                {
+                    try
+                    {
+                      
+
+                        DataTable dataTable = new DataTable(sqlTableName);
+
+                        // Define columns in DataTable based on XML data
+                        foreach (XElement rowElement in tableElement.Elements())
+                        {
+                            DataRow row = dataTable.NewRow();
+                            foreach (XElement columnElement in rowElement.Elements())
+                            {
+                                if (!dataTable.Columns.Contains(columnElement.Name.LocalName))
+                                {
+                                    dataTable.Columns.Add(columnElement.Name.LocalName);
+                                }
+                                row[columnElement.Name.LocalName] = columnElement.Value;
+                            }
+                            dataTable.Rows.Add(row);
+                        }
+                        List<string> sqlSchema = GetColumnNames(sqlTableName);
+
+                        using (SqlBulkCopy bulkCopy = new SqlBulkCopy(sqlConnection))
+                        {
+                            bulkCopy.DestinationTableName = sqlTableName;
+                            bulkCopy.BatchSize = 1000; // Set desired segment size
+
+                            // Add column mappings
+                            foreach (DataColumn column in dataTable.Columns)
+                            {
+                                string columnName = column.ColumnName;
+                                if (columnName == "ID")
+                                {
+                                    bulkCopy.ColumnMappings.Add(columnName, "CB_ID");
+                                }
+                                if (sqlSchema.Contains(columnName))
+                                {
+                                    bulkCopy.ColumnMappings.Add(columnName, columnName);
+                                }
+                                else if (columnName == "Connected_CustomsItemDetailsHistoryID")
+                                {
+                                    bulkCopy.ColumnMappings.Add(columnName, "Connect_CustItemDetailsHistID");
+                                }
+                                else if (columnName == "Valid_CustomsItemDetailsHistoryID")
+                                {
+                                    bulkCopy.ColumnMappings.Add(columnName, "CustomsItemDetailsHistoryID");
+                                }
+                                else if (columnName == "Valid_PropertiesDetailsHistoryID")
+                                {
+                                    bulkCopy.ColumnMappings.Add(columnName, "PropertiesDetailsHistoryID");
+                                }
+                                else if (columnName == "CI_CustomsItemHierarchicLocationIDNum")
+                                {
+                                    bulkCopy.ColumnMappings.Add(columnName, "ItemHierarchicLocationID");
+                                } 
+                                else if (columnName == "CIH_CustomsItemEntityStatusIDNum")
+                                {
+                                    bulkCopy.ColumnMappings.Add(columnName, "CustomsItemEntityStatusIDNum");
+                                }
+                                else if (columnName == "ValidQuotaDetailsHistoryID")
+                                {
+                                    bulkCopy.ColumnMappings.Add(columnName, "ValidQuotaDetailsHistoryID");
+                                }
+
+                                if (sqlTableName == "Customs.CB_TariffComputedDatas")
+                                {
+                                    if (columnName == "WithoutQuota_ComputationMethodDataID")
+                                {
+                                        bulkCopy.ColumnMappings.Add(columnName, "WithoutQuota_ComputationID");
+                                    }
+                                    else if (columnName == "WithinQuota_ComputationMethodDataID")
+                                    {
+                                        bulkCopy.ColumnMappings.Add(columnName, "WithinQuota_ComputationID");
+                                    }
+                                }
+                                else
+                                {
+                                    if (columnName == "WithoutQuota_ComputationMethodDataID")
+                                    {
+                                    bulkCopy.ColumnMappings.Add(columnName, "WithoutQuota_ComputMethDataID");
+                                }
+                                else if (columnName == "WithinQuota_ComputationMethodDataID")
+                                {
+                                    bulkCopy.ColumnMappings.Add(columnName, "WithinQuota_ComputMethDataID");
+                                }
+                            }
+                            }
+                            bulkCopy.WriteToServer(dataTable);
+                        }
+
+                        logger.Debug($"Table {xmlTableName} migrated to {sqlTableName} successfully.");
+                        Console.WriteLine($"Table {fileName} migrated to {sqlTableName} successfully.");
+                    }
+                    catch (Exception ex)
+                    {
+                        logger.Debug($"Error occurred: {ex.Message}");
+                        continue;
+                    }
+                }
+
+                sqlConnection.Close();
             }
         }
 
@@ -298,9 +346,9 @@ namespace CustomsBook
                     return "Customs.CB_Rules";
                 case "RuleDetailsHistory":
                     return "Customs.CB_RuleDetailsHistorys";
-                case "Tariff_777":
+                case "Tariff":
                     return "Customs.CB_Tariffs";
-                case "TariffDetailsHistory_777":
+                case "TariffDetailsHistory":
                     return "Customs.CB_TariffDetailsHistorys";
                 case "ComputationMethodData":
                     return "Customs.CB_ComputationMethodDatas";
@@ -331,7 +379,7 @@ namespace CustomsBook
                 case "LevyCondition":
                     return "Customs.CB_LevyConditions";
                 case "LevyExclusion":
-                    return "Customs.CB_LevyExclusions"; 
+                    return "Customs.CB_LevyExclusions";
                 case "Vendor":
                     return "Customs.CB_Vendors";
                 case "CustomsBookAddition":
@@ -339,15 +387,23 @@ namespace CustomsBook
                 case "CustomsBookAdditionsDetailsHistory":
                     return "Customs.CB_CustomsBookAdditionsDetailsHistorys";
                 case "AdditionRulesDetailsHistory":
-                    return "Customs.CB_AdditionRulesDetailsHistorys";
-                
+                    return "Customs.CB_AdditionRulesDetailsHistorys";                    
+                case "CustomsItemComputedData":
+                    return "Customs.CB_CustomsItemComputedDatas";
+                case "TariffComputedData":
+                    return "Customs.CB_TariffComputedDatas";
+                case "QuotaComputedData":
+                    return "Customs.CB_QuotaComputedDatas";
+                case "RegularityRequirementComputedData":
+                    return "Customs.CB_RequirementComputedDatas";
+
 
                 // Add additional mappings as needed
                 default:
                     return null; // Use the same name if no mapping is defined
             }
         }
-        
+
         static List<string> GetColumnNames(string tableName)
         {
             List<string> columns = new List<string>();
@@ -365,7 +421,7 @@ namespace CustomsBook
                     com.Parameters.AddWithValue("@yourtableName", tableNameAfterDot);
                     using (SqlDataReader reader = com.ExecuteReader())
                     {
-                        
+
                         while (reader.Read()) // Iterate over each row in the result set
                         {
                             string columnName = reader.GetString(0); // Access the first column (index 0) as a string
@@ -381,7 +437,7 @@ namespace CustomsBook
 
         static void Main(string[] args)
         {
-            NLog.LogManager.Configuration = new NLog.Config.XmlLoggingConfiguration(Path.Combine("C:\\LWC_NEW\\Logitude\\CustomsBook\\NLog.config"));
+            NLog.LogManager.Configuration = new NLog.Config.XmlLoggingConfiguration(Path.Combine("C:\\LWC\\Logitude\\CustomsBook\\NLog.config"));
             logger.Debug("Start TaskScheduler");
             DownloadFile();
             Console.ReadLine();

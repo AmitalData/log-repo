@@ -1046,6 +1046,13 @@ export class MaintenanceComponent {
         item.Code = "API_SETTINGS";
         item.ObjectTableName = TextCodeTranslator.Translate("Customs.MC.General.APISettings"),
         this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+                
+        var item = new MenusTablePM();
+        item.CategoryTypeCode = 'AAP';
+        item.Icon = "List"
+        item.Code = "API_Requests";
+        item.ObjectTableName = TextCodeTranslator.Translate("Customs.MC.General.APIRequests") || 'API Requests',
+        this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
     }
  
  
@@ -1106,6 +1113,16 @@ export class MaintenanceComponent {
                         logWindow.Title = TextCodeTranslator.Translate("Customs.MC.General.APISettings");
                         logWindow.IsShowCloseButton = true;
                         logWindow.Show('./Common/Components/Maintenance/AmitalAPI/APISettingsComponent');
+                    break;
+                }
+
+                case "API_Requests": {
+                        const logWindow = new LogitudeWindow();
+                        logWindow.Width = window.outerWidth;
+                        logWindow.Height = window.outerHeight;
+                        logWindow.Title = TextCodeTranslator.Translate("Customs.MC.General.API_Requests");
+                        logWindow.IsShowCloseButton = true;
+                        logWindow.Show('./Common/Components/Maintenance/AmitalAPI/AmitalAPIRequestsComponent');
                     break;
                 }
 
