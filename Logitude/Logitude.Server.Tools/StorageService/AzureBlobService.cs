@@ -227,7 +227,7 @@ namespace Logitude.Server.Tools.StorageService
             ICloudBlob destBlobRef = blobContainerDest.GetBlobReferenceFromServer(blobDestination.Name);
             while (destBlobRef.CopyState.Status == CopyStatus.Pending)
             {
-                Task.Delay(100).Wait();
+                Task.Delay(50).Wait();
                 destBlobRef = blobContainerDest.GetBlobReferenceFromServer(destBlobRef.Name);
             }
 
