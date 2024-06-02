@@ -4,6 +4,7 @@ using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Azure;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -15,9 +16,6 @@ namespace Logitude.Server.Tools.StorageService
 {
     public class AzureBlobService : IBlobService , IDisposable
     {
-
-         
-
         public byte[] Read(BlobFileInfo fileInfo)
         {
             //tenant1/docsout/1-379.pdf
@@ -150,7 +148,7 @@ namespace Logitude.Server.Tools.StorageService
           
         //}
 
-        private  void GetFileBlobContainerWithoutAzureFolder(BlobFileInfo fileInfo, out string localPath, out CloudBlobContainer blobContainer)
+        private void GetFileBlobContainerWithoutAzureFolder(BlobFileInfo fileInfo, out string localPath, out CloudBlobContainer blobContainer)
         {
             if (fileInfo.HasExternalContainer)
             {
@@ -166,7 +164,8 @@ namespace Logitude.Server.Tools.StorageService
                 blobContainer = StorageAcountDetails.GetCurrentContainer(fileInfo.ContainerName);
             }
         }
-        private  void GetFileBlobContainerInfo(BlobFileInfo fileInfo, out string localPath, out CloudBlobContainer blobContainer)
+
+        private void GetFileBlobContainerInfo(BlobFileInfo fileInfo, out string localPath, out CloudBlobContainer blobContainer)
         {
             if (fileInfo.HasExternalContainer)
             {
@@ -177,7 +176,7 @@ namespace Logitude.Server.Tools.StorageService
                 string extension = !string.IsNullOrEmpty(fileInfo.Extension) ? fileInfo.Extension.ToLower() : "";
 
                 localPath = fileInfo.FileName + "." + extension;
-                if (!string.IsNullOrEmpty(LogitudeSettings.AzureFolderName) &&  IsEnableAzureRootFolder(fileInfo.Tenant))
+                if (!string.IsNullOrEmpty(LogitudeSettings.AzureFolderName) && IsEnableAzureRootFolder(fileInfo.Tenant))
                 {
                     localPath = fileInfo.ExternalContainerName + "/" + localPath;
                     blobContainer = StorageAcountDetails.GetCurrentContainer(LogitudeSettings.AzureFolderName.ToLower());
@@ -189,7 +188,7 @@ namespace Logitude.Server.Tools.StorageService
             }
             else
             {
-                string extension =!string.IsNullOrEmpty(fileInfo.Extension) ? fileInfo.Extension.ToLower() : "";
+                string extension = !string.IsNullOrEmpty(fileInfo.Extension) ? fileInfo.Extension.ToLower() : "";
 
                 localPath = StorageAcountDetails.GetBlobNameByLocation(fileInfo.FileName + "." + extension, fileInfo.FolderName);
                 if (!string.IsNullOrEmpty(LogitudeSettings.AzureFolderName) && IsEnableAzureRootFolder(fileInfo.Tenant))
@@ -199,7 +198,7 @@ namespace Logitude.Server.Tools.StorageService
                 }
                 else
                 {
-                    if (fileInfo.FolderName == "how-to" )
+                    if (fileInfo.FolderName == "how-to")
                     {
                         blobContainer = StorageAcountDetails.GetCurrentContainer(fileInfo.FolderName);
                     }
@@ -212,14 +211,36 @@ namespace Logitude.Server.Tools.StorageService
             }
         }
 
+        public void MoveFromAnotherStorage(string containerSASURI, string fileNameSource, BlobFileInfo destinationFileInfo)
+        {
+            string cacheKey = containerSASURI.Substring(containerSASURI.Length - 30, 29);
+            CloudBlobContainer blobContainerSource = CacheManager.GetOrInsertNewObject(cacheKey, () => 
+                new CloudBlobContainer(new Uri(containerSASURI)));
+                
+            CloudBlockBlob blobSource = blobContainerSource.GetBlockBlobReference(fileNameSource);
+
+            GetFileBlobContainerInfo(destinationFileInfo, out string localPath, out CloudBlobContainer blobContainerDest);
+            CloudBlockBlob blobDestination = blobContainerDest.GetBlockBlobReference(localPath);
+
+            blobDestination.StartCopy(blobSource);
+
+            ICloudBlob destBlobRef = blobContainerDest.GetBlobReferenceFromServer(blobDestination.Name);
+            while (destBlobRef.CopyState.Status == CopyStatus.Pending)
+            {
+                Task.Delay(50).Wait();
+                destBlobRef = blobContainerDest.GetBlobReferenceFromServer(destBlobRef.Name);
+            }
+
+            blobSource.Delete();
+        }
+
         public void Write(byte[] data, BlobFileInfo fileInfo)
         {
-         
             string localPath = null;
             CloudBlobContainer blobContainer = null;
             GetFileBlobContainerInfo(fileInfo, out localPath, out blobContainer);
 
-            
+
             var blobfile = blobContainer.GetBlockBlobReference(localPath);
             using (Stream blobstream = blobfile.OpenWrite())
             {
@@ -330,7 +351,7 @@ namespace Logitude.Server.Tools.StorageService
 
                 }
 
-               // finalcloudBlockBlob.StartCopy(tempcloudBlockBlob);
+                // finalcloudBlockBlob.StartCopy(tempcloudBlockBlob);
                 tempcloudBlockBlob.DeleteIfExists();
             }
         }
@@ -430,11 +451,11 @@ namespace Logitude.Server.Tools.StorageService
             //
 
           
-        }
 
+        }
         public void Dispose()
         {
-         }
+        }
     }
 }
 
