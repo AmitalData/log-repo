@@ -323,17 +323,15 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
                     inputReportLine.ConfirmationNumber = journal.ConfirmationNumber;
                 }
-                if (aPInvoicePM != null)
+
+                if (aPInvoicePM != null && CheckLastNineAreNine(aPInvoicePM.ConfirmationNumber))
                 {
-                    if (CheckLastNineAreNine(aPInvoicePM.ConfirmationNumber))
-                    {
-                        inputReportLine.LineTypeCode = "H";
-                        inputReportLine.ConfirmationNumber = null;
-                    }
-                    else if (aPInvoicePM.VATNumber == tenantPM.VatNumber)
-                    {
-                        inputReportLine.LineTypeCode = "C";
-                    }
+                    inputReportLine.LineTypeCode = "H";
+                    inputReportLine.ConfirmationNumber = null;
+                }
+                else if (aPInvoicePM != null && aPInvoicePM.VATNumber == tenantPM.VatNumber)
+                {
+                    inputReportLine.LineTypeCode = "C";
                 }
                 else if (journal.LineCounter > 0 && journal.LineCreditAccountId != null && journal.LineCreditAccountId == setting.CustomsGLAccountId)
                 {
