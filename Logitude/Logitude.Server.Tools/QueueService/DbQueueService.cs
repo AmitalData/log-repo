@@ -542,14 +542,12 @@ namespace Logitude.Server.Tools.QueueService
                         {
                             SqlCommand cmd = new SqlCommand("[dbo].[Queue_Peek_Jouranl_Approval]", cn);
                             cmd.CommandType = CommandType.StoredProcedure;
-                            SqlParameter messageIdPar = new SqlParameter("@V_MessageId", SqlDbType.BigInt);
-                            SqlParameter queueCodePar = new SqlParameter("@V_QueueDefinitionCode", SqlDbType.NVarChar, 255);
-                            SqlParameter messageBodyPar = new SqlParameter("@V_MessageBody", SqlDbType.VarChar, messageBodyLength);
-                            SqlParameter retryNumberPar = new SqlParameter("@V_RetryNumber", SqlDbType.Int);
-                            SqlParameter watingStatusPar = new SqlParameter("@v_WatingStatus", SqlDbType.Int);
-                            SqlParameter tenantPar = new SqlParameter("@V_Tenant", SqlDbType.Int);
-                            SqlParameter messageCreatedServerTimepar = new SqlParameter("@V_MESSAGECREATEDSERVERTIME", SqlDbType.DateTime);
-                            SqlParameter nextRunDelayInSecPar = new SqlParameter("@V_NEXTRUNDELAYINSEC", SqlDbType.Int);
+                            SqlParameter messageIdPar = new SqlParameter("@MessageId", SqlDbType.BigInt);
+                            SqlParameter queueCodePar = new SqlParameter("@QueueDefinitionCode", SqlDbType.NVarChar, 255);
+                            SqlParameter messageBodyPar = new SqlParameter("@MessageBody", SqlDbType.VarChar, messageBodyLength);
+                            SqlParameter retryNumberPar = new SqlParameter("@RetryNumber", SqlDbType.Int);
+                            SqlParameter watingStatusPar = new SqlParameter("@WatingStatus", SqlDbType.Int);
+                            SqlParameter tenantPar = new SqlParameter("@Tenant", SqlDbType.Int);
 
                             messageIdPar.Direction = ParameterDirection.Output;
                             messageBodyPar.Direction = ParameterDirection.Output;
@@ -557,12 +555,9 @@ namespace Logitude.Server.Tools.QueueService
                             retryNumberPar.Direction = ParameterDirection.Output;
                             watingStatusPar.Direction = ParameterDirection.Input;
                             tenantPar.Direction = ParameterDirection.Output;
-                            messageCreatedServerTimepar.Direction = ParameterDirection.Output;
-                            nextRunDelayInSecPar.Direction = ParameterDirection.Input;
 
                             queueCodePar.Value = QueueCode;
                             watingStatusPar.Value = WorkerNameService.GetWorkerWaitingStatusForReceiving(this.Tenant);
-                            nextRunDelayInSecPar.Value = serverWaitTime.Value.Milliseconds;
 
                             cmd.Parameters.Add(messageIdPar);
                             cmd.Parameters.Add(messageBodyPar);
@@ -570,8 +565,6 @@ namespace Logitude.Server.Tools.QueueService
                             cmd.Parameters.Add(queueCodePar);
                             cmd.Parameters.Add(watingStatusPar);
                             cmd.Parameters.Add(tenantPar);
-                            cmd.Parameters.Add(messageCreatedServerTimepar);
-                            cmd.Parameters.Add(nextRunDelayInSecPar);
 
                             cn.Open();
                             var output = cmd.ExecuteNonQuery();
@@ -592,11 +585,10 @@ namespace Logitude.Server.Tools.QueueService
 
                                     }
                                     this.CurrentMessageId = response.MessageId = messageId.ToString();
-                                    response.RetryNumber = (int)cmd.Parameters["@V_RetryNumber"].Value;
-                                    response.Tenant = (int)cmd.Parameters["@V_Tenant"].Value;
-                                    response.MessageCreatedServerTime = (DateTime)cmd.Parameters["@V_MESSAGECREATEDSERVERTIME"].Value;
+                                    response.RetryNumber = (int)cmd.Parameters["@RetryNumber"].Value;
+                                    response.Tenant = (int)cmd.Parameters["@Tenant"].Value;
 
-                                    string messageBody = cmd.Parameters["@V_MessageBody"].Value as string;
+                                    string messageBody = cmd.Parameters["@MessageBody"].Value as string;
                                     if (!string.IsNullOrEmpty(messageBody))
                                     {
                                         Dictionary<string, string> messageValues = DictionaryJsonConverter.FromJsonToDictionary(messageBody);
@@ -611,7 +603,6 @@ namespace Logitude.Server.Tools.QueueService
 
                         }
                     }
-
                     scope.Complete();
                 }
 
