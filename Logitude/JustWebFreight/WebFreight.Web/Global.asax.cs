@@ -572,8 +572,8 @@ namespace WebFreight.Web
             LogitudeSettings.System2RedirectFraction = setting.System2RedirectFraction;
 			LogitudeSettings.WindWardSettings = setting.WindWardSettings;
 			LogitudeSettings.LogitudeIISURL = setting.LogitudeIISURL;
-
-		}
+            LogitudeSettings.TempStorageConnection = setting.TempStorageConnection;
+        }
 
 		private void StartSignalRTopicThread()
         {
