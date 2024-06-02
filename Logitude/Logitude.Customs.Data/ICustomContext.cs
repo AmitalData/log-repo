@@ -71,6 +71,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<CB_RegularityInception> CB_RegularityInceptions { get; }
 		 IDbSet<CB_RegularityRequiredCertificate> CB_RegularityRequiredCertificates { get; }
 		 IDbSet<CB_RegularityRequirement> CB_RegularityRequirements { get; }
+		 IDbSet<CB_RequirementComputedData> CB_RequirementComputedDatas { get; }
 		 IDbSet<CB_Rule> CB_Rules { get; }
 		 IDbSet<CB_RuleDetailsHistory> CB_RuleDetailsHistorys { get; }
 		 IDbSet<CB_Tariff> CB_Tariffs { get; }
