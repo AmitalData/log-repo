@@ -1657,7 +1657,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
             public void WorkUntilQEmptyQueueDB(TimeSpan? timeSpan = null, string selectedQueue = null)
             {
-                selectedQueue = selectedQueue ?? JournalApproveService.K_AccountingJournalApproveWR;
+                selectedQueue = selectedQueue ?? JournalApproveService.K_AccountingJournalApproveMutliThreadingWR;
                 Stopwatch stopwatch = null;
                 if (timeSpan != null)
                 {
