@@ -1,4 +1,4 @@
-<View DBType="Main" Name="ShipmentDataView" Schema="dbo" Module="Shipment">
+<View DBType="Main" Name="LogBoxShipmentDataView" Schema="dbo" Module="Shipment">
   <SqlScript>
     <![CDATA[
 
