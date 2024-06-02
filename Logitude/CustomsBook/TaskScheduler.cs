@@ -346,9 +346,9 @@ namespace CustomsBook
                     return "Customs.CB_Rules";
                 case "RuleDetailsHistory":
                     return "Customs.CB_RuleDetailsHistorys";
-                case "Tariff_777":
+                case "Tariff":
                     return "Customs.CB_Tariffs";
-                case "TariffDetailsHistory_777":
+                case "TariffDetailsHistory":
                     return "Customs.CB_TariffDetailsHistorys";
                 case "ComputationMethodData":
                     return "Customs.CB_ComputationMethodDatas";
