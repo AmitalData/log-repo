@@ -401,6 +401,7 @@
     <Compile Include="EntityDataMappings\CB_CountriesExclusionDataMapping.cs" />
     <Compile Include="EntityDataMappings\CB_CustomsBookAdditionDataMapping.cs" />
     <Compile Include="EntityDataMappings\CB_CustomsBookAdditionsDetailsHistoryDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CB_CustomsItemComputedDataDataMapping.cs" />
     <Compile Include="EntityDataMappings\CB_CustomsItemDataMapping.cs" />
     <Compile Include="EntityDataMappings\CB_CustomsItemDetailsHistoryDataMapping.cs" />
     <Compile Include="EntityDataMappings\CB_CustomsItemExclusionDataMapping.cs" />
@@ -669,6 +670,7 @@
     <Compile Include="EntityDataMappings\Generated\CB_CountriesExclusionDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CB_CustomsBookAdditionDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CB_CustomsBookAdditionsDetailsHistoryDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CB_CustomsItemComputedDataDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CB_CustomsItemDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CB_CustomsItemDetailsHistoryDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CB_CustomsItemExclusionDataMapping.Generated.cs" />
@@ -1327,6 +1329,7 @@
     <Compile Include="EntityQueryServices\Generated\CB_CountriesExclusionQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CB_CustomsBookAdditionQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CB_CustomsBookAdditionsDetailsHistoryQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CB_CustomsItemComputedDataQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CB_CustomsItemDetailsHistoryQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CB_CustomsItemExclusionQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CB_CustomsItemLinkageQueryService.Generated.cs" />
@@ -1939,6 +1942,7 @@
     <Compile Include="EntityUpdateServices\Generated\CB_CountriesExclusionUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CB_CustomsBookAdditionsDetailsHistoryUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CB_CustomsBookAdditionUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\CB_CustomsItemComputedDataUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CB_CustomsItemDetailsHistoryUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CB_CustomsItemExclusionUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CB_CustomsItemLinkageUpdateService.Generated.cs" />
