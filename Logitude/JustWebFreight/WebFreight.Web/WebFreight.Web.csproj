@@ -1489,6 +1489,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CB_RegularityRequirementViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CB_RuleDetailsHistoryViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CB_RuleViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CB_TariffComputedDataViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CB_TariffDetailsHistoryViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CB_TariffViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CB_TradeAgreementHistoryViewsController.Generated.cs" />
@@ -1567,6 +1568,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CB_RegularityRequirementController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CB_RuleController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CB_RuleDetailsHistoryController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CB_TariffComputedDataController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CB_TariffController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CB_TariffDetailsHistoryController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CB_TradeAgreementController.Generated.cs" />
@@ -1840,6 +1842,7 @@
     <Compile Include="CustomModel\DomainServices\CustomDomainService.LoadingSiteType.cs" />
     <Compile Include="CustomModel\DomainServices\Generated\CB_CustomsItemComputedDataDomainService.Generated.cs" />
     <Compile Include="CustomModel\DomainServices\Generated\CB_CustomsItemDomainService.Generated.cs" />
+    <Compile Include="CustomModel\DomainServices\Generated\CB_TariffComputedDataDomainService.Generated.cs" />
     <Compile Include="CustomModel\DomainServices\Generated\LogisticActionRequestTypeDomainService.Generated.cs" />
     <Compile Include="CustomModel\DomainServices\CustomDomainService.CustomsDocumentUpload.cs" />
     <Compile Include="CustomModel\DomainServices\Generated\RemarksClassificationDomainService.Generated.cs" />
@@ -4038,6 +4041,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CB_RegularityRequirementUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CB_RuleDetailsHistoryUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CB_RuleUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CB_TariffComputedDataUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CB_TariffDetailsHistoryUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CB_TariffUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CB_TradeAgreementHistoryUpdateClass.cs" />
