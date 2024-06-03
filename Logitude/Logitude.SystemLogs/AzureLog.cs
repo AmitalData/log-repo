@@ -10,11 +10,21 @@ using Logitude.SystemLogs.Repositories;
 using System.Transactions;
 using Simplog.Server.Infrastructure.Helpers;
 using System.Data.Entity.Validation;
+using NLog;
 
 namespace Logitude.SystemLogs
 {
     public static class AzureLog
     {
+        private static readonly NLog.Logger NLogger = NLog.LogManager.GetLogger("AmitalLogger");
+
+        private static void InitNlogConfig()
+        {
+            if (NLog.LogManager.Configuration == null)
+                NLog.LogManager.Configuration = new NLog.Config.XmlLoggingConfiguration(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "NLog.config"));
+
+        }
+
         public static void SaveFileToStorage(string filename,string fileContent,int tenant)
         {
             try
@@ -218,6 +228,10 @@ namespace Logitude.SystemLogs
 
         static void AddLogRecord(string exception,int tenant ,string stackTrace, DateTime clientDate,  string userId, string userName,string IP, Exception cachedException)
         {
+
+            InitNlogConfig();
+            NLogger.Error(cachedException, "Tenant {0}, clientDate {1}, userID {2}, userName {3}, IP {4}, stackTrace {5}, exception:{6}",
+                tenant,clientDate, userId, userName,IP,stackTrace, exception); 
 
             if (!string.IsNullOrEmpty(exception) && exception.Contains("Sorry! you have no permission to do this operation"))
                 return;
