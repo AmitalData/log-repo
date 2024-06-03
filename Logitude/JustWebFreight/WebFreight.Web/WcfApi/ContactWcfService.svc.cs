@@ -17,6 +17,9 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityLists;
+using Microsoft.TeamFoundation.Common;
+using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 
 namespace WebFreight.Web.WcfApi
 {
@@ -51,7 +54,7 @@ namespace WebFreight.Web.WcfApi
                     ICommonDataContext objectContext = CommonDataContext.GetContext(entityPM.Tenant);
                     ContactRepository ContactRepository = new ContactRepository(objectContext);
                     CardRepository cardRepository = new CardRepository(objectContext);
-
+                    GlobalContactRepository globalContactsRepository=new GlobalContactRepository();
                     ContactService service = new ContactService(objectContext, entityPM.Tenant);
 
                     entityPM.IsHybrid = true;
@@ -62,7 +65,29 @@ namespace WebFreight.Web.WcfApi
                         response.ErrorMessage = "ExternalId field is required";
                         return response;
                     }
-
+                    if (entityPM.Tenant != 0)
+                    {
+                        Contact contact = ContactRepository.GetSingleContactByEmailSpecificTenant(entityPM.Email, 0);
+                        GlobalContact globalContact = globalContactsRepository.GetGlobalContactByEmailAndTenant(entityPM.Email, 0);
+                         if (contact != null)
+                        {
+                            if (!contact.InActive)
+                            {
+                                response.HasError = true;
+                                response.ErrorMessage = "Email field exist in the database Contact in tenant 0.";
+                                return response;
+                            }
+                        }
+                        if (globalContact != null)
+                        {
+                            if (!globalContact.InActive)
+                            {
+                                response.HasError = true;
+                                response.ErrorMessage = "Email field exist in the database GlobalContact in tenant 0.";
+                                return response;
+                            }
+                        }
+                    }
                     if (entityPM.CardId != null)
                     {
                         Card card = cardRepository.GetSingleCardByCode(entityPM.CardId, entityPM.Tenant, false);
