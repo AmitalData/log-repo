@@ -21,16 +21,24 @@ export function FillARPayment(aRPaymentDetails: ARPaymentDetails) {
 }
 
 export function FillChequeARPayment(aRPaymentDetails: ARPaymentDetails) {
+
+    const now = new Date();
+
     cy.FillLogLov(ARPaymentSelectors.Partner, aRPaymentDetails.Partner, true)
-    cy.FillLogTextBox(ARPaymentSelectors.RegisterDate, aRPaymentDetails.RegisterDate)
+    //cy.FillLogTextBox(ARPaymentSelectors.RegisterDate, aRPaymentDetails.RegisterDate)
+    cy.FillDate(ARPaymentSelectors.RegisterDate,now.toLocaleDateString('fr-FR') )
     cy.FillLogLov(ARPaymentSelectors.PaymentMethod, aRPaymentDetails.PaymentMethod, true)
     cy.FillLogLov(ARPaymentSelectors.PaymentBranch, aRPaymentDetails.PaymentBranch, true)
     cy.FillLogLov(ARPaymentSelectors.PaymentCurrency, aRPaymentDetails.PaymentCurrency, true)
 }
 
 export function FillChequeDetails(aRPaymentDetails: ARPaymentDetails) {
+
+    const now = new Date();
+
     PressOnTitleAfterFillLogTextBox(ARPaymentSelectors.ChequeAmount,aRPaymentDetails.ChequeAmount)
-    PressOnTitleAfterFillLogTextBox(ARPaymentSelectors.ChequeValueDate, aRPaymentDetails.ChequeValueDate)
+    //PressOnTitleAfterFillLogTextBox(ARPaymentSelectors.ChequeValueDate, aRPaymentDetails.ChequeValueDate)
+    PressOnTitleAfterFillLogTextBox(ARPaymentSelectors.ChequeValueDate,now.toLocaleDateString('fr-FR') )
     PressOnTitleAfterFillLogTextBox(ARPaymentSelectors.ChequeRef, aRPaymentDetails.ChequeRef)
     PressOnTitleAfterFillLogTextBox(ARPaymentSelectors.ChequeBank, aRPaymentDetails.ChequeBank)
     PressOnTitleAfterFillLogTextBox(ARPaymentSelectors.ChequeBankBranch, aRPaymentDetails.ChequeBankBranch)
