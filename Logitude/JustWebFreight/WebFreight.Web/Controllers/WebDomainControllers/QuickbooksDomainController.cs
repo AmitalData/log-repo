@@ -1,6 +1,5 @@
 ﻿using Intuit.Ipp.Core;
 using Intuit.Ipp.QueryFilter;
-using Intuit.Ipp.Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +7,6 @@ using System.Net;
 using System.Net.Http;
 using System.Web;
 using System.Web.Http;
-using Intuit.Ipp.LinqExtender;
 using WebFreight.Web.Helpers;
 using Intuit.Ipp.Data;
 using Logitude.BL.InvoiceModel.EntityPMs;
