@@ -20,8 +20,15 @@ namespace Logitude.SystemLogs
 
         private static void InitNlogConfig()
         {
-            if (NLog.LogManager.Configuration == null)
-                NLog.LogManager.Configuration = new NLog.Config.XmlLoggingConfiguration(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "NLog.config"));
+            try
+            {
+                if (NLog.LogManager.Configuration == null)
+                    NLog.LogManager.Configuration = new NLog.Config.XmlLoggingConfiguration(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "NLog.config"));
+            }
+            catch(Exception e) 
+            {
+                System.Diagnostics.Debug.WriteLine(e);
+            }
 
         }
 
