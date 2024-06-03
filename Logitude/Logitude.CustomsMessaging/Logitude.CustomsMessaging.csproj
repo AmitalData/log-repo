@@ -494,6 +494,7 @@
     <Compile Include="UnifreightGateway\AnalyzeQueueMessageService.cs" />
     <Compile Include="UnifreightGateway\CacheManagerService.cs" />
     <Compile Include="UnifreightGateway\CustomsRequestsSheetInProgressService.cs" />
+    <Compile Include="UnifreightGateway\ExportCloudSSOService.cs" />
     <Compile Include="UnifreightGateway\InsertImportDeclarationService.cs" />
     <Compile Include="UnifreightGateway\MevakerSendSignedDeclarationService.cs" />
     <Compile Include="UnifreightGateway\SendDirectMessageService.cs" />

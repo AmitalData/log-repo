@@ -22,6 +22,10 @@ using System.Web.Http;
 using WebFreight.Web.CustomModel;
 using WebFreight.Web.CustomWebServices;
 using WebFreight.Web.Helpers;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
+using System.Web;
 
 namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 {
@@ -34,6 +38,56 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
         }
 
+        public HttpResponseMessage PostUnifreightGatewayMessages(UnifreightGatewayParams requestParams)
+        {
+            try
+            {
+                try
+                {
+                    string logKey = PerformanceLogger.LogCurrentTime();
+                    string token = HttpContext.Current.Request.Headers["Token"];
+                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                    WebFreight.Web.Security.SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                    WebFreight.Web.Security.SecurityUtility.CheckContactFeature("Customs.Declaration", "READ", authToken.Tenant);
+                }
+                catch (Exception E)
+                {
+                    requestParams.SUCCESS = "false";
+                    bool hidesecurtityparams = true;
+                    requestParams.MessageOut = hidesecurtityparams ? $"authentication failed" : E.ToString();
+
+                    return Request.CreateResponse(HttpStatusCode.OK, requestParams);
+                }
+
+                string DataOut1 = "";
+                string DataOut2 = "";
+                string SUCCESS = "";
+                string MoreParams = requestParams.MoreParams;
+                string MessageOut = "";
+
+                var service = new UnifreightGatewayService();
+                service.ProccessRequest(requestParams.AssemblyQualifiedName, requestParams.DataIn1, requestParams.DataIn2,
+                    out DataOut1,
+                    out DataOut2,
+                    out SUCCESS,
+                    ref MoreParams,
+                    out MessageOut
+                    );
+
+                requestParams.DataOut1 = DataOut1;
+                requestParams.DataOut2 = DataOut2;
+                requestParams.SUCCESS = SUCCESS;
+                requestParams.MoreParams = MoreParams;
+                requestParams.MessageOut = MessageOut;
+
+                return Request.CreateResponse(HttpStatusCode.OK, requestParams);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
 
         public HttpResponseMessage PostMorningMessages(MorningMessageRequestParams requestParams)
         {
@@ -725,7 +779,18 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
         public bool continueInBackground { get; set; }
         public string responseDataXml { get; set; }
         public int ProgressStage { get; set; }
-
     }
 
+    public class UnifreightGatewayParams
+    {
+        public string Token { get; set; }
+        public string AssemblyQualifiedName { get; set; }
+        public string DataIn1 { get; set; }
+        public string DataIn2 { get; set; }
+        public string DataOut1 { get; set; }
+        public string DataOut2 { get; set; }
+        public string SUCCESS { get; set; }
+        public string MoreParams { get; set; }
+        public string MessageOut { get; set; }
+    }
 }
