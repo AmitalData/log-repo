@@ -14,7 +14,10 @@ namespace Simplog.Data.ShipmentModel.Mapping
             this.Property(t => t.Tenant).HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
             this.Property(t => t.ShipmentNumber).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.CustomerReference1).HasMaxLength(50).IsUnicode(false);
+            this.Property(t => t.DirectionName).HasMaxLength(10).IsUnicode(false);
+            this.Property(t => t.TransportModeName).HasMaxLength(10).IsUnicode(false);
             this.Property(t => t.CustomerReference2).HasMaxLength(50).IsUnicode(false);
+            this.Property(t => t.TruckNumber).HasMaxLength(15);
             this.Property(t => t.DirectionId).IsRequired().IsFixedLength().HasMaxLength(1).IsUnicode(false);
             this.Property(t => t.TransportModeId).IsRequired().IsFixedLength().HasMaxLength(1).IsUnicode(false);
             this.Property(t => t.ShipperName).HasMaxLength(60).IsUnicode(false);
@@ -29,10 +32,13 @@ namespace Simplog.Data.ShipmentModel.Mapping
             this.Property(t => t.CustomerReference2).HasColumnName("CustomerReference2");
             this.Property(t => t.LastUpdateDate).HasColumnName("LastUpdateDate");
             this.Property(t => t.IsCancelled).HasColumnName("IsCancelled");
+            this.Property(t => t.DirectionName).HasColumnName("DirectionName");
+            this.Property(t => t.TransportModeName).HasColumnName("TransportModeName");
             this.Property(t => t.IsOperationalClosed).HasColumnName("IsOperationalClosed");
             this.Property(t => t.DirectionId).HasColumnName("DirectionId");
             this.Property(t => t.TransportModeId).HasColumnName("TransportModeId");
             this.Property(t => t.CreateDateTime).HasColumnName("CreateDateTime");
+            this.Property(t => t.TruckNumber).HasColumnName("TruckNumber");
             this.Property(t => t.ShipperName).HasColumnName("ShipperName");
             this.Property(t => t.SearchFields).HasColumnName("SearchFields");
         }
