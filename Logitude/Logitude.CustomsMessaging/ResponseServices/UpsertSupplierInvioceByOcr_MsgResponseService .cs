@@ -472,14 +472,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         else
                             supplierInvoiceItemPM.OriginCountryCode = CustomsCountry.Code;
                     }
+
+                    SupplierInvoiceItemQueryService supplierInvoiceItemQueryService = new SupplierInvoiceItemQueryService(context);
                     if (supplierInvoiceItem.TryGetValue("ITEM_HS_CODE", out string itemCode))
                     {
-                        supplierInvoiceItemPM.ClassificationCode = ValidateClassificationCode(itemCode.Length > 11 ? itemCode.Substring(0, 11) : itemCode);
-
+                        supplierInvoiceItemPM.ClassificationCode = supplierInvoiceItemQueryService.ValidateClassificationCode(itemCode);
                     }
                     else if(dic.TryGetValue("HS_CODE", out string classificationCode))
                     {
-                        supplierInvoiceItemPM.ClassificationCode = ValidateClassificationCode(classificationCode.Length > 11 ? classificationCode.Substring(0, 11) : classificationCode);
+                        supplierInvoiceItemPM.ClassificationCode = supplierInvoiceItemQueryService.ValidateClassificationCode(classificationCode);
                     }
 
                     if (string.IsNullOrEmpty(supplierInvoiceItemPM.OriginCountryCode) && !string.IsNullOrEmpty(originCountryField))
@@ -530,32 +531,6 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 
 
-        }
-
-        private string ValidateClassificationCode(string classificationCode)
-        {
-            string newValue = classificationCode;
-
-            if (newValue.Length == 8)
-            {
-                newValue += "00";
-                newValue += LuhnAlgorithm.CalculateLuhnAlgorithm(newValue);
-            }
-            else if (newValue.Length == 9)
-            {
-                newValue = newValue.Substring(0, 8) + "00" + newValue.Substring(8);
-                newValue += LuhnAlgorithm.CalculateLuhnAlgorithm(newValue.Substring(0, 10));
-            }
-            else if (newValue.Length == 10)
-            {
-                newValue += LuhnAlgorithm.CalculateLuhnAlgorithm(newValue);
-            }
-            else if (newValue.Length == 11)
-            {
-                newValue += LuhnAlgorithm.CalculateLuhnAlgorithm(newValue.Substring(0, 10));
-            }
-
-            return newValue;
         }
 
 

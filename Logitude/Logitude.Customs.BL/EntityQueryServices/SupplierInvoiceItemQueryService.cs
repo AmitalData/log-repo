@@ -14,6 +14,7 @@ using Simplog.Server.Infrastructure.Helpers;
 using Logitude.Customs.BL.EntityDataMappings;
 using Logitude.Customs.Data.Repsitories;
 using Simplog.Server.Infrastructure.Helpers;
+using Logitude.CustomsMessaging.Common.Gen;
 namespace Logitude.Customs.BL.EntityQueryServices
 {
     public partial class SupplierInvoiceItemQueryService : EntityQueryService<SupplierInvoiceItem, SupplierInvoiceItemKeys, SupplierInvoiceItemPM, SupplierInvoicePM, SupplierInvoiceKeys> 
@@ -511,6 +512,35 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return supplierInvoiceItems.ToList();
         }
 
+        public string ValidateClassificationCode(string classificationCode)
+        {
+            if (string.IsNullOrEmpty(classificationCode))
+            {
+                return classificationCode;
+            }
+            string newValue = classificationCode.Length > 11 ? classificationCode.Substring(0, 11) : classificationCode;
+
+            if (newValue.Length == 8)
+            {
+                newValue += "00";
+                newValue += LuhnAlgorithm.CalculateLuhnAlgorithm(newValue);
+            }
+            else if (newValue.Length == 9)
+            {
+                newValue = newValue.Substring(0, 8) + "00" + newValue.Substring(8);
+                newValue += LuhnAlgorithm.CalculateLuhnAlgorithm(newValue.Substring(0, 10));
+            }
+            else if (newValue.Length == 10)
+            {
+                newValue += LuhnAlgorithm.CalculateLuhnAlgorithm(newValue);
+            }
+            else if (newValue.Length == 11)
+            {
+                newValue += LuhnAlgorithm.CalculateLuhnAlgorithm(newValue.Substring(0, 10));
+            }
+
+            return newValue;
+        }
 
     }
 }
