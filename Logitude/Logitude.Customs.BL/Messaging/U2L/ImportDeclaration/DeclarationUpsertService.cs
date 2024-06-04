@@ -1653,9 +1653,12 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 			if (!string.IsNullOrEmpty(invoiceItem.ItemHScode))
 			{
                 SupplierInvoiceItemQueryService supplierInvoiceItemQueryService = new SupplierInvoiceItemQueryService(_context);
-                string classificationCode = supplierInvoiceItemQueryService.ValidateClassificationCode(invoiceItem.ItemHScode);
-                supplierInvoiceItem.ClassificationCode = classificationCode;
-			}
+                var validate = supplierInvoiceItemQueryService.ValidateClassificationCode(invoiceItem.ItemHScode);
+				if (validate != null)
+				{
+                    supplierInvoiceItem.ClassificationCode = validate;
+                }
+            }
             decimal invoiceQuantity;
             if (decimal.TryParse(invoiceItem.ItemQuantity, out invoiceQuantity))
             {

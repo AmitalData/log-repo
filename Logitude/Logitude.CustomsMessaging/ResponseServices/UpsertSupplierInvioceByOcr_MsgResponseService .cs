@@ -476,11 +476,43 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     SupplierInvoiceItemQueryService supplierInvoiceItemQueryService = new SupplierInvoiceItemQueryService(context);
                     if (supplierInvoiceItem.TryGetValue("ITEM_HS_CODE", out string itemCode))
                     {
-                        supplierInvoiceItemPM.ClassificationCode = supplierInvoiceItemQueryService.ValidateClassificationCode(itemCode);
+                        itemCode = new string(itemCode.Where(char.IsDigit).ToArray());
+                        if (itemCode.Length > 7)
+                        {
+                            var validate = supplierInvoiceItemQueryService.ValidateClassificationCode(itemCode);
+                            if (validate != null)
+                            {
+                                supplierInvoiceItemPM.ClassificationCode = validate;
+                            }
+                            else
+                            {
+                                invalidValuesRemarks += $" FieldJson: ITEM_HS_CODE, FieldName: ClassificationCode, InvalidValueReceived: {itemCode};";
+                            }
+                        }
+                        else
+                        {
+                            invalidValuesRemarks += $" FieldJson: ITEM_HS_CODE, FieldName: ClassificationCode, InvalidValueReceived: {itemCode};";
+                        }
                     }
                     else if(dic.TryGetValue("HS_CODE", out string classificationCode))
                     {
-                        supplierInvoiceItemPM.ClassificationCode = supplierInvoiceItemQueryService.ValidateClassificationCode(classificationCode);
+                        classificationCode = new string(classificationCode.Where(char.IsDigit).ToArray());
+                        if (classificationCode.Length > 7)
+                        {
+                            var validate = supplierInvoiceItemQueryService.ValidateClassificationCode(classificationCode);
+                            if (validate != null)
+                            {
+                                supplierInvoiceItemPM.ClassificationCode = validate;
+                            }
+                            else
+                            {
+                                invalidValuesRemarks += $" FieldJson: HS_CODE, FieldName: ClassificationCode, InvalidValueReceived: {classificationCode};";
+                            }
+                        }
+                        else
+                        {
+                            invalidValuesRemarks += $" FieldJson: HS_CODE, FieldName: ClassificationCode, InvalidValueReceived: {classificationCode};";
+                        }
                     }
 
                     if (string.IsNullOrEmpty(supplierInvoiceItemPM.OriginCountryCode) && !string.IsNullOrEmpty(originCountryField))
