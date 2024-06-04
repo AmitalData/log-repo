@@ -13581,6 +13581,15 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             var myResult = from f in shipments
                            select new LogBoxShipmentList()
                            {
+                               DirectionName=f.DirectionName,
+                               IsShipmentOrder = f.IsShipmentOrder,
+                               PartnerLogoId=f.PartnerLogoId,
+                               TransportModeName=f.TransportModeName,
+                               CarrierNumber =f.CarrierNumber,
+                               ContainersNumbersandTypesArray = f.ContainersNumbersandTypesArray,
+                               PartnerName=f.PartnerName,
+                               TruckNumber =f.TruckNumber,
+                               TruckContainerNumber = "",
                                CustomsClearanceDate = f.CustomsClearanceDate,
                                StatusLocation = f.StatusLocation,
                                Tenant = f.Tenant,
@@ -14668,10 +14677,19 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             {
                 myResult = new LogBoxShipmentList()
                 {
+                    DirectionName= f.DirectionName,
+                    TransportModeName = f.TransportModeName,
+                    IsShipmentOrder=f.IsShipmentOrder,
+                    PartnerLogoId=f.PartnerLogoId,
+                    CarrierNumber = f.CarrierNumber,
+                    Shipper = f.ShipperName,
+                    TruckNumber = f.TruckNumber,
+                    TruckContainerNumber="",
+                    PartnerName=f.PartnerName,
+                    ContainersNumbersandTypesArray = f.ContainersNumbersandTypesArray,
                     StatusLocation = f.StatusLocation,
                     Tenant = f.Tenant,
                     Id = f.Id,
-                    Shipper = f.Shipper,
                     DirectionId = f.DirectionId,
                     CreateDateTime = f.CreateDateTime,
                     ShipmentNumber = f.ShipmentNumber,

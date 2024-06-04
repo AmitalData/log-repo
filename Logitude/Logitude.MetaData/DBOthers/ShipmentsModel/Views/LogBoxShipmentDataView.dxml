@@ -6,6 +6,7 @@ CREATE VIEW [dbo].[LogBoxShipmentDataView]
 AS
 SELECT        
 dbo.Shipments.Id,
+dbo.Shipments.CustomsClearanceDate,
 dbo.Shipments.Tenant,
 dbo.Shipments.ShipmentNumber, 
 dbo.Shipments.ComputedStatusDate, 
@@ -25,6 +26,11 @@ dbo.Shipments.SearchFields,
 dbo.Shipments.ComputedStatusDate as StatusDate,
 dbo.Shipments.ForwarderShipmentNumber as ForwarderShipmentNumber,
 HybridPartner.Id as ForwarderPartnerId,
+HybridPartner.Name as PartnerName,
+HybridPartner.SmallLogoId as PartnerLogoId,
+dbo.Directions.Name AS DirectionName,
+dbo.Shipments.IsShipmentOrder AS IsShipmentOrder,
+dbo.TransportModes.Name AS TransportModeName, 
 dbo.Shipments.IsCancelled,
 ShipmentAdditionalCloudDatas.ApprovedByUserName as ApprovedByUserName,
 ShipmentAdditionalCloudDatas.IsImporterApprovalRequried as IsImporterApprovalRequried,
@@ -34,19 +40,24 @@ ShipmentComputedFields.RequestedDocumentsCount as RequestedDocumentsCount,
 ShipmentComputedFields.IsRequestedDocuments as IsRequestedDocuments,
 ShipmentComputedFields.LastDocumentDateTime as LastDocumentDateTime,
 ShipmentComputedFields.DocumentsSearchFields as DocumentsSearchFields,
+dbo.ShipmentMasterDatas.TruckNumber,
+ShipmentComputedFields.ContainersNumbersandTypesArray as ContainersNumbersandTypesArray,
 CASE WHEN (MasterShipmentDataId IS NOT NULL) THEN CASE WHEN (ShipmentMasterDataEntityStatus.StatusWeight > dbo.EntityStatus.StatusWeight) THEN ShipmentMasterDataEntityStatus.Name ELSE dbo.EntityStatus.Name END ELSE dbo.EntityStatus.Name END AS StatusName,
 CASE WHEN (dbo.ShipmentMasterDatas.MainCarriageATA IS NOT NULL) THEN dbo.ShipmentMasterDatas.MainCarriageATA ELSE dbo.ShipmentMasterDatas.MainCarriageETA END AS MainCarriageExpectedOrActual,
-CASE WHEN (MasterShipmentDataId IS NOT NULL) THEN CASE WHEN (ShipmentMasterDataEntityStatus.StatusWeight > dbo.EntityStatus.StatusWeight) THEN dbo.ShipmentMasterDatas.StatusLocation ELSE dbo.Shipments.StatusLocation END ELSE dbo.Shipments.StatusLocation END AS StatusLocation
+CASE WHEN (MasterShipmentDataId IS NOT NULL) THEN CASE WHEN (ShipmentMasterDataEntityStatus.StatusWeight > dbo.EntityStatus.StatusWeight) THEN dbo.ShipmentMasterDatas.StatusLocation ELSE dbo.Shipments.StatusLocation END ELSE dbo.Shipments.StatusLocation END AS StatusLocation,
+CASE WHEN ('A' = dbo.Shipments.TransportModeId) THEN CASE WHEN (MainCarriageCarrierCards.Code IS NULL) THEN N'' ELSE MainCarriageCarrierCards.Code END + CASE WHEN (MainCarriageCarrierNumber IS NULL) THEN N'' ELSE MainCarriageCarrierNumber END WHEN ('O' = dbo.Shipments.TransportModeId) THEN CASE WHEN (dbo.ShipmentMasterDatas.MainCarriageVesselName IS NULL) THEN N'' ELSE dbo.ShipmentMasterDatas.MainCarriageVesselName END + N'/' + CASE WHEN (MainCarriageCarrierNumber IS NULL) THEN N'' ELSE MainCarriageCarrierNumber END WHEN ('I' = dbo.Shipments.TransportModeId AND 'D' = dbo.Shipments.DirectionId) THEN TruckNumber ELSE MainCarriageCarrierNumber END AS CarrierNumber
+
 FROM            
 dbo.Shipments LEFT OUTER JOIN
 dbo.ShipmentMasterDatas ON dbo.ShipmentMasterDatas.Id = dbo.Shipments.MasterShipmentDataId LEFT OUTER JOIN
 dbo.EntityStatus ON dbo.Shipments.StatusId = dbo.EntityStatus.Id LEFT OUTER JOIN
 dbo.EntityStatus AS ShipmentMasterDataEntityStatus ON dbo.ShipmentMasterDatas.StatusId = ShipmentMasterDataEntityStatus.Id LEFT OUTER JOIN
+dbo.Directions ON dbo.Shipments.DirectionId = dbo.Directions.Id LEFT OUTER JOIN
 dbo.HybridPartners AS HybridPartner ON dbo.Shipments.ForwarderPartnerId = HybridPartner.Id LEFT OUTER JOIN
+dbo.TransportModes ON dbo.Shipments.TransportModeId = dbo.TransportModes.Id LEFT OUTER JOIN
+dbo.Cards AS MainCarriageCarrierCards ON dbo.ShipmentMasterDatas.MainCarriageCarrierId = MainCarriageCarrierCards.Id LEFT OUTER JOIN
 dbo.ShipmentComputedFields AS ShipmentComputedFields ON dbo.Shipments.Id = ShipmentComputedFields.Id INNER JOIN
 dbo.ShipmentAdditionalCloudDatas AS ShipmentAdditionalCloudDatas ON dbo.Shipments.Id = ShipmentAdditionalCloudDatas.Id 
-						 
-   
 						 
     ]]>
   </SqlScript>

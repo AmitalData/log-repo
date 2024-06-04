@@ -11,8 +11,17 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string TransportModeId { get; set; }
         public string DirectionId { get; set; }
         public string ShipmentNumber { get; set; }
+        public string TruckContainerNumber { get; set; }
+        public string DirectionName { get; set; }
+        public string TransportModeName { get; set; }
+        public string PartnerLogoId { get; set; }
+        public bool IsShipmentOrder { get; set; }
+        public string TruckNumber { get; set; }
+        public string CarrierNumber { get; set; }
+        public string PartnerName { get; set; }
+        public string ContainersNumbersandTypesArray { get; set; }
         public DateTime? CustomsClearanceDate { get; set; }
-        public bool IsOperationalClosed { get; set; } 
+        public bool IsOperationalClosed { get; set; }
         public string StatusName { get; set; }
         public DateTime? StatusDate { get; set; }
         public string StatusLocation { get; set; }

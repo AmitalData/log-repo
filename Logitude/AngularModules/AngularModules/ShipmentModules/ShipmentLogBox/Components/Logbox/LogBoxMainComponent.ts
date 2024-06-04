@@ -903,7 +903,7 @@ export class LogBoxMainComponent implements OnInit, AfterViewInit {
         logboxShipmentExportExcelArgs.SortBy = this.filterAgrs.SortBy;
         logboxShipmentExportExcelArgs.SortDirection = this.filterAgrs.SortDirection;
         logboxShipmentExportExcelArgs.QueryName = this.SelectedFilter;
-        logboxShipmentExportExcelArgs.QuerySection = "Shipment";
+        logboxShipmentExportExcelArgs.QuerySection = "ShipmentLogBox";
         logboxShipmentExportExcelArgs.Filters = this.filterAgrs;
 
         return logboxShipmentExportExcelArgs;

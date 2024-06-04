@@ -8,8 +8,17 @@ export class LogBoxShipmentList {
 	IsOperationalClosed: boolean;
 	StatusName: string;
 	CustomsClearanceDate: Date;
+	ContainersNumbersandTypesArray: string;
+	CarrierNumber: string;
+	PartnerName: string;
 	StatusDate: Date;
+	DirectionName: string;
+	TransportModeName: string;
+	PartnerLogoId: string;
+	IsShipmentOrder: boolean;
 	Shipper: string;
+	TruckContainerNumber: string;
+	TruckNumber: string;
 	CustomerReference1: string;
 	CustomerReference2: string;
 	CustomerReference3: string;
