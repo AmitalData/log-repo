@@ -13,13 +13,15 @@ Feature: Cheque Deposit
 
     Scenario: Approve the Cheque Deposit
 
-    Scenario: Approve the Cheque Deposit
+
 
         Given a cheque with the following details
+
             | AccountingDate | TODAY   |
             | CashBook       | Cash    |
             | BankAccount    | 884477  |
             | ForeignAmount  | 8       |
+
 
         When Approve the AR Payment
         Then the AR Payment should approve successfully
