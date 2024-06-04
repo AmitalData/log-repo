@@ -37,7 +37,7 @@ import { DatePipe } from '@angular/common';
 import { TenantManagementPM } from 'Infrastructure/EntityPMs/TenantManagementPM';
 
 
-@Component({    
+@Component({
     templateUrl: './ECommercePaymentRequestMobileComponent.html',
     styleUrls: ['./mobilePayments.scss', './detailsMobile.scss']
 })
@@ -47,7 +47,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     public DimApproveButton: boolean = false;
     public orianStyle: boolean = false;
     public dsvStyle: boolean = false;
-
+    public qaIndicator: number = 0;
     DataContext: ECommercePaymentRequestMobileComponent = this;
     //private messageWindow: MessageWindow = new MessageWindow();
     EntityPm: ShipmentPM = new ShipmentPM();
@@ -137,7 +137,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
             }
         }
         this.StartBusyIndicator("Loading ...");
-        this._ShipmentPMService.getSingleBySecurityKeyTenantWithoutToken(this.SecurityKey, this.Tenant).subscribe((MyResult:any) => {
+        this._ShipmentPMService.getSingleBySecurityKeyTenantWithoutToken(this.SecurityKey, this.Tenant).subscribe((MyResult: any) => {
             this.MapFieldsFromResponseData(MyResult);
             if (MyResult.Result) {
                 //this.EntityPm = MyResult.Result;
@@ -146,7 +146,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                 this.AdditionalData = MyResult.Result;//AdditionalResult.Result
                 if (this.AdditionalData.IsPaymentRequired) {
                     if (this.EntityPm) {
-                        
+                        this.qaIndicator = 1;
                         this.SetTotalAmountInNIS();
                     }
                 }
@@ -189,7 +189,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
             }
         });
 
-        if(this.dsvStyle)
+        if (this.dsvStyle)
             this.initTenantManagements(this.SecurityKey)
     }
 
@@ -226,7 +226,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
             if (this.RefreshTimer) {
                 clearTimeout(this.RefreshTimer);
             }
-            this._ShipmentPMService.getSingleBySecurityKeyTenantWithoutToken(this.SecurityKey, this.Tenant).subscribe((MyResult:any) => {
+            this._ShipmentPMService.getSingleBySecurityKeyTenantWithoutToken(this.SecurityKey, this.Tenant).subscribe((MyResult: any) => {
                 this.MapFieldsFromResponseData(MyResult);
                 if (MyResult.Result) {
                     //this.EntityPm = MyResult.Result;
@@ -235,7 +235,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                     this.AdditionalData = MyResult.Result;//AdditionalResult.Result
                     if (this.AdditionalData.IsPaymentRequired) {
                         if (this.EntityPm) {
-
+                            this.qaIndicator = 1;
                             this.SetTotalAmountInNIS();
                         }
                     }
@@ -395,7 +395,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
         //if (myResult.Result) { 
         //var securityId = myResult.Result.SecurityId;
 
-        if(this.serviceAgreementURL)
+        if (this.serviceAgreementURL)
             open(this.serviceAgreementURL)
         else
             DownloadManager.DownloadExternalPage(null, this.Tenant, this.TermsOfUseDocumentId);
@@ -403,7 +403,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
         //});
 
     }
-    
+
     async initTenantManagements(securityKey: string) {
         const data: UrlAndLogo = await this._ShipmentPMService.getLogoAndUrlWithoutToken(securityKey)
         this.logoImg = data.logo;
@@ -412,7 +412,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     }
 
     openLogoUrl() {
-        if(this.logoUrl)
+        if (this.logoUrl)
             window.open(this.logoUrl)
     }
 }
