@@ -1111,7 +1111,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     isSubmitChanges = true;
                 }
 
-                bool isAmendOrConverted = this._DeclarationPM.IsAmendment == true || this._DeclarationPM.IsConvertedDeclaration == true;
+                bool isAmendOrConverted = this._DeclarationPM?.IsAmendment == true || this._DeclarationPM?.IsConvertedDeclaration == true;
 
                 if (!isAmendOrConverted)
                 {
