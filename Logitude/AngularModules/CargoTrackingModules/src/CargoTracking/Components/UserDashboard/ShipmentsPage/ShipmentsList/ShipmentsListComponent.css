@@ -678,7 +678,7 @@ h1{
 
         }
         .filters-footer {
-            position: relative;
+            position: sticky;
             bottom: 0;
            
             width: 100%;
