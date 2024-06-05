@@ -5,10 +5,11 @@ import { InterestReportPMService } from 'Accounting/Services/StandardPMs/Interes
 import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
 import { BaseComponent } from 'Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { AppTool } from 'Infrastructure/Tools';
-import {  PDFDocumentInvoices } from '../../../Accounting/Services/ExtendedLists/InterestReportExtendedListService';
+import {  InterestReportExtendedListService, PDFDocumentInvoices } from '../../../Accounting/Services/ExtendedLists/InterestReportExtendedListService';
 import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 import { ObjectsLocator } from 'Infrastructure/Locators/ObjectsLocator';
+import { InterestReportArguments } from 'Accounting/DataContracts/InterestReportArgs';
 
 
 
@@ -25,6 +26,9 @@ export class BtatchPrintConfirmComponent implements OnInit    {
     public isRTL:boolean;
     public URL:any;
     public newWindow:any;
+    private interestReportExtendedListService: InterestReportExtendedListService = new InterestReportExtendedListService();
+    interestReportArgs: InterestReportArguments;
+
     ngOnInit() {
        
     }
@@ -37,26 +41,45 @@ export class BtatchPrintConfirmComponent implements OnInit    {
  
     }
 
+    SetWindowArgs(args: any) {
+        this.interestReportArgs = args.interestReportArgs;
+    }
+
+
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }
  
     DownloadButtonClicked() {
-        var a = document.createElement("a");
-        a.href = this.URL;
-        a.download = "InterestInvoices.pdf"; 
-        a.click();
-         window.URL.revokeObjectURL(this.URL);   
-        this.CurrentSession.CloseCurrentWindowEmit("Download");
-
+        debugger;
+        this.interestReportExtendedListService.PrintDocuments(this.interestReportArgs).subscribe((response: ServiceResponse) => {
+            if (response.HasError) {
+                alert(response.ErrorsArray[0]);
+            }else{
+                var a = document.createElement("a");
+                a.href = this.URL;
+                a.download = "InterestInvoices.pdf"; 
+                a.click();
+                 window.URL.revokeObjectURL(this.URL); 
+                this.CurrentSession.CloseCurrentWindowEmit("Download");
+            }
+    });
     }
 
     ViewButtonClicked() {
-        this.newWindow = window.open('', '_blank');//OPEN WINDOW FIRST ON SUBMIT THEN POPULATE PDF
-        this.newWindow.location.href = this.URL;
+
         //OPEN WINDOW FIRST ON SUBMIT THEN POPULATE PDF  
         // window.open(this.URL,  '_blank');
-         this.CurrentSession.CloseCurrentWindowEmit("View");
+        this.interestReportExtendedListService.PrintDocuments(this.interestReportArgs).subscribe((response: ServiceResponse) => {
+                if (response.HasError) {
+                    alert(response.ErrorsArray[0]);
+                }else{
+                    this.newWindow = window.open('', '_blank');//OPEN WINDOW FIRST ON SUBMIT THEN POPULATE PDF
+                    this.newWindow.location.href = this.URL;
+                    this.CurrentSession.CloseCurrentWindowEmit("View");
+
+                }
+        });
          
     }
    
