@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "14b203e2883352f7fbc144b2e545ffa5";
+		public const string HashString = "c74405b7eed095c65a911e2489c13b2b";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -18295,7 +18295,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query DeclarationWithoutReleaseQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationTextCode_9.Id, NameTextCodeCode = DeclarationTextCode_9.Code, ObjectTableName = "Customs.Declaration", Code = "DeclarationWithoutRelease",  QueryGroupCode = "DECL", IndexOrder = 9, Tenant = 0, ObjectTableId = DeclarationObjectTable.Id, QuerySection = "Customs.Declaration", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = DeclarationFeature_9.Id,FeatureUniqeCode= DeclarationFeature_9.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
+			  Query DeclarationWithoutReleaseQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationTextCode_9.Id, NameTextCodeCode = DeclarationTextCode_9.Code, ObjectTableName = "Customs.Declaration", Code = "DeclarationWithoutRelease",  QueryGroupCode = "DECL", IndexOrder = 9, Tenant = 0, ObjectTableId = DeclarationObjectTable.Id, QuerySection = "Customs.Declaration", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DeclarationFeature_9.Id,FeatureUniqeCode= DeclarationFeature_9.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
 			 QueryColumn DeclarationWithoutReleaseQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationWithoutReleaseQuery.Id,QueryCode = DeclarationWithoutReleaseQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.Declaration.TaxationDateTime" , ColumnWidth = 110 }, addedQueryColumns);
 
@@ -18417,7 +18417,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query DeclarationsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationTextCode_13.Id, NameTextCodeCode = DeclarationTextCode_13.Code, ObjectTableName = "Customs.Declaration", Code = "Declarations",  QueryGroupCode = "DECL", IndexOrder = 13, Tenant = 0, ObjectTableId = DeclarationObjectTable.Id, QuerySection = "Customs.Declaration", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = DeclarationFeature_13.Id,FeatureUniqeCode= DeclarationFeature_13.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
+			  Query DeclarationsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DeclarationTextCode_13.Id, NameTextCodeCode = DeclarationTextCode_13.Code, ObjectTableName = "Customs.Declaration", Code = "Declarations",  QueryGroupCode = "DECL", IndexOrder = 13, Tenant = 0, ObjectTableId = DeclarationObjectTable.Id, QuerySection = "Customs.Declaration", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DeclarationFeature_13.Id,FeatureUniqeCode= DeclarationFeature_13.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
 			 QueryColumn DeclarationsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DeclarationsQuery.Id,QueryCode = DeclarationsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.Declaration.TaxationDateTime" , ColumnWidth = 110 }, addedQueryColumns);
 
@@ -19006,6 +19006,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   Feature DeclarationFeature_IsExportSign = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "IsExportSign", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.IsExportSign", NameTextCodeDefaultText = @"Is Export Sign" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
 
 		   Feature DeclarationFeature_ExportDiamonds = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ExportDiamonds", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.ExportDiamonds", NameTextCodeDefaultText = @"הצהרת יהלומים - יצוא" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
+
+		   Feature DeclarationFeature_ADDNEWDECLARATION = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ADDNEWDECLARATION", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.ADDNEWDECLARATION", NameTextCodeDefaultText = @"Add New Declaration" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
 
    
 	    
