@@ -1659,6 +1659,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
             public void WorkUntilQEmptyQueueDB(TimeSpan? timeSpan = null, string selectedQueue = null)
             {
+                               
                 selectedQueue = selectedQueue ?? JournalApproveService.K_AccountingJournalApproveWR;
                 Stopwatch stopwatch = null;
                 if (timeSpan != null)
@@ -1710,14 +1711,20 @@ namespace Logitude.Accounting.BL.CoreBL
                             LogDoneItemInMemoryAction?.Invoke(1);
 
                         }
-                        
+
                     }
                     Thread.Sleep(10);//itzik - let other thread abilty to use GLAccout !!!
                 }
 
+                if (DateTime.UtcNow.Date > _NextDueDoneAt.Date)
+                {
+                    Logger.LogDebug("JornalApprove beforeAddBatchTask selected queue: {0}, workerRoleName: {1}  , time:{2} ",
+                        selectedQueue, LogitudeSettings.WorkerRoleName, DateTime.Now );
+
+                }
+
                 if (selectedQueue == JournalApproveService.K_AccountingJournalApproveMutliThreadingWR)
                 {
-
 
                     try
                     {
@@ -1743,6 +1750,8 @@ namespace Logitude.Accounting.BL.CoreBL
                     }
                     catch (Exception)
                     {
+                        Logger.LogDebug("JornalApprove beforeAddBatchTask exception selected queue: {0}, workerRoleName: {1}  , time:{2} , ",
+                        selectedQueue, LogitudeSettings.WorkerRoleName, DateTime.Now);
 
                         throw;
                     }
