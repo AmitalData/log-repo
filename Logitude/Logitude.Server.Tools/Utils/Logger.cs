@@ -17,9 +17,17 @@ namespace Logitude.Server.Tools.Utils
 
         private static void InitNlogConfig()
         {
-            if (NLog.LogManager.Configuration == null)
-               NLog.LogManager.Configuration = new NLog.Config.XmlLoggingConfiguration(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "NLog.config"));
+            try
+            {
+                if (NLog.LogManager.Configuration == null)
+                    NLog.LogManager.Configuration = new NLog.Config.XmlLoggingConfiguration(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "NLog.config"));
 
+            }
+            catch (Exception ex)
+            {
+                Debug.Write("NLOG CONFIG NOT FOUND " + ex);
+                
+            }
         }
 
         delegate DialogResult Show(string text, string caption);
@@ -336,34 +344,41 @@ namespace Logitude.Server.Tools.Utils
 
         private static void LogToNlog(NLog.LogLevel level, Exception exception, string mess, params object[] args)
         {
-
-            InitNlogConfig();
-
-            switch (level.Ordinal)
+            try
             {
-                case 1:// NLog.LogLevel.Debug:
-                    NLogger.Debug(exception, mess, args);
-                    break;
-                case 2:// NLog.LogLevel.Info:
-                    NLogger.Info(exception, mess, args);
-                    break;
-                case 3:// NLog.LogLevel.Warn:
-                    NLogger.Warn(exception, mess, args);
-                    break;
-                case 4: // NLog.LogLevel.Error:
-                    NLogger.Error(exception, mess, args);
-                    break;
-                case 5:// NLog.LogLevel.Fatal:                       
-                    NLogger.Fatal(exception, mess, args);
-                    break;
 
-                case 0:
-                    NLogger.Trace(exception, mess, args);
-                    break;
+                InitNlogConfig();
+
+                switch (level.Ordinal)
+                {
+                    case 1:// NLog.LogLevel.Debug:
+                        NLogger.Debug(exception, mess, args);
+                        break;
+                    case 2:// NLog.LogLevel.Info:
+                        NLogger.Info(exception, mess, args);
+                        break;
+                    case 3:// NLog.LogLevel.Warn:
+                        NLogger.Warn(exception, mess, args);
+                        break;
+                    case 4: // NLog.LogLevel.Error:
+                        NLogger.Error(exception, mess, args);
+                        break;
+                    case 5:// NLog.LogLevel.Fatal:                       
+                        NLogger.Fatal(exception, mess, args);
+                        break;
+
+                    case 0:
+                        NLogger.Trace(exception, mess, args);
+                        break;
 
 
-                default:
-                    break;
+                    default:
+                        break;
+                }
+            }
+            catch (Exception)
+            {
+                Debug.Write("Nlog failed");
             }
 
 
