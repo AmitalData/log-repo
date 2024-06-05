@@ -145,6 +145,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         private logitudeGridExportToExcelService: LogitudeGridExportToExcelService,
         private tenantManagementService: TenantManagementService,
     ) {
+        
         this.InitComponent();
         this.SetDefaultBackgroundColor();
 
@@ -206,15 +207,17 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     public FilterByATADateDataLessThan: string = "";
 
     ngOnInit(): void {
+       
         this.setMaxNumberOfCarachter(window.innerWidth);
         this.setDefaultSort();
+        this.setDefaultDates()
         this.GetMilstones();
         this.getPreviousScroll();
         this.GetCompanyLoginsFromCache();
         this.fillFeltersDictionary();
         this.setViews();
     }
-
+   
     OnRouteChanged(event) {
         if (event instanceof NavigationEnd) {
             this.RerenderVirtualScroll();
@@ -311,7 +314,15 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         this.ShipmentSearchInput.SortFieldName = SortOptions.CMD;
         this.ShipmentSearchInput.SortType = SortOptions.DESC;
     }
-
+    private setDefaultDates() {
+        const fromDate = new Date();
+        fromDate.setMonth(fromDate.getMonth() - 6);
+        this.FilterByOpenDateDataGreaterThan = fromDate.toISOString().slice(0, 10);
+        this.FilterByOpenDateDataLessThan = new Date().toISOString().slice(0, 10);
+        this.ApplyFilterButtonClicked(true)  
+              
+    }
+    
     private selectDefaultSortFields() {
         this.sortByMultipleSelection.select.options.filter(d =>
             [SortOptions.CMD, SortOptions.DESC].includes(d.value.Code))
@@ -333,6 +344,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     }
 
     ngAfterViewInit(): void {
+        
         this.selectDefaultSortFields();
         this.SetShipmentsScrollPosition();
         this.LoadScreenData();
@@ -849,17 +861,13 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
     }
 
     private async getFromDate() {
-
-        const fromDate = new Date();
-        //this.backMonths = this.backMonths || await this.tenantManagementService.getShipmentBuildMonth();
-        fromDate.setMonth(fromDate.getMonth() - 6);
+       
+        const fromDate = new Date(this.FilterByOpenDateDataGreaterThan);
         if (this.FilterByOpenDateDataGreaterThan=="") {
-            this.FilterByOpenDateDataGreaterThan = fromDate.toString();
+            this.backMonths = this.backMonths || await this.tenantManagementService.getShipmentBuildMonth();
+            fromDate.setMonth(fromDate.getMonth() - this.backMonths);
         }
-        if (this.FilterByOpenDateDataLessThan=="") {
-            this.FilterByOpenDateDataLessThan = new Date().toString();
-            this.ApplyFilterButtonClicked(true)
-        }
+        
         return fromDate;
     }
     private async InitiateShipmentDataSource() {
@@ -1148,7 +1156,7 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
             const day = dateObj.getDate();
             const month = dateObj.getMonth() + 1;
             const year = dateObj.getFullYear();
-            return `${day}/${month}/${year}`;
+            return `${year}/${month}/${day}`;
         }
         else {
             return "";
