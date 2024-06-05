@@ -51,7 +51,6 @@ export class BtatchPrintConfirmComponent implements OnInit    {
     }
  
     DownloadButtonClicked() {
-        debugger;
         this.interestReportExtendedListService.PrintDocuments(this.interestReportArgs).subscribe((response: ServiceResponse) => {
             if (response.HasError) {
                 alert(response.ErrorsArray[0]);
@@ -84,5 +83,4 @@ export class BtatchPrintConfirmComponent implements OnInit    {
     }
    
 }
- 
  
