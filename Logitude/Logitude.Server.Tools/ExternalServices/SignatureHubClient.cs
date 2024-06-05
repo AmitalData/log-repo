@@ -10,6 +10,8 @@ using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Logitude.Server.Tools;
+using Logitude.Server.Tools.Utils;
 
 namespace Logitude.Server.Tools.ExternalServices
 {
@@ -37,6 +39,7 @@ namespace Logitude.Server.Tools.ExternalServices
             {
                 throw new Exception("Object already created");
             }
+            Logger.LogInfo("ServerURI:" + ServerURI);
             _Instance = new SignatureHubClient(ServerURI, message4U);
             try
             {
