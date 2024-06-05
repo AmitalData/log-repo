@@ -149,6 +149,10 @@
         opacity: 0;
         visibility: collapse;
     }
+
+    .criticalWarning {
+        color: rgb(229, 48, 48)
+    }
 </style>
 <table>
     <tr>
@@ -390,7 +394,7 @@
 
                                 <ul class="ConstraintList">
                                     
-                                    <li *ngFor="let constraint of ConstraintsList" [class.Selected]="SelectedConstraint?.ConstraintId == constraint.ConstraintId">
+                                    <li *ngFor="let constraint of ConstraintsList" [class.Selected]="SelectedConstraint?.ConstraintId == constraint.ConstraintId && constraint.ConstraintId">
                                         <!-- Status-->
                                         <div class="ListItem-right">
                                             <a (click)="constraint.ViewConstraintDetails()" *ngIf="constraint.IsStatusHyperlinkVisibile" style="display: block;" href="#">{{constraint.ConstraintStatus}}</a>
@@ -566,14 +570,13 @@
                                                 (SelectedItemChanged)="EditEntity($event,AnswerType.Warning)"
                                                 [SelectedRow]="SelectedRowsByType.get(AnswerType.Warning)">
 
-
                                 <!-- Description -->
                                 <log-column [header]="'Customs.Declaration.O.Description' | TextCodeTranslationPipe"
                                             [width]="'480'" [Alignment]="'right'" [binding]="'Description'">
 
                                     <ng-template let-item>
 <log-cell-template  [IgnoreMods]="true" #logcelltemplate>
-                                        <div style="text-align: right;" class="TextTrimming" [title]="item.Description">
+                                        <div style="text-align: right;" class="TextTrimming" [title]="item.Description" [class.criticalWarning]="item.ListVersionId == CriticalWarningCode">
                                             <span>{{item.Description}}</span>
                                         </div>
                                     </log-cell-template>
@@ -587,7 +590,7 @@
 
                                     <ng-template let-item>
 <log-cell-template  [IgnoreMods]="true" #logcelltemplate>
-                                        <div style="text-align: right;" class="TextTrimming">
+                                        <div style="text-align: right;" class="TextTrimming" [class.criticalWarning]="item.ListVersionId == CriticalWarningCode">
                                             <span>{{item.TableNameTextCode | TextCodeTranslationPipe}}</span>
                                         </div>
                                     </log-cell-template>
@@ -601,7 +604,7 @@
 
                                     <ng-template let-item>
 <log-cell-template  [IgnoreMods]="true" #logcelltemplate>
-                                        <div style="text-align: right;" class="TextTrimming">
+                                        <div style="text-align: right;" class="TextTrimming" [class.criticalWarning]="item.ListVersionId == CriticalWarningCode">
                                             <span>{{item.FieldNameTextCode | TextCodeTranslationPipe}}</span>
                                         </div>
                                     </log-cell-template>
@@ -615,7 +618,7 @@
 
                                     <ng-template let-item>
 <log-cell-template  [IgnoreMods]="true" #logcelltemplate>
-                                        <div style="text-align: right;" class="TextTrimming">
+                                        <div style="text-align: right;" class="TextTrimming" [class.criticalWarning]="item.ListVersionId == CriticalWarningCode">
                                             <span>{{item.LineNumber}}</span>
                                         </div>
                                     </log-cell-template>
@@ -629,7 +632,7 @@
 
                                     <ng-template let-item>
 <log-cell-template  [IgnoreMods]="true" #logcelltemplate>
-                                        <div style="text-align: right;" class="TextTrimming">
+                                        <div style="text-align: right;" class="TextTrimming" [class.criticalWarning]="item.ListVersionId == CriticalWarningCode">
                                             <span>{{item.ErrorType}}</span>
                                         </div>
                                     </log-cell-template>
@@ -642,7 +645,7 @@
                                             [width]="'160'" [Alignment]="'right'" [binding]="'DepositionStatusCode'">
                                     <ng-template let-item>
 <log-cell-template  [IgnoreMods]="true" #logcelltemplate>
-                                        <div style="text-align: right;" *ngIf="item.ErrorType=='4589'">
+                                        <div style="text-align: right;" *ngIf="item.ErrorType=='4589'" [class.criticalWarning]="item.ListVersionId == CriticalWarningCode">
 
                                             <span>
                                                 <button class="Button" style="height:18px; width: 110px; right:0px; margin-right: 0px; " *ngIf="DepositionStatusCode == 'R' && IsDepositionStatusCodeButton && DepositionStatusCodeIcon == 'DEFAULT'" (click)="DepositionStatusbuttonclicked($event)" tabindex="-1">
