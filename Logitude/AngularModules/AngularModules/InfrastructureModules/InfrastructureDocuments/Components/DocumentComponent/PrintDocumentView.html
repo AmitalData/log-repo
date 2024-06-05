@@ -180,7 +180,7 @@
 
                                             <td style="margin-left:3px;margin-right:3px; min-width:60px;width:60px;max-width:60px;border-bottom:1px solid #E4E3E1;">
 
-                                                <button [disabled]="(!item.IsPrintButtonEnabled || (DisableSendOriginalCopy && item.IsOriginal) !(item.IsOriginal && Signed ))||this.EntityPM?.IsSigned==2" *ngIf="item.IsButtonsStackPanelVisible" class="Button" style="margin-top:1px;height:25px;width:55px" (click)="showSendControlDialog(item)">
+                                                <button [disabled]="(!item.IsPrintButtonEnabled || (DisableSendOriginalCopy && item.IsOriginal) )||this.EntityPM?.IsSigned==2" *ngIf="item.IsButtonsStackPanelVisible" class="Button" style="margin-top:1px;height:25px;width:55px" (click)="showSendControlDialog(item)">
                                                     <table>
                                                         <tr>
                                                            
