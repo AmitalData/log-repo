@@ -12,9 +12,9 @@ namespace Logitude.Accounting.BL.EntityQueryServices
     public partial class AccountingCompanyTypeQueryService
     {
 
-        public AccountingCompanyTypePM GetByCode(string code, int tenant)
+        public AccountingCompanyTypePM GetByCode(string code, int tenant, bool getFromCache = false)
         {
-            AccountingCompanyType poco = this.repository.GetSingleAccountingCompanyTypeByCode(code, tenant);
+            AccountingCompanyType poco = this.repository.GetSingleAccountingCompanyTypeByCode(code, tenant, getFromCache);
             if (poco != null)
             {
                 return GetEntityPM(poco);
