@@ -17,6 +17,8 @@ export class MainReportSchedulerComponent implements OnInit {
     public ReportGroupList: ReportGroupList;
     public ReportList: ReportList;
     public BIReportEntity: any;
+    public IsQueryReport: any;
+
     constructor() {
     }
 
@@ -27,6 +29,7 @@ export class MainReportSchedulerComponent implements OnInit {
         this.ReportGroupList = windowArgs.ReportGroupList;
         this.ReportList = windowArgs.ReportList;
         this.BIReportEntity = windowArgs.BIReportEntity;
+        this.IsQueryReport = windowArgs.IsQueryReport;
         this.RunComponent();
     }
 
@@ -80,7 +83,7 @@ export class MainReportSchedulerComponent implements OnInit {
                         SessionLocator.DynamicLoader.Load('./Report/Components/Scheduler/TaskReportSchedulerComponent', myLocation.viewContainerRef)
                             .then(cmpRef => {
                                 this.PageChild_RETASK = cmpRef.instance;
-                                this.PageChild_RETASK.SetWindowArgs({ ReportGroupList: this.ReportGroupList, ReportList: this.ReportList, BIReportEntity: this.BIReportEntity });
+                                this.PageChild_RETASK.SetWindowArgs({ ReportGroupList: this.ReportGroupList, ReportList: this.ReportList, BIReportEntity: this.BIReportEntity, IsQueryReport: this.IsQueryReport });
                             });
                     }
                     break;

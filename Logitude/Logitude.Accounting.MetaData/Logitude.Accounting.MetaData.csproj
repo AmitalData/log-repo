@@ -71,6 +71,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Content Include="DBOthers\0Types\GLAccountAgingDataType.xml" />
+    <None Include="DBOthers\SProcedures\usp_OpenTransaction.dxml" />
     <None Include="DBOthers\SProcedures\usp_AccountingStreaming.dxml" />
     <None Include="DBOthers\Views\CardGLAccountDataView.dxml" />
     <Content Include="DBScripts\202204131020_AddInterestTransactionsForRegularJournals.axml" />
@@ -79,6 +80,7 @@
     <Content Include="DBScripts\202207041224_ARInvoiceOppositeJournalCreditLines.axml" />
     <None Include="DBOthers\Views\AllARPaymentChequesViews.dxml" />
     <None Include="DBOthers\Views\TotalOpenTransInBankViews.dxml" />
+    <None Include="DBScripts\202405131200_CreateSchemaQueryReports.sxml" />
     <None Include="DBScripts\202403031201_ChartOfAccountsEnglishName.sxml" />
     <None Include="DBScripts\202403111553_ChequeCounterSerialAddLine.sxml" />
     <None Include="DBScripts\202308211244_UpdateInterestReportSearchFields.sxml" />

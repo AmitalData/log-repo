@@ -312,11 +312,12 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
 
                     inputReportLine.LineTypeCode = "R";
+                    inputReportLine.VatNumber = inputReportLine.Reference;
                     inputReportLine.Reference = "000000000";
                     inputReportLine.ReferecneGroup = "0000";
-                    inputReportLine.VatNumber = aPInvoicePM != null ? aPInvoicePM.InvoiceNumber : inputReportLine.VatNumber;
+                   
 
-                }
+				}
                 else if (card != null && card.IsAutonomy)
                 {
                     inputReportLine.LineTypeCode = "P";

@@ -249,5 +249,15 @@ export class SchedulerExtendedPMService {
             return serviceResponse;
         }), catchError(ServiceHelper.HandleServiceError));
     }
+    GetProceduresBySchema(schemaId: string) {
+        var url = this.apiUrl + '/GetProceduresBySchema?' + 'schemaId=' + schemaId;
 
+        return this.httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+            serviceResponse.Result = response;
+
+            return serviceResponse;
+        }), catchError(ServiceHelper.HandleServiceError));
+    }
 }

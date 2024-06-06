@@ -37,7 +37,7 @@
 
                                                         <table>
                                                             <tr>
-                                                                <td style="width:45%">
+                                                                <td style="width:30%">
                                                                     <table>
 
                                                                         <tr class="FormFieldRow">
@@ -149,7 +149,34 @@
                                                                         </tr>
                                                                     </table>
                                                                 </td>
-                                                                 <td style="width:55%">
+                                                                <td style="width:30%" >
+                                                                    <table style="min-height: 160px;" *ngIf="IsQueryReport">
+                                                                     <tr class="FormFieldRow">
+                                                                            <td style="width:155px;vertical-align:central">
+                                                                                <LogLabel [ObjectFieldName]="'Report Scheduler'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [Text]="'Report Scheduler'"></LogLabel>
+                                                                            </td>
+
+
+                                                                            <td style="width:250px;height:5px">
+                                                                                <table>
+                                                                                    <tr>
+                                                                                        <td>
+                                                                                            <ComboBox (SelectedItemChanged)="this.SelectedReport = $event" [SelectedItem]="SelectedReport" [ItemsSource]="SchedulerReports" [Binding]="'Name'"></ComboBox>
+                                                                                        </td>
+                                                                                        <td style="width:10%">
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                </table>
+                                                                            </td>
+                                                                            <td></td>
+                                                                        </tr>
+                                                                        <tr>
+                                                                            <td></td>
+                                                                            <td style="width: 350px;"></td>
+                                                                        </tr>
+                                                                    </table>
+                                                                </td>
+                                                                 <td style="width:40%">
                                                                     <table style="min-height: 160px;" *ngIf="DisplayFTPOption">
                                                                         <tr class="FormFieldRow">
                                                                             <td></td>
@@ -170,7 +197,7 @@
                                                                                         </td>
                                                                                         <td style="width:80px">
             
-                                                                                            <RadioButton style="display:inline" [Name]="'TriggerRadio'" [IsChecked]="IsFTP == true" (Checked)="SetTaskType('FTP')" [Text]="'FTP'" [Top]="5"></RadioButton>
+                                                                                            <RadioButton style="display:inline"  [Name]="'TriggerRadio'" [IsChecked]="IsFTP == true" [IsEnabled]="!IsQueryReport" (Checked)="SetTaskType('FTP')" [Text]="'FTP'" [Top]="5"></RadioButton>
             
                                                                                         </td>
                                                                                         <td></td>
