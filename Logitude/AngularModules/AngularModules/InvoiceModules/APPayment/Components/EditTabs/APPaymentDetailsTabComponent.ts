@@ -425,7 +425,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                 }
             }
 
-            if (this.PaymentMethodCode == "CH" || this.PaymentMethodAddedManually) {
+            if (this.PaymentMethodCode == "CH" || this.PaymentMethodAddedManually|| this.PaymentMethodCode == "BT") {
                 this.UIProperties.SetVisibility("Bank", this.ObjectTableName, true);
                 this.UIProperties.SetVisibility("BankBranch", this.ObjectTableName, true);
                 this.UIProperties.SetVisibility("Account", this.ObjectTableName, true);
