@@ -1582,10 +1582,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 _CCUFILEMPM.GRANTTIME = new DateTime(_EmptyDate.Year, _EmptyDate.Month, _EmptyDate.Day, _DirtyDeclarationPM.HatraDate.Value.Hour, _DirtyDeclarationPM.HatraDate.Value.Minute, 0, _DirtyDeclarationPM.HatraDate.Value.Kind);
             }
 
-            _CCUFILEMPM.CIFVALUE = (decimal)_DirtyDeclarationPM.CIFValue.ToNullableDouble("_DirtyDeclarationPM.CIFValue");
-            _CCUFILEMPM.ACCEPTEDPRICE = (decimal)_DirtyDeclarationPM.DealValue.ToNullableDouble("_DirtyDeclarationPM.DealValue");
-            _CCUFILEMPM.TOTALTAX = (decimal)_DirtyDeclarationPM.TotalTax.ToNullableDouble("_DirtyDeclarationPM.TotalTax");
-            _CCUFILEMPM.GOODSVALUE = (decimal)_DirtyDeclarationPM.DealValueWithoutFactor.ToNullableDouble("_DirtyDeclarationPM.DealValueWithoutFactor");
+            _CCUFILEMPM.CIFVALUE = (decimal?)_DirtyDeclarationPM.CIFValue.ToNullableDouble("_DirtyDeclarationPM.CIFValue");
+            _CCUFILEMPM.ACCEPTEDPRICE = (decimal?)_DirtyDeclarationPM.DealValue.ToNullableDouble("_DirtyDeclarationPM.DealValue");
+            _CCUFILEMPM.TOTALTAX = (decimal?)_DirtyDeclarationPM.TotalTax.ToNullableDouble("_DirtyDeclarationPM.TotalTax");
+            _CCUFILEMPM.GOODSVALUE = (decimal?)_DirtyDeclarationPM.DealValueWithoutFactor.ToNullableDouble("_DirtyDeclarationPM.DealValueWithoutFactor");
             //_CCUFILEMPM.MEHESDRAFTSTATUS = _DirtyDeclarationPM.DeclarationStatusTypeCode.ToNullableInt("_DirtyDeclarationPM.DeclarationStatusTypeCode"); // moran 9.2.15 - Task 1613
             _CCUFILEMPM.MEHESDRAFTSTATUS = TranslateDeclarationStatusTypeCodeToUNF(_DirtyDeclarationPM.DeclarationStatusTypeCode);
 
@@ -1875,11 +1875,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             cCUTAXPM.TAXTYPE = GetTranslationP2L("IIGC", "CTBTAXTYPE", decDeclarationTaxes.TaxTypeCode);
             cCUTAXPM.TAXTYPEN = decDeclarationTaxes.TaxTypeCode;
             //cCUTAXPM.TAXAMOUNT = decDeclarationTaxes.TotalAmount.ToNullableDouble("decDeclarationTaxes.TotalAmount");
-            cCUTAXPM.TAXAMOUNT = (decimal)decDeclarationTaxes.TotalAmount.ToNullableDouble("decDeclarationTaxes.TotalAmount") + (decimal)decDeclarationTaxes.DeferredTaxAmount.ToNullableDouble("decDeclarationTaxes.DeferredTaxAmount");
+            cCUTAXPM.TAXAMOUNT = (decimal?)decDeclarationTaxes.TotalAmount.ToNullableDouble("decDeclarationTaxes.TotalAmount") + (decimal)decDeclarationTaxes.DeferredTaxAmount.ToNullableDouble("decDeclarationTaxes.DeferredTaxAmount");
             //cCUTAXPM.TAXTOPAY = cCUTAXPM.TAXAMOUNT - decDeclarationTaxes.DeferredTaxAmount.ToNullableDouble("decDeclarationTaxes.DeferredTaxAmount");
-            cCUTAXPM.TAXTOPAY = (decimal)decDeclarationTaxes.TotalAmount.ToNullableDouble("decDeclarationTaxes.TotalAmount");
-            cCUTAXPM.POSTPONEDTAX = (decimal)decDeclarationTaxes.DeferredTaxAmount.ToNullableDouble("decDeclarationTaxes.DeferredTaxAmount");
-            cCUTAXPM.TAXBASIS = (decimal)decDeclarationTaxes.TaxBaseAmount.ToNullableDouble("decDeclarationTaxes.TaxBaseAmount");
+            cCUTAXPM.TAXTOPAY = (decimal?)decDeclarationTaxes.TotalAmount.ToNullableDouble("decDeclarationTaxes.TotalAmount");
+            cCUTAXPM.POSTPONEDTAX = (decimal?)decDeclarationTaxes.DeferredTaxAmount.ToNullableDouble("decDeclarationTaxes.DeferredTaxAmount");
+            cCUTAXPM.TAXBASIS = (decimal?)decDeclarationTaxes.TaxBaseAmount.ToNullableDouble("decDeclarationTaxes.TaxBaseAmount");
             
             var setting = CustomsSettingQueryService.GetSettingByTenant(_DirtyDeclarationPM.Tenant);
             if (!setting.IsConnectedToUniFreight)
@@ -2506,7 +2506,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 //Take the Exchange rate from the Main Account, if it does not exist calculate it according the InvoiceCurrencyTypeCode
                 if (decSupplierInvoice.ExchangeRate.HasValue && decSupplierInvoice.ExchangeRate > 0)
                 {
-                    _CCUFILEMPM.CURRENCYRATE = decSupplierInvoice.ExchangeRate;//;.ToNullableDouble("decSupplierInvoice.ExchangeRate");
+                    _CCUFILEMPM.CURRENCYRATE = (decimal?)decSupplierInvoice.ExchangeRate.ToNullableDouble("decSupplierInvoice.ExchangeRate");
                     _CCUFILEMPM.CURRENCYRATENEW = decSupplierInvoice.ExchangeRate.Value; // moran 12.1.16 - Task 17425
                 }
                 else
@@ -2516,7 +2516,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     {
                         if (!string.IsNullOrWhiteSpace(rate.ExchangeRate.ToString()))
                         {
-                            _CCUFILEMPM.CURRENCYRATE = rate.ExchangeRate;//.ToNullableDouble("rate.ExchangeRate");
+                            _CCUFILEMPM.CURRENCYRATE = (decimal?) rate.ExchangeRate.ToNullableDouble("rate.ExchangeRate");
                             _CCUFILEMPM.CURRENCYRATENEW = rate.ExchangeRate.Value; // moran 12.1.16 - Task 17425
                         }
                     }
@@ -2526,7 +2526,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 _MainAccountSet = true;
             }
 
-            _CCUFILEMPM.TRANSPVALUE = _CCUFILEMPM.TRANSPVALUE.GetValueOrDefault() + (decimal)decSupplierInvoice.TotalFreightInNIS.ToNullableDouble("decSupplierInvoice.TotalFreightInNIS").GetValueOrDefault();
+            _CCUFILEMPM.TRANSPVALUE = _CCUFILEMPM.TRANSPVALUE.GetValueOrDefault() + (decimal?)decSupplierInvoice.TotalFreightInNIS.ToNullableDouble("decSupplierInvoice.TotalFreightInNIS").GetValueOrDefault();
 
             double? amountDouble = 0;
             double amountDouble2 = 0;
@@ -2534,7 +2534,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             amountDouble = Transfer(decSupplierInvoice.InsuranceAmount, decSupplierInvoice.InsruanceCurrencyTypeCode, "ILS", decSupplierInvoice.ExchangeRate);
             if (amountDouble != null)
             {
-                _CCUFILEMPM.INSURANCEVALUE = _CCUFILEMPM.INSURANCEVALUE.GetValueOrDefault() + (decimal)amountDouble.GetValueOrDefault();
+                _CCUFILEMPM.INSURANCEVALUE = _CCUFILEMPM.INSURANCEVALUE.GetValueOrDefault() + (decimal?)amountDouble.GetValueOrDefault();
             }
 
             ////<--- Yuval Chalup 02.08.2015 // Mirit 10/07/16 Task 20996
@@ -2552,7 +2552,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             if (double.TryParse(decSupplierInvoice.InsruancePercentage.ToString(), out amountDouble2))
             {
-                _CCUFILEMPM.INSURANCEPERCENT = (decimal)amountDouble2;
+                _CCUFILEMPM.INSURANCEPERCENT = (decimal?)amountDouble2;
             }
 
             //<--- Yuval Chalup 31.12.2014 AMI-52371
@@ -2923,17 +2923,17 @@ decSupplierInvoiceItem.CounterKey, decSupplierInvoiceItem.LineNumber, this._Dirt
             supplierInvoiceItem103PM.PURCHCOUNTRYN = decSupplierInvoice.IssueCountryCode;
             supplierInvoiceItem103PM.WHOLESALEPRICE = decSupplierInvoiceItem.WholeSaleItemPrice;
             /////supplierInvoiceItem103PM.DISCOUNTCODE = GetTranslationP2L("IIGC", "CTBDISCOUNT", decSupplierInvoiceItem.TaxExemptCode); ;Yuval Chalup 30.11.2016 TASK-24754 (Removed)
-            supplierInvoiceItem103PM.QUANTITY = (decimal)decSupplierInvoiceItem.InvoiceQuantity.ToNullableDouble("decSupplierInvoiceItem.InvoiceQuantity");
-            supplierInvoiceItem103PM.EXTRAQNTY = (decimal)decSupplierInvoiceItem.AdditionalQuantity.ToNullableDouble("decSupplierInvoiceItem.AdditionalQuantity");
-            supplierInvoiceItem103PM.STSQNTY = (decimal)decSupplierInvoiceItem.StatisticQuantity.ToNullableDouble("decSupplierInvoiceItem.StatisticQuantity");
+            supplierInvoiceItem103PM.QUANTITY = (decimal?)decSupplierInvoiceItem.InvoiceQuantity.ToNullableDouble("decSupplierInvoiceItem.InvoiceQuantity");
+            supplierInvoiceItem103PM.EXTRAQNTY = (decimal?)decSupplierInvoiceItem.AdditionalQuantity.ToNullableDouble("decSupplierInvoiceItem.AdditionalQuantity");
+            supplierInvoiceItem103PM.STSQNTY = (decimal?)decSupplierInvoiceItem.StatisticQuantity.ToNullableDouble("decSupplierInvoiceItem.StatisticQuantity");
             supplierInvoiceItem103PM.TSVIRA = true;
             if (decSupplierInvoice.IsAccumalated)
             {
                 supplierInvoiceItem103PM.TSVIRA = false;
             }
             supplierInvoiceItem103PM.ORIGINVALUE = decSupplierInvoiceItem.ItemPrice;
-            supplierInvoiceItem103PM.NIDHEMEHESPCNT = (decimal)decSupplierInvoiceItem.DeferredCustomsTax.ToNullableDouble("decSupplierInvoiceItem.DeferredCustomsTax");
-            supplierInvoiceItem103PM.NIDHEMASPCNT = (decimal)decSupplierInvoiceItem.DeferredPurchaseTax.ToNullableDouble("decSupplierInvoiceItem.DeferredPurchaseTax");
+            supplierInvoiceItem103PM.NIDHEMEHESPCNT = (decimal?)decSupplierInvoiceItem.DeferredCustomsTax.ToNullableDouble("decSupplierInvoiceItem.DeferredCustomsTax");
+            supplierInvoiceItem103PM.NIDHEMASPCNT = (decimal?)decSupplierInvoiceItem.DeferredPurchaseTax.ToNullableDouble("decSupplierInvoiceItem.DeferredPurchaseTax");
             double? FOREIGNCURRVAL_AfterExchangeRate = 0;
             string currencyCode = decSupplierInvoiceItem.ItemPriceCurrencyCode;
             if (string.IsNullOrWhiteSpace(currencyCode))
@@ -2975,8 +2975,8 @@ decSupplierInvoiceItem.CounterKey, decSupplierInvoiceItem.LineNumber, this._Dirt
                 //Update 105 accumulated fields from PARENT item 
                 if (supplierInvoiceItemParentPM != null)
                 {
-                    supplierInvoiceItem105PM.QUANTITY = (decimal)supplierInvoiceItemParentPM.InvoiceQuantity.ToNullableDouble("decSupplierInvoiceItem.InvoiceQuantity");
-                    supplierInvoiceItem105PM.STSQNTY = (decimal)supplierInvoiceItemParentPM.StatisticQuantity.ToNullableDouble("decSupplierInvoiceItem.StatisticQuantity");
+                    supplierInvoiceItem105PM.QUANTITY = (decimal?)supplierInvoiceItemParentPM.InvoiceQuantity.ToNullableDouble("decSupplierInvoiceItem.InvoiceQuantity");
+                    supplierInvoiceItem105PM.STSQNTY = (decimal?)supplierInvoiceItemParentPM.StatisticQuantity.ToNullableDouble("decSupplierInvoiceItem.StatisticQuantity");
                     currencyCode = supplierInvoiceItemParentPM.ItemPriceCurrencyCode;
                     if (string.IsNullOrWhiteSpace(currencyCode))
                     {
@@ -3064,7 +3064,7 @@ decSupplierInvoiceItem.CounterKey, decSupplierInvoiceItem.LineNumber, this._Dirt
             CCUTRANSPVALPM cCUTRANSPVALPM = new CCUTRANSPVALPM();
             cCUTRANSPVALPM.ChangeSetOp = ChangeSetOperation.Insert;
 
-            cCUTRANSPVALPM.TRANSPVALFC = (decimal)supplierInvoiceFreightAmounts.Amount.ToNullableDouble("supplierInvoiceFreightAmounts.Amount");
+            cCUTRANSPVALPM.TRANSPVALFC = (decimal?)supplierInvoiceFreightAmounts.Amount.ToNullableDouble("supplierInvoiceFreightAmounts.Amount");
            
             cCUTRANSPVALPM.CURRID = GetTranslationP2L("IIGC", "CTBCURRENCY", supplierInvoiceFreightAmounts.CurrencyTypeCode);
             cCUTRANSPVALPM.CURRIDN = supplierInvoiceFreightAmounts.CurrencyTypeCode;
@@ -3261,15 +3261,15 @@ decSupplierInvoiceItem.CounterKey, decSupplierInvoiceItem.LineNumber, this._Dirt
             //cCUTAXPM.GOODSNO = mySupplierInvoiceItem103PM.ITEMLINENO;
             nullableInt = decSupplierInvoiceItem.LineNumber;
             cCUTAXPM.GOODSNO = (decSupplierInvoiceItem == null) ? null : nullableInt;
-            cCUTAXPM.TAXBASIS = (decimal)decSupplierInvoiceItemTaxes.TaxBaseAmount.ToNullableDouble("decSupplierInvoiceItemTaxes.TaxBaseAmount");
+            cCUTAXPM.TAXBASIS = (decimal?)decSupplierInvoiceItemTaxes.TaxBaseAmount.ToNullableDouble("decSupplierInvoiceItemTaxes.TaxBaseAmount");
             //cCUTAXPM.TAXAMOUNT = decSupplierInvoiceItemTaxes.TaxAmount.ToNullableDouble("decSupplierInvoiceItemTaxes.TaxAmount");
-            cCUTAXPM.TAXAMOUNT = (decimal)decSupplierInvoiceItemTaxes.TaxAmount.ToNullableDouble("decSupplierInvoiceItemTaxes.TaxAmount") + (decimal)decSupplierInvoiceItemTaxes.DeferedTaxAmount.ToNullableDouble("decSupplierInvoiceItemTaxes.DeferedTaxAmount");
-            cCUTAXPM.POSTPONEDTAX = (decimal)decSupplierInvoiceItemTaxes.DeferedTaxAmount.ToNullableDouble("decSupplierInvoiceItemTaxes.DeferedTaxAmount");
+            cCUTAXPM.TAXAMOUNT = (decimal?)decSupplierInvoiceItemTaxes.TaxAmount.ToNullableDouble("decSupplierInvoiceItemTaxes.TaxAmount") + (decimal)decSupplierInvoiceItemTaxes.DeferedTaxAmount.ToNullableDouble("decSupplierInvoiceItemTaxes.DeferedTaxAmount");
+            cCUTAXPM.POSTPONEDTAX = (decimal?)decSupplierInvoiceItemTaxes.DeferedTaxAmount.ToNullableDouble("decSupplierInvoiceItemTaxes.DeferedTaxAmount");
             //cCUTAXPM.TAXTOPAY = cCUTAXPM.TAXAMOUNT - cCUTAXPM.POSTPONEDTAX;
-            cCUTAXPM.TAXTOPAY = (decimal)decSupplierInvoiceItemTaxes.TaxAmount.ToNullableDouble("decSupplierInvoiceItemTaxes.TaxAmount");
-            cCUTAXPM.TAXRATE = (decimal)decSupplierInvoiceItemTaxes.TaxRate.ToNullableDouble("decSupplierInvoiceItemTaxes.TaxRate");
+            cCUTAXPM.TAXTOPAY = (decimal?)decSupplierInvoiceItemTaxes.TaxAmount.ToNullableDouble("decSupplierInvoiceItemTaxes.TaxAmount");
+            cCUTAXPM.TAXRATE = (decimal?)decSupplierInvoiceItemTaxes.TaxRate.ToNullableDouble("decSupplierInvoiceItemTaxes.TaxRate");
             //cCUTAXPM.DEFINEDTAX = cCUTAXPM.POSTPONEDTAX; //Remarked by Yuval Chalup TASK-21875 05.07.2016
-            cCUTAXPM.ADDTAXRATE = (decimal)decSupplierInvoiceItemTaxes.AlternateRate.ToNullableDouble("decSupplierInvoiceItemTaxes.AlternateRate");
+            cCUTAXPM.ADDTAXRATE = (decimal?)decSupplierInvoiceItemTaxes.AlternateRate.ToNullableDouble("decSupplierInvoiceItemTaxes.AlternateRate");
             if (cCUTAXPM.PRATMEHES != null) // moran 17.1.16 - Task 19798
             {
                 _loanAmount += decSupplierInvoiceItemTaxes.TotalBtlCoverageNIS;
@@ -3430,13 +3430,13 @@ decSupplierInvoiceItem.CounterKey, decSupplierInvoiceItem.LineNumber, this._Dirt
             cCUTAXPM.PRATMEHESN = (supplierInvoiceItem105PM == null) ? "" : supplierInvoiceItem105PM.PRATMEHESN;
             nullableInt = supplierInvoiceItem105PM.LINENO;
             cCUTAXPM.GOODSNO = nullableInt;
-            cCUTAXPM.TAXBASIS = (decimal)decSupplierInvoiceItemTaxes.TaxBaseAmount.ToNullableDouble("decSupplierInvoiceItemTaxes.TaxBaseAmount");
-            cCUTAXPM.TAXAMOUNT = (decimal)decSupplierInvoiceItemTaxes.TaxAmount.ToNullableDouble("decSupplierInvoiceItemTaxes.TaxAmount") + (decimal)decSupplierInvoiceItemTaxes.DeferedTaxAmount.ToNullableDouble("decSupplierInvoiceItemTaxes.DeferedTaxAmount");
-            cCUTAXPM.POSTPONEDTAX = (decimal)decSupplierInvoiceItemTaxes.DeferedTaxAmount.ToNullableDouble("decSupplierInvoiceItemTaxes.DeferedTaxAmount");
-            cCUTAXPM.TAXTOPAY = (decimal)decSupplierInvoiceItemTaxes.TaxAmount.ToNullableDouble("decSupplierInvoiceItemTaxes.TaxAmount");
-            cCUTAXPM.TAXRATE = (decimal)decSupplierInvoiceItemTaxes.TaxRate.ToNullableDouble("decSupplierInvoiceItemTaxes.TaxRate");
-            cCUTAXPM.ADDTAXRATE = (decimal)decSupplierInvoiceItemTaxes.AlternateRate.ToNullableDouble("decSupplierInvoiceItemTaxes.AlternateRate");
-            cCUTAXPM.TAXBASIS = (decimal)decSupplierInvoiceItemTaxes.TaxBaseAmount.ToNullableDouble("decSupplierInvoiceItemTaxes.TaxBaseAmount");
+            cCUTAXPM.TAXBASIS = (decimal?)decSupplierInvoiceItemTaxes.TaxBaseAmount.ToNullableDouble("decSupplierInvoiceItemTaxes.TaxBaseAmount");
+            cCUTAXPM.TAXAMOUNT = (decimal?)decSupplierInvoiceItemTaxes.TaxAmount.ToNullableDouble("decSupplierInvoiceItemTaxes.TaxAmount") + (decimal)decSupplierInvoiceItemTaxes.DeferedTaxAmount.ToNullableDouble("decSupplierInvoiceItemTaxes.DeferedTaxAmount");
+            cCUTAXPM.POSTPONEDTAX = (decimal?)decSupplierInvoiceItemTaxes.DeferedTaxAmount.ToNullableDouble("decSupplierInvoiceItemTaxes.DeferedTaxAmount");
+            cCUTAXPM.TAXTOPAY = (decimal?)decSupplierInvoiceItemTaxes.TaxAmount.ToNullableDouble("decSupplierInvoiceItemTaxes.TaxAmount");
+            cCUTAXPM.TAXRATE = (decimal?)decSupplierInvoiceItemTaxes.TaxRate.ToNullableDouble("decSupplierInvoiceItemTaxes.TaxRate");
+            cCUTAXPM.ADDTAXRATE = (decimal?)decSupplierInvoiceItemTaxes.AlternateRate.ToNullableDouble("decSupplierInvoiceItemTaxes.AlternateRate");
+            cCUTAXPM.TAXBASIS = (decimal?)decSupplierInvoiceItemTaxes.TaxBaseAmount.ToNullableDouble("decSupplierInvoiceItemTaxes.TaxBaseAmount");
             if (cCUTAXPM.PRATMEHES != null)
             {
                 _loanAmount += decSupplierInvoiceItemTaxes.TotalBtlCoverageNIS;
@@ -3636,12 +3636,12 @@ decSupplierInvoiceItem.CounterKey, decSupplierInvoiceItem.LineNumber, this._Dirt
             cCUCARSCPM.CHASSISNO = decSupplierInvioceItemsCars.VehicleChassisNumber;
             cCUCARSCPM.CARMODEL = decSupplierInvioceItemsCars.SupplierInvoiceItemVehicleAdds.FirstOrDefault().VehicleModel;
             cCUCARSCPM.ENGINENO = decSupplierInvioceItemsCars.SupplierInvoiceItemVehicleAdds.FirstOrDefault().EngineNumber;
-            cCUCARSCPM.FOB = (decimal)decSupplierInvioceItemsCars.SupplierInvoiceItemVehicleAdds.FirstOrDefault().VehicleValue.ToNullableDouble("VehicleValue");
+            cCUCARSCPM.FOB = (decimal?)decSupplierInvioceItemsCars.SupplierInvoiceItemVehicleAdds.FirstOrDefault().VehicleValue.ToNullableDouble("VehicleValue");
             cCUCARSCPM.EXEMPTTYPE = decSupplierInvioceItemsCars.SupplierInvoiceItemVehicleAdds.FirstOrDefault().Exempt_type;
             cCUCARSCPM.WINDOWNO = decSupplierInvioceItemsCars.SupplierInvoiceItemVehicleAdds.FirstOrDefault().WindowNumber;
-            cCUCARSCPM.BUYTAX = (decimal)decSupplierInvioceItemsCars.SupplierInvoiceItemVehicleAdds.FirstOrDefault().ChassisPurchaseTax.ToNullableDouble("ChassisPurchaseTax");
-            cCUCARSCPM.GENERALTAX = (decimal)decSupplierInvioceItemsCars.SupplierInvoiceItemVehicleAdds.FirstOrDefault().ChassisTax.ToNullableDouble("ChassisTax");
-            cCUCARSCPM.VATRESHIMON = (decimal)decSupplierInvioceItemsCars.SupplierInvoiceItemVehicleAdds.FirstOrDefault().ChassisVat.ToNullableDouble("ChassisVat");
+            cCUCARSCPM.BUYTAX = (decimal?)decSupplierInvioceItemsCars.SupplierInvoiceItemVehicleAdds.FirstOrDefault().ChassisPurchaseTax.ToNullableDouble("ChassisPurchaseTax");
+            cCUCARSCPM.GENERALTAX = (decimal?)decSupplierInvioceItemsCars.SupplierInvoiceItemVehicleAdds.FirstOrDefault().ChassisTax.ToNullableDouble("ChassisTax");
+            cCUCARSCPM.VATRESHIMON = (decimal?)decSupplierInvioceItemsCars.SupplierInvoiceItemVehicleAdds.FirstOrDefault().ChassisVat.ToNullableDouble("ChassisVat");
 
             var setting = CustomsSettingQueryService.GetSettingByTenant(_DirtyDeclarationPM.Tenant);
             if (!setting.IsConnectedToUniFreight)
