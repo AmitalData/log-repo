@@ -9,7 +9,7 @@ using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
-using Intuit.Ipp.LinqExtender;
+
 
 namespace Logitude.BL.CommonDataModel.EntityQueries
 {

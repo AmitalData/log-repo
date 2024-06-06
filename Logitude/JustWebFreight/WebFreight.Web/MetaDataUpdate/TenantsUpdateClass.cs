@@ -1613,7 +1613,7 @@ namespace WebFreight.Web.MetaDataUpdate
 
             return table.HashString != updateClassHashString;
         }
-        public static void BuildObjectTablesZipFilesData(bool savetodisk = false, bool includeCustoms = false)
+        public static void BuildObjectTablesZipFilesData(bool savetodisk = false, bool includeCustoms = false ,bool temp = false)
         {
 
             ObjectFieldQuery objectFieldsQuery = new ObjectFieldQuery(0);
@@ -1832,8 +1832,8 @@ namespace WebFreight.Web.MetaDataUpdate
 
         public static byte[] CompressionFileData(string fileName, byte[] fileData)
         {
-            if (ICSharpCode.SharpZipLib.Zip.ZipConstants.DefaultCodePage == 1)
-                ICSharpCode.SharpZipLib.Zip.ZipConstants.DefaultCodePage = 437;
+            //if (ICSharpCode.SharpZipLib.Zip.ZipConstants.DefaultCodePage == 1)
+            //    ICSharpCode.SharpZipLib.Zip.ZipConstants.DefaultCodePage = 437;
             MemoryStream outputMemStream = new MemoryStream();
             ZipOutputStream zipStream = new ZipOutputStream(outputMemStream);
 
@@ -1842,7 +1842,7 @@ namespace WebFreight.Web.MetaDataUpdate
 
             var newEntry = new ZipEntry(fileName + ".json");
             newEntry.DateTime = DateTime.Now;
-            ICSharpCode.SharpZipLib.Zip.ZipConstants.DefaultCodePage = 437;
+            //ICSharpCode.SharpZipLib.Zip.ZipConstants.DefaultCodePage = 437;
 
             zipStream.PutNextEntry(newEntry);
 

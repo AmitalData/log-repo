@@ -20,7 +20,6 @@ using Simplog.Data.QuoteModel.Mapping;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data; 
 using Logitude.Accounting.Data.EntityMapping;
-
 namespace Logitude.Accounting.Data
 {
    public  partial  class AccountingContext: DbContextBase, IAccountingContext
@@ -58,13 +57,13 @@ namespace Logitude.Accounting.Data
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
 
-		    if (LogitudeSettings.DatabaseManagementSystem == "oracle")
-            {
-                var config = Devart.Data.Oracle.Entity.Configuration.OracleEntityProviderConfig.Instance;
-                config.Workarounds.DisableQuoting = true;
-                config.Workarounds.IgnoreSchemaName = true;
+		    //if (LogitudeSettings.DatabaseManagementSystem == "oracle")
+      //      {
+      //          var config = Devart.Data.Oracle.Entity.Configuration.OracleEntityProviderConfig.Instance;
+      //          config.Workarounds.DisableQuoting = true;
+      //          config.Workarounds.IgnoreSchemaName = true;
                 
-            }
+      //      }
             Database.SetInitializer<AccountingContext>(null);
             modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
 			

@@ -553,7 +553,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         DateTime referenceDate;
                         if (DateUtil.IsCellDateFormatted(cell))
                         {
-                            referenceDate = cell.DateCellValue;
+                            referenceDate = Convert.ToDateTime( cell.DateCellValue );
                         }
                         else
                         {
