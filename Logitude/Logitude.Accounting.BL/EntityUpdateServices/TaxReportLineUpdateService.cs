@@ -254,7 +254,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 {
                     if (entityPM.StatusCode != TaxReportLineStatusValues.DuplicateThereisanothertransactionwiththesameVATNoandReference) entityPM.StatusCode = "1";
                 }
-                else if (entityPM.VatNumber != null)
+                else if (entityPM.VatNumber != null && entityPM.LineTypeCode != "R")
                 {
                     zerosVatNumber = trimmedZeros == "" ? true : false;
                     if (entityPM.VatNumber.Length > 9 || (zerosVatNumber && entityPM.VatNumber != "000000000"))
@@ -326,7 +326,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 {
                     if (entityPM.StatusCode != TaxReportLineStatusValues.DuplicateThereisanothertransactionwiththesameVATNoandReference) entityPM.StatusCode = "1";
                 }
-                else if (entityPM.VatNumber != null)
+                else if (entityPM.VatNumber != null && entityPM.LineTypeCode != "R")
                 {
                     zerosVatNumber = trimmedZeros == "" ? true : false;
                     if (entityPM.VatNumber.Length > 9 || (zerosVatNumber && entityPM.VatNumber != "000000000"))
