@@ -77,7 +77,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
         /// There are no comments for PAYTAX in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<long> PAYTAX
+        public virtual global::System.Nullable<decimal> PAYTAX
         {
             get
             {
@@ -92,14 +92,14 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<long> _PAYTAX;
+        private global::System.Nullable<decimal> _PAYTAX;
 
     
         /// <summary>
         /// There are no comments for REJECTTAX in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<long> REJECTTAX
+        public virtual global::System.Nullable<decimal> REJECTTAX
         {
             get
             {
@@ -114,7 +114,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<long> _REJECTTAX;
+        private global::System.Nullable<decimal> _REJECTTAX;
 
     
         /// <summary>
@@ -165,7 +165,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
         /// There are no comments for TOTALPAYTAX in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<long> TOTALPAYTAX
+        public virtual global::System.Nullable<decimal> TOTALPAYTAX
         {
             get
             {
@@ -180,14 +180,14 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<long> _TOTALPAYTAX;
+        private global::System.Nullable<decimal> _TOTALPAYTAX;
 
     
         /// <summary>
         /// There are no comments for TOTALPAYDEPOSIT in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<long> TOTALPAYDEPOSIT
+        public virtual global::System.Nullable<decimal> TOTALPAYDEPOSIT
         {
             get
             {
@@ -202,7 +202,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<long> _TOTALPAYDEPOSIT;
+        private global::System.Nullable<decimal> _TOTALPAYDEPOSIT;
 
     
         /// <summary>
