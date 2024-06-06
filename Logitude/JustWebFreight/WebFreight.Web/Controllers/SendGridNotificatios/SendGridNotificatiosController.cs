@@ -61,7 +61,7 @@ namespace WebFreight.Web.Controller
                         InsertNewAnalyzeQueue(emailsList, tenant);
                     }
 
-                    Logger.NLogger.Info("הגיע בהצלחה SendGrid {0}", emailsList[0].CommunicationLogId);
+                    Logger.LogInfo("הגיע בהצלחה SendGrid {0}", emailsList[0].CommunicationLogId);
                 }
             }
 
@@ -71,7 +71,7 @@ namespace WebFreight.Web.Controller
                 AzureLog.SaveLogsInStorage("SendGrid Page error  " + Environment.NewLine + errorMessage, "E", DateTime.Now, errorInfo.Message, errorInfo.StackTrace, 0, null, null, null);
                 //throw;
 
-                    Logger.NLogger.Info("נכשל");
+                    Logger.LogInfo("נכשל");
             }
 
             return Request.CreateResponse();
