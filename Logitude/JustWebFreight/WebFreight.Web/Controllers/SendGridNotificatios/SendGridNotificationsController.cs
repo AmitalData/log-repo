@@ -20,7 +20,7 @@ using System.Xml.Serialization;
 
 namespace WebFreight.Web.Controller
 {
-    public class SendGridNotificatiosController : ApiController
+    public class SendGridNotificationsController : ApiController
     {
         string values = "";
         int tenant = 0;
