@@ -2506,7 +2506,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 //Take the Exchange rate from the Main Account, if it does not exist calculate it according the InvoiceCurrencyTypeCode
                 if (decSupplierInvoice.ExchangeRate.HasValue && decSupplierInvoice.ExchangeRate > 0)
                 {
-                    _CCUFILEMPM.CURRENCYRATE = (long?)decSupplierInvoice.ExchangeRate.ToNullableDouble("decSupplierInvoice.ExchangeRate");
+                    _CCUFILEMPM.CURRENCYRATE = decSupplierInvoice.ExchangeRate;//;.ToNullableDouble("decSupplierInvoice.ExchangeRate");
                     _CCUFILEMPM.CURRENCYRATENEW = decSupplierInvoice.ExchangeRate.Value; // moran 12.1.16 - Task 17425
                 }
                 else
@@ -2516,7 +2516,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     {
                         if (!string.IsNullOrWhiteSpace(rate.ExchangeRate.ToString()))
                         {
-                            _CCUFILEMPM.CURRENCYRATE = (long?)rate.ExchangeRate.ToNullableDouble("rate.ExchangeRate");
+                            _CCUFILEMPM.CURRENCYRATE = rate.ExchangeRate;//.ToNullableDouble("rate.ExchangeRate");
                             _CCUFILEMPM.CURRENCYRATENEW = rate.ExchangeRate.Value; // moran 12.1.16 - Task 17425
                         }
                     }

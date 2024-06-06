@@ -1,0 +1,9 @@
+Warning: Missing Index In DXML File Card.dxml, The Found Index On DB Is IX_Cards_Tenant_GLAccountId, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File Card.dxml, The Found Index On DB Is ix_Cards_GLAccountId, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File Card.dxml, The Found Index On DB Is PIX_Cards_Tenant_PartnerTypeId, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File Card.dxml, The Found Index On DB Is IX_Cards_UpdateDate, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File Card.dxml, The Found Index On DB Is PIX_Cards_InActive_Tenant_PartnerTypeId, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File Card.dxml, The Found Index On DB Is IX_Cards_VatNumber_Tenant_InActive_PartnerTypeId, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File Card.dxml, The Found Index On DB Is PIX_Cards_InActive_Tenant_IsCustomer, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File FollowUp.dxml, The Found Index On DB Is IX_FK_QuoteFollowUp, The Index Should Added To The DXML File
+Warning: Missing Index In DXML File ObjectField.dxml, The Found Index On DB Is CopyToDW_Includes, The Index Should Added To The DXML File
