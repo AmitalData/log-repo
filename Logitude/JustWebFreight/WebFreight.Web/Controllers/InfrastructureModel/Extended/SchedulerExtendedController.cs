@@ -253,5 +253,25 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-    }
+		public HttpResponseMessage GetProceduresBySchema(string schemaId)
+		{
+			try
+			{
+				string token = HttpContext.Current.Request.Headers["Token"];
+				AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+				SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+				int tenant = authToken.Tenant;
+				
+				TasksSchedulerQuery tasksSchedulerQuery = new TasksSchedulerQuery(tenant);
+				List<Procedure> procedures = tasksSchedulerQuery.GetProceduresBySchema(schemaId, tenant);
+
+				return Request.CreateResponse(HttpStatusCode.OK, procedures);
+			}
+
+			catch (Exception ex)
+			{
+				return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+			}
+		}
+	}
 }
