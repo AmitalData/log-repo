@@ -31,11 +31,11 @@ namespace Unifreight.BL.EntityPMs
 
         public int? MEMIRTYPE { get; set; }
 
-        public long? MADADRATE { get; set; }
+        public decimal? MADADRATE { get; set; }
 
         public string FUELTYPE { get; set; }
 
-        public long? WEIGHT { get; set; }
+        public decimal? WEIGHT { get; set; }
 
         public string FFU1 { get; set; }
 

@@ -25,13 +25,13 @@ namespace Unifreight.BL.EntityPMs
 
         public string WINDOWNO { get; set; }
 
-        public long? FOB { get; set; }
+        public decimal? FOB { get; set; }
 
-        public long? GENERALTAX { get; set; }
+        public decimal? GENERALTAX { get; set; }
 
-        public long? BUYTAX { get; set; }
+        public decimal? BUYTAX { get; set; }
 
-        public long? VATRESHIMON { get; set; }
+        public decimal? VATRESHIMON { get; set; }
 
         public string EXEMPTTYPE { get; set; }
 

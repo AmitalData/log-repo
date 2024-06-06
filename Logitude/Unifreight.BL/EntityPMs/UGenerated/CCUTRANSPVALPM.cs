@@ -13,11 +13,11 @@ namespace Unifreight.BL.EntityPMs
 
         public int LINENO { get; set; }
 
-        public long? TRANSPVALFC { get; set; }
+        public decimal? TRANSPVALFC { get; set; }
 
         public string CURRID { get; set; }
 
-        public long? TRANSPVAL { get; set; }
+        public decimal? TRANSPVAL { get; set; }
 
         public string CURRIDN { get; set; }
 

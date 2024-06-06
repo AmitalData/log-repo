@@ -144,7 +144,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
         /// There are no comments for TAXBASIS in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<long> TAXBASIS
+        public virtual global::System.Nullable<decimal> TAXBASIS
         {
             get
             {
@@ -159,14 +159,14 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<long> _TAXBASIS;
+        private global::System.Nullable<decimal> _TAXBASIS;
 
     
         /// <summary>
         /// There are no comments for TAXAMOUNT in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<long> TAXAMOUNT
+        public virtual global::System.Nullable<decimal> TAXAMOUNT
         {
             get
             {
@@ -181,14 +181,14 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<long> _TAXAMOUNT;
+        private global::System.Nullable<decimal> _TAXAMOUNT;
 
     
         /// <summary>
         /// There are no comments for POSTPONEDTAX in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<long> POSTPONEDTAX
+        public virtual global::System.Nullable<decimal> POSTPONEDTAX
         {
             get
             {
@@ -203,14 +203,14 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<long> _POSTPONEDTAX;
+        private global::System.Nullable<decimal> _POSTPONEDTAX;
 
     
         /// <summary>
         /// There are no comments for TAXTOPAY in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<long> TAXTOPAY
+        public virtual global::System.Nullable<decimal> TAXTOPAY
         {
             get
             {
@@ -225,7 +225,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<long> _TAXTOPAY;
+        private global::System.Nullable<decimal> _TAXTOPAY;
 
     
         /// <summary>
@@ -254,7 +254,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
         /// There are no comments for TAXRATE in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<long> TAXRATE
+        public virtual global::System.Nullable<decimal> TAXRATE
         {
             get
             {
@@ -269,14 +269,14 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<long> _TAXRATE;
+        private global::System.Nullable<decimal> _TAXRATE;
 
     
         /// <summary>
         /// There are no comments for DEFINEDTAX in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<long> DEFINEDTAX
+        public virtual global::System.Nullable<decimal> DEFINEDTAX
         {
             get
             {
@@ -291,14 +291,14 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<long> _DEFINEDTAX;
+        private global::System.Nullable<decimal> _DEFINEDTAX;
 
     
         /// <summary>
         /// There are no comments for ADDTAXRATE in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<long> ADDTAXRATE
+        public virtual global::System.Nullable<decimal> ADDTAXRATE
         {
             get
             {
@@ -313,14 +313,14 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<long> _ADDTAXRATE;
+        private global::System.Nullable<decimal> _ADDTAXRATE;
 
     
         /// <summary>
         /// There are no comments for ADDEFINEDTAX in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<long> ADDEFINEDTAX
+        public virtual global::System.Nullable<decimal> ADDEFINEDTAX
         {
             get
             {
@@ -335,14 +335,14 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<long> _ADDEFINEDTAX;
+        private global::System.Nullable<decimal> _ADDEFINEDTAX;
 
     
         /// <summary>
         /// There are no comments for ADDIMPORT in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<long> ADDIMPORT
+        public virtual global::System.Nullable<decimal> ADDIMPORT
         {
             get
             {
@@ -357,7 +357,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<long> _ADDIMPORT;
+        private global::System.Nullable<decimal> _ADDIMPORT;
 
     
         /// <summary>

@@ -253,7 +253,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
         /// There are no comments for RAISEPERCENT in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<long> RAISEPERCENT
+        public virtual global::System.Nullable<decimal> RAISEPERCENT
         {
             get
             {
@@ -268,14 +268,14 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<long> _RAISEPERCENT;
+        private global::System.Nullable<decimal> _RAISEPERCENT;
 
     
         /// <summary>
         /// There are no comments for RAISEVALUE in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<long> RAISEVALUE
+        public virtual global::System.Nullable<decimal> RAISEVALUE
         {
             get
             {
@@ -290,14 +290,14 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<long> _RAISEVALUE;
+        private global::System.Nullable<decimal> _RAISEVALUE;
 
     
         /// <summary>
         /// There are no comments for NISVALUE in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<long> NISVALUE
+        public virtual global::System.Nullable<decimal> NISVALUE
         {
             get
             {
@@ -312,14 +312,14 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<long> _NISVALUE;
+        private global::System.Nullable<decimal> _NISVALUE;
 
     
         /// <summary>
         /// There are no comments for QUANTITY in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<long> QUANTITY
+        public virtual global::System.Nullable<decimal> QUANTITY
         {
             get
             {
@@ -334,14 +334,14 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<long> _QUANTITY;
+        private global::System.Nullable<decimal> _QUANTITY;
 
     
         /// <summary>
         /// There are no comments for EXTRAQNTY in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<long> EXTRAQNTY
+        public virtual global::System.Nullable<decimal> EXTRAQNTY
         {
             get
             {
@@ -356,7 +356,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<long> _EXTRAQNTY;
+        private global::System.Nullable<decimal> _EXTRAQNTY;
 
     
         /// <summary>
@@ -385,7 +385,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
         /// There are no comments for IMPORTADDITION in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<long> IMPORTADDITION
+        public virtual global::System.Nullable<decimal> IMPORTADDITION
         {
             get
             {
@@ -400,7 +400,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<long> _IMPORTADDITION;
+        private global::System.Nullable<decimal> _IMPORTADDITION;
 
     
         /// <summary>
@@ -473,7 +473,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
         /// There are no comments for AGNTPAYCUST in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<long> AGNTPAYCUST
+        public virtual global::System.Nullable<decimal> AGNTPAYCUST
         {
             get
             {
@@ -488,14 +488,14 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<long> _AGNTPAYCUST;
+        private global::System.Nullable<decimal> _AGNTPAYCUST;
 
     
         /// <summary>
         /// There are no comments for AGNTPAYTAX in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<long> AGNTPAYTAX
+        public virtual global::System.Nullable<decimal> AGNTPAYTAX
         {
             get
             {
@@ -510,14 +510,14 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<long> _AGNTPAYTAX;
+        private global::System.Nullable<decimal> _AGNTPAYTAX;
 
     
         /// <summary>
         /// There are no comments for AGNTPAYBITHA in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<long> AGNTPAYBITHA
+        public virtual global::System.Nullable<decimal> AGNTPAYBITHA
         {
             get
             {
@@ -532,14 +532,14 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<long> _AGNTPAYBITHA;
+        private global::System.Nullable<decimal> _AGNTPAYBITHA;
 
     
         /// <summary>
         /// There are no comments for NIDHEMEHESPCNT in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<long> NIDHEMEHESPCNT
+        public virtual global::System.Nullable<decimal> NIDHEMEHESPCNT
         {
             get
             {
@@ -554,14 +554,14 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<long> _NIDHEMEHESPCNT;
+        private global::System.Nullable<decimal> _NIDHEMEHESPCNT;
 
     
         /// <summary>
         /// There are no comments for NIDHEMASPCNT in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<long> NIDHEMASPCNT
+        public virtual global::System.Nullable<decimal> NIDHEMASPCNT
         {
             get
             {
@@ -576,7 +576,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<long> _NIDHEMASPCNT;
+        private global::System.Nullable<decimal> _NIDHEMASPCNT;
 
     
         /// <summary>
@@ -1001,7 +1001,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
         /// There are no comments for STSQNTY in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<long> STSQNTY
+        public virtual global::System.Nullable<decimal> STSQNTY
         {
             get
             {
@@ -1016,7 +1016,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<long> _STSQNTY;
+        private global::System.Nullable<decimal> _STSQNTY;
 
     
         /// <summary>

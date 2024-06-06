@@ -127,7 +127,7 @@ namespace Unifreight.Data.AmitalModel
             modelBuilder.Entity<GGGQ>()
                 .Property(p => p.EXPTASKTIME)
                     .HasColumnName(@"EXP_TASK_TIME")
-                    .HasColumnType("int64");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<GGGQ>()
                 .Property(p => p.TRY)
                     .HasColumnType("int");
@@ -517,11 +517,11 @@ namespace Unifreight.Data.AmitalModel
             modelBuilder.Entity<CCUPAYHAND>()
                 .Property(p => p.PAYTAX)
                     .HasColumnName(@"PAY_TAX")
-                    .HasColumnType("int64");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUPAYHAND>()
                 .Property(p => p.REJECTTAX)
                     .HasColumnName(@"REJECT_TAX")
-                    .HasColumnType("int64");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUPAYHAND>()
                 .Property(p => p.HANDTYPE)
                     .HasColumnName(@"HAND_TYPE")
@@ -534,11 +534,11 @@ namespace Unifreight.Data.AmitalModel
             modelBuilder.Entity<CCUPAYHAND>()
                 .Property(p => p.TOTALPAYTAX)
                     .HasColumnName(@"TOTAL_PAY_TAX")
-                    .HasColumnType("int64");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUPAYHAND>()
                 .Property(p => p.TOTALPAYDEPOSIT)
                     .HasColumnName(@"TOTAL_PAY_DEPOSIT")
-                    .HasColumnType("int64");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUPAYHAND>()
                 .Property(p => p.HANDDATE)
                     .HasColumnName(@"HAND_DATE")
@@ -662,22 +662,22 @@ namespace Unifreight.Data.AmitalModel
             modelBuilder.Entity<CCUSUPITEM>()
                 .Property(p => p.RAISEPERCENT)
                     .HasColumnName(@"RAISE_PERCENT")
-                    .HasColumnType("int64");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUSUPITEM>()
                 .Property(p => p.RAISEVALUE)
                     .HasColumnName(@"RAISE_VALUE")
-                    .HasColumnType("int64");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUSUPITEM>()
                 .Property(p => p.NISVALUE)
                     .HasColumnName(@"NIS_VALUE")
-                    .HasColumnType("int64");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUSUPITEM>()
                 .Property(p => p.QUANTITY)
-                    .HasColumnType("int64");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUSUPITEM>()
                 .Property(p => p.EXTRAQNTY)
                     .HasColumnName(@"EXTRA_QNTY")
-                    .HasColumnType("int64");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUSUPITEM>()
                 .Property(p => p.WHOLESALEPRICE)
                     .HasColumnName(@"WHOLESALE_PRICE")
@@ -685,7 +685,7 @@ namespace Unifreight.Data.AmitalModel
             modelBuilder.Entity<CCUSUPITEM>()
                 .Property(p => p.IMPORTADDITION)
                     .HasColumnName(@"IMPORT_ADDITION")
-                    .HasColumnType("int64");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUSUPITEM>()
                 .Property(p => p.DISCOUNTCODE)
                     .HasColumnName(@"DISCOUNT_CODE")
@@ -704,23 +704,23 @@ namespace Unifreight.Data.AmitalModel
             modelBuilder.Entity<CCUSUPITEM>()
                 .Property(p => p.AGNTPAYCUST)
                     .HasColumnName(@"AGNT_PAY_CUST")
-                    .HasColumnType("int64");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUSUPITEM>()
                 .Property(p => p.AGNTPAYTAX)
                     .HasColumnName(@"AGNT_PAY_TAX")
-                    .HasColumnType("int64");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUSUPITEM>()
                 .Property(p => p.AGNTPAYBITHA)
                     .HasColumnName(@"AGNT_PAY_BITHA")
-                    .HasColumnType("int64");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUSUPITEM>()
                 .Property(p => p.NIDHEMEHESPCNT)
                     .HasColumnName(@"NIDHE_MEHES_PCNT")
-                    .HasColumnType("int64");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUSUPITEM>()
                 .Property(p => p.NIDHEMASPCNT)
                     .HasColumnName(@"NIDHE_MAS_PCNT")
-                    .HasColumnType("int64");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUSUPITEM>()
                 .Property(p => p.VEHICLECODE)
                     .HasColumnName(@"VEHICLE_CODE")
@@ -822,7 +822,7 @@ namespace Unifreight.Data.AmitalModel
             modelBuilder.Entity<CCUSUPITEM>()
                 .Property(p => p.STSQNTY)
                     .HasColumnName(@"STS_QNTY")
-                    .HasColumnType("int64");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUSUPITEM>()
                 .Property(p => p.PRATMEHESN)
                     .HasColumnName(@"PRAT_MEHES_N")
@@ -1138,22 +1138,22 @@ namespace Unifreight.Data.AmitalModel
             modelBuilder.Entity<CCUCUSTITEM>()
                 .Property(p => p.RAISEPERCENT)
                     .HasColumnName(@"RAISE_PERCENT")
-                    .HasColumnType("int64");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUCUSTITEM>()
                 .Property(p => p.RAISEVALUE)
                     .HasColumnName(@"RAISE_VALUE")
-                    .HasColumnType("int64");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUCUSTITEM>()
                 .Property(p => p.NISVALUE)
                     .HasColumnName(@"NIS_VALUE")
-                    .HasColumnType("int64");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUCUSTITEM>()
                 .Property(p => p.QUANTITY)
-                    .HasColumnType("int64");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUCUSTITEM>()
                 .Property(p => p.EXTRAQNTY)
                     .HasColumnName(@"EXTRA_QNTY")
-                    .HasColumnType("int64");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUCUSTITEM>()
                 .Property(p => p.WHOLESALEPRICE)
                     .HasColumnName(@"WHOLESALE_PRICE")
@@ -1161,7 +1161,7 @@ namespace Unifreight.Data.AmitalModel
             modelBuilder.Entity<CCUCUSTITEM>()
                 .Property(p => p.IMPORTADDITION)
                     .HasColumnName(@"IMPORT_ADDITION")
-                    .HasColumnType("int64");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUCUSTITEM>()
                 .Property(p => p.DISCOUNTCODE)
                     .HasColumnName(@"DISCOUNT_CODE")
@@ -1180,23 +1180,23 @@ namespace Unifreight.Data.AmitalModel
             modelBuilder.Entity<CCUCUSTITEM>()
                 .Property(p => p.AGNTPAYCUST)
                     .HasColumnName(@"AGNT_PAY_CUST")
-                    .HasColumnType("int64");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUCUSTITEM>()
                 .Property(p => p.AGNTPAYTAX)
                     .HasColumnName(@"AGNT_PAY_TAX")
-                    .HasColumnType("int64");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUCUSTITEM>()
                 .Property(p => p.AGNTPAYBITHA)
                     .HasColumnName(@"AGNT_PAY_BITHA")
-                    .HasColumnType("int64");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUCUSTITEM>()
                 .Property(p => p.NIDHEMEHESPCNT)
                     .HasColumnName(@"NIDHE_MEHES_PCNT")
-                    .HasColumnType("int64");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUCUSTITEM>()
                 .Property(p => p.NIDHEMASPCNT)
                     .HasColumnName(@"NIDHE_MAS_PCNT")
-                    .HasColumnType("int64");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUCUSTITEM>()
                 .Property(p => p.VEHICLECODE)
                     .HasColumnName(@"VEHICLE_CODE")
@@ -1289,7 +1289,7 @@ namespace Unifreight.Data.AmitalModel
             modelBuilder.Entity<CCUCUSTITEM>()
                 .Property(p => p.STSQNTY)
                     .HasColumnName(@"STS_QNTY")
-                    .HasColumnType("int64");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUCUSTITEM>()
                 .Property(p => p.PRATMEHESN)
                     .HasColumnName(@"PRAT_MEHES_N")
@@ -1383,7 +1383,7 @@ namespace Unifreight.Data.AmitalModel
             modelBuilder.Entity<CCUPAYLINEF>()
                 .Property(p => p.PAYAMOUNT)
                     .HasColumnName(@"PAY_AMOUNT")
-                    .HasColumnType("int64");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUPAYLINEF>()
                 .Property(p => p.ACCOUNTNAME)
                     .HasColumnName(@"ACCOUNT_NAME")
@@ -1465,19 +1465,19 @@ namespace Unifreight.Data.AmitalModel
             modelBuilder.Entity<CCUTAX>()
                 .Property(p => p.TAXBASIS)
                     .HasColumnName(@"TAX_BASIS")
-                    .HasColumnType("int64");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUTAX>()
                 .Property(p => p.TAXAMOUNT)
                     .HasColumnName(@"TAX_AMOUNT")
-                    .HasColumnType("int64");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUTAX>()
                 .Property(p => p.POSTPONEDTAX)
                     .HasColumnName(@"POSTPONED_TAX")
-                    .HasColumnType("int64");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUTAX>()
                 .Property(p => p.TAXTOPAY)
                     .HasColumnName(@"TAX_TO_PAY")
-                    .HasColumnType("int64");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUTAX>()
                 .Property(p => p.TAXCALCCODE)
                     .HasColumnName(@"TAX_CALC_CODE")
@@ -1485,23 +1485,23 @@ namespace Unifreight.Data.AmitalModel
             modelBuilder.Entity<CCUTAX>()
                 .Property(p => p.TAXRATE)
                     .HasColumnName(@"TAX_RATE")
-                    .HasColumnType("int64");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUTAX>()
                 .Property(p => p.DEFINEDTAX)
                     .HasColumnName(@"DEFINED_TAX")
-                    .HasColumnType("int64");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUTAX>()
                 .Property(p => p.ADDTAXRATE)
                     .HasColumnName(@"ADD_TAX_RATE")
-                    .HasColumnType("int64");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUTAX>()
                 .Property(p => p.ADDEFINEDTAX)
                     .HasColumnName(@"AD_DEFINED_TAX")
-                    .HasColumnType("int64");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUTAX>()
                 .Property(p => p.ADDIMPORT)
                     .HasColumnName(@"ADD_IMPORT")
-                    .HasColumnType("int64");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUTAX>()
                 .Property(p => p.PRATMEHESN)
                     .HasColumnName(@"PRAT_MEHES_N")
@@ -1635,7 +1635,7 @@ namespace Unifreight.Data.AmitalModel
             modelBuilder.Entity<CCUFILEM>()
                 .Property(p => p.INDEXVALUE)
                     .HasColumnName(@"INDEX_VALUE")
-                    .HasColumnType("int64");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUFILEM>()
                 .Property(p => p.COINID)
                     .HasColumnName(@"COIN_ID")
@@ -1644,67 +1644,67 @@ namespace Unifreight.Data.AmitalModel
             modelBuilder.Entity<CCUFILEM>()
                 .Property(p => p.CHANGINGVALUE)
                     .HasColumnName(@"CHANGING_VALUE")
-                    .HasColumnType("int64");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUFILEM>()
                 .Property(p => p.REGIONVALUE)
                     .HasColumnName(@"REGION_VALUE")
-                    .HasColumnType("int64");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUFILEM>()
                 .Property(p => p.TRANSPVALUE)
                     .HasColumnName(@"TRANSP_VALUE")
-                    .HasColumnType("int64");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUFILEM>()
                 .Property(p => p.INSURANCEVALUE)
                     .HasColumnName(@"INSURANCE_VALUE")
-                    .HasColumnType("int64");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUFILEM>()
                 .Property(p => p.SERVICEVALUE)
                     .HasColumnName(@"SERVICE_VALUE")
-                    .HasColumnType("int64");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUFILEM>()
                 .Property(p => p.EXPENSEVALUE)
                     .HasColumnName(@"EXPENSE_VALUE")
-                    .HasColumnType("int64");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUFILEM>()
                 .Property(p => p.CLOSUREVALUE)
                     .HasColumnName(@"CLOSURE_VALUE")
-                    .HasColumnType("int64");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUFILEM>()
                 .Property(p => p.FEECARRIER)
                     .HasColumnName(@"FEE_CARRIER")
-                    .HasColumnType("int64");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUFILEM>()
                 .Property(p => p.FEEPLATFORM)
                     .HasColumnName(@"FEE_PLATFORM")
-                    .HasColumnType("int64");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUFILEM>()
                 .Property(p => p.CURRENCYRATE)
                     .HasColumnName(@"CURRENCY_RATE")
-                    .HasColumnType("int64");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUFILEM>()
                 .Property(p => p.PRICEINDEX)
                     .HasColumnName(@"PRICE_INDEX")
-                    .HasColumnType("int64");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUFILEM>()
                 .Property(p => p.GOODSVALUE)
                     .HasColumnName(@"GOODS_VALUE")
-                    .HasColumnType("int64");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUFILEM>()
                 .Property(p => p.CIFVALUE)
                     .HasColumnName(@"CIF_VALUE")
-                    .HasColumnType("int64");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUFILEM>()
                 .Property(p => p.ACCEPTEDPRICE)
                     .HasColumnName(@"ACCEPTED_PRICE")
-                    .HasColumnType("int64");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUFILEM>()
                 .Property(p => p.TOTALTAX)
                     .HasColumnName(@"TOTAL_TAX")
-                    .HasColumnType("int64");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUFILEM>()
                 .Property(p => p.TRANSPVALFC)
                     .HasColumnName(@"TRANSP_VAL_FC")
-                    .HasColumnType("int64");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUFILEM>()
                 .Property(p => p.TRANCURRENCY)
                     .HasColumnName(@"TRAN_CURRENCY")
@@ -1713,7 +1713,7 @@ namespace Unifreight.Data.AmitalModel
             modelBuilder.Entity<CCUFILEM>()
                 .Property(p => p.INSURANCEPERCENT)
                     .HasColumnName(@"INSURANCE_PERCENT")
-                    .HasColumnType("int64");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUFILEM>()
                 .Property(p => p.INSURANCECURR)
                     .HasColumnName(@"INSURANCE_CURR")
@@ -1722,7 +1722,7 @@ namespace Unifreight.Data.AmitalModel
             modelBuilder.Entity<CCUFILEM>()
                 .Property(p => p.INSURANCEAMNT)
                     .HasColumnName(@"INSURANCE_AMNT")
-                    .HasColumnType("int64");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUFILEM>()
                 .Property(p => p.PAYDATE)
                     .HasColumnName(@"PAY_DATE")
@@ -1771,7 +1771,7 @@ namespace Unifreight.Data.AmitalModel
             modelBuilder.Entity<CCUFILEM>()
                 .Property(p => p.GUARANTEEAMNT)
                     .HasColumnName(@"GUARANTEE_AMNT")
-                    .HasColumnType("int64");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUFILEM>()
                 .Property(p => p.IMPORTTYPE)
                     .HasColumnName(@"IMPORT_TYPE")
@@ -1893,7 +1893,7 @@ namespace Unifreight.Data.AmitalModel
             modelBuilder.Entity<CCUFILEM>()
                 .Property(p => p.TOTALINVOICELINESNO)
                     .HasColumnName(@"TOTAL_INVOICE_LINES_NO")
-                    .HasColumnType("int64");
+                    .HasColumnType("int");
 
 
 
@@ -3017,11 +3017,11 @@ namespace Unifreight.Data.AmitalModel
                     .HasColumnName(@"LINE_NO")
                     .IsRequired()
                     .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
-                    .HasColumnType("int64");
+                    .HasColumnType("int");
             modelBuilder.Entity<CCUTRANSPVAL>()
                 .Property(p => p.TRANSPVALFC)
                     .HasColumnName(@"TRANSP_VAL_FC")
-                    .HasColumnType("int64");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUTRANSPVAL>()
                 .Property(p => p.CURRID)
                     .HasColumnName(@"CURR_ID")
@@ -3030,7 +3030,7 @@ namespace Unifreight.Data.AmitalModel
             modelBuilder.Entity<CCUTRANSPVAL>()
                 .Property(p => p.TRANSPVAL)
                     .HasColumnName(@"TRANSP_VAL")
-                    .HasColumnType("int64");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUTRANSPVAL>()
                 .Property(p => p.CURRIDN)
                     .HasColumnName(@"CURR_ID_N")
@@ -3367,7 +3367,7 @@ namespace Unifreight.Data.AmitalModel
             modelBuilder.Entity<CCUCARL>()
                 .Property(p => p.MADADRATE)
                     .HasColumnName(@"MADAD_RATE")
-                    .HasColumnType("int64");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUCARL>()
                 .Property(p => p.FUELTYPE)
                     .HasColumnName(@"FUEL_TYPE")
@@ -3375,7 +3375,7 @@ namespace Unifreight.Data.AmitalModel
                     .HasColumnType("char");
             modelBuilder.Entity<CCUCARL>()
                 .Property(p => p.WEIGHT)
-                    .HasColumnType("int64");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUCARL>()
                 .Property(p => p.FFU1)
                     .HasMaxLength(50)
@@ -4548,19 +4548,19 @@ namespace Unifreight.Data.AmitalModel
                     .HasColumnType("char");
             modelBuilder.Entity<CCUCARSC>()
                 .Property(p => p.FOB)
-                    .HasColumnType("int64");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUCARSC>()
                 .Property(p => p.GENERALTAX)
                     .HasColumnName(@"GENERAL_TAX")
-                    .HasColumnType("int64");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUCARSC>()
                 .Property(p => p.BUYTAX)
                     .HasColumnName(@"BUY_TAX")
-                    .HasColumnType("int64");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUCARSC>()
                 .Property(p => p.VATRESHIMON)
                     .HasColumnName(@"VAT_RESHIMON")
-                    .HasColumnType("int64");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUCARSC>()
                 .Property(p => p.EXEMPTTYPE)
                     .HasColumnName(@"EXEMPT_TYPE")
