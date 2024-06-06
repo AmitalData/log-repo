@@ -10,7 +10,7 @@ import { GenerateCurrentDatetimeString } from '../../../Base/cypress/actions/Gen
 
 
 export function NavigatesToLinksGatewayPREQ(){
-    cy.visit('https://test-accounting.amital.co.il/test/LinksGateway.aspx?Menu=PREQ&SecurityKey=d5e6d15f4cb24f12a8ac9c5e8c54a06d');
+    cy.visit('https://accounting-staging.amital.co.il/accounting/LinksGateway.aspx?Menu=PREQ&SecurityKey=d5e6d15f4cb24f12a8ac9c5e8c54a06d');
 }
 
 
