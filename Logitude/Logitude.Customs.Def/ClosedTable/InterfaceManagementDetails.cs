@@ -2812,6 +2812,25 @@ namespace Logitude.Customs.Def.ClosedTable
 
             all.Add(new InterfaceManagementDetails()
             {
+                Code = "UCB2751",
+
+                ///DCAInUniCourierBatchSend_MsgMessagingService
+                InOut = InOutEnum.I.ToString(),
+                Description = "שידור הצהרות יצוא",// "Unifreight Courier *2750* Batch Send",
+                DcaPrefixName = "Export_UCB2751_Out.",
+                DefaultSendOptionsCode = null,
+                DefaultPriority = CONST_DefaultPriority,
+                AllowRestore = true,
+
+                Active = true,
+                SendAsDual = false,
+                ResponseInterfaceCode = "",
+                //  NeedSignature = false
+                // InterfaceType = "C",
+            });
+
+            all.Add(new InterfaceManagementDetails()
+            {
                 Code = "UCB8250",
                 InOut = InOutEnum.I.ToString(),
                 Description = "שידור סטטוס הצהרות לבלדר",

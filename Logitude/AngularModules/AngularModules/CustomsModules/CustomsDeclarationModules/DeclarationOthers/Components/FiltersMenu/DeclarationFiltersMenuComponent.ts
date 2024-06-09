@@ -170,7 +170,8 @@ export class DeclarationFiltersMenuComponent
             this.apiQueryFilters.AdditionalFilters[index]["SpecificMenuFilter"] = true;
         }
 
-        this.SelectedValueChanged.emit({ Filters: this.apiQueryFilters, RemoveFilter: false });
+        // todo: show notification if there is selected rows and prevent change
+        this.SelectedValueChanged.emit({ Filters: this.apiQueryFilters, RemoveFilter: false, RowCount: this.diamondsMenusCount[this.SelectedDiamondsMenu] });
     }
 
     // RemoveDiamondsDeclarationFilter() {
@@ -243,5 +244,6 @@ export class DeclarationFiltersMenuComponent
             this.SelectedValueChanged.emit({ Filters: exportFilterData.apiQueryFilters, RemoveFilter: false });
         });
     }
+
 }
 

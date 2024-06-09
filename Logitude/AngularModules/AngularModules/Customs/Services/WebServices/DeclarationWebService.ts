@@ -2074,6 +2074,25 @@ export class DeclarationWebService {
         });
     }
 
+    PostActionOnDeclarationBatch(requestParams) {
+        return defer(() => {
+    
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+
+            return this._http.post(this._apiUrl + '/PostActionOnDeclarationBatch/', 
+                JSON.stringify(requestParams),
+                ServiceHelper.GetHttpHeaders()).pipe(map((response) => {
+                    var res = response;
+                    serviceResponse.Result = res;
+                    return serviceResponse;
+                }),catchError(ServiceHelper.HandleServiceError));
+        });
+    }
 
     MapJsonToCorrectionView(jsonPM: any, mapParent: boolean = true, entityPM: DeclarationCorrectionView = null) {
 

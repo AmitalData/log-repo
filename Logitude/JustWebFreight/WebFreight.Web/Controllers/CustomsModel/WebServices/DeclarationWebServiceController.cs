@@ -60,6 +60,7 @@ using Logitude.Customs.Data.EntityPOCOs;
 using System.Data;
 using Org.BouncyCastle.Bcpg.Sig;
 using Logitude.Customs.Data.EntityMapping;
+using Simplog.Server.Infrastructure.DataContracts;
 
 namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 {
@@ -520,7 +521,68 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             }
 
         }
- 
+
+        [HttpPost]
+        public HttpResponseMessage PostActionOnDeclarationBatch([FromBody] ActionOnBatch actionOnBatch)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                string loggedUserEmail = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                UserRepository userRepository = new UserRepository(tenant);
+                User loggedUser = userRepository.GetSingleUserByCodeOrEmail(null, loggedUserEmail, tenant, true);
+                ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
+
+                List<string> declarationIds;
+
+                if (actionOnBatch.IsAllSelected)
+                {
+                    throw new Exception("not implemented");
+
+                    // todo: get only ids
+                    /*
+                    declarationIds = GetByFilters(actionOnBatch.Filters, tenant);
+
+                    if (actionOnBatch.SelectedIds != null)
+                    {
+                        // select only ids that are not in the selectedIds list
+                        declarationIds = declarationIds.Where(id => !actionOnBatch.SelectedIds.Contains(id)).ToList();
+                    }*/
+                }
+                else
+                {
+                    // todo: custom query to get id only?
+                    // DeclarationRepository repo = new DeclarationRepository(customContext);
+                    // declarationIds = repo.GetDeclarationsById(actionOnBatch.SelectedIds).Where(d => d.Tenant == tenant).Select(d => d.Id).ToList();
+                    declarationIds = actionOnBatch.SelectedIds;
+                }
+
+                DataResult result = new DataResult();
+                switch (actionOnBatch.Action.ToLower())
+                {
+                    case "senddeclarationaction":
+                        var messagingService = new DCAInUCB2751_MsgMessagingService();
+                        string RequestInProgressList;
+                        var sts = messagingService.CreateCRS(tenant, declarationIds, actionOnBatch.LoggingUserId, out RequestInProgressList);
+                        result.RequestInProgressList = RequestInProgressList;
+                        result.Message = sts;
+                        break;
+
+                    default:
+                        throw new Exception("Action not supported");
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
         public HttpResponseMessage PostSendTransshipmenDeclaration(GenericRequestParams requestParamsData)
         {
             try
@@ -2610,4 +2672,17 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
         public int  Tenant { get; set; }
    }
 
+    public class ActionOnBatch
+    {
+        public bool IsAllSelected { get; set; }
+        public List<string> SelectedIds { get; set; }
+        public string Action { get; set; }
+        public string LoggingUserId { get; set; }
+        public ApiQueryFilters Filters { get; set; }
+    }
+    public class DataResult
+    {
+        public string RequestInProgressList { get; set; }
+        public string Message { get; set; }
+    }
 }

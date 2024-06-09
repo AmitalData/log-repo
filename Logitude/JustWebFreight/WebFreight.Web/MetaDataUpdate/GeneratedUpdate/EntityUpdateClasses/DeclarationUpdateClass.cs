@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "14b203e2883352f7fbc144b2e545ffa5";
+		public const string HashString = "af14af37c28c533a6fb00ca5571de903";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -22071,6 +22071,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode DeclarationTextCode_CustomsDeclarationOPaidDeclarations = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.PaidDeclarations", DefaultText = "Paid Declarations",LocalDefaultText = @"הצהרות שהוגשו", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DeclarationTextCode_CustomsDeclarationOReleasedDeclarations = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ReleasedDeclarations", DefaultText = "Released Declarations",LocalDefaultText = @"הצהרות שהותרו", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOSendDeclarationAction = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SendDeclarationAction", DefaultText = "Send Declaration",LocalDefaultText = @"שידור הצהרה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOSendSignedDeclarationsAction = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SendSignedDeclarationsAction", DefaultText = "Send Signed Declarations",LocalDefaultText = @"שידור הצהרה חתומה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOSendDeclarationPaymentsAction = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SendDeclarationPaymentsAction", DefaultText = "Send Declaration Payments",LocalDefaultText = @"שידור הגשת הצהרה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

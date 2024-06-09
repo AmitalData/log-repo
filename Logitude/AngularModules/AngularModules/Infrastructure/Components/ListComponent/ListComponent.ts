@@ -58,6 +58,10 @@ import { SharedManifestComponent } from 'ShipmentModules/ShipmentSharedManifest/
 import { EditQuoteTemplateComponent } from 'QuoteOPModules/QuoteTemplates/Components/EditQuoteTemplateComponent';
 import { CargoSplitGeneralTabComponent } from 'CustomsModules/CustomsDeclarationCargoSplit/Components/EditTabs/General/CargoSplitGeneralTabComponent';
 import { LogisticActionRequestGeneralTabComponent } from 'CustomsModules/CustomsLogisticActionRequest/Components/EditTabs/General/LogisticActionRequestGeneralTabComponent';
+import { ObservableCollection } from 'Infrastructure/Utilities/ObservableCollection';
+import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
+import { DeclarationExtendedListService } from 'Customs/Services/ExtendedLists/DeclarationExtendedListService';
+import { DeclarationWebService } from 'Customs/Services/WebServices/DeclarationWebService';
 
 @Component({
 
@@ -98,6 +102,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     public HasCustomsFilterMenu: boolean = false;
     public IsPhysicalCheckObjectTable: boolean = false;
     public IsLogisticActionRequestObjectTable: boolean = false;
+    private _declarationWebService: DeclarationWebService = new DeclarationWebService();
 
 
     @ViewChild(LogGridComponent) MyLogGridComponent: LogGridComponent = null;
@@ -527,6 +532,9 @@ export class ListComponent implements OnInit, AfterViewInit {
         });
 
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
+
+        this.ExcludedItems = new ObservableCollection([]);
+        this.SelectedItems = new ObservableCollection([]);
     }
     name: string;
     processAdvanceQueryFilters(filters) {
@@ -944,6 +952,8 @@ export class ListComponent implements OnInit, AfterViewInit {
                                         cmpRef.instance.SetFiltersMenu(this.listArgs.Filters);
                                     }
                                     cmpRef.instance.SelectedValueChanged.subscribe(($event: any) => {
+                                        this.SelectedFilterChanged($event);
+
                                         this.FiltersMenu = new ApiQueryFilters();
                                         this.FiltersMenu = $event.Filters;
                                         this.MenuHeaderchangeevent.emit({ Filters: $event.Filters, RemoveFilter: $event.RemoveFilter });
@@ -1226,6 +1236,17 @@ export class ListComponent implements OnInit, AfterViewInit {
                     this.columnsObjectFields.push(window.ObjectFields.filter(x => x.FieldCode === value.ObjectFieldCode)[0]);
                 });
 
+                if (this.IsSelectAllCheckboxVisible) {
+                    this.columns.push({
+                        FieldName: "",
+                        DataTypeCode: 'String',
+                        Display: '',
+                        IsCustomTemplate: true,
+                        Styles: { width: '27px' },
+                        IsCheckBox: true
+                    });
+                }
+
                 for (var i = 0; i < this.QueryColumns.length; i++) {
                     var CurColumn = this.columns.filter(a => a.FieldName == this.QueryColumns[i].ObjectFieldName);
                     if (this.columns != null && (CurColumn == null || CurColumn.length == 0)) {
@@ -1420,6 +1441,8 @@ export class ListComponent implements OnInit, AfterViewInit {
                     }
                 });
             }
+
+            this.SetSelectAllCheckBox(this.SelectedQuery.UniqueCode);
 
             this.GetQueryColumns(this.SelectedQuery.UniqueCode, this.UserId);
         }
@@ -2723,6 +2746,47 @@ export class ListComponent implements OnInit, AfterViewInit {
         this.IsAddButtonVisible = isVisible;
     }
 
+    ScreenQueryActions = {
+        "Customs.Declaration.DiamondsDeclarations": {
+            actions: ["SendDeclarationAction", "SendSignedDeclarationsAction", "SendDeclarationPaymentsAction"],
+            actionTranslationPrefix: "Customs.Declaration.O."
+        }
+    };
+
+    ScreenQueryAction = [];
+
+    public IsSelectAllCheckboxVisible: boolean = false;
+    private SetSelectAllCheckBox(queryCode) {
+        var isVisible = false;
+
+        if (this.ScreenQueryActions[queryCode]) {
+            isVisible = true;
+            this.ScreenQueryAction = this.ScreenQueryActions[queryCode];
+        }
+
+        this.IsSelectAllCheckboxVisible = isVisible;
+
+        this.SelectAllRowsChecked(false);
+    }
+
+    SelectedFilterChanged($event) {
+        if ($event.RowCount) {
+            // todo: currently it is the total without filters consideration
+            this.dataCount = $event.RowCount;
+        }
+
+        this.SelectAllRowsChecked(false);
+    }
+
+    SelectAllRowsChecked(selected) {
+        this.IsSelected = selected;
+
+        this.SelectedItems.Collection = [];
+        this.ExcludedItems.Collection = [];
+
+        this.CalculateSelectedCount();
+    }
+
     // New
     public NewEntityButtonLabel: string = null;
     public IsNewEntityButtonVisible: boolean = false;
@@ -3937,4 +4001,86 @@ export class ListComponent implements OnInit, AfterViewInit {
                 });
         }
     }
+
+    public IsSelected: boolean = false;
+    public SelectedItems: ObservableCollection;
+    public ExcludedItems: ObservableCollection;
+    public SelectedCount: number = 0;
+
+    onCheckBoxChecked($event) {
+        if ($event.IsChecked) {
+
+            if (!this.SelectedItems.Collection.includes($event.rowData.Id)) {
+                this.SelectedItems.Insert($event.rowData.Id);
+
+                if (this.IsSelected) {
+                    if (this.ExcludedItems.Collection.includes($event.rowData.Id)) {
+                        this.ExcludedItems.Remove($event.rowData.Id);
+                    }
+                }
+            }
+        }
+        else {
+            var removedIndex = null;
+            for (var i = 0; i < this.SelectedItems.Collection.length; i++) {
+                if ($event.rowIndex == this.SelectedItems.Collection[i].rowIndex) {
+                    removedIndex = i;
+                    break;
+                }
+            }
+
+            if (removedIndex != null) {
+                this.SelectedItems.RemoveFromIndex(removedIndex);
+            }
+
+            if (this.IsSelected) {
+                if (!this.ExcludedItems.Collection.includes($event.rowData.Id)) {
+                    this.ExcludedItems.Insert($event.rowData.Id);
+                }
+            }
+        }
+
+        this.CalculateSelectedCount();
+    }
+
+    CalculateSelectedCount() {
+        this.SelectedCount = this.IsSelected? this.dataCount - this.ExcludedItems.Collection.length: this.SelectedItems.Collection.length;
+        // todo: emit selectedCount
+    }
+
+    ShowActionConfirmationWindow(action) {
+
+        var confirmWindow = new ConfirmWindow();
+        var confirmMsg: string = "נבחרו {count} ל{actionTranslation}, האם להמשיך? "
+            .replace("{count}", this.SelectedCount.toString())
+            .replace("{actionTranslation}", TextCodeTranslator.Translate(this.ScreenQueryAction["actionTranslationPrefix"] + action));
+        confirmWindow.Title = "Customer Care Deactivation";
+        confirmWindow.Width = 400;
+        confirmWindow.Height = 180;
+        confirmWindow.YesButtonText = "OK"; // todo
+        confirmWindow.NoButtonText = "Cancel"; //todo
+        confirmWindow.Show(confirmMsg);
+
+        var params = {
+            Action: action,
+            IsAllSelected: this.IsSelected, 
+            SelectedIds: this.IsSelected? this.ExcludedItems.Collection: this.SelectedItems.Collection, 
+            // Filters: this.CurrentQueryFilters,
+            LoggingUserId: SessionLocator.LoggedUserId
+        };
+
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+
+                if (this.ObjectTable.Name == "Customs.Declaration") {
+                    this._declarationWebService.PostActionOnDeclarationBatch(params).subscribe((response:any) => {
+                        this.SelectAllRowsChecked(false);
+                        SessionLocator.SelectedSession.StopBusyIndicator();
+
+                        //todo:  deselect the selected..
+                    });
+                }
+            }
+        });
+    };
 }
