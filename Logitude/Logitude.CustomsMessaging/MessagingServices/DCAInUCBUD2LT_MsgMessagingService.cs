@@ -704,13 +704,13 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
         private bool IsConnected2Declaration()
         {
-            return (this._DocumentsFilingPM.ObjectTableId == ObjectTableRepository.GetObjectTableByName("Customs.Declaration") &&  ( !String.IsNullOrWhiteSpace(this._DocumentsFilingPM.EntityId) || !String.IsNullOrWhiteSpace(this._DocumentsFilingPM.ExternalEntityReference)));
+            return (this._DocumentsFilingPM.ObjectTableId == ObjectTableRepository.GetObjectTableByName("Customs.Declaration") && (!String.IsNullOrWhiteSpace(this._DocumentsFilingPM.EntityId) || !String.IsNullOrWhiteSpace(this._DocumentsFilingPM.ExternalEntityReference))) || this._DocumentsFilingPM.ExternalEntityName == "EFIFILEM";
         }
 
 
 
-		
-	}
+
+    }
     public class CustomCreateTicket : ICustomCreateTicket
 	{
 		public bool CreateTicket(string documentFilingId, string documentFilingCode, string documentTypeCode, int tenant, string declaratinId)
