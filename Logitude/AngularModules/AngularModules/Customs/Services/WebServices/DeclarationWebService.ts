@@ -2074,7 +2074,7 @@ export class DeclarationWebService {
         });
     }
 
-    PostActionOnDeclarationBatch(requestParams) {
+    PostActionOnDeclarationBatch(requestParams, filters: ApiQueryFilters) {
         return defer(() => {
     
             var authHeader = new Headers();
@@ -2084,7 +2084,7 @@ export class DeclarationWebService {
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
 
-            return this._http.post(this._apiUrl + '/PostActionOnDeclarationBatch/', 
+            return this._http.post(this._apiUrl + '/PostActionOnDeclarationBatch?' + this.logtuideTableDataService.apiQueryFilterToQueryString(filters), 
                 JSON.stringify(requestParams),
                 ServiceHelper.GetHttpHeaders()).pipe(map((response) => {
                     var res = response;

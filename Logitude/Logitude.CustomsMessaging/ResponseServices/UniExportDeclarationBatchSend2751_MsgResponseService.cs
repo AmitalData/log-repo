@@ -36,6 +36,9 @@ using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using System.Data.SqlClient;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Logitude.Customs.Data.EntityListQueryServices;
+using Logitude.Customs.Data.EntityLists;
+using Logitude.Customs.BL.Messaging.Customs.SignQueueBL;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -53,14 +56,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
             var repo = new DeclarationRepository(context);
-            List<Declaration> listPoco = new List<Declaration>();
+            List<string> idList = new List<string>();
 
             if (customResponse.ServerSplitDeclarationsList != null && customResponse.ServerSplitDeclarationsList.Count > 0)
             {
                 mess.AppendLine($"מפוצל כבר !!!");
 
-                List<Declaration> ServerSplitDeclarationsList = repo.GetDeclarationsById(customResponse.ServerSplitDeclarationsList).Where(d => d.Tenant == requestParams.Tenant).ToList();
-                Create2751CRS(requestParams, mess, objectTableId, ServerSplitDeclarationsList);
+                List<Declaration> ServerSplitDeclarationsList = repo.GetDeclarationsById(customResponse.ServerSplitDeclarationsList).ToList();
+                Create2751CRS(requestParams, mess, objectTableId, ServerSplitDeclarationsList, customResponse.SignDeclaration);
             }
             else
             {
@@ -70,21 +73,23 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if (customResponse.ClientFilterDeclarationsList != null && customResponse.ClientFilterDeclarationsList.Count > 0)
                 {
                     mess.AppendLine($"סומנו בצד הלקוח ");
-                    listPoco = repo.GetDeclarationsById(customResponse.ClientFilterDeclarationsList).Where(d => d.Tenant == requestParams.Tenant).ToList();
+                    idList = repo.GetDeclarationsById(customResponse.ClientFilterDeclarationsList)
+                        .Where(d => d.Tenant == requestParams.Tenant)
+                        .Select(d => d.Id).ToList();
                 }
                 else
                 {
-                    // todo
-                    mess.AppendLine($"GetAllByFilters");
-                    // listPoco = GetByMasterIDCourierDeclarationStatusCode(customResponse, requestParams, repo);
+                    mess.AppendLine($"GetDeclarationsByFilters");
+                    idList = GetDeclarationsByFilters(context, customResponse);
+                    mess.AppendLine($"Found {idList.Count} declarations");
                 }
-                if (listPoco.Count == 0)
+                if (idList.Count == 0)
                 {
                     mess.AppendLine($"There ARE  NOT any Declarations 'R'eady to (Declaration) send  for master {requestParams.AppicationId} ");
                 }
-                if (listPoco.Count > 0)
+                if (idList.Count > 0)
                 {
-                    listPoco.Select(r => r.Id).ToList().ChunkBy(100)
+                    idList.ChunkBy(100)
                        .ForEach(list100 =>
                        {
                            customResponse.ServerSplitDeclarationsList = list100;
@@ -103,8 +108,21 @@ namespace Logitude.CustomsMessaging.ResponseServices
             this.MyResponseData.Succeeded = true;
         }
 
+        private List<string> GetDeclarationsByFilters(ICustomContext MyContext, DCAInUCB2751WithResponseContentHeader customResponse)
+        {
+            DeclarationListQueryService declarationQuery = new DeclarationListQueryService(MyContext);
+            List<DeclarationList> declarations = declarationQuery.GetList(customResponse.QueryOperations, customResponse.tenant);
 
-        private static void Create2751CRS(GenericRequestParams requestParams, StringBuilder mess, string objectTableId, List<Declaration> listPoco)
+            List<string> declarationIds = declarations.Select(d => d.Id).ToList();
+
+            if (customResponse.ExcludedIds != null && customResponse.ExcludedIds.Count > 0)
+            {
+                declarationIds = declarationIds.Where(id => !customResponse.ExcludedIds.Contains(id)).ToList();
+            }
+            return declarationIds;
+        }
+
+        private static void Create2751CRS(GenericRequestParams requestParams, StringBuilder mess, string objectTableId, List<Declaration> listPoco, bool SignDeclaration)
         {
             var listDeclarationIdCreateCRS = new List<string>();
 
@@ -114,21 +132,43 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 {
                     using (var scopeNewCRS = TransactionFactory.GetNewTransaction())
                     {
+                        var loggedUserId = requestParams.LoggingUserId;
+                        if (SignDeclaration)
+                        {
+                            var signQueueHSMService = new SignQueueHSMService();
+                            if (signQueueHSMService.IsHSMSign_IsOn(itemPM.Tenant))
+                            {
+                                loggedUserId = AuthenticationUtil.ResolveUserId(itemPM.Tenant);
+                            }
+                            else
+                            {
+                                if (!string.IsNullOrEmpty(itemPM.SignedByUserId))
+                                {
+                                    loggedUserId = itemPM.SignedByUserId;
+                                }
+                                else
+                                {
+                                    var declarationQueryService = new DeclarationQueryService(itemPM.Tenant);
+                                    loggedUserId = declarationQueryService.GetSignedByUserIdByCustomFileNo(itemPM.Tenant, itemPM.CustomFileNo);
+                                }
+                            }
+                        }
+
                         var requestParams2751 = new GenericRequestParams()
                         {
+                            AppicationId = itemPM.Id,
+                            InterfaceTypeCode = "2751",
+                            RequestVIA = SendRequestVIA.WebServiceBatch,
                             Tenant = requestParams.Tenant,
                             RequestName = "Declaration Request",
                             ResponseName = "Declaration Response",
+                            ForcePersonalSign = SignDeclaration,
 
                             LoggingEnabled = true,
                             LoggingObjectTableId = objectTableId,
                             LoggingEntityId = itemPM.Id,
-                            AppicationId = itemPM.Id,
-                            InterfaceTypeCode = "2751",
-
-                            // LoggingEntityReference = itemPM.DeclarationNumber,
-                            LoggingUserId = requestParams.LoggingUserId,
-                            RequestVIA = SendRequestVIA.WebServiceBatch,
+                            LoggingEntityReference = itemPM.DeclarationNumber,
+                            LoggingUserId = loggedUserId,
                             ParentId = requestParams.CustomsRequestsSheetId,
                         };
 

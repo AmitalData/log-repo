@@ -8,6 +8,7 @@ using Logitude.CustomsMessaging.ResponseServices;
 using Logitude.CustomsMessaging.Testers.Messages;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
@@ -73,7 +74,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
             throw new NotImplementedException();
         }
 
-        public string CreateCRS(int tenant, List<string> DeclarationsIds, string LoggingUserId, out string RequestInProgressListOut)
+        public string CreateCRS(int tenant, SendDeclarationBatchRequestParams sendDeclarationBatchRequestParams, bool signDeclaration,
+            out string RequestInProgressListOut)
         {
             string batchId = Guid.NewGuid().ToString();
 
@@ -97,17 +99,25 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
             var myDCAInUCB2751WithResponseContentHeader = new DCAInUCB2751WithResponseContentHeader()
             {
-                // CourierMasterId = mySendALLCorrectRequestParams.CourierMasterId,
                 BatchId = batchId,
-                LoggingUserId = LoggingUserId,
-                ClientFilterDeclarationsList = DeclarationsIds,
+                LoggingUserId = sendDeclarationBatchRequestParams.LoggingUserId,
                 tenant = tenant,
+                SignDeclaration = signDeclaration,
                 MyMoreParams = "",
                 ResponseContentHeader = new DefaultResponseContentHeader()
                 {
                     TransmitionDateTime = transmitionDateTime
                 },
             };
+            if (sendDeclarationBatchRequestParams.IsAllSelected)
+            {
+                myDCAInUCB2751WithResponseContentHeader.ExcludedIds = sendDeclarationBatchRequestParams.SelectedIds;
+                myDCAInUCB2751WithResponseContentHeader.QueryOperations = sendDeclarationBatchRequestParams.QueryOperations;
+            }
+            else
+            {
+                myDCAInUCB2751WithResponseContentHeader.ClientFilterDeclarationsList = sendDeclarationBatchRequestParams.SelectedIds;
+            }
 
             var body = XmlGenericUtil<DCAInUCB2751WithResponseContentHeader>.SerializeObject(myDCAInUCB2751WithResponseContentHeader);
             body = body.Substring(body.IndexOf(Environment.NewLine));
@@ -187,8 +197,11 @@ namespace Logitude.CustomsMessaging.MessagingServices
         public int tenant { get; set; }
         public string LoggingUserId { get; set; }
         public string BatchId { get; set; }
+        public bool SignDeclaration { get; set; }
         public List<string> ClientFilterDeclarationsList { get; set; }
         public List<string> ServerSplitDeclarationsList { get; set; }
+        public List<string> ExcludedIds { get; set; }
+        public QueryOperations QueryOperations { get; set; }
         public string MyMoreParams { get; set; }
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
     }

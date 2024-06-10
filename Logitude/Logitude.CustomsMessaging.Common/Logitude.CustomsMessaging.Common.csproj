@@ -81,6 +81,7 @@
     <Compile Include="RequestParams\MessageWaitingRequestParams.cs" />
     <Compile Include="RequestParams\NewVehicleRequestParams.Shared.cs" />
     <Compile Include="RequestParams\RTGSInfoQueryRequestParams.Shared.cs" />
+    <Compile Include="RequestParams\SendDeclarationBatchRequestParams.Shared.cs" />
     <Compile Include="RequestParams\SendALLDelayFormParams.Shared.cs" />
     <Compile Include="RequestParams\SendALLCorrectRequestParams.Shared.cs" />
     <Compile Include="RequestParams\MultiUpdateRequestParams.Shared.cs" />

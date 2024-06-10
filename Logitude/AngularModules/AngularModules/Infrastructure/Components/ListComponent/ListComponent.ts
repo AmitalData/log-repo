@@ -102,7 +102,14 @@ export class ListComponent implements OnInit, AfterViewInit {
     public IsPhysicalCheckObjectTable: boolean = false;
     public IsLogisticActionRequestObjectTable: boolean = false;
     private _declarationWebService: DeclarationWebService = new DeclarationWebService();
-
+    public onChangeCheckBoxesState: EventEmitter<any> = new EventEmitter();
+    public ScreenQueryAction = {};
+    private ScreenQueryActions = {
+        "Customs.Declaration.DiamondsDeclarations": {
+            actions: ["SendDeclarationAction", "SendSignedDeclarationsAction", "SendDeclarationPaymentsAction"],
+            actionTranslationPrefix: "Customs.Declaration.O."
+        }
+    };
 
     @ViewChild(LogGridComponent) MyLogGridComponent: LogGridComponent = null;
     @ViewChild(LogGridComponentV2) MyLogGridComponentV2: LogGridComponentV2 = null;
@@ -2745,16 +2752,6 @@ export class ListComponent implements OnInit, AfterViewInit {
         this.IsAddButtonVisible = isVisible;
     }
 
-    // move in the beggingn
-    ScreenQueryActions = {
-        "Customs.Declaration.DiamondsDeclarations": {
-            actions: ["SendDeclarationAction", "SendSignedDeclarationsAction", "SendDeclarationPaymentsAction"],
-            actionTranslationPrefix: "Customs.Declaration.O."
-        }
-    };
-
-    ScreenQueryAction = {};
-
     public IsSelectAllCheckboxVisible: boolean = false;
     private SetSelectAllCheckBox(queryCode) {
         var isVisible = false;
@@ -2771,7 +2768,6 @@ export class ListComponent implements OnInit, AfterViewInit {
 
     SelectedFilterChanged($event) {
         if ($event.RowCount) {
-            // todo: currently it is the total without filters consideration
             this.dataCount = $event.RowCount;
         }
 
@@ -4045,15 +4041,21 @@ export class ListComponent implements OnInit, AfterViewInit {
 
     CalculateSelectedCount() {
         this.SelectedCount = this.IsSelected? this.dataCount - this.ExcludedItems.Collection.length: this.SelectedItems.Collection.length;
-        // todo: emit selectedCount
+        // todo: emit selectedCount / IsSelected
     }
 
     ShowActionConfirmationWindow(action) {
 
         var confirmWindow = new ConfirmWindow();
-        var confirmMsg: string = "נבחרו {count} ל{actionTranslation}, האם להמשיך? "
-            .replace("{count}", this.SelectedCount.toString())
-            .replace("{actionTranslation}", TextCodeTranslator.Translate(this.ScreenQueryAction["actionTranslationPrefix"] + action));
+        var confirmMsg;
+        if (this.IsSelected) {
+            confirmMsg = "נבחרו כל הצהרות ל{actionTranslation}, האם להמשיך? ";
+        }
+        else {
+            confirmMsg = "נבחרו {count} הצהרות ל{actionTranslation}, האם להמשיך? "
+                .replace("{count}", this.SelectedCount.toString());
+        }
+        confirmMsg = confirmMsg.replace("{actionTranslation}", TextCodeTranslator.Translate(this.ScreenQueryAction["actionTranslationPrefix"] + action));
         confirmWindow.Title = "Customer Care Deactivation";
         confirmWindow.Width = 400;
         confirmWindow.Height = 180;
@@ -4065,7 +4067,6 @@ export class ListComponent implements OnInit, AfterViewInit {
             Action: action,
             IsAllSelected: this.IsSelected, 
             SelectedIds: this.IsSelected? this.ExcludedItems.Collection: this.SelectedItems.Collection, 
-            // Filters: this.CurrentQueryFilters,
             LoggingUserId: SessionLocator.LoggedUserId
         };
 
@@ -4073,11 +4074,20 @@ export class ListComponent implements OnInit, AfterViewInit {
             if (confirmWindow.Yes) {
 
                 if (this.ObjectTable.Name == "Customs.Declaration") {
-                    this._declarationWebService.PostActionOnDeclarationBatch(params).subscribe((response:any) => {
+                    this._declarationWebService.PostActionOnDeclarationBatch(params, this.CurrentQueryFilters).subscribe((response:any) => {
+
+                        // deselect the rows
+                        if (this.SelectedItems.Collection.length > 0) {
+                            let emittedArray = this.SelectedItems.Collection.map((res) => ({ rowData: {Id: res}, IsChecked: false, RowIndex: -1, ById: true }));
+                            this.onChangeCheckBoxesState.emit(emittedArray);
+                        }
+                        if (this.ExcludedItems.Collection.length > 0) {
+                            let emittedArray = this.ExcludedItems.Collection.map((res) => ({ rowData: {Id: res}, IsChecked: false, RowIndex: -1, ById: true }));
+                            this.onChangeCheckBoxesState.emit(emittedArray);
+                        }
+                                
                         this.SelectAllRowsChecked(false);
                         SessionLocator.SelectedSession.StopBusyIndicator();
-
-                        //todo:  deselect the selected..
                     });
                 }
             }
