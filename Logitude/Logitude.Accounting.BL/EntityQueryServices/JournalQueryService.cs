@@ -379,6 +379,22 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             }
         }
 
+
+
+
+
+        public bool ExistsAccEntCodeByJIds(string accEntCode, IQueryable<string> jIds, int tenant)
+        {
+            return repository.ExistsAccEntCodeByJIds(accEntCode, jIds, tenant);
+        }
+
+        public string GetFirstIdByAccEntCodeByJIds(string accEntCode, IQueryable<string> jIds, int tenant)
+        {
+            return repository.GetFirstIdByAccEntCodeByJIds(accEntCode, jIds, tenant);
+        }
+
+
+
         public IQueryable<JournalPM> GetJournalsByAccountingEntityId(string entityId, int tenant)
         {
             IQueryable<Journal> journalQuery = repository.GetByJournalsAccountingEntityId(entityId,tenant);

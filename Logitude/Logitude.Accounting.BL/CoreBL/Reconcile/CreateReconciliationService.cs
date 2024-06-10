@@ -20,6 +20,7 @@ using System.Transactions;
 using Newtonsoft.Json;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.QueueService;
+using Logitude.Accounting.Data.EntityLists;
 
 namespace Logitude.Accounting.BL.CoreBL
 {
@@ -87,11 +88,12 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 }
             }
-            
-            List<LedgerTransactionPM> recoTransactions = GetReconcileTransactions(reconciliationPM);
-            bool hasTwoPaymentsOnly = (recoTransactions.Count(d => d.SourceTypeCode == AccountingEntities.ARPayment) == 2) && recoTransactions.TrueForAll(d => d.SourceTypeCode == AccountingEntities.ARPayment);
-            bool hasMultipleARPayments = CheckIfHasMultiplePayment(reconciliationPM, recoTransactions);
-            if (reconciliationPM.ReconciliationLines.Any(d => d.GroupNumber == 0) && reconciliationPM.ReconciliationLines.Any(d => d.GroupNumber != 0) && hasMultipleARPayments)
+
+
+            List<string> transactionsIds = reconciliationPM.ReconciliationLines.Select(d => d.TransactionId).ToList();
+            List<LedgerTransactionJournalLineLT> ltjlines = GetLedgerTransactionJournalLineLTsByIdList(transactionsIds, reconciliationPM.Tenant);
+            bool hasMultipleARPayments = CheckIfHasMultiplePaymentsLT(ltjlines);
+            if (hasMultipleARPayments && reconciliationPM.ReconciliationLines.Any(d => d.GroupNumber == 0) && reconciliationPM.ReconciliationLines.Any(d => d.GroupNumber != 0))
             {
                 recoCallBack = SplitAndSubmitReconciliationByGroupNumberNonZero(reconciliationPM, hasMultipleARPayments);
             }
@@ -275,12 +277,18 @@ namespace Logitude.Accounting.BL.CoreBL
             return hasMultipleARPayments;
         }
 
-        private static List<LedgerTransactionPM> GetReconcileTransactions(ReconciliationPM reconciliationPM)
+
+        private static bool CheckIfHasMultiplePaymentsLT(List<LedgerTransactionJournalLineLT> recoTransactions)
         {
-            List<string> transactionsIds = reconciliationPM.ReconciliationLines.Select(d => d.TransactionId).ToList();
-            LedgerTransactionQueryService transactionQueryService = new LedgerTransactionQueryService(reconciliationPM.Tenant);
-            List<LedgerTransactionPM> recoTransactions = transactionQueryService.GetLedgerTransactionPMsByIdList(transactionsIds, reconciliationPM.Tenant);
-            return recoTransactions;
+            bool hasMultipleARPayments = recoTransactions.Count(d => d.SourceTypeCode == AccountingEntities.ARPayment) > 1;
+            return hasMultipleARPayments;
+        }
+
+
+        public List<LedgerTransactionJournalLineLT> GetLedgerTransactionJournalLineLTsByIdList(List<string> transactionIdList, int tenant)
+        {
+            var a = new LedgerTransactionQueryService(tenant);
+            return a.GetLedgerTransactionJournalLineLTsByIdList(transactionIdList, tenant);
         }
 
         private static bool CheckAnyLedgerTransactionReconciledByIdList(ReconciliationPM reconciliationPM)
