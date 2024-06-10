@@ -51,7 +51,7 @@ using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Logitude.CRM.Data.EntityPOCOs;
 using Logitude.Server.Tools.Utils;
-
+using Logitude.BL.InfrastructureModel.EntityPMs;
 
 namespace Logitude.Accounting.BL.CoreBL
 {
@@ -1006,7 +1006,11 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
         }
-        public static void ReturnToQueue(int SeedTenant, bool AllTenants)
+
+
+
+
+        public static void ReturnToQueue(int SeedTenant , bool AllTenants)
         {
             var sw = new Stopwatch();
 
@@ -1019,7 +1023,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 var journalQS = new JournalQueryService(SeedTenant);
 
-                waitingJournal = journalQS.GetJournalByTenant(SeedTenant, AllTenants).ToList();
+                waitingJournal = journalQS.GetJournalByTenant(SeedTenant,AllTenants).ToList();
 
             }
             sw.Stop();
@@ -1044,10 +1048,10 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 try
                 {
-                    if (journal.QueueId != null)
+                    if(journal.QueueId != null )
                     {
                         QueueMessageRepository QueueMessageRepository = new QueueMessageRepository(SeedTenant);
-                        var status = QueueMessageRepository.GetSingleQueueMessage(journal.QueueId)?.Status;
+                        var status = QueueMessageRepository.GetSingleQueueMessage(Convert.ToInt64(journal.QueueId))?.Status;
                         if (status  !=  1)
                             continue;
                     }
@@ -1122,7 +1126,6 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
         }
-
         [Flags]
         public enum MyActions
         {
@@ -1650,15 +1653,14 @@ namespace Logitude.Accounting.BL.CoreBL
             static JournalApproveWorker()
             {
                 //_NextDueDoneAt = DateTime.UtcNow.Date.AddDays(1);//tomorrow at 00:00
-                _NextDueDoneAt = DateTime.UtcNow.Date;//today already done - do next day =tomorrow at 00:00 ///
+                _NextDueDoneAt = DateTime.UtcNow.Date.AddDays(-1);//today already done - do next day =tomorrow at 00:00 ///
             }
             public Action<int> LogDoneItemInMemoryAction { get; set; }
             public Action SetLastActivate { get; set; }
 
             public void WorkUntilQEmptyQueueDB(TimeSpan? timeSpan = null, string selectedQueue = null)
             {
-                               
-                selectedQueue = selectedQueue ?? JournalApproveService.K_AccountingJournalApproveMutliThreadingWR;
+                selectedQueue = selectedQueue ?? JournalApproveService.K_AccountingJournalApproveWR;
                 Stopwatch stopwatch = null;
                 if (timeSpan != null)
                 {
@@ -1709,33 +1711,38 @@ namespace Logitude.Accounting.BL.CoreBL
                             LogDoneItemInMemoryAction?.Invoke(1);
 
                         }
-
+                        
                     }
                     Thread.Sleep(10);//itzik - let other thread abilty to use GLAccout !!!
                 }
-
-                if (DateTime.UtcNow.Date > _NextDueDoneAt.Date)
                 {
-                    Logger.LogDebug("JornalApprove beforeAddBatchTask selected queue: {0}, workerRoleName: {1}  , time:{2} ",
-                        selectedQueue, LogitudeSettings.WorkerRoleName, DateTime.Now );
+                    Logger.LogDebug("before selectedQueue == JournalApproveService.K_AccountingJournalApproveMutliThreadingWR);");
 
-                }
-
-                if (selectedQueue == JournalApproveService.K_AccountingJournalApproveMutliThreadingWR)
+                    if (selectedQueue == JournalApproveService.K_AccountingJournalApproveMutliThreadingWR)
                 {
 
-                    try
-                    {
+                        Logger.LogDebug("in selectedQueue == JournalApproveService.K_AccountingJournalApproveMutliThreadingWR);");
+
+                        try
+                        {
                         string workerRoleName = "";
                         if(!string.IsNullOrEmpty(LogitudeSettings.WorkerRoleName))
                         {
                             workerRoleName = LogitudeSettings.WorkerRoleName;
                         }
-                        if (DateTime.UtcNow.Date > _NextDueDoneAt.Date && workerRoleName != "staging")// _NextDueDoneAt DateTime.UtcNow.TimeOfDay < TimeSpan.FromHours(6) ) 
+                            Logger.LogDebug(" if (DateTime.UtcNow.Date > _NextDueDoneAt.Date && workerRoleName != \"staging\")" + workerRoleName);
+                            Logger.LogDebug(" _NextDueDoneAt.Date" + _NextDueDoneAt.Date);
+
+                            if (DateTime.UtcNow.Date > _NextDueDoneAt.Date && workerRoleName != "staging")// _NextDueDoneAt DateTime.UtcNow.TimeOfDay < TimeSpan.FromHours(6) ) 
                         {
-                            if (DateTime.Now < new DateTime(2050, 06, 01))
-                            {
-                                CreateBatchAccountingIntegrityCheck();
+                                Logger.LogDebug("JornalApprove beforeAddBatchTask selected queue: {0}, workerRoleName: {1}  , time:{2} ",
+    selectedQueue, LogitudeSettings.WorkerRoleName, DateTime.Now);
+                                Logger.LogDebug(" _NextDueDoneAt.Date 2" + _NextDueDoneAt.Date);
+
+                                if (DateTime.Now < new DateTime(2050, 06, 01))
+                                {
+                                    Logger.LogDebug("CreateBatchAccountingIntegrityCheck");
+                                    CreateBatchAccountingIntegrityCheck();
                             }
                             _NextDueDoneAt = DateTime.UtcNow.Date;
                             var myDueLocalBalanceService = new DueLocalBalanceService();
@@ -1748,8 +1755,6 @@ namespace Logitude.Accounting.BL.CoreBL
                     }
                     catch (Exception)
                     {
-                        Logger.LogDebug("JornalApprove beforeAddBatchTask exception selected queue: {0}, workerRoleName: {1}  , time:{2} , ",
-                        selectedQueue, LogitudeSettings.WorkerRoleName, DateTime.Now);
 
                         throw;
                     }
@@ -1804,19 +1809,19 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         try
                         {
-                            Logger.LogDebug(String.Format("JournalApproveService, Point 1, tenant {0}", response.Tenant));
+                            Logger.LogTrace(String.Format("JournalApproveService, Point 1, tenant {0}", response.Tenant));
                             if (_NextDueDoneDict == null) _NextDueDoneDict = new Dictionary<int, DateTime>();
                             if (!_NextDueDoneDict.ContainsKey(response.Tenant))
                                 _NextDueDoneDict.Add(response.Tenant, DateTime.MinValue);
 
                             if (DateTime.UtcNow.Date > _NextDueDoneDict[response.Tenant].Date)  
                             {
-                                Logger.LogDebug(String.Format("JournalApproveService, Point 2, tenant {0}, date {1} ", response.Tenant, _NextDueDoneDict[response.Tenant].Date));
+                                Logger.LogTrace(String.Format("JournalApproveService, Point 2, tenant {0}, date {1} ", response.Tenant, _NextDueDoneDict[response.Tenant].Date));
 
                                 _NextDueDoneDict[response.Tenant] = DateTime.UtcNow.Date;
                                 var myDueLocalBalanceService = new DueLocalBalanceService();
                                 myDueLocalBalanceService.RunOneTenantFast(response.Tenant);
-                                Logger.LogDebug(String.Format("JournalApproveService, Point 3, tenant {0}", response.Tenant));
+                                Logger.LogTrace(String.Format("JournalApproveService, Point 3, tenant {0}", response.Tenant));
                             }
                         }
                         catch (Exception)
@@ -1832,9 +1837,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         string communicationLogId = response.MessageValues["communicationLogId"].ToString();
                         int tenant = 0;
                         int.TryParse(response.MessageValues["tenant"].ToString(), out tenant);
-                        Logger.LogDebug(String.Format("JournalApproveService, Point 4, tenant {0}", response.Tenant));
                         UpdateGLAccountAgingData(communicationLogId, queueservice, tenant);
-                        Logger.LogDebug(String.Format("JournalApproveService, Point 5, tenant {0}", response.Tenant));
                         SetTenantIdle(response.Tenant);
                     }
                     else
