@@ -60,7 +60,6 @@ import { CargoSplitGeneralTabComponent } from 'CustomsModules/CustomsDeclaration
 import { LogisticActionRequestGeneralTabComponent } from 'CustomsModules/CustomsLogisticActionRequest/Components/EditTabs/General/LogisticActionRequestGeneralTabComponent';
 import { ObservableCollection } from 'Infrastructure/Utilities/ObservableCollection';
 import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
-import { DeclarationExtendedListService } from 'Customs/Services/ExtendedLists/DeclarationExtendedListService';
 import { DeclarationWebService } from 'Customs/Services/WebServices/DeclarationWebService';
 
 @Component({
@@ -2746,6 +2745,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         this.IsAddButtonVisible = isVisible;
     }
 
+    // move in the beggingn
     ScreenQueryActions = {
         "Customs.Declaration.DiamondsDeclarations": {
             actions: ["SendDeclarationAction", "SendSignedDeclarationsAction", "SendDeclarationPaymentsAction"],
@@ -2753,7 +2753,7 @@ export class ListComponent implements OnInit, AfterViewInit {
         }
     };
 
-    ScreenQueryAction = [];
+    ScreenQueryAction = {};
 
     public IsSelectAllCheckboxVisible: boolean = false;
     private SetSelectAllCheckBox(queryCode) {
