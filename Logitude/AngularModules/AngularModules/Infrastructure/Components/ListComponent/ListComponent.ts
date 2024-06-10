@@ -3951,6 +3951,9 @@ export class ListComponent implements OnInit, AfterViewInit {
                             if (Param.ColIndexes.filter(a => a.FieldName == querycolumn.ObjectFieldName)[0].Width > 0) {
                                 querycolumn.ColumnWidth = Param.ColIndexes.filter(a => a.FieldName == querycolumn.ObjectFieldName)[0].Width;
                             }
+                            else if (SessionLocator.HomeComponent.SelectedTabItem.Index && Param.ColIndexes.filter(a => a.FieldName == querycolumn.ObjectFieldName)[SessionLocator.HomeComponent.SelectedTabItem.Index].Width > 0) {                                        
+                                querycolumn.ColumnWidth = Param.ColIndexes.filter(a => a.FieldName == querycolumn.ObjectFieldName)[SessionLocator.HomeComponent.SelectedTabItem.Index].Width;
+                            }
                             this.GeneralEntitiesArgs.QueryColumnsPMs.push(querycolumn);
                         });
                         this.GeneralEntitiesArgs.Tenant = SessionInfo.LoggedUserTenant;
