@@ -185,8 +185,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                          _MyDeclarationPM = myQueryService.GetSingle(requestParams.AppicationId, true, false);
                     if (_MyDeclarationPM != null)
                     {
-                        //_MyDeclarationPM.IsSubmitDeclaration = false;
-                        //myDeclarationUpdateService.Update(_MyDeclarationPM, true);
+                       _MyDeclarationPM.ExportClosedErrorXML = mydDclarationErrorPointerService.AnalyzeErrorPionterExport(CastError(customResponse.Response.Error), _MyDeclarationPM, WCOTypeEnum.WCO_EX);
+                                            
                     }
                 }
 
@@ -1160,6 +1160,29 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
         }
 
+
+
+
+        public UnifreightIIG.Common.ExportDeclarationServiceReference.ResponseError[] CastError(ResponseError[] responseError)
+        {
+
+
+            string ErrorString;
+            using (var stringwriter = new System.IO.StringWriter())
+            {
+                var serializer = new XmlSerializer(responseError.GetType());
+                serializer.Serialize(stringwriter, responseError);
+                ErrorString = stringwriter.ToString();
+            }
+
+
+
+            using (var stringReader = new System.IO.StringReader(ErrorString))
+            {
+                var serializer = new XmlSerializer(typeof(UnifreightIIG.Common.ExportDeclarationServiceReference.ResponseError[]));
+                return serializer.Deserialize(stringReader) as UnifreightIIG.Common.ExportDeclarationServiceReference.ResponseError[];
+            }
+        }
         private void SendSoyStatusToUnifreight(DF_NG_2757_MSG10004_ExportDeclarationResponse customResponse, string userId, string additionalComment = null, DateTime? dateTime = null)
         {
             // determine if the export diamonds feature is enabled to allow autosending
