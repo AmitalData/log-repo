@@ -1715,34 +1715,32 @@ namespace Logitude.Accounting.BL.CoreBL
                     }
                     Thread.Sleep(10);//itzik - let other thread abilty to use GLAccout !!!
                 }
+
+
+                if (selectedQueue == JournalApproveService.K_AccountingJournalApproveMutliThreadingWR)
                 {
-                    Logger.LogDebug("before selectedQueue == JournalApproveService.K_AccountingJournalApproveMutliThreadingWR);");
 
-                    if (selectedQueue == JournalApproveService.K_AccountingJournalApproveMutliThreadingWR)
-                {
+                    Logger.LogDebug("in selectedQueue == JournalApproveService.K_AccountingJournalApproveMutliThreadingWR);");
 
-                        Logger.LogDebug("in selectedQueue == JournalApproveService.K_AccountingJournalApproveMutliThreadingWR);");
-
-                        try
-                        {
+                    try
+                    {
                         string workerRoleName = "";
-                        if(!string.IsNullOrEmpty(LogitudeSettings.WorkerRoleName))
+                        if (!string.IsNullOrEmpty(LogitudeSettings.WorkerRoleName))
                         {
                             workerRoleName = LogitudeSettings.WorkerRoleName;
                         }
-                            Logger.LogDebug(" if (DateTime.UtcNow.Date > _NextDueDoneAt.Date && workerRoleName != \"staging\")" + workerRoleName);
-                            Logger.LogDebug(" _NextDueDoneAt.Date" + _NextDueDoneAt.Date);
+                        Logger.LogDebug(" if (DateTime.UtcNow.Date > _NextDueDoneAt.Date && workerRoleName != \"staging\")" + workerRoleName);
+                        Logger.LogDebug(" _NextDueDoneAt.Date" + _NextDueDoneAt.Date);
 
-                            if (DateTime.UtcNow.Date > _NextDueDoneAt.Date && workerRoleName != "staging")// _NextDueDoneAt DateTime.UtcNow.TimeOfDay < TimeSpan.FromHours(6) ) 
+                        if (DateTime.UtcNow.Date > _NextDueDoneAt.Date && workerRoleName != "staging")// _NextDueDoneAt DateTime.UtcNow.TimeOfDay < TimeSpan.FromHours(6) ) 
                         {
-                                Logger.LogDebug("JornalApprove beforeAddBatchTask selected queue: {0}, workerRoleName: {1}  , time:{2} ",
-    selectedQueue, LogitudeSettings.WorkerRoleName, DateTime.Now);
-                                Logger.LogDebug(" _NextDueDoneAt.Date 2" + _NextDueDoneAt.Date);
 
-                                if (DateTime.Now < new DateTime(2050, 06, 01))
-                                {
-                                    Logger.LogDebug("CreateBatchAccountingIntegrityCheck");
-                                    CreateBatchAccountingIntegrityCheck();
+                            Logger.LogDebug(" _NextDueDoneAt.Date 2" + _NextDueDoneAt.Date);
+
+                            if (DateTime.Now < new DateTime(2050, 06, 01))
+                            {
+                                Logger.LogDebug("CreateBatchAccountingIntegrityCheck");
+                                CreateBatchAccountingIntegrityCheck();
                             }
                             _NextDueDoneAt = DateTime.UtcNow.Date;
                             var myDueLocalBalanceService = new DueLocalBalanceService();
@@ -1759,8 +1757,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         throw;
                     }
                 }
-
-            }
+              }
 
             public void WorkUntilQEmptyQueueDBMultiThreaded(TimeSpan? timeSpan = null, string selectedQueue = null)
             {
