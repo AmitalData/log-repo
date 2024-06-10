@@ -1,21 +1,13 @@
-﻿using Logitude.Server.Tools.Helpers;
-using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using Simplog.Server.Infrastructure;
-using Logitude.Accounting.BL.Validators;
+﻿using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityPMs;
-using Logitude.BL.Security;
-using Logitude.BL.CommonDataModel.EntityQueries;
-using Logitude.Accounting.BL.EntityQueryServices;
-using Logitude.BL.Interfaces;
-using Microsoft.Practices.Unity;
-using Logitude.Server.Tools;
-using Logitude.BL.Helpers;
 using Logitude.BL.Resolvers;
-using Logitude.Accounting.BL.CloseTables;
+using Logitude.Server.Tools.Helpers;
+using Simplog.Server.Infrastructure;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace Logitude.Accounting.BL.Validators
 {
@@ -101,12 +93,12 @@ namespace Logitude.Accounting.BL.Validators
                 }
             }
 
-            BlockMultiplePayments(errorsList, context);
+            // BlockMultiplePayments(errorsList, context);
 
             //
             // Check Lines
 
-            List<LedgerTransactionPM> transactionsPMs =  GetReconciliationTransactions(myReconciliationPM, context);
+            List<LedgerTransactionJournalLineLT> transactionsPMs = GetLedgerTransactionJournalLineLTsByIdList(context);
 
             BlockDifferentAccountsReconciliation(errorsList, transactionsPMs);
 
@@ -116,7 +108,6 @@ namespace Logitude.Accounting.BL.Validators
             IReconciliationValidatorContextDataProvider myDataProvider = context.GetService(typeof(IReconciliationValidatorContextDataProvider)) as IReconciliationValidatorContextDataProvider;
             if (myDataProvider != null)
             {
-                ///ledgerTransactionPMs = myDataProvider.GetLedgerTransactionPMsByIdList(transactionIdList, myReconciliationPM.Tenant);
                 myGLAccount = myDataProvider.GetGLAccount(myReconciliationPM.AccountId, myReconciliationPM.Tenant);
 
             }
@@ -149,9 +140,10 @@ namespace Logitude.Accounting.BL.Validators
                         , myReconciliationPM.CreatedByReconciliationStageB);
                 }
             }
-            if (sum != 0)
-            {
 
+            decimal x = Math.Abs(sum);
+            if (x >= 0.0001m)
+            {
                 AddError(errorsList, M_sumofAmounttoreconcilemUST0);
             }
 
@@ -188,7 +180,7 @@ namespace Logitude.Accounting.BL.Validators
             return transactionsPMs;
         }
 
-        private static void BlockDifferentAccountsReconciliation(List<string> errorsList, List<LedgerTransactionPM> transactionsPMList)
+        private static void BlockDifferentAccountsReconciliation(List<string> errorsList, List<LedgerTransactionJournalLineLT> transactionsPMList)
         {
             var isReconcileWithDifferentAccounts = transactionsPMList.GroupBy(transaction => transaction.AccountId).Count() > 1;
             if (isReconcileWithDifferentAccounts == true)
@@ -197,73 +189,90 @@ namespace Logitude.Accounting.BL.Validators
             }
         }
 
-        private static void BlockMultiplePayments(List<string> errorsList, ValidationContext context)
-        {
-            List<LedgerTransactionPM> transactions = GetReconciliationTransactions(context);
-            int paymentsCount = GetPaymentsCountFromTransactions(transactions);
-            int arpaymentsCount = GetARPaymentsCountFromTransactions(transactions);
-            int appaymentsCount = GetAPPaymentsCountFromTransactions(transactions);
 
-            bool transactionsAreNotSameSource = transactions.GroupBy(d => d.SourceId).Count() > 1;
-            if (transactionsAreNotSameSource)
-            {
-                if (arpaymentsCount > 1)
-                    //AddErrorByTextCode(errorsList, "Reconciliation.O.CantReconcileMutipleAPPayment");
-                //if (appaymentsCount > 1)
-                //    AddErrorByTextCode(errorsList, "Reconciliation.O.CantReconcileMutipleAPPayment");
-                if (appaymentsCount == 1 && arpaymentsCount == 1)
-                    AddErrorByTextCode(errorsList, "Accounting.O.CantIncludeTwoOrMorePayment");
-            }
-        }
 
-        private static string CheckMultipleAPPayment(List<LedgerTransactionPM> transactions)
-        {
-            bool transactionsAreNotSameSource = transactions.GroupBy(d => d.SourceId).Count() > 1;
-            int appaymentsCount = GetAPPaymentsCountFromTransactions(transactions);
-            if (appaymentsCount > 1 && transactionsAreNotSameSource)
-                return GetTranslatedText("Reconciliation.O.CantReconcileMutipleAPPayment");
-            return null;
-        }
 
-        private static string CheckMultipleARPayments(List<LedgerTransactionPM> transactions)
-        {
-            bool transactionsAreNotSameSource = transactions.GroupBy(d => d.SourceId).Count() > 1;
+        //private static void BlockMultiplePayments(List<string> errorsList, ValidationContext context)
+        //{
+        //    List<LedgerTransactionPM> transactions = GetReconciliationTransactions(context);
+        //    int paymentsCount = GetPaymentsCountFromTransactions(transactions);
+        //    int arpaymentsCount = GetARPaymentsCountFromTransactions(transactions);
+        //    int appaymentsCount = GetAPPaymentsCountFromTransactions(transactions);
 
-            int arpaymentsCount = GetARPaymentsCountFromTransactions(transactions);
-            if (arpaymentsCount > 1 && transactionsAreNotSameSource)
-                return GetTranslatedText("Reconciliation.O.CantReconcileMutipleARPayment");
-            return null;
-        }
+        //    bool transactionsAreNotSameSource = transactions.GroupBy(d => d.SourceId).Count() > 1;
+        //    if (transactionsAreNotSameSource)
+        //    {
+        //        if (arpaymentsCount > 1)
+        //            //AddErrorByTextCode(errorsList, "Reconciliation.O.CantReconcileMutipleAPPayment");
+        //            //if (appaymentsCount > 1)
+        //            //    AddErrorByTextCode(errorsList, "Reconciliation.O.CantReconcileMutipleAPPayment");
+        //            if (appaymentsCount == 1 && arpaymentsCount == 1)
+        //                AddErrorByTextCode(errorsList, "Accounting.O.CantIncludeTwoOrMorePayment");
+        //    }
+        //}
 
-        private static int GetPaymentsCountFromTransactions(List<LedgerTransactionPM> transactions)
-        {
-            return transactions.Count(d =>
-            {
-                bool notStornoTransaction = d.OriginalJournalId == null;
-                return notStornoTransaction && (d.SourceTypeCode == AccountingEntityValues.ARPayment || d.SourceTypeCode == AccountingEntityValues.APPayment);
-            });
-        }
-        private static int GetARPaymentsCountFromTransactions(List<LedgerTransactionPM> transactions)
-        {
-            return transactions.Count(d =>
-            {
-                bool notStornoTransaction = d.OriginalJournalId == null;
-                return notStornoTransaction && (d.SourceTypeCode == AccountingEntityValues.ARPayment);
-            });
-        }
-        private static int GetAPPaymentsCountFromTransactions(List<LedgerTransactionPM> transactions)
-        {
-            return transactions.Count(d =>
-            {
-                bool notStornoTransaction = d.OriginalJournalId == null;
-                return notStornoTransaction && (d.SourceTypeCode == AccountingEntityValues.APPayment);
-            });
-        }
-        private static List<LedgerTransactionPM> GetReconciliationTransactions(ValidationContext context)
+
+        //private static string CheckMultipleAPPayment(List<LedgerTransactionPM> transactions)
+        //{
+        //    bool transactionsAreNotSameSource = transactions.GroupBy(d => d.SourceId).Count() > 1;
+        //    int appaymentsCount = GetAPPaymentsCountFromTransactions(transactions);
+        //    if (appaymentsCount > 1 && transactionsAreNotSameSource)
+        //        return GetTranslatedText("Reconciliation.O.CantReconcileMutipleAPPayment");
+        //    return null;
+        //}
+
+        //private static string CheckMultipleARPayments(List<LedgerTransactionPM> transactions)
+        //{
+        //    bool transactionsAreNotSameSource = transactions.GroupBy(d => d.SourceId).Count() > 1;
+
+        //    int arpaymentsCount = GetARPaymentsCountFromTransactions(transactions);
+        //    if (arpaymentsCount > 1 && transactionsAreNotSameSource)
+        //        return GetTranslatedText("Reconciliation.O.CantReconcileMutipleARPayment");
+        //    return null;
+        //}
+
+        //private static int GetPaymentsCountFromTransactions(List<LedgerTransactionPM> transactions)
+        //{
+        //    return transactions.Count(d =>
+        //    {
+        //        bool notStornoTransaction = d.OriginalJournalId == null;
+        //        return notStornoTransaction && (d.SourceTypeCode == AccountingEntityValues.ARPayment || d.SourceTypeCode == AccountingEntityValues.APPayment);
+        //    });
+        //}
+        //private static int GetARPaymentsCountFromTransactions(List<LedgerTransactionPM> transactions)
+        //{
+        //    return transactions.Count(d =>
+        //    {
+        //        bool notStornoTransaction = d.OriginalJournalId == null;
+        //        return notStornoTransaction && (d.SourceTypeCode == AccountingEntityValues.ARPayment);
+        //    });
+        //}
+        //private static int GetAPPaymentsCountFromTransactions(List<LedgerTransactionPM> transactions)
+        //{
+        //    return transactions.Count(d =>
+        //    {
+        //        bool notStornoTransaction = d.OriginalJournalId == null;
+        //        return notStornoTransaction && (d.SourceTypeCode == AccountingEntityValues.APPayment);
+        //    });
+        //}
+
+
+
+
+        //private static List<LedgerTransactionPM> GetReconciliationTransactions(ValidationContext context)
+        //{
+        //    var transactionsId = reconciliation.ReconciliationLines.Where(d => d.TransactionId != null).Select(a => a.TransactionId).ToList();
+        //    var myDataProvider = context.GetService(typeof(IReconciliationValidatorContextDataProvider)) as IReconciliationValidatorContextDataProvider;
+        //    var transactionsPMList = myDataProvider.GetLedgerTransactionPMsByIdList(transactionsId, reconciliation.Tenant);
+        //    return transactionsPMList;
+        //}
+
+
+        private static List<LedgerTransactionJournalLineLT> GetLedgerTransactionJournalLineLTsByIdList(ValidationContext context)
         {
             var transactionsId = reconciliation.ReconciliationLines.Where(d => d.TransactionId != null).Select(a => a.TransactionId).ToList();
             var myDataProvider = context.GetService(typeof(IReconciliationValidatorContextDataProvider)) as IReconciliationValidatorContextDataProvider;
-            var transactionsPMList = myDataProvider.GetLedgerTransactionPMsByIdList(transactionsId, reconciliation.Tenant);
+            var transactionsPMList = myDataProvider.GetLedgerTransactionJournalLineLTsByIdList(transactionsId, reconciliation.Tenant);
             return transactionsPMList;
         }
 
@@ -289,7 +298,7 @@ namespace Logitude.Accounting.BL.Validators
             }
         }
 
-        private static void CheckReconciliationLine(List<string> errorsList, List<LedgerTransactionPM> ledgerTransactionPMs, GLAccountPM myGLAccount, ref decimal sum, ReconciliationLinePM reconciliationLine, bool CreatedByReconciliationAfterConversion, bool createdByReconciliationStageB)
+        private static void CheckReconciliationLine(List<string> errorsList, List<LedgerTransactionJournalLineLT> ledgerTransactionPMs, GLAccountPM myGLAccount, ref decimal sum, ReconciliationLinePM reconciliationLine, bool CreatedByReconciliationAfterConversion, bool createdByReconciliationStageB)
         {
             if (reconciliationLine.ChangeSetOp != ChangeSetOperation.Insert)
             {
@@ -316,7 +325,7 @@ namespace Logitude.Accounting.BL.Validators
                     }
                     else
                     {
-                        if (ledgerTransactionPM.IsReconciled && ledgerTransactionPM.OpenAmount!=0)
+                        if (ledgerTransactionPM.IsReconciled && ledgerTransactionPM.OpenAmount != 0)
                         {
                             bool useLocal_inner = true;
                             string txt_M_ledgerTransactionalreadyReconciled = TranslateMyTextCode(/*" ledgerTransaction already Reconciled  ?? ? TransactionId="*/M_ledgerTransactionalreadyReconciled, 0, useLocal_inner);
