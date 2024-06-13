@@ -61,10 +61,8 @@ namespace Logitude.Customs.Data.Repsitories
                                 MeasurementUnitName = reader["MeasurementUnit"] != DBNull.Value ? (string)reader["MeasurementUnit"] : null,
                                 OptionalTaxAddition = reader["OptionalTaxAddition"] != DBNull.Value ? (decimal?)reader["OptionalTaxAddition"] : null,
                                 StartDate = reader["StartDate"] != DBNull.Value ? (DateTime?)reader["StartDate"] : null,
-                                EndDate = reader["EndDate"] != DBNull.Value ? (DateTime?)reader["EndDate"] : null
-
-                                // TODO: GENRETE THE XML CB_Tariff FOR THIS FIELD:
-                                // TradeAgreementName = reader["TradeAgreementName"] != DBNull.Value ? (string)reader["TradeAgreementName"] : null,
+                                EndDate = reader["EndDate"] != DBNull.Value ? (DateTime?)reader["EndDate"] : null,
+                                TradeAgreementName = reader["TradeAgreementName"] != DBNull.Value ? (string)reader["TradeAgreementName"] : null,
 
                             };
                             results.Add(result);
