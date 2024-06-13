@@ -90,12 +90,12 @@ namespace Logitude.Accounting.BL.CoreBL
             }
 
 
-            List<string> transactionsIds = reconciliationPM.ReconciliationLines.Select(d => d.TransactionId).ToList();
-            List<LedgerTransactionJournalLineLT> ltjlines = GetLedgerTransactionJournalLineLTsByIdList(transactionsIds, reconciliationPM.Tenant);
-            bool hasMultipleARPayments = CheckIfHasMultiplePaymentsLT(ltjlines);
+            // List<string> transactionsIds = reconciliationPM.ReconciliationLines.Select(d => d.TransactionId).ToList();
+            // List<LedgerTransactionJournalLineLT> ltjlines = GetLedgerTransactionJournalLineLTsByIdList(transactionsIds, reconciliationPM.Tenant);
+            bool hasMultipleARPayments = false; // CheckIfHasMultiplePaymentsLT(ltjlines);
             if (hasMultipleARPayments && reconciliationPM.ReconciliationLines.Any(d => d.GroupNumber == 0) && reconciliationPM.ReconciliationLines.Any(d => d.GroupNumber != 0))
             {
-                recoCallBack = SplitAndSubmitReconciliationByGroupNumberNonZero(reconciliationPM, hasMultipleARPayments);
+                    recoCallBack = SplitAndSubmitReconciliationByGroupNumberNonZero(reconciliationPM, hasMultipleARPayments);
             }
             else if (hasMultipleARPayments != true)
             {
