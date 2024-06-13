@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class GeneralUpdateClass
    {  		
-		public const string HashString = "3116ad46736bdeb595db27b5904d8ac0";
+		public const string HashString = "4951e949750303c36831a3bd88cf36be";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2113,9 +2113,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_AccountingOSelectTwoTransactionAtLeast = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.SelectTwoTransactionAtLeast", DefaultText = "Please select at least two transactions in order to create a new external reconciliation",LocalDefaultText = @"חובה לבחור לפחות שתי תנועות ע''מ ליצור התאמה חדשה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode GeneralTextCode_AccountingOTaxLineTitle = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.TaxLineTitle", DefaultText = "New tax deduction period",LocalDefaultText = @"תקופת ניכוי חדשה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+           TextCode GeneralTextCode_AccountingOTaxLineTitle = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.TaxLineTitle", DefaultText = "New tax deduction period", LocalDefaultText = @"תקופת ניכוי חדשה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode GeneralTextCode_AccountingOMustBeLess = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.MustBeLess", DefaultText = "From date must be less than to date",LocalDefaultText = @"מ-תאריך חייב להיות קטן מ-עד תאריך", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+           TextCode GeneralTextCode_AccountingOTaxRepProblem = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.TaxRepProblem", DefaultText = "The problem is in the line", LocalDefaultText = @"הבעיה מצויה בשורה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+           TextCode GeneralTextCode_AccountingOTaxRepProblem_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.TaxRepProblem_2", DefaultText = "of this report in Journal No", LocalDefaultText = @"בדוח זה בפקודת יומן מספר", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+           TextCode GeneralTextCode_AccountingOMustBeLess = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.MustBeLess", DefaultText = "From date must be less than to date",LocalDefaultText = @"מ-תאריך חייב להיות קטן מ-עד תאריך", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_AccountingOMustBeLarger = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.MustBeLarger", DefaultText = "To date must be larger than from date",LocalDefaultText = @"עד תאריך חייב להיות גדול מ-תאריך", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
