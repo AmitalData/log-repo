@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "af14af37c28c533a6fb00ca5571de903";
+		public const string HashString = "a89efcd61bcfb8a0bfe351d22ff72578";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -22077,6 +22077,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode DeclarationTextCode_CustomsDeclarationOSendSignedDeclarationsAction = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SendSignedDeclarationsAction", DefaultText = "Send Signed Declarations",LocalDefaultText = @"שידור הצהרה חתומה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DeclarationTextCode_CustomsDeclarationOSendDeclarationPaymentsAction = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.SendDeclarationPaymentsAction", DefaultText = "Send Declaration Payments",LocalDefaultText = @"שידור הגשת הצהרה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOCancelSelectedRowsConfirm = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CancelSelectedRowsConfirm", DefaultText = "The declaration selection will be removed, are you sure?",LocalDefaultText = @" שים לב, בחירת ההצהרות שבוצעה תימחק, האם להמשיך ?", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

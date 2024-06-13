@@ -81,6 +81,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     @Output() ColumnsReady = new EventEmitter();
     @Output() QueryListSourceChanged = new EventEmitter();
     @Output() FiltersBarLoaded: EventEmitter<any> = new EventEmitter<any>();
+    @Output() SelectedRows: EventEmitter<any> = new EventEmitter();
     RTL: boolean = ObjectsLocator.GlobalSetting == undefined ? false : (ObjectsLocator.GlobalSetting.LayoutDirection == 'rtl' ? true : false);
     public SeachBoxIsDisabled: boolean = false;
     //@Output() ShowTipEvent = new EventEmitter();
@@ -4017,16 +4018,8 @@ export class ListComponent implements OnInit, AfterViewInit {
             }
         }
         else {
-            var removedIndex = null;
-            for (var i = 0; i < this.SelectedItems.Collection.length; i++) {
-                if ($event.rowIndex == this.SelectedItems.Collection[i].rowIndex) {
-                    removedIndex = i;
-                    break;
-                }
-            }
-
-            if (removedIndex != null) {
-                this.SelectedItems.RemoveFromIndex(removedIndex);
+            if (this.SelectedItems.Collection.includes($event.rowData.Id)) {
+                this.SelectedItems.Remove($event.rowData.Id);
             }
 
             if (this.IsSelected) {
@@ -4041,7 +4034,7 @@ export class ListComponent implements OnInit, AfterViewInit {
 
     CalculateSelectedCount() {
         this.SelectedCount = this.IsSelected? this.dataCount - this.ExcludedItems.Collection.length: this.SelectedItems.Collection.length;
-        // todo: emit selectedCount / IsSelected
+        this.SelectedRows.emit(this.IsSelected || this.SelectedItems.Collection.length);
     }
 
     ShowActionConfirmationWindow(action) {
@@ -4056,11 +4049,11 @@ export class ListComponent implements OnInit, AfterViewInit {
                 .replace("{count}", this.SelectedCount.toString());
         }
         confirmMsg = confirmMsg.replace("{actionTranslation}", TextCodeTranslator.Translate(this.ScreenQueryAction["actionTranslationPrefix"] + action));
-        confirmWindow.Title = "Customer Care Deactivation";
+        confirmWindow.Title = TextCodeTranslator.Translate("General.O.Confirm");
         confirmWindow.Width = 400;
         confirmWindow.Height = 180;
-        confirmWindow.YesButtonText = "OK"; // todo
-        confirmWindow.NoButtonText = "Cancel"; //todo
+        confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+        confirmWindow.NoButtonText = TextCodeTranslator.Translate("General.B.Cancel");
         confirmWindow.Show(confirmMsg);
 
         var params = {
@@ -4085,9 +4078,24 @@ export class ListComponent implements OnInit, AfterViewInit {
                             let emittedArray = this.ExcludedItems.Collection.map((res) => ({ rowData: {Id: res}, IsChecked: false, RowIndex: -1, ById: true }));
                             this.onChangeCheckBoxesState.emit(emittedArray);
                         }
-                                
                         this.SelectAllRowsChecked(false);
                         SessionLocator.SelectedSession.StopBusyIndicator();
+
+                        // show message
+                        var myMessageWindow = new MessageWindow();
+                        if(!AppTool.IsNullOrEmpty(response.RequestInProgressList)){
+                            myMessageWindow.ShowEventButton=true;
+                            myMessageWindow.EventButtonText=TextCodeTranslator.Translate("Customs.Declaration.TH.RequestSheet");
+                        }  
+                        myMessageWindow.Show(response.Message);
+                        // myMessageWindow.WindowClosed.subscribe(s => {
+                        //     this.RefreshButtonClicked();
+                        // });
+                        // myMessageWindow.SendEvent.subscribe(s=>{
+                        //     if(s){
+                        //         this.LoadCustomsRequestSheetsScreen(response.RequestInProgressList)
+                        //     }
+                        // });
                     });
                 }
             }

@@ -124,9 +124,6 @@
         width: 165px !important;
     }
 
-    .ToggleButton {
-        border:none !important;
-    }
     .ActionButton{
         display: block;
         outline: none;
@@ -273,7 +270,7 @@
                     <tr>
 
                         <td *ngIf="IsSelectAllCheckboxVisible" style="height:26px;width:53px; ">
-                            <div style="border:1px solid #6A8299;width: 48px;border-radius: 3px;max-height: 26px;">
+                            <div style="border:1px solid #6A8299;width: 47px;border-radius: 3px;max-height: 26px;">
                                 <table>
                                     <tr>
                                         <td>
@@ -283,8 +280,7 @@
                                         </td>
 
                                         <td>
-                                            <div class="ToggleButton" tabindex="-1" style="width: 20px;height:23px;left:10px ">
-
+                                            <div class="ToggleButton" tabindex="-1" style="width: 20px;height:23px;left:10px; border: none;">
                                                 <img src="./Images/ToggleIcon.png" style="float:left;" />
                                                 <div class="ToggleButtonMenu" style="width: 70px;top:26px;text-align:right">
                                                     <button  style="text-align:right" (click)="SelectAllRowsChecked(true)">{{'Customs.General.O.SelectAll' | TextCodeTranslationPipe}}</button>

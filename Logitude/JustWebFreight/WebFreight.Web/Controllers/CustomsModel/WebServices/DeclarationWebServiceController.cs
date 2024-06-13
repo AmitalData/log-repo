@@ -547,18 +547,25 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 }
 
                 DataResult result = new DataResult();
-                bool signDeclaration = sendDeclarationBatchRequestParams.Action.ToLower() == "sendsigneddeclarationsaction";
+                string RequestInProgressList;
 
                 switch (sendDeclarationBatchRequestParams.Action.ToLower())
                 {
                     case "sendsigneddeclarationsaction": 
                     case "senddeclarationaction":
+                        bool signDeclaration = sendDeclarationBatchRequestParams.Action.ToLower() == "sendsigneddeclarationsaction";
 
-                        var messagingService = new DCAInUCB2751_MsgMessagingService();
-                        string RequestInProgressList;
-                        var sts = messagingService.CreateCRS(tenant, sendDeclarationBatchRequestParams, signDeclaration, out RequestInProgressList);
+                        var sendMessagingService = new DCAInUCB2751_MsgMessagingService();
+                        var sendDeclarationSts = sendMessagingService.CreateCRS(tenant, sendDeclarationBatchRequestParams, signDeclaration, out RequestInProgressList);
                         result.RequestInProgressList = RequestInProgressList;
-                        result.Message = sts;
+                        result.Message = sendDeclarationSts;
+                        break;
+
+                    case "senddeclarationpaymentsaction":
+                        var paymentMessagingService = new DCAInUCB2755E_MsgMessagingService();
+                        var paymentDeclarationSts = paymentMessagingService.CreateCRS(tenant, sendDeclarationBatchRequestParams, out RequestInProgressList);
+                        result.RequestInProgressList = RequestInProgressList;
+                        result.Message = paymentDeclarationSts;
                         break;
 
                     default:

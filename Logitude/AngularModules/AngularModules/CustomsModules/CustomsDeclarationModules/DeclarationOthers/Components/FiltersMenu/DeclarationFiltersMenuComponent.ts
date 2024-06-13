@@ -7,6 +7,7 @@ import { TextCodeTranslator } from "Infrastructure/Utilities/TextCodeTranslator"
 import { filter } from "rxjs/operators";
 import { DeclarationExtendedListService } from '../../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
 import { ServiceResponse } from "Infrastructure/DataContracts/ServiceResponse";
+import { ConfirmWindow } from "Controls/Windows/ConfirmWindow";
 
 @Component({
     selector: 'DeclarationFiltersMenuComponent',
@@ -27,6 +28,7 @@ export class DeclarationFiltersMenuComponent
     exportFilterData: any;
     private _DeclarationExtendedListService: DeclarationExtendedListService = new DeclarationExtendedListService();
     currentQuery: string;
+    selectedRows: boolean;
 
     // diamonds vars
     diamondsMenusCount = {};
@@ -72,6 +74,10 @@ export class DeclarationFiltersMenuComponent
                         }
                     }
                 });
+
+            this.CurrentSession.CurrentListComponent.SelectedRows.subscribe(data => {
+                this.selectedRows = data;
+            });
         }
         else {
             this.CustomGetTotalCount.emit(null);
@@ -153,8 +159,27 @@ export class DeclarationFiltersMenuComponent
         this.ApplyTransportSelectedStyle();
     }
 
-    ShowDiamondsDeclarationByMenu(menu?: string) {
+    ShowDiamondsDeclarationByMenu(menu?: string, forceMenuChange=false) {
+
         if (menu) {
+
+            if (!forceMenuChange && this.selectedRows) {
+                var confirmWindow = new ConfirmWindow();
+                var confirmMsg = TextCodeTranslator.Translate("Customs.Declaration.O.CancelSelectedRowsConfirm");
+                confirmWindow.Title = TextCodeTranslator.Translate("General.O.Confirm");
+                confirmWindow.Width = 400;
+                confirmWindow.Height = 180;
+                confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+                confirmWindow.NoButtonText = TextCodeTranslator.Translate("General.B.Cancel");
+                confirmWindow.Show(confirmMsg);
+                confirmWindow.WindowClosed.subscribe((event: any) => {
+                    if (confirmWindow.Yes) {
+                        this.ShowDiamondsDeclarationByMenu(menu, true);
+                    }
+                });
+                return;
+            }
+    
             this.SelectedDiamondsMenu = menu;
         }
 
@@ -170,7 +195,6 @@ export class DeclarationFiltersMenuComponent
             this.apiQueryFilters.AdditionalFilters[index]["SpecificMenuFilter"] = true;
         }
 
-        // todo: show notification if there is selected rows and prevent change
         this.SelectedValueChanged.emit({ Filters: this.apiQueryFilters, RemoveFilter: false, RowCount: this.diamondsMenusCount[this.SelectedDiamondsMenu] });
     }
 
