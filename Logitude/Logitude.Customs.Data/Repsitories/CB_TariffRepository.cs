@@ -29,7 +29,102 @@ namespace Logitude.Customs.Data.Repsitories
 			throw new NotImplementedException();
         }
 
-        public List<CB_TariffList> GetCustomsBookTaxRates(int customsItemID)
+        public List<CB_TariffList> GetCustomsBookAgreementLevelData(int customsItemID, int measurementUnitMalamId)
+        {
+            try
+            {
+                List<CB_TariffList> results = new List<CB_TariffList>();
+                string strConnString = GetConnection(0);
+                using (SqlConnection connection = new SqlConnection(strConnString))
+                {
+                    connection.Open();
+                    var command = connection.CreateCommand();
+                    command.CommandText = "usp_AgreementLevelData";
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                    command.Parameters.AddWithValue("@CustomsItemIDNum", customsItemID);
+                    command.Parameters.AddWithValue("@MeasurementUnitMalamId", measurementUnitMalamId);
+
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var result = new CB_TariffList
+                            {
+
+                                // following to match the actual column names from file 202413061852_usp_AgreementLevelData.sxml:
+                                CustomsItemID = reader["CustomsItemIDNum"] != DBNull.Value ? (int)reader["CustomsItemIDNum"] : 0,
+                                ID = reader["TarrifID"] != DBNull.Value ? (int)reader["TarrifID"] : 0,
+                                CustomsRate = reader["CustomsRateWithout"] != DBNull.Value ? (string)reader["CustomsRateWithout"] : null,
+                                CustomsRateWithinQuota = reader["CustomsRateWithin"] != DBNull.Value ? (string)reader["CustomsRateWithin"] : null,
+                                QuotaID = reader["QuotaID"] != DBNull.Value ? (int?)reader["QuotaID"] : null,
+                                MeasurementUnitName = reader["MeasurementUnit"] != DBNull.Value ? (string)reader["MeasurementUnit"] : null,
+                                OptionalTaxAddition = reader["OptionalTaxAddition"] != DBNull.Value ? (decimal?)reader["OptionalTaxAddition"] : null,
+                                StartDate = reader["StartDate"] != DBNull.Value ? (DateTime?)reader["StartDate"] : null,
+                                EndDate = reader["EndDate"] != DBNull.Value ? (DateTime?)reader["EndDate"] : null
+
+                                // TODO: GENRETE THE XML CB_Tariff FOR THIS FIELD:
+                                // TradeAgreementName = reader["TradeAgreementName"] != DBNull.Value ? (string)reader["TradeAgreementName"] : null,
+
+                            };
+                            results.Add(result);
+                        }
+                    }
+                    connection.Close();
+                }
+
+                return results;
+            }
+
+            catch (Exception ex)
+            {
+                throw new Exception();
+            }
+        }
+        
+        public List<CB_TariffList> GetCustomsBookRegularityRequirementData(int customsItemID)
+        {
+            try
+            {
+                List<CB_TariffList> results = new List<CB_TariffList>();
+                string strConnString = GetConnection(0);
+                using (SqlConnection connection = new SqlConnection(strConnString))
+                {
+                    connection.Open();
+                    var command = connection.CreateCommand();
+                    command.CommandText = "usp_RegularityRequirementData";
+                    command.CommandType = System.Data.CommandType.StoredProcedure;
+
+                    command.Parameters.AddWithValue("@CustomsItemID", customsItemID);
+
+                    using (var reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            var result = new CB_TariffList
+                            {
+                                // TODO: GENRETE THE XML CB_Tariff FOR THIS FIELD + add column to the file 202413061852_usp_RegularityRequirementData.sxml:
+
+                                CustomsItemID = reader["CustomsItemID"] != DBNull.Value ? (int)reader["CustomsItemID"] : 0,
+                                ID = reader["TarrifID"] != DBNull.Value ? (int)reader["TarrifID"] : 0,
+
+
+                            };
+                            results.Add(result);
+                        }
+                    }
+                    connection.Close();
+                }
+
+                return results;
+            }
+
+            catch (Exception ex)
+            {
+                throw new Exception();
+            }
+        }
+         public List<CB_TariffList> GetCustomsBookTaxRates(int customsItemID)
         {
             try
             {

@@ -126,6 +126,8 @@
     <None Include="DBScripts\Post\202310101100_AddCustomsEnvSettings.sxml" />
     <None Include="DBScripts\Post\202310031714_DeleteDeclarationStatusFieldC.sxml" />
     <None Include="DBScripts\Post\202308060942_AddINTERFACETENANTDEFINITIONS.sxml" />
+    <None Include="DBScripts\Post\202413061854_usp_RegularityRequirementData.sxml" />
+    <None Include="DBScripts\Post\202413061852_usp_AgreementLevelData.sxml" />
     <None Include="DBScripts\Post\202414041313_AddClientItemsSearchFields.sxml" />
     <None Include="DBScripts\Post\202208281500_UpdateLoadingOfDeclaration.sxml" />
     <None Include="DBOthers\Procedures\ReconnectObjectMetaDataProcedure.dxml" />

@@ -34,6 +34,51 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
     public class CB_TariffExtendedController : ApiController
     {
 
+        public HttpResponseMessage GetCustomsBookAgreementLevelData(int customsItemId, int measurementUnitMalamId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+
+                string loggedUserEmail = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(0);
+
+                CB_TariffQueryService tariffQueryService = new CB_TariffQueryService(0);
+                List<CB_TariffList> result = tariffQueryService.GetCustomsBookAgreementLevelData(customsItemId, measurementUnitMalamId);
+
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+        
+        public HttpResponseMessage GetCustomsBookRegularityRequirementData(int customsItemId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+
+                string loggedUserEmail = authToken.Email;
+                SecurityUtility.AuthenticationOnTenant(0);
+
+                CB_TariffQueryService tariffQueryService = new CB_TariffQueryService(0);
+                List<CB_TariffList> result = tariffQueryService.GetCustomsBookRegularityRequirementData(customsItemId);
+
+                return Request.CreateResponse(HttpStatusCode.OK, result);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+
         public HttpResponseMessage GetCustomsBookTaxRates(int customsItemId)
         {
             try
