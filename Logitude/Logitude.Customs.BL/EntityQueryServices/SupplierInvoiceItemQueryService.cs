@@ -538,7 +538,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
             }
             else if (newValue.Length == 11)
             {
-                newValue += LuhnAlgorithm.CalculateLuhnAlgorithm(newValue.Substring(0, 10));
+                string lastDigit = newValue.Substring(10, 1);
+                bool isValid = LuhnAlgorithm.CalculateLuhnAlgorithm(newValue.Substring(0, 10)) == int.Parse(lastDigit);
+                newValue = isValid ? newValue : null;
             }
 
             return newValue;
