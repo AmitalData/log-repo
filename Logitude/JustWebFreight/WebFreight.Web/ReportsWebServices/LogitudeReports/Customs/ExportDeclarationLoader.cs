@@ -70,7 +70,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
             (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false;
 
             var declarations = (from a in context.Declarations
-                                                   .Include(a => a.CustomsTransportMode)
+                                                   .Include(a => a.TransportMode)
                                                    .Include(a => a.DeclarationType)
                                                    .Include(a => a.GovernmentProcedureCurrent)
                                                    .Include(a => a.CustomsCountry)
@@ -112,7 +112,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Customs
                                     a.TaxationDateTime,
                                     a.ExportFile,
                                     a.TransportModeId,
-                                    TransportModeName = a.CustomsTransportMode != null ? a.CustomsTransportMode.LocalName : null,
+                                    TransportModeName = a.TransportMode != null ? a.TransportMode.LocalName : null,
                                     a.CustomFileNo,
                                     a.DeclarationNumber,
                                     DeclarationTypeName = a.DeclarationType != null ? a.DeclarationType.LocalName : null,

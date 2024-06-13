@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsHouseTypeAdditionalUpdateClass
    {  		
-		public const string HashString = "52a09f80f62a1d708a2a7bcc2ee8dca1";
+		public const string HashString = "8481edf934d298531e49ffe34c133684";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -103,6 +103,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    AvailableInCustomization =  true,
+			      				    SupportSubEntity =  false,
+			      				    ApplyGenericCustomFields =  false,
+			      				    AvailableInDocumentTypes =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasFiltersMenu =  false,
@@ -343,7 +346,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 						FieldName =  "TransportModeId",
 					  						ObjectTableName =  "Customs.CustomsHouseTypeAdditional",
 					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "Customs.CustomsTransportMode",
+					  						LookUpTableName =  "TransportMode",
 					  						MinLength =  0,
 					  						MaxLength =  1,
 					  						IsRequired =  false,
@@ -383,8 +386,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "Transport Mode",
 					  						FullLocalDefaultText =  "מצב תחבורה",
 					  						IsForeignKey =  true,
-					  						ForeignEntity =  "CustomsTransportMode",
-					  						NavigationPropertyName =  "CustomsTransportMode",
+					  						ForeignEntity =  "TransportMode",
+					  						NavigationPropertyName =  "TransportMode",
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,

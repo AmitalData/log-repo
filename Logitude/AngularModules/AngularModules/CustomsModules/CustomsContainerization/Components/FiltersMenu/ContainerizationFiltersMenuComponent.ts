@@ -44,7 +44,7 @@ export class ContainerizationFiltersMenuComponent
                     break;
                 }
 
-                case "L": {
+                case "I": {
                     img_I.setAttribute("src", "./Images/TransportModes/I_g.png");
                     break;
                 }
@@ -69,7 +69,7 @@ export class ContainerizationFiltersMenuComponent
                     break;
                 }
 
-                case "L": {
+                case "I": {
                     img_I.setAttribute("src", "./Images/TransportModes/I.png");
                     //img_I.style.top = "1px";
                     break;
@@ -114,7 +114,7 @@ export class ContainerizationFiltersMenuComponent
                     break;
                 }
 
-                case "L": {
+                case "I": {
                     img_I.setAttribute("src", "./Images/TransportModes/I_w.png");
                     break;
                 }

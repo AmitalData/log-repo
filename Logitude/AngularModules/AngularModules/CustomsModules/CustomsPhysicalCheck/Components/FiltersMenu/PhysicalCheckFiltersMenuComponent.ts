@@ -94,7 +94,7 @@ export class PhysicalCheckFiltersMenuComponent
                     break;
                 }
 
-                case "L": {
+                case "I": {
                     img_I.setAttribute("src", "./Images/TransportModes/I_w.png");
                     break;
                 }
@@ -121,7 +121,7 @@ export class PhysicalCheckFiltersMenuComponent
                     break;
                 }
 
-                case "L": {
+                case "I": {
                     img_I.setAttribute("src", "./Images/TransportModes/I.png");
 
                     break;
@@ -148,7 +148,7 @@ export class PhysicalCheckFiltersMenuComponent
                     break;
                 }
 
-                case "L": {
+                case "I": {
                     img_I.setAttribute("src", "./Images/TransportModes/I_g.png");
                     break;
                 }

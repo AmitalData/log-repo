@@ -243,7 +243,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                          ExportAutonomyRegionTypeCode = a.ExportAutonomyRegionTypeCode,
                                                          DepartmentId = a.DepartmentId,
                                                          DepartmentName = a.Department.LocalName,
-                                                         TransportModeName = a.CustomsTransportMode == null ? null : a.CustomsTransportMode.LocalName,
+                                                         TransportModeName = a.TransportMode == null ? null : a.TransportMode.LocalName,
                                                          EntitleImporterCode = a.EntitleImporterCode,
                                                          CreatedByUserName =
 
@@ -475,7 +475,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
                                                           DepartmentId = a.DepartmentId,
                                                           DepartmentName = a.Department.LocalName,
-                                                          TransportModeName = a.CustomsTransportMode == null ? null : a.CustomsTransportMode.LocalName,
+                                                          TransportModeName = a.TransportMode == null ? null : a.TransportMode.LocalName,
                                                           CreatedByUserName =
 
                                                          a.CreatedByUser.Code,
@@ -723,7 +723,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                      DeclarationStatusTypeName = a.DeclarationStatusType == null ? null : a.DeclarationStatusType.LocalName,
                                                      TransportModeForExport = a.TransportModeId,
                                                      DeclarationStatusTypeCode = a.DeclarationStatusTypeCode,
-                                                     TransportModeName = a.CustomsTransportMode == null ? null : a.CustomsTransportMode.LocalName,
+                                                     TransportModeName = a. TransportMode == null ? null : a.TransportMode.LocalName,
                                                      ExportFile = a.ExportFile,
                                                      PaymentDate = a.PaymentDate,
                                                      IsSubmitDeclaration = a.IsSubmitDeclaration,

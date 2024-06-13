@@ -28,11 +28,11 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string Code { get; set; }
 	      
         public virtual CustomsHouseType CustomsHouseType { get; set; }
-        [ForeignKey("CustomsTransportMode")]
+        [ForeignKey("TransportMode")]
         [Column("TransportModeId")]
 	    public string TransportModeId { get; set; }
 	      
-        public virtual CustomsTransportMode CustomsTransportMode { get; set; }
+        public virtual TransportMode TransportMode { get; set; }
         [ForeignKey("UnloadingSiteType")]
         [Column("UnloadPortCode")]
 	    public string UnloadPortCode { get; set; }

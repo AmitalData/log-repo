@@ -173,6 +173,7 @@
     <None Include="DBScripts\GlobalModel\AddOpportunityStageChangingBatchService.sxml" />
     <None Include="DBScripts\InfrastructureModel\202209260235_UpdateEntityStatusDelivery.sxml" />
     <None Include="DBScripts\InfrastructureModel\202303081102_UpdateAvailableInDocumentTypesForCustomObjects.sxml" />
+    <None Include="DBScripts\InfrastructureModel\20240610_UpdateTransportmodeLocalName.sxml" />
     <None Include="DBScripts\InfrastructureModel\ChangeTypeOfSPLITCOMPONENTPATH.sxml" />
     <None Include="DBScripts\InfrastructureModel\UpdateScreenSectionTable.sxml" />
     <None Include="DBScripts\InvoiceModel\202201160900_UpdateAutomaticLastUpdateDateOnARInvoiceTransferStatus.sxml" />
@@ -191,6 +192,7 @@
     <None Include="DBScripts\InvoiceModel\202203021250_FillAPInvoicePaymentsNumbers.sxml" />
     <None Include="DBScripts\CommonModel\202208071040_FillCustomerGroupOnCardLevel.sxml" />
     <None Include="DBScripts\GlobalModel\AddStarWorkflowInstanceRetryWorkerBatchService.sxml" />
+    <None Include="DBScripts\InfrastructureModel\20240610_UpdateTransportMode.sxml" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

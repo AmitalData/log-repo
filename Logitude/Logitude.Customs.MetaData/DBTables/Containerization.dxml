@@ -155,7 +155,7 @@
     ReferencedTableSchema="Customs" />
   <Relation
     ForeignKeyColumn="TransportModeId"
-    ReferencedTable="CustomsTransportModes"
-    ReferencedColumn="Code"
-    ReferencedTableSchema="Customs" />
+    ReferencedTable="TransportModes"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
 </Table>
