@@ -66,8 +66,8 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 string loggedUserEmail = authToken.Email;
                 SecurityUtility.AuthenticationOnTenant(0);
 
-                CB_TariffQueryService tariffQueryService = new CB_TariffQueryService(0);
-                List<CB_TariffList> result = tariffQueryService.GetCustomsBookRegularityRequirementData(customsItemId);
+                CB_RequirementComputedDataQueryService requirementComputedDataQueryService = new CB_RequirementComputedDataQueryService(0);
+                List<CB_RequirementComputedDataList> result = requirementComputedDataQueryService.GetCustomsBookRegularityRequirementData(customsItemId);
 
                 return Request.CreateResponse(HttpStatusCode.OK, result);
             }

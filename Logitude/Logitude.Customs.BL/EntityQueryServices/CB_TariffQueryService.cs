@@ -25,13 +25,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
         public List<CB_TariffList> GetCustomsBookAgreementLevelData(int customsItemId, int measurementUnitMalamId)
         {
             return this.repository.GetCustomsBookAgreementLevelData(customsItemId, measurementUnitMalamId);
-        }
-        
-        public List<CB_TariffList> GetCustomsBookRegularityRequirementData(int customsItemId)
-        {
-            return this.repository.GetCustomsBookRegularityRequirementData(customsItemId);
-        }
-        
+        }      
         public List<CB_TariffList> GetCustomsBookTaxRates(int customsItemId)
         {
             return this.repository.GetCustomsBookTaxRates(customsItemId);

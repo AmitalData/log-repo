@@ -80,60 +80,7 @@ namespace Logitude.Customs.Data.Repsitories
             }
         }
         
-        public List<CB_TariffList> GetCustomsBookRegularityRequirementData(int customsItemID)
-        {
-            try
-            {
-                List<CB_TariffList> results = new List<CB_TariffList>();
-                string strConnString = GetConnection(0);
-                using (SqlConnection connection = new SqlConnection(strConnString))
-                {
-                    connection.Open();
-                    var command = connection.CreateCommand();
-                    command.CommandText = "usp_RegularityRequirementData";
-                    command.CommandType = System.Data.CommandType.StoredProcedure;
-
-                    command.Parameters.AddWithValue("@CustomsItemID", customsItemID);
-
-                    using (var reader = command.ExecuteReader())
-                    {
-                        while (reader.Read())
-                        {
-                            // change to other repository
-                            var result = new CB_TariffList();
-                            var result1 = new CB_RequirementComputedDataList
-                            {
-                                // TODO: GENRETE THE XML CB_Tariff FOR THIS FIELD + add column to the file 202413061852_usp_RegularityRequirementData.sxml:
-                                
-                                CustomsItemID = reader["CustomsItemID"] != DBNull.Value ? (int)reader["CustomsItemID"] : 0,
-                                ID = reader["id"] != DBNull.Value ? (int)reader["id"] : 0,
-                                RequirementValidOrigin = reader["RequirementValidOrigin"] != DBNull.Value ? (string)reader["RequirementValidOrigin"] : null,
-                                RequirementGoodsDescription = reader["RequirementGoodsDescription"] != DBNull.Value ? (string)reader["RequirementGoodsDescription"] : null,
-                                Authority = reader["Authority"] != DBNull.Value ? (string)reader["Authority"] : null,
-                                ConfirmationType = reader["ConfirmationType"] != DBNull.Value ? (string)reader["ConfirmationType"] : null,
-                                InterConditionsRelationship = reader["InterConditionsRelationship"] != DBNull.Value ? (string)reader["InterConditionsRelationship"] : null,
-                                TextualCondition = reader["TextualCondition"] != DBNull.Value ? (string)reader["TextualCondition"] : null,
-                                IsPersonalImportIncluded = reader["IsPersonalImportIncluded"] != DBNull.Value ? (bool)reader["IsPersonalImportIncluded"] : false,
-                                IsCarnetIncluded = reader["IsCarnetIncluded"] != DBNull.Value ? (bool)reader["IsCarnetIncluded"] : false,
-
-
-
-                            };
-                            results.Add(result);
-                        }
-                    }
-                    connection.Close();
-                }
-
-                return results;
-            }
-
-            catch (Exception ex)
-            {
-                throw new Exception();
-            }
-        }
-         public List<CB_TariffList> GetCustomsBookTaxRates(int customsItemID)
+        public List<CB_TariffList> GetCustomsBookTaxRates(int customsItemID)
         {
             try
             {
