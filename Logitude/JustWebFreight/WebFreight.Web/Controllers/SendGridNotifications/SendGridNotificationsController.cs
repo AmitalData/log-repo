@@ -11,12 +11,13 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Xml.Serialization;
-
+using WebFreight.Web.Helpers;
 
 namespace WebFreight.Web.Controller
 {
@@ -53,9 +54,10 @@ namespace WebFreight.Web.Controller
 
                         }).ToList();
 
-                    tenant = emailsList.Select(a => a.Tenant).FirstOrDefault();
-                    communicationLogId = emailsList.Where(a => a != null).Select(a => a.CommunicationLogId).FirstOrDefault();
+                    int tenant = emailsList.Select(a => a.Tenant).FirstOrDefault();
+                    string communicationLogId = emailsList.Where(a => a != null).Select(a => a.CommunicationLogId).FirstOrDefault();
                     string deploymentStage = emailsList.Where(a => a != null).Select(a => a.DeploymentStage).FirstOrDefault();
+
                     if (deploymentStage == LogitudeSettings.DeploymentStage)
                     {
                         InsertNewAnalyzeQueue(emailsList, tenant);
@@ -63,21 +65,24 @@ namespace WebFreight.Web.Controller
 
                     Logger.LogInfo("הגיע בהצלחה SendGrid {0}", emailsList[0].CommunicationLogId);
                 }
-            }
+
+
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }  
 
             catch (Exception errorInfo)
             {
                 string errorMessage = errorInfo.Message;
                 AzureLog.SaveLogsInStorage("SendGrid Page error  " + Environment.NewLine + errorMessage, "E", DateTime.Now, errorInfo.Message, errorInfo.StackTrace, 0, null, null, null);
-                //throw;
+                Logger.LogInfo("נכשל", errorInfo);
 
-                    Logger.LogInfo("נכשל");
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(errorInfo));
+
             }
+        }  
 
-            return Request.CreateResponse();
 
 
-        }
 
         private void InsertNewAnalyzeQueue(List<ResponseItem> emailsList, int tenant)
         {
