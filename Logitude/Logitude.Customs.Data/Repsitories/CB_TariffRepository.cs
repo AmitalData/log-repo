@@ -99,12 +99,23 @@ namespace Logitude.Customs.Data.Repsitories
                     {
                         while (reader.Read())
                         {
-                            var result = new CB_TariffList
+                            // change to other repository
+                            var result = new CB_TariffList();
+                            var result1 = new CB_RequirementComputedDataList
                             {
                                 // TODO: GENRETE THE XML CB_Tariff FOR THIS FIELD + add column to the file 202413061852_usp_RegularityRequirementData.sxml:
-
+                                
                                 CustomsItemID = reader["CustomsItemID"] != DBNull.Value ? (int)reader["CustomsItemID"] : 0,
-                                ID = reader["TarrifID"] != DBNull.Value ? (int)reader["TarrifID"] : 0,
+                                ID = reader["id"] != DBNull.Value ? (int)reader["id"] : 0,
+                                RequirementValidOrigin = reader["RequirementValidOrigin"] != DBNull.Value ? (string)reader["RequirementValidOrigin"] : null,
+                                RequirementGoodsDescription = reader["RequirementGoodsDescription"] != DBNull.Value ? (string)reader["RequirementGoodsDescription"] : null,
+                                Authority = reader["Authority"] != DBNull.Value ? (string)reader["Authority"] : null,
+                                ConfirmationType = reader["ConfirmationType"] != DBNull.Value ? (string)reader["ConfirmationType"] : null,
+                                InterConditionsRelationship = reader["InterConditionsRelationship"] != DBNull.Value ? (string)reader["InterConditionsRelationship"] : null,
+                                TextualCondition = reader["TextualCondition"] != DBNull.Value ? (string)reader["TextualCondition"] : null,
+                                IsPersonalImportIncluded = reader["IsPersonalImportIncluded"] != DBNull.Value ? (bool)reader["IsPersonalImportIncluded"] : false,
+                                IsCarnetIncluded = reader["IsCarnetIncluded"] != DBNull.Value ? (bool)reader["IsCarnetIncluded"] : false,
+
 
 
                             };
