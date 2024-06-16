@@ -1,8 +1,6 @@
 ﻿using Logitude.Server.Tools.Counters;
-using Logitude.Server.Tools.Utils;
 using Logitude.SystemLogs;
 using Newtonsoft.Json.Linq;
-using NPOI.Util;
 using Simplog.Data.Helpers;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
@@ -11,33 +9,34 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Xml.Serialization;
-using WebFreight.Web.Helpers;
 
-namespace WebFreight.Web.Controller
+
+namespace WebFreight.Web.Controllers.SendGridNotificatiosController
 {
-    public class SendGridNotificationsController : ApiController
+    public class SendGridNotificatiosController: ApiController
     {
-        string values = "";
-        int tenant = 0;
-        string communicationLogId = "";
+        private string communicationLogId;
 
-        public HttpResponseMessage ReceiveNotification([FromBody] JArray values)
+        [HttpPost]
 
+        [Route("process")]
+        public async Task<IHttpActionResult> Process()
         {
+
             try
             {
-                //using (var reader = new StreamReader(str))
-                //{
-                //    values = reader.ReadToEnd();
-                //}
-                var jsonData = values;
-            //    JArray jsonData = JArray.Parse(values);
+                string values;
+
+
+                using (var reader = new StreamReader(await Request.Content.ReadAsStreamAsync()))
+                {
+                    values = await reader.ReadToEndAsync();
+                }
+                JArray jsonData = JArray.Parse(values);
                 if (jsonData != null)
                 {
                     List<ResponseItem> emailsList = ((JArray)jsonData).Select(x =>
@@ -54,35 +53,27 @@ namespace WebFreight.Web.Controller
 
                         }).ToList();
 
-                    int tenant = emailsList.Select(a => a.Tenant).FirstOrDefault();
-                    string communicationLogId = emailsList.Where(a => a != null).Select(a => a.CommunicationLogId).FirstOrDefault();
-                    string deploymentStage = emailsList.Where(a => a != null).Select(a => a.DeploymentStage).FirstOrDefault();
+                   int tenant = emailsList.Select(a => a.Tenant).FirstOrDefault();
+                   string  communicationLogId = emailsList.Where(a => a != null).Select(a => a.CommunicationLogId).FirstOrDefault();
+                   string deploymentStage = emailsList.Where(a => a != null).Select(a => a.DeploymentStage).FirstOrDefault();
 
                     if (deploymentStage == LogitudeSettings.DeploymentStage)
                     {
                         InsertNewAnalyzeQueue(emailsList, tenant);
                     }
 
-                    Logger.LogInfo("הגיע בהצלחה SendGrid {0}", emailsList[0].CommunicationLogId);
                 }
 
-
-                return Request.CreateResponse(HttpStatusCode.OK);
-            }  
+                return Ok();
+            }
 
             catch (Exception errorInfo)
             {
                 string errorMessage = errorInfo.Message;
                 AzureLog.SaveLogsInStorage("SendGrid Page error  " + Environment.NewLine + errorMessage, "E", DateTime.Now, errorInfo.Message, errorInfo.StackTrace, 0, null, null, null);
-                Logger.LogInfo("נכשל", errorInfo);
-
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(errorInfo));
-
+                return InternalServerError(errorInfo);
             }
-        }  
-
-
-
+        }
 
         private void InsertNewAnalyzeQueue(List<ResponseItem> emailsList, int tenant)
         {
@@ -140,3 +131,4 @@ namespace WebFreight.Web.Controller
 
     }
 }
+    
