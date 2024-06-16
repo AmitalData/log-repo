@@ -110,10 +110,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         private List<string> GetDeclarationsByFilters(ICustomContext MyContext, DCAInUCB2755EWithResponseContentHeader customResponse)
         {
+            customResponse.QueryOperations.GetAll = true;
+            customResponse.QueryOperations.SortByColumnName = null;
             DeclarationListQueryService declarationQuery = new DeclarationListQueryService(MyContext);
-            List<DeclarationList> declarations = declarationQuery.GetList(customResponse.QueryOperations, customResponse.tenant);
-
-            List<string> declarationIds = declarations.Select(d => d.Id).ToList();
+            List<string> declarationIds = declarationQuery.GetByFilters(customResponse.QueryOperations, customResponse.tenant).Select(d => d.Id).ToList();
 
             if (customResponse.ExcludedIds != null && customResponse.ExcludedIds.Count > 0)
             {
