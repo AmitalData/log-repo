@@ -163,7 +163,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     //}
 
                     this._MyDeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
-
+                    myDeclarationUpdateService.Update(_MyDeclarationPM, true);
                 }
                 if(_MyDeclarationPM.Direction == "E" && requestParams.RequestVIA != SendRequestVIA.WebServiceBatch && !setting.IsConnectedToUniFreight && customResponse.ResponseContentHeader?.Exception?.Length > 0 && customResponse.Response?.Declaration == null)
                 {
@@ -183,11 +183,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if (!string.IsNullOrWhiteSpace(requestParams.AppicationId))
                 {   if(_MyDeclarationPM==null)
                          _MyDeclarationPM = myQueryService.GetSingle(requestParams.AppicationId, true, false);
-                    if (_MyDeclarationPM != null)
-                    {
-                       _MyDeclarationPM.ExportClosedErrorXML = mydDclarationErrorPointerService.AnalyzeErrorPionterExport(CastError(customResponse.Response.Error), _MyDeclarationPM, WCOTypeEnum.WCO_EX);
-                                            
-                    }
+                  
                 }
 
                 this.MyResponseData.UserMessage = GetExceptionMsg(customResponse.ResponseContentHeader.Exception[0]);
