@@ -51,7 +51,6 @@ using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Logitude.CRM.Data.EntityPOCOs;
 using Logitude.Server.Tools.Utils;
-using Logitude.BL.InfrastructureModel.EntityPMs;
 
 namespace Logitude.Accounting.BL.CoreBL
 {
@@ -1051,7 +1050,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     if(journal.QueueId != null )
                     {
                         QueueMessageRepository QueueMessageRepository = new QueueMessageRepository(SeedTenant);
-                        var status = QueueMessageRepository.GetSingleQueueMessage(journal.QueueId)?.Status;
+                        var status = QueueMessageRepository.GetSingleQueueMessage(Convert.ToInt64(journal.QueueId))?.Status;
                         if (status  !=  1)
                             continue;
                     }
@@ -1653,13 +1652,14 @@ namespace Logitude.Accounting.BL.CoreBL
             static JournalApproveWorker()
             {
                 //_NextDueDoneAt = DateTime.UtcNow.Date.AddDays(1);//tomorrow at 00:00
-                _NextDueDoneAt = DateTime.UtcNow.Date.AddDays(-1);//today already done - do next day =tomorrow at 00:00 ///
+                _NextDueDoneAt = DateTime.UtcNow.Date;//today already done - do next day =tomorrow at 00:00 ///
             }
             public Action<int> LogDoneItemInMemoryAction { get; set; }
             public Action SetLastActivate { get; set; }
 
             public void WorkUntilQEmptyQueueDB(TimeSpan? timeSpan = null, string selectedQueue = null)
             {
+                               
                 selectedQueue = selectedQueue ?? JournalApproveService.K_AccountingJournalApproveWR;
                 Stopwatch stopwatch = null;
                 if (timeSpan != null)
@@ -1711,53 +1711,22 @@ namespace Logitude.Accounting.BL.CoreBL
                             LogDoneItemInMemoryAction?.Invoke(1);
 
                         }
-                        
+
                     }
                     Thread.Sleep(10);//itzik - let other thread abilty to use GLAccout !!!
                 }
 
-
-                if (selectedQueue == JournalApproveService.K_AccountingJournalApproveMutliThreadingWR)
+                if (DateTime.UtcNow.Date > _NextDueDoneAt.Date)
                 {
+                    Logger.LogDebug("JornalApprove beforeAddBatchTask selected queue: {0}, workerRoleName: {1}  , time:{2} ",
+                        selectedQueue, LogitudeSettings.WorkerRoleName, DateTime.Now );
 
-                    Logger.LogDebug("in selectedQueue == JournalApproveService.K_AccountingJournalApproveMutliThreadingWR);");
-
-                    try
-                    {
-                        string workerRoleName = "";
-                        if (!string.IsNullOrEmpty(LogitudeSettings.WorkerRoleName))
-                        {
-                            workerRoleName = LogitudeSettings.WorkerRoleName;
-                        }
-                        Logger.LogDebug(" if (DateTime.UtcNow.Date > _NextDueDoneAt.Date && workerRoleName != \"staging\")" + workerRoleName);
-                        Logger.LogDebug(" _NextDueDoneAt.Date" + _NextDueDoneAt.Date);
-
-                        if (DateTime.UtcNow.Date > _NextDueDoneAt.Date && workerRoleName != "staging")// _NextDueDoneAt DateTime.UtcNow.TimeOfDay < TimeSpan.FromHours(6) ) 
-                        {
-
-                            Logger.LogDebug(" _NextDueDoneAt.Date 2" + _NextDueDoneAt.Date);
-
-                            if (DateTime.Now < new DateTime(2050, 06, 01))
-                            {
-                                Logger.LogDebug("CreateBatchAccountingIntegrityCheck");
-                                CreateBatchAccountingIntegrityCheck();
-                            }
-                            _NextDueDoneAt = DateTime.UtcNow.Date;
-                            var myDueLocalBalanceService = new DueLocalBalanceService();
-                            myDueLocalBalanceService.RunAllTenants();
-
-                            var dailyRebuildAgingService = new DailyRebuildAgingService();
-                            dailyRebuildAgingService.RunAllAgingTenants();
-
-                        }
-                    }
-                    catch (Exception)
-                    {
-
-                        throw;
-                    }
                 }
-              }
+
+                CheckCreateIntegrity();
+
+
+            }
 
             public void WorkUntilQEmptyQueueDBMultiThreaded(TimeSpan? timeSpan = null, string selectedQueue = null)
             {
@@ -1817,7 +1786,6 @@ namespace Logitude.Accounting.BL.CoreBL
 
                                 _NextDueDoneDict[response.Tenant] = DateTime.UtcNow.Date;
                                 var myDueLocalBalanceService = new DueLocalBalanceService();
-                                Logger.LogTrace(String.Format("RunOneTenantFast "));
                                 myDueLocalBalanceService.RunOneTenantFast(response.Tenant);
                                 Logger.LogTrace(String.Format("JournalApproveService, Point 3, tenant {0}", response.Tenant));
                             }
@@ -1847,10 +1815,54 @@ namespace Logitude.Accounting.BL.CoreBL
                         }
                         SetTenantIdle(response.Tenant);
                     }
+
+                    CheckCreateIntegrity();
                     Thread.Sleep(10);//itzik - let other thread abilty to use GLAccout !!!
                 }
             }
+            public void CheckCreateIntegrity()
+            {
 
+
+
+                Logger.LogDebug("in selectedQueue == JournalApproveService.K_AccountingJournalApproveMutliThreadingWR);");
+
+                try
+                {
+                    string workerRoleName = "";
+                    if (!string.IsNullOrEmpty(LogitudeSettings.WorkerRoleName))
+                    {
+                        workerRoleName = LogitudeSettings.WorkerRoleName;
+                    }
+                    Logger.LogDebug(" if (DateTime.UtcNow.Date > _NextDueDoneAt.Date && workerRoleName != \"staging\")" + workerRoleName);
+                    Logger.LogDebug(" _NextDueDoneAt.Date" + _NextDueDoneAt.Date);
+
+                    if (DateTime.UtcNow.Date > _NextDueDoneAt.Date && workerRoleName != "staging")
+                    {
+
+                        Logger.LogDebug(" _NextDueDoneAt.Date 2" + _NextDueDoneAt.Date);
+
+                        if (DateTime.Now < new DateTime(2050, 06, 01))
+                        {
+                            Logger.LogDebug("CreateBatchAccountingIntegrityCheck");
+                            CreateBatchAccountingIntegrityCheck();
+                        }
+                        _NextDueDoneAt = DateTime.UtcNow.Date;
+                        var myDueLocalBalanceService = new DueLocalBalanceService();
+                        myDueLocalBalanceService.RunAllTenants();
+
+                        var dailyRebuildAgingService = new DailyRebuildAgingService();
+                        dailyRebuildAgingService.RunAllAgingTenants();
+
+                    }
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+
+            }
             public void CreateBatchAccountingIntegrityCheck()
             {
                 try
