@@ -1050,7 +1050,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     //
                     string lastLine = "";
                     lastLine += "X";
-                    lastLine += taxReport.VatNumber.PadLeft(9, '0');
+                    lastLine += taxReport.VatNumber?.PadLeft(9, '0');
                     myStringBuilder.Append(lastLine);
 
 
