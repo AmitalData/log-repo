@@ -262,11 +262,17 @@
       <HintPath>..\packages\WindowsAzure.Storage.9.3.3\lib\net45\Microsoft.WindowsAzure.Storage.dll</HintPath>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
+    <Reference Include="NetCommonHelper, Version=1.0.0.6, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NetCommonHelper.1.0.6\lib\net46\NetCommonHelper.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json.Bson, Version=1.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.Bson.1.0.2\lib\net45\Newtonsoft.Json.Bson.dll</HintPath>
+    </Reference>
+    <Reference Include="NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.5.3.2\lib\net46\NLog.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -805,12 +811,14 @@
     <Compile Include="GlobalModel\Tools\EntityService\TenantHybridPartnerService.cs" />
     <Compile Include="Helpers\AddManualTraceEventsHelper.cs" />
     <Compile Include="Helpers\APICaller.cs" />
+    <Compile Include="Helpers\BaseClasses\BaseInstance.cs" />
     <Compile Include="Helpers\CacheHelper.cs" />
     <Compile Include="Helpers\ConcurrencyFieldHelper.cs" />
     <Compile Include="Helpers\ContainersExternal.cs" />
     <Compile Include="Helpers\ContainerStatusesHelper.cs" />
     <Compile Include="Helpers\ContainerTrackingHelper.cs" />
     <Compile Include="Helpers\CopyPortHelper.cs" />
+    <Compile Include="Helpers\DefaultAndConfiguration_Ext.cs" />
     <Compile Include="Helpers\DigitalFieldSecuritesHelper.cs" />
     <Compile Include="Helpers\DWObjectFieldsGroupedService.cs" />
     <Compile Include="Helpers\ExportServer\ExportServerLogin.cs" />
@@ -819,6 +827,7 @@
     <Compile Include="Helpers\ExportServer\UserData.cs" />
     <Compile Include="Helpers\ObjectFieldPropertyGetter.cs" />
     <Compile Include="Helpers\PayablesLinesVatAmounts.cs" />
+    <Compile Include="Helpers\SettingsHelper.cs" />
     <Compile Include="InfrastructureModel\APIDataContract\EntityStatus.Generated.cs" />
     <Compile Include="InfrastructureModel\APIDataContract\EventsTypes.cs" />
     <Compile Include="InfrastructureModel\APIDataContract\EventType.Generated.cs" />
@@ -3594,6 +3603,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Nlog.config" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
@@ -3606,6 +3616,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ICSharpDLL\ICSharpCode.SharpZipLib.dll" />
+    <Content Include="readme.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">

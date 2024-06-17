@@ -92,7 +92,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
             IQueryable<GLAccountTotalByMonthsDTOAging> qTotalByMonthAcc = null;
 
-            Logger.LogDebug("Aging Report Start");
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Aging Report Start");
 
             _AccountingContext = AccountingContext.GetContext(_Param.Tenant);
             (_AccountingContext as System.Data.Entity.DbContext).Database.CommandTimeout = 300;
@@ -115,7 +115,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             bool fromGLAccountAgingData = false;
             if (_Param.FroceFromGLAccountAgingData && !_Param.SuppressFromGLAccountAgingData)
             {
-                Logger.LogDebug("{fromGLAccountAgingData}:{0}", fromGLAccountAgingData);
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("{fromGLAccountAgingData}:{0}", fromGLAccountAgingData));
 
                 var agingReportFromAgingData = new AgingReportFromAgingData(_AccountingContext, _MainAccountIdList_ToFetchThenAggragrate, _qAllAccAging4AccountTypeCode_CustomerOrVendor, _AccountingCurrencyId);
                 theDBList = agingReportFromAgingData.GetFromGLAccountAgingData(_Param.Tenant, listPeriods, myorderLessThanExclusive);//, listLessThanExclusivePeriods);
@@ -132,7 +132,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 if (_Param.AggregateByGLAccountCurrencies)
                 {
 
-                    Logger.LogDebug("{AggregateByGLAccountCurrencies}:{0}", _Param.AggregateByGLAccountCurrencies);
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("{AggregateByGLAccountCurrencies}:{0}", _Param.AggregateByGLAccountCurrencies));
 
 
                     var qlist = (from left_TotDB in theDBList
@@ -304,7 +304,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 }
             }
 
-            Logger.LogDebug("AccountListRelatedCurrencies Query \r\n {0} ", q_accountsList.ToTraceQuery());
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("AccountListRelatedCurrencies Query \r\n {0} ", q_accountsList.ToTraceQuery()));
 
             var myaccountsList = q_accountsList.ToList();
 
@@ -1198,12 +1198,12 @@ _Param.AgingForDate.Date, false, true, true,false, false);
                     );
 
             //
-            Logger.LogDebug("GLAccountReconcileDefintionChanged Query \r\n {0} ", qCheck.ToTraceQuery());
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("GLAccountReconcileDefintionChanged Query \r\n {0} ", qCheck.ToTraceQuery()));
             DateTime start = DateTime.Now;
 
             var listEx = qCheck.ToList();
 
-            Logger.LogDebug("GLAccountReconcileDefintionChanged SUM duration {0} seconds ", (DateTime.Now - start).TotalSeconds);
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("GLAccountReconcileDefintionChanged SUM duration {0} seconds ", (DateTime.Now - start).TotalSeconds));
 
            
             if (listEx.Any())

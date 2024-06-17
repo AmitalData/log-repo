@@ -945,7 +945,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             if (shipmentSearchInput.CustomersIds.Count > 0)
             {
 
-                Logger.LogDebug("FilterByCustomers count:{0}", shipmentSearchInput.CustomersIds.Count);
+             NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("FilterByCustomers count:{0}", shipmentSearchInput.CustomersIds.Count));
 
                 shipments = shipments.Where(d =>
                             shipmentSearchInput.CustomersIds.Contains(d.CustomerId)
@@ -958,22 +958,22 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
         {
             if (shipmentSearchInput.HasException)
             {
-                Logger.LogDebug("Filter HasException ");
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Filter HasException ");
                 shipments = shipments.Where(d => d.CurrentMilestoneExceptions != null);
             }
             if (shipmentSearchInput.OrdersOnly)
             {
-                Logger.LogDebug("Filter OrdersOnly ");
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Filter OrdersOnly ");
                 shipments = shipments.Where(d => d.EntityType == OrderType);
             }
             if (shipmentSearchInput.EstimatedArrivalOnly)
             {
-                Logger.LogDebug("Filter EstimatedArrivalOnly ");
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Filter EstimatedArrivalOnly ");
                 shipments = shipments.Where(d => d.ArrivalEstimationDate != null && d.ArrivalDate == null);
             }
             if (shipmentSearchInput.OperationalOpenedOnly)
             {
-                Logger.LogDebug("Filter OperationalOpenedOnly ");
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Filter OperationalOpenedOnly ");
                 shipments = shipments.Where(d => d.IsOperationalClosed == false);
             }
             return shipments;
@@ -983,7 +983,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
         {
             if (shipmentSearchInput.FromDate.HasValue || shipmentSearchInput.ToDate.HasValue)
             {
-                Logger.LogDebug("Filter FromDate-ToDate ");
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Filter FromDate-ToDate ");
 
                 shipments = shipments.Where(x =>
                       (shipmentSearchInput.FromDate.HasValue && x.CreateDate >= shipmentSearchInput.FromDate) ||
@@ -998,7 +998,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
         {
             if (shipmentSearchInput.MilestonesCodes.Count > 0)
             {
-                Logger.LogDebug("Filter MilestonesCodes ");
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Filter MilestonesCodes ");
                 shipments = shipments.Where(d =>
                             shipmentSearchInput.MilestonesCodes.Contains(d.CurrentMilestoneCode)
                         );
@@ -1012,7 +1012,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             if (!string.IsNullOrEmpty(shipmentSearchInput.OpenDateGreaterThan) &&
                 DateTime.TryParseExact(shipmentSearchInput.OpenDateGreaterThan, "d/M/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime openDateGreaterThan))
             {
-                Logger.LogDebug("Filter OpenDateGreaterThan {0} ", shipmentSearchInput.OpenDateGreaterThan);
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("Filter OpenDateGreaterThan {0} ", shipmentSearchInput.OpenDateGreaterThan));
 
                 shipments = shipments.Where(d => d.CreateDate >= openDateGreaterThan);
             }
@@ -1023,7 +1023,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             if (!string.IsNullOrEmpty(shipmentSearchInput.ClearanceDateGreaterThan) &&
                 DateTime.TryParseExact(shipmentSearchInput.ClearanceDateGreaterThan, "d/M/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime clearanceDateGreaterThan))
             {
-                Logger.LogDebug("Filter clearanceDateGreaterThan {0} ", shipmentSearchInput.ClearanceDateGreaterThan);
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("Filter clearanceDateGreaterThan {0} ", shipmentSearchInput.ClearanceDateGreaterThan));
 
                 shipments = shipments.Where(d => d.ClearanceDate >= clearanceDateGreaterThan);
             }
@@ -1034,7 +1034,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             if (!string.IsNullOrEmpty(shipmentSearchInput.ATADateGreaterThan) &&
                 DateTime.TryParseExact(shipmentSearchInput.ATADateGreaterThan, "d/M/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime ATADateGreaterThan))
             {
-                Logger.LogDebug("Filter ATADateGreaterThan {0} ", shipmentSearchInput.ClearanceDateGreaterThan);
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("Filter ATADateGreaterThan {0} ", shipmentSearchInput.ClearanceDateGreaterThan));
                 shipments = shipments.Where(d => d.ArrivalDate >= ATADateGreaterThan);
             }
             return shipments;
@@ -1045,7 +1045,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             if (!string.IsNullOrEmpty(shipmentSearchInput.OpenDateLessThan) &&
                 DateTime.TryParseExact(shipmentSearchInput.OpenDateLessThan, "d/M/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime openDateLessThan))
             {
-                Logger.LogDebug("Filter OpenDateLessThan {0} ", shipmentSearchInput.OpenDateLessThan);
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("Filter OpenDateLessThan {0} ", shipmentSearchInput.OpenDateLessThan));
 
                 shipments = shipments.Where(d => d.CreateDate <= openDateLessThan);
             }

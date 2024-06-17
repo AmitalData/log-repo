@@ -474,7 +474,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     }
                     else
                     {
-                        Logitude.Server.Tools.Utils.Logger.LogDebug("apiResponse.Msg :{0}", apiResponse.Msg);
+                        NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("apiResponse.Msg :{0}", apiResponse.Msg));
 
                         entityPM.ConfirmationNumberStatus = "5";
                         entityPM.APIResponseToConfirmation = apiResponse.Msg?.Length > 500 ? apiResponse.Msg?.Substring(0, 500) : apiResponse.Msg;
@@ -487,7 +487,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                 else
                 {
-                    Logitude.Server.Tools.Utils.Logger.LogDebug("apiResponse.Res.StatusCode :{0} {1}", apiResponse?.Res?.StatusCode, apiResponse);
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("apiResponse.Res.StatusCode :{0} {1}", apiResponse?.Res?.StatusCode, apiResponse));
 
                     entityPM.ConfirmationNumberStatus = "5";
                     entityPM.APIResponseToConfirmation = apiResponse.Msg?.Length > 500 ? apiResponse.Msg?.Substring(0, 500) : apiResponse.Msg;
@@ -497,7 +497,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             }
             catch (Exception ex)
             {
-                Logitude.Server.Tools.Utils.Logger.LogDebug(ex, "apiResponse ");
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex, "apiResponse ");
 
                 entityPM.ConfirmationNumberStatus = "5";
                 entityPM.APIResponseToConfirmation = ex.Message.Length > 500 ? ex.Message.Substring(0, 500) : ex.Message;

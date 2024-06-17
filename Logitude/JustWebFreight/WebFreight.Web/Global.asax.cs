@@ -67,8 +67,8 @@ namespace WebFreight.Web
             LogitudeAppSettings.IsRecycled = true;
             LogitudeAppSettings.WarmingIsFinished = false;
             //} 
-            NLog.LogManager.Configuration = new NLog.Config.XmlLoggingConfiguration(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "NLog.config"));
-
+            NetCommonHelper.Logger.DevLog.Instance.SetProcessName("WebSite",true);
+         
             if (string.IsNullOrEmpty(LogitudeSettings.DeploymentStage))
             {
                 string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
