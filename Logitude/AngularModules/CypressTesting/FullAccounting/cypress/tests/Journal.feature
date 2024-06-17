@@ -9,8 +9,8 @@ Feature: Journal
             | ActionName    | חובה+זכות |
             | RefDate       | 16/10/2022 |
             | DueDate       | 16/10/2022 |
-            | CreditAccount | קטרינג כהן ובניו     |
-            | DebitAccount  | קטרינג כהן ובניו     |
+            | CreditAccount | KHTest     |
+            | DebitAccount  | KHTest     |
             | Amount        | 100        |
         And fill "10/08/2023" as accounting date
         When save as draft

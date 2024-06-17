@@ -5,11 +5,11 @@ Feature: AP Payment
     Scenario: Create new AP Payment
         Given the user logged in and navigates to Full Accounting workspace
         And an AP Payment with the following details
-            | Vendor        | קטרינג כהן ובניו     |
-            | PaymentMethod | Cash       |
-            | PaymentAmount | 100        |
-            | RegisterDate  | 02/09/2021 |
-            | BranchId      | Main Office            | 
+            | Vendor        | HadiNewVendor2023|
+            | PaymentMethod | Cash        |
+            | PaymentAmount | 100         |
+            | RegisterDate  | 02/09/2021  |
+            | BranchId      | Main Office | 
              
         When save the AP Payment
         Then the AP Payment should save successfully
