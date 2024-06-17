@@ -1,6 +1,7 @@
 ﻿
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.Data.EntityLists;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Collections.Generic;
