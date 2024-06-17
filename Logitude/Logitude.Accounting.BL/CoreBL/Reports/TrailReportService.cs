@@ -1187,7 +1187,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
         //*** כרטיסים לא פעילים (יתרת פתיחה לתקופה 0 וללא תנועות  לטווח הדוח )
         /// </summary>
         public bool Suppress_DoNotShowCardWithoutActivity { get; set; }
-
+        public bool Suppress_ControlAccount { get; set; }
 
         public bool IsRevenueExpenseReport { get; set; }
 
