@@ -111,6 +111,7 @@ namespace Logitude.CustomsMessaging.Dca
             }
             catch (System.Exception e)
             {
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e);
                 _SaveError = true;
                 _SBErrorLog.AppendLine("Error: " + e.ToString());
 
@@ -119,7 +120,7 @@ namespace Logitude.CustomsMessaging.Dca
             {
                 if (_SaveError)
                 {
-                    Logger.LogMe(_SBErrorLog.ToString(), true, "DcaDirect9200TenantService");
+                    NetCommonHelper.Logger.DevLog.Instance.WriteError(_SBErrorLog.ToString()+":"+"DcaDirect9200TenantService");
                 }
 
             }
@@ -200,7 +201,7 @@ namespace Logitude.CustomsMessaging.Dca
                     var l = sbFilenameQueue.ToList();
                     var sb1 = new StringBuilder();
                     l.ForEach(line => { sb1.AppendLine(line); });
-                    Logger.LogMe(sb1.ToString(), false, "TenantDownloaderFilename");
+                    NetCommonHelper.Logger.DevLog.Instance.WriteInfo(sb1.ToString() + "TenantDownloaderFilename");
                     string haveMore = response.Result.HowManyOtherWaitingMessages > 0 ? "Have more .." : "";
                     _SBInfoLog.AppendLine("All messages received  " + haveMore);
 
@@ -210,6 +211,7 @@ namespace Logitude.CustomsMessaging.Dca
             }
             catch (System.Exception ex)
             {
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex);
                 _SaveError = true;
                 _SBErrorLog.AppendLine($"Error while send 9100 error : {ex.ToString()}");
             }
@@ -284,7 +286,7 @@ namespace Logitude.CustomsMessaging.Dca
 
 
 
-                    Logger.LogMe(sbFilename.ToString(), false, "TenantDownloaderFilename");
+                    NetCommonHelper.Logger.DevLog.Instance.WriteInfo(sbFilename.ToString() + "TenantDownloaderFilename");
                     string haveMore = response.Result.HowManyOtherWaitingMessages > 0 ? "Have more .." : "";
                     _SBInfoLog.AppendLine("All messages received  " + haveMore);
 
@@ -294,6 +296,7 @@ namespace Logitude.CustomsMessaging.Dca
             }
             catch (System.Exception ex)
             {
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex);
                 _SaveError = true;
                 _SBErrorLog.AppendLine($"Error while send 9100 error : {ex.ToString()}");
             }
@@ -508,7 +511,7 @@ IsStart(rec.InterfaceManagement.DcaPrefixName4, myFileName)
                     if (DateTime.Now.Subtract(_LastErrordateTime) > TimeSpan.FromMinutes(10))
                     {
                         _LastErrordateTime = DateTime.Now;
-                        Logger.LogMe("NO MAIN Code (response 2754 of 2750 !!!) - currMessagingService : " + currMessagingService + " Is not Registered in ContainerAccessor.Container,    Due infinite errors i cancel writing log", true, "DCANotIsRegistered");
+                        NetCommonHelper.Logger.DevLog.Instance.WriteError("NO MAIN Code (response 2754 of 2750 !!!) - currMessagingService : " + currMessagingService + " Is not Registered in ContainerAccessor.Container,    Due infinite errors i cancel writing log"+":"+"DCANotIsRegistered");
                     }
                 }
                 catch

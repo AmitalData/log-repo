@@ -517,7 +517,8 @@ namespace AmitalCustomsWindowsService.Tester
                 if (dardcODED)
                 {
                     var password = signUpWorkerRole.CreatTenant(email, Company);
-                    Logger.LogMe("CreatTenant:email=" + email + ":Pass=" + password, false);
+                NetCommonHelper.Logger.DevLog.Instance.WriteInfo("CreatTenant:email=" + email + ":Pass=" + password);
+                   
                 }
                 else
                 {
@@ -563,7 +564,7 @@ namespace AmitalCustomsWindowsService.Tester
             catch (Exception e1)
             {
 
-                Logger.LogMe(e1.ToString(), true);  
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e1);
             }
         }
 

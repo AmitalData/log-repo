@@ -11,7 +11,7 @@ using System.Windows.Forms;
 
 namespace Logitude.Server.Tools.Utils
 {
-    public static class Logger
+    public static class TODELETE__Logger
     {
 
         delegate DialogResult Show(string text, string caption);
@@ -73,7 +73,7 @@ namespace Logitude.Server.Tools.Utils
                 {
                     try
                     {
-                        //WorkingDir = System.Configuration.ConfigurationSettings.AppSettings["WorkingDir"].ToString();
+                        //WorkingDir = ConfigurationManager.AppSettings["WorkingDir"].ToString();
                         //WorkingDir = Path.GetDirectoryName(Application.ExecutablePath);
 
 

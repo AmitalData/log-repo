@@ -1,5 +1,6 @@
 ﻿using AmitalCustomsWindowsService.Tester.LoadTest;
 using Logitude.Server.Tools.Utils;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -28,8 +29,8 @@ namespace AmitalCustomsWindowsService
         void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             var err = e.ExceptionObject.ToString();
-            Logger.LogMe("CurrentDomain_UnhandledException!!!" + e.IsTerminating.ToString() + err, true);
-            Logger.LogMe("CurrentDomain_UnhandledException!!!" + e.ToString(), true);
+            
+            NetCommonHelper.Logger.DevLog.Instance.WriteFatal(new Exception("CurrentDomain_UnhandledException!!!"),JsonConvert.SerializeObject( e));
             //System.Diagnostics.Debugger.Launch();
             var featureCheckMaxPoolSizeWasReachedThenRetart = ConfigurationManager.AppSettings["20180219.CheckMaxPoolSizeWasReachedThenRetart"] == "1";
             if (featureCheckMaxPoolSizeWasReachedThenRetart) { }
@@ -47,7 +48,7 @@ namespace AmitalCustomsWindowsService
         {
             // TODO: Add code here to perform any tear-down necessary to stop your service.
             
-            Logger.LogMe("OnStop()", false);
+            NetCommonHelper.Logger.DevLog.Instance.WriteInfo("OnStop()");
             _LoadTestWorkerService.StopThreads();
         }
 

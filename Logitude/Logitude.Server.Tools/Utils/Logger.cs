@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.Entity.Core.Objects;
 using System.Diagnostics;
 using System.Globalization;
@@ -14,7 +15,7 @@ using System.Windows.Forms;
 
 namespace Logitude.Server.Tools.Utils
 {
-    public static class Logger
+    public static class TODELETE_Logger
     {
         static Thread writeLogLoop = null;
         static Dictionary<string, string> suffixs = null;
@@ -27,7 +28,7 @@ namespace Logitude.Server.Tools.Utils
         static ConcurrentQueue<Tuple<string, bool, string>> cq = null;
         static Dictionary<string, Dictionary<string, StreamWriter>> dicStream = null;
         static DateTime lastOldStreamCheck;
-        static Logger()
+        static TODELETE_Logger()
         {
             lastOldStreamCheck = DateTime.Now;
             dicStream = new Dictionary<string, Dictionary<string, StreamWriter>>();
@@ -132,7 +133,7 @@ namespace Logitude.Server.Tools.Utils
                 {
                     try
                     {
-                        //WorkingDir = System.Configuration.ConfigurationSettings.AppSettings["WorkingDir"].ToString();
+                        //WorkingDir = ConfigurationManager.AppSettings["WorkingDir"].ToString();
                         //WorkingDir = Path.GetDirectoryName(Application.ExecutablePath);
 
 
@@ -199,7 +200,7 @@ namespace Logitude.Server.Tools.Utils
             int LoggerFileSizeLimitInMB = 100;
             try
             {
-                var sLoggerFileSizeLimitInMB = System.Configuration.ConfigurationSettings.AppSettings["Logger.FileSizeLimitInMB"];
+                var sLoggerFileSizeLimitInMB = ConfigurationManager.AppSettings["Logger.FileSizeLimitInMB"];
                 if (!String.IsNullOrWhiteSpace(sLoggerFileSizeLimitInMB))
                 {
                     LoggerFileSizeLimitInMB = int.Parse(sLoggerFileSizeLimitInMB);
@@ -323,7 +324,7 @@ namespace Logitude.Server.Tools.Utils
         {
             try
             {
-                lock (typeof(Logger))
+                lock (typeof(TODELETE_Logger))
                 {
                     InitWorkingDir();
                     string[] files = Directory.GetFiles(WorkingDir, ValidFileName(Application.ProductName) + ".*.State.txt", SearchOption.TopDirectoryOnly);
@@ -356,7 +357,7 @@ namespace Logitude.Server.Tools.Utils
                 {
                     FileName = FileName.Replace(c, '.');
                 }
-                lock (typeof(Logger))
+                lock (typeof(TODELETE_Logger))
                 {
                     suffixs.Add(origFileName, FileName);
                 }
@@ -372,7 +373,7 @@ namespace Logitude.Server.Tools.Utils
             string suffixFile = ValidFileName(Suffix) + ".State.txt";
             try
             {
-                lock (typeof(Logger))
+                lock (typeof(TODELETE_Logger))
                 {
                     InitWorkingDir();
                     using (StreamWriter sw = File.CreateText(WorkingDir + ValidFileName(Application.ProductName) + "." + suffixFile))
