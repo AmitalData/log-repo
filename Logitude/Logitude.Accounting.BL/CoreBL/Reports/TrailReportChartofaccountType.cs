@@ -37,11 +37,13 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
             if (true || !base.NotUsingControlAccount()) // in the level we take only cards==1 
             {
-                IQueryable<TrailReportTemp> qAccumulateLocalAmount_TransStart_JoinAccountsWhereIscontrolAccount_GroupByChartOfAccountsTypeCode
-                    = Init_LocalAmount_TransStart_JoinAccountsWhereIscontrolAccount_GroupByChartOfAccountsTypeCode();
+                //IQueryable<TrailReportTemp> qAccumulateLocalAmount_TransStart_JoinAccountsWhereIscontrolAccount_GroupByChartOfAccountsTypeCode
+                //    = Init_LocalAmount_TransStart_JoinAccountsWhereIscontrolAccount_GroupByChartOfAccountsTypeCode();
+                //qAccumulate_LocalAmount_TransStart_JoinAccountsNotControlAccount_GroupByChartOfAccountsTypeCode_All =
+                //    qAccumulate_LocalAmountTransStart_JoinAccountsNotControlAccount_GroupByChartOfAccountsTypeCode.Union(
+                //qAccumulateLocalAmount_TransStart_JoinAccountsWhereIscontrolAccount_GroupByChartOfAccountsTypeCode);
                 qAccumulate_LocalAmount_TransStart_JoinAccountsNotControlAccount_GroupByChartOfAccountsTypeCode_All =
-                    qAccumulate_LocalAmountTransStart_JoinAccountsNotControlAccount_GroupByChartOfAccountsTypeCode.Union(
-                qAccumulateLocalAmount_TransStart_JoinAccountsWhereIscontrolAccount_GroupByChartOfAccountsTypeCode);
+                    qAccumulate_LocalAmountTransStart_JoinAccountsNotControlAccount_GroupByChartOfAccountsTypeCode;
             }
 
             IQueryable<TrailReportTemp> qAccumulate_LocalAmount_TransEnd_JoinAccountsNotControlAccount_GroupByChartOfAccountsTypeCode = Init_LocalAmount_TransEnd_JoinAccountsNotControlAccount_GroupByChartOfAccountsTypeCode();
@@ -49,9 +51,11 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             IQueryable<TrailReportTemp> qAccumulate_LocalAmount_TransEnd_JoinAccountsNotControlAccount_GroupByChartOfAccountsTypeCode_All = null;
             if (true || !base.NotUsingControlAccount()) // in the level we take only cards==1 
             {
-                IQueryable<TrailReportTemp> qAccumulate_LocalAmounts_TransEnd_JoinAccountsWhereIsControlAccount_ChartOfAccountsTypeCode = Init_LocalAmounts_TransEnd_JoinAccountsWhereIsControlAccount_ChartOfAccountsTypeCode();
+                // IQueryable<TrailReportTemp> qAccumulate_LocalAmounts_TransEnd_JoinAccountsWhereIsControlAccount_ChartOfAccountsTypeCode = Init_LocalAmounts_TransEnd_JoinAccountsWhereIsControlAccount_ChartOfAccountsTypeCode();
+                //qAccumulate_LocalAmount_TransEnd_JoinAccountsNotControlAccount_GroupByChartOfAccountsTypeCode_All =
+                //    qAccumulate_LocalAmount_TransEnd_JoinAccountsNotControlAccount_GroupByChartOfAccountsTypeCode.Union(qAccumulate_LocalAmounts_TransEnd_JoinAccountsWhereIsControlAccount_ChartOfAccountsTypeCode);
                 qAccumulate_LocalAmount_TransEnd_JoinAccountsNotControlAccount_GroupByChartOfAccountsTypeCode_All =
-                    qAccumulate_LocalAmount_TransEnd_JoinAccountsNotControlAccount_GroupByChartOfAccountsTypeCode.Union(qAccumulate_LocalAmounts_TransEnd_JoinAccountsWhereIsControlAccount_ChartOfAccountsTypeCode);
+                    qAccumulate_LocalAmount_TransEnd_JoinAccountsNotControlAccount_GroupByChartOfAccountsTypeCode;
             }
             IQueryable<TrailReportTemp> _QUnionAllMoneyData = qAccumulateLocalAmountOnly_TotalStart_JoinAccounts_GroupByChartOfAccountsTypeCode.Union(qAccumulate_LocalAmount_TransStart_JoinAccountsNotControlAccount_GroupByChartOfAccountsTypeCode_All).Union(qAccumulateLocalAmountOnly_TotalDelta2End_JoinAccounts_GroupByChartOfAccountsTypeCode).Union(qAccumulate_LocalAmount_TransEnd_JoinAccountsNotControlAccount_GroupByChartOfAccountsTypeCode_All);
 

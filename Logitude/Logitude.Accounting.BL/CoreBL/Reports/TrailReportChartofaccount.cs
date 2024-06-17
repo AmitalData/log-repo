@@ -50,12 +50,14 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             if (true || !base.NotUsingControlAccount()) // in the level we take only cards==1 
             {
 
-                IQueryable<TrailReportTemp> qLocalAmountsOfAccountTransStart_JoinAccountsWhereIscontrolAccount_GroupByCOATypeId =
-Init_LocalAmountsOfAccountTransStart_JoinAccountsWhereIscontrolAccount_GroupByCOATypeId();
+//                IQueryable<TrailReportTemp> qLocalAmountsOfAccountTransStart_JoinAccountsWhereIscontrolAccount_GroupByCOATypeId =
+//Init_LocalAmountsOfAccountTransStart_JoinAccountsWhereIscontrolAccount_GroupByCOATypeId();
 
+//                qLocalAmountsOfAccountTransStart_GroupByCOATypeId_All =
+//                    qLocalAmountsOfAccountTransStart_JoinAccountsWhereNotControlAccount_GroupByCOATypeId.Union(
+//                qLocalAmountsOfAccountTransStart_JoinAccountsWhereIscontrolAccount_GroupByCOATypeId);
                 qLocalAmountsOfAccountTransStart_GroupByCOATypeId_All =
-                    qLocalAmountsOfAccountTransStart_JoinAccountsWhereNotControlAccount_GroupByCOATypeId.Union(
-                qLocalAmountsOfAccountTransStart_JoinAccountsWhereIscontrolAccount_GroupByCOATypeId);
+                  qLocalAmountsOfAccountTransStart_JoinAccountsWhereNotControlAccount_GroupByCOATypeId;
             }
 
 
@@ -70,11 +72,13 @@ Init_LocalAmountsOfAccountTransStart_JoinAccountsWhereIscontrolAccount_GroupByCO
             IQueryable<TrailReportTemp> qLocalAmountsOfAccountTransEnd_GroupByCOATypeId_All = null;
             if (true || !base.NotUsingControlAccount()) // in the level we take only cards==1 
             {
-                IQueryable<TrailReportTemp> qLocalAmountsOfAccountTransEnd__JoinAccountsWhereIsControlAccount_GroupByCOATypeId =
-                    Init_LocalAmountsOfAccountTransEnd__JoinAccountsWhereIsControlAccount_GroupByCOATypeId();
+                //IQueryable<TrailReportTemp> qLocalAmountsOfAccountTransEnd__JoinAccountsWhereIsControlAccount_GroupByCOATypeId =
+                //    Init_LocalAmountsOfAccountTransEnd__JoinAccountsWhereIsControlAccount_GroupByCOATypeId();
+                //qLocalAmountsOfAccountTransEnd_GroupByCOATypeId_All =
+                //    qLocalAmountsOfAccount_TransEnd_JoinAccountsNotControlAccount_GroupByCOATypeId.Union(
+                //    qLocalAmountsOfAccountTransEnd__JoinAccountsWhereIsControlAccount_GroupByCOATypeId);
                 qLocalAmountsOfAccountTransEnd_GroupByCOATypeId_All =
-                    qLocalAmountsOfAccount_TransEnd_JoinAccountsNotControlAccount_GroupByCOATypeId.Union(
-                    qLocalAmountsOfAccountTransEnd__JoinAccountsWhereIsControlAccount_GroupByCOATypeId);
+                    qLocalAmountsOfAccount_TransEnd_JoinAccountsNotControlAccount_GroupByCOATypeId;
             }
 
             //var sqlqAccumulateTranactionBeginOfMonthToDateTillToDateInculde = ((ObjectQuery)qAccumulateTranactionBeginOfMonthToDateTillToDateInculde).ToTraceString();
