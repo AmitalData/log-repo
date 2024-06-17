@@ -37,7 +37,7 @@ namespace WebFreight.Web.Controller
                 //    values = reader.ReadToEnd();
                 //}
                 var jsonData = values;
-            //    JArray jsonData = JArray.Parse(values);
+                //    JArray jsonData = JArray.Parse(values);
                 if (jsonData != null)
                 {
                     List<ResponseItem> emailsList = ((JArray)jsonData).Select(x =>
@@ -68,7 +68,7 @@ namespace WebFreight.Web.Controller
 
 
                 return Request.CreateResponse(HttpStatusCode.OK);
-            }  
+            }
 
             catch (Exception errorInfo)
             {
@@ -79,7 +79,7 @@ namespace WebFreight.Web.Controller
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(errorInfo));
 
             }
-        }  
+        }
 
 
 
