@@ -398,7 +398,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
            
                     ConfirmationNumberDefaultQuery confirmationNumberDefaultQuery = new ConfirmationNumberDefaultQuery(entityPM.Tenant);
                     IQueryable<ConfirmationNumberDefaultList> iQueryableEntityList = confirmationNumberDefaultQuery.GetIQueryableEntityListByTenant(entityPM.Tenant);
-                    ConfirmationNumberDefaultList confirmationNumberDefaultList = iQueryableEntityList.Where(a => a.FromDate <= entityPM.TaxReportDate).FirstOrDefault();
+                    ConfirmationNumberDefaultList confirmationNumberDefaultList = iQueryableEntityList.Where(a => a.FromDate <= entityPM.ReferenceDate).FirstOrDefault();
                      if (validStatuses.Contains(entityPM.LineTypeCode) && entityPM.VatAmount > confirmationNumberDefaultList?.AmountForConfirmationNumber && string.IsNullOrEmpty(entityPM.ConfirmationNumber))
                     {
                         entityPM.StatusCode = "11";
