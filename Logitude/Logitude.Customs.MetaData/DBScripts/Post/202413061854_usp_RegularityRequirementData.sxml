@@ -45,7 +45,7 @@
 					LEFT JOIN 
 						Customs.Authorities AU ON AU.CODE = RC.AuthorityID
 					LEFT JOIN 
-						Customs.ConfirmationTypes CT ON CT.CODE = RC.ConfirmationTypeID
+						Customs.ConfirmationTypes CT ON CT.MALAMID = RC.ConfirmationTypeID
 					LEFT JOIN 
 						Customs.InterConditionsRelationships IR ON IR.Code = RI.InterConditionsRelationshipID
 					WHERE 
@@ -57,9 +57,9 @@
 				SELECT
 					RequirementValidOrigin, --  המקור החוקי לדרישה 
 					-- נובע מפרק/פרט - חסר עדיין
-					RequirementGoodsDescription + ISNULL(' / '+ STRING_AGG(TrNumber, ' / ') WITHIN GROUP (ORDER BY TrNumber),'') AS RequirementGoodsDescriptionWithTrNumber, -- תיאור
+					RequirementGoodsDescription, -- תיאור
 					Authority, -- גורם מאשר
-					ConfirmationType, -- סוג אישור
+					ConfirmationType + ISNULL(' / '+ STRING_AGG(TrNumber, ' / ') WITHIN GROUP (ORDER BY TrNumber),'') AS ConfirmationType, -- סוג אישור
 					TextualCondition, -- תיאור תנאים
 					InterConditionsRelationship, -- יחס תנאים
 					IsPersonalImportIncluded, -- חל ביבוא אישי 
