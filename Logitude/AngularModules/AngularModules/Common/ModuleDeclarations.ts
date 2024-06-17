@@ -75,6 +75,9 @@ import { CloseSaveButtonsComponent } from './Components/Maintenance/AmitalAPI/co
  import { HostScreenComponent } from './Components/HostScreen/HostScreenComponent';
 import { AmitalAPIRequestsComponent } from './Components/Maintenance/AmitalAPI/AmitalAPIRequestsComponent';
 import { LogitudeGridSimpleComponent } from './Components/Maintenance/AmitalAPI/components/LogitudeGridSimpleComponent';
+import { DefaultAndConfigurationComponent } from './Components/Maintenance/DefaultAndConfiguration/DefaultAndConfigurationComponent';
+import { WrapperLogFieldComponent } from './Components/Maintenance/AmitalAPI/components/WrapperLogFieldComponent';
+import { FieldByTypeComponent } from './Components/Maintenance/DefaultAndConfiguration/FieldByTypeComponent';
 
   export const Components =
     [
@@ -150,10 +153,13 @@ import { LogitudeGridSimpleComponent } from './Components/Maintenance/AmitalAPI/
         AmitalAPISchemaTable,
         TariffsTabComponent,
         HostScreenComponent,
+        WrapperLogFieldComponent,
         LogTexBoxFormComponent,
         CloseSaveButtonsComponent,
         AmitalAPIRequestsComponent,
         LogitudeGridSimpleComponent,
+        DefaultAndConfigurationComponent,
+        FieldByTypeComponent,
     ];
   
 export class ModuleDeclarations {
@@ -238,9 +244,12 @@ export class ModuleDeclarations {
             case "AmitalAPIRequestsComponent": { myResult = AmitalAPIRequestsComponent; break; }
             case "TariffsTabComponent": { myResult = TariffsTabComponent; break; }
             case "HostScreenComponent": { myResult = HostScreenComponent; break; }
+            case "WrapperLogFieldComponent": { myResult = WrapperLogFieldComponent; break; }
             case "LogTexBoxFormComponent": { myResult = LogTexBoxFormComponent; break; }
             case "CloseSaveButtonsComponent": { myResult = CloseSaveButtonsComponent; break; }
             case "LogitudeGridSimpleComponent": { myResult = LogitudeGridSimpleComponent; break; }
+            case "DefaultAndConfigurationComponent": { myResult = DefaultAndConfigurationComponent; break; }
+            case "FieldByTypeComponent": { myResult = FieldByTypeComponent; break; }
         }
  
         return myResult;

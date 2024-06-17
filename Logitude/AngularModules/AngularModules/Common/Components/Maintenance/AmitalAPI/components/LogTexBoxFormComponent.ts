@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { ChangeDetectorRef, Component, EventEmitter, Input, Output } from "@angular/core";
 import { FieldData } from "../amitalApiTypes";
 import { UIProperties } from "Infrastructure/Components/LogitudeComponents/UIProperties";
 import { AmitalAPIAddWindowService } from "../WindowsComponent/AmitalAPIAddWindowService";
@@ -8,28 +8,15 @@ import { AmitalAPIAddWindowService } from "../WindowsComponent/AmitalAPIAddWindo
     template: `
         <div class='form-data-field' [style.direction]='dir' [style.justifyContent]="'flex-' + (dir === 'rtl' ? 'end' : 'start')">
             <ng-content></ng-content>
-            
-            <div *ngFor='let field of fields' class='form-data-field-field'>
-                <LogLabel [DataContext]="DataContext" [Text]="field.label" [LayoutDirection]="dir"></LogLabel>
 
-                <ng-container [ngSwitch]='field.type'>
-                    <div *ngSwitchCase='"boolean"'>
-                        <select #selectedData (change)='DataContext[field.name] = selectedData.value' [value]='DataContext[field.name]' [ngClass]='{"error": field.error}' >
-                            <option *ngFor='let x of ["true", "false"]'>{{x}}</option>
-                        </select>
-                    </div>
+            <ng-container *ngIf='showFields'>
+                <div *ngFor='let field of _fields' class='form-data-field-field'>
+                    <LogLabel [DataContext]="DataContext" [Text]="field.label" [LayoutDirection]="dir"></LogLabel>
+                    <wrapper-log-field [DataContext]='DataContext' [dir]='dir' [name]='field.name' [type]='field.type' [error]='field.error' [values]='field.values' (change)='valueChange.emit({field: field.name, value: DataContext[field.name]})'></wrapper-log-field>
+                </div>
+            </ng-container>
 
-                    <div *ngSwitchCase='"selectCustom"'>
-                        <select #selectedData (change)='DataContext[field.name] = selectedData.value' [value]='DataContext[field.name]' [ngClass]='{"error": field.error}' >
-                            <option *ngFor='let x of field.values'>{{x}}</option>
-                        </select>
-                    </div>
-                    
-                    <LogDatePicker *ngSwitchCase='"date"' [ObjectFieldName]="field.name" [DataContext]="DataContext" [SelectedDateValue]='DataContext[field.name]' [ForceSubscribe]='true'></LogDatePicker>
-
-                    <LogTextBox *ngSwitchDefault [InputType]='field.type || "text"' [DataContext]="DataContext" [ObjectFieldName]='field.name' [dir]="dir"></LogTextBox>
-                </ng-container>
-            </div>
+            <ng-content select='[end]'></ng-content>
         </div>
     `,
     styleUrls: ['../fields.scss'],
@@ -37,26 +24,38 @@ import { AmitalAPIAddWindowService } from "../WindowsComponent/AmitalAPIAddWindo
 })
 export class LogTexBoxFormComponent {
     amitalAPIAddWindowService: AmitalAPIAddWindowService = new AmitalAPIAddWindowService();
-    @Input() fields: TextBoxField[] = [];
+    showFields: boolean = true;
+    @Input() set fields(f: TextBoxField[])  {
+        this._fields = f;
+        f.filter(field => field != undefined).forEach(field => this.DataContext[field.name] = field.value);
+    };
     @Input() DataContext?: any = { UIProperties: new UIProperties() };
     @Input() dir: string = 'rtl';
+    @Output() valueChange: EventEmitter<ValueChange> = new EventEmitter<ValueChange>();
+    _fields: TextBoxField[] = [];
     
     public get values(): any {
-        return this.fields.reduce((acc, field) => {
-            acc[field.name] = this.DataContext[field.name];
+        return this._fields.reduce((acc, field) => {
+            acc[field.name] = field.type === 'boolean' ? !!this.DataContext[field.name] : this.DataContext[field.name];
             return acc;
         }, {});    
     }
 
-    public isValid(): boolean {
-        const fields = this.fields.filter(field => (field.required && !this.DataContext[field.name]) || field.error);
+    public get valid(): boolean {
+        const fields = this._fields.filter(field => (field.required && !this.DataContext[field.name]) || field.error);
         return this.amitalAPIAddWindowService.chekFormValidation(fields, this.DataContext);
     }
+
+    constructor(private cd: ChangeDetectorRef) {}
 }
 
+export type ValueChange = { field: string, value: any };
+export type FieldType = 'boolean' | 'selectCustom' | 'date' | 'number' | 'text';
+
 export type TextBoxField = FieldData & {
-    type?: 'boolean' | 'selectCustom' | 'date' | 'integer';
+    type?: FieldType;
     values?: any[];
     error?: boolean;
     required?: boolean;
+    value?: any;
 };

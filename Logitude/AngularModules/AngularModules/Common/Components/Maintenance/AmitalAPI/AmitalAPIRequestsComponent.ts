@@ -54,7 +54,7 @@ export class AmitalAPIRequestsComponent {
         { name: 'isParent', label: 'Is Parent', type: 'selectCustom', values: ['Yes', 'No', 'All'] },
         { name: 'hasErrors', label: 'Has Error', type: 'selectCustom', values: ['Yes', 'No', 'All'] },
         { name: 'clientApi', label: 'Client Api' },
-        { name: 'minItems', label: 'Min Items', type: 'integer' },
+        { name: 'minItems', label: 'Min Items', type: 'number' },
     ];
     columns: GridColumn[] = [
         { Display: 'Id', FieldName: 'Id', Styles: { width: '280px' } },
@@ -94,7 +94,7 @@ export class AmitalAPIRequestsComponent {
     }
 
     refreshTable(logitudeGridSimpleComponent: LogitudeGridSimpleComponent) {
-        if (!this.form.isValid())
+        if (!this.form.valid)
             return;
 
         logitudeGridSimpleComponent.refreshTable();

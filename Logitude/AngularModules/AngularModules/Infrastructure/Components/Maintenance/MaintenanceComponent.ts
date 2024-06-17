@@ -1,5 +1,5 @@
 declare var window: any;
-import { Component } from '@angular/core';
+import { Component, isDevMode } from '@angular/core';
 import { TextCodeTranslator } from '../../Utilities/TextCodeTranslator';
 import { SessionLocator } from '../../Utilities/SessionLocator';
 import { FeatureLocator } from '../../Utilities/FeatureLocator';
@@ -36,6 +36,17 @@ import { TaxesWebService } from 'Customs/Services/WebServices/TaxesWebService';
 })
 
 export class MaintenanceComponent {
+    //ngOnInit(): void {
+    //    if(!isDevMode()) return;
+
+    //    setTimeout(() => {
+    //        this.ItemClicked(this.AllMaintenanceMenu.find(d => d.Code == "DEFU"));
+    //        setTimeout(() => {
+    //            SessionLocator.SelectedSession.CurrentListComponent.AddNewEntity();
+    //        }, 500);
+    //    }, 100);
+    //}
+        
     public ItemsSource: MaintenanceMenuItem[];
     LayoutDirection: string = 'ltr';
     private _entityResourceService: EntityResourceService = new EntityResourceService();
@@ -242,6 +253,15 @@ export class MaintenanceComponent {
     }
 
     private BuildSystemSettings() {
+        var item = new MenusTablePM();
+        item.CategoryTypeCode = "CMS";
+        item.Icon = "List"
+        item.Code = "DEFU";
+        item.ObjectTableName = "Defaults",
+        item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "DefaultAndConfiguration")[0].Id
+        item.TranslatedName = "Defaults", // TextCodeTranslator.Translate('General.MC.Logs');
+        this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+
         if (FeatureLocator.HasFeaturePermession("General", this.invoiceConfirmationNumber)) {
             var item2 = new MenusTablePM();
             item2.CategoryTypeCode = "CMS";
