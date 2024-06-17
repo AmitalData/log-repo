@@ -43,22 +43,26 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             IQueryable<TrailReportTemp> qTransStart_JoinAccountsNotControlAccount_GroupByCOATypeId_All = null;
             if (true)
             {
-                IQueryable<TrailReportTemp> qTransStart_JoinAccountsWhereIscontrolAccount_GroupByCOATypeId = Init_TransStart_JoinAccountsWhereIscontrolAccount_GroupByCOATypeId();
+//                IQueryable<TrailReportTemp> qTransStart_JoinAccountsWhereIscontrolAccount_GroupByCOATypeId = Init_TransStart_JoinAccountsWhereIscontrolAccount_GroupByCOATypeId();
 
+//                qTransStart_JoinAccountsNotControlAccount_GroupByCOATypeId_All =
+//                    qTransStart_JoinAccountsNotControlAccount_GroupByCOATypeId.Union(
+//qTransStart_JoinAccountsWhereIscontrolAccount_GroupByCOATypeId);
                 qTransStart_JoinAccountsNotControlAccount_GroupByCOATypeId_All =
-                    qTransStart_JoinAccountsNotControlAccount_GroupByCOATypeId.Union(
-qTransStart_JoinAccountsWhereIscontrolAccount_GroupByCOATypeId);
+                    qTransStart_JoinAccountsNotControlAccount_GroupByCOATypeId;
             }
 
             IQueryable<TrailReportTemp> qAccumulateTransEnd__JoinAccountsNotControlAccount_GroupByCOATypeId = Init_TransEnd__JoinAccountsNotControlAccount_GroupByCOATypeId();
             IQueryable<TrailReportTemp> qAccumulateTransEnd__JoinAccountsNotControlAccount_GroupByCOATypeIdAll = null;
             if (true)
             {
-                IQueryable<TrailReportTemp> qAccumulateTransEnd__JoinAccountsWhereIsControlAccount_GroupByCOATypeId = Init_TransEnd__JoinAccountsWhereIsControlAccount_GroupByCOATypeId();
+                //IQueryable<TrailReportTemp> qAccumulateTransEnd__JoinAccountsWhereIsControlAccount_GroupByCOATypeId = Init_TransEnd__JoinAccountsWhereIsControlAccount_GroupByCOATypeId();
 
+                //qAccumulateTransEnd__JoinAccountsNotControlAccount_GroupByCOATypeIdAll =
+                //    qAccumulateTransEnd__JoinAccountsNotControlAccount_GroupByCOATypeId.Union(
+                //qAccumulateTransEnd__JoinAccountsWhereIsControlAccount_GroupByCOATypeId);
                 qAccumulateTransEnd__JoinAccountsNotControlAccount_GroupByCOATypeIdAll =
-                    qAccumulateTransEnd__JoinAccountsNotControlAccount_GroupByCOATypeId.Union(
-                qAccumulateTransEnd__JoinAccountsWhereIsControlAccount_GroupByCOATypeId);
+                    qAccumulateTransEnd__JoinAccountsNotControlAccount_GroupByCOATypeId;
             }
 
 
