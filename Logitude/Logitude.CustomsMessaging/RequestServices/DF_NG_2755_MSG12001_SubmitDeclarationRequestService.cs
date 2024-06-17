@@ -48,10 +48,10 @@ namespace Logitude.CustomsMessaging.RequestServices
                 requestParams.RequestVIA = DefaultMessageController.Via(requestParams.Tenant, requestParams.MainInterfaceCode ?? "2755", requestParams.RequestVIA);
             }
 
-            var srverTime = (new DualQueryService(AmitalContext.GetContext(requestParams.Tenant))).GetServerDateTime();
+            var srverTime = DateTime.Now;// (new DualQueryService(AmitalContext.GetContext(requestParams.Tenant))).GetServerDateTime();
             if (
                 declarationPaymentsPM.FuturePaymentDateTime > srverTime &&
-                declarationPaymentsPM.FuturePaymentDateTime.GetValueOrDefault().Subtract(srverTime.GetValueOrDefault()) > TimeSpan.FromMinutes(1)
+                declarationPaymentsPM.FuturePaymentDateTime.GetValueOrDefault().Subtract(srverTime) > TimeSpan.FromMinutes(1)
                 )
             {
 
