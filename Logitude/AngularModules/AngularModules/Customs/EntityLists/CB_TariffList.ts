@@ -23,6 +23,7 @@ export class CB_TariffList {
 	OptionalTaxAddition: number;
 	StartDate: Date;
 	EndDate: Date;
+	TradeAgreementName: string;
 	
 }
  

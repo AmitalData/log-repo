@@ -59,6 +59,11 @@ export class CB_TariffPM {
     public set CB_ID(newValue: string) { if (this.cB_ID != newValue) { this.cB_ID = newValue; this.MarkAsDirty("CB_ID"); } }
        
 	 
+    private tradeAgreementName: string;
+    public get TradeAgreementName() { return this.tradeAgreementName; }
+    public set TradeAgreementName(newValue: string) { if (this.tradeAgreementName != newValue) { this.tradeAgreementName = newValue; this.MarkAsDirty("TradeAgreementName"); } }
+       
+	 
 
     public OldEntityPM: CB_TariffPM;
 		

@@ -60,6 +60,20 @@ namespace Logitude.Customs.Data.EntityLists
        public bool? PH_IsCarItem  { get; set; }
        [DataMember]
        public string FullGoodsDescription  { get; set; }
+       [DataMember]
+       public int? Agreements  { get; set; }
+       [DataMember]
+       public string CustomsRate  { get; set; }
+       [DataMember]
+       public string PurchaseTax  { get; set; }
+       [DataMember]
+       public decimal? OptionalTaxAddition  { get; set; }
+       [DataMember]
+       public string MeasurementUnitName  { get; set; }
+       [DataMember]
+       public string Remarks  { get; set; }
+       [DataMember]
+       public string SearchByTextResult  { get; set; }
    }
 
 }

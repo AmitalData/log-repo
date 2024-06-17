@@ -181,6 +181,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string tradeAgreementName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TradeAgreementName  
+	   {
+	    
+	     get
+		{
+		   return tradeAgreementName;
+		 }
+		 set
+		 {
+		   if(tradeAgreementName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TradeAgreementName",OldValue=tradeAgreementName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   tradeAgreementName=value;
+		   }
+			
+		 }
+	   }
 	    }
    
 }
