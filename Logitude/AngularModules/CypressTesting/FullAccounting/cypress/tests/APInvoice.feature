@@ -5,7 +5,7 @@ Feature: AP Invoice
     Scenario: Create new AP Invoice
         Given the user logged in and navigates to Full Accounting workspace
         And an AP Invoice with the following details
-            | Vendor         | קטרינג כהן ובניו     |
+            | Vendor         | KHTest     |
             | InvoiceNumber  | Random     |
             | InvoiceAmount  | 100        |
             | InvoiceDate    | 16/04/2023 |
