@@ -380,6 +380,7 @@
       <Private>True</Private>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
@@ -805,12 +806,14 @@
     <Compile Include="GlobalModel\Tools\EntityService\TenantHybridPartnerService.cs" />
     <Compile Include="Helpers\AddManualTraceEventsHelper.cs" />
     <Compile Include="Helpers\APICaller.cs" />
+    <Compile Include="Helpers\BaseClasses\BaseInstance.cs" />
     <Compile Include="Helpers\CacheHelper.cs" />
     <Compile Include="Helpers\ConcurrencyFieldHelper.cs" />
     <Compile Include="Helpers\ContainersExternal.cs" />
     <Compile Include="Helpers\ContainerStatusesHelper.cs" />
     <Compile Include="Helpers\ContainerTrackingHelper.cs" />
     <Compile Include="Helpers\CopyPortHelper.cs" />
+    <Compile Include="Helpers\DefaultAndConfiguration_Ext.cs" />
     <Compile Include="Helpers\DigitalFieldSecuritesHelper.cs" />
     <Compile Include="Helpers\DWObjectFieldsGroupedService.cs" />
     <Compile Include="Helpers\ExportServer\ExportServerLogin.cs" />
@@ -819,6 +822,8 @@
     <Compile Include="Helpers\ExportServer\UserData.cs" />
     <Compile Include="Helpers\ObjectFieldPropertyGetter.cs" />
     <Compile Include="Helpers\PayablesLinesVatAmounts.cs" />
+    <Compile Include="Helpers\SettingsHelper.cs" />
+    <Compile Include="Helpers\SettingsHelperUI.cs" />
     <Compile Include="InfrastructureModel\APIDataContract\EntityStatus.Generated.cs" />
     <Compile Include="InfrastructureModel\APIDataContract\EventsTypes.cs" />
     <Compile Include="InfrastructureModel\APIDataContract\EventType.Generated.cs" />

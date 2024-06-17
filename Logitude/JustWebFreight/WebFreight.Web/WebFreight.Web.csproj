@@ -4827,12 +4827,6 @@
     <Content Include="css\kendo.default.min.css.map" />
     <Content Include="css\kendo.mobile.all.min.css.map" />
     <Content Include="Integration Test\LoginVars\Production\Cloud\TeamIslam\LoginVars.csv" />
-    <Content Include="NewRelicAgent_x64_10.25.0.0.msi">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="newrelic.cmd">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <None Include="Properties\PublishProfiles\Customs.pubxml" />
     <None Include="Properties\PublishProfiles\CustomsNewProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FeatureBranchPub.pubxml" />
