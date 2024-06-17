@@ -121,7 +121,7 @@
     }
 
     .DeclarationsTable {
-        width: 165px !important;
+        width: 162px !important;
     }
 
     .ActionButton{
@@ -345,7 +345,7 @@
                             <span>{{'View'}}:</span>
                         </td>
 
-                        <td style="vertical-align: middle;width:170px;padding-left: 20px;">
+                        <td style="vertical-align: middle;width: 135px;padding-left: 10px;">
                             <QueryList *ngIf="(ShowViews || EnglishView) && ResourcesLoaded" [ItemsSource]="Queries" [UserItemSource]="UserQueries" [Binding]="'NameTextCodeCode'" [onSelectedQueryChangeEvent]="onSelectedQueryChangeEvent" [SelectedItem]="SelectedQuery" [ObjectTableName]="ObjectTableName" (itemSelectedEvent)="QueryValueChanged($event)" [QueryListSourceChanged]="QueryListSourceChanged" (QueriesChangedEvent)="QueriesChangedEvent($event)" [LoadResourceCompleted]="LoadResourceCompleted" [pubSubAdvanceQueryFiltersService]="AdvanceQFiltersService" (NewViewClosedEvent)="NewViewClosedEvent($event)"></QueryList>
 
 
@@ -389,24 +389,21 @@
                             <div>  <span>Showing the first {{ConstantPageSize}} rows, use the search field to find more results.</span></div>
                         </td>
 
-                        <td style="width: 53px;" tabindex="-1">
-                            <ng-container *ngIf="SelectedCount > 0">
-                                <div tabindex="-1" class="ToggleButton" id="toggleButton">
-                                    <img src="./Images/ToggleIcon.png" style="margin-left: 5px; margin-top: 2px; left: 0px;" />
-                                    <label style="right: 5px;">{{'Customs.Declaration.B.Actions' | TextCodeTranslationPipe}}</label>
-                                    <div class="ToggleButtonMenu" style="width: 140px;top:21px;text-align:right">
-                                        <button *ngFor="let action of (ScreenQueryAction['actions'] || [])" [id]="action" (click)="ShowActionConfirmationWindow(action)" style="text-align:right">{{ (ScreenQueryAction["actionTranslationPrefix"] + action) | TextCodeTranslationPipe }}</button>
-                                    </div>
+                        <td style="width: 53px;" tabindex="-1" *ngIf="SelectedCount > 0">
+                            <div tabindex="-1" class="ToggleButton" id="toggleButton">
+                                <img src="./Images/ToggleIcon.png" style="margin-left: 5px; margin-top: 2px; left: 0px;" />
+                                <label style="right: 5px;">{{'Customs.Declaration.B.Actions' | TextCodeTranslationPipe}}</label>
+                                <div class="ToggleButtonMenu" style="width: 140px;top:21px;text-align:right">
+                                    <button *ngFor="let action of (ScreenQueryAction['actions'] || [])" [id]="action" (click)="ShowActionConfirmationWindow(action)" style="text-align:right">{{ (ScreenQueryAction["actionTranslationPrefix"] + action) | TextCodeTranslationPipe }}</button>
                                 </div>
-                            </ng-container>
+                            </div>
                         </td>
-
 
                         <td>
                             <div></div>
                         </td>
 
-                        <td *ngIf="HasCustomsFilterMenu" style="float: left; margin-right: 20px">
+                        <td *ngIf="HasCustomsFilterMenu" style="float: left; margin-top: 2px">
                             <div LocationDirective Code="MNH"></div>
                         </td>
                         <td style="width: 1px;" *ngIf="IsNavigateButtonVisible">
