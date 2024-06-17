@@ -5,6 +5,7 @@ using System.Text;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel;
 using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.Helpers;
 namespace Simplog.Global.Data.GlobalModel.Repositories
 {
     public class PaymentMethodRepository : IRepository<PaymentMethod>
@@ -31,12 +32,37 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
             PaymentMethod instance = (from i in context.PaymentMethods
                                  where i.Code == code                                 
                                  select i).FirstOrDefault();
+            string entityName = "PaymentMethod" + code;
+            if (CacheManager.CacheWrapper != null)
+            {
+                if (CacheManager.CacheWrapper.Get(entityName) == null && instance != null)
+                {
+                    CacheManager.CacheWrapper.Insert(entityName, instance, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                }
+                else
+                {
+                    instance = (PaymentMethod)CacheManager.CacheWrapper.Get(entityName);
+                }
+            }
             return instance;
         }
 
         public IQueryable<PaymentMethod> GetPaymentMethods()
         {
-            return context.PaymentMethods;
+            IQueryable<PaymentMethod> items = context.PaymentMethods;
+            string entityName = "AllPaymentMethods";
+            if (CacheManager.CacheWrapper != null)
+            {
+                if (CacheManager.CacheWrapper.Get(entityName) == null && items != null)
+                {
+                    CacheManager.CacheWrapper.Insert(entityName, items, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                }
+                else
+                {
+                    items = (IQueryable<PaymentMethod>)CacheManager.CacheWrapper.Get(entityName);
+                }
+            }
+            return items;
         }
 
         public IQueryable<PaymentMethod> GetAll()
@@ -63,7 +89,21 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
 
         public List<PaymentMethod> All()
         {
-            return context.PaymentMethods.ToList();
+            List<PaymentMethod> items = context.PaymentMethods.ToList();
+            string entityName = "AllPaymentMethodsList";
+            if (CacheManager.CacheWrapper != null)
+            {
+                if (CacheManager.CacheWrapper.Get(entityName) == null && items != null)
+                {
+                    CacheManager.CacheWrapper.Insert(entityName, items, null, System.DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
+                }
+                else
+                {
+                    items = (List<PaymentMethod>)CacheManager.CacheWrapper.Get(entityName);
+                }
+            }
+            return items;
+            //return context.PaymentMethods.ToList();
         }
 
         public IGlobalContext context
