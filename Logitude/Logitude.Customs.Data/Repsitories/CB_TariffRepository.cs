@@ -54,7 +54,7 @@ namespace Logitude.Customs.Data.Repsitories
 
                                 // following to match the actual column names from file 202413061852_usp_AgreementLevelData.sxml:
                                 CustomsItemID = reader["CustomsItemIDNum"] != DBNull.Value ? (int)reader["CustomsItemIDNum"] : 0,
-                                ID = reader["TarrifID"] != DBNull.Value ? (int)reader["TarrifID"] : 0,
+                                ID = reader["TariffID"] != DBNull.Value ? (int)reader["TariffID"] : 0,
                                 CustomsRate = reader["CustomsRateWithout"] != DBNull.Value ? (string)reader["CustomsRateWithout"] : null,
                                 CustomsRateWithinQuota = reader["CustomsRateWithin"] != DBNull.Value ? (string)reader["CustomsRateWithin"] : null,
                                 QuotaID = reader["QuotaID"] != DBNull.Value ? (int?)reader["QuotaID"] : null,

@@ -14,6 +14,7 @@
 		
 				WITH CTE AS (
 					SELECT
+						R.CustomsItemID,
 						R.ID,
 						RI.ID AS RegularityInceptionID,
 						RC.RegularityInceptionID AS RCRegularityInceptionID,
@@ -55,6 +56,8 @@
 						AND R.CountryID IS NULL
 				)
 				SELECT
+					CustomsItemID,
+					ID,
 					RequirementValidOrigin, --  המקור החוקי לדרישה 
 					-- נובע מפרק/פרט - חסר עדיין
 					RequirementGoodsDescription, -- תיאור
@@ -68,6 +71,7 @@
 				FROM 
 					CTE
 				GROUP BY
+					CustomsItemID,
 					ID,
 					RegularityInceptionID,
 					RegularityRequirementID,

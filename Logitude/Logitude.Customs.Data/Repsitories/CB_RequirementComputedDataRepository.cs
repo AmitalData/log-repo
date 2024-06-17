@@ -47,7 +47,7 @@ namespace Logitude.Customs.Data.Repsitories
                             {
                                 // following to match the actual column names from file 202413061852_usp_RegularityRequirementData.sxml:
                                 CustomsItemID = reader["CustomsItemID"] != DBNull.Value ? (int)reader["CustomsItemID"] : 0,
-                                ID = reader["id"] != DBNull.Value ? (int)reader["id"] : 0,
+                                ID = reader["ID"] != DBNull.Value ? (int)reader["ID"] : 0,
                                 RequirementValidOrigin = reader["RequirementValidOrigin"] != DBNull.Value ? (string)reader["RequirementValidOrigin"] : null,
                                 RequirementGoodsDescription = reader["RequirementGoodsDescription"] != DBNull.Value ? (string)reader["RequirementGoodsDescription"] : null,
                                 Authority = reader["Authority"] != DBNull.Value ? (string)reader["Authority"] : null,
@@ -56,6 +56,10 @@ namespace Logitude.Customs.Data.Repsitories
                                 TextualCondition = reader["TextualCondition"] != DBNull.Value ? (string)reader["TextualCondition"] : null,
                                 IsPersonalImportIncluded = reader["IsPersonalImportIncluded"] != DBNull.Value ? (bool)reader["IsPersonalImportIncluded"] : false,
                                 IsCarnetIncluded = reader["IsCarnetIncluded"] != DBNull.Value ? (bool)reader["IsCarnetIncluded"] : false,
+
+                                // TODO: add the rest of the fields after the requirements are clear:
+                                // FromEpisodeDetail = reader["FromEpisodeDetail"] != DBNull.Value ? (string)reader["FromEpisodeDetail"] : null,
+                                // AutonomyRegion = reader["AutonomyRegion"] != DBNull.Value ? (string)reader["AutonomyRegion"] : null,
                             };
                             results.Add(result);
                         }
