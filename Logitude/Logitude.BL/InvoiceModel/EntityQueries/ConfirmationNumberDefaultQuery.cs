@@ -57,7 +57,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
         public IQueryable<ConfirmationNumberDefaultList> GetIQueryableEntityListByTenant(int tenant)
         {
             IQueryable<ConfirmationNumberDefaultList> result = from entity in repository.context.ConfirmationNumberDefaults
-                                                               where entity.Tenant== tenant
+                                                               where entity.Tenant== tenant orderby entity.FromDate descending
                                                                select new ConfirmationNumberDefaultList()
                                                                {
                                                                    Tenant = entity.Tenant,
