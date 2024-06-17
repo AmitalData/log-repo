@@ -1817,6 +1817,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                                 _NextDueDoneDict[response.Tenant] = DateTime.UtcNow.Date;
                                 var myDueLocalBalanceService = new DueLocalBalanceService();
+                                Logger.LogTrace(String.Format("RunOneTenantFast "));
                                 myDueLocalBalanceService.RunOneTenantFast(response.Tenant);
                                 Logger.LogTrace(String.Format("JournalApproveService, Point 3, tenant {0}", response.Tenant));
                             }
