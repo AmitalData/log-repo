@@ -109,7 +109,10 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     TranzilaPaymentWithBit: string = "0";
     WhatsAppMessagingNumber: string = "00";
     ShowWhatsAppIcon: boolean = false;
-
+    HandleTenant() {
+        this.orianStyle = +this.Tenant === 126 || +this.Tenant === 1153;
+        this.dsvStyle = +this.Tenant === 49 || +this.Tenant === 1062;
+    }
     RunComponent() {
 
         if (SessionLocator.IsExternalParams) {
@@ -123,10 +126,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                     if (me.Tenant) {
                         this.Tenant = me.Tenant;
                     }
-
-                    this.orianStyle = +this.Tenant === 126 || +this.Tenant === 1153;
-                    this.dsvStyle = +this.Tenant === 49 || +this.Tenant === 1062;
-
+                    this.HandleTenant();
                     //SessionLocator.ExternalParams.Args.forEach(arg => {
                     //    if (arg.FieldName == 'ShipmentId') {
                     //        ShipmentId = arg.FieldValue; 
@@ -145,6 +145,8 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                 //this._ShipmentAdditionalCloudDataService.getSingleWithoutToken(this.EntityPm.Id,Tenant).subscribe((AdditionalResult:any) => {
 
                 this.AdditionalData = MyResult.Result;//AdditionalResult.Result
+                this.Tenant = this.AdditionalData.Tenant;
+                this.HandleTenant();
                 if (this.AdditionalData.IsPaymentRequired) {
                     if (this.EntityPm) {
                         this.qaIndicator = 1;
