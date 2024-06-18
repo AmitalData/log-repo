@@ -102,6 +102,11 @@ export class UserIdNumberMobileComponent extends BaseComponent implements OnInit
     ShowFinalMessage: boolean = false;
     SecurityKey: string = "";
     Tenant: number = null;
+    HandleTenant(){
+        this.orianStyle = +this.Tenant === 126 || +this.Tenant === 1153;
+        if (this.orianStyle)
+            this.getEcommerceSupportEmail()
+    }
     RunComponent() {
 
         if (SessionLocator.IsExternalParams) {
@@ -115,13 +120,7 @@ export class UserIdNumberMobileComponent extends BaseComponent implements OnInit
                     if (me.Tenant) {
                         this.Tenant = me.Tenant;
                     }
-
-                    this.orianStyle = +this.Tenant === 126 || +this.Tenant === 1153;
-                    if (this.orianStyle)
-                        this.getEcommerceSupportEmail()
-
-
-
+                    this.HandleTenant();
                     //SessionLocator.ExternalParams.Args.forEach(arg => {
                     //    if (arg.FieldName == 'ShipmentId') {
                     //        ShipmentId = arg.FieldValue; 
@@ -153,9 +152,11 @@ export class UserIdNumberMobileComponent extends BaseComponent implements OnInit
                 this._ShipmentPMService.getUserIdDetailsByShipmentSecurityKeyWithoutToken(this.SecurityKey, this.Tenant).subscribe((MyResult: any) => {
                     if (MyResult.Result) {
                         this.AdditionalData = MyResult.Result;//AdditionalResult.Result
+                        this.Tenant = this.AdditionalData.Tenant;
+                        this.HandleTenant();
                         this.qaIndicator = 1;
                         var service = new CommonDomainService();
-                        service.GetTenantLogoUri(this.AdditionalData.Tenant).subscribe((myLogoResult: any) => {
+                        service.GetTenantLogoUri(this.Tenant).subscribe((myLogoResult: any) => {
 
                             this.CompanyLogo = myLogoResult.Result;
                             this.StopBusyIndicator();

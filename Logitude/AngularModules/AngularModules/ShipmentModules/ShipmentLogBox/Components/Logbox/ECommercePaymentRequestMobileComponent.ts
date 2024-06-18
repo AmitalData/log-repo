@@ -108,7 +108,10 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     Tenant: number = null;
     WhatsAppMessagingNumber: string = "00";
     ShowWhatsAppIcon: boolean = false;
-
+    HandleTenant() {
+        this.orianStyle = +this.Tenant === 126 || +this.Tenant === 1153;
+        this.dsvStyle = +this.Tenant === 49 || +this.Tenant === 1062;
+    }
     RunComponent() {
 
         if (SessionLocator.IsExternalParams) {
@@ -122,9 +125,6 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                     if (me.Tenant) {
                         this.Tenant = me.Tenant;
                     }
-
-                    this.orianStyle = +this.Tenant === 126 || +this.Tenant === 1153;
-                    this.dsvStyle = +this.Tenant === 49 || +this.Tenant === 1062;
 
                     //SessionLocator.ExternalParams.Args.forEach(arg => {
                     //    if (arg.FieldName == 'ShipmentId') {
@@ -144,6 +144,8 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                 //this._ShipmentAdditionalCloudDataService.getSingleWithoutToken(this.EntityPm.Id,Tenant).subscribe((AdditionalResult:any) => {
 
                 this.AdditionalData = MyResult.Result;//AdditionalResult.Result
+                this.Tenant = this.AdditionalData.Tenant;
+                this.HandleTenant();
                 if (this.AdditionalData.IsPaymentRequired) {
                     if (this.EntityPm) {
                         this.qaIndicator = 1;
@@ -163,14 +165,14 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
 
                 //});
                 var service = new CommonDomainService();
-                service.GetTenantLogoUriByShipmentSecurityKey(this.AdditionalData.Tenant, this.SecurityKey).subscribe((myLogoResult: any) => {
+                service.GetTenantLogoUriByShipmentSecurityKey(this.Tenant, this.SecurityKey).subscribe((myLogoResult: any) => {
 
                     this.CompanyLogo = myLogoResult.Result;
                     this.StopBusyIndicator();
 
                 });
                 //GetTenantEcommerceSupportEmail
-                service.GetTenantEcommerceSupportEmailByShipmentSecurityKey(this.AdditionalData.Tenant, this.SecurityKey).subscribe((myTenant: any) => {
+                service.GetTenantEcommerceSupportEmailByShipmentSecurityKey(this.Tenant, this.SecurityKey).subscribe((myTenant: any) => {
                     if (myTenant.Result) {
                         this.EcommerceSupportEmail = myTenant.Result;
                     }
@@ -398,7 +400,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
         if (this.serviceAgreementURL)
             open(this.serviceAgreementURL)
         else
-            DownloadManager.DownloadExternalPage(null, this.AdditionalData.Tenant, this.TermsOfUseDocumentId);
+            DownloadManager.DownloadExternalPage(null, this.Tenant, this.TermsOfUseDocumentId);
         //  }
         //});
 
