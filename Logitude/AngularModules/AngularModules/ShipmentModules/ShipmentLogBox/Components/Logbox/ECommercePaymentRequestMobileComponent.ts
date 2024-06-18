@@ -125,7 +125,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                     if (me.Tenant) {
                         this.Tenant = me.Tenant;
                     }
-
+                    this.HandleTenant();
                     //SessionLocator.ExternalParams.Args.forEach(arg => {
                     //    if (arg.FieldName == 'ShipmentId') {
                     //        ShipmentId = arg.FieldValue; 
