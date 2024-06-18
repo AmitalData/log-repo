@@ -1212,9 +1212,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                  payment = new DeclarationPaymentPM()
                 {
                     DeclarationId = _MyDeclarationPM.Id,
-                    CreatedByUserId = _MyDeclarationPM.CreatedByUserId,
+                    CreatedByUserId = _MyDeclarationPM.SignedByUserId,
                     PaymentDate = DateTime.Now,
-                    SignatoryIdentification = requestParams.SignByPersonalId,
+                    SignatoryIdentification = _MyDeclarationPM.SignerPersonalId,
                     Tenant = requestParams.Tenant,
                     ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
                 };
@@ -1224,7 +1224,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
             else
             {
                 payment.PaymentDate = DateTime.Now;
-                payment.SignatoryIdentification = requestParams.SignByPersonalId;
+                payment.SignatoryIdentification = _MyDeclarationPM.SignerPersonalId;
+                payment.CreatedByUserId = _MyDeclarationPM.SignedByUserId;
                 payment.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
 
             }
