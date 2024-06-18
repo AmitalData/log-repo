@@ -82,8 +82,8 @@ namespace Logitude.Server.Tools.StorageService
                 return true;
             }
             catch (Exception ex)
-            {                
-                Logger.LogMe("Error accord when create container '" + containerName +"' for account '" + blobServiceClient.AccountName + "', errror message: " +  ex.Message, true);
+            {
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex,"Error accord when create container '" + containerName +"' for account '" + blobServiceClient.AccountName + "'");
                 return false;
             }
         }

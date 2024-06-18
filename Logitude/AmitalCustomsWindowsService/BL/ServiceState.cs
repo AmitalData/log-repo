@@ -203,26 +203,27 @@ LastError:{4}",
         {
             try
             {
-                string Source = SandBoxDir();
-                DirectoryInfo DirectoryInfo1 = new DirectoryInfo(Source);
-                if (!DirectoryInfo1.Exists)
-                    DirectoryInfo1.Create();
-                else
-                {
-                    DirectoryInfo1.Delete(true);
-                    DirectoryInfo1.Create();
-                }
+                //todo:elisheva check
+                //string Source = SandBoxDir();
+                //DirectoryInfo DirectoryInfo1 = new DirectoryInfo(Source);
+                //if (!DirectoryInfo1.Exists)
+                //    DirectoryInfo1.Create();
+                //else
+                //{
+                //    DirectoryInfo1.Delete(true);
+                //    DirectoryInfo1.Create();
+                //}
             }
             catch (Exception e)
             {
-                Logger.LogMe(e.ToString(), true);
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e);
             }
         }
 
-        internal static string SandBoxDir()
-        {
-            return Logger.WorkingDir + @"..\SandBox\";
-        }
+        //internal static string SandBoxDir()
+        //{
+        //    return Logger.WorkingDir + @"..\SandBox\";
+        //}
 
 
 

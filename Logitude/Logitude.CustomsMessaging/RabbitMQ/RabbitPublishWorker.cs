@@ -146,8 +146,8 @@ InterfaceTypeCode: rabbitQueue.InterfaceTypeCode,
                 {
                     _LastError = e.Message;
                     errCount++;
-                    Logger.LogMe(e.ToString(), true, "RabbitPublishWorker");
-                    if (errCount > 20)
+                    NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e,"RabbitPublishWorker");
+                   if (errCount > 20)
                     {
                         errCount = 20;
                     }
@@ -163,10 +163,10 @@ InterfaceTypeCode: rabbitQueue.InterfaceTypeCode,
             if (DateTime.Now.Subtract(_LastReportAt)> TimeSpan.FromMinutes(5))
             {
                 _LastReportAt = DateTime.Now;
-                
-                Logger.LogMe(
+
+                NetCommonHelper.Logger.DevLog.Instance.WriteInfo(
                     $"_TotalBasicPublish:{_TotalBasicPublish},_TimeoutHalfSEC:{_TimeoutHalfSEC},_TimeoutMoreHalfSEC{_TimeoutMoreHalfSEC},_TimeoutMore1SEC:{_TimeoutMore1SEC},_TimeoutMore5SEC:{_TimeoutMore5SEC},_TimeoutFail:{_TimeoutFail},_TimeoutX2:{_TimeoutX2}"
-                    , false, "RabbitPublishWorker");
+                   +":"+ "RabbitPublishWorker");
 
                 _TotalBasicPublish = _TimeoutHalfSEC =
                     _TimeoutMoreHalfSEC = _TimeoutMore1SEC = 

@@ -39,7 +39,7 @@ namespace Unifreight.Data.AmitalModel
             }
             catch (Exception e)
             {
-                Logger.LogMe("Error in ClearCacheLastSync error: " + e, true);
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e,"Error in ClearCacheLastSync error" );
             }
         }
     }

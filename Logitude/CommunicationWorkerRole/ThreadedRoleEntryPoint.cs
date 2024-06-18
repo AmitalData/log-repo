@@ -205,7 +205,15 @@ namespace CommunicationWorkerRole
                 LogitudeSettings.HandleLogMe = new Action<string, bool, string, DateTime>((mess, err, suffix, stopLogAt) =>
                 {
                     if (DateTime.Now > stopLogAt) return;
-                    Logger.LogMe(mess, err, suffix);
+                    if (err)
+                    {
+                        NetCommonHelper.Logger.DevLog.Instance.WriteError(mess);
+                    }
+                    else
+                    {
+                        NetCommonHelper.Logger.DevLog.Instance.WriteInfo(mess);
+                    }
+                    //Logger.LogMe(mess, err, suffix);
                 });
                 LogitudeSettings.HandleDbExceptionInject = ExceptionHandler.HandleDbException;
                 LogitudeSettings.HandleBuildObjectTablesZipFilesData_Inject = WebFreight.Web.MetaDataUpdate.TenantsUpdateClass.BuildObjectTablesZipFilesData;

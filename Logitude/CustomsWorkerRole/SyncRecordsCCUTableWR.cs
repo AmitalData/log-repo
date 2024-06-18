@@ -42,7 +42,8 @@ namespace CustomsWorkerRole
                 }
                 catch (Exception e)
                 {
-                    Logger.LogMe("error on SendToUnifreightQueue, Exception: " + e.ToString(), true);
+                    NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e, "error on SendToUnifreightQueue");
+                  
                 }
             }
 
@@ -61,7 +62,8 @@ namespace CustomsWorkerRole
                 }
                 catch (Exception e)
                 {
-                    Logger.LogMe("error on Schdule action " + actionName + ", Exception: " + e.ToString(), true);
+                    NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e, "error on Schdule action " + actionName);
+                    
                 }
                 finally
                 {
@@ -82,8 +84,8 @@ namespace CustomsWorkerRole
             string action = "SyncUnifreightTable";
             string tableName = "SyncRecord";
             string fileNos = string.Join(",", records.ConvertAll(record => record.FileNo.Trim()).Distinct());
-            
-            Logger.LogMe("SendToQueue, fileNos: " + fileNos, false);
+
+            NetCommonHelper.Logger.DevLog.Instance.WriteInfo("SendToQueue, fileNos: " + fileNos);
 
             UnifreightQueueService.Insert(tenant, priority, queueName, subject, storageFolder, action, tableName, fileNos);
         }

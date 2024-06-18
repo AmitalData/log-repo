@@ -248,15 +248,16 @@ namespace Logitude.Customs.BL.Messaging.Maman
             catch (Exception e)
             {
                 sb.AppendLine(e.ToString());
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e);
                 //e.SetMess
                 //throw;
             }
             finally
             {
-                if (Logger.ToLogUntilDateyyyyMMdd("20230112HDCall409236.LogUntilDateyyyyMMdd"))
-                {
-                    Logger.LogMe(sb.ToString(), false, "Send2Masof");
-                }
+                //if (Logger.ToLogUntilDateyyyyMMdd("20230112HDCall409236.LogUntilDateyyyyMMdd"))
+                //{
+                    NetCommonHelper.Logger.DevLog.Instance.WriteInfo(sb.ToString());
+                //}
 
             }
 

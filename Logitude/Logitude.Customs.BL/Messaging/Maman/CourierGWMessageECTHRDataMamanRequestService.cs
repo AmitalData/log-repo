@@ -209,7 +209,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
             }
             if (Send2MasofIfNeededService.GetStopLogAt() > DateTime.Now)
             {
-                Logger.LogMe(sb.ToString(), false, "GWMessageECTHRDataMaman");
+                NetCommonHelper.Logger.DevLog.Instance.WriteInfo(sb.ToString()+ "GWMessageECTHRDataMaman:");
             }
             
             string aw8 = null;

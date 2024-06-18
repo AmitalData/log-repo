@@ -41,7 +41,7 @@ namespace CustomsWorkerRole
                 string RabbitMQLogFILE = "RabbitMQLog"+ _myClass;
                 if (ProcessMessage==null)
                 {
-                    Logger.LogMe("ProcessMessage_Db ==null", true, "rabbitmq");
+                    NetCommonHelper.Logger.DevLog.Instance.WriteError("ProcessMessage_Db ==null"+ ":rabbitmq");
                     ExceptionHandler.HandleException(null, DateTime.Now, 0, "", $"{_myClass}:WorkerRoleRabbitMQ", $"ProcessMessage_Db == null", null);
                     Thread.Sleep(5000);
                     return;
@@ -57,7 +57,7 @@ namespace CustomsWorkerRole
                     {
 
                         connection.ConnectionShutdown += Connection_ConnectionShutdown;
-                        Logger.LogMe($"CONNECTION:{myRabbitQueueCode}", false, RabbitMQLogFILE);
+                        NetCommonHelper.Logger.DevLog.Instance.WriteInfo($"CONNECTION:{myRabbitQueueCode}"+":"+ RabbitMQLogFILE);
                         channel.BasicQos(0, 5, true);
                         RabbitmqHelper.DeclareQueue(channel, myRabbitQueueCode, true);
 
@@ -91,7 +91,7 @@ namespace CustomsWorkerRole
                                 {
                                     channel.BasicAck(ea.DeliveryTag, false);
                                     ExceptionHandler.HandleException(null, DateTime.Now, 0, "", $"{_myClass}:RabbitMQ", $"BasicProperties.Headers[que_id] is null  ", null);
-                                    Logger.LogMe("No interfaceTypeCode in header " + messageId, true, RabbitMQLogFILE);
+                                    NetCommonHelper.Logger.DevLog.Instance.WriteError("No interfaceTypeCode in header " + messageId+":" +RabbitMQLogFILE);
                                     Thread.Sleep(1000);
 
                                     return;
@@ -103,7 +103,7 @@ namespace CustomsWorkerRole
                                 {
                                     channel.BasicAck(ea.DeliveryTag, false);
                                     ExceptionHandler.HandleException(null, DateTime.Now, 0, "", $"{_myClass}:WorkerRoleRabbitMQ", $"GetRabbitMQPseudoByMessageId not found({longQId})", null);
-                                    Logger.LogMe($"GetRabbitMQPseudoByMessageId not found({longQId})", true, RabbitMQLogFILE);
+                                    NetCommonHelper.Logger.DevLog.Instance.WriteError($"GetRabbitMQPseudoByMessageId not found({longQId})" + ":" + RabbitMQLogFILE);
                                     Thread.Sleep(100);
                                     return;
 
@@ -132,7 +132,7 @@ namespace CustomsWorkerRole
                                         successProcessMessage = false;
                                         //Logger.LogMe(e1.ToString(), true, "rabbitmq");
                                         ExceptionHandler.HandleException(e1, DateTime.Now, 0, "", $"{_myClass}:WorkerRoleRabbitMQ", $"WorkUntilPrcossesStop_RabbitMQ{messageId}", null);
-                                        Logger.LogMe($"WorkUntilPrcossesStop_RabbitMQ{messageId}", true, RabbitMQLogFILE);
+                                        NetCommonHelper.Logger.DevLog.Instance.WriteError($"WorkUntilPrcossesStop_RabbitMQ{messageId}" + ":" + RabbitMQLogFILE);
                                         Thread.Sleep(1000);
 
                                     }
@@ -166,7 +166,7 @@ namespace CustomsWorkerRole
                                         catch (Exception eee)
                                         {
 
-                                            Logger.LogMe(eee.ToString(), true, "rabbitmq");
+                                            NetCommonHelper.Logger.DevLog.Instance.WriteFatal(eee, "rabbitmq");
                                             ExceptionHandler.HandleException(eee, DateTime.Now, 0, "", $"{_myClass}:WorkerRoleRabbitMQ", $"WorkUntilPrcossesStop_RabbitMQ{messageId}", null);
                                             Thread.Sleep(1000);
                                         }
@@ -202,7 +202,7 @@ namespace CustomsWorkerRole
                         consumer.Received += consumerEventArgs;
                         consumer.Shutdown += (sender, e) => {
                             isConnectionShutdown = true;
-                            Logger.LogMe("Connection broke!", false, RabbitMQLogFILE);
+                            NetCommonHelper.Logger.DevLog.Instance.WriteInfo("Connection broke!" + ":" + RabbitMQLogFILE);
                         };
 
                         channel.BasicConsume(queue:myRabbitQueueCode /*this._RabbitQueueCode*/,
@@ -219,14 +219,14 @@ namespace CustomsWorkerRole
                         )
                             {
 
-                                Logger.LogMe("Connection broke!", false, RabbitMQLogFILE);
+                                NetCommonHelper.Logger.DevLog.Instance.WriteWarning("Connection broke!"+ RabbitMQLogFILE);
                                 break;
                             }
 
                             if (DateTime.Now.Subtract(lastworkAt) > TimeSpan.FromMinutes(10))
                             {
                                 Thread.Sleep(1000);
-                                Logger.LogMe("No work (FromMinutes(10)) or connection fail ??! - dispose old create new one", false, RabbitMQLogFILE);
+                                NetCommonHelper.Logger.DevLog.Instance.WriteWarning("No work (FromMinutes(10)) or connection fail ??! - dispose old create new one"+ RabbitMQLogFILE);
                                 break;
 
                             }
@@ -239,7 +239,7 @@ namespace CustomsWorkerRole
                             if (DateTime.Now.Subtract(_LastReprtAt) > TimeSpan.FromHours(1))
                             {
                                 _LastReprtAt = DateTime.Now;
-                                Logger.LogMe(this.GetType().FullName + ":Still Alive", false);
+                                NetCommonHelper.Logger.DevLog.Instance.WriteInfo(this.GetType().FullName + ":Still Alive");
                             }
 
                         }

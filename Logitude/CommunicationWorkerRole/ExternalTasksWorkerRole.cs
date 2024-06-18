@@ -38,7 +38,7 @@ namespace CommunicationWorkerRole
                     try
                     {
                         LastActivity = DateTime.UtcNow;
-                        //string url = LogitudeSettings.LogitudeURL;//System.Configuration.ConfigurationSettings.AppSettings.Get("LogitudeURL");
+                        //string url = LogitudeSettings.LogitudeURL;//ConfigurationManager.AppSettings.Get("LogitudeURL");
                         //url = url + "/wcfapi/ExternalTasksQueueWcfService.svc";
                         //url = url.Replace("https", "http");
                         Envelope result;

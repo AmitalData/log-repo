@@ -1,5 +1,4 @@
-﻿using Logitude.BL.Helpers;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 
@@ -30,7 +29,7 @@ namespace AmitalTestConsoleApp
 
                 if (string.IsNullOrEmpty(key))
                 {
-                    var settingsList = SettingsHelper.Instance.GetByTenant(tenantId);
+                    var settingsList = Logitude.BL.Helpers.SettingsHelper.Instance.GetByTenant(tenantId);
 
                     if (settingsList != null && settingsList.Count > 0)
                     {
@@ -47,7 +46,7 @@ namespace AmitalTestConsoleApp
                 }
                 else
                 {
-                    var settingByKey = SettingsHelper.Instance.GetByTenant(tenantId, key);
+                    var settingByKey = Logitude.BL.Helpers.SettingsHelper.Instance.GetByTenant(tenantId, key);
 
                     if (settingByKey != null)
                     {
@@ -64,7 +63,7 @@ namespace AmitalTestConsoleApp
             }
         }
 
-        private static void DisplaySetting(DefaultAndConfiguration_Ext setting)
+        private static void DisplaySetting(Logitude.BL.Helpers.DefaultAndConfiguration_Ext setting)
         {
             var objVal1 = setting.ObjVal1;
             var objVal2 = setting.ObjVal2;

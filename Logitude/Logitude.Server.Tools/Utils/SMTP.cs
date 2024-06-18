@@ -33,19 +33,24 @@ namespace Logitude.Server.Tools.Utils
                 }
                 try
                 {
-                    To = ConfigurationSettings.AppSettings["SMTP.ErrorNotifyEMAIL"].ToString();
+                    To = ConfigurationManager.AppSettings["SMTP.ErrorNotifyEMAIL"].ToString();
                 }
-                catch
+                catch (Exception e)
                 {
                     ValidConfig = false;
-                    Logger.LogMe("pls ErrorNotifyEMAIL add key to AppSettings:SMTP.ErrorNotifyEMAIL ", false, "SMTP");
+                    NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e,"pls ErrorNotifyEMAIL add key to AppSettings:SMTP.ErrorNotifyEMAIL ");
+                    return;
+                }
+                {
+                    ValidConfig = false;
+                    NetCommonHelper.Logger.DevLog.Instance.WriteInfo("pls ErrorNotifyEMAIL add key to AppSettings:SMTP.ErrorNotifyEMAIL ");
                     return;
                 }
                 SendIt(To, Subject, Body, "", "", "");
             }
             catch (Exception e)
             {
-                Logger.LogMe(e.ToString() + "Send Email To:" + To + Environment.NewLine + Body, true, "SMTP");
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e, "SMTP");
                 ValidConfig = false;
             }
         }
@@ -71,9 +76,9 @@ namespace Logitude.Server.Tools.Utils
 
             try
             {
-                if (String.IsNullOrWhiteSpace( ConfigurationSettings.AppSettings["SMTP.ForceBother"]))
+                if (String.IsNullOrWhiteSpace(ConfigurationManager.AppSettings["SMTP.ForceBother"]))
                 {
-                    Logger.LogMe("Sorry Due SMTP.ForceBother IsNullOrWhiteSpace suppress send email !!", false);
+                    NetCommonHelper.Logger.DevLog.Instance.WriteInfo("Sorry Due SMTP.ForceBother IsNullOrWhiteSpace suppress send email !!");
                     return;
                 }
                 if (!ValidConfig)
@@ -82,28 +87,28 @@ namespace Logitude.Server.Tools.Utils
                 {
                     if (smtpserver == "")
                     {
-                        smtpserver = ConfigurationSettings.AppSettings["SMTP.server"].ToString();
+                        smtpserver = ConfigurationManager.AppSettings["SMTP.server"].ToString();
                     }
                     if (sendusername == "")
                     {
-                        sendusername = ConfigurationSettings.AppSettings["SMTP.sendusername"].ToString();
+                        sendusername = ConfigurationManager.AppSettings["SMTP.sendusername"].ToString();
                     }
                     if (sendpassword == "")
                     {
-                        sendpassword = ConfigurationSettings.AppSettings["SMTP.sendpassword"].ToString();
+                        sendpassword = ConfigurationManager.AppSettings["SMTP.sendpassword"].ToString();
                     }
                 }
                 catch
                 {
                     ValidConfig = false;
-                    Logger.LogMe("not ValidConfig AppSettings not Init ", false, "SMTP");
+                    NetCommonHelper.Logger.DevLog.Instance.WriteInfo("not ValidConfig AppSettings not Init ");
                     return;
 
                 }
                 if (smtpserver == "" || sendusername == "" || sendpassword == "")
                 {
                     ValidConfig = false;
-                    Logger.LogMe("not ValidConfig one of Config is missing ", false, "SMTP");
+                    NetCommonHelper.Logger.DevLog.Instance.WriteInfo("not ValidConfig one of Config is missing ");
                     return;
                 }
 
@@ -126,11 +131,11 @@ namespace Logitude.Server.Tools.Utils
 
                 SmtpMail.SmtpServer = smtpserver;  //your real server goes here
                 SmtpMail.Send(mail);
-                Logger.LogMe("Send Email To:" + To + Environment.NewLine + Body, false, "SMTP");
+                NetCommonHelper.Logger.DevLog.Instance.WriteInfo("Send Email To:" + To + Environment.NewLine + Body);
             }
             catch (Exception e)
             {
-                Logger.LogMe(e.ToString(), true, "SMTP");
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e, "SMTP");
                 ValidConfig = false;
             }
 

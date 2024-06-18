@@ -454,7 +454,7 @@ namespace Logitude.Server.Tools.FTP
                 catch (Exception e)
                 {
 
-                    Logger.LogMe(e.ToString(), true, "SFTP");
+                    NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e, "SFTP");
                 }
 
                 MyFinally();
