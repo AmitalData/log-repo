@@ -943,7 +943,6 @@ namespace Logitude.Accounting.BL.CoreBL
                         //TotalInvoiceAmount
                         myStringBuilder.Append(FormatDecimal(lineList.TotalInvoiceAmount, 10, showLocalError: showLocal, includeSign: true, truncateDecimal: true));
 
-                        myStringBuilder.Append("+");
                         myStringBuilder.Append(FormatStringEnd(lineList.ConfirmationNumber, 9, paddingDigit: '0'));
 
                         myStringBuilder.Append("000000000");
