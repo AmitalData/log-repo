@@ -574,7 +574,7 @@ namespace Logitude.Accounting.BL.CoreBL
             return DateTime.UtcNow.Date;
         }
 
-        internal void RunAllTenants()
+        public void RunAllTenants()
         {
             var qs = new GLAccountQueryService(0);
             DateTime today = GetToday().Date;
