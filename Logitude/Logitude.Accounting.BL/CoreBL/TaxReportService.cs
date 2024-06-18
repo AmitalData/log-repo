@@ -944,7 +944,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         myStringBuilder.Append(FormatDecimal(lineList.TotalInvoiceAmount, 10, showLocalError: showLocal, includeSign: true, truncateDecimal: true));
 
                         myStringBuilder.Append("+");
-                        myStringBuilder.Append(FormatString(lineList.ConfirmationNumber, 9, paddingDigit: '0'));
+                        myStringBuilder.Append(FormatStringEnd(lineList.ConfirmationNumber, 9, paddingDigit: '0'));
 
                         myStringBuilder.Append("000000000");
 
@@ -1256,6 +1256,32 @@ namespace Logitude.Accounting.BL.CoreBL
 
             return result;
         }
+
+
+        private static string FormatStringEnd(string str, int wordSize, char paddingDigit = ' ')
+        {
+            string result = "";
+
+            //catch nulls
+            if (string.IsNullOrEmpty(str))
+            {
+                str = paddingDigit.ToString();
+            }
+
+            //big size
+            if (str.Length > wordSize)
+            {
+                str = str.Substring(str.Length - wordSize);
+                //throw new ApplicationException("There is a string with big value!");
+            }
+
+            //padding left
+            result += str.PadLeft(wordSize, paddingDigit);
+
+            return result;
+        }
+
+
 
 
         public static BatchTaskExecutionPM CreateTaxReportFileInBatch(string taxReportId, int tenant)
