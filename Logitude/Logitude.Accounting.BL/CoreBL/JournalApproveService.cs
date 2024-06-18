@@ -1695,6 +1695,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         break;
                     }
+                    CheckCreateIntegrity();
 
                     if (response.MessageValues.ContainsKey("communicationLogId"))
                     {
@@ -1723,7 +1724,6 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 }
 
-                CheckCreateIntegrity();
 
 
             }
@@ -1796,6 +1796,7 @@ namespace Logitude.Accounting.BL.CoreBL
                             throw;
                         }
                     }
+                    CheckCreateIntegrity();
 
 
                     if (response.MessageValues.ContainsKey("communicationLogId"))
@@ -1816,7 +1817,6 @@ namespace Logitude.Accounting.BL.CoreBL
                         SetTenantIdle(response.Tenant);
                     }
 
-                    CheckCreateIntegrity();
                     Thread.Sleep(10);//itzik - let other thread abilty to use GLAccout !!!
                 }
             }
