@@ -223,6 +223,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 }
                 clientAndVendorTypeGLAccountIdsCount = myClientAndVendorTypeGLAccountIds.Count;
+
                 int count = 0;
                 Logger.LogTrace(String.Format("time  of List<string> listBatch in myClientAndVendorTypeGLAccountIds.Batch(500)  " + DateTime.UtcNow.ToString()));
                 foreach (List<string> listBatch in myClientAndVendorTypeGLAccountIds.Batch(500))
