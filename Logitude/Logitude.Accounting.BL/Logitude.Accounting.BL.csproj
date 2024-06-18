@@ -1186,7 +1186,6 @@
   <ItemGroup>
     <Content Include="CoreBL\BuildTenant\LedgerTransactionsType.txt" />
     <Content Include="CoreBL\BuildTenant\usp_AccountingStreaming.txt" />
-    <Content Include="readme.txt" />
     <Content Include="StimulsoftDll\Stimulsoft.Report.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

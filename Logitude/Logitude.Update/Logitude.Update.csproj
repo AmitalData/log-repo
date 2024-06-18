@@ -604,7 +604,6 @@
   <ItemGroup>
     <Content Include="BKMVDATA.txt.txt" />
     <Content Include="logo_tr_AVr_icon.ico" />
-    <Content Include="readme.txt" />
     <Content Include="UpdateSettings.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
