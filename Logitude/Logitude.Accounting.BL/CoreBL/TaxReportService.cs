@@ -945,7 +945,6 @@ namespace Logitude.Accounting.BL.CoreBL
 
                         myStringBuilder.Append(FormatStringEnd(lineList.ConfirmationNumber, 9, paddingDigit: '0'));
 
-                        myStringBuilder.Append("000000000");
 
                         myStringBuilder.AppendLine();
 
