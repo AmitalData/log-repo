@@ -220,7 +220,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
                 clientAndVendorTypeGLAccountIdsCount = myClientAndVendorTypeGLAccountIds.Count;
 
-                foreach (List<string> listBatch in myClientAndVendorTypeGLAccountIds.Batch(100))
+                foreach (List<string> listBatch in myClientAndVendorTypeGLAccountIds.Batch(500))
                 {
                     var myDefaultListToUpdate =
                         (
@@ -564,7 +564,7 @@ namespace Logitude.Accounting.BL.CoreBL
             return DateTime.UtcNow.Date;
         }
 
-        internal void RunAllTenants()
+        public void RunAllTenants()
         {
             var qs = new GLAccountQueryService(0);
             DateTime today = GetToday().Date;
@@ -589,7 +589,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
         }
 
-        internal void RunOneTenantFast(int tenant)
+        public void RunOneTenantFast(int tenant)
         {
 
                 try
