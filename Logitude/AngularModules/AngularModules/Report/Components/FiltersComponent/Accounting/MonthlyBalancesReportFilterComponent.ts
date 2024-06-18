@@ -135,6 +135,14 @@ export class MonthlyBalancesReportFilterComponent extends BaseComponent {
         if (this.numberOfYear != value) {
             this.numberOfYear = value;
         }
+        if(this.numberOfYear!=null){
+            this.DataContext.UIProperties.SetRequired("NumberOfYear", this.ObjectTableName, false)
+
+        }
+        else{
+            this.DataContext.UIProperties.SetRequired("NumberOfYear", this.ObjectTableName, true)
+
+        }
     }
     SetChartOfAccountsFilterProperties(){
               this.selectedChartOfAccounts = this.chartOfAccounts.filter(item=>item.Checked == true);
