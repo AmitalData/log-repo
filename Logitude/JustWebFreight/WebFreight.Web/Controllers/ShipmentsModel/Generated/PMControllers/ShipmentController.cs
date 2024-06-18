@@ -662,6 +662,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
         {
             try
             {
+                TenantAdditionalDataRepository TADR = new TenantAdditionalDataRepository(0);
                 ShipmentQuery shipmentQuery;
                 ShipmentAdditionalCloudCustomData CustomData;
                 const string testKey = "d5e6d15f4cb24f12a8ac9c5e8c54a06d";
@@ -676,7 +677,8 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
                 if (key == testKey)
                 {
                     shipmentQuery = new ShipmentQuery(0);
-                    CustomData = shipmentQuery.GetSingleShipmentAdditionalCloudCustomDataTest();
+                    var listOfTenantsWithAdditionalData = TADR.All().Select(x=>x.Tenant).Distinct().ToList();
+                    CustomData = shipmentQuery.GetSingleShipmentAdditionalCloudCustomDataTest(listOfTenantsWithAdditionalData);
                     tenant = CustomData.Tenant;
                 }
                 else
@@ -687,7 +689,6 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
                 if (CustomData != null && !string.IsNullOrEmpty(CustomData.PaymentRequestXML))
                 {
                     AddWhatsAppMessagingPhoneNumberToResponseHeader(tenant.Value);
-                    TenantAdditionalDataRepository TADR = new TenantAdditionalDataRepository(tenant.Value);
                     var MyAdditionalData = TADR.GetSingleTenantAdditionalData(tenant.Value);
                     if (MyAdditionalData != null)
                     {

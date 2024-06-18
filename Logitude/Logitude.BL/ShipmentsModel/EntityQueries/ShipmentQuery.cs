@@ -15102,8 +15102,8 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
         public ShipmentPM GetSingleShipmentPMBySecurityKeyTenantTest()
         {
             var shipment = (from a in repository.context.Shipments
-                        join b in repository.context.ShipmentAdditionalCloudDatas on a.Id equals b.Id
-                        where b.IsUserIDNumberRequired == true && !a.IsCancelled && b.UserIdNumberUpdateDate == null && b.UserIdNumberXMLData != null && b.UserIdNumberXMLData.Contains("<UserIdNumberRequestPM")
+                            join b in repository.context.ShipmentAdditionalCloudDatas on a.Id equals b.Id
+                            where b.IsUserIDNumberRequired == true && !a.IsCancelled && b.UserIdNumberUpdateDate == null && b.UserIdNumberXMLData != null && b.UserIdNumberXMLData.Contains("<UserIdNumberRequestPM")
                             select a).FirstOrDefault();
 
             ShipmentMasterData masterData = (from a in repository.context.ShipmentMasterDatas
@@ -15246,12 +15246,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             return null;
         }
-        public ShipmentAdditionalCloudCustomData GetSingleShipmentAdditionalCloudCustomDataTest()
+        public ShipmentAdditionalCloudCustomData GetSingleShipmentAdditionalCloudCustomDataTest(List<int> tenants)
         {
             ShipmentAdditionalCloudCustomData data = null;
             data = (from a in repository.context.Shipments
                     join b in repository.context.ShipmentAdditionalCloudDatas on a.Id equals b.Id
-                    where b.IsPaymentRequired == true && !a.IsCancelled && b.PaymentDateTime == null && b.PaymentRequestXML != null && b.PaymentRequestXML.Contains("<RequestPayment")
+                    where tenants.Contains(a.Tenant) && b.IsPaymentRequired == true && !a.IsCancelled && b.PaymentDateTime == null && b.PaymentRequestXML != null && b.PaymentRequestXML.Contains("<RequestPayment")
                     select new ShipmentAdditionalCloudCustomData
                     {
                         ShipmentNumber = a.ShipmentNumber,
@@ -15268,7 +15268,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         Tenant = a.Tenant
                     }).FirstOrDefault();
 
-            return data;
+           return data;
         }
 
         public ShipmentAdditionalCloudCustomData GetSingleShipmentAdditionalCloudCustomData(string key, int tenant)

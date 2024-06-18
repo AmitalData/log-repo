@@ -163,14 +163,14 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
 
                 //});
                 var service = new CommonDomainService();
-                service.GetTenantLogoUriByShipmentSecurityKey(this.Tenant, this.SecurityKey).subscribe((myLogoResult: any) => {
+                service.GetTenantLogoUriByShipmentSecurityKey(this.AdditionalData.Tenant, this.SecurityKey).subscribe((myLogoResult: any) => {
 
                     this.CompanyLogo = myLogoResult.Result;
                     this.StopBusyIndicator();
 
                 });
                 //GetTenantEcommerceSupportEmail
-                service.GetTenantEcommerceSupportEmailByShipmentSecurityKey(this.Tenant, this.SecurityKey).subscribe((myTenant: any) => {
+                service.GetTenantEcommerceSupportEmailByShipmentSecurityKey(this.AdditionalData.Tenant, this.SecurityKey).subscribe((myTenant: any) => {
                     if (myTenant.Result) {
                         this.EcommerceSupportEmail = myTenant.Result;
                     }
@@ -398,7 +398,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
         if (this.serviceAgreementURL)
             open(this.serviceAgreementURL)
         else
-            DownloadManager.DownloadExternalPage(null, this.Tenant, this.TermsOfUseDocumentId);
+            DownloadManager.DownloadExternalPage(null, this.AdditionalData.Tenant, this.TermsOfUseDocumentId);
         //  }
         //});
 

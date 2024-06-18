@@ -155,7 +155,7 @@ export class UserIdNumberMobileComponent extends BaseComponent implements OnInit
                         this.AdditionalData = MyResult.Result;//AdditionalResult.Result
                         this.qaIndicator = 1;
                         var service = new CommonDomainService();
-                        service.GetTenantLogoUri(this.Tenant).subscribe((myLogoResult: any) => {
+                        service.GetTenantLogoUri(this.AdditionalData.Tenant).subscribe((myLogoResult: any) => {
 
                             this.CompanyLogo = myLogoResult.Result;
                             this.StopBusyIndicator();
