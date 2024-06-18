@@ -95,8 +95,5 @@
   <ItemGroup>
     <Folder Include="bin\Debug\" />
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="readme.txt" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

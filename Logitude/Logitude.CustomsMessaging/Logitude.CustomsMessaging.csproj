@@ -782,7 +782,6 @@
     <Content Include="MyObj\ICSharpCode.SharpZipLib.dll" />
     <Content Include="Dca\Deploy\ftpscript.txt" />
     <Content Include="Dca\Deploy\Xap\Xapftpscript.txt" />
-    <Content Include="readme.txt" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="CommonDataModel\" />

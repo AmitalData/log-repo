@@ -3618,7 +3618,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ICSharpDLL\ICSharpCode.SharpZipLib.dll" />
-    <Content Include="readme.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">

@@ -983,6 +983,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001211530095_AddLastMileStatusNameField.resx">
       <DependentUpon>202001211530095_AddLastMileStatusNameField.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001231129242_AddIsManadatory_DeclarationType.resx">
       <DependentUpon>202001231129242_AddIsManadatory_DeclarationType.cs</DependentUpon>
