@@ -6,8 +6,8 @@ Feature: Cheque Deposit
         Given the user logged in and navigates to Full Accounting workspace
         And an AR Payment with the following details
             | AccountingDate | TODAY  |
-            | CashBook       | Cash   |
-            | BankAccount    | 884477 |
+            | CashBook       | NisBox |
+            | BankAccount    | 4sq6acrd4ibh6d |
             | ForeignAmount  | 8      |
         When create AR Payment
 
@@ -17,8 +17,8 @@ Feature: Cheque Deposit
 
         Given a cheque with the following details
             | AccountingDate | TODAY   |
-            | CashBook       | Cash    |
-            | BankAccount    | 884477  |
+            | CashBook       | NisBox  |
+            | BankAccount    | 4sq6acrd4ibh6d  |
             | ForeignAmount  | 8       |
 
         When Approve the AR Payment
