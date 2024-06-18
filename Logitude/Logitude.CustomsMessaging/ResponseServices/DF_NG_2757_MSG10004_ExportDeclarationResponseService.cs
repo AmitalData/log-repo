@@ -1188,7 +1188,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 {
                     statusSoyRemarks += $"-{this._MyDeclarationPM.DeclarationNumber}";
                 }
-                else if (!string.IsNullOrEmpty(customResponse.Response.Declaration.ID.Value))
+                else if (!string.IsNullOrEmpty(customResponse.Response?.Declaration?.ID?.Value))
                 {
                     statusSoyRemarks += $"-{customResponse.Response.Declaration.ID.Value}";
                 }
