@@ -1770,24 +1770,26 @@ namespace Logitude.Accounting.BL.CoreBL
                         break;
                     }
 
+                    Logger.LogDebug(String.Format("JournalApproveService, Point 0, tenant {0}, selectedQueue {1}", response.Tenant, selectedQueue));
+
                     if (selectedQueue == JournalApproveService.K_AccountingJournalApproveMutliThreadingWR 
                         && response != null && response.Tenant != 0)
                     {
                         try
                         {
-                            Logger.LogTrace(String.Format("JournalApproveService, Point 1, tenant {0}", response.Tenant));
+                            Logger.LogDebug(String.Format("JournalApproveService, Point 1, tenant {0}", response.Tenant));
                             if (_NextDueDoneDict == null) _NextDueDoneDict = new Dictionary<int, DateTime>();
                             if (!_NextDueDoneDict.ContainsKey(response.Tenant))
                                 _NextDueDoneDict.Add(response.Tenant, DateTime.MinValue);
 
                             if (DateTime.UtcNow.Date > _NextDueDoneDict[response.Tenant].Date)  
                             {
-                                Logger.LogTrace(String.Format("JournalApproveService, Point 2, tenant {0}, date {1} ", response.Tenant, _NextDueDoneDict[response.Tenant].Date));
+                                Logger.LogDebug(String.Format("JournalApproveService, Point 2, tenant {0}, date {1} ", response.Tenant, _NextDueDoneDict[response.Tenant].Date));
 
                                 _NextDueDoneDict[response.Tenant] = DateTime.UtcNow.Date;
                                 var myDueLocalBalanceService = new DueLocalBalanceService();
                                 myDueLocalBalanceService.RunOneTenantFast(response.Tenant);
-                                Logger.LogTrace(String.Format("JournalApproveService, Point 3, tenant {0}", response.Tenant));
+                                Logger.LogDebug(String.Format("JournalApproveService, Point 3, tenant {0}", response.Tenant));
                             }
                         }
                         catch (Exception)

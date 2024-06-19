@@ -193,7 +193,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
         public void ReBuild(int tenant, string AccountId, bool fastRun = false)
         {
-            Logger.LogTrace(String.Format("ReBuild  START"));
+            Logger.LogDebug(String.Format("ReBuild  START"));
             int clientAndVendorTypeGLAccountIdsCount = -1;
             List<DueLocalBalanceM> myDueLocalBalanceListToUpdate;
             List<string> myClientAndVendorTypeGLAccountIds;
@@ -206,7 +206,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     var accountingContext = AccountingContext.GetContext(tenant);
                     if (fastRun)
                     {
-                        Logger.LogTrace(String.Format("fastRun START "+ fastRun));
+                        Logger.LogDebug(String.Format("fastRun START " + fastRun));
 
                         InitDueLocalBalanceListToUpdate(accountingContext, tenant, AccountId, true, true);
                     }
@@ -215,7 +215,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         InitDueLocalBalanceListToUpdate(accountingContext, tenant, AccountId, false, false);// WHY I CHANGE TO FALSE FALSE (FROM TRUE*2) 1 NO TIME 2 THE REVERSE DUE DATE RETURN LISt
 
                     }
-                    Logger.LogTrace(String.Format("fastRun FINISH " + fastRun));
+                    Logger.LogDebug(String.Format("fastRun FINISH " + fastRun));
                     myDueLocalBalanceListToUpdate = _QDueLocalBalanceListToUpdate.ToList();
 
                     myClientAndVendorTypeGLAccountIds = _QClientAndVendorTypeGLAccountIds.ToList();
@@ -225,12 +225,12 @@ namespace Logitude.Accounting.BL.CoreBL
                 clientAndVendorTypeGLAccountIdsCount = myClientAndVendorTypeGLAccountIds.Count;
 
                 int count = 0;
-                Logger.LogTrace(String.Format("time  of List<string> listBatch in myClientAndVendorTypeGLAccountIds.Batch(500)  " + DateTime.UtcNow.ToString()));
+                Logger.LogDebug(String.Format("time  of List<string> listBatch in myClientAndVendorTypeGLAccountIds.Batch(500)  " + DateTime.UtcNow.ToString()));
                 foreach (List<string> listBatch in myClientAndVendorTypeGLAccountIds.Batch(500))
                 {
                     count++;
-                 
-                    Logger.LogTrace(String.Format("count:  " + count +"time: "+DateTime.UtcNow.ToString()));
+
+                    Logger.LogDebug(String.Format("count:  " + count + "time: " + DateTime.UtcNow.ToString()));
                     var myDefaultListToUpdate =
                         (
                         from myAccountId in listBatch
@@ -261,7 +261,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         foreach (var defaultItem in myDefaultListToUpdate)
                         {
                             count2++;
-                            Logger.LogTrace(String.Format("count2:  " + count + "time: " + DateTime.UtcNow.ToString()));
+                            Logger.LogDebug(String.Format("count2:  " + count + "time: " + DateTime.UtcNow.ToString()));
                             var item2update = //_QDueLocalBalanceListToUpdate
                                 myDueLocalBalanceListToUpdate
                                 .FirstOrDefault(r => r.AccountId == defaultItem.AccountId);
@@ -308,7 +308,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     }
                     //Thread.Sleep(200000);//let Journal approval work 
                 }
-                Logger.LogTrace(String.Format("time  end  List<string> listBatch in myClientAndVendorTypeGLAccountIds.Batch(500)  " + DateTime.UtcNow.ToString()));
+                Logger.LogDebug(String.Format("time  end  List<string> listBatch in myClientAndVendorTypeGLAccountIds.Batch(500)  " + DateTime.UtcNow.ToString()));
             }
             catch (Exception e)
             {
@@ -603,17 +603,18 @@ namespace Logitude.Accounting.BL.CoreBL
         public void RunOneTenantFast(int tenant)
         {
 
-                try
-               {
-                  Logger.LogTrace(String.Format("ReBuild "));
+            try
+            {
+                Logger.LogDebug(String.Format("ReBuild "));
+                this.ReBuild(tenant, "", true);
                   this.ReBuild(tenant, "", true);
-                }
-                catch (Exception e)
-                {
+            }
+            catch (Exception e)
+            {
 
-                    ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "DueLocalBalanceService" + this.GetType().Name, " : RunOneTenantFast({tenant}) Method", null);
-                    Thread.Sleep(TimeSpan.FromSeconds(5));
-                }
+                ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "DueLocalBalanceService" + this.GetType().Name, " : RunOneTenantFast({tenant}) Method", null);
+                Thread.Sleep(TimeSpan.FromSeconds(5));
+            }
 
         }
     }
