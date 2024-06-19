@@ -2240,7 +2240,7 @@ namespace MeatadataGeneratorTool
                         indexElement.Attributes().ToList().ForEach(element =>
                         {
                             indexXmlElement.SetAttribute("Columns", indexElement.Attribute("Columns").Value);
-                        }
+                        });
                         if (indexElement.Attribute("Partition") != null)
                         {
                             indexXmlElement.SetAttribute("Partition", indexElement.Attribute("Partition").Value);
@@ -2253,8 +2253,7 @@ namespace MeatadataGeneratorTool
                         {
                             indexXmlElement.SetAttribute("Include", indexElement.Attribute("Include").Value);
                         }
-                            indexXmlElement.SetAttribute(element.Name.LocalName, element.Value);
-                        });
+                        indexXmlElement.SetAttribute(indexElement.Name.LocalName, indexElement.Value);
 
                         tableElement.AppendChild(indexXmlElement);
                     }
@@ -2303,7 +2302,7 @@ namespace MeatadataGeneratorTool
                 }
             }
         }
-
+        
         #endregion
 
         #region GetDataType
