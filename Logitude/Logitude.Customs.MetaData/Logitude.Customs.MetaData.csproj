@@ -99,8 +99,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ContextGenerator.tt</DependentUpon>
     </Compile>
-    <None Include="DBOthers\Procedures\usp_AgreementLevelData.dxml" />
-    <None Include="DBOthers\Procedures\usp_RegularityRequirementData.dxml" />
+    <None Include="DBOthers\Procedures\usp_CB_AgreementLevelData.dxml" />
+    <None Include="DBOthers\Procedures\usp_CB_RegularityRequirementData.dxml" />
     <None Include="DBOthers\Procedures\QueueEnqueue_succeedRequestsheets.dxml" />
     <None Include="DBOthers\Procedures\usp_NewCustomsBookMainViewSearchByText.dxml" />
     <None Include="DBOthers\Procedures\usp_NEWCustomsBookMainViewSearchByClassification.dxml" />

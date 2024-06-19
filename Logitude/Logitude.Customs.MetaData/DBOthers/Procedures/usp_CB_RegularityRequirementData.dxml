@@ -1,12 +1,13 @@
-﻿<Procedure DBType="Main" Name="usp_RegularityRequirementData" Schema="dbo" Module="Customs">
+﻿<Procedure DBType="Main" Name="usp_CB_RegularityRequirementData" Schema="dbo" Module="Customs">
   <SqlScript>
 	  <![CDATA[		
-				CREATE OR ALTER PROCEDURE [dbo].[usp_RegularityRequirementData]
+				CREATE OR ALTER PROCEDURE [dbo].[usp_CB_RegularityRequirementData]
     @CustomsItemID NVARCHAR(50)
 		AS
 		BEGIN		
 			WITH CTE AS (
 				SELECT
+					R.CustomsItemID,
 					R.ID,
 					RI.ID AS RegularityInceptionID,
 					RC.RegularityInceptionID AS RCRegularityInceptionID,
@@ -48,6 +49,8 @@
 					AND R.CountryID IS NULL
 			)
 			SELECT
+      	CustomsItemID,
+				ID,
 				RequirementValidOrigin, --  המקור החוקי לדרישה 
 				-- נובע מפרק/פרט - חסר עדיין
 				RequirementGoodsDescription, -- תיאור
@@ -61,6 +64,7 @@
 			FROM 
 				CTE
 			GROUP BY
+				CustomsItemID,
 				ID,
 				RegularityInceptionID,
 				RegularityRequirementID,
