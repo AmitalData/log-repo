@@ -99,6 +99,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ContextGenerator.tt</DependentUpon>
     </Compile>
+    <None Include="DBOthers\Procedures\usp_AgreementLevelData.dxml" />
+    <None Include="DBOthers\Procedures\usp_RegularityRequirementData.dxml" />
     <None Include="DBOthers\Procedures\QueueEnqueue_succeedRequestsheets.dxml" />
     <None Include="DBOthers\Procedures\usp_NewCustomsBookMainViewSearchByText.dxml" />
     <None Include="DBOthers\Procedures\usp_NEWCustomsBookMainViewSearchByClassification.dxml" />
@@ -130,8 +132,6 @@
     <None Include="DBScripts\Post\202310101100_AddCustomsEnvSettings.sxml" />
     <None Include="DBScripts\Post\202310031714_DeleteDeclarationStatusFieldC.sxml" />
     <None Include="DBScripts\Post\202308060942_AddINTERFACETENANTDEFINITIONS.sxml" />
-    <None Include="DBScripts\Post\202413061854_usp_RegularityRequirementData.sxml" />
-    <None Include="DBScripts\Post\202413061852_usp_AgreementLevelData.sxml" />
     <None Include="DBScripts\Post\202414041313_AddClientItemsSearchFields.sxml" />
     <None Include="DBScripts\Post\202208281500_UpdateLoadingOfDeclaration.sxml" />
     <None Include="DBOthers\Procedures\ReconnectObjectMetaDataProcedure.dxml" />
