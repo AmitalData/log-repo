@@ -27,7 +27,7 @@
   </Column>
   <Column
     Name="TransportationTypeCode"
-    Type="varchar"
+    Type="char"
     Size="1">
     <Constraints
       Nullable="true" />

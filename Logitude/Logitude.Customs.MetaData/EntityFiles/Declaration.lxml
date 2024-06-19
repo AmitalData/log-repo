@@ -3585,7 +3585,7 @@
     IsMaxLength="false"
     NoMetaDataField="false"
     GenerateInList="false"
-    IsFixedLength="false"
+    IsFixedLength="true"
     EnableAutoFill="false"
     IncludeInSearchField="false"
     AllowedinAutomationConditions="false"

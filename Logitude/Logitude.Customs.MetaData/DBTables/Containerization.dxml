@@ -121,7 +121,7 @@
   </Column>
   <Column
     Name="TransportModeId"
-    Type="varchar"
+    Type="char"
     Size="1">
     <Constraints
       Nullable="true" />
