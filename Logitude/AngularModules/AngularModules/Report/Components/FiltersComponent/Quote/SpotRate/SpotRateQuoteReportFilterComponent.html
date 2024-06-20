@@ -99,8 +99,8 @@
                                             <!-- Open Date Greater Than -->
                                             <td style="width:180px;">Open Date Greater Than:</td>
                                             <td style="width:170px;">
-                                                <LogDatePicker [NoObjectField]="true" [ObjectFieldName]="'OpenDate'"
-                                                    [DataContext]="DataContext"></LogDatePicker>
+                                                <AdvancedDatePicker [NoObjectField]="true" [ObjectFieldName]="'OpenDate'" [SelectedDateValue]="OpenDate"
+                                                    [DataContext]="DataContext" [InputType]="'date'" [TimeMode]="'12'" [ShowToolTip]="true" ></AdvancedDatePicker>
                                             </td>
 
 
@@ -111,9 +111,9 @@
                                             <!-- Expiration Date Less Than -->
                                             <td style="width:180px;">Expiration Date Less Than:</td>
                                             <td style="width:170px;">
-                                                <LogDatePicker [NoObjectField]="true"
-                                                    [ObjectFieldName]="'ExpirationDate'" [DataContext]="DataContext">
-                                                </LogDatePicker>
+                                                <AdvancedDatePicker [NoObjectField]="true" [SelectedDateValue]="ExpirationDate"
+                                                    [ObjectFieldName]="'ExpirationDate'" [DataContext]="DataContext" [InputType]="'date'" [TimeMode]="'12'" [ShowToolTip]="true">
+                                                </AdvancedDatePicker>
                                             </td>
 
                                             <td>
