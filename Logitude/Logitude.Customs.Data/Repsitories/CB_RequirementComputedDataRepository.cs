@@ -34,7 +34,7 @@ namespace Logitude.Customs.Data.Repsitories
                 {
                     connection.Open();
                     var command = connection.CreateCommand();
-                    command.CommandText = "usp_RegularityRequirementData";
+                    command.CommandText = "usp_CB_RegularityRequirementData";
                     command.CommandType = System.Data.CommandType.StoredProcedure;
 
                     command.Parameters.AddWithValue("@CustomsItemID", customsItemID);
