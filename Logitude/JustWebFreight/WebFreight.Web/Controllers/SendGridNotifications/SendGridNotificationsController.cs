@@ -1,6 +1,7 @@
 ﻿using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Utils;
 using Logitude.SystemLogs;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NPOI.Util;
 using Simplog.Data.Helpers;
@@ -32,10 +33,8 @@ namespace WebFreight.Web.Controller
         {
             try
             {
-                //using (var reader = new StreamReader(str))
-                //{
-                //    values = reader.ReadToEnd();
-                //}
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(JsonConvert.SerializeObject(values));//Log debug
+
                 var jsonData = values;
 
                 if (jsonData != null)
@@ -55,7 +54,7 @@ namespace WebFreight.Web.Controller
                         }).ToList();
 
                     int tenant = emailsList.Select(a => a.Tenant).FirstOrDefault();
-                    string communicationLogId = emailsList.Where(a => a != null).Select(a => a.CommunicationLogId).FirstOrDefault();
+                    communicationLogId = emailsList.Where(a => a != null).Select(a => a.CommunicationLogId).FirstOrDefault();
                     string deploymentStage = emailsList.Where(a => a != null).Select(a => a.DeploymentStage).FirstOrDefault();
 
                     if (deploymentStage == LogitudeSettings.DeploymentStage)
@@ -63,7 +62,7 @@ namespace WebFreight.Web.Controller
                         InsertNewAnalyzeQueue(emailsList, tenant);
                     }
 
-                    Logger.LogInfo("הגיע בהצלחה SendGrid {0}", emailsList[0].CommunicationLogId);
+                    NetCommonHelper.Logger.DevLog.Instance.WriteInfo("הגיע בהצלחה");//Log debug
                 }
 
 
@@ -76,7 +75,7 @@ namespace WebFreight.Web.Controller
             {
                 string errorMessage = errorInfo.Message;
                 AzureLog.SaveLogsInStorage("SendGrid Page error  " + Environment.NewLine + errorMessage, "E", DateTime.Now, errorInfo.Message, errorInfo.StackTrace, 0, null, null, null);
-                Logger.LogInfo("נכשל", errorInfo);
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(errorInfo);//Log debug
 
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(errorInfo));
 
