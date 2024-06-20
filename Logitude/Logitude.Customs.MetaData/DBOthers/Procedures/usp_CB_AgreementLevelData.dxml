@@ -1,0 +1,46 @@
+﻿<Procedure DBType="Main" Name="usp_CB_AgreementLevelData" Schema="dbo" Module="Customs">
+  <SqlScript>
+	  <![CDATA[		
+		CREATE OR ALTER PROCEDURE [dbo].[usp_CB_AgreementLevelData]
+				@CustomsItemIDNum NVARCHAR(50),
+				@MeasurementUnitMalamId INT
+			AS
+			BEGIN
+				select 
+					CASE     -- מדינות ומכס כללי
+						WHEN T.Title = 'מכס כללי' THEN T.Title
+						WHEN T.Title = 'מס קניה' THEN T.Title
+					ELSE TA.Title  END AS TradeAgreementName, -- מדינות ומכס כללי
+          CustomsItemIDNum,
+					TariffID,
+					CustomsRateWithout.CalculationReference AS CustomsRateWithout, -- שיעור מכס 
+					CustomsRateWithin.CalculationReference AS CustomsRateWithin, -- שיעור מכס במסגרת מכסה 
+					TCD.QuotaID, -- מספר מכסה
+					M.LOCALNAME AS MeasurementUnit, --יחידה סטטיסטית 
+					TCD.StartDate, -- בתוקף מ
+					TCD.EndDate, -- בתוקף עד 
+					CustomsRateWithout.OptionalTaxAddition -- תמ"א
+					from customs.CB_TariffComputedDatas TCD
+					left join customs.CB_Tariffs T ON T.ID = TCD.TariffID
+					left join customs.CB_TradeAgreements TA ON TA.ID = TCD.TradeAgreementID
+					left join CUSTOMS.CB_ComputationMethodDatas CustomsRateWithout ON CustomsRateWithout.ID = TCD.WithoutQuota_ComputationID
+					left join CUSTOMS.CB_ComputationMethodDatas CustomsRateWithin ON CustomsRateWithin.ID = TCD.WithinQuota_ComputationID
+					left join CUSTOMS.MEASURMENTUNITS M ON M.MALAMID = @MeasurementUnitMalamId -- פרמטר שנשלח מהUI
+					--    CustomsItemIDNum = פרמטר שנשלח מהUI
+					where 
+						TCD.CustomsItemIDNum = @CustomsItemIDNum 
+						AND TCD.StartDate <= GETDATE()
+						AND TCD.EndDate > GETDATE()
+					ORDER BY TCD.TradeAgreementID 
+			END
+
+
+    ]]>
+  </SqlScript>
+
+  <OracleScript>
+    <![CDATA[
+	
+    ]]>
+  </OracleScript>
+</Procedure>
