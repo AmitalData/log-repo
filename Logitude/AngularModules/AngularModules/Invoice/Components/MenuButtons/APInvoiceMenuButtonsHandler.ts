@@ -430,6 +430,7 @@ if (response != null) {
     }
 
     CheckDuplication() {
+        
         var service: InvoiceDomainService = new InvoiceDomainService();
         service.CheckVendor_NumberDuplication(this.EntityPM.VendorId, this.EntityPM.InvoiceNumber, this.EntityPM.Id).subscribe((myResponse: ServiceResponse) => {
             if (myResponse.HasError) {
@@ -447,7 +448,7 @@ if (response != null) {
                         confirmWindow.YesButtonText = TextCodeTranslator.Translate("General.B.Save");
                         confirmWindow.NoButtonText = TextCodeTranslator.Translate("General.B.Cancel");
                         confirmWindow.ShowCancelButton = false;
-                        confirmWindow.Show(TextCodeTranslator.Translate("APInvoice.M.SameInvoiceNumber"));
+                        confirmWindow.Show(TextCodeTranslator.Translate("APInvoice.M.SameInvoiceNumber")+": "+this.EntityPM.InvoiceNumber);
 
                         confirmWindow.WindowClosed.subscribe(c => {
                             if (confirmWindow.Yes) {
