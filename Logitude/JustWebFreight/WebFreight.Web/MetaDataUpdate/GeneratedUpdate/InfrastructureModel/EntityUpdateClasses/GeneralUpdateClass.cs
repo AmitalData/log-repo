@@ -731,11 +731,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
 		   Feature GeneralFeature_CONFIRMATIONNUMBERDEFAULTS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CONFIRMATIONNUMBERDEFAULTS", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.CONFIRMATIONNUMBERDEFAULTS", NameTextCodeDefaultText = @"Confirmation number defaults" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
 
-    
-	    
-		}
+           Feature GeneralFeature_CUSTOMSSHIPMENTS = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CUSTOMSSHIPMENTS", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.CUSTOMSSHIPMENTS", NameTextCodeDefaultText = @"Customs Shipments" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes, GeneralObjectTable);
 
-	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
+
+
+        }
+
+        public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
 			ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault(); 
             AddEventTypes.AddEventType(new EventTypeDetails()
