@@ -105057,6 +105057,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;WarehouseLegWarehouseName&quot;"
     ListPropertyPath="&quot;WarehouseLegWarehouseName&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -107076,6 +107077,62 @@
         ColumnWidth="150" />
     </QueryColumns>
     <QueryFilters />
+  </Query>
+  <Query
+    Code="&quot;CustomsShipments&quot;"
+    TextCode="&quot;Customs Shipments&quot;"
+    QueryGroupCode="&quot;SHIP&quot;"
+    IndexOrder="22"
+    ObjectTableName="&quot;Shipment&quot;"
+    QuerySection="&quot;Shipment&quot;"
+    SystemLevel="true"
+    IsAddNewEntity="true"
+    IsPackagable="true"
+    DefaultSortName="&quot;CreateDateTime&quot;"
+    DefaultSortDirection="&quot;Ascending&quot;"
+    IsSpellChecked="false">
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;CustomsShipments&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;TransportModeId&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;CustomsShipments&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;CreateDateTime&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;CustomsShipments&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;ShipmentNumber&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;CustomsShipments&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;ShipmentType&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;CustomsShipments&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;CustomerName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;CustomsShipments&quot;"
+        IndexOrder="5"
+        ObjectFieldName="&quot;StatusName&quot;"
+        ColumnWidth="100" />
+    </QueryColumns>
+    <QueryFilters>
+      <QueryFilter
+        QueryCode="&quot;CustomsShipments&quot;"
+        PredefinedValue="&quot;C&quot;"
+        ObjectFieldName="&quot;DirectionId&quot;"
+        IsPredefined="true"
+        Operator="&quot;Equal&quot;"
+        IndexOrder="0"
+        CustomPredefined="false" />
+    </QueryFilters>
   </Query>
   <Screen
     Name="&quot;Header Screen&quot;"
