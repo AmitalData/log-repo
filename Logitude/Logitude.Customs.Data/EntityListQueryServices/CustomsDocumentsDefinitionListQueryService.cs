@@ -21,7 +21,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
     {
 	    private IQueryable<CustomsDocumentsDefinitionList> GetIqueryableList(IQueryable<CustomsDocumentsDefinition> iQueryable)
         {
-		IQueryable<CustomsDocumentsDefinitionList> query = (from a in iQueryable.Include("CustomDocumentType").Include("CustomsTransportMode").Include("GovernmentProcedureType").Include("CargoIdentifireType").Include("LeadDocumentType")
+		IQueryable<CustomsDocumentsDefinitionList> query = (from a in iQueryable.Include("CustomDocumentType").Include("TransportMode").Include("GovernmentProcedureType").Include("CargoIdentifireType").Include("LeadDocumentType")
                                                             select new CustomsDocumentsDefinitionList()
 											                {
 					                                            Id = a.Id,
@@ -33,7 +33,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                 ProcessTypeCode = a.ProcessTypeCode,
                                                                 ProcessTypeName = a.GovernmentProcedureType != null ? a.GovernmentProcedureType.LocalName : null,
                                                                 TransportationTypeCode = a.TransportationTypeCode,
-                                                                TransportationTypeName = a.CustomsTransportMode != null ? a.CustomsTransportMode.LocalName : null,
+                                                                TransportationTypeName = a.TransportMode != null ? a.TransportMode.LocalName : null,
                                                                 Mandatory = a.Mandatory,
                                                                 Inactive = a.Inactive,
                                                                 DeclarationTypeCode = a.DeclarationTypeCode,

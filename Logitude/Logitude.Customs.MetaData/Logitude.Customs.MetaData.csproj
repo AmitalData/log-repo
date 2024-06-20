@@ -137,6 +137,7 @@
     <None Include="DBScripts\Post\202310031714_DeleteDeclarationStatusFieldC.sxml" />
     <None Include="DBScripts\Post\202308060942_AddINTERFACETENANTDEFINITIONS.sxml" />
     <None Include="DBScripts\Post\202422051020_UpdateCustomsEnvironmentSettings.sxml" />
+    <None Include="DBScripts\Post\20241006_UpdateTransportModeInTables.sxml" />
     <None Include="DBScripts\Post\202414041313_AddClientItemsSearchFields.sxml" />
     <None Include="DBScripts\Post\202208281500_UpdateLoadingOfDeclaration.sxml" />
     <None Include="DBOthers\Procedures\ReconnectObjectMetaDataProcedure.dxml" />
@@ -226,6 +227,8 @@
     <None Include="DBScripts\Pre\20221220_AddCustomsHSMSignWR_Global.sxml" />
     <None Include="DBScripts\Pre\20221220_AddCustomsHSMSignWR_MAIN.sxml" />
     <None Include="DBScripts\Pre\20230310_CreateTypeVarcharTable.sxml" />
+    <None Include="DBScripts\Pre\20240610_UpdateTransportMode.sxml" />
+    <None Include="DBScripts\Post\20240610_UpdateTransportmodeLocalName.sxml" />
     <None Include="DBTables\AcceptanceStatus.dxml" />
     <None Include="DBTables\AccumalationState.dxml" />
     <None Include="DBTables\ActionCode.dxml" />
