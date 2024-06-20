@@ -910,7 +910,8 @@ namespace Logitude.Accounting.Data.Repositories
                //include All AccountTypeCode  client
                qClientTenant =
                    qAllInTenant
-                   .Where(a => a.AccountTypeCode == "2");//2	����	Client
+                   .Where(a => a.AccountTypeCode == "2")
+                   ;//2	����	Client
             
            }
 
@@ -926,7 +927,8 @@ namespace Logitude.Accounting.Data.Repositories
                //include All AccountTypeCode  vendors
                qVendorTenant =
                    qAllInTenant
-                   .Where(a => a.AccountTypeCode == "3");// 3	���	Vendor
+                   .Where(a => a.AccountTypeCode == "3")
+                   ;// 3	���	Vendor
             
            }
 
@@ -942,7 +944,8 @@ namespace Logitude.Accounting.Data.Repositories
                //include All AccountTypeCode  Job
                qJobTenant =
                    qAllInTenant
-                   .Where(a => a.AccountTypeCode == "4");//4	�'��	Job
+                   .Where(a => a.AccountTypeCode == "4")
+                   ;//4	�'��	Job
 
            }
 
@@ -956,7 +959,8 @@ namespace Logitude.Accounting.Data.Repositories
                //include All AccountTypeCode  file
                qFileTenant =
                    qAllInTenant
-                   .Where(a => a.AccountTypeCode == "5");////5	���	File
+                   .Where(a => a.AccountTypeCode == "5")
+                   ;////5	���	File
 
            }
 
@@ -989,7 +993,252 @@ namespace Logitude.Accounting.Data.Repositories
            return qQTrail;
        }
 
-       partial void onUpdate()//Partial Methods Definition in Generated
+
+        // Upper Levels, i.e. ChartOfAcc Type, ChartOfAcc
+        public IQueryable<GLAccount> GetQAllCardsAndDetailsAccType_Upper(int Tenant
+    , string clientControlAccountId
+    , string vendorControlAccountId
+    , List<string> jobControlAccountId_list
+    , string fileControlAccountId
+    )
+        {
+            var qAllInTenant = this.GetAll(Tenant);
+            IQueryable<GLAccount> qQTrail = null;
+            IQueryable<GLAccount> qClientTenant = null;
+            IQueryable<GLAccount> qVendorTenant = null;
+            IQueryable<GLAccount> qJobTenant = null;
+            IQueryable<GLAccount> qFileTenant = null;
+
+
+
+            var qCardTenant =
+            qAllInTenant
+              ////   .Where(a => a.AccountTypeCode == "1")// card    1	�����	Card
+                ;
+            var excludelist = new List<string>();
+
+            if (!string.IsNullOrWhiteSpace(clientControlAccountId))
+            {
+                //exclude clientControlAccountId
+                //qCardTenant=qCardTenant.Where(a => a.Id != clientControlAccountId);
+                excludelist.Add(clientControlAccountId);
+                //include All AccountTypeCode  client
+                qClientTenant =
+                    qAllInTenant
+                  ////   .Where(a => a.AccountTypeCode == "2")
+                    ;//2	����	Client
+
+            }
+
+
+
+
+            if (!string.IsNullOrWhiteSpace(vendorControlAccountId))
+            {
+                //exclude vendorControlAccountId
+                //qCardTenant=qCardTenant.Where(a => a.Id != vendorControlAccountId);
+                excludelist.Add(vendorControlAccountId);
+
+                //include All AccountTypeCode  vendors
+                qVendorTenant =
+                    qAllInTenant
+                   ////   .Where(a => a.AccountTypeCode == "3")
+                    ;// 3	���	Vendor
+
+            }
+
+
+
+            //if (!string.IsNullOrWhiteSpace(jobControlAccountId_list))
+            if (jobControlAccountId_list != null && jobControlAccountId_list.Count > 0)
+            {
+                //exclude jobControlAccountId
+                //qCardTenant=qCardTenant.Where(a => a.Id != jobControlAccountId);
+                excludelist.AddRange(jobControlAccountId_list);
+
+                //include All AccountTypeCode  Job
+                qJobTenant =
+                    qAllInTenant
+                  ////    .Where(a => a.AccountTypeCode == "4")
+                    ;//4	�'��	Job
+
+            }
+
+
+            if (!string.IsNullOrWhiteSpace(fileControlAccountId))
+            {
+                //exclude fileControlAccountId
+                //qCardTenant=qCardTenant.Where(a => a.Id != fileControlAccountId);
+                excludelist.Add(fileControlAccountId);
+
+                //include All AccountTypeCode  file
+                qFileTenant =
+                    qAllInTenant
+                  ////    .Where(a => a.AccountTypeCode == "5")
+                    ;////5	���	File
+
+            }
+
+            if (excludelist.Count() > 0)
+            {
+                qCardTenant = qCardTenant.Where(a => excludelist.Contains(a.Id) == false);
+            }
+
+            qCardTenant = qCardTenant.Where(a => a.IsControlAccount == false);
+            if (qClientTenant != null) qClientTenant = qClientTenant.Where(a => a.IsControlAccount == false);
+            if (qVendorTenant != null) qVendorTenant = qVendorTenant.Where(a => a.IsControlAccount == false);
+            if (qJobTenant != null) qJobTenant = qJobTenant.Where(a => a.IsControlAccount == false);
+            if (qFileTenant != null) qFileTenant = qFileTenant.Where(a => a.IsControlAccount == false);
+
+            qQTrail = qCardTenant;
+
+
+            if (qClientTenant != null)
+            {
+                qQTrail = qQTrail.Union(qClientTenant);
+            }
+            if (qVendorTenant != null)
+            {
+                qQTrail = qQTrail.Union(qVendorTenant);
+            }
+
+            if (qJobTenant != null)
+            {
+                qQTrail = qQTrail.Union(qJobTenant);
+            }
+            if (qFileTenant != null)
+            {
+                qQTrail = qQTrail.Union(qFileTenant);
+            }
+
+
+            return qQTrail;
+        }
+
+
+        // Lower Level, i.e. GLAccount
+        public IQueryable<GLAccount> GetQAllCardsAndDetailsAccType_Lower(int Tenant
+    , string clientControlAccountId
+    , string vendorControlAccountId
+    , List<string> jobControlAccountId_list
+    , string fileControlAccountId
+    ) 
+        {
+            var qAllInTenant = this.GetAll(Tenant);
+            IQueryable<GLAccount> qQTrail = null;
+            IQueryable<GLAccount> qClientTenant = null;
+            IQueryable<GLAccount> qVendorTenant = null;
+            IQueryable<GLAccount> qJobTenant = null;
+            IQueryable<GLAccount> qFileTenant = null;
+
+
+
+            var qCardTenant =
+            qAllInTenant
+                 .Where(a => a.AccountTypeCode == "1")// card    1	�����	Card
+                ;
+            var excludelist = new List<string>();
+
+            if (!string.IsNullOrWhiteSpace(clientControlAccountId))
+            {
+                //exclude clientControlAccountId
+                //qCardTenant=qCardTenant.Where(a => a.Id != clientControlAccountId);
+                excludelist.Add(clientControlAccountId);
+                //include All AccountTypeCode  client
+                qClientTenant =
+                    qAllInTenant
+                     .Where(a => a.AccountTypeCode == "2")
+                    ;//2	����	Client
+
+            }
+
+
+
+
+            if (!string.IsNullOrWhiteSpace(vendorControlAccountId))
+            {
+                //exclude vendorControlAccountId
+                //qCardTenant=qCardTenant.Where(a => a.Id != vendorControlAccountId);
+                excludelist.Add(vendorControlAccountId);
+
+                //include All AccountTypeCode  vendors
+                qVendorTenant =
+                    qAllInTenant
+                      .Where(a => a.AccountTypeCode == "3")
+                    ;// 3	���	Vendor
+
+            }
+
+
+
+            //if (!string.IsNullOrWhiteSpace(jobControlAccountId_list))
+            if (jobControlAccountId_list != null && jobControlAccountId_list.Count > 0)
+            {
+                //exclude jobControlAccountId
+                //qCardTenant=qCardTenant.Where(a => a.Id != jobControlAccountId);
+                excludelist.AddRange(jobControlAccountId_list);
+
+                //include All AccountTypeCode  Job
+                qJobTenant =
+                    qAllInTenant
+                      .Where(a => a.AccountTypeCode == "4")
+                    ;//4	�'��	Job
+
+            }
+
+
+            if (!string.IsNullOrWhiteSpace(fileControlAccountId))
+            {
+                //exclude fileControlAccountId
+                //qCardTenant=qCardTenant.Where(a => a.Id != fileControlAccountId);
+                excludelist.Add(fileControlAccountId);
+
+                //include All AccountTypeCode  file
+                qFileTenant =
+                    qAllInTenant
+                      .Where(a => a.AccountTypeCode == "5")
+                    ;////5	���	File
+
+            }
+
+            if (excludelist.Count() > 0)
+            {
+                qCardTenant = qCardTenant.Where(a => excludelist.Contains(a.Id) == false);
+            }
+
+            qCardTenant = qCardTenant.Where(a => a.IsControlAccount == false);
+            if (qClientTenant != null) qClientTenant = qClientTenant.Where(a => a.IsControlAccount == false);
+            if (qVendorTenant != null) qVendorTenant = qVendorTenant.Where(a => a.IsControlAccount == false);
+            if (qJobTenant != null) qJobTenant = qJobTenant.Where(a => a.IsControlAccount == false);
+            if (qFileTenant != null) qFileTenant = qFileTenant.Where(a => a.IsControlAccount == false);
+
+            qQTrail = qCardTenant;
+
+
+            if (qClientTenant != null)
+            {
+                qQTrail = qQTrail.Union(qClientTenant);
+            }
+            if (qVendorTenant != null)
+            {
+                qQTrail = qQTrail.Union(qVendorTenant);
+            }
+
+            if (qJobTenant != null)
+            {
+                qQTrail = qQTrail.Union(qJobTenant);
+            }
+            if (qFileTenant != null)
+            {
+                qQTrail = qQTrail.Union(qFileTenant);
+            }
+
+
+            return qQTrail;
+        }
+
+
+        partial void onUpdate()//Partial Methods Definition in Generated
        {
            InsureUsingOnlyByUpdateService();
        }

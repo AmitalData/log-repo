@@ -76,17 +76,22 @@
     }
 
     .tabs li {
+        width: 116px;
         padding: 10px 20px;
         border-top: 5px solid #b1b1b1;
         background-color: #eee;
         border-radius: 0px;
         cursor: pointer;
-        margin: 1px;
+        margin: 2px;
     }
 
     .tabs li.active {
-        border-top: 5px solid #d35400;
-        background-color: #f7c8c6;
+        border-top: 5px solid;
+        background-color: rgba(0, 0, 0, 0.1);
+        font-weight: bold;
+        text-decoration: underline;
+        color: #333;
+        box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
     }
 
     .content textarea {
@@ -153,13 +158,13 @@
 
 <div class="background">
     <div class="container">
-        <img class="logo logo-spacing" alt="logo" src="../../../Images/ApplicationLogo/UnifreightLogo.png" />
+        <img class="logo logo-spacing" alt="logo" src="./Images/ApplicationLogo/UnifreightLogo.png" />
         <div class="form-container" [class.blur]="formError">
             <form [formGroup]="surveyForm" (ngSubmit)="onSubmit()" *ngIf="!formSubmitted">
                 <h5 class="title">{{ howSatisfiedAreYou }}</h5>
                 <ul class="tabs">
                     <li *ngFor="let tab of tabs" [class.active]="activeTab === tab.content"
-                        (click)="setActiveTab(tab.content)">
+                        (click)="setActiveTab(tab.content)" [style.border-top-color]="tab.mainColor" [style.background-color]="tab.secondaryColor">
                         {{ tab.content }}
                     </li>
                 </ul>

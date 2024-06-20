@@ -1,0 +1,12 @@
+﻿<Script DBType="Main" Module="Accounting" AOT="false">
+  <Sql Version="1">
+    <![CDATA[
+	
+IF NOT EXISTS (SELECT * FROM sys.schemas WHERE name = 'QueryReports')
+BEGIN
+    EXEC ('CREATE SCHEMA QueryReports;');
+END
+		
+     ]]>
+ </Sql>
+</Script>

@@ -13,6 +13,8 @@ namespace Logitude.ShipmentTests.Models.Accounting.ARInvoice
         public string ConcurrencyGUID { get; set; }
         public string NewConcurrencyGUID { get; set; }
         public string IssuedByUserId { get; set; }
+        public string ConfirmationNumberStatus { get; set; }
+
         public string ARInvoiceTypeCode { get; set; }
         public string VATNumber { get; set; }
         public DateTime? InvoiceDate { get; set; }

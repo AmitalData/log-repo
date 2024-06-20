@@ -743,7 +743,7 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
                 qLedgerTransaction = qLedgerTransaction.Where(record => record.AccountId == gLAccountId);
             }
 
-            var qYeartransferLedgerTransaction =
+            var qYeartransferLedgerTransactionAll =
                 (from record in qLedgerTransaction
 
                      //context.LedgerTransactions
@@ -751,9 +751,20 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
                      //where EntityFunctions.TruncateTime(record.AccountingDate) == beginOfYear
 
                  join j in qYearTransferJournals
-on record.JournalId equals j.Id
+                        on record.JournalId equals j.Id
 
                  select record);
+
+
+            var qYeartransferLedgerTransaction =
+                (from record in qYeartransferLedgerTransactionAll
+
+
+            join acc in context.GLAccounts.Where(glac => glac.ChartOfAccountsTypeCode == "1" || glac.ChartOfAccountsTypeCode == "2") // Revenues or Expenses
+                        on record.AccountId equals acc.Id
+
+                select record);
+
             return qYeartransferLedgerTransaction;
         }
 

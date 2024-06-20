@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;0f00&quot;"
+  Code="&quot;f827&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -3855,6 +3855,18 @@
       Code="&quot;Accounting.O.TaxLineTitle&quot;"
       DefaultText="&quot;New tax deduction period&quot;"
       LocalDefaultText="&quot;תקופת ניכוי חדשה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.O.TaxRepProblem&quot;"
+      DefaultText="&quot;The problem is in the line&quot;"
+      LocalDefaultText="&quot;הבעיה מצויה בשורה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.O.TaxRepProblem_2&quot;"
+      DefaultText="&quot;of this report in Journal No&quot;"
+      LocalDefaultText="&quot;בדוח זה בפקודת יומן מספר&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
@@ -8308,6 +8320,15 @@
       FeatureTextCodeCode="&quot;General.Features.General.Features.ReleaseSettings&quot;"
       FeatureDefaultText="&quot;Release Settings&quot;"
       IsPackagable="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;CONFIRMATIONNUMBERDEFAULTS&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.CONFIRMATIONNUMBERDEFAULTS&quot;"
+      FeatureDefaultText="&quot;Confirmation number defaults&quot;"
+      IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />

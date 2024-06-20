@@ -13,6 +13,9 @@ using Simplog.Server.Infrastructure;
 using Simplog.Data.CommonDataModel.Repositories;
 using System.Runtime.Remoting.Contexts;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
+using System.Data.SqlClient;
+using Simplog.Data.Helpers;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace Logitude.BL.InfrastructureModel.EntityQueries
 {
@@ -585,9 +588,57 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             this.repository.context.SaveChanges();
 
         }
-    }
+		public List<Procedure> GetProceduresBySchema(string schemaId,int tenant)
+		{
+            string key = "proceduresBySchema";
+			List<Procedure> procedures = new List<Procedure>();
 
-    public class CustomSchedulerHistory
+			if (HttpContext.Current != null && CacheManager.CacheWrapper.Get(key) != null)
+            {
+                procedures = (List<Procedure>)CacheManager.CacheWrapper.Get(key);
+
+			}
+            else
+            {
+				string connectionString = TenantServerConfigration.GetDbConnection(tenant);
+
+			  	string query = @"
+               SELECT (SCHEMA_NAME([schema_id]) + '.' + Name) as Code,Name
+               FROM sys.procedures
+               WHERE SCHEMA_NAME([schema_id]) = '" + schemaId + "'";
+
+				using (SqlConnection connection = new SqlConnection(connectionString))
+				{
+					connection.Open();
+
+					using (SqlCommand command = new SqlCommand(query, connection))
+					{
+						using (SqlDataReader reader = command.ExecuteReader())
+						{
+							while (reader.Read())
+							{
+								Procedure procedure = new Procedure
+								{
+									Code = reader["Code"].ToString(),
+									Name = reader["Name"].ToString()
+								};
+								procedures.Add(procedure);
+							}
+						}
+					}
+				}
+                CacheManager.CacheWrapper.Insert(key, procedures);
+			}				
+            return procedures;
+		}
+	}
+	public class Procedure
+	{
+		public string Code { get; set; }
+		public string Name { get; set; }
+
+	}
+	public class CustomSchedulerHistory
     {
         public int HistoryDuration { get; set; }
     }

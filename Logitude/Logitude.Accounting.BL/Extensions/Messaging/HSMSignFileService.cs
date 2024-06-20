@@ -1,4 +1,5 @@
-﻿using Logitude.Accounting.Def.EntityPMs;
+﻿using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Accounting.Def.EntityQueryServicesExt;
 using Logitude.Accounting.Def.EntityUpdateServicesExt;
 using Logitude.BL.InvoiceModel.Tools;
@@ -157,7 +158,7 @@ namespace Logitude.Accounting.BL.Messaging
         {
             IFullAccountingSettingQueryServiceExt query = ContainerAccessor.Container.Resolve(typeof(IFullAccountingSettingQueryServiceExt), "FullAccountingSettingQueryServiceExt", new ParameterOverride("", 1)) as IFullAccountingSettingQueryServiceExt;
 
-            FullAccountingSettingPM accountingSettingsTenant0 = query.GetFullAccountingSettingByTenant(0);
+            FullAccountingSetting accountingSettingsTenant0 = query.GetFullAccountingSettingByTenantShort(0);
             if (string.IsNullOrWhiteSpace(accountingSettings.HSMaddress))
             {
                 throw new ArgumentNullException("HSMaddress");

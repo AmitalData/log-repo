@@ -1,4 +1,5 @@
 ﻿using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Accounting.Def.EntityQueryServicesExt;
 using System;
@@ -19,6 +20,12 @@ namespace Logitude.Accounting.BL.EntityQueryServiceExt
         {
             FullAccountingSettingQueryService query = new FullAccountingSettingQueryService(tenant);
             return query.GetSingleFullAccountingSetting(tenant);
+        }
+
+        public FullAccountingSetting GetFullAccountingSettingByTenantShort(int tenant)
+        {
+            FullAccountingSettingQueryService query = new FullAccountingSettingQueryService(tenant);
+            return query.GetFullAccountingSettingByTenantShort(tenant);
         }
     }
 }

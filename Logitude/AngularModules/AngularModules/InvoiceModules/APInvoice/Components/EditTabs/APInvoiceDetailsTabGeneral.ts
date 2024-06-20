@@ -108,8 +108,8 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
 
     private InitializeVendorLov() {
         if (this.accountingActivated) {
-            this.DisplayFieldsFromList = "Code,CalculatedEnglishName,GLAccountDisplayNumber,CountryCode,PartnerTypeName";
-            this.DisplayLocalFieldsFromList = "Code,CalculatedLocalName,GLAccountDisplayNumber,CountryCode,PartnerTypeName";
+            this.DisplayFieldsFromList = "Code,GLAccountDisplayNumber,CalculatedEnglishName,PartnerTypeName,CountryCode";
+            this.DisplayLocalFieldsFromList = "Code,GLAccountDisplayNumber,CalculatedLocalName,PartnerTypeName,CountryCode";
             this.VendorLovSizeForFullAccounting = 550;
             this.forceShowLocalAndEnglishColumns = true;
             this.FillLOVColumnsWidths();
@@ -121,13 +121,13 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     FillLOVColumnsWidths()
     {
         this.ColumnsWidths = [
-            { ColumnName: 'Code', Width: 100 },
+            { ColumnName: 'Code', Width: 120 },
             { ColumnName: 'CalculatedEnglishName', Width: 120 },
             { ColumnName: 'CalculatedLocalName', Width: 120 },
             { ColumnName: 'LocalName', Width: 120 },
             { ColumnName: 'GLAccountDisplayNumber', Width: 120 },
             // { ColumnName: 'CityName', Width: 85 },
-            { ColumnName: 'CountryCode', Width: 60 },
+            { ColumnName: 'CountryCode', Width: 120 },
             { ColumnName: 'PartnerTypeName', Width: 60 }
         ];
     }
@@ -238,6 +238,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         }
 
         this.UIProperties.SetEnabled("ConfirmationNumber", this.ObjectTableName, true);
+
         this.SetUIProperties_DueDate();
         this.SetUIProperties_VATNumber();
         this.SetUIProperties_ExchangeRate();
@@ -1106,7 +1107,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             this.EntityPM.ConfirmationNumber = newValue;
         }
     }
-
+   
     get AccountingDate() { return this.EntityPM.AccountingDate; }
     set AccountingDate(value: Date) {
         if (this.EntityPM.AccountingDate != value) {

@@ -86,7 +86,15 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
                 _AccountingCurrencyId = (new AccountingSettingResolver()).ResolveAccountingCurrencyId(_TrailReportParam.Tenant);
 
-                GetGLAccountCardPopulationByParam();
+                var level = _TrailReportParam.MyTrailReportLevel;
+                if (level == ReportLevel.ChartofaccountType || level == ReportLevel.Chartofaccount)
+                {
+                    GetGLAccountCardPopulationByParam_Upper(); 
+                }
+                else
+                {
+                    GetGLAccountCardPopulationByParam_Lower();
+                }
 
                 Create4MainQueriesPeriod();
 
@@ -457,6 +465,150 @@ into groupBy_currency
                 );
         }
 
+        private void GetGLAccountCardPopulationByParam_Upper()
+        {
+            var repoGLAccount = new GLAccountRepository(_AccountingContext);
+            var myQBaseAllCardsAndDetailsAccType = //Get The Account List
+                repoGLAccount.
+                GetQAllCardsAndDetailsAccType_Upper(
+                _TrailReportParam.Tenant,
+                null, //GetClientContolAcc(_FullAccountingSetting),
+                null, //GetVendorContolAcc(_FullAccountingSetting),
+                null, //GetJobContolAcc(_FullAccountingSetting),
+                null )//GetFileContolAcc(_FullAccountingSetting))
+                //.Where(a => !a.Inactive)
+                ;
+            if (_TrailReportParam.ChartOfAccountsIdList.Count > 0)
+            {
+                myQBaseAllCardsAndDetailsAccType = myQBaseAllCardsAndDetailsAccType
+                    .Where(r => _TrailReportParam.ChartOfAccountsIdList.Contains(r.ChartOfAccountsId));
+            }
+            if (_TrailReportParam.ChartOfAccountsTypeCodeList.Count > 0)
+            {
+                myQBaseAllCardsAndDetailsAccType = myQBaseAllCardsAndDetailsAccType
+                    .Where(r => _TrailReportParam.ChartOfAccountsTypeCodeList.Contains(r.ChartOfAccountsTypeCode));
+            }
+
+            if (!String.IsNullOrWhiteSpace(_TrailReportParam.Category1))
+            {
+                myQBaseAllCardsAndDetailsAccType = myQBaseAllCardsAndDetailsAccType
+                    .Where(a => a.Category1Id == _TrailReportParam.Category1);
+            }
+            if (!String.IsNullOrWhiteSpace(_TrailReportParam.Category2))
+            {
+                myQBaseAllCardsAndDetailsAccType = myQBaseAllCardsAndDetailsAccType
+                    .Where(a => a.Category2Id == _TrailReportParam.Category2);
+            }
+            if (!String.IsNullOrWhiteSpace(_TrailReportParam.Category3))
+            {
+                myQBaseAllCardsAndDetailsAccType = myQBaseAllCardsAndDetailsAccType
+                    .Where(a => a.Category3Id == _TrailReportParam.Category3);
+            }
+            if (!String.IsNullOrWhiteSpace(_TrailReportParam.Category4))
+            {
+                myQBaseAllCardsAndDetailsAccType = myQBaseAllCardsAndDetailsAccType
+                    .Where(a => a.Category4Id == _TrailReportParam.Category4);
+            }
+            if (!String.IsNullOrWhiteSpace(_TrailReportParam.Category5))
+            {
+                myQBaseAllCardsAndDetailsAccType = myQBaseAllCardsAndDetailsAccType
+                    .Where(a => a.Category5Id == _TrailReportParam.Category5);
+            }
+
+
+            QBaseAllCardsAndDetailsAccType = (
+                from a in myQBaseAllCardsAndDetailsAccType
+                select new AccountCOAM //Made 4 Short(Projoction) +Algant+Fast SQL
+                {
+                    Id = a.Id,
+                    Tenant = a.Tenant,
+                    AccountTypeCode = a.AccountTypeCode,
+                    EnglishName = a.EnglishName,
+                    ChartOfAccountsTypeCode = a.ChartOfAccountsTypeCode,
+                    ChartOfAccountsId = a.ChartOfAccountsId,
+                    IsControlAccount = a.IsControlAccount,
+                    ParentId = a.ParentAccountId,
+                    DisplayNumber = a.DisplayNumber,
+                    LocalName = a.LocalName,
+                    CurrencyId = a.CurrencyId,
+                    IsMultiCurrency = a.IsMultiCurrency,
+
+                }
+                );
+        }
+
+        private void GetGLAccountCardPopulationByParam_Lower()
+        {
+            var repoGLAccount = new GLAccountRepository(_AccountingContext);
+            var myQBaseAllCardsAndDetailsAccType = //Get The Account List
+                repoGLAccount.
+                GetQAllCardsAndDetailsAccType_Lower(
+                _TrailReportParam.Tenant,
+                GetClientContolAcc(_FullAccountingSetting),
+                GetVendorContolAcc(_FullAccountingSetting),
+                GetJobContolAcc(_FullAccountingSetting),
+                GetFileContolAcc(_FullAccountingSetting))
+                //.Where(a => !a.Inactive)
+                ;
+            if (_TrailReportParam.ChartOfAccountsIdList.Count > 0)
+            {
+                myQBaseAllCardsAndDetailsAccType = myQBaseAllCardsAndDetailsAccType
+                    .Where(r => _TrailReportParam.ChartOfAccountsIdList.Contains(r.ChartOfAccountsId));
+            }
+            if (_TrailReportParam.ChartOfAccountsTypeCodeList.Count > 0)
+            {
+                myQBaseAllCardsAndDetailsAccType = myQBaseAllCardsAndDetailsAccType
+                    .Where(r => _TrailReportParam.ChartOfAccountsTypeCodeList.Contains(r.ChartOfAccountsTypeCode));
+            }
+
+            if (!String.IsNullOrWhiteSpace(_TrailReportParam.Category1))
+            {
+                myQBaseAllCardsAndDetailsAccType = myQBaseAllCardsAndDetailsAccType
+                    .Where(a => a.Category1Id == _TrailReportParam.Category1);
+            }
+            if (!String.IsNullOrWhiteSpace(_TrailReportParam.Category2))
+            {
+                myQBaseAllCardsAndDetailsAccType = myQBaseAllCardsAndDetailsAccType
+                    .Where(a => a.Category2Id == _TrailReportParam.Category2);
+            }
+            if (!String.IsNullOrWhiteSpace(_TrailReportParam.Category3))
+            {
+                myQBaseAllCardsAndDetailsAccType = myQBaseAllCardsAndDetailsAccType
+                    .Where(a => a.Category3Id == _TrailReportParam.Category3);
+            }
+            if (!String.IsNullOrWhiteSpace(_TrailReportParam.Category4))
+            {
+                myQBaseAllCardsAndDetailsAccType = myQBaseAllCardsAndDetailsAccType
+                    .Where(a => a.Category4Id == _TrailReportParam.Category4);
+            }
+            if (!String.IsNullOrWhiteSpace(_TrailReportParam.Category5))
+            {
+                myQBaseAllCardsAndDetailsAccType = myQBaseAllCardsAndDetailsAccType
+                    .Where(a => a.Category5Id == _TrailReportParam.Category5);
+            }
+
+
+            QBaseAllCardsAndDetailsAccType = (
+                from a in myQBaseAllCardsAndDetailsAccType
+                select new AccountCOAM //Made 4 Short(Projoction) +Algant+Fast SQL
+                {
+                    Id = a.Id,
+                    Tenant = a.Tenant,
+                    AccountTypeCode = a.AccountTypeCode,
+                    EnglishName = a.EnglishName,
+                    ChartOfAccountsTypeCode = a.ChartOfAccountsTypeCode,
+                    ChartOfAccountsId = a.ChartOfAccountsId,
+                    IsControlAccount = a.IsControlAccount,
+                    ParentId = a.ParentAccountId,
+                    DisplayNumber = a.DisplayNumber,
+                    LocalName = a.LocalName,
+                    CurrencyId = a.CurrencyId,
+                    IsMultiCurrency = a.IsMultiCurrency,
+
+                }
+                );
+        }
+
         protected abstract void AdjustTrailReportFull();
 
 
@@ -477,22 +629,28 @@ into groupBy_currency
                  Level1Id = chart.Level1Id,
                  Level1Name = chart.Level1Name,
                  Level1Code =  chart.Level1Code,
+                 Level1English = chart.Level1English,
+
 
                  Level2Id = chart.Level2Id,
                  Level2Name = chart.Level2Name,
                  Level2Code = chart.Level2Code,
+                 Level2English = chart.Level2English,
 
                  Level3Id = chart.Level3Id,
                  Level3Name = chart.Level3Name,
                  Level3Code = chart .Level3Code,
+                 Level3English = chart.Level3English,
 
                  Level4Id = chart.Level4Id,
                  Level4Name = chart.Level4Name,
                  Level4Code = chart.Level4Code,
+                 Level4English = chart.Level4English,
 
                  Level5Id = chart.Level5Id,
                  Level5Name = chart.Level5Name,
                  Level5Code  = chart.Level5Code,
+                 Level5English = chart.Level5English,
 
 
                  GLAccountId = aGL.Id,
@@ -502,7 +660,11 @@ into groupBy_currency
                  ChartOfAccountId=aGL.ChartOfAccountsId,
                  ChartOfAccountTypeCode = //aGL.AccountTypeCode,
                  aGL.ChartOfAccountsTypeCode,
-               
+
+                 ChartOfAccountsTypeEnglish = chart.ChartOfAccountsTypeEnglish,
+                 ChartOfAccountsEnglish = chart.ChartOfAccountsEnglish,
+                 GLAccountEnglish = aGL.EnglishName,
+
                  LeafId = chart.LeafId,
                 
 
@@ -612,7 +774,7 @@ into groupBy_currency
                
 
 
-                if (trailReportParam.DetailedControlClients
+                /*if (trailReportParam.DetailedControlClients
                     ||
                     trailReportParam.DetailedControlFile
                     ||
@@ -626,7 +788,7 @@ into groupBy_currency
                     )
                 {
                     throw new Exception("Only in TrailReportLevel.GLAccount DetailedControl is allowed !!!");
-                }
+                }*/
                 if (!string.IsNullOrWhiteSpace(trailReportParam.Category1)
                     ||
                     !string.IsNullOrWhiteSpace(trailReportParam.Category2)

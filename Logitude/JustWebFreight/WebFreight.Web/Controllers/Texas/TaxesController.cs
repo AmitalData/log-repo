@@ -1,11 +1,12 @@
-﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
+﻿using Logitude.BL.Helpers.ExportServer;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
 using System.Net;
 using System.Net.Http;
 using System.Web;
 using System.Web.Http;
-using WebFreight.Web.Helpers.ExportServer;
+
 
 namespace WebFreight.Web.Controllers
 {
@@ -51,7 +52,7 @@ namespace WebFreight.Web.Controllers
             AuthenticationToken authToken = GetTenantFromToken();
             if (authToken == null) return Request.CreateResponse(HttpStatusCode.Unauthorized);
 
-            return ExportServerService.CreateConfirmationNumber(authToken.Tenant, authToken.Email, Convert.ToString(body));
+            return ExportServerService.CreateConfirmationNumber(authToken.Tenant, authToken.Email, Convert.ToString(body)).Res;
         }
 
         private static AuthenticationToken GetTenantFromToken()

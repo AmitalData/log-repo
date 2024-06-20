@@ -276,6 +276,9 @@
 
                                     <td style="width: 375px;">
                                         <table>
+                                            <td>
+                                                <div></div>
+                                            </td>
                                             <!-- ConfirmationNumber -->
                                             <tr class="FormFieldRow">
                                                 <td style="width: 135px;">
@@ -286,6 +289,19 @@
                                                     <LogTextBox [ObjectFieldName]="'ConfirmationNumber'" [InputType]="'text'" [Text]="ConfirmationNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                                 </td>
                                             </tr>
+                                            <!-- ConfirmationNumberStatus -->
+                                            <tr class="FormFieldRow">
+                                                <td style="width: 135px;">
+                                                    <LogLabel [ObjectFieldName]="'ConfirmationNumberStatusName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogTextBox [ObjectFieldName]="'ConfirmationNumberStatusName'" [InputType]="'text'" [Text]="ConfirmationNumberStatusName" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                </td>
+                                            </tr>
+                                            <td>
+                                                <div></div>
+                                            </td>
                                         </table>
                                     </td>
 

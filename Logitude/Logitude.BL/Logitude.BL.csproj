@@ -138,8 +138,8 @@
       <HintPath>..\packages\Microsoft.Azure.KeyVault.Core.1.0.0\lib\net40\Microsoft.Azure.KeyVault.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=5.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.5.0.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=7.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.7.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Data.Edm, Version=5.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Data.Edm.5.7.0\lib\net40\Microsoft.Data.Edm.dll</HintPath>
@@ -611,6 +611,10 @@
     <Compile Include="Helpers\CopyPortHelper.cs" />
     <Compile Include="Helpers\DigitalFieldSecuritesHelper.cs" />
     <Compile Include="Helpers\DWObjectFieldsGroupedService.cs" />
+    <Compile Include="Helpers\ExportServer\ExportServerLogin.cs" />
+    <Compile Include="Helpers\ExportServer\ExportServerService.cs" />
+    <Compile Include="Helpers\ExportServer\LoginImportWcfStruct.cs" />
+    <Compile Include="Helpers\ExportServer\UserData.cs" />
     <Compile Include="Helpers\ObjectFieldPropertyGetter.cs" />
     <Compile Include="Helpers\PayablesLinesVatAmounts.cs" />
     <Compile Include="InfrastructureModel\APIDataContract\EntityStatus.Generated.cs" />
@@ -799,6 +803,7 @@
     <Compile Include="InvoiceModel\APIDataContract\XSD\APInvoiceXSD.cs" />
     <Compile Include="InvoiceModel\CloseTables\AccountingEntityValues.cs" />
     <Compile Include="InvoiceModel\CloseTables\DetailsClassesGenerated\ARInvoicesSignedStatusDetails.Generated.cs" />
+    <Compile Include="InvoiceModel\CloseTables\DetailsClassesGenerated\ConfirmationNumberStatusDetails.Generated.cs" />
     <Compile Include="InvoiceModel\CloseTables\DetailsClassesGenerated\QBOGlobalTaxCalculationDetails.Generated.cs" />
     <Compile Include="InvoiceModel\CloseTables\EnumGenerated\ARInvoicesSignedStatusStruct.Generated.cs" />
     <Compile Include="InvoiceModel\CloseTables\EnumGenerated\QBOGlobalTaxCalculationStruct.Generated.cs" />
@@ -806,14 +811,19 @@
     <Compile Include="InvoiceModel\CustomFilters\ARInvoiceTypeCustomFilter.cs" />
     <Compile Include="InvoiceModel\CustomFilters\DigitalPortalCustomFilter.cs" />
     <Compile Include="InvoiceModel\EntityLists\ARInvoicesSignedStatusList.cs" />
+    <Compile Include="InvoiceModel\EntityLists\ConfirmationNumberStatusList.cs" />
+    <Compile Include="InvoiceModel\EntityLists\ConfirmationNumberDefaultList.cs" />
     <Compile Include="InvoiceModel\EntityLists\ARPaymentBankTranferList.cs" />
     <Compile Include="InvoiceModel\EntityLists\QBOGlobalTaxCalculationList.cs" />
+    <Compile Include="InvoiceModel\EntityPMs\ConfirmationNumberDefaultPM.cs" />
     <Compile Include="InvoiceModel\EntityPMs\ARInvoicesSignedStatusPM.cs" />
     <Compile Include="InvoiceModel\EntityPMs\ARPaymentBankTranferPM.cs" />
     <Compile Include="InvoiceModel\EntityPMs\ARPaymentChequeReplicaPM.cs" />
     <Compile Include="InvoiceModel\EntityPMs\ARPaymentChequeStatusReplicaPM.cs" />
     <Compile Include="InvoiceModel\EntityPMs\QBOGlobalTaxCalculationPM.cs" />
     <Compile Include="InvoiceModel\EntityQueries\ARInvoicesSignedStatusQuery.cs" />
+    <Compile Include="InvoiceModel\EntityQueries\ConfirmationNumberStatusQuery.cs" />
+    <Compile Include="InvoiceModel\EntityQueries\ConfirmationNumberDefaultQuery.cs" />
     <Compile Include="InvoiceModel\EntityQueries\ARPaymentBankTranferQuery.cs" />
     <Compile Include="InvoiceModel\EntityQueries\ARPaymentChequeReplicaQuery.cs" />
     <Compile Include="InvoiceModel\EntityQueries\ARPaymentChequeStatusReplicaQuery.cs" />
@@ -831,10 +841,13 @@
     <Compile Include="InvoiceModel\Tools\Behaviours\InvoicePaymentNumbersBehaviour.cs" />
     <Compile Include="InvoiceModel\Tools\DataMapping\ARInvoiceMapping.Concurrency.cs" />
     <Compile Include="InvoiceModel\Tools\DataMapping\ARPaymentMapping.Concurrency.cs" />
+    <Compile Include="InvoiceModel\Tools\DataMapping\ConfirmationNumberDefaultMapping.cs" />
+    <Compile Include="InvoiceModel\Tools\EntityService\ConfirmationNumberDefaultService.cs" />
     <Compile Include="InvoiceModel\Tools\ExternalService\SATProfact40\Payment\Complemento.PagosPago.DoctoRelacionados.CreditNotes.cs" />
     <Compile Include="InvoiceModel\Tools\ExternalService\SATProfact40\Payment\Complemento.PagosPago.DoctoRelacionados.PagosPagoDoctoRelacionado.cs" />
     <Compile Include="InvoiceModel\Tools\ExternalService\SATProfact40\SATInvoiceDifferenceVATCalculationService.cs" />
     <Compile Include="InvoiceModel\Tools\ExternalService\SATProfact40\SATInvoiceSenderService.cs" />
+    <Compile Include="InvoiceModel\Tools\Validating\ConfirmationNumberDefaultValidator.cs" />
     <Compile Include="QuoteModel\CustomFilters\DigitalPortalCustomFilter.cs" />
     <Compile Include="QuoteModel\EntityPMs\QuoteSalesAmountWithVATDetailsPM.cs" />
     <Compile Include="QuoteModel\EntityQueries\QuoteQuery.Digital.cs" />

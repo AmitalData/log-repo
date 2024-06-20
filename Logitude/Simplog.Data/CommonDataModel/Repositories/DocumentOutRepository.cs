@@ -7,7 +7,7 @@ using Simplog.Server.Infrastructure;
 
 namespace Simplog.Data.CommonDataModel.Repositories
 {
-    public class DocumentOutRepository:IRepository<DocumentOut>
+    public class DocumentOutRepository : IRepository<DocumentOut>
     {
         ICommonDataContext commonDataContext;
 
@@ -35,8 +35,8 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             DocumentOut d = (from a in context.DocumentOuts.Include("DocumentsFiling").Include("DocumentsFiling.DocumentType").Include("DocumentsFiling.CreatedByUser.Contact")
 
-                                  where a.Id == id && a.Tenant == tenant
-                                  select a).FirstOrDefault();
+                             where a.Id == id && a.Tenant == tenant
+                             select a).FirstOrDefault();
             return d;
         }
 
@@ -44,8 +44,8 @@ namespace Simplog.Data.CommonDataModel.Repositories
         public byte[] GetEditableFieldsById(string id, int tenant)
         {
             byte[] editableFields = (from a in context.DocumentOuts
-                             where a.Id == id && a.Tenant == tenant
-                             select a.EditableFields).FirstOrDefault();
+                                     where a.Id == id && a.Tenant == tenant
+                                     select a.EditableFields).FirstOrDefault();
             return editableFields;
         }
 
@@ -54,7 +54,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             DocumentOut documentOut = (from a in context.DocumentOuts
                                        .Include("DocumentsFiling")
-                                       where 
+                                       where
                                        a.Tenant == tenant
                                        && a.DocumentsFiling.EntityId == entityId
                                        && a.DocumentsFiling.ObjectTableId == objectTableId
@@ -62,10 +62,12 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return documentOut;
         }
 
-        public DocumentOut GetDocumentOutByEntityAndChildEntity(string entityId, string childEntityId)
+        public DocumentOut GetDocumentOutByEntityAndChildEntity(string entityId, string childEntityId, int tenant)
         {
+            if (string.IsNullOrEmpty(entityId) && string.IsNullOrEmpty(childEntityId))
+                return null;
             DocumentOut documentOut = (from a in context.DocumentOuts.Include("DocumentsFiling").Include("DocumentsFiling.DocumentType").Include("DocumentsFiling.CreatedByUser.Contact")
-                                       where a.DocumentsFiling.EntityId == entityId && a.DocumentsFiling.ChildEntityId == childEntityId
+                                       where a.DocumentsFiling.EntityId == entityId && a.DocumentsFiling.ChildEntityId == childEntityId && a.Tenant == tenant
                                        select a).FirstOrDefault();
             return documentOut;
         }
@@ -88,11 +90,11 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
 
 
-        public string GetDocumentOutIdByDocumentTypeIdAndEntityId(string entityId, string documentTypeId,string objectTableId, int tenant)
+        public string GetDocumentOutIdByDocumentTypeIdAndEntityId(string entityId, string documentTypeId, string objectTableId, int tenant)
         {
             string documentOutId = (from a in context.DocumentOuts.Include("DocumentsFiling")
-                                       where a.DocumentsFiling.EntityId == entityId && a.DocumentsFiling.DocumentTypeId == documentTypeId && a.DocumentsFiling.ObjectTableId == objectTableId && a.DocumentsFiling.DirectionCode == "O" && a.Tenant == tenant
-                                       select a.Id).FirstOrDefault();
+                                    where a.DocumentsFiling.EntityId == entityId && a.DocumentsFiling.DocumentTypeId == documentTypeId && a.DocumentsFiling.ObjectTableId == objectTableId && a.DocumentsFiling.DirectionCode == "O" && a.Tenant == tenant
+                                    select a.Id).FirstOrDefault();
             return documentOutId;
         }
 
@@ -103,7 +105,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
             List<DocumentOut> documentOuts;
             documentOuts = (from a in context.DocumentOuts.Include("DocumentsFiling").Include("DocumentsFiling.DocumentType").Include("DocumentsFiling.CreatedByUser.Contact")
                             where a.DocumentsFiling.EntityId == shipmentId
-                select a).ToList();
+                            select a).ToList();
             return documentOuts;
         }
 
@@ -140,7 +142,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public void SubmitChanges()
         {
-            context.SaveChanges();  
+            context.SaveChanges();
         }
 
 

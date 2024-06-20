@@ -51,6 +51,7 @@ import { LoadRecoExPageComponent } from './Components/NewEntity/LoadRecoExPageCo
 import { Generate1000Component } from './Components/Maintenance/Generate1000Component';
 import { Receiving1000Component } from './Components/Maintenance/Receiving1000Component';
 import { AccountingFunctionalTestComponent } from './Components/Maintenance/AccountingFunctionalTestComponent';
+import { UploadExpensesComponent } from './Components/Maintenance/UploadExpensesComponent';
 import { ManageExternalReconciliationTabComponent } from './Components/Others/ReconcileExternalPage/ManageExternalReconciliationTabComponent';
 import { ExternalPagesTabComponent } from './Components/Others/ReconcileExternalPage/ExternalPagesTabComponent';
 
@@ -84,6 +85,7 @@ import { ReconciliationLineListTemplate } from './Components/ListTemplates/Recon
 import {InterestReportListTemplate} from './Components/ListTemplates/InterestReportListTemplate'
 import {InterestInvoiceListTemplate} from './Components/ListTemplates/InterestInvoiceListTemplate'
 import { InterestBasesTypeDetailsTabComponent } from './Components/EditTabs/Interest/DetailsTab/InterestBasesTypeDetailsTabComponent';
+import { ChequeCounterSerialComponent } from './Components/EditTabs/BankAccount/DetailsTab/ChequeCounterSerialComponent';
 import {PrintedListHeaderTemplate} from './Components/ListTemplates/PrintedListHeaderTemplate'
 import { GLAccountChequeListComponent } from './Components/EditTabs/GLAccount/GLAccountChequeListComponent';
 
@@ -216,7 +218,7 @@ export const Components =
         Generate1000Component,
         Receiving1000Component,
         AccountingFunctionalTestComponent,
-
+        UploadExpensesComponent,
         //Edit Tabs
         GLAccountGeneralTabComponent,
         //CashBookGeneralTabComponent,
@@ -246,6 +248,7 @@ export const Components =
         TaxDeductionReportGeneralTabComponent,
         BankPageEventsComponent,
         InterestBasesTypeDetailsTabComponent,
+        ChequeCounterSerialComponent,
         ManageExternalReconciliationTabComponent,
         ExternalPagesTabComponent,
         GLAccountInterestComponent,
@@ -392,7 +395,7 @@ export class ModuleDeclarations {
             case "Generate1000Component": { myResult = Generate1000Component; break; }
             case "Receiving1000Component": { myResult = Receiving1000Component; break; }
             case "AccountingFunctionalTestComponent": { myResult = AccountingFunctionalTestComponent; break; }
-
+            case "UploadExpensesComponent": { myResult = UploadExpensesComponent; break; }
             //Edit Tabs
             case "GLAccountGeneralTabComponent": { myResult = GLAccountGeneralTabComponent; break; }
             //case "CashBookGeneralTabComponent": { myResult = CashBookGeneralTabComponent; break; }
@@ -423,6 +426,7 @@ export class ModuleDeclarations {
             case "TaxDeductionReportGeneralTabComponent": { myResult = TaxDeductionReportGeneralTabComponent; break; }
             case "BankPageEventsComponent": { myResult = BankPageEventsComponent; break; }
             case "InterestBasesTypeDetailsTabComponent": { myResult = InterestBasesTypeDetailsTabComponent; break;}
+            case "ChequeCounterSerialComponent": { myResult = ChequeCounterSerialComponent; break;}
             case "ExternalPagesTabComponent": { myResult = ExternalPagesTabComponent; break; }
             case "GLAccountInterestComponent": { myResult = GLAccountInterestComponent; break; }
             case "InterestReportGeneralTabComponent": { myResult = InterestReportGeneralTabComponent; break; }

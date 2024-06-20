@@ -32,6 +32,7 @@ export class CashBookDetailsTabComponent extends BaseComponent implements OnInit
     public EntityPM: CashBookPM = null;
     public ObjectTableName = "CashBook";
     public DataContext = this;
+    public filterAgrs: ApiQueryFilters;
     public TotalSum = 0;
     public NoRows: boolean = false;
     tenantCurrency: string = SessionLocator.TenantPM.CurrencyCode;
@@ -105,6 +106,8 @@ export class CashBookDetailsTabComponent extends BaseComponent implements OnInit
             DataTypeCode: 'DateTime',
             Display: TextCodeTranslator.Translate("CashBookLine.F.DueDate"),
             Styles: { width: '100px' },
+            ServerSideSortable: true,
+            SortByName: 'DueDate',
             HtmlListComponentName: 'CashBookLineListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/CashBookLineListTemplate',
             IsCustomTemplate: true
@@ -166,6 +169,8 @@ export class CashBookDetailsTabComponent extends BaseComponent implements OnInit
         this.columns.push({
             FieldName: 'ARPaymentNumber',
             DataTypeCode: 'String',
+            ServerSideSortable: true,
+            SortByName: 'ARPaymentNumber',
             Display: TextCodeTranslator.Translate("CashBookLine.F.ARPaymentNumber"),
             Styles: { width: '110px' },
             HtmlListComponentName: 'CashBookLineListTemplate',
@@ -185,8 +190,9 @@ export class CashBookDetailsTabComponent extends BaseComponent implements OnInit
     }
 
     DataSource = {
-        pageSize: 30,
+        pageSize: 50,
         rowCount: null,
+        sortingCol: "DueDate",
         sortingDir: "Ascending",
         getRows: (skip: number, take: number, sortingCol: string, sortingDir: string, getCount: boolean, searchFields?: string, filters: ApiQueryFilters = null) => {
             var tempo = this.GetRows(skip, take, sortingCol, sortingDir, getCount, searchFields, filters);
@@ -195,42 +201,37 @@ export class CashBookDetailsTabComponent extends BaseComponent implements OnInit
     };
 
     GetRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
+        this.CreateApiQueryFilters(take, skip, sortingCol, sortingDir);
+        return this._entityListService.getByFilters("CashBookLine", this.filterAgrs);
 
-        //#region Filters
-        var filters = new ApiQueryFilters;
-        // if (this.dateFilter) {
-        //     filters.AdditionalFilters.push(this.dateFilter);
-        // } else {
-        //     return;
-        // }
-        if (this.searchFieldFilter) {
-            filters.AdditionalFilters.push(this.searchFieldFilter);
+    }
+    private CreateApiQueryFilters(take: any, skip: any, sortingCol: any, sortingDir: any) {
+        this.filterAgrs = new ApiQueryFilters();
+        this.filterAgrs.PageSize = take;
+        this.filterAgrs.PageIndex = skip;
+        this.filterAgrs.GetAll = false;
+        this.filterAgrs.GetCount = true;
+        if (sortingCol) {
+            this.filterAgrs.SortBy = sortingCol;
         }
-
-        filters.PageSize = 50;
-        filters.PageIndex = 0;
-        filters.GetCount = true;
-
-        //  filters.SortBy = "Line";
-        //  filters.SortDirection = "Ascending";
+        if (sortingDir) {
+            this.filterAgrs.SortDirection = sortingDir;
+        }
+        if (this.searchFieldFilter) {
+            this.filterAgrs.AdditionalFilters.push(this.searchFieldFilter);
+        }
         var today = new Date();
 
         if (this.FilterSelectedValue == 'cash')
-            filters.addAdditionalFilter("DueDate", today, null, null, "LessThanOrEqual", false, false, false, "DateTime");
+        this.filterAgrs.addAdditionalFilter("DueDate", today, null, null, "LessThanOrEqual", false, false, false, "DateTime");
         else if (this.FilterSelectedValue == 'postdated')
-            filters.addAdditionalFilter("DueDate", today, null, null, "LargerThan", false, false, false, "DateTime");
+        this.filterAgrs.addAdditionalFilter("DueDate", today, null, null, "LargerThan", false, false, false, "DateTime");
 
-        filters.addAdditionalFilter("ARPChequeStatusCode", "1,4", null, null, "InListExact", false, false, false, "string");
-        //  filters.addAdditionalFilter("ARPChequeStatusCode", "5", null, null, "NotEqual", false, false, false, "string");
-        filters.addAdditionalFilter("IsDeposited", false, null, null, "Equals", false, false, false, "Boolean");
-        filters.addAdditionalFilter("CashBookId", this.EntityPM.Id, null, null, "Equals", false, false, false, "string");
-
-        //#endregion
-
-        return this._entityListService.getByFilters("CashBookLine", filters);
+        this.filterAgrs.addAdditionalFilter("ARPChequeStatusCode", "1,4", null, null, "InListExact", false, false, false, "string");
+        this.filterAgrs.addAdditionalFilter("IsDeposited", false, null, null, "Equals", false, false, false, "Boolean");
+        this.filterAgrs.addAdditionalFilter("CashBookId", this.EntityPM.Id, null, null, "Equals", false, false, false, "string");
 
     }
-
     //#endregion
 
 

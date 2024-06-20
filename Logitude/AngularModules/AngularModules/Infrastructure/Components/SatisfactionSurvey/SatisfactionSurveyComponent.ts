@@ -12,11 +12,11 @@ import { of } from 'rxjs';
 })
 export class SatisfactionSurveyComponent implements OnInit {
     tabs = [
-        { id: 'tab1', content: Translate.NotAtAllSatisfied, score: 1 },
-        { id: 'tab2', content: Translate.Slightly, score: 2 },
-        { id: 'tab3', content: Translate.Moderately, score: 3 },
-        { id: 'tab4', content: Translate.VeryMuch, score: 4 },
-        { id: 'tab5', content: Translate.Extent, score: 5 },
+        { id: 'tab1', content: Translate.NotAtAllSatisfied, score: 1, mainColor: '#E7340F', secondaryColor:'#FCE3E0'},
+        { id: 'tab2', content: Translate.Slightly, score: 2, mainColor: '#FF8C00', secondaryColor:'#FFEFDF' },
+        { id: 'tab3', content: Translate.Moderately, score: 3, mainColor: '#F2DB15', secondaryColor:'#FDFAE2' },
+        { id: 'tab4', content: Translate.VeryMuch, score: 4, mainColor: '#6BB437', secondaryColor:'#EBF4E3' },
+        { id: 'tab5', content: Translate.Excellent, score: 5, mainColor:'#4E8D00', secondaryColor:'#E6EFDD' },
     ];
 
     activeTab: string;

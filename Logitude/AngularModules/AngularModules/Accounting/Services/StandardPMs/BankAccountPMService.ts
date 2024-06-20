@@ -21,6 +21,7 @@ import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLo
 
 import {BankAccountPM} from '../../EntityPMs/BankAccountPM';
 
+import {ChequeCounterSerialPM} from '../../EntityPMs/ChequeCounterSerialPM';
 
 @Injectable()
 
@@ -182,12 +183,22 @@ export class BankAccountPMService {
                  
             }
 			
+               this.MapChequeCounterSerials(entityPM, jsonPM,mapParent); // Call composition tables map methods
 			 
             
 
 		if (mapParent) {
                 entityPM.OldEntityPM = this.clone(entityPM);
-
+			   			   
+            entityPM.OldEntityPM.ChequeCounterSerials = [];
+            for (var item in entityPM.ChequeCounterSerials) {
+            var myChequeCounterSerialPM = entityPM.ChequeCounterSerials[item];
+            var newChequeCounterSerialPM: ChequeCounterSerialPM = this.clone(myChequeCounterSerialPM);
+						
+							 
+            entityPM.OldEntityPM.ChequeCounterSerials.push(newChequeCounterSerialPM);
+            }
+			   
 		}
         else {
 
@@ -199,6 +210,98 @@ export class BankAccountPMService {
         return entityPM;
     }
 
+    MapChequeCounterSerials(entityPM: BankAccountPM, jsonPM: any, mapParent: boolean = true) {
+
+        var oldChequeCounterSerials: ChequeCounterSerialPM[] = [];
+        if (entityPM.OldEntityPM && !mapParent) {
+            oldChequeCounterSerials = entityPM.OldEntityPM.ChequeCounterSerials;
+        }
+
+        entityPM.ChequeCounterSerials = new Array<ChequeCounterSerialPM>();
+        for (var item in jsonPM.ChequeCounterSerials) {
+            var jItem = jsonPM.ChequeCounterSerials[item];
+            if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+                continue;
+            }
+            var newChequeCounterSerialPM: ChequeCounterSerialPM;
+	  
+            if (mapParent) {
+                newChequeCounterSerialPM = new ChequeCounterSerialPM(entityPM);
+            }
+            else
+            {
+                newChequeCounterSerialPM = new ChequeCounterSerialPM(null);
+            }
+ 			newChequeCounterSerialPM.DisableMarkAsDirty = true;
+               
+            var pmKeysArray = Object.keys(jItem);
+            for (var pmKey in pmKeysArray) {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                    continue;
+                }
+				                  var pmProperty = pmKeysArray[pmKey];
+                newChequeCounterSerialPM[pmProperty] = jItem[pmProperty];
+            }
+           
+			 
+            if (mapParent) {
+                newChequeCounterSerialPM.UniqueKey = Guid.newGuid();
+                newChequeCounterSerialPM.ChangeSetOp = "None";
+                jItem.ChangeSetOp = "None";
+                newChequeCounterSerialPM.OldEntityPM = this.clone(newChequeCounterSerialPM);
+
+				
+            }
+            else {
+                if (newChequeCounterSerialPM.UniqueKey) {
+
+                    if (jItem.IsDirty)
+                        newChequeCounterSerialPM.ChangeSetOp = "Update";
+                }
+                else {
+                        newChequeCounterSerialPM.ChangeSetOp = "Insert";
+                }
+ 
+                newChequeCounterSerialPM.OldEntityPM = null;
+                newChequeCounterSerialPM.EntityParentPM = null;
+            }
+			 newChequeCounterSerialPM.DisableMarkAsDirty = false;
+			 newChequeCounterSerialPM.IsDirty = false;
+            entityPM.ChequeCounterSerials.push(newChequeCounterSerialPM);
+        }
+        if (oldChequeCounterSerials) {
+            
+            for (var itemKey in oldChequeCounterSerials) {
+                if (entityPM.ChequeCounterSerials.filter(p=> p.UniqueKey === oldChequeCounterSerials[itemKey].UniqueKey).length === 0) {
+				
+                    if (oldChequeCounterSerials[itemKey]) {
+                        //oldChequeCounterSerials[itemKey].ChangeSetOp = "Delete";
+                        //entityPM.ChequeCounterSerials.push(oldChequeCounterSerials[itemKey]);
+						var oldItemJson = oldChequeCounterSerials[itemKey];
+                        var deletedPM: ChequeCounterSerialPM = new ChequeCounterSerialPM(null);
+						deletedPM.DisableMarkAsDirty = true;
+                        var pmKeys = Object.keys(oldItemJson);
+                        for (var key in pmKeys) {
+
+                            if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties" || pmKeys[key] === "OldEntityPM" || pmKeys[key] === "PropertyChanged") {
+                                continue;
+                            }
+
+                            var property = pmKeys[key];
+                            deletedPM[property] = oldItemJson[property];
+                        }
+
+					    deletedPM.DisableMarkAsDirty = false;
+                        deletedPM.IsDirty = false;
+                        deletedPM.ChangeSetOp = "Delete";
+                        
+                        deletedPM.OldEntityPM = null;
+                        entityPM.ChequeCounterSerials.push(deletedPM);
+                    }
+                }
+            }
+        }
+    }
 
 	  public clone(jsonPM: any) {
         var entityPM: any;

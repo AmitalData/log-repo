@@ -41,6 +41,7 @@ export class ReportSchedulerDetails {
     public DocumentTypeTemplateId: string;
     public DocumentTypeTemplateIds: Array<string> = [];
     public MessageTemplateId: string;
+    public ProcedureName: string;
 }
 
 export class ReportSchedulerRecepients {

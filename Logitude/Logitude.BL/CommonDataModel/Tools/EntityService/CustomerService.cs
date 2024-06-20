@@ -720,6 +720,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     entityCard.Address2 = entityPM.Address2_Potential;
                     entityCard.Phone = entityPM.PhoneNumber;
                     entityCard.ZipCode = entityPM.ZipCode_Potential;
+                    
 
                     if (entityPM.CountryId_Potential != null)
                     {
@@ -793,6 +794,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 entityPM.CountryCode = entityCard.CountryCode;
                 entityPM.CountryName = entityCard.CountryName;
             }
+            entityCard.EmailForSendingSingArinvoice = entityPM.Card?.EmailForSendingSingArinvoice;
+            entityCard.SendingInterestReport = entityPM.Card != null ? entityPM.Card.SendingInterestReport : entityCard.SendingInterestReport; 
         }
 
         private void ComputeContactFields()

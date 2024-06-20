@@ -6,7 +6,7 @@ import { Cloner } from '../../../Infrastructure/Utilities/Cloner';
 import { AppTool, DateTool } from '../../../Infrastructure/Tools';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { SchedulerExtendedPMService } from '../../../Infrastructure/Services/ExtendedPMs/SchedulerExtendedPMService';
-import { Component } from '@angular/core';
+import { AfterViewInit, Component } from '@angular/core';
 import { TaskReportSchedulerItemClass } from './TaskReportSchedulerComponent';
 import { QueryFilterItem } from '../Filters/QueryFilterItem';
 import {
@@ -23,7 +23,7 @@ import { AddEditReportSchedulerComponent } from './AddEditReportSchedulerCompone
     templateUrl: './AddEditReportTaskSchedulerComponent.html',
 
 })
-export class AddEditReportTaskSchedulerComponent {
+export class AddEditReportTaskSchedulerComponent implements AfterViewInit{
     public EntityPM: TasksSchedulerPM;
     public DataContext: TaskReportSchedulerItemClass;
     public ObjectTableName: string = 'TasksScheduler';
@@ -32,29 +32,36 @@ export class AddEditReportTaskSchedulerComponent {
     public SelectedFormat: CodeNameClass;
     public SelectedFormatAdvanced: string;
     public IsBIReport: boolean;
+    public IsQueryReport: boolean;
+    public SchedulerReports: CodeNameClass[] = [];
+    public SelectedReport: CodeNameClass;
     schedulerExtendedPMService: SchedulerExtendedPMService;
     private parentComponent: AddEditReportSchedulerComponent;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
-        this.schedulerExtendedPMService = new SchedulerExtendedPMService();
+        this.schedulerExtendedPMService = new SchedulerExtendedPMService();       
     }
 
     SetDataContext(DataContext: any) {
         this.DataContext = DataContext['DataContext'];
         this.EntityPM = DataContext['DataContext'].EntityPM;
         this.IsBIReport = this.DataContext.fatherComponent.IsBIReport;
+        this.IsQueryReport = this.DataContext.fatherComponent.IsQueryReport;
         this.EntityPM.EntityId = this.IsBIReport ? this.DataContext.fatherComponent.BIReportEntity['Id'] : this.DataContext.fatherComponent.ReportList.Id;
         this.FillSchedulerFormats();
         this.SetSchedulerFormat();
+        this.FillSchedulerReports() 
         this.SetSchedulerResultType();
-        this.EntityPM.ProcedureCode = this.IsBIReport ? 'BIReportSchedulerTask' : 'ReportSchedulerTask';
+        this.EntityPM.ProcedureCode = this.IsBIReport ? 'BIReportSchedulerTask' : this.IsQueryReport ? 'QueryReport' : 'ReportSchedulerTask';
         this.parentComponent = DataContext['parentComponent'];
         this.BuildSchedulerDetailsData();
         this.Clone();
         this.SetTigger(this.DataContext.TriggerType);
         this.SendValidation();
     }
-
+    ngAfterViewInit(): void {
+        this.SetSchedulerReport();
+    }
     SendValidation() {
         if ((SessionLocator.LoggedUserPM.IsCustomerCare || ObjectsLocator.GlobalSetting.DeploymentStage == "Dev") && this.DataContext?.fatherComponent?.ReportList?.Code != "RSTA") {
             this.DisplayFTPOption = true;
@@ -74,6 +81,33 @@ export class AddEditReportTaskSchedulerComponent {
         if (AppTool.IsNullOrEmpty(this.SelectedFormat)) this.FormatSelectionChanged(this.SchedulerFormats.filter(format => format.Code == pdfFormatCode)[0]);
     }
 
+    
+    private  FillSchedulerReports() {
+        if(!this.IsQueryReport) return;
+        this.CurrentSession.StartBusyIndicator('Loading...');
+        this.schedulerExtendedPMService
+            .GetProceduresBySchema('QueryReports')
+            .subscribe((myResult: ServiceResponse) => {
+                var myResponse: ServiceResponse = myResult;
+                if (!myResponse.HasError) {
+                    this.SchedulerReports = myResponse.Result;
+                    
+                }
+                this.CurrentSession.StopBusyIndicator();
+            });
+       
+    }
+
+     private SetSchedulerReport() {
+        if(!this.IsQueryReport) return;
+        var currentProcedureName = this.DataContext.SchedulerDetailsData.ReportDetails.ProcedureName;
+        console.log(currentProcedureName);
+        console.log(this.SchedulerReports);
+        this.SelectedReport = this.SchedulerReports.filter(proc => proc.Code == currentProcedureName)[0];
+        console.log(this.SelectedReport);
+     }
+    
+
     private SetSchedulerResultType() {
         if (this.DataContext.IsNew) {
             this.EntityPM.Type = 'Report';
@@ -89,7 +123,7 @@ export class AddEditReportTaskSchedulerComponent {
 
     BuildSchedulerDetailsData() {
         if (this.EntityPM.SchedulerDetailsData) {
-            this.SetSchedulerDetailsData(this.EntityPM.SchedulerDetailsData);
+             this.SetSchedulerDetailsData(this.EntityPM.SchedulerDetailsData);
         } else if (this.EntityPM.Id) {
             this.LoadReportSchedulerDetailsData();
         } else {
@@ -301,7 +335,9 @@ export class AddEditReportTaskSchedulerComponent {
         ) {
             errors.push("You can't select a past date");
         }
-
+        if(this.IsQueryReport && AppTool.IsNullOrEmpty(this.SelectedReport)) {
+            errors.push("You need select a procedure");
+        }
         this.parentComponent.ValidationErrorsList = errors;
         if (this.parentComponent.ValidationErrorsList.length == 0) {
             return true;
@@ -316,7 +352,7 @@ export class AddEditReportTaskSchedulerComponent {
             .subscribe((myResult: ServiceResponse) => {
                 var myResponse: ServiceResponse = myResult;
                 if (!myResponse.HasError) {
-                    this.SetSchedulerDetailsData(myResponse.Result);
+                    this.SetSchedulerDetailsData(myResponse.Result);                    
                 } else {
                     this.parentComponent.ValidationErrorsList = myResponse.ErrorsArray;
                     this.Clone();
@@ -421,6 +457,7 @@ export class AddEditReportTaskSchedulerComponent {
         this.DataContext.SchedulerDetails.ReportDetails.DWQueryFilterData = reportSchedulerDetails.DWQueryFilterData;
         this.DataContext.SchedulerDetails.ReportDetails.DocumentTypeTemplateId = reportSchedulerDetails.DocumentTypeTemplateId;
         this.DataContext.SchedulerDetails.ReportDetails.MessageTemplateId = reportSchedulerDetails.MessageTemplateId;
+        this.DataContext.SchedulerDetails.ReportDetails.ProcedureName = reportSchedulerDetails.ProcedureName;
         const recepients = reportSchedulerDetails.Recepients;
         this.DataContext.SchedulerDetails.ReportDetails.Recepients.To = recepients.To
             ? recepients.To.toString().split(',').join(';')

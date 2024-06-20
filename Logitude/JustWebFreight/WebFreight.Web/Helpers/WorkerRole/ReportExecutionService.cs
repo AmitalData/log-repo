@@ -43,12 +43,18 @@ namespace WebFreight.Web.Helpers.WorkerRoleHelpers
                 if (queueService != null && queueResponse != null)
                 {
                     reportExecutionLog = GetReportExecutionLog();
-                    if (reportExecutionLog != null &&  reportExecutionLog.RetryNumber < 2  && (reportExecutionLog.StatusCode == "W" || reportExecutionLog.StatusCode == "P"))
+                    if (reportExecutionLog != null && reportExecutionLog.RetryNumber < 2 && (reportExecutionLog.StatusCode == "W" || reportExecutionLog.StatusCode == "P"))
                     {
-                        UpdateReportExecutionLog(new ReportExecutionLogArgs() { StartDate = startDate, StatusCode = "P", ExecutedByServerName = System.Environment.MachineName  });
+                        UpdateReportExecutionLog(new ReportExecutionLogArgs() { StartDate = startDate, StatusCode = "P", ExecutedByServerName = System.Environment.MachineName });
                         BuildStimulReport();
                     }
-                    else queueService.Complete();
+                    else
+                    {
+                        queueService.Complete();
+                        if (reportExecutionLog != null && reportExecutionLog.RetryNumber >= 2 && (reportExecutionLog.StatusCode == "W" || reportExecutionLog.StatusCode == "P"))
+                            UpdateReportExecutionLog(new ReportExecutionLogArgs() { Exception = new Exception(reportExecutionLog.ExceptionMessage + 
+                                " Report Exc failed - Removed from queue and mark as failed the exc"), DoneDate = DateTime.Now, StartDate = startDate, StatusCode = "F" });
+                    }
                 }
             }
             catch (Exception ex)
