@@ -19,7 +19,7 @@ namespace MicrosoftGraphClient.GraphServices
 
         public Subscription Create(CreateSubscriptionRequest createSubscription)
         {
-            return GraphAPICaller.Call<Subscription>(new GraphAPICallerParameters { Url = Url, AccessToken = AccessToken, Method = Method.POST, RequestBody = createSubscription });
+            return GraphAPICaller.Call<Subscription>(new GraphAPICallerParameters { Url = Url, AccessToken = AccessToken, Method = Method.Post, RequestBody = createSubscription });
         }
     }
 }

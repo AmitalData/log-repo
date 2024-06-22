@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.EntityLists;
-using Devart.Data.Linq;
+
 
 namespace Logitude.Accounting.Data.EntityListQueryServices
 { 
