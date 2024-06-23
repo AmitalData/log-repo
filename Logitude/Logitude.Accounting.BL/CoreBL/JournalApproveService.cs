@@ -1736,32 +1736,32 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
             }
-                        if (DateTime.UtcNow.Date > _NextDueDoneAt.Date && workerRoleName != "staging")// _NextDueDoneAt DateTime.UtcNow.TimeOfDay < TimeSpan.FromHours(6) ) 
-                        {
-                            if (DateTime.Now < new DateTime(2050, 06, 01))
-                            {
-                                CreateBatchAccountingIntegrityCheck();
-                            }
-                            _NextDueDoneAt = DateTime.UtcNow.Date;
-                            var myDueLocalBalanceService = new DueLocalBalanceService();
-                            myDueLocalBalanceService.RunAllTenants();
+            //            if (DateTime.UtcNow.Date > _NextDueDoneAt.Date && workerRoleName != "staging")// _NextDueDoneAt DateTime.UtcNow.TimeOfDay < TimeSpan.FromHours(6) ) 
+            //            {
+            //                if (DateTime.Now < new DateTime(2050, 06, 01))
+            //                {
+            //                    CreateBatchAccountingIntegrityCheck();
+            //                }
+            //                _NextDueDoneAt = DateTime.UtcNow.Date;
+            //                var myDueLocalBalanceService = new DueLocalBalanceService();
+            //                myDueLocalBalanceService.RunAllTenants();
 
-                            var dailyRebuildAgingService = new DailyRebuildAgingService();
-                            dailyRebuildAgingService.RunAllAgingTenants();
+            //                var dailyRebuildAgingService = new DailyRebuildAgingService();
+            //                dailyRebuildAgingService.RunAllAgingTenants();
 
-                        }
-                    }
-                    catch (Exception)
-                    {
-                        NetCommonHelper.Logger.DevLog.Instance.WriteError("JournalApprove exception selected queue: " + selectedQueue
-                              + ", workerRoleName: " + LogitudeSettings.WorkerRoleName
-                              + ",time" + DateTime.Now.ToString());
+            //            }
+            //        }
+            //        catch (Exception)
+            //        {
+            //            NetCommonHelper.Logger.DevLog.Instance.WriteError("JournalApprove exception selected queue: " + selectedQueue
+            //                  + ", workerRoleName: " + LogitudeSettings.WorkerRoleName
+            //                  + ",time" + DateTime.Now.ToString());
 
-                        throw;
-                    }
-                }
+            //            throw;
+            //        }
+            //    }
 
-            }
+            //}
 
             public void WorkUntilQEmptyQueueDBMultiThreaded(TimeSpan? timeSpan = null, string selectedQueue = null)
             {
