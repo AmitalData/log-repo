@@ -4203,7 +4203,6 @@
     <None Include="Resources\Stimulsoft Reports.Ultimate 2013.1 Trial A252_020150909133627201254900033002.mrt.txt" />
     <Content Include="QuickbooksOnlineAuth2.aspx" />
     <EmbeddedResource Include="Properties\webfreight.web.dll.licenses" />
-    <Content Include="readme.txt" />
     <Content Include="ReportsWebServices\APInvoiceWebService.asmx" />
     <None Include="Properties\PublishProfiles\sendgrid.pubxml" />
     <None Include="Resources\A252_2015_020151011133801779020300040816.mrt" />
