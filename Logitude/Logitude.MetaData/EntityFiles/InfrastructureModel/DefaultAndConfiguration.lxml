@@ -1139,16 +1139,51 @@
       <QueryColumn
         QueryCode="&quot;DefaultAndConfiguration&quot;"
         IndexOrder="1"
-        ObjectFieldName="&quot;Is_Active&quot;"
+        ObjectFieldName="&quot;SetKey&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;DefaultAndConfiguration&quot;"
         IndexOrder="2"
-        ObjectFieldName="&quot;StoreInCache&quot;"
+        ObjectFieldName="&quot;SetValueType1&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;DefaultAndConfiguration&quot;"
         IndexOrder="3"
+        ObjectFieldName="&quot;Value1&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;DefaultAndConfiguration&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;SetValueType2&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;DefaultAndConfiguration&quot;"
+        IndexOrder="5"
+        ObjectFieldName="&quot;Value2&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;DefaultAndConfiguration&quot;"
+        IndexOrder="6"
+        ObjectFieldName="&quot;AdditionalKey&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;DefaultAndConfiguration&quot;"
+        IndexOrder="7"
+        ObjectFieldName="&quot;SortOrder&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;DefaultAndConfiguration&quot;"
+        IndexOrder="8"
+        ObjectFieldName="&quot;Is_Active&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;DefaultAndConfiguration&quot;"
+        IndexOrder="9"
+        ObjectFieldName="&quot;StoreInCache&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;DefaultAndConfiguration&quot;"
+        IndexOrder="10"
         ObjectFieldName="&quot;AllowInheritance&quot;"
         ColumnWidth="100" />
     </QueryColumns>
