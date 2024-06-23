@@ -1579,6 +1579,11 @@ export class DeclarationPM {
     public set DiamondsDeclarationFilter(newValue: string) { if (this.diamondsDeclarationFilter != newValue) { this.diamondsDeclarationFilter = newValue; this.MarkAsDirty("DiamondsDeclarationFilter"); } }
        
 	 
+    private systemConnection: string;
+    public get SystemConnection() { return this.systemConnection; }
+    public set SystemConnection(newValue: string) { if (this.systemConnection != newValue) { this.systemConnection = newValue; this.MarkAsDirty("SystemConnection"); } }
+       
+	 
 
     public OldEntityPM: DeclarationPM;
 		

@@ -324,6 +324,7 @@
     <None Include="DBTables\ShipmentsModel\OceanInsightsStatusLog.dxml" />
     <None Include="DBTables\ShipmentsModel\ShipmentAnalytic.dxml" />
     <None Include="DBTables\ShipmentsModel\ShipmentDigitalField.dxml" />
+    <None Include="DBTables\ShipmentsModel\ShipmentReferance.dxml" />
     <None Include="EntityFiles\CommonDataModel\CarrierServiceLine.lxml" />
     <None Include="EntityFiles\CommonDataModel\CustomerGroup.lxml" />
     <None Include="EntityFiles\InfrastructureModel\DeploymentPackageExecutionLog.lxml" />
@@ -1879,6 +1880,7 @@
     <None Include="EntityFiles\ShipmentsModel\ShipmentProductItem.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ShipmentReceivable.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ShipmentReceivableStatus.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\ShipmentReferance.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ShipmentStoragePricing.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ShipmentSubType.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ShipmentType.lxml" />

@@ -6183,6 +6183,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string systemConnection ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string SystemConnection  
+	   {
+	    
+	     get
+		{
+		   return systemConnection;
+		 }
+		 set
+		 {
+		   if(systemConnection != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SystemConnection",OldValue=systemConnection,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   systemConnection=value;
+		   }
+			
+		 }
+	   }
 	    }
    
 }

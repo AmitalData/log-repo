@@ -306,6 +306,7 @@
     <Compile Include="EntityKeys\MAWBTypeKeys.cs" />
     <Compile Include="EntityKeys\NbcDeclarationTypeKeys.cs" />
     <Compile Include="EntityKeys\NDMessageActionCodeKeys.cs" />
+    <Compile Include="EntityKeys\NUnicloudKeys.cs" />
     <Compile Include="EntityKeys\OcrDocumentKeys.cs" />
     <Compile Include="EntityKeys\OcrStatusKeys.cs" />
     <Compile Include="EntityKeys\OriginCriterionKeys.cs" />
@@ -686,6 +687,7 @@
     <Compile Include="EntityListQueryServices\Generated\MAWBTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\NbcDeclarationTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\NDMessageActionCodeListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\NUnicloudListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\OcrDocumentListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\OcrStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\OriginCriterionListQueryService.Generated.cs" />
@@ -768,6 +770,7 @@
     <Compile Include="EntityListQueryServices\MAWBTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\NbcDeclarationTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\NDMessageActionCodeListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\NUnicloudListQueryService.cs" />
     <Compile Include="EntityListQueryServices\OcrDocumentListQueryService.cs" />
     <Compile Include="EntityListQueryServices\OcrStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\OriginCriterionListQueryService.cs" />
@@ -890,6 +893,7 @@
     <Compile Include="EntityLists\Generated\InceptionCodeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\InterConditionsRelationshipList.Generated.cs" />
     <Compile Include="EntityLists\Generated\InternationalSiteTenantList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\NUnicloudList.Generated.cs" />
     <Compile Include="EntityLists\Generated\PerYearFrequencyList.Generated.cs" />
     <Compile Include="EntityLists\Generated\QuotaComputationBasisList.Generated.cs" />
     <Compile Include="EntityLists\Generated\QuotaIncrementList.Generated.cs" />
@@ -1235,6 +1239,7 @@
     <Compile Include="EntityMapping\MAWBTypeMap.cs" />
     <Compile Include="EntityMapping\NbcDeclarationTypeMap.cs" />
     <Compile Include="EntityMapping\NDMessageActionCodeMap.cs" />
+    <Compile Include="EntityMapping\NUnicloudMap.cs" />
     <Compile Include="EntityMapping\OcrDocumentMap.cs" />
     <Compile Include="EntityMapping\OcrStatusMap.cs" />
     <Compile Include="EntityMapping\OriginCriterionMap.cs" />
@@ -1467,6 +1472,7 @@
     <Compile Include="EntityPOCOs\MAWBType.cs" />
     <Compile Include="EntityPOCOs\NbcDeclarationType.cs" />
     <Compile Include="EntityPOCOs\NDMessageActionCode.cs" />
+    <Compile Include="EntityPOCOs\NUnicloud.cs" />
     <Compile Include="EntityPOCOs\OcrDocument.cs" />
     <Compile Include="EntityPOCOs\OcrStatus.cs" />
     <Compile Include="EntityPOCOs\OriginCriterion.cs" />
@@ -1848,6 +1854,7 @@
     <Compile Include="Repsitories\Generated\MAWBTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\NbcDeclarationTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\NDMessageActionCodeRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\NUnicloudRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\OcrDocumentRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\OcrStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\OriginCriterionRepository.Generated.cs" />
@@ -1930,6 +1937,7 @@
     <Compile Include="Repsitories\MAWBTypeRepository.cs" />
     <Compile Include="Repsitories\NbcDeclarationTypeRepository.cs" />
     <Compile Include="Repsitories\NDMessageActionCodeRepository.cs" />
+    <Compile Include="Repsitories\NUnicloudRepository.cs" />
     <Compile Include="Repsitories\OcrDocumentRepository.cs" />
     <Compile Include="Repsitories\OcrStatusRepository.cs" />
     <Compile Include="Repsitories\OriginCriterionRepository.cs" />

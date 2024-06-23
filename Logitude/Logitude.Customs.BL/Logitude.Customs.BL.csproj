@@ -219,6 +219,7 @@
     <Compile Include="CloseTables\DetailsClassesGenerated\LogisticActionRequestTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\LogisticActionResponseReqSDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\NDMessageActionCodeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\NUnicloudDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\OcrStatusDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\OriginCriterionDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\PartyRelationshipTypeDetails.Generated.cs" />
@@ -965,6 +966,7 @@
     <Compile Include="EntityDataMappings\Generated\NotificationReplyDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\NotificationTenantDefinitionDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\NotificationTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\NUnicloudDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\OcrDocumentDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\OcrStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\OrganizationUnitTypeDataMapping.Generated.cs" />
@@ -1170,6 +1172,7 @@
     <Compile Include="EntityDataMappings\NotificationReplyDataMapping.cs" />
     <Compile Include="EntityDataMappings\NotificationTenantDefinitionDataMapping.cs" />
     <Compile Include="EntityDataMappings\NotificationTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\NUnicloudDataMapping.cs" />
     <Compile Include="EntityDataMappings\OcrDocumentDataMapping.cs" />
     <Compile Include="EntityDataMappings\OcrStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\OrganizationUnitTypeDataMapping.cs" />
@@ -1395,6 +1398,7 @@
     <Compile Include="EntityQueryServices\Generated\InterConditionsRelationshipQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\LevyTrustQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\InceptionCodeQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\NUnicloudQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\PerYearFrequencyQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\QuotaComputationBasisQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\QuotaIncrementQueryService.Generated.cs" />
@@ -1999,6 +2003,7 @@
     <Compile Include="EntityUpdateServices\Generated\InterConditionsRelationshipUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\LevyTrustUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\InceptionCodeUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\NUnicloudUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\PerYearFrequencyUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\QuotaComputationBasisUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\QuotaIncrementUpdateService.Generated.cs" />

@@ -96,6 +96,11 @@ export class DeclarationReferantDataList {
 	CustomerId: string;
 	IsCloseOrOpenFromUser: boolean;
 	ListCounter: number;
+	MawbDate: Date;
+	IskaNumber: string;
+	Vessel: string;
+	FlightVoyageNumber: string;
+	CarrierCode: string;
 	
 }
  
