@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class DefaultAndConfigurationUpdateClass
    {  		
-		public const string HashString = "f20b2f37ce2be64bcc7b0d4e9c8592af";
+		public const string HashString = "178f71245e392022df05106bc1b03b3b";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1084,11 +1084,25 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	
 			 QueryColumn DefaultAndConfigurationQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DefaultAndConfigurationQuery.Id,QueryCode = DefaultAndConfigurationQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "DefaultAndConfiguration.CreateDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn DefaultAndConfigurationQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DefaultAndConfigurationQuery.Id,QueryCode = DefaultAndConfigurationQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "DefaultAndConfiguration.Is_Active" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn DefaultAndConfigurationQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DefaultAndConfigurationQuery.Id,QueryCode = DefaultAndConfigurationQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "DefaultAndConfiguration.SetKey" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn DefaultAndConfigurationQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DefaultAndConfigurationQuery.Id,QueryCode = DefaultAndConfigurationQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "DefaultAndConfiguration.StoreInCache" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn DefaultAndConfigurationQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DefaultAndConfigurationQuery.Id,QueryCode = DefaultAndConfigurationQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "DefaultAndConfiguration.SetValueType1" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn DefaultAndConfigurationQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DefaultAndConfigurationQuery.Id,QueryCode = DefaultAndConfigurationQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "DefaultAndConfiguration.AllowInheritance" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn DefaultAndConfigurationQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DefaultAndConfigurationQuery.Id,QueryCode = DefaultAndConfigurationQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "DefaultAndConfiguration.Value1" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn DefaultAndConfigurationQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DefaultAndConfigurationQuery.Id,QueryCode = DefaultAndConfigurationQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "DefaultAndConfiguration.SetValueType2" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn DefaultAndConfigurationQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DefaultAndConfigurationQuery.Id,QueryCode = DefaultAndConfigurationQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "DefaultAndConfiguration.Value2" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn DefaultAndConfigurationQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DefaultAndConfigurationQuery.Id,QueryCode = DefaultAndConfigurationQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "DefaultAndConfiguration.AdditionalKey" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn DefaultAndConfigurationQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DefaultAndConfigurationQuery.Id,QueryCode = DefaultAndConfigurationQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "DefaultAndConfiguration.SortOrder" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn DefaultAndConfigurationQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DefaultAndConfigurationQuery.Id,QueryCode = DefaultAndConfigurationQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "DefaultAndConfiguration.Is_Active" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn DefaultAndConfigurationQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DefaultAndConfigurationQuery.Id,QueryCode = DefaultAndConfigurationQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "DefaultAndConfiguration.StoreInCache" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn DefaultAndConfigurationQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DefaultAndConfigurationQuery.Id,QueryCode = DefaultAndConfigurationQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "DefaultAndConfiguration.AllowInheritance" , ColumnWidth = 100 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);
