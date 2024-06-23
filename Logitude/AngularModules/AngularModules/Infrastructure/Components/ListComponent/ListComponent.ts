@@ -889,6 +889,7 @@ export class ListComponent implements OnInit, AfterViewInit {
 
     FiltersMenu: ApiQueryFilters = null;
     private isLoaderReady: boolean;
+    DeclarationsTable = false;
     View: string;
     RunComponent() {
 
@@ -926,7 +927,9 @@ export class ListComponent implements OnInit, AfterViewInit {
             else
                 this.HasExcelExportButton = true;
         }
-
+        if (this.ObjectTable.Name == "Customs.Declaration") {
+            this.DeclarationsTable = true;
+        }
 
         if (this.ObjectTable.Name == "DocumentType") {
             if (FeatureLocator.HasFeaturePermession("DocumentType", "FROMLIBRARY")) {
@@ -2935,7 +2938,7 @@ export class ListComponent implements OnInit, AfterViewInit {
     public IsNewEntityButtonVisible: boolean = false;
     public IsNewEntityButtonDisabled: boolean = false;
     private SetNewEntityButton() {
-        
+
         if((!this.HaveFeatureNewExportDeclararion()) || (this.HaveFeatureNewExportDeclararion() && !AmitalGatewayUtil.Instance.AmitalBrowserInUse))
         {
             this.SetNewEntityLabel();
@@ -3076,7 +3079,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                                         isVisible = false;
                                     }
                                 }
-                                if (!isVisible && this.HaveFeatureNewExportDeclararion()) {
+                                if (!isVisible && (this.HaveFeatureNewExportDeclararion() || (this.MenuTableQuerySection == "Customs.Declaration" && FeatureLocator.HasFeaturePermession(this.ObjectTableName, "ADDNEWDECLARATION")))) {
                                     isVisible = true;
                                 }
                                 this.IsNewEntityButtonVisible = isVisible;
@@ -3149,7 +3152,7 @@ export class ListComponent implements OnInit, AfterViewInit {
             this.ShowAddNewEntityValidationMsg();
             return;
         }
-        if (this.SelectedQuery != null) {
+       if (this.SelectedQuery != null) {
 
             if (!this.CheckPermissions(this.ObjectTableName, "NEW", true) && !this.ObjectTable?.IsCustom) {
                 return;
@@ -3196,9 +3199,12 @@ export class ListComponent implements OnInit, AfterViewInit {
                         if (this.QueryCode == "Masters" || this.QueryCode == "Open Payables Masters" || this.QueryCode == "All Masters" || IsOriginalMaster) {
                             this.RunNewMasterWizard();
                         } else {
-                            if (this.SelectedQuery.ObjectTableNewWizardControlName == "Logitude.Customs.NewDeclarationControlCommand" &&
-                                this.HaveFeatureNewExportDeclararion) {
-                                this.RunNewExportDeclaration();
+                            if (this.SelectedQuery.ObjectTableNewWizardControlName == "Logitude.Customs.NewDeclarationControlCommand" ) {
+                                if(this.HaveFeatureNewExportDeclararion())
+                                    this.RunNewExportDeclaration();
+                                else if(FeatureLocator.HasFeaturePermession(this.ObjectTableName, "ADDNEWDECLARATION") && this.MenuTableQuerySection == "Customs.Declaration"){
+                                    this.RunNewDeclaration();
+                                }
 
                             } else if (this.ObjectTableName == "Customs.LogisticActionRequest")
                                 this.RunNewLogisticActionRequest();
@@ -3259,6 +3265,16 @@ export class ListComponent implements OnInit, AfterViewInit {
         logWindow.Height = 500;
         logWindow.NewWizardArgs = { IsNewEntity: true };
         logWindow.Show("./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/NewEntity/NewExportDeclarationComponent");
+        logWindow.WindowClosed.subscribe(($event: any) => this.OnNewEntityWindowClosed($event));
+    }
+
+    RunNewDeclaration() {
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = TextCodeTranslator.Translate('Customs.Declaration.O.NewDeclaration');
+        logWindow.Width = 800;
+        logWindow.Height = 500;
+        logWindow.NewWizardArgs = { IsNewEntity: true };
+        logWindow.Show("./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/NewEntity/NewDeclarationComponent");
         logWindow.WindowClosed.subscribe(($event: any) => this.OnNewEntityWindowClosed($event));
     }
 
@@ -3947,6 +3963,9 @@ export class ListComponent implements OnInit, AfterViewInit {
                             querycolumn.IndexOrder = Param.ColIndexes.filter(a => a.FieldName == querycolumn.ObjectFieldName)[0].Index;
                             if (Param.ColIndexes.filter(a => a.FieldName == querycolumn.ObjectFieldName)[0].Width > 0) {
                                 querycolumn.ColumnWidth = Param.ColIndexes.filter(a => a.FieldName == querycolumn.ObjectFieldName)[0].Width;
+                            }
+                            else if (SessionLocator.HomeComponent.SelectedTabItem.Index && Param.ColIndexes.filter(a => a.FieldName == querycolumn.ObjectFieldName)[SessionLocator.HomeComponent.SelectedTabItem.Index].Width > 0) {                                        
+                                querycolumn.ColumnWidth = Param.ColIndexes.filter(a => a.FieldName == querycolumn.ObjectFieldName)[SessionLocator.HomeComponent.SelectedTabItem.Index].Width;
                             }
                             this.GeneralEntitiesArgs.QueryColumnsPMs.push(querycolumn);
                         });

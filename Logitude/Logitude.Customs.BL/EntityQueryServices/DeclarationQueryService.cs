@@ -2100,8 +2100,11 @@ namespace Logitude.Customs.BL.EntityQueryServices
             var mycontext = CustomContext.GetContext(tenant);
             IQueryable<Declaration> declaration =
                  from dc in mycontext.Declarations
-                 where dc.Tenant == tenant && dc.Direction == "E" && dc.IsCancelled == false &&
-                     dc.AmendmentDontDisplayInList == false && dc.IsDiamondDeclaration == true
+                 where dc.Tenant == tenant
+                     // DiamondsDeclarations query
+                     && dc.Direction == "E" && dc.IsCancelled == false
+                     && dc.AmendmentDontDisplayInList == false && dc.IsDiamondDeclaration == true
+                     && dc.IsExportClosed == false && dc.IsClose == false
                  select dc;
 
             DeclarationCustomFilters declarationCustomFilters = new DeclarationCustomFilters();

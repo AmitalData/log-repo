@@ -124,6 +124,10 @@
         margin-right: 20px;
         width: 30px;
     }
+
+    .DeclarationsTable {
+        width: 165px !important;
+    }
 </style>
 
 <div style="position: absolute; top:0px; bottom:0px; left:0px; right:0px;margin:auto; background:white;" *ngIf="IsDemoTenant">
@@ -284,8 +288,32 @@
                             <span>{{'View'}}:</span>
                         </td>
 
-                        <td style="vertical-align: middle;width:170px">
-                             <QueryList *ngIf="ShowViews && ResourcesLoaded" [ItemsSource]="Queries" [UserItemSource]="UserQueries" [Binding]="'NameTextCodeCode'" [onSelectedQueryChangeEvent]="onSelectedQueryChangeEvent" [SelectedItem]="SelectedQuery" [ObjectTableName]="ObjectTableName" (itemSelectedEvent)="QueryValueChanged($event)" [QueryListSourceChanged]="QueryListSourceChanged" (QueriesChangedEvent)="QueriesChangedEvent($event)" [LoadResourceCompleted]="LoadResourceCompleted" [pubSubAdvanceQueryFiltersService]="AdvanceQFiltersService" (NewViewClosedEvent)="NewViewClosedEvent($event)"></QueryList>
+                        <td style="vertical-align: middle;width:170px;padding-left: 20px;">
+                            <QueryList *ngIf="(ShowViews || EnglishView) && ResourcesLoaded" [ItemsSource]="Queries" [UserItemSource]="UserQueries" [Binding]="'NameTextCodeCode'" [onSelectedQueryChangeEvent]="onSelectedQueryChangeEvent" [SelectedItem]="SelectedQuery" [ObjectTableName]="ObjectTableName" (itemSelectedEvent)="QueryValueChanged($event)" [QueryListSourceChanged]="QueryListSourceChanged" (QueriesChangedEvent)="QueriesChangedEvent($event)" [LoadResourceCompleted]="LoadResourceCompleted" [pubSubAdvanceQueryFiltersService]="AdvanceQFiltersService" (NewViewClosedEvent)="NewViewClosedEvent($event)"></QueryList>
+
+
+
+                            <!--<select style="width: 150px;" [(ngModel)]="SelectedQueryId" (change)="QueryValueChanged($event.target.value)">
+            <option *ngFor="let q of Queries" [value]="q.Id">{{q.NameTextCodeCode | TextCodeTranslationPipe}}</option>
+        </select>-->
+                            <!--<div class="dropdown">
+        <div style="float:left;">
+            <button (click)="ShowFieldsList()" class="dropbtn " id="AddFilterButton" style="width:80px;">{{'General.B.AddFilter' | TextCodeTranslationPipe}}</button>
+            <div id="FieldsDropdown" class="dropdown-content" style="border:solid 1px #AAAAAA;">-->
+                            <!--<select [(ngModel)]="SelectedQueryId" (change)="QueryValueChanged($event.target.value)" style="height:244px;" multiple>
+            <option *ngFor="let q of Queries" [value]="q.Id">{{q.NameTextCodeCode | TextCodeTranslationPipe}}</option>
+        </select>-->
+                            <!--       <div *ngFor="let q of Queries">
+                            <label>{{q.NameTextCodeCode | TextCodeTranslationPipe}}</label>
+                        </div>
+                        <div style="height:27px;background-color:#dfecf7;">
+                            <a href="#">New View</a>
+                        </div>
+
+
+                </div>
+            </div>
+        </div>-->
                          </td>
                          <td *ngIf="IsPhysicalCheckObjectTable || IsLogisticActionRequestObjectTable" style="width: 100px;">
                             <div LocationDirective Code="MNO"></div>

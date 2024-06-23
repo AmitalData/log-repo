@@ -268,7 +268,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             foreach (DocumentsFilingMetaDataValuePM itemPM in entityPM.DocumentsFilingMetaDataValues)
             {
                 this.CreateDocumentsFilingMetaDataValue(itemPM);
-                this.CreateCustomsDocumentsFilingMetaDataValue(itemPM);
             }
 
             //if (tenantPM.IsHybrid)
@@ -390,7 +389,10 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             {
                 AddToTasksQueue(theEntityPm, isNewEntity, loggedUserId);
             }
-
+            foreach (DocumentsFilingMetaDataValuePM itemPM in entityPM.DocumentsFilingMetaDataValues)
+            {
+                this.CreateCustomsDocumentsFilingMetaDataValue(itemPM);
+            }
             AddImporterQueue(theEntityPm, tenantPM, HavingDREL);
             AddImporterQueueWithDelay(theEntityPm, tenantPM, HavingDREL);
             new ShipmentOrderDocumentsQueueService().Build(theEntityPm);
@@ -836,9 +838,11 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             {
                 AddToTasksQueue(theEntityPm, isNewEntity, loggedUserId);
             }
-           
+
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
+
+            //UpdateCustomsDocumentMetaDataValuesCollection();
 
             AddImporterQueue(theEntityPm, tenantPM, HavingDREL);
             new ShipmentOrderDocumentsQueueService().Build(theEntityPm);
@@ -1037,9 +1041,9 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
             AddImporterQueue(theEntityPm, tenantPM, HavingDREL);
-            new ShipmentOrderDocumentsQueueService().Build(theEntityPm);
+             new ShipmentOrderDocumentsQueueService().Build(theEntityPm);
 
-            if (entityPM.IsUpdateSharedDocument)
+             if (entityPM.IsUpdateSharedDocument)
             {
                 IQueueService queueservice = new DbQueueService();
                 queueservice.InitializeQueue("ResharedAgentDocumentQueue", tenant);
@@ -1780,11 +1784,9 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
         private void UpdateDocumentsFilingMetaDataValuesCollection()
         {
-            var isExport = false;
             if (documentsFilingMetaDataValueChangeSet != null)
             {
-                if (this.entityPM.ExternalEntityName == "EFIFILEM" || this.entityPM.ExternalEntityName == "MFIFILEM")
-                    isExport = true;
+             
                 foreach (DocumentsFilingMetaDataValuePM itemPM in documentsFilingMetaDataValueChangeSet)
                 {
                     switch (itemPM.ChangeSetOp)
@@ -1792,27 +1794,21 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                         case ChangeSetOperation.Insert:
                             {
                                 this.CreateDocumentsFilingMetaDataValue(itemPM);
-                                if(isExport)
-                                    this.CreateCustomsDocumentsFilingMetaDataValue(itemPM);
-
+                              
                                 break;
                             }
 
                         case ChangeSetOperation.Update:
                             {
                                 this.UpdateDocumentsFilingMetaDataValue(itemPM);
-                                if (isExport)
-                                    this.UpdateCustomsDocumentsFilingMetaDataValue(itemPM);
-
+                             
                                 break;
                             }
 
                         case ChangeSetOperation.Delete:
                             {
                                 this.DeleteDocumentsFilingMetaDataValue(itemPM);
-                                if (isExport)
-                                    this.DeleteCustomsDocumentsFilingMetaDataValue(itemPM);
-
+                              
                                 break;
                             }
                       
@@ -1825,6 +1821,47 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
 
            
+
+        }
+        private void UpdateCustomsDocumentMetaDataValuesCollection()
+        {
+           
+            if (documentsFilingMetaDataValueChangeSet != null)
+            {
+                if (this.entityPM.ExternalEntityName == "EFIFILEM" || this.entityPM.ExternalEntityName == "MFIFILEM")
+                {
+
+                    foreach (DocumentsFilingMetaDataValuePM itemPM in documentsFilingMetaDataValueChangeSet)
+                    {
+                        switch (itemPM.ChangeSetOp)
+                        {
+                            case ChangeSetOperation.Insert:
+                                {
+                                     this.CreateCustomsDocumentsFilingMetaDataValue(itemPM);
+                                     break;
+                                }
+
+                            case ChangeSetOperation.Update:
+                                {
+                                       this.UpdateCustomsDocumentsFilingMetaDataValue(itemPM);
+                                       break;
+                                }
+
+                            case ChangeSetOperation.Delete:
+                                {
+                                     this.DeleteCustomsDocumentsFilingMetaDataValue(itemPM);
+                                       break;
+                                }
+
+                            default: { break; }
+                        }
+                    }
+                }
+
+                customContext.SaveChanges();
+            }
+
+
 
         }
 
@@ -1856,23 +1893,35 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
         private void CreateCustomsDocumentsFilingMetaDataValue(DocumentsFilingMetaDataValuePM itemPM)
         {
-            CustomsDocumentMetaDataValue customsDocumentMetaDataValue = new CustomsDocumentMetaDataValue();
-            customsDocumentMetaDataValue.MetaDataTypeCode = itemPM.DocumentsMetaDataTypeCode;
-            customsDocumentMetaDataValue.CustomsDocumentId = entityPM.Id;
-            customsDocumentMetaDataValue.Tenant = tenant; 
-            customsDocumentMetaDataValue.MetaDataValue = itemPM.MetaDataValue;
-            customsDocumentMetaDataValueRepository.Add(customsDocumentMetaDataValue);
+            CustomsDocumentQueryService myCustomsDocumentQueryService = new CustomsDocumentQueryService(tenant);
+            string documentsFilingId = myCustomsDocumentQueryService.GetDocumentInIdByCustomsDocId(entityPM.Id, tenant);
+
+            if (documentsFilingId != null)
+            {
+                CustomsDocumentMetaDataValue customsDocumentMetaDataValue = new CustomsDocumentMetaDataValue();
+                customsDocumentMetaDataValue.MetaDataTypeCode = itemPM.DocumentsMetaDataTypeCode;
+                customsDocumentMetaDataValue.CustomsDocumentId = entityPM.Id;
+                customsDocumentMetaDataValue.Tenant = tenant;
+                customsDocumentMetaDataValue.MetaDataValue = itemPM.MetaDataValue;
+                customsDocumentMetaDataValueRepository.Add(customsDocumentMetaDataValue);
+            }
         }
         private void UpdateCustomsDocumentsFilingMetaDataValue(DocumentsFilingMetaDataValuePM itemPM)
         {
+
             CustomsDocumentMetaDataValue customsDocumentMetaDataValue = customsDocumentMetaDataValueRepository.GetCustomsDocumentMetaDataValuesByCustomDocumentAndMetaDateValue(entityPM.Id, tenant, itemPM.DocumentsMetaDataTypeCode);
-            customsDocumentMetaDataValue.MetaDataValue=itemPM.MetaDataValue;
-            customsDocumentMetaDataValueRepository.Update(customsDocumentMetaDataValue);
+            if(customsDocumentMetaDataValue != null) {
+                customsDocumentMetaDataValue.MetaDataValue = itemPM.MetaDataValue;
+                customsDocumentMetaDataValueRepository.Update(customsDocumentMetaDataValue);
+            }
+           
         }
         private void DeleteCustomsDocumentsFilingMetaDataValue(DocumentsFilingMetaDataValuePM itemPM)
         {
-            CustomsDocumentMetaDataValue customsDocumentMetaDataValue = customsDocumentMetaDataValueRepository.GetCustomsDocumentMetaDataValuesByCustomDocumentAndMetaDateValue(entityPM.Id, tenant, itemPM.DocumentsMetaDataTypeCode);
-            customsDocumentMetaDataValueRepository.Remove(customsDocumentMetaDataValue);
+
+            CustomsDocumentMetaDataValue customsDocumentMetaDataValue = customsDocumentMetaDataValueRepository.GetCustomsDocumentMetaDataValuesByCustomDocumentAndMetaDateValue(entityPM.Id, tenant,itemPM.DocumentsMetaDataTypeCode);
+            if(customsDocumentMetaDataValue != null) 
+               customsDocumentMetaDataValueRepository.Remove(customsDocumentMetaDataValue);
         }
 
         public string RandomString(int length)

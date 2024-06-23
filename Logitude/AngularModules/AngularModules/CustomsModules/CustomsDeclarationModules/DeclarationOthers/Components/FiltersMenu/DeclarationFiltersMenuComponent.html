@@ -10,7 +10,7 @@
 <table>
     <tr>
         <td *ngIf="isExport">
-            <button class="Button" style="width: 95px;" (click)="openFiltersWindow()">
+            <button class="Button" (click)="openFiltersWindow()">
                 {{titleExportFilterMenu}}
                 <img *ngIf="exportFilterData?.filterActive" width="20" height="20" style="vertical-align: middle;" src="./Images/Icons/MiniGreenTick.png" />
             </button>
