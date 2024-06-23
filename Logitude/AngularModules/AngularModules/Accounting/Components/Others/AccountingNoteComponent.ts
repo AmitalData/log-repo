@@ -73,7 +73,7 @@ export class AccountingNoteComponent extends BaseComponent {
 
                 }else{
                     this.ValidationErrorsList = [];
-                    this.ValidationErrorsList.push("No card id in selected gl account!!!!!!!!!!");
+                    this.ValidationErrorsList.push(TextCodeTranslator.Translate("AccountingNote.O.NoCardIdInGLAccount"));
                     return;
                 }
 
