@@ -481,6 +481,11 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public bool UNFCourier { get; set; }
         [Column("AutoSending")]
 	    public bool AutoSending { get; set; }
+        [ForeignKey("SystemConnectionCode")]
+        [Column("SystemConnection")]
+	    public string SystemConnection { get; set; }
+	      
+        public virtual NUnicloud SystemConnectionCode { get; set; }
     }
 }
 	 

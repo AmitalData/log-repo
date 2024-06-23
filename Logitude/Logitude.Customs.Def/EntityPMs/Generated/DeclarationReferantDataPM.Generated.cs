@@ -1170,6 +1170,121 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private DateTime? mawbDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime? MawbDate  
+	   {
+	    
+	     get
+		{
+		   return mawbDate;
+		 }
+		 set
+		 {
+		   if(mawbDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MawbDate",OldValue=mawbDate,NewValue=value,PropertyType="DateTime?"};
+		    NotifyPropertyChanged(values);
+		   mawbDate=value;
+		   }
+			
+		 }
+	   }
+	  private string iskaNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string IskaNumber  
+	   {
+	    
+	     get
+		{
+		   return iskaNumber;
+		 }
+		 set
+		 {
+		   if(iskaNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IskaNumber",OldValue=iskaNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   iskaNumber=value;
+		   }
+			
+		 }
+	   }
+	  private string vessel ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Vessel  
+	   {
+	    
+	     get
+		{
+		   return vessel;
+		 }
+		 set
+		 {
+		   if(vessel != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Vessel",OldValue=vessel,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   vessel=value;
+		   }
+			
+		 }
+	   }
+	  private string flightVoyageNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string FlightVoyageNumber  
+	   {
+	    
+	     get
+		{
+		   return flightVoyageNumber;
+		 }
+		 set
+		 {
+		   if(flightVoyageNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FlightVoyageNumber",OldValue=flightVoyageNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   flightVoyageNumber=value;
+		   }
+			
+		 }
+	   }
+	  private string carrierCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CarrierCode  
+	   {
+	    
+	     get
+		{
+		   return carrierCode;
+		 }
+		 set
+		 {
+		   if(carrierCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CarrierCode",OldValue=carrierCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   carrierCode=value;
+		   }
+			
+		 }
+	   }
 	    }
    
 }

@@ -1046,6 +1046,7 @@
     <Compile Include="Controllers\AccountingModel\Generated\ListControllers\ChequeCounterSerialViewsController.Generated.cs" />
     <Compile Include="Controllers\AccountingModel\APInvoiceStatusUpdateController.cs" />
     <Compile Include="Controllers\AccountingModel\GLAccountMultiToCurrencyController.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\NUnicloudViewsController.Generated.cs" />
     <Compile Include="Controllers\HybridModel\DocumentInController.cs" />
     <Compile Include="Controllers\InfrastructureModel\QueueMessagesViewsController.cs" />
     <Compile Include="Controllers\CommonDataModel\ApiHelpers\CardAPiHelper.cs" />
@@ -4314,6 +4315,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\MAWBTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\NDMessageActionCodeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\MeasureTypeUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\NUnicloudUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\OccasionContactUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\OccasionInviteeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\NbcDeclarationTypeUpdateClass.cs" />
