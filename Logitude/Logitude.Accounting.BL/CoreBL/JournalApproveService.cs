@@ -1668,6 +1668,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
 
                 QueueResponse response = null;
+                // 1. Main Loop Start 
                 while (true)
                 {
                     if (stopwatch != null && timeSpan != null)
@@ -1691,7 +1692,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         queueservice = new DbQueueService(selectedQueue, 0);
                         response = queueservice.Receive(new TimeSpan(0, 0, 0, 5));
                     }
-                    catch (Exception)
+                    catch (Exception) // in the main loop
                     {
 
                         throw;
@@ -1722,16 +1723,17 @@ namespace Logitude.Accounting.BL.CoreBL
                     }
                     Thread.Sleep(10);//itzik - let other thread abilty to use GLAccout !!!
                 }
+                // Main Loop Finish 
 
 
-
-                if (DateTime.UtcNow.Date > _NextDueDoneAt.Date)
+                if (DateTime.UtcNow.Date > _NextDueDoneAt.Date) // 2. Checking and logging after the main loop 
                 {
                     NetCommonHelper.Logger.DevLog.Instance.WriteDebug("JournalApprove beforeAddBatchTask selected queue: " + selectedQueue
                           + ", workerRoleName: " + LogitudeSettings.WorkerRoleName
                           + ",time" + DateTime.Now.ToString());
                 }
 
+                // 3. Queue selector
                 if (selectedQueue == JournalApproveService.K_AccountingJournalApproveMutliThreadingWR)
                 {
 
@@ -1757,7 +1759,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                         }
                     }
-                    catch (Exception)
+                    catch (Exception) // In the queue selector
                     {
                         NetCommonHelper.Logger.DevLog.Instance.WriteError("JournalApprove exception selected queue: " + selectedQueue
                               + ", workerRoleName: " + LogitudeSettings.WorkerRoleName
