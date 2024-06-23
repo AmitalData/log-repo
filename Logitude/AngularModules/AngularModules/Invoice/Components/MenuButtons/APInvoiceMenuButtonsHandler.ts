@@ -1,19 +1,20 @@
 declare var window: any;
-import {APInvoicePM} from '../../EntityPMs/APInvoicePM';
-import {MenuButtonPM} from '../../../Infrastructure/EntityPMs/MenuButtonPM'
-import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
-import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
-import {AppTool} from '../../../Infrastructure/Tools';
-import {APInvoiceValidator}  from '../../Validators/APInvoiceValidator';
-import {InvoiceDomainService} from '../../Services/InvoiceDomainService';
-import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
-import {ConfirmWindow} from '../../../Controls/Windows/ConfirmWindow';
-import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
-import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
-import {GeneralPrintHelper} from '../../../Infrastructure/Helpers/GeneralPrintHelper';
-import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
-import {ServiceLocator} from '../../../Infrastructure/Locators/ServiceLocator';
+import { APInvoicePM } from '../../EntityPMs/APInvoicePM';
+import { MenuButtonPM } from '../../../Infrastructure/EntityPMs/MenuButtonPM'
+import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
+import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
+import { AppTool } from '../../../Infrastructure/Tools';
+import { APInvoiceValidator } from '../../Validators/APInvoiceValidator';
+import { InvoiceDomainService } from '../../Services/InvoiceDomainService';
+import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
+import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
+import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
+import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
+import { GeneralPrintHelper } from '../../../Infrastructure/Helpers/GeneralPrintHelper';
+import { EntityArgs } from '../../../Infrastructure/DataContracts/EntityArgs';
+import { ServiceLocator } from '../../../Infrastructure/Locators/ServiceLocator';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
+import { Alert } from 'selenium-webdriver';
 
 export class APInvoiceMenuButtonsHandler {
     private CurrentSession = SessionLocator.SelectedSession;
@@ -22,7 +23,7 @@ export class APInvoiceMenuButtonsHandler {
     isFullAccounting: boolean = false;
     public approvedStatusCode: string = "AD";
     public VoidStatusCode: string = "VD";
-    
+
     public SetEntityPM(entityArgs: EntityArgs) {
         this.entityArgs = entityArgs;
         this.EntityPM = entityArgs.EntityPM;
@@ -231,9 +232,9 @@ export class APInvoiceMenuButtonsHandler {
                     break;
                 }
 
-                case "CopyInvoice":{
-                     this.OpenCopyInvoiceScreen();
-                     break;
+                case "CopyInvoice": {
+                    this.OpenCopyInvoiceScreen();
+                    break;
                 }
 
                 default: {
@@ -247,7 +248,7 @@ export class APInvoiceMenuButtonsHandler {
 
     SendToQBO() {
         var invoiceDomainService: InvoiceDomainService = new InvoiceDomainService();
-        invoiceDomainService.getConnectedAPPayments(this.EntityPM.Id).subscribe((response:any) => {
+        invoiceDomainService.getConnectedAPPayments(this.EntityPM.Id).subscribe((response: any) => {
             if (!response.HasError) {
 
                 if (this.EntityPM.TransferStatusCode == "TR" || this.EntityPM.TransferStatusCode == "ET" || this.EntityPM.TransferStatusCode == "IP") {
@@ -391,18 +392,41 @@ export class APInvoiceMenuButtonsHandler {
         service.ValidateInvoiceDate(this.EntityPM.InvoiceDate).subscribe((response: ServiceResponse) => {
 
 
-if (response != null) {
- this.CurrentSession.StopBusyIndicator();
+            if (response != null) {
+                this.CurrentSession.StopBusyIndicator();
                 if (!response.HasError) {
                     if (response.Result != null) {
                         this.ShowConfirmWindow(response.Result);
                     }
                     else {
-                        this.CheckDuplication();
+                        if (this.EntityPM.ConfirmationNumber == null) {
+                            this.entityArgs.EditComponent.StartBusyIndicatorLoading();
+                                                     
+                            service.ValidateConfirmationNumber(this.EntityPM.TotalVATs[0]?.LocalVATAmount.toString(),this.EntityPM.InvoiceDate).subscribe((response: ServiceResponse) => {
+                                if (response != null) {
+                                    this.CurrentSession.StopBusyIndicator();
+                                    if (!response.HasError) {
+                                        if (response.Result != null) {
+                                            this.ShowConfirmWindow(response.Result);
+                                        }
+                                        else {
+                                            this.CheckDuplication();
+                                        }
+                                    }
+                                }
+                                else {
+                                    this.entityArgs.EditComponent.ValidationErrorsList = response.ErrorsArray;
+                                }
+
+                            })
+                        }
+                        else {
+                            this.CheckDuplication();
+                        }
                     }
                 }
                 else {
-                    this.entityArgs.EditComponent.ValidationErrorsList  = response.ErrorsArray;
+                    this.entityArgs.EditComponent.ValidationErrorsList = response.ErrorsArray;
                 }
             }
 
@@ -438,32 +462,32 @@ if (response != null) {
             }
 
             else {
-                    var isDuplicated: boolean = myResponse.Result;
-                    if (isDuplicated) {
-                        var confirmWindow = new ConfirmWindow();
-                        confirmWindow.Title = "Warning";
-                        confirmWindow.Width = 450;
-                        confirmWindow.Height = 190;
-                        confirmWindow.YesButtonText = TextCodeTranslator.Translate("General.B.Save");
-                        confirmWindow.NoButtonText = TextCodeTranslator.Translate("General.B.Cancel");
-                        confirmWindow.ShowCancelButton = false;
-                        confirmWindow.Show(TextCodeTranslator.Translate("APInvoice.M.SameInvoiceNumber"));
+                var isDuplicated: boolean = myResponse.Result;
+                if (isDuplicated) {
+                    var confirmWindow = new ConfirmWindow();
+                    confirmWindow.Title = "Warning";
+                    confirmWindow.Width = 450;
+                    confirmWindow.Height = 190;
+                    confirmWindow.YesButtonText = TextCodeTranslator.Translate("General.B.Save");
+                    confirmWindow.NoButtonText = TextCodeTranslator.Translate("General.B.Cancel");
+                    confirmWindow.ShowCancelButton = false;
+                    confirmWindow.Show(TextCodeTranslator.Translate("APInvoice.M.SameInvoiceNumber"));
 
-                        confirmWindow.WindowClosed.subscribe(c => {
-                            if (confirmWindow.Yes) {
-                                this.ContinueSaving();
-                            }
+                    confirmWindow.WindowClosed.subscribe(c => {
+                        if (confirmWindow.Yes) {
+                            this.ContinueSaving();
+                        }
 
-                            if (confirmWindow.No) {
-                                this.StopFlags();
-                            }
-                        });
-                    }
-
-                    else {
-                        this.ContinueSaving();
-                    }
+                        if (confirmWindow.No) {
+                            this.StopFlags();
+                        }
+                    });
                 }
+
+                else {
+                    this.ContinueSaving();
+                }
+            }
 
         });
     }

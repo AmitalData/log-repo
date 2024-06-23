@@ -460,6 +460,26 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
         }
 
+        public HttpResponseMessage GetValidateConfirmationNumber(string localVATAmount, string invoiceDateString)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                string loggedUserEmail = authToken.Email;
+                int tenant = authToken.Tenant;
+
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                DateTime? invoiceDate = DateHelper.GetDate(invoiceDateString);
+                decimal result = decimal.Parse(localVATAmount.Replace(",", ""));
+                string warningMessage = APInvoiceValidator.ValidateConfirmationNumber(invoiceDate, result, tenant, loggedUserEmail);
+                return Request.CreateResponse(HttpStatusCode.OK, warningMessage);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
         public HttpResponseMessage GetValidateInvoiceNumber(string invoiceNumber)
         {
             try
