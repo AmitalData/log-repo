@@ -1004,6 +1004,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                               ContactPhone = a.Contact != null ? a.Contact.BusinessPhone : null,
                                                               ContactEmail  = a.Contact != null ? a.Contact.Email : null,
                                                               ContactName = a.ContactId != null ? (a.Contact.LocalName ?? a.Contact.EnglishName) : null,
+                                                              ActiveForInterest = a.ActiveForInterest,
                                                           });
             //var xxx = accountListQuery.ToList();
 
