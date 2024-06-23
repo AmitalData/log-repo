@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, EventEmitter, Output } from '@angular/core';
-import { GridColumn } from 'Common/Components/Maintenance/AmitalAPI/components/LogitudeGridSimpleComponent';
+import { GridColumn } from 'InfrastructureModules/InfrastructureOthers/AmitalAPI/components/LogitudeGridSimpleComponent';
 import { CommunicationLogListService } from 'Common/Services/StandardLists/CommunicationLogListService';
 import { BaseComponent } from 'Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';

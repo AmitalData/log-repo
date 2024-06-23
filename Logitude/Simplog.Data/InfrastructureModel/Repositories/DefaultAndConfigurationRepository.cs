@@ -39,18 +39,10 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
 
         public DefaultAndConfiguration GetSingleDefaultAndConfiguration(string id)
-        {
-            long? longId = null;
-            if (id != null)
-            {
-                longId = long.Parse(id);
-            }
-
+        {           
             return (from a in context.DefaultAndConfigurations
                     where a.Id == id
                     select a).FirstOrDefault();
-
-
         }
 
         public void Remove(DefaultAndConfiguration entity)
@@ -108,11 +100,6 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
         public DefaultAndConfiguration GetSingleDefaultAndConfiguration(string id, int tenant)
         {
-            long? longId = null;
-            if (id != null)
-            {
-                longId = long.Parse(id);
-            }
 
             return (from a in context.DefaultAndConfigurations
                     where a.Id == id

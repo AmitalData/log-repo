@@ -36,16 +36,6 @@ import { TaxesWebService } from 'Customs/Services/WebServices/TaxesWebService';
 })
 
 export class MaintenanceComponent {
-    //ngOnInit(): void {
-    //    if(!isDevMode()) return;
-
-    //    setTimeout(() => {
-    //        this.ItemClicked(this.AllMaintenanceMenu.find(d => d.Code == "DEFU"));
-    //        setTimeout(() => {
-    //            SessionLocator.SelectedSession.CurrentListComponent.AddNewEntity();
-    //        }, 500);
-    //    }, 100);
-    //}
         
     public ItemsSource: MaintenanceMenuItem[];
     LayoutDirection: string = 'ltr';
@@ -1122,7 +1112,7 @@ export class MaintenanceComponent {
                         logWindow.Height = window.outerHeight;
                         logWindow.Title = TextCodeTranslator.Translate("Customs.MC.General.AmitalAPISettings");
                         logWindow.IsShowCloseButton = true;
-                        logWindow.Show('./Common/Components/Maintenance/AmitalAPI/AmitalAPISettingsComponent');
+                        logWindow.Show('./InfrastructureModules/InfrastructureOthers/AmitalAPI/AmitalAPISettingsComponent');                        
                     break;
                 }
 
@@ -1132,7 +1122,7 @@ export class MaintenanceComponent {
                         logWindow.Height = window.outerHeight;
                         logWindow.Title = TextCodeTranslator.Translate("Customs.MC.General.APISettings");
                         logWindow.IsShowCloseButton = true;
-                        logWindow.Show('./Common/Components/Maintenance/AmitalAPI/APISettingsComponent');
+                        logWindow.Show('./InfrastructureModules/InfrastructureOthers/AmitalAPI/APISettingsComponent');
                     break;
                 }
 
@@ -1142,7 +1132,7 @@ export class MaintenanceComponent {
                         logWindow.Height = window.outerHeight;
                         logWindow.Title = TextCodeTranslator.Translate("Customs.MC.General.API_Requests");
                         logWindow.IsShowCloseButton = true;
-                        logWindow.Show('./Common/Components/Maintenance/AmitalAPI/AmitalAPIRequestsComponent');
+                        logWindow.Show('./InfrastructureModules/InfrastructureOthers/AmitalAPI/AmitalAPIRequestsComponent');
                     break;
                 }
 
