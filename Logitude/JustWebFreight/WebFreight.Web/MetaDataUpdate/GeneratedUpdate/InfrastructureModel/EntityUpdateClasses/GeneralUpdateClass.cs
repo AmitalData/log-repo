@@ -85,8 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class GeneralUpdateClass
    {  		
-
-
+		public const string HashString = "4293685b800ebd4de24e35cd746684a6";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -129,7 +128,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "General",
-			      				    Code =  "29d5",
+			      				    Code =  "f827",
 			      				    Name =  "General",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Generals",
@@ -1638,7 +1637,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_AccountingGeneralBSearch = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.B.Search", DefaultText = "Search",LocalDefaultText = @"חפש", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode GeneralTextCode_AccountingGeneralBEdit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.B.Edit", DefaultText = "Edit",LocalDefaultText = @"עריכה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode GeneralTextCode_AccountingGeneralBEdit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.B.Edit", DefaultText = "Edit",LocalDefaultText = @"ערוכה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_AccountingGeneralBEvents = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.B.Events", DefaultText = "Events",LocalDefaultText = @"אירועים", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
@@ -2490,9 +2489,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_AccountingGeneralOPaymentChequeAutomaticOption = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.PaymentChequeAutomaticOption", DefaultText = "Internal Cheque",LocalDefaultText = @"מערכת המחאות", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
-            TextCode GeneralTextCode_AccountingGeneralOVendorWithCustomerGLAccount = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.VendorWithCustomerGLAccount", DefaultText = "The selected operational card is connected to a client-type account and therefore will not be included in the tax withholding report", LocalDefaultText = @"הכרטיס התפעולי שנבחר מחובר לחשבון מסוג לקוח ולכן לא ייכלל בדוח ניכוי מס במקור", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-            TextCode GeneralTextCode_AccountingGeneralOCheques = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.Cheques", DefaultText = "Cheques",LocalDefaultText = @"שקים", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode GeneralTextCode_AccountingGeneralOCheques = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.Cheques", DefaultText = "Cheques",LocalDefaultText = @"שקים", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_AccountingGeneralOLastBankPage = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.LastBankPage", DefaultText = "This is not the last bank page",LocalDefaultText = @"רק דף אחרון ניתן לעריכה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
@@ -2844,18 +2841,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_GeneralMCShaamTokenManagement = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.ShaamTokenManagement", DefaultText = "SHAAM Token Management",LocalDefaultText = @"", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
+   
+	    
+}
 
-            TextCode GeneralTextCode_GeneralMCMine = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.Mine", DefaultText = "Mine", LocalDefaultText = @"שלי", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
- 		   TextCode GeneralTextCode_AccountingOYear = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.Year", DefaultText = "Year",LocalDefaultText = @"שנה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
- 		   TextCode GeneralTextCode_AccountingGeneralOConfirmationNumberValidation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.General.O.ConfirmationNumberValidation", DefaultText = "Confirmation Number is required for a apinvoice",LocalDefaultText = @"עבור חשבונית ספק נדרש מספר הקצאה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+    
 
-
-
-        }
-
-
-
-    }
+   }
     
 }
 	 
