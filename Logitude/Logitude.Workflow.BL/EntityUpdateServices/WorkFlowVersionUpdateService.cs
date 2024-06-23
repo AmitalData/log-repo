@@ -104,7 +104,7 @@ namespace Logitude.Workflow.BL.EntityUpdateServices
             List<string> workfloeVersionAvtivationErrors = new List<string>();
             string workfloeVersionAvtivationUrl = ConfigurationManager.AppSettings["WorkflowEngineURL"] + ExternalApiURLs.GetWorkFlowVersionActivationValidation(entityPM.Id);
 
-            List<WorkflowActivationError> workflowActivationErrors = APICaller.CallApi<List<WorkflowActivationError>>(workfloeVersionAvtivationUrl, null, Method.GET);
+            List<WorkflowActivationError> workflowActivationErrors = APICaller.CallApi<List<WorkflowActivationError>>(workfloeVersionAvtivationUrl, null, Method.Get);
             if (workflowActivationErrors.Count > 0)
             {
                 foreach (WorkflowActivationError workflowActivationError in workflowActivationErrors)
