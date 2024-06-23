@@ -1,6 +1,4 @@
-﻿
-
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+﻿using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -11,9 +9,6 @@ using System.Threading.Tasks;
 
 namespace Logitude.BL.Helpers
 {
-
-   
-
     public class SettingsHelperUI
     {
         private static readonly MemoryCache _cache = MemoryCache.Default;
@@ -62,15 +57,7 @@ namespace Logitude.BL.Helpers
                 List<DefaultAndConfigurationKey> result =
                 (from a in repository.context.DefaultAndConfigurationKey
                  where a.Tenant == tenant
-                 select new DefaultAndConfigurationKey
-                 {
-                     Tenant = a.Tenant,
-                     CreateDate = a.CreateDate,
-                     SetType = a.SetType,
-                     SetKey = a.SetKey,
-                     ShortDescription = a.ShortDescription,
-                     FullDesctiption = a.FullDesctiption
-                 }).ToList();
+                 select a).ToList();
 
                 return result;
             }
