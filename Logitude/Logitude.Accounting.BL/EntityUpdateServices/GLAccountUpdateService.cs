@@ -526,17 +526,17 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     }
                 }
             }
-            if (entityPM.ActiveForInterest == false)
-            {
-                for (int i = 0; i < entityPM.GLAccountInterestPeriods.Count; i++)
-                {
-                    if (entityPM.GLAccountInterestPeriods[i].ChangeSetOp != ChangeSetOperation.Delete)
-                    {
-                        throw new ApplicationException(TextCodesTranslator.TranslateText("GLAccount.O.DeleteExistInterestperiods", entityPM.Tenant, showLocals));
-                    }
+            //if (entityPM.ActiveForInterest == false)
+            //{
+            //    for (int i = 0; i < entityPM.GLAccountInterestPeriods.Count; i++)
+            //    {
+            //        if (entityPM.GLAccountInterestPeriods[i].ChangeSetOp != ChangeSetOperation.Delete)
+            //        {
+            //            throw new ApplicationException(TextCodesTranslator.TranslateText("GLAccount.O.DeleteExistInterestperiods", entityPM.Tenant, showLocals));
+            //        }
 
-                }
-            }
+            //    }
+            //}
 
 
             ContactPM loggedUser = GetLoggedContact(entityPM.Tenant);
