@@ -1090,7 +1090,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         {
 
                             //OnException(null, null, journalId, SeedTenant, eee);
-                            Logger.LogError(journalId.ToString() + " " + eee2.Message);
+                            NetCommonHelper.Logger.DevLog.Instance.WriteError(journalId.ToString() + " " + eee2.Message);
                             //ExceptionHandler.HandleException(eee, DateTime.Now, 0, "", "JournalApproveWorkerRole", "approveJournalService.SubmitApprove", null);
                             Logitude.SystemLogs.ExceptionHandler.HandleException(eee2, DateTime.Now, 0, "", "", "JournalApproveService.ReturnToQueue()" + eee2.Message, null);
 
@@ -1677,6 +1677,13 @@ namespace Logitude.Accounting.BL.CoreBL
                             return;
                         }
                     }
+
+                    
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug("JournalApprove inloop selected queue: " + selectedQueue 
+                        + ", workerRoleName: " + LogitudeSettings.WorkerRoleName 
+                        + ", _NextDueDoneAt.Date" + _NextDueDoneAt.Date.ToString()
+                        + ", _NextDueDoneAt.Time" + _NextDueDoneAt.TimeOfDay.ToString());
+
                     DbQueueService queueservice = null;
                     //ThrowNewException("BrokeredMessage receivedMessage = _QueueClient.Receive(TimeSpan.FromSeconds(5));");
                     try
@@ -1717,14 +1724,42 @@ namespace Logitude.Accounting.BL.CoreBL
                     Thread.Sleep(10);//itzik - let other thread abilty to use GLAccout !!!
                 }
 
+
+
                 if (DateTime.UtcNow.Date > _NextDueDoneAt.Date)
                 {
-                    Logger.LogDebug("JornalApprove beforeAddBatchTask selected queue: {0}, workerRoleName: {1}  , time:{2} ",
-                        selectedQueue, LogitudeSettings.WorkerRoleName, DateTime.Now );
-
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug("JournalApprove beforeAddBatchTask selected queue: " + selectedQueue
+                          + ", workerRoleName: " + LogitudeSettings.WorkerRoleName
+                          + ",time" + DateTime.Now.ToString());
                 }
 
 
+
+            }
+                        if (DateTime.UtcNow.Date > _NextDueDoneAt.Date && workerRoleName != "staging")// _NextDueDoneAt DateTime.UtcNow.TimeOfDay < TimeSpan.FromHours(6) ) 
+                        {
+                            if (DateTime.Now < new DateTime(2050, 06, 01))
+                            {
+                                CreateBatchAccountingIntegrityCheck();
+                            }
+                            _NextDueDoneAt = DateTime.UtcNow.Date;
+                            var myDueLocalBalanceService = new DueLocalBalanceService();
+                            myDueLocalBalanceService.RunAllTenants();
+
+                            var dailyRebuildAgingService = new DailyRebuildAgingService();
+                            dailyRebuildAgingService.RunAllAgingTenants();
+
+                        }
+                    }
+                    catch (Exception)
+                    {
+                        NetCommonHelper.Logger.DevLog.Instance.WriteError("JournalApprove exception selected queue: " + selectedQueue
+                              + ", workerRoleName: " + LogitudeSettings.WorkerRoleName
+                              + ",time" + DateTime.Now.ToString());
+
+                        throw;
+                    }
+                }
 
             }
 
