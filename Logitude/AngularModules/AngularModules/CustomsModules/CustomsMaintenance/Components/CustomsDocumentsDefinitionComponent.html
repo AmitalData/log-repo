@@ -68,9 +68,9 @@
                                             <td style="width: 130px;">
                                                 <LogLov [ObjectFieldName]="'TransportationTypeCode'"
                                                         [SelectedValue]="TransportationTypeCode"
-                                                        [ObjectTableName]="'Customs.CustomsTransportMode'"
+                                                        [ObjectTableName]="'TransportMode'"
                                                         [DataContext]="DataContext"
-                                                        [LookUpTableName]="'Customs.CustomsTransportMode'"
+                                                        [LookUpTableName]="'TransportMode'"
                                                         [HideLastColumn]="true"
                                                         [HideColumns]="true">
                                                 </LogLov>
@@ -181,7 +181,7 @@
                                                                                 <LogLov [ObjectFieldName]="'TransportationTypeCode'"
                                                                                         [ObjectTableName]="ObjectTableName"
                                                                                         [DataContext]="item"
-                                                                                        [LookUpTableName]="'Customs.CustomsTransportMode'"
+                                                                                        [LookUpTableName]="'TransportMode'"
                                                                                         (SelectedItemChanged)="item.SetLocalName($event,'TransportationTypeName')"
                                                                                         [HideColumns]="true"
                                                                                         [FocusOnMe]="true"

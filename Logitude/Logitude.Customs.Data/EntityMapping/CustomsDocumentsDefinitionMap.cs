@@ -29,7 +29,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.DocumentTypeCode).HasColumnName("DocumentTypeCode").HasMaxLength(7).IsUnicode(false);
 
-            this.Property(t => t.TransportationTypeCode).HasColumnName("TransportationTypeCode").HasMaxLength(1).IsUnicode(false);
+            this.Property(t => t.TransportationTypeCode).HasColumnName("TransportationTypeCode").HasMaxLength(1).IsFixedLength();
 
             this.Property(t => t.ProcessTypeCode).HasColumnName("ProcessTypeCode").HasMaxLength(7).IsUnicode(false);
 

@@ -137,7 +137,7 @@ export class DeclarationReferantDataFiltersMenuComponent
                     break;
                 }
 
-                case "L": {
+                case "I": {
                     img_I.setAttribute("src", "./Images/TransportModes/I_w.png");
                     break;
                 }
@@ -162,7 +162,7 @@ export class DeclarationReferantDataFiltersMenuComponent
                     break;
                 }
 
-                case "L": {
+                case "I": {
                     img_I.setAttribute("src", "./Images/TransportModes/I.png");
                     //img_I.style.top = "1px";
                     break;
@@ -188,7 +188,7 @@ export class DeclarationReferantDataFiltersMenuComponent
                     break;
                 }
 
-                case "L": {
+                case "I": {
                     img_I.setAttribute("src", "./Images/TransportModes/I_g.png");
                     break;
                 }
