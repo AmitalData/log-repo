@@ -122,6 +122,12 @@ namespace CommunicationWorkerRole// DUE LOADER ///.Accounting
                 }
 
                 OnStart();
+
+
+                string logtext = "AccountingJournalApproveMutliThreadingWR.WorkOnce(), Point 2, _UseQueue " + _UseQueue.ToString();
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(logtext);
+
+
                 if (_UseQueue)
                 {
                     var myWorker = new JournalApproveService.JournalApproveWorker();
@@ -148,6 +154,14 @@ namespace CommunicationWorkerRole// DUE LOADER ///.Accounting
         
         private void WorkNonStopWithoutQueue()
         {
+
+
+            string logtext = "AccountingJournalApproveMutliThreadingWR.WorkNonStopWithoutQueue(), Point 2, _UseQueue " + _UseQueue.ToString();
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug(logtext);
+
+
+
+
             var sw = new Stopwatch();
             List<string> Last_journalBufferKeys = null;
             while (IsRunning)
