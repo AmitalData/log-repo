@@ -15,6 +15,7 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public string FullNameTextCodeId { get; set; }
         public string ObjectTableId { get; set; }
         public string FieldName { get; set; }
+        public string ShortName { get; set; }
         public string DataTypeCode { get; set; }
         public string DataTypeName { get; set; }
         public int MaxLength { get; set; }
