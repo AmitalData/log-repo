@@ -29,6 +29,7 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
         public bool IsRestrictable { get; set; }
         public bool IsMain { get; set; }
         public string DBTableName { get; set; }
+        public string DBTableShortName { get; set; }
         public string BaseObjectTableId { get; set; }
         public string DescriptionTextCodeId { get; set; }
         public string DescriptionTextCodeCode { get; set; }
