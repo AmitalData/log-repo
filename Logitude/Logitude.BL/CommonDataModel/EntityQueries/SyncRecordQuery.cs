@@ -55,6 +55,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     Entname = syncRecord.Entname,
                     RecordAsJson = recordAsJson,
                     UpdateDate = syncRecord.SyncDT,
+                    CraeteDate = syncRecord.CreateDate                
                 };
             }).SkipWhile(x => x == null).ToList();
 
