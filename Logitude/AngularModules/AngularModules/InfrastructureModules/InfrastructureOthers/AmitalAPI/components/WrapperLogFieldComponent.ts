@@ -39,12 +39,16 @@ export class WrapperLogFieldComponent {
     @Input() set type (t: FieldType) {
         if(this._type)
             this._DataContext[this.name] = null;
-
+        
         this._type = t || 'text';
         this.refreshTextbox();
     };
     @Input() values?: any[];
     @Input() error?: boolean;
+    @Input() set value (val: any) {
+        this._DataContext[this.name] = val;
+        this.refreshTextbox();
+    }
     @Output() change: EventEmitter<any> = new EventEmitter<any>();
 
     private refreshTextbox() {
@@ -61,7 +65,7 @@ export class WrapperLogFieldComponent {
 
     constructor(private cd: ChangeDetectorRef) {}
 
-    public get value(): any {
+    public get Value(): any {
         return this.type === 'boolean' ? !!this._DataContext[this.name] : this._DataContext[this.name];
     }
 
