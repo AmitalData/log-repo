@@ -107,11 +107,11 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.IskaNumber).HasColumnName("IskaNumber").HasMaxLength(16).IsUnicode(false);
 
-            this.Property(t => t.Vessel).HasColumnName("Vessel").HasMaxLength(5).IsUnicode(false);
+            this.Property(t => t.Vessel).HasColumnName("Vessel").HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.FlightVoyageNumber).HasColumnName("FlightVoyageNumber").HasMaxLength(9).IsUnicode(false);
 
-            this.Property(t => t.CarrierCode).HasColumnName("CarrierCode").HasMaxLength(2).IsUnicode(false);
+            this.Property(t => t.CarrierCode).HasColumnName("CarrierCode").HasMaxLength(15).IsUnicode(false);
         }
     }
 }

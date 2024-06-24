@@ -50,4 +50,9 @@
     ReferencedTable="Shipments"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ReferenceType"
+    ReferencedTable="ReferenceTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
 </Table>

@@ -329,6 +329,7 @@
     <Compile Include="EntityKeys\ReferantTeamKeys.cs" />
     <Compile Include="EntityKeys\ReferenceInputTypeKeys.cs" />
     <Compile Include="EntityKeys\ReferenceStatusKeys.cs" />
+    <Compile Include="EntityKeys\ReferenceTypeKeys.cs" />
     <Compile Include="EntityKeys\RefundCustomerActivityTypeKeys.cs" />
     <Compile Include="EntityKeys\RegularityPublicationKeys.cs" />
     <Compile Include="EntityKeys\RegularityRequirementWarningKeys.cs" />
@@ -710,6 +711,7 @@
     <Compile Include="EntityListQueryServices\Generated\ReferantTeamListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ReferenceInputTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ReferenceStatusListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\ReferenceTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\RefundCustomerActivityTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\RegularityPublicationListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\RegularityRequirementWarningListQueryService.Generated.cs" />
@@ -793,6 +795,7 @@
     <Compile Include="EntityListQueryServices\ReferantTeamListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ReferenceInputTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ReferenceStatusListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\ReferenceTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\RefundCustomerActivityTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\RegularityPublicationListQueryService.cs" />
     <Compile Include="EntityListQueryServices\RegularityRequirementWarningListQueryService.cs" />
@@ -901,6 +904,7 @@
     <Compile Include="EntityLists\Generated\PerYearFrequencyList.Generated.cs" />
     <Compile Include="EntityLists\Generated\QuotaComputationBasisList.Generated.cs" />
     <Compile Include="EntityLists\Generated\QuotaIncrementList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ReferenceTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\RegularityPublicationList.Generated.cs" />
     <Compile Include="EntityLists\Generated\RegularityRequirementWarningList.Generated.cs" />
     <Compile Include="EntityLists\Generated\RegularitySourceList.Generated.cs" />
@@ -1262,6 +1266,7 @@
     <Compile Include="EntityMapping\ReferantTeamMap.cs" />
     <Compile Include="EntityMapping\ReferenceInputTypeMap.cs" />
     <Compile Include="EntityMapping\ReferenceStatusMap.cs" />
+    <Compile Include="EntityMapping\ReferenceTypeMap.cs" />
     <Compile Include="EntityMapping\RefundCustomerActivityTypeMap.cs" />
     <Compile Include="EntityMapping\RegularityPublicationMap.cs" />
     <Compile Include="EntityMapping\RegularityRequirementWarningMap.cs" />
@@ -1496,6 +1501,7 @@
     <Compile Include="EntityPOCOs\ReferantTeam.cs" />
     <Compile Include="EntityPOCOs\ReferenceInputType.cs" />
     <Compile Include="EntityPOCOs\ReferenceStatus.cs" />
+    <Compile Include="EntityPOCOs\ReferenceType.cs" />
     <Compile Include="EntityPOCOs\RefundCustomerActivityType.cs" />
     <Compile Include="EntityPOCOs\RegularityPublication.cs" />
     <Compile Include="EntityPOCOs\RegularityRequirementWarning.cs" />
@@ -1877,6 +1883,7 @@
     <Compile Include="Repsitories\Generated\ReferantTeamRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ReferenceInputTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ReferenceStatusRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\ReferenceTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\RefundCustomerActivityTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\RegularityPublicationRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\RegularityRequirementWarningRepository.Generated.cs" />
@@ -1960,6 +1967,7 @@
     <Compile Include="Repsitories\ReferantTeamRepository.cs" />
     <Compile Include="Repsitories\ReferenceInputTypeRepository.cs" />
     <Compile Include="Repsitories\ReferenceStatusRepository.cs" />
+    <Compile Include="Repsitories\ReferenceTypeRepository.cs" />
     <Compile Include="Repsitories\RefundCustomerActivityTypeRepository.cs" />
     <Compile Include="Repsitories\RegularityPublicationRepository.cs" />
     <Compile Include="Repsitories\RegularityRequirementWarningRepository.cs" />

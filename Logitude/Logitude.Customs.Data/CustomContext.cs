@@ -812,6 +812,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new ReferenceStatusMap());
 	
+            modelBuilder.Configurations.Add(new ReferenceTypeMap());
+	
             modelBuilder.Configurations.Add(new RefundCustomerActivityTypeMap());
 	
             modelBuilder.Configurations.Add(new RegisteredWarehouseSiteTypeMap());
@@ -3764,6 +3766,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<ReferenceStatus> ReferenceStatuses 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<ReferenceType> ReferenceTypes 
 	 {
 	      get; set;
 	 
