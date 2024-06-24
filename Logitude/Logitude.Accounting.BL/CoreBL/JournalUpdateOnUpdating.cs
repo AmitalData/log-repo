@@ -27,6 +27,8 @@ using Microsoft.Practices.Unity;
 using Logitude.BL.Helpers;
 using Logitude.BL.Resolvers;
 using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 namespace Logitude.Accounting.BL
 {
@@ -242,6 +244,11 @@ namespace Logitude.Accounting.BL
 
             }
 
+            string[] stacklines = JournalUpdateOnUpdating.GetStack(0);
+            string logtext = "JournalUpdateOnUpdating.OnUpdating(), Point 1, Journal " + journalPM.JournalNumber + ", T=" +journalPM.Tenant.ToString() + ", Status=" + journalPM.StatusCode;
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug(logtext);
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug(JsonConvert.SerializeObject(stacklines));
+
             switch (journalPM.StatusCodeEnum)
             {
 
@@ -310,7 +317,23 @@ namespace Logitude.Accounting.BL
             return TranslateTextsClass.Translate(textCodeCode, tenant, getLocalDefaultText);
         }
 
+        private static string[] GetStack(int removeLines)
+        {
+            string[] stack = Environment.StackTrace.Split(
+                new string[] { Environment.NewLine },
+                StringSplitOptions.RemoveEmptyEntries);
 
+            if (stack.Length <= removeLines)
+                return new string[0];
+
+            string[] actualResult = new string[stack.Length - removeLines];
+            for (int i = removeLines; i < stack.Length; i++)
+                // Remove 6 characters (e.g. "  at ") from the beginning of the line
+                // This might be different for other languages and platforms
+                actualResult[i - removeLines] = stack[i].Substring(6);
+
+            return actualResult;
+        }
 
         public virtual IJournalApproveParser NewJournalApproveParser(JournalPM journalPM)
         {
