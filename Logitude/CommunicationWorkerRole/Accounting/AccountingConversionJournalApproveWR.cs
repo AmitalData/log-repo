@@ -133,7 +133,7 @@ namespace CommunicationWorkerRole// DUE LOADER ///.Accounting
                 OnStart();
 
 
-                string logtext = "AccountingConversionJournalApproveWR.WorkOnce(), Point 2, _UseQueue " + _UseQueue.ToString();
+                string logtext = "AccountingConversionJournalApproveWR.WorkOnce(), Point 2";
                 NetCommonHelper.Logger.DevLog.Instance.WriteDebug(logtext);
 
 
