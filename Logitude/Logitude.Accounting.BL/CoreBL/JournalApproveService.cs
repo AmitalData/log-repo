@@ -862,6 +862,12 @@ namespace Logitude.Accounting.BL.CoreBL
             List<string> journalBufferKeys = null;
             //List<string> Last_journalBufferKeys = null;
             sw.Restart();
+
+            string logtext = "JournalApproveService.WorkWithoutQueueStatus4(), Point 2, SeedTenant " + SeedTenant.ToString();
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug(logtext);
+
+
+
             using (var scope = TransactionFactory.GetTransaction())
             // maybe to do GetNewSerializableTransaction Lock ?!?!?!
             {
@@ -945,6 +951,13 @@ namespace Logitude.Accounting.BL.CoreBL
             List<string> journalBufferKeys = null;
             //List<string> Last_journalBufferKeys = null;
             sw.Restart();
+
+
+            string logtext = "JournalApproveService.WorkWithoutQueue(), Point 2, SeedTenant " + SeedTenant.ToString();
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug(logtext);
+
+
+
             using (var scope = TransactionFactory.GetTransaction())
             // maybe to do GetNewSerializableTransaction Lock ?!?!?!
             {
