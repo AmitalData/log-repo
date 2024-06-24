@@ -6,6 +6,8 @@ import { ReportsPreviewComponent } from 'Report/Components/ReportsPreviewCompone
 import { TenantPM } from 'Common/EntityPMs/TenantPM';
 import { ReportFliter } from 'Report/Components/Filters/ReportFliter';
 import { DateTool } from 'Infrastructure/Tools';
+import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
+import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
 
 @Component({
 
@@ -20,14 +22,19 @@ export class SpotRateQuoteReportFilterComponent extends BaseComponent {
     queryFilterItems: QueryFilterItem[];
     queryFilterItem: QueryFilterItem;
     public DataContext: SpotRateQuoteReportFilterComponent = this;
+    entityResourceService: EntityResourceService = new EntityResourceService();
 
+    isReady: boolean = false;
+    public RunReportTitle: string;
     public OpenDate: Date;
     public ExpirationDate: Date;
     public CustomerId: string = null;
     public SalesmanId: string = null;
-    
+    public IsSchedulerReport: boolean;
     constructor() {
         super();
+        this.entityResourceService.getEntityResourceByTableName("GLAccount").subscribe(response => { this.isReady = true; this.SetRunReportTitle(); });
+
     }
 
     InitializeComponent(myReportsPreview: ReportsPreviewComponent) {
@@ -65,5 +72,58 @@ export class SpotRateQuoteReportFilterComponent extends BaseComponent {
         myFilterItems.push(new QueryFilterItem("OpenDateGraterThan", this.OpenDate));
         myFilterItems.push(new QueryFilterItem("ExpirationDateLessThan", this.ExpirationDate));
         return myFilterItems;
+    }
+
+    SetCustomerIdFilter(queryFilterItem: QueryFilterItem) {
+        if (queryFilterItem.FieldName == "CustomerId") {
+            this.CustomerId = queryFilterItem.FieldValue;
+        }
+    }
+    SetSalesmanIdFilter(queryFilterItem: QueryFilterItem) {
+        if (queryFilterItem.FieldName == "SalesmanId") {
+            this.SalesmanId = queryFilterItem.FieldValue;
+        }
+    }
+    SetOpenDateFilter(queryFilterItem: QueryFilterItem) {
+        if (queryFilterItem.FieldName == "OpenDateGraterThan") {
+            this.OpenDate = queryFilterItem.FieldValue;
+        }
+    }
+    SetExpirationDateLessThanFilter(queryFilterItem: QueryFilterItem) {
+        if (queryFilterItem.FieldName == "ExpirationDateLessThan") {
+            this.ExpirationDate = queryFilterItem.FieldValue;
+        }
+    }
+
+    SetQueryFilterItems(queryFilterItems: Array<QueryFilterItem>) { //For Scheduler Report
+        this.IsSchedulerReport = true;
+        if (queryFilterItems) {
+            queryFilterItems.forEach(queryFilterItem => {
+                this.SetFilterItem(queryFilterItem);
+            });
+        }
+    }
+    private SetFilterItem(queryFilterItem: QueryFilterItem) {
+        if (queryFilterItem) {
+            this.SetExpirationDateLessThanFilter(queryFilterItem);
+            this.SetOpenDateFilter(queryFilterItem);
+            this.SetSalesmanIdFilter(queryFilterItem);
+            this.SetCustomerIdFilter(queryFilterItem);
+
+        }
+
+    }
+    SetRunReportTitle() {
+        if (this.isReady) {
+            if (this.IsSchedulerReport) {
+                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.PreviewReport");
+            }
+            else {
+                this.RunReportTitle = TextCodeTranslator.Translate("AgingReport.O.RunReport");
+            }
+
+        }
+
+
     }
 }
