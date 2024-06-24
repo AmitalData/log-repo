@@ -958,7 +958,6 @@
     <None Include="DBTables\CommonDataModel\ShippingLine.dxml" />
     <None Include="DBTables\CommonDataModel\SmallDocument.dxml" />
     <None Include="DBTables\CommonDataModel\State.dxml" />
-    <None Include="DBTables\CommonDataModel\SyncRecord.dxml" />
     <None Include="DBTables\CommonDataModel\TariffCarrierTranslation.dxml" />
     <None Include="DBTables\CommonDataModel\TarrifCharge.dxml" />
     <None Include="DBTables\CommonDataModel\TarrifFromTo.dxml" />

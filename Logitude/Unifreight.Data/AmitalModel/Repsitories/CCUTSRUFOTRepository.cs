@@ -40,7 +40,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
         {
             context.CCUTSRUFOTs.Add(entity);
             if(entity.TENANT.HasValue)
-                SyncRecordCache.ClearCacheLastSync(entity.FILENO.ToString(), entity.TENANT.Value);
+                SyncRecordCache.ClearCacheLasySync(entity.FILENO.ToString(), entity.TENANT.Value);
         }
 
         public void Remove(CCUTSRUFOT entity)
@@ -56,7 +56,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             context.CCUTSRUFOTs.Remove(entity);
 
             if (entity.TENANT.HasValue)
-                SyncRecordCache.ClearCacheLastSync(entity.FILENO.ToString(), entity.TENANT.Value);
+                SyncRecordCache.ClearCacheLasySync(entity.FILENO.ToString(), entity.TENANT.Value);
         }
 
         public void Update(CCUTSRUFOT entity)
@@ -67,7 +67,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             }
 
             if (entity.TENANT.HasValue)
-                SyncRecordCache.ClearCacheLastSync(entity.FILENO.ToString(), entity.TENANT.Value);
+                SyncRecordCache.ClearCacheLasySync(entity.FILENO.ToString(), entity.TENANT.Value);
         }
 
         public List<CCUTSRUFOT> All()
