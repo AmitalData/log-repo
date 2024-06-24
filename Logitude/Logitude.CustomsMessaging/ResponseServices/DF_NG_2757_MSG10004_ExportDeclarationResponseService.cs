@@ -1180,7 +1180,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     // get the declaration status label
                     DeclarationStatusTypeQueryService declarationStatusTypeQueryService = new DeclarationStatusTypeQueryService(_MyDeclarationPM.Tenant);
                     DeclarationStatusTypePM declarationStatusType = declarationStatusTypeQueryService.GetSingle(customResponse.Response.Status[0].NameCode.Value, false, true);
-                    declarationStatusLabel = declarationStatusType?.LocalName ?? "";
+                    declarationStatusLabel = declarationStatusType?.LocalName ?? "לא ידוע";
                 }
                 string statusSoyRemarks = $"CODE-{declarationStatus}-{declarationStatusLabel}-";
 
