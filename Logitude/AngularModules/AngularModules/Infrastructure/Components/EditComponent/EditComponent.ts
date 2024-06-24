@@ -1159,6 +1159,12 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                             allTabs.splice(indexOfTab, 1);
                         }
                     }
+                    if(this.EntityPM.ShipmentTypeId != "FCLD"){
+                        var indexOfTab = allTabs.findIndex(t => t.Code == "SHSP");
+                        if (indexOfTab > -1) {
+                            allTabs.splice(indexOfTab, 1);
+                        }
+                    }
 
 
                     // MHGC: Master General
