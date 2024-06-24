@@ -9,5 +9,6 @@ namespace Logitude.BL.CommonDataModel.Helpers
         public string TrigAction { get; set; }
         public string RecordAsJson { get; set; }
         public DateTime? UpdateDate { get; set; }
+        public DateTime? CraeteDate { get; set; }
     }
 }

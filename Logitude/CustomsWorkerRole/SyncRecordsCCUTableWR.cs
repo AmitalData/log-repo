@@ -16,6 +16,8 @@ namespace CustomsWorkerRole
         {
             if (isFirstTime)
             {
+                Logger.LogDebug("SyncRecordsCCUTableWR start run (WorkOnce)");
+
                 isFirstTime = false;
                 Scheduler(SendSyncRecoredToUnifreightQueue, 30000, "SendSyncRecoredToUnifreightQueue");
             }
@@ -23,6 +25,8 @@ namespace CustomsWorkerRole
 
         private void SendSyncRecoredToUnifreightQueue()
         {
+            Logger.LogDebug("SendSyncRecoredToUnifreightQueue start run");
+
             List<SyncRecord> syncRecordsInQueueList = new List<SyncRecord>();
             SyncRecordQuery syncRecordQuery = new SyncRecordQuery();
             List<SyncRecord> records = syncRecordQuery.GetAndMarkNewSyncRecord();
@@ -30,7 +34,9 @@ namespace CustomsWorkerRole
             if (records == null || records.Count == 0)
                 return;
 
-            var RecordsGroupByTenants = records.GroupBy(record => record.Tenant).ToList();            
+            Logger.LogDebug("SendSyncRecoredToUnifreightQueue, records count: " + records.Count);
+
+            var RecordsGroupByTenants = records.GroupBy(record => record.Tenant).ToList();
 
             foreach (var group in RecordsGroupByTenants)
             {
@@ -41,9 +47,8 @@ namespace CustomsWorkerRole
                     syncRecordsInQueueList.AddRange(recordsOfTenant);
                 }
                 catch (Exception e)
-                {
-                    NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e, "error on SendToUnifreightQueue");
-                  
+                {                    
+                    NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e, "error on SendToUnifreightQueue, tenant: " + group.Key);
                 }
             }
 
@@ -63,7 +68,6 @@ namespace CustomsWorkerRole
                 catch (Exception e)
                 {
                     NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e, "error on Schdule action " + actionName);
-                    
                 }
                 finally
                 {
@@ -85,7 +89,7 @@ namespace CustomsWorkerRole
             string tableName = "SyncRecord";
             string fileNos = string.Join(",", records.ConvertAll(record => record.FileNo.Trim()).Distinct());
 
-            NetCommonHelper.Logger.DevLog.Instance.WriteInfo("SendToQueue, fileNos: " + fileNos);
+            NetCommonHelper.Logger.DevLog.Instance.WriteInfo("SendToQueue, fileNos: " + fileNos + ", tenant: " + tenant);
 
             UnifreightQueueService.Insert(tenant, priority, queueName, subject, storageFolder, action, tableName, fileNos);
         }
