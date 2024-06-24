@@ -119,6 +119,7 @@
     <Compile Include="EntityPMs\Generated\PerYearFrequencyPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\QuotaComputationBasisPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\QuotaIncrementPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ReferenceTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\RegularityPublicationPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\RegularityRequirementWarningPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\RegularitySourcePM.Generated.cs" />

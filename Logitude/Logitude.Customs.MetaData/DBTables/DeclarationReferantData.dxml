@@ -290,7 +290,7 @@
   <Column
     Name="Vessel"
     Type="varchar"
-    Size="5">
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>
@@ -304,7 +304,7 @@
   <Column
     Name="CarrierCode"
     Type="varchar"
-    Size="2">
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>
