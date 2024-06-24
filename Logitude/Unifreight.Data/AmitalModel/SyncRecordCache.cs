@@ -7,7 +7,7 @@ namespace Unifreight.Data.AmitalModel
 {
     public class SyncRecordCache
     {
-        public static void ClearCacheLasySync(string fileNo, int tenant)
+        public static void ClearCacheLastSync(string fileNo, int tenant)
         {
             TryCatch(() =>
             {
@@ -16,7 +16,7 @@ namespace Unifreight.Data.AmitalModel
             });
         }
 
-        public static void ClearCacheLasySyncByPrimaryNum(string primaryNum, int? tenant)
+        public static void ClearCacheLastSyncByPrimaryNum(string primaryNum, int? tenant)
         {
             TryCatch(() =>
             {
@@ -27,7 +27,7 @@ namespace Unifreight.Data.AmitalModel
                 if (fileNo == null)
                     return;
 
-                ClearCacheLasySync(fileNo.Value.ToString(), tenant.Value);
+                ClearCacheLastSync(fileNo.Value.ToString(), tenant.Value);
             });
         }
 
