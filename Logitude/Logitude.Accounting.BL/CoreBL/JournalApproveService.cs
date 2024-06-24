@@ -1659,7 +1659,12 @@ namespace Logitude.Accounting.BL.CoreBL
 
             public void WorkUntilQEmptyQueueDB(TimeSpan? timeSpan = null, string selectedQueue = null)
             {
-                               
+
+                string[] stacklines = JournalApproveWorker.GetStack(0);
+                string logtext = "JournalApproveService.cs JournalApproveWorker.WorkUntilQEmptyQueueDB(), Point 1, selectedQueue " + selectedQueue;
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(logtext);
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(JsonConvert.SerializeObject(stacklines));
+
                 selectedQueue = selectedQueue ?? JournalApproveService.K_AccountingJournalApproveWR;
                 Stopwatch stopwatch = null;
                 if (timeSpan != null)
@@ -1771,8 +1776,32 @@ namespace Logitude.Accounting.BL.CoreBL
 
             }
 
+
+            private static string[] GetStack(int removeLines)
+            {
+                string[] stack = Environment.StackTrace.Split(
+                    new string[] { Environment.NewLine },
+                    StringSplitOptions.RemoveEmptyEntries);
+
+                if (stack.Length <= removeLines)
+                    return new string[0];
+
+                string[] actualResult = new string[stack.Length - removeLines];
+                for (int i = removeLines; i < stack.Length; i++)
+                    // Remove 6 characters (e.g. "  at ") from the beginning of the line
+                    // This might be different for other languages and platforms
+                    actualResult[i - removeLines] = stack[i].Substring(6);
+
+                return actualResult;
+            }
             public void WorkUntilQEmptyQueueDBMultiThreaded(TimeSpan? timeSpan = null, string selectedQueue = null)
             {
+
+                string[] stacklines = JournalApproveWorker.GetStack(0);
+                string logtext = "JournalApproveService.cs JournalApproveWorker.WorkUntilQEmptyQueueDBMultiThreaded(), Point 1, selectedQueue " + selectedQueue;
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(logtext);
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug(JsonConvert.SerializeObject(stacklines));
+
                 selectedQueue = selectedQueue ?? JournalApproveService.K_AccountingJournalApproveMutliThreadingWR;
                 Stopwatch stopwatch = null;
                 if (timeSpan != null)
@@ -1783,6 +1812,12 @@ namespace Logitude.Accounting.BL.CoreBL
                 QueueResponse response = null;
                 while (true)
                 {
+
+                    NetCommonHelper.Logger.DevLog.Instance.WriteDebug("WorkUntilQEmptyQueueDBMultiThreaded inloop selected queue: " + selectedQueue
+    + ", workerRoleName: " + LogitudeSettings.WorkerRoleName
+    + ", _NextDueDoneAt.Date" + _NextDueDoneAt.Date.ToString()
+    + ", _NextDueDoneAt.Time" + _NextDueDoneAt.TimeOfDay.ToString());
+
                     if (stopwatch != null && timeSpan != null)
                     {
                         if (stopwatch.Elapsed > timeSpan)
