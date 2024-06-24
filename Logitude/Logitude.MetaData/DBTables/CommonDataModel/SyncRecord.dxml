@@ -7,8 +7,7 @@
   <Column
     Name="Id"
     Type="nvarchar"
-    Size="36"
-    DefaultValue="newid()">
+    Size="36">
     <Constraints
       PrimaryKey="true"
       Nullable="false" />
@@ -65,8 +64,4 @@
     <Constraints
       Nullable="false" />
   </Column>
-  <Index Columns="CreateDate" />
-  <Index Columns="Tenant" />
-  <Index Columns="IsSync" />
-  <Index Columns="FileNo" />
 </Table>

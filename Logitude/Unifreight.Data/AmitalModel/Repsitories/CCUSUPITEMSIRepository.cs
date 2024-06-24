@@ -42,7 +42,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
         public void Add(CCUSUPITEMSI entity)
         {
             context.CCUSUPITEMSIs.Add(entity);
-            SyncRecordCache.ClearCacheLastSync(entity.FILENO.ToString(), entity.TENANT.Value);
+            SyncRecordCache.ClearCacheLasySync(entity.FILENO.ToString(), entity.TENANT.Value);
         }
 
         public void Remove(CCUSUPITEMSI entity)
@@ -53,7 +53,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             }
             //context.AddToCCUSUPITEMSIs 
             context.CCUSUPITEMSIs.Remove(entity);
-            SyncRecordCache.ClearCacheLastSync(entity.FILENO.ToString(), entity.TENANT.Value);
+            SyncRecordCache.ClearCacheLasySync(entity.FILENO.ToString(), entity.TENANT.Value);
         }
 
         public void Update(CCUSUPITEMSI entity)
@@ -63,7 +63,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
                 context.CCUSUPITEMSIs.Attach(entity); context.SetAsModified(entity);
             }
 
-            SyncRecordCache.ClearCacheLastSync(entity.FILENO.ToString(), entity.TENANT.Value);
+            SyncRecordCache.ClearCacheLasySync(entity.FILENO.ToString(), entity.TENANT.Value);
         }
 
         public List<CCUSUPITEMSI> All()
