@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Table
   Name="SyncRecord"
-  Schema="Customs"
+  Schema="dbo"
   DBType="Main"
   Module="Common">
   <Column
@@ -65,8 +65,12 @@
     <Constraints
       Nullable="false" />
   </Column>
-  <Index Columns="CreateDate" />
-  <Index Columns="Tenant" />
-  <Index Columns="IsSync" />
-  <Index Columns="FileNo" />
+  <Index
+    Columns="CreateDate" />
+  <Index
+    Columns="Tenant" />
+  <Index
+    Columns="IsSync" />
+  <Index
+    Columns="FileNo" />
 </Table>
