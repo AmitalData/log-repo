@@ -478,7 +478,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         itemCode = new string(itemCode.Where(char.IsDigit).ToArray());
                         if (itemCode.Length > 7)
                         {
-                            var validate = ValidateClassificationCode(itemCode.Length > 10? itemCode.Substring(startIndex: 0, 10) : itemCode);
+                            var validate = ValidateClassificationCode(itemCode.Length > 10? itemCode.Substring(0, 10) : itemCode);
                             if (validate != null)
                             {
                                 supplierInvoiceItemPM.ClassificationCode = validate;
