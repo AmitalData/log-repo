@@ -16,7 +16,7 @@ namespace CustomsWorkerRole
         {
             if (isFirstTime)
             {
-                Logger.LogDebug("SyncRecordsCCUTableWR start run (WorkOnce)");
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("SyncRecordsCCUTableWR start run (WorkOnce)");
 
                 isFirstTime = false;
                 Scheduler(SendSyncRecoredToUnifreightQueue, 30000, "SendSyncRecoredToUnifreightQueue");
@@ -25,7 +25,7 @@ namespace CustomsWorkerRole
 
         private void SendSyncRecoredToUnifreightQueue()
         {
-            Logger.LogDebug("SendSyncRecoredToUnifreightQueue start run");
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("SendSyncRecoredToUnifreightQueue start run");
 
             List<SyncRecord> syncRecordsInQueueList = new List<SyncRecord>();
             SyncRecordQuery syncRecordQuery = new SyncRecordQuery();
@@ -34,7 +34,7 @@ namespace CustomsWorkerRole
             if (records == null || records.Count == 0)
                 return;
 
-            Logger.LogDebug("SendSyncRecoredToUnifreightQueue, records count: " + records.Count);
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("SendSyncRecoredToUnifreightQueue, records count: " + records.Count);
 
             var RecordsGroupByTenants = records.GroupBy(record => record.Tenant).ToList();
 

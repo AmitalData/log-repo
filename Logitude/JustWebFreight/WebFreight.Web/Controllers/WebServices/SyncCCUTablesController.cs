@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Web.Http;
 using WebFreight.Web.Helpers;
-using Logitude.Server.Tools.Utils;
 
 namespace WebFreight.Web.Controllers.WebServices
 {
@@ -12,7 +11,7 @@ namespace WebFreight.Web.Controllers.WebServices
     {
         public IHttpActionResult GetSyncData(string fileNo)
         {
-            Logger.LogDebug("GetSyncData, fileNo: '{0}'", fileNo);
+            NetCommonHelper.Logger. DevLog.Instance.WriteDebug("GetSyncData, fileNo: " + fileNo);
             if(string.IsNullOrEmpty(fileNo))
                 return BadRequest("FileNo is required");
 
@@ -25,7 +24,7 @@ namespace WebFreight.Web.Controllers.WebServices
             }
             catch (Exception ex)
             {
-                Logger.LogError(ex, "GetSyncData faild, fileNo: '{0}'", fileNo);
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex, "GetSyncData faild, fileNo: " + fileNo);
                 return InternalServerError(ex);
             }
         }
@@ -33,7 +32,7 @@ namespace WebFreight.Web.Controllers.WebServices
         [HttpPut]
         public IHttpActionResult UpdateSyncData(string fileNo, DateTime syncDT)
         {
-            Logger.LogDebug("UpdateSyncData, fileNo: '{0}', syncDT: '{1}'", fileNo, syncDT);
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("UpdateSyncData, fileNo: " +  fileNo + ", syncDT: " +  syncDT);
             if (string.IsNullOrEmpty(fileNo) || syncDT == null)
                 return BadRequest("FileNo and syncDT is required");
 
@@ -46,7 +45,7 @@ namespace WebFreight.Web.Controllers.WebServices
             }
             catch (Exception ex)
             {
-                Logger.LogError(ex, "UpdateSyncData faild, fileNo: '{0}', syncDT: '{1}'", fileNo, syncDT);
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex, "UpdateSyncData faild, fileNo: " + fileNo + " +, syncDT: " + syncDT);
                 return InternalServerError(ex);
             }
         }
@@ -54,7 +53,7 @@ namespace WebFreight.Web.Controllers.WebServices
         [HttpGet]
         public IHttpActionResult GetLastSyncDate(string fileNo)
         {
-            Logger.LogDebug("GetLastSyncDate, fileNo: '{0}'", fileNo);
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("GetLastSyncDate, fileNo: " + fileNo);
             if (string.IsNullOrEmpty(fileNo))
                 return BadRequest("FileNo is required");
 
@@ -67,7 +66,7 @@ namespace WebFreight.Web.Controllers.WebServices
             }
             catch (Exception ex)
             {
-                Logger.LogError(ex, "GetLastSyncDate faild, fileNo: '{0}'", fileNo);
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex, "GetLastSyncDate faild, fileNo: " + fileNo);
                 return InternalServerError(ex);
             }
         }
