@@ -42,7 +42,7 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;רפרנט&quot;"
   DefaultText="&quot;Shipment Referance&quot;"
-  Code="&quot;1afe&quot;"
+  Code="&quot;f501&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;ShipmentReferance&quot;"
@@ -97,6 +97,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;ShipmentId&quot;"
     ListPropertyPath="&quot;ShipmentId&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -172,6 +173,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;Tenant&quot;"
     ListPropertyPath="&quot;Tenant&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -245,6 +247,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;LineNumber&quot;"
     ListPropertyPath="&quot;LineNumber&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -299,7 +302,8 @@
     IsChecked="true"
     IsDeleted="false"
     ObjectTableName="&quot;ShipmentReferance&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;LookUp&quot;"
+    LookUpTableName="&quot;ReferenceType&quot;"
     MinLength="0"
     MaxLength="10"
     IsRequired="false"
@@ -320,6 +324,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;ReferenceType&quot;"
     ListPropertyPath="&quot;ReferenceType&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -343,8 +348,10 @@
     ListLableDefaultText="&quot;Reference Type&quot;"
     ListLocalDefaultText="&quot;סוג אסמכתא&quot;"
     IsNullable="true"
-    IsForeignKey="false"
+    IsForeignKey="true"
+    ForeignEntity="&quot;ReferenceType&quot;"
     DontBuildRelationOnDB="false"
+    NavigationPropertyName="&quot;ReferenceType&quot;"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -396,6 +403,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;PartnerId&quot;"
     ListPropertyPath="&quot;PartnerId&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -471,6 +479,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;ReferenceValue&quot;"
     ListPropertyPath="&quot;ReferenceValue&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -515,6 +524,15 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <Screen
+    Name="&quot;ShipmentReferanceHeaderScreen&quot;"
+    ObjectTableName="&quot;ShipmentReferance&quot;"
+    IsReadOnly="true"
+    IsHeaderScreen="true"
+    NumberOfColumns="2"
+    NumberOfRows="1">
+    <ScreenFields />
+  </Screen>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
@@ -543,6 +561,7 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
   </EventTypes>
+  <Records />
   <DataContracts />
   <AdditionalTextCodes />
   <AdditionalFeatures />
