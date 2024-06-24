@@ -5,7 +5,7 @@
         </td>
     </tr>
 
-    <tr>
+    <tr *ngIf="isReady">
         <td>
             <table>
                 <tr style="height:25px">
@@ -63,8 +63,7 @@
 
                                             <!-- Run -->
                                             <td style="width:90px;">
-                                                <button class="GreenButton" (click)="RunReport(true)">Run
-                                                    Report</button>
+                                                <button class="GreenButton" (click)="RunReport(true)">{{RunReportTitle}}</button>
                                             </td>
 
                                             <td>
