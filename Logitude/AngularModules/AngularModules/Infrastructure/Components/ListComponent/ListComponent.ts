@@ -2073,6 +2073,13 @@ export class ListComponent implements OnInit, AfterViewInit {
                                 logWindow.Width = 650;
                                 break;
                             }
+
+                            case "DefaultAndConfiguration": {
+                                windowTitle = "Add/Edit Default And Configuration";
+                                logWindow.Height = 400;
+                                logWindow.Width = 850;
+                                break;
+                            }
                         }
 
                         logWindow.Title = windowTitle

@@ -12,11 +12,11 @@ import { LogtuideTableDataService } from 'Infrastructure/Services/logtuide-table
     template: `
             <log-text-box-form #form [fields]='fields' [DataContext]='DataContext'  [dir]="dir" (valueChange)='onValueChanged($event)'>
                 <ng-container end>
-                    <div class='form-data-field-field' [ngClass]='{"is-array": type1.endsWith("[]")}'>
+                    <div class='form-data-field-field' [ngClass]='{"is-array": type1IsArray}'>
                         <LogLabel [DataContext]="DataContext" [Text]="'Value1'" [LayoutDirection]="dir"></LogLabel>
                         <app-field-by-type #value1 [type]='type1' [dir]='dir' [name]='"Value1"' [DataContext]='DataContext'></app-field-by-type>
                     </div>
-                    <div class='form-data-field-field' [ngClass]='{"is-array": type2.endsWith("[]")}'>
+                    <div class='form-data-field-field' [ngClass]='{"is-array": type2IsArray}'>
                         <LogLabel [DataContext]="DataContext" [Text]="'Value2'" [LayoutDirection]="dir"></LogLabel>
                         <app-field-by-type #value2 [type]='type2' [dir]='dir' [name]='"Value2"' [DataContext]='DataContext'></app-field-by-type>
                     </div>
@@ -28,32 +28,36 @@ import { LogtuideTableDataService } from 'Infrastructure/Services/logtuide-table
         `,
     styleUrls: ['../../AmitalAPI/fields.scss'],
     styles: [`
+            :host ::ng-deep .form-data-field-field { 
+                flex: 0 0 410px !important;
+            }
+            
             :host ::ng-deep .form-data-field-field LogLabel {
                 flex: 0 0 100px !important;
-            }
+            }    
 
-            .form-data-field-field.is-array LogLabel {
-                flex: 0 0 78px !important;
-            }
-
-            .form-data-field-field.is-array app-field-by-type {
-                max-height: 110px;
+            :host ::ng-deep .is-array app-field-by-type .values-container {
                 overflow-y: auto;
                 overflow-x: hidden;
                 max-width: initial;
+                max-height: 90px;
             }
 
-            :host ::ng-deep .form-data-field-field LogTextBox,
-            :host ::ng-deep .form-data-field-field LogDatePicker,
-            :host ::ng-deep .form-data-field-field .InputDiv,
-            :host ::ng-deep .form-data-field-field .DatePickerInputDiv,
-            :host ::ng-deep .form-data-field-field select {
-                width: 290px !important;
+            :host ::ng-deep .is-array app-field-by-type LogTextBox,
+            :host ::ng-deep .is-array app-field-by-type LogDatePicker,
+            :host ::ng-deep .is-array app-field-by-type .InputDiv,
+            :host ::ng-deep .is-array app-field-by-type .DatePickerInputDiv,
+            :host ::ng-deep .is-array app-field-by-type select {
+                width: 260px !important;
             }
 
             .form-data-field-field {
                 height: auto !important;
                 align-items: flex-start;
+            }
+
+            .form-data-field-field.is-array {
+                height: 110px !important;
             }
         `],
 })
@@ -66,7 +70,9 @@ export class DefaultAndConfigurationComponent {
     errorMaeasge: boolean = false;
     isEdit: boolean = false;
     type1: string = 'System.String';
+    type1IsArray: boolean = false;
     type2: string = 'System.String';
+    type2IsArray: boolean = false;
     typesList: string[] = ['System.String', 'System.Int', 'System.Double', 'System.Boolean', 'System.DateTime', 'System.String[]', 'System.Int[]', 'System.Double[]', 'System.Boolean[]'];
     fields: TextBoxField[] = [
         { name: 'Is_Active', label: 'Is Active', type: 'boolean', value: true },
@@ -87,15 +93,24 @@ export class DefaultAndConfigurationComponent {
 
     async initData(entityId: string) {
         SessionLocator.SelectedSession.StartBusyIndicator('');
+
         this.DataContext = await LogtuideTableDataService.createInstance().getDataFromService(new DefaultAndConfigurationPMService().get(entityId));
+        this.type1 = this.DataContext['SetValueType1'];
+        this.type1IsArray = this.type1.endsWith('[]');
+        this.type2 = this.DataContext['SetValueType2'];
+        this.type2IsArray = this.type2.endsWith('[]');
+
         SessionLocator.SelectedSession.StopBusyIndicator();
     }
 
     onValueChanged(e: ValueChange) {
-        if (e.field === 'SetValueType1')
+        if (e.field === 'SetValueType1') {
             this.type1 = e.value;
-        else if (e.field === 'SetValueType2')
+            this.type1IsArray = e.value.endsWith('[]');
+        } else if (e.field === 'SetValueType2') {
             this.type2 = e.value;
+            this.type2IsArray = e.value.endsWith('[]');
+        }
     }
 
     async close(save: boolean) {
