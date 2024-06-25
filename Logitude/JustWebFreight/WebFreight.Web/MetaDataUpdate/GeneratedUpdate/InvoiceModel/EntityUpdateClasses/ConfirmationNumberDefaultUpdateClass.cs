@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class ConfirmationNumberDefaultUpdateClass
    {  		
-		public const string HashString = "aafdfe7eaa3549c96fc840e6be9e4081";
+		public const string HashString = "8014f56802e3d835931f516233b0aa02";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -493,6 +493,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "InActive",
 					  						ListPropertyPath =  "InActive",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -567,7 +568,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 	
 			 QueryColumn AllConfirmationDefaultsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllConfirmationDefaultsQuery.Id,QueryCode = AllConfirmationDefaultsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ConfirmationNumberDefault.FromDate" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllConfirmationDefaultsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllConfirmationDefaultsQuery.Id,QueryCode = AllConfirmationDefaultsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ConfirmationNumberDefault.AmountForConfirmationNumber" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AllConfirmationDefaultsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllConfirmationDefaultsQuery.Id,QueryCode = AllConfirmationDefaultsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ConfirmationNumberDefault.InActive" , ColumnWidth = 50 }, addedQueryColumns);
+
+			 QueryColumn AllConfirmationDefaultsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllConfirmationDefaultsQuery.Id,QueryCode = AllConfirmationDefaultsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ConfirmationNumberDefault.AmountForConfirmationNumber" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

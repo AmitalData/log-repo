@@ -14,12 +14,13 @@ import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
+
 export class ConfirmationNumberDefaultPM {
-      
+
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-                    this.UIProperties = new UIProperties(this); 
+		            this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -48,9 +49,10 @@ export class ConfirmationNumberDefaultPM {
     public get AmountForConfirmationNumber() { return this.amountForConfirmationNumber; }
     public set AmountForConfirmationNumber(newValue: number) { if (this.amountForConfirmationNumber != newValue) { this.amountForConfirmationNumber = newValue; this.MarkAsDirty("AmountForConfirmationNumber"); } }
        
-    private inActiveAmount: boolean;
-    public get InActive() { return this.inActiveAmount; }
-    public set InActive(newValue: boolean) { if (this.inActiveAmount != newValue) { this.inActiveAmount = newValue; this.MarkAsDirty("InActive"); } }
+	 
+    private inActive: boolean;
+    public get InActive() { return this.inActive; }
+    public set InActive(newValue: boolean) { if (this.inActive != newValue) { this.inActive = newValue; this.MarkAsDirty("InActive"); } }
        
 	 
 
@@ -68,9 +70,8 @@ export class ConfirmationNumberDefaultPM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "ConfirmationNumberDefault");
            
         }
-       }
+	 }
     }
-
     private MyClone: ConfirmationNumberDefaultPM;
 
     public CloneMe() {
@@ -81,4 +82,4 @@ export class ConfirmationNumberDefaultPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}
