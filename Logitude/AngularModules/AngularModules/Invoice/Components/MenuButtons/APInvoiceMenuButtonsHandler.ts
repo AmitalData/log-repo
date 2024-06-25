@@ -445,7 +445,7 @@ if (response != null) {
                         confirmWindow.Title = "Warning";
                         confirmWindow.Width = 450;
                         confirmWindow.Height = 190;
-                        confirmWindow.YesButtonText = TextCodeTranslator.Translate("General.B.Save");
+                        confirmWindow.YesButtonText = TextCodeTranslator.Translate("General.B.Ok");
                         confirmWindow.NoButtonText = TextCodeTranslator.Translate("General.B.Cancel");
                         confirmWindow.ShowCancelButton = false;
                         confirmWindow.Show(TextCodeTranslator.Translate("APInvoice.M.SameInvoiceNumber")+": "+this.EntityPM.InvoiceNumber);
