@@ -367,6 +367,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WWApi", "WWApi\WWApi.csproj
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AmitalTestConsoleApp", "AmitalTestConsoleApp\AmitalTestConsoleApp.csproj", "{06D4F58C-10C6-4F03-8C59-85AE3C2B86A4}"
 EndProject
+Project("{F088123C-0E9E-452A-89E6-6BA2F21D5CAC}") = "AmitalDependencyDiagram", "AmitalDependencyDiagram\AmitalDependencyDiagram.modelproj", "{F1BE47FA-7FBD-47E2-AD21-FB6E359432BF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		All Projects|Any CPU = All Projects|Any CPU
@@ -5823,6 +5825,48 @@ Global
 		{06D4F58C-10C6-4F03-8C59-85AE3C2B86A4}.SingleImage|Mixed Platforms.Build.0 = Debug|Any CPU
 		{06D4F58C-10C6-4F03-8C59-85AE3C2B86A4}.SingleImage|x86.ActiveCfg = Debug|Any CPU
 		{06D4F58C-10C6-4F03-8C59-85AE3C2B86A4}.SingleImage|x86.Build.0 = Debug|Any CPU
+		{F1BE47FA-7FBD-47E2-AD21-FB6E359432BF}.All Projects|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1BE47FA-7FBD-47E2-AD21-FB6E359432BF}.All Projects|Any CPU.Build.0 = Debug|Any CPU
+		{F1BE47FA-7FBD-47E2-AD21-FB6E359432BF}.All Projects|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{F1BE47FA-7FBD-47E2-AD21-FB6E359432BF}.All Projects|Mixed Platforms.Build.0 = Debug|Any CPU
+		{F1BE47FA-7FBD-47E2-AD21-FB6E359432BF}.All Projects|x86.ActiveCfg = Debug|Any CPU
+		{F1BE47FA-7FBD-47E2-AD21-FB6E359432BF}.All Projects|x86.Build.0 = Debug|Any CPU
+		{F1BE47FA-7FBD-47E2-AD21-FB6E359432BF}.CD_ROM|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1BE47FA-7FBD-47E2-AD21-FB6E359432BF}.CD_ROM|Any CPU.Build.0 = Debug|Any CPU
+		{F1BE47FA-7FBD-47E2-AD21-FB6E359432BF}.CD_ROM|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{F1BE47FA-7FBD-47E2-AD21-FB6E359432BF}.CD_ROM|Mixed Platforms.Build.0 = Debug|Any CPU
+		{F1BE47FA-7FBD-47E2-AD21-FB6E359432BF}.CD_ROM|x86.ActiveCfg = Debug|Any CPU
+		{F1BE47FA-7FBD-47E2-AD21-FB6E359432BF}.CD_ROM|x86.Build.0 = Debug|Any CPU
+		{F1BE47FA-7FBD-47E2-AD21-FB6E359432BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1BE47FA-7FBD-47E2-AD21-FB6E359432BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1BE47FA-7FBD-47E2-AD21-FB6E359432BF}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{F1BE47FA-7FBD-47E2-AD21-FB6E359432BF}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{F1BE47FA-7FBD-47E2-AD21-FB6E359432BF}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F1BE47FA-7FBD-47E2-AD21-FB6E359432BF}.Debug|x86.Build.0 = Debug|Any CPU
+		{F1BE47FA-7FBD-47E2-AD21-FB6E359432BF}.DVD-5|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1BE47FA-7FBD-47E2-AD21-FB6E359432BF}.DVD-5|Any CPU.Build.0 = Debug|Any CPU
+		{F1BE47FA-7FBD-47E2-AD21-FB6E359432BF}.DVD-5|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{F1BE47FA-7FBD-47E2-AD21-FB6E359432BF}.DVD-5|Mixed Platforms.Build.0 = Debug|Any CPU
+		{F1BE47FA-7FBD-47E2-AD21-FB6E359432BF}.DVD-5|x86.ActiveCfg = Debug|Any CPU
+		{F1BE47FA-7FBD-47E2-AD21-FB6E359432BF}.DVD-5|x86.Build.0 = Debug|Any CPU
+		{F1BE47FA-7FBD-47E2-AD21-FB6E359432BF}.None|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1BE47FA-7FBD-47E2-AD21-FB6E359432BF}.None|Any CPU.Build.0 = Debug|Any CPU
+		{F1BE47FA-7FBD-47E2-AD21-FB6E359432BF}.None|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{F1BE47FA-7FBD-47E2-AD21-FB6E359432BF}.None|Mixed Platforms.Build.0 = Debug|Any CPU
+		{F1BE47FA-7FBD-47E2-AD21-FB6E359432BF}.None|x86.ActiveCfg = Debug|Any CPU
+		{F1BE47FA-7FBD-47E2-AD21-FB6E359432BF}.None|x86.Build.0 = Debug|Any CPU
+		{F1BE47FA-7FBD-47E2-AD21-FB6E359432BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1BE47FA-7FBD-47E2-AD21-FB6E359432BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1BE47FA-7FBD-47E2-AD21-FB6E359432BF}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{F1BE47FA-7FBD-47E2-AD21-FB6E359432BF}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{F1BE47FA-7FBD-47E2-AD21-FB6E359432BF}.Release|x86.ActiveCfg = Release|Any CPU
+		{F1BE47FA-7FBD-47E2-AD21-FB6E359432BF}.Release|x86.Build.0 = Release|Any CPU
+		{F1BE47FA-7FBD-47E2-AD21-FB6E359432BF}.SingleImage|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1BE47FA-7FBD-47E2-AD21-FB6E359432BF}.SingleImage|Any CPU.Build.0 = Debug|Any CPU
+		{F1BE47FA-7FBD-47E2-AD21-FB6E359432BF}.SingleImage|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{F1BE47FA-7FBD-47E2-AD21-FB6E359432BF}.SingleImage|Mixed Platforms.Build.0 = Debug|Any CPU
+		{F1BE47FA-7FBD-47E2-AD21-FB6E359432BF}.SingleImage|x86.ActiveCfg = Debug|Any CPU
+		{F1BE47FA-7FBD-47E2-AD21-FB6E359432BF}.SingleImage|x86.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

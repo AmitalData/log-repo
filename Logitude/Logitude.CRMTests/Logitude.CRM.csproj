@@ -146,6 +146,10 @@
     <Compile Include="Steps\Opportunities\UpdateOpportunitySteps.cs" />
   </ItemGroup>
   <ItemGroup>
+    <AdditionalFiles Include="..\AmitalDependencyDiagram\DependencyValidation1.layerdiagram">
+      <Link>DependencyValidation1.layerdiagram</Link>
+      <Visible>False</Visible>
+    </AdditionalFiles>
     <None Include="app.config" />
     <None Include="Features\Activities\CreateAppointment.feature" />
     <None Include="Features\Activities\CreatePhoneCall.feature" />
@@ -161,7 +165,10 @@
     <None Include="Features\Opportunities\UpdateOpportunity.feature" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Analyzer Include="..\packages\Microsoft.DependencyValidation.Analyzers.0.11.0\analyzers\dotnet\cs\Microsoft.DependencyValidation.Analyzers.resources.dll" />
+    <Analyzer Include="..\packages\Microsoft.DependencyValidation.Analyzers.0.11.0\analyzers\dotnet\Microsoft.DependencyValidation.Analyzers.dll" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Logitude.Test.Base\Logitude.Base.csproj">
       <Project>{74FBC07E-5CBF-44C5-85C8-F86FACAA06B6}</Project>

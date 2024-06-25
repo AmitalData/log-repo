@@ -160,6 +160,10 @@
     <Compile Include="GlobalModel\EntityPOCOs\TenantManagementLicense.cs" />
     <Compile Include="GlobalModel\EntityPOCOs\TenantType.cs" />
     <Compile Include="GlobalModel\GlobalContext.cs" />
+    <AdditionalFiles Include="..\AmitalDependencyDiagram\DependencyValidation1.layerdiagram">
+      <Link>DependencyValidation1.layerdiagram</Link>
+      <Visible>False</Visible>
+    </AdditionalFiles>
     <None Include="GlobalModel\GlobalContext.Views.cs" />
     <Compile Include="GlobalModel\Helpers\GlobalDbHelper.cs" />
     <Compile Include="GlobalModel\IGlobalContext.cs" />
@@ -641,6 +645,10 @@
     <EmbeddedResource Include="Migrations\202004301840322_Abed_FixCustomerCareIPColumnInTableSettings.resx">
       <DependentUpon>202004301840322_Abed_FixCustomerCareIPColumnInTableSettings.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\packages\Microsoft.DependencyValidation.Analyzers.0.11.0\analyzers\dotnet\cs\Microsoft.DependencyValidation.Analyzers.resources.dll" />
+    <Analyzer Include="..\packages\Microsoft.DependencyValidation.Analyzers.0.11.0\analyzers\dotnet\Microsoft.DependencyValidation.Analyzers.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
