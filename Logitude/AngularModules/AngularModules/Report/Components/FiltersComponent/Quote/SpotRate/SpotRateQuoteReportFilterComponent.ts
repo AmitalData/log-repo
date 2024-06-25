@@ -5,9 +5,11 @@ import { QueryFilterItem } from '../../../../Components/Filters/QueryFilterItem'
 import { ReportsPreviewComponent } from 'Report/Components/ReportsPreviewComponent';
 import { TenantPM } from 'Common/EntityPMs/TenantPM';
 import { ReportFliter } from 'Report/Components/Filters/ReportFliter';
-import { DateTool } from 'Infrastructure/Tools';
+import { AppTool, DateTool } from 'Infrastructure/Tools';
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
+import { CardExtendedPMService } from 'Common/Services/ExtendedPMs/CardExtendedPMService';
+import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
 
 @Component({
 
@@ -31,6 +33,8 @@ export class SpotRateQuoteReportFilterComponent extends BaseComponent {
     public CustomerId: string = null;
     public SalesmanId: string = null;
     public IsSchedulerReport: boolean;
+    GLAccountChanged: boolean;
+
     constructor() {
         super();
         this.entityResourceService.getEntityResourceByTableName("GLAccount").subscribe(response => { this.isReady = true; this.SetRunReportTitle(); });
@@ -58,14 +62,14 @@ export class SpotRateQuoteReportFilterComponent extends BaseComponent {
         reportFliter.ReportCode = this.ReportsPreview.Report.Code;
         reportFliter.NumberOfPage = 1;
         reportFliter.ProcessType = "GenerateReport";
-        reportFliter.QueryFilterItemLists = this.BuildQueryFilterItems();
+        reportFliter.QueryFilterItemLists = this.GetQueryFilterItems ();
 
         this.ReportsPreview.GenerateReport(reportFliter, isloading);
 
     }
 
 
-    private BuildQueryFilterItems() {
+    private GetQueryFilterItems () {
         var myFilterItems: QueryFilterItem[] = [];
         myFilterItems.push(new QueryFilterItem("CustomerId", this.CustomerId));
         myFilterItems.push(new QueryFilterItem("SalesmanId", this.SalesmanId));
@@ -77,6 +81,7 @@ export class SpotRateQuoteReportFilterComponent extends BaseComponent {
     SetCustomerIdFilter(queryFilterItem: QueryFilterItem) {
         if (queryFilterItem.FieldName == "CustomerId") {
             this.CustomerId = queryFilterItem.FieldValue;
+            this.GLAccountChanged = true;
         }
     }
     SetSalesmanIdFilter(queryFilterItem: QueryFilterItem) {
@@ -125,5 +130,46 @@ export class SpotRateQuoteReportFilterComponent extends BaseComponent {
         }
 
 
+    }
+    ValidateSelectedFilters (){
+        return true;
+    }
+    IsPartnersChanged(SelectedTab) {
+        if (SelectedTab == '2')
+            this.GLAccountChanged = false;
+        return this.GLAccountChanged;
+    }
+
+    PrepareContactList() {
+
+        //var glAccountId = this.GetLookUpFieldValue(this.Customer);
+        if (this.CustomerId != null) {
+            this.GLAccountCardContacts(this.CustomerId);
+
+        }
+    }
+    GetLookUpFieldValue(field) {
+        if (field) {
+            if (field[0]["@nil"] != "true")
+                return field;
+        }
+        return null
+    }
+    GLAccountCardContacts(glAccountId:string) {
+        var cardExtendedPMService = new CardExtendedPMService();
+        cardExtendedPMService.GetAllConnectedPartnersByGLAccountId(glAccountId).subscribe((response: ServiceResponse) => {
+            if (!response.HasError) {
+                var allContacts = response.Result;
+                if (allContacts != null && allContacts.length > 0) {
+                    allContacts.forEach(contact => {
+                        if (!AppTool.IsNullOrEmpty(contact)) this.ReportsPreview.AddPartner(contact.PartnerName, contact.PartnerId);
+                    });
+                    this.ReportsPreview.PartnersObslist.reverse();
+                }
+            }
+        });
+    }
+    GetMainCustomerFieldName() {
+        return 'CustomerId';
     }
 }
