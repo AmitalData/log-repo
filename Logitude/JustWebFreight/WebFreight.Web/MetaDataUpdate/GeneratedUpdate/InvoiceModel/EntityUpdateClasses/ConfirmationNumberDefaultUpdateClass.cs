@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class ConfirmationNumberDefaultUpdateClass
    {  		
-		public const string HashString = "8014f56802e3d835931f516233b0aa02";
+		public const string HashString = "e213c9372e2ae335b46c2a8c62a26962";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -568,9 +568,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 	
 			 QueryColumn AllConfirmationDefaultsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllConfirmationDefaultsQuery.Id,QueryCode = AllConfirmationDefaultsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ConfirmationNumberDefault.FromDate" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllConfirmationDefaultsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllConfirmationDefaultsQuery.Id,QueryCode = AllConfirmationDefaultsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ConfirmationNumberDefault.InActive" , ColumnWidth = 50 }, addedQueryColumns);
+			 QueryColumn AllConfirmationDefaultsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllConfirmationDefaultsQuery.Id,QueryCode = AllConfirmationDefaultsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ConfirmationNumberDefault.InActive" , ColumnWidth = 50 }, addedQueryColumns);
 
-			 QueryColumn AllConfirmationDefaultsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllConfirmationDefaultsQuery.Id,QueryCode = AllConfirmationDefaultsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ConfirmationNumberDefault.AmountForConfirmationNumber" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AllConfirmationDefaultsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllConfirmationDefaultsQuery.Id,QueryCode = AllConfirmationDefaultsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ConfirmationNumberDefault.AmountForConfirmationNumber" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);
@@ -597,11 +597,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 	   		  
 	      
 
-	         Screen ConfirmationNumberDefaultGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ConfirmationNumberDefault.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = ConfirmationNumberDefaultObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 2, IsReadOnly = false }, screensRepository, tenantScreens);
+	         Screen ConfirmationNumberDefaultGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ConfirmationNumberDefault.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = ConfirmationNumberDefaultObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 3, IsReadOnly = false }, screensRepository, tenantScreens);
       
              ScreenField ConfirmationNumberDefaultConfirmationNumberDefaultGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ConfirmationNumberDefaultGeneralTabScreenScreen1.Id,ScreenCode = ConfirmationNumberDefaultGeneralTabScreenScreen1.Code, ObjectFieldCode = "ConfirmationNumberDefault.FromDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
              ScreenField ConfirmationNumberDefaultConfirmationNumberDefaultGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = ConfirmationNumberDefaultGeneralTabScreenScreen1.Id,ScreenCode = ConfirmationNumberDefaultGeneralTabScreenScreen1.Code, ObjectFieldCode = "ConfirmationNumberDefault.AmountForConfirmationNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ConfirmationNumberDefaultConfirmationNumberDefaultGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = ConfirmationNumberDefaultGeneralTabScreenScreen1.Id,ScreenCode = ConfirmationNumberDefaultGeneralTabScreenScreen1.Code, ObjectFieldCode = "ConfirmationNumberDefault.InActive", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	            
 
 	    }
