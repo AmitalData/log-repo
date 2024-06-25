@@ -48,6 +48,10 @@ export class ConfirmationNumberDefaultPM {
     public get AmountForConfirmationNumber() { return this.amountForConfirmationNumber; }
     public set AmountForConfirmationNumber(newValue: number) { if (this.amountForConfirmationNumber != newValue) { this.amountForConfirmationNumber = newValue; this.MarkAsDirty("AmountForConfirmationNumber"); } }
        
+    private inActiveAmount: boolean;
+    public get InActive() { return this.inActiveAmount; }
+    public set InActive(newValue: boolean) { if (this.inActiveAmount != newValue) { this.inActiveAmount = newValue; this.MarkAsDirty("InActive"); } }
+       
 	 
 
     public OldEntityPM: ConfirmationNumberDefaultPM;
@@ -77,4 +81,4 @@ export class ConfirmationNumberDefaultPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

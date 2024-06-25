@@ -18,5 +18,6 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public string SearchFields { get; set; }
 
         public int AmountForConfirmationNumber { get; set; }
+        public bool InActive { get; set; }
     }
 }

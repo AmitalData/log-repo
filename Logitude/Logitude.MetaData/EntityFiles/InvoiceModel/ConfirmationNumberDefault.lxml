@@ -469,6 +469,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;InActive&quot;"
     ListPropertyPath="&quot;InActive&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -537,6 +538,11 @@
       <QueryColumn
         QueryCode="&quot;All Confirmation Defaults&quot;"
         IndexOrder="1"
+        ObjectFieldName="&quot;InActive&quot;"
+        ColumnWidth="50" />
+      <QueryColumn
+        QueryCode="&quot;All Confirmation Defaults&quot;"
+        IndexOrder="2"
         ObjectFieldName="&quot;AmountForConfirmationNumber&quot;"
         ColumnWidth="130" />
     </QueryColumns>

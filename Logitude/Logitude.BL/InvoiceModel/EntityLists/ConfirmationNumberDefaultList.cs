@@ -10,6 +10,7 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public int Tenant { get; set; }
         public DateTime FromDate { get; set; }
         public int AmountForConfirmationNumber { get; set; }
+       public bool InActive { get; set; }
 
     }
 }
