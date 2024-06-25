@@ -17,6 +17,8 @@ using System.Runtime.Remoting.Contexts;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using Logitude.Accounting.Def.EntityPMs;
+using Logitude.Server.Tools.Helpers;
 
 namespace Logitude.Accounting.BL.CoreBL.Reports
 {
@@ -26,6 +28,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
         private IAccountingContext _AccountingContext;
         private bool _IsAccountingCurrencyRequested;
         private IQueryable<string> _allIdAccounts;
+        private FullAccountingSettingPM _FullAccountingSettingPM;
         //private IQueryable<string> _ListIdAccounts;
         private string _SearchByFilter;
         private Stopwatch _sw;
@@ -57,9 +60,9 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             _sw = Stopwatch.StartNew();
             DateTime? maxCreateDate = null;
             List<LedgerTransactionList> list = new List<LedgerTransactionList>();
-
             this.Response = new LedgerTransactionBalanceResponse();
             CheckParam();
+            _FullAccountingSettingPM = GetRevenueExpenseGLAccountFromAccSetting(_AccountingContext, _Param.Tenant);
 
             var TransactionFactoryWrapper = new TransactionFactoryWrapper();
 
@@ -107,7 +110,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                     GLAccount acc = myGLAccountQueryService.GetSingleByAccountId(firstId, _Param.Tenant);
                     if (acc != null)
                     {
-                        if (acc.ChartOfAccountsTypeCode == "1" || acc.ChartOfAccountsTypeCode == "2") // Revenues or Expenses
+
+                        if (acc.ChartOfAccountsTypeCode == "1" || acc.ChartOfAccountsTypeCode == "2" || acc.Id == _FullAccountingSettingPM.RevenueExpenseGLAccountId) // Revenues or Expenses
                         {
                             openBalancePlease_ReCalcYearTransfer = true;
                         }
@@ -214,6 +218,51 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             this.Response.TookMS = sw.ElapsedMilliseconds;
 
             Debug.WriteLine("Response.TookMS:" + Response.TookMS.ToString());
+        }
+
+
+        private FullAccountingSettingPM GetRevenueExpenseGLAccountFromAccSetting(IAccountingContext accountingContext, int tenant)
+        {
+            bool useLocal = true;
+            string text;
+            var myFullAccountingSettingQueryService = new FullAccountingSettingQueryService(accountingContext);
+            var myFullAccountingSettingPM = myFullAccountingSettingQueryService.GetSingleFullAccountingSetting(tenant);
+            if (myFullAccountingSettingPM == null)
+            {
+                throw new ApplicationException("No FullAccountingSettingPM  for tenant ");
+            }
+            if (string.IsNullOrWhiteSpace(myFullAccountingSettingPM.RevenueExpenseGLAccountId))
+            {
+                //   throw new ApplicationException("No myFullAccountingSettingPM.RevenueExpenseGLAccountId  for tenant ");
+                text = TranslateTextsClassTranslate("YearTransfer.O.RevenueExpenseType", 0, useLocal);
+                // A year transfer account is undefined or not configured correctly
+                throw new ApplicationException(text);
+            }
+            else
+            {
+                GLAccountQueryService myGLAccountQueryService = new GLAccountQueryService(accountingContext);
+                GLAccountPM revenueExpenseGLAccount = myGLAccountQueryService.GetSingle(myFullAccountingSettingPM.RevenueExpenseGLAccountId, false, true);
+                if (revenueExpenseGLAccount == null || revenueExpenseGLAccount.RevenueExpenseType != "3")
+                {
+                    text = TranslateTextsClassTranslate("YearTransfer.O.RevenueExpenseType", 0, useLocal);
+                    // A year transfer account is undefined or not configured correctly
+                    throw new ApplicationException(text);
+                }
+            }
+            return myFullAccountingSettingPM;
+
+        }
+
+
+        public static ITextCodeTranslator OverrideITextCodeTranslator { get; set; }
+
+        public virtual string TranslateTextsClassTranslate(string textCodeCode, int tenant, bool getLocalDefaultText)
+        {
+            if (OverrideITextCodeTranslator != null)
+            {
+                return OverrideITextCodeTranslator.Translate(textCodeCode, tenant);
+            }
+            return TranslateTextsClass.Translate(textCodeCode, tenant, getLocalDefaultText);
         }
 
         private IQueryable<LedgerTransactionList> GetLedgerTransactinByTaxReportFilter()
