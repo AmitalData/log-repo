@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class ConfirmationNumberDefaultUpdateClass
    {  		
-		public const string HashString = "7dcde7160dc2bbaf224c673ce6c71c55";
+		public const string HashString = "8014f56802e3d835931f516233b0aa02";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -467,6 +467,71 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "InActive",
+					  						ObjectTableName =  "ConfirmationNumberDefault",
+					  						FieldsDataType =  "Boolean",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "InActive",
+					  						ListPropertyPath =  "InActive",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "ConfirmationNumberDefault",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "InActive",
+					  						DefaultText =  "InActive",
+					  						FullLocalDefaultText =  "חסום",
+					  						ListFieldLable =  "InActiveListLable",
+					  						ListLableDefaultText =  "InActive",
+					  						ListLocalDefaultText =  "חסום",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
@@ -503,7 +568,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 	
 			 QueryColumn AllConfirmationDefaultsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllConfirmationDefaultsQuery.Id,QueryCode = AllConfirmationDefaultsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ConfirmationNumberDefault.FromDate" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllConfirmationDefaultsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllConfirmationDefaultsQuery.Id,QueryCode = AllConfirmationDefaultsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ConfirmationNumberDefault.AmountForConfirmationNumber" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AllConfirmationDefaultsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllConfirmationDefaultsQuery.Id,QueryCode = AllConfirmationDefaultsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ConfirmationNumberDefault.InActive" , ColumnWidth = 50 }, addedQueryColumns);
+
+			 QueryColumn AllConfirmationDefaultsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllConfirmationDefaultsQuery.Id,QueryCode = AllConfirmationDefaultsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ConfirmationNumberDefault.AmountForConfirmationNumber" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

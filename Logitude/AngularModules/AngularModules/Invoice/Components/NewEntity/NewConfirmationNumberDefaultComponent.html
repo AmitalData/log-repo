@@ -42,7 +42,19 @@
                                 </td>
                             </tr>
 
-                        
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'InActive'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogCheckBox [ObjectFieldName]="'InActive'" [Checked]="DataContext.InActive" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
 
                           
 
