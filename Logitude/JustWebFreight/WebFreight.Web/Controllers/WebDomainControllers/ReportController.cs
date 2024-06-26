@@ -448,9 +448,11 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 				StiReport stiReport = new StiReport();
 				MemoryStream memoryStream = new MemoryStream();
 
-				stiReport.LoadDocument(memoryStreamForPrintExcelOrPdfRequest.Result);
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("step 2 this appService working om IISWR lenth of bytes {0} ", null, memoryStreamForPrintExcelOrPdfRequest?.Result?.Length);
 
-				if (memoryStreamForPrintExcelOrPdfRequest.Type == "PrintToPDF")
+                stiReport.LoadDocument(memoryStreamForPrintExcelOrPdfRequest.Result);
+
+                if (memoryStreamForPrintExcelOrPdfRequest.Type == "PrintToPDF")
 				{
 
 					stiReport.ExportDocument(StiExportFormat.Pdf, memoryStream);
@@ -469,15 +471,18 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
 				}
 
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("step 3 StiExcel created file in IISWR ");
 
-				return Request.CreateResponse(HttpStatusCode.OK, memoryStream);
+
+                return Request.CreateResponse(HttpStatusCode.OK, memoryStream);
 
 			}
 
 			catch (Exception ex)
 			{
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex, "step ex IISWR failed to create file");
 
-				return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
 			}
 		}
 
