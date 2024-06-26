@@ -533,12 +533,12 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             CardQuery cardQuery = new CardQuery(entityPM.Tenant);
             bool fromCache = true;
             CardList cardList = cardQuery.GetSingleByGLAccount(entityPM.Id, entityPM.Tenant, false);
-            /*if(cardList != null)
+            if(cardList != null)
             {
                 entityPM.CardId = cardList.Id;
                 entityPM.SalesmanUserId = cardList.SalesmanUserId;
                 entityPM.CollectorId = cardList.CollectorId;
-            }*/
+            }
 
             List<CardList> CardLists = cardQuery.GetAllCardsByGLAccount(entityPM.Id, entityPM.Tenant);
             bool IsSalesmanUserIdSameOnAllCards = false;
