@@ -538,7 +538,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 entityPM.CardId = cardList.Id;
                 entityPM.SalesmanUserId = cardList.SalesmanUserId;
                 entityPM.CollectorId = cardList.CollectorId;
-
             }
 
             List<CardList> CardLists = cardQuery.GetAllCardsByGLAccount(entityPM.Id, entityPM.Tenant);
