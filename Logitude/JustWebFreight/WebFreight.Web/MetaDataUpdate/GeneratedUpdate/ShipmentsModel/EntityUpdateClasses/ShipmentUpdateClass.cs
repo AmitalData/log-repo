@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentUpdateClass
    {  		
-		public const string HashString = "6e8fc4d1563ccfcf8aa2f2cb3b711ae0";
+		public const string HashString = "9e8fc4d1563ccfcf8aa2f2cb3b711ae0";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -90844,7 +90844,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
   
 	      
 
-			  Query CustomsShipmentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_22.Id, NameTextCodeCode = ShipmentTextCode_22.Code, ObjectTableName = "Shipment", Code = "CustomsShipments",  QueryGroupCode = "SHIP", IndexOrder = 22, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "Shipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_22.Id,FeatureUniqeCode= ShipmentFeature_22.FeatureUniqeCode, DefaultSortName = "CreateDateTime", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
+			  Query CustomsShipmentsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ShipmentTextCode_22.Id, NameTextCodeCode = ShipmentTextCode_22.Code, ObjectTableName = "Shipment", Code = "CustomsShipments",  QueryGroupCode = "SHIP", IndexOrder = 22, Tenant = 0, ObjectTableId = ShipmentObjectTable.Id, QuerySection = "CustomsShipment", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ShipmentFeature_22.Id,FeatureUniqeCode= ShipmentFeature_22.FeatureUniqeCode, DefaultSortName = "CreateDateTime", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
 	
 			 QueryColumn CustomsShipmentsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CustomsShipmentsQuery.Id,QueryCode = CustomsShipmentsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Shipment.TransportModeId" , ColumnWidth = 100 }, addedQueryColumns);
 

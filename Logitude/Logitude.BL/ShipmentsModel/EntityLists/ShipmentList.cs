@@ -696,6 +696,6 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public double? Volume { get; set; }
         public bool IsDocumentsNeedApprove { get; set; }
         public string ContainersNumbers { get; set; }
-
+        public string ReferantUserId { get; set; }
     }
 }

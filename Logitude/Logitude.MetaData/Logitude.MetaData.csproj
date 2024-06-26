@@ -405,7 +405,6 @@
     <None Include="DBOthers\InfrastructureModel\Procedures\usp_ChangeTenantLocalCurrency_APPayments.dxml" />
     <None Include="DBOthers\InfrastructureModel\Procedures\usp_ChangeTenantLocalCurrency_ARInvoices.dxml" />
     <None Include="DBOthers\InfrastructureModel\Procedures\usp_ChangeTenantLocalCurrency_ARPayments.dxml" />
-    <None Include="DBOthers\InfrastructureModel\Procedures\usp_ChangeTenantLocalCurrency_Quotes.dxml" />
     <None Include="DBOthers\InfrastructureModel\Procedures\usp_ChangeTenantLocalCurrency_Shipments.dxml" />
     <None Include="DBOthers\InfrastructureModel\Procedures\usp_ChangeTenantProfitCurrency.dxml" />
     <None Include="DBOthers\InvoiceModel\Triggers\TriggerOnCreate_AutomaticLastUpdateDateAPInvoiceStatus.dxml" />
@@ -519,9 +518,7 @@
     <None Include="DBOthers\CommonDataModel\Triggers\Trigger_AutomaticLastUpdateDateVessels.dxml" />
     <None Include="DBScripts\CommonModel\202011190832_UpdateEORInumberInCustomerToField1Value.sxml" />
     <None Include="DBScripts\CommonModel\202012080421_UpdatePortsSearchFields.sxml" />
-    <None Include="DBScripts\CommonModel\202012080423_FillAirLineCardSearchData.sxml" />
     <None Include="DBScripts\CommonModel\202012080427_PreparerUpdateCardSearchData.sxml" />
-    <None Include="DBScripts\CommonModel\202012080440_FillContactCardSearchData.sxml" />
     <None Include="DBScripts\CommonModel\202012100811_QueryExportExecutionLogWorkerRole.asxml" />
     <None Include="DBScripts\CommonModel\202012211256_AddNewPickupDeliveryEventTypesToShipment.sxml" />
     <None Include="DBScripts\CommonModel\202012301040_UpdateChargeGroupById.sxml" />
@@ -760,7 +757,6 @@
     <None Include="DBScripts\ShipmentModel\202211010335_UpdateAutomaticLastUpdateDateOnContainerStatuses.sxml" />
     <None Include="DBScripts\ShipmentModel\202122031108_UpdateFollowUpForwardingEvents.sxml" />
     <None Include="DBScripts\ShipmentModel\202201031148_FillProratedAmountTable.soxml" />
-    <None Include="DBScripts\ShipmentModel\DeleteShipmentAssginedtoCustomsAgentId.sxml" />
     <None Include="DBScripts\ShipmentModel\FillAccountingClosedByUserInShipmentComputedFields.sxml" />
     <None Include="DBScripts\ShipmentModel\UpdateAutomaticLastUpdateDateOnContainer.sxml" />
     <Content Include="DBScripts\ShipmentModel\UpdateshipmentsCalculateDocumentsKPIFields.txt" />

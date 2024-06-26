@@ -866,6 +866,7 @@
     <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentDocsField.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentPackageHarmonize.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentProductItem.cs" />
+    <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentReferance.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentStoragePricing.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentSubType.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentUnassignedField.cs" />
@@ -902,6 +903,7 @@
     <Compile Include="ShipmentsModel\Mapping\ShipmentDigitalFieldMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\ShipmentDocsFieldMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\ShipmentPackageHarmonizeMap.cs" />
+    <Compile Include="ShipmentsModel\Mapping\ShipmentReferanceMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\ShipmentUnassignedFieldMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\ShipmentProductItemMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\ShipmentStoragePricingMap.cs" />
@@ -1339,6 +1341,7 @@
     <Compile Include="ShipmentsModel\Repositories\ShipmentDocsFieldRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\ShipmentPackageHarmonizeRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\ShipmentProductItemRepository.cs" />
+    <Compile Include="ShipmentsModel\Repositories\ShipmentReferanceRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\ShipmentStoragePricingRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\ShipmentSubTypeRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\ShipmentUnassignedFieldRepository.cs" />

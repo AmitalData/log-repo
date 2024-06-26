@@ -240,9 +240,6 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
                 nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false && !d.IsListFilter).ToList();
                 QueryOperations listQueryOperation = new QueryOperations();
                 listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true || d.IsListFilter).ToList();
-				                
-				ShipmentReferanceCustomFilter customfilters = new ShipmentReferanceCustomFilter(tenant);
-                entityPocos = customfilters.GetFilteredQuery(queryOperations, entityPocos);
 	
                 entityPocos = genericFilter.GetFilteredQuery<ShipmentReferance>(nonListQueryOperation, entityPocos);
                 int skippedEntities = queryOperations.PageIndex;

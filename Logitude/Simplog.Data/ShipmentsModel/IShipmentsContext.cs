@@ -23,6 +23,7 @@ namespace Simplog.Data.ShipmentsModel
         IDbSet<ShipmentType> ShipmentTypes { get; }
         IDbSet<ShipmentMasterData> ShipmentMasterDatas { get; }
         IDbSet<ShipmentReceivable> ShipmentReceivables { get; }
+        IDbSet<ShipmentReferance> ShipmentReferances { get; }
         IDbSet<ShipmentPickUpDelivery> ShipmentPickUpDeliveries { get; }
         IDbSet<PackageType> PackageTypes { get; }
         IDbSet<ShipmentPackage> ShipmentPackages { get; }
