@@ -73,8 +73,8 @@ export class SpotRateQuoteReportFilterComponent extends BaseComponent {
         var myFilterItems: QueryFilterItem[] = [];
         myFilterItems.push(new QueryFilterItem("CustomerId", this.CustomerId));
         myFilterItems.push(new QueryFilterItem("SalesmanId", this.SalesmanId));
-        myFilterItems.push(new QueryFilterItem("OpenDateGraterThan", this.OpenDate));
-        myFilterItems.push(new QueryFilterItem("ExpirationDateLessThan", this.ExpirationDate));
+        myFilterItems.push(new QueryFilterItem("OpenDateGraterThan", this.OpenDate,null, 'Date'));
+        myFilterItems.push(new QueryFilterItem("ExpirationDateLessThan", this.ExpirationDate,null, 'Date'));
         return myFilterItems;
     }
 
