@@ -251,7 +251,7 @@ namespace Logitude.BL.Helpers
 (dr) =>
 {
 
-    Debug.WriteLine($"ExecuteReaderSingleResult: {dr.GetString(0)}", false);
+   NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"ExecuteReaderSingleResult: {dr.GetString(0)}");
 return 0;
 });
 

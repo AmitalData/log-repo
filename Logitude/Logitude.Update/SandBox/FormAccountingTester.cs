@@ -36,8 +36,6 @@ namespace Logitude.Update.SandBox
         public FormAccountingTester()
         {
             InitializeComponent();
-            TraceListener debugListener = new MyTraceListener(this.textBoxLogger);
-            Debug.Listeners.Add(debugListener);
             LoggedContactResolver.RegisterLoggedContactUtil();
 
         }
@@ -87,7 +85,7 @@ namespace Logitude.Update.SandBox
             }
 
             ///List<MMPSDataM> list100 = Do100(tenant, goodRowsGoodAccount);
-            Debug.WriteLine("done !!!!!!!!!");
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("done !!!!!!!!!");
         }
 
         private static List<MMPSDataM> Do100(int tenant, List<MMPSDataM> goodRowsGoodAccount)
@@ -185,7 +183,7 @@ namespace Logitude.Update.SandBox
                                 catch (Exception E) when  (E.Message == ReverseEngineerTotalByMonth_ControlAccountService.const_isokNothingDone )
                                 {
 
-                                    Debug.WriteLine("const_isokNothingDone");
+                                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("const_isokNothingDone");
                                     //throw;
                                 }
 

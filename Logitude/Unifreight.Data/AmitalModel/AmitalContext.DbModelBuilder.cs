@@ -21,7 +21,7 @@ namespace Unifreight.Data.AmitalModel
         public AmitalContext(int tenantSeed, DbConnection connection, DbCompiledModel model, string connSchemaUserId)
 : base(connection, model)
         {
-            Debug.WriteLine("AmitalContext:" + connSchemaUserId);
+         NetCommonHelper.Logger.DevLog.Instance.WriteDebug("AmitalContext:" + connSchemaUserId);
             AmitalUserGrant = connSchemaUserId;
 
             _TenantSeed = tenantSeed;

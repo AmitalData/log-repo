@@ -319,7 +319,7 @@ namespace Logitude.Accounting.BL.Validators
             if (debugit)
             {
                 var serializedObject = ProxyUtil.JsonConvertSerialize(myJournalPM);
-                Debug.WriteLine(serializedObject);
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug(serializedObject);
             }
             var errorsList = new MyList<string>();
             

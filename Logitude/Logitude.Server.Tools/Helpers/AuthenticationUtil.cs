@@ -483,21 +483,20 @@ namespace Logitude.Server.Tools.Helpers
             bool hasEmailClaim = principal.HasClaim(c => c.Type == ClaimTypes.Email);
             if (hasEmailClaim)
             {
-                Debug.WriteLine("hasEmailClaim:" + claimsEmail.Value);
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("hasEmailClaim:" + claimsEmail.Value);
             }
 
-            Debug.WriteLine("GetCurrentPrincipalTenant():" );
-            Debug.Write(GetThreadCurrentPrincipalTenant());
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("GetCurrentPrincipalTenant():{0}",GetThreadCurrentPrincipalTenant()));
 
 
-            Debug.WriteLine("UserName:" +Environment.UserName);
-            Debug.WriteLine("Thread.CurrentPrincipal.Identity.Name:" + Thread.CurrentPrincipal.Identity.Name);
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("UserName:" +Environment.UserName);
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Thread.CurrentPrincipal.Identity.Name:" + Thread.CurrentPrincipal.Identity.Name);
             if (HttpContext.Current != null)
             {
-                Debug.WriteLine("HttpContext.Current.User.Identity.Name:" + HttpContext.Current.User.Identity.Name);
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("HttpContext.Current.User.Identity.Name:" + HttpContext.Current.User.Identity.Name);
             }
             
-            Debug.WriteLine("WindowsIdentity.GetCurrent().Name:" + WindowsIdentity.GetCurrent().Name);
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("WindowsIdentity.GetCurrent().Name:" + WindowsIdentity.GetCurrent().Name);
         }
 
         public static bool IsResolveUserIdentityNameEqualSystem(int tenant)

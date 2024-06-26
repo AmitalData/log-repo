@@ -254,7 +254,7 @@ namespace Simplog.Server.Infrastructure
             {
                 DbContextBaseUtil.ToLog = false;
 
-                Debug.WriteLine(@"DbContextBase:ToLog:(Default:False due Memory Leak if not Disposed)Any time any place u can set: 
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug(@"DbContextBase:ToLog:(Default:False due Memory Leak if not Disposed)Any time any place u can set: 
 Simplog.Server.Infrastructure.DbContextBaseUtil.ToLog =true;");
                 AmitalDebuggerUtil.Break();
             }
@@ -274,7 +274,7 @@ Simplog.Server.Infrastructure.DbContextBaseUtil.ToLog =true;");
                 {
                     return;
                 }
-                Debug.WriteLine(mess);
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug(mess);
                 _MyLogQueue.Enqueue(mess);
             }
             catch (Exception)
@@ -406,7 +406,7 @@ Simplog.Server.Infrastructure.DbContextBaseUtil.ToLog =true;");
 
                     try
                     {
-                        Debug.WriteLine(line + " ;");
+                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug(line + " ;");
                         OracleCommand myCommand = mySysConnection.CreateCommand(line);//"INSERT INTO Test.Dept(DeptNo, DName) Values(50, 'DEVELOPMENT')");
                         myCommand.ExecuteNonQuery();
 
@@ -608,7 +608,7 @@ Simplog.Server.Infrastructure.DbContextBaseUtil.ToLog =true;");
         public Nullable<returnType> ExecuteReaderSingleResult<returnType>(string sqlReturn1Row, Func<DbDataReader, Nullable<returnType>> GetReturnTypeFromReader)
         where returnType : struct
         {
-            Debug.WriteLine(sqlReturn1Row);
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(sqlReturn1Row);
             ////sqlReturn1Row = sqlReturn1Row.TrimEnd(" "[0]).TrimEnd(";"[0]);
             using (var command = this.Database.Connection.CreateCommand())
             {
@@ -655,7 +655,7 @@ Simplog.Server.Infrastructure.DbContextBaseUtil.ToLog =true;");
 
 
 
-            Debug.WriteLine(sqlReturn1Row);
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(sqlReturn1Row);
 
 
 

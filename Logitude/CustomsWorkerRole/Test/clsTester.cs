@@ -266,7 +266,7 @@ SELECT TOP 1000 [Id]
             var declarationQueryService = new DeclarationQueryService(1);
             var declarationRepository = new DeclarationRepository(1);
             var list = declarationRepository.GetDeclarationsThatCanResend(1, 300);
-            Debug.WriteLine("GetDeclarationsThatCanResend:Retrieve:" + list.Count().ToString());
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("GetDeclarationsThatCanResend:Retrieve:" + list.Count().ToString());
             int succ = 0;
             foreach (var item in list)
             {
@@ -288,7 +288,7 @@ SELECT TOP 1000 [Id]
 
                 }
             }
-            Debug.WriteLine("GetDeclarationsThatCanResend:succ:" + succ.ToString());
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("GetDeclarationsThatCanResend:succ:" + succ.ToString());
         }
 
 
@@ -306,13 +306,13 @@ SELECT TOP 1000 [Id]
                     //return Request.CreateResponse(HttpStatusCode.OK, documents);
                     var query = new DeclarationQueryService(customContext);
                     var myCustomsDocumentsTicketPMList = query.GetDeclarationMandatoryTicket(parentEntityId, 1);
-                    Debug.WriteLine(s.ToString());
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug(s.ToString());
                 }
 
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(ex.ToString());
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug(ex.ToString());
             }
         }
         public static void Check_CourierSchedulerServiceIsTimeRange()
@@ -520,7 +520,7 @@ SELECT TOP 1000 [Id]
             bool err = false;
             //Debug.WriteLine("RestoreAlDec");
             //Debug.WriteLine("תיקים ששולמו ושסוג תהליך שלהם מתחיל ב-407");
-            Debug.WriteLine("תיקים ששולמו ");
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("תיקים ששולמו ");
             try
             {
                 var declarationRepository = new DeclarationRepository(1);
@@ -545,7 +545,7 @@ SELECT TOP 1000 [Id]
 
 
                 var payList = alreadyPay.ToList();
-                Debug.WriteLine("payList.Count" + payList.Count().ToString());
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("payList.Count" + payList.Count().ToString());
 
                 //var supplierInvoiceItemRepository = new SupplierInvoiceItemRepository(1);
                 //var qHaveMoreThen1 = (from a in supplierInvoiceItemRepository.GetAll(1)
@@ -564,7 +564,7 @@ SELECT TOP 1000 [Id]
                 {
 
 
-                    Debug.WriteLine($"Dec = {poco.Id} CustFile {poco.CustomsFile}");
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"Dec = {poco.Id} CustFile {poco.CustomsFile}");
 
                     var ms = new Logitude.CustomsMessaging.MessagingServices.DF_NG_8373_Web05_RetrieveImportDeclarationMessagingService();
                     ms.Send(
@@ -591,25 +591,25 @@ SELECT TOP 1000 [Id]
             catch (Exception ee)
             {
                 err = true;
-                Debug.WriteLine("RestoreAlDec:" + ee.ToString());
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("RestoreAlDec:" + ee.ToString());
 
             }
             finally
             {
                 if (!err)
                 {
-                    Debug.WriteLine("Done !!!!:" + i.ToString());
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Done !!!!:" + i.ToString());
                 }
             }
         }
 
         public void Send8373()
         {
-            //            Debug.WriteLine(@"לפתח תוכנית תיקון שתריץ מסר סטטוס הצהרה
+            //           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(@"לפתח תוכנית תיקון שתריץ מסר סטטוס הצהרה
             //האוכולוסיה לחיפוש - הצהרות שיש להם תאריך תשלום ואין להם תאריך התרה
             //עבור כל הצהרה יבוצע שאילתא לסטטוס הצהרה");
 
-            Debug.WriteLine(@"שיחזור נתוני הצהרה    
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(@"שיחזור נתוני הצהרה    
 PaymentDate  מלפני 3  ימים ");
             int i = 1;
             bool err = false;
@@ -632,7 +632,7 @@ PaymentDate  מלפני 3  ימים ");
 
 
                 var noHatraList = noHatra.ToList();
-                Debug.WriteLine("Count" + noHatraList.Count().ToString());
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Count" + noHatraList.Count().ToString());
 
                 //var supplierInvoiceItemRepository = new SupplierInvoiceItemRepository(1);
                 //var qHaveMoreThen1 = (from a in supplierInvoiceItemRepository.GetAll(1)
@@ -651,7 +651,7 @@ PaymentDate  מלפני 3  ימים ");
                 {
 
 
-                    Debug.WriteLine($"Dec = {poco.Id} CustFile {poco.CustomsFile}");
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"Dec = {poco.Id} CustFile {poco.CustomsFile}");
 
                     var ms = new Logitude.CustomsMessaging.MessagingServices.DF_NG_8373_Web05_RetrieveImportDeclarationMessagingService();
                     ms.Send(
@@ -685,14 +685,14 @@ PaymentDate  מלפני 3  ימים ");
             catch (Exception ee)
             {
                 err = true;
-                Debug.WriteLine("RestoreAlDec:" + ee.ToString());
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("RestoreAlDec:" + ee.ToString());
 
             }
             finally
             {
                 if (!err)
                 {
-                    Debug.WriteLine("Done !!!!:" + i.ToString());
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Done !!!!:" + i.ToString());
                 }
             }
         }
@@ -783,7 +783,7 @@ PaymentDate  מלפני 3  ימים ");
                     catch (Exception ee)
                     {
 
-                        Debug.WriteLine($"error  {i}:{counter}  " + ee.ToString());
+                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"error  {i}:{counter}  " + ee.ToString());
 
                     }
                     finally

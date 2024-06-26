@@ -403,7 +403,7 @@ namespace AmitalCustomsWindowsService.Tester
 ";
 
             var lines=d.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
-            Debug.WriteLine("CREATE SCHEMA Customs;  ");
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("CREATE SCHEMA Customs;  ");
 			foreach (var line in lines)
 			{
 

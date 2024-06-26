@@ -62,7 +62,7 @@ namespace Logitude.CustomsMessaging.Helpers
             sw.Stop();
             if (sw.Elapsed > TimeSpan.FromSeconds(12))
             {
-                Debug.Write("***" + sw.Elapsed.ToString());
+                NetCommonHelper.Logger.DevLog.Instance.WriteDebug("***" + sw.Elapsed.ToString());
             }
         }
         public List<SYSTBL_NG_9001_MSG_SystemTablesResponseTableData> GetTableData(

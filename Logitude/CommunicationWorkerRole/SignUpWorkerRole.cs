@@ -115,7 +115,7 @@ namespace CommunicationWorkerRole
                 }
                 catch (Exception e)
                 {
-                    Debug.WriteLine(e.ToString());
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug(e.ToString());
                     ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "WorkerRole", "SignUpWorkerRole : Run() Method", null);
                     Thread.Sleep(10000);
                 }
@@ -124,10 +124,10 @@ namespace CommunicationWorkerRole
 
         public void CreateTenant(SignUpInfoClass signUpInfo)
         {
-            Debug.WriteLine("CreateTenant:Email=" + signUpInfo.Email);
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("CreateTenant:Email=" + signUpInfo.Email);
             string password = SignUpClass.StartSignUp(signUpInfo);
             this.Password = password;
-            Debug.WriteLine("CreateTenant:password=" + password);
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("CreateTenant:password=" + password);
             //EmailsWorkerRole emailrole = new EmailsWorkerRole();
 
 
@@ -149,7 +149,7 @@ namespace CommunicationWorkerRole
 
              string emailbody = HtmlTemplate.ToString();
 
-            Debug.WriteLine(emailbody);
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(emailbody);
             EmailCommunicationParams emailParams = new EmailCommunicationParams();
             if (LogitudeSettings.DeploymentStage == "Simplog")
             {
@@ -224,7 +224,7 @@ namespace CommunicationWorkerRole
             }
 
             Communications.AddEmailCommunicationLogQueue(emailParams, 0);
-            Debug.WriteLine("SendEmail:done!!");
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("SendEmail:done!!");
         }
 
         private static EmailCommunicationParams GetLogboxEmailCommunicationParams(SignUpInfoClass signUpInfo, string emailbody)

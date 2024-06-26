@@ -52,7 +52,7 @@ namespace Logitude.Customs.BL.Messaging
             }
             if (string.IsNullOrWhiteSpace(Path.GetExtension(ftpOutParams.MyFileName.FileWithExtension)))
             {
-                Debug.WriteLine("!!Warning!!!File name without Extension !!!Warning!!");
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("!!Warning!!!File name without Extension !!!Warning!!");
                 AmitalDebuggerUtil.Break(AmitalDebuggerLevel.Warning);
             }
 

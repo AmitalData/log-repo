@@ -24,7 +24,7 @@ namespace Logitude.Accounting.BL.Utils
         {
             suffix = ValidFileName(suffix);
             LogMeDelegate logMe;
-            Debug.WriteLine(mess);
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(mess);
             if (Error)
             {
                 logMe = new LogMeDelegate(LogError);

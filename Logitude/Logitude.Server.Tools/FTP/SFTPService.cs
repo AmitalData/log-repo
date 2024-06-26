@@ -469,14 +469,14 @@ namespace Logitude.Server.Tools.FTP
             string p_status_1;
             string p_message_1;
 
-            Debug.WriteLine($"DirList('tmp_ *.tmp') ..");
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"DirList('tmp_ *.tmp') ..");
             var directoryFiles = DirList("tmp_*.tmp", true, false, out p_status_1, out p_message_1).ToList();
-            Debug.WriteLine($"Temp file {directoryFiles.Count()}");
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"Temp file {directoryFiles.Count()}");
 
 
             foreach (var fileName in directoryFiles)
             {
-                Debug.WriteLine($"delete Temp file {fileName}");
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"delete Temp file {fileName}");
                 DeleteFile(fileName, out p_status_1, out p_message_1);
             }
 

@@ -880,7 +880,7 @@ namespace Logitude.Accounting.BL.CoreBL
             sw.Stop();
             if (sw.Elapsed > TimeSpan.FromSeconds(2))
             {
-                Debug.WriteLine("Improve SQL Query Performance !!!");
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Improve SQL Query Performance !!!");
             }
             if (journalBufferKeys == null)
             {
@@ -963,7 +963,7 @@ namespace Logitude.Accounting.BL.CoreBL
             sw.Stop();
             if (sw.Elapsed > TimeSpan.FromSeconds(2))
             {
-                Debug.WriteLine("Improve SQL Query Performance !!!");
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Improve SQL Query Performance !!!");
             }
             if (journalBufferKeys == null)
             {
@@ -1025,7 +1025,7 @@ namespace Logitude.Accounting.BL.CoreBL
             sw.Stop();
             if (sw.Elapsed > TimeSpan.FromSeconds(2))
             {
-                Debug.WriteLine("Improve SQL Query Performance !!!");
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Improve SQL Query Performance !!!");
             }
             if (waitingJournal == null)
             {

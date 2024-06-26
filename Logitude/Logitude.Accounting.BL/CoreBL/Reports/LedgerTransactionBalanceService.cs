@@ -213,7 +213,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             }
             this.Response.TookMS = sw.ElapsedMilliseconds;
 
-            Debug.WriteLine("Response.TookMS:" + Response.TookMS.ToString());
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Response.TookMS:" + Response.TookMS.ToString());
         }
 
         private IQueryable<LedgerTransactionList> GetLedgerTransactinByTaxReportFilter()
@@ -267,7 +267,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
         {
 
             mess = mess + ":Took:" + _sw.Elapsed.ToString();
-            Debug.WriteLine(mess);
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(mess);
 
             _sw.Restart();
             //_StringBuilder.AppendLine(mess);
@@ -410,7 +410,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             var myStatstic4period = qGperiod
                     //.First()  = fail : Sequence contains no elements
                     .FirstOrDefault();
-            Debug.WriteLine("BuildCallBack:" + sw.ElapsedMilliseconds);
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("BuildCallBack:" + sw.ElapsedMilliseconds);
             DateTime periodMaxCreateDate = DateTime.Now;
             decimal periodSumLocalAmount = 0;
             decimal periodSumForeignAmount = 0;

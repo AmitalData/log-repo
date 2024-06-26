@@ -49,18 +49,18 @@ namespace WebFreight.Web
             string ComStatusCode = "";
             try
             {
-                Debug.WriteLine("Request Form");
-                Debug.WriteLine("=================");
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Request Form");
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("=================");
                 foreach (string key in Request.Form.AllKeys)
                 {
                     var val = Request.Form[key];
-                    Debug.WriteLine(key + " :" + Request.Form[key]);
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug(key + " :" + Request.Form[key]);
                 }
-                Debug.WriteLine("Request Header");
-                Debug.WriteLine("=================");
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Request Header");
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("=================");
                 foreach (string key in Request.Headers.AllKeys)
                 {
-                    Debug.WriteLine(key + " :" + Request.Headers[key]);
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug(key + " :" + Request.Headers[key]);
                 }
                 string data = getData(Request.InputStream);
                 WriteData(data);
