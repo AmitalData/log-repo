@@ -126,7 +126,7 @@ namespace CustomsWorkerRole
             if (DateTime.Now.Subtract(_LastActiveAt) < TimeSpan.FromSeconds(10))
             {
                 Thread.Sleep(TimeSpan.FromSeconds(2));
-                Debug.WriteLine("do not disturb the DCAServer Wait 10 sec ");
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("do not disturb the DCAServer Wait 10 sec ");
                 return;
             }
             _LastActiveAt = DateTime.Now;

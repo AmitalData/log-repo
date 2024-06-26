@@ -214,7 +214,7 @@ namespace Logitude.Accounting.BL.Validators
                 if (FromFullAccountingProvider)
                 {
                     AmitalDebuggerUtil.Break(AmitalDebuggerLevel.Information);
-                    Debug.WriteLine("Is control account - A void Check due FromFullAccountingProvider");
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Is control account - A void Check due FromFullAccountingProvider");
                 }
                 else
                 {

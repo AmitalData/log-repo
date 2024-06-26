@@ -136,7 +136,7 @@ namespace Logitude.CustomsMessaging.RabbitMQ
                                              body: message);
 
 
-                Debug.WriteLine($"RABBITMQ.BasicPublish {rabbitMQCode}");
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"RABBITMQ.BasicPublish {rabbitMQCode}");
             }
             finally
             {

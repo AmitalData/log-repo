@@ -36,21 +36,21 @@ namespace CustomsWorkerRole.Test
             var customsRequestsSheetQueryService = new CustomsRequestsSheetQueryService(tenant);
             var q = qs.GetQCustomsWithheld(tenant);
             var decs = q.ToList();
-            Debug.WriteLine($"GetQCustomsWithheld({decs.Count})");
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"GetQCustomsWithheld({decs.Count})");
             var crsList = new List<string>();
             foreach (var decId in decs)
             {
-                Debug.WriteLine($"currentdecId={decId}");
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"currentdecId={decId}");
                 var list = customsRequestsSheetQueryService.GetRequestByInterfaceTypeCode(tenant, "2470", objectTableDecId, decId, null);
                 if (list?.Count > 0)
                 {
-                    Debug.WriteLine($"GetRequestByInterfaceTypeCode(2470).count={list?.Count}");
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"GetRequestByInterfaceTypeCode(2470).count={list?.Count}");
                     var customsRequestsSheetPM = list.FirstOrDefault(x => x.RequestStatusCode == "30");
 
                     if (customsRequestsSheetPM != null)
                     {
 
-                        Debug.WriteLine($"customsRequestsSheetPM.id={customsRequestsSheetPM.Id}");
+                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"customsRequestsSheetPM.id={customsRequestsSheetPM.Id}");
                         string mess = null;
                         try
                         {
@@ -64,7 +64,7 @@ namespace CustomsWorkerRole.Test
                         }
                         catch (Exception e)
                         {
-                            Debug.WriteLine(e.ToString());
+                           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(e.ToString());
 
                         }
                     }
@@ -92,7 +92,7 @@ namespace CustomsWorkerRole.Test
 
             if (customsRequestsSheetPM?.RequestStatusEnum != Logitude.CustomsMessaging.Common.ResponseData.SheetStatusEnum.Analyzed)
             {
-                Debug.WriteLine($"status not Analyzed-abort {customsRequestsSheetPM?.Id}");
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"status not Analyzed-abort {customsRequestsSheetPM?.Id}");
                 return;
             }
 
@@ -109,7 +109,7 @@ namespace CustomsWorkerRole.Test
 
                 MessagingServiceFactoryHelper
                 .ResolveAndReQueue(customsRequestsSheetPM.InterfaceTypeCode, customsRequestsSheetPM.Tenant, customsRequestsSheetPM.Id);
-                Debug.WriteLine($"customsRequestsSheetPM.id={customsRequestsSheetPM.Id}:done");
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"customsRequestsSheetPM.id={customsRequestsSheetPM.Id}:done");
                 scopeNewCRS.Complete();
 
             }

@@ -267,35 +267,35 @@ INSERT INTO "ANALYZEQUEUESTATUS" (CODE, NAME) VALUES ('W', 'Waiting')
                 var customsPartnerFtpDetails = new CustomsPartnerFtpDetails();
                 var defInterfaceDetails = customsPartnerFtpDetails.GetAllInterfaceDetails()
                     .Where(r => r.Code == customsPartnerFtpPM.InterfaceName).First();
-                Debug.WriteLine($"DownloadFTPFiles({customsPartnerFtpPM.InterfaceName},T{customsPartnerFtpPM.Tenant})");
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"DownloadFTPFiles({customsPartnerFtpPM.InterfaceName},T{customsPartnerFtpPM.Tenant})");
                 var ftpDetail = customsPartnerFtpPM.MyFtpDetail;
 
-                Debug.WriteLine($"FTPService({ftpDetail.Host}, {ftpDetail.UserName}, {ftpDetail.Password})");
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"FTPService({ftpDetail.Host}, {ftpDetail.UserName}, {ftpDetail.Password})");
                 sftpService = new SFTPService();
                 sftpService.Logon(ftpDetail.Host, ftpDetail.UserName, ftpDetail.Password, "22", ftpDetail.Folder, out p_status, out p_message);
-                Debug.WriteLine($"DirectoryListSimple({ftpDetail.Folder})");
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"DirectoryListSimple({ftpDetail.Folder})");
 
                 
                 var directoryFiles = sftpService.DirList("*", true, false, out p_status, out p_message).ToList();
-                Debug.WriteLine($"directoryFiles.Count=({directoryFiles.Count})");
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"directoryFiles.Count=({directoryFiles.Count})");
                 if (!string.IsNullOrWhiteSpace(customsPartnerFtpPM.FileExt))
                 {
 
-                    Debug.WriteLine($"FileExt=({customsPartnerFtpPM.FileExt})");
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"FileExt=({customsPartnerFtpPM.FileExt})");
                     directoryFiles = directoryFiles.Where(f => (
                     Path.GetExtension(f)
                     .Contains(customsPartnerFtpPM.FileExt)))
                     .ToList();
-                    Debug.WriteLine($"directoryFiles.Count=({directoryFiles.Count})");
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"directoryFiles.Count=({directoryFiles.Count})");
                 }
                 if (!string.IsNullOrWhiteSpace(customsPartnerFtpPM.FileName))
                 {
-                    Debug.WriteLine($"FileExt=({customsPartnerFtpPM.FileName})");
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"FileExt=({customsPartnerFtpPM.FileName})");
                     directoryFiles = directoryFiles.Where(f => (
                      Path.GetFileNameWithoutExtension(f)
                     .Contains(customsPartnerFtpPM.FileName)))
                     .ToList();
-                    Debug.WriteLine($"directoryFiles.Count=({directoryFiles.Count})");
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"directoryFiles.Count=({directoryFiles.Count})");
                 }
                 directoryFiles = directoryFiles.Where(r => !String.IsNullOrWhiteSpace(r)).ToList();
                 directoryFiles = directoryFiles.OrderBy(fileName => fileName).ToList();
@@ -303,30 +303,30 @@ INSERT INTO "ANALYZEQUEUESTATUS" (CODE, NAME) VALUES ('W', 'Waiting')
                 {
                     if (_BadFileNamesCache.Contains(fileName))
                     {
-                        Debug.WriteLine($"continue>BadFileNamesCache({fileName})");
+                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"continue>BadFileNamesCache({fileName})");
                         continue;
                     }
 
                     var fileWithFolder = ftpDetail.Folder + "/" + Path.GetFileName(fileName);//in linux i get folder\fileName  in win only file name !!
-                    Debug.WriteLine($"ftpService.Download({fileWithFolder})");
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"ftpService.Download({fileWithFolder})");
                     byte[] fileData = sftpService.DownloadFile(fileName, out p_status, out p_message, toDir);
-                    Debug.WriteLine($"SaveMessageToAnalyzeQueue");
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"SaveMessageToAnalyzeQueue");
                     int tenant = customsPartnerFtpPM.Tenant;
                     LastActivity = DateTime.UtcNow;
                     try
                     {
-                        Debug.WriteLine($"fileData.Length == {fileData.Length}");
+                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"fileData.Length == {fileData.Length}");
                         if (fileData.Length > 0)
                         {
 
-                            Debug.WriteLine($"SaveAnalyzeQueue({defInterfaceDetails}, {fileName}, {fileData}, {tenant})");
+                           NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"SaveAnalyzeQueue({defInterfaceDetails}, {fileName}, {fileData}, {tenant})");
                             SaveAnalyzeQueue(defInterfaceDetails, fileName, fileData, tenant);
                         }
-                        Debug.WriteLine($"ftpService.Delete({fileName})");
+                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"ftpService.Delete({fileName})");
                         sftpService.DeleteFile(fileName, out p_status, out p_message, toDir);
                         if (p_status=="-1")
                         {
-                            Debug.WriteLine($"ftpService.Delete({fileName})");
+                           NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"ftpService.Delete({fileName})");
                             _BadFileNamesCache.Add(fileName);
                         }
                         
@@ -354,7 +354,7 @@ INSERT INTO "ANALYZEQUEUESTATUS" (CODE, NAME) VALUES ('W', 'Waiting')
                     string p_more1 = ""; string p_status1; string p_message1;
                     if (!String.IsNullOrWhiteSpace(System.Configuration.ConfigurationManager.AppSettings["SFTPLogoff"]))
                     {
-                        Debug.WriteLine("sftpService.Logoff");
+                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug("sftpService.Logoff");
                         sftpService.Logoff(ref p_more1, out p_status1, out p_message1);
                     }
 
@@ -379,32 +379,32 @@ INSERT INTO "ANALYZEQUEUESTATUS" (CODE, NAME) VALUES ('W', 'Waiting')
                 var customsPartnerFtpDetails = new CustomsPartnerFtpDetails();
                 var defInterfaceDetails = customsPartnerFtpDetails.GetAllInterfaceDetails()
                     .Where(r => r.Code == customsPartnerFtpPM.InterfaceName).First();
-                Debug.WriteLine($"DownloadFTPFiles({customsPartnerFtpPM.InterfaceName})");
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"DownloadFTPFiles({customsPartnerFtpPM.InterfaceName})");
                 var ftpDetail = customsPartnerFtpPM.MyFtpDetail;
 
-                Debug.WriteLine($"FTPService({ftpDetail.Host}, {ftpDetail.UserName}, {ftpDetail.Password})");
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"FTPService({ftpDetail.Host}, {ftpDetail.UserName}, {ftpDetail.Password})");
                 FTPService ftpService = new FTPService(ftpDetail.Host, ftpDetail.UserName, ftpDetail.Password);
-                Debug.WriteLine($"DirectoryListSimple({ftpDetail.Folder})");
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"DirectoryListSimple({ftpDetail.Folder})");
                 var directoryFiles = ftpService.DirectoryListSimple(ftpDetail.Folder).ToList();
-                Debug.WriteLine($"directoryFiles.Count=({directoryFiles.Count})");
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"directoryFiles.Count=({directoryFiles.Count})");
                 if (!string.IsNullOrWhiteSpace(customsPartnerFtpPM.FileExt))
                 {
 
-                    Debug.WriteLine($"FileExt=({customsPartnerFtpPM.FileExt})");
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"FileExt=({customsPartnerFtpPM.FileExt})");
                     directoryFiles = directoryFiles.Where(f => (
                     Path.GetExtension(f)
                     .Contains(customsPartnerFtpPM.FileExt)))
                     .ToList();
-                    Debug.WriteLine($"directoryFiles.Count=({directoryFiles.Count})");
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"directoryFiles.Count=({directoryFiles.Count})");
                 }
                 if (!string.IsNullOrWhiteSpace(customsPartnerFtpPM.FileName))
                 {
-                    Debug.WriteLine($"FileExt=({customsPartnerFtpPM.FileName})");
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"FileExt=({customsPartnerFtpPM.FileName})");
                     directoryFiles = directoryFiles.Where(f => (
                      Path.GetFileNameWithoutExtension(f)
                     .Contains(customsPartnerFtpPM.FileName)))
                     .ToList();
-                    Debug.WriteLine($"directoryFiles.Count=({directoryFiles.Count})");
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"directoryFiles.Count=({directoryFiles.Count})");
                 }
                 directoryFiles = directoryFiles.Where(r => !String.IsNullOrWhiteSpace(r)).ToList();
                 directoryFiles = directoryFiles.OrderBy(fileName => fileName).ToList();
@@ -412,30 +412,30 @@ INSERT INTO "ANALYZEQUEUESTATUS" (CODE, NAME) VALUES ('W', 'Waiting')
                 {
                     if (_BadFileNamesCache.Contains(fileName))
                     {
-                        Debug.WriteLine($"continue>BadFileNamesCache({fileName})");
+                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"continue>BadFileNamesCache({fileName})");
                         continue;
                     }
 
                     var fileWithFolder = ftpDetail.Folder + "/" + Path.GetFileName(fileName);//in linux i get folder\fileName  in win only file name !!
-                    Debug.WriteLine($"ftpService.Download({fileWithFolder})");
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"ftpService.Download({fileWithFolder})");
 					string p_message = "";
 					byte[] fileData = ftpService.Download(fileWithFolder,out p_message);
 
 
 
-                    Debug.WriteLine($"SaveMessageToAnalyzeQueue");
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"SaveMessageToAnalyzeQueue");
 
                     int tenant = customsPartnerFtpPM.Tenant;
                     LastActivity = DateTime.UtcNow;
                     try
                     {
-                        Debug.WriteLine($"fileData.Length == {fileData.Length}");
+                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"fileData.Length == {fileData.Length}");
                         if (fileData.Length > 0)
                         {
                             
                             SaveAnalyzeQueue(defInterfaceDetails, fileName, fileData, tenant);
                         }
-                        Debug.WriteLine($"ftpService.Delete({fileName})");
+                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"ftpService.Delete({fileName})");
                         ftpService.Delete(fileWithFolder);
                         LogDoneItemInMemory();
 

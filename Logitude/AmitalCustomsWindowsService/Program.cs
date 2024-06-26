@@ -82,7 +82,7 @@ namespace AmitalCustomsWindowsService
             //GatewayService.TestXmlDF_MSG10000_ImportDeclaration(@"D:\Source\2012\UnifreightIIG\UnifreightIIG.ServerTester\UnifreightIIG.ServerTester\IIGProxys\ImportDeclaration\SaveDF_MSG2750_2754_ImportDeclarationRequest-309925709-7788.xml");
             
 
-            Debug.WriteLine("AmitalCustomsWindowsService !!!...");
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("AmitalCustomsWindowsService !!!...");
             NetCommonHelper.Logger.DevLog.Instance.WriteInfo("AmitalCustomsWindowsService");
             NetCommonHelper.Logger.DevLog.Instance.WriteInfo("Environment.UserInteractive" + Environment.UserInteractive.ToString());
 

@@ -95,7 +95,7 @@ namespace Logitude.CustomsMessaging.Dca.Restore9100
 
         private void LogIt(string mess)
         {
-            Debug.WriteLine(mess);
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(mess);
             MyStringBuilder.AppendLine(mess);
         }
 

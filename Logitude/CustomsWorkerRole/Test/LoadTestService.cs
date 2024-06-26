@@ -102,8 +102,8 @@ namespace CustomsWorkerRole.Test
                             DateTime.Now.AddDays(-1*i));
                         
                     }
-                    Debug.WriteLine("End!!!!!!!!!!!!!!"); ;
-                    Debug.WriteLine("End!!!!!!!!!!!!!!"); ;
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("End!!!!!!!!!!!!!!"); ;
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("End!!!!!!!!!!!!!!"); ;
 
                 }
                 );
@@ -119,8 +119,8 @@ namespace CustomsWorkerRole.Test
                     SendExchangeRate(MethodEnum.ByDca, DateTime.Now.AddDays(-7));
                     //Thread.Sleep(TimeSpan.FromMinutes());
                 }
-                Debug.WriteLine("End!!!!!!!!!!!!!!"); ;
-                Debug.WriteLine("End!!!!!!!!!!!!!!"); ;
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("End!!!!!!!!!!!!!!"); ;
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("End!!!!!!!!!!!!!!"); ;
 
 
             }
@@ -197,7 +197,7 @@ namespace CustomsWorkerRole.Test
                 catch (Exception eee)
                 {
 
-                    Debug.WriteLine(eee.ToString()); ;
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug(eee.ToString()); ;
                     Thread.Sleep(5000);
                 }
                 
@@ -254,14 +254,14 @@ namespace CustomsWorkerRole.Test
                     catch (Exception eee)
                     {
 
-                        Debug.WriteLine(eee.ToString()); ;
+                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug(eee.ToString()); ;
                         Thread.Sleep(5000);
                     }
 
                     Thread.Sleep(1000);
                 }
-                Debug.WriteLine("End!!!!!!!!!!!!!!"); ;
-                Debug.WriteLine("End!!!!!!!!!!!!!!"); ;
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("End!!!!!!!!!!!!!!"); ;
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("End!!!!!!!!!!!!!!"); ;
             });
         }
 
@@ -364,19 +364,19 @@ namespace CustomsWorkerRole.Test
                     catch (Exception eee)
                     {
 
-                        Debug.WriteLine(eee.ToString()); ;
+                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug(eee.ToString()); ;
                         Thread.Sleep(5000);
                     }
 
                     Thread.Sleep(1000);
                 }
-                Debug.WriteLine("End!!!!!!!!!!!!!!"); ;
-                Debug.WriteLine("End!!!!!!!!!!!!!!"); ;
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("End!!!!!!!!!!!!!!"); ;
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("End!!!!!!!!!!!!!!"); ;
 
-                Debug.WriteLine("ByDca:"+_ByDca.ToString()); ;
-                Debug.WriteLine("ByWebRole:" + _ByWebRole.ToString()); ;
-                Debug.WriteLine("ByWorkerRole:" + _ByWorkerRole.ToString()); ;
-                Debug.WriteLine("CustomsDocument:" + _CustomsDocument.ToString()); ;
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("ByDca:"+_ByDca.ToString()); ;
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("ByWebRole:" + _ByWebRole.ToString()); ;
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("ByWorkerRole:" + _ByWorkerRole.ToString()); ;
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("CustomsDocument:" + _CustomsDocument.ToString()); ;
             });
         }
 

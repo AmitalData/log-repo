@@ -317,7 +317,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             {
                 var sw = Stopwatch.StartNew();
                 loggedUserFeatures = GetAllowedFeaturesForLoggedUserBL(loggedUserId, tenant);
-                Debug.WriteLine($"GetAllowedFeaturesForLoggedUserBL({sw.Elapsed})");
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"GetAllowedFeaturesForLoggedUserBL({sw.Elapsed})");
             }
 
 

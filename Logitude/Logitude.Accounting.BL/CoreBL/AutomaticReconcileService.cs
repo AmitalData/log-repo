@@ -55,7 +55,7 @@ namespace Logitude.Accounting.BL.CoreBL
             
             if (String.IsNullOrWhiteSpace(acc.AutomaticReconcileId))
             {
-                Debug.WriteLine("No valid Method");
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("No valid Method");
                 //return;
             }
             else
@@ -66,7 +66,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 if (pocoAutomaticReconcileMethod == null)
                 {
-                    Debug.WriteLine("No valid Method");
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("No valid Method");
                 }
             }
             
@@ -105,7 +105,7 @@ namespace Logitude.Accounting.BL.CoreBL
             fields = fields.Distinct().ToList();
             if (fields.Count == 0)
             {
-                Debug.WriteLine("No valid Method");
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("No valid Method");
 
 
 

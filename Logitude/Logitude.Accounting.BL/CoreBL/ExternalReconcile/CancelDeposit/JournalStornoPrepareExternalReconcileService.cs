@@ -58,13 +58,13 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile.CancelDeposit
                 this._JournalToVoidPM.AccountingEntityCode != depositAccountingEntityCode
                 )
             {
-                Debug.WriteLine("no need to create AccountingEntityCode is not Bank Deposit");
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("no need to create AccountingEntityCode is not Bank Deposit");
                 return false;
             }
 
             if (!IsStornoJournal(theStorno))
             {
-                Debug.WriteLine("The original void and the storno have not been properly initalized.");
+               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("The original void and the storno have not been properly initalized.");
                 return false;
             }
             var orginalJornalLedgerTransactions = FetchlTransactionOfOriginalJournal(_JournalToVoidPM.Id, _JournalToVoidPM.Tenant);

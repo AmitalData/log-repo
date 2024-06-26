@@ -67,10 +67,9 @@ namespace Logitude.Server.Tools.Helpers
             var s = now
                 //.ToUniversalTime()
                 .ToString("o");
-            Debug.WriteLine(s);
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(s);
             var f = new string(s.ToList().Where(arg => arg >= '0' && arg <= '9').ToArray());
-            Debug.WriteLine(f);
-            Debug.WriteLine(f.Length);
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(string.Format("{0}{1}",f,f.Length));
             return f;
         }
 

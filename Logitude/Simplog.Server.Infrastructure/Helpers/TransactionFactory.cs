@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -177,12 +178,8 @@ namespace Simplog.Server.Infrastructure.Helpers
         }
         static void Current_TransactionCompleted(object sender, TransactionEventArgs e)
         {
-            Debug.WriteLine(Environment.StackTrace.ToString());
-            Debug.WriteLine("A transaction has completed:");
-            Debug.WriteLine("ID:             {0}", e.Transaction.TransactionInformation.LocalIdentifier);
-            Debug.WriteLine("Distributed ID: {0}", e.Transaction.TransactionInformation.DistributedIdentifier);
-            Debug.WriteLine("Status:         {0}", e.Transaction.TransactionInformation.Status);
-            Debug.WriteLine("IsolationLevel: {0}", e.Transaction.IsolationLevel);
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(Environment.StackTrace.ToString());
+           NetCommonHelper.Logger.DevLog.Instance.WriteDebug("A transaction has completed:"+JsonConvert.SerializeObject(e.Transaction));
         }
     }
 

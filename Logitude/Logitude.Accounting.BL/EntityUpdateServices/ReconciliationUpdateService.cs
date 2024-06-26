@@ -546,7 +546,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                             var errLines = string.Join(Environment.NewLine, errorsList);
                             throw new ApplicationException(errLines);
                         }
-                        Debug.WriteLine("due CreatedByReconciliationAfterConversion do not   UpdateLedgerTransaction - dont change open Amount ");
+                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug("due CreatedByReconciliationAfterConversion do not   UpdateLedgerTransaction - dont change open Amount ");
                     }
                     else
                     {
@@ -619,7 +619,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     Math.Abs(deltaGLAccountAgingDataPM.TotalOpenTransactions.GetValueOrDefault()) > 10_000
                     )
                 {
-                    Debug.WriteLine("Ohad: Given Reconciliation Update And tenant == Ship2u and the Delta of TotalOpenTransactions > 10,000 ,Do not Update (Cause lock cause Fail Journal Streaming  ) .... ");
+                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Ohad: Given Reconciliation Update And tenant == Ship2u and the Delta of TotalOpenTransactions > 10,000 ,Do not Update (Cause lock cause Fail Journal Streaming  ) .... ");
                 }
                 else
                 {
