@@ -19,7 +19,7 @@ namespace MicrosoftGraphClient.GraphServices
 
         public Profile Get()
         {
-            return GraphAPICaller.Call<Profile>(new GraphAPICallerParameters { Url = Url, AccessToken = AccessToken, Method = Method.GET });
+            return GraphAPICaller.Call<Profile>(new GraphAPICallerParameters { Url = Url, AccessToken = AccessToken, Method = Method.Get });
         }
     }
 }

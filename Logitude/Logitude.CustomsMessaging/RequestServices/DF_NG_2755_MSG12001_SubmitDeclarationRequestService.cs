@@ -47,11 +47,11 @@ namespace Logitude.CustomsMessaging.RequestServices
             {
                 requestParams.RequestVIA = DefaultMessageController.Via(requestParams.Tenant, requestParams.MainInterfaceCode ?? "2755", requestParams.RequestVIA);
             }
-            //IMPORTANT - need change to cloud
-    //        var srverTime = (new DualQueryService(AmitalContext.GetContext(requestParams.Tenant))).GetServerDateTime();
+
+            var srverTime = DateTime.Now;// (new DualQueryService(AmitalContext.GetContext(requestParams.Tenant))).GetServerDateTime();
             if (
-                declarationPaymentsPM.FuturePaymentDateTime > DateTime.Now &&
-                declarationPaymentsPM.FuturePaymentDateTime.GetValueOrDefault().Subtract(DateTime.Now) > TimeSpan.FromMinutes(1)
+                declarationPaymentsPM.FuturePaymentDateTime > srverTime &&
+                declarationPaymentsPM.FuturePaymentDateTime.GetValueOrDefault().Subtract(srverTime) > TimeSpan.FromMinutes(1)
                 )
             {
 

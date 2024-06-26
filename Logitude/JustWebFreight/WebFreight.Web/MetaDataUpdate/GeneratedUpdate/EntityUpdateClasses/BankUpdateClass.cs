@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class BankUpdateClass
    {  		
-		public const string HashString = "4cb06c95bc4b4c1ecfc6f8742e1a6699";
+		public const string HashString = "043c58496c08678ad914d78e80b75935";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -98,11 +98,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	             				    ObjectTableName =  "Customs.Bank",
 			      				    IsNew =  false,
 			      				    DBTableName =  "Customs.Banks",
+			      				    DBTableShortName = "Customs.Banks",
 			      				    ObjectTableSingular =  "Bank",
 			      				    ObjectTablePlural =  "Banks",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    AvailableInCustomization =  true,
+			      				    SupportSubEntity =  false,
+			      				    ApplyGenericCustomFields =  false,
+			      				    AvailableInDocumentTypes =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasFiltersMenu =  false,
@@ -157,6 +161,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Code",
+					  						ShortName = "Code",
 					  						ObjectTableName =  "Customs.Bank",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,

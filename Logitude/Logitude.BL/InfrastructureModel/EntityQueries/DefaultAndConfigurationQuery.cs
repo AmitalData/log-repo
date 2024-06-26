@@ -39,11 +39,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
 
         public DefaultAndConfigurationPM GetSinglePM(string id, int tenant)
         {
-            long? LongId = null;
-            if (id != null)
-            {
-                LongId = long.Parse(id);
-            }
 
             DefaultAndConfigurationPM result =
           (from a in repository.context.DefaultAndConfigurations

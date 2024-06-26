@@ -14,7 +14,7 @@ using System.Data.Entity.ModelConfiguration.Conventions;
 using System;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Helpers;
-
+using Devart.Data.Oracle.Entity.Configuration;
 namespace Simplog.Global.Data.GlobalModel
 {
     public class GlobalContext : DbContextBase, IGlobalContext
@@ -106,7 +106,7 @@ namespace Simplog.Global.Data.GlobalModel
         {
             if (LogitudeSettings.DatabaseManagementSystem == "oracle")
             {
-                var config = Devart.Data.Oracle.Entity.Configuration.OracleEntityProviderConfig.Instance;
+                var config = OracleEntityProviderConfig.Instance;
                 config.Workarounds.DisableQuoting = true;
                 //config.QueryOptions.CaseInsensitiveComparison = true;
                 //config.QueryOptions.CaseInsensitiveLike = true;

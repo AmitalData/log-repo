@@ -39,7 +39,7 @@ namespace Logitude.Customs.Data.Repsitories
                 {
                     connection.Open();
                     var command = connection.CreateCommand();
-                    command.CommandText = "usp_AgreementLevelData";
+                    command.CommandText = "usp_CB_AgreementLevelData";
                     command.CommandType = System.Data.CommandType.StoredProcedure;
 
                     command.Parameters.AddWithValue("@CustomsItemIDNum", customsItemID);

@@ -11,6 +11,7 @@ namespace WebFreight.Web.Controllers.WebServices
     {
         public IHttpActionResult GetSyncData(string fileNo)
         {
+            NetCommonHelper.Logger. DevLog.Instance.WriteDebug("GetSyncData, fileNo: " + fileNo);
             if(string.IsNullOrEmpty(fileNo))
                 return BadRequest("FileNo is required");
 
@@ -23,6 +24,7 @@ namespace WebFreight.Web.Controllers.WebServices
             }
             catch (Exception ex)
             {
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex, "GetSyncData faild, fileNo: " + fileNo);
                 return InternalServerError(ex);
             }
         }
@@ -30,6 +32,7 @@ namespace WebFreight.Web.Controllers.WebServices
         [HttpPut]
         public IHttpActionResult UpdateSyncData(string fileNo, DateTime syncDT)
         {
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("UpdateSyncData, fileNo: " +  fileNo + ", syncDT: " +  syncDT);
             if (string.IsNullOrEmpty(fileNo) || syncDT == null)
                 return BadRequest("FileNo and syncDT is required");
 
@@ -42,6 +45,7 @@ namespace WebFreight.Web.Controllers.WebServices
             }
             catch (Exception ex)
             {
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex, "UpdateSyncData faild, fileNo: " + fileNo + " +, syncDT: " + syncDT);
                 return InternalServerError(ex);
             }
         }
@@ -49,6 +53,7 @@ namespace WebFreight.Web.Controllers.WebServices
         [HttpGet]
         public IHttpActionResult GetLastSyncDate(string fileNo)
         {
+            NetCommonHelper.Logger.DevLog.Instance.WriteDebug("GetLastSyncDate, fileNo: " + fileNo);
             if (string.IsNullOrEmpty(fileNo))
                 return BadRequest("FileNo is required");
 
@@ -61,6 +66,7 @@ namespace WebFreight.Web.Controllers.WebServices
             }
             catch (Exception ex)
             {
+                NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex, "GetLastSyncDate faild, fileNo: " + fileNo);
                 return InternalServerError(ex);
             }
         }

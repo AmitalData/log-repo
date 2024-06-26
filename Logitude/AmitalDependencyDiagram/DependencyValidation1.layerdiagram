@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<layerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/SimpleShapesModel" dslVersion="1.0.0.0" Id="3781751b-c8bd-47b8-917e-1c02b78b42d0" xmlns="http://schemas.microsoft.com/VisualStudio/TeamArchitect/LayerDesigner">
+  <layers>
+    <layer Id="4f54cb29-28ed-4fd0-9baf-c6507249dd0f" name="UI">
+      <dependencyToLayers>
+        <dependencyFromLayerToLayer Id="bc40c763-9f40-4f43-be49-5dbe611e5f1d" direction="Forward">
+          <layerMoniker Id="f3c9d960-c11d-4b15-9c15-a8b7d21fecf6" />
+        </dependencyFromLayerToLayer>
+      </dependencyToLayers>
+    </layer>
+    <layer Id="832d8437-6373-455d-9636-ac21d362348b" name="Contracts" />
+    <layer Id="eec46be3-631b-4d5e-9a43-f05ef6c6a19c" name="Business Logic">
+      <dependencyToLayers>
+        <dependencyFromLayerToLayer Id="663a1905-06ec-4f34-b6f4-b78ec0ac2491" direction="Forward">
+          <layerMoniker Id="e81412bb-bf31-4f4c-aeb8-fbf06edfb4ba" />
+        </dependencyFromLayerToLayer>
+      </dependencyToLayers>
+      <childLayers>
+        <layer Id="02c54ccf-640c-4d5c-9321-21b869cf60f4" name="Logitude.Accounting.BL">
+          <references>
+            <reference Id="811929c1-e405-4de9-a165-9894de98c2ba" name="Logitude.Accounting.BL">
+              <ArtifactNode Label="Logitude.Accounting.BL" Category="CodeSchema_Project" Id="(Assembly=../Logitude.Accounting.BL/Logitude.Accounting.BL.csproj)">
+                <Category Ref="File" />
+              </ArtifactNode>
+            </reference>
+          </references>
+        </layer>
+      </childLayers>
+    </layer>
+    <layer Id="f3c9d960-c11d-4b15-9c15-a8b7d21fecf6" name="Service Interface / Controllers">
+      <dependencyToLayers>
+        <dependencyFromLayerToLayer Id="c4d7094c-b709-46fd-b6dc-d3cdbdb45f48" direction="Forward">
+          <layerMoniker Id="eec46be3-631b-4d5e-9a43-f05ef6c6a19c" />
+        </dependencyFromLayerToLayer>
+      </dependencyToLayers>
+      <childLayers>
+        <layer Id="0ef45971-f9a4-4430-a117-aa465c292059" name="WebFreight.Web">
+          <references>
+            <reference Id="664d1d53-e343-460a-8f39-7c915b6e7d1e" name="WebFreight.Web">
+              <ArtifactNode Label="WebFreight.Web" Category="CodeSchema_Project" Id="(Assembly=../JustWebFreight/WebFreight.Web/WebFreight.Web.csproj)">
+                <Category Ref="File" />
+              </ArtifactNode>
+            </reference>
+          </references>
+        </layer>
+      </childLayers>
+    </layer>
+    <layer Id="e81412bb-bf31-4f4c-aeb8-fbf06edfb4ba" name="Data Access">
+      <childLayers>
+        <layer Id="dffdba5f-23ce-4b57-b2a0-58071878f2bd" name="Logitude.Accounting.Data">
+          <references>
+            <reference Id="c9363366-5ef8-4d40-8776-d6748a9bf090" name="Logitude.Accounting.Data">
+              <ArtifactNode Label="Logitude.Accounting.Data" Category="CodeSchema_Project" Id="(Assembly=../Logitude.Accounting.Data/Logitude.Accounting.Data.csproj)">
+                <Category Ref="File" />
+              </ArtifactNode>
+            </reference>
+          </references>
+        </layer>
+      </childLayers>
+    </layer>
+  </layers>
+</layerModel>

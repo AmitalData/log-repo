@@ -40,6 +40,7 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public bool IsAutoComplete { get; set; }
         public string SortingByObjectField { get; set; }
         public string DBTableName { get; set; }
+        public string DBTableShortName { get; set; }
         public int CustomFieldsCount { get; set; }
         public bool HasCustomFields { get; set; }
         public bool InActive { get; set; }

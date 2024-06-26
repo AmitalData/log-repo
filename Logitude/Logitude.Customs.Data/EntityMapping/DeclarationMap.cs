@@ -87,7 +87,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.FileState).HasColumnName("FileState").HasMaxLength(2).IsUnicode(false);
 
-            this.Property(t => t.TransportModeId).HasColumnName("TransportModeId").HasMaxLength(1).IsUnicode(false);
+            this.Property(t => t.TransportModeId).HasColumnName("TransportModeId").HasMaxLength(1).IsFixedLength();
 
             this.Property(t => t.ErrosXml).HasColumnName("ErrosXml").IsMaxLength().IsUnicode(true);
 

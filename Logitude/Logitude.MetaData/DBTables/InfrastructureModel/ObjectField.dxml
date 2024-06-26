@@ -220,7 +220,6 @@
   <Column
     Name="DisplayInSearchWindowFiltersIndex"
     ShortName="SearchWindowFiltersIndex"
-
     Type="int">
     <Constraints
       Nullable="false" />
@@ -427,7 +426,6 @@
   <Column
     Name="AllowedInCustomerFieldsSettings"
     ShortName="AllowedInCustFieldsSettings"
-
     Type="bit">
     <Constraints
       Nullable="false" />
@@ -606,12 +604,6 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="DisplayInRequiredFields"
-    Type="bit">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="LeftKey"
     Type="varchar"
     Size="100">
@@ -659,10 +651,23 @@
       Nullable="false" />
   </Column>
   <Column
+Name="ShortName"
+Type="varchar"
+Size="30">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="IsListFilter"
     Type="bit">
     <Constraints
       Nullable="false" />
+  </Column>
+  <Column
+    Name="DisplayInRequiredFields"
+    Type="bit">
+    <Constraints
+      Nullable="true" />
   </Column>
   <Relation
     ForeignKeyColumn="FullNameTextCodeId"
@@ -725,7 +730,7 @@
   <Index
     Columns="FieldCode" />
   <Index
-	Columns="Tenant,ObjectTableId,IsCustom,InActive" />
+    Columns="Tenant,ObjectTableId,IsCustom,InActive" />
   <UniqueConstraint
     Columns="FieldName,ObjectTableId,Tenant" />
   <UniqueConstraint
