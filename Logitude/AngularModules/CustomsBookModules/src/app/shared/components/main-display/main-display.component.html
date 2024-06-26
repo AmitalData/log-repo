@@ -4,59 +4,59 @@
 		<div class="mainTable_list">
 			<div class="data_row_container" [class.active]="!showDetails">
 				<app-table-top class="app-table-top" [class.active]="!showDetails" />
-				<ul class="wtree">
+				<ul  *ngFor="let item of data" class="wtree">
 					<app-data-row
-						[data]="data.name"
+						[data]="item.CIH_GoodsDescription"
 						(showCommentSidebar)="showAddComment = !showAddComment"
 						(showDetails)="showDetails = !showDetails"
-						(showChildern)="showChildern(data.name)"
+						(showChildern)="showChildern(item.CIH_GoodsDescription)"
 						class="app-data-row"
 					>
 					</app-data-row>
 					<ul class="wtree" [@inOutAnimation]>
-						<ng-container *ngIf="data.children && data.children.length > 0 && childrenToDesplay.includes(data.name)">
-							<ng-container *ngFor="let key2 of Object.keys(data.children)">
+						<ng-container *ngIf="item.children && item.children.length > 0 && childrenToDesplay.includes(item.CIH_GoodsDescription)">
+							<ng-container *ngFor="let key2 of Object.keys(item.children)">
 								<li [@inOutAnimation]>
 									<app-data-row
-										[data]="data.children[key2]?.name"
+										[data]="item.children[key2]?.CIH_GoodsDescription"
 										(showCommentSidebar)="showAddComment = !showAddComment"
 										(showDetails)="showDetails = !showDetails"
 										class="app-data-row"
-										(showChildern)="showChildern(data.children[key2]?.name)"
+										(showChildern)="showChildern(item.children[key2]?.CIH_GoodsDescription)"
 									>
 									</app-data-row>
 									<ng-container
 										*ngIf="
-											data.children[key2] &&
-											data.children.length > 0 &&
-											childrenToDesplay.includes(data.children[key2]?.name)
+											item.children[key2] &&
+											item.children.length > 0 &&
+											childrenToDesplay.includes(item.children[key2]?.CIH_GoodsDescription)
 										"
 									>
 										<ul [@inOutAnimation]>
-											<ng-container *ngFor="let key3 of Object.keys(data.children[key2].children)">
+											<ng-container *ngFor="let key3 of Object.keys(item.children[key2].children)">
 												<li [@inOutAnimation]>
 													<app-data-row
-														[data]="data.children[key2].children[key3]?.name"
+														[data]="item.children[key2].children[key3]?.CIH_GoodsDescription"
 														(showCommentSidebar)="showAddComment = !showAddComment"
 														(showDetails)="showDetails = !showDetails"
 														class="app-data-row"
-														(showChildern)="showChildern(data.children[key2].children[key3]?.name)"
+														(showChildern)="showChildern(item.children[key2].children[key3]?.CIH_GoodsDescription)"
 													>
 													</app-data-row>
 													<ng-container
 														*ngIf="
-															data.children[key2].children[key3] &&
-															data.children.length > 0 &&
-															childrenToDesplay.includes(data.children[key2].children[key3]?.name)
+															item.children[key2].children[key3] &&
+															item.children.length > 0 &&
+															childrenToDesplay.includes(item.children[key2].children[key3]?.CIH_GoodsDescription)
 														"
 													>
 														<ul [@inOutAnimation]>
 															<ng-container
-																*ngFor="let key4 of Object.keys(data.children[key2].children[key3].children)"
+																*ngFor="let key4 of Object.keys(item.children[key2].children[key3].children)"
 															>
 																<li [@inOutAnimation]>
 																	<app-data-row
-																		[data]="data.children[key2].children[key3].children[key4]?.name"
+																		[data]="item.children[key2].children[key3].children[key4]?.CIH_GoodsDescription"
 																		(showCommentSidebar)="showAddComment = !showAddComment"
 																		(showDetails)="showDetails = !showDetails"
 																		class="app-data-row"

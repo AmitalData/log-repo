@@ -107,8 +107,8 @@
       <Visible>False</Visible>
     </AdditionalFiles>
     <None Include="DBOthers\Procedures\Queue_Peek_list.dxml" />
-    <None Include="DBOthers\Procedures\usp_AgreementLevelData.dxml" />
-    <None Include="DBOthers\Procedures\usp_RegularityRequirementData.dxml" />
+    <None Include="DBOthers\Procedures\usp_CB_AgreementLevelData.dxml" />
+    <None Include="DBOthers\Procedures\usp_CB_RegularityRequirementData.dxml" />
     <None Include="DBOthers\Procedures\QueueEnqueue_succeedRequestsheets.dxml" />
     <None Include="DBOthers\Procedures\usp_NewCustomsBookMainViewSearchByText.dxml" />
     <None Include="DBOthers\Procedures\usp_NEWCustomsBookMainViewSearchByClassification.dxml" />

@@ -1,7 +1,7 @@
-﻿<Procedure DBType="Main" Name="usp_AgreementLevelData" Schema="dbo" Module="Customs">
+﻿<Procedure DBType="Main" Name="usp_CB_AgreementLevelData" Schema="dbo" Module="Customs">
   <SqlScript>
 	  <![CDATA[		
-		CREATE OR ALTER PROCEDURE [dbo].[usp_AgreementLevelData]
+		CREATE OR ALTER PROCEDURE [dbo].[usp_CB_AgreementLevelData]
 				@CustomsItemIDNum NVARCHAR(50),
 				@MeasurementUnitMalamId INT
 			AS
@@ -11,6 +11,8 @@
 						WHEN T.Title = 'מכס כללי' THEN T.Title
 						WHEN T.Title = 'מס קניה' THEN T.Title
 					ELSE TA.Title  END AS TradeAgreementName, -- מדינות ומכס כללי
+          CustomsItemIDNum,
+					TariffID,
 					CustomsRateWithout.CalculationReference AS CustomsRateWithout, -- שיעור מכס 
 					CustomsRateWithin.CalculationReference AS CustomsRateWithin, -- שיעור מכס במסגרת מכסה 
 					TCD.QuotaID, -- מספר מכסה
