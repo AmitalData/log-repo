@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BaseService } from './Services/BaseService';
+import { AppTool } from './Infrastructure/Tools';
 
 interface Filters {
 	SearchFields?: string;
@@ -16,7 +17,8 @@ interface Filters {
 	providedIn: 'root',
 })
 export class API_MainService extends BaseService {
-	private _apiUrl: string = 'http://localhost:9996/api/';
+	//private _apiUrl: string = 'http://localhost:9996/api/';
+	private _apiUrl: string = AppTool.GetLogitudeURL() + "api/";
 
 	constructor(httpClient: HttpClient) {
 		super(httpClient);
