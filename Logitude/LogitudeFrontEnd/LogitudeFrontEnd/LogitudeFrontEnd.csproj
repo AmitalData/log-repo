@@ -6,7 +6,7 @@
     <ProjectGuid>{F62203A9-EE8D-4AD0-BAB4-B6D34009CAD3}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
-    <OutputPath>bin</OutputPath>
+    <OutputPath>..\Library\Bin\</OutputPath>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <DebugType>full</DebugType>
     <DebugSymbols>true</DebugSymbols>
