@@ -243,16 +243,11 @@ export class AppTool {
 				logitude_url = baseUrl.replace("/customs-book","");
 			}
 		}
-
-		// if (location.href.indexOf('localhost') > -1) {
-		// 	logitude_url = 'http://localhost:9996/'; //test.logitudeworld.com/test/';//
-		// }
 		// else {
 		// 	if(baseUrl.includes('/customs-book')){
 		// 		logitude_url = baseUrl.replace("/customs-book","");
 		// 	}
 		// }
-		debugger	
 		return logitude_url;
 	}
 
