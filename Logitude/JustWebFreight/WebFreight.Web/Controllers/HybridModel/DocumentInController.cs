@@ -37,6 +37,7 @@ using Newtonsoft.Json;
 using Microsoft.TeamFoundation.Common;
 using WebFreight.Web.WcfApi;
 using Logitude.Server.Tools;
+using Intuit.Ipp.DataService;
 
 
 
@@ -45,14 +46,39 @@ namespace WebFreight.Web.Controllers.HybridModel
 {
     public class DocumentInController : ApiController
     {
-  
-        public Response Upsert(DocumentsFilingPM documentDataPM, bool batch)
+        [System.Web.Http.HttpPost]
+       
+        public Response Upsert([FromBody] object[] t)   //DocumentsFilingPM documentDataPM, bool batch)
         {
-          
-               DocumentInWcfService DocumentInWcfService= new DocumentInWcfService();
-                Response response = DocumentInWcfService.Upsert(documentDataPM, batch);
-                return response;
+
+            var jsonSerializerSettings = new JsonSerializerSettings();
+            jsonSerializerSettings.MissingMemberHandling = MissingMemberHandling.Ignore;
+
+            
+           DocumentsFilingPM documentDataPM =  JsonConvert.DeserializeObject< DocumentsFilingPM>(JsonConvert.SerializeObject( t[0]), jsonSerializerSettings);
+            bool batch = JsonConvert.DeserializeObject<bool>(JsonConvert.SerializeObject(t[1]), jsonSerializerSettings);
+
+            DocumentInWcfService DocumentInWcfService= new DocumentInWcfService();
+            Response response = DocumentInWcfService.Upsert(documentDataPM, batch);
+            return  response;
                      
+        }
+
+
+        [System.Web.Http.HttpPost]
+
+        public DocumentsFilingPM GetDocumentDataByExternalIdWithoutBinaray([FromBody] object[] t)
+        {
+            var jsonSerializerSettings = new JsonSerializerSettings();
+            jsonSerializerSettings.MissingMemberHandling = MissingMemberHandling.Ignore;
+
+          
+           string externalId = JsonConvert.DeserializeObject<string>(JsonConvert.SerializeObject(t[0]), jsonSerializerSettings);
+            int tenant = JsonConvert.DeserializeObject<int>(JsonConvert.SerializeObject(t[1]), jsonSerializerSettings);
+            Response res = JsonConvert.DeserializeObject<Response>(JsonConvert.SerializeObject(t[2]), jsonSerializerSettings);
+            DocumentInWcfService DocumentInWcfService = new DocumentInWcfService();
+            DocumentsFilingPM response = DocumentInWcfService.GetDocumentDataByExternalIdWithoutBinaray(externalId, tenant, ref res);
+            return response;
         }
     }
 }

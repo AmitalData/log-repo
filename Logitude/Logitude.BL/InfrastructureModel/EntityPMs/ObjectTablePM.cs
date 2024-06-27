@@ -32,6 +32,8 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public bool IsAutoComplete { get; set; }
         public string SortingByObjectField { get; set; }
         public string DBTableName { get; set; }
+        public string DBTableShortName { get; set; }
+
         public int CustomFieldsCount { get; set; }
         public bool HasCustomFields { get; set; }
         public string DescriptionTextCodeId { get; set; }

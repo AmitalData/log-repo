@@ -95,6 +95,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 entityPM.CreateDateTime = DateTime.Now;
             }
 
+            if(entityPM.TransportModeId == "L")
+            {
+                entityPM.TransportModeId = "I";
+            }
 
 
             ICustomContext context = MainContext as CustomContext;

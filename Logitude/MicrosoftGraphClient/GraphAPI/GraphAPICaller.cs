@@ -12,7 +12,7 @@ namespace MicrosoftGraphClient.GraphAPI
         public static T Call<T>(GraphAPICallerParameters graphAPICallerParameters)
         {
             RestRequest restRequest = GetRestRequest(graphAPICallerParameters);
-            IRestResponse<T> restResponse = new RestClient().ExecuteAsync<T>(restRequest).Result;
+            RestResponse<T> restResponse = new RestClient().ExecuteAsync<T>(restRequest).Result;
             if (IsSuccessResponse(restResponse))
             {
                 return restResponse.Data;
@@ -23,7 +23,7 @@ namespace MicrosoftGraphClient.GraphAPI
         public static string Call(GraphAPICallerParameters graphAPICallerParameters)
         {
             RestRequest restRequest = GetRestRequest(graphAPICallerParameters);
-            IRestResponse restResponse = new RestClient().ExecuteAsync(restRequest).Result;
+            RestResponse restResponse = new RestClient().ExecuteAsync(restRequest).Result;
             if (IsSuccessResponse(restResponse))
             {
                 return restResponse.Content;
@@ -89,7 +89,7 @@ namespace MicrosoftGraphClient.GraphAPI
             return restRequest;
         }
 
-        private static bool IsSuccessResponse(IRestResponse restResponse)
+        private static bool IsSuccessResponse(RestResponse restResponse)
         {
             return restResponse != null &&
                 (restResponse.StatusCode == HttpStatusCode.OK ||
@@ -97,7 +97,7 @@ namespace MicrosoftGraphClient.GraphAPI
                 restResponse.StatusCode == HttpStatusCode.Created);
         }
 
-        private static string GetResponseErrorMessage(IRestResponse restResponse)
+        private static string GetResponseErrorMessage(RestResponse restResponse)
         {
             string defaultErrorMessage = "Error";
             if (restResponse != null)

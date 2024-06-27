@@ -65,11 +65,11 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string SecondCargoID { get; set; }
         [Column("ThirdCargoID")]
 	    public string ThirdCargoID { get; set; }
-        [ForeignKey("CustomsTransportMode")]
+        [ForeignKey("TransportMode")]
         [Column("TransportModeId")]
 	    public string TransportModeId { get; set; }
 	      
-        public virtual CustomsTransportMode CustomsTransportMode { get; set; }
+        public virtual TransportMode TransportMode { get; set; }
         [Column("ExistInCustoms")]
 	    public string ExistInCustoms { get; set; }
     }

@@ -35,7 +35,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             
             this.entityPM = theEntityPm;
             this.Poco = new DefaultAndConfiguration();
-            DefaultAndConfigurationMapping.MapEntity(theEntityPm, Poco);
+            DefaultAndConfigurationMapping.MapEntity(theEntityPm, Poco, true);
             entityRepository.Add(Poco);
             entityRepository.SubmitChanges();
 
@@ -46,7 +46,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
              
             this.entityPM = theEntityPm;
             this.Poco = entityRepository.GetSingleDefaultAndConfiguration(theEntityPm.Id);
-            DefaultAndConfigurationMapping.MapEntity(theEntityPm, Poco);
+            DefaultAndConfigurationMapping.MapEntity(theEntityPm, Poco, false);
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
         }

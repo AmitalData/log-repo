@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class DefaultAndConfigurationUpdateClass
    {  		
-		public const string HashString = "e70dd4cf7b357de5a7e34c2586c8ee49";
+		public const string HashString = "4bccc15e9b19320874c4ec82cf566f4c";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -136,7 +136,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Infrastructure",
-			      				    NewWizardComponentPath =  "./CommonModules/Components/Maintenance/DefaultAndConfiguration/DefaultAndConfigurationComponent",
+			      				    NewWizardComponentPath =  "./InfrastructureModules/InfrastructureOthers/Components/DefaultAndConfiguration/DefaultAndConfigurationComponent",
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
 			      				    AllowedForComputingPartners =  false,
@@ -232,7 +232,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
 					  						MultiLine =  false,
@@ -417,7 +417,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  true,
+					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
@@ -465,7 +465,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
 					  						DisplayInRequiredFields =  false,
-					  						HasTemplate =  true,
+					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
@@ -532,7 +532,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
 					  						DisplayInRequiredFields =  false,
-					  						HasTemplate =  true,
+					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
@@ -555,7 +555,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  36,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
 					  						MultiLine =  false,
@@ -618,7 +618,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  128,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
 					  						MultiLine =  false,
@@ -681,7 +681,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  4000,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
 					  						MultiLine =  false,
@@ -721,7 +721,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
 					  						DisplayInRequiredFields =  false,
-					  						HasTemplate =  false,
+					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
@@ -744,7 +744,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  128,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
 					  						MultiLine =  false,
@@ -807,7 +807,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  4000,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
 					  						MultiLine =  false,
@@ -847,7 +847,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
 					  						DisplayInRequiredFields =  false,
-					  						HasTemplate =  false,
+					  						HasTemplate =  true,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
@@ -914,7 +914,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
 					  						DisplayInRequiredFields =  false,
-					  						HasTemplate =  true,
+					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
@@ -937,7 +937,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  36,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
 					  						MultiLine =  false,
@@ -1000,7 +1000,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
 					  						MultiLine =  false,
@@ -1079,16 +1079,30 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 	      
 
 			  Query DefaultAndConfigurationQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = DefaultAndConfigurationTextCode_0.Id, NameTextCodeCode = DefaultAndConfigurationTextCode_0.Code, ObjectTableName = "DefaultAndConfiguration", Code = "DefaultAndConfiguration",  EditWizardName = "NoName",
-			   EditWizardComponentPath = "./CommonModules/Components/Maintenance/DefaultAndConfiguration/DefaultAndConfigurationComponent",
+			   EditWizardComponentPath = "./InfrastructureModules/InfrastructureOthers/Components/DefaultAndConfiguration/DefaultAndConfigurationComponent",
 			   QueryGroupCode = "52aa", IndexOrder = 0, Tenant = 0, ObjectTableId = DefaultAndConfigurationObjectTable.Id, QuerySection = "DefaultAndConfiguration", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = DefaultAndConfigurationFeature_0.Id,FeatureUniqeCode= DefaultAndConfigurationFeature_0.FeatureUniqeCode, DefaultSortName = "CreateDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
 			 QueryColumn DefaultAndConfigurationQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DefaultAndConfigurationQuery.Id,QueryCode = DefaultAndConfigurationQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "DefaultAndConfiguration.CreateDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn DefaultAndConfigurationQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DefaultAndConfigurationQuery.Id,QueryCode = DefaultAndConfigurationQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "DefaultAndConfiguration.Is_Active" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn DefaultAndConfigurationQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DefaultAndConfigurationQuery.Id,QueryCode = DefaultAndConfigurationQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "DefaultAndConfiguration.SetKey" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn DefaultAndConfigurationQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DefaultAndConfigurationQuery.Id,QueryCode = DefaultAndConfigurationQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "DefaultAndConfiguration.StoreInCache" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn DefaultAndConfigurationQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DefaultAndConfigurationQuery.Id,QueryCode = DefaultAndConfigurationQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "DefaultAndConfiguration.SetValueType1" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn DefaultAndConfigurationQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DefaultAndConfigurationQuery.Id,QueryCode = DefaultAndConfigurationQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "DefaultAndConfiguration.AllowInheritance" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn DefaultAndConfigurationQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DefaultAndConfigurationQuery.Id,QueryCode = DefaultAndConfigurationQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "DefaultAndConfiguration.Value1" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn DefaultAndConfigurationQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DefaultAndConfigurationQuery.Id,QueryCode = DefaultAndConfigurationQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "DefaultAndConfiguration.SetValueType2" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn DefaultAndConfigurationQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DefaultAndConfigurationQuery.Id,QueryCode = DefaultAndConfigurationQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "DefaultAndConfiguration.Value2" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn DefaultAndConfigurationQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DefaultAndConfigurationQuery.Id,QueryCode = DefaultAndConfigurationQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "DefaultAndConfiguration.AdditionalKey" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn DefaultAndConfigurationQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DefaultAndConfigurationQuery.Id,QueryCode = DefaultAndConfigurationQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "DefaultAndConfiguration.SortOrder" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn DefaultAndConfigurationQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DefaultAndConfigurationQuery.Id,QueryCode = DefaultAndConfigurationQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "DefaultAndConfiguration.Is_Active" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn DefaultAndConfigurationQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DefaultAndConfigurationQuery.Id,QueryCode = DefaultAndConfigurationQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "DefaultAndConfiguration.StoreInCache" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn DefaultAndConfigurationQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DefaultAndConfigurationQuery.Id,QueryCode = DefaultAndConfigurationQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "DefaultAndConfiguration.AllowInheritance" , ColumnWidth = 100 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

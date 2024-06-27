@@ -125,11 +125,11 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public decimal? TotalTax { get; set; }
         [Column("FileState")]
 	    public string FileState { get; set; }
-        [ForeignKey("CustomsTransportMode")]
+        [ForeignKey("TransportMode")]
         [Column("TransportModeId")]
 	    public string TransportModeId { get; set; }
 	      
-        public virtual CustomsTransportMode CustomsTransportMode { get; set; }
+        public virtual TransportMode TransportMode { get; set; }
         [Column("ErrosXml")]
 	    public string ErrosXml { get; set; }
         [Column("ImporterName")]

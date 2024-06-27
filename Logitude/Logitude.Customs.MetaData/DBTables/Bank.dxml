@@ -1,11 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Table
   Name="Banks"
+  ShortName="Customs.Banks"
+  OldNames="Liron"
   Schema="Customs"
   DBType="Main"
   Module="Customs">
   <Column
     Name="Code"
+    ShortName="Code"
+    OldNames="Liron2"
     Type="varchar"
     Size="2">
     <Constraints

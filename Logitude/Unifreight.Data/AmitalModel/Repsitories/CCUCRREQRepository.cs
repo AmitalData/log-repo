@@ -38,7 +38,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
         public void Add(CCUCRREQ entity)
         {
             context.CCUCRREQs.Add(entity);
-            SyncRecordCache.ClearCacheLasySync(entity.FILENO.ToString(), entity.TENANT.Value);
+            SyncRecordCache.ClearCacheLastSync(entity.FILENO.ToString(), entity.TENANT.Value);
         }
 
         public void Remove(CCUCRREQ entity)
@@ -49,7 +49,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             }
             //context.AddToCCUCRREQs 
             context.CCUCRREQs.Remove(entity);
-            SyncRecordCache.ClearCacheLasySync(entity.FILENO.ToString(), entity.TENANT.Value);
+            SyncRecordCache.ClearCacheLastSync(entity.FILENO.ToString(), entity.TENANT.Value);
         }
 
         public void Update(CCUCRREQ entity)
@@ -58,7 +58,7 @@ namespace Unifreight.Data.AmitalModel.Repsitories
             {
                 context.CCUCRREQs.Attach(entity); context.SetAsModified(entity);
             }
-            SyncRecordCache.ClearCacheLasySync(entity.FILENO.ToString(), entity.TENANT.Value);
+            SyncRecordCache.ClearCacheLastSync(entity.FILENO.ToString(), entity.TENANT.Value);
         }
 
         public List<CCUCRREQ> All()
