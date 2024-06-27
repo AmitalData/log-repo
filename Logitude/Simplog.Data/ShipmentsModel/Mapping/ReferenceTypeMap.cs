@@ -8,10 +8,9 @@ using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using System.Data.Entity.ModelConfiguration;
-using Logitude.Customs.Data.EntityPOCOs;
-using Logitude.Customs.Data;
- 
-namespace Logitude.Customs.Data.EntityMapping
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+
+namespace Simplog.Data.ShipmentsModel.Mapping
 {
  
     public class ReferenceTypeMap : EntityTypeConfiguration<ReferenceType>
@@ -19,7 +18,7 @@ namespace Logitude.Customs.Data.EntityMapping
 	    string dbms;
         public ReferenceTypeMap()
         { 
-			  this.ToTable("ReferenceTypes", "Customs");
+			  this.ToTable("ReferenceTypes");
 		
 		    this.HasKey(t => new { t.Code });
 	 

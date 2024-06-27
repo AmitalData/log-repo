@@ -30,20 +30,13 @@ using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using WebFreight.Web.Helpers;
-using WebFreight.Web.Security;
 using System.Web.Script.Serialization;
 using WebFreight.Web.DataContracts;
-using Logitude.Customs.Data.EntityPOCOs;
-using Logitude.Customs.Def.EntityPMs;
-using Logitude.Customs.Data;
-using Logitude.Customs.BL;
-using Logitude.Customs.Data.EntityLists;
-using Logitude.Customs.BL.EntityUpdateServices;
-using Logitude.Customs.Data.EntityListQueryServices;
-using Logitude.Customs.BL.EntityQueryServices;
+using Logitude.BL.ShipmentsModel.EntityQueries;
+using Logitude.BL.ShipmentsModel.EntityLists;
+using Simplog.Data.ShipmentsModel;
 
-namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
+namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.ListControllers
 { 
 
     
@@ -59,7 +52,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
+                IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
                 ReferenceTypeListQueryService referenceTypeQuery = new ReferenceTypeListQueryService(MyContext);
                 ReferenceTypeList referenceTypeList = referenceTypeQuery.GetSingle(code);
  				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
@@ -81,7 +74,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
+                IShipmentsContext MyContext = ShipmentsContext.GetContext(authToken.Tenant);
                 ReferenceTypeListQueryService referenceTypeQuery = new ReferenceTypeListQueryService(MyContext);
                 List<ReferenceTypeList> result = referenceTypeQuery.GetList(authToken.Tenant);
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
@@ -108,17 +101,17 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                 QueryOperations queryOperations = new QueryOperations()
                 {
-                    ObjectTableName = "Customs.ReferenceType",
+                    ObjectTableName = "ReferenceType",
                     PageIndex = filters.PageIndex,
                     PageSize = filters.PageSize,
-                    QuerySection = "Customs.ReferenceTypes",
+                    QuerySection = "ReferenceTypes",
                     SortByColumnName = filters.SortBy,
                     SortDirectin = filters.SortDirection,
 					GetAll = filters.GetAll, 
                 };
 
 				
-				List<ObjectField> ReferenceTypeObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Customs.ReferenceType",tenant);
+				List<ObjectField> ReferenceTypeObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("ReferenceType",tenant);
                 List<PropertyInfo> filterProperties = filters.GetType().GetProperties().ToList();
                 for (int i = 1; i <= 10; i++)
                 {
@@ -191,13 +184,13 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                     }
                 }
 
-                ICustomContext MyContext = CustomContext.GetContext(tenant);
+                IShipmentsContext MyContext = ShipmentsContext.GetContext(tenant);
 				ReferenceTypeListQueryService referenceTypeQuery = new ReferenceTypeListQueryService(MyContext);
 
                 TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
                  { 
                      AdditionalTreeFilter = filters.TreeFilters,
-                     ObjectTableName = "Customs.ReferenceType",
+                     ObjectTableName = "ReferenceType",
                      ParentEntityId = filters.ParentEntityId,
                      ParentObjectTableName = filters.ParentObjectTableName, 
                      Tenant = tenant ,

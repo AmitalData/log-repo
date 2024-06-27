@@ -10,11 +10,9 @@ using System.ComponentModel.DataAnnotations;
 using Logitude.Server.Tools;  
 using Simplog.Server.Infrastructure;
 using Logitude.Server.Tools.CloseTablesClasses;
-using Logitude.Customs.Data.EntityPOCOs;
-using Logitude.Customs.Def.EntityPMs; 
-using Logitude.Customs.Data;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
 
-namespace Logitude.Customs.BL
+namespace Logitude.BL.ShipmentsModel
 {
    public class ReferenceTypeDetails : ReferenceType, ICloseTable<ReferenceType, ReferenceTypeDetails>
    {

@@ -855,6 +855,7 @@
     <Compile Include="ShipmentsModel\EntityPOCOs\PayableProratedAmount.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\PickUpDeliveryPackageHarmonize.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\PickUpDeliveryTransportMode.cs" />
+    <Compile Include="ShipmentsModel\EntityPOCOs\ReferenceType.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentAnalytic.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentAssembly.cs" />
     <Compile Include="ShipmentsModel\EntityPOCOs\ShipmentContainerStatus.cs" />
@@ -889,6 +890,7 @@
     <Compile Include="ShipmentsModel\Mapping\LogitudeOceanInsightsRequestMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\LogitudeOceanInsightsResponseMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\OceanInsightsStatusLogMap.cs" />
+    <Compile Include="ShipmentsModel\Mapping\ReferenceTypeMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\ShipmentAnalyticMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\OBLTypeMap.cs" />
     <Compile Include="ShipmentsModel\Mapping\OceanInsightsRequestsCountMap.cs" />
@@ -1328,6 +1330,7 @@
     <Compile Include="ShipmentsModel\Repositories\PayableProratedAmountRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\PickUpDeliveryPackageHarmonizeRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\PickUpDeliveryTransportModeRepository.cs" />
+    <Compile Include="ShipmentsModel\Repositories\ReferenceTypeRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\ShipmentAdditionalCloudDataRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\ShipmentAssemblyRepository.cs" />
     <Compile Include="ShipmentsModel\Repositories\ShipmentComputedFieldsRepository.cs" />

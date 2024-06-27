@@ -10,11 +10,9 @@ using System.ServiceModel.DomainServices.Server;
 using Logitude.Server.Tools; 
 using System.Runtime.Serialization;
 using Simplog.Server.Infrastructure.DataContracts; 
-using Logitude.Customs.Def.Validators;
   
-namespace Logitude.Customs.Def.EntityPMs
+namespace Logitude.BL.ShipmentsModel.EntityPMs
 {
-   [CustomValidation(typeof(CustomsClassLevelValidator), "ValidateClass")]
    [DataContract]
    public partial class ReferenceTypePM : EntityPM
    {
@@ -23,7 +21,6 @@ namespace Logitude.Customs.Def.EntityPMs
        [Key]
 	  
        
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
        public string Code  
 	   {
@@ -46,7 +43,6 @@ namespace Logitude.Customs.Def.EntityPMs
 	  private string localName ;
 	  	  
        
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
        public string LocalName  
 	   {
@@ -69,7 +65,6 @@ namespace Logitude.Customs.Def.EntityPMs
 	  private string englishName ;
 	  	  
        
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
        public string EnglishName  
 	   {
@@ -92,7 +87,6 @@ namespace Logitude.Customs.Def.EntityPMs
 	  private string searchFields ;
 	  	  
        
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
        public string SearchFields  
 	   {
@@ -115,7 +109,6 @@ namespace Logitude.Customs.Def.EntityPMs
 	  private bool inactive ;
 	  	  
        
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
        public bool Inactive  
 	   {

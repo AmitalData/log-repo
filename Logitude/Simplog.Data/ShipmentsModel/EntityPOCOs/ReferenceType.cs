@@ -11,7 +11,7 @@ using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
 
-namespace Logitude.Customs.Data.EntityPOCOs
+namespace Simplog.Data.ShipmentsModel.EntityPOCOs
 {
    
     public class ReferenceType

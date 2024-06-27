@@ -42,14 +42,10 @@ using Logitude.Accounting.Data.Repositories;
 using Logitude.BookingLib.Data.EntityPOCOs;
 using Logitude.BookingLib.BL;
 using Logitude.BookingLib.Data.Repositories;
-using Logitude.Customs.Data.EntityPOCOs;
-using Logitude.Customs.BL;
-using Logitude.Customs.Data.Repsitories;
 using Logitude.Social.Data.EntityPOCOs;
 using Logitude.Social.BL;
 using Logitude.Social.Data.Repsitories;
 using Logitude.Server.Tools.CloseTablesClasses;
-using Logitude.Customs.BL.ClosedTable;
 using Logitude.CRM.BL.CLoseTable;
 using Logitude.BookingLib.BL.CLoseTable;
 using Logitude.WarehouseLib.Data.Repositories;
@@ -88,18 +84,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ReferenceTypeUpdateClass
    {  		
-		public const string HashString = "e92d90e742e3c72b34c97cb63d221895";
+		public const string HashString = "w92d90e742e3c72b34c97cb63d221895";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
             {
 			
-	             				    ObjectTableName =  "Customs.ReferenceType",
+	             				    ObjectTableName =  "ReferenceType",
 			      				    IsNew =  false,
-			      				    DBTableName =  "Customs.ReferenceTypes",
-			      				    ObjectTableSingular =  "Customs.ReferenceType",
-			      				    ObjectTablePlural =  "Customs.ReferenceTypes",
+			      				    DBTableName =  "ReferenceTypes",
+			      				    ObjectTableSingular =  "ReferenceType",
+			      				    ObjectTablePlural =  "ReferenceTypes",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    AvailableInCustomization =  true,
@@ -135,12 +131,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "ReferenceType",
 			      				    Code =  "COGR",
-			      				    Name =  "Customs.ReferenceType",
+			      				    Name =  "ReferenceType",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "LocalName",
 			      				    GenerateDomainService =  false,
-			      				    ClientModuleName =  "Customs",
-			      				    ServerModuleName =  "Customs",
+			      				    ClientModuleName =  "Shipment",
+			      				    ServerModuleName = "Shipment",
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
 			      				    AllowedForComputingPartners =  false,
@@ -161,7 +157,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Code",
-					  						ObjectTableName =  "Customs.ReferenceType",
+					  						ObjectTableName =  "ReferenceType",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  10,
@@ -190,7 +186,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.ReferenceType",
+					  						ValidForQuerySection1 =  "ReferenceType",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -227,7 +223,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "LocalName",
-					  						ObjectTableName =  "Customs.ReferenceType",
+					  						ObjectTableName =  "ReferenceType",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  60,
@@ -256,7 +252,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.ReferenceType",
+					  						ValidForQuerySection1 =  "ReferenceType",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -293,7 +289,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "EnglishName",
-					  						ObjectTableName =  "Customs.ReferenceType",
+					  						ObjectTableName =  "ReferenceType",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  60,
@@ -322,7 +318,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.ReferenceType",
+					  						ValidForQuerySection1 =  "ReferenceType",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -359,7 +355,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						ObjectTableName =  "Customs.ReferenceType",
+					  						ObjectTableName =  "ReferenceType",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  1000,
@@ -388,7 +384,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.ReferenceType",
+					  						ValidForQuerySection1 =  "ReferenceType",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  true,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -425,7 +421,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Inactive",
-					  						ObjectTableName =  "Customs.ReferenceType",
+					  						ObjectTableName =  "ReferenceType",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
 					  						MaxLength =  0,
@@ -454,7 +450,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.ReferenceType",
+					  						ValidForQuerySection1 =  "ReferenceType",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -491,15 +487,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    {  
 	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-	        QueryGroup ReferenceTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "COGR", Name = "Customs.ReferenceType" }, queryGroupRepository,tenantQueryGroups);
+	        QueryGroup ReferenceTypeQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "COGR", Name = "ReferenceType" }, queryGroupRepository,tenantQueryGroups);
 						QueryGroup ReferenceTypeQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "c7b8", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
-	        ObjectTable ReferenceTypeObjectTable = objectTables.ContainsKey("Customs.ReferenceType") ? objectTables["Customs.ReferenceType"] : null;
+	        ObjectTable ReferenceTypeObjectTable = objectTables.ContainsKey("ReferenceType") ? objectTables["ReferenceType"] : null;
             if (ReferenceTypeObjectTable == null)
             {
                 IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 
-                ReferenceTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.ReferenceType" && d.Tenant == 0).FirstOrDefault();
+                ReferenceTypeObjectTable = objectContext.ObjectTables.Where(d => d.Name == "ReferenceType" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
@@ -510,22 +506,22 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
    
 
-			   TextCode ReferenceTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ReferenceType.Q.ReferenceTypeQuery", DefaultText = @"ReferenceTypes",LocalDefaultText = "מקושר לתיק", ObjectTableId = ReferenceTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
-			   Feature ReferenceTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "REFERENCETYPE", ObjectTableId = ReferenceTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.ReferenceType.Features.ReferenceTypes", NameTextCodeDefaultText = "ReferenceType", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ReferenceTypeObjectTable, addedFeatures, addedTextCodes);
+			   TextCode ReferenceTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ReferenceType.Q.ReferenceTypeQuery", DefaultText = @"ReferenceTypes",LocalDefaultText = "מקושר לתיק", ObjectTableId = ReferenceTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ReferenceTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "REFERENCETYPE", ObjectTableId = ReferenceTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "ReferenceType.Features.ReferenceTypes", NameTextCodeDefaultText = "ReferenceType", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ReferenceTypeObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();
 	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query ReferenceTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ReferenceTypeTextCode_0.Id, NameTextCodeCode = ReferenceTypeTextCode_0.Code, ObjectTableName = "Customs.ReferenceType", Code = "ReferenceType",  QueryGroupCode = "COGR", IndexOrder = 0, Tenant = 0, ObjectTableId = ReferenceTypeObjectTable.Id, QuerySection = "Customs.ReferenceType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ReferenceTypeFeature_0.Id,FeatureUniqeCode= ReferenceTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
+			  Query ReferenceTypeQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ReferenceTypeTextCode_0.Id, NameTextCodeCode = ReferenceTypeTextCode_0.Code, ObjectTableName = "ReferenceType", Code = "ReferenceType",  QueryGroupCode = "COGR", IndexOrder = 0, Tenant = 0, ObjectTableId = ReferenceTypeObjectTable.Id, QuerySection = "ReferenceType", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ReferenceTypeFeature_0.Id,FeatureUniqeCode= ReferenceTypeFeature_0.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
-			 QueryColumn ReferenceTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ReferenceTypeQuery.Id,QueryCode = ReferenceTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.ReferenceType.Code" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ReferenceTypeQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ReferenceTypeQuery.Id,QueryCode = ReferenceTypeQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ReferenceType.Code" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ReferenceTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ReferenceTypeQuery.Id,QueryCode = ReferenceTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.ReferenceType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ReferenceTypeQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ReferenceTypeQuery.Id,QueryCode = ReferenceTypeQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ReferenceType.EnglishName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ReferenceTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ReferenceTypeQuery.Id,QueryCode = ReferenceTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.ReferenceType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ReferenceTypeQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ReferenceTypeQuery.Id,QueryCode = ReferenceTypeQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "ReferenceType.LocalName" , ColumnWidth = 130 }, addedQueryColumns);
 
-			 QueryColumn ReferenceTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ReferenceTypeQuery.Id,QueryCode = ReferenceTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.ReferenceType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn ReferenceTypeQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ReferenceTypeQuery.Id,QueryCode = ReferenceTypeQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "ReferenceType.Inactive" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);
@@ -537,15 +533,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
-		   ObjectTable ReferenceTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.ReferenceType" && d.Tenant == 0).FirstOrDefault();
-		   //List<ObjectField> ReferenceTypeObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.ReferenceType").ToList();
+		   ObjectTable ReferenceTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ReferenceType" && d.Tenant == 0).FirstOrDefault();
+		   //List<ObjectField> ReferenceTypeObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "ReferenceType").ToList();
 		       
 	      
 
-	         Screen ReferenceTypeCustomsReferenceTypeHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ReferenceType.HeaderScreen", Name = "Customs.ReferenceTypeHeaderScreen", ObjectTableId = ReferenceTypeObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen ReferenceTypeReferenceTypeHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ReferenceType.HeaderScreen", Name = "ReferenceTypeHeaderScreen", ObjectTableId = ReferenceTypeObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
-		    ReferenceTypeObjectTable.HeaderScreenId = ReferenceTypeCustomsReferenceTypeHeaderScreenScreen0.Id;
-		    ReferenceTypeObjectTable.HeaderScreenCode = ReferenceTypeCustomsReferenceTypeHeaderScreenScreen0.Code;
+		    ReferenceTypeObjectTable.HeaderScreenId = ReferenceTypeReferenceTypeHeaderScreenScreen0.Id;
+		    ReferenceTypeObjectTable.HeaderScreenCode = ReferenceTypeReferenceTypeHeaderScreenScreen0.Code;
 
 	   		  
 
@@ -562,7 +558,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
-			ObjectTable ReferenceTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.ReferenceType" && d.Tenant == 0).FirstOrDefault(); 
+			ObjectTable ReferenceTypeObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ReferenceType" && d.Tenant == 0).FirstOrDefault(); 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "CREV",

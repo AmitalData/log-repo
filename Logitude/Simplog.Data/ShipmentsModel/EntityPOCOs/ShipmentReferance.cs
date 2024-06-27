@@ -23,7 +23,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public virtual Shipment Shipment { get; set; }
         [ForeignKey("PartnerId")]
         public virtual Card Card { get; set; }
-        // [ForeignKey("ReferenceType")]
-        // public virtual ReferenceType ReferenceTypeCode { get; set; }
+        [ForeignKey("ReferenceType")]
+        public virtual ReferenceType ReferenceTypeCode { get; set; }
     }
 }

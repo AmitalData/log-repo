@@ -586,7 +586,6 @@
     <None Include="DBTables\ReferantTeam.dxml" />
     <None Include="DBTables\ReferenceInputType.dxml" />
     <None Include="DBTables\ReferenceStatus.dxml" />
-    <None Include="DBTables\ReferenceType.dxml" />
     <None Include="DBTables\RefundCustomerActivityType.dxml" />
     <None Include="DBTables\RegisteredWarehouseSiteType.dxml" />
     <None Include="DBTables\RegularityPublication.dxml" />
@@ -691,7 +690,6 @@
     <None Include="EntityFiles\CB_TariffComputedData.lxml" />
     <None Include="EntityFiles\CB_TradeLevy.lxml" />
     <None Include="EntityFiles\CB_Vendor.lxml" />
-    <None Include="EntityFiles\ReferenceType.lxml" />
     <None Include="EntityFiles\NUnicloud.lxml" />
     <None Include="EntityFiles\DiscountTypeRegulation.lxml" />
     <None Include="EntityFiles\CustomsItemGroup.lxml" />

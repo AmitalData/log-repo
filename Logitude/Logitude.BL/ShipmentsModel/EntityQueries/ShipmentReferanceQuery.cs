@@ -67,7 +67,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                        ShipmentId = a.ShipmentId,
                                                        Tenant = a.Tenant,
                                                        LineNumber = a.LineNumber,
-                                                       // ReferenceType = a.ReferenceType == null ? null : a.ReferenceTypeCode.Code,
+                                                       ReferenceType = a.ReferenceType == null ? null : a.ReferenceTypeCode.Code,
                                                        PartnerId = a.Card == null ? null : a.Card.Code,
                                                        ReferenceValue = a.ReferenceValue,
                                                    }).ToList();
@@ -84,7 +84,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                        ShipmentId = a.ShipmentId,
                        Tenant = a.Tenant,
                        LineNumber = a.LineNumber,
-                       // ReferenceType = a.ReferenceType == null ? null : a.ReferenceTypeCode.Code,
+                       ReferenceType = a.ReferenceType == null ? null : a.ReferenceTypeCode.Code,
                        PartnerId = a.Card == null ? null : a.Card.Code,
                        ReferenceValue = a.ReferenceValue,
 

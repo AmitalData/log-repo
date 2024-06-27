@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.Runtime.Serialization; 
 
-namespace Logitude.Customs.Data.EntityLists
+namespace Logitude.BL.ShipmentsModel.EntityLists
 {
    [DataContract]
    public partial class ReferenceTypeList
