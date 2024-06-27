@@ -42,7 +42,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\Library\Bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -51,14 +51,14 @@
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\Library\Bin\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'All Projects|AnyCPU'">
     <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\All Projects\</OutputPath>
+    <OutputPath>..\Library\Bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -67,7 +67,7 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'None|AnyCPU'">
-    <OutputPath>bin\None\</OutputPath>
+    <OutputPath>..\Library\Bin\</OutputPath>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>logo_tr_AVr_icon.ico</ApplicationIcon>
@@ -569,9 +569,9 @@
       <Project>{78ec8434-e6ad-4e93-9b17-c746f5403f7b}</Project>
       <Name>Simplog.Data</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Simplog.Global.Data\Simplog.Global.Data.csproj">
+    <ProjectReference Include="..\Simplog.Global.Data\Simplog.Data.Global.csproj">
       <Project>{6d7ffad2-35b6-4133-8700-cf73e58d0c85}</Project>
-      <Name>Simplog.Global.Data</Name>
+      <Name>Simplog.Data.Global</Name>
     </ProjectReference>
     <ProjectReference Include="..\Simplog.Server.Infrastructure\Simplog.Server.Infrastructure.csproj">
       <Project>{acc2ea9e-e150-4099-8aa1-66326ab14be8}</Project>

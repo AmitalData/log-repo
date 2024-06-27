@@ -1,62 +1,453 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <layerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/SimpleShapesModel" dslVersion="1.0.0.0" Id="3781751b-c8bd-47b8-917e-1c02b78b42d0" xmlns="http://schemas.microsoft.com/VisualStudio/TeamArchitect/LayerDesigner">
   <layers>
-    <layer Id="4f54cb29-28ed-4fd0-9baf-c6507249dd0f" name="UI">
-      <dependencyToLayers>
-        <dependencyFromLayerToLayer Id="bc40c763-9f40-4f43-be49-5dbe611e5f1d" direction="Forward">
-          <layerMoniker Id="f3c9d960-c11d-4b15-9c15-a8b7d21fecf6" />
-        </dependencyFromLayerToLayer>
-      </dependencyToLayers>
+    <layer Id="775214f9-dede-4008-9762-2c5687e3d383" name="Accounting Module">
+      <childLayers>
+        <layer Id="dbe56443-a5aa-4dd5-bd80-30eb5d4058d5" name="Logitude.Accounting.MetaData.dll">
+          <references>
+            <reference Id="8c1e1aca-f7d6-4f41-a1b5-627ebe04fcfe" name="Logitude.Accounting.MetaData.dll">
+              <ArtifactNode Label="Logitude.Accounting.MetaData.dll" Category="CodeSchema_Assembly" Id="(Assembly=../Logitude.Accounting.MetaData/bin/Debug/Logitude.Accounting.MetaData.dll)" />
+              <ExpandedNode Id="(Assembly=Logitude.Accounting.MetaData)" Label="Logitude.Accounting.MetaData.dll" Category="CodeSchema_Assembly">
+                <Category Ref="FileSystem.Category.FileOfType.dll" />
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+            </reference>
+          </references>
+        </layer>
+        <layer Id="f4fe1ebf-75e5-4c78-8eba-f75a08373da9" name="Logitude.Accounting.BL.dll">
+          <dependencyToLayers>
+            <dependencyFromLayerToLayer Id="d5b05a62-b4ad-447f-b5d1-55a2545328ae" direction="Forward">
+              <layerMoniker Id="79ed3f7c-bc19-4bc5-a0f2-cdebacfa9483" />
+            </dependencyFromLayerToLayer>
+            <dependencyFromLayerToLayer Id="154ca57c-4d17-46fd-b6ba-de697abcfa76" direction="Forward">
+              <layerMoniker Id="b61af34c-d4db-42d2-9475-41a13ef70efe" />
+            </dependencyFromLayerToLayer>
+          </dependencyToLayers>
+          <references>
+            <reference Id="f5d46e95-4c4a-480e-be92-a494d22f8f48" name="Logitude.Accounting.BL.dll">
+              <ArtifactNode Label="Logitude.Accounting.BL.dll" Category="CodeSchema_Assembly" Id="(Assembly=../Logitude.Accounting.BL/bin/Debug/Logitude.Accounting.BL.dll)" />
+              <ExpandedNode Id="(Assembly=Logitude.Accounting.BL)" Label="Logitude.Accounting.BL.dll" Category="CodeSchema_Assembly">
+                <Category Ref="FileSystem.Category.FileOfType.dll" />
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+            </reference>
+          </references>
+        </layer>
+        <layer Id="79ed3f7c-bc19-4bc5-a0f2-cdebacfa9483" name="Logitude.Accounting.Data.dll">
+          <references>
+            <reference Id="ab6ce2a9-b9de-4297-a2b9-17174e97df0c" name="Logitude.Accounting.Data.dll">
+              <ArtifactNode Label="Logitude.Accounting.Data.dll" Category="CodeSchema_Assembly" Id="(Assembly=../Logitude.Accounting.Data/bin/Debug/Logitude.Accounting.Data.dll)" />
+              <ExpandedNode Id="(Assembly=Logitude.Accounting.Data)" Label="Logitude.Accounting.Data.dll" Category="CodeSchema_Assembly">
+                <Category Ref="FileSystem.Category.FileOfType.dll" />
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+            </reference>
+          </references>
+        </layer>
+        <layer Id="b61af34c-d4db-42d2-9475-41a13ef70efe" name="Logitude.Accounting.Def.dll">
+          <dependencyToLayers>
+            <dependencyFromLayerToLayer Id="078ff244-52ed-48b8-97a2-23d0834be6f5" direction="Forward">
+              <layerMoniker Id="79ed3f7c-bc19-4bc5-a0f2-cdebacfa9483" />
+            </dependencyFromLayerToLayer>
+          </dependencyToLayers>
+          <references>
+            <reference Id="506045ba-f74c-4699-bd8a-b8981cf3203c" name="Logitude.Accounting.Def.dll">
+              <ArtifactNode Label="Logitude.Accounting.Def.dll" Category="CodeSchema_Assembly" Id="(Assembly=../Logitude.Accounting.Def/bin/Debug/Logitude.Accounting.Def.dll)" />
+              <ExpandedNode Id="(Assembly=Logitude.Accounting.Def)" Label="Logitude.Accounting.Def.dll" Category="CodeSchema_Assembly">
+                <Category Ref="FileSystem.Category.FileOfType.dll" />
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+            </reference>
+          </references>
+        </layer>
+      </childLayers>
     </layer>
-    <layer Id="832d8437-6373-455d-9636-ac21d362348b" name="Contracts" />
-    <layer Id="eec46be3-631b-4d5e-9a43-f05ef6c6a19c" name="Business Logic">
+    <layer Id="cc508884-426c-496a-a479-8e4eef7aae4d" name="WebFreight.Web.dll">
       <dependencyToLayers>
-        <dependencyFromLayerToLayer Id="663a1905-06ec-4f34-b6f4-b78ec0ac2491" direction="Forward">
-          <layerMoniker Id="e81412bb-bf31-4f4c-aeb8-fbf06edfb4ba" />
+        <dependencyFromLayerToLayer Id="4bbc1404-aa01-4de5-b96d-46b86f15c839" direction="Forward">
+          <layerMoniker Id="775214f9-dede-4008-9762-2c5687e3d383" />
+        </dependencyFromLayerToLayer>
+        <dependencyFromLayerToLayer Id="6f523210-ae26-420f-a4da-1014b6b1568a" direction="Forward">
+          <layerMoniker Id="2f1d8d5b-4b1d-4f44-b218-2ea0759f35bd" />
+        </dependencyFromLayerToLayer>
+        <dependencyFromLayerToLayer Id="de7b9679-dbc1-4b54-9ee8-3adbd682a4f0" direction="Forward">
+          <layerMoniker Id="7309d43a-6efc-4036-ac9b-d31dd578148c" />
+        </dependencyFromLayerToLayer>
+        <dependencyFromLayerToLayer Id="51410c8f-6061-4b7a-ba14-e443f5b26e52" direction="Forward">
+          <layerMoniker Id="8fa09b10-3209-41d5-a4e2-515ab42d01b9" />
+        </dependencyFromLayerToLayer>
+        <dependencyFromLayerToLayer Id="20bfede2-99cf-4e30-b292-d8ca6f2de276" direction="Forward">
+          <layerMoniker Id="df3bd134-c2b5-4082-af09-7fc0872641b1" />
+        </dependencyFromLayerToLayer>
+        <dependencyFromLayerToLayer Id="f957f4df-fae1-4f9b-9def-774aa637009c" direction="Forward">
+          <layerMoniker Id="06076617-bd56-4fbe-bd7a-de6fa5e94d88" />
         </dependencyFromLayerToLayer>
       </dependencyToLayers>
       <childLayers>
-        <layer Id="02c54ccf-640c-4d5c-9321-21b869cf60f4" name="Logitude.Accounting.BL">
+        <layer Id="18692bc8-45be-4855-aadc-f5c4f473d043" name="WebFreight.Web.AccountingModel">
+          <dependencyToLayers>
+            <dependencyFromLayerToLayer Id="cac8f4ec-1a30-4064-a416-ac94be57bf6d" direction="Forward">
+              <layerMoniker Id="b61af34c-d4db-42d2-9475-41a13ef70efe" />
+            </dependencyFromLayerToLayer>
+            <dependencyFromLayerToLayer Id="e93e1075-55b6-475f-80aa-f7cce7387924" direction="Forward">
+              <layerMoniker Id="79ed3f7c-bc19-4bc5-a0f2-cdebacfa9483" />
+            </dependencyFromLayerToLayer>
+            <dependencyFromLayerToLayer Id="af0faa4e-f173-4cd5-9777-5853d641d298" direction="Forward">
+              <layerMoniker Id="f4fe1ebf-75e5-4c78-8eba-f75a08373da9" />
+            </dependencyFromLayerToLayer>
+          </dependencyToLayers>
           <references>
-            <reference Id="811929c1-e405-4de9-a165-9894de98c2ba" name="Logitude.Accounting.BL">
-              <ArtifactNode Label="Logitude.Accounting.BL" Category="CodeSchema_Project" Id="(Assembly=../Logitude.Accounting.BL/Logitude.Accounting.BL.csproj)">
+            <reference Id="ed25a19f-62c3-4651-b01c-7acd28ee3b4b" name="WebFreight.Web.AccountingModel">
+              <ArtifactNode Label="WebFreight.Web.AccountingModel" Category="CodeSchema_Namespace" Id="(Namespace=WebFreight.Web.AccountingModel)" />
+              <ExpandedNode Id="(Namespace=WebFreight.Web.AccountingModel)" Label="WebFreight.Web.AccountingModel" Category="CodeSchema_Namespace">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+            </reference>
+          </references>
+        </layer>
+        <layer Id="a903d3ed-9280-4f5a-b518-032ccc837427" name="WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting">
+          <dependencyToLayers>
+            <dependencyFromLayerToLayer Id="1398dbd6-a133-4a65-b6ba-045bbcba5fdd" direction="Forward">
+              <layerMoniker Id="79ed3f7c-bc19-4bc5-a0f2-cdebacfa9483" />
+            </dependencyFromLayerToLayer>
+            <dependencyFromLayerToLayer Id="d3f0e34c-83db-476b-80cb-29d8198c2a44" direction="Forward">
+              <layerMoniker Id="18692bc8-45be-4855-aadc-f5c4f473d043" />
+            </dependencyFromLayerToLayer>
+          </dependencyToLayers>
+          <references>
+            <reference Id="77ddcc2a-8570-40d0-aae3-7aeea470ab24" name="WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting">
+              <ArtifactNode Label="WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting" Category="CodeSchema_Namespace" Id="(Namespace=WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting)" />
+              <ExpandedNode Id="(Namespace=WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting)" Label="WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting" Category="CodeSchema_Namespace">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+            </reference>
+          </references>
+        </layer>
+        <layer Id="d00da2cd-0ac6-404b-a845-a41b20af4986" name="WebFreight.Web.Helpers">
+          <dependencyToLayers>
+            <dependencyFromLayerToLayer Id="e2f10971-5f42-4582-9eba-48802557e33b" direction="Forward">
+              <layerMoniker Id="f4fe1ebf-75e5-4c78-8eba-f75a08373da9" />
+            </dependencyFromLayerToLayer>
+            <dependencyFromLayerToLayer Id="d219cff7-2ae3-4533-90b9-693c08ccb081" direction="Forward">
+              <layerMoniker Id="a903d3ed-9280-4f5a-b518-032ccc837427" />
+            </dependencyFromLayerToLayer>
+            <dependencyFromLayerToLayer Id="ecc605bc-5e8f-407e-aa1c-9efca7e446e5" direction="Bidirectional">
+              <layerMoniker Id="18692bc8-45be-4855-aadc-f5c4f473d043" />
+            </dependencyFromLayerToLayer>
+          </dependencyToLayers>
+          <references>
+            <reference Id="4a4ae9c8-9273-45c8-ab44-ae1df9316065" name="WebFreight.Web.Helpers">
+              <ArtifactNode Label="WebFreight.Web.Helpers" Category="CodeSchema_Namespace" Id="(Namespace=WebFreight.Web.Helpers)" />
+              <ExpandedNode Id="(Namespace=WebFreight.Web.Helpers)" Label="WebFreight.Web.Helpers" Category="CodeSchema_Namespace">
+                <LinkCategory Ref="Represents" />
+              </ExpandedNode>
+            </reference>
+          </references>
+        </layer>
+      </childLayers>
+      <references>
+        <reference Id="932096e0-b51b-48ed-929f-ecb9d16f140e" name="WebFreight.Web.dll">
+          <ArtifactNode Label="WebFreight.Web.dll" Category="CodeSchema_Assembly" Id="(Assembly=../JustWebFreight/WebFreight.Web/bin/WebFreight.Web.dll)" />
+          <ExpandedNode Id="(Assembly=WebFreight.Web)" Label="WebFreight.Web.dll" Category="CodeSchema_Assembly">
+            <Category Ref="FileSystem.Category.FileOfType.dll" />
+            <LinkCategory Ref="Represents" />
+          </ExpandedNode>
+        </reference>
+      </references>
+    </layer>
+    <layer Id="df3bd134-c2b5-4082-af09-7fc0872641b1" name="Booking">
+      <childLayers>
+        <layer Id="fe7eb5e1-baca-4179-8af1-fd37ec16c85d" name="Logitude.BookingLib.BL">
+          <dependencyToLayers>
+            <dependencyFromLayerToLayer Id="9f4696d1-fff6-49d3-8258-73fa56f3ee89" direction="Forward">
+              <layerMoniker Id="62cc3a91-76f4-44ca-aff0-1ad591f84d9f" />
+            </dependencyFromLayerToLayer>
+          </dependencyToLayers>
+          <references>
+            <reference Id="c53bae88-19f9-415b-8740-c3c39458fdc0" name="Logitude.BookingLib.BL">
+              <ArtifactNode Label="Logitude.BookingLib.BL" Category="CodeSchema_Project" Id="(Assembly=../Logitude.BookingLib.BL/Logitude.BookingLib.BL.csproj)">
+                <Category Ref="File" />
+              </ArtifactNode>
+            </reference>
+          </references>
+        </layer>
+        <layer Id="62cc3a91-76f4-44ca-aff0-1ad591f84d9f" name="Logitude.BookingLib.Data">
+          <references>
+            <reference Id="ddf9b710-a513-48aa-b34b-a10dd13632f2" name="Logitude.BookingLib.Data">
+              <ArtifactNode Label="Logitude.BookingLib.Data" Category="CodeSchema_Project" Id="(Assembly=../Logitude.BookingLib.Data/Logitude.BookingLib.Data.csproj)">
+                <Category Ref="File" />
+              </ArtifactNode>
+            </reference>
+          </references>
+        </layer>
+        <layer Id="9c159f9a-0eca-4502-8988-fdd6ced8c0b6" name="Logitude.BookingLib.MetaData">
+          <references>
+            <reference Id="ff6338b4-7a04-4746-87e5-d831b72b199b" name="Logitude.BookingLib.MetaData">
+              <ArtifactNode Label="Logitude.BookingLib.MetaData" Category="CodeSchema_Project" Id="(Assembly=../Logitude.BookingLib.MetaData/Logitude.BookingLib.MetaData.csproj)">
                 <Category Ref="File" />
               </ArtifactNode>
             </reference>
           </references>
         </layer>
       </childLayers>
+      <references>
+        <reference Id="ecab7372-962c-4961-99a8-4470b27a834b" name="Booking">
+          <ArtifactNode Label="Booking" Category="CodeSchema_Project" Id="(Assembly=../Booking)">
+            <Category Ref="CodeMap_SolutionFolder" />
+          </ArtifactNode>
+        </reference>
+      </references>
     </layer>
-    <layer Id="f3c9d960-c11d-4b15-9c15-a8b7d21fecf6" name="Service Interface / Controllers">
-      <dependencyToLayers>
-        <dependencyFromLayerToLayer Id="c4d7094c-b709-46fd-b6dc-d3cdbdb45f48" direction="Forward">
-          <layerMoniker Id="eec46be3-631b-4d5e-9a43-f05ef6c6a19c" />
-        </dependencyFromLayerToLayer>
-      </dependencyToLayers>
+    <layer Id="3a8cd854-b048-4ebc-97bc-4b6fb5b55434" name="CargoTracking">
       <childLayers>
-        <layer Id="0ef45971-f9a4-4430-a117-aa465c292059" name="WebFreight.Web">
+        <layer Id="06076617-bd56-4fbe-bd7a-de6fa5e94d88" name="Logitude.CargoTracking.BL">
+          <dependencyToLayers>
+            <dependencyFromLayerToLayer Id="446e3cf1-eeb5-4824-8b41-13d109aefbda" direction="Forward">
+              <layerMoniker Id="adf01423-f3c1-4279-9194-42348c03cc1a" />
+            </dependencyFromLayerToLayer>
+            <dependencyFromLayerToLayer Id="4b791232-7d55-4b46-a200-dd7264e8aa94" direction="Forward">
+              <layerMoniker Id="033ef935-ffe7-49d8-8d6b-6aa7bd013eba" />
+            </dependencyFromLayerToLayer>
+          </dependencyToLayers>
           <references>
-            <reference Id="664d1d53-e343-460a-8f39-7c915b6e7d1e" name="WebFreight.Web">
-              <ArtifactNode Label="WebFreight.Web" Category="CodeSchema_Project" Id="(Assembly=../JustWebFreight/WebFreight.Web/WebFreight.Web.csproj)">
+            <reference Id="4f638ae5-bf2e-404c-8f18-1b62005f03e2" name="Logitude.CargoTracking.BL">
+              <ArtifactNode Label="Logitude.CargoTracking.BL" Category="CodeSchema_Project" Id="(Assembly=../Logitude.CargoTracking.BL/Logitude.CargoTracking.BL.csproj)">
+                <Category Ref="File" />
+              </ArtifactNode>
+            </reference>
+          </references>
+        </layer>
+        <layer Id="033ef935-ffe7-49d8-8d6b-6aa7bd013eba" name="Logitude.CargoTracking.Data">
+          <references>
+            <reference Id="0b844ca9-2626-41e2-8568-14c00fece019" name="Logitude.CargoTracking.Data">
+              <ArtifactNode Label="Logitude.CargoTracking.Data" Category="CodeSchema_Project" Id="(Assembly=../Logitude.CargoTracking.Data/Logitude.CargoTracking.Data.csproj)">
+                <Category Ref="File" />
+              </ArtifactNode>
+            </reference>
+          </references>
+        </layer>
+        <layer Id="adf01423-f3c1-4279-9194-42348c03cc1a" name="Logitude.CargoTracking.Def">
+          <references>
+            <reference Id="3189d98b-3e96-47ca-a872-654da2c56765" name="Logitude.CargoTracking.Def">
+              <ArtifactNode Label="Logitude.CargoTracking.Def" Category="CodeSchema_Project" Id="(Assembly=../Logitude.CargoTracking.Def/Logitude.CargoTracking.Def.csproj)">
+                <Category Ref="File" />
+              </ArtifactNode>
+            </reference>
+          </references>
+        </layer>
+        <layer Id="c98be61e-3abd-4fb3-a74e-ad85e3147dca" name="Logitude.CargoTracking.MetaData">
+          <references>
+            <reference Id="c898825e-6d97-4a28-913c-16debf7524c9" name="Logitude.CargoTracking.MetaData">
+              <ArtifactNode Label="Logitude.CargoTracking.MetaData" Category="CodeSchema_Project" Id="(Assembly=../Logitude.CargoTracking.MetaData/Logitude.CargoTracking.MetaData.csproj)">
                 <Category Ref="File" />
               </ArtifactNode>
             </reference>
           </references>
         </layer>
       </childLayers>
+      <references>
+        <reference Id="024299d4-29b3-45a2-b0f5-b73b1977b6c0" name="CargoTracking">
+          <ArtifactNode Label="CargoTracking" Category="CodeSchema_Project" Id="(Assembly=../CargoTracking)">
+            <Category Ref="CodeMap_SolutionFolder" />
+          </ArtifactNode>
+        </reference>
+      </references>
     </layer>
-    <layer Id="e81412bb-bf31-4f4c-aeb8-fbf06edfb4ba" name="Data Access">
+    <layer Id="7309d43a-6efc-4036-ac9b-d31dd578148c" name="CRM">
       <childLayers>
-        <layer Id="dffdba5f-23ce-4b57-b2a0-58071878f2bd" name="Logitude.Accounting.Data">
+        <layer Id="344f23dc-a442-4c64-bb0d-5dabc793b4c2" name="Logitude.CRM.BL">
+          <dependencyToLayers>
+            <dependencyFromLayerToLayer Id="b9b4146d-2b5f-42c1-9ddf-bcd61c572a85" direction="Forward">
+              <layerMoniker Id="18e89388-2f54-4b04-8dbf-afbd1922771a" />
+            </dependencyFromLayerToLayer>
+          </dependencyToLayers>
           <references>
-            <reference Id="c9363366-5ef8-4d40-8776-d6748a9bf090" name="Logitude.Accounting.Data">
-              <ArtifactNode Label="Logitude.Accounting.Data" Category="CodeSchema_Project" Id="(Assembly=../Logitude.Accounting.Data/Logitude.Accounting.Data.csproj)">
+            <reference Id="ec5c0d72-80dc-4022-a5f7-e3def44cda78" name="Logitude.CRM.BL">
+              <ArtifactNode Label="Logitude.CRM.BL" Category="CodeSchema_Project" Id="(Assembly=../Logitude.CRM.BL/Logitude.CRM.BL.csproj)">
+                <Category Ref="File" />
+              </ArtifactNode>
+            </reference>
+          </references>
+        </layer>
+        <layer Id="18e89388-2f54-4b04-8dbf-afbd1922771a" name="Logitude.CRM.Data">
+          <references>
+            <reference Id="b631bff7-cd5e-4709-827a-a8360a8c6f2e" name="Logitude.CRM.Data">
+              <ArtifactNode Label="Logitude.CRM.Data" Category="CodeSchema_Project" Id="(Assembly=../Logitude.CRM.Data/Logitude.CRM.Data.csproj)">
+                <Category Ref="File" />
+              </ArtifactNode>
+            </reference>
+          </references>
+        </layer>
+        <layer Id="0c540533-7175-42d5-94b1-af1ccbe4111d" name="Logitude.CRM.MetaData">
+          <references>
+            <reference Id="7e8bc96e-e0b1-4787-979b-b459c91dd26f" name="Logitude.CRM.MetaData">
+              <ArtifactNode Label="Logitude.CRM.MetaData" Category="CodeSchema_Project" Id="(Assembly=../Logitude.CRM.MetaData/Logitude.CRM.MetaData.csproj)">
                 <Category Ref="File" />
               </ArtifactNode>
             </reference>
           </references>
         </layer>
       </childLayers>
+      <references>
+        <reference Id="1b931001-bbad-439d-90bd-20bcdbcf89f2" name="CRM">
+          <ArtifactNode Label="CRM" Category="CodeSchema_Project" Id="(Assembly=../CRM)">
+            <Category Ref="CodeMap_SolutionFolder" />
+          </ArtifactNode>
+        </reference>
+      </references>
+    </layer>
+    <layer Id="2f1d8d5b-4b1d-4f44-b218-2ea0759f35bd" name="Customs">
+      <childLayers>
+        <layer Id="dc259864-84a0-410e-8a03-fcef8a4cab7f" name="Logitude.Customs.BL">
+          <dependencyToLayers>
+            <dependencyFromLayerToLayer Id="a7e8bbfa-abd7-4666-9560-9e26132d2ab9" direction="Forward">
+              <layerMoniker Id="ae15ada9-1e52-4061-a91a-5d0a2496b4b0" />
+            </dependencyFromLayerToLayer>
+            <dependencyFromLayerToLayer Id="fbd1bd9d-f806-4bd3-9401-b2f74490ce90" direction="Forward">
+              <layerMoniker Id="75ae5c48-86ee-4bf3-95f4-b193c8f54493" />
+            </dependencyFromLayerToLayer>
+          </dependencyToLayers>
+          <references>
+            <reference Id="73be84af-56ab-44f8-a4b2-ebb145100203" name="Logitude.Customs.BL">
+              <ArtifactNode Label="Logitude.Customs.BL" Category="CodeSchema_Project" Id="(Assembly=../Logitude.Customs.BL/Logitude.Customs.BL.csproj)">
+                <Category Ref="File" />
+              </ArtifactNode>
+            </reference>
+          </references>
+        </layer>
+        <layer Id="75ae5c48-86ee-4bf3-95f4-b193c8f54493" name="Logitude.Customs.Data">
+          <references>
+            <reference Id="7287be65-9a40-41bb-a328-923fd4b1d3d6" name="Logitude.Customs.Data">
+              <ArtifactNode Label="Logitude.Customs.Data" Category="CodeSchema_Project" Id="(Assembly=../Logitude.Customs.Data/Logitude.Customs.Data.csproj)">
+                <Category Ref="File" />
+              </ArtifactNode>
+            </reference>
+          </references>
+        </layer>
+        <layer Id="ae15ada9-1e52-4061-a91a-5d0a2496b4b0" name="Logitude.Customs.Def">
+          <references>
+            <reference Id="3a7dba29-27c4-4c3e-baf3-7c5768210a34" name="Logitude.Customs.Def">
+              <ArtifactNode Label="Logitude.Customs.Def" Category="CodeSchema_Project" Id="(Assembly=../Logitude.Customs.Def/Logitude.Customs.Def.csproj)">
+                <Category Ref="File" />
+              </ArtifactNode>
+            </reference>
+          </references>
+        </layer>
+        <layer Id="27c71b1f-b8db-416e-8201-a77713dc3500" name="Logitude.Customs.MetaData">
+          <references>
+            <reference Id="58d771da-58b4-4d68-83de-3fa8691052cc" name="Logitude.Customs.MetaData">
+              <ArtifactNode Label="Logitude.Customs.MetaData" Category="CodeSchema_Project" Id="(Assembly=../Logitude.Customs.MetaData/Logitude.Customs.MetaData.csproj)">
+                <Category Ref="File" />
+              </ArtifactNode>
+            </reference>
+          </references>
+        </layer>
+      </childLayers>
+      <references>
+        <reference Id="7f8ce5ee-8fec-40d5-97f4-fe6f28c9a599" name="Customs">
+          <ArtifactNode Label="Customs" Category="CodeSchema_Project" Id="(Assembly=../Customs)">
+            <Category Ref="CodeMap_SolutionFolder" />
+          </ArtifactNode>
+        </reference>
+      </references>
+    </layer>
+    <layer Id="3ef15b3c-854d-4947-a46e-a679deb38cd0" name="Infrastructure">
+      <childLayers>
+        <layer Id="c2ce6352-17cd-4fe7-8ad2-d65f88e73d31" name="Logitude.Infrastructure.BL">
+          <references>
+            <reference Id="5afd64bf-8f0c-4509-90bc-3d7487d9d3e7" name="Logitude.Infrastructure.BL">
+              <ArtifactNode Label="Logitude.Infrastructure.BL" Category="CodeSchema_Project" Id="(Assembly=../Logitude.Infrastructure.BL/Logitude.Infrastructure.BL.csproj)">
+                <Category Ref="File" />
+              </ArtifactNode>
+            </reference>
+          </references>
+        </layer>
+        <layer Id="94a71670-53d3-454a-89dd-a3d2e0779aa1" name="Logitude.Infrastructure.Data">
+          <dependencyToLayers>
+            <dependencyFromLayerToLayer Id="149bff16-2213-4ca9-823d-301b05b702a9" direction="Forward">
+              <layerMoniker Id="c2ce6352-17cd-4fe7-8ad2-d65f88e73d31" />
+            </dependencyFromLayerToLayer>
+          </dependencyToLayers>
+          <references>
+            <reference Id="42e52923-dc60-41e0-8fbc-790966c6ebdb" name="Logitude.Infrastructure.Data">
+              <ArtifactNode Label="Logitude.Infrastructure.Data" Category="CodeSchema_Project" Id="(Assembly=../Logitude.Infrastructure.Data/Logitude.Infrastructure.Data.csproj)">
+                <Category Ref="File" />
+              </ArtifactNode>
+            </reference>
+          </references>
+        </layer>
+        <layer Id="c82eda71-e233-473b-be42-1326db23c762" name="Logitude.Infrastructure.MetaData">
+          <references>
+            <reference Id="a0b9916a-2751-4937-814b-1cdaadce51eb" name="Logitude.Infrastructure.MetaData">
+              <ArtifactNode Label="Logitude.Infrastructure.MetaData" Category="CodeSchema_Project" Id="(Assembly=../Logitude.Infrastructure.MetaData/Logitude.Infrastructure.MetaData.csproj)">
+                <Category Ref="File" />
+              </ArtifactNode>
+            </reference>
+          </references>
+        </layer>
+      </childLayers>
+      <references>
+        <reference Id="3643240c-7790-4528-8578-4e3f204cdee2" name="Infrastructure">
+          <ArtifactNode Label="Infrastructure" Category="CodeSchema_Project" Id="(Assembly=../Infrastructure)">
+            <Category Ref="CodeMap_SolutionFolder" />
+          </ArtifactNode>
+        </reference>
+      </references>
+    </layer>
+    <layer Id="8fa09b10-3209-41d5-a4e2-515ab42d01b9" name="ShipmentOrder">
+      <childLayers>
+        <layer Id="4a7e0037-65a5-4ee4-b69f-2a70b466e168" name="Logitude.ShipmentOrderModule.BL">
+          <dependencyToLayers>
+            <dependencyFromLayerToLayer Id="7cba58dd-a34c-42d6-a875-0afe5be30a4b" direction="Forward">
+              <layerMoniker Id="1182f7eb-b847-485d-a6c7-bc2bf06d82a4" />
+            </dependencyFromLayerToLayer>
+            <dependencyFromLayerToLayer Id="55457035-73cc-4bc8-b017-465674a26263" direction="Forward">
+              <layerMoniker Id="131ae026-5fc9-4ed8-ab19-b5601bca48f5" />
+            </dependencyFromLayerToLayer>
+          </dependencyToLayers>
+          <references>
+            <reference Id="a2241d5f-04d1-4637-96ea-c3bc3691e940" name="Logitude.ShipmentOrderModule.BL">
+              <ArtifactNode Label="Logitude.ShipmentOrderModule.BL" Category="CodeSchema_Project" Id="(Assembly=../Logitude.ShipmentOrderModule.BL/Logitude.ShipmentOrderModule.BL.csproj)">
+                <Category Ref="File" />
+              </ArtifactNode>
+            </reference>
+          </references>
+        </layer>
+        <layer Id="1182f7eb-b847-485d-a6c7-bc2bf06d82a4" name="Logitude.ShipmentOrderModule.Data">
+          <references>
+            <reference Id="bedebc9e-734c-4f66-80ab-ba8a5a9c616e" name="Logitude.ShipmentOrderModule.Data">
+              <ArtifactNode Label="Logitude.ShipmentOrderModule.Data" Category="CodeSchema_Project" Id="(Assembly=../Logitude.ShipmentOrderModule.Data/Logitude.ShipmentOrderModule.Data.csproj)">
+                <Category Ref="File" />
+              </ArtifactNode>
+            </reference>
+          </references>
+        </layer>
+        <layer Id="131ae026-5fc9-4ed8-ab19-b5601bca48f5" name="Logitude.ShipmentOrderModule.Def">
+          <references>
+            <reference Id="8a66e80c-d7aa-4f84-9f69-591dddbd625a" name="Logitude.ShipmentOrderModule.Def">
+              <ArtifactNode Label="Logitude.ShipmentOrderModule.Def" Category="CodeSchema_Project" Id="(Assembly=../Logitude.ShipmentOrderModule.Def/Logitude.ShipmentOrderModule.Def.csproj)">
+                <Category Ref="File" />
+              </ArtifactNode>
+            </reference>
+          </references>
+        </layer>
+        <layer Id="e5ddc637-1ec8-4153-8550-af1921fcb330" name="Logitude.ShipmentOrderModule.MetaData">
+          <references>
+            <reference Id="e61f0689-52d1-471c-899a-3ff2b9c65dbc" name="Logitude.ShipmentOrderModule.MetaData">
+              <ArtifactNode Label="Logitude.ShipmentOrderModule.MetaData" Category="CodeSchema_Project" Id="(Assembly=../Logitude.ShipmentOrderModule.MetaData/Logitude.ShipmentOrderModule.MetaData.csproj)">
+                <Category Ref="File" />
+              </ArtifactNode>
+            </reference>
+          </references>
+        </layer>
+      </childLayers>
+      <references>
+        <reference Id="08bc758e-7bd7-44e3-890f-0c07cce7011c" name="ShipmentOrder">
+          <ArtifactNode Label="ShipmentOrder" Category="CodeSchema_Project" Id="(Assembly=../ShipmentOrder)">
+            <Category Ref="CodeMap_SolutionFolder" />
+          </ArtifactNode>
+        </reference>
+      </references>
     </layer>
   </layers>
 </layerModel>
