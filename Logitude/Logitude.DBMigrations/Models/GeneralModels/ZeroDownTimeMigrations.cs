@@ -100,6 +100,10 @@ namespace Logitude.DBMigrations.Models
         protected void ExitTool(string message)
         {
             Console.WriteLine(message);
+#if DEBUG
+
+            Console.ReadLine();
+#endif
             Environment.Exit(1);
         }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+//using Oracle.DataAccess.Client;
 using Oracle.ManagedDataAccess.Client;
 
 namespace Logitude.DBMigrations.Models
@@ -32,6 +33,8 @@ namespace Logitude.DBMigrations.Models
 
             try
             {
+                connection.SqlNetAllowedLogonVersionClient = OracleAllowedLogonVersionClient.Version11;
+
                 connection.Open();
                 reader = command.ExecuteReader();
 
@@ -85,6 +88,8 @@ namespace Logitude.DBMigrations.Models
 
             try
             {
+                connection.SqlNetAllowedLogonVersionClient = OracleAllowedLogonVersionClient.Version11;
+
                 connection.Open();
                 reader = command.ExecuteReader();
 
@@ -175,6 +180,8 @@ namespace Logitude.DBMigrations.Models
 
             try
             {
+                connection.SqlNetAllowedLogonVersionClient = OracleAllowedLogonVersionClient.Version11;
+
                 connection.Open();
                 reader = command.ExecuteReader();
 
@@ -227,6 +234,8 @@ namespace Logitude.DBMigrations.Models
 
             try
             {
+                connection.SqlNetAllowedLogonVersionClient = OracleAllowedLogonVersionClient.Version11;
+
                 connection.Open();
                 reader = command.ExecuteReader();
 
@@ -274,6 +283,8 @@ namespace Logitude.DBMigrations.Models
 
             try
             {
+                connection.SqlNetAllowedLogonVersionClient = OracleAllowedLogonVersionClient.Version11;
+
                 connection.Open();
                 reader = command.ExecuteReader();
 
