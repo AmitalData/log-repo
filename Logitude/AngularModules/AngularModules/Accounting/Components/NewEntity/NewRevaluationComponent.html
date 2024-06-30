@@ -72,7 +72,15 @@
 
                                 </td>
                                 <td style="width:120px"> {{'Accounting.General.O.DefaultGLAccount' | TextCodeTranslationPipe}}</td>
+                                <td style="width:200px;padding-right: 36px;">
 
+                                    <LogLov [ObjectFieldName]="'DefaultGLAccountId'"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'ChartOfAccount'"
+                                            [HideColumns]="true">
+                                    </LogLov>
+                                </td>
                                <td><div></div></td>
 
                                 <td><div></div></td>
