@@ -197,7 +197,7 @@ namespace CustomsWorkerRole.Test
                 catch (Exception eee)
                 {
 
-                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug(eee.ToString()); ;
+                   NetCommonHelper.Logger.DevLog.Instance.WriteFatal(eee); ;
                     Thread.Sleep(5000);
                 }
                 
@@ -254,7 +254,7 @@ namespace CustomsWorkerRole.Test
                     catch (Exception eee)
                     {
 
-                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug(eee.ToString()); ;
+                       NetCommonHelper.Logger.DevLog.Instance.WriteFatal(eee); ;
                         Thread.Sleep(5000);
                     }
 
@@ -364,7 +364,7 @@ namespace CustomsWorkerRole.Test
                     catch (Exception eee)
                     {
 
-                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug(eee.ToString()); ;
+                       NetCommonHelper.Logger.DevLog.Instance.WriteFatal(eee); ;
                         Thread.Sleep(5000);
                     }
 

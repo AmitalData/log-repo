@@ -64,7 +64,7 @@ namespace CustomsWorkerRole.Test
                         }
                         catch (Exception e)
                         {
-                           NetCommonHelper.Logger.DevLog.Instance.WriteDebug(e.ToString());
+                           NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e);
 
                         }
                     }

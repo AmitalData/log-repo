@@ -115,7 +115,7 @@ namespace CommunicationWorkerRole
                 }
                 catch (Exception e)
                 {
-                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug(e.ToString());
+                   NetCommonHelper.Logger.DevLog.Instance.WriteFatal(e);
                     ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "WorkerRole", "SignUpWorkerRole : Run() Method", null);
                     Thread.Sleep(10000);
                 }

@@ -184,7 +184,7 @@ namespace Logitude.Update.PatchDistribution
             catch (Exception ee)
             {
                 ApproveEnabled = false;
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug(ee.ToString());
+               NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ee);
                 MessageBox.Show(ee.ToString());
                 return;
             }

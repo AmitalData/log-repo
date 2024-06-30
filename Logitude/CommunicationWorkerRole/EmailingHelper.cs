@@ -291,7 +291,7 @@ namespace CommunicationWorkerRole
                 catch (Exception ee)
                 {
 
-                   NetCommonHelper.Logger.DevLog.Instance.WriteDebug("Exception!!!!!!myClient.Send(myMessage):" + ee.ToString());
+                   NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ee,"Exception!!!!!!myClient.Send(myMessage):");
                     throw;
                 }
 

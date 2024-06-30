@@ -190,7 +190,7 @@ namespace AmitalCustomsWindowsService.Tester
             catch (Exception eee)
             {
 
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("CustomsWorkerRole.Utils.ServiceBusUtil.ShowAll failed :" + eee.ToString());
+               NetCommonHelper.Logger.DevLog.Instance.WriteFatal(eee,"CustomsWorkerRole.Utils.ServiceBusUtil.ShowAll failed :" );
             }
 
         }
@@ -321,7 +321,7 @@ namespace AmitalCustomsWindowsService.Tester
             catch (Exception ex)
             {
 
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug(ex.ToString()); 
+               NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex); 
             }
             
         }
@@ -808,7 +808,7 @@ namespace AmitalCustomsWindowsService.Tester
             catch (Exception ee)
             {
 
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug(ee.ToString());
+               NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ee);
                 MessageBox.Show("maybe tenant not exist !!!");
             }
             
