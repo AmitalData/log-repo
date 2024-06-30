@@ -312,7 +312,7 @@ SELECT TOP 1000 [Id]
             }
             catch (Exception ex)
             {
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug(ex.ToString());
+               NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex);
             }
         }
         public static void Check_CourierSchedulerServiceIsTimeRange()
@@ -591,7 +591,7 @@ SELECT TOP 1000 [Id]
             catch (Exception ee)
             {
                 err = true;
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("RestoreAlDec:" + ee.ToString());
+               NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ee, "RestoreAlDec:");
 
             }
             finally
