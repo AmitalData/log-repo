@@ -2075,7 +2075,7 @@ export class ListComponent implements OnInit, AfterViewInit {
                             }
 
                             case "DefaultAndConfiguration": {
-                                windowTitle = "Add/Edit Default And Configuration";
+                                windowTitle = "Edit Default And Configuration";
                                 logWindow.Height = 400;
                                 logWindow.Width = 850;
                                 break;
@@ -2968,6 +2968,9 @@ export class ListComponent implements OnInit, AfterViewInit {
             else if (this.ObjectTableName == "Currency") {
                 this.NewEntityButtonLabel = TextCodeTranslator.Translate("General.B.Add");
             }
+            else if (this.ObjectTableName == "DefaultAndConfiguration") {
+                this.NewEntityButtonLabel = 'new Default And Configuration';
+            }
  
             else {
                 //this.NewEntityButtonLabel = "New " + TextCodeTranslator.TranslateTable(this.ObjectTableName);
@@ -3471,6 +3474,12 @@ export class ListComponent implements OnInit, AfterViewInit {
                         logWindow.Height = 800;
                         break;
                     }
+                case "DefaultAndConfiguration":
+                    {                                                
+                        logWindow.Width = 850;
+                        logWindow.Height = 400;
+                        break;
+                    }
 
             }
 
@@ -3523,6 +3532,10 @@ export class ListComponent implements OnInit, AfterViewInit {
 
             if (this.ObjectTableName == "InterestBasesType") {
                 str = TextCodeTranslator.Translate("Accounting.General.O.NewInterestBases");
+            }
+
+            if (this.ObjectTableName == "DefaultAndConfiguration") {
+                str = 'Add Default And Configuration'
             }
 
             if (!AppTool.IsNullOrEmpty(this.NewButtonLable)) {

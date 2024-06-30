@@ -822,8 +822,8 @@
     <Compile Include="Helpers\ExportServer\UserData.cs" />
     <Compile Include="Helpers\ObjectFieldPropertyGetter.cs" />
     <Compile Include="Helpers\PayablesLinesVatAmounts.cs" />
-    <Compile Include="Helpers\SettingsHelper.cs" />
-    <Compile Include="Helpers\SettingsHelperUI.cs" />
+    <Compile Include="Helpers\DefaultService.cs" />
+    <Compile Include="Helpers\DefaultKeyService.cs" />
     <Compile Include="InfrastructureModel\APIDataContract\EntityStatus.Generated.cs" />
     <Compile Include="InfrastructureModel\APIDataContract\EventsTypes.cs" />
     <Compile Include="InfrastructureModel\APIDataContract\EventType.Generated.cs" />
