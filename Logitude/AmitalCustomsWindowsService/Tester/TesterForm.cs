@@ -190,7 +190,7 @@ namespace AmitalCustomsWindowsService.Tester
             catch (Exception eee)
             {
 
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("CustomsWorkerRole.Utils.ServiceBusUtil.ShowAll failed :" + eee.ToString());
+               NetCommonHelper.Logger.DevLog.Instance.WriteFatal(eee,"CustomsWorkerRole.Utils.ServiceBusUtil.ShowAll failed :" );
             }
 
         }

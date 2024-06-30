@@ -378,7 +378,7 @@ IsStart(rec.InterfaceManagement.DcaPrefixName4, myFileName)
                     }
                     catch (System.Exception EE)
                     {
-                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"SaveInDB({myFileName}) -{EE.ToString()}");
+                       NetCommonHelper.Logger.DevLog.Instance.WriteFatal(EE,$"SaveInDB({myFileName})");
                         _SaveError = true;
                         exceptionBag.Add($"Error while save message in DCA : {EE.ToString()}");
                         //throw;
@@ -444,7 +444,7 @@ IsStart(rec.InterfaceManagement.DcaPrefixName4, myFileName)
                     }
                     catch (System.Exception EE)
                     {
-                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"SaveInDB({myFileName}) -{EE.ToString()}");
+                       NetCommonHelper.Logger.DevLog.Instance.WriteFatal(EE, $"SaveInDB({myFileName})");
                         _SaveError = true;
                         _SBErrorLog.AppendLine($"Error while save message in DCA : {EE.ToString()}");
                         //throw;

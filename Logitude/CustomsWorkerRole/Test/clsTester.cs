@@ -685,7 +685,7 @@ PaymentDate  מלפני 3  ימים ");
             catch (Exception ee)
             {
                 err = true;
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug("RestoreAlDec:" + ee.ToString());
+               NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ee,"RestoreAlDec:" );
 
             }
             finally
@@ -783,7 +783,7 @@ PaymentDate  מלפני 3  ימים ");
                     catch (Exception ee)
                     {
 
-                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug($"error  {i}:{counter}  " + ee.ToString());
+                       NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ee,$"error  {i}:{counter}  " );
 
                     }
                     finally

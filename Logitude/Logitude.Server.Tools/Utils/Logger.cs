@@ -114,7 +114,7 @@ namespace Logitude.Server.Tools.Utils
             }
             catch (Exception ex)
             {
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug(ex.ToString());
+               NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex);
             }
         }
 
@@ -413,7 +413,7 @@ namespace Logitude.Server.Tools.Utils
                     }
                     catch (Exception ex)
                     {
-                       NetCommonHelper.Logger.DevLog.Instance.WriteDebug(ex.ToString());
+                       NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex);
                     }
                 }
                 dicStream.Remove(datestr);
