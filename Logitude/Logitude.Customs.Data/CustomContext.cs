@@ -3770,13 +3770,7 @@ namespace Logitude.Customs.Data
 	      get; set;
 	 
 	 }
-	
-	 public IDbSet<ReferenceType> ReferenceTypes 
-	 {
-	      get; set;
-	 
-	 }
-	
+		
 	 public IDbSet<RefundCustomerActivityType> RefundCustomerActivityTypes 
 	 {
 	      get; set;

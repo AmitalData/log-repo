@@ -3,7 +3,7 @@
   Name="ShipmentReferances"
   Schema="dbo"
   DBType="Main"
-  Module="ShipmentReferance">
+  Module="Shipment">
   <Column
     Name="ShipmentId"
     Type="varchar"
@@ -54,7 +54,7 @@
     ForeignKeyColumn="ReferenceType"
     ReferencedTable="ReferenceTypes"
     ReferencedColumn="Code"
-    ReferencedTableSchema="Customs" />
+    ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="PartnerId"
     ReferencedTable="Cards"

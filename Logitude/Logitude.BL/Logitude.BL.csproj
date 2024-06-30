@@ -1094,7 +1094,9 @@
     <Compile Include="ShipmentsModel\EntityQueries\ReferenceTypeQueryService.cs" />
     <Compile Include="ShipmentsModel\EntityQueries\ShipmentReferanceQuery.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\OceanInsightsStatusLogMapping.cs" />
+    <Compile Include="ShipmentsModel\Tools\DataMapping\ShipmentMapping.ShipmentReferance.cs" />
     <Compile Include="ShipmentsModel\Tools\EntityService\OceanInsightsStatusLogService.cs" />
+    <Compile Include="ShipmentsModel\Tools\EntityService\ShipmentReferanceService.cs" />
     <Compile Include="ShipmentsModel\Tools\ExternalService\ShipmentAdditionalDataService.cs" />
     <Compile Include="ShipmentsModel\EntityLists\DigitalShipmentList.cs" />
     <Compile Include="ShipmentsModel\EntityLists\ShipmentDigitalFieldList.cs" />
