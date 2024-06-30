@@ -6,7 +6,7 @@ using WebFreight.Web.Controllers.DigitalPortal.Helpers;
 using Logitude.BL.QuoteModel.EntityQueries;
 using Logitude.BL.QuoteModel.EntityPMs;
 using System.Net.Http;
-using WebFreight.Web.Controllers.DigitalPortal.Models;
+using Simplog.Server.Infrastructure.DataContracts.Models;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System.Web;
