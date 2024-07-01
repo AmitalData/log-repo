@@ -167,7 +167,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>xcopy "$(ProjectDir)Settings\VersionInfo.xml" "$(ProjectDir)bin\Debug\VersionInfo.xml" /Y /-I
-xcopy "$(ProjectDir)Settings\Configurations.xml" "$(ProjectDir)bin\Debug\Configurations.xml" /Y /-I</PreBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
 </Project>
