@@ -812,8 +812,6 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new ReferenceStatusMap());
 	
-            modelBuilder.Configurations.Add(new ReferenceTypeMap());
-	
             modelBuilder.Configurations.Add(new RefundCustomerActivityTypeMap());
 	
             modelBuilder.Configurations.Add(new RegisteredWarehouseSiteTypeMap());
@@ -3770,7 +3768,7 @@ namespace Logitude.Customs.Data
 	      get; set;
 	 
 	 }
-		
+	
 	 public IDbSet<RefundCustomerActivityType> RefundCustomerActivityTypes 
 	 {
 	      get; set;
