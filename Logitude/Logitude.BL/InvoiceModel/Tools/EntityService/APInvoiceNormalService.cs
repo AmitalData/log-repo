@@ -2167,7 +2167,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                                             Reference1 = theEntityPm.InvoiceNumber,
                                                             Reference2 = theEntityPm.MainEntityReference,
                                                             Reference3 = !string.IsNullOrEmpty(theEntityPm.HouseNumber) ? theEntityPm.HouseNumber : theEntityPm.MasterNumber,
-                                                            Notes = d.Notes!=null?d.Notes:theEntityPm.InternalNotes,
+                                                            Notes =!string.IsNullOrEmpty(d.Notes) && !string.IsNullOrWhiteSpace(d.Notes) ? d.Notes:theEntityPm.InternalNotes,
                                                         }).ToList();
 
                     journalDebitLines.AddRange(journalLines);
