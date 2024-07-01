@@ -43,7 +43,7 @@ export class FieldByTypeComponent {
     }
 
     public get value(): any {
-        return this.isArray ? this.fields.toArray().map(x => x.Value).join(';') : this.fields.first.Value;
+        return this.isArray ? this.fields.toArray() : this.fields.first.Value;
     }
 
     public get valid(): boolean {
@@ -54,9 +54,9 @@ export class FieldByTypeComponent {
         switch (type) {
             case 'System.String':
                 return 'text';
-            case 'System.Int':
+            case 'System.Int32':
                 return 'number';
-            case 'System.Double':
+            case 'System.Double32':
                 return 'number';
             case 'System.Boolean':
                 return 'boolean';

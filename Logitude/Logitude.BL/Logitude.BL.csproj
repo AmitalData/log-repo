@@ -833,8 +833,8 @@
     <Compile Include="Helpers\ExportServer\UserData.cs" />
     <Compile Include="Helpers\ObjectFieldPropertyGetter.cs" />
     <Compile Include="Helpers\PayablesLinesVatAmounts.cs" />
-    <Compile Include="Helpers\SettingsHelper.cs" />
-    <Compile Include="Helpers\SettingsHelperUI.cs" />
+    <Compile Include="Helpers\DefaultService.cs" />
+    <Compile Include="Helpers\DefaultKeyService.cs" />
     <Compile Include="InfrastructureModel\APIDataContract\EntityStatus.Generated.cs" />
     <Compile Include="InfrastructureModel\APIDataContract\EventsTypes.cs" />
     <Compile Include="InfrastructureModel\APIDataContract\EventType.Generated.cs" />
@@ -3632,10 +3632,6 @@
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Analyzer Include="..\packages\Microsoft.DependencyValidation.Analyzers.0.11.0\analyzers\dotnet\cs\Microsoft.DependencyValidation.Analyzers.resources.dll" />
-    <Analyzer Include="..\packages\Microsoft.DependencyValidation.Analyzers.0.11.0\analyzers\dotnet\Microsoft.DependencyValidation.Analyzers.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />

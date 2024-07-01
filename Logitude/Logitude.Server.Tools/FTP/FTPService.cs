@@ -75,7 +75,7 @@ namespace Logitude.Server.Tools.FTP
 			}
 			catch (WebException ex)
 			{
-               NetCommonHelper.Logger.DevLog.Instance.WriteDebug(ex.ToString());
+               NetCommonHelper.Logger.DevLog.Instance.WriteFatal(ex);
 				FTPServiceExceptionThrower.Throw(ex, user, host, remoteFile, "download");
 			}
 			catch (Exception ex)
