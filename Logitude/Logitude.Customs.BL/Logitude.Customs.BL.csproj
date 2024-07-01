@@ -284,7 +284,6 @@
     <Compile Include="CloseTables\DetailsClassesGenerated\PoaStatusTypeLookUpDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\QuotaComputationBasisDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\QuotaIncrementDetails.Generated.cs" />
-    <Compile Include="CloseTables\DetailsClassesGenerated\ReferenceTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\RegularityPublicationDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\RegularityRequirementWarningDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\RegularitySourceDetails.Generated.cs" />
@@ -1073,7 +1072,6 @@
     <Compile Include="EntityDataMappings\Generated\ReferantTeamDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ReferenceInputTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ReferenceStatusDataMapping.Generated.cs" />
-    <Compile Include="EntityDataMappings\Generated\ReferenceTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\RefundCustomerActivityTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\RegisteredWarehouseSiteTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\RegularityPublicationDataMapping.Generated.cs" />
@@ -1280,7 +1278,6 @@
     <Compile Include="EntityDataMappings\ReferantTeamDataMapping.cs" />
     <Compile Include="EntityDataMappings\ReferenceInputTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\ReferenceStatusDataMapping.cs" />
-    <Compile Include="EntityDataMappings\ReferenceTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\RefundCustomerActivityTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\RegisteredWarehouseSiteTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\RegularityPublicationDataMapping.cs" />
@@ -1459,7 +1456,6 @@
     <Compile Include="EntityQueryServices\Generated\PerYearFrequencyQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\QuotaComputationBasisQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\QuotaIncrementQueryService.Generated.cs" />
-    <Compile Include="EntityQueryServices\Generated\ReferenceTypeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\RegularityPublicationQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\RegularityRequirementWarningQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\RegularitySourceQueryService.Generated.cs" />
@@ -2065,7 +2061,6 @@
     <Compile Include="EntityUpdateServices\Generated\PerYearFrequencyUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\QuotaComputationBasisUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\QuotaIncrementUpdateService.Generated.cs" />
-    <Compile Include="EntityUpdateServices\Generated\ReferenceTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\RegularityPublicationUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\RegularityRequirementWarningUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\RegularitySourceUpdateService.Generated.cs" />

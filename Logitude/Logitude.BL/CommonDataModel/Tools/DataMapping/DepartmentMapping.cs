@@ -20,6 +20,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.Notes = entityPM.Notes;
             poco.Tenant = entityPM.Tenant;            
             poco.Code = entityPM.Code;
+            poco.DirectionId = entityPM.DirectionId;
 
             BuildSearchField(entityPM, poco);
         }

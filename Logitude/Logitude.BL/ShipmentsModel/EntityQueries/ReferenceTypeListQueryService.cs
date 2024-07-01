@@ -10,17 +10,17 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel;
+using Logitude.BL.ShipmentsModel.EntityLists;
 
-using Logitude.Customs.Data.EntityPOCOs;
-using Logitude.Customs.Data.EntityLists;
-
-namespace Logitude.Customs.Data.EntityListQueryServices
+namespace Logitude.BL.ShipmentsModel.EntityQueries
 { 
 
     public partial class ReferenceTypeListQueryService
     {
-         private ICustomContext context;
-        public ReferenceTypeListQueryService(ICustomContext context)
+         private IShipmentsContext context;
+        public ReferenceTypeListQueryService(IShipmentsContext context)
         {
             this.context = context;
         }
@@ -55,7 +55,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(ReferenceTypeList).GetProperty(queryOperations.SortByColumnName);
-                List<ObjectField> ReferenceTypeObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Customs.ReferenceType",tenant).ToList();
+                List<ObjectField> ReferenceTypeObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("ReferenceType",tenant).ToList();
 
                 ObjectField objectField = (from a in ReferenceTypeObjectFields
                                            where a.FieldName == queryOperations.SortByColumnName
@@ -179,6 +179,25 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
             int count = query2.Count();
             return count;
+        }
+
+        private IQueryable<ReferenceTypeList> GetIqueryableList(IQueryable<ReferenceType> iQueryable)
+        {
+            IQueryable<ReferenceTypeList> query = (from a in iQueryable
+                                                   select new ReferenceTypeList()
+                                                   {
+
+                                                       SearchFields = a.SearchFields,
+
+                                                       Inactive = a.Inactive,
+
+                                                   });
+            return query;
+        }
+
+        private IQueryable<ReferenceType> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<ReferenceType> iQueryable)
+        {
+            throw new NotImplementedException();
         }
 
 

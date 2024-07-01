@@ -6,22 +6,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
-using Logitude.Customs.Data.EntityPOCOs;
-using Logitude.Customs.Data.EntityKeys;
 using Simplog.Server.Infrastructure;
+using Simplog.Data.ShipmentsModel;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
 
-namespace Logitude.Customs.Data.Repsitories
+namespace Simplog.Data.ShipmentsModel.Repositories
 {
-   public partial class ReferenceTypeRepository:IRepository<ReferenceType>
+   public class ReferenceTypeRepository:IRepository<ReferenceType>
    {
    
-        private ICustomContext currentContext;
+        IShipmentsContext currentContext;
+
         public ReferenceTypeRepository(int tenant)
         {
-            currentContext = CustomContext.GetContext(tenant);
+            currentContext = new ShipmentsContext();
         }
 
-        public ReferenceTypeRepository(ICustomContext context)
+        public ReferenceTypeRepository(IShipmentsContext context)
         {
             currentContext = context;
         }
@@ -40,19 +41,18 @@ namespace Logitude.Customs.Data.Repsitories
             return from a in context.ReferenceTypes  
                    select a;
         }
-				 
+		        
         public ReferenceType GetSingle(EntityKeyFields entityKeys)
         {
-            ReferenceTypeKeys keys = entityKeys as ReferenceTypeKeys;
-            return (from a in context.ReferenceTypes
-                    where a.Code == keys.Code
-                    select a).FirstOrDefault();
+            //ReferenceTypeKeys keys = entityKeys as ReferenceTypeKeys;
+            //return (from a in context.ReferenceTypes
+            //        where a.Code == keys.Code
+            //        select a).FirstOrDefault();
+            throw new NotImplementedException();
         }
-		 		                 
-        partial void onAdd();//Partial Methods Definition in Generated
+
         public void Add(ReferenceType entity)
         {
-            onAdd();
             context.ReferenceTypes.Add(entity);
         }
 
@@ -61,11 +61,8 @@ namespace Logitude.Customs.Data.Repsitories
             context.ReferenceTypes.Attach(entity);
             context.ReferenceTypes.Remove(entity);
         }
-
-        partial void onUpdate();//Partial Methods Definition in Generated
         public void Update(ReferenceType entity)
         {
-            onUpdate();
             context.ReferenceTypes.Attach(entity);
             context.SetAsModified(entity);
         }
@@ -75,7 +72,7 @@ namespace Logitude.Customs.Data.Repsitories
             return context.ReferenceTypes.ToList();
         }
 
-        private ICustomContext context
+        public IShipmentsContext context
         {
             get { return currentContext; }
         }
@@ -84,7 +81,14 @@ namespace Logitude.Customs.Data.Repsitories
         {
             context.SaveChanges();
         }
-	 
-   }
-   }
+
+        public List<ReferenceType> GetMulti(EntityKeyFields entityKeys)
+        {
+
+            throw new NotImplementedException();
+        }
+
+
+    }
+}
 	 

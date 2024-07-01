@@ -161,7 +161,6 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature taskTypesFeature = tenantFeatures.Where(d => d.Code == "TASKTYPES" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             Feature taskPrioritiesFeature = tenantFeatures.Where(d => d.Code == "TASKPRIORITIES" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             Feature taskStatusesFeature = tenantFeatures.Where(d => d.Code == "TASKSTATUSES" && d.FeatureTypeCode == "MENU").FirstOrDefault();
-            Feature customsShipmentsFeature = tenantFeatures.Where(d => d.Code == "CUSTOMSSHIPMENTS" && d.FeatureTypeCode == "MENU").FirstOrDefault();
 
             #endregion
 
@@ -201,7 +200,6 @@ namespace WebFreight.Web.MetaDataUpdate
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "TAAP", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 31, CategoryTypeCode = null, TextCode = "General.MH.TasksApp", Icon = "DashboardPath", FeatureId = tasksAppFeature.Id, FeatureUniqeCode = tasksAppFeature.FeatureUniqeCode, }, MenusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "CDSH", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 18, CategoryTypeCode = null, TextCode = "General.MH.ClassicDashboard", Icon = "DashboardPath", FeatureId = dashFeature.Id, FeatureUniqeCode = dashFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "CONT", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 1, CategoryTypeCode = null, TextCode = "General.MH.Containers", Icon = "OperationsPath", ObjectTableId = tenantObjectTables.Where(o => o.Name == "Container").FirstOrDefault().Id, FeatureId = containerFeature.Id, FeatureUniqeCode = containerFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
-            AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "CSSH", Tenant = 0, MenuTypeCode = "Main", IndexOfOrder = 1, CategoryTypeCode = null, TextCode = "General.MH.CustomsShipments", Icon = "OperationsPath", ObjectTableId = tenantObjectTables.Where(o => o.Name == "Shipment").FirstOrDefault().Id, FeatureId = customsShipmentsFeature.Id, FeatureUniqeCode = customsShipmentsFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
 
             #endregion
 

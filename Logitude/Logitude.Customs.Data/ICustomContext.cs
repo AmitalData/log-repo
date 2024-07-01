@@ -389,7 +389,6 @@ namespace Logitude.Customs.Data
 		 IDbSet<ReferantTeam> ReferantTeams { get; }
 		 IDbSet<ReferenceInputType> ReferenceInputTypes { get; }
 		 IDbSet<ReferenceStatus> ReferenceStatuses { get; }
-		 IDbSet<ReferenceType> ReferenceTypes { get; }
 		 IDbSet<RefundCustomerActivityType> RefundCustomerActivityTypes { get; }
 		 IDbSet<RegisteredWarehouseSiteType> RegisteredWarehouseSiteTypes { get; }
 		 IDbSet<RegularityPublication> RegularityPublications { get; }
