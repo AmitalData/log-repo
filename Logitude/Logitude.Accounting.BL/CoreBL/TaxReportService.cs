@@ -243,7 +243,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 card = GetGLAccountCard(account);
 				if (transaction.AccountingEntity == AccountingEntityValues.APInvoice)
 				{
-					aPInvoice = allAPInvoices.Where(d => d.Id == transaction.AccountingEntityId).FirstOrDefault();
+					var aPInvoice = allAPInvoices.Where(d => d.Id == transaction.AccountingEntityId).FirstOrDefault();
 
 					if (aPInvoice != null)
 					{
