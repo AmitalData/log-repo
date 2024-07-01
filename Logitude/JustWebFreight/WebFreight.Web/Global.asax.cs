@@ -388,7 +388,19 @@ namespace WebFreight.Web
             //});
 
 
-
+            LogitudeSettings.HandleLogMe = new Action<string, bool, string, DateTime>((mess, err, suffix, stopLogAt) =>
+            {
+                if (DateTime.Now > stopLogAt) return;
+                if (err)
+                {
+                    NetCommonHelper.Logger.DevLog.Instance.WriteError(mess);
+                }
+                else
+                {
+                    NetCommonHelper.Logger.DevLog.Instance.WriteInfo(mess);
+                }
+                //Logger.LogMe(mess, err, suffix);
+            });
 
             LogitudeSettings.HandleDbExceptionInject = ExceptionHandler.HandleDbException;
             LogitudeSettings.HandleBuildObjectTablesZipFilesData_Inject = MetaDataUpdate.TenantsUpdateClass.BuildObjectTablesZipFilesData;
