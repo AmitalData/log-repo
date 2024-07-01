@@ -35,6 +35,7 @@ namespace WebFreight.Web.MetaDataUpdate.DetailClasses
         public bool IsAutoComplete { get; set; }
         public string SortingByObjectField { get; set; }
         public string DBTableName { get; set; }
+        public string DBTableShortName { get; set; }
         public bool InActive { get; set; }
         public string SearchFields { get; set; }
         public string DescriptionDefaultText { get; set; }

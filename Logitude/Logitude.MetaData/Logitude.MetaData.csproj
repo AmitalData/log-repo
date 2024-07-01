@@ -108,6 +108,10 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <AdditionalFiles Include="..\AmitalDependencyDiagram\DependencyValidation1.layerdiagram">
+      <Link>DependencyValidation1.layerdiagram</Link>
+      <Visible>False</Visible>
+    </AdditionalFiles>
     <None Include="DBOthers\CommonDataModel\Procedures\usp_DeletePerformanceLogs.dxml" />
     <None Include="DBOthers\CommonDataModel\Procedures\usp_DeleteMobileNotificationLogs.dxml" />
     <None Include="DBOthers\CommonDataModel\Views\AllActiveGLAccountsView.dxml" />
@@ -144,7 +148,6 @@
     <None Include="DBScripts\CommonModel\202304051240_MarkDuplicatedDocumentsAsDeletedCloudIgnore.Ignoresxml" />
     <None Include="DBScripts\CommonModel\202304051240_MarkDuplicatedDocumentsAsDeletedLogboxIgnore.Ignoresxml" />
     <None Include="DBScripts\CommonModel\202307021535_FillCargoTrackingInvitationFromSharedLogistics.sxml" />
-    <None Include="DBScripts\CommonModel\202403201211_UpdateSendingInterestReportinDefult.sxml" />
     <None Include="DBScripts\CommonModel\202308031135_FillEORInumberCardFromCustomer.sxml" />
     <None Include="DBScripts\CommonModel\FillCodeForCustomerSizes.sxml" />
     <None Include="DBScripts\CommonModel\FillTenantManagmentArchiveShipmentFilters.sxml" />
@@ -194,6 +197,7 @@
     <None Include="DBScripts\CommonModel\202208071040_FillCustomerGroupOnCardLevel.sxml" />
     <None Include="DBScripts\GlobalModel\AddStarWorkflowInstanceRetryWorkerBatchService.sxml" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -322,6 +326,7 @@
     <None Include="DBTables\ShipmentsModel\ContainerTrackingRequest.dxml" />
     <None Include="DBTables\ShipmentsModel\ContainerTrackingResponse.dxml" />
     <None Include="DBTables\ShipmentsModel\OceanInsightsStatusLog.dxml" />
+    <None Include="DBTables\ShipmentsModel\ReferenceType.dxml" />
     <None Include="DBTables\ShipmentsModel\ShipmentAnalytic.dxml" />
     <None Include="DBTables\ShipmentsModel\ShipmentDigitalField.dxml" />
     <None Include="DBTables\ShipmentsModel\ShipmentReferance.dxml" />
@@ -405,7 +410,6 @@
     <None Include="DBOthers\InfrastructureModel\Procedures\usp_ChangeTenantLocalCurrency_APPayments.dxml" />
     <None Include="DBOthers\InfrastructureModel\Procedures\usp_ChangeTenantLocalCurrency_ARInvoices.dxml" />
     <None Include="DBOthers\InfrastructureModel\Procedures\usp_ChangeTenantLocalCurrency_ARPayments.dxml" />
-    <None Include="DBOthers\InfrastructureModel\Procedures\usp_ChangeTenantLocalCurrency_Quotes.dxml" />
     <None Include="DBOthers\InfrastructureModel\Procedures\usp_ChangeTenantLocalCurrency_Shipments.dxml" />
     <None Include="DBOthers\InfrastructureModel\Procedures\usp_ChangeTenantProfitCurrency.dxml" />
     <None Include="DBOthers\InvoiceModel\Triggers\TriggerOnCreate_AutomaticLastUpdateDateAPInvoiceStatus.dxml" />
@@ -519,9 +523,7 @@
     <None Include="DBOthers\CommonDataModel\Triggers\Trigger_AutomaticLastUpdateDateVessels.dxml" />
     <None Include="DBScripts\CommonModel\202011190832_UpdateEORInumberInCustomerToField1Value.sxml" />
     <None Include="DBScripts\CommonModel\202012080421_UpdatePortsSearchFields.sxml" />
-    <None Include="DBScripts\CommonModel\202012080423_FillAirLineCardSearchData.sxml" />
     <None Include="DBScripts\CommonModel\202012080427_PreparerUpdateCardSearchData.sxml" />
-    <None Include="DBScripts\CommonModel\202012080440_FillContactCardSearchData.sxml" />
     <None Include="DBScripts\CommonModel\202012100811_QueryExportExecutionLogWorkerRole.asxml" />
     <None Include="DBScripts\CommonModel\202012211256_AddNewPickupDeliveryEventTypesToShipment.sxml" />
     <None Include="DBScripts\CommonModel\202012301040_UpdateChargeGroupById.sxml" />
@@ -760,7 +762,6 @@
     <None Include="DBScripts\ShipmentModel\202211010335_UpdateAutomaticLastUpdateDateOnContainerStatuses.sxml" />
     <None Include="DBScripts\ShipmentModel\202122031108_UpdateFollowUpForwardingEvents.sxml" />
     <None Include="DBScripts\ShipmentModel\202201031148_FillProratedAmountTable.soxml" />
-    <None Include="DBScripts\ShipmentModel\DeleteShipmentAssginedtoCustomsAgentId.sxml" />
     <None Include="DBScripts\ShipmentModel\FillAccountingClosedByUserInShipmentComputedFields.sxml" />
     <None Include="DBScripts\ShipmentModel\UpdateAutomaticLastUpdateDateOnContainer.sxml" />
     <Content Include="DBScripts\ShipmentModel\UpdateshipmentsCalculateDocumentsKPIFields.txt" />
@@ -958,6 +959,7 @@
     <None Include="DBTables\CommonDataModel\ShippingLine.dxml" />
     <None Include="DBTables\CommonDataModel\SmallDocument.dxml" />
     <None Include="DBTables\CommonDataModel\State.dxml" />
+    <None Include="DBTables\CommonDataModel\SyncRecord.dxml" />
     <None Include="DBTables\CommonDataModel\TariffCarrierTranslation.dxml" />
     <None Include="DBTables\CommonDataModel\TarrifCharge.dxml" />
     <None Include="DBTables\CommonDataModel\TarrifFromTo.dxml" />
@@ -1848,6 +1850,7 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="EntityFiles\ShipmentsModel\PickUpDeliveryTransportMode.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\ReferenceType.lxml" />
     <None Include="EntityFiles\ShipmentsModel\Shipment.lxml">
       <SubType>Designer</SubType>
     </None>
@@ -1894,6 +1897,10 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\packages\Microsoft.DependencyValidation.Analyzers.0.11.0\analyzers\dotnet\cs\Microsoft.DependencyValidation.Analyzers.resources.dll" />
+    <Analyzer Include="..\packages\Microsoft.DependencyValidation.Analyzers.0.11.0\analyzers\dotnet\Microsoft.DependencyValidation.Analyzers.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

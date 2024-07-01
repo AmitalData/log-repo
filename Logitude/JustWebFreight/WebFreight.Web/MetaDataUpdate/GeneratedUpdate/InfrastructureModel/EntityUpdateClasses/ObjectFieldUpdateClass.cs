@@ -74,15 +74,12 @@ using Logitude.TariffModule.BL.CLoseTable;
 using Logitude.CargoTracking.Data.Repositories;
 using Logitude.CargoTracking.BL;
 using Logitude.CargoTracking.Data.EntityPOCOs;
-
 using Logitude.Workflow.Data.Repositories;
 using Logitude.Workflow.Data.EntityPOCOs;
 using Logitude.Workflow.BL.CLoseTable;
 using Logitude.DashboardModule.Data.Repositories;
 using Logitude.DashboardModule.Data.EntityPOCOs;
 using Logitude.DashboardModule.BL;
-//using Amital.QuoteOPM.BL.CLoseTable;
-
 
 
 
@@ -91,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class ObjectFieldUpdateClass
    {  		
-		public const string HashString = "f7f7f2ea48d7e55791f4ab6a626b798e";
+		public const string HashString = "f628526a243c055977fe75cd497b4dd7";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -135,8 +132,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Object Field",
-
-			      				    Code =  "7a0c",
+			      				    Code =  "2f57",
 			      				    Name =  "ObjectField",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Infrastructure",
@@ -2290,6 +2286,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "DisplayInSearchWindowFiltersIndex",
+					  						ShortName =  "SearchWindowFiltersIndex",
 					  						ObjectTableName =  "ObjectField",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -2327,7 +2324,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-
 					  						FullFieldLable =  "DisplayInSearchWindowFiltersIndex",
 					  						DefaultText =  "DisplayInSearchWindowFiltersIndex",
 					  						FullLocalDefaultText =  "DisplayInSearchWindowFiltersIndex",
@@ -4281,6 +4277,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			   {
 					 
 					 						FieldName =  "AllowedInCustomerFieldsSettings",
+					  						ShortName =  "AllowedInCustFieldsSettings",
 					  						ObjectTableName =  "ObjectField",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -4318,7 +4315,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-
 					  						FullFieldLable =  "AllowedInCustomerFieldsSettings",
 					  						DefaultText =  "AllowedInCustomerFieldsSettings",
 					  						FullLocalDefaultText =  "AllowedInCustomerFieldsSettings",
@@ -8264,11 +8260,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "DisplayInRequiredFields",
 					  						ListPropertyPath =  "DisplayInRequiredFields",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -8286,7 +8284,68 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DisplayInRequiredFields",
 					  						DefaultText =  "DisplayInRequiredFields",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "ShortName",
+					  						ObjectTableName =  "ObjectField",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  30,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "ShortName",
+					  						ListPropertyPath =  "ShortName",
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "ShortName",
+					  						DefaultText =  "Short Name",
+					  						FullLocalDefaultText =  "Short Name",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  true,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,

@@ -1,9 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\packages\EntityFramework.6.5.1\build\EntityFramework.props" Condition="Exists('..\..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" />
   <Import Project="..\..\packages\xunit.runner.console.2.8.1\build\xunit.runner.console.props" Condition="Exists('..\..\packages\xunit.runner.console.2.8.1\build\xunit.runner.console.props')" />
   <Import Project="..\..\packages\SixLabors.ImageSharp.3.1.4\build\SixLabors.ImageSharp.props" Condition="Exists('..\..\packages\SixLabors.ImageSharp.3.1.4\build\SixLabors.ImageSharp.props')" />
-  <Import Project="..\..\packages\Microsoft.Net.Compilers.4.2.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\..\packages\Microsoft.Net.Compilers.4.2.0\build\Microsoft.Net.Compilers.props')" />
-  <Import Project="..\..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -101,14 +100,14 @@
     <Reference Include="BouncyCastle.Cryptography, Version=2.0.0.0, Culture=neutral, PublicKeyToken=072edcf4a5328938, processorArchitecture=MSIL">
       <HintPath>..\..\packages\BouncyCastle.Cryptography.2.4.0\lib\net461\BouncyCastle.Cryptography.dll</HintPath>
     </Reference>
-    <Reference Include="Devart.Data, Version=6.0.20.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Devart.Data.6.0.20\lib\netstandard2.0\Devart.Data.dll</HintPath>
+    <Reference Include="Devart.Data, Version=6.0.21.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Devart.Data.6.0.21\lib\netstandard2.0\Devart.Data.dll</HintPath>
     </Reference>
-    <Reference Include="Devart.Data.Linq, Version=4.8.1590.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Devart.Data.Linq.5.1.20\lib\netstandard2.0\Devart.Data.Linq.dll</HintPath>
+    <Reference Include="Devart.Data.Linq, Version=5.1.21.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Devart.Data.Linq.5.1.21\lib\netstandard2.0\Devart.Data.Linq.dll</HintPath>
     </Reference>
-    <Reference Include="Devart.Data.Oracle, Version=10.3.20.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Devart.Data.Oracle.10.3.20\lib\netstandard2.0\Devart.Data.Oracle.dll</HintPath>
+    <Reference Include="Devart.Data.Oracle, Version=10.3.21.0, Culture=neutral, PublicKeyToken=09af7300eec23701, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Devart.Data.Oracle.10.3.21\lib\netstandard2.0\Devart.Data.Oracle.dll</HintPath>
     </Reference>
     <Reference Include="DevDefined.OAuth">
       <HintPath>..\..\packages\DevDefined.OAuth.0.2\lib\DevDefined.OAuth.dll</HintPath>
@@ -120,10 +119,10 @@
       <HintPath>..\..\packages\EAGetMail.5.3.5\lib\net472\EAGetMail.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Enums.NET, Version=5.0.0.0, Culture=neutral, PublicKeyToken=7ea1c1650d506225, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Enums.NET.5.0.0\lib\net461\Enums.NET.dll</HintPath>
@@ -550,6 +549,9 @@
     <Reference Include="Newtonsoft.Json.Bson, Version=1.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Newtonsoft.Json.Bson.1.0.2\lib\net45\Newtonsoft.Json.Bson.dll</HintPath>
     </Reference>
+    <Reference Include="NLog, Version=5.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NLog.5.3.2\lib\net46\NLog.dll</HintPath>
+    </Reference>
     <Reference Include="NPOI.Core, Version=2.7.0.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
       <HintPath>..\..\packages\NPOI.2.7.0\lib\net472\NPOI.Core.dll</HintPath>
     </Reference>
@@ -718,11 +720,6 @@
     <Reference Include="System.IdentityModel.Tokens.Jwt, Version=7.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.IdentityModel.Tokens.Jwt.7.6.0\lib\net472\System.IdentityModel.Tokens.Jwt.dll</HintPath>
     </Reference>
-    <Reference Include="System.IO, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\System.IO.4.1.0\lib\net462\System.IO.dll</HintPath>
-      <Private>True</Private>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System.IO.Compression, Version=4.1.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.IO.Compression.4.3.0\lib\net46\System.IO.Compression.dll</HintPath>
       <Private>True</Private>
@@ -801,9 +798,6 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Numerics" />
-    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
-    </Reference>
     <Reference Include="System.Numerics" />
     <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
@@ -1047,7 +1041,7 @@
     <Compile Include="Controllers\AccountingModel\APInvoiceStatusUpdateController.cs" />
     <Compile Include="Controllers\AccountingModel\GLAccountMultiToCurrencyController.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\NUnicloudViewsController.Generated.cs" />
-    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ReferenceTypeViewsController.Generated.cs" />
+    <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\ReferenceTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\HybridModel\DocumentInController.cs" />
     <Compile Include="Controllers\InfrastructureModel\QueueMessagesViewsController.cs" />
     <Compile Include="Controllers\CommonDataModel\ApiHelpers\CardAPiHelper.cs" />
@@ -1118,7 +1112,9 @@
     <Compile Include="Controllers\Monitoring\MonitoringController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Extended\ContainersController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\AWBAdditionalHandlingInfoViewsController.Generated.cs" />
+    <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\ShipmentReferanceViewsController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\PMControllers\AWBAdditionalHandlingInfoController.Generated.cs" />
+    <Compile Include="Controllers\ShipmentsModel\Generated\PMControllers\ShipmentReferanceController.Generated.cs" />
     <Compile Include="Controllers\Texas\TaxesController.cs" />
     <Compile Include="Controllers\WebServices\SatisfactionSurveyController.cs" />
     <Compile Include="Controllers\WebServices\WindWardWebServiceController.cs" />
@@ -4377,7 +4373,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ReferantTeamUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ReferenceInputTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ReferenceStatusUpdateClass.cs" />
-    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ReferenceTypeUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\ShipmentsModel\EntityUpdateClasses\ReferenceTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\RefundCustomerActivityTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\RegularityPublicationUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\RegularityRequirementWarningUpdateClass.cs" />
@@ -4832,6 +4828,10 @@
     <Content Include="newrelic.cmd">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <AdditionalFiles Include="..\..\AmitalDependencyDiagram\DependencyValidation1.layerdiagram">
+      <Link>DependencyValidation1.layerdiagram</Link>
+      <Visible>False</Visible>
+    </AdditionalFiles>
     <None Include="Properties\PublishProfiles\Customs.pubxml" />
     <None Include="Properties\PublishProfiles\CustomsNewProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FeatureBranchPub.pubxml" />
@@ -4874,6 +4874,7 @@
     <Content Include="Monitoring\StorageBackup.aspx" />
     <Content Include="Monitoring\WebHookCommunicationMonitoring.aspx" />
     <Content Include="QuickbooksOnlineAuth2.aspx" />
+    <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\webfreight.web.dll.licenses" />
     <Content Include="readme.txt" />
     <Content Include="ReportsWebServices\APInvoiceWebService.asmx" />
@@ -8910,6 +8911,10 @@
   <ItemGroup>
     <Compile Include="Controllers\CustomsModel\Extended\ExceptionReasonController.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\..\packages\Microsoft.DependencyValidation.Analyzers.0.11.0\analyzers\dotnet\cs\Microsoft.DependencyValidation.Analyzers.resources.dll" />
+    <Analyzer Include="..\..\packages\Microsoft.DependencyValidation.Analyzers.0.11.0\analyzers\dotnet\Microsoft.DependencyValidation.Analyzers.dll" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
@@ -8959,9 +8964,6 @@
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
-    <Error Condition="!Exists('..\..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
-    <Error Condition="!Exists('..\..\packages\Microsoft.Net.Compilers.4.2.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.Net.Compilers.4.2.0\build\Microsoft.Net.Compilers.props'))" />
     <Error Condition="!Exists('..\..\packages\Microsoft.ApplicationInsights.DependencyCollector.2.22.0\build\Microsoft.ApplicationInsights.DependencyCollector.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.ApplicationInsights.DependencyCollector.2.22.0\build\Microsoft.ApplicationInsights.DependencyCollector.targets'))" />
     <Error Condition="!Exists('..\..\packages\Microsoft.ApplicationInsights.PerfCounterCollector.2.22.0\build\Microsoft.ApplicationInsights.PerfCounterCollector.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.ApplicationInsights.PerfCounterCollector.2.22.0\build\Microsoft.ApplicationInsights.PerfCounterCollector.targets'))" />
     <Error Condition="!Exists('..\..\packages\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.2.22.0\build\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.2.22.0\build\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.targets'))" />
@@ -8971,8 +8973,9 @@
     <Error Condition="!Exists('..\..\packages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets'))" />
     <Error Condition="!Exists('..\..\packages\SixLabors.ImageSharp.3.1.4\build\SixLabors.ImageSharp.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\SixLabors.ImageSharp.3.1.4\build\SixLabors.ImageSharp.props'))" />
     <Error Condition="!Exists('..\..\packages\xunit.runner.console.2.8.1\build\xunit.runner.console.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\xunit.runner.console.2.8.1\build\xunit.runner.console.props'))" />
+    <Error Condition="!Exists('..\..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\EntityFramework.6.5.1\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\EntityFramework.6.5.1\build\EntityFramework.targets'))" />
   </Target>
-  <Import Project="..\..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
   <Import Project="..\..\packages\Microsoft.ApplicationInsights.DependencyCollector.2.22.0\build\Microsoft.ApplicationInsights.DependencyCollector.targets" Condition="Exists('..\..\packages\Microsoft.ApplicationInsights.DependencyCollector.2.22.0\build\Microsoft.ApplicationInsights.DependencyCollector.targets')" />
   <Import Project="..\..\packages\Microsoft.ApplicationInsights.PerfCounterCollector.2.22.0\build\Microsoft.ApplicationInsights.PerfCounterCollector.targets" Condition="Exists('..\..\packages\Microsoft.ApplicationInsights.PerfCounterCollector.2.22.0\build\Microsoft.ApplicationInsights.PerfCounterCollector.targets')" />
   <Import Project="..\..\packages\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.2.22.0\build\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.targets" Condition="Exists('..\..\packages\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.2.22.0\build\Microsoft.ApplicationInsights.WindowsServer.TelemetryChannel.targets')" />
@@ -8980,6 +8983,7 @@
   <Import Project="..\..\packages\Microsoft.ApplicationInsights.Web.2.22.0\build\Microsoft.ApplicationInsights.Web.targets" Condition="Exists('..\..\packages\Microsoft.ApplicationInsights.Web.2.22.0\build\Microsoft.ApplicationInsights.Web.targets')" />
   <Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets" Condition="Exists('..\..\packages\Microsoft.Bcl.Build.1.0.21\build\Microsoft.Bcl.Build.targets')" />
   <Import Project="..\..\packages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets" Condition="Exists('..\..\packages\NETStandard.Library.2.0.3\build\netstandard2.0\NETStandard.Library.targets')" />
+  <Import Project="..\..\packages\EntityFramework.6.5.1\build\EntityFramework.targets" Condition="Exists('..\..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" />
   <!--<Import Project="..\..\packages\Microsoft.Bcl.Build.1.0.4\tools\Microsoft.Bcl.Build.targets" />-->
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

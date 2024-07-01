@@ -60,6 +60,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DashboardClassesGenerator.tt</DependentUpon>
     </Compile>
+    <AdditionalFiles Include="..\AmitalDependencyDiagram\DependencyValidation1.layerdiagram">
+      <Link>DependencyValidation1.layerdiagram</Link>
+      <Visible>False</Visible>
+    </AdditionalFiles>
     <None Include="AnalyticsEntityFiles\APInvoiceAnalytic.ljson" />
     <None Include="AnalyticsEntityFiles\ARInvoiceAnalytic.ljson" />
     <None Include="AnalyticsEntityFiles\ContainerAnalytic.ljson" />
@@ -137,6 +141,10 @@
     <None Include="EntityFiles\Widget.lxml" />
     <None Include="EntityFiles\WidgetMeasure.lxml" />
     <None Include="EntityFiles\WidgetType.lxml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\packages\Microsoft.DependencyValidation.Analyzers.0.11.0\analyzers\dotnet\cs\Microsoft.DependencyValidation.Analyzers.resources.dll" />
+    <Analyzer Include="..\packages\Microsoft.DependencyValidation.Analyzers.0.11.0\analyzers\dotnet\Microsoft.DependencyValidation.Analyzers.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

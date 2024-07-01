@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class PaymentOrderUpdateClass
    {  		
-		public const string HashString = "3f0dbfd9f928c95fd8d7e46c6c36a92b";
+		public const string HashString = "7ff31800064359846f5e26ed83657824";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -103,6 +103,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    AvailableInCustomization =  true,
+			      				    SupportSubEntity =  false,
+			      				    ApplyGenericCustomFields =  false,
+			      				    AvailableInDocumentTypes =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasFiltersMenu =  false,
@@ -3451,7 +3454,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList(); 
 		   ObjectTable PaymentOrderObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.PaymentOrder" && d.Tenant == 0).FirstOrDefault();       
     
-			   Feature PaymentOrderFeature_MB0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MOREPAYMENTORDER", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.PaymentOrder.Features.MorePaymnetOrder", NameTextCodeDefaultText = "More", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,PaymentOrderObjectTable);
+			   Feature PaymentOrderFeature_MB0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MOREPAYMENTORDER", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.PaymentOrder.Features.MorePaymnetOrder", NameTextCodeDefaultText = "More", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,PaymentOrderObjectTable);
 
 			   Feature PaymentOrderFeature_MB00 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CLOSEPAYMENTORDER", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.PaymentOrder.Features.ClosePaymnetOrder", NameTextCodeDefaultText = "Close Payment Order", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,PaymentOrderObjectTable);
              			   Feature PaymentOrderFeature_MB01 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UNCLOSEPAYMENTORDER", ObjectTableId = PaymentOrderObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.PaymentOrder.Features.UnClosePaymnetOrder", NameTextCodeDefaultText = "UnClose Payment Order", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,PaymentOrderObjectTable);

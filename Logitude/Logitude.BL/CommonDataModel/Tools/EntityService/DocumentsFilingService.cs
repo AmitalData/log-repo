@@ -1041,11 +1041,10 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
             AddImporterQueue(theEntityPm, tenantPM, HavingDREL);
-            //UpdateCustomsDocumentMetaDataValuesCollection();
-            new ShipmentOrderDocumentsQueueService().Build(theEntityPm);
+             new ShipmentOrderDocumentsQueueService().Build(theEntityPm);
 
 
-            if (entityPM.IsUpdateSharedDocument)
+             if (entityPM.IsUpdateSharedDocument)
             {
                 IQueueService queueservice = new DbQueueService();
                 queueservice.InitializeQueue("ResharedAgentDocumentQueue", tenant);
@@ -1789,6 +1788,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             if (documentsFilingMetaDataValueChangeSet != null)
             {
              
+
                 foreach (DocumentsFilingMetaDataValuePM itemPM in documentsFilingMetaDataValueChangeSet)
                 {
                     switch (itemPM.ChangeSetOp)

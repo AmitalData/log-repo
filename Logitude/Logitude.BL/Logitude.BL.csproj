@@ -1,8 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" />
   <Import Project="..\packages\librdkafka.redist.2.4.0\build\librdkafka.redist.props" Condition="Exists('..\packages\librdkafka.redist.2.4.0\build\librdkafka.redist.props')" />
-  <Import Project="..\packages\Microsoft.Net.Compilers.4.2.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.4.2.0\build\Microsoft.Net.Compilers.props')" />
-  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -64,10 +63,10 @@
       <HintPath>..\packages\Confluent.Kafka.2.4.0\lib\net462\Confluent.Kafka.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="evohtmltopdf, Version=10.0.0.0, Culture=neutral, PublicKeyToken=e1fcbb86597de299, processorArchitecture=MSIL">
       <HintPath>..\packages\EvoHtmlToPdf_x64.10.0.0\lib\net40\evohtmltopdf.dll</HintPath>
@@ -896,6 +895,7 @@
     <Compile Include="InfrastructureModel\EntityQueries\QueueMessageQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\QuoteChargesGroupQuery.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\ReferenceCustomObjectQuery.cs" />
+    <Compile Include="ShipmentsModel\EntityQueries\ReferenceTypeListQueryService.cs" />
     <Compile Include="InfrastructureModel\EntityQueries\ScreenSectionQuery.cs" />
     <Compile Include="InfrastructureModel\Services\CustomChildEntityService.cs" />
     <Compile Include="InfrastructureModel\EntityLists\DefaultAndConfigurationList.cs" />
@@ -1083,11 +1083,20 @@
     <Compile Include="ShipmentsModel\APIDataContract\GeneralContainerTrackingArgs.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\Shipments.cs" />
     <Compile Include="ShipmentsModel\APIDataContract\VizionModels.cs" />
+    <Compile Include="ShipmentsModel\CloseTables\DetailsClassesGenerated\ReferenceTypeDetails.Generated.cs" />
     <Compile Include="ShipmentsModel\CustomFilters\DigitalPortalCustomFilter.cs" />
+    <Compile Include="ShipmentsModel\EntityLists\ReferenceTypeList.cs" />
+    <Compile Include="ShipmentsModel\EntityLists\ShipmentReferanceList.cs" />
     <Compile Include="ShipmentsModel\EntityOtherServices\ContainerShipmentUpdateService.cs" />
     <Compile Include="ShipmentsModel\EntityPMs\OceanInsightsStatusLogPM.cs" />
+    <Compile Include="ShipmentsModel\EntityPMs\ReferenceTypePM.cs" />
+    <Compile Include="ShipmentsModel\EntityPMs\ShipmentReferancePM.cs" />
+    <Compile Include="ShipmentsModel\EntityQueries\ReferenceTypeQueryService.cs" />
+    <Compile Include="ShipmentsModel\EntityQueries\ShipmentReferanceQuery.cs" />
     <Compile Include="ShipmentsModel\Tools\DataMapping\OceanInsightsStatusLogMapping.cs" />
+    <Compile Include="ShipmentsModel\Tools\DataMapping\ShipmentMapping.ShipmentReferance.cs" />
     <Compile Include="ShipmentsModel\Tools\EntityService\OceanInsightsStatusLogService.cs" />
+    <Compile Include="ShipmentsModel\Tools\EntityService\ShipmentReferanceService.cs" />
     <Compile Include="ShipmentsModel\Tools\ExternalService\ShipmentAdditionalDataService.cs" />
     <Compile Include="ShipmentsModel\EntityLists\DigitalShipmentList.cs" />
     <Compile Include="ShipmentsModel\EntityLists\ShipmentDigitalFieldList.cs" />
@@ -3605,6 +3614,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <AdditionalFiles Include="..\AmitalDependencyDiagram\DependencyValidation1.layerdiagram">
+      <Link>DependencyValidation1.layerdiagram</Link>
+      <Visible>False</Visible>
+    </AdditionalFiles>
     <None Include="Nlog.config" />
     <None Include="packages.config">
       <SubType>Designer</SubType>
@@ -3618,12 +3631,15 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ICSharpDLL\ICSharpCode.SharpZipLib.dll" />
-    <Content Include="readme.txt" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\packages\Microsoft.DependencyValidation.Analyzers.0.11.0\analyzers\dotnet\cs\Microsoft.DependencyValidation.Analyzers.resources.dll" />
+    <Analyzer Include="..\packages\Microsoft.DependencyValidation.Analyzers.0.11.0\analyzers\dotnet\Microsoft.DependencyValidation.Analyzers.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
@@ -3632,12 +3648,11 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
-    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
-    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
-    <Error Condition="!Exists('..\packages\Microsoft.Net.Compilers.4.2.0\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Net.Compilers.4.2.0\build\Microsoft.Net.Compilers.props'))" />
     <Error Condition="!Exists('..\packages\librdkafka.redist.2.4.0\build\librdkafka.redist.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\librdkafka.redist.2.4.0\build\librdkafka.redist.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.targets'))" />
   </Target>
-  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
+  <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

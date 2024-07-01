@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentReferanceUpdateClass
    {  		
-		public const string HashString = "0f027daf42598efe45b65946115a4392";
+		public const string HashString = "1f027daf42598efe45b65946115a4392";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -100,7 +100,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    DBTableName =  "ShipmentReferances",
 			      				    ObjectTableSingular =  "ShipmentReferance",
 			      				    ObjectTablePlural =  "ShipmentReferances",
-			      				    HasCustomFilter =  true,
+			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    AvailableInCustomization =  false,
 			      				    SupportSubEntity =  false,
@@ -108,7 +108,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    AvailableInDocumentTypes =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
-			      				    HasFiltersMenu =  true,
+			      				    HasFiltersMenu =  false,
 			      				    IsEditable =  false,
 			      				    IsNewWizard =  false,
 			      				    KeyPropertyPath =  "ShipmentId",
@@ -136,8 +136,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 			      				    Code =  "f501",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
-			      				    ClientModuleName =  "ShipmentReferance",
-			      				    ServerModuleName =  "",
+			      				    ClientModuleName =  "Shipment",
+			      				    ServerModuleName = "Shipment",
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
 			      				    AllowedForComputingPartners =  false,
@@ -329,8 +329,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						ListFieldLable =  "LineNumberListLable",
 					  						ListLableDefaultText =  "Line Number",
 					  						ListLocalDefaultText =  "מס' שורה",
-					  						IsForeignKey =  false,
-					  						IsMaxLength =  false,
+					  						IsForeignKey =  true,
+										    ForeignEntity = "ReferenceType",
+										    NavigationPropertyName = "ReferenceTypeCode",
+										    IsMaxLength =  false,
 					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -371,7 +373,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "ReferenceType",
-					  						ListPropertyPath =  "ReferenceType",
+					  						ListPropertyPath = "ReferenceType",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -438,8 +440,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "PartnerId",
-					  						ListPropertyPath =  "PartnerId",
+					  						PMPropertyPath = "PartnerId",
+					  						ListPropertyPath = "PartnerId",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,

@@ -28,11 +28,11 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string DocumentTypeCode { get; set; }
 	      
         public virtual CustomDocumentType CustomDocumentType { get; set; }
-        [ForeignKey("CustomsTransportMode")]
+        [ForeignKey("TransportMode")]
         [Column("TransportationTypeCode")]
 	    public string TransportationTypeCode { get; set; }
 	      
-        public virtual CustomsTransportMode CustomsTransportMode { get; set; }
+        public virtual TransportMode TransportMode { get; set; }
         [ForeignKey("GovernmentProcedureType")]
         [Column("ProcessTypeCode")]
 	    public string ProcessTypeCode { get; set; }

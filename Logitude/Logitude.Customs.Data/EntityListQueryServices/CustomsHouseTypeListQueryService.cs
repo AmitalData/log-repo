@@ -46,7 +46,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
             IQueryable<CustomsHouseTypeList> query = (from a in iQueryable
 
-                                                      join d in context.CustomsHouseTypeAdditionals.Include("CustomsTransportMode").Include("UnloadingSiteType")
+                                                      join d in context.CustomsHouseTypeAdditionals.Include("TransportMode").Include("UnloadingSiteType")
                                                       on a.Code equals d.Code 
                                                       select new CustomsHouseTypeList()
                                                       {
@@ -58,7 +58,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                           UnloadPortCode = d.UnloadPortCode,
                                                           UnloadPortName = d.UnloadingSiteType != null ? d.UnloadingSiteType.LocalName : null,
                                                           TransportModeId = d.TransportModeId,
-                                                          TransportModeName = d.CustomsTransportMode != null ? d.CustomsTransportMode.LocalName : null,
+                                                          TransportModeName = d.TransportMode != null ? d.TransportMode.LocalName : null,
                                                       });
             return query;
 		}
