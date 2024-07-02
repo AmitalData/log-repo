@@ -20,6 +20,9 @@ using System.Data.SqlClient;
 using Simplog.Data.Helpers;
 using System.Data;
 using Simplog.Data.CommonDataModel;
+using Newtonsoft.Json.Linq;
+using Simplog.Data.CommonDataModel.Mapping;
+using Logitude.BL.Resolvers;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -121,54 +124,70 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             {
                 //this.UpdateBankAccount(entityPM);
             }
- 
+
             base.OnUpdating(entityPM, entityPOCO);
         }
 
         public void DelSertOpenRecilationDrafts(List<LedgerTransactionPM> OpenRecilationDrafts)
         {
 
-            string gLAccountId; int tenant ;
-            var pairs=OpenRecilationDrafts.GroupBy(r => new { r.AccountId, r.Tenant });
-                var pairsCount = pairs.Count();
-                if (pairsCount > 1)
-                {
-                    throw new ApplicationException("only one combination allowed Of {AccountId +Tenant }");
-                }
-                if (pairsCount == 0)
-                {
-                    //to delete 
-                    throw new ApplicationException("only one combination allowed Of {AccountId +Tenant } (pairsCount == 0) ==>No Items On Match List,To Delete ? ");
-                }
-            
-            var repeateTrans= OpenRecilationDrafts.GroupBy(r => r.Id).Where( g=> g.Count()>1).Select( g=>g.Key).ToList();
-            if (repeateTrans.Count>0)
+            string gLAccountId; int tenant;
+            var pairs = OpenRecilationDrafts.GroupBy(r => new { r.AccountId, r.Tenant });
+            var pairsCount = pairs.Count();
+            if (pairsCount > 1)
             {
-                throw new ApplicationException("Client Side should send send Unique Id List :" + string.Join(",",repeateTrans.ToArray()));
+                throw new ApplicationException("only one combination allowed Of {AccountId +Tenant }");
             }
-  
-            gLAccountId =pairs.First().Key.AccountId;
-            tenant=pairs.First().Key.Tenant;
+            if (pairsCount == 0)
+            {
+                //to delete 
+                throw new ApplicationException("only one combination allowed Of {AccountId +Tenant } (pairsCount == 0) ==>No Items On Match List,To Delete ? ");
+            }
+
+            var repeateTrans = OpenRecilationDrafts.GroupBy(r => r.Id).Where(g => g.Count() > 1).Select(g => g.Key).ToList();
+            if (repeateTrans.Count > 0)
+            {
+                throw new ApplicationException("Client Side should send send Unique Id List :" + string.Join(",", repeateTrans.ToArray()));
+            }
+
+            gLAccountId = pairs.First().Key.AccountId;
+            tenant = pairs.First().Key.Tenant;
 
             using (var scope = TransactionFactory.GetTransaction())
             {
                 (this.Repository as LedgerTransactionRepository).ResetDraftOpenReconciliation(gLAccountId, tenant);
 
-                var transIdList=OpenRecilationDrafts.Select(r => r.Id).ToList();
+                var transIdList = OpenRecilationDrafts.Select(r => r.Id).ToList();
                 LedgerTransactionQueryService qs = new LedgerTransactionQueryService((MainContext as IAccountingContext));
-                var listPM=qs.GetLedgerTransactionPMsByIdList(transIdList, tenant);
+                List<string> isReconciledReferences = new List<string>();
+                var listPM = qs.GetLedgerTransactionPMsByIdList(transIdList, tenant);
+                bool isValid = true;
                 foreach (var pm in listPM)
                 {
-                    if (pm.IsReconciled)
+                    var draft = OpenRecilationDrafts.First(r => r.Id == pm.Id);
+                    if (pm.IsReconciled || pm.OpenAmount != draft.OpenAmount)
                     {
-                        throw new ApplicationException("DelSertOpenRecilationDrafts but pm.IsReconciled " + pm.Id);
+                        isValid = false;
+                        isReconciledReferences.Add(pm.Reference1);
                     }
-                    pm.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
-                    pm.AmountToReconcile = OpenRecilationDrafts.First(r => r.Id == pm.Id).AmountToReconcile;
-                    pm.Mark = true;
+                    else
+                    {
+                        pm.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                        pm.AmountToReconcile = OpenRecilationDrafts.First(r => r.Id == pm.Id).AmountToReconcile;
+                        pm.Mark = true;
+                    }
                 }
-                this.UpdateMulti(listPM, new List<LedgerTransactionPM>(), new EntityPM(), true);
-                scope.Complete();
+                if (isValid)
+                {
+                    this.UpdateMulti(listPM, new List<LedgerTransactionPM>(), new EntityPM(), true);
+                    scope.Complete();
+                }
+                else
+                {
+                    var showLocals = LoggedContactResolver.GetLoggedContactShowLocal(tenant);
+                    var msg = TranslateTextsClass.Translate("LedgerTransaction.O.ReconciledInDraft", tenant, showLocals);
+                    throw new ApplicationException(msg + Environment.NewLine + string.Join(Environment.NewLine, isReconciledReferences));
+                }
             }
         }
         internal void UpdateBankAccount(LedgerTransactionPM entityPM)
@@ -182,7 +201,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 if (entityPM.IsExternalReconcile)
                 {
                     Int32.TryParse(bankAccount.TotalOpenExternalTransactions, out totalOpenExternalTransactions);
-                    if(totalOpenExternalTransactions > 0)
+                    if (totalOpenExternalTransactions > 0)
                     {
                         totalOpenExternalTransactions--;
                     }
@@ -211,7 +230,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 connection.Open();
                 using (SqlCommand command = connection.CreateCommand())
                 {
-                    command.CommandText = 
+                    command.CommandText =
                         "UPDATE LedgerTransactions SET InReconcileProgress= @Value_inReconcileProgress " +
                         "WHERE ID IN (" +
                         "    SELECT  LedgerTransactionId  from JournalReconciles " +
@@ -221,7 +240,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     command.CommandType = CommandType.Text;
 
                     command.Parameters.Add("@Value_inReconcileProgress", SqlDbType.Int);
-                    command.Parameters["@Value_inReconcileProgress"].Value= Value_inReconcileProgress;
+                    command.Parameters["@Value_inReconcileProgress"].Value = Value_inReconcileProgress;
 
                     command.Parameters.Add("@tenant", SqlDbType.Int);
                     command.Parameters["@tenant"].Value = tenant;
@@ -231,7 +250,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
 
                     int rows = command.ExecuteNonQuery();
-                    return rows ;
+                    return rows;
                 }
             }
         }
@@ -270,7 +289,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
         }
 
-        public void UpdateInReconcileProgress(List<String> listTransactionId,int tenant,bool Value_inReconcileProgress)
+        public void UpdateInReconcileProgress(List<String> listTransactionId, int tenant, bool Value_inReconcileProgress)
         {
 
             //using (var scope = TransactionFactory.GetTransaction())//we alreary in a scope !!-but while straming we r in Serlazed TRans
@@ -327,13 +346,13 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         protected override void Trace(LedgerTransactionPM entityPM, LedgerTransaction entityPOCO, string changesXml)
         {
-            if(entityPM.IsExternalReconcile != entityPOCO.IsExternalReconcile)
+            if (entityPM.IsExternalReconcile != entityPOCO.IsExternalReconcile)
             {
                 ContactRepository contactRep = new ContactRepository(entityPM.Tenant);
                 string resolveLoggingUserId = AuthenticationUtil.ResolveUserIdentityName(entityPM.Tenant);
                 Contact contact = contactRep.GetSingleContactByEmail(resolveLoggingUserId, entityPM.Tenant);
                 bool showLocals = !contact.DontShowLocalLabels;
-                var eventNotes = string.Concat("Line No:  "+ entityPM.JournalLineNumber + ", Is Externally Reconciled changed: ", TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPM.Tenant, showLocals), entityPOCO.IsExternalReconcile, "\t", TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPM.Tenant, showLocals), entityPM.IsExternalReconcile, "\n");
+                var eventNotes = string.Concat("Line No:  " + entityPM.JournalLineNumber + ", Is Externally Reconciled changed: ", TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPM.Tenant, showLocals), entityPOCO.IsExternalReconcile, "\t", TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPM.Tenant, showLocals), entityPM.IsExternalReconcile, "\n");
 
                 EventTracer.CreateTraceEvent(new EventTracerArgs()
                 {
@@ -347,7 +366,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
                 });
             }
-            
+
         }
 
     }
