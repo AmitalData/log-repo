@@ -615,10 +615,10 @@ namespace WebFreight.Web.WcfApi
             return response;
         }
 
-        public Response UploadDocumentFileDataFromStorage(int tenant, string blobname, string DocumentId)
+        public Response UploadDocumentFileDataFromStorage(int tenant, string blobname, string DocumentId = null)
         {
             Response response = new Response();
-            if(string.IsNullOrEmpty(blobname) || string.IsNullOrEmpty(DocumentId))
+            if(string.IsNullOrEmpty(blobname))
                 return UpdateResponseException(response, new ArgumentException("blobname or DocumentId is null or empty"));
 
             SecurityUtility.AuthenticationOnTenant(tenant);

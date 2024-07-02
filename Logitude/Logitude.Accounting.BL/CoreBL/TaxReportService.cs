@@ -259,7 +259,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 if (transaction.AccountingEntity == AccountingEntityValues.APInvoice)
                 {
-                    var aPInvoice = allAPInvoices.Where(d => d.Id == transaction.AccountingEntityId).FirstOrDefault();
+					var aPInvoice = allAPInvoices.Where(d => d.Id == transaction.AccountingEntityId).FirstOrDefault();
 
                     if (aPInvoice != null)
                     {
