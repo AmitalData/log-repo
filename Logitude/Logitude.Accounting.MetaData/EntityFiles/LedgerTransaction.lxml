@@ -6528,6 +6528,12 @@
       LocalDefaultText="&quot;דווח המע&quot;מ&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;LedgerTransaction.O.ReconciledInDraft&quot;"
+      DefaultText="&quot;There are lines that have been reconciled, the references must be disconnected from the draft: &quot;"
+      LocalDefaultText="&quot;ישנם שורות שהותאמו ,יש לנתק את האסמכתאות מהטיוטה: &quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
