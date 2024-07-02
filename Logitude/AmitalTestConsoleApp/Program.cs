@@ -30,7 +30,7 @@ namespace AmitalTestConsoleApp
 
                 if (string.IsNullOrEmpty(key))
                 {
-                    var settingsList = Logitude.BL.Helpers.DefaultService.Instance.Get(tenantId);
+                    var settingsList = DefaultService.Instance.Get(tenantId);
 
                     if (settingsList != null && settingsList.Count > 0)
                     {

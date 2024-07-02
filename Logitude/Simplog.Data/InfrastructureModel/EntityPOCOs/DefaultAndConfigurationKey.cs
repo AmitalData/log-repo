@@ -12,13 +12,12 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
     {
         [Key, Column(Order = 0)]
         public int Tenant { get; set; }
-        public DateTime CreateDate { get; set; }
+        public DateTime CreateDate { get; set; }        
+        public string SetType1 { get; set; }
         [Key, Column(Order = 1)]
-        public string SetType { get; set; }
-        [Key, Column(Order = 2)]
         public string SetKey { get; set; }
         public string ShortDescription { get; set; }
         public string FullDesctiption { get; set; }
-
+        public string SetType2 { get; set; }
     }
 }
