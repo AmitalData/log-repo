@@ -697,5 +697,6 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public bool IsDocumentsNeedApprove { get; set; }
         public string ContainersNumbers { get; set; }
         public string ReferantUserId { get; set; }
+        public string IskaNumber { get; set; }
     }
 }

@@ -281,13 +281,6 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="IskaNumber"
-    Type="varchar"
-    Size="16">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="Vessel"
     Type="varchar"
     Size="15">

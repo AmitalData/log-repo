@@ -97,7 +97,6 @@ export class DeclarationReferantDataList {
 	IsCloseOrOpenFromUser: boolean;
 	ListCounter: number;
 	MawbDate: Date;
-	IskaNumber: string;
 	Vessel: string;
 	FlightVoyageNumber: string;
 	CarrierCode: string;

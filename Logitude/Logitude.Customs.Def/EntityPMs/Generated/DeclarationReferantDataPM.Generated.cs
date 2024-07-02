@@ -1193,29 +1193,6 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private string iskaNumber ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string IskaNumber  
-	   {
-	    
-	     get
-		{
-		   return iskaNumber;
-		 }
-		 set
-		 {
-		   if(iskaNumber != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IskaNumber",OldValue=iskaNumber,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   iskaNumber=value;
-		   }
-			
-		 }
-	   }
 	  private string vessel ;
 	  	  
        
