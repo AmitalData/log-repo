@@ -7,7 +7,8 @@ import { NgFor, NgForOf, NgIf } from '@angular/common';
 import { trigger, style, animate, transition } from '@angular/animations';
 //@ts-ignore
 import { mockData } from '../../../../../mock_data';
-import { API_MainService } from '../../../core/API_MainService';
+import { API_MainService, Filters } from '../../../core/API_MainService';
+import { filter } from 'rxjs';
 
 @Component({
 	selector: 'app-main-display',
@@ -52,10 +53,24 @@ export class MainDisplayComponent {
 		//this.data = this.orderedData(mockData);
 		// this.item = this.data[0];
 
-		
-		this.API_MainService.GetCustomsBookMainView(new Filters()).subscribe((data: any) => {
+		let filters: Filters = {
+			CustomsBookType: '1',
+			Tenant: 0,
+			SearchFields: ''
+		};
+
+		this.API_MainService.GetCustomsBookMainView(filters).subscribe((data: CB_CustomsItemComputedDataList[]) => {
 			this.data = this.orderedData(data);
 		});
+
+		// CHECK DATA:
+		this.API_MainService.GetCustomsBookAgreementLevelData(23066,6).subscribe((data: CB_TariffList[]) => {
+			console.log(data);
+		});
+		this.API_MainService.GetCustomsBookRegularityRequirementData(17514).subscribe((data: CBRequirementComputedDataListComponent[]) => {
+			console.log(data);
+		});
+	
 	}
 
 	ngOnChanges(changes: SimpleChanges) {
@@ -102,14 +117,14 @@ export class MainDisplayComponent {
 }
 
 
-export class Filters {
-	CustomsBookType: string = "1";
-	Tenant: number = 0;
-	SearchFields: string | null = null;
-	CustomsItemHierarchic: string | null = null;
-	Reamarks: boolean = false;
-	Rules: boolean = false;
-}
+// export class Filters {
+// 	CustomsBookType: string = "1";
+// 	Tenant: number = 0;
+// 	SearchFields: string | null = null;
+// 	CustomsItemHierarchic: string | null = null;
+// 	Reamarks: boolean = false;
+// 	Rules: boolean = false;
+// }
 
 export class CB_CustomsItemComputedDataList {
 	CB_ID: string;
@@ -141,7 +156,51 @@ export class CB_CustomsItemComputedDataList {
 	OptionalTaxAddition?: number;
 	MeasurementUnitName: string;
 	Remarks: string;
-  SearchByTextResult: string;
-
+  	SearchByTextResult: string;
 	children: CB_CustomsItemComputedDataList[];
 }
+
+export class CBRequirementComputedDataListComponent {
+	CB_ID: string;
+	ID: number;
+	RegularityRequirementID: number;
+	CountryID?: number;
+	CustomsItemID?: number;
+	StartDate: Date;
+	EndDate: Date;
+	RegularitySourceCodeID: string;
+	CreateDate?: Date;
+	InceptionCodeID: string;
+	RegularityPublicationCodeID: string;
+	AutonomyCustomsItemID?: number;
+	IsAllCustomsItems: boolean;
+	RequirementValidOrigin: string;
+	RequirementGoodsDescription: string;
+	Authority: string;
+	ConfirmationType: string;
+	InterConditionsRelationship: string;
+	TextualCondition: string;
+	IsPersonalImportIncluded?: boolean;
+	IsCarnetIncluded?: boolean;
+	FromEpisodeDetail: string;
+	AutonomyRegion: string;
+  }
+
+  export class CB_TariffList {
+	ID: number;
+	CreateDate: Date;
+	UpdateDate?: Date;
+	TradeAgreementID?: number;
+	CustomsItemID: number;
+	Title: string;
+	CB_ID: string;
+	Country: string;
+	CustomsRate: string;
+	CustomsRateWithinQuota: string;
+	QuotaID?: number;
+	MeasurementUnitName: string;
+	OptionalTaxAddition?: number;
+	StartDate?: Date;
+	EndDate?: Date;
+	TradeAgreementName: string;
+  }
