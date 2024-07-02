@@ -18,6 +18,7 @@ namespace Unifreight.Data.AmitalModel
 
         public static void ClearCacheLastSyncByPrimaryNum(string primaryNum, int? tenant)
         {
+            return;
             TryCatch(() =>
             {
                 if (tenant == null || !tenant.HasValue || primaryNum == null || !long.TryParse(primaryNum, out long lCUSTOMFILENO))
