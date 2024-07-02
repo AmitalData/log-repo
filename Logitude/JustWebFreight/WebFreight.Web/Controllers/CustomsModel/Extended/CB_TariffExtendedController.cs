@@ -41,8 +41,8 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
 
-                string loggedUserEmail = authToken.Email;
-                SecurityUtility.AuthenticationOnTenant(0);
+                //string loggedUserEmail = authToken.Email;
+                //SecurityUtility.AuthenticationOnTenant(0);
 
                 CB_TariffQueryService tariffQueryService = new CB_TariffQueryService(0);
                 List<CB_TariffList> result = tariffQueryService.GetCustomsBookAgreementLevelData(customsItemId, measurementUnitMalamId);
@@ -63,8 +63,8 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
 
-                string loggedUserEmail = authToken.Email;
-                SecurityUtility.AuthenticationOnTenant(0);
+                //string loggedUserEmail = authToken.Email;
+                //SecurityUtility.AuthenticationOnTenant(0);
 
                 CB_RequirementComputedDataQueryService requirementComputedDataQueryService = new CB_RequirementComputedDataQueryService(0);
                 List<CB_RequirementComputedDataList> result = requirementComputedDataQueryService.GetCustomsBookRegularityRequirementData(customsItemId);

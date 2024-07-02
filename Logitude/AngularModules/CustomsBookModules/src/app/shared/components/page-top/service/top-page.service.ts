@@ -41,7 +41,7 @@ export class Service {
 	}
 }
 
-enum SearchBy {
+export enum SearchBy {
 	'searchBy_form01' = 'חיפוש פרט מכס... ',
 	'pageSearch_form02' = 'חיפוש מילה/ צירוף מילים...',
 }

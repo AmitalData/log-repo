@@ -21,15 +21,15 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
     public class CB_CustomsItemExtendedController : ApiController
     {
 
-        public HttpResponseMessage GetCustomsBookMainView(Filters filters)
+        public HttpResponseMessage GetCustomsBookMainView(string customsBookType, int Tenant)
         {
             try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
-                if(filters == null)
-                {
-                    filters = new Filters();
-                }
+                Filters filters = new Filters();
+                filters.CustomsBookType = customsBookType;
+                filters.Tenant = Tenant;
+               
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
 
                 //string loggedUserEmail = authToken.Email;
