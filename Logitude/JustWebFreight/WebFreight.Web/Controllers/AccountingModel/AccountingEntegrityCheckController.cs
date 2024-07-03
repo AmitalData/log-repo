@@ -23,7 +23,6 @@ namespace WebFreight.Web.Controllers.AccountingModel
         {
             try
             {
-                //test vladi
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
