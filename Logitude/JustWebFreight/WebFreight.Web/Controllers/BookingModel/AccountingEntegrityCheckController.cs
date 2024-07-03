@@ -22,8 +22,8 @@ namespace WebFreight.Web.Controllers.AccountingModel
         public HttpResponseMessage PostFixEntegrityCheckErrorInBatch(AccountingIntegrityCheckPM entityPM)
         {
             try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
+            {//simon
+                string token = HttpContext.Current.Request.Headers["Token1"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.AuthenticationOnEntityTenant("AccountingIntegrityCheck", entityPM.Tenant, authToken.Tenant);
