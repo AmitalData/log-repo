@@ -2133,7 +2133,8 @@
     <Compile Include="CommonDataModel\DomainServices\CommonDataDomainService.CustomsShipper.cs" />
     <Compile Include="CommonDataModel\DomainServices\CommonDataDomainService.RegistryDateType.cs" />
     <Compile Include="CommonDataModel\DomainServices\CommonDataDomainService.TemperatureUnit.cs" />
-    <Compile Include="Controllers\AccountingModel\AccountingEntegrityCheckController.cs" />
+
+    <Compile Include="Controllers\BookingModel\AccountingEntegrityCheckController.cs" />
     <Compile Include="Controllers\AccountingModel\AccountingNoteController.cs" />
     <Compile Include="Controllers\AccountingModel\AccountingNoteViewsController.cs" />
     <Compile Include="Controllers\AccountingModel\AccountingOpController.cs" />
