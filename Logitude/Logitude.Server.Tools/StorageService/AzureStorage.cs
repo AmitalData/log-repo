@@ -13,7 +13,6 @@ using System.Threading.Tasks;
 using System.Net.Http;
 using Azure.Storage.Blobs.Specialized;
 using Logitude.Server.Tools.Utils;
-using System.Diagnostics;
 
 namespace Logitude.Server.Tools.StorageService
 {
