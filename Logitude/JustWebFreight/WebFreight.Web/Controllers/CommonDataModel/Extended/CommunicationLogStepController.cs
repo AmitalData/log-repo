@@ -87,10 +87,13 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
 
         private static void Authentication(int tenant)
         {
-            string token = HttpContext.Current.Request.Headers["Token"];
-            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-            SecurityUtility.AuthenticationOnTenant(tenant);
+            string token = HttpContext.Current?.Request?.Headers["Token"];
+            if (token != null)
+            {
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
+            }
         }
 
 
