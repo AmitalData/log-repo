@@ -122,8 +122,8 @@ export class DocumentsPanelComponent {
                 var documentName = SessionLocator.Tenant + "_" + documentFiling.DocumentId;
 
 
-                var token = ServiceHelper.GetLoggedUserToken();
-                let uri = ServiceHelper.GetLogitudeURL() + "WebPages/Downloadpage.aspx?id=" + documentName + "&token=" + token;
+                var token = ServiceHelper.GetLDocumentDownloadToken();
+                let uri = ServiceHelper.GetLogitudeURL() + "WebPages/Downloadpage.aspx?id=" + documentName + "&tempId=" + token;
                 if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
                     AmitalGatewayUtil.Instance.DeclarationMessaging.RaiseOpenNewBrowser(uri);
                     return;
