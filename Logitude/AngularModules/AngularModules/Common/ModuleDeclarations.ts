@@ -73,6 +73,7 @@ import { CloseSaveButtonsComponent } from './Components/Maintenance/AmitalAPI/co
 
   import { TariffsTabComponent } from './Components/TariffsTab/TariffsTabComponent';
  import { HostScreenComponent } from './Components/HostScreen/HostScreenComponent';
+import { ReportExecutionLogListActionBarComponent } from './Components/ListActionBar/ReportExecutionLogListActionBarComponent';
 
   export const Components =
     [
@@ -150,6 +151,7 @@ import { CloseSaveButtonsComponent } from './Components/Maintenance/AmitalAPI/co
          HostScreenComponent,
         LogTexBoxFormComponent,
         CloseSaveButtonsComponent,
+        ReportExecutionLogListActionBarComponent
     ];
   
 export class ModuleDeclarations {
@@ -237,6 +239,8 @@ export class ModuleDeclarations {
              case "HostScreenComponent": { myResult = HostScreenComponent; break; }
             case "LogTexBoxFormComponent": { myResult = LogTexBoxFormComponent; break; }
             case "CloseSaveButtonsComponent": { myResult = CloseSaveButtonsComponent; break; }
+            case "ReportExecutionLogListActionBarComponent": { myResult = ReportExecutionLogListActionBarComponent; break; }
+
         }
  
         return myResult;
