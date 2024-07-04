@@ -88,7 +88,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 {
    public class ShipmentUpdateClass
    {  		
-		public const string HashString = "9e8fc4d1563ccfcf8aa2f2cb3b711a31";
+		public const string HashString = "9e8fc4d1563ccfcf8aa2f2cb3b711a1a";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -8272,7 +8272,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CustomerId",
 					  						DefaultText =  "Customer",
-					  						HelpTextCode =  "CustomerId",
+											FullLocalDefaultText = "קוד לקוח",
+											HelpTextCode =  "CustomerId",
 					  						HelpTextDefaultText =  "Indicates who the customer is, so that Logitude knows to refer to the relevant partner for statistics, billing and shared logistics. For Export, the Shipper is selected automatically. For Import, the Consignee is selected automatically.",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "Card",
@@ -11259,9 +11260,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TransportModeId",
 					  						DefaultText =  "Main Carriage Transport Mode",
-					  						ListFieldLable =  "TransportModeIdListLable",
-					  						ListLableDefaultText =  "Transport Mode",
-					  						ShortFieldLable =  "TransportModeId",
+											FullLocalDefaultText = "סוג הובלה",
+                                            ListFieldLable =  "TransportModeIdListLable",
+						                    ListLableDefaultText =  "Transport Mode",
+										    ListLocalDefaultText = "סוג הובלה",
+										    ShortFieldLable =  "TransportModeId",
 					  						ShortFieldLableDefaultText =  "Transport",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "TransportMode",
@@ -95931,13 +95934,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.ShipmentsModel.EntityUpd
 
  		   TextCode ShipmentTextCode_ShipmentGContainersLines = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.G.ContainersLines", DefaultText = "Containers lines",LocalDefaultText = null, ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
-   
-	    
-}
+           TextCode ShipmentTextCode_NewShipment = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.NewShipment", DefaultText = "New Shipment", LocalDefaultText = "משלוח חדש", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
-    
+           TextCode ShipmentTextCode_OpenNewCustomShipment = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Shipment.O.OpenNewCustomShipment", DefaultText = "Open New Shipment", LocalDefaultText = "פתיחת תיק עמילות", ObjectTableId = ShipmentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
-   }
+
+
+        }
+
+
+
+    }
     
 }
 	 

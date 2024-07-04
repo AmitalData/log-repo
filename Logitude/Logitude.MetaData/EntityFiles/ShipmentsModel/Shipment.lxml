@@ -9510,6 +9510,7 @@
     DisplayLongName="false"
     FullFieldLable="&quot;CustomerId&quot;"
     DefaultText="&quot;Customer&quot;"
+    FullLocalDefaultText="&quot;קוד לקוח&quot;"
     HelpTextCode="&quot;CustomerId&quot;"
     HelpTextDefaultText="&quot;Indicates who the customer is, so that Logitude knows to refer to the relevant partner for statistics, billing and shared logistics. For Export, the Shipper is selected automatically. For Import, the Consignee is selected automatically.&quot;"
     IsNullable="false"
@@ -12970,8 +12971,10 @@
     DisplayLongName="false"
     FullFieldLable="&quot;TransportModeId&quot;"
     DefaultText="&quot;Main Carriage Transport Mode&quot;"
+    FullLocalDefaultText="&quot;סוג הובלה&quot;"
     ListFieldLable="&quot;TransportModeIdListLable&quot;"
     ListLableDefaultText="&quot;Transport Mode&quot;"
+    ListLocalDefaultText="&quot;סוג הובלה&quot;"
     ShortFieldLable="&quot;TransportModeId&quot;"
     ShortFieldLableDefaultText="&quot;Transport&quot;"
     IsNullable="false"
@@ -119631,6 +119634,18 @@
       Code="&quot;Shipment.G.ContainersLines&quot;"
       DefaultText="&quot;Containers lines&quot;"
       TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.O.NewShipment&quot;"
+      DefaultText="&quot;New Shipment&quot;"
+      LocalDefaultText="&quot;משלוח חדש&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.O.OpenNewCustomShipment&quot;"
+      DefaultText="&quot;Open New Shipment&quot;"
+      LocalDefaultText="&quot;פתיחת תיק עמילות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>

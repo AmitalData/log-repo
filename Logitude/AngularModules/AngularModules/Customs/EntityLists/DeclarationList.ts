@@ -43,6 +43,7 @@ export class DeclarationList {
 	CIFValue: number;
 	TotalTax: number;
 	FileState: string;
+	TransportModeId: string;
 	DeclarationOfficeName: string;
 	ImporterName: string;
 	DepartmentId: string;

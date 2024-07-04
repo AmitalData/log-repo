@@ -3541,7 +3541,7 @@
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="1"
-    DisplayInList="false"
+    DisplayInList="true"
     IsCustomFilter="false"
     IsListFilter="false"
     Operator="&quot;Equals&quot;"
@@ -22285,7 +22285,7 @@
         PredefinedValue="&quot;false&quot;"
         ObjectFieldName="&quot;AmendmentDontDisplayInList&quot;"
         IsPredefined="true"
-    IndexOrder="0"
+        IndexOrder="0"
         CustomPredefined="false" />
       <QueryFilter
         QueryCode="&quot;UnReleasedIndividual&quot;"

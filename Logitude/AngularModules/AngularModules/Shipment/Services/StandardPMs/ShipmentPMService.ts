@@ -468,6 +468,28 @@ export class ShipmentPMService {
             }
         });
     }
+    insertCustomShipment(entityPM: ShipmentPM, declarationOfficeCode = null) {
+        return defer(() => {
+            var shipment: ShipmentPM;
+            shipment = this.MapJsonToEntityPM(entityPM, false);
+            var shipString = JSON.stringify({EntityPM: shipment, DeclarationOfficeCode: declarationOfficeCode});
+
+            var response: ServiceResponse;
+            response = new ServiceResponse();
+
+            //console.log(shipString);
+            return this._http.post(this._apiUrl + "/PostCustoms/", shipString, ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                var pm = res;
+                var shipment: ShipmentPM;
+                shipment = this.MapJsonToEntityPM(pm, true, entityPM);
+
+                response.Result = shipment;
+                return response;
+
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
     GetNewEntityPM() {
         var entityPM: ShipmentPM;
         entityPM = new ShipmentPM();
