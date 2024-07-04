@@ -28,13 +28,13 @@
                                         <table>
                                             <tr style="height: 20px;">
                                                 <td>
-                                                    <RadioButton [IsEnabled]="!IsCounterUsed" [Name]="'CounterDirectionRadio'" [IsChecked]="SameForAllDirectios == true" (Checked)="SameForAllDirectios = true" [Text]="'Same for (Import,Export,Domestic,Drop)'"></RadioButton>
+                                                    <RadioButton [IsEnabled]="!IsCounterUsed" [Name]="'CounterDirectionRadio'" [IsChecked]="SameForAllDirectios == true" (Checked)="SameForAllDirectios = true" [Text]="'Same for (Import,Export,Domestic,Drop,Customs)'"></RadioButton>
                                                 </td>
                                             </tr>
 
                                             <tr style="height: 20px;">
                                                 <td>
-                                                    <RadioButton [IsEnabled]="!IsCounterUsed || !HasAllTransportsFeature" [Name]="'CounterDirectionRadio'" [IsChecked]="SameForAllDirectios == false" (Checked)="SameForAllDirectios = false" [Text]="'Different for (Import,Export,Domestic,Drop)'"></RadioButton>
+                                                    <RadioButton [IsEnabled]="!IsCounterUsed || !HasAllTransportsFeature" [Name]="'CounterDirectionRadio'" [IsChecked]="SameForAllDirectios == false" (Checked)="SameForAllDirectios = false" [Text]="'Different for (Import,Export,Domestic,Drop,Customs)'"></RadioButton>
                                                 </td>
                                             </tr>
 
