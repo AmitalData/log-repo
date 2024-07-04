@@ -63,7 +63,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ImporterApproval, 
 	         DeclarationIdToDisplay, 
 	         MawbDate, 
-	         IskaNumber, 
 	         Vessel, 
 	         FlightVoyageNumber, 
 	         CarrierCode,
@@ -124,7 +123,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         OccuredStatus, 
 	         NotOccuredStatus, 
 	         MawbDate, 
-	         IskaNumber, 
 	         Vessel, 
 	         FlightVoyageNumber, 
 	         CarrierCode,
@@ -334,11 +332,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MawbDate))
             {
 				entityPOCO.MawbDate = entityPM.MawbDate;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IskaNumber))
-            {
-				entityPOCO.IskaNumber = entityPM.IskaNumber;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Vessel))
@@ -567,11 +560,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.MawbDate = entityPOCO.MawbDate;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IskaNumber))
-            {
-					entityPM.IskaNumber = entityPOCO.IskaNumber;
-            }
-
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Vessel))
             {
 					entityPM.Vessel = entityPOCO.Vessel;
@@ -791,11 +779,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MawbDate))
             {
                 oldEntityPM.MawbDate = entityPM.MawbDate;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IskaNumber))
-            {
-                oldEntityPM.IskaNumber = entityPM.IskaNumber;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Vessel))

@@ -125,8 +125,6 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string DeclarationIdToDisplay { get; set; }
         [Column("MawbDate")]
 	    public DateTime? MawbDate { get; set; }
-        [Column("IskaNumber")]
-	    public string IskaNumber { get; set; }
         [ForeignKey("VesselCode")]
         [Column("Vessel")]
 	    public string Vessel { get; set; }

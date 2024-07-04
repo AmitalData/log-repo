@@ -6001,6 +6001,7 @@
     <TextCode
       Code="&quot;General.MH.CustomsShipments&quot;"
       DefaultText="&quot;Customs Shipments&quot;"
+      LocalDefaultText="&quot;עמילות מכס&quot;"
       TextCodeTypeCode="&quot;MH&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
