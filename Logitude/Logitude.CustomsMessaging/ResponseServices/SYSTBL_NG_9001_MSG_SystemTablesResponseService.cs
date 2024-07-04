@@ -231,7 +231,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         private List<SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt> ManipulateCustomResponse(string tableId, SYSTBL_NG_9001_MSG_SystemTablesResponse customResponse)
         {
-
+           
             var writeHighlight = false;
             switch (tableId)
             {
@@ -714,11 +714,15 @@ ID List :
                                                     if (dr["ConstraintTypeEnumID"] != DBNull.Value && dr["ConstraintTypeEnumID"] != null)
                                                     {
                                                         LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                        string constraintTypeValue = dr["ConstraintTypeEnumID"]?.ToString();
-                                                        if(constraintTypeValue != null) 
-                                                        {
-                                                            newExt.MyCertificateOfOriginMandatoryFields.IsMandatory = constraintTypeValue == "1" ? true : false;
-                                                        }
+                                                        //string constraintTypeValue = dr["ConstraintTypeEnumID"]?.ToString();
+                                                        //if(constraintTypeValue != null) 
+                                                        //{
+                                                        //    newExt.MyCertificateOfOriginMandatoryFields.IsMandatory = constraintTypeValue == "1" ? true : false;
+                                                        //}
+
+                                                        string constraintTypeName = dr["ConstraintTypeName"]?.ToString();
+                                                        if (constraintTypeName != null && constraintTypeName == "Mandatory" || constraintTypeName == "Optional" || constraintTypeName == "Condition")
+                                                            newExt.MyCertificateOfOriginMandatoryFields.IsMandatory = constraintTypeName;
                                                     }
 
 
