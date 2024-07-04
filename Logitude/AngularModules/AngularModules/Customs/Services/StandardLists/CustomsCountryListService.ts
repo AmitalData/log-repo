@@ -152,7 +152,52 @@ export class CustomsCountryListService {
 					catchError(ServiceHelper.HandleServiceError));
 		});        
 	}
+	getSingleFromCache(code: string) {
 
+		var callTime = new Date(); 	    
+
+		if (!SessionLocator.UseCachedData) {
+            return this.getSingle(code);
+        }
+
+        var serviceResponse: ServiceResponse = new ServiceResponse();
+
+		if (CustomsCountryListService.CachedData.length > 0) {
+			return defer(() => {
+				var filteredData = CustomsCountryListService.CachedData.filter(a => a.Code === code)[0];
+				serviceResponse.CallTime = callTime;
+				serviceResponse.Result = filteredData; 
+                return of(serviceResponse);
+            });
+        }
+
+        else {
+            return CachedDataManager.GetClosedTableData("Customs.CustomsCountry").pipe(
+				map((cachedJson:any) => {
+
+					var _mappedListsArray: Array<CustomsCountryList> = [];
+
+					if (cachedJson) {
+						for (var key in cachedJson) {
+							var entity: CustomsCountryList = this.MapJsonToEntityList(cachedJson[key]);
+							_mappedListsArray.push(entity);
+						}
+					}
+
+					CustomsCountryListService.CachedData = _mappedListsArray;
+
+					var filteredData = CustomsCountryListService.CachedData.filter(a => a.Code === code)[0];
+					serviceResponse.Result = filteredData; 
+					serviceResponse.CallTime = callTime;
+			     
+					PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "CustomsCountry", "GetSingleListFromCache", 'code=' + code); 
+
+					return serviceResponse;
+				}),
+
+				catchError(ServiceHelper.HandleServiceError));
+        }
+    }
 	
 	    MapJsonToEntityList(jsonList: any) {
        
